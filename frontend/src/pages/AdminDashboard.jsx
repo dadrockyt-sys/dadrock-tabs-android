@@ -10,8 +10,9 @@ import {
   Search,
   Music,
   Users,
-  X,
   FileSpreadsheet,
+  Youtube,
+  RefreshCw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
