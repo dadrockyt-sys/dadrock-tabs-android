@@ -301,8 +301,13 @@ def parse_video_title(title: str) -> tuple:
 @api_router.post("/admin/youtube/sync")
 async def sync_youtube_channel(request: YouTubeSyncRequest, auth: bool = Depends(verify_admin)):
     """Sync videos from YouTube channel using API"""
+    # Use provided API key or fall back to env variable
+    api_key = request.api_key or YOUTUBE_API_KEY
+    if not api_key:
+        raise HTTPException(status_code=400, detail="YouTube API key not configured")
+    
     try:
-        youtube = build("youtube", "v3", developerKey=request.api_key, cache_discovery=False)
+        youtube = build("youtube", "v3", developerKey=api_key, cache_discovery=False)
         
         videos_added = 0
         videos_skipped = 0
