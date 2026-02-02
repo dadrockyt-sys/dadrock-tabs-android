@@ -1,0 +1,141 @@
+{
+  "design_system": {
+    "name": "DadRock Tabs - The Analog Stage",
+    "description": "A gritty, authentic rock-and-roll aesthetic that merges the warmth of vintage tube amps with the precision of a modern database. Dark, high-contrast, and texture-rich.",
+    "theme_strategy": "dark_only",
+    "typography": {
+      "font_family": {
+        "heading": "Oswald, sans-serif",
+        "body": "Manrope, sans-serif",
+        "mono": "JetBrains Mono, monospace"
+      },
+      "scale": {
+        "h1": "text-6xl md:text-8xl font-bold uppercase tracking-tighter",
+        "h2": "text-4xl md:text-5xl font-bold uppercase tracking-tight",
+        "h3": "text-2xl md:text-3xl font-semibold tracking-wide",
+        "body": "text-base md:text-lg leading-relaxed",
+        "caption": "text-sm font-medium tracking-widest uppercase text-muted-foreground"
+      },
+      "imports": [
+        "https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Manrope:wght@400;500;700&display=swap"
+      ]
+    },
+    "colors": {
+      "palette": {
+        "background": "#09090b",
+        "foreground": "#fafafa",
+        "card": "#18181b",
+        "card_foreground": "#fafafa",
+        "popover": "#09090b",
+        "popover_foreground": "#fafafa",
+        "primary": "#f59e0b",
+        "primary_foreground": "#09090b",
+        "secondary": "#27272a",
+        "secondary_foreground": "#fafafa",
+        "muted": "#27272a",
+        "muted_foreground": "#a1a1aa",
+        "accent": "#dc2626",
+        "accent_foreground": "#fafafa",
+        "destructive": "#7f1d1d",
+        "destructive_foreground": "#fafafa",
+        "border": "#27272a",
+        "input": "#27272a",
+        "ring": "#f59e0b"
+      },
+      "usage": {
+        "primary_action": "bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_15px_rgba(245,158,11,0.5)]",
+        "secondary_action": "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-white/10",
+        "surface_card": "bg-card border border-white/5 hover:border-primary/50 transition-colors duration-300"
+      }
+    },
+    "visual_enhancers": {
+      "textures": {
+        "noise_overlay": "fixed inset-0 z-50 pointer-events-none opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]",
+        "vinyl_groove": "repeating-radial-gradient(#111 0, #111 2px, #1a1a1a 3px, #1a1a1a 4px)"
+      },
+      "shadows": {
+        "glow": "shadow-[0_0_20px_-5px_rgba(245,158,11,0.3)]",
+        "stage_light": "shadow-[0_-20px_60px_-15px_rgba(245,158,11,0.15)]"
+      },
+      "borders": {
+        "pedal": "border-2 border-white/10 rounded-lg",
+        "sharp": "border border-border rounded-none"
+      }
+    },
+    "layout": {
+      "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+      "spacing": {
+        "section": "py-24 md:py-32",
+        "element": "gap-6 md:gap-8"
+      },
+      "grids": {
+        "cards": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8",
+        "dashboard": "grid grid-cols-12 gap-6"
+      }
+    },
+    "components": {
+      "buttons": {
+        "default": "h-12 px-8 rounded-md font-bold uppercase tracking-wider transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0",
+        "ghost": "hover:bg-white/5 hover:text-primary"
+      },
+      "inputs": {
+        "search_hero": "h-16 text-xl bg-black/50 border-2 border-white/20 focus:border-primary focus:ring-0 rounded-full px-8 backdrop-blur-md text-white placeholder:text-white/40"
+      },
+      "cards": {
+        "video_card": "group relative overflow-hidden bg-card rounded-xl border border-white/5 hover:border-primary/50 transition-all duration-500"
+      }
+    },
+    "motion": {
+      "transitions": "transition-all duration-300 ease-out",
+      "hover_effects": "hover:scale-[1.02] hover:shadow-lg",
+      "page_load": "animate-in fade-in slide-in-from-bottom-4 duration-700"
+    },
+    "assets": {
+      "images": {
+        "hero_bg": {
+          "url": "https://images.unsplash.com/photo-1765224747159-6a6417cd208c?crop=entropy&cs=srgb&fm=jpg&q=85",
+          "alt": "Silhouette of guitarist on stage with orange spotlight",
+          "usage": "Hero section background with heavy overlay"
+        },
+        "admin_bg": {
+          "url": "https://images.unsplash.com/photo-1636818477383-3a23426afe87?crop=entropy&cs=srgb&fm=jpg&q=85",
+          "alt": "Music studio mixing console",
+          "usage": "Admin login page background"
+        },
+        "texture_accent": {
+          "url": "https://images.unsplash.com/photo-1753427251279-c64f92a3a25b?crop=entropy&cs=srgb&fm=jpg&q=85",
+          "alt": "Fender Jaguar close up",
+          "usage": "About page or featured section background"
+        },
+        "vinyl_record": {
+          "url": "https://images.unsplash.com/photo-1669801158950-f663cf15298c?crop=entropy&cs=srgb&fm=jpg&q=85",
+          "alt": "Vinyl record texture",
+          "usage": "Ad countdown page center element"
+        }
+      },
+      "icons": "lucide-react"
+    },
+    "accessibility": {
+      "contrast_check": "Ensure all text on image backgrounds has a semi-transparent black overlay (bg-black/60 or higher).",
+      "focus_states": "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+    },
+    "instructions_to_main_agent": [
+      "1. INSTALL FONTS: Add the Google Fonts import to index.css immediately.",
+      "2. SETUP TAILWIND: Update tailwind.config.js with the colors and font families defined above.",
+      "3. GLOBAL STYLES: Add the noise overlay to the body in App.js or index.css.",
+      "4. COMPONENT OVERRIDES: When using Shadcn components, override the default radius to '0.5rem' or '0.75rem' but keep borders subtle.",
+      "5. NOISE TEXTURE: Implement the noise texture as a fixed div in the root layout.",
+      "6. AD PAGE: The ad page must feature the vinyl record image spinning (animate-spin-slow) with the countdown timer in the center.",
+      "7. ADMIN PANEL: Keep it high-density. Use the 'Mixing Console' image as the background for the login page only. The dashboard itself should be clean dark gray/black.",
+      "8. SEARCH: The search bar is the main character of the home page. Make it huge.",
+      "9. DATA-TESTID: Add data-testid attributes to all interactive elements (buttons, inputs, links)."
+    ],
+    "universal_guidelines": [
+      "Do not use gradients for backgrounds, use solid dark colors + noise.",
+      "Avoid 'Inter' font for headings. Use 'Oswald'.",
+      "Use 2-3x more padding than usual.",
+      "Never use pure black (#000000), use #09090b.",
+      "Always add hover states to interactive elements."
+    ]
+  }
+}
