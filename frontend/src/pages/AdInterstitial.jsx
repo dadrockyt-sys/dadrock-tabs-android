@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Guitar, ExternalLink, FastForward } from "lucide-react";
+import { ExternalLink, FastForward } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -69,7 +71,7 @@ const AdInterstitial = () => {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <Guitar className="w-16 h-16 text-primary mx-auto animate-pulse" />
+          <img src={LOGO_URL} alt="Loading" className="w-32 h-auto mx-auto animate-pulse" />
           <p className="text-muted-foreground mt-4">Loading...</p>
         </div>
       </div>
@@ -125,7 +127,7 @@ const AdInterstitial = () => {
                       {countdown}
                     </span>
                   ) : (
-                    <Guitar className="w-8 h-8 text-primary" />
+                    <img src={LOGO_URL} alt="DadRock" className="w-12 h-12 object-contain" />
                   )}
                 </div>
               </div>

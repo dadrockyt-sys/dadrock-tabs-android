@@ -6,7 +6,7 @@
 
 /* Hero section styles */
 .hero-bg {
-    background-image: url('https://images.unsplash.com/photo-1765224747159-6a6417cd208c?crop=entropy&cs=srgb&fm=jpg&q=85');
+    background-color: #000000;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

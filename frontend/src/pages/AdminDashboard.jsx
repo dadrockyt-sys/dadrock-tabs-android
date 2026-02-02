@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
-  Guitar,
   Plus,
   Pencil,
   Trash2,
@@ -15,6 +14,8 @@ import {
   FileSpreadsheet,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -218,7 +219,7 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <Guitar className="w-16 h-16 text-primary animate-pulse" />
+        <img src={LOGO_URL} alt="Loading" className="w-32 h-auto animate-pulse" />
       </div>
     );
   }
@@ -229,8 +230,8 @@ const AdminDashboard = () => {
       <header className="sticky top-0 z-40 bg-background border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Guitar className="w-8 h-8 text-primary" />
+            <div className="flex items-center gap-4">
+              <img src={LOGO_URL} alt="DadRock Tabs" className="h-12 w-auto" />
               <div>
                 <h1 className="font-heading text-xl font-bold uppercase tracking-tight text-white">
                   Admin Dashboard

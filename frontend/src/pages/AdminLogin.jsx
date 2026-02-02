@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Guitar, Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
+
+const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -116,12 +118,11 @@ const AdminLogin = () => {
 
             {/* Footer */}
             <div className="mt-8 text-center">
-              <div className="flex items-center justify-center gap-2 text-muted-foreground">
-                <Guitar className="w-5 h-5" />
-                <span className="font-heading text-sm uppercase tracking-widest">
-                  DadRock Tabs Admin
-                </span>
-              </div>
+              <img 
+                src={LOGO_URL} 
+                alt="DadRock Tabs"
+                className="h-12 w-auto mx-auto opacity-50"
+              />
             </div>
           </div>
         </main>

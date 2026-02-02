@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { Search as SearchIcon, Guitar, ArrowLeft, Play, User, Music } from "lucide-react";
+import { Search as SearchIcon, ArrowLeft, Play, User, Music } from "lucide-react";
+
+const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -119,10 +121,11 @@ const Search = () => {
                 className="flex items-center gap-2 cursor-pointer"
                 onClick={() => navigate("/")}
               >
-                <Guitar className="w-6 h-6 text-primary" />
-                <span className="font-heading text-xl font-bold uppercase tracking-tight text-white">
-                  DadRock Tabs
-                </span>
+                <img 
+                  src={LOGO_URL} 
+                  alt="DadRock Tabs"
+                  className="h-10 w-auto"
+                />
               </div>
             </div>
 

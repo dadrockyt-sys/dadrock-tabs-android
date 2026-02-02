@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, Guitar, Music, Settings } from "lucide-react";
+import { Search, Music, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,6 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
+const BANNER_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/u9nzw1f2_20201025_123236.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -24,27 +27,27 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative bg-black">
       {/* Hero Section */}
-      <div className="hero-bg min-h-screen relative">
-        {/* Overlay */}
-        <div className="absolute inset-0 hero-overlay" />
-        
+      <div className="min-h-screen relative">
         {/* Content */}
         <div className="relative z-10 flex flex-col min-h-screen">
-          {/* Header */}
-          <header className="flex justify-between items-center p-6 md:p-8">
-            <div className="flex items-center gap-3">
-              <Guitar className="w-8 h-8 text-primary" />
-              <span className="font-heading text-2xl font-bold uppercase tracking-tight text-white">
-                DadRock Tabs
-              </span>
+          {/* Header with Banner */}
+          <header className="relative">
+            {/* Banner Image */}
+            <div className="w-full h-32 md:h-40 overflow-hidden">
+              <img 
+                src={BANNER_URL} 
+                alt="DadRock Guitar Tabs Banner"
+                className="w-full h-full object-cover object-center"
+              />
             </div>
+            {/* Admin Button */}
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate("/admin")}
-              className="text-muted-foreground hover:text-primary"
+              className="absolute top-4 right-4 text-muted-foreground hover:text-primary bg-black/50 backdrop-blur-sm"
               data-testid="admin-link"
             >
               <Settings className="w-5 h-5" />
@@ -52,12 +55,14 @@ const Home = () => {
           </header>
 
           {/* Main Content */}
-          <main className="flex-1 flex flex-col items-center justify-center px-4 -mt-20">
-            {/* Title */}
-            <div className="text-center mb-12 fade-in">
-              <h1 className="font-heading text-6xl md:text-8xl font-bold uppercase tracking-tighter text-white mb-4">
-                DadRock <span className="text-primary">Tabs</span>
-              </h1>
+          <main className="flex-1 flex flex-col items-center justify-center px-4 -mt-10">
+            {/* Logo */}
+            <div className="text-center mb-8 fade-in">
+              <img 
+                src={LOGO_URL} 
+                alt="DadRock Tabs Logo"
+                className="w-64 md:w-80 lg:w-96 mx-auto mb-6 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)]"
+              />
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
                 Your go-to database for classic rock guitar tutorials. Search by song or artist.
               </p>
@@ -117,7 +122,7 @@ const Home = () => {
                 <p className="text-sm text-muted-foreground uppercase tracking-widest">Guitar Tabs</p>
               </div>
               <div className="text-center">
-                <Guitar className="w-8 h-8 text-primary mx-auto mb-2" />
+                <Music className="w-8 h-8 text-primary mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground uppercase tracking-widest">Classic Rock</p>
               </div>
             </div>
