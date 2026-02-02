@@ -79,6 +79,10 @@ class AdminLoginResponse(BaseModel):
     success: bool
     message: str
 
+class YouTubeSyncRequest(BaseModel):
+    api_key: str
+    channel_id: str = "UCLN8LV-ojTQP2wPtDg1kvGQ"  # DadRock Tabs channel ID
+
 def extract_youtube_thumbnail(url: str) -> str:
     """Extract video ID and generate thumbnail URL"""
     video_id = None
