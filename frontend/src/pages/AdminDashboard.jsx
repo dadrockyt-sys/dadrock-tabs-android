@@ -55,6 +55,7 @@ const AdminDashboard = () => {
   const [videos, setVideos] = useState([]);
   const [stats, setStats] = useState({ total_videos: 0, total_artists: 0 });
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   // Modal states
