@@ -108,6 +108,7 @@ const Home = () => {
               >
               <Settings className="w-5 h-5" />
             </Button>
+            </div>
           </header>
 
           {/* Main Content */}
