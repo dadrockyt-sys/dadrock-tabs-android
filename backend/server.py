@@ -80,8 +80,11 @@ class AdminLoginResponse(BaseModel):
     message: str
 
 class YouTubeSyncRequest(BaseModel):
-    api_key: str
+    api_key: Optional[str] = None  # Will use env var if not provided
     channel_id: str = "UCLN8LV-ojTQP2wPtDg1kvGQ"  # DadRock Tabs channel ID
+
+# YouTube API key from env
+YOUTUBE_API_KEY = os.environ.get('YOUTUBE_API_KEY', '')
 
 def extract_youtube_thumbnail(url: str) -> str:
     """Extract video ID and generate thumbnail URL"""
