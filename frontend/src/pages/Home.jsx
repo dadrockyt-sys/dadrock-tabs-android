@@ -61,7 +61,7 @@ const Home = () => {
               <img 
                 src={LOGO_URL} 
                 alt="DadRock Tabs Logo"
-                className="w-64 sm:w-72 md:w-96 lg:w-[28rem] mx-auto mb-4 md:mb-6 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)]"
+                className="w-80 sm:w-96 md:w-[28rem] lg:w-[34rem] mx-auto mb-4 md:mb-6 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)]"
               />
               <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
                 Your go-to database for classic rock guitar tutorials. Search by song or artist.
