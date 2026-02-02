@@ -218,6 +218,27 @@ const AdminDashboard = () => {
     navigate("/admin");
   };
 
+  const handleYouTubeSync = async () => {
+    const headers = getAuthHeader();
+    if (!headers) return;
+
+    setSyncing(true);
+    try {
+      const response = await axios.post(
+        `${API}/admin/youtube/sync`,
+        { channel_id: "UCLN8LV-ojTQP2wPtDg1kvGQ" },
+        { headers }
+      );
+      toast.success(response.data.message);
+      fetchVideos();
+      fetchStats();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Failed to sync from YouTube");
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
