@@ -1,51 +1,14 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ExternalLink, FastForward } from "lucide-react";
+import { ExternalLink, FastForward, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
+const MERCH_URL = "https://my-store-b8bb42.creator-spring.com";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
-
-// Google Ad Component
-const GoogleAd = () => {
-  const adRef = useRef(null);
-  const [adLoaded, setAdLoaded] = useState(false);
-
-  useEffect(() => {
-    try {
-      if (window.adsbygoogle && adRef.current) {
-        // Push the ad
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        setAdLoaded(true);
-      }
-    } catch (error) {
-      console.log("Ad loading error:", error);
-    }
-  }, []);
-
-  return (
-    <div className="w-full flex justify-center my-4">
-      <ins
-        ref={adRef}
-        className="adsbygoogle"
-        style={{ 
-          display: "block",
-          width: "100%",
-          maxWidth: "336px",
-          height: "280px",
-          backgroundColor: adLoaded ? "transparent" : "#18181b"
-        }}
-        data-ad-client="ca-pub-6391677195320364"
-        data-ad-slot="7237947171"
-        data-ad-format="rectangle"
-        data-full-width-responsive="true"
-      />
-    </div>
-  );
-};
 
 const AdInterstitial = () => {
   const { videoId } = useParams();
@@ -97,7 +60,7 @@ const AdInterstitial = () => {
 
   useEffect(() => {
     if (countdown === 0 && canSkip) {
-      // Auto-redirect after countdown (increased to 5 seconds to show ad longer)
+      // Auto-redirect after countdown
       const autoRedirect = setTimeout(() => {
         redirectToYouTube();
       }, 5000);
@@ -172,13 +135,31 @@ const AdInterstitial = () => {
           </div>
         </div>
 
-        {/* Google Ad */}
-        <div className="mb-6 p-4 bg-card rounded-xl border border-white/5">
-          <p className="text-xs text-muted-foreground uppercase tracking-widest mb-3">
-            Advertisement
+        {/* Merch Ad */}
+        <a 
+          href={MERCH_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block mb-6 p-6 bg-gradient-to-br from-card to-card/50 rounded-xl border border-primary/30 hover:border-primary/60 transition-all duration-300 group"
+          data-testid="merch-ad"
+        >
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <ShoppingBag className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
+            <span className="font-heading text-xl font-bold uppercase tracking-wider text-primary">
+              Support DadRock!
+            </span>
+          </div>
+          <p className="text-white text-lg mb-3">
+            Get Official DadRock Tabs Merch!
           </p>
-          <GoogleAd />
-        </div>
+          <p className="text-muted-foreground text-sm mb-4">
+            T-shirts, hoodies, hats & more. Show your love for classic rock!
+          </p>
+          <div className="inline-flex items-center gap-2 px-6 py-2 bg-primary text-primary-foreground rounded-full font-heading font-bold uppercase tracking-wider text-sm group-hover:bg-primary/90 transition-colors">
+            <ShoppingBag className="w-4 h-4" />
+            Shop Now
+          </div>
+        </a>
 
         {/* Action Buttons */}
         <div className="flex flex-col gap-3">
