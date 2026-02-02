@@ -172,6 +172,24 @@ const Home = () => {
               </div>
             </form>
 
+            {/* Make a Request Button */}
+            <a
+              href="https://buymeacoffee.com/dadrockytq/commissions"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 w-full max-w-3xl fade-in stagger-1"
+              data-testid="request-button"
+            >
+              <Button
+                type="button"
+                size="lg"
+                className="w-full h-16 rounded-full font-heading font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700 glow-amber btn-lift text-lg"
+              >
+                <MessageSquarePlus className="w-6 h-6 mr-3" />
+                Make a Request
+              </Button>
+            </a>
+
             {/* Quick Stats */}
             <div className="mt-12 flex gap-8 md:gap-16 fade-in stagger-2">
               <div className="text-center">
