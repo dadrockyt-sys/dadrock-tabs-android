@@ -1,0 +1,33 @@
+{
+  "name": "DadRock Tabs",
+  "short_name": "DadRock",
+  "description": "Searchable database for DadRock Guitar Tabs YouTube channel. Find classic rock guitar tutorials by song or artist.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#f59e0b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/dadrock-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/dadrock-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["music", "education", "entertainment"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Search Videos",
+      "url": "/search",
+      "description": "Search for guitar tabs"
+    }
+  ]
+}
