@@ -76,13 +76,26 @@ const Home = () => {
               />
             </div>
             {/* Admin Button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate("/admin")}
-              className="absolute top-4 right-4 text-muted-foreground hover:text-primary bg-black/50 backdrop-blur-sm"
-              data-testid="admin-link"
-            >
+            <div className="absolute top-4 right-4 flex gap-2">
+              {showInstallButton && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleInstall}
+                  className="text-primary hover:text-primary/80 bg-black/50 backdrop-blur-sm"
+                  data-testid="install-app-button"
+                >
+                  <Download className="w-5 h-5 mr-1" />
+                  Install
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/admin")}
+                className="text-muted-foreground hover:text-primary bg-black/50 backdrop-blur-sm"
+                data-testid="admin-link"
+              >
               <Settings className="w-5 h-5" />
             </Button>
           </header>
