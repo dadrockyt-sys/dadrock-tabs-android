@@ -271,6 +271,117 @@ async def get_stats(auth: bool = Depends(verify_admin)):
         "total_artists": len(artists)
     }
 
+def parse_video_title(title: str) -> tuple:
+    """Parse video title to extract song and artist
+    Expected formats: 
+    - "Song Name - Artist Name Guitar TAB"
+    - "Artist - Song Name (Guitar + Bass TABS)"
+    """
+    # Remove common suffixes
+    clean_title = re.sub(r'\s*(Guitar|Bass|TAB|TABS|Lesson|Tutorial|\+|\(|\)|\[|\]|HD|Official).*', '', title, flags=re.IGNORECASE)
+    clean_title = clean_title.strip()
+    
+    # Try to split by " - "
+    if " - " in clean_title:
+        parts = clean_title.split(" - ", 1)
+        # Heuristic: usually format is "Song - Artist" or "Artist - Song"
+        # For DadRock Tabs, it's typically "Song Name - Artist Name"
+        return parts[0].strip(), parts[1].strip() if len(parts) > 1 else "Unknown Artist"
+    
+    # Try to split by " by "
+    if " by " in clean_title.lower():
+        parts = re.split(r'\s+by\s+', clean_title, flags=re.IGNORECASE)
+        return parts[0].strip(), parts[1].strip() if len(parts) > 1 else "Unknown Artist"
+    
+    return clean_title, "DadRock Tabs"
+
+@api_router.post("/admin/youtube/sync")
+async def sync_youtube_channel(request: YouTubeSyncRequest, auth: bool = Depends(verify_admin)):
+    """Sync videos from YouTube channel using API"""
+    try:
+        youtube = build("youtube", "v3", developerKey=request.api_key, cache_discovery=False)
+        
+        videos_added = 0
+        videos_skipped = 0
+        errors = []
+        next_page_token = None
+        
+        # Get channel's uploads playlist
+        channel_response = youtube.channels().list(
+            part="contentDetails",
+            id=request.channel_id
+        ).execute()
+        
+        if not channel_response.get("items"):
+            raise HTTPException(status_code=404, detail="Channel not found")
+        
+        uploads_playlist_id = channel_response["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+        
+        # Fetch all videos from uploads playlist
+        while True:
+            playlist_response = youtube.playlistItems().list(
+                part="snippet",
+                playlistId=uploads_playlist_id,
+                maxResults=50,
+                pageToken=next_page_token
+            ).execute()
+            
+            for item in playlist_response.get("items", []):
+                snippet = item["snippet"]
+                video_id = snippet["resourceId"]["videoId"]
+                title = snippet["title"]
+                youtube_url = f"https://www.youtube.com/watch?v={video_id}"
+                thumbnail = snippet["thumbnails"].get("high", snippet["thumbnails"].get("default", {})).get("url", "")
+                
+                # Check if video already exists
+                existing = await db.videos.find_one({"youtube_url": youtube_url})
+                if existing:
+                    videos_skipped += 1
+                    continue
+                
+                # Parse title to get song and artist
+                song, artist = parse_video_title(title)
+                
+                # Create video entry
+                video = Video(
+                    song=song,
+                    artist=artist,
+                    youtube_url=youtube_url,
+                    thumbnail=thumbnail
+                )
+                
+                doc = video.model_dump()
+                doc['created_at'] = doc['created_at'].isoformat()
+                
+                try:
+                    await db.videos.insert_one(doc)
+                    videos_added += 1
+                except Exception as e:
+                    errors.append(f"Failed to add '{title}': {str(e)}")
+            
+            next_page_token = playlist_response.get("nextPageToken")
+            if not next_page_token:
+                break
+        
+        return {
+            "success": True,
+            "message": f"Sync completed! {videos_added} videos added, {videos_skipped} already existed.",
+            "videos_added": videos_added,
+            "videos_skipped": videos_skipped,
+            "errors": errors
+        }
+        
+    except HttpError as e:
+        error_reason = str(e)
+        if "quotaExceeded" in error_reason:
+            raise HTTPException(status_code=429, detail="YouTube API quota exceeded. Try again tomorrow.")
+        elif "keyInvalid" in error_reason or "API key not valid" in error_reason:
+            raise HTTPException(status_code=401, detail="Invalid YouTube API key")
+        else:
+            raise HTTPException(status_code=400, detail=f"YouTube API error: {error_reason}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Sync failed: {str(e)}")
+
 # Include the router in the main app
 app.include_router(api_router)
 
