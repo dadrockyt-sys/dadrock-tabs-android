@@ -6,6 +6,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 import secrets
+import re
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional
@@ -13,6 +14,8 @@ import uuid
 from datetime import datetime, timezone
 import csv
 import io
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
