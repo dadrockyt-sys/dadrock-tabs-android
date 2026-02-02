@@ -173,7 +173,7 @@ const Home = () => {
             </form>
 
             {/* Quick Stats */}
-            <div className="mt-16 flex gap-8 md:gap-16 fade-in stagger-2">
+            <div className="mt-12 flex gap-8 md:gap-16 fade-in stagger-2">
               <div className="text-center">
                 <Music className="w-8 h-8 text-primary mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground uppercase tracking-widest">Guitar Tabs</p>
@@ -182,6 +182,16 @@ const Home = () => {
                 <Music className="w-8 h-8 text-primary mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground uppercase tracking-widest">Classic Rock</p>
               </div>
+              <a
+                href="https://my-store-b8bb42.creator-spring.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-center group"
+                data-testid="merch-link-footer"
+              >
+                <ShoppingBag className="w-8 h-8 text-primary mx-auto mb-2 group-hover:scale-110 transition-transform" />
+                <p className="text-sm text-muted-foreground uppercase tracking-widest group-hover:text-primary transition-colors">Support Merch</p>
+              </a>
             </div>
           </main>
 
