@@ -35,7 +35,7 @@ const Home = () => {
           {/* Header with Banner */}
           <header className="relative">
             {/* Banner Image */}
-            <div className="w-full h-32 md:h-40 overflow-hidden">
+            <div className="w-full h-16 sm:h-24 md:h-32 overflow-hidden">
               <img 
                 src={BANNER_URL} 
                 alt="DadRock Guitar Tabs Banner"
