@@ -77,6 +77,16 @@ const Home = () => {
             </div>
             {/* Admin Button */}
             <div className="absolute top-4 right-4 flex gap-2">
+              <a
+                href="https://my-store-b8bb42.creator-spring.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-primary hover:text-primary/80 bg-black/50 backdrop-blur-sm rounded-md transition-colors"
+                data-testid="merch-link"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span className="hidden sm:inline">Support Merch</span>
+              </a>
               {showInstallButton && (
                 <Button
                   variant="ghost"
@@ -86,7 +96,7 @@ const Home = () => {
                   data-testid="install-app-button"
                 >
                   <Download className="w-5 h-5 mr-1" />
-                  Install
+                  <span className="hidden sm:inline">Install</span>
                 </Button>
               )}
               <Button
