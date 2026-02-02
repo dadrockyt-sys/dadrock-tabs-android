@@ -57,13 +57,13 @@ const Home = () => {
           {/* Main Content */}
           <main className="flex-1 flex flex-col items-center justify-center px-4 -mt-10">
             {/* Logo */}
-            <div className="text-center mb-6 md:mb-8 fade-in">
+            <div className="text-center mb-6 md:mb-8 fade-in px-4">
               <img 
                 src={LOGO_URL} 
                 alt="DadRock Tabs Logo"
-                className="w-80 sm:w-96 md:w-[28rem] lg:w-[34rem] mx-auto mb-4 md:mb-6 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)]"
+                className="w-full max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-xl mx-auto mb-4 md:mb-6 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)]"
               />
-              <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
+              <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto">
                 Your go-to database for classic rock guitar tutorials. Search by song or artist.
               </p>
             </div>
