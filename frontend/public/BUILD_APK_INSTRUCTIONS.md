@@ -5,7 +5,7 @@ Since building Android apps requires specific architecture tools, here are **fre
 ## Option 1: GitHub Actions (Recommended - FREE)
 
 1. **Push to GitHub:**
-   - Download: https://music-tab-finder.preview.emergentagent.com/DadRockTabs-Android-Project.zip
+   - Download: https://tabfinder-3.preview.emergentagent.com/DadRockTabs-Android-Project.zip
    - Create a new GitHub repository
    - Upload the `android` folder contents
 
@@ -65,7 +65,7 @@ jobs:
 ---
 
 ## Your Project Download:
-https://music-tab-finder.preview.emergentagent.com/DadRockTabs-Android-Project.zip
+https://tabfinder-3.preview.emergentagent.com/DadRockTabs-Android-Project.zip
 
 **App Details:**
 - Package: `com.dadrocktabs.app`

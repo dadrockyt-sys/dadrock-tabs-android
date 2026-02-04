@@ -4,7 +4,7 @@
   "webDir": "build",
   "bundledWebRuntime": false,
   "server": {
-    "url": "https://music-tab-finder.preview.emergentagent.com",
+    "url": "https://tabfinder-3.preview.emergentagent.com",
     "cleartext": false,
     "androidScheme": "https"
   },
