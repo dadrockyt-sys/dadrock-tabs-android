@@ -87,7 +87,7 @@ const Home = () => {
                 className="w-full h-full object-cover object-center"
               />
             </div>
-            {/* Admin Button */}
+            {/* Top Right Buttons */}
             <div className="absolute top-4 right-4 flex gap-2">
               <a
                 href="https://my-store-b8bb42.creator-spring.com"
@@ -111,15 +111,6 @@ const Home = () => {
                   <span className="hidden sm:inline">Install</span>
                 </Button>
               )}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate("/admin")}
-                className="text-muted-foreground hover:text-primary bg-black/50 backdrop-blur-sm"
-                data-testid="admin-link"
-              >
-              <Settings className="w-5 h-5" />
-            </Button>
             </div>
           </header>
 
