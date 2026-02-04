@@ -165,11 +165,11 @@ const Home = () => {
                   <Button
                     type="button"
                     size="lg"
-                    className="h-16 px-8 rounded-full font-heading font-bold uppercase tracking-wider bg-red-600 text-white hover:bg-red-700 btn-lift"
+                    className="h-16 px-10 rounded-full font-heading font-bold uppercase tracking-wider bg-red-600 text-white hover:bg-red-700 btn-lift"
                     data-testid="top10-button"
                   >
                     <TrendingUp className="w-5 h-5 mr-2" />
-                    Top 10
+                    Top 10 Most Viewed Lessons
                   </Button>
                 </a>
               </div>
