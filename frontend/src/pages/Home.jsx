@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, Settings, Download, ShoppingBag, MessageSquarePlus, Heart } from "lucide-react";
+import { Search, Download, ShoppingBag, MessageSquarePlus, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
