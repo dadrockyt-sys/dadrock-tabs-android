@@ -24,12 +24,16 @@ const Home = () => {
 
   // Secret admin access: tap logo 5 times quickly
   const handleLogoClick = () => {
-    setLogoClickCount(prev => prev + 1);
-    setTimeout(() => setLogoClickCount(0), 3000); // Reset after 3 seconds
+    const newCount = logoClickCount + 1;
+    setLogoClickCount(newCount);
     
-    if (logoClickCount >= 4) {
-      navigate("/admin");
+    // Reset count after 3 seconds of inactivity
+    setTimeout(() => setLogoClickCount(0), 3000);
+    
+    // Navigate on 5th click
+    if (newCount >= 5) {
       setLogoClickCount(0);
+      navigate("/admin");
     }
   };
 
