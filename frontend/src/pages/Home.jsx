@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const BANNER_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/u9nzw1f2_20201025_123236.jpg";
+const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@DadRockTabs?view=0&sort=p&shelf_id=0";
 
 const Home = () => {
   const navigate = useNavigate();
