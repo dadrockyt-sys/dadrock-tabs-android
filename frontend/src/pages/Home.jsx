@@ -190,25 +190,39 @@ const Home = () => {
               </Button>
             </a>
 
-            {/* Quick Stats */}
-            <div className="mt-12 flex gap-8 md:gap-16 fade-in stagger-2">
-              <div className="text-center">
-                <Music className="w-8 h-8 text-primary mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground uppercase tracking-widest">Guitar Tabs</p>
-              </div>
-              <div className="text-center">
-                <Music className="w-8 h-8 text-primary mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground uppercase tracking-widest">Classic Rock</p>
-              </div>
+            {/* Support & Merch Buttons */}
+            <div className="mt-6 w-full max-w-3xl flex gap-4 fade-in stagger-2">
+              <a
+                href="https://www.paypal.com/donate?hosted_button_id=FKZ2C3QW9ZBTE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1"
+                data-testid="support-button"
+              >
+                <Button
+                  type="button"
+                  size="lg"
+                  className="w-full h-12 rounded-full font-heading font-bold uppercase tracking-wider bg-secondary border border-white/20 text-white hover:bg-white/10 btn-lift"
+                >
+                  <Heart className="w-5 h-5 mr-2 text-red-500" />
+                  Support
+                </Button>
+              </a>
               <a
                 href="https://my-store-b8bb42.creator-spring.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-center group"
-                data-testid="merch-link-footer"
+                className="flex-1"
+                data-testid="merch-button"
               >
-                <ShoppingBag className="w-8 h-8 text-primary mx-auto mb-2 group-hover:scale-110 transition-transform" />
-                <p className="text-sm text-muted-foreground uppercase tracking-widest group-hover:text-primary transition-colors">Support Merch</p>
+                <Button
+                  type="button"
+                  size="lg"
+                  className="w-full h-12 rounded-full font-heading font-bold uppercase tracking-wider bg-secondary border border-white/20 text-white hover:bg-white/10 btn-lift"
+                >
+                  <ShoppingBag className="w-5 h-5 mr-2 text-primary" />
+                  Merchandise
+                </Button>
               </a>
             </div>
           </main>
