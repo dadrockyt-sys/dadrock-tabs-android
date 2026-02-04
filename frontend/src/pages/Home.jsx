@@ -146,21 +146,6 @@ const Home = () => {
                   />
                 </div>
 
-                {/* Search Type Select */}
-                <Select value={searchType} onValueChange={setSearchType}>
-                  <SelectTrigger 
-                    className="w-full md:w-40 h-16 bg-secondary border-2 border-white/10 rounded-full text-white"
-                    data-testid="search-type-select"
-                  >
-                    <SelectValue placeholder="Search by" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all" data-testid="search-type-all">All</SelectItem>
-                    <SelectItem value="song" data-testid="search-type-song">Song</SelectItem>
-                    <SelectItem value="artist" data-testid="search-type-artist">Artist</SelectItem>
-                  </SelectContent>
-                </Select>
-
                 {/* Search Button */}
                 <Button
                   type="submit"
@@ -170,6 +155,23 @@ const Home = () => {
                 >
                   Search
                 </Button>
+
+                {/* Top 10 Button */}
+                <a
+                  href={YOUTUBE_CHANNEL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    type="button"
+                    size="lg"
+                    className="h-16 px-8 rounded-full font-heading font-bold uppercase tracking-wider bg-red-600 text-white hover:bg-red-700 btn-lift"
+                    data-testid="top10-button"
+                  >
+                    <TrendingUp className="w-5 h-5 mr-2" />
+                    Top 10
+                  </Button>
+                </a>
               </div>
             </form>
 
