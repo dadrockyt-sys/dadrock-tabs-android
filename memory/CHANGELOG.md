@@ -1,5 +1,14 @@
 # DadRock Tabs - Changelog
 
+## [Feb 4, 2026] - Deployment Fix
+
+### Fixed
+- **Added `/health` endpoint** - Kubernetes health probe was failing with 404
+  - Added `GET /health` endpoint returning `{"status": "healthy"}`
+  - Required for successful deployment to production
+
+---
+
 ## [Feb 4, 2026] - Bug Fix Session
 
 ### Fixed
