@@ -150,28 +150,11 @@ const Home = () => {
                 <Button
                   type="submit"
                   size="lg"
-                  className="h-16 px-10 rounded-full font-heading font-bold uppercase tracking-wider bg-primary text-primary-foreground hover:bg-primary/90 glow-amber btn-lift"
+                  className="h-16 px-16 md:px-20 rounded-full font-heading font-bold uppercase tracking-wider bg-primary text-primary-foreground hover:bg-primary/90 glow-amber btn-lift"
                   data-testid="search-button"
                 >
                   Search
                 </Button>
-
-                {/* Top 10 Button */}
-                <a
-                  href={YOUTUBE_CHANNEL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button
-                    type="button"
-                    size="lg"
-                    className="h-16 px-10 rounded-full font-heading font-bold uppercase tracking-wider bg-red-600 text-white hover:bg-red-700 btn-lift"
-                    data-testid="top10-button"
-                  >
-                    <TrendingUp className="w-5 h-5 mr-2" />
-                    Top 10 Most Viewed Lessons
-                  </Button>
-                </a>
               </div>
             </form>
 
