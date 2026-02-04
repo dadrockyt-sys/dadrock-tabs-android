@@ -64,7 +64,7 @@ const Home = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}&type=${searchType}`);
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}&type=all`);
     }
   };
 
