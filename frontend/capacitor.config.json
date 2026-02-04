@@ -4,6 +4,8 @@
   "webDir": "build",
   "bundledWebRuntime": false,
   "server": {
+    "url": "https://music-tab-finder.preview.emergentagent.com",
+    "cleartext": false,
     "androidScheme": "https"
   },
   "plugins": {
@@ -14,7 +16,7 @@
     }
   },
   "android": {
-    "allowMixedContent": true,
+    "allowMixedContent": false,
     "backgroundColor": "#09090b"
   }
 }
