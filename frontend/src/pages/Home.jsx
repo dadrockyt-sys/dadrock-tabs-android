@@ -11,7 +11,6 @@ const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@DadRockTabs?view=0&sort=p&
 const Home = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchType, setSearchType] = useState("all");
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showInstallButton, setShowInstallButton] = useState(false);
   const [logoClickCount, setLogoClickCount] = useState(0);
