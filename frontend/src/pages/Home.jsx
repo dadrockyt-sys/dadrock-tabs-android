@@ -20,6 +20,18 @@ const Home = () => {
   const [searchType, setSearchType] = useState("all");
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showInstallButton, setShowInstallButton] = useState(false);
+  const [logoClickCount, setLogoClickCount] = useState(0);
+
+  // Secret admin access: tap logo 5 times quickly
+  const handleLogoClick = () => {
+    setLogoClickCount(prev => prev + 1);
+    setTimeout(() => setLogoClickCount(0), 3000); // Reset after 3 seconds
+    
+    if (logoClickCount >= 4) {
+      navigate("/admin");
+      setLogoClickCount(0);
+    }
+  };
 
   useEffect(() => {
     const handleBeforeInstall = (e) => {
