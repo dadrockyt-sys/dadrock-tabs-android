@@ -424,6 +424,38 @@ async def sync_youtube_channel(request: YouTubeSyncRequest, auth: bool = Depends
 # Include the router in the main app
 app.include_router(api_router)
 
+# SEO Routes (on main app, not api_router)
+from fastapi.responses import Response, PlainTextResponse
+
+@app.get("/sitemap.xml")
+async def sitemap_root():
+    sitemap_xml = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://dadrocktabs.com/</loc>
+    <lastmod>2026-02-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://dadrocktabs.com/search</loc>
+    <lastmod>2026-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>"""
+    return Response(content=sitemap_xml, media_type="application/xml")
+
+@app.get("/robots.txt")
+async def robots_root():
+    robots_txt = """User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+Sitemap: https://dadrocktabs.com/sitemap.xml"""
+    return PlainTextResponse(content=robots_txt)
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
