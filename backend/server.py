@@ -28,6 +28,11 @@ db = client[os.environ['DB_NAME']]
 # Create the main app
 app = FastAPI()
 
+# Health check endpoint for Kubernetes probes
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}
+
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
