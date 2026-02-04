@@ -116,6 +116,37 @@ def verify_admin(credentials: HTTPBasicCredentials = Depends(security)):
 async def root():
     return {"message": "DadRock Tabs API"}
 
+@api_router.get("/sitemap.xml")
+async def sitemap():
+    from fastapi.responses import Response
+    sitemap_xml = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://dadrocktabs.com/</loc>
+    <lastmod>2026-02-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://dadrocktabs.com/search</loc>
+    <lastmod>2026-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>"""
+    return Response(content=sitemap_xml, media_type="application/xml")
+
+@api_router.get("/robots.txt")
+async def robots():
+    from fastapi.responses import PlainTextResponse
+    robots_txt = """User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+Sitemap: https://dadrocktabs.com/api/sitemap.xml"""
+    return PlainTextResponse(content=robots_txt)
+
 @api_router.get("/videos", response_model=SearchResponse)
 async def get_videos(
     search: Optional[str] = None,
