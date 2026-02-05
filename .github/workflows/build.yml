@@ -22,9 +22,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-
       - name: Install dependencies
         working-directory: frontend
         run: yarn install
@@ -37,10 +34,11 @@ jobs:
         working-directory: frontend
         run: npx cap sync android
 
-      - name: Regenerate Gradle Wrapper
+      - name: Download Gradle Wrapper
         working-directory: frontend/android
         run: |
-          gradle wrapper --gradle-version 7.6.4
+          mkdir -p gradle/wrapper
+          curl -L -o gradle/wrapper/gradle-wrapper.jar https://github.com/gradle/gradle/raw/v7.6.4/gradle/wrapper/gradle-wrapper.jar
           chmod +x gradlew
 
       - name: Decode Keystore
@@ -50,7 +48,6 @@ jobs:
       - name: Build Signed AAB
         working-directory: frontend/android
         run: |
-          chmod +x gradlew
           ./gradlew bundleRelease \
             -Pandroid.injected.signing.store.file=$PWD/app/dadrock-release-key.jks \
             -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
