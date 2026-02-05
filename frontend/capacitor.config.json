@@ -4,7 +4,7 @@
   "webDir": "build",
   "bundledWebRuntime": false,
   "server": {
-    "url": "https://tabfinder-3.preview.emergentagent.com",
+    "url": "https://dadrocktabs.com",
     "cleartext": false,
     "androidScheme": "https"
   },
