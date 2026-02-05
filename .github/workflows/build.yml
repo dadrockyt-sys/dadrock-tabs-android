@@ -26,8 +26,8 @@ jobs:
         run: |
           # Remove corrupted SDK 35
           rm -rf $ANDROID_HOME/platforms/android-35
-          # Reinstall fresh copy
-          yes | sdkmanager "platforms;android-35" "build-tools;35.0.0"
+          # Reinstall fresh copy using full path
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
       - name: Install dependencies
         working-directory: frontend
