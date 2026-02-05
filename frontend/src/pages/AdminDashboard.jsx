@@ -73,7 +73,7 @@ const AdminDashboard = () => {
   });
 
   // Get auth header
-  const getAuthHeader = () => {
+  const getAuthHeader = useCallback(() => {
     const auth = sessionStorage.getItem("adminAuth");
     if (!auth) {
       navigate("/admin");
@@ -82,7 +82,7 @@ const AdminDashboard = () => {
     return {
       Authorization: `Basic ${btoa(`admin:${atob(auth)}`)}`,
     };
-  };
+  }, [navigate]);
 
   const fetchVideos = useCallback(async () => {
     const headers = getAuthHeader();
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
     } catch (error) {
       console.error("Error fetching videos:", error);
     }
-  }, [searchQuery]);
+  }, [searchQuery, getAuthHeader]);
 
   const fetchStats = useCallback(async () => {
     const headers = getAuthHeader();
@@ -112,7 +112,7 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, [navigate]);
+  }, [navigate, getAuthHeader]);
 
   useEffect(() => {
     fetchVideos();
