@@ -40,7 +40,7 @@ jobs:
       - name: Regenerate Gradle Wrapper
         working-directory: frontend/android
         run: |
-          gradle wrapper --gradle-version 8.2
+          gradle wrapper --gradle-version 7.6.4
           chmod +x gradlew
 
       - name: Decode Keystore
