@@ -22,15 +22,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Fix Android SDK 35
-        run: |
-          # Remove corrupted SDK 35
-          rm -rf $ANDROID_HOME/platforms/android-35
-          # Download fresh SDK 35 from Google
-          cd $ANDROID_HOME
-          curl -L -o platform-35.zip https://dl.google.com/android/repository/platform-35-ext14_r01.zip
-          unzip -q platform-35.zip -d platforms/
-          mv platforms/android-15 platforms/android-35 || true
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Accept Android Licenses
+        run: yes | sdkmanager --licenses || true
 
       - name: Install dependencies
         working-directory: frontend
@@ -48,7 +44,7 @@ jobs:
         working-directory: frontend/android
         run: |
           mkdir -p gradle/wrapper
-          curl -L -o gradle/wrapper/gradle-wrapper.jar https://github.com/gradle/gradle/raw/v8.0.2/gradle/wrapper/gradle-wrapper.jar
+          curl -L -o gradle/wrapper/gradle-wrapper.jar https://github.com/gradle/gradle/raw/v8.7/gradle/wrapper/gradle-wrapper.jar
           chmod +x gradlew
 
       - name: Decode Keystore
