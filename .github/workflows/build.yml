@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
@@ -21,6 +21,16 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: Fix Android SDK 35
+        run: |
+          # Remove corrupted SDK 35
+          rm -rf $ANDROID_HOME/platforms/android-35
+          # Download fresh SDK 35 from Google
+          cd $ANDROID_HOME
+          curl -L -o platform-35.zip https://dl.google.com/android/repository/platform-35-ext14_r01.zip
+          unzip -q platform-35.zip -d platforms/
+          mv platforms/android-15 platforms/android-35 || true
 
       - name: Install dependencies
         working-directory: frontend
