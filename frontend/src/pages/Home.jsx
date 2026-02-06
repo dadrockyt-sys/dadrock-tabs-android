@@ -77,7 +77,7 @@ const Home = () => {
           {/* Header with Banner */}
           <header className="relative">
             {/* Banner Image */}
-            <div className="w-full h-10 sm:h-12 md:h-16 lg:h-20 overflow-hidden bg-black">
+            <div className="w-full h-14 sm:h-16 md:h-20 lg:h-24 overflow-hidden bg-black">
               <img 
                 src={BANNER_URL} 
                 alt="DadRock Guitar Tabs Banner"
