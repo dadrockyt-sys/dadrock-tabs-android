@@ -205,6 +205,57 @@ const Home = () => {
               </div>
             </form>
 
+            {/* Popular Searches Section */}
+            <div className="w-full max-w-3xl mt-6 fade-in stagger-2">
+              <p className="text-sm text-muted-foreground text-center mb-3">🔥 Popular Searches</p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {POPULAR_SEARCHES.map((artist) => (
+                  <button
+                    key={artist.name}
+                    onClick={() => navigate(`/search?q=${encodeURIComponent(artist.name)}&type=all`)}
+                    className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary/50 rounded-full text-sm text-white/80 hover:text-white transition-all duration-200"
+                    data-testid={`popular-${artist.name.toLowerCase().replace(/[^a-z]/g, '-')}`}
+                  >
+                    {artist.icon} {artist.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Social Sharing Section */}
+            <div className="w-full max-w-3xl mt-6 fade-in stagger-3">
+              <p className="text-sm text-muted-foreground text-center mb-3">📢 Share DadRock Tabs</p>
+              <div className="flex justify-center gap-3">
+                <a
+                  href="https://www.facebook.com/sharer/sharer.php?u=https://dadrocktabs.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-blue-600 hover:bg-blue-700 rounded-full text-white transition-all duration-200"
+                  data-testid="share-facebook"
+                >
+                  <Facebook className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://twitter.com/intent/tweet?text=Check%20out%20DadRock%20Tabs%20-%20Free%20guitar%20%26%20bass%20tutorials%20for%20classic%20rock!&url=https://dadrocktabs.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-sky-500 hover:bg-sky-600 rounded-full text-white transition-all duration-200"
+                  data-testid="share-twitter"
+                >
+                  <Twitter className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://api.whatsapp.com/send?text=Check%20out%20DadRock%20Tabs%20-%20Free%20guitar%20%26%20bass%20tutorials%20for%20classic%20rock!%20https://dadrocktabs.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-green-500 hover:bg-green-600 rounded-full text-white transition-all duration-200"
+                  data-testid="share-whatsapp"
+                >
+                  <Share2 className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+
             {/* Make a Request Button */}
             <a
               href="https://buymeacoffee.com/dadrockytq/commissions"
