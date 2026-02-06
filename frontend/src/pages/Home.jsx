@@ -77,11 +77,11 @@ const Home = () => {
           {/* Header with Banner */}
           <header className="relative">
             {/* Banner Image */}
-            <div className="w-full h-12 sm:h-16 md:h-20 lg:h-24 overflow-hidden">
+            <div className="w-full h-10 sm:h-12 md:h-16 lg:h-20 overflow-hidden bg-black">
               <img 
                 src={BANNER_URL} 
                 alt="DadRock Guitar Tabs Banner"
-                className="w-full h-full object-cover object-center scale-100"
+                className="w-full h-full object-contain"
               />
             </div>
             {/* Top Right Buttons */}
