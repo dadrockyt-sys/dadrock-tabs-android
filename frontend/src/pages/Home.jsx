@@ -14,9 +14,9 @@ const POPULAR_SEARCHES = [
   { name: "AC/DC", icon: "⚡" },
   { name: "Van Halen", icon: "🔥" },
   { name: "Def Leppard", icon: "🎵" },
-  { name: "Guns N' Roses", icon: "🌹" },
+  { name: "Ozzy Osbourne", icon: "🦇" },
   { name: "Metallica", icon: "🤘" },
-  { name: "Black Sabbath", icon: "🦇" },
+  { name: "Black Sabbath", icon: "🖤" },
   { name: "Aerosmith", icon: "💎" },
 ];
 
