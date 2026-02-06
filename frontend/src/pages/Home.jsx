@@ -112,17 +112,17 @@ const Home = () => {
           </header>
 
           {/* Main Content */}
-          <main className="flex-1 flex flex-col items-center justify-center px-4 -mt-10">
+          <main className="flex-1 flex flex-col items-center justify-center px-4 pt-4 md:pt-0 md:-mt-10">
             {/* Logo and Definition Section */}
             <div className="w-full max-w-4xl mb-6 md:mb-8 fade-in px-4">
               <div className="flex flex-col items-center md:flex-row md:items-center md:justify-center gap-4 md:gap-10">
                 {/* Logo - Left Side - Tap 5 times for secret admin access */}
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 mt-2 md:mt-0">
                   <img 
                     src={LOGO_URL} 
                     alt="DadRock Tabs Logo"
                     onClick={handleLogoClick}
-                    className="w-32 sm:w-40 md:w-56 lg:w-64 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)] cursor-pointer select-none"
+                    className="w-24 sm:w-28 md:w-56 lg:w-64 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)] cursor-pointer select-none"
                   />
                 </div>
                 
