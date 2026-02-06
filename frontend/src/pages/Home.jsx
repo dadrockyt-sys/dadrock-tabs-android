@@ -115,31 +115,31 @@ const Home = () => {
           <main className="flex-1 flex flex-col items-center justify-center px-4 -mt-10">
             {/* Logo and Definition Section */}
             <div className="w-full max-w-4xl mb-6 md:mb-8 fade-in px-4">
-              <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
+              <div className="flex flex-col items-center md:flex-row md:items-center md:justify-center gap-4 md:gap-10">
                 {/* Logo - Left Side - Tap 5 times for secret admin access */}
                 <div className="flex-shrink-0">
                   <img 
                     src={LOGO_URL} 
                     alt="DadRock Tabs Logo"
                     onClick={handleLogoClick}
-                    className="w-48 sm:w-56 md:w-64 lg:w-72 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)] cursor-pointer select-none"
+                    className="w-32 sm:w-40 md:w-56 lg:w-64 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)] cursor-pointer select-none"
                   />
                 </div>
                 
                 {/* Dictionary Definition - Right Side */}
-                <div className="text-left">
-                  <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
-                    DadRock <span className="text-primary font-normal text-lg sm:text-xl md:text-2xl">[dad•rok]</span>
+                <div className="text-center md:text-left">
+                  <h2 className="font-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-tight">
+                    DadRock <span className="text-primary font-normal text-sm sm:text-base md:text-xl lg:text-2xl">[dad•rok]</span>
                   </h2>
-                  <p className="text-muted-foreground italic mt-1 text-sm sm:text-base">n.</p>
-                  <p className="text-white/90 text-base sm:text-lg md:text-xl mt-2 max-w-md leading-relaxed">
+                  <p className="text-muted-foreground italic mt-1 text-xs sm:text-sm">n.</p>
+                  <p className="text-white/90 text-sm sm:text-base md:text-lg mt-1 md:mt-2 max-w-sm md:max-w-md leading-relaxed">
                     Rock music that appeals to an older generation; or is heavily influenced by that of an earlier era.
                   </p>
                 </div>
               </div>
               
               {/* Tagline */}
-              <p className="text-base md:text-lg text-muted-foreground text-center mt-6 max-w-2xl mx-auto">
+              <p className="text-sm md:text-base lg:text-lg text-muted-foreground text-center mt-4 md:mt-6 max-w-2xl mx-auto">
                 Your go-to database for classic rock guitar tutorials. Search by song or artist.
               </p>
             </div>
