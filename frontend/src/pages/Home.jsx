@@ -113,15 +113,33 @@ const Home = () => {
 
           {/* Main Content */}
           <main className="flex-1 flex flex-col items-center justify-center px-4 -mt-10">
-            {/* Logo - Tap 5 times for secret admin access */}
-            <div className="text-center mb-6 md:mb-8 fade-in px-4">
-              <img 
-                src={LOGO_URL} 
-                alt="DadRock Tabs Logo"
-                onClick={handleLogoClick}
-                className="w-full max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-xl mx-auto mb-4 md:mb-6 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)] cursor-pointer select-none"
-              />
-              <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto">
+            {/* Logo and Definition Section */}
+            <div className="w-full max-w-4xl mb-6 md:mb-8 fade-in px-4">
+              <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
+                {/* Logo - Left Side - Tap 5 times for secret admin access */}
+                <div className="flex-shrink-0">
+                  <img 
+                    src={LOGO_URL} 
+                    alt="DadRock Tabs Logo"
+                    onClick={handleLogoClick}
+                    className="w-48 sm:w-56 md:w-64 lg:w-72 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)] cursor-pointer select-none"
+                  />
+                </div>
+                
+                {/* Dictionary Definition - Right Side */}
+                <div className="text-left">
+                  <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
+                    DadRock <span className="text-primary font-normal text-lg sm:text-xl md:text-2xl">[dad•rok]</span>
+                  </h2>
+                  <p className="text-muted-foreground italic mt-1 text-sm sm:text-base">n.</p>
+                  <p className="text-white/90 text-base sm:text-lg md:text-xl mt-2 max-w-md leading-relaxed">
+                    Rock music that appeals to an older generation; or is heavily influenced by that of an earlier era.
+                  </p>
+                </div>
+              </div>
+              
+              {/* Tagline */}
+              <p className="text-base md:text-lg text-muted-foreground text-center mt-6 max-w-2xl mx-auto">
                 Your go-to database for classic rock guitar tutorials. Search by song or artist.
               </p>
             </div>
