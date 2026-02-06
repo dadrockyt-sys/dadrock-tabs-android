@@ -1,12 +1,24 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, Download, ShoppingBag, MessageSquarePlus, Heart, Youtube } from "lucide-react";
+import { Search, Download, ShoppingBag, MessageSquarePlus, Heart, Youtube, Share2, Facebook, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const BANNER_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/u9nzw1f2_20201025_123236.jpg";
 const YOUTUBE_CHANNEL_URL = "https://youtube.com/@dadrockytofficial?si=8Tl_CxtfUExseIk1";
+
+// Popular searches for SEO and user engagement
+const POPULAR_SEARCHES = [
+  { name: "Led Zeppelin", icon: "🎸" },
+  { name: "AC/DC", icon: "⚡" },
+  { name: "Van Halen", icon: "🔥" },
+  { name: "Def Leppard", icon: "🎵" },
+  { name: "Guns N' Roses", icon: "🌹" },
+  { name: "Metallica", icon: "🤘" },
+  { name: "Black Sabbath", icon: "🦇" },
+  { name: "Aerosmith", icon: "💎" },
+];
 
 const Home = () => {
   const navigate = useNavigate();
