@@ -122,7 +122,7 @@ const Home = () => {
                     src={LOGO_URL} 
                     alt="DadRock Tabs Logo"
                     onClick={handleLogoClick}
-                    className="w-24 sm:w-28 md:w-56 lg:w-64 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)] cursor-pointer select-none"
+                    className="w-36 sm:w-40 md:w-56 lg:w-64 drop-shadow-[0_0_30px_rgba(245,158,11,0.3)] cursor-pointer select-none"
                   />
                 </div>
                 
