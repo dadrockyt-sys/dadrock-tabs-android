@@ -140,7 +140,7 @@ const Home = () => {
               
               {/* Tagline */}
               <p className="text-sm md:text-base lg:text-lg text-muted-foreground text-center mt-4 md:mt-6 max-w-2xl mx-auto">
-                Your go-to database for classic rock guitar tutorials. Search by song or artist.
+                Your go-to database for classic rock guitar & bass tutorials. Search by song or artist.
               </p>
             </div>
 
