@@ -9,6 +9,9 @@
         <domain includeSubdomains="true">dadrocktabs.com</domain>
         <domain includeSubdomains="true">dadrocktabs.preview.emergentagent.com</domain>
         <domain includeSubdomains="true">emergentagent.com</domain>
+        <domain includeSubdomains="true">youtube.com</domain>
+        <domain includeSubdomains="true">googlevideo.com</domain>
+        <domain includeSubdomains="true">ytimg.com</domain>
         <trust-anchors>
             <certificates src="system" />
         </trust-anchors>
