@@ -141,70 +141,198 @@
         </script>
     </head>
     <body>
-        <!-- Static SEO Content - Visible to crawlers and before JS loads -->
+        <!-- Static SEO Content - Multi-language versions for crawlers -->
         <div id="seo-content" style="background-color: #09090b; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px 20px; min-height: 100vh;">
             <div style="max-width: 800px; margin: 0 auto; text-align: center;">
                 
-                <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">Dad Rock Tabs – Guitar Tabs with Video Lessons</h1>
-                
-                <p style="font-size: 1.25rem; line-height: 1.8; color: #d4d4d8; margin-bottom: 20px;">
-                    Welcome! This site provides easy guitar and bass tabs for classic rock songs with direct links to full video breakdowns on YouTube.
-                </p>
-                
-                <p style="font-size: 1.1rem; color: #a1a1aa; margin-bottom: 25px;">
-                    Click below to learn your first song:
-                </p>
-                
-                <!-- Featured Video -->
-                <div style="margin-bottom: 30px;">
-                    <iframe
-                        src="https://www.youtube.com/embed/BT4AEyYXSKA"
-                        title="We Will Rock You - Guitar Lesson"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        style="width: 100%; max-width: 280px; height: 500px; border-radius: 12px; border: 2px solid #f59e0b;"
-                    ></iframe>
-                    <p style="color: #a1a1aa; font-size: 0.9rem; margin-top: 10px;">🎸 "We Will Rock You" – Watch how I break down this classic Queen riff!</p>
+                <!-- English Content (default) -->
+                <div id="seo-en" class="seo-lang" style="display: none;">
+                    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">Dad Rock Tabs – Guitar Tabs with Video Lessons</h1>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #d4d4d8; margin-bottom: 20px;">
+                        Welcome! This site provides easy guitar and bass tabs for classic rock songs with direct links to full video breakdowns on YouTube.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #a1a1aa; margin-bottom: 25px;">Click below to learn your first song:</p>
+                    <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px; margin-top: 30px;">What You'll Find Here</h2>
+                    <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px; color: #a1a1aa;">
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Classic Rock Tabs</strong> – Led Zeppelin, AC/DC, Van Halen, Aerosmith</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">80s Hair Metal</strong> – Def Leppard, Motley Crue, Whitesnake, Bon Jovi</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Heavy Metal</strong> – Black Sabbath, Ozzy Osbourne, Metallica, Iron Maiden</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Blues Rock</strong> – Stevie Ray Vaughan, Eric Clapton, Gary Moore</li>
+                        <li style="padding: 12px 0;">✓ <strong style="color: #fff;">Bass Tabs</strong> – Learn bass lines from all your favorite rock songs</li>
+                    </ul>
+                    <p style="color: #71717a; font-size: 0.9rem;">Over 4,000 guitar and bass tabs • Free lessons • Updated regularly</p>
                 </div>
-                
-                <p style="margin-bottom: 40px;">
-                    <a href="https://youtube.com/@dadrockytofficial" style="display: inline-block; background-color: #dc2626; color: #fff; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">Watch Video Lessons on YouTube</a>
-                </p>
-                
-                <!-- Enable JavaScript notice -->
-                <div style="background: #1a1a2e; border: 1px solid #f59e0b; border-radius: 12px; padding: 20px; margin-bottom: 30px;">
-                    <p style="color: #f59e0b; font-size: 1rem; margin-bottom: 10px; font-weight: bold;">✨ Want to Search 4,000+ Tabs?</p>
-                    <p style="color: #a1a1aa; font-size: 0.9rem; margin-bottom: 15px;">Enable JavaScript for the full interactive experience!</p>
-                    <a href="https://www.enable-javascript.com/" target="_blank" rel="noopener noreferrer" style="color: #f59e0b; text-decoration: underline; font-size: 0.9rem;">Learn How →</a>
+
+                <!-- Spanish Content -->
+                <div id="seo-es" class="seo-lang" style="display: none;">
+                    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">Dad Rock Tabs – Tablaturas de Guitarra con Lecciones en Video</h1>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #d4d4d8; margin-bottom: 20px;">
+                        ¡Bienvenido! Este sitio ofrece tablaturas fáciles de guitarra y bajo para canciones de rock clásico con enlaces directos a tutoriales completos en YouTube.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #a1a1aa; margin-bottom: 25px;">Haz clic abajo para aprender tu primera canción:</p>
+                    <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px; margin-top: 30px;">Lo Que Encontrarás Aquí</h2>
+                    <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px; color: #a1a1aa;">
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Tabs de Rock Clásico</strong> – Led Zeppelin, AC/DC, Van Halen, Aerosmith</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Hair Metal de los 80s</strong> – Def Leppard, Motley Crue, Whitesnake, Bon Jovi</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Heavy Metal</strong> – Black Sabbath, Ozzy Osbourne, Metallica, Iron Maiden</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Blues Rock</strong> – Stevie Ray Vaughan, Eric Clapton, Gary Moore</li>
+                        <li style="padding: 12px 0;">✓ <strong style="color: #fff;">Tabs de Bajo</strong> – Aprende líneas de bajo de tus canciones favoritas</li>
+                    </ul>
+                    <p style="color: #71717a; font-size: 0.9rem;">Más de 4,000 tablaturas • Lecciones gratis • Actualizado regularmente</p>
                 </div>
-                
-                <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px;">What You'll Find Here</h2>
-                <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px; color: #a1a1aa;">
-                    <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Classic Rock Tabs</strong> – Led Zeppelin, AC/DC, Van Halen, Aerosmith</li>
-                    <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">80s Hair Metal</strong> – Def Leppard, Motley Crue, Whitesnake, Bon Jovi</li>
-                    <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Heavy Metal</strong> – Black Sabbath, Ozzy Osbourne, Metallica, Iron Maiden</li>
-                    <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Blues Rock</strong> – Stevie Ray Vaughan, Eric Clapton, Gary Moore</li>
-                    <li style="padding: 12px 0;">✓ <strong style="color: #fff;">Bass Tabs</strong> – Learn bass lines from all your favorite rock songs</li>
-                </ul>
-                
-                <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px;">Popular Lessons</h2>
-                <p style="color: #a1a1aa; margin-bottom: 30px; line-height: 1.8;">
-                    Iron Man tab, Stairway to Heaven lesson, Back in Black riff, Eruption solo, Sweet Child O' Mine intro, Crazy Train, Smoke on the Water, Highway to Hell, Enter Sandman
-                </p>
-                
-                <p style="color: #71717a; font-size: 0.9rem; margin-top: 40px;">
-                    Over 4,000 guitar and bass tabs • Free lessons • Updated regularly
-                </p>
+
+                <!-- Portuguese (BR) Content -->
+                <div id="seo-pt-br" class="seo-lang" style="display: none;">
+                    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">Dad Rock Tabs – Tablaturas de Guitarra com Vídeo Aulas</h1>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #d4d4d8; margin-bottom: 20px;">
+                        Bem-vindo! Este site oferece tablaturas fáceis de guitarra e baixo para músicas de rock clássico com links diretos para tutoriais completos no YouTube.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #a1a1aa; margin-bottom: 25px;">Clique abaixo para aprender sua primeira música:</p>
+                    <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px; margin-top: 30px;">O Que Você Vai Encontrar</h2>
+                    <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px; color: #a1a1aa;">
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Tabs de Rock Clássico</strong> – Led Zeppelin, AC/DC, Van Halen, Aerosmith</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Hair Metal dos Anos 80</strong> – Def Leppard, Motley Crue, Whitesnake, Bon Jovi</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Heavy Metal</strong> – Black Sabbath, Ozzy Osbourne, Metallica, Iron Maiden</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Blues Rock</strong> – Stevie Ray Vaughan, Eric Clapton, Gary Moore</li>
+                        <li style="padding: 12px 0;">✓ <strong style="color: #fff;">Tabs de Baixo</strong> – Aprenda linhas de baixo das suas músicas favoritas</li>
+                    </ul>
+                    <p style="color: #71717a; font-size: 0.9rem;">Mais de 4.000 tablaturas • Aulas grátis • Atualizado regularmente</p>
+                </div>
+
+                <!-- French Content -->
+                <div id="seo-fr" class="seo-lang" style="display: none;">
+                    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">Dad Rock Tabs – Tablatures Guitare avec Leçons Vidéo</h1>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #d4d4d8; margin-bottom: 20px;">
+                        Bienvenue! Ce site propose des tablatures faciles de guitare et basse pour des chansons rock classiques avec des liens directs vers des tutoriels vidéo complets sur YouTube.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #a1a1aa; margin-bottom: 25px;">Cliquez ci-dessous pour apprendre votre première chanson:</p>
+                    <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px; margin-top: 30px;">Ce Que Vous Trouverez Ici</h2>
+                    <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px; color: #a1a1aa;">
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Tabs Rock Classique</strong> – Led Zeppelin, AC/DC, Van Halen, Aerosmith</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Hair Metal des Années 80</strong> – Def Leppard, Motley Crue, Whitesnake, Bon Jovi</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Heavy Metal</strong> – Black Sabbath, Ozzy Osbourne, Metallica, Iron Maiden</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Blues Rock</strong> – Stevie Ray Vaughan, Eric Clapton, Gary Moore</li>
+                        <li style="padding: 12px 0;">✓ <strong style="color: #fff;">Tabs Basse</strong> – Apprenez les lignes de basse de vos chansons préférées</li>
+                    </ul>
+                    <p style="color: #71717a; font-size: 0.9rem;">Plus de 4 000 tablatures • Leçons gratuites • Mis à jour régulièrement</p>
+                </div>
+
+                <!-- German Content -->
+                <div id="seo-de" class="seo-lang" style="display: none;">
+                    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">Dad Rock Tabs – Gitarrentabs mit Video-Lektionen</h1>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #d4d4d8; margin-bottom: 20px;">
+                        Willkommen! Diese Seite bietet einfache Gitarren- und Bass-Tabs für klassische Rock-Songs mit direkten Links zu vollständigen Video-Tutorials auf YouTube.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #a1a1aa; margin-bottom: 25px;">Klicken Sie unten, um Ihren ersten Song zu lernen:</p>
+                    <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px; margin-top: 30px;">Was Sie Hier Finden</h2>
+                    <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px; color: #a1a1aa;">
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Classic Rock Tabs</strong> – Led Zeppelin, AC/DC, Van Halen, Aerosmith</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">80er Hair Metal</strong> – Def Leppard, Motley Crue, Whitesnake, Bon Jovi</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Heavy Metal</strong> – Black Sabbath, Ozzy Osbourne, Metallica, Iron Maiden</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Blues Rock</strong> – Stevie Ray Vaughan, Eric Clapton, Gary Moore</li>
+                        <li style="padding: 12px 0;">✓ <strong style="color: #fff;">Bass Tabs</strong> – Lernen Sie Basslinien Ihrer Lieblingssongs</li>
+                    </ul>
+                    <p style="color: #71717a; font-size: 0.9rem;">Über 4.000 Tabs • Kostenlose Lektionen • Regelmäßig aktualisiert</p>
+                </div>
+
+                <!-- Italian Content -->
+                <div id="seo-it" class="seo-lang" style="display: none;">
+                    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">Dad Rock Tabs – Tablature Chitarra con Video Lezioni</h1>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #d4d4d8; margin-bottom: 20px;">
+                        Benvenuto! Questo sito offre tablature facili per chitarra e basso di canzoni rock classiche con link diretti a tutorial video completi su YouTube.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #a1a1aa; margin-bottom: 25px;">Clicca sotto per imparare la tua prima canzone:</p>
+                    <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px; margin-top: 30px;">Cosa Troverai Qui</h2>
+                    <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px; color: #a1a1aa;">
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Tab Rock Classico</strong> – Led Zeppelin, AC/DC, Van Halen, Aerosmith</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Hair Metal Anni 80</strong> – Def Leppard, Motley Crue, Whitesnake, Bon Jovi</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Heavy Metal</strong> – Black Sabbath, Ozzy Osbourne, Metallica, Iron Maiden</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Blues Rock</strong> – Stevie Ray Vaughan, Eric Clapton, Gary Moore</li>
+                        <li style="padding: 12px 0;">✓ <strong style="color: #fff;">Tab Basso</strong> – Impara le linee di basso delle tue canzoni preferite</li>
+                    </ul>
+                    <p style="color: #71717a; font-size: 0.9rem;">Oltre 4.000 tablature • Lezioni gratuite • Aggiornato regolarmente</p>
+                </div>
+
+                <!-- Japanese Content -->
+                <div id="seo-ja" class="seo-lang" style="display: none;">
+                    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">Dad Rock Tabs – ビデオレッスン付きギタータブ譜</h1>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #d4d4d8; margin-bottom: 20px;">
+                        ようこそ！このサイトでは、クラシックロックの曲の簡単なギター・ベースタブ譜と、YouTubeの完全なビデオチュートリアルへの直接リンクを提供しています。
+                    </p>
+                    <p style="font-size: 1.1rem; color: #a1a1aa; margin-bottom: 25px;">下のボタンをクリックして最初の曲を学びましょう：</p>
+                    <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px; margin-top: 30px;">ここで見つかるもの</h2>
+                    <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px; color: #a1a1aa;">
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">クラシックロックタブ</strong> – Led Zeppelin, AC/DC, Van Halen, Aerosmith</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">80年代ヘアメタル</strong> – Def Leppard, Motley Crue, Whitesnake, Bon Jovi</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">ヘビーメタル</strong> – Black Sabbath, Ozzy Osbourne, Metallica, Iron Maiden</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">ブルースロック</strong> – Stevie Ray Vaughan, Eric Clapton, Gary Moore</li>
+                        <li style="padding: 12px 0;">✓ <strong style="color: #fff;">ベースタブ</strong> – お気に入りの曲のベースラインを学ぼう</li>
+                    </ul>
+                    <p style="color: #71717a; font-size: 0.9rem;">4,000以上のタブ譜 • 無料レッスン • 定期的に更新</p>
+                </div>
+
+                <!-- Russian Content -->
+                <div id="seo-ru" class="seo-lang" style="display: none;">
+                    <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">Dad Rock Tabs – Гитарные Табы с Видео Уроками</h1>
+                    <p style="font-size: 1.25rem; line-height: 1.8; color: #d4d4d8; margin-bottom: 20px;">
+                        Добро пожаловать! Этот сайт предлагает простые табы для гитары и баса классических рок-песен с прямыми ссылками на полные видеоуроки на YouTube.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #a1a1aa; margin-bottom: 25px;">Нажмите ниже, чтобы выучить свою первую песню:</p>
+                    <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px; margin-top: 30px;">Что Вы Найдете Здесь</h2>
+                    <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px; color: #a1a1aa;">
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Табы Классического Рока</strong> – Led Zeppelin, AC/DC, Van Halen, Aerosmith</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Хэйр-метал 80-х</strong> – Def Leppard, Motley Crue, Whitesnake, Bon Jovi</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Хэви-метал</strong> – Black Sabbath, Ozzy Osbourne, Metallica, Iron Maiden</li>
+                        <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Блюз-рок</strong> – Stevie Ray Vaughan, Eric Clapton, Gary Moore</li>
+                        <li style="padding: 12px 0;">✓ <strong style="color: #fff;">Басовые Табы</strong> – Изучайте басовые линии ваших любимых песен</li>
+                    </ul>
+                    <p style="color: #71717a; font-size: 0.9rem;">Более 4 000 табов • Бесплатные уроки • Регулярные обновления</p>
+                </div>
+
+                <!-- Shared content (video, buttons) shown for all languages -->
+                <div id="seo-shared" style="margin-top: 30px;">
+                    <!-- Featured Video -->
+                    <div style="margin-bottom: 30px;">
+                        <iframe
+                            src="https://www.youtube.com/embed/BT4AEyYXSKA"
+                            title="We Will Rock You - Guitar Lesson"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            style="width: 100%; max-width: 280px; height: 500px; border-radius: 12px; border: 2px solid #f59e0b;"
+                        ></iframe>
+                    </div>
+                    
+                    <p style="margin-bottom: 40px;">
+                        <a href="https://youtube.com/@dadrockytofficial" style="display: inline-block; background-color: #dc2626; color: #fff; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">YouTube Channel</a>
+                    </p>
+                </div>
             </div>
         </div>
+        
+        <!-- Language detection script - runs immediately -->
+        <script>
+            (function() {
+                var path = window.location.pathname;
+                var lang = 'en';
+                var langMatch = path.match(/^\/(en|es|pt-br|fr|de|it|ja|ru)(\/|$)/);
+                if (langMatch) lang = langMatch[1];
+                
+                var el = document.getElementById('seo-' + lang);
+                if (el) el.style.display = 'block';
+                else document.getElementById('seo-en').style.display = 'block';
+            })();
+        </script>
         
         <!-- React App Root - Will replace SEO content when JS loads -->
         <div id="root"></div>
         
         <!-- Noscript fallback for users without JavaScript -->
         <noscript>
-            <style>#seo-content { display: block !important; }</style>
+            <style>
+                #seo-content { display: block !important; }
+                #seo-en { display: block !important; }
+            </style>
         </noscript>
         <!--
       This HTML file is a template.
