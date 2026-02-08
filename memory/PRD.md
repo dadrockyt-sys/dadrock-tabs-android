@@ -80,6 +80,7 @@ videos: {
 - **All core features**: WORKING
 - **PWA**: WORKING
 - **Android App**: Ready for Play Store (loads live URL)
+- **Featured Video**: YouTube Shorts embed added (Feb 2025)
 
 ## Prioritized Backlog
 ### P0 (Complete)
