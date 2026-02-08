@@ -107,3 +107,10 @@ videos: {
 ## Known Issues
 - Sitemap returns 404 on custom domain (dadrocktabs.com) - works on preview URL
 - Workaround: Use Google URL Inspection tool for manual indexing
+
+## Recent Fixes (Feb 2025)
+- **Android App Blank Screen Fix**: Added `dadrocktabs.com` and YouTube domains to `network_security_config.xml`
+- **SDK Downgrade**: Downgraded from SDK 35 to SDK 34 for stable GitHub Actions builds
+- **Gradle Version**: Updated to Gradle 8.2 and Android Gradle Plugin 8.2.2
+- **Capacitor Config**: Added `allowNavigation` for YouTube domains
+- **Version Bump**: v1.3 (versionCode 4)
