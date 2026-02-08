@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Search, Download, ShoppingBag, MessageSquarePlus, Heart, Youtube, Share2, Facebook, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { getTranslation } from "@/translations";
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const BANNER_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/u9nzw1f2_20201025_123236.jpg";
@@ -20,12 +21,24 @@ const POPULAR_SEARCHES = [
   { name: "Aerosmith", icon: "💎" },
 ];
 
+// Detect language from URL path
+const getLanguageFromPath = (pathname) => {
+  const langMatch = pathname.match(/^\/(en|es|pt-br|fr|de|it|ja|ru)(\/|$)/);
+  return langMatch ? langMatch[1] : "en";
+};
+
 const Home = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showInstallButton, setShowInstallButton] = useState(false);
   const [logoClickCount, setLogoClickCount] = useState(0);
+  
+  // Get current language and translations
+  const currentLang = getLanguageFromPath(location.pathname);
+  const t = getTranslation(currentLang);
+  const langPrefix = currentLang === "en" ? "" : `/${currentLang}`;
 
   // Secret admin access: tap logo 5 times quickly
   const handleLogoClick = () => {
