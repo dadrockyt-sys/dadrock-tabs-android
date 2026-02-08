@@ -2,11 +2,11 @@
   "appId": "com.dadrocktabs.app",
   "appName": "DadRock Tabs",
   "webDir": "build",
-  "bundledWebRuntime": false,
   "server": {
     "url": "https://dadrocktabs.com",
     "cleartext": false,
-    "androidScheme": "https"
+    "androidScheme": "https",
+    "allowNavigation": ["dadrocktabs.com", "*.dadrocktabs.com", "*.youtube.com", "youtube.com"]
   },
   "plugins": {
     "SplashScreen": {
@@ -17,6 +17,8 @@
   },
   "android": {
     "allowMixedContent": false,
-    "backgroundColor": "#09090b"
+    "backgroundColor": "#09090b",
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
   }
 }
