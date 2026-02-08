@@ -141,53 +141,48 @@
         </script>
     </head>
     <body>
-        <noscript>You need to enable JavaScript to run this app.</noscript>
-        <div id="root">
-            <!-- Static SEO content visible without JavaScript -->
-            <div id="static-seo-content" style="background-color: #09090b; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px 20px; text-align: center; min-height: 100vh;">
-                <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">DadRock Tabs – Guitar & Bass Tabs for Classic Rock</h1>
-                <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px; line-height: 1.6; color: #a1a1aa;">
-                    Learn your favorite classic rock songs with clear tablature and video lessons. Every tab links to a YouTube breakdown so you can see it played and explained.
+        <!-- Static SEO Content - Visible to crawlers and before JS loads -->
+        <div id="seo-content" style="background-color: #09090b; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px 20px; min-height: 100vh;">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">Dad Rock Tabs – Guitar & Bass Tabs with YouTube Lessons</h1>
+                <p style="font-size: 1.25rem; line-height: 1.8; color: #d4d4d8; margin-bottom: 30px;">
+                    Learn classic rock, 80s metal, and blues songs with easy-to-follow tabs and video breakdowns. Each tab page includes a direct link to the lesson on my YouTube channel — great for players who want both the notes and the demonstration.
                 </p>
-                <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: #fff;">What You'll Find Here:</h2>
-                <ul style="list-style: none; padding: 0; max-width: 600px; margin: 0 auto 30px; text-align: left; color: #d4d4d8;">
-                    <li style="padding: 10px 0; border-bottom: 1px solid #27272a;">🎸 <strong>4,000+ Guitar & Bass Tabs</strong> – Classic rock, 80s hair metal, blues, and more</li>
-                    <li style="padding: 10px 0; border-bottom: 1px solid #27272a;">🎵 <strong>Video Lessons</strong> – Every tab links to a YouTube tutorial</li>
-                    <li style="padding: 10px 0; border-bottom: 1px solid #27272a;">🔥 <strong>Popular Artists</strong> – Led Zeppelin, AC/DC, Van Halen, Black Sabbath, Ozzy Osbourne</li>
-                    <li style="padding: 10px 0; border-bottom: 1px solid #27272a;">📚 <strong>Free to Use</strong> – Search by song or artist and start learning</li>
+                
+                <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px;">🎸 What You'll Learn</h2>
+                <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: 0 auto 30px; color: #a1a1aa;">
+                    <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Classic Rock Guitar Tabs</strong> – Led Zeppelin, AC/DC, Van Halen, Aerosmith</li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">80s Hair Metal Tabs</strong> – Def Leppard, Motley Crue, Whitesnake, Bon Jovi</li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Heavy Metal Tabs</strong> – Black Sabbath, Ozzy Osbourne, Metallica, Iron Maiden</li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid #27272a;">✓ <strong style="color: #fff;">Blues Rock Tabs</strong> – Stevie Ray Vaughan, Eric Clapton, Gary Moore</li>
+                    <li style="padding: 12px 0;">✓ <strong style="color: #fff;">Bass Guitar Tabs</strong> – Learn bass lines from all your favorite rock songs</li>
                 </ul>
-                <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: #fff;">Popular Searches:</h2>
-                <p style="color: #a1a1aa; max-width: 600px; margin: 0 auto 30px;">
-                    Led Zeppelin tabs, AC/DC guitar lessons, Van Halen riffs, Def Leppard tabs, Black Sabbath Iron Man, Ozzy Osbourne tabs, Metallica tabs, Aerosmith tabs, how to play classic rock, 80s hair metal guitar, blues rock tabs
+                
+                <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px;">🔥 Popular Guitar Lessons</h2>
+                <p style="color: #a1a1aa; margin-bottom: 30px; line-height: 1.8;">
+                    Iron Man tab, Stairway to Heaven guitar lesson, Back in Black riff, Eruption solo, Sweet Child O' Mine intro, Crazy Train tab, Smoke on the Water, Purple Haze, Highway to Hell, Enter Sandman
                 </p>
-                <p style="color: #71717a; font-size: 0.9rem;">
-                    <em>Loading DadRock Tabs app...</em>
+                
+                <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 15px;">📺 Watch on YouTube</h2>
+                <p style="color: #a1a1aa; margin-bottom: 20px;">
+                    Every tab comes with a YouTube video lesson showing you exactly how to play it.
+                </p>
+                <p style="margin-bottom: 30px;">
+                    <a href="https://youtube.com/@dadrockytofficial" style="display: inline-block; background-color: #dc2626; color: #fff; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">Subscribe to DadRock Tabs on YouTube</a>
+                </p>
+                
+                <p style="color: #71717a; font-size: 0.9rem; margin-top: 40px;">
+                    Search over 4,000 guitar and bass tabs • Free lessons • Updated regularly
                 </p>
             </div>
         </div>
         
+        <!-- React App Root - Will replace SEO content when JS loads -->
+        <div id="root"></div>
+        
         <!-- Noscript fallback for users without JavaScript -->
         <noscript>
-            <div style="background-color: #09090b; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px 20px; text-align: center; min-height: 100vh;">
-                <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 20px; color: #f59e0b;">DadRock Tabs – Guitar & Bass Tabs for Classic Rock</h1>
-                <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 30px; line-height: 1.6; color: #a1a1aa;">
-                    Learn your favorite classic rock songs with clear tablature and video lessons. Every tab links to a YouTube breakdown so you can see it played and explained.
-                </p>
-                <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: #fff;">What You'll Find Here:</h2>
-                <ul style="list-style: none; padding: 0; max-width: 600px; margin: 0 auto 30px; text-align: left; color: #d4d4d8;">
-                    <li style="padding: 10px 0; border-bottom: 1px solid #27272a;">🎸 <strong>4,000+ Guitar & Bass Tabs</strong> – Classic rock, 80s hair metal, blues, and more</li>
-                    <li style="padding: 10px 0; border-bottom: 1px solid #27272a;">🎵 <strong>Video Lessons</strong> – Every tab links to a YouTube tutorial</li>
-                    <li style="padding: 10px 0; border-bottom: 1px solid #27272a;">🔥 <strong>Popular Artists</strong> – Led Zeppelin, AC/DC, Van Halen, Black Sabbath, Ozzy Osbourne</li>
-                    <li style="padding: 10px 0; border-bottom: 1px solid #27272a;">📚 <strong>Free to Use</strong> – Search by song or artist and start learning</li>
-                </ul>
-                <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: #fff;">Visit Our YouTube Channel:</h2>
-                <p style="margin-bottom: 20px;">
-                    <a href="https://youtube.com/@dadrockytofficial" style="color: #f59e0b; font-size: 1.2rem; text-decoration: underline;">Subscribe to DadRock Tabs on YouTube</a>
-                </p>
-                <p style="color: #71717a; font-size: 0.9rem;">
-                    <em>Please enable JavaScript for the full interactive experience, or visit our YouTube channel directly.</em>
-                </p>
-            </div>
+            <style>#seo-content { display: block !important; }</style>
         </noscript>
         <!--
       This HTML file is a template.
