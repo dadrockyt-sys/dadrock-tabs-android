@@ -181,7 +181,7 @@ const Home = () => {
                   <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-muted-foreground" />
                   <Input
                     type="text"
-                    placeholder="Search for songs or artists..."
+                    placeholder={t.searchPlaceholder}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="search-input h-16 text-lg md:text-xl bg-black/50 border-2 border-white/20 focus:border-primary rounded-full pl-16 pr-6 text-white placeholder:text-white/40 backdrop-blur-md"
@@ -196,7 +196,7 @@ const Home = () => {
                   className="h-16 px-10 rounded-full font-heading font-bold uppercase tracking-wider bg-primary text-primary-foreground hover:bg-primary/90 glow-amber btn-lift"
                   data-testid="search-button"
                 >
-                  Search
+                  {t.searchButton}
                 </Button>
 
                 {/* Subscribe Button */}
@@ -212,7 +212,7 @@ const Home = () => {
                     data-testid="subscribe-button"
                   >
                     <Youtube className="w-5 h-5 mr-2" />
-                    Subscribe Here! It's FREE
+                    {t.subscribeButton}
                   </Button>
                 </a>
               </div>
