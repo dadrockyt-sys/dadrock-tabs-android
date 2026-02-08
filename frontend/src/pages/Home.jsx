@@ -220,7 +220,7 @@ const Home = () => {
 
             {/* Featured Video Section */}
             <div className="w-full max-w-2xl mt-8 fade-in stagger-2">
-              <p className="text-sm text-muted-foreground text-center mb-3">🎬 Featured Lesson</p>
+              <p className="text-sm text-muted-foreground text-center mb-3">🎬 {t.featuredLesson}</p>
               <div className="relative rounded-xl overflow-hidden border-2 border-primary/50 shadow-lg shadow-primary/20 aspect-[9/16] max-h-[500px] mx-auto" style={{ maxWidth: '280px' }}>
                 <iframe
                   src="https://www.youtube.com/embed/BT4AEyYXSKA"
@@ -233,18 +233,18 @@ const Home = () => {
                 ></iframe>
               </div>
               <p className="text-center text-white/80 mt-3 text-sm">
-                🎸 <strong>"We Will Rock You"</strong> by Queen – Watch how I break down this classic riff!
+                🎸 <strong>{t.featuredCaption}</strong>
               </p>
             </div>
 
             {/* Popular Searches Section */}
             <div className="w-full max-w-3xl mt-6 fade-in stagger-2">
-              <p className="text-sm text-muted-foreground text-center mb-3">🔥 Popular Searches</p>
+              <p className="text-sm text-muted-foreground text-center mb-3">🔥 {t.popularSearches}</p>
               <div className="flex flex-wrap justify-center gap-2">
                 {POPULAR_SEARCHES.map((artist) => (
                   <button
                     key={artist.name}
-                    onClick={() => navigate(`/search?q=${encodeURIComponent(artist.name)}&type=all`)}
+                    onClick={() => navigate(`${langPrefix}/search?q=${encodeURIComponent(artist.name)}&type=all`)}
                     className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary/50 rounded-full text-sm text-white/80 hover:text-white transition-all duration-200"
                     data-testid={`popular-${artist.name.toLowerCase().replace(/[^a-z]/g, '-')}`}
                   >
@@ -256,7 +256,7 @@ const Home = () => {
 
             {/* Social Sharing Section */}
             <div className="w-full max-w-3xl mt-6 fade-in stagger-3">
-              <p className="text-sm text-muted-foreground text-center mb-3">📢 Share DadRock Tabs</p>
+              <p className="text-sm text-muted-foreground text-center mb-3">📢 {t.shareDadRock}</p>
               <div className="flex justify-center gap-3">
                 <a
                   href="https://www.facebook.com/sharer/sharer.php?u=https://dadrocktabs.com"
