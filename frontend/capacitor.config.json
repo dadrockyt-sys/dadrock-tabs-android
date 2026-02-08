@@ -6,7 +6,7 @@
     "url": "https://dadrocktabs.com",
     "cleartext": false,
     "androidScheme": "https",
-    "allowNavigation": ["dadrocktabs.com", "*.dadrocktabs.com", "*.youtube.com", "youtube.com"]
+    "allowNavigation": ["dadrocktabs.com", "*.dadrocktabs.com", "*.youtube.com", "youtube.com", "*.cloudflare.com", "*.googlesyndication.com", "*.googletagmanager.com"]
   },
   "plugins": {
     "SplashScreen": {
@@ -19,6 +19,6 @@
     "allowMixedContent": false,
     "backgroundColor": "#09090b",
     "captureInput": true,
-    "webContentsDebuggingEnabled": false
+    "webContentsDebuggingEnabled": true
   }
 }
