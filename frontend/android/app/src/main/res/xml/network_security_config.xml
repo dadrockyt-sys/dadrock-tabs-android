@@ -12,6 +12,12 @@
         <domain includeSubdomains="true">youtube.com</domain>
         <domain includeSubdomains="true">googlevideo.com</domain>
         <domain includeSubdomains="true">ytimg.com</domain>
+        <domain includeSubdomains="true">cloudflare.com</domain>
+        <domain includeSubdomains="true">googleapis.com</domain>
+        <domain includeSubdomains="true">gstatic.com</domain>
+        <domain includeSubdomains="true">googletagmanager.com</domain>
+        <domain includeSubdomains="true">googlesyndication.com</domain>
+        <domain includeSubdomains="true">posthog.com</domain>
         <trust-anchors>
             <certificates src="system" />
         </trust-anchors>
