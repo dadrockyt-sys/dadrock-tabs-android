@@ -205,6 +205,25 @@ const Home = () => {
               </div>
             </form>
 
+            {/* Featured Video Section */}
+            <div className="w-full max-w-2xl mt-8 fade-in stagger-2">
+              <p className="text-sm text-muted-foreground text-center mb-3">🎬 Featured Lesson</p>
+              <div className="relative rounded-xl overflow-hidden border-2 border-primary/50 shadow-lg shadow-primary/20">
+                <video 
+                  controls 
+                  className="w-full"
+                  poster="https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png"
+                  data-testid="featured-video"
+                >
+                  <source src="https://customer-assets.emergentagent.com/job_5ed84bf5-76b9-4681-bbf0-e01d80e6c422/artifacts/b1iktlpm_we_Will_Rock_you_4K_MEDIUM_FR30.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <p className="text-center text-white/80 mt-3 text-sm">
+                🎸 <strong>"We Will Rock You"</strong> by Queen – Watch how I break down this classic riff!
+              </p>
+            </div>
+
             {/* Popular Searches Section */}
             <div className="w-full max-w-3xl mt-6 fade-in stagger-2">
               <p className="text-sm text-muted-foreground text-center mb-3">🔥 Popular Searches</p>
