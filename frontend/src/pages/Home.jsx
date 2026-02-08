@@ -302,7 +302,7 @@ const Home = () => {
                 className="w-full h-16 rounded-full font-heading font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700 glow-amber btn-lift text-lg"
               >
                 <MessageSquarePlus className="w-6 h-6 mr-3" />
-                Make a Request
+                {t.makeRequest}
               </Button>
             </a>
 
@@ -321,7 +321,7 @@ const Home = () => {
                   className="w-full h-12 rounded-full font-heading font-bold uppercase tracking-wider bg-secondary border border-white/20 text-white hover:bg-white/10 btn-lift"
                 >
                   <Heart className="w-5 h-5 mr-2 text-red-500" />
-                  Support
+                  {t.support}
                 </Button>
               </a>
               <a
@@ -337,7 +337,7 @@ const Home = () => {
                   className="w-full h-12 rounded-full font-heading font-bold uppercase tracking-wider bg-secondary border border-white/20 text-white hover:bg-white/10 btn-lift"
                 >
                   <ShoppingBag className="w-5 h-5 mr-2 text-primary" />
-                  Merchandise
+                  {t.merchandise}
                 </Button>
               </a>
             </div>
@@ -346,7 +346,7 @@ const Home = () => {
           {/* Footer */}
           <footer className="p-6 text-center">
             <p className="text-sm text-muted-foreground">
-              © 2024 DadRock Tabs. All rights reserved.
+              {t.footer}
             </p>
           </footer>
         </div>
