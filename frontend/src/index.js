@@ -33,6 +33,12 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Hide SEO content when React loads
+const seoContent = document.getElementById('seo-content');
+if (seoContent) {
+  seoContent.style.display = 'none';
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
