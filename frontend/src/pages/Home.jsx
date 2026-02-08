@@ -154,18 +154,18 @@ const Home = () => {
                 {/* Dictionary Definition - Right Side */}
                 <div className="text-center md:text-left">
                   <h2 className="font-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-tight">
-                    DadRock <span className="text-primary font-normal text-sm sm:text-base md:text-xl lg:text-2xl">[dad•rok]</span>
+                    {t.definition.term} <span className="text-primary font-normal text-sm sm:text-base md:text-xl lg:text-2xl">{t.definition.pronunciation}</span>
                   </h2>
-                  <p className="text-muted-foreground italic mt-1 text-xs sm:text-sm">n.</p>
+                  <p className="text-muted-foreground italic mt-1 text-xs sm:text-sm">{t.definition.partOfSpeech}</p>
                   <p className="text-white/90 text-sm sm:text-base md:text-lg mt-1 md:mt-2 max-w-sm md:max-w-md leading-relaxed">
-                    Rock music that appeals to an older generation; or is heavily influenced by that of an earlier era.
+                    {t.definition.meaning}
                   </p>
                 </div>
               </div>
               
               {/* Tagline */}
               <p className="text-sm md:text-base lg:text-lg text-muted-foreground text-center mt-4 md:mt-6 max-w-2xl mx-auto">
-                Your go-to database for classic rock guitar & bass tutorials. Search by song or artist.
+                {t.tagline}
               </p>
             </div>
 
