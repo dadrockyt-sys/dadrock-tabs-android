@@ -5,7 +5,7 @@ import base64
 from datetime import datetime
 
 class DadRockTabsAPITester:
-    def __init__(self, base_url="https://tabfinder-3.preview.emergentagent.com"):
+    def __init__(self, base_url="https://dadrocktabs.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.admin_password = "dadrock2024"
