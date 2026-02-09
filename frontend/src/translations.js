@@ -169,6 +169,27 @@ const translations = {
     merchandise: "Мерч",
     footer: "© 2024 DadRock Tabs. Все права защищены.",
     supportMerch: "Мерч Поддержки"
+  },
+  hi: {
+    definition: {
+      term: "DadRock",
+      pronunciation: "[डैड•रॉक]",
+      partOfSpeech: "सं.",
+      meaning: "रॉक संगीत जो पुरानी पीढ़ी को पसंद आता है; या जो पुराने युग से बहुत प्रभावित है।"
+    },
+    tagline: "क्लासिक रॉक गिटार और बेस ट्यूटोरियल का आपका डेटाबेस। गाने या कलाकार से खोजें।",
+    searchPlaceholder: "गाने या कलाकार खोजें...",
+    searchButton: "खोजें",
+    subscribeButton: "यहाँ सब्सक्राइब करें! यह मुफ़्त है",
+    featuredLesson: "विशेष पाठ",
+    featuredCaption: 'Queen का "We Will Rock You" – देखें मैं इस क्लासिक रिफ़ को कैसे समझाता हूँ!',
+    popularSearches: "लोकप्रिय खोजें",
+    shareDadRock: "DadRock Tabs शेयर करें",
+    makeRequest: "अनुरोध करें",
+    support: "सहायता",
+    merchandise: "मर्चेंडाइज",
+    footer: "© 2024 DadRock Tabs. सर्वाधिकार सुरक्षित।",
+    supportMerch: "सहायता मर्चेंडाइज"
   }
 };
 
