@@ -23,7 +23,7 @@ const POPULAR_SEARCHES = [
 
 // Detect language from URL path
 const getLanguageFromPath = (pathname) => {
-  const langMatch = pathname.match(/^\/(en|es|pt-br|fr|de|it|ja|ru)(\/|$)/);
+  const langMatch = pathname.match(/^\/(en|es|pt-br|fr|de|it|ja|ru|hi)(\/|$)/);
   return langMatch ? langMatch[1] : "en";
 };
 
