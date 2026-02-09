@@ -33,6 +33,7 @@ function App() {
             <Route path="/it/*" element={<Home />} />
             <Route path="/ja/*" element={<Home />} />
             <Route path="/ru/*" element={<Home />} />
+            <Route path="/hi/*" element={<Home />} />
             
             {/* Language-specific search routes */}
             <Route path="/en/search" element={<Search />} />
@@ -43,6 +44,7 @@ function App() {
             <Route path="/it/search" element={<Search />} />
             <Route path="/ja/search" element={<Search />} />
             <Route path="/ru/search" element={<Search />} />
+            <Route path="/hi/search" element={<Search />} />
           </Routes>
         </BrowserRouter>
         
