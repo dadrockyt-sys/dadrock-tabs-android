@@ -75,6 +75,14 @@ const AdminDashboard = () => {
     youtube_url: "",
   });
 
+  // Featured video settings state
+  const [featuredVideo, setFeaturedVideo] = useState({
+    featured_video_url: "",
+    featured_video_title: "",
+    featured_video_artist: "",
+  });
+  const [savingSettings, setSavingSettings] = useState(false);
+
   // Get auth header
   const getAuthHeader = useCallback(() => {
     const auth = sessionStorage.getItem("adminAuth");
