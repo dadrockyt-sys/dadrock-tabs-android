@@ -34,6 +34,11 @@ const Home = () => {
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showInstallButton, setShowInstallButton] = useState(false);
   const [logoClickCount, setLogoClickCount] = useState(0);
+  const [featuredVideo, setFeaturedVideo] = useState({
+    url: "https://www.youtube.com/embed/BT4AEyYXSKA",
+    title: "We Will Rock You",
+    artist: "Queen"
+  });
   
   // Get current language and translations
   const currentLang = getLanguageFromPath(location.pathname);
