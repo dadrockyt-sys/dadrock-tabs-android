@@ -239,6 +239,21 @@ const AdminDashboard = () => {
     navigate("/admin");
   };
 
+  const handleSaveSettings = async () => {
+    const headers = getAuthHeader();
+    if (!headers) return;
+
+    setSavingSettings(true);
+    try {
+      await axios.put(`${API}/admin/settings`, featuredVideo, { headers });
+      toast.success("Featured video settings saved!");
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Failed to save settings");
+    } finally {
+      setSavingSettings(false);
+    }
+  };
+
   const handleYouTubeSync = async () => {
     const headers = getAuthHeader();
     if (!headers) return;
