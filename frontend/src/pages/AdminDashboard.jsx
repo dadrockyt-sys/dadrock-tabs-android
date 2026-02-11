@@ -13,6 +13,9 @@ import {
   FileSpreadsheet,
   Youtube,
   RefreshCw,
+  Settings,
+  Video,
+  Save,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
