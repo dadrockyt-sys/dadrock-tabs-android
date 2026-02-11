@@ -320,6 +320,60 @@ async def get_stats(auth: bool = Depends(verify_admin)):
         "total_artists": len(artists)
     }
 
+# Site Settings endpoints
+@api_router.get("/settings")
+async def get_site_settings():
+    """Get public site settings (featured video, etc.)"""
+    settings = await db.settings.find_one({"type": "site"}, {"_id": 0})
+    if not settings:
+        # Return defaults
+        return {
+            "featured_video_url": "https://www.youtube.com/embed/BT4AEyYXSKA",
+            "featured_video_title": "We Will Rock You",
+            "featured_video_artist": "Queen"
+        }
+    return {
+        "featured_video_url": settings.get("featured_video_url", "https://www.youtube.com/embed/BT4AEyYXSKA"),
+        "featured_video_title": settings.get("featured_video_title", "We Will Rock You"),
+        "featured_video_artist": settings.get("featured_video_artist", "Queen")
+    }
+
+@api_router.put("/admin/settings")
+async def update_site_settings(settings: SiteSettingsUpdate, auth: bool = Depends(verify_admin)):
+    """Update site settings (admin only)"""
+    update_data = {k: v for k, v in settings.model_dump().items() if v is not None}
+    
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No data to update")
+    
+    # Convert YouTube URL to embed format if needed
+    if 'featured_video_url' in update_data:
+        url = update_data['featured_video_url']
+        # Handle different YouTube URL formats
+        video_id = None
+        if 'youtube.com/watch?v=' in url:
+            video_id = url.split('v=')[1].split('&')[0]
+        elif 'youtu.be/' in url:
+            video_id = url.split('youtu.be/')[1].split('?')[0]
+        elif 'youtube.com/shorts/' in url:
+            video_id = url.split('shorts/')[1].split('?')[0]
+        elif 'youtube.com/embed/' in url:
+            video_id = url.split('embed/')[1].split('?')[0]
+        
+        if video_id:
+            update_data['featured_video_url'] = f"https://www.youtube.com/embed/{video_id}"
+    
+    update_data['type'] = 'site'
+    update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
+    
+    await db.settings.update_one(
+        {"type": "site"},
+        {"$set": update_data},
+        upsert=True
+    )
+    
+    return {"success": True, "message": "Settings updated successfully"}
+
 def parse_video_title(title: str) -> tuple:
     """Parse video title to extract song and artist
     Expected formats: 
