@@ -1,6 +1,42 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <!-- Dynamic language detection - runs first -->
+        <script>
+            (function() {
+                var path = window.location.pathname;
+                var langMap = {
+                    '/es': 'es', '/es/': 'es',
+                    '/pt-br': 'pt-BR', '/pt-br/': 'pt-BR',
+                    '/fr': 'fr', '/fr/': 'fr',
+                    '/de': 'de', '/de/': 'de',
+                    '/it': 'it', '/it/': 'it',
+                    '/ja': 'ja', '/ja/': 'ja',
+                    '/ru': 'ru', '/ru/': 'ru',
+                    '/hi': 'hi', '/hi/': 'hi',
+                    '/en': 'en', '/en/': 'en'
+                };
+                var lang = 'en';
+                for (var prefix in langMap) {
+                    if (path === prefix || path.startsWith(prefix + '/') || path.startsWith(prefix)) {
+                        lang = langMap[prefix];
+                        break;
+                    }
+                }
+                document.documentElement.lang = lang;
+                
+                // Update canonical URL
+                var canonicalUrl = 'https://dadrocktabs.com' + path;
+                if (!canonicalUrl.endsWith('/')) canonicalUrl += '/';
+                var canonical = document.querySelector('link[rel="canonical"]');
+                if (canonical) canonical.href = canonicalUrl;
+                
+                // Update og:url
+                var ogUrl = document.querySelector('meta[property="og:url"]');
+                if (ogUrl) ogUrl.content = canonicalUrl;
+            })();
+        </script>
+        
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-92RKGQW8NJ"></script>
         <script>
@@ -22,10 +58,10 @@
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://dadrocktabs.com/" />
         
-        <!-- Hreflang tags for multi-language SEO -->
-        <link rel="alternate" hreflang="en" href="https://dadrocktabs.com/en/" />
+        <!-- Hreflang tags for multi-language SEO - All languages referenced from every page -->
+        <link rel="alternate" hreflang="en" href="https://dadrocktabs.com/" />
         <link rel="alternate" hreflang="es" href="https://dadrocktabs.com/es/" />
-        <link rel="alternate" hreflang="pt-br" href="https://dadrocktabs.com/pt-br/" />
+        <link rel="alternate" hreflang="pt-BR" href="https://dadrocktabs.com/pt-br/" />
         <link rel="alternate" hreflang="fr" href="https://dadrocktabs.com/fr/" />
         <link rel="alternate" hreflang="de" href="https://dadrocktabs.com/de/" />
         <link rel="alternate" hreflang="it" href="https://dadrocktabs.com/it/" />
@@ -33,14 +69,6 @@
         <link rel="alternate" hreflang="ru" href="https://dadrocktabs.com/ru/" />
         <link rel="alternate" hreflang="hi" href="https://dadrocktabs.com/hi/" />
         <link rel="alternate" hreflang="x-default" href="https://dadrocktabs.com/" />
-        
-        <!-- Hreflang tags for Iron Man page -->
-        <link rel="alternate" hreflang="en" href="https://dadrocktabs.com/en/iron-man/" />
-        <link rel="alternate" hreflang="es" href="https://dadrocktabs.com/es/iron-man/" />
-        <link rel="alternate" hreflang="pt-br" href="https://dadrocktabs.com/pt-br/iron-man/" />
-        <link rel="alternate" hreflang="fr" href="https://dadrocktabs.com/fr/iron-man/" />
-        <link rel="alternate" hreflang="de" href="https://dadrocktabs.com/de/iron-man/" />
-        <link rel="alternate" hreflang="x-default" href="https://dadrocktabs.com/en/iron-man/" />
         
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website" />
