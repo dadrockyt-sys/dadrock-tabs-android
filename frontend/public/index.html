@@ -90,45 +90,10 @@
                 window.__DADROCK_SEO = data;
             })();
         </script>
-                        description: 'クラシックロック、80年代ヘアメタル、ブルースのビデオレッスン付き無料ギター・ベースタブ譜。4000以上のチュートリアルを検索。'
-                    },
-                    'ru': {
-                        title: 'DadRock Tabs - Бесплатные Табы для Гитары и Баса | Классический Рок',
-                        description: 'Бесплатные табы для гитары и баса с видео уроками для классического рока, хэйр-метала 80-х и блюза. Ищите среди 4000+ туториалов.'
-                    },
-                    'hi': {
-                        title: 'DadRock Tabs - मुफ़्त गिटार और बेस टैब्स | क्लासिक रॉक',
-                        description: 'क्लासिक रॉक, 80 के दशक के हेयर मेटल और ब्लूज़ के लिए वीडियो पाठों के साथ मुफ़्त गिटार और बेस टैब्स। 4000+ ट्यूटोरियल खोजें।'
-                    }
-                };
-                
-                var data = seoData[lang] || seoData['en'];
-                
-                // Update canonical URL to current language
-                var canonicalUrl = 'https://dadrocktabs.com' + (langPath || '') + '/';
-                var canonical = document.querySelector('link[rel="canonical"]');
-                if (canonical) canonical.href = canonicalUrl;
-                
-                // Update title
-                document.title = data.title;
-                
-                // Update meta description
-                var descMeta = document.querySelector('meta[name="description"]');
-                if (descMeta) descMeta.content = data.description;
-                
-                // Update og:url, og:title, og:description
-                var ogUrl = document.querySelector('meta[property="og:url"]');
-                var ogTitle = document.querySelector('meta[property="og:title"]');
-                var ogDesc = document.querySelector('meta[property="og:description"]');
-                if (ogUrl) ogUrl.content = canonicalUrl;
-                if (ogTitle) ogTitle.content = data.title;
-                if (ogDesc) ogDesc.content = data.description;
-            });
-        </script>
         
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://dadrocktabs.com/" />
+        <script>document.write('<meta name="twitter:url" content="' + window.__DADROCK_CANONICAL + '" />');</script>
         <meta name="twitter:title" content="DadRock Tabs - Free Guitar & Bass Tabs | 80s Hair Metal, Classic Rock, Blues" />
         <meta name="twitter:description" content="Free guitar and bass tabs, lessons, and tablature for 80s hair metal, classic rock, and blues. Search 4000+ video tutorials by song or artist." />
         <meta name="twitter:image" content="https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png" />
