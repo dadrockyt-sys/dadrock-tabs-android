@@ -125,10 +125,20 @@ const AdminDashboard = () => {
     }
   }, [navigate, getAuthHeader]);
 
+  const fetchSettings = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API}/settings`);
+      setFeaturedVideo(response.data);
+    } catch (error) {
+      console.error("Error fetching settings:", error);
+    }
+  }, []);
+
   useEffect(() => {
     fetchVideos();
     fetchStats();
-  }, [fetchVideos, fetchStats]);
+    fetchSettings();
+  }, [fetchVideos, fetchStats, fetchSettings]);
 
   const handleAddVideo = async (e) => {
     e.preventDefault();
