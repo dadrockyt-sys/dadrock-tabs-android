@@ -88,6 +88,16 @@ class YouTubeSyncRequest(BaseModel):
     api_key: Optional[str] = None  # Will use env var if not provided
     channel_id: str = "UCLN8LV-ojTQP2wPtDg1kvGQ"  # DadRock Tabs channel ID
 
+class SiteSettings(BaseModel):
+    featured_video_url: str = "https://www.youtube.com/embed/BT4AEyYXSKA"
+    featured_video_title: str = "We Will Rock You"
+    featured_video_artist: str = "Queen"
+
+class SiteSettingsUpdate(BaseModel):
+    featured_video_url: Optional[str] = None
+    featured_video_title: Optional[str] = None
+    featured_video_artist: Optional[str] = None
+
 # YouTube API key from env
 YOUTUBE_API_KEY = os.environ.get('YOUTUBE_API_KEY', '')
 
