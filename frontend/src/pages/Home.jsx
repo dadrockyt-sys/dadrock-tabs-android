@@ -74,6 +74,24 @@ const Home = () => {
       setShowInstallButton(false);
     }
 
+    // Fetch featured video settings
+    const fetchFeaturedVideo = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/settings`);
+        if (response.ok) {
+          const data = await response.json();
+          setFeaturedVideo({
+            url: data.featured_video_url || "https://www.youtube.com/embed/BT4AEyYXSKA",
+            title: data.featured_video_title || "We Will Rock You",
+            artist: data.featured_video_artist || "Queen"
+          });
+        }
+      } catch (error) {
+        console.log("Using default featured video");
+      }
+    };
+    fetchFeaturedVideo();
+
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
     };
