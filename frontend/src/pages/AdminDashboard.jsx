@@ -339,6 +339,87 @@ const AdminDashboard = () => {
           </div>
         </div>
 
+        {/* Featured Video Settings */}
+        <div className="bg-card rounded-xl border border-white/5 p-6 mb-8" data-testid="featured-video-settings">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
+              <Video className="w-5 h-5 text-red-500" />
+            </div>
+            <div>
+              <h2 className="font-heading text-lg font-bold uppercase tracking-tight text-white">
+                Featured Video Settings
+              </h2>
+              <p className="text-sm text-muted-foreground">Change the video displayed on the homepage</p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div className="space-y-2">
+              <Label htmlFor="featured-url" className="text-white">YouTube URL</Label>
+              <Input
+                id="featured-url"
+                value={featuredVideo.featured_video_url}
+                onChange={(e) => setFeaturedVideo({ ...featuredVideo, featured_video_url: e.target.value })}
+                className="bg-secondary border-white/10 text-white"
+                placeholder="https://youtube.com/watch?v=... or shorts URL"
+                data-testid="featured-video-url-input"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="featured-title" className="text-white">Song Title</Label>
+              <Input
+                id="featured-title"
+                value={featuredVideo.featured_video_title}
+                onChange={(e) => setFeaturedVideo({ ...featuredVideo, featured_video_title: e.target.value })}
+                className="bg-secondary border-white/10 text-white"
+                placeholder="e.g., We Will Rock You"
+                data-testid="featured-video-title-input"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="featured-artist" className="text-white">Artist</Label>
+              <Input
+                id="featured-artist"
+                value={featuredVideo.featured_video_artist}
+                onChange={(e) => setFeaturedVideo({ ...featuredVideo, featured_video_artist: e.target.value })}
+                className="bg-secondary border-white/10 text-white"
+                placeholder="e.g., Queen"
+                data-testid="featured-video-artist-input"
+              />
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <Button
+              onClick={handleSaveSettings}
+              disabled={savingSettings}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+              data-testid="save-settings-button"
+            >
+              {savingSettings ? (
+                <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <Save className="w-4 h-4 mr-2" />
+              )}
+              {savingSettings ? "Saving..." : "Save Settings"}
+            </Button>
+            
+            {featuredVideo.featured_video_url && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span>Preview:</span>
+                <a 
+                  href={featuredVideo.featured_video_url.replace('/embed/', '/watch?v=')} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Open in YouTube
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Actions Bar */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="flex-1 relative">
