@@ -246,8 +246,8 @@ const Home = () => {
               <p className="text-sm text-muted-foreground text-center mb-3">🎬 {t.featuredLesson}</p>
               <div className="relative rounded-xl overflow-hidden border-2 border-primary/50 shadow-lg shadow-primary/20 aspect-[9/16] max-h-[500px] mx-auto" style={{ maxWidth: '280px' }}>
                 <iframe
-                  src="https://www.youtube.com/embed/BT4AEyYXSKA"
-                  title="We Will Rock You - Guitar Lesson"
+                  src={featuredVideo.url}
+                  title={`${featuredVideo.title} - Guitar Lesson`}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -256,7 +256,7 @@ const Home = () => {
                 ></iframe>
               </div>
               <p className="text-center text-white/80 mt-3 text-sm">
-                🎸 <strong>{t.featuredCaption}</strong>
+                🎸 <strong>"{featuredVideo.title}"</strong> by {featuredVideo.artist} – {t.featuredCaption.split('–')[1] || "Watch how I break down this classic riff!"}
               </p>
             </div>
 
