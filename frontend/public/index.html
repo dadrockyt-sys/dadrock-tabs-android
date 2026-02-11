@@ -66,68 +66,30 @@
         <meta property="og:image" content="https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png" />
         <meta property="og:site_name" content="DadRock Tabs" />
         
-        <!-- Dynamic language detection and SEO updates -->
+        <!-- Dynamic title and description based on language -->
         <script>
-            // Immediately set HTML lang attribute based on URL
             (function() {
-                var path = window.location.pathname;
-                var langCodes = {
-                    '/es': 'es', '/pt-br': 'pt-BR', '/fr': 'fr', '/de': 'de',
-                    '/it': 'it', '/ja': 'ja', '/ru': 'ru', '/hi': 'hi', '/en': 'en'
-                };
-                for (var prefix in langCodes) {
-                    if (path === prefix || path === prefix + '/' || path.startsWith(prefix + '/')) {
-                        document.documentElement.lang = langCodes[prefix];
-                        break;
-                    }
-                }
-            })();
-            
-            // Update meta tags after DOM is ready
-            document.addEventListener('DOMContentLoaded', function() {
-                var path = window.location.pathname;
-                var langCodes = {
-                    '/es': 'es', '/pt-br': 'pt-BR', '/fr': 'fr', '/de': 'de',
-                    '/it': 'it', '/ja': 'ja', '/ru': 'ru', '/hi': 'hi', '/en': 'en'
-                };
-                var lang = 'en';
-                var langPath = '';
-                for (var prefix in langCodes) {
-                    if (path === prefix || path === prefix + '/' || path.startsWith(prefix + '/')) {
-                        lang = langCodes[prefix];
-                        langPath = prefix;
-                        break;
-                    }
-                }
-                
-                // Language-specific titles and descriptions
                 var seoData = {
-                    'en': {
-                        title: 'DadRock Tabs - Free Guitar & Bass Tabs | Classic Rock, Hair Metal, Blues',
-                        description: 'Free guitar and bass tabs with video lessons for classic rock, 80s hair metal, and blues. Search 4000+ tutorials. Learn Led Zeppelin, AC/DC, Van Halen and more!'
-                    },
-                    'es': {
-                        title: 'DadRock Tabs - Tablaturas Gratis de Guitarra y Bajo | Rock Clásico',
-                        description: 'Tablaturas gratis de guitarra y bajo con lecciones en video para rock clásico, hair metal de los 80s y blues. Busca más de 4000 tutoriales.'
-                    },
-                    'pt-BR': {
-                        title: 'DadRock Tabs - Tablaturas Grátis de Guitarra e Baixo | Rock Clássico',
-                        description: 'Tablaturas grátis de guitarra e baixo com vídeo aulas para rock clássico, hair metal dos anos 80 e blues. Pesquise mais de 4000 tutoriais.'
-                    },
-                    'fr': {
-                        title: 'DadRock Tabs - Tablatures Gratuites Guitare & Basse | Rock Classique',
-                        description: 'Tablatures gratuites de guitare et basse avec leçons vidéo pour rock classique, hair metal des années 80 et blues. Recherchez plus de 4000 tutoriels.'
-                    },
-                    'de': {
-                        title: 'DadRock Tabs - Kostenlose Gitarren- & Bass-Tabs | Classic Rock',
-                        description: 'Kostenlose Gitarren- und Bass-Tabs mit Video-Lektionen für Classic Rock, 80er Hair Metal und Blues. Über 4000 Tutorials durchsuchen.'
-                    },
-                    'it': {
-                        title: 'DadRock Tabs - Tablature Gratuite Chitarra e Basso | Rock Classico',
-                        description: 'Tablature gratuite per chitarra e basso con video lezioni per rock classico, hair metal anni 80 e blues. Cerca oltre 4000 tutorial.'
-                    },
-                    'ja': {
-                        title: 'DadRock Tabs - 無料ギター＆ベースタブ譜 | クラシックロック',
+                    'en': { title: 'DadRock Tabs - Free Guitar & Bass Tabs | Classic Rock, Hair Metal, Blues', description: 'Free guitar and bass tabs with video lessons for classic rock, 80s hair metal, and blues. Search 4000+ tutorials.' },
+                    'es': { title: 'DadRock Tabs - Tablaturas Gratis de Guitarra y Bajo | Rock Clásico', description: 'Tablaturas gratis de guitarra y bajo con lecciones en video para rock clásico, hair metal de los 80s y blues.' },
+                    'pt-BR': { title: 'DadRock Tabs - Tablaturas Grátis de Guitarra e Baixo | Rock Clássico', description: 'Tablaturas grátis de guitarra e baixo com vídeo aulas para rock clássico, hair metal dos anos 80 e blues.' },
+                    'fr': { title: 'DadRock Tabs - Tablatures Gratuites Guitare & Basse | Rock Classique', description: 'Tablatures gratuites de guitare et basse avec leçons vidéo pour rock classique, hair metal des années 80 et blues.' },
+                    'de': { title: 'DadRock Tabs - Kostenlose Gitarren- & Bass-Tabs | Classic Rock', description: 'Kostenlose Gitarren- und Bass-Tabs mit Video-Lektionen für Classic Rock, 80er Hair Metal und Blues.' },
+                    'it': { title: 'DadRock Tabs - Tablature Gratuite Chitarra e Basso | Rock Classico', description: 'Tablature gratuite per chitarra e basso con video lezioni per rock classico, hair metal anni 80 e blues.' },
+                    'ja': { title: 'DadRock Tabs - 無料ギター＆ベースタブ譜 | クラシックロック', description: 'クラシックロック、80年代ヘアメタル、ブルースのビデオレッスン付き無料ギター・ベースタブ譜。' },
+                    'ru': { title: 'DadRock Tabs - Бесплатные Табы для Гитары и Баса | Классический Рок', description: 'Бесплатные табы для гитары и баса с видео уроками для классического рока, хэйр-метала 80-х и блюза.' },
+                    'hi': { title: 'DadRock Tabs - मुफ़्त गिटार और बेस टैब्स | क्लासिक रॉक', description: 'क्लासिक रॉक, 80 के दशक के हेयर मेटल और ब्लूज़ के लिए वीडियो पाठों के साथ मुफ़्त गिटार और बेस टैब्स।' }
+                };
+                var data = seoData[window.__DADROCK_LANG] || seoData['en'];
+                // Write title immediately
+                document.write('<title>' + data.title + '</title>');
+                // Update meta description
+                var descEl = document.querySelector('meta[name="description"]');
+                if (descEl) descEl.content = data.description;
+                // Store for later
+                window.__DADROCK_SEO = data;
+            })();
+        </script>
                         description: 'クラシックロック、80年代ヘアメタル、ブルースのビデオレッスン付き無料ギター・ベースタブ譜。4000以上のチュートリアルを検索。'
                     },
                     'ru': {
