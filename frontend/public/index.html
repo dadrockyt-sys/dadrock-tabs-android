@@ -1,39 +1,85 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Dynamic language detection - runs first -->
+        <!-- Dynamic language detection and SEO updates - runs first -->
         <script>
             (function() {
                 var path = window.location.pathname;
-                var langMap = {
-                    '/es': 'es', '/es/': 'es',
-                    '/pt-br': 'pt-BR', '/pt-br/': 'pt-BR',
-                    '/fr': 'fr', '/fr/': 'fr',
-                    '/de': 'de', '/de/': 'de',
-                    '/it': 'it', '/it/': 'it',
-                    '/ja': 'ja', '/ja/': 'ja',
-                    '/ru': 'ru', '/ru/': 'ru',
-                    '/hi': 'hi', '/hi/': 'hi',
-                    '/en': 'en', '/en/': 'en'
+                var langCodes = {
+                    '/es': 'es', '/pt-br': 'pt-BR', '/fr': 'fr', '/de': 'de',
+                    '/it': 'it', '/ja': 'ja', '/ru': 'ru', '/hi': 'hi', '/en': 'en'
                 };
                 var lang = 'en';
-                for (var prefix in langMap) {
-                    if (path === prefix || path.startsWith(prefix + '/') || path.startsWith(prefix)) {
-                        lang = langMap[prefix];
+                var langPath = '';
+                for (var prefix in langCodes) {
+                    if (path === prefix || path === prefix + '/' || path.startsWith(prefix + '/')) {
+                        lang = langCodes[prefix];
+                        langPath = prefix;
                         break;
                     }
                 }
                 document.documentElement.lang = lang;
                 
-                // Update canonical URL
-                var canonicalUrl = 'https://dadrocktabs.com' + path;
-                if (!canonicalUrl.endsWith('/')) canonicalUrl += '/';
-                var canonical = document.querySelector('link[rel="canonical"]');
-                if (canonical) canonical.href = canonicalUrl;
+                // Language-specific titles and descriptions
+                var seoData = {
+                    'en': {
+                        title: 'DadRock Tabs - Free Guitar & Bass Tabs | Classic Rock, Hair Metal, Blues',
+                        description: 'Free guitar and bass tabs with video lessons for classic rock, 80s hair metal, and blues. Search 4000+ tutorials. Learn Led Zeppelin, AC/DC, Van Halen and more!'
+                    },
+                    'es': {
+                        title: 'DadRock Tabs - Tablaturas Gratis de Guitarra y Bajo | Rock Clásico',
+                        description: 'Tablaturas gratis de guitarra y bajo con lecciones en video para rock clásico, hair metal de los 80s y blues. Busca más de 4000 tutoriales.'
+                    },
+                    'pt-BR': {
+                        title: 'DadRock Tabs - Tablaturas Grátis de Guitarra e Baixo | Rock Clássico',
+                        description: 'Tablaturas grátis de guitarra e baixo com vídeo aulas para rock clássico, hair metal dos anos 80 e blues. Pesquise mais de 4000 tutoriais.'
+                    },
+                    'fr': {
+                        title: 'DadRock Tabs - Tablatures Gratuites Guitare & Basse | Rock Classique',
+                        description: 'Tablatures gratuites de guitare et basse avec leçons vidéo pour rock classique, hair metal des années 80 et blues. Recherchez plus de 4000 tutoriels.'
+                    },
+                    'de': {
+                        title: 'DadRock Tabs - Kostenlose Gitarren- & Bass-Tabs | Classic Rock',
+                        description: 'Kostenlose Gitarren- und Bass-Tabs mit Video-Lektionen für Classic Rock, 80er Hair Metal und Blues. Über 4000 Tutorials durchsuchen.'
+                    },
+                    'it': {
+                        title: 'DadRock Tabs - Tablature Gratuite Chitarra e Basso | Rock Classico',
+                        description: 'Tablature gratuite per chitarra e basso con video lezioni per rock classico, hair metal anni 80 e blues. Cerca oltre 4000 tutorial.'
+                    },
+                    'ja': {
+                        title: 'DadRock Tabs - 無料ギター＆ベースタブ譜 | クラシックロック',
+                        description: 'クラシックロック、80年代ヘアメタル、ブルースのビデオレッスン付き無料ギター・ベースタブ譜。4000以上のチュートリアルを検索。'
+                    },
+                    'ru': {
+                        title: 'DadRock Tabs - Бесплатные Табы для Гитары и Баса | Классический Рок',
+                        description: 'Бесплатные табы для гитары и баса с видео уроками для классического рока, хэйр-метала 80-х и блюза. Ищите среди 4000+ туториалов.'
+                    },
+                    'hi': {
+                        title: 'DadRock Tabs - मुफ़्त गिटार और बेस टैब्स | क्लासिक रॉक',
+                        description: 'क्लासिक रॉक, 80 के दशक के हेयर मेटल और ब्लूज़ के लिए वीडियो पाठों के साथ मुफ़्त गिटार और बेस टैब्स। 4000+ ट्यूटोरियल खोजें।'
+                    }
+                };
                 
-                // Update og:url
+                var data = seoData[lang] || seoData['en'];
+                
+                // Update canonical URL
+                var canonicalUrl = 'https://dadrocktabs.com' + (langPath || '') + '/';
+                document.querySelector('link[rel="canonical"]').href = canonicalUrl;
+                
+                // Update title
+                document.title = data.title;
+                
+                // Update meta description
+                var descMeta = document.querySelector('meta[name="description"]');
+                if (descMeta) descMeta.content = data.description;
+                
+                // Update og:url, og:title, og:description
                 var ogUrl = document.querySelector('meta[property="og:url"]');
+                var ogTitle = document.querySelector('meta[property="og:title"]');
+                var ogDesc = document.querySelector('meta[property="og:description"]');
                 if (ogUrl) ogUrl.content = canonicalUrl;
+                if (ogTitle) ogTitle.content = data.title;
+                if (ogDesc) ogDesc.content = data.description;
             })();
         </script>
         
@@ -50,7 +96,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="theme-color" content="#f59e0b" />
         
-        <!-- SEO Meta Tags -->
+        <!-- SEO Meta Tags (will be updated by script above) -->
         <meta name="google-site-verification" content="6eCPyTvd-e1pcSqsNYjFZhM5SWc3_ySHFfKHc24D2RA" />
         <meta name="description" content="DadRock Tabs - Free guitar and bass tabs, lessons, and tablature for 80s hair metal, classic rock, and blues. Search 4000+ video tutorials. Learn Led Zeppelin, AC/DC, Van Halen, Def Leppard, Motley Crue, Whitesnake, and more!" />
         <meta name="keywords" content="DadRock Tabs, electric guitar, acoustic guitar, guitar tabs, bass tabs, tab, tabs, tablature, backing track, guitar lesson, bass lesson, learn guitar, learn bass, how to play guitar, how to play bass, 80s music, retro rock, heavy metal, hair metal, classic rock, blues rock, intro tabs, solo tabs, lead guitar, riff, rhythm guitar, music lessons, songs, 60s rock, 70s rock, 90s rock, Led Zeppelin tabs, AC/DC tabs, Van Halen tabs, Def Leppard tabs, Motley Crue tabs, Whitesnake tabs, Ozzy Osbourne tabs, Black Sabbath tabs, Metallica tabs, Aerosmith tabs, free guitar lessons, YouTube guitar lessons, dad rock, rock guitar tutorials, blues guitar tabs, hard rock tabs, tabs de guitarra, tablature guitare, cómo tocar, comment jouer, lección de guitarra, cours de guitare" />
@@ -70,7 +116,7 @@
         <link rel="alternate" hreflang="hi" href="https://dadrocktabs.com/hi/" />
         <link rel="alternate" hreflang="x-default" href="https://dadrocktabs.com/" />
         
-        <!-- Open Graph / Facebook -->
+        <!-- Open Graph / Facebook (will be updated by script above) -->
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://dadrocktabs.com/" />
         <meta property="og:title" content="DadRock Tabs - Free Guitar & Bass Tabs | 80s Hair Metal, Classic Rock, Blues" />
