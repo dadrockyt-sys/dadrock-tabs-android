@@ -20,6 +20,14 @@
                 window.__DADROCK_LANG = lang;
                 window.__DADROCK_LANG_PATH = langPath;
                 window.__DADROCK_CANONICAL = 'https://dadrocktabs.com' + (langPath || '') + '/';
+                
+                // Write CSS to show only the correct language content
+                var langId = lang.toLowerCase().replace('-', '-');
+                if (langPath === '/pt-br') langId = 'pt-br';
+                else if (langPath === '') langId = 'en';
+                else langId = langPath.substring(1);
+                
+                document.write('<style>.seo-lang{display:none !important}#seo-' + langId + '{display:block !important}</style>');
             })();
         </script>
         
