@@ -378,6 +378,13 @@
                 var langMatch = path.match(/^\/(en|es|pt-br|fr|de|it|ja|ru|hi)(\/|$)/);
                 if (langMatch) lang = langMatch[1];
                 
+                // Hide all language sections first
+                var allLangs = document.querySelectorAll('.seo-lang');
+                for (var i = 0; i < allLangs.length; i++) {
+                    allLangs[i].style.display = 'none';
+                }
+                
+                // Show the correct language
                 var el = document.getElementById('seo-' + lang);
                 if (el) el.style.display = 'block';
                 else document.getElementById('seo-en').style.display = 'block';
