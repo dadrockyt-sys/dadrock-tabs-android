@@ -21,15 +21,25 @@
                 window.__DADROCK_LANG_PATH = langPath;
                 window.__DADROCK_CANONICAL = 'https://dadrocktabs.com' + (langPath || '') + '/';
                 
-                // Write CSS to show only the correct language content
-                var langId = lang.toLowerCase().replace('-', '-');
-                if (langPath === '/pt-br') langId = 'pt-br';
-                else if (langPath === '') langId = 'en';
-                else langId = langPath.substring(1);
-                
-                document.write('<style>.seo-lang{display:none !important}#seo-' + langId + '{display:block !important}</style>');
+                // Determine language ID for CSS
+                var langId = langPath ? langPath.substring(1) : 'en';
+                window.__DADROCK_LANG_ID = langId;
             })();
         </script>
+        
+        <!-- CSS to control which language content is shown - written synchronously -->
+        <script>
+            document.write('<style>');
+            document.write('.seo-lang { display: none !important; }');
+            document.write('#seo-' + window.__DADROCK_LANG_ID + ' { display: block !important; }');
+            document.write('.seo-lang:not(#seo-' + window.__DADROCK_LANG_ID + ') h1, ');
+            document.write('.seo-lang:not(#seo-' + window.__DADROCK_LANG_ID + ') p, ');
+            document.write('.seo-lang:not(#seo-' + window.__DADROCK_LANG_ID + ') ul { display: none !important; }');
+            document.write('</style>');
+        </script>
+        
+        <!-- Dynamic canonical URL -->
+        <script>document.write('<link rel="canonical" href="' + window.__DADROCK_CANONICAL + '" />');</script>
         
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-92RKGQW8NJ"></script>
