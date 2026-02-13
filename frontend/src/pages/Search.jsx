@@ -65,9 +65,13 @@ const VideoCard = ({ video, onClick }) => {
 
 const Search = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
   const initialType = searchParams.get("type") || "all";
+  
+  // Get current language
+  const currentLang = getLanguageFromPath(location.pathname);
 
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [searchType, setSearchType] = useState(initialType);
