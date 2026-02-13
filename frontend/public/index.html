@@ -173,6 +173,39 @@
         }
         </script>
         
+        <!-- Language-specific JSON-LD structured data -->
+        <script>
+            (function() {
+                var jsonLdData = {
+                    'en': { name: 'DadRock Tabs - Guitar & Bass Lessons', description: 'Free guitar and bass tabs with video lessons for classic rock, 80s hair metal, and blues.', inLanguage: 'en' },
+                    'es': { name: 'DadRock Tabs - Lecciones de Guitarra y Bajo', description: 'Tablaturas gratis de guitarra y bajo con lecciones en video para rock clásico.', inLanguage: 'es' },
+                    'pt-br': { name: 'DadRock Tabs - Aulas de Guitarra e Baixo', description: 'Tablaturas grátis de guitarra e baixo com vídeo aulas para rock clássico.', inLanguage: 'pt-BR' },
+                    'fr': { name: 'DadRock Tabs - Cours de Guitare et Basse', description: 'Tablatures gratuites de guitare et basse avec leçons vidéo pour rock classique.', inLanguage: 'fr' },
+                    'de': { name: 'DadRock Tabs - Gitarren- und Bass-Unterricht', description: 'Kostenlose Gitarren- und Bass-Tabs mit Video-Lektionen für Classic Rock.', inLanguage: 'de' },
+                    'it': { name: 'DadRock Tabs - Lezioni di Chitarra e Basso', description: 'Tablature gratuite per chitarra e basso con video lezioni per rock classico.', inLanguage: 'it' },
+                    'ja': { name: 'DadRock Tabs - ギターとベースのレッスン', description: 'クラシックロックのビデオレッスン付き無料ギター・ベースタブ譜。', inLanguage: 'ja' },
+                    'ru': { name: 'DadRock Tabs - Уроки Гитары и Баса', description: 'Бесплатные табы для гитары и баса с видео уроками для классического рока.', inLanguage: 'ru' },
+                    'hi': { name: 'DadRock Tabs - गिटार और बेस पाठ', description: 'क्लासिक रॉक के लिए वीडियो पाठों के साथ मुफ़्त गिटार और बेस टैब्स।', inLanguage: 'hi' }
+                };
+                var langId = window.__DADROCK_LANG_ID || 'en';
+                var data = jsonLdData[langId] || jsonLdData['en'];
+                var jsonLd = {
+                    "@context": "https://schema.org",
+                    "@type": "WebPage",
+                    "name": data.name,
+                    "description": data.description,
+                    "url": window.__DADROCK_CANONICAL,
+                    "inLanguage": data.inLanguage,
+                    "isPartOf": {
+                        "@type": "WebSite",
+                        "name": "DadRock Tabs",
+                        "url": "https://dadrocktabs.com"
+                    }
+                };
+                document.write('<script type="application/ld+json">' + JSON.stringify(jsonLd) + '<\/script>');
+            })();
+        </script>
+        
         <!-- Google AdSense -->
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6391677195320364" crossorigin="anonymous"></script>
         <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
