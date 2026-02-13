@@ -210,6 +210,9 @@ Object.entries(languages).forEach(([langCode, config]) => {
     html = html.replace('</head>', `${jsonLdScript}\n</head>`);
   }
   
+  // 9. Clean up empty script tags left over from removed document.write calls
+  html = html.replace(/<script><\/script>/g, '');
+  
   // Create directory if needed
   const langDir = langCode === 'en' ? buildDir : path.join(buildDir, langCode);
   if (langCode !== 'en' && !fs.existsSync(langDir)) {
