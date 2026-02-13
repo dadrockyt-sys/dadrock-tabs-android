@@ -178,6 +178,11 @@ const Search = () => {
                 Search
               </Button>
             </form>
+            
+            {/* Language Selector */}
+            <div className="hidden md:block">
+              <LanguageSelector currentLang={currentLang} />
+            </div>
           </div>
         </div>
       </header>
