@@ -107,12 +107,21 @@ videos: {
 - [ ] Custom domain sitemap fix
 
 ## Known Issues
+- **Deployment Sync**: Changes may not immediately reflect on live domain (platform issue - contact Emergent Support)
+- **Android Build**: GitHub Actions workflow may need adjustments for SDK 35 requirement
 - Sitemap returns 404 on custom domain (dadrocktabs.com) - works on preview URL
 - Workaround: Use Google URL Inspection tool for manual indexing
 
 ## Recent Fixes (Feb 2025)
+- **Multi-Language SEO Pre-rendering**: Created `generate-lang-pages.js` post-build script that generates separate static HTML files for each of the 9 supported languages. Each language page now has:
+  - Correct `<html lang="">` attribute
+  - Static `<link rel="canonical">` tag for that language
+  - Localized `<title>`, `<meta description>`, `og:title`, `og:description`, `twitter:title`, `twitter:description`
+  - Only the relevant language's static SEO content in the body
+  - Proper JSON-LD structured data
+- **Featured Video Admin Panel**: Added ability for admin to change the featured video URL, title, and artist dynamically
 - **Android App Blank Screen Fix**: Added `dadrocktabs.com` and YouTube domains to `network_security_config.xml`
-- **SDK Downgrade**: Downgraded from SDK 35 to SDK 34 for stable GitHub Actions builds
+- **SDK Configuration**: Using SDK 34 for stable builds
 - **Gradle Version**: Updated to Gradle 8.2 and Android Gradle Plugin 8.2.2
 - **Capacitor Config**: Added `allowNavigation` for YouTube domains
 - **Version Bump**: v1.3 (versionCode 4)
