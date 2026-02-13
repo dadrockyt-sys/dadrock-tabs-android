@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Search as SearchIcon, ArrowLeft, Play, User, Music } from "lucide-react";
 
@@ -14,9 +14,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
+import LanguageSelector from "@/components/LanguageSelector";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+
+// Detect language from URL path
+const getLanguageFromPath = (pathname) => {
+  const langMatch = pathname.match(/^\/(en|es|pt-br|fr|de|it|ja|ru|hi)(\/|$)/);
+  return langMatch ? langMatch[1] : "en";
+};
 
 const VideoCard = ({ video, onClick }) => {
   return (
