@@ -149,6 +149,16 @@ Object.entries(languages).forEach(([langCode, config]) => {
     `<meta property="og:description" content="${config.description}"`
   );
   
+  // 5b. Update twitter:title and twitter:description
+  html = html.replace(
+    /<meta name="twitter:title" content="[^"]*"/,
+    `<meta name="twitter:title" content="${config.title}"`
+  );
+  html = html.replace(
+    /<meta name="twitter:description" content="[^"]*"/,
+    `<meta name="twitter:description" content="${config.description}"`
+  );
+  
   // 6. Remove all seo-lang sections EXCEPT the current language
   const allLangCodes = Object.keys(languages);
   
