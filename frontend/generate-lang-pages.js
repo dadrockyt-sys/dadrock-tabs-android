@@ -77,10 +77,51 @@ Object.entries(languages).forEach(([langCode, config]) => {
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${config.lang}"`);
   
   // 2. Replace ALL occurrences of dynamic canonical with static one
-  // Handle minified version: '+window.__DADROCK_CANONICAL+'
-  html = html.replace(/'\+window\.__DADROCK_CANONICAL\+'/g, `"${config.canonical}"`);
-  html = html.replace(/"\+window\.__DADROCK_CANONICAL\+"/g, `"${config.canonical}"`);
-  html = html.replace(/window\.__DADROCK_CANONICAL/g, `"${config.canonical}"`);
+  // Handle minified version where it appears as string concatenation
+  // The minified code might look like: "https://dadrocktabs.com"+(e||"")+"/"
+  // We need to replace window.__DADROCK_CANONICAL assignments and usages
+  
+  // Replace the assignment in the first script
+  html = html.replace(
+    /window\.__DADROCK_CANONICAL="https:\/\/dadrocktabs\.com"\+\([^)]+\)\+"\/"/g,
+    `window.__DADROCK_CANONICAL="${config.canonical}"`
+  );
+  
+  // Replace document.write for canonical link
+  html = html.replace(
+    /document\.write\('<link rel="canonical" href="'\+window\.__DADROCK_CANONICAL\+'" \/>'\)/g,
+    ''
+  );
+  html = html.replace(
+    /document\.write\('<link rel="canonical" href="'\+"https:\/\/dadrocktabs\.com\/fr\/"\+'" \/>'\)/g,
+    ''
+  );
+  
+  // Remove any existing dynamic canonical scripts and add static canonical
+  html = html.replace(
+    /<script>document\.write\('<link rel="canonical"[^<]*<\/script>/g,
+    ''
+  );
+  
+  // Add static canonical link after robots meta
+  if (!html.includes(`<link rel="canonical" href="${config.canonical}"`)) {
+    html = html.replace(
+      /<meta name="robots"[^>]*>/,
+      `$&\n<link rel="canonical" href="${config.canonical}" />`
+    );
+  }
+  
+  // Replace dynamic og:url
+  html = html.replace(
+    /<script>document\.write\('<meta property="og:url"[^<]*<\/script>/g,
+    `<meta property="og:url" content="${config.canonical}" />`
+  );
+  
+  // Replace dynamic twitter:url  
+  html = html.replace(
+    /<script>document\.write\('<meta name="twitter:url"[^<]*<\/script>/g,
+    `<meta name="twitter:url" content="${config.canonical}" />`
+  );
   
   // 3. Add static title if not present (after </head> opening scripts)
   // First remove any dynamic title generation
