@@ -114,6 +114,7 @@ videos: {
 - Workaround: Use Google URL Inspection tool for manual indexing
 
 ## Recent Fixes (Feb 2025)
+- **Language Selector UI**: Added a dropdown language selector to the header that allows users to switch between all 9 supported languages. Shows flag + language code, with full dropdown of all language options.
 - **Multi-Language SEO Pre-rendering**: Created `generate-lang-pages.js` post-build script that generates separate static HTML files for each of the 9 supported languages. Each language page now has:
   - Correct `<html lang="">` attribute
   - Static `<link rel="canonical">` tag for that language
