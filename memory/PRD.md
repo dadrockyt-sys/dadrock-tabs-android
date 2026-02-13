@@ -83,6 +83,7 @@ videos: {
 - **Featured Video**: Admin-configurable YouTube embed (Feb 2025)
 - **Multi-language Support**: 9 languages (EN, ES, PT-BR, FR, DE, IT, JA, RU, HI)
 - **Multi-language SEO**: Pre-rendered static HTML files for each language (Feb 2025)
+- **Language Selector**: UI dropdown for switching between languages (Feb 2025)
 
 ## Prioritized Backlog
 ### P0 (Complete)
