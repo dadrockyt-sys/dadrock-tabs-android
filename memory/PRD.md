@@ -80,8 +80,9 @@ videos: {
 - **All core features**: WORKING
 - **PWA**: WORKING
 - **Android App**: Ready for Play Store (loads live URL)
-- **Featured Video**: YouTube Shorts embed added (Feb 2025)
-- **Multi-language Support**: 8 languages (EN, ES, PT-BR, FR, DE, IT, JA, RU)
+- **Featured Video**: Admin-configurable YouTube embed (Feb 2025)
+- **Multi-language Support**: 9 languages (EN, ES, PT-BR, FR, DE, IT, JA, RU, HI)
+- **Multi-language SEO**: Pre-rendered static HTML files for each language (Feb 2025)
 
 ## Prioritized Backlog
 ### P0 (Complete)
