@@ -128,21 +128,22 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet" />
         
-        <!-- Structured Data for SEO -->
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "DadRock Tabs",
-            "alternateName": ["Dad Rock Tabs", "DadRock Guitar Tabs"],
-            "url": "https://dadrocktabs.com",
-            "description": "Free guitar and bass tabs, lessons, and tablature for 80s hair metal, classic rock, and blues music. Over 4000 video tutorials.",
-            "potentialAction": {
-                "@type": "SearchAction",
-                "target": "https://dadrocktabs.com/search?q={search_term_string}",
-                "query-input": "required name=search_term_string"
-            }
-        }
+        <!-- Structured Data for SEO - Dynamic URL based on language -->
+        <script>
+            document.write('<script type="application/ld+json">' + JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "DadRock Tabs",
+                "alternateName": ["Dad Rock Tabs", "DadRock Guitar Tabs"],
+                "url": window.__DADROCK_CANONICAL,
+                "description": "Free guitar and bass tabs, lessons, and tablature for 80s hair metal, classic rock, and blues music. Over 4000 video tutorials.",
+                "inLanguage": window.__DADROCK_LANG,
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://dadrocktabs.com/search?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            }) + '<\/script>');
         </script>
         <script type="application/ld+json">
         {
