@@ -29,13 +29,14 @@
         
         <!-- CSS to control which language content is shown - written synchronously -->
         <script>
-            document.write('<style>');
-            document.write('.seo-lang { display: none !important; }');
-            document.write('#seo-' + window.__DADROCK_LANG_ID + ' { display: block !important; }');
-            document.write('.seo-lang:not(#seo-' + window.__DADROCK_LANG_ID + ') h1, ');
-            document.write('.seo-lang:not(#seo-' + window.__DADROCK_LANG_ID + ') p, ');
-            document.write('.seo-lang:not(#seo-' + window.__DADROCK_LANG_ID + ') ul { display: none !important; }');
-            document.write('</style>');
+            // Remove hidden attribute from correct language, keep it on others
+            document.addEventListener('DOMContentLoaded', function() {
+                var langId = window.__DADROCK_LANG_ID || 'en';
+                var correctEl = document.getElementById('seo-' + langId);
+                if (correctEl) {
+                    correctEl.removeAttribute('hidden');
+                }
+            });
         </script>
         
         <!-- Dynamic canonical URL -->
