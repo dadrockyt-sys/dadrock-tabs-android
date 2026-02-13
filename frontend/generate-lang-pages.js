@@ -76,21 +76,20 @@ Object.entries(languages).forEach(([langCode, config]) => {
   // 1. Set the correct lang attribute on <html>
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${config.lang}"`);
   
-  // 2. Replace the dynamic canonical with a static one
-  // Remove the document.write for canonical and add static link
-  html = html.replace(
-    /<script>document\.write\('<link rel="canonical" href="' \+ window\.__DADROCK_CANONICAL \+ '" \/>';\)<\/script>/,
-    `<link rel="canonical" href="${config.canonical}" />`
-  );
+  // 2. Replace ALL occurrences of dynamic canonical with static one
+  // Handle minified version: '+window.__DADROCK_CANONICAL+'
+  html = html.replace(/'\+window\.__DADROCK_CANONICAL\+'/g, `"${config.canonical}"`);
+  html = html.replace(/"\+window\.__DADROCK_CANONICAL\+"/g, `"${config.canonical}"`);
+  html = html.replace(/window\.__DADROCK_CANONICAL/g, `"${config.canonical}"`);
   
-  // 3. Set static title (remove dynamic title generation and add static)
-  // Find and replace the dynamic title script
-  const titleScriptRegex = /document\.write\('<title>' \+ data\.title \+ '<\/title>'\);/;
-  html = html.replace(titleScriptRegex, '');
+  // 3. Add static title if not present (after </head> opening scripts)
+  // First remove any dynamic title generation
+  html = html.replace(/document\.write\("<title>"\+[^)]+\+"<\/title>"\)/g, '');
+  html = html.replace(/document\.write\('<title>'\+[^)]+\+'<\/title>'\)/g, '');
   
-  // Add static title tag if not present
+  // Add title right after <head>
   if (!html.includes(`<title>${config.title}</title>`)) {
-    html = html.replace('</head>', `<title>${config.title}</title>\n</head>`);
+    html = html.replace(/<head>/, `<head>\n<title>${config.title}</title>`);
   }
   
   // 4. Update meta description
@@ -99,42 +98,51 @@ Object.entries(languages).forEach(([langCode, config]) => {
     `<meta name="description" content="${config.description}"`
   );
   
-  // 5. Update og:url
+  // 5. Update og:title and og:description
   html = html.replace(
-    /<script>document\.write\('<meta property="og:url" content="' \+ window\.__DADROCK_CANONICAL \+ '" \/>';\)<\/script>/,
-    `<meta property="og:url" content="${config.canonical}" />`
+    /<meta property="og:title" content="[^"]*"/,
+    `<meta property="og:title" content="${config.title}"`
+  );
+  html = html.replace(
+    /<meta property="og:description" content="[^"]*"/,
+    `<meta property="og:description" content="${config.description}"`
   );
   
   // 6. Remove all seo-lang sections EXCEPT the current language
-  // This is the key part - we only keep the matching language content
   const allLangCodes = Object.keys(languages);
   
   allLangCodes.forEach(otherLang => {
     if (otherLang !== langCode) {
-      // Remove the entire div for other languages
-      const seoRegex = new RegExp(
-        `<div id="seo-${otherLang}" class="seo-lang"[^>]*>[\\s\\S]*?<\\/div>\\s*(?=<div id="seo-|<!-- Shared content)`,
-        'g'
-      );
-      html = html.replace(seoRegex, '');
+      // Remove the entire div for other languages - handle both minified and non-minified
+      // Pattern: <div id="seo-XX" class="seo-lang" ...>...</div>
+      const patterns = [
+        // Non-minified with hidden attribute
+        new RegExp(`<div id="seo-${otherLang}" class="seo-lang" hidden[^>]*>[\\s\\S]*?<\\/div>\\s*(?=<div id="seo-|<!-- Shared)`, 'g'),
+        // Minified version
+        new RegExp(`<div id="seo-${otherLang}" class="seo-lang"[^>]*>[\\s\\S]*?<\\/div>(?=<div id="seo-|<div id="seo-shared)`, 'g'),
+      ];
+      
+      patterns.forEach(regex => {
+        html = html.replace(regex, '');
+      });
     }
   });
   
-  // 7. Make the current language section visible (remove hidden attribute and display:none)
+  // 7. Make the current language section visible
   html = html.replace(
-    new RegExp(`<div id="seo-${langCode}" class="seo-lang" hidden style="display: none;">`),
-    `<div id="seo-${langCode}" class="seo-lang" style="display: block;">`
+    new RegExp(`<div id="seo-${langCode}" class="seo-lang" hidden`, 'g'),
+    `<div id="seo-${langCode}" class="seo-lang"`
   );
   html = html.replace(
-    new RegExp(`<div id="seo-${langCode}" class="seo-lang" hidden>`),
-    `<div id="seo-${langCode}" class="seo-lang" style="display: block;">`
+    new RegExp(`id="seo-${langCode}" class="seo-lang" style="display:\\s*none;?"`, 'g'),
+    `id="seo-${langCode}" class="seo-lang" style="display:block"`
   );
   
-  // 8. Update JSON-LD WebPage data to be static
+  // 8. Add static JSON-LD for this language
   const webPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": config.title.split(' - ')[0] + ' - ' + (config.lang === 'en' ? 'Guitar & Bass Lessons' : config.title.split(' | ')[0].split(' - ')[1]),
+    "name": config.title,
     "description": config.description,
     "url": config.canonical,
     "inLanguage": config.lang,
@@ -145,15 +153,11 @@ Object.entries(languages).forEach(([langCode, config]) => {
     }
   };
   
-  // Remove dynamic JSON-LD and add static one
-  // This regex finds and removes the dynamic WebPage JSON-LD script
-  const jsonLdScriptRegex = /<script>\s*\(function\(\)\s*\{\s*var jsonLdData[\s\S]*?<\\\/script>'\);\s*\}\)\(\);\s*<\/script>/;
-  html = html.replace(jsonLdScriptRegex, 
-    `<script type="application/ld+json">${JSON.stringify(webPageJsonLd, null, 2)}</script>`
-  );
-  
-  // 9. Clean up unnecessary dynamic scripts for this static version
-  // Keep the language detection for React app functionality but the SEO content is now static
+  // Add JSON-LD before </head>
+  const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(webPageJsonLd)}</script>`;
+  if (!html.includes('"@type":"WebPage"')) {
+    html = html.replace('</head>', `${jsonLdScript}\n</head>`);
+  }
   
   // Create directory if needed
   const langDir = langCode === 'en' ? buildDir : path.join(buildDir, langCode);
@@ -172,3 +176,4 @@ Object.entries(languages).forEach(([langCode, config]) => {
 
 console.log('\n🎉 Language-specific HTML generation complete!');
 console.log(`   Generated ${Object.keys(languages).length} language versions.`);
+
