@@ -29,14 +29,34 @@
         
         <!-- CSS to control which language content is shown - written synchronously -->
         <script>
-            // Remove hidden attribute from correct language, keep it on others
-            document.addEventListener('DOMContentLoaded', function() {
+            // IMMEDIATELY remove non-matching language content from DOM
+            // This runs synchronously before Google can see the content
+            (function() {
                 var langId = window.__DADROCK_LANG_ID || 'en';
-                var correctEl = document.getElementById('seo-' + langId);
-                if (correctEl) {
-                    correctEl.removeAttribute('hidden');
+                // Write CSS to hide everything first
+                document.write('<style>.seo-lang{display:none!important}</style>');
+                
+                // Schedule DOM removal for when elements exist
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', removeOtherLangs);
+                } else {
+                    setTimeout(removeOtherLangs, 0);
                 }
-            });
+                
+                function removeOtherLangs() {
+                    var allLangs = document.querySelectorAll('.seo-lang');
+                    for (var i = 0; i < allLangs.length; i++) {
+                        var el = allLangs[i];
+                        if (el.id === 'seo-' + langId) {
+                            el.removeAttribute('hidden');
+                            el.style.display = 'block';
+                        } else {
+                            // REMOVE from DOM entirely so Google can't see it
+                            el.parentNode.removeChild(el);
+                        }
+                    }
+                }
+            })();
         </script>
         
         <!-- Dynamic canonical URL -->
