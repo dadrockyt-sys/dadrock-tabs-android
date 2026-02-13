@@ -4,6 +4,7 @@ import { Search, Download, ShoppingBag, MessageSquarePlus, Heart, Youtube, Share
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getTranslation } from "@/translations";
+import LanguageSelector from "@/components/LanguageSelector";
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const BANNER_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/u9nzw1f2_20201025_123236.jpg";
