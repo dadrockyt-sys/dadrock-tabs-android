@@ -60,7 +60,9 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "craco build && node generate-lang-pages.js",
+    "build:only": "craco build",
+    "generate-langs": "node generate-lang-pages.js",
     "test": "craco test"
   },
   "browserslist": {
