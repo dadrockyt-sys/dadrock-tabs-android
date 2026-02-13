@@ -135,6 +135,7 @@ const Home = () => {
             </div>
             {/* Top Right Buttons */}
             <div className="absolute top-4 right-4 flex gap-2">
+              <LanguageSelector currentLang={currentLang} />
               <a
                 href="https://my-store-b8bb42.creator-spring.com"
                 target="_blank"
