@@ -124,7 +124,7 @@ const Home = () => {
         {/* Content */}
         <div className="relative z-10 flex flex-col min-h-screen">
           {/* Header with Banner - extra top padding on mobile for phone status bar */}
-          <header className="relative pt-10 sm:pt-0">
+          <header className="relative pt-8 sm:pt-0">
             {/* Banner Image */}
             <div className="w-full h-14 sm:h-16 md:h-20 lg:h-24 overflow-hidden bg-black">
               <img 
@@ -133,8 +133,34 @@ const Home = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            {/* Top Right Buttons - positioned relative to banner on mobile */}
-            <div className="absolute top-12 sm:top-4 right-4 flex gap-2 z-20">
+            
+            {/* Mobile: Buttons below banner in a row */}
+            <div className="flex sm:hidden justify-end gap-2 px-4 py-2 bg-black">
+              <LanguageSelector currentLang={currentLang} />
+              <a
+                href="https://my-store-b8bb42.creator-spring.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-primary hover:text-primary/80 bg-zinc-900/80 backdrop-blur-sm rounded-md transition-colors border border-zinc-700/50"
+                data-testid="merch-link-mobile"
+              >
+                <ShoppingBag className="w-4 h-4" />
+              </a>
+              {showInstallButton && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleInstall}
+                  className="text-primary hover:text-primary/80 bg-zinc-900/80 backdrop-blur-sm border border-zinc-700/50"
+                  data-testid="install-app-button-mobile"
+                >
+                  <Download className="w-4 h-4" />
+                </Button>
+              )}
+            </div>
+            
+            {/* Desktop: Buttons absolute positioned over banner */}
+            <div className="hidden sm:flex absolute top-4 right-4 gap-2 z-20">
               <LanguageSelector currentLang={currentLang} />
               <a
                 href="https://my-store-b8bb42.creator-spring.com"
@@ -144,7 +170,7 @@ const Home = () => {
                 data-testid="merch-link"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span className="hidden sm:inline">{t.supportMerch}</span>
+                <span>{t.supportMerch}</span>
               </a>
               {showInstallButton && (
                 <Button
@@ -155,14 +181,14 @@ const Home = () => {
                   data-testid="install-app-button"
                 >
                   <Download className="w-5 h-5 mr-1" />
-                  <span className="hidden sm:inline">Install</span>
+                  <span>Install</span>
                 </Button>
               )}
             </div>
           </header>
 
-          {/* Main Content */}
-          <main className="flex-1 flex flex-col items-center justify-center px-4 pt-4 md:pt-0 md:-mt-10">
+          {/* Main Content - more top padding on desktop to push content lower */}
+          <main className="flex-1 flex flex-col items-center justify-center px-4 pt-4 md:pt-8 lg:pt-12">
             {/* Logo and Definition Section */}
             <div className="w-full max-w-4xl mb-6 md:mb-8 fade-in px-4">
               <div className="flex flex-col items-center md:flex-row md:items-center md:justify-center gap-4 md:gap-10">
