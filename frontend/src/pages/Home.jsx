@@ -123,8 +123,8 @@ const Home = () => {
       <div className="min-h-screen relative">
         {/* Content */}
         <div className="relative z-10 flex flex-col min-h-screen">
-          {/* Header with Banner */}
-          <header className="relative">
+          {/* Header with Banner - extra top padding on mobile for phone status bar */}
+          <header className="relative pt-10 sm:pt-0">
             {/* Banner Image */}
             <div className="w-full h-14 sm:h-16 md:h-20 lg:h-24 overflow-hidden bg-black">
               <img 
@@ -133,8 +133,8 @@ const Home = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            {/* Top Right Buttons - positioned lower on mobile to avoid status bar */}
-            <div className="absolute top-16 sm:top-4 right-4 flex gap-2 z-20">
+            {/* Top Right Buttons - positioned relative to banner on mobile */}
+            <div className="absolute top-12 sm:top-4 right-4 flex gap-2 z-20">
               <LanguageSelector currentLang={currentLang} />
               <a
                 href="https://my-store-b8bb42.creator-spring.com"
