@@ -133,8 +133,8 @@ const Home = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            {/* Top Right Buttons */}
-            <div className="absolute top-4 right-4 flex gap-2">
+            {/* Top Right Buttons - positioned lower on mobile to avoid status bar */}
+            <div className="absolute top-16 sm:top-4 right-4 flex gap-2 z-20">
               <LanguageSelector currentLang={currentLang} />
               <a
                 href="https://my-store-b8bb42.creator-spring.com"
