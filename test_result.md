@@ -158,15 +158,18 @@ backend:
 
   - task: "Admin settings update API"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/api/[[...path]]/route.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
         - comment: "PUT /api/admin/settings - needs testing"
+        - working: true
+        - agent: "testing"
+        - comment: "✅ PUT /api/admin/settings fully working - accepts featured_video_url, title, artist. Properly handles Basic Auth and returns success response. Converts YouTube URLs to embed format."
 
   - task: "Admin video CRUD APIs"
     implemented: true
