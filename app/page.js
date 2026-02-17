@@ -326,9 +326,14 @@ export default function App() {
 
           {/* Definition */}
           <div className="text-center mb-6 max-w-xl">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              DadRock <span className="text-amber-500 font-normal">[dad-rok]</span>
-            </h2>
+            <div className="flex items-center justify-center gap-2 flex-wrap">
+              <img 
+                src={DADROCK_TEXT_URL} 
+                alt="DadRock" 
+                className="h-8 sm:h-10"
+              />
+              <span className="text-amber-500 text-xl sm:text-2xl">[dad-rok]</span>
+            </div>
             <p className="text-zinc-500 italic text-sm mt-1">n.</p>
             <p className="text-zinc-300 mt-2 leading-relaxed">
               Rock music that appeals to an older generation; or is heavily influenced by that of an earlier era.
