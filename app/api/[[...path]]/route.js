@@ -4,6 +4,28 @@ import { v4 as uuidv4 } from 'uuid';
 
 // Admin password from env
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'dadrock2024';
+const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY || '';
+const DADROCK_CHANNEL_ID = 'UCLN8LV-ojTQP2wPtDg1kvGQ'; // DadRock Tabs channel ID
+
+// Helper to parse video title to extract song and artist
+function parseVideoTitle(title) {
+  // Remove common suffixes
+  let cleanTitle = title.replace(/\s*(Guitar|Bass|TAB|TABS|Lesson|Tutorial|\+|\(|\)|\[|\]|HD|Official).*/gi, '').trim();
+  
+  // Try to split by " - "
+  if (cleanTitle.includes(' - ')) {
+    const parts = cleanTitle.split(' - ', 2);
+    return { song: parts[0].trim(), artist: parts[1]?.trim() || 'DadRock Tabs' };
+  }
+  
+  // Try to split by " by "
+  const byMatch = cleanTitle.match(/(.+?)\s+by\s+(.+)/i);
+  if (byMatch) {
+    return { song: byMatch[1].trim(), artist: byMatch[2].trim() };
+  }
+  
+  return { song: cleanTitle, artist: 'DadRock Tabs' };
+}
 
 // Helper to extract YouTube thumbnail
 function extractYouTubeThumbnail(url) {
