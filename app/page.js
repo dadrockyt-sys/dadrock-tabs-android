@@ -127,6 +127,25 @@ export default function App() {
 
   const t = getTranslation(currentLang);
 
+  // Featured video state
+  const [featuredVideo, setFeaturedVideo] = useState(null);
+
+  // Load featured video on mount
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data) {
+          setFeaturedVideo({
+            url: data.featured_video_url,
+            title: data.featured_video_title,
+            artist: data.featured_video_artist
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   // Check admin auth on mount
   useEffect(() => {
     const authToken = sessionStorage.getItem('dadrock_admin_auth');
