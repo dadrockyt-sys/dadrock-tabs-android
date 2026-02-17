@@ -424,7 +424,7 @@ export default function App() {
           {/* Action Buttons */}
           <div className="w-full max-w-md space-y-3">
             <a
-              href="https://buymeacoffee.com/dadrocktabs"
+              href="https://buymeacoffee.com/dadrockytq/commissions"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full py-3.5 rounded-full bg-amber-500 hover:bg-amber-400 text-black font-bold uppercase tracking-wide transition-colors"
