@@ -434,7 +434,7 @@ export default function App() {
             </a>
             <div className="flex gap-3">
               <a
-                href="https://buymeacoffee.com/dadrocktabs"
+                href="https://www.paypal.com/donate?hosted_button_id=FKZ2C3QW9ZBTE"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white transition-all"
