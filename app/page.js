@@ -295,10 +295,11 @@ export default function App() {
         {/* Header */}
         <header className="flex items-center justify-between px-4 py-3 bg-black border-b border-zinc-900">
           <div className="flex-1" />
-          <h1 className="text-xl sm:text-2xl font-bold tracking-wide">
-            <span className="text-amber-500">DADROCK</span>
-            <span className="text-white ml-2">Guitar Tabs</span>
-          </h1>
+          <img 
+            src={BANNER_URL} 
+            alt="DadRock Guitar Tabs" 
+            className="h-8 sm:h-10 md:h-12"
+          />
           <div className="flex-1 flex justify-end items-center gap-2">
             <LanguageSelector currentLang={currentLang} onLanguageChange={setCurrentLang} />
             <a
