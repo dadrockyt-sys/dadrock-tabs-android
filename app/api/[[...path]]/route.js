@@ -193,6 +193,107 @@ export async function POST(request, context) {
       return NextResponse.json({ error: 'Invalid password' }, { status: 401 });
     }
 
+    // YouTube sync endpoint
+    if (path === '/admin/youtube/sync') {
+      if (!verifyAdmin(request)) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+
+      const body = await request.json().catch(() => ({}));
+      const apiKey = body.api_key || YOUTUBE_API_KEY;
+      const channelId = body.channel_id || DADROCK_CHANNEL_ID;
+
+      if (!apiKey) {
+        return NextResponse.json({ error: 'YouTube API key not configured' }, { status: 400 });
+      }
+
+      try {
+        // First, get the uploads playlist ID for the channel
+        const channelResponse = await fetch(
+          `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${channelId}&key=${apiKey}`
+        );
+        const channelData = await channelResponse.json();
+
+        if (channelData.error) {
+          return NextResponse.json({ error: channelData.error.message }, { status: 400 });
+        }
+
+        if (!channelData.items || channelData.items.length === 0) {
+          return NextResponse.json({ error: 'Channel not found' }, { status: 404 });
+        }
+
+        const uploadsPlaylistId = channelData.items[0].contentDetails.relatedPlaylists.uploads;
+        const db = await getDb();
+
+        let videosAdded = 0;
+        let videosSkipped = 0;
+        let nextPageToken = null;
+        const errors = [];
+
+        // Fetch all videos from uploads playlist (paginated)
+        do {
+          const playlistUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=50&key=${apiKey}${nextPageToken ? `&pageToken=${nextPageToken}` : ''}`;
+          
+          const playlistResponse = await fetch(playlistUrl);
+          const playlistData = await playlistResponse.json();
+
+          if (playlistData.error) {
+            errors.push(playlistData.error.message);
+            break;
+          }
+
+          for (const item of playlistData.items || []) {
+            const snippet = item.snippet;
+            const videoId = snippet.resourceId.videoId;
+            const title = snippet.title;
+            const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
+            const thumbnail = snippet.thumbnails?.high?.url || snippet.thumbnails?.default?.url || '';
+
+            // Check if video already exists
+            const existing = await db.collection('videos').findOne({ youtube_url: youtubeUrl });
+            if (existing) {
+              videosSkipped++;
+              continue;
+            }
+
+            // Parse title to get song and artist
+            const { song, artist } = parseVideoTitle(title);
+
+            // Create video entry
+            const video = {
+              id: uuidv4(),
+              song,
+              artist,
+              youtube_url: youtubeUrl,
+              thumbnail,
+              created_at: new Date().toISOString()
+            };
+
+            try {
+              await db.collection('videos').insertOne(video);
+              videosAdded++;
+            } catch (e) {
+              errors.push(`Failed to add '${title}': ${e.message}`);
+            }
+          }
+
+          nextPageToken = playlistData.nextPageToken;
+        } while (nextPageToken);
+
+        return NextResponse.json({
+          success: true,
+          message: `Sync completed! ${videosAdded} videos added, ${videosSkipped} already existed.`,
+          videos_added: videosAdded,
+          videos_skipped: videosSkipped,
+          errors
+        });
+
+      } catch (e) {
+        console.error('YouTube sync error:', e);
+        return NextResponse.json({ error: `Sync failed: ${e.message}` }, { status: 500 });
+      }
+    }
+
     // Create video (admin)
     if (path === '/admin/videos') {
       if (!verifyAdmin(request)) {
