@@ -188,15 +188,18 @@ backend:
 
   - task: "Admin stats API"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/api/[[...path]]/route.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
         - comment: "GET /api/admin/stats - needs testing"
+        - working: true
+        - agent: "testing"
+        - comment: "✅ GET /api/admin/stats working correctly - returns total_videos and total_artists counts. Properly requires Basic Auth and returns 401 for unauthorized access."
 
 frontend:
   - task: "Home page with search and featured video"
