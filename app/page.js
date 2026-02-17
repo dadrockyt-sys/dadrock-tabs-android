@@ -417,6 +417,29 @@ export default function App() {
             </div>
           </div>
 
+          {/* Featured Video */}
+          {featuredVideo?.url && (
+            <div className="w-full max-w-2xl mb-8">
+              <p className="text-center text-zinc-400 mb-4 flex items-center justify-center gap-2">
+                <span>🎬</span> Featured Lesson
+              </p>
+              <div className="relative aspect-video rounded-xl overflow-hidden border border-zinc-800">
+                <iframe
+                  src={getYouTubeEmbedUrl(featuredVideo.url)}
+                  title={featuredVideo.title || "Featured Video"}
+                  className="absolute inset-0 w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              {featuredVideo.title && (
+                <p className="text-center mt-3 text-zinc-400">
+                  🎸 "{featuredVideo.title}" {featuredVideo.artist && `by ${featuredVideo.artist}`}
+                </p>
+              )}
+            </div>
+          )}
+
           {/* Share Section */}
           <div className="mb-8">
             <p className="text-center text-zinc-400 mb-4 flex items-center justify-center gap-2">
