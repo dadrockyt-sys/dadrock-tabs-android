@@ -322,7 +322,7 @@ export default function App() {
               src={LOGO_URL}
               alt="DadRock Tabs Logo"
               onClick={handleLogoClick}
-              className="w-40 sm:w-48 md:w-56 cursor-pointer select-none hover:scale-105 transition-transform duration-300"
+              className="w-80 sm:w-96 md:w-[28rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300"
             />
           </div>
 
