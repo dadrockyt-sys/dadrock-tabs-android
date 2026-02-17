@@ -1,19 +1,22 @@
-import './globals.css'
+import './globals.css';
 
 export const metadata = {
-  title: 'Next.js MongoDB Template',
-  description: 'A simple template with App Router, MongoDB, and shadcn/ui',
-}
+  title: 'DadRock Tabs - Guitar & Bass Tabs for Classic Rock',
+  description: 'Free guitar and bass tabs for classic rock hits. Learn to play Led Zeppelin, AC/DC, Van Halen, and more!',
+  keywords: 'guitar tabs, bass tabs, classic rock, dad rock, guitar lessons, Led Zeppelin, AC/DC, Van Halen',
+  openGraph: {
+    title: 'DadRock Tabs - Guitar & Bass Tabs for Classic Rock',
+    description: 'Free guitar and bass tabs for classic rock hits.',
+    type: 'website',
+  },
+};
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>
-        <script dangerouslySetInnerHTML={{__html:'window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"&&e.message&&e.message.includes("PerformanceServerTiming")){e.stopImmediatePropagation();e.preventDefault()}},true);'}} />
-      </head>
-      <body>
+    <html lang="en" className="dark">
+      <body className="min-h-screen bg-background antialiased">
         {children}
       </body>
     </html>
-  )
+  );
 }
