@@ -658,18 +658,6 @@ export default function App({ initialLang = 'en' }) {
   if (currentPage === 'watch' && selectedVideo) {
     const watchEmbedUrl = getYouTubeEmbedUrl(selectedVideo.youtube_url) + '?autoplay=1';
 
-    // Countdown effect for ad
-    useEffect(() => {
-      if (showAd && adCountdown > 0) {
-        const timer = setTimeout(() => {
-          setAdCountdown(adCountdown - 1);
-        }, 1000);
-        return () => clearTimeout(timer);
-      } else if (adCountdown === 0) {
-        setShowAd(false);
-      }
-    }, [showAd, adCountdown]);
-
     // Show interstitial ad
     if (showAd) {
       return (
