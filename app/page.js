@@ -492,7 +492,7 @@ export default function App({ initialLang = 'en' }) {
               className="flex items-center justify-center gap-2 w-full py-3.5 rounded-full bg-amber-500 hover:bg-amber-400 text-black font-bold uppercase tracking-wide transition-colors"
             >
               <MessageSquarePlus className="w-5 h-5" />
-              Make a Request
+              {t.makeRequest}
             </a>
             <div className="flex gap-3">
               <a
@@ -502,7 +502,7 @@ export default function App({ initialLang = 'en' }) {
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white transition-all"
               >
                 <Heart className="w-4 h-4 text-red-500" />
-                Support
+                {t.support}
               </a>
               <a
                 href="https://my-store-b8bb42.creator-spring.com"
@@ -511,7 +511,7 @@ export default function App({ initialLang = 'en' }) {
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white transition-all"
               >
                 <ShoppingBag className="w-4 h-4 text-amber-500" />
-                Merchandise
+                {t.merchandise}
               </a>
             </div>
           </div>
