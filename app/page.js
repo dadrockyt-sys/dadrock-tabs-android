@@ -642,10 +642,96 @@ export default function App({ initialLang = 'en' }) {
     );
   }
 
-  // Watch Page
+  // Watch Page with Interstitial Ad
   if (currentPage === 'watch' && selectedVideo) {
-    const watchEmbedUrl = getYouTubeEmbedUrl(selectedVideo.youtube_url);
+    const watchEmbedUrl = getYouTubeEmbedUrl(selectedVideo.youtube_url) + '?autoplay=1';
 
+    // Countdown effect for ad
+    useEffect(() => {
+      if (showAd && adCountdown > 0) {
+        const timer = setTimeout(() => {
+          setAdCountdown(adCountdown - 1);
+        }, 1000);
+        return () => clearTimeout(timer);
+      } else if (adCountdown === 0) {
+        setShowAd(false);
+      }
+    }, [showAd, adCountdown]);
+
+    // Show interstitial ad
+    if (showAd) {
+      return (
+        <div className="min-h-screen bg-black flex flex-col">
+          <header className="bg-black/95 border-b border-zinc-800 px-4 py-3">
+            <div className="max-w-4xl mx-auto flex items-center gap-4">
+              <button onClick={() => setCurrentPage('home')}>
+                <img src={LOGO_URL} alt="DadRock Tabs" className="w-10 h-10" />
+              </button>
+              <div className="flex-1" />
+              <div className="text-zinc-400 text-sm">
+                Video starts in <span className="text-amber-500 font-bold text-lg">{adCountdown}</span> seconds
+              </div>
+            </div>
+          </header>
+
+          <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
+            <div className="text-center mb-8">
+              <p className="text-zinc-500 text-sm uppercase tracking-wider mb-2">Sponsored</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                Check Out Our Merchandise!
+              </h2>
+              <p className="text-zinc-400">
+                Support DadRock Tabs by grabbing some awesome gear
+              </p>
+            </div>
+
+            <a
+              href={adLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full max-w-2xl mb-8"
+            >
+              <div className="bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 p-1 rounded-2xl hover:scale-[1.02] transition-transform">
+                <div className="bg-zinc-900 rounded-xl p-8 text-center">
+                  <ShoppingBag className="w-16 h-16 mx-auto mb-4 text-amber-500" />
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+                    DadRock Tabs Official Store
+                  </h3>
+                  <p className="text-zinc-400 mb-4">
+                    T-Shirts, Hoodies, Mugs & More!
+                  </p>
+                  <span className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 text-black font-bold rounded-full">
+                    <ShoppingBag className="w-5 h-5" />
+                    Shop Now
+                  </span>
+                </div>
+              </div>
+            </a>
+
+            <div className="text-center">
+              <p className="text-zinc-500 mb-4">
+                Loading: <span className="text-white font-semibold">{selectedVideo.song}</span> by {selectedVideo.artist}
+              </p>
+              <div className="w-64 h-2 bg-zinc-800 rounded-full overflow-hidden mx-auto">
+                <div 
+                  className="h-full bg-amber-500 transition-all duration-1000"
+                  style={{ width: `${((5 - adCountdown) / 5) * 100}%` }}
+                />
+              </div>
+              <button
+                onClick={() => setShowAd(false)}
+                className="mt-6 text-zinc-500 hover:text-white text-sm underline"
+                disabled={adCountdown > 0}
+              >
+                {adCountdown > 0 ? `Skip in ${adCountdown}s` : 'Skip Ad'}
+              </button>
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    // Show video after ad
     return (
       <div className="min-h-screen bg-black">
         <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-zinc-800">
