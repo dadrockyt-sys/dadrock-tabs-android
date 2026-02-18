@@ -146,7 +146,7 @@ export default function App({ initialLang = 'en' }) {
   // Featured video state
   const [featuredVideo, setFeaturedVideo] = useState(null);
 
-  // Load featured video on mount
+  // Load featured video and ad settings on mount
   useEffect(() => {
     fetch('/api/settings')
       .then(res => res.ok ? res.json() : null)
@@ -157,6 +157,9 @@ export default function App({ initialLang = 'en' }) {
             title: data.featured_video_title,
             artist: data.featured_video_artist
           });
+          if (data.ad_link) {
+            setAdLink(data.ad_link);
+          }
         }
       })
       .catch(() => {});
