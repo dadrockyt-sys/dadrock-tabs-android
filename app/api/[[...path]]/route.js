@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { v4 as uuidv4 } from 'uuid';
 
 // Admin password from env
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'dadrock2024';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Babyty99';
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY || '';
 const DADROCK_CHANNEL_ID = 'UCLN8LV-ojTQP2wPtDg1kvGQ'; // DadRock Tabs channel ID
 
