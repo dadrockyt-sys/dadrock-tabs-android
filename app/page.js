@@ -988,6 +988,30 @@ export default function App({ initialLang = 'en' }) {
             </form>
           </div>
 
+          {/* Interstitial Ad Settings */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mt-6">
+            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              <ShoppingBag className="w-5 h-5 text-amber-500" />
+              Interstitial Ad Settings
+            </h2>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm text-zinc-400 mb-2">Ad Link URL</label>
+                <input
+                  type="text"
+                  value={adminAdLink}
+                  onChange={(e) => setAdminAdLink(e.target.value)}
+                  className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
+                  placeholder="https://my-store-b8bb42.creator-spring.com/"
+                />
+                <p className="text-xs text-zinc-500 mt-2">
+                  This link will be shown in the 5-second interstitial ad before videos play.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="mt-8 text-center">
             <button onClick={() => setCurrentPage('home')} className="text-zinc-400 hover:text-white inline-flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
