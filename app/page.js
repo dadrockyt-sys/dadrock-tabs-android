@@ -306,11 +306,14 @@ export default function App({ initialLang = 'en' }) {
           featured_video_url: featuredVideoUrl,
           featured_video_title: featuredVideoTitle,
           featured_video_artist: featuredVideoArtist,
+          ad_link: adminAdLink,
         }),
       });
 
       if (res.ok) {
         setSaveStatus({ type: 'success', message: 'Settings saved successfully!' });
+        // Update ad link
+        setAdLink(adminAdLink);
       } else {
         setSaveStatus({ type: 'error', message: 'Failed to save settings' });
       }
