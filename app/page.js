@@ -107,10 +107,11 @@ function VideoCard({ video, onClick }) {
 }
 
 // Main App Component
-export default function App() {
+export default function App({ initialLang = 'en' }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [currentPage, setCurrentPage] = useState('home');
-  const [currentLang, setCurrentLang] = useState('en');
+  const [currentLang, setCurrentLang] = useState(initialLang);
   const [searchQuery, setSearchQuery] = useState('');
   const [logoClickCount, setLogoClickCount] = useState(0);
   
