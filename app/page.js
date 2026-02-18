@@ -140,6 +140,8 @@ export default function App({ initialLang = 'en' }) {
   const [saveStatus, setSaveStatus] = useState({ type: '', message: '' });
   const [isSaving, setIsSaving] = useState(false);
   const [stats, setStats] = useState({ total_videos: 0, total_artists: 0 });
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncStatus, setSyncStatus] = useState({ type: '', message: '' });
 
   const t = getTranslation(currentLang);
 
