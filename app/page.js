@@ -331,7 +331,8 @@ export default function App({ initialLang = 'en' }) {
     setIsSyncing(true);
     setSyncStatus({ type: '', message: '' });
     try {
-      const authToken = sessionStorage.getItem('dadrock_admin_auth');
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
       const response = await fetch('/api/admin/youtube/sync', {
         method: 'POST',
         headers: {
