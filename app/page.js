@@ -324,6 +324,18 @@ export default function App({ initialLang = 'en' }) {
     }
   };
 
+  // Countdown effect for interstitial ad
+  useEffect(() => {
+    if (currentPage === 'watch' && showAd && adCountdown > 0) {
+      const timer = setTimeout(() => {
+        setAdCountdown(adCountdown - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else if (currentPage === 'watch' && adCountdown === 0 && showAd) {
+      setShowAd(false);
+    }
+  }, [currentPage, showAd, adCountdown]);
+
   useEffect(() => {
     if (currentPage === 'admin' && isAuthenticated) {
       loadAdminData();
