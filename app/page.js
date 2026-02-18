@@ -433,7 +433,7 @@ export default function App({ initialLang = 'en' }) {
           {featuredVideo?.url && (
             <div className="w-full max-w-2xl mb-8">
               <p className="text-center text-zinc-400 mb-4 flex items-center justify-center gap-2">
-                <span>🎬</span> Featured Lesson
+                <span>🎬</span> {t.featuredLesson}
               </p>
               <div className="relative aspect-video rounded-xl overflow-hidden border border-zinc-800">
                 <iframe
@@ -455,7 +455,7 @@ export default function App({ initialLang = 'en' }) {
           {/* Share Section */}
           <div className="mb-8">
             <p className="text-center text-zinc-400 mb-4 flex items-center justify-center gap-2">
-              <span>📢</span> Share DadRock Tabs
+              <span>📢</span> {t.shareDadRock}
             </p>
             <div className="flex justify-center gap-3">
               <a
