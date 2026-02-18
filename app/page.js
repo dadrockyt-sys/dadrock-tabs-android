@@ -360,23 +360,17 @@ export default function App({ initialLang = 'en' }) {
           {/* Definition */}
           <div className="text-center mb-6 max-w-xl">
             <div className="flex items-center justify-center gap-2 flex-wrap">
-              <img 
-                src={DADROCK_TEXT_URL} 
-                alt="DadRock" 
-                className="h-8 sm:h-10"
-              />
-              <span className="text-amber-500 text-xl sm:text-2xl">{t.definition.pronunciation}</span>
+              <span className="text-white text-2xl sm:text-3xl font-bold">DadRock</span>
+              <span className="text-amber-500 text-xl sm:text-2xl">[dad•rok]</span>
             </div>
             <p className="text-zinc-500 italic text-sm mt-1">{t.definition.partOfSpeech}</p>
             <p className="text-zinc-300 mt-2 leading-relaxed">
               {t.definition.meaning}
             </p>
+            <p className="text-zinc-400 text-sm sm:text-base mt-4">
+              {t.tagline}
+            </p>
           </div>
-
-          {/* Tagline */}
-          <p className="text-zinc-400 text-center text-sm sm:text-base mb-6 max-w-lg">
-            {t.tagline}
-          </p>
 
           {/* Search Form */}
           <form onSubmit={handleSearch} className="w-full max-w-2xl mb-6">
