@@ -349,6 +349,9 @@ export async function PUT(request, context) {
       if (body.featured_video_artist) {
         updateData.featured_video_artist = body.featured_video_artist;
       }
+      if (body.ad_link) {
+        updateData.ad_link = body.ad_link;
+      }
 
       await db.collection('settings').updateOne(
         { type: 'site' },
