@@ -579,7 +579,7 @@ export default function App({ initialLang = 'en' }) {
                 </button>
               </form>
 
-              <LanguageSelector currentLang={currentLang} onLanguageChange={setCurrentLang} />
+              <LanguageSelector currentLang={currentLang} />
             </div>
           </div>
         </header>
@@ -645,7 +645,7 @@ export default function App({ initialLang = 'en' }) {
                 <img src={LOGO_URL} alt="DadRock Tabs" className="w-10 h-10" />
               </button>
               <div className="flex-1" />
-              <LanguageSelector currentLang={currentLang} onLanguageChange={setCurrentLang} />
+              <LanguageSelector currentLang={currentLang} />
             </div>
           </div>
         </header>
