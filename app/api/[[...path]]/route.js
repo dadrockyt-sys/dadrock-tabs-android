@@ -93,7 +93,8 @@ export async function GET(request, context) {
       return NextResponse.json({
         featured_video_url: settings?.featured_video_url || 'https://www.youtube.com/embed/BT4AEyYXSKA',
         featured_video_title: settings?.featured_video_title || 'We Will Rock You',
-        featured_video_artist: settings?.featured_video_artist || 'Queen'
+        featured_video_artist: settings?.featured_video_artist || 'Queen',
+        ad_link: settings?.ad_link || 'https://my-store-b8bb42.creator-spring.com/'
       });
     }
 
