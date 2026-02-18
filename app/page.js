@@ -326,6 +326,37 @@ export default function App({ initialLang = 'en' }) {
     }
   };
 
+  // Sync videos from YouTube
+  const handleYouTubeSync = async () => {
+    setIsSyncing(true);
+    setSyncStatus({ type: '', message: '' });
+    try {
+      const authToken = sessionStorage.getItem('dadrock_admin_auth');
+      const response = await fetch('/api/admin/youtube/sync', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${authToken}`
+        },
+        body: JSON.stringify({})
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setSyncStatus({ 
+          type: 'success', 
+          message: `Synced ${data.videos_added} new videos! (${data.videos_skipped} already existed)` 
+        });
+        loadAdminData(); // Refresh stats
+      } else {
+        setSyncStatus({ type: 'error', message: data.error || 'Failed to sync videos' });
+      }
+    } catch (err) {
+      setSyncStatus({ type: 'error', message: 'Connection error. Please try again.' });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   // Countdown effect for interstitial ad
   useEffect(() => {
     if (currentPage === 'watch' && showAd && adCountdown > 0) {
