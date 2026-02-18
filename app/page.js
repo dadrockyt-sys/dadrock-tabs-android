@@ -938,6 +938,35 @@ export default function App({ initialLang = 'en' }) {
             </div>
           </div>
 
+          {/* YouTube Sync Section */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <Youtube className="w-5 h-5 text-red-500" />
+              Sync Videos from YouTube
+            </h2>
+            <p className="text-zinc-400 mb-4">
+              Click the button below to sync all videos from the DadRock Tabs YouTube channel to your database.
+            </p>
+            
+            {syncStatus.message && (
+              <div className={`flex items-center gap-2 p-3 rounded-lg mb-4 ${
+                syncStatus.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+              }`}>
+                {syncStatus.type === 'success' ? <CheckCircle className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+                {syncStatus.message}
+              </div>
+            )}
+            
+            <button
+              onClick={handleYouTubeSync}
+              disabled={isSyncing}
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-500 transition-colors disabled:opacity-50"
+            >
+              <Youtube className="w-5 h-5" />
+              {isSyncing ? 'Syncing...' : 'Sync from YouTube'}
+            </button>
+          </div>
+
           <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
             <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
               <Music className="w-5 h-5 text-amber-500" />
