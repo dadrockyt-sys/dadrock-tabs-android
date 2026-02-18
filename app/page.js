@@ -332,7 +332,7 @@ export default function App({ initialLang = 'en' }) {
             className="h-8 sm:h-10 md:h-12"
           />
           <div className="flex-1 flex justify-end items-center gap-2">
-            <LanguageSelector currentLang={currentLang} onLanguageChange={setCurrentLang} />
+            <LanguageSelector currentLang={currentLang} />
             <a
               href="https://my-store-b8bb42.creator-spring.com"
               target="_blank"
