@@ -365,17 +365,17 @@ export default function App({ initialLang = 'en' }) {
                 alt="DadRock" 
                 className="h-8 sm:h-10"
               />
-              <span className="text-amber-500 text-xl sm:text-2xl">[dad-rok]</span>
+              <span className="text-amber-500 text-xl sm:text-2xl">{t.definition.pronunciation}</span>
             </div>
-            <p className="text-zinc-500 italic text-sm mt-1">n.</p>
+            <p className="text-zinc-500 italic text-sm mt-1">{t.definition.partOfSpeech}</p>
             <p className="text-zinc-300 mt-2 leading-relaxed">
-              Rock music that appeals to an older generation; or is heavily influenced by that of an earlier era.
+              {t.definition.meaning}
             </p>
           </div>
 
           {/* Tagline */}
           <p className="text-zinc-400 text-center text-sm sm:text-base mb-6 max-w-lg">
-            Your go-to database for classic rock guitar & bass tutorials. Search by song or artist.
+            {t.tagline}
           </p>
 
           {/* Search Form */}
@@ -385,7 +385,7 @@ export default function App({ initialLang = 'en' }) {
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
                 <input
                   type="text"
-                  placeholder="Search for songs or artists..."
+                  placeholder={t.searchPlaceholder}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full h-12 sm:h-14 bg-zinc-900 border border-zinc-700 focus:border-amber-500 rounded-full pl-12 pr-4 text-white placeholder:text-zinc-500 outline-none transition-colors"
@@ -395,7 +395,7 @@ export default function App({ initialLang = 'en' }) {
                 type="submit"
                 className="h-12 sm:h-14 px-6 sm:px-8 rounded-full bg-amber-500 text-black font-bold uppercase tracking-wider hover:bg-amber-400 transition-colors"
               >
-                Search
+                {t.searchButton}
               </button>
             </div>
           </form>
@@ -408,13 +408,13 @@ export default function App({ initialLang = 'en' }) {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 hover:bg-red-500 text-white font-bold uppercase tracking-wide transition-colors mb-8"
           >
             <Youtube className="w-5 h-5" />
-            Subscribe Here! It's Free
+            {t.subscribe}
           </a>
 
           {/* Popular Searches */}
           <div className="w-full max-w-2xl mb-8">
             <p className="text-center text-zinc-400 mb-4 flex items-center justify-center gap-2">
-              <span>🔥</span> Popular Searches
+              <span>🔥</span> {t.popularSearches}
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {popularArtists.map((artist) => (
