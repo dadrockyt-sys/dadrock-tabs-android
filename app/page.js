@@ -272,6 +272,7 @@ export default function App({ initialLang = 'en' }) {
         setFeaturedVideoUrl(data.featured_video_url || '');
         setFeaturedVideoTitle(data.featured_video_title || '');
         setFeaturedVideoArtist(data.featured_video_artist || '');
+        setAdminAdLink(data.ad_link || 'https://my-store-b8bb42.creator-spring.com/');
       }
     } catch (err) {}
 
