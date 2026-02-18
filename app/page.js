@@ -124,6 +124,9 @@ export default function App({ initialLang = 'en' }) {
   
   // Watch page state
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [showAd, setShowAd] = useState(true);
+  const [adCountdown, setAdCountdown] = useState(5);
+  const [adLink, setAdLink] = useState('https://my-store-b8bb42.creator-spring.com/');
   
   // Admin page state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -133,6 +136,7 @@ export default function App({ initialLang = 'en' }) {
   const [featuredVideoUrl, setFeaturedVideoUrl] = useState('');
   const [featuredVideoTitle, setFeaturedVideoTitle] = useState('');
   const [featuredVideoArtist, setFeaturedVideoArtist] = useState('');
+  const [adminAdLink, setAdminAdLink] = useState('');
   const [saveStatus, setSaveStatus] = useState({ type: '', message: '' });
   const [isSaving, setIsSaving] = useState(false);
   const [stats, setStats] = useState({ total_videos: 0, total_artists: 0 });
