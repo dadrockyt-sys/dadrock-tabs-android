@@ -524,10 +524,10 @@ export default function App({ initialLang = 'en' }) {
             className="inline-flex items-center gap-2 px-5 py-2 text-sm text-zinc-400 hover:text-white bg-zinc-900 hover:bg-zinc-800 rounded-full transition-all border border-zinc-800"
           >
             <Mail className="w-4 h-4" />
-            Contact
+            {t.contact}
           </a>
           <p className="text-xs text-zinc-600 mt-4">
-            © 2024 DadRock Tabs. All rights reserved.
+            {t.footer}
           </p>
         </footer>
       </div>
