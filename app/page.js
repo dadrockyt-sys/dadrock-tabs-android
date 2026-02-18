@@ -22,9 +22,19 @@ const popularArtists = [
   { name: "Aerosmith", emoji: "💎" },
 ];
 
-// Language Selector Component
-function LanguageSelector({ currentLang, onLanguageChange }) {
+// Language Selector Component with SEO-friendly URLs
+function LanguageSelector({ currentLang }) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
+  const handleLanguageChange = (lang) => {
+    setIsOpen(false);
+    if (lang === 'en') {
+      router.push('/');
+    } else {
+      router.push(`/${lang}`);
+    }
+  };
 
   return (
     <div className="relative">
@@ -44,7 +54,7 @@ function LanguageSelector({ currentLang, onLanguageChange }) {
             {locales.map((lang) => (
               <button
                 key={lang}
-                onClick={() => { onLanguageChange(lang); setIsOpen(false); }}
+                onClick={() => handleLanguageChange(lang)}
                 className={`w-full flex items-center gap-3 px-3 py-2 text-sm transition-colors ${
                   lang === currentLang
                     ? "bg-amber-500/20 text-amber-500"
