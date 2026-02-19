@@ -750,10 +750,10 @@ export default function App({ initialLang = 'en' }) {
             <div className="text-center mb-8">
               <p className="text-zinc-500 text-sm uppercase tracking-wider mb-2">Sponsored</p>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                Check Out Our Merchandise!
+                {adHeadline}
               </h2>
               <p className="text-zinc-400">
-                Support DadRock Tabs by grabbing some awesome gear
+                {adDescription}
               </p>
             </div>
 
@@ -765,16 +765,24 @@ export default function App({ initialLang = 'en' }) {
             >
               <div className="bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 p-1 rounded-2xl hover:scale-[1.02] transition-transform">
                 <div className="bg-zinc-900 rounded-xl p-8 text-center">
-                  <ShoppingBag className="w-16 h-16 mx-auto mb-4 text-amber-500" />
+                  {adImage ? (
+                    <img 
+                      src={adImage} 
+                      alt={adHeadline}
+                      className="w-full max-h-64 object-contain mx-auto mb-4 rounded-lg"
+                    />
+                  ) : (
+                    <ShoppingBag className="w-16 h-16 mx-auto mb-4 text-amber-500" />
+                  )}
                   <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
-                    DadRock Tabs Official Store
+                    {adHeadline}
                   </h3>
                   <p className="text-zinc-400 mb-4">
-                    T-Shirts, Hoodies, Mugs & More!
+                    {adDescription}
                   </p>
                   <span className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 text-black font-bold rounded-full">
                     <ShoppingBag className="w-5 h-5" />
-                    Shop Now
+                    {adButtonText}
                   </span>
                 </div>
               </div>
