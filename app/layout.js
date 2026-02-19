@@ -73,6 +73,25 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <head>
+        {/* Google Analytics GA4 */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-92RKGQW8NJ"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-92RKGQW8NJ', {
+                page_title: document.title,
+                page_location: window.location.href,
+              });
+            `,
+          }}
+        />
+        
         {/* Hreflang tags for international SEO */}
         {alternateLinks.map((link, index) => (
           <link
