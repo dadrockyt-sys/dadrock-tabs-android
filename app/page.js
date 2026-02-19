@@ -397,9 +397,9 @@ export default function App({ initialLang = 'en' }) {
   // Home Page
   if (currentPage === 'home') {
     return (
-      <div className="min-h-screen bg-black">
+      <div className="min-h-screen bg-black overflow-y-auto">
         {/* Header */}
-        <header className="flex items-center justify-between px-4 py-3 bg-black border-b border-zinc-900">
+        <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-3 bg-black/95 backdrop-blur-sm border-b border-zinc-900">
           <div className="flex-1" />
           <img 
             src={BANNER_URL} 
