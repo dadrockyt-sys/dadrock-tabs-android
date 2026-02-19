@@ -97,11 +97,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Setup swipe to refresh
+        // Setup swipe to refresh - only enable when at top of page
         swipeRefreshLayout.setColorSchemeColors(
             getResources().getColor(R.color.primary, getTheme())
         );
         swipeRefreshLayout.setOnRefreshListener(() -> webView.reload());
+        
+        // Fix scroll conflict: Only enable swipe refresh when WebView is at top
+        webView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            swipeRefreshLayout.setEnabled(scrollY == 0);
+        });
 
         // Load website
         webView.loadUrl(WEBSITE_URL);
