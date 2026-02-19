@@ -356,6 +356,18 @@ export async function PUT(request, context) {
       if (body.ad_link) {
         updateData.ad_link = body.ad_link;
       }
+      if (body.ad_image !== undefined) {
+        updateData.ad_image = body.ad_image;
+      }
+      if (body.ad_headline) {
+        updateData.ad_headline = body.ad_headline;
+      }
+      if (body.ad_description) {
+        updateData.ad_description = body.ad_description;
+      }
+      if (body.ad_button_text) {
+        updateData.ad_button_text = body.ad_button_text;
+      }
 
       await db.collection('settings').updateOne(
         { type: 'site' },
