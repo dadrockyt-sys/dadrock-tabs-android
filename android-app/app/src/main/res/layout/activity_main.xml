@@ -23,7 +23,10 @@
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/progressBar" />
+            android:layout_below="@id/progressBar"
+            android:nestedScrollingEnabled="true"
+            android:scrollbars="vertical"
+            android:overScrollMode="always" />
 
     </RelativeLayout>
 
