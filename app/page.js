@@ -299,6 +299,10 @@ export default function App({ initialLang = 'en' }) {
         setFeaturedVideoTitle(data.featured_video_title || '');
         setFeaturedVideoArtist(data.featured_video_artist || '');
         setAdminAdLink(data.ad_link || 'https://my-store-b8bb42.creator-spring.com/');
+        setAdminAdImage(data.ad_image || '');
+        setAdminAdHeadline(data.ad_headline || 'Check Out Our Merchandise!');
+        setAdminAdDescription(data.ad_description || 'Support DadRock Tabs by grabbing some awesome gear');
+        setAdminAdButtonText(data.ad_button_text || 'Shop Now');
       }
     } catch (err) {}
 
