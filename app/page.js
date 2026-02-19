@@ -127,6 +127,10 @@ export default function App({ initialLang = 'en' }) {
   const [showAd, setShowAd] = useState(true);
   const [adCountdown, setAdCountdown] = useState(5);
   const [adLink, setAdLink] = useState('https://my-store-b8bb42.creator-spring.com/');
+  const [adImage, setAdImage] = useState('');
+  const [adHeadline, setAdHeadline] = useState('Check Out Our Merchandise!');
+  const [adDescription, setAdDescription] = useState('Support DadRock Tabs by grabbing some awesome gear');
+  const [adButtonText, setAdButtonText] = useState('Shop Now');
   
   // Admin page state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
