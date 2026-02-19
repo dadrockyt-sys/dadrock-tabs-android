@@ -185,11 +185,17 @@ export default function App({ initialLang = 'en' }) {
     }
   }, []);
 
-  const getYouTubeEmbedUrl = (url) => {
+  const getYouTubeEmbedUrl = (url, autoplay = false) => {
     if (!url) return null;
-    if (url.includes('/embed/')) return url;
+    if (url.includes('/embed/')) {
+      return autoplay ? `${url}${url.includes('?') ? '&' : '?'}autoplay=1&mute=1` : url;
+    }
     const videoIdMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-    return videoIdMatch ? `https://www.youtube.com/embed/${videoIdMatch[1]}` : url;
+    if (videoIdMatch) {
+      const baseUrl = `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+      return autoplay ? `${baseUrl}?autoplay=1&mute=1` : baseUrl;
+    }
+    return url;
   };
 
   // Search functionality
