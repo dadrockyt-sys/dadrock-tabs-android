@@ -1106,6 +1106,53 @@ export default function App({ initialLang = 'en' }) {
 
             <div className="space-y-4">
               <div>
+                <label className="block text-sm text-zinc-400 mb-2">Ad Headline</label>
+                <input
+                  type="text"
+                  value={adminAdHeadline}
+                  onChange={(e) => setAdminAdHeadline(e.target.value)}
+                  className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
+                  placeholder="Check Out Our Merchandise!"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm text-zinc-400 mb-2">Ad Description</label>
+                <input
+                  type="text"
+                  value={adminAdDescription}
+                  onChange={(e) => setAdminAdDescription(e.target.value)}
+                  className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
+                  placeholder="Support DadRock Tabs by grabbing some awesome gear"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm text-zinc-400 mb-2">Ad Image URL (optional)</label>
+                <input
+                  type="text"
+                  value={adminAdImage}
+                  onChange={(e) => setAdminAdImage(e.target.value)}
+                  className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
+                  placeholder="https://example.com/ad-banner.jpg"
+                />
+                <p className="text-xs text-zinc-500 mt-2">
+                  Leave empty to show default icon. Recommended size: 600x300px
+                </p>
+                {adminAdImage && (
+                  <div className="mt-3 p-2 bg-zinc-800 rounded-lg">
+                    <p className="text-xs text-zinc-400 mb-2">Preview:</p>
+                    <img 
+                      src={adminAdImage} 
+                      alt="Ad preview" 
+                      className="max-h-32 mx-auto rounded"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div>
                 <label className="block text-sm text-zinc-400 mb-2">Ad Link URL</label>
                 <input
                   type="text"
@@ -1115,8 +1162,29 @@ export default function App({ initialLang = 'en' }) {
                   placeholder="https://my-store-b8bb42.creator-spring.com/"
                 />
                 <p className="text-xs text-zinc-500 mt-2">
-                  This link will be shown in the 5-second interstitial ad before videos play.
+                  Where users go when they click the ad
                 </p>
+              </div>
+
+              <div>
+                <label className="block text-sm text-zinc-400 mb-2">Button Text</label>
+                <input
+                  type="text"
+                  value={adminAdButtonText}
+                  onChange={(e) => setAdminAdButtonText(e.target.value)}
+                  className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
+                  placeholder="Shop Now"
+                />
+              </div>
+
+              <div className="bg-zinc-800/50 rounded-lg p-4 mt-4">
+                <p className="text-sm text-amber-500 font-medium mb-2">💡 Tips for Paid Ads:</p>
+                <ul className="text-xs text-zinc-400 space-y-1">
+                  <li>• Use eye-catching images (600x300px recommended)</li>
+                  <li>• Keep headlines short and compelling</li>
+                  <li>• Include clear call-to-action button text</li>
+                  <li>• Track conversions by using UTM parameters in your link</li>
+                </ul>
               </div>
             </div>
           </div>
