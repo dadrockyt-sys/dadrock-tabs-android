@@ -119,3 +119,14 @@
     -webkit-overflow-scrolling: touch;
   }
 }
+
+/* Safe area padding for mobile notches/status bars */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  .pt-safe {
+    padding-top: max(env(safe-area-inset-top), 8px);
+  }
+}
