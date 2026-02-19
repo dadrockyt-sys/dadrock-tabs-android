@@ -339,13 +339,21 @@ export default function App({ initialLang = 'en' }) {
           featured_video_title: featuredVideoTitle,
           featured_video_artist: featuredVideoArtist,
           ad_link: adminAdLink,
+          ad_image: adminAdImage,
+          ad_headline: adminAdHeadline,
+          ad_description: adminAdDescription,
+          ad_button_text: adminAdButtonText,
         }),
       });
 
       if (res.ok) {
         setSaveStatus({ type: 'success', message: 'Settings saved successfully!' });
-        // Update ad link
+        // Update ad settings in state
         setAdLink(adminAdLink);
+        setAdImage(adminAdImage);
+        setAdHeadline(adminAdHeadline);
+        setAdDescription(adminAdDescription);
+        setAdButtonText(adminAdButtonText);
       } else {
         setSaveStatus({ type: 'error', message: 'Failed to save settings' });
       }
