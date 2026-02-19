@@ -100,3 +100,22 @@
   font-family: 'Impact', 'Haettenschweiler', 'Arial Narrow Bold', sans-serif;
   letter-spacing: 0.02em;
 }
+
+/* Mobile touch scrolling fixes */
+@media (max-width: 768px) {
+  html, body {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Prevent iframe from blocking scroll */
+  iframe {
+    pointer-events: auto;
+    touch-action: auto;
+  }
+  
+  /* Smooth momentum scrolling for touch devices */
+  main {
+    -webkit-overflow-scrolling: touch;
+  }
+}
