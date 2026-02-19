@@ -434,14 +434,14 @@ export default function App({ initialLang = 'en' }) {
               <a
                 href="https://my-store-b8bb42.creator-spring.com"
                 target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-amber-500 hover:text-amber-400 transition-colors"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              <span>Support Merch</span>
-            </a>
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-amber-500 hover:text-amber-400 transition-colors"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span>Support Merch</span>
+              </a>
+            </div>
           </div>
-        </div>
         </header>
 
         {/* Main Content */}
