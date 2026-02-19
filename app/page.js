@@ -441,6 +441,7 @@ export default function App({ initialLang = 'en' }) {
               <span>Support Merch</span>
             </a>
           </div>
+        </div>
         </header>
 
         {/* Main Content */}
