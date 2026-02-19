@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowContentAccess(true);
         webSettings.setMediaPlaybackRequiresUserGesture(false);
+        
+        // Enable nested scrolling for better scroll behavior
+        webView.setNestedScrollingEnabled(true);
+        webView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
 
         // Set WebViewClient
         webView.setWebViewClient(new WebViewClient() {
