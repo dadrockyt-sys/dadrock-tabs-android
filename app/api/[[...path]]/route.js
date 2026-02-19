@@ -91,10 +91,14 @@ export async function GET(request, context) {
       const db = await getDb();
       const settings = await db.collection('settings').findOne({ type: 'site' });
       return NextResponse.json({
-        featured_video_url: settings?.featured_video_url || 'https://www.youtube.com/embed/BT4AEyYXSKA',
+        featured_video_url: settings?.featured_video_url || 'https://www.youtube.com/embed/BT4EyYXSKA',
         featured_video_title: settings?.featured_video_title || 'We Will Rock You',
         featured_video_artist: settings?.featured_video_artist || 'Queen',
-        ad_link: settings?.ad_link || 'https://my-store-b8bb42.creator-spring.com/'
+        ad_link: settings?.ad_link || 'https://my-store-b8bb42.creator-spring.com/',
+        ad_image: settings?.ad_image || '',
+        ad_headline: settings?.ad_headline || 'Check Out Our Merchandise!',
+        ad_description: settings?.ad_description || 'Support DadRock Tabs by grabbing some awesome gear',
+        ad_button_text: settings?.ad_button_text || 'Shop Now'
       });
     }
 
