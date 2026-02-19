@@ -420,19 +420,20 @@ export default function App({ initialLang = 'en' }) {
   if (currentPage === 'home') {
     return (
       <div className="min-h-screen bg-black overflow-y-auto">
-        {/* Header */}
-        <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-3 bg-black/95 backdrop-blur-sm border-b border-zinc-900">
-          <div className="flex-1" />
-          <img 
-            src={BANNER_URL} 
-            alt="DadRock Guitar Tabs" 
-            className="h-8 sm:h-10 md:h-12"
-          />
-          <div className="flex-1 flex justify-end items-center gap-2">
-            <LanguageSelector currentLang={currentLang} />
-            <a
-              href="https://my-store-b8bb42.creator-spring.com"
-              target="_blank"
+        {/* Header - with safe area padding for mobile notch/status bar */}
+        <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-zinc-900 pt-safe">
+          <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3">
+            <div className="flex-1" />
+            <img 
+              src={BANNER_URL} 
+              alt="DadRock Guitar Tabs" 
+              className="h-6 sm:h-10 md:h-12 max-w-[50%] object-contain"
+            />
+            <div className="flex-1 flex justify-end items-center gap-1 sm:gap-2">
+              <LanguageSelector currentLang={currentLang} />
+              <a
+                href="https://my-store-b8bb42.creator-spring.com"
+                target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-amber-500 hover:text-amber-400 transition-colors"
             >
