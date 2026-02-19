@@ -512,7 +512,7 @@ export default function App({ initialLang = 'en' }) {
               </p>
               <div className="relative aspect-video rounded-xl overflow-hidden border border-zinc-800">
                 <iframe
-                  src={getYouTubeEmbedUrl(featuredVideo.url)}
+                  src={getYouTubeEmbedUrl(featuredVideo.url, isFirstVisit)}
                   title={featuredVideo.title || "Featured Video"}
                   className="absolute inset-0 w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
