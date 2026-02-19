@@ -177,9 +177,11 @@ export default function App({ initialLang = 'en' }) {
             title: data.featured_video_title,
             artist: data.featured_video_artist
           });
-          if (data.ad_link) {
-            setAdLink(data.ad_link);
-          }
+          if (data.ad_link) setAdLink(data.ad_link);
+          if (data.ad_image) setAdImage(data.ad_image);
+          if (data.ad_headline) setAdHeadline(data.ad_headline);
+          if (data.ad_description) setAdDescription(data.ad_description);
+          if (data.ad_button_text) setAdButtonText(data.ad_button_text);
         }
       })
       .catch(() => {});
