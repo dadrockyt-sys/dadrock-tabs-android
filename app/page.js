@@ -147,6 +147,16 @@ export default function App({ initialLang = 'en' }) {
 
   // Featured video state
   const [featuredVideo, setFeaturedVideo] = useState(null);
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
+
+  // Check if first visit on mount
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('dadrock_visited');
+    if (!hasVisited) {
+      setIsFirstVisit(true);
+      localStorage.setItem('dadrock_visited', 'true');
+    }
+  }, []);
 
   // Load featured video and ad settings on mount
   useEffect(() => {
