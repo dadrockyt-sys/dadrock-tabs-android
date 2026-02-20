@@ -130,3 +130,29 @@
     padding-top: max(env(safe-area-inset-top), 8px);
   }
 }
+
+/* Background guitarist silhouette */
+.bg-guitarist {
+  position: relative;
+}
+
+.bg-guitarist::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('https://images.pexels.com/photos/2147029/pexels-photo-2147029.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-guitarist > * {
+  position: relative;
+  z-index: 1;
+}
