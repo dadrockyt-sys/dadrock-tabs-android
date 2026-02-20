@@ -637,8 +637,8 @@ export default function App({ initialLang = 'en' }) {
   if (currentPage === 'search') {
     return (
       <div className="min-h-screen bg-black">
-        <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-zinc-800">
-          <div className="max-w-7xl mx-auto px-4 py-3">
+        <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-zinc-800 pt-safe">
+          <div className="max-w-7xl mx-auto px-4 py-2 sm:py-3">
             <div className="flex items-center gap-3">
               <button onClick={() => setCurrentPage('home')} className="text-zinc-400 hover:text-white transition-colors">
                 <ArrowLeft className="w-6 h-6" />
