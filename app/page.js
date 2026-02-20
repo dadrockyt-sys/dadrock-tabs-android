@@ -735,7 +735,7 @@ export default function App({ initialLang = 'en' }) {
     // Show interstitial ad
     if (showAd) {
       return (
-        <div className="min-h-screen bg-black flex flex-col">
+        <div className="min-h-screen bg-black flex flex-col bg-guitarist">
           <header className="bg-black/95 border-b border-zinc-800 px-4 py-2 sm:py-3 pt-safe">
             <div className="max-w-4xl mx-auto flex items-center gap-4">
               <button onClick={() => setCurrentPage('home')}>
