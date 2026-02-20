@@ -419,7 +419,7 @@ export default function App({ initialLang = 'en' }) {
   // Home Page
   if (currentPage === 'home') {
     return (
-      <div className="min-h-screen bg-black overflow-y-auto">
+      <div className="min-h-screen bg-black overflow-y-auto bg-guitarist">
         {/* Header - with safe area padding for mobile notch/status bar */}
         <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-zinc-900 pt-safe">
           <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3">
