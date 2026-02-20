@@ -935,7 +935,7 @@ export default function App({ initialLang = 'en' }) {
 
     return (
       <div className="min-h-screen bg-black">
-        <header className="bg-zinc-900 border-b border-zinc-800 px-6 py-4">
+        <header className="bg-zinc-900 border-b border-zinc-800 px-4 sm:px-6 py-3 sm:py-4 pt-safe">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button onClick={() => setCurrentPage('home')}>
