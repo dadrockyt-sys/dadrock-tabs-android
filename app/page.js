@@ -553,8 +553,8 @@ export default function App({ initialLang = 'en' }) {
           </div>
 
           {/* Definition */}
-          <div className="text-center mb-8 max-w-xl fade-in-up" style={{ animationDelay: '0.2s' }}>
-            <div className="flex items-center justify-center gap-3 flex-wrap mb-2">
+          <div className="text-center mb-8 max-w-2xl fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className="flex items-center justify-center gap-3 flex-wrap mb-3">
               <img 
                 src={DADROCK_TEXT_URL} 
                 alt="DadRock" 
@@ -563,14 +563,14 @@ export default function App({ initialLang = 'en' }) {
               />
               <span className="text-amber-500 text-2xl sm:text-3xl md:text-4xl font-bold text-glow">{t.definition.pronunciation}</span>
             </div>
-            <p className="text-zinc-400 italic text-base mt-2 tracking-wide">{t.definition.partOfSpeech}</p>
-            <p className="text-zinc-200 mt-4 leading-relaxed text-base sm:text-lg font-light">
+            <p className="text-amber-400/80 italic text-lg sm:text-xl mt-2 tracking-widest font-rock-alt">{t.definition.partOfSpeech}</p>
+            <p className="rock-definition mt-5 text-xl sm:text-2xl md:text-3xl px-2">
               {t.definition.meaning}
             </p>
           </div>
 
           {/* Tagline */}
-          <p className="text-zinc-400 text-center text-sm sm:text-base mb-8 max-w-lg fade-in-up leading-relaxed" style={{ animationDelay: '0.3s' }}>
+          <p className="rock-tagline text-center text-xl sm:text-2xl md:text-3xl mb-10 max-w-2xl px-4 fade-in-up leading-relaxed" style={{ animationDelay: '0.3s' }}>
             {t.tagline}
           </p>
 
