@@ -49,25 +49,32 @@ function LanguageSelector({ currentLang }) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-44 bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl overflow-hidden z-50">
-          <div className="py-1">
-            {locales.map((lang) => (
-              <button
-                key={lang}
-                onClick={() => handleLanguageChange(lang)}
-                className={`w-full flex items-center gap-3 px-3 py-2 text-sm transition-colors ${
-                  lang === currentLang
-                    ? "bg-amber-500/20 text-amber-500"
-                    : "text-zinc-300 hover:bg-zinc-800 hover:text-white"
-                }`}
-              >
-                <span className="text-lg">{localeFlags[lang]}</span>
-                <span className="flex-1 text-left">{localeNames[lang]}</span>
-                {lang === currentLang && <span className="text-amber-500">✓</span>}
-              </button>
-            ))}
+        <>
+          {/* Backdrop to close dropdown when clicking outside */}
+          <div 
+            className="fixed inset-0 z-40" 
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="absolute right-0 mt-2 w-48 bg-zinc-900 border border-zinc-700 rounded-lg shadow-2xl overflow-hidden z-50 max-h-[70vh] overflow-y-auto">
+            <div className="py-1">
+              {locales.map((lang) => (
+                <button
+                  key={lang}
+                  onClick={() => handleLanguageChange(lang)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors touch-manipulation ${
+                    lang === currentLang
+                      ? "bg-amber-500/30 text-amber-400"
+                      : "text-zinc-200 hover:bg-zinc-800 active:bg-zinc-700"
+                  }`}
+                >
+                  <span className="text-lg">{localeFlags[lang]}</span>
+                  <span className="flex-1 text-left font-medium">{localeNames[lang]}</span>
+                  {lang === currentLang && <span className="text-amber-400">✓</span>}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
