@@ -563,7 +563,7 @@ export default function App({ initialLang = 'en' }) {
               />
               <span className="text-amber-500 text-2xl sm:text-3xl md:text-4xl font-bold text-glow">{t.definition.pronunciation}</span>
             </div>
-            <p className="text-amber-400/80 italic text-lg sm:text-xl mt-2 tracking-widest font-rock-alt">{t.definition.partOfSpeech}</p>
+            <p className="text-amber-400/80 italic text-2xl sm:text-3xl md:text-4xl mt-2 tracking-widest font-rock-alt">{t.definition.partOfSpeech}</p>
             <p className="rock-definition mt-5 text-xl sm:text-2xl md:text-3xl px-2">
               {t.definition.meaning}
             </p>
