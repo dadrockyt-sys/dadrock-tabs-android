@@ -52,48 +52,49 @@ function LanguageSelector({ currentLang }) {
       {isOpen && (
         <div 
           className="fixed inset-0 flex items-start justify-center pt-16"
-          style={{ zIndex: 9999 }}
+          style={{ zIndex: 9999, backgroundColor: '#000000' }}
         >
-          {/* Dark backdrop */}
+          {/* Dark backdrop - completely opaque */}
           <div 
             className="absolute inset-0"
-            style={{ backgroundColor: 'rgba(0, 0, 0, 0.85)' }}
+            style={{ backgroundColor: '#000000' }}
             onClick={() => setIsOpen(false)}
           />
           
           {/* Language menu */}
           <div 
-            className="relative w-72 max-h-[80vh] overflow-y-auto rounded-2xl shadow-2xl"
+            className="relative w-80 max-h-[80vh] overflow-y-auto rounded-2xl"
             style={{ 
-              backgroundColor: '#1a1a1a',
-              border: '2px solid #404040',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.9)'
+              backgroundColor: '#1f1f1f',
+              border: '2px solid #525252',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 1)'
             }}
           >
             {/* Header */}
             <div 
               className="sticky top-0 px-4 py-3 border-b flex items-center justify-between"
-              style={{ backgroundColor: '#1a1a1a', borderColor: '#404040' }}
+              style={{ backgroundColor: '#1f1f1f', borderColor: '#525252' }}
             >
               <span className="text-white font-bold text-lg">Select Language</span>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="text-zinc-400 hover:text-white text-2xl leading-none"
+                className="w-8 h-8 flex items-center justify-center rounded-full text-zinc-400 hover:text-white hover:bg-zinc-700 text-2xl leading-none"
               >
                 ×
               </button>
             </div>
             
             {/* Language options */}
-            <div className="py-2">
+            <div style={{ backgroundColor: '#1f1f1f' }}>
               {locales.map((lang) => (
                 <button
                   key={lang}
                   onClick={() => handleLanguageChange(lang)}
-                  className="w-full flex items-center gap-4 px-4 py-4 text-base transition-colors touch-manipulation active:bg-zinc-700"
+                  className="w-full flex items-center gap-4 px-4 py-4 text-base transition-colors touch-manipulation"
                   style={{ 
-                    backgroundColor: lang === currentLang ? '#2d2d00' : 'transparent',
-                    color: lang === currentLang ? '#fbbf24' : '#e4e4e7'
+                    backgroundColor: lang === currentLang ? '#3d3d00' : '#1f1f1f',
+                    color: lang === currentLang ? '#fbbf24' : '#e4e4e7',
+                    borderBottom: '1px solid #333333'
                   }}
                 >
                   <span className="text-2xl">{localeFlags[lang]}</span>
