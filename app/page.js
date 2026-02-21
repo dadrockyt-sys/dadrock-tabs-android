@@ -542,28 +542,28 @@ export default function App({ initialLang = 'en' }) {
 
         {/* Main Content */}
         <main className="flex flex-col items-center px-4 py-8 sm:py-12">
-          {/* Logo */}
-          <div className="mb-6">
+          {/* Logo - Crossed Guitars */}
+          <div className="mb-4">
             <img
               src={LOGO_URL}
               alt="DadRock Tabs Logo"
               onClick={handleLogoClick}
-              className="w-80 sm:w-96 md:w-[28rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300"
+              className="w-[22rem] sm:w-[28rem] md:w-[34rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300"
             />
           </div>
 
           {/* Definition */}
           <div className="text-center mb-6 max-w-xl">
-            <div className="flex items-center justify-center gap-2 flex-wrap">
+            <div className="flex items-center justify-center gap-3 flex-wrap">
               <img 
                 src={DADROCK_TEXT_URL} 
                 alt="DadRock" 
-                className="h-8 sm:h-10"
+                className="h-12 sm:h-14 md:h-16"
               />
-              <span className="text-amber-500 text-xl sm:text-2xl">{t.definition.pronunciation}</span>
+              <span className="text-amber-500 text-2xl sm:text-3xl md:text-4xl font-bold">{t.definition.pronunciation}</span>
             </div>
-            <p className="text-zinc-500 italic text-sm mt-1">{t.definition.partOfSpeech}</p>
-            <p className="text-zinc-300 mt-2 leading-relaxed">
+            <p className="text-zinc-500 italic text-base mt-2">{t.definition.partOfSpeech}</p>
+            <p className="text-zinc-300 mt-3 leading-relaxed text-base sm:text-lg">
               {t.definition.meaning}
             </p>
           </div>
