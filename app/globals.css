@@ -193,6 +193,42 @@
   text-shadow: 0 0 20px rgba(251, 191, 36, 0.5), 0 0 40px rgba(251, 191, 36, 0.3);
 }
 
+/* 80s Rock Style Typography */
+.font-rock {
+  font-family: 'Oswald', 'Impact', 'Haettenschweiler', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.font-rock-alt {
+  font-family: 'Teko', 'Impact', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Rock definition text style */
+.rock-definition {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #e4e4e7;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Rock tagline style */
+.rock-tagline {
+  font-family: 'Teko', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
 /* Video card hover effect */
 .video-card {
   transition: all 0.2s ease;
