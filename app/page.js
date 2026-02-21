@@ -719,15 +719,15 @@ export default function App({ initialLang = 'en' }) {
         </main>
 
         {/* Footer */}
-        <footer className="py-6 text-center">
+        <footer className="py-10 text-center fade-in-up" style={{ animationDelay: '1s' }}>
           <a
             href="mailto:Dadrockyt@gmail.com"
-            className="inline-flex items-center gap-2 px-5 py-2 text-sm text-zinc-400 hover:text-white bg-zinc-900 hover:bg-zinc-800 rounded-full transition-all border border-zinc-800"
+            className="artist-btn inline-flex items-center gap-2 px-6 py-3 text-sm text-zinc-300 hover:text-white bg-zinc-800/80 rounded-full border border-zinc-700 font-medium"
           >
             <Mail className="w-4 h-4" />
             {t.contact}
           </a>
-          <p className="text-xs text-zinc-600 mt-4">
+          <p className="text-sm text-zinc-500 mt-6">
             {t.footer}
           </p>
         </footer>
