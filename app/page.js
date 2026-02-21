@@ -54,22 +54,29 @@ function LanguageSelector({ currentLang }) {
           <div 
             className="fixed inset-0 z-40" 
             onClick={() => setIsOpen(false)}
+            aria-hidden="true"
           />
-          <div className="absolute right-0 mt-2 w-48 bg-zinc-900 border border-zinc-700 rounded-lg shadow-2xl overflow-hidden z-50 max-h-[70vh] overflow-y-auto">
-            <div className="py-1">
+          <div 
+            className="absolute right-0 mt-2 w-52 rounded-xl shadow-2xl overflow-hidden z-50 max-h-[70vh] overflow-y-auto"
+            style={{ backgroundColor: '#18181b', border: '1px solid #3f3f46' }}
+          >
+            <div className="py-2">
               {locales.map((lang) => (
                 <button
                   key={lang}
                   onClick={() => handleLanguageChange(lang)}
+                  style={{ 
+                    backgroundColor: lang === currentLang ? 'rgba(245, 158, 11, 0.3)' : 'transparent',
+                  }}
                   className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors touch-manipulation ${
                     lang === currentLang
-                      ? "bg-amber-500/30 text-amber-400"
+                      ? "text-amber-400"
                       : "text-zinc-200 hover:bg-zinc-800 active:bg-zinc-700"
                   }`}
                 >
-                  <span className="text-lg">{localeFlags[lang]}</span>
+                  <span className="text-xl">{localeFlags[lang]}</span>
                   <span className="flex-1 text-left font-medium">{localeNames[lang]}</span>
-                  {lang === currentLang && <span className="text-amber-400">✓</span>}
+                  {lang === currentLang && <span className="text-amber-400 font-bold">✓</span>}
                 </button>
               ))}
             </div>
