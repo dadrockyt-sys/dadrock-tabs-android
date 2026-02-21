@@ -26,7 +26,12 @@ const popularArtists = [
 // Language Selector Component with SEO-friendly URLs
 function LanguageSelector({ currentLang }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLanguageChange = (lang) => {
     setIsOpen(false);
@@ -36,6 +41,116 @@ function LanguageSelector({ currentLang }) {
       router.push(`/${lang}`);
     }
   };
+
+  // Modal content to be portaled to body
+  const modalContent = isOpen && mounted ? createPortal(
+    <div 
+      style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 99999,
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        paddingTop: '60px',
+        backgroundColor: '#000000'
+      }}
+    >
+      {/* Dark backdrop - click to close */}
+      <div 
+        style={{ 
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#000000'
+        }}
+        onClick={() => setIsOpen(false)}
+      />
+      
+      {/* Language menu card */}
+      <div 
+        style={{ 
+          position: 'relative',
+          width: '320px',
+          maxWidth: '90vw',
+          maxHeight: '80vh',
+          overflowY: 'auto',
+          borderRadius: '16px',
+          backgroundColor: '#262626',
+          border: '2px solid #525252',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 1)'
+        }}
+      >
+        {/* Header */}
+        <div 
+          style={{ 
+            position: 'sticky',
+            top: 0,
+            padding: '16px',
+            backgroundColor: '#262626',
+            borderBottom: '1px solid #525252',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}
+        >
+          <span style={{ color: '#ffffff', fontWeight: 'bold', fontSize: '18px' }}>Select Language</span>
+          <button 
+            onClick={() => setIsOpen(false)}
+            style={{
+              width: '32px',
+              height: '32px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '50%',
+              backgroundColor: '#404040',
+              color: '#ffffff',
+              border: 'none',
+              fontSize: '20px',
+              cursor: 'pointer'
+            }}
+          >
+            ×
+          </button>
+        </div>
+        
+        {/* Language options */}
+        <div style={{ backgroundColor: '#262626' }}>
+          {locales.map((lang) => (
+            <button
+              key={lang}
+              onClick={() => handleLanguageChange(lang)}
+              style={{ 
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '16px',
+                padding: '16px',
+                fontSize: '16px',
+                backgroundColor: lang === currentLang ? '#4a4a00' : '#262626',
+                color: lang === currentLang ? '#fbbf24' : '#e4e4e7',
+                borderBottom: '1px solid #404040',
+                border: 'none',
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              <span style={{ fontSize: '24px' }}>{localeFlags[lang]}</span>
+              <span style={{ flex: 1, fontWeight: '500' }}>{localeNames[lang]}</span>
+              {lang === currentLang && <span style={{ color: '#fbbf24', fontWeight: 'bold', fontSize: '20px' }}>✓</span>}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>,
+    document.body
+  ) : null;
 
   return (
     <>
@@ -49,64 +164,7 @@ function LanguageSelector({ currentLang }) {
         <ChevronDown className={`w-3 h-3 transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
-      {/* Full-screen language selector modal */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 flex items-start justify-center pt-16"
-          style={{ zIndex: 9999, backgroundColor: '#000000' }}
-        >
-          {/* Dark backdrop - completely opaque */}
-          <div 
-            className="absolute inset-0"
-            style={{ backgroundColor: '#000000' }}
-            onClick={() => setIsOpen(false)}
-          />
-          
-          {/* Language menu */}
-          <div 
-            className="relative w-80 max-h-[80vh] overflow-y-auto rounded-2xl"
-            style={{ 
-              backgroundColor: '#1f1f1f',
-              border: '2px solid #525252',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 1)'
-            }}
-          >
-            {/* Header */}
-            <div 
-              className="sticky top-0 px-4 py-3 border-b flex items-center justify-between"
-              style={{ backgroundColor: '#1f1f1f', borderColor: '#525252' }}
-            >
-              <span className="text-white font-bold text-lg">Select Language</span>
-              <button 
-                onClick={() => setIsOpen(false)}
-                className="w-8 h-8 flex items-center justify-center rounded-full text-zinc-400 hover:text-white hover:bg-zinc-700 text-2xl leading-none"
-              >
-                ×
-              </button>
-            </div>
-            
-            {/* Language options */}
-            <div style={{ backgroundColor: '#1f1f1f' }}>
-              {locales.map((lang) => (
-                <button
-                  key={lang}
-                  onClick={() => handleLanguageChange(lang)}
-                  className="w-full flex items-center gap-4 px-4 py-4 text-base transition-colors touch-manipulation"
-                  style={{ 
-                    backgroundColor: lang === currentLang ? '#3d3d00' : '#1f1f1f',
-                    color: lang === currentLang ? '#fbbf24' : '#e4e4e7',
-                    borderBottom: '1px solid #333333'
-                  }}
-                >
-                  <span className="text-2xl">{localeFlags[lang]}</span>
-                  <span className="flex-1 text-left font-medium">{localeNames[lang]}</span>
-                  {lang === currentLang && <span style={{ color: '#fbbf24' }} className="font-bold text-xl">✓</span>}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      {modalContent}
     </>
   );
 }
