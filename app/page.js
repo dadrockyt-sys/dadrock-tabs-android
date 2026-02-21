@@ -631,38 +631,39 @@ export default function App({ initialLang = 'en' }) {
 
           {/* Featured Video */}
           {featuredVideo?.url && (
-            <div className="w-full max-w-2xl mb-8">
-              <p className="text-center text-zinc-400 mb-4 flex items-center justify-center gap-2">
-                <span>🎬</span> {t.featuredLesson}
+            <div className="w-full max-w-2xl mb-10 fade-in-up" style={{ animationDelay: '0.7s' }}>
+              <p className="text-center text-zinc-300 mb-5 flex items-center justify-center gap-2 text-lg font-medium">
+                <span className="text-2xl">🎬</span> {t.featuredLesson}
               </p>
-              <div className="relative aspect-video rounded-xl overflow-hidden border border-zinc-800">
+              <div className="relative aspect-video rounded-2xl overflow-hidden glass-card p-1">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 via-transparent to-red-500/20 rounded-2xl pointer-events-none" />
                 <iframe
                   src={getYouTubeEmbedUrl(featuredVideo.url, isFirstVisit)}
                   title={featuredVideo.title || "Featured Video"}
-                  className="absolute inset-0 w-full h-full"
+                  className="relative w-full h-full rounded-xl"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
               </div>
               {featuredVideo.title && (
-                <p className="text-center mt-3 text-zinc-400">
-                  🎸 "{featuredVideo.title}" {featuredVideo.artist && `by ${featuredVideo.artist}`}
+                <p className="text-center mt-4 text-zinc-300 text-lg">
+                  🎸 <span className="font-semibold text-amber-400">"{featuredVideo.title}"</span> {featuredVideo.artist && <span className="text-zinc-400">by {featuredVideo.artist}</span>}
                 </p>
               )}
             </div>
           )}
 
           {/* Share Section */}
-          <div className="mb-8">
-            <p className="text-center text-zinc-400 mb-4 flex items-center justify-center gap-2">
-              <span>📢</span> {t.shareDadRock}
+          <div className="mb-10 fade-in-up" style={{ animationDelay: '0.8s' }}>
+            <p className="text-center text-zinc-300 mb-5 flex items-center justify-center gap-2 text-lg font-medium">
+              <span className="text-2xl">📢</span> {t.shareDadRock}
             </p>
-            <div className="flex justify-center gap-3">
+            <div className="flex justify-center gap-4">
               <a
                 href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? window.location.origin : 'https://dadrocktabs.com'}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-full bg-blue-600 hover:bg-blue-500 flex items-center justify-center transition-colors"
+                className="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-500 flex items-center justify-center transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(37,99,235,0.5)]"
               >
                 <Facebook className="w-5 h-5 text-white" />
               </a>
@@ -670,13 +671,13 @@ export default function App({ initialLang = 'en' }) {
                 href={`https://twitter.com/intent/tweet?url=${typeof window !== 'undefined' ? window.location.origin : 'https://dadrocktabs.com'}&text=Check out DadRock Tabs!`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-full bg-sky-500 hover:bg-sky-400 flex items-center justify-center transition-colors"
+                className="w-12 h-12 rounded-full bg-sky-500 hover:bg-sky-400 flex items-center justify-center transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(14,165,233,0.5)]"
               >
                 <Twitter className="w-5 h-5 text-white" />
               </a>
               <button
                 onClick={() => navigator.share?.({ url: window.location.href, title: 'DadRock Tabs' })}
-                className="w-11 h-11 rounded-full bg-zinc-700 hover:bg-zinc-600 flex items-center justify-center transition-colors"
+                className="w-12 h-12 rounded-full bg-zinc-700 hover:bg-zinc-600 flex items-center justify-center transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(113,113,122,0.5)]"
               >
                 <Share2 className="w-5 h-5 text-white" />
               </button>
@@ -684,12 +685,12 @@ export default function App({ initialLang = 'en' }) {
           </div>
 
           {/* Action Buttons */}
-          <div className="w-full max-w-md space-y-3">
+          <div className="w-full max-w-md space-y-4 fade-in-up" style={{ animationDelay: '0.9s' }}>
             <a
               href="https://buymeacoffee.com/dadrockytq/commissions"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-full bg-amber-500 hover:bg-amber-400 text-black font-bold uppercase tracking-wide transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-4 rounded-full gradient-btn text-black font-bold uppercase tracking-wide text-lg"
             >
               <MessageSquarePlus className="w-5 h-5" />
               {t.makeRequest}
@@ -699,18 +700,18 @@ export default function App({ initialLang = 'en' }) {
                 href="https://www.paypal.com/donate?hosted_button_id=FKZ2C3QW9ZBTE"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white transition-all"
+                className="artist-btn flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full bg-zinc-800/80 border border-zinc-700 text-zinc-200 hover:text-white font-medium"
               >
-                <Heart className="w-4 h-4 text-red-500" />
+                <Heart className="w-5 h-5 text-red-500" />
                 {t.support}
               </a>
               <a
                 href="https://my-store-b8bb42.creator-spring.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white transition-all"
+                className="artist-btn flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full bg-zinc-800/80 border border-zinc-700 text-zinc-200 hover:text-white font-medium"
               >
-                <ShoppingBag className="w-4 h-4 text-amber-500" />
+                <ShoppingBag className="w-5 h-5 text-amber-500" />
                 {t.merchandise}
               </a>
             </div>
