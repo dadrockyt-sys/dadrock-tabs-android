@@ -11,7 +11,7 @@ import sys
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://youtube-video-hub.preview.emergentagent.com/api"
+BASE_URL = "https://tabs-staging.preview.emergentagent.com/api"
 ADMIN_PASSWORD = "dadrock2024"
 
 def create_basic_auth_header():
