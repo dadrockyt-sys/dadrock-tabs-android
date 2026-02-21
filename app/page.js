@@ -541,86 +541,91 @@ export default function App({ initialLang = 'en' }) {
         </header>
 
         {/* Main Content */}
-        <main className="flex flex-col items-center px-4 py-8 sm:py-12">
-          {/* Logo - Crossed Guitars */}
-          <div className="mb-4">
+        <main className="flex flex-col items-center px-4 py-6 sm:py-10">
+          {/* Logo - Crossed Guitars with Glow Animation */}
+          <div className="mb-2 fade-in-up" style={{ animationDelay: '0.1s' }}>
             <img
               src={LOGO_URL}
               alt="DadRock Tabs Logo"
               onClick={handleLogoClick}
-              className="w-[22rem] sm:w-[28rem] md:w-[34rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300"
+              className="w-[22rem] sm:w-[28rem] md:w-[34rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
             />
           </div>
 
           {/* Definition */}
-          <div className="text-center mb-6 max-w-xl">
-            <div className="flex items-center justify-center gap-3 flex-wrap">
+          <div className="text-center mb-8 max-w-xl fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className="flex items-center justify-center gap-3 flex-wrap mb-2">
               <img 
                 src={DADROCK_TEXT_URL} 
                 alt="DadRock" 
                 className="h-12 sm:h-14 md:h-16"
+                style={{ filter: 'drop-shadow(0 0 10px rgba(251, 191, 36, 0.4))' }}
               />
-              <span className="text-amber-500 text-2xl sm:text-3xl md:text-4xl font-bold">{t.definition.pronunciation}</span>
+              <span className="text-amber-500 text-2xl sm:text-3xl md:text-4xl font-bold text-glow">{t.definition.pronunciation}</span>
             </div>
-            <p className="text-zinc-500 italic text-base mt-2">{t.definition.partOfSpeech}</p>
-            <p className="text-zinc-300 mt-3 leading-relaxed text-base sm:text-lg">
+            <p className="text-zinc-400 italic text-base mt-2 tracking-wide">{t.definition.partOfSpeech}</p>
+            <p className="text-zinc-200 mt-4 leading-relaxed text-base sm:text-lg font-light">
               {t.definition.meaning}
             </p>
           </div>
 
           {/* Tagline */}
-          <p className="text-zinc-400 text-center text-sm sm:text-base mb-6 max-w-lg">
+          <p className="text-zinc-400 text-center text-sm sm:text-base mb-8 max-w-lg fade-in-up leading-relaxed" style={{ animationDelay: '0.3s' }}>
             {t.tagline}
           </p>
 
-          {/* Search Form */}
-          <form onSubmit={handleSearch} className="w-full max-w-2xl mb-6">
+          {/* Search Form with Gradient Border */}
+          <form onSubmit={handleSearch} className="w-full max-w-2xl mb-8 fade-in-up" style={{ animationDelay: '0.4s' }}>
             <div className="flex gap-3">
-              <div className="flex-1 relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
+              <div className="flex-1 relative gradient-border">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 z-10" />
                 <input
                   type="text"
                   placeholder={t.searchPlaceholder}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full h-12 sm:h-14 bg-zinc-900 border border-zinc-700 focus:border-amber-500 rounded-full pl-12 pr-4 text-white placeholder:text-zinc-500 outline-none transition-colors"
+                  className="w-full h-12 sm:h-14 bg-zinc-900/90 rounded-full pl-12 pr-4 text-white placeholder:text-zinc-500 outline-none transition-all focus:bg-zinc-800 focus:shadow-[0_0_30px_rgba(251,191,36,0.3)]"
                 />
               </div>
               <button
                 type="submit"
-                className="h-12 sm:h-14 px-6 sm:px-8 rounded-full bg-amber-500 text-black font-bold uppercase tracking-wider hover:bg-amber-400 transition-colors"
+                className="h-12 sm:h-14 px-6 sm:px-8 rounded-full gradient-btn text-black font-bold uppercase tracking-wider"
               >
                 {t.searchButton}
               </button>
             </div>
           </form>
 
-          {/* Subscribe Button */}
+          {/* Subscribe Button with Pulse Glow */}
           <a
             href={YOUTUBE_CHANNEL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 hover:bg-red-500 text-white font-bold uppercase tracking-wide transition-colors mb-8"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full subscribe-btn pulse-glow text-white font-bold uppercase tracking-wide mb-10 fade-in-up"
+            style={{ animationDelay: '0.5s' }}
           >
-            <Youtube className="w-5 h-5" />
+            <Youtube className="w-6 h-6" />
             {t.subscribe}
           </a>
 
-          {/* Popular Searches */}
-          <div className="w-full max-w-2xl mb-8">
-            <p className="text-center text-zinc-400 mb-4 flex items-center justify-center gap-2">
-              <span>🔥</span> {t.popularSearches}
-            </p>
-            <div className="flex flex-wrap justify-center gap-2">
-              {popularArtists.map((artist) => (
-                <button
-                  key={artist.name}
-                  onClick={() => handleArtistClick(artist.name)}
-                  className="px-4 py-2 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-amber-500/50 text-sm text-zinc-300 hover:text-white transition-all"
-                >
-                  {artist.emoji} {artist.name}
-                </button>
-              ))}
+          {/* Popular Searches with Glassmorphism */}
+          <div className="w-full max-w-2xl mb-10 fade-in-up" style={{ animationDelay: '0.6s' }}>
+            <div className="glass-card rounded-2xl p-6">
+              <p className="text-center text-zinc-300 mb-5 flex items-center justify-center gap-2 text-lg font-medium">
+                <span className="text-2xl">🔥</span> {t.popularSearches}
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                {popularArtists.map((artist, index) => (
+                  <button
+                    key={artist.name}
+                    onClick={() => handleArtistClick(artist.name)}
+                    className="artist-btn px-5 py-2.5 rounded-full bg-zinc-800/80 border border-zinc-700 text-sm text-zinc-200 hover:text-white font-medium"
+                    style={{ animationDelay: `${0.7 + index * 0.05}s` }}
+                  >
+                    <span className="mr-1.5">{artist.emoji}</span> {artist.name}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
