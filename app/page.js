@@ -37,7 +37,7 @@ function LanguageSelector({ currentLang }) {
   };
 
   return (
-    <div className="relative">
+    <>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-sm font-medium text-zinc-300 hover:text-white bg-zinc-800/80 hover:bg-zinc-700 rounded-md transition-all border border-zinc-700/50"
@@ -48,42 +48,64 @@ function LanguageSelector({ currentLang }) {
         <ChevronDown className={`w-3 h-3 transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
+      {/* Full-screen language selector modal */}
       {isOpen && (
-        <>
-          {/* Backdrop to close dropdown when clicking outside */}
+        <div 
+          className="fixed inset-0 flex items-start justify-center pt-16"
+          style={{ zIndex: 9999 }}
+        >
+          {/* Dark backdrop */}
           <div 
-            className="fixed inset-0 z-40" 
+            className="absolute inset-0"
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.85)' }}
             onClick={() => setIsOpen(false)}
-            aria-hidden="true"
           />
+          
+          {/* Language menu */}
           <div 
-            className="absolute right-0 mt-2 w-52 rounded-xl shadow-2xl overflow-hidden z-50 max-h-[70vh] overflow-y-auto"
-            style={{ backgroundColor: '#18181b', border: '1px solid #3f3f46' }}
+            className="relative w-72 max-h-[80vh] overflow-y-auto rounded-2xl shadow-2xl"
+            style={{ 
+              backgroundColor: '#1a1a1a',
+              border: '2px solid #404040',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.9)'
+            }}
           >
+            {/* Header */}
+            <div 
+              className="sticky top-0 px-4 py-3 border-b flex items-center justify-between"
+              style={{ backgroundColor: '#1a1a1a', borderColor: '#404040' }}
+            >
+              <span className="text-white font-bold text-lg">Select Language</span>
+              <button 
+                onClick={() => setIsOpen(false)}
+                className="text-zinc-400 hover:text-white text-2xl leading-none"
+              >
+                ×
+              </button>
+            </div>
+            
+            {/* Language options */}
             <div className="py-2">
               {locales.map((lang) => (
                 <button
                   key={lang}
                   onClick={() => handleLanguageChange(lang)}
+                  className="w-full flex items-center gap-4 px-4 py-4 text-base transition-colors touch-manipulation active:bg-zinc-700"
                   style={{ 
-                    backgroundColor: lang === currentLang ? 'rgba(245, 158, 11, 0.3)' : 'transparent',
+                    backgroundColor: lang === currentLang ? '#2d2d00' : 'transparent',
+                    color: lang === currentLang ? '#fbbf24' : '#e4e4e7'
                   }}
-                  className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition-colors touch-manipulation ${
-                    lang === currentLang
-                      ? "text-amber-400"
-                      : "text-zinc-200 hover:bg-zinc-800 active:bg-zinc-700"
-                  }`}
                 >
-                  <span className="text-xl">{localeFlags[lang]}</span>
+                  <span className="text-2xl">{localeFlags[lang]}</span>
                   <span className="flex-1 text-left font-medium">{localeNames[lang]}</span>
-                  {lang === currentLang && <span className="text-amber-400 font-bold">✓</span>}
+                  {lang === currentLang && <span style={{ color: '#fbbf24' }} className="font-bold text-xl">✓</span>}
                 </button>
               ))}
             </div>
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 
