@@ -553,26 +553,28 @@ export default function App({ initialLang = 'en' }) {
             </div>
             
             {/* Container for layered images */}
-            <div className="relative">
-              {/* Headphones - Back layer (ear cups) */}
+            <div className="relative flex items-center justify-center">
+              {/* Headphones - Back layer */}
               <img
                 src={HEADPHONES_URL}
                 alt="Headphones"
-                className="absolute w-[115%] headphone-bass"
+                className="absolute headphone-bass pointer-events-none"
                 style={{ 
                   filter: 'brightness(1.3) drop-shadow(0 0 30px rgba(251, 191, 36, 0.5))',
-                  left: '-7.5%',
-                  top: '-25%',
+                  width: '120%',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -60%)',
                   zIndex: 5
                 }}
               />
               
-              {/* Main Guitar Logo - Middle layer */}
+              {/* Main Guitar Logo - Centered */}
               <img
                 src={LOGO_URL}
                 alt="DadRock Tabs Logo"
                 onClick={handleLogoClick}
-                className="relative w-[22rem] sm:w-[28rem] md:w-[34rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
+                className="relative w-[20rem] sm:w-[26rem] md:w-[32rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
                 style={{ zIndex: 10 }}
               />
             </div>
