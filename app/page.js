@@ -546,33 +546,33 @@ export default function App({ initialLang = 'en' }) {
           {/* Logo with Headphones - Bass Emanation Effect */}
           <div className="mb-2 fade-in-up relative" style={{ animationDelay: '0.1s' }}>
             {/* Sound Wave Rings */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ top: '-10%' }}>
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ top: '-5%' }}>
               <div className="absolute w-[70%] h-[70%] rounded-full border-2 border-amber-500/40 sound-wave-1" />
               <div className="absolute w-[85%] h-[85%] rounded-full border-2 border-red-500/30 sound-wave-2" />
               <div className="absolute w-[100%] h-[100%] rounded-full border border-amber-500/20 sound-wave-3" />
             </div>
             
-            {/* Headphones - Positioned on top */}
-            <div className="absolute inset-0 flex items-start justify-center z-20 pointer-events-none">
-              <img
-                src={HEADPHONES_URL}
-                alt="Headphones"
-                className="w-[95%] sm:w-[90%] headphone-bass"
-                style={{ 
-                  filter: 'brightness(1.3) drop-shadow(0 0 20px rgba(251, 191, 36, 0.4))',
-                  marginTop: '-8%',
-                  transform: 'scale(1.1)'
-                }}
-              />
-            </div>
-            
-            {/* Main Guitar Logo */}
+            {/* Main Guitar Logo - Base layer */}
             <img
               src={LOGO_URL}
               alt="DadRock Tabs Logo"
               onClick={handleLogoClick}
               className="relative z-10 w-[22rem] sm:w-[28rem] md:w-[34rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
             />
+            
+            {/* Headphones - Overlay on top */}
+            <div className="absolute inset-0 flex items-start justify-center z-20 pointer-events-none">
+              <img
+                src={HEADPHONES_URL}
+                alt="Headphones"
+                className="w-[100%] sm:w-[95%] headphone-bass"
+                style={{ 
+                  filter: 'brightness(1.2) drop-shadow(0 0 25px rgba(251, 191, 36, 0.5))',
+                  marginTop: '-12%',
+                  mixBlendMode: 'lighten'
+                }}
+              />
+            </div>
           </div>
 
           {/* Definition */}
