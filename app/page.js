@@ -10,6 +10,7 @@ import { getTranslation, locales, localeNames, localeFlags } from '@/lib/i18n';
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const DADROCK_TEXT_URL = "https://customer-assets.emergentagent.com/job_nextjs-deploy-3/artifacts/2vno1305_Picsart_26-02-16_06-05-32-255%281%29.png";
 const BANNER_URL = "https://customer-assets.emergentagent.com/job_nextjs-deploy-3/artifacts/q10t8nk7_Picsart_26-02-17_18-51-12-061.png";
+const HEADPHONES_URL = "https://customer-assets.emergentagent.com/job_bd94fdc7-4b49-4099-93f6-493e89650cc1/artifacts/89e4i39y_headphones-3d.gif";
 const YOUTUBE_CHANNEL = "https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ";
 
 const popularArtists = [
