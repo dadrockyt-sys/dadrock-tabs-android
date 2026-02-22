@@ -283,7 +283,11 @@ export default function App({ initialLang = 'en' }) {
           if (data.ad_button_text) setAdButtonText(data.ad_button_text);
         }
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => {
+        // Set page ready after content loads to prevent animation glitches
+        setTimeout(() => setPageReady(true), 100);
+      });
   }, []);
 
   // Check admin auth on mount
