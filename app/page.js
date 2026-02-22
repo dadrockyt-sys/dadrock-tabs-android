@@ -544,108 +544,45 @@ export default function App({ initialLang = 'en' }) {
 
         {/* Main Content */}
         <main className="flex flex-col items-center px-4 py-6 sm:py-10">
-          {/* Logo with Stylized Headphones - Bass Emanation Effect */}
+          {/* Logo with Marshall Amp Stacks - Bass Emanation Effect */}
           <div className="mb-4 fade-in-up relative flex items-center justify-center overflow-visible" style={{ animationDelay: '0.1s' }}>
             {/* Sound Wave Rings */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="absolute w-[50%] h-[50%] rounded-full border-2 border-amber-500/50 sound-wave-1" />
-              <div className="absolute w-[65%] h-[65%] rounded-full border-2 border-red-500/40 sound-wave-2" />
-              <div className="absolute w-[80%] h-[80%] rounded-full border border-amber-500/30 sound-wave-3" />
+              <div className="absolute w-[60%] h-[60%] rounded-full border-2 border-amber-500/50 sound-wave-1" />
+              <div className="absolute w-[80%] h-[80%] rounded-full border-2 border-red-500/40 sound-wave-2" />
+              <div className="absolute w-[100%] h-[100%] rounded-full border border-amber-500/30 sound-wave-3" />
             </div>
             
             {/* Container for layered images */}
             <div className="relative flex items-center justify-center">
-              {/* CSS Stylized Headphone Frame */}
-              {/* Headband arc - outer glow */}
-              <div 
-                className="absolute pointer-events-none"
-                style={{
-                  width: '95%',
-                  height: '50%',
-                  top: '-8%',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  border: '6px solid transparent',
-                  borderBottom: 'none',
-                  borderRadius: '50% 50% 0 0',
-                  background: 'linear-gradient(180deg, rgba(90,90,90,1) 0%, rgba(60,60,60,1) 100%) padding-box, linear-gradient(180deg, rgba(150,150,150,0.8), rgba(80,80,80,0.6)) border-box',
-                  boxShadow: '0 0 30px rgba(251, 191, 36, 0.4), 0 -5px 20px rgba(251, 191, 36, 0.3)',
-                  zIndex: 6
-                }}
-              />
-              {/* Headband padding/cushion */}
-              <div 
-                className="absolute pointer-events-none"
-                style={{
-                  width: '70%',
-                  height: '12%',
-                  top: '-2%',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  background: 'linear-gradient(180deg, rgba(50,50,50,1) 0%, rgba(30,30,30,1) 100%)',
-                  borderRadius: '50% 50% 50% 50% / 100% 100% 0% 0%',
-                  boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.8)',
-                  zIndex: 7
+              {/* Left Marshall Amp Stack - Mirrored */}
+              <img
+                src={MARSHALL_AMP_URL}
+                alt="Marshall Amp Left"
+                className="absolute amp-left pointer-events-none"
+                style={{ 
+                  height: '100%',
+                  width: 'auto',
+                  left: '-5%',
+                  top: '5%',
+                  transform: 'scaleX(-1)',
+                  zIndex: 5,
+                  opacity: 0.95
                 }}
               />
               
-              {/* Left ear cup - outer */}
-              <div 
-                className="absolute headphone-bass pointer-events-none"
-                style={{
-                  width: '24%',
-                  height: '38%',
-                  top: '22%',
-                  left: '-2%',
-                  background: 'linear-gradient(145deg, rgba(70,70,70,1) 0%, rgba(40,40,40,1) 50%, rgba(50,50,50,1) 100%)',
-                  borderRadius: '25% 35% 35% 25%',
-                  border: '3px solid rgba(90, 90, 90, 0.9)',
-                  boxShadow: '0 0 30px rgba(251, 191, 36, 0.5), inset 0 0 25px rgba(0,0,0,0.7), 5px 5px 15px rgba(0,0,0,0.5)',
-                  zIndex: 16
-                }}
-              />
-              {/* Left ear cup - inner cushion */}
-              <div 
-                className="absolute pointer-events-none"
-                style={{
-                  width: '18%',
-                  height: '28%',
-                  top: '27%',
-                  left: '1%',
-                  background: 'radial-gradient(ellipse at center, rgba(25,25,25,1) 0%, rgba(15,15,15,1) 100%)',
-                  borderRadius: '50%',
-                  boxShadow: 'inset 0 0 20px rgba(0,0,0,0.9)',
-                  zIndex: 17
-                }}
-              />
-              
-              {/* Right ear cup - outer */}
-              <div 
-                className="absolute headphone-bass pointer-events-none"
-                style={{
-                  width: '24%',
-                  height: '38%',
-                  top: '22%',
-                  right: '-2%',
-                  background: 'linear-gradient(215deg, rgba(70,70,70,1) 0%, rgba(40,40,40,1) 50%, rgba(50,50,50,1) 100%)',
-                  borderRadius: '35% 25% 25% 35%',
-                  border: '3px solid rgba(90, 90, 90, 0.9)',
-                  boxShadow: '0 0 30px rgba(251, 191, 36, 0.5), inset 0 0 25px rgba(0,0,0,0.7), -5px 5px 15px rgba(0,0,0,0.5)',
-                  zIndex: 16
-                }}
-              />
-              {/* Right ear cup - inner cushion */}
-              <div 
-                className="absolute pointer-events-none"
-                style={{
-                  width: '18%',
-                  height: '28%',
-                  top: '27%',
-                  right: '1%',
-                  background: 'radial-gradient(ellipse at center, rgba(25,25,25,1) 0%, rgba(15,15,15,1) 100%)',
-                  borderRadius: '50%',
-                  boxShadow: 'inset 0 0 20px rgba(0,0,0,0.9)',
-                  zIndex: 17
+              {/* Right Marshall Amp Stack */}
+              <img
+                src={MARSHALL_AMP_URL}
+                alt="Marshall Amp Right"
+                className="absolute amp-right pointer-events-none"
+                style={{ 
+                  height: '100%',
+                  width: 'auto',
+                  right: '-5%',
+                  top: '5%',
+                  zIndex: 5,
+                  opacity: 0.95
                 }}
               />
               
@@ -654,7 +591,7 @@ export default function App({ initialLang = 'en' }) {
                 src={LOGO_URL}
                 alt="DadRock Tabs Logo"
                 onClick={handleLogoClick}
-                className="relative w-[18rem] sm:w-[24rem] md:w-[30rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
+                className="relative w-[16rem] sm:w-[22rem] md:w-[28rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
                 style={{ zIndex: 10 }}
               />
             </div>
