@@ -543,13 +543,34 @@ export default function App({ initialLang = 'en' }) {
 
         {/* Main Content */}
         <main className="flex flex-col items-center px-4 py-6 sm:py-10">
-          {/* Logo - Crossed Guitars with Glow Animation */}
-          <div className="mb-2 fade-in-up" style={{ animationDelay: '0.1s' }}>
+          {/* Logo with Headphones - Bass Emanation Effect */}
+          <div className="mb-2 fade-in-up relative" style={{ animationDelay: '0.1s' }}>
+            {/* Sound Wave Rings */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="absolute w-[80%] h-[80%] rounded-full border-2 border-amber-500/30 sound-wave-1" />
+              <div className="absolute w-[90%] h-[90%] rounded-full border-2 border-red-500/20 sound-wave-2" />
+              <div className="absolute w-[100%] h-[100%] rounded-full border border-amber-500/10 sound-wave-3" />
+            </div>
+            
+            {/* Headphones - Behind the logo */}
+            <div className="absolute inset-0 flex items-center justify-center z-0">
+              <img
+                src={HEADPHONES_URL}
+                alt="Headphones"
+                className="w-[85%] sm:w-[80%] headphone-bass opacity-90"
+                style={{ 
+                  filter: 'brightness(1.2) drop-shadow(0 0 15px rgba(251, 191, 36, 0.3))',
+                  marginTop: '-5%'
+                }}
+              />
+            </div>
+            
+            {/* Main Guitar Logo */}
             <img
               src={LOGO_URL}
               alt="DadRock Tabs Logo"
               onClick={handleLogoClick}
-              className="w-[22rem] sm:w-[28rem] md:w-[34rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
+              className="relative z-10 w-[22rem] sm:w-[28rem] md:w-[34rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
             />
           </div>
 
