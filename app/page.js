@@ -554,39 +554,58 @@ export default function App({ initialLang = 'en' }) {
             
             {/* Container for layered images */}
             <div className="relative flex items-center justify-center">
-              {/* Headphones - Glowing outline effect using multiple layers */}
-              {/* Layer 1: Base headphones with edge detection look */}
-              <img
-                src={HEADPHONES_URL}
-                alt="Headphones"
+              {/* Headphones glow outline - multiple layers for neon effect */}
+              <div 
                 className="absolute headphone-bass pointer-events-none"
                 style={{ 
                   width: '105%',
-                  height: 'auto',
+                  height: '105%',
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
                   zIndex: 5,
-                  filter: 'invert(1) brightness(0.3) sepia(1) saturate(5) hue-rotate(5deg)',
-                  mixBlendMode: 'screen',
-                  opacity: 0.9
+                  backgroundImage: `url(${HEADPHONES_URL})`,
+                  backgroundSize: 'contain',
+                  backgroundPosition: 'center top',
+                  backgroundRepeat: 'no-repeat',
+                  filter: 'brightness(2) contrast(2) grayscale(1)',
+                  mixBlendMode: 'lighten',
+                  maskImage: `url(${HEADPHONES_URL})`,
+                  WebkitMaskImage: `url(${HEADPHONES_URL})`,
+                  maskSize: 'contain',
+                  WebkitMaskSize: 'contain',
+                  maskPosition: 'center top',
+                  WebkitMaskPosition: 'center top',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskRepeat: 'no-repeat'
                 }}
               />
-              {/* Layer 2: Glow effect */}
-              <img
-                src={HEADPHONES_URL}
-                alt=""
+              
+              {/* Amber glow layer */}
+              <div 
                 className="absolute headphone-bass pointer-events-none"
                 style={{ 
-                  width: '105%',
-                  height: 'auto',
+                  width: '108%',
+                  height: '108%',
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
                   zIndex: 4,
-                  filter: 'invert(1) brightness(0.5) sepia(1) saturate(10) hue-rotate(10deg) blur(8px)',
+                  backgroundImage: `url(${HEADPHONES_URL})`,
+                  backgroundSize: 'contain',
+                  backgroundPosition: 'center top',
+                  backgroundRepeat: 'no-repeat',
+                  filter: 'brightness(3) contrast(1.5) sepia(1) saturate(3) hue-rotate(-10deg) blur(12px)',
                   mixBlendMode: 'screen',
-                  opacity: 0.6
+                  opacity: 0.5,
+                  maskImage: `url(${HEADPHONES_URL})`,
+                  WebkitMaskImage: `url(${HEADPHONES_URL})`,
+                  maskSize: 'contain',
+                  WebkitMaskSize: 'contain',
+                  maskPosition: 'center top',
+                  WebkitMaskPosition: 'center top',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskRepeat: 'no-repeat'
                 }}
               />
               
