@@ -58,12 +58,12 @@
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-5px); }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
-  50% { box-shadow: 0 0 35px rgba(239, 68, 68, 0.8), 0 0 50px rgba(239, 68, 68, 0.4); }
+  0%, 100% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.6), 0 0 40px rgba(239, 68, 68, 0.3); }
 }
 
 @keyframes shimmer {
@@ -72,29 +72,15 @@
 }
 
 @keyframes amp-vibrate {
-  0%, 100% { transform: translateX(0) scaleY(1); }
-  10% { transform: translateX(-1px) scaleY(1.005); }
-  20% { transform: translateX(1px) scaleY(0.995); }
-  30% { transform: translateX(-1px) scaleY(1.005); }
-  40% { transform: translateX(1px) scaleY(1); }
-  50% { transform: translateX(0) scaleY(1.003); }
-  60% { transform: translateX(-1px) scaleY(0.997); }
-  70% { transform: translateX(1px) scaleY(1.005); }
-  80% { transform: translateX(-1px) scaleY(1); }
-  90% { transform: translateX(0) scaleY(0.998); }
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-1px); }
+  75% { transform: translateX(1px); }
 }
 
 @keyframes amp-vibrate-mirror {
-  0%, 100% { transform: scaleX(-1) translateX(0) scaleY(1); }
-  10% { transform: scaleX(-1) translateX(-1px) scaleY(1.005); }
-  20% { transform: scaleX(-1) translateX(1px) scaleY(0.995); }
-  30% { transform: scaleX(-1) translateX(-1px) scaleY(1.005); }
-  40% { transform: scaleX(-1) translateX(1px) scaleY(1); }
-  50% { transform: scaleX(-1) translateX(0) scaleY(1.003); }
-  60% { transform: scaleX(-1) translateX(-1px) scaleY(0.997); }
-  70% { transform: scaleX(-1) translateX(1px) scaleY(1.005); }
-  80% { transform: scaleX(-1) translateX(-1px) scaleY(1); }
-  90% { transform: scaleX(-1) translateX(0) scaleY(0.998); }
+  0%, 100% { transform: scaleX(-1) translateX(0); }
+  25% { transform: scaleX(-1) translateX(-1px); }
+  75% { transform: scaleX(-1) translateX(1px); }
 }
 
 @keyframes amp-glow-pulse {
