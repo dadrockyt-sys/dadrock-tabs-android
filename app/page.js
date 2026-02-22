@@ -544,37 +544,38 @@ export default function App({ initialLang = 'en' }) {
         {/* Main Content */}
         <main className="flex flex-col items-center px-4 py-6 sm:py-10">
           {/* Logo with Headphones - Bass Emanation Effect */}
-          <div className="mb-2 fade-in-up relative flex items-center justify-center" style={{ animationDelay: '0.1s' }}>
+          <div className="mb-4 fade-in-up relative flex items-center justify-center" style={{ animationDelay: '0.1s' }}>
             {/* Sound Wave Rings */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="absolute w-[60%] h-[60%] rounded-full border-2 border-amber-500/50 sound-wave-1" />
-              <div className="absolute w-[75%] h-[75%] rounded-full border-2 border-red-500/40 sound-wave-2" />
-              <div className="absolute w-[90%] h-[90%] rounded-full border border-amber-500/30 sound-wave-3" />
+              <div className="absolute w-[50%] h-[50%] rounded-full border-2 border-amber-500/50 sound-wave-1" />
+              <div className="absolute w-[65%] h-[65%] rounded-full border-2 border-red-500/40 sound-wave-2" />
+              <div className="absolute w-[80%] h-[80%] rounded-full border border-amber-500/30 sound-wave-3" />
             </div>
             
             {/* Container for layered images */}
             <div className="relative flex items-center justify-center">
-              {/* Headphones - Back layer */}
+              {/* Headphones - Behind the guitar logo */}
               <img
                 src={HEADPHONES_URL}
                 alt="Headphones"
                 className="absolute headphone-bass pointer-events-none"
                 style={{ 
-                  filter: 'brightness(1.3) drop-shadow(0 0 30px rgba(251, 191, 36, 0.5))',
-                  width: '120%',
+                  filter: 'brightness(1.4) drop-shadow(0 0 25px rgba(251, 191, 36, 0.6))',
+                  width: '115%',
+                  height: 'auto',
                   top: '50%',
                   left: '50%',
-                  transform: 'translate(-50%, -60%)',
+                  transform: 'translate(-50%, -55%)',
                   zIndex: 5
                 }}
               />
               
-              {/* Main Guitar Logo - Centered */}
+              {/* Main Guitar Logo - Centered on top */}
               <img
                 src={LOGO_URL}
                 alt="DadRock Tabs Logo"
                 onClick={handleLogoClick}
-                className="relative w-[20rem] sm:w-[26rem] md:w-[32rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
+                className="relative w-[18rem] sm:w-[24rem] md:w-[30rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
                 style={{ zIndex: 10 }}
               />
             </div>
