@@ -543,7 +543,7 @@ export default function App({ initialLang = 'en' }) {
 
         {/* Main Content */}
         <main className="flex flex-col items-center px-4 py-6 sm:py-10">
-          {/* Logo with Headphones - Bass Emanation Effect */}
+          {/* Logo with Stylized Headphones - Bass Emanation Effect */}
           <div className="mb-4 fade-in-up relative flex items-center justify-center overflow-visible" style={{ animationDelay: '0.1s' }}>
             {/* Sound Wave Rings */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -554,62 +554,55 @@ export default function App({ initialLang = 'en' }) {
             
             {/* Container for layered images */}
             <div className="relative flex items-center justify-center">
-              {/* Headphones glow outline - multiple layers for neon effect */}
+              {/* CSS Stylized Headphone Frame */}
+              {/* Headband arc */}
               <div 
                 className="absolute headphone-bass pointer-events-none"
-                style={{ 
-                  width: '105%',
-                  height: '105%',
-                  top: '50%',
+                style={{
+                  width: '90%',
+                  height: '45%',
+                  top: '-5%',
                   left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  zIndex: 5,
-                  backgroundImage: `url(${HEADPHONES_URL})`,
-                  backgroundSize: 'contain',
-                  backgroundPosition: 'center top',
-                  backgroundRepeat: 'no-repeat',
-                  filter: 'brightness(2) contrast(2) grayscale(1)',
-                  mixBlendMode: 'lighten',
-                  maskImage: `url(${HEADPHONES_URL})`,
-                  WebkitMaskImage: `url(${HEADPHONES_URL})`,
-                  maskSize: 'contain',
-                  WebkitMaskSize: 'contain',
-                  maskPosition: 'center top',
-                  WebkitMaskPosition: 'center top',
-                  maskRepeat: 'no-repeat',
-                  WebkitMaskRepeat: 'no-repeat'
+                  transform: 'translateX(-50%)',
+                  border: '4px solid rgba(120, 120, 120, 0.8)',
+                  borderBottom: 'none',
+                  borderRadius: '50% 50% 0 0',
+                  boxShadow: '0 0 20px rgba(251, 191, 36, 0.4), inset 0 0 15px rgba(251, 191, 36, 0.2)',
+                  zIndex: 15
+                }}
+              />
+              {/* Left ear cup */}
+              <div 
+                className="absolute headphone-bass pointer-events-none"
+                style={{
+                  width: '22%',
+                  height: '35%',
+                  top: '25%',
+                  left: '2%',
+                  background: 'linear-gradient(135deg, rgba(80,80,80,0.9) 0%, rgba(50,50,50,0.9) 100%)',
+                  borderRadius: '30% 20% 30% 40%',
+                  border: '3px solid rgba(100, 100, 100, 0.8)',
+                  boxShadow: '0 0 25px rgba(251, 191, 36, 0.5), inset 0 0 20px rgba(0,0,0,0.5)',
+                  zIndex: 15
+                }}
+              />
+              {/* Right ear cup */}
+              <div 
+                className="absolute headphone-bass pointer-events-none"
+                style={{
+                  width: '22%',
+                  height: '35%',
+                  top: '25%',
+                  right: '2%',
+                  background: 'linear-gradient(225deg, rgba(80,80,80,0.9) 0%, rgba(50,50,50,0.9) 100%)',
+                  borderRadius: '20% 30% 40% 30%',
+                  border: '3px solid rgba(100, 100, 100, 0.8)',
+                  boxShadow: '0 0 25px rgba(251, 191, 36, 0.5), inset 0 0 20px rgba(0,0,0,0.5)',
+                  zIndex: 15
                 }}
               />
               
-              {/* Amber glow layer */}
-              <div 
-                className="absolute headphone-bass pointer-events-none"
-                style={{ 
-                  width: '108%',
-                  height: '108%',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  zIndex: 4,
-                  backgroundImage: `url(${HEADPHONES_URL})`,
-                  backgroundSize: 'contain',
-                  backgroundPosition: 'center top',
-                  backgroundRepeat: 'no-repeat',
-                  filter: 'brightness(3) contrast(1.5) sepia(1) saturate(3) hue-rotate(-10deg) blur(12px)',
-                  mixBlendMode: 'screen',
-                  opacity: 0.5,
-                  maskImage: `url(${HEADPHONES_URL})`,
-                  WebkitMaskImage: `url(${HEADPHONES_URL})`,
-                  maskSize: 'contain',
-                  WebkitMaskSize: 'contain',
-                  maskPosition: 'center top',
-                  WebkitMaskPosition: 'center top',
-                  maskRepeat: 'no-repeat',
-                  WebkitMaskRepeat: 'no-repeat'
-                }}
-              />
-              
-              {/* Main Guitar Logo - Centered on top */}
+              {/* Main Guitar Logo - Centered */}
               <img
                 src={LOGO_URL}
                 alt="DadRock Tabs Logo"
