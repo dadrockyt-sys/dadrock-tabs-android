@@ -555,50 +555,96 @@ export default function App({ initialLang = 'en' }) {
             {/* Container for layered images */}
             <div className="relative flex items-center justify-center">
               {/* CSS Stylized Headphone Frame */}
-              {/* Headband arc */}
+              {/* Headband arc - outer glow */}
               <div 
-                className="absolute headphone-bass pointer-events-none"
+                className="absolute pointer-events-none"
                 style={{
-                  width: '90%',
-                  height: '45%',
-                  top: '-5%',
+                  width: '95%',
+                  height: '50%',
+                  top: '-8%',
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  border: '4px solid rgba(120, 120, 120, 0.8)',
+                  border: '6px solid transparent',
                   borderBottom: 'none',
                   borderRadius: '50% 50% 0 0',
-                  boxShadow: '0 0 20px rgba(251, 191, 36, 0.4), inset 0 0 15px rgba(251, 191, 36, 0.2)',
-                  zIndex: 15
+                  background: 'linear-gradient(180deg, rgba(90,90,90,1) 0%, rgba(60,60,60,1) 100%) padding-box, linear-gradient(180deg, rgba(150,150,150,0.8), rgba(80,80,80,0.6)) border-box',
+                  boxShadow: '0 0 30px rgba(251, 191, 36, 0.4), 0 -5px 20px rgba(251, 191, 36, 0.3)',
+                  zIndex: 6
                 }}
               />
-              {/* Left ear cup */}
+              {/* Headband padding/cushion */}
+              <div 
+                className="absolute pointer-events-none"
+                style={{
+                  width: '70%',
+                  height: '12%',
+                  top: '-2%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: 'linear-gradient(180deg, rgba(50,50,50,1) 0%, rgba(30,30,30,1) 100%)',
+                  borderRadius: '50% 50% 50% 50% / 100% 100% 0% 0%',
+                  boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.8)',
+                  zIndex: 7
+                }}
+              />
+              
+              {/* Left ear cup - outer */}
               <div 
                 className="absolute headphone-bass pointer-events-none"
                 style={{
-                  width: '22%',
-                  height: '35%',
-                  top: '25%',
-                  left: '2%',
-                  background: 'linear-gradient(135deg, rgba(80,80,80,0.9) 0%, rgba(50,50,50,0.9) 100%)',
-                  borderRadius: '30% 20% 30% 40%',
-                  border: '3px solid rgba(100, 100, 100, 0.8)',
-                  boxShadow: '0 0 25px rgba(251, 191, 36, 0.5), inset 0 0 20px rgba(0,0,0,0.5)',
-                  zIndex: 15
+                  width: '24%',
+                  height: '38%',
+                  top: '22%',
+                  left: '-2%',
+                  background: 'linear-gradient(145deg, rgba(70,70,70,1) 0%, rgba(40,40,40,1) 50%, rgba(50,50,50,1) 100%)',
+                  borderRadius: '25% 35% 35% 25%',
+                  border: '3px solid rgba(90, 90, 90, 0.9)',
+                  boxShadow: '0 0 30px rgba(251, 191, 36, 0.5), inset 0 0 25px rgba(0,0,0,0.7), 5px 5px 15px rgba(0,0,0,0.5)',
+                  zIndex: 16
                 }}
               />
-              {/* Right ear cup */}
+              {/* Left ear cup - inner cushion */}
+              <div 
+                className="absolute pointer-events-none"
+                style={{
+                  width: '18%',
+                  height: '28%',
+                  top: '27%',
+                  left: '1%',
+                  background: 'radial-gradient(ellipse at center, rgba(25,25,25,1) 0%, rgba(15,15,15,1) 100%)',
+                  borderRadius: '50%',
+                  boxShadow: 'inset 0 0 20px rgba(0,0,0,0.9)',
+                  zIndex: 17
+                }}
+              />
+              
+              {/* Right ear cup - outer */}
               <div 
                 className="absolute headphone-bass pointer-events-none"
                 style={{
-                  width: '22%',
-                  height: '35%',
-                  top: '25%',
-                  right: '2%',
-                  background: 'linear-gradient(225deg, rgba(80,80,80,0.9) 0%, rgba(50,50,50,0.9) 100%)',
-                  borderRadius: '20% 30% 40% 30%',
-                  border: '3px solid rgba(100, 100, 100, 0.8)',
-                  boxShadow: '0 0 25px rgba(251, 191, 36, 0.5), inset 0 0 20px rgba(0,0,0,0.5)',
-                  zIndex: 15
+                  width: '24%',
+                  height: '38%',
+                  top: '22%',
+                  right: '-2%',
+                  background: 'linear-gradient(215deg, rgba(70,70,70,1) 0%, rgba(40,40,40,1) 50%, rgba(50,50,50,1) 100%)',
+                  borderRadius: '35% 25% 25% 35%',
+                  border: '3px solid rgba(90, 90, 90, 0.9)',
+                  boxShadow: '0 0 30px rgba(251, 191, 36, 0.5), inset 0 0 25px rgba(0,0,0,0.7), -5px 5px 15px rgba(0,0,0,0.5)',
+                  zIndex: 16
+                }}
+              />
+              {/* Right ear cup - inner cushion */}
+              <div 
+                className="absolute pointer-events-none"
+                style={{
+                  width: '18%',
+                  height: '28%',
+                  top: '27%',
+                  right: '1%',
+                  background: 'radial-gradient(ellipse at center, rgba(25,25,25,1) 0%, rgba(15,15,15,1) 100%)',
+                  borderRadius: '50%',
+                  boxShadow: 'inset 0 0 20px rgba(0,0,0,0.9)',
+                  zIndex: 17
                 }}
               />
               
