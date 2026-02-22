@@ -546,21 +546,22 @@ export default function App({ initialLang = 'en' }) {
           {/* Logo with Headphones - Bass Emanation Effect */}
           <div className="mb-2 fade-in-up relative" style={{ animationDelay: '0.1s' }}>
             {/* Sound Wave Rings */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="absolute w-[80%] h-[80%] rounded-full border-2 border-amber-500/30 sound-wave-1" />
-              <div className="absolute w-[90%] h-[90%] rounded-full border-2 border-red-500/20 sound-wave-2" />
-              <div className="absolute w-[100%] h-[100%] rounded-full border border-amber-500/10 sound-wave-3" />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ top: '-10%' }}>
+              <div className="absolute w-[70%] h-[70%] rounded-full border-2 border-amber-500/40 sound-wave-1" />
+              <div className="absolute w-[85%] h-[85%] rounded-full border-2 border-red-500/30 sound-wave-2" />
+              <div className="absolute w-[100%] h-[100%] rounded-full border border-amber-500/20 sound-wave-3" />
             </div>
             
-            {/* Headphones - Behind the logo */}
-            <div className="absolute inset-0 flex items-center justify-center z-0">
+            {/* Headphones - Positioned on top */}
+            <div className="absolute inset-0 flex items-start justify-center z-20 pointer-events-none">
               <img
                 src={HEADPHONES_URL}
                 alt="Headphones"
-                className="w-[85%] sm:w-[80%] headphone-bass opacity-90"
+                className="w-[95%] sm:w-[90%] headphone-bass"
                 style={{ 
-                  filter: 'brightness(1.2) drop-shadow(0 0 15px rgba(251, 191, 36, 0.3))',
-                  marginTop: '-5%'
+                  filter: 'brightness(1.3) drop-shadow(0 0 20px rgba(251, 191, 36, 0.4))',
+                  marginTop: '-8%',
+                  transform: 'scale(1.1)'
                 }}
               />
             </div>
