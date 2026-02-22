@@ -544,33 +544,36 @@ export default function App({ initialLang = 'en' }) {
         {/* Main Content */}
         <main className="flex flex-col items-center px-4 py-6 sm:py-10">
           {/* Logo with Headphones - Bass Emanation Effect */}
-          <div className="mb-2 fade-in-up relative" style={{ animationDelay: '0.1s' }}>
+          <div className="mb-2 fade-in-up relative flex items-center justify-center" style={{ animationDelay: '0.1s' }}>
             {/* Sound Wave Rings */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ top: '-5%' }}>
-              <div className="absolute w-[70%] h-[70%] rounded-full border-2 border-amber-500/40 sound-wave-1" />
-              <div className="absolute w-[85%] h-[85%] rounded-full border-2 border-red-500/30 sound-wave-2" />
-              <div className="absolute w-[100%] h-[100%] rounded-full border border-amber-500/20 sound-wave-3" />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="absolute w-[60%] h-[60%] rounded-full border-2 border-amber-500/50 sound-wave-1" />
+              <div className="absolute w-[75%] h-[75%] rounded-full border-2 border-red-500/40 sound-wave-2" />
+              <div className="absolute w-[90%] h-[90%] rounded-full border border-amber-500/30 sound-wave-3" />
             </div>
             
-            {/* Main Guitar Logo - Base layer */}
-            <img
-              src={LOGO_URL}
-              alt="DadRock Tabs Logo"
-              onClick={handleLogoClick}
-              className="relative z-10 w-[22rem] sm:w-[28rem] md:w-[34rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
-            />
-            
-            {/* Headphones - Overlay on top */}
-            <div className="absolute inset-0 flex items-start justify-center z-20 pointer-events-none">
+            {/* Container for layered images */}
+            <div className="relative">
+              {/* Headphones - Back layer (ear cups) */}
               <img
                 src={HEADPHONES_URL}
                 alt="Headphones"
-                className="w-[100%] sm:w-[95%] headphone-bass"
+                className="absolute w-[115%] headphone-bass"
                 style={{ 
-                  filter: 'brightness(1.2) drop-shadow(0 0 25px rgba(251, 191, 36, 0.5))',
-                  marginTop: '-12%',
-                  mixBlendMode: 'lighten'
+                  filter: 'brightness(1.3) drop-shadow(0 0 30px rgba(251, 191, 36, 0.5))',
+                  left: '-7.5%',
+                  top: '-25%',
+                  zIndex: 5
                 }}
+              />
+              
+              {/* Main Guitar Logo - Middle layer */}
+              <img
+                src={LOGO_URL}
+                alt="DadRock Tabs Logo"
+                onClick={handleLogoClick}
+                className="relative w-[22rem] sm:w-[28rem] md:w-[34rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
+                style={{ zIndex: 10 }}
               />
             </div>
           </div>
