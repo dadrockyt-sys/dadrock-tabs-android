@@ -544,7 +544,7 @@ export default function App({ initialLang = 'en' }) {
         {/* Main Content */}
         <main className="flex flex-col items-center px-4 py-6 sm:py-10">
           {/* Logo with Headphones - Bass Emanation Effect */}
-          <div className="mb-4 fade-in-up relative flex items-center justify-center" style={{ animationDelay: '0.1s' }}>
+          <div className="mb-4 fade-in-up relative flex items-center justify-center overflow-visible" style={{ animationDelay: '0.1s' }}>
             {/* Sound Wave Rings */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="absolute w-[50%] h-[50%] rounded-full border-2 border-amber-500/50 sound-wave-1" />
@@ -554,19 +554,20 @@ export default function App({ initialLang = 'en' }) {
             
             {/* Container for layered images */}
             <div className="relative flex items-center justify-center">
-              {/* Headphones - Behind the guitar logo */}
+              {/* Headphones - Behind the guitar logo with blend mode to hide black bg */}
               <img
                 src={HEADPHONES_URL}
                 alt="Headphones"
                 className="absolute headphone-bass pointer-events-none"
                 style={{ 
-                  filter: 'brightness(1.4) drop-shadow(0 0 25px rgba(251, 191, 36, 0.6))',
-                  width: '115%',
+                  filter: 'brightness(1.5) drop-shadow(0 0 25px rgba(251, 191, 36, 0.6))',
+                  width: '110%',
                   height: 'auto',
                   top: '50%',
                   left: '50%',
-                  transform: 'translate(-50%, -55%)',
-                  zIndex: 5
+                  transform: 'translate(-50%, -52%)',
+                  zIndex: 5,
+                  mixBlendMode: 'screen'
                 }}
               />
               
