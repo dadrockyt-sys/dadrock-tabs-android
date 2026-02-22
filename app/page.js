@@ -212,6 +212,7 @@ export default function App({ initialLang = 'en' }) {
   const [currentLang, setCurrentLang] = useState(initialLang);
   const [searchQuery, setSearchQuery] = useState('');
   const [logoClickCount, setLogoClickCount] = useState(0);
+  const [pageReady, setPageReady] = useState(false);
   
   // Search page state
   const [searchResults, setSearchResults] = useState([]);
