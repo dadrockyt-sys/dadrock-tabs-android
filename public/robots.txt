@@ -1,0 +1,27 @@
+# DadRock Tabs - robots.txt
+# Free Guitar & Bass Tabs for Classic Rock, Heavy Metal, Hair Metal & Blues
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://dadrocktabs.com/sitemap.xml
+
+# Allow all search engines to index all content
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+# Crawl delay (optional - be nice to the server)
+Crawl-delay: 1
