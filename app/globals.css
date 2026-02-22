@@ -71,29 +71,79 @@
   100% { background-position: 200% center; }
 }
 
-@keyframes glow-pulse {
-  0%, 100% { filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.4)); }
-  50% { filter: drop-shadow(0 0 40px rgba(251, 191, 36, 0.7)) drop-shadow(0 0 60px rgba(251, 191, 36, 0.3)); }
+@keyframes bass-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.4));
+  }
+  50% { 
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 40px rgba(251, 191, 36, 0.7)) drop-shadow(0 0 60px rgba(251, 191, 36, 0.3));
+  }
 }
 
-.fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+@keyframes sound-wave {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
 }
 
-.fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
+@keyframes sound-wave-delayed {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
 }
 
-.float-animation {
-  animation: float 4s ease-in-out infinite;
+@keyframes headphone-vibrate {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-2px) rotate(-0.5deg); }
+  50% { transform: translateY(0) rotate(0deg); }
+  75% { transform: translateY(-1px) rotate(0.5deg); }
 }
 
-.pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+@keyframes bass-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.6),
+                0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(251, 191, 36, 0),
+                0 0 0 30px rgba(239, 68, 68, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.6),
+                0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
 }
 
 .logo-glow {
   animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.headphone-bass {
+  animation: headphone-vibrate 0.3s ease-in-out infinite, bass-pulse 1.5s ease-in-out infinite;
+}
+
+.sound-wave-1 {
+  animation: sound-wave 2s ease-out infinite;
+}
+
+.sound-wave-2 {
+  animation: sound-wave-delayed 2s ease-out infinite 0.5s;
+}
+
+.sound-wave-3 {
+  animation: sound-wave 2.5s ease-out infinite 1s;
 }
 
 .stagger-1 { animation-delay: 0.1s; opacity: 0; }
