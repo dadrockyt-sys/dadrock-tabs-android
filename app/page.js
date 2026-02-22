@@ -605,7 +605,7 @@ export default function App({ initialLang = 'en' }) {
           </div>
 
           {/* Definition */}
-          <div className="text-center mb-8 max-w-2xl fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className={`text-center mb-8 max-w-2xl transition-opacity duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.1s' }}>
             <div className="flex items-center justify-center gap-3 flex-wrap mb-3">
               <img 
                 src={DADROCK_TEXT_URL} 
@@ -622,7 +622,7 @@ export default function App({ initialLang = 'en' }) {
           </div>
 
           {/* Tagline */}
-          <p className="rock-tagline text-center text-xl sm:text-2xl md:text-3xl mb-10 max-w-2xl px-4 fade-in-up leading-relaxed" style={{ animationDelay: '0.3s' }}>
+          <p className={`rock-tagline text-center text-xl sm:text-2xl md:text-3xl mb-10 max-w-2xl px-4 leading-relaxed transition-opacity duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.2s' }}>
             {t.tagline}
           </p>
 
