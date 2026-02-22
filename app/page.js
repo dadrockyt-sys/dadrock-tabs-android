@@ -554,20 +554,39 @@ export default function App({ initialLang = 'en' }) {
             
             {/* Container for layered images */}
             <div className="relative flex items-center justify-center">
-              {/* Headphones - Behind the guitar logo with blend mode to hide black bg */}
+              {/* Headphones - Glowing outline effect using multiple layers */}
+              {/* Layer 1: Base headphones with edge detection look */}
               <img
                 src={HEADPHONES_URL}
                 alt="Headphones"
                 className="absolute headphone-bass pointer-events-none"
                 style={{ 
-                  filter: 'brightness(1.5) drop-shadow(0 0 25px rgba(251, 191, 36, 0.6))',
-                  width: '110%',
+                  width: '105%',
                   height: 'auto',
                   top: '50%',
                   left: '50%',
-                  transform: 'translate(-50%, -52%)',
+                  transform: 'translate(-50%, -50%)',
                   zIndex: 5,
-                  mixBlendMode: 'screen'
+                  filter: 'invert(1) brightness(0.3) sepia(1) saturate(5) hue-rotate(5deg)',
+                  mixBlendMode: 'screen',
+                  opacity: 0.9
+                }}
+              />
+              {/* Layer 2: Glow effect */}
+              <img
+                src={HEADPHONES_URL}
+                alt=""
+                className="absolute headphone-bass pointer-events-none"
+                style={{ 
+                  width: '105%',
+                  height: 'auto',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: 4,
+                  filter: 'invert(1) brightness(0.5) sepia(1) saturate(10) hue-rotate(10deg) blur(8px)',
+                  mixBlendMode: 'screen',
+                  opacity: 0.6
                 }}
               />
               
