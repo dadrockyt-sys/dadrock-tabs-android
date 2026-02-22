@@ -24,6 +24,8 @@ export async function generateMetadata({ params }) {
     zh: 'DadRock Tabs - 经典摇滚吉他和贝斯谱',
     ru: 'DadRock Tabs - Гитарные и басовые табулатуры классического рока',
     hi: 'DadRock Tabs - क्लासिक रॉक के लिए गिटार और बास टैब',
+    sv: 'DadRock Tabs - Gitarr- och Bastabulatur för Klassisk Rock',
+    fi: 'DadRock Tabs - Kitara- ja Bassotabulatuurit Klassiselle Rockille',
   };
 
   const descriptions = {
@@ -39,6 +41,8 @@ export async function generateMetadata({ params }) {
     zh: '经典摇滚热门歌曲的免费吉他和贝斯谱。学习演奏Led Zeppelin、AC/DC、Van Halen等！您的爸爸摇滚吉他教程数据库。',
     ru: 'Бесплатные гитарные и басовые табулатуры классических рок-хитов. Научитесь играть Led Zeppelin, AC/DC, Van Halen и других! Ваша база данных уроков гитары dad rock.',
     hi: 'क्लासिक रॉक हिट्स के लिए मुफ्त गिटार और बास टैब। Led Zeppelin, AC/DC, Van Halen और अधिक बजाना सीखें! डैड रॉक गिटार ट्यूटोरियल का आपका डेटाबेस।',
+    sv: 'Gratis gitarr- och bastabulatur för klassiska rockhits. Lär dig spela Led Zeppelin, AC/DC, Van Halen och mer! Din databas för dad rock gitarrlektioner.',
+    fi: 'Ilmaiset kitara- ja bassotabulatuurit klassisille rock-hiteille. Opi soittamaan Led Zeppelin, AC/DC, Van Halen ja paljon muuta! Tietokantasi dad rock kitaraoppaille.',
   };
 
   const keywords = {
@@ -54,6 +58,8 @@ export async function generateMetadata({ params }) {
     zh: '吉他谱, 贝斯谱, 经典摇滚, 爸爸摇滚, 吉他课程, Led Zeppelin, AC/DC, Van Halen, Metallica',
     ru: 'гитарные табы, басовые табы, классический рок, дэд рок, уроки гитары, Led Zeppelin, AC/DC, Van Halen, Metallica',
     hi: 'गिटार टैब, बास टैब, क्लासिक रॉक, डैड रॉक, गिटार सबक, Led Zeppelin, AC/DC, Van Halen, Metallica',
+    sv: 'gitarrtabs, bastabs, klassisk rock, dad rock, gitarrlektioner, Led Zeppelin, AC/DC, Van Halen, Metallica',
+    fi: 'kitaratabulatuurit, bassotabulatuurit, klassinen rock, dad rock, kitaratunnit, Led Zeppelin, AC/DC, Van Halen, Metallica',
   };
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://dadrocktabs.com';
