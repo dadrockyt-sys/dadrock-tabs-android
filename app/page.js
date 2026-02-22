@@ -627,7 +627,7 @@ export default function App({ initialLang = 'en' }) {
           </p>
 
           {/* Search Form with Gradient Border */}
-          <form onSubmit={handleSearch} className="w-full max-w-2xl mb-8 fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <form onSubmit={handleSearch} className={`w-full max-w-2xl mb-8 transition-opacity duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '0.3s' }}>
             <div className="flex gap-3">
               <div className="flex-1 relative gradient-border">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 z-10" />
@@ -653,8 +653,8 @@ export default function App({ initialLang = 'en' }) {
             href={YOUTUBE_CHANNEL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full subscribe-btn pulse-glow text-white font-bold uppercase tracking-wide mb-10 fade-in-up"
-            style={{ animationDelay: '0.5s' }}
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full subscribe-btn ${pageReady ? 'pulse-glow' : ''} text-white font-bold uppercase tracking-wide mb-10 transition-opacity duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transitionDelay: '0.4s' }}
           >
             <Youtube className="w-6 h-6" />
             {t.subscribe}
