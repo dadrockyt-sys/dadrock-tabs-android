@@ -70,6 +70,105 @@ export async function generateMetadata({ params }) {
     languages[l] = l === 'en' ? baseUrl : `${baseUrl}/${l}`;
   });
 
+  // JSON-LD Structured Data for SEO
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `${baseUrl}/#website`,
+        'url': baseUrl,
+        'name': 'DadRock Tabs',
+        'description': descriptions.en,
+        'inLanguage': locales,
+        'potentialAction': {
+          '@type': 'SearchAction',
+          'target': {
+            '@type': 'EntryPoint',
+            'urlTemplate': `${baseUrl}/search?q={search_term_string}`
+          },
+          'query-input': 'required name=search_term_string'
+        }
+      },
+      {
+        '@type': 'Organization',
+        '@id': `${baseUrl}/#organization`,
+        'name': 'DadRock Tabs',
+        'url': baseUrl,
+        'logo': 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png',
+        'sameAs': [
+          'https://youtube.com/@dadrockytofficial'
+        ]
+      },
+      {
+        '@type': 'WebPage',
+        '@id': lang === 'en' ? `${baseUrl}/#webpage` : `${baseUrl}/${lang}/#webpage`,
+        'url': lang === 'en' ? baseUrl : `${baseUrl}/${lang}`,
+        'name': titles[lang] || titles.en,
+        'description': descriptions[lang] || descriptions.en,
+        'isPartOf': { '@id': `${baseUrl}/#website` },
+        'inLanguage': lang,
+        'about': {
+          '@type': 'Thing',
+          'name': 'Guitar Tablature',
+          'description': 'Musical notation for guitar and bass'
+        }
+      },
+      {
+        '@type': 'MusicGroup',
+        'name': 'Classic Rock Artists',
+        'genre': ['Classic Rock', 'Heavy Metal', 'Hair Metal', 'Blues Rock', 'Hard Rock'],
+        'member': [
+          { '@type': 'Person', 'name': 'Led Zeppelin' },
+          { '@type': 'Person', 'name': 'AC/DC' },
+          { '@type': 'Person', 'name': 'Van Halen' },
+          { '@type': 'Person', 'name': 'Metallica' },
+          { '@type': 'Person', 'name': 'Black Sabbath' },
+          { '@type': 'Person', 'name': 'Ozzy Osbourne' },
+          { '@type': 'Person', 'name': 'Def Leppard' },
+          { '@type': 'Person', 'name': 'Guns N\' Roses' }
+        ]
+      },
+      {
+        '@type': 'FAQPage',
+        'mainEntity': [
+          {
+            '@type': 'Question',
+            'name': 'What is DadRock Tabs?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'DadRock Tabs is a free database of guitar and bass tablature for classic rock, heavy metal, hair metal, and blues music from the 70s, 80s, and 90s. Perfect for beginners to advanced guitar players.'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'What artists can I find tabs for?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'You can find tabs for Led Zeppelin, AC/DC, Van Halen, Metallica, Black Sabbath, Ozzy Osbourne, Def Leppard, Guns N\' Roses, Aerosmith, and many more classic rock legends.'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'Are the guitar tabs free?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Yes! All guitar and bass tabs on DadRock Tabs are completely free. We provide video tutorials to help you learn your favorite classic rock songs.'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'Can beginners use DadRock Tabs?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Absolutely! DadRock Tabs offers tutorials for all skill levels, from easy beginner songs to advanced techniques. Learn at your own pace with our video lessons.'
+            }
+          }
+        ]
+      }
+    ]
+  };
+
   return {
     title: titles[lang] || titles.en,
     description: descriptions[lang] || descriptions.en,
@@ -86,11 +185,20 @@ export async function generateMetadata({ params }) {
       alternateLocale: locales.filter(l => l !== lang),
       url: lang === 'en' ? baseUrl : `${baseUrl}/${lang}`,
       siteName: 'DadRock Tabs',
+      images: [
+        {
+          url: 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png',
+          width: 1200,
+          height: 630,
+          alt: 'DadRock Tabs - Free Guitar & Bass Tabs for Classic Rock',
+        }
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: titles[lang] || titles.en,
       description: descriptions[lang] || descriptions.en,
+      images: ['https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png'],
     },
     robots: {
       index: true,
@@ -102,6 +210,9 @@ export async function generateMetadata({ params }) {
         'max-image-preview': 'large',
         'max-snippet': -1,
       },
+    },
+    other: {
+      'script:ld+json': JSON.stringify(structuredData),
     },
   };
 }
