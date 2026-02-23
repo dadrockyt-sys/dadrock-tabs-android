@@ -1052,6 +1052,59 @@ export default function App({ initialLang = 'en' }) {
               Go Back
             </button>
           </div>
+
+          {/* Animated Logo with Marshall Amps */}
+          <div className="mt-10 mb-6 relative flex items-center justify-center overflow-visible">
+            {/* Sound Wave Rings */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="absolute w-[60%] h-[60%] rounded-full border-2 border-amber-500/50 sound-wave-1" />
+              <div className="absolute w-[80%] h-[80%] rounded-full border-2 border-red-500/40 sound-wave-2" />
+              <div className="absolute w-[100%] h-[100%] rounded-full border border-amber-500/30 sound-wave-3" />
+            </div>
+            
+            {/* Container for layered images */}
+            <div className="relative flex items-center justify-center">
+              {/* Left Marshall Amp Stack - Mirrored */}
+              <img
+                src={MARSHALL_AMP_URL}
+                alt="Marshall Amp Left"
+                className="absolute pointer-events-none amp-left"
+                style={{ 
+                  height: '100%',
+                  width: 'auto',
+                  left: '-5%',
+                  top: '5%',
+                  transform: 'scaleX(-1)',
+                  zIndex: 5,
+                  opacity: 0.95
+                }}
+              />
+              
+              {/* Right Marshall Amp Stack */}
+              <img
+                src={MARSHALL_AMP_URL}
+                alt="Marshall Amp Right"
+                className="absolute pointer-events-none amp-right"
+                style={{ 
+                  height: '100%',
+                  width: 'auto',
+                  right: '-5%',
+                  top: '5%',
+                  zIndex: 5,
+                  opacity: 0.95
+                }}
+              />
+              
+              {/* Main Guitar Logo - Centered */}
+              <img
+                src={LOGO_URL}
+                alt="DadRock Tabs Logo"
+                onClick={() => setCurrentPage('home')}
+                className="relative w-[12rem] sm:w-[16rem] md:w-[20rem] cursor-pointer select-none hover:scale-105 transition-transform duration-300 float-animation logo-glow"
+                style={{ zIndex: 10 }}
+              />
+            </div>
+          </div>
         </main>
       </div>
     );
