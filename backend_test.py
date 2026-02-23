@@ -1,374 +1,362 @@
 #!/usr/bin/env python3
 """
-Backend API Tests for DadRock Tabs Next.js API
-Tests all endpoints with authentication, CRUD operations, and search functionality
+Backend API Test Suite for DadRock Tabs App
+Focus: Interstitial Ad Duration Control Feature
 """
 
 import requests
 import json
 import base64
 import sys
-from datetime import datetime
 
 # Configuration
 BASE_URL = "https://rock-timer-panel.preview.emergentagent.com/api"
-ADMIN_PASSWORD = "dadrock2024"
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "Babyty99"
 
-def create_basic_auth_header():
-    """Create Basic Auth header for admin endpoints"""
-    credentials = f"admin:{ADMIN_PASSWORD}"
-    encoded = base64.b64encode(credentials.encode()).decode()
-    return {"Authorization": f"Basic {encoded}"}
+# Create Basic Auth header
+auth_string = f"{ADMIN_USERNAME}:{ADMIN_PASSWORD}"
+auth_bytes = auth_string.encode('utf-8')
+auth_header = base64.b64encode(auth_bytes).decode('utf-8')
+HEADERS = {
+    'Authorization': f'Basic {auth_header}',
+    'Content-Type': 'application/json'
+}
 
-def print_test_result(test_name, success, response_data=None, error=None):
-    """Print formatted test results"""
-    status = "✅ PASS" if success else "❌ FAIL"
-    print(f"{status} {test_name}")
-    if error:
-        print(f"   Error: {error}")
-    if response_data and not success:
-        print(f"   Response: {response_data}")
-    print()
-
-def test_health_endpoint():
-    """Test GET /health endpoint"""
-    print("Testing Health Check Endpoint...")
-    try:
-        response = requests.get(f"{BASE_URL}/health", timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            success = data.get('status') == 'healthy'
-            print_test_result("GET /health", success, data)
-            return success
-        else:
-            print_test_result("GET /health", False, response.text, f"Status: {response.status_code}")
-            return False
-    except Exception as e:
-        print_test_result("GET /health", False, error=str(e))
-        return False
-
-def test_settings_endpoint():
-    """Test GET /settings endpoint"""
-    print("Testing Settings Endpoint...")
+def test_get_settings_default_ad_duration():
+    """Test 1: GET /api/settings should return ad_duration field (default value is 5)"""
+    print("\n=== Test 1: GET /api/settings - Check default ad_duration ===")
+    
     try:
         response = requests.get(f"{BASE_URL}/settings", timeout=10)
+        print(f"Status Code: {response.status_code}")
+        
         if response.status_code == 200:
             data = response.json()
-            required_fields = ['featured_video_url', 'featured_video_title', 'featured_video_artist']
-            success = all(field in data for field in required_fields)
-            print_test_result("GET /settings", success, data)
-            return success, data
+            print(f"Response: {json.dumps(data, indent=2)}")
+            
+            # Check if ad_duration exists and has default value
+            if 'ad_duration' in data:
+                ad_duration = data['ad_duration']
+                print(f"✅ ad_duration found: {ad_duration}")
+                
+                if ad_duration == 5:
+                    print("✅ Default ad_duration is correctly set to 5")
+                    return True
+                else:
+                    print(f"❌ Expected default ad_duration=5, but got {ad_duration}")
+                    return False
+            else:
+                print("❌ ad_duration field missing from response")
+                return False
         else:
-            print_test_result("GET /settings", False, response.text, f"Status: {response.status_code}")
-            return False, None
+            print(f"❌ Expected 200, got {response.status_code}")
+            return False
+            
     except Exception as e:
-        print_test_result("GET /settings", False, error=str(e))
-        return False, None
+        print(f"❌ Error: {e}")
+        return False
 
-def test_videos_endpoint():
-    """Test GET /videos endpoint with different search parameters"""
-    print("Testing Videos Endpoint...")
+def test_put_admin_settings_valid_duration():
+    """Test 2: PUT /api/admin/settings with valid ad_duration should save successfully"""
+    print("\n=== Test 2: PUT /api/admin/settings - Save valid ad_duration=15 ===")
     
-    # Test basic videos list
     try:
-        response = requests.get(f"{BASE_URL}/videos", timeout=10)
+        payload = {"ad_duration": 15}
+        response = requests.put(f"{BASE_URL}/admin/settings", 
+                               headers=HEADERS, 
+                               json=payload, 
+                               timeout=10)
+        
+        print(f"Status Code: {response.status_code}")
+        print(f"Response: {response.text}")
+        
         if response.status_code == 200:
             data = response.json()
-            success = 'videos' in data and 'total' in data
-            print_test_result("GET /videos (basic)", success, data)
+            if data.get('success') and 'updated successfully' in data.get('message', ''):
+                print("✅ ad_duration=15 saved successfully")
+                return True
+            else:
+                print(f"❌ Unexpected response format: {data}")
+                return False
         else:
-            print_test_result("GET /videos (basic)", False, response.text, f"Status: {response.status_code}")
-            success = False
+            print(f"❌ Expected 200, got {response.status_code}")
+            return False
+            
     except Exception as e:
-        print_test_result("GET /videos (basic)", False, error=str(e))
-        success = False
+        print(f"❌ Error: {e}")
+        return False
+
+def test_get_settings_updated_duration():
+    """Test 3: GET /api/settings should now return ad_duration: 15"""
+    print("\n=== Test 3: GET /api/settings - Verify ad_duration=15 is saved ===")
     
-    # Test search functionality
-    search_tests = [
-        ("search=rock", "search by keyword"),
-        ("search=queen&search_type=artist", "search by artist"),
-        ("search=rock&search_type=song", "search by song"),
-        ("search=test&search_type=all", "search all fields"),
-        ("limit=10&skip=0", "pagination")
+    try:
+        response = requests.get(f"{BASE_URL}/settings", timeout=10)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"Response: {json.dumps(data, indent=2)}")
+            
+            if 'ad_duration' in data:
+                ad_duration = data['ad_duration']
+                print(f"✅ ad_duration found: {ad_duration}")
+                
+                if ad_duration == 15:
+                    print("✅ ad_duration correctly updated to 15")
+                    return True
+                else:
+                    print(f"❌ Expected ad_duration=15, but got {ad_duration}")
+                    return False
+            else:
+                print("❌ ad_duration field missing from response")
+                return False
+        else:
+            print(f"❌ Expected 200, got {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return False
+
+def test_validation_minimum_clamping():
+    """Test 4: PUT with ad_duration: 2 should be clamped to 5 (minimum)"""
+    print("\n=== Test 4: PUT /api/admin/settings - Test minimum validation (2 -> 5) ===")
+    
+    try:
+        payload = {"ad_duration": 2}
+        response = requests.put(f"{BASE_URL}/admin/settings", 
+                               headers=HEADERS, 
+                               json=payload, 
+                               timeout=10)
+        
+        print(f"Status Code: {response.status_code}")
+        print(f"Response: {response.text}")
+        
+        if response.status_code == 200:
+            # Now check if it was clamped to 5
+            get_response = requests.get(f"{BASE_URL}/settings", timeout=10)
+            if get_response.status_code == 200:
+                data = get_response.json()
+                ad_duration = data.get('ad_duration')
+                print(f"Actual saved ad_duration: {ad_duration}")
+                
+                if ad_duration == 5:
+                    print("✅ ad_duration correctly clamped from 2 to minimum 5")
+                    return True
+                else:
+                    print(f"❌ Expected clamped value 5, but got {ad_duration}")
+                    return False
+            else:
+                print("❌ Failed to retrieve updated settings")
+                return False
+        else:
+            print(f"❌ Expected 200, got {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return False
+
+def test_validation_maximum_clamping():
+    """Test 5: PUT with ad_duration: 60 should be clamped to 30 (maximum)"""
+    print("\n=== Test 5: PUT /api/admin/settings - Test maximum validation (60 -> 30) ===")
+    
+    try:
+        payload = {"ad_duration": 60}
+        response = requests.put(f"{BASE_URL}/admin/settings", 
+                               headers=HEADERS, 
+                               json=payload, 
+                               timeout=10)
+        
+        print(f"Status Code: {response.status_code}")
+        print(f"Response: {response.text}")
+        
+        if response.status_code == 200:
+            # Now check if it was clamped to 30
+            get_response = requests.get(f"{BASE_URL}/settings", timeout=10)
+            if get_response.status_code == 200:
+                data = get_response.json()
+                ad_duration = data.get('ad_duration')
+                print(f"Actual saved ad_duration: {ad_duration}")
+                
+                if ad_duration == 30:
+                    print("✅ ad_duration correctly clamped from 60 to maximum 30")
+                    return True
+                else:
+                    print(f"❌ Expected clamped value 30, but got {ad_duration}")
+                    return False
+            else:
+                print("❌ Failed to retrieve updated settings")
+                return False
+        else:
+            print(f"❌ Expected 200, got {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return False
+
+def test_ad_duration_with_other_settings():
+    """Test 6: Test that ad_duration is saved alongside other ad settings"""
+    print("\n=== Test 6: PUT /api/admin/settings - Save ad_duration with other settings ===")
+    
+    try:
+        payload = {
+            "ad_duration": 20,
+            "ad_headline": "Test Headline",
+            "ad_description": "Test Description",
+            "ad_button_text": "Test Button",
+            "ad_link": "https://test.com"
+        }
+        
+        response = requests.put(f"{BASE_URL}/admin/settings", 
+                               headers=HEADERS, 
+                               json=payload, 
+                               timeout=10)
+        
+        print(f"Status Code: {response.status_code}")
+        print(f"Response: {response.text}")
+        
+        if response.status_code == 200:
+            # Verify all settings were saved correctly
+            get_response = requests.get(f"{BASE_URL}/settings", timeout=10)
+            if get_response.status_code == 200:
+                data = get_response.json()
+                print(f"Retrieved settings: {json.dumps(data, indent=2)}")
+                
+                success = True
+                
+                # Check ad_duration
+                if data.get('ad_duration') == 20:
+                    print("✅ ad_duration=20 saved correctly")
+                else:
+                    print(f"❌ ad_duration expected 20, got {data.get('ad_duration')}")
+                    success = False
+                
+                # Check other ad settings
+                if data.get('ad_headline') == "Test Headline":
+                    print("✅ ad_headline saved correctly")
+                else:
+                    print(f"❌ ad_headline expected 'Test Headline', got '{data.get('ad_headline')}'")
+                    success = False
+                
+                if data.get('ad_description') == "Test Description":
+                    print("✅ ad_description saved correctly")
+                else:
+                    print(f"❌ ad_description expected 'Test Description', got '{data.get('ad_description')}'")
+                    success = False
+                    
+                if data.get('ad_button_text') == "Test Button":
+                    print("✅ ad_button_text saved correctly")
+                else:
+                    print(f"❌ ad_button_text expected 'Test Button', got '{data.get('ad_button_text')}'")
+                    success = False
+                    
+                if data.get('ad_link') == "https://test.com":
+                    print("✅ ad_link saved correctly")
+                else:
+                    print(f"❌ ad_link expected 'https://test.com', got '{data.get('ad_link')}'")
+                    success = False
+                
+                return success
+            else:
+                print("❌ Failed to retrieve updated settings")
+                return False
+        else:
+            print(f"❌ Expected 200, got {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return False
+
+def test_unauthorized_access():
+    """Test 7: Verify unauthorized access is properly rejected"""
+    print("\n=== Test 7: PUT /api/admin/settings - Test unauthorized access ===")
+    
+    try:
+        payload = {"ad_duration": 25}
+        # Use wrong credentials
+        wrong_headers = {
+            'Authorization': 'Basic d3JvbmdfdXNlcjp3cm9uZ19wYXNz',  # wrong_user:wrong_pass
+            'Content-Type': 'application/json'
+        }
+        
+        response = requests.put(f"{BASE_URL}/admin/settings", 
+                               headers=wrong_headers, 
+                               json=payload, 
+                               timeout=10)
+        
+        print(f"Status Code: {response.status_code}")
+        print(f"Response: {response.text}")
+        
+        if response.status_code == 401:
+            print("✅ Unauthorized access correctly rejected with 401")
+            return True
+        else:
+            print(f"❌ Expected 401, got {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return False
+
+def run_all_tests():
+    """Run all ad duration control tests"""
+    print("=" * 80)
+    print("BACKEND TESTING: Interstitial Ad Duration Control Feature")
+    print("=" * 80)
+    print(f"Base URL: {BASE_URL}")
+    print(f"Admin Credentials: {ADMIN_USERNAME}:{ADMIN_PASSWORD}")
+    print("=" * 80)
+    
+    tests = [
+        ("Default ad_duration value", test_get_settings_default_ad_duration),
+        ("Save valid ad_duration", test_put_admin_settings_valid_duration),
+        ("Verify saved ad_duration", test_get_settings_updated_duration),
+        ("Minimum validation (clamping)", test_validation_minimum_clamping),
+        ("Maximum validation (clamping)", test_validation_maximum_clamping),
+        ("Save with other ad settings", test_ad_duration_with_other_settings),
+        ("Unauthorized access rejection", test_unauthorized_access)
     ]
     
-    for params, description in search_tests:
+    passed = 0
+    failed = 0
+    results = []
+    
+    for test_name, test_func in tests:
         try:
-            response = requests.get(f"{BASE_URL}/videos?{params}", timeout=10)
-            if response.status_code == 200:
-                data = response.json()
-                test_success = 'videos' in data and 'total' in data
-                print_test_result(f"GET /videos ({description})", test_success, {"count": len(data.get('videos', []))})
-                success = success and test_success
+            result = test_func()
+            if result:
+                passed += 1
+                results.append(f"✅ {test_name}")
             else:
-                print_test_result(f"GET /videos ({description})", False, response.text, f"Status: {response.status_code}")
-                success = False
+                failed += 1
+                results.append(f"❌ {test_name}")
         except Exception as e:
-            print_test_result(f"GET /videos ({description})", False, error=str(e))
-            success = False
+            failed += 1
+            results.append(f"❌ {test_name} - Exception: {e}")
     
-    return success
-
-def test_admin_login():
-    """Test POST /admin/login endpoint"""
-    print("Testing Admin Login...")
-    
-    # Test correct password
-    try:
-        payload = {"password": ADMIN_PASSWORD}
-        response = requests.post(f"{BASE_URL}/admin/login", json=payload, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            success = data.get('success') == True
-            print_test_result("POST /admin/login (correct password)", success, data)
-        else:
-            print_test_result("POST /admin/login (correct password)", False, response.text, f"Status: {response.status_code}")
-            success = False
-    except Exception as e:
-        print_test_result("POST /admin/login (correct password)", False, error=str(e))
-        success = False
-    
-    # Test wrong password
-    try:
-        payload = {"password": "wrongpassword"}
-        response = requests.post(f"{BASE_URL}/admin/login", json=payload, timeout=10)
-        wrong_pass_success = response.status_code == 401
-        print_test_result("POST /admin/login (wrong password)", wrong_pass_success, {"status": response.status_code})
-        success = success and wrong_pass_success
-    except Exception as e:
-        print_test_result("POST /admin/login (wrong password)", False, error=str(e))
-        success = False
-    
-    return success
-
-def test_admin_settings():
-    """Test PUT /admin/settings endpoint"""
-    print("Testing Admin Settings Update...")
-    
-    headers = create_basic_auth_header()
-    headers['Content-Type'] = 'application/json'
-    
-    # Test settings update
-    try:
-        payload = {
-            "featured_video_url": "https://www.youtube.com/watch?v=TEST123",
-            "featured_video_title": "Test Song Title",
-            "featured_video_artist": "Test Artist"
-        }
-        response = requests.put(f"{BASE_URL}/admin/settings", json=payload, headers=headers, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            success = data.get('success') == True
-            print_test_result("PUT /admin/settings", success, data)
-        else:
-            print_test_result("PUT /admin/settings", False, response.text, f"Status: {response.status_code}")
-            success = False
-    except Exception as e:
-        print_test_result("PUT /admin/settings", False, error=str(e))
-        success = False
-    
-    # Test unauthorized access
-    try:
-        response = requests.put(f"{BASE_URL}/admin/settings", json=payload, timeout=10)
-        unauth_success = response.status_code == 401
-        print_test_result("PUT /admin/settings (unauthorized)", unauth_success, {"status": response.status_code})
-        success = success and unauth_success
-    except Exception as e:
-        print_test_result("PUT /admin/settings (unauthorized)", False, error=str(e))
-        success = False
-    
-    return success
-
-def test_admin_stats():
-    """Test GET /admin/stats endpoint"""
-    print("Testing Admin Stats...")
-    
-    headers = create_basic_auth_header()
-    
-    try:
-        response = requests.get(f"{BASE_URL}/admin/stats", headers=headers, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            required_fields = ['total_videos', 'total_artists']
-            success = all(field in data for field in required_fields)
-            print_test_result("GET /admin/stats", success, data)
-        else:
-            print_test_result("GET /admin/stats", False, response.text, f"Status: {response.status_code}")
-            success = False
-    except Exception as e:
-        print_test_result("GET /admin/stats", False, error=str(e))
-        success = False
-    
-    # Test unauthorized access
-    try:
-        response = requests.get(f"{BASE_URL}/admin/stats", timeout=10)
-        unauth_success = response.status_code == 401
-        print_test_result("GET /admin/stats (unauthorized)", unauth_success, {"status": response.status_code})
-        success = success and unauth_success
-    except Exception as e:
-        print_test_result("GET /admin/stats (unauthorized)", False, error=str(e))
-        success = False
-    
-    return success
-
-def test_video_crud():
-    """Test full CRUD cycle for videos"""
-    print("Testing Video CRUD Operations...")
-    
-    headers = create_basic_auth_header()
-    headers['Content-Type'] = 'application/json'
-    
-    created_video_id = None
-    
-    # CREATE - Test POST /admin/videos
-    try:
-        payload = {
-            "song": "Bohemian Rhapsody",
-            "artist": "Queen",
-            "youtube_url": "https://www.youtube.com/watch?v=fJ9rUzIMcZQ"
-        }
-        response = requests.post(f"{BASE_URL}/admin/videos", json=payload, headers=headers, timeout=10)
-        if response.status_code == 201:
-            data = response.json()
-            created_video_id = data.get('id')
-            required_fields = ['id', 'song', 'artist', 'youtube_url', 'thumbnail', 'created_at']
-            success = all(field in data for field in required_fields) and created_video_id
-            print_test_result("POST /admin/videos (create)", success, {"id": created_video_id, "song": data.get('song')})
-        else:
-            print_test_result("POST /admin/videos (create)", False, response.text, f"Status: {response.status_code}")
-            success = False
-    except Exception as e:
-        print_test_result("POST /admin/videos (create)", False, error=str(e))
-        success = False
-    
-    if not created_video_id:
-        print("❌ Cannot continue CRUD tests - video creation failed")
-        return False
-    
-    # READ - Test GET /videos/:id
-    try:
-        response = requests.get(f"{BASE_URL}/videos/{created_video_id}", timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            read_success = data.get('id') == created_video_id and data.get('song') == "Bohemian Rhapsody"
-            print_test_result("GET /videos/:id (read)", read_success, {"id": data.get('id'), "song": data.get('song')})
-            success = success and read_success
-        else:
-            print_test_result("GET /videos/:id (read)", False, response.text, f"Status: {response.status_code}")
-            success = False
-    except Exception as e:
-        print_test_result("GET /videos/:id (read)", False, error=str(e))
-        success = False
-    
-    # UPDATE - Test PUT /admin/videos/:id
-    try:
-        payload = {
-            "song": "We Will Rock You",
-            "artist": "Queen",
-            "youtube_url": "https://www.youtube.com/watch?v=BT4AEyYXSKA"
-        }
-        response = requests.put(f"{BASE_URL}/admin/videos/{created_video_id}", json=payload, headers=headers, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            update_success = data.get('id') == created_video_id and data.get('song') == "We Will Rock You"
-            print_test_result("PUT /admin/videos/:id (update)", update_success, {"id": data.get('id'), "song": data.get('song')})
-            success = success and update_success
-        else:
-            print_test_result("PUT /admin/videos/:id (update)", False, response.text, f"Status: {response.status_code}")
-            success = False
-    except Exception as e:
-        print_test_result("PUT /admin/videos/:id (update)", False, error=str(e))
-        success = False
-    
-    # DELETE - Test DELETE /admin/videos/:id
-    try:
-        response = requests.delete(f"{BASE_URL}/admin/videos/{created_video_id}", headers=headers, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            delete_success = 'message' in data
-            print_test_result("DELETE /admin/videos/:id (delete)", delete_success, data)
-            success = success and delete_success
-        else:
-            print_test_result("DELETE /admin/videos/:id (delete)", False, response.text, f"Status: {response.status_code}")
-            success = False
-    except Exception as e:
-        print_test_result("DELETE /admin/videos/:id (delete)", False, error=str(e))
-        success = False
-    
-    # Verify deletion - GET should return 404
-    try:
-        response = requests.get(f"{BASE_URL}/videos/{created_video_id}", timeout=10)
-        verify_delete_success = response.status_code == 404
-        print_test_result("GET /videos/:id (verify delete)", verify_delete_success, {"status": response.status_code})
-        success = success and verify_delete_success
-    except Exception as e:
-        print_test_result("GET /videos/:id (verify delete)", False, error=str(e))
-        success = False
-    
-    # Test unauthorized CRUD operations
-    try:
-        payload = {"song": "Test", "artist": "Test", "youtube_url": "https://www.youtube.com/watch?v=test"}
-        response = requests.post(f"{BASE_URL}/admin/videos", json=payload, timeout=10)
-        unauth_success = response.status_code == 401
-        print_test_result("POST /admin/videos (unauthorized)", unauth_success, {"status": response.status_code})
-        success = success and unauth_success
-    except Exception as e:
-        print_test_result("POST /admin/videos (unauthorized)", False, error=str(e))
-        success = False
-    
-    return success
-
-def main():
-    """Run all backend tests"""
-    print("=" * 60)
-    print("DadRock Tabs Backend API Tests")
-    print("=" * 60)
-    print(f"Base URL: {BASE_URL}")
-    print(f"Admin Password: {ADMIN_PASSWORD}")
-    print("=" * 60)
-    print()
-    
-    # Track all test results
-    test_results = {}
-    
-    # Run all tests
-    test_results['health'] = test_health_endpoint()
-    test_results['settings'], _ = test_settings_endpoint()
-    test_results['videos'] = test_videos_endpoint()
-    test_results['admin_login'] = test_admin_login()
-    test_results['admin_settings'] = test_admin_settings()
-    test_results['admin_stats'] = test_admin_stats()
-    test_results['video_crud'] = test_video_crud()
-    
-    # Summary
-    print("=" * 60)
+    print("\n" + "=" * 80)
     print("TEST SUMMARY")
-    print("=" * 60)
+    print("=" * 80)
     
-    total_tests = len(test_results)
-    passed_tests = sum(1 for result in test_results.values() if result)
+    for result in results:
+        print(result)
     
-    for test_name, result in test_results.items():
-        status = "✅ PASS" if result else "❌ FAIL"
-        print(f"{status} {test_name.replace('_', ' ').title()}")
+    print(f"\nTotal Tests: {len(tests)}")
+    print(f"✅ Passed: {passed}")
+    print(f"❌ Failed: {failed}")
     
-    print()
-    print(f"Overall: {passed_tests}/{total_tests} tests passed")
-    
-    if passed_tests == total_tests:
-        print("🎉 All backend tests PASSED!")
+    if failed == 0:
+        print("\n🎉 ALL TESTS PASSED! Interstitial Ad Duration Control feature is working correctly.")
         return True
     else:
-        print("⚠️  Some backend tests FAILED!")
+        print(f"\n⚠️  {failed} test(s) failed. Please review the issues above.")
         return False
 
 if __name__ == "__main__":
-    try:
-        success = main()
-        sys.exit(0 if success else 1)
-    except KeyboardInterrupt:
-        print("\n\n❌ Tests interrupted by user")
-        sys.exit(1)
-    except Exception as e:
-        print(f"\n\n❌ Unexpected error: {e}")
-        sys.exit(1)
+    success = run_all_tests()
+    sys.exit(0 if success else 1)
