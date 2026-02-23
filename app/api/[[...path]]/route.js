@@ -98,7 +98,8 @@ export async function GET(request, context) {
         ad_image: settings?.ad_image || '',
         ad_headline: settings?.ad_headline || 'Check Out Our Merchandise!',
         ad_description: settings?.ad_description || 'Support DadRock Tabs by grabbing some awesome gear',
-        ad_button_text: settings?.ad_button_text || 'Shop Now'
+        ad_button_text: settings?.ad_button_text || 'Shop Now',
+        ad_duration: settings?.ad_duration || 5
       });
     }
 
