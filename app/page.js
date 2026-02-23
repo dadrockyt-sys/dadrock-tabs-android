@@ -283,6 +283,11 @@ export default function App({ initialLang = 'en' }) {
           if (data.ad_headline) setAdHeadline(data.ad_headline);
           if (data.ad_description) setAdDescription(data.ad_description);
           if (data.ad_button_text) setAdButtonText(data.ad_button_text);
+          if (data.ad_duration) {
+            const duration = parseInt(data.ad_duration) || 5;
+            setAdDuration(duration);
+            setAdCountdown(duration);
+          }
         }
       })
       .catch(() => {})
