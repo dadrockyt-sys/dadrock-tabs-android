@@ -1010,48 +1010,24 @@ export default function App({ initialLang = 'en' }) {
             </div>
           </div>
 
-          {/* Fullscreen Landscape Button */}
-          <div className="flex justify-center mb-8">
+          {/* Fullscreen Landscape Button - Opens YouTube directly for best fullscreen experience */}
+          <div className="flex justify-center gap-3 mb-8">
             <button
               onClick={() => {
-                const iframe = document.getElementById('video-iframe');
-                
-                if (iframe) {
-                  // Try to make the iframe fullscreen
-                  if (iframe.requestFullscreen) {
-                    iframe.requestFullscreen().then(() => {
-                      // Try to lock orientation to landscape after entering fullscreen
-                      if (screen.orientation && screen.orientation.lock) {
-                        screen.orientation.lock('landscape').catch(() => {});
-                      }
-                    }).catch((err) => {
-                      // If iframe fullscreen fails, try the container
-                      const container = document.getElementById('video-container');
-                      if (container && container.requestFullscreen) {
-                        container.requestFullscreen().catch(() => {
-                          // Last resort: open in YouTube app/site
-                          window.open(selectedVideo.youtube_url, '_blank');
-                        });
-                      }
-                    });
-                  } else if (iframe.webkitRequestFullscreen) {
-                    iframe.webkitRequestFullscreen();
-                  } else if (iframe.webkitEnterFullscreen) {
-                    // iOS Safari
-                    iframe.webkitEnterFullscreen();
-                  } else {
-                    // Fallback: open YouTube directly
-                    window.open(selectedVideo.youtube_url, '_blank');
-                  }
-                }
+                // Open YouTube video in a new tab (YouTube app on mobile will handle fullscreen)
+                window.open(selectedVideo.youtube_url, '_blank');
               }}
               className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-bold rounded-full transition-all hover:scale-105 shadow-lg shadow-amber-500/30"
             >
               <Maximize className="w-5 h-5" />
-              <span>Watch Fullscreen</span>
+              <span>Fullscreen Mode</span>
               <Smartphone className="w-5 h-5 rotate-90" />
             </button>
           </div>
+          
+          <p className="text-center text-zinc-500 text-sm mb-6">
+            Tip: Use YouTube's fullscreen button in the video player, or tap "Fullscreen Mode" to open in YouTube app
+          </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
