@@ -162,7 +162,7 @@ backend:
     file: "/app/app/api/[[...path]]/route.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
@@ -173,6 +173,9 @@ backend:
         - working: "NA"
         - agent: "main"
         - comment: "Added ad_duration field support. PUT /api/admin/settings now accepts ad_duration (5-30 seconds) with validation. GET /api/settings returns ad_duration. Needs retesting."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ RETESTING COMPLETE - PUT /api/admin/settings with ad_duration support fully verified. All ad settings (ad_headline, ad_description, ad_button_text, ad_link, ad_duration) save properly together. Validation and clamping working correctly (min=5, max=30). Authentication and authorization properly enforced."
 
   - task: "Interstitial Ad Duration Control"
     implemented: true
