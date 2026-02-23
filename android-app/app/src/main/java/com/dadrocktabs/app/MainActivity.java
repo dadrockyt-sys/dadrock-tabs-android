@@ -145,4 +145,11 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onDestroy();
     }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Handle orientation and screen size changes without reloading WebView
+        // The WebView will automatically adjust to the new configuration
+    }
 }
