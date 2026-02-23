@@ -162,7 +162,7 @@ backend:
     file: "/app/app/api/[[...path]]/route.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
         - working: "NA"
         - agent: "main"
@@ -170,6 +170,21 @@ backend:
         - working: true
         - agent: "testing"
         - comment: "✅ PUT /api/admin/settings fully working - accepts featured_video_url, title, artist. Properly handles Basic Auth and returns success response. Converts YouTube URLs to embed format."
+        - working: "NA"
+        - agent: "main"
+        - comment: "Added ad_duration field support. PUT /api/admin/settings now accepts ad_duration (5-30 seconds) with validation. GET /api/settings returns ad_duration. Needs retesting."
+
+  - task: "Interstitial Ad Duration Control"
+    implemented: true
+    working: "NA"
+    file: "/app/app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "New feature: Admin can set ad duration (5-30 seconds). Backend validates and clamps values. Frontend admin UI has number input and slider. Watch page uses the configured duration for interstitial ad countdown."
 
   - task: "Admin video CRUD APIs"
     implemented: true
