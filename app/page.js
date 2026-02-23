@@ -454,6 +454,7 @@ export default function App({ initialLang = 'en' }) {
           ad_headline: adminAdHeadline,
           ad_description: adminAdDescription,
           ad_button_text: adminAdButtonText,
+          ad_duration: adminAdDuration,
         }),
       });
 
