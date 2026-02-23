@@ -1014,24 +1014,34 @@ export default function App({ initialLang = 'en' }) {
           <div className="flex justify-center mb-8">
             <button
               onClick={() => {
-                const container = document.getElementById('video-container');
                 const iframe = document.getElementById('video-iframe');
                 
-                if (container) {
-                  // Try to enter fullscreen
-                  if (container.requestFullscreen) {
-                    container.requestFullscreen();
-                  } else if (container.webkitRequestFullscreen) {
-                    container.webkitRequestFullscreen();
-                  } else if (container.msRequestFullscreen) {
-                    container.msRequestFullscreen();
-                  }
-                  
-                  // Try to lock orientation to landscape
-                  if (screen.orientation && screen.orientation.lock) {
-                    screen.orientation.lock('landscape').catch(() => {
-                      // Orientation lock not supported or failed
+                if (iframe) {
+                  // Try to make the iframe fullscreen
+                  if (iframe.requestFullscreen) {
+                    iframe.requestFullscreen().then(() => {
+                      // Try to lock orientation to landscape after entering fullscreen
+                      if (screen.orientation && screen.orientation.lock) {
+                        screen.orientation.lock('landscape').catch(() => {});
+                      }
+                    }).catch((err) => {
+                      // If iframe fullscreen fails, try the container
+                      const container = document.getElementById('video-container');
+                      if (container && container.requestFullscreen) {
+                        container.requestFullscreen().catch(() => {
+                          // Last resort: open in YouTube app/site
+                          window.open(selectedVideo.youtube_url, '_blank');
+                        });
+                      }
                     });
+                  } else if (iframe.webkitRequestFullscreen) {
+                    iframe.webkitRequestFullscreen();
+                  } else if (iframe.webkitEnterFullscreen) {
+                    // iOS Safari
+                    iframe.webkitEnterFullscreen();
+                  } else {
+                    // Fallback: open YouTube directly
+                    window.open(selectedVideo.youtube_url, '_blank');
                   }
                 }
               }}
