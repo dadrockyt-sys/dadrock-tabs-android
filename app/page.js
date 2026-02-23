@@ -993,14 +993,54 @@ export default function App({ initialLang = 'en' }) {
             <p className="text-zinc-400 mt-2 text-lg">by {selectedVideo.artist}</p>
           </div>
 
-          <div className="aspect-video rounded-xl overflow-hidden border border-zinc-800 mb-8">
-            <iframe
-              src={watchEmbedUrl}
-              title={selectedVideo.song}
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+          {/* Video Player Container */}
+          <div className="relative mb-4">
+            <div 
+              id="video-container"
+              className="aspect-video rounded-xl overflow-hidden border border-zinc-800"
+            >
+              <iframe
+                id="video-iframe"
+                src={watchEmbedUrl}
+                title={selectedVideo.song}
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+          {/* Fullscreen Landscape Button */}
+          <div className="flex justify-center mb-8">
+            <button
+              onClick={() => {
+                const container = document.getElementById('video-container');
+                const iframe = document.getElementById('video-iframe');
+                
+                if (container) {
+                  // Try to enter fullscreen
+                  if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                  } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                  } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
+                  }
+                  
+                  // Try to lock orientation to landscape
+                  if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock('landscape').catch(() => {
+                      // Orientation lock not supported or failed
+                    });
+                  }
+                }
+              }}
+              className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-bold rounded-full transition-all hover:scale-105 shadow-lg shadow-amber-500/30"
+            >
+              <Maximize className="w-5 h-5" />
+              <span>Watch Fullscreen</span>
+              <Smartphone className="w-5 h-5 rotate-90" />
+            </button>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
