@@ -958,7 +958,7 @@ export default function App({ initialLang = 'en' }) {
               <div className="w-64 h-2 bg-zinc-800 rounded-full overflow-hidden mx-auto">
                 <div 
                   className="h-full bg-amber-500 transition-all duration-1000"
-                  style={{ width: `${((5 - adCountdown) / 5) * 100}%` }}
+                  style={{ width: `${((adDuration - adCountdown) / adDuration) * 100}%` }}
                 />
               </div>
               <button
