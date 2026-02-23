@@ -353,7 +353,7 @@ export default function App({ initialLang = 'en' }) {
   const handleVideoClick = (video) => {
     setSelectedVideo(video);
     setShowAd(true);
-    setAdCountdown(5);
+    setAdCountdown(adDuration); // Use the configurable duration
     setCurrentPage('watch');
   };
 
