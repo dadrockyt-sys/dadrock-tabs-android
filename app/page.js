@@ -1032,16 +1032,7 @@ export default function App({ initialLang = 'en' }) {
             </button>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={selectedVideo.youtube_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-red-600 hover:bg-red-500 text-white font-bold uppercase tracking-wide transition-colors"
-            >
-              <Youtube className="w-6 h-6" />
-              Watch on YouTube
-            </a>
+          <div className="flex justify-center">
             <button
               onClick={() => setCurrentPage('search')}
               className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 font-bold uppercase tracking-wide transition-colors"
