@@ -997,7 +997,7 @@ export default function App({ initialLang = 'en' }) {
           <div className="relative mb-4">
             <div 
               id="video-container"
-              className="aspect-video rounded-xl overflow-hidden border border-zinc-800"
+              className="aspect-video rounded-xl overflow-hidden border border-zinc-800 bg-black"
             >
               <iframe
                 id="video-iframe"
@@ -1006,28 +1006,31 @@ export default function App({ initialLang = 'en' }) {
                 className="w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                 allowFullScreen
+                style={{ border: 'none' }}
               />
+            </div>
+            
+            {/* Fullscreen hint overlay */}
+            <div className="absolute bottom-3 right-3 bg-black/70 px-3 py-1.5 rounded-full text-xs text-zinc-300 flex items-center gap-1.5 pointer-events-none">
+              <Maximize className="w-3 h-3" />
+              <span>Tap video → ⛶ for fullscreen</span>
             </div>
           </div>
 
-          {/* Fullscreen Landscape Button - Opens YouTube directly for best fullscreen experience */}
-          <div className="flex justify-center gap-3 mb-8">
+          {/* Open in YouTube App Button */}
+          <div className="flex justify-center gap-3 mb-6">
             <button
               onClick={() => {
-                // Open YouTube video in a new tab (YouTube app on mobile will handle fullscreen)
+                // Open in YouTube app (better fullscreen experience on mobile)
                 window.open(selectedVideo.youtube_url, '_blank');
               }}
-              className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-bold rounded-full transition-all hover:scale-105 shadow-lg shadow-amber-500/30"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white font-medium rounded-full transition-all border border-zinc-700"
             >
-              <Maximize className="w-5 h-5" />
-              <span>Fullscreen Mode</span>
-              <Smartphone className="w-5 h-5 rotate-90" />
+              <Youtube className="w-4 h-4 text-red-500" />
+              <span>Open in YouTube App</span>
+              <Smartphone className="w-4 h-4 rotate-90 text-zinc-400" />
             </button>
           </div>
-          
-          <p className="text-center text-zinc-500 text-sm mb-6">
-            Tip: Use YouTube's fullscreen button in the video player, or tap "Fullscreen Mode" to open in YouTube app
-          </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
