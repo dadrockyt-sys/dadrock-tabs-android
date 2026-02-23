@@ -176,15 +176,18 @@ backend:
 
   - task: "Interstitial Ad Duration Control"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/api/[[...path]]/route.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
         - comment: "New feature: Admin can set ad duration (5-30 seconds). Backend validates and clamps values. Frontend admin UI has number input and slider. Watch page uses the configured duration for interstitial ad countdown."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ COMPREHENSIVE TESTING COMPLETE - All 7 test cases PASSED: 1) GET /api/settings returns ad_duration field (default=5) ✓ 2) PUT /api/admin/settings saves valid ad_duration=15 ✓ 3) GET /api/settings returns updated value ✓ 4) Minimum validation clamps 2->5 ✓ 5) Maximum validation clamps 60->30 ✓ 6) ad_duration saves alongside other ad settings ✓ 7) Unauthorized access properly rejected ✓. Backend validation, clamping, persistence, and authentication all working perfectly."
 
   - task: "Admin video CRUD APIs"
     implemented: true
