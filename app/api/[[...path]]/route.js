@@ -369,6 +369,11 @@ export async function PUT(request, context) {
       if (body.ad_button_text) {
         updateData.ad_button_text = body.ad_button_text;
       }
+      if (body.ad_duration !== undefined) {
+        // Validate: min 5, max 30, default 5
+        const duration = parseInt(body.ad_duration) || 5;
+        updateData.ad_duration = Math.min(30, Math.max(5, duration));
+      }
 
       await db.collection('settings').updateOne(
         { type: 'site' },
