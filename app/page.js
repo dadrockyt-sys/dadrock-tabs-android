@@ -415,6 +415,7 @@ export default function App({ initialLang = 'en' }) {
         setAdminAdHeadline(data.ad_headline || 'Check Out Our Merchandise!');
         setAdminAdDescription(data.ad_description || 'Support DadRock Tabs by grabbing some awesome gear');
         setAdminAdButtonText(data.ad_button_text || 'Shop Now');
+        setAdminAdDuration(data.ad_duration || 5);
       }
     } catch (err) {}
 
