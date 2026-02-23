@@ -272,7 +272,9 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "Interstitial Ad Duration Control"
+    - "Admin settings update API"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -282,3 +284,5 @@ agent_communication:
     - message: "DadRock Tabs Next.js app has been built. All backend API endpoints are implemented. Please test the admin APIs including settings update, video CRUD, and stats endpoints. The admin password is 'dadrock2024' and uses Basic Auth with format 'admin:password'."
     - agent: "testing"
     - message: "✅ COMPREHENSIVE BACKEND TESTING COMPLETE - All 10 API endpoints tested successfully including health, settings, videos with search, admin login, admin settings update, video CRUD operations, and admin stats. All authentication, authorization, YouTube URL processing, thumbnail generation, and error handling working perfectly. 7/7 major backend tasks PASS with 0 critical issues found."
+    - agent: "main"
+    - message: "NEW FEATURE ADDED: Interstitial Ad Duration Control. Please test: 1) GET /api/settings should return ad_duration field (default 5). 2) PUT /api/admin/settings with ad_duration should save it to database (validates min=5, max=30). 3) Values below 5 should be clamped to 5, values above 30 clamped to 30. Admin password is 'Babyty99' and uses Basic Auth format 'admin:Babyty99'."
