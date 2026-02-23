@@ -466,6 +466,8 @@ export default function App({ initialLang = 'en' }) {
         setAdHeadline(adminAdHeadline);
         setAdDescription(adminAdDescription);
         setAdButtonText(adminAdButtonText);
+        setAdDuration(adminAdDuration);
+        setAdCountdown(adminAdDuration);
       } else {
         setSaveStatus({ type: 'error', message: 'Failed to save settings' });
       }
