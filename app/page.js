@@ -1364,6 +1364,40 @@ export default function App({ initialLang = 'en' }) {
                 />
               </div>
 
+              <div>
+                <label className="block text-sm text-zinc-400 mb-2">Ad Duration (seconds)</label>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="number"
+                    min="5"
+                    max="30"
+                    value={adminAdDuration}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value) || 5;
+                      setAdminAdDuration(Math.min(30, Math.max(5, val)));
+                    }}
+                    className="w-32 px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
+                  />
+                  <div className="flex-1">
+                    <input
+                      type="range"
+                      min="5"
+                      max="30"
+                      value={adminAdDuration}
+                      onChange={(e) => setAdminAdDuration(parseInt(e.target.value))}
+                      className="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                    />
+                    <div className="flex justify-between text-xs text-zinc-500 mt-1">
+                      <span>5s (min)</span>
+                      <span>30s (max)</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-xs text-zinc-500 mt-2">
+                  How long the interstitial ad displays before the video plays. Default: 5 seconds.
+                </p>
+              </div>
+
               <div className="bg-zinc-800/50 rounded-lg p-4 mt-4">
                 <p className="text-sm text-amber-500 font-medium mb-2">💡 Tips for Paid Ads:</p>
                 <ul className="text-xs text-zinc-400 space-y-1">
