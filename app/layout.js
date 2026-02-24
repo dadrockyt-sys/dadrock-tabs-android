@@ -69,10 +69,14 @@ function generateAlternateLinks() {
 
 export default function RootLayout({ children }) {
   const alternateLinks = generateAlternateLinks();
+  const canonicalUrl = baseUrl; // Ensure canonical is the non-www version
   
   return (
     <html lang="en" className="dark">
       <head>
+        {/* Canonical URL - tells Google this is the main version */}
+        <link rel="canonical" href={canonicalUrl} />
+        
         {/* 80s Rock Style Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
