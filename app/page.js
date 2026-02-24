@@ -1419,7 +1419,75 @@ export default function App({ initialLang = 'en' }) {
               </div>
 
               <div>
-                <label className="block text-sm text-zinc-400 mb-2">Ad Image URL (optional)</label>
+                <label className="block text-sm text-zinc-400 mb-2">Ad Image</label>
+                
+                {/* Image Preview */}
+                {adminAdImage && (
+                  <div className="relative mb-3 p-3 bg-zinc-800 rounded-lg">
+                    <button
+                      type="button"
+                      onClick={() => setAdminAdImage('')}
+                      className="absolute top-2 right-2 p-1 bg-red-500/80 hover:bg-red-500 rounded-full text-white"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                    <p className="text-xs text-zinc-400 mb-2">Current Image:</p>
+                    <img 
+                      src={adminAdImage} 
+                      alt="Ad preview" 
+                      className="max-h-40 mx-auto rounded"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  </div>
+                )}
+                
+                {/* Upload Area */}
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+                    onChange={handleImageUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    disabled={isUploading}
+                  />
+                  <div className={`flex flex-col items-center justify-center gap-3 p-6 border-2 border-dashed rounded-lg transition-colors ${
+                    isUploading ? 'border-amber-500 bg-amber-500/10' : 'border-zinc-700 hover:border-amber-500 hover:bg-zinc-800/50'
+                  }`}>
+                    {isUploading ? (
+                      <>
+                        <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                        <span className="text-sm text-amber-500">Uploading...</span>
+                      </>
+                    ) : (
+                      <>
+                        <div className="w-12 h-12 bg-zinc-700 rounded-full flex items-center justify-center">
+                          <Upload className="w-6 h-6 text-amber-500" />
+                        </div>
+                        <div className="text-center">
+                          <p className="text-sm text-white font-medium">Click to upload image</p>
+                          <p className="text-xs text-zinc-500 mt-1">JPEG, PNG, GIF, WebP (max 5MB)</p>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Upload Error */}
+                {uploadError && (
+                  <div className="flex items-center gap-2 mt-2 text-red-400 text-sm">
+                    <AlertCircle className="w-4 h-4" />
+                    {uploadError}
+                  </div>
+                )}
+                
+                {/* OR divider for URL input */}
+                <div className="flex items-center gap-3 my-4">
+                  <div className="flex-1 h-px bg-zinc-700" />
+                  <span className="text-xs text-zinc-500">OR enter URL</span>
+                  <div className="flex-1 h-px bg-zinc-700" />
+                </div>
+                
+                {/* URL Input (fallback) */}
                 <input
                   type="text"
                   value={adminAdImage}
@@ -1430,17 +1498,6 @@ export default function App({ initialLang = 'en' }) {
                 <p className="text-xs text-zinc-500 mt-2">
                   Leave empty to show default icon. Recommended size: 600x300px
                 </p>
-                {adminAdImage && (
-                  <div className="mt-3 p-2 bg-zinc-800 rounded-lg">
-                    <p className="text-xs text-zinc-400 mb-2">Preview:</p>
-                    <img 
-                      src={adminAdImage} 
-                      alt="Ad preview" 
-                      className="max-h-32 mx-auto rounded"
-                      onError={(e) => e.target.style.display = 'none'}
-                    />
-                  </div>
-                )}
               </div>
 
               <div>
