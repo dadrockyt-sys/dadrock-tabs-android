@@ -1466,7 +1466,7 @@ export default function App({ initialLang = 'en' }) {
                         </div>
                         <div className="text-center">
                           <p className="text-sm text-white font-medium">Click to upload image</p>
-                          <p className="text-xs text-zinc-500 mt-1">JPEG, PNG, GIF, WebP (max 5MB)</p>
+                          <p className="text-xs text-zinc-500 mt-1">JPEG, PNG, GIF, WebP (max 2MB)</p>
                         </div>
                       </>
                     )}
