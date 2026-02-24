@@ -21,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 public class MainActivity extends AppCompatActivity {
 
     private static final String WEBSITE_URL = "https://www.dadrocktabs.com";
+    private static final String APP_TRACKING_PARAMS = "?utm_source=android_app&utm_medium=app&utm_campaign=dadrock_app";
     
     private WebView webView;
     private ProgressBar progressBar;
