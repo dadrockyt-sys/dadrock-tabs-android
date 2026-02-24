@@ -114,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
             swipeRefreshLayout.setEnabled(scrollY == 0);
         });
 
-        // Load website
-        webView.loadUrl(WEBSITE_URL);
+        // Load website with tracking parameters for Google Analytics
+        webView.loadUrl(WEBSITE_URL + APP_TRACKING_PARAMS);
     }
 
     @Override
