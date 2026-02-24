@@ -272,9 +272,9 @@ export default function App({ initialLang = 'en' }) {
       return;
     }
 
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      setUploadError('File too large. Maximum size is 5MB');
+    // Validate file size (max 2MB for base64 storage)
+    if (file.size > 2 * 1024 * 1024) {
+      setUploadError('File too large. Maximum size is 2MB');
       return;
     }
 
