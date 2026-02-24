@@ -251,12 +251,63 @@ export default function App({ initialLang = 'en' }) {
   const [stats, setStats] = useState({ total_videos: 0, total_artists: 0 });
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncStatus, setSyncStatus] = useState({ type: '', message: '' });
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   const t = getTranslation(currentLang);
 
   // Featured video state
   const [featuredVideo, setFeaturedVideo] = useState(null);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
+
+  // Handle image upload
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      setUploadError('Invalid file type. Allowed: JPEG, PNG, GIF, WebP');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setUploadError('File too large. Maximum size is 5MB');
+      return;
+    }
+
+    setIsUploading(true);
+    setUploadError('');
+
+    try {
+      const authToken = sessionStorage.getItem('dadrock_admin_auth');
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Basic ' + btoa('admin:' + authToken),
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.url) {
+        setAdminAdImage(data.url);
+        setUploadError('');
+      } else {
+        setUploadError(data.error || 'Upload failed');
+      }
+    } catch (err) {
+      setUploadError('Failed to upload image');
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   // Check if first visit on mount
   useEffect(() => {
