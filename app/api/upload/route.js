@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { existsSync } from 'fs';
-import path from 'path';
+import { getDb } from '@/lib/mongodb';
 import { v4 as uuidv4 } from 'uuid';
 
 // Admin password from env
@@ -45,43 +43,47 @@ export async function POST(request) {
       }, { status: 400 });
     }
 
-    // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    // Validate file size (max 2MB for base64 storage)
+    const maxSize = 2 * 1024 * 1024; // 2MB
     if (file.size > maxSize) {
       return NextResponse.json({ 
-        error: 'File too large. Maximum size is 5MB' 
+        error: 'File too large. Maximum size is 2MB' 
       }, { status: 400 });
     }
 
-    // Create uploads directory if it doesn't exist
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!existsSync(uploadsDir)) {
-      await mkdir(uploadsDir, { recursive: true });
-    }
-
-    // Generate unique filename
-    const fileExtension = file.name.split('.').pop().toLowerCase();
-    const uniqueFilename = `${uuidv4()}.${fileExtension}`;
-    const filePath = path.join(uploadsDir, uniqueFilename);
-
-    // Convert file to buffer and save
+    // Convert file to base64
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    await writeFile(filePath, buffer);
+    const base64 = buffer.toString('base64');
+    const dataUrl = `data:${file.type};base64,${base64}`;
 
-    // Return the public URL
-    const publicUrl = `/uploads/${uniqueFilename}`;
+    // Generate unique ID for the image
+    const imageId = uuidv4();
+
+    // Store in MongoDB
+    const db = await getDb();
+    await db.collection('uploads').insertOne({
+      id: imageId,
+      filename: file.name,
+      mimeType: file.type,
+      dataUrl: dataUrl,
+      size: file.size,
+      created_at: new Date().toISOString()
+    });
+
+    // Return the API URL to fetch this image
+    const publicUrl = `/api/image/${imageId}`;
 
     return NextResponse.json({ 
       success: true, 
       url: publicUrl,
-      filename: uniqueFilename 
+      imageId: imageId 
     });
 
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json({ 
-      error: 'Failed to upload file' 
+      error: 'Failed to upload file: ' + error.message 
     }, { status: 500 });
   }
 }
