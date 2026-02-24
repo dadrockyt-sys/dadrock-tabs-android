@@ -300,10 +300,11 @@ export default function App({ initialLang = 'en' }) {
         setAdminAdImage(data.url);
         setUploadError('');
       } else {
-        setUploadError(data.error || 'Upload failed');
+        setUploadError(data.error || 'Upload failed. Please try again.');
       }
     } catch (err) {
-      setUploadError('Failed to upload image');
+      console.error('Upload error:', err);
+      setUploadError('Network error. Please try again.');
     } finally {
       setIsUploading(false);
     }
