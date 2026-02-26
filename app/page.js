@@ -1286,6 +1286,31 @@ export default function App({ initialLang = 'en' }) {
             </button>
           </div>
 
+          {/* Related Artists Section for Internal Linking */}
+          <div className="mt-12 w-full">
+            <h3 className="text-xl font-bold text-amber-500 text-center mb-6 font-rock">
+              🎸 Explore More Artists Like {selectedVideo.artist}
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {getRelatedArtists(selectedVideo.artist, 6).map((artist, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setSearchQuery(artist.name);
+                    performSearch(artist.name, 'artist');
+                  }}
+                  className="flex items-center justify-center gap-2 py-3 px-4 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700 hover:border-amber-500/50 rounded-xl text-zinc-200 hover:text-white transition-all group"
+                >
+                  <span className="text-xl group-hover:scale-110 transition-transform">{artist.emoji}</span>
+                  <span className="font-medium truncate">{artist.name}</span>
+                </button>
+              ))}
+            </div>
+            <p className="text-center text-zinc-500 text-sm mt-4">
+              Click any artist to discover more guitar & bass tabs
+            </p>
+          </div>
+
           {/* Animated Logo with Marshall Amps */}
           <div className="mt-10 mb-6 relative flex items-center justify-center overflow-visible">
             {/* Sound Wave Rings */}
