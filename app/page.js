@@ -310,6 +310,36 @@ export default function App({ initialLang = 'en' }) {
     }
   };
 
+  // Update document title and meta description based on language
+  useEffect(() => {
+    const t = getTranslation(currentLang);
+    // Set page title
+    document.title = t.meta_title || 'DadRock Tabs - Free Guitar & Bass Tabs';
+    
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', t.meta_description || 'Free guitar and bass tabs for classic rock hits.');
+    } else {
+      const newMeta = document.createElement('meta');
+      newMeta.name = 'description';
+      newMeta.content = t.meta_description || 'Free guitar and bass tabs for classic rock hits.';
+      document.head.appendChild(newMeta);
+    }
+
+    // Update og:title
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', t.meta_title || 'DadRock Tabs');
+    }
+
+    // Update og:description
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) {
+      ogDesc.setAttribute('content', t.meta_description || 'Free guitar and bass tabs for classic rock hits.');
+    }
+  }, [currentLang]);
+
   // Check if first visit on mount
   useEffect(() => {
     const hasVisited = localStorage.getItem('dadrock_visited');
