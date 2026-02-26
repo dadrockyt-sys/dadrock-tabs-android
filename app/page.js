@@ -1156,6 +1156,36 @@ export default function App({ initialLang = 'en' }) {
             </div>
           </div>
 
+          {/* VideoObject Schema for SEO */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "VideoObject",
+                "name": `${selectedVideo.song} - ${selectedVideo.artist} Guitar Tab Tutorial`,
+                "description": `Learn to play ${selectedVideo.song} by ${selectedVideo.artist} with this guitar and bass tablature video tutorial. Free lesson from DadRock Tabs.`,
+                "thumbnailUrl": selectedVideo.thumbnail || `https://img.youtube.com/vi/${selectedVideo.video_id}/maxresdefault.jpg`,
+                "uploadDate": selectedVideo.created_at || new Date().toISOString(),
+                "contentUrl": selectedVideo.youtube_url,
+                "embedUrl": watchEmbedUrl,
+                "publisher": {
+                  "@type": "Organization",
+                  "name": "DadRock Tabs",
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": LOGO_URL
+                  }
+                },
+                "interactionStatistic": {
+                  "@type": "InteractionCounter",
+                  "interactionType": { "@type": "WatchAction" },
+                  "userInteractionCount": selectedVideo.view_count || 0
+                }
+              })
+            }}
+          />
+
           {/* Open in YouTube App Button */}
           <div className="flex justify-center gap-3 mb-6">
             <button
