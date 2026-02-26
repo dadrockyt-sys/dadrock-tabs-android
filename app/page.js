@@ -1091,6 +1091,54 @@ export default function App({ initialLang = 'en' }) {
               <p className="text-zinc-500 text-sm mt-2">Try a different search term.</p>
             </div>
           )}
+
+          {/* Related Artists Section for Internal Linking - Show after search results */}
+          {!loading && searchResults.length > 0 && (
+            <div className="mt-12 border-t border-zinc-800 pt-8">
+              <h3 className="text-xl font-bold text-amber-500 mb-6 font-rock">
+                🎸 Explore More Classic Rock & Metal Artists
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                {getRelatedArtists(activeSearch, 12).map((artist, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setSearchQuery(artist.name);
+                      performSearch(artist.name, 'artist');
+                    }}
+                    className="flex items-center justify-center gap-2 py-3 px-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700 hover:border-amber-500/50 rounded-xl text-zinc-200 hover:text-white transition-all group"
+                  >
+                    <span className="text-lg group-hover:scale-110 transition-transform">{artist.emoji}</span>
+                    <span className="font-medium text-sm truncate">{artist.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Show Browse All Artists when no search active */}
+          {!loading && !activeSearch && (
+            <div className="mt-8">
+              <h3 className="text-xl font-bold text-amber-500 mb-6 font-rock">
+                🎸 Browse All Artists
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                {allArtists.slice(0, 24).map((artist, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setSearchQuery(artist.name);
+                      performSearch(artist.name, 'artist');
+                    }}
+                    className="flex items-center justify-center gap-2 py-3 px-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700 hover:border-amber-500/50 rounded-xl text-zinc-200 hover:text-white transition-all group"
+                  >
+                    <span className="text-lg group-hover:scale-110 transition-transform">{artist.emoji}</span>
+                    <span className="font-medium text-sm truncate">{artist.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </main>
       </div>
     );
