@@ -25,6 +25,81 @@ const popularArtists = [
   { name: "Aerosmith", emoji: "💎" },
 ];
 
+// Extended artist database for internal linking
+const allArtists = [
+  { name: "Led Zeppelin", emoji: "🎸", genre: "classic rock" },
+  { name: "AC/DC", emoji: "⚡", genre: "hard rock" },
+  { name: "Van Halen", emoji: "🔥", genre: "hard rock" },
+  { name: "Def Leppard", emoji: "🎵", genre: "hair metal" },
+  { name: "Ozzy Osbourne", emoji: "🦇", genre: "heavy metal" },
+  { name: "Metallica", emoji: "🤘", genre: "thrash metal" },
+  { name: "Black Sabbath", emoji: "🖤", genre: "heavy metal" },
+  { name: "Aerosmith", emoji: "💎", genre: "hard rock" },
+  { name: "Deep Purple", emoji: "🎹", genre: "classic rock" },
+  { name: "Iron Maiden", emoji: "⚔️", genre: "heavy metal" },
+  { name: "Judas Priest", emoji: "🔱", genre: "heavy metal" },
+  { name: "Guns N' Roses", emoji: "🌹", genre: "hard rock" },
+  { name: "Bon Jovi", emoji: "❤️", genre: "hair metal" },
+  { name: "Motley Crue", emoji: "💀", genre: "hair metal" },
+  { name: "Kiss", emoji: "💋", genre: "hard rock" },
+  { name: "Scorpions", emoji: "🦂", genre: "hard rock" },
+  { name: "Whitesnake", emoji: "🐍", genre: "hair metal" },
+  { name: "Dio", emoji: "🤘", genre: "heavy metal" },
+  { name: "Rainbow", emoji: "🌈", genre: "classic rock" },
+  { name: "ZZ Top", emoji: "🎸", genre: "blues rock" },
+  { name: "Thin Lizzy", emoji: "🍀", genre: "classic rock" },
+  { name: "Boston", emoji: "🚀", genre: "classic rock" },
+  { name: "Journey", emoji: "🌟", genre: "classic rock" },
+  { name: "Foreigner", emoji: "🌍", genre: "classic rock" },
+  { name: "REO Speedwagon", emoji: "🚗", genre: "classic rock" },
+  { name: "Styx", emoji: "⛵", genre: "classic rock" },
+  { name: "Kansas", emoji: "🌾", genre: "classic rock" },
+  { name: "Rush", emoji: "⭐", genre: "progressive rock" },
+  { name: "Yes", emoji: "✅", genre: "progressive rock" },
+  { name: "Pink Floyd", emoji: "🌙", genre: "progressive rock" },
+  { name: "Cream", emoji: "🍦", genre: "blues rock" },
+  { name: "The Who", emoji: "🎯", genre: "classic rock" },
+  { name: "Jimi Hendrix", emoji: "🔥", genre: "blues rock" },
+  { name: "Eric Clapton", emoji: "🎸", genre: "blues rock" },
+  { name: "Stevie Ray Vaughan", emoji: "🎵", genre: "blues rock" },
+  { name: "Lynyrd Skynyrd", emoji: "🦅", genre: "southern rock" },
+  { name: "Allman Brothers", emoji: "🍑", genre: "southern rock" },
+  { name: "Pantera", emoji: "🐆", genre: "thrash metal" },
+  { name: "Megadeth", emoji: "☠️", genre: "thrash metal" },
+  { name: "Slayer", emoji: "🗡️", genre: "thrash metal" },
+  { name: "Anthrax", emoji: "🦠", genre: "thrash metal" },
+];
+
+// Function to get related artists based on genre or name similarity
+function getRelatedArtists(artistName, count = 6) {
+  const currentArtist = allArtists.find(a => 
+    a.name.toLowerCase() === artistName?.toLowerCase()
+  );
+  
+  if (!currentArtist) {
+    // Return random popular artists if not found
+    return allArtists.slice(0, count);
+  }
+  
+  // Get artists from same genre, excluding current
+  const sameGenre = allArtists.filter(a => 
+    a.genre === currentArtist.genre && a.name !== currentArtist.name
+  );
+  
+  // Get some from other genres for variety
+  const otherGenre = allArtists.filter(a => 
+    a.genre !== currentArtist.genre && a.name !== currentArtist.name
+  );
+  
+  // Mix: 4 from same genre, 2 from others
+  const related = [
+    ...sameGenre.slice(0, 4),
+    ...otherGenre.sort(() => Math.random() - 0.5).slice(0, 2)
+  ];
+  
+  return related.slice(0, count);
+}
+
 // Language Selector Component with SEO-friendly URLs
 function LanguageSelector({ currentLang }) {
   const [isOpen, setIsOpen] = useState(false);
