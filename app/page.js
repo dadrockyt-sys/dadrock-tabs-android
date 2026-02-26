@@ -861,6 +861,52 @@ export default function App({ initialLang = 'en' }) {
               </a>
             </div>
           </div>
+
+          {/* FAQ Section for SEO */}
+          {t.faq && t.faq.length > 0 && (
+            <div className="w-full max-w-4xl mt-16 px-4">
+              <h2 className="text-2xl sm:text-3xl font-bold text-center text-amber-500 mb-8 font-rock">
+                {t.faqTitle || 'Frequently Asked Questions'}
+              </h2>
+              <div className="space-y-4">
+                {t.faq.map((item, index) => (
+                  <details 
+                    key={index} 
+                    className="group bg-zinc-900/80 border border-zinc-700 rounded-xl overflow-hidden"
+                  >
+                    <summary className="flex items-center justify-between p-5 cursor-pointer hover:bg-zinc-800/50 transition-colors">
+                      <h3 className="text-lg font-semibold text-white pr-4">{item.question}</h3>
+                      <ChevronDown className="w-5 h-5 text-amber-500 transform group-open:rotate-180 transition-transform flex-shrink-0" />
+                    </summary>
+                    <div className="px-5 pb-5 text-zinc-300 leading-relaxed">
+                      {item.answer}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* FAQ Schema for SEO - Invisible structured data */}
+          {t.faq && t.faq.length > 0 && (
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  "mainEntity": t.faq.map(item => ({
+                    "@type": "Question",
+                    "name": item.question,
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": item.answer
+                    }
+                  }))
+                })
+              }}
+            />
+          )}
         </main>
 
         {/* Footer */}
