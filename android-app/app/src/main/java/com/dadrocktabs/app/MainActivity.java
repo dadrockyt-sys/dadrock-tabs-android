@@ -36,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initialize Firebase Analytics
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        
+        // Log app open event
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SOURCE, "android_app");
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+
         webView = findViewById(R.id.webView);
         progressBar = findViewById(R.id.progressBar);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
