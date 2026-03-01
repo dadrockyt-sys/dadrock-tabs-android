@@ -18,6 +18,8 @@ import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String WEBSITE_URL = "https://www.dadrocktabs.com";
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private WebView webView;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FirebaseAnalytics firebaseAnalytics;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
