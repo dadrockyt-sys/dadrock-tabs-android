@@ -9,6 +9,25 @@
       "client_info": {
         "mobilesdk_app_id": "1:978126849614:android:d3e6c39bdcc573f36ca51f",
         "android_client_info": {
+          "package_name": "Com.dadrocktabs.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7De9gi5-tSeuHiBVvARpYQQV_iV49JdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978126849614:android:db672ea8ee2fd0626ca51f",
+        "android_client_info": {
           "package_name": "com.dadrocktabs.app"
         }
       },
