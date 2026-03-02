@@ -124,8 +124,6 @@ jobs:
         retention-days: 90
 
     - name: Create Release
-      env:
-        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
       if: env.KEYSTORE_BASE64 != ''
       uses: softprops/action-gh-release@v1
       with:
@@ -135,4 +133,5 @@ jobs:
         draft: false
         prerelease: false
       env:
+        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
