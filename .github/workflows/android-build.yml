@@ -91,18 +91,21 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Decode Keystore
-      if: ${{ secrets.KEYSTORE_BASE64 != '' }}
+      env:
+        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      if: env.KEYSTORE_BASE64 != ''
       working-directory: android-app
       run: |
         echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/release-keystore.jks
 
     - name: Build Signed Release AAB
-      if: ${{ secrets.KEYSTORE_BASE64 != '' }}
-      working-directory: android-app
       env:
+        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      if: env.KEYSTORE_BASE64 != ''
+      working-directory: android-app
       run: |
         ./gradlew bundleRelease \
           -Pandroid.injected.signing.store.file=$(pwd)/app/release-keystore.jks \
@@ -111,7 +114,9 @@ jobs:
           -Pandroid.injected.signing.key.password=$KEY_PASSWORD
 
     - name: Upload Signed Release AAB
-      if: ${{ secrets.KEYSTORE_BASE64 != '' }}
+      env:
+        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      if: env.KEYSTORE_BASE64 != ''
       uses: actions/upload-artifact@v4
       with:
         name: app-release-aab-signed-v${{ github.event.inputs.version_code }}
@@ -119,7 +124,9 @@ jobs:
         retention-days: 90
 
     - name: Create Release
-      if: ${{ secrets.KEYSTORE_BASE64 != '' }}
+      env:
+        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      if: env.KEYSTORE_BASE64 != ''
       uses: softprops/action-gh-release@v1
       with:
         tag_name: v${{ github.event.inputs.version_name }}
