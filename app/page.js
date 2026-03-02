@@ -15,6 +15,7 @@ const MARSHALL_AMP_URL = "https://customer-assets.emergentagent.com/job_bd94fdc7
 const YOUTUBE_CHANNEL = "https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ";
 
 const popularArtists = [
+  { name: "Pantera", emoji: "🐆" },
   { name: "Led Zeppelin", emoji: "🎸" },
   { name: "AC/DC", emoji: "⚡" },
   { name: "Van Halen", emoji: "🔥" },
