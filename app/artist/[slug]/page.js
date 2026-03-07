@@ -6,11 +6,28 @@ import ArtistPageClient from './ArtistPageClient';
 function slugToArtistPattern(slug) {
   // Handle special cases - must match exactly what's in the database
   const specialCases = {
+    // Symbols and special characters
     'acdc': 'AC/DC',
-    'guns-n-roses': "Guns N' Roses",
-    'motorhead': 'Motorhead',  // Database has plain text, not Motörhead
-    'blue-oyster-cult': 'Blue Oyster Cult',  // Database has plain text
-    'motley-crue': 'Motley Crue',  // Database has "Motley Crue -" not "Mötley Crüe"
+    
+    // Plain text versions (database doesn't use special chars like ö, ü)
+    'motorhead': 'Motorhead',
+    'blue-oyster-cult': 'Blue Oyster Cult',
+    'motley-crue': 'Motley Crue',
+    
+    // Apostrophe handling - database uses apostrophes
+    'janes-addiction': "Jane's Addiction",
+    'enuff-znuff': "Enuff Z'Nuff",
+    'drivin-n-cryin': "Drivin' 'N' Cryin'",
+    
+    // LA vs L.A. - database uses "LA Guns"
+    'la-guns': 'LA Guns',
+    
+    // Case sensitivity fixes
+    'zz-top': 'ZZ Top',
+    'ufo': 'UFO',
+    'reo-speedwagon': 'REO Speedwagon',
+    'elo': 'ELO',
+    'bto': 'BTO',
   };
   
   if (specialCases[slug]) {
