@@ -103,6 +103,21 @@ export async function GET(request, context) {
       });
     }
 
+    // Get all unique artists
+    if (path === '/artists') {
+      const db = await getDb();
+      const artists = await db.collection('videos').aggregate([
+        { $group: { _id: '$artist', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $project: { artist: '$_id', count: 1, _id: 0 } }
+      ]).toArray();
+      
+      return NextResponse.json({
+        artists: artists.filter(a => a.artist),
+        total: artists.length
+      });
+    }
+
     // Get all videos with search
     if (path === '/videos') {
       const db = await getDb();
