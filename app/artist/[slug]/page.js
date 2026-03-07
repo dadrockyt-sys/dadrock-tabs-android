@@ -4,13 +4,13 @@ import ArtistPageClient from './ArtistPageClient';
 
 // Convert slug to artist name pattern for database lookup
 function slugToArtistPattern(slug) {
-  // Handle special cases
+  // Handle special cases - must match exactly what's in the database
   const specialCases = {
     'acdc': 'AC/DC',
     'guns-n-roses': "Guns N' Roses",
-    'motorhead': 'Motörhead',
-    'blue-oyster-cult': 'Blue Öyster Cult',
-    'motley-crue': 'Mötley Crüe',
+    'motorhead': 'Motorhead',  // Database has plain text, not Motörhead
+    'blue-oyster-cult': 'Blue Oyster Cult',  // Database has plain text
+    'motley-crue': 'Motley Crue',  // Database has "Motley Crue -" not "Mötley Crüe"
   };
   
   if (specialCases[slug]) {

@@ -10,7 +10,7 @@ import base64
 import sys
 
 # Configuration
-BASE_URL = "https://rock-timer-panel.preview.emergentagent.com/api"
+BASE_URL = "https://dadrock-seo-debug.preview.emergentagent.com/api"
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "Babyty99"
 
