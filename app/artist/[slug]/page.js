@@ -2,8 +2,8 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import ArtistPageClient from './ArtistPageClient';
 
-// Convert slug to artist name for database lookup
-function slugToArtistName(slug) {
+// Convert slug to artist name pattern for database lookup
+function slugToArtistPattern(slug) {
   // Handle special cases
   const specialCases = {
     'acdc': 'AC/DC',
@@ -27,11 +27,12 @@ function slugToArtistName(slug) {
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
   const slug = params.slug;
-  const artistName = slugToArtistName(slug);
+  const artistPattern = slugToArtistPattern(slug);
   
   const db = await getDb();
+  // Search for artist name at the start of the field (handles "Metallica -" and "Metallica")
   const videoCount = await db.collection('videos').countDocuments({
-    artist: { $regex: new RegExp(`^${artistName}$`, 'i') }
+    artist: { $regex: new RegExp(`^${artistPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i') }
   });
   
   if (videoCount === 0) {
@@ -41,13 +42,13 @@ export async function generateMetadata({ params }) {
     };
   }
   
-  const title = `Learn ${artistName} Songs - Free Guitar & Bass Tabs | DadRock Tabs`;
-  const description = `Learn how to play songs by ${artistName} with step-by-step guitar and bass tutorials. These riffs are some of the most recognizable classic rock riffs ever written and perfect for beginner and intermediate players. ${videoCount} lessons available.`;
+  const title = `Learn ${artistPattern} Songs - Free Guitar & Bass Tabs | DadRock Tabs`;
+  const description = `Learn how to play songs by ${artistPattern} with step-by-step guitar and bass tutorials. These riffs are some of the most recognizable classic rock riffs ever written and perfect for beginner and intermediate players. ${videoCount} lessons available.`;
   
   return {
     title,
     description,
-    keywords: `${artistName} tabs, ${artistName} guitar tabs, ${artistName} bass tabs, ${artistName} tutorial, learn ${artistName} songs, ${artistName} lessons, classic rock tabs`,
+    keywords: `${artistPattern} tabs, ${artistPattern} guitar tabs, ${artistPattern} bass tabs, ${artistPattern} tutorial, learn ${artistPattern} songs, ${artistPattern} lessons, classic rock tabs`,
     openGraph: {
       title,
       description,
@@ -69,13 +70,15 @@ export async function generateMetadata({ params }) {
 // Server component to fetch data
 export default async function ArtistPage({ params }) {
   const slug = params.slug;
-  const artistName = slugToArtistName(slug);
+  const artistPattern = slugToArtistPattern(slug);
   
   const db = await getDb();
   
-  // Find all videos for this artist (case-insensitive)
+  // Find all videos for this artist (matches "Metallica", "Metallica -", etc.)
+  // Use regex to match artist names that START with the pattern
+  const escapedPattern = artistPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const videos = await db.collection('videos')
-    .find({ artist: { $regex: new RegExp(`^${artistName}$`, 'i') } })
+    .find({ artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') } })
     .sort({ created_at: -1 })
     .toArray();
   
@@ -83,8 +86,8 @@ export default async function ArtistPage({ params }) {
     notFound();
   }
   
-  // Get the actual artist name from the first video (preserves original casing)
-  const actualArtistName = videos[0].artist;
+  // Get the display name (use the clean version without " -")
+  const displayArtistName = artistPattern;
   
   // Convert MongoDB documents to plain objects
   const plainVideos = videos.map(video => ({
@@ -102,8 +105,8 @@ export default async function ArtistPage({ params }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    'name': `${actualArtistName} Guitar & Bass Tabs`,
-    'description': `Learn how to play songs by ${actualArtistName} with step-by-step guitar and bass tutorials.`,
+    'name': `${displayArtistName} Guitar & Bass Tabs`,
+    'description': `Learn how to play songs by ${displayArtistName} with step-by-step guitar and bass tutorials.`,
     'url': `https://dadrocktabs.com/artist/${slug}`,
     'publisher': {
       '@type': 'Organization',
@@ -112,7 +115,7 @@ export default async function ArtistPage({ params }) {
     },
     'mainEntity': {
       '@type': 'MusicGroup',
-      'name': actualArtistName,
+      'name': displayArtistName,
       'genre': 'Rock'
     },
     'numberOfItems': plainVideos.length,
@@ -122,7 +125,7 @@ export default async function ArtistPage({ params }) {
       'item': {
         '@type': 'VideoObject',
         'name': video.song || video.title,
-        'description': `Guitar and bass tutorial for ${video.song || video.title} by ${actualArtistName}`,
+        'description': `Guitar and bass tutorial for ${video.song || video.title} by ${displayArtistName}`,
         'thumbnailUrl': video.thumbnail,
         'uploadDate': video.created_at,
         'contentUrl': video.youtube_url
@@ -137,7 +140,7 @@ export default async function ArtistPage({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ArtistPageClient 
-        artistName={actualArtistName} 
+        artistName={displayArtistName} 
         videos={plainVideos} 
         slug={slug}
       />
