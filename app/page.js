@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image } from 'lucide-react';
+import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus } from 'lucide-react';
 import { getTranslation, locales, localeNames, localeFlags } from '@/lib/i18n';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
@@ -329,6 +329,26 @@ export default function App({ initialLang = 'en' }) {
   const [syncStatus, setSyncStatus] = useState({ type: '', message: '' });
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
+
+  // Upcoming videos state
+  const [upcomingVideos, setUpcomingVideos] = useState([]);
+  const [showUpcomingModal, setShowUpcomingModal] = useState(false);
+  const [loadingUpcoming, setLoadingUpcoming] = useState(false);
+  
+  // Admin upcoming videos state
+  const [adminUpcomingVideos, setAdminUpcomingVideos] = useState([]);
+  const [newUpcomingTitle, setNewUpcomingTitle] = useState('');
+  const [newUpcomingArtist, setNewUpcomingArtist] = useState('');
+  const [newUpcomingDate, setNewUpcomingDate] = useState('');
+  const [newUpcomingThumbnail, setNewUpcomingThumbnail] = useState('');
+  const [newUpcomingDescription, setNewUpcomingDescription] = useState('');
+  const [isAddingUpcoming, setIsAddingUpcoming] = useState(false);
+  
+  // YouTube OAuth state
+  const [youtubeConnected, setYoutubeConnected] = useState(false);
+  const [youtubeChannelName, setYoutubeChannelName] = useState('');
+  const [isSyncingScheduled, setIsSyncingScheduled] = useState(false);
+  const [scheduledSyncStatus, setScheduledSyncStatus] = useState({ type: '', message: '' });
 
   const t = getTranslation(currentLang);
 
@@ -668,6 +688,125 @@ export default function App({ initialLang = 'en' }) {
     }
   };
 
+  // Check YouTube OAuth connection status
+  const checkYoutubeConnection = async () => {
+    try {
+      const res = await fetch('/api/auth/youtube?action=status');
+      if (res.ok) {
+        const data = await res.json();
+        setYoutubeConnected(data.connected);
+        setYoutubeChannelName(data.channel_name || '');
+      }
+    } catch (err) {
+      console.error('Failed to check YouTube connection:', err);
+    }
+  };
+
+  // Sync scheduled videos from YouTube
+  const handleSyncScheduledVideos = async () => {
+    setIsSyncingScheduled(true);
+    setScheduledSyncStatus({ type: '', message: '' });
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      const response = await fetch('/api/admin/youtube/scheduled', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${authToken}`
+        }
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setScheduledSyncStatus({ 
+          type: 'success', 
+          message: data.message 
+        });
+        loadUpcomingVideos(); // Refresh list
+      } else {
+        if (data.need_reconnect) {
+          setYoutubeConnected(false);
+        }
+        setScheduledSyncStatus({ type: 'error', message: data.error || 'Failed to sync scheduled videos' });
+      }
+    } catch (err) {
+      setScheduledSyncStatus({ type: 'error', message: 'Connection error. Please try again.' });
+    } finally {
+      setIsSyncingScheduled(false);
+    }
+  };
+
+  // Load upcoming videos for admin
+  const loadUpcomingVideos = async () => {
+    try {
+      const authToken = sessionStorage.getItem('dadrock_admin_auth');
+      const res = await fetch('/api/admin/upcoming', {
+        headers: { 'Authorization': 'Basic ' + btoa('admin:' + authToken) },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setAdminUpcomingVideos(data.upcoming || []);
+      }
+    } catch (err) {
+      console.error('Failed to load upcoming videos:', err);
+    }
+  };
+
+  // Add upcoming video manually
+  const handleAddUpcoming = async () => {
+    if (!newUpcomingTitle || !newUpcomingDate) return;
+    
+    setIsAddingUpcoming(true);
+    try {
+      const authToken = sessionStorage.getItem('dadrock_admin_auth');
+      const res = await fetch('/api/admin/upcoming', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Basic ' + btoa('admin:' + authToken),
+        },
+        body: JSON.stringify({
+          title: newUpcomingTitle,
+          artist: newUpcomingArtist,
+          scheduled_date: new Date(newUpcomingDate).toISOString(),
+          thumbnail: newUpcomingThumbnail,
+          description: newUpcomingDescription
+        }),
+      });
+      
+      if (res.ok) {
+        // Clear form and reload list
+        setNewUpcomingTitle('');
+        setNewUpcomingArtist('');
+        setNewUpcomingDate('');
+        setNewUpcomingThumbnail('');
+        setNewUpcomingDescription('');
+        loadUpcomingVideos();
+      }
+    } catch (err) {
+      console.error('Failed to add upcoming video:', err);
+    } finally {
+      setIsAddingUpcoming(false);
+    }
+  };
+
+  // Delete upcoming video
+  const handleDeleteUpcoming = async (id) => {
+    try {
+      const authToken = sessionStorage.getItem('dadrock_admin_auth');
+      const res = await fetch(`/api/admin/upcoming/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Basic ' + btoa('admin:' + authToken) },
+      });
+      
+      if (res.ok) {
+        loadUpcomingVideos();
+      }
+    } catch (err) {
+      console.error('Failed to delete upcoming video:', err);
+    }
+  };
+
   // Countdown effect for interstitial ad
   useEffect(() => {
     if (currentPage === 'watch' && showAd && adCountdown > 0) {
@@ -683,6 +822,8 @@ export default function App({ initialLang = 'en' }) {
   useEffect(() => {
     if (currentPage === 'admin' && isAuthenticated) {
       loadAdminData();
+      checkYoutubeConnection();
+      loadUpcomingVideos();
     }
   }, [currentPage, isAuthenticated]);
 
@@ -822,12 +963,111 @@ export default function App({ initialLang = 'en' }) {
             href={YOUTUBE_CHANNEL}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full subscribe-btn ${pageReady ? 'pulse-glow' : ''} text-white font-bold uppercase tracking-wide mb-10 transition-opacity duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full subscribe-btn ${pageReady ? 'pulse-glow' : ''} text-white font-bold uppercase tracking-wide mb-4 transition-opacity duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.4s' }}
           >
             <Youtube className="w-6 h-6" />
             {t.subscribe}
           </a>
+
+          {/* Coming Soon Button */}
+          <button
+            onClick={() => {
+              setLoadingUpcoming(true);
+              fetch('/api/upcoming')
+                .then(res => res.json())
+                .then(data => {
+                  setUpcomingVideos(data.upcoming || []);
+                  setShowUpcomingModal(true);
+                })
+                .catch(err => console.error('Failed to load upcoming:', err))
+                .finally(() => setLoadingUpcoming(false));
+            }}
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-purple-600 hover:bg-purple-500 text-white font-bold uppercase tracking-wide mb-10 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transitionDelay: '0.45s' }}
+            disabled={loadingUpcoming}
+          >
+            <Calendar className="w-6 h-6" />
+            {loadingUpcoming ? 'Loading...' : (t.comingSoon || 'Coming Soon')}
+          </button>
+
+          {/* Coming Soon Modal */}
+          {showUpcomingModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+              <div className="relative w-full max-w-2xl max-h-[80vh] bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden">
+                {/* Header */}
+                <div className="sticky top-0 bg-zinc-900 border-b border-zinc-700 p-4 flex items-center justify-between">
+                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                    <Calendar className="w-6 h-6 text-purple-500" />
+                    {t.comingSoon || 'Coming Soon'}
+                  </h2>
+                  <button
+                    onClick={() => setShowUpcomingModal(false)}
+                    className="p-2 hover:bg-zinc-800 rounded-lg transition-colors"
+                  >
+                    <X className="w-5 h-5 text-zinc-400" />
+                  </button>
+                </div>
+                
+                {/* Content */}
+                <div className="p-4 overflow-y-auto max-h-[calc(80vh-80px)]">
+                  {upcomingVideos.length === 0 ? (
+                    <div className="text-center py-12">
+                      <Calendar className="w-16 h-16 mx-auto mb-4 text-zinc-600" />
+                      <p className="text-zinc-400 text-lg">{t.noUpcoming || 'No upcoming videos scheduled'}</p>
+                      <p className="text-zinc-500 text-sm mt-2">{t.checkBackSoon || 'Check back soon for new content!'}</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {upcomingVideos.map((video) => (
+                        <div key={video.id} className="flex gap-4 p-4 bg-zinc-800/50 rounded-xl border border-zinc-700">
+                          {video.thumbnail ? (
+                            <img 
+                              src={video.thumbnail} 
+                              alt={video.title}
+                              className="w-32 h-20 object-cover rounded-lg flex-shrink-0"
+                            />
+                          ) : (
+                            <div className="w-32 h-20 bg-zinc-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                              <Music className="w-8 h-8 text-zinc-500" />
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-bold text-white text-lg truncate">{video.title}</h3>
+                            <p className="text-zinc-400 text-sm">{video.artist}</p>
+                            <div className="flex items-center gap-2 mt-2 text-purple-400 text-sm">
+                              <Clock className="w-4 h-4" />
+                              <span>{new Date(video.scheduled_date).toLocaleDateString(currentLang, { 
+                                weekday: 'long', 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Footer */}
+                <div className="sticky bottom-0 bg-zinc-900 border-t border-zinc-700 p-4">
+                  <a
+                    href={YOUTUBE_CHANNEL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-3 rounded-full bg-red-600 hover:bg-red-500 text-white font-bold transition-colors"
+                  >
+                    <Youtube className="w-5 h-5" />
+                    {t.subscribeNotify || 'Subscribe & Turn On Notifications'}
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Popular Searches with Glassmorphism */}
           <div className="w-full max-w-2xl mb-10 fade-in-up" style={{ animationDelay: '0.6s' }}>
@@ -1559,6 +1799,142 @@ export default function App({ initialLang = 'en' }) {
               <Youtube className="w-5 h-5" />
               {isSyncing ? 'Syncing...' : 'Sync from YouTube'}
             </button>
+          </div>
+
+          {/* YouTube OAuth & Scheduled Videos Section */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-purple-500" />
+              Upcoming / Scheduled Videos
+            </h2>
+            <p className="text-zinc-400 mb-4">
+              Connect your YouTube account to automatically import scheduled videos, or add them manually.
+            </p>
+            
+            {/* YouTube OAuth Connection Status */}
+            <div className="mb-6 p-4 bg-zinc-800/50 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-zinc-400">YouTube Connection Status</p>
+                  <p className={`font-semibold ${youtubeConnected ? 'text-green-400' : 'text-zinc-500'}`}>
+                    {youtubeConnected ? `✓ Connected: ${youtubeChannelName}` : '○ Not Connected'}
+                  </p>
+                </div>
+                <a
+                  href="/api/auth/youtube?action=connect"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                    youtubeConnected 
+                      ? 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600' 
+                      : 'bg-purple-600 text-white hover:bg-purple-500'
+                  }`}
+                >
+                  <Youtube className="w-4 h-4" />
+                  {youtubeConnected ? 'Reconnect' : 'Connect YouTube'}
+                </a>
+              </div>
+            </div>
+
+            {/* Sync Scheduled Videos Button */}
+            {youtubeConnected && (
+              <div className="mb-6">
+                {scheduledSyncStatus.message && (
+                  <div className={`flex items-center gap-2 p-3 rounded-lg mb-4 ${
+                    scheduledSyncStatus.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                  }`}>
+                    {scheduledSyncStatus.type === 'success' ? <CheckCircle className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+                    {scheduledSyncStatus.message}
+                  </div>
+                )}
+                <button
+                  onClick={handleSyncScheduledVideos}
+                  disabled={isSyncingScheduled}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-500 transition-colors disabled:opacity-50"
+                >
+                  <Calendar className="w-5 h-5" />
+                  {isSyncingScheduled ? 'Syncing Scheduled...' : 'Sync Scheduled Videos'}
+                </button>
+              </div>
+            )}
+
+            {/* Manual Add Upcoming Video */}
+            <div className="border-t border-zinc-700 pt-6">
+              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                <Plus className="w-5 h-5 text-amber-500" />
+                Add Upcoming Video Manually
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <input
+                  type="text"
+                  value={newUpcomingTitle}
+                  onChange={(e) => setNewUpcomingTitle(e.target.value)}
+                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
+                  placeholder="Song Title"
+                />
+                <input
+                  type="text"
+                  value={newUpcomingArtist}
+                  onChange={(e) => setNewUpcomingArtist(e.target.value)}
+                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
+                  placeholder="Artist Name"
+                />
+                <input
+                  type="datetime-local"
+                  value={newUpcomingDate}
+                  onChange={(e) => setNewUpcomingDate(e.target.value)}
+                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
+                />
+                <input
+                  type="text"
+                  value={newUpcomingThumbnail}
+                  onChange={(e) => setNewUpcomingThumbnail(e.target.value)}
+                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
+                  placeholder="Thumbnail URL (optional)"
+                />
+              </div>
+              <button
+                onClick={handleAddUpcoming}
+                disabled={isAddingUpcoming || !newUpcomingTitle || !newUpcomingDate}
+                className="flex items-center gap-2 px-6 py-3 bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400 transition-colors disabled:opacity-50"
+              >
+                <Plus className="w-5 h-5" />
+                {isAddingUpcoming ? 'Adding...' : 'Add Upcoming Video'}
+              </button>
+            </div>
+
+            {/* List of Upcoming Videos */}
+            {adminUpcomingVideos.length > 0 && (
+              <div className="border-t border-zinc-700 pt-6 mt-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-amber-500" />
+                  Scheduled Videos ({adminUpcomingVideos.length})
+                </h3>
+                <div className="space-y-3">
+                  {adminUpcomingVideos.map((video) => (
+                    <div key={video.id} className="flex items-center justify-between p-4 bg-zinc-800/50 rounded-lg">
+                      <div className="flex items-center gap-4">
+                        {video.thumbnail && (
+                          <img src={video.thumbnail} alt={video.title} className="w-16 h-10 object-cover rounded" />
+                        )}
+                        <div>
+                          <p className="font-semibold text-white">{video.title}</p>
+                          <p className="text-sm text-zinc-400">{video.artist}</p>
+                          <p className="text-xs text-purple-400">
+                            <Calendar className="w-3 h-3 inline mr-1" />
+                            {new Date(video.scheduled_date).toLocaleString()}
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteUpcoming(video.id)}
+                        className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">

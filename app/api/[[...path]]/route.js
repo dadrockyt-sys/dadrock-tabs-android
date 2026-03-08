@@ -192,6 +192,57 @@ export async function GET(request, context) {
       });
     }
 
+    // Get upcoming videos (public endpoint)
+    if (path === '/upcoming') {
+      const db = await getDb();
+      const upcoming = await db.collection('upcoming_videos')
+        .find({})
+        .sort({ scheduled_date: 1 })
+        .toArray();
+      
+      // Filter to only show future videos and format response
+      const now = new Date();
+      const formattedUpcoming = upcoming
+        .filter(v => new Date(v.scheduled_date) >= now)
+        .map(v => ({
+          id: v.id,
+          title: v.title,
+          artist: v.artist,
+          scheduled_date: v.scheduled_date,
+          thumbnail: v.thumbnail,
+          description: v.description
+        }));
+      
+      return NextResponse.json({ 
+        upcoming: formattedUpcoming,
+        total: formattedUpcoming.length 
+      });
+    }
+
+    // Admin: Get all upcoming videos (includes past ones)
+    if (path === '/admin/upcoming') {
+      if (!verifyAdmin(request)) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+      const db = await getDb();
+      const upcoming = await db.collection('upcoming_videos')
+        .find({})
+        .sort({ scheduled_date: 1 })
+        .toArray();
+      
+      return NextResponse.json({ 
+        upcoming: upcoming.map(v => ({
+          id: v.id,
+          title: v.title,
+          artist: v.artist,
+          scheduled_date: v.scheduled_date,
+          thumbnail: v.thumbnail,
+          description: v.description
+        })),
+        total: upcoming.length 
+      });
+    }
+
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   } catch (error) {
     console.error('API Error:', error);
@@ -337,6 +388,33 @@ export async function POST(request, context) {
       return NextResponse.json(video, { status: 201 });
     }
 
+    // Create upcoming video (admin)
+    if (path === '/admin/upcoming') {
+      if (!verifyAdmin(request)) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+      
+      const body = await request.json();
+      const db = await getDb();
+      
+      if (!body.title || !body.scheduled_date) {
+        return NextResponse.json({ error: 'Title and scheduled_date are required' }, { status: 400 });
+      }
+      
+      const upcoming = {
+        id: uuidv4(),
+        title: body.title,
+        artist: body.artist || '',
+        scheduled_date: body.scheduled_date,
+        thumbnail: body.thumbnail || '',
+        description: body.description || '',
+        created_at: new Date().toISOString()
+      };
+
+      await db.collection('upcoming_videos').insertOne(upcoming);
+      return NextResponse.json(upcoming, { status: 201 });
+    }
+
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   } catch (error) {
     console.error('API Error:', error);
@@ -462,6 +540,24 @@ export async function DELETE(request, context) {
       }
 
       return NextResponse.json({ message: 'Video deleted successfully' });
+    }
+
+    // Delete upcoming video (admin)
+    if (path.startsWith('/admin/upcoming/') && pathSegments.length === 3) {
+      if (!verifyAdmin(request)) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+
+      const upcomingId = pathSegments[2];
+      const db = await getDb();
+
+      const result = await db.collection('upcoming_videos').deleteOne({ id: upcomingId });
+
+      if (result.deletedCount === 0) {
+        return NextResponse.json({ error: 'Upcoming video not found' }, { status: 404 });
+      }
+
+      return NextResponse.json({ message: 'Upcoming video deleted successfully' });
     }
 
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
