@@ -112,41 +112,41 @@ export async function POST(request) {
       }, { status: 401 });
     }
 
-    // First get the channel's uploads playlist
-    const channelResponse = await fetch(
-      'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&mine=true',
-      { headers: { 'Authorization': `Bearer ${accessToken}` } }
-    );
-    const channelData = await channelResponse.json();
+    // Fetch ALL videos from the channel using pagination
+    let allVideoIds = [];
+    let nextPageToken = '';
+    let pageCount = 0;
+    const maxPages = 5; // Fetch up to 250 videos (50 per page)
 
-    if (channelData.error) {
-      console.error('Channel fetch error:', channelData.error);
-      return NextResponse.json({ error: channelData.error.message }, { status: 400 });
-    }
+    do {
+      const searchUrl = new URL('https://www.googleapis.com/youtube/v3/search');
+      searchUrl.searchParams.set('part', 'snippet');
+      searchUrl.searchParams.set('forMine', 'true');
+      searchUrl.searchParams.set('type', 'video');
+      searchUrl.searchParams.set('maxResults', '50');
+      searchUrl.searchParams.set('order', 'date');
+      if (nextPageToken) {
+        searchUrl.searchParams.set('pageToken', nextPageToken);
+      }
 
-    if (!channelData.items?.length) {
-      return NextResponse.json({ error: 'No channel found' }, { status: 404 });
-    }
+      const searchResponse = await fetch(searchUrl.toString(), {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+      });
+      const searchData = await searchResponse.json();
 
-    const uploadsPlaylistId = channelData.items[0].contentDetails.relatedPlaylists.uploads;
+      if (searchData.error) {
+        console.error('Search fetch error:', searchData.error);
+        break;
+      }
 
-    // Fetch videos from the channel - this includes scheduled ones when using OAuth
-    // We need to use the search endpoint with type=video and forMine=true to get scheduled videos
-    const searchResponse = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&maxResults=50&order=date`,
-      { headers: { 'Authorization': `Bearer ${accessToken}` } }
-    );
-    const searchData = await searchResponse.json();
+      const videoIds = searchData.items?.map(item => item.id.videoId) || [];
+      allVideoIds = [...allVideoIds, ...videoIds];
+      
+      nextPageToken = searchData.nextPageToken || '';
+      pageCount++;
+    } while (nextPageToken && pageCount < maxPages);
 
-    if (searchData.error) {
-      console.error('Search fetch error:', searchData.error);
-      return NextResponse.json({ error: searchData.error.message }, { status: 400 });
-    }
-
-    // Get video details to check privacy status and scheduled time
-    const videoIds = searchData.items?.map(item => item.id.videoId).join(',') || '';
-    
-    if (!videoIds) {
+    if (allVideoIds.length === 0) {
       return NextResponse.json({ 
         success: true, 
         message: 'No videos found',
@@ -155,35 +155,46 @@ export async function POST(request) {
       });
     }
 
-    const videosResponse = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?part=snippet,status&id=${videoIds}`,
-      { headers: { 'Authorization': `Bearer ${accessToken}` } }
-    );
-    const videosData = await videosResponse.json();
+    // Fetch video details in batches of 50 (API limit)
+    let allScheduledVideos = [];
+    
+    for (let i = 0; i < allVideoIds.length; i += 50) {
+      const batchIds = allVideoIds.slice(i, i + 50).join(',');
+      
+      const videosResponse = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet,status&id=${batchIds}`,
+        { headers: { 'Authorization': `Bearer ${accessToken}` } }
+      );
+      const videosData = await videosResponse.json();
 
-    if (videosData.error) {
-      console.error('Videos fetch error:', videosData.error);
-      return NextResponse.json({ error: videosData.error.message }, { status: 400 });
+      if (videosData.error) {
+        console.error('Videos fetch error:', videosData.error);
+        continue;
+      }
+
+      // Filter for scheduled (private with publishAt) videos
+      const scheduledVideos = videosData.items?.filter(video => {
+        const status = video.status;
+        const snippet = video.snippet;
+        
+        // Method 1: Private videos with a publishAt date (scheduled)
+        if (status?.privacyStatus === 'private' && status?.publishAt) {
+          return true;
+        }
+        
+        // Method 2: Upcoming premieres/live broadcasts
+        if (snippet?.liveBroadcastContent === 'upcoming') {
+          return true;
+        }
+        
+        return false;
+      }) || [];
+
+      allScheduledVideos = [...allScheduledVideos, ...scheduledVideos];
     }
 
-    // Filter for scheduled (private with publishAt) videos
-    const scheduledVideos = videosData.items?.filter(video => {
-      const status = video.status;
-      // Scheduled videos have privacyStatus 'private' and a publishAt date in the future
-      return status?.privacyStatus === 'private' && status?.publishAt;
-    }) || [];
-
-    // Also check for upcoming live broadcasts / premieres
-    const upcomingVideos = videosData.items?.filter(video => {
-      const snippet = video.snippet;
-      return snippet?.liveBroadcastContent === 'upcoming';
-    }) || [];
-
-    // Combine both types
-    const allUpcoming = [...scheduledVideos, ...upcomingVideos];
-    
     // Remove duplicates by video ID
-    const uniqueUpcoming = allUpcoming.filter((video, index, self) =>
+    const uniqueUpcoming = allScheduledVideos.filter((video, index, self) =>
       index === self.findIndex(v => v.id === video.id)
     );
 
@@ -229,7 +240,8 @@ export async function POST(request) {
 
     return NextResponse.json({
       success: true,
-      message: `Found ${uniqueUpcoming.length} scheduled videos. Added ${addedCount} new, ${skippedCount} already existed.`,
+      message: `Scanned ${allVideoIds.length} videos. Found ${uniqueUpcoming.length} scheduled. Added ${addedCount} new, ${skippedCount} already existed.`,
+      total_scanned: allVideoIds.length,
       scheduled_found: uniqueUpcoming.length,
       upcoming_added: addedCount,
       upcoming_skipped: skippedCount
