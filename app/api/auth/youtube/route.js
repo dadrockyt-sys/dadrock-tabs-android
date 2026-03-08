@@ -6,10 +6,8 @@ const YOUTUBE_CLIENT_SECRET = process.env.YOUTUBE_CLIENT_SECRET;
 const REDIRECT_URI = process.env.NEXT_PUBLIC_BASE_URL + '/api/auth/youtube/callback';
 
 // Scopes needed to read scheduled/private videos
-const SCOPES = [
-  'https://www.googleapis.com/auth/youtube.readonly',
-  'https://www.googleapis.com/auth/youtube.force-ssl'
-].join(' ');
+// Using only youtube.readonly for unverified apps
+const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
