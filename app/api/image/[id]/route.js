@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
-export async function GET(request, { params }) {
+export async function GET(request, context) {
   try {
+    const params = await context.params;
     const imageId = params.id;
 
     if (!imageId) {

@@ -75,7 +75,7 @@ function convertToEmbedUrl(url) {
 }
 
 export async function GET(request, context) {
-  const { params } = context;
+  const params = await context.params;
   const pathSegments = params?.path || [];
   const path = '/' + pathSegments.join('/');
   const { searchParams } = new URL(request.url);
@@ -251,7 +251,7 @@ export async function GET(request, context) {
 }
 
 export async function POST(request, context) {
-  const { params } = context;
+  const params = await context.params;
   const pathSegments = params?.path || [];
   const path = '/' + pathSegments.join('/');
 
@@ -423,7 +423,7 @@ export async function POST(request, context) {
 }
 
 export async function PUT(request, context) {
-  const { params } = context;
+  const params = await context.params;
   const pathSegments = params?.path || [];
   const path = '/' + pathSegments.join('/');
 
@@ -519,7 +519,7 @@ export async function PUT(request, context) {
 }
 
 export async function DELETE(request, context) {
-  const { params } = context;
+  const params = await context.params;
   const pathSegments = params?.path || [];
   const path = '/' + pathSegments.join('/');
 
