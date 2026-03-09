@@ -192,32 +192,8 @@ export async function GET(request, context) {
       });
     }
 
-    // Get upcoming videos (public endpoint)
-    if (path === '/upcoming') {
-      const db = await getDb();
-      const upcoming = await db.collection('upcoming_videos')
-        .find({})
-        .sort({ scheduled_date: 1 })
-        .toArray();
-      
-      // Filter to only show future videos and format response
-      const now = new Date();
-      const formattedUpcoming = upcoming
-        .filter(v => new Date(v.scheduled_date) >= now)
-        .map(v => ({
-          id: v.id,
-          title: v.title,
-          artist: v.artist,
-          scheduled_date: v.scheduled_date,
-          thumbnail: v.thumbnail,
-          description: v.description
-        }));
-      
-      return NextResponse.json({ 
-        upcoming: formattedUpcoming,
-        total: formattedUpcoming.length 
-      });
-    }
+    // Get upcoming videos - Now handled by /api/upcoming/route.js
+    // (Keeping comment for reference)
 
     // Admin: Get all upcoming videos (includes past ones)
     if (path === '/admin/upcoming') {
