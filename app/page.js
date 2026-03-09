@@ -1026,12 +1026,22 @@ export default function App({ initialLang = 'en' }) {
                               src={video.thumbnail} 
                               alt={video.title}
                               className="w-32 h-20 object-cover rounded-lg flex-shrink-0"
+                              onError={(e) => {
+                                // If thumbnail fails to load, show fallback
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'flex';
+                              }}
                             />
-                          ) : (
-                            <div className="w-32 h-20 bg-zinc-700 rounded-lg flex items-center justify-center flex-shrink-0">
-                              <Music className="w-8 h-8 text-zinc-500" />
+                          ) : null}
+                          <div 
+                            className="w-32 h-20 bg-gradient-to-br from-purple-600/30 to-zinc-800 rounded-lg items-center justify-center flex-shrink-0 border border-purple-500/20"
+                            style={{ display: video.thumbnail ? 'none' : 'flex' }}
+                          >
+                            <div className="text-center">
+                              <Music className="w-6 h-6 text-purple-400 mx-auto" />
+                              <span className="text-xs text-purple-300 mt-1 block">Coming Soon</span>
                             </div>
-                          )}
+                          </div>
                           <div className="flex-1 min-w-0">
                             <h3 className="font-bold text-white text-lg truncate">{video.title}</h3>
                             <p className="text-zinc-400 text-sm">{video.artist}</p>
