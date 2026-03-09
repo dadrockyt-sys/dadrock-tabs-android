@@ -200,6 +200,7 @@ export async function POST(request) {
 
     let addedCount = 0;
     let skippedCount = 0;
+    let updatedCount = 0;
 
     for (const video of uniqueUpcoming) {
       const snippet = video.snippet;
@@ -208,15 +209,31 @@ export async function POST(request) {
       // Determine scheduled date
       let scheduledDate = status?.publishAt || snippet?.publishedAt;
       
+      // Use standard YouTube thumbnail URL (doesn't expire)
+      // For private videos, this might not work, but it's worth trying
+      const standardThumbnail = `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
+      // Fallback to the signed URL from API (may expire)
+      const signedThumbnail = snippet.thumbnails?.high?.url || snippet.thumbnails?.default?.url || '';
+      
       // Check if already exists
       const existing = await db.collection('upcoming_videos').findOne({
-        $or: [
-          { youtube_video_id: video.id },
-          { title: snippet.title }
-        ]
+        youtube_video_id: video.id
       });
 
       if (existing) {
+        // Update the thumbnail URL to refresh it
+        await db.collection('upcoming_videos').updateOne(
+          { youtube_video_id: video.id },
+          { 
+            $set: { 
+              thumbnail: signedThumbnail,
+              thumbnail_standard: standardThumbnail,
+              scheduled_date: scheduledDate,
+              updated_at: new Date().toISOString()
+            } 
+          }
+        );
+        updatedCount++;
         skippedCount++;
         continue;
       }
@@ -229,7 +246,8 @@ export async function POST(request) {
         title: song,
         artist: artist,
         scheduled_date: scheduledDate,
-        thumbnail: snippet.thumbnails?.high?.url || snippet.thumbnails?.default?.url || '',
+        thumbnail: signedThumbnail,
+        thumbnail_standard: standardThumbnail,
         description: snippet.description?.substring(0, 200) || '',
         created_at: new Date().toISOString()
       };
@@ -240,11 +258,11 @@ export async function POST(request) {
 
     return NextResponse.json({
       success: true,
-      message: `Scanned ${allVideoIds.length} videos. Found ${uniqueUpcoming.length} scheduled. Added ${addedCount} new, ${skippedCount} already existed.`,
+      message: `Scanned ${allVideoIds.length} videos. Found ${uniqueUpcoming.length} scheduled. Added ${addedCount} new, updated ${updatedCount} existing.`,
       total_scanned: allVideoIds.length,
       scheduled_found: uniqueUpcoming.length,
       upcoming_added: addedCount,
-      upcoming_skipped: skippedCount
+      upcoming_updated: updatedCount
     });
 
   } catch (err) {
