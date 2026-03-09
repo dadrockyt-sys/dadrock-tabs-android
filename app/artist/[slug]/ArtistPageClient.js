@@ -2,9 +2,81 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Play, Youtube, Music, Home } from 'lucide-react';
+import { ArrowLeft, Play, Youtube, Music, Home, Users } from 'lucide-react';
 
 const LOGO_URL = "https://i.imgur.com/6hOgR0D.png";
+
+// Related artists mapping for internal linking (SEO boost)
+const relatedArtistsMap = {
+  'AC/DC': ['Van Halen', 'Def Leppard', 'Aerosmith', 'Kiss', 'Scorpions'],
+  'Metallica': ['Megadeth', 'Slayer', 'Anthrax', 'Iron Maiden', 'Black Sabbath'],
+  'Van Halen': ['AC/DC', 'Def Leppard', 'Motley Crue', 'Bon Jovi', 'Whitesnake'],
+  'Led Zeppelin': ['Deep Purple', 'Black Sabbath', 'Cream', 'The Who', 'Jimi Hendrix'],
+  'Black Sabbath': ['Ozzy Osbourne', 'Dio', 'Iron Maiden', 'Judas Priest', 'Metallica'],
+  'Ozzy Osbourne': ['Black Sabbath', 'Dio', 'Alice Cooper', 'Motley Crue', 'Quiet Riot'],
+  'Def Leppard': ['AC/DC', 'Van Halen', 'Bon Jovi', 'Whitesnake', 'Scorpions'],
+  'Guns N Roses': ['Motley Crue', 'Skid Row', 'Poison', 'Bon Jovi', 'Aerosmith'],
+  'Aerosmith': ['AC/DC', 'Van Halen', 'Guns N Roses', 'Kiss', 'Bon Jovi'],
+  'Iron Maiden': ['Judas Priest', 'Black Sabbath', 'Metallica', 'Megadeth', 'Dio'],
+  'Judas Priest': ['Iron Maiden', 'Black Sabbath', 'Accept', 'Scorpions', 'Dio'],
+  'Deep Purple': ['Led Zeppelin', 'Rainbow', 'Whitesnake', 'Uriah Heep', 'Black Sabbath'],
+  'Kiss': ['AC/DC', 'Twisted Sister', 'Motley Crue', 'Alice Cooper', 'Aerosmith'],
+  'Motley Crue': ['Poison', 'Ratt', 'Def Leppard', 'Van Halen', 'Guns N Roses'],
+  'Bon Jovi': ['Def Leppard', 'Journey', 'Foreigner', 'Van Halen', 'Whitesnake'],
+  'ZZ Top': ['Lynyrd Skynyrd', 'AC/DC', 'Allman Brothers', 'Stevie Ray Vaughan', 'Ted Nugent'],
+  'Scorpions': ['Accept', 'Def Leppard', 'UFO', 'Judas Priest', 'Dokken'],
+  'Whitesnake': ['Deep Purple', 'Def Leppard', 'Van Halen', 'Bon Jovi', 'Foreigner'],
+  'Dio': ['Black Sabbath', 'Rainbow', 'Iron Maiden', 'Judas Priest', 'Ozzy Osbourne'],
+  'Rainbow': ['Deep Purple', 'Dio', 'Whitesnake', 'Black Sabbath', 'Uriah Heep'],
+};
+
+// Default related artists for any artist not in the map
+const defaultRelatedArtists = ['AC/DC', 'Metallica', 'Van Halen', 'Led Zeppelin', 'Black Sabbath'];
+
+// Convert artist name to URL slug
+function artistToSlug(artist) {
+  // Handle special cases
+  const specialSlugs = {
+    'AC/DC': 'acdc',
+    "Guns N' Roses": 'guns-n-roses',
+    'Guns N Roses': 'guns-n-roses',
+    'Mötley Crüe': 'motley-crue',
+    'Motley Crue': 'motley-crue',
+    'Motörhead': 'motorhead',
+    'Motorhead': 'motorhead',
+    'Blue Öyster Cult': 'blue-oyster-cult',
+    'Blue Oyster Cult': 'blue-oyster-cult',
+    "Jane's Addiction": 'janes-addiction',
+    "Enuff Z'Nuff": 'enuff-znuff',
+    "Drivin' 'N' Cryin'": 'drivin-n-cryin',
+    'ZZ Top': 'zz-top',
+    'UFO': 'ufo',
+    'REO Speedwagon': 'reo-speedwagon',
+    'ELO': 'elo',
+    'BTO': 'bto',
+  };
+  
+  if (specialSlugs[artist]) {
+    return specialSlugs[artist];
+  }
+  
+  return artist.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+}
+
+// Get related artists for a given artist
+function getRelatedArtists(artistName) {
+  // Try to find in the map (check variations)
+  const normalized = artistName.replace(/ -$/, '').trim();
+  
+  for (const [key, related] of Object.entries(relatedArtistsMap)) {
+    if (key.toLowerCase() === normalized.toLowerCase()) {
+      return related;
+    }
+  }
+  
+  // Return default, excluding the current artist
+  return defaultRelatedArtists.filter(a => a.toLowerCase() !== normalized.toLowerCase());
+}
 
 export default function ArtistPageClient({ artistName, videos, slug }) {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -148,6 +220,28 @@ export default function ArtistPageClient({ artistName, videos, slug }) {
             <p>
               Start learning {artistName} today and add some classic rock to your playing! 🎸
             </p>
+          </div>
+        </section>
+
+        {/* Related Artists Section - Internal Linking for SEO */}
+        <section className="mt-10 p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+          <h2 className="text-2xl font-bold mb-4 text-white flex items-center gap-2">
+            <Users className="w-6 h-6 text-amber-500" />
+            If You Like {artistName}, You'll Love...
+          </h2>
+          <p className="text-zinc-400 mb-6">
+            Check out guitar and bass tabs from these similar classic rock artists:
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {getRelatedArtists(artistName).map((relatedArtist) => (
+              <Link
+                key={relatedArtist}
+                href={`/artist/${artistToSlug(relatedArtist)}`}
+                className="px-5 py-3 bg-zinc-800 hover:bg-amber-500 hover:text-black rounded-full font-medium transition-all border border-zinc-700 hover:border-amber-500"
+              >
+                {relatedArtist}
+              </Link>
+            ))}
           </div>
         </section>
 
