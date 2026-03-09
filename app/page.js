@@ -290,6 +290,13 @@ export default function App({ initialLang = 'en' }) {
   const [logoClickCount, setLogoClickCount] = useState(0);
   const [pageReady, setPageReady] = useState(false);
   
+  // Sync currentLang with initialLang when it changes (e.g., navigation to /hi, /es, etc.)
+  useEffect(() => {
+    if (initialLang !== currentLang) {
+      setCurrentLang(initialLang);
+    }
+  }, [initialLang]);
+  
   // Search page state
   const [searchResults, setSearchResults] = useState([]);
   const [searchType, setSearchType] = useState('all');

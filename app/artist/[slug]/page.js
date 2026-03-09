@@ -43,7 +43,8 @@ function slugToArtistPattern(slug) {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
-  const slug = params.slug;
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
   const artistPattern = slugToArtistPattern(slug);
   
   const db = await getDb();
@@ -86,7 +87,8 @@ export async function generateMetadata({ params }) {
 
 // Server component to fetch data
 export default async function ArtistPage({ params }) {
-  const slug = params.slug;
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
   const artistPattern = slugToArtistPattern(slug);
   
   const db = await getDb();

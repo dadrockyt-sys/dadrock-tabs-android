@@ -9,7 +9,8 @@ export async function generateStaticParams() {
 
 // Generate metadata for each language
 export async function generateMetadata({ params }) {
-  const lang = params.lang || 'en';
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang || 'en';
   
   const titles = {
     en: 'DadRock Tabs - Free Guitar & Bass Tabs for 70s 80s 90s Classic Rock, Heavy Metal & Blues',
@@ -220,6 +221,7 @@ export async function generateMetadata({ params }) {
 // Import and re-export the main page component with lang param
 import HomePage from '../page';
 
-export default function LangPage({ params }) {
-  return <HomePage initialLang={params.lang} />;
+export default async function LangPage({ params }) {
+  const resolvedParams = await params;
+  return <HomePage initialLang={resolvedParams.lang} />;
 }
