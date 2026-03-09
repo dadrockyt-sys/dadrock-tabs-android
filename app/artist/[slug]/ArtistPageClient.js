@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Play, Youtube, Music, Home, Users } from 'lucide-react';
 
-const LOGO_URL = "https://i.imgur.com/6hOgR0D.png";
+const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
 // Related artists mapping for internal linking (SEO boost)
 const relatedArtistsMap = {
