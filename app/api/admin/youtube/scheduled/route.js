@@ -202,6 +202,26 @@ export async function POST(request) {
     let skippedCount = 0;
     let updatedCount = 0;
 
+    // Helper function to download image and convert to base64
+    async function downloadThumbnailAsBase64(imageUrl, accessToken) {
+      try {
+        const response = await fetch(imageUrl, {
+          headers: accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {}
+        });
+        
+        if (!response.ok) return null;
+        
+        const arrayBuffer = await response.arrayBuffer();
+        const base64 = Buffer.from(arrayBuffer).toString('base64');
+        const contentType = response.headers.get('content-type') || 'image/jpeg';
+        
+        return `data:${contentType};base64,${base64}`;
+      } catch (err) {
+        console.error('Failed to download thumbnail:', err);
+        return null;
+      }
+    }
+
     for (const video of uniqueUpcoming) {
       const snippet = video.snippet;
       const status = video.status;
@@ -209,11 +229,16 @@ export async function POST(request) {
       // Determine scheduled date
       let scheduledDate = status?.publishAt || snippet?.publishedAt;
       
-      // Use standard YouTube thumbnail URL (doesn't expire)
-      // For private videos, this might not work, but it's worth trying
-      const standardThumbnail = `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
-      // Fallback to the signed URL from API (may expire)
-      const signedThumbnail = snippet.thumbnails?.high?.url || snippet.thumbnails?.default?.url || '';
+      // Get the best available thumbnail URL
+      const thumbnailUrl = snippet.thumbnails?.high?.url || 
+                          snippet.thumbnails?.medium?.url ||
+                          snippet.thumbnails?.default?.url || '';
+      
+      // Download and store thumbnail as base64 (never expires!)
+      let storedThumbnail = null;
+      if (thumbnailUrl) {
+        storedThumbnail = await downloadThumbnailAsBase64(thumbnailUrl, accessToken);
+      }
       
       // Check if already exists
       const existing = await db.collection('upcoming_videos').findOne({
@@ -221,17 +246,21 @@ export async function POST(request) {
       });
 
       if (existing) {
-        // Update the thumbnail URL to refresh it
+        // Update with fresh thumbnail
+        const updateData = { 
+          scheduled_date: scheduledDate,
+          updated_at: new Date().toISOString()
+        };
+        
+        // Only update thumbnail if we successfully downloaded a new one
+        if (storedThumbnail) {
+          updateData.thumbnail_base64 = storedThumbnail;
+          updateData.thumbnail = storedThumbnail; // Use base64 as primary
+        }
+        
         await db.collection('upcoming_videos').updateOne(
           { youtube_video_id: video.id },
-          { 
-            $set: { 
-              thumbnail: signedThumbnail,
-              thumbnail_standard: standardThumbnail,
-              scheduled_date: scheduledDate,
-              updated_at: new Date().toISOString()
-            } 
-          }
+          { $set: updateData }
         );
         updatedCount++;
         skippedCount++;
@@ -246,8 +275,9 @@ export async function POST(request) {
         title: song,
         artist: artist,
         scheduled_date: scheduledDate,
-        thumbnail: signedThumbnail,
-        thumbnail_standard: standardThumbnail,
+        thumbnail: storedThumbnail || thumbnailUrl, // Prefer base64
+        thumbnail_base64: storedThumbnail,
+        thumbnail_url: thumbnailUrl, // Keep original URL as backup
         description: snippet.description?.substring(0, 200) || '',
         created_at: new Date().toISOString()
       };

@@ -128,13 +128,13 @@ export async function GET(request) {
       }
     }
     
-    // Format response
+    // Format response - prefer base64 thumbnails (never expire)
     const formattedUpcoming = upcomingVideos.map(v => ({
       id: v.id,
       title: v.title,
       artist: v.artist,
       scheduled_date: v.scheduled_date,
-      thumbnail: v.thumbnail,
+      thumbnail: v.thumbnail_base64 || v.thumbnail, // Prefer stored base64
       youtube_video_id: v.youtube_video_id,
       description: v.description
     }));
