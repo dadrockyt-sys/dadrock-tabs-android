@@ -286,13 +286,20 @@ export async function POST(request) {
       addedCount++;
     }
 
+    // Auto-cleanup: Delete past scheduled videos that have already gone live
+    const now = new Date();
+    const deleteResult = await db.collection('upcoming_videos').deleteMany({
+      scheduled_date: { $lt: now.toISOString() }
+    });
+
     return NextResponse.json({
       success: true,
-      message: `Scanned ${allVideoIds.length} videos. Found ${uniqueUpcoming.length} scheduled. Added ${addedCount} new, updated ${updatedCount} existing.`,
+      message: `Scanned ${allVideoIds.length} videos. Found ${uniqueUpcoming.length} scheduled. Added ${addedCount} new, updated ${updatedCount} existing.${deleteResult.deletedCount > 0 ? ` Removed ${deleteResult.deletedCount} past videos.` : ''}`,
       total_scanned: allVideoIds.length,
       scheduled_found: uniqueUpcoming.length,
       upcoming_added: addedCount,
-      upcoming_updated: updatedCount
+      upcoming_updated: updatedCount,
+      past_removed: deleteResult.deletedCount
     });
 
   } catch (err) {

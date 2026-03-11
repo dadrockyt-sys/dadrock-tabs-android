@@ -57,14 +57,23 @@ export async function GET(request) {
   try {
     const db = await getDb();
     
+    // Auto-cleanup: Delete past scheduled videos that have already gone live
+    const now = new Date();
+    const deleteResult = await db.collection('upcoming_videos').deleteMany({
+      scheduled_date: { $lt: now.toISOString() }
+    });
+    
+    if (deleteResult.deletedCount > 0) {
+      console.log(`Auto-cleaned ${deleteResult.deletedCount} past scheduled videos`);
+    }
+    
     // Get all upcoming videos
     const upcoming = await db.collection('upcoming_videos')
       .find({})
       .sort({ scheduled_date: 1 })
       .toArray();
     
-    // Filter to only show future videos
-    const now = new Date();
+    // Filter to only show future videos (extra safety)
     let upcomingVideos = upcoming.filter(v => new Date(v.scheduled_date) >= now);
     
     // Check if we need to refresh thumbnails (if any are older than 20 hours)
