@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Trophy, Eye, ThumbsUp, Play, Youtube, Home, Facebook, Twitter, Mail, ExternalLink, Music } from 'lucide-react';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
-const YOUTUBE_CHANNEL = 'https://www.youtube.com/@dadrocktabs';
+const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
 
 // Convert artist name to URL slug
 function artistToSlug(artist) {
