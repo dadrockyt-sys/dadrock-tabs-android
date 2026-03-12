@@ -1,56 +1,68 @@
 <analysis>
-
 <original_problem_statement>
 The user wants to manage and deploy their DadRock Tabs application. The initial product requirements included a functional Next.js app, an 80s rock aesthetic, and an admin panel.
 
 During this session, the user's requests expanded significantly to include:
-- **Admin Controls**: Ability to set the duration of the interstitial ad timer.
-- **UI/UX**: Add the animated homepage logo to the video watch page.
-- **Android App**: Fix a device compatibility warning from the Google Play Console for Android 16.
-- **Admin Features**: Replace the ad image URL input with a file upload system.
-- **Analytics**: Integrate app usage tracking into the existing Google Analytics setup.
+- **Bug Fixes**:
+    - Fix Not Found errors for specific artist pages like Motley Crue due to data mapping issues.
+    - Fix a broken logo image on artist pages.
+    - Fix internationalization (i18n) language switching, which broke after a Next.js upgrade.
+    - Fix admin panel login, which broke after a Next.js upgrade.
 - **SEO & Content**:
-    - Fix Page with redirect errors and missing translated titles in Google Search.
-    - Implement advanced SEO with Schema.org markup (FAQ, Video) and internal linking (Related Artists).
-    - Create dynamically generated, SEO-optimized landing pages for every individual artist in the database (e.g., ).
-- **Ad Tracking**: Integrate Firebase to track app installs from Google Ads campaigns.
-- **Bug Fixing**: A major, complex issue where the YouTube video sync was blocked due to a combination of incorrect API key restrictions, a closed billing account, and a rolled-back Vercel deployment.
+    - Add internal linking (Related Artists) to all artist pages.
+    - Guide the user on verifying domain ownership with Google Search Console via DNS records.
+- **New Features**:
+    - **Upcoming Videos**: Create a system to display scheduled YouTube videos. This evolved into a multi-part feature including:
+        - YouTube OAuth integration to access the user's private/scheduled videos.
+        - An admin panel section to connect the YouTube account and manually/automatically sync scheduled videos.
+        - A robust solution to handle expiring YouTube thumbnail URLs by downloading and storing them as Base64 data in the database.
+        - A dedicated, SEO-optimized  landing page with social sharing, descriptive text, and links to artist pages.
+        - Automatic cleanup of videos that have already gone live.
+    - **Top Lessons Page**:
+        - Create a new  landing page to display the 10 most-viewed lessons.
+        - Add a button on the homepage to link to this new page.
+        - Provide an admin panel section for the user to manually curate the top 10 videos by pasting YouTube URLs.
+- **UI/UX**:
+    - Fix cropped thumbnails on the Coming Soon page.
+    - Relocate social sharing links on the Coming Soon page for better visibility.
+- **Maintenance**:
+    - Upgrade Next.js from a version with a security vulnerability to the latest patched version (16.1.6).
 </original_problem_statement>
 
 **User's preferred language**: English
 
 **what currently exists?**
-The DadRock Tabs application is a feature-rich, multi-language Next.js app. It has a fully functional admin panel for managing content and settings. Key features completed in this session include an admin-controlled ad timer, an image upload system that stores images in MongoDB as Base64, and Firebase integration for app install tracking. A major enhancement is the creation of over 400 dynamic, SEO-optimized landing pages for each artist, complete with updated sitemaps and internal linking. The critical YouTube API key issue that was blocking content updates has been fully resolved.
+The DadRock Tabs application is a multi-language Next.js app with an admin panel. This session added significant new functionality. There is now a complete system for managing and displaying upcoming scheduled videos, powered by YouTube OAuth. This includes a dedicated, SEO-optimized  landing page, and a robust backend that stores thumbnails as Base64 data to prevent expiration issues. A new  page has also been created to showcase the most popular videos, with a full manual configuration interface in the admin panel. The app has been upgraded to Next.js 16, and all resulting breaking changes (API routes, page routing, i18n) have been fixed. Numerous bugs and SEO improvements have also been implemented.
 
 **Last working item**:
-- Last item agent was working: The user reported that the newly created artist page for Motley Crue () is Not found by Google and asked if other artist pages are similarly affected. The agent was just beginning to investigate this potential SEO/indexing issue.
-- Status: IN PROGRESS
-- Agent Testing Done: N
-- Which testing method agent to use? manual testing by curl
+- Last item agent was working: The user reported that on the production URL (), the new Top Lessons page was not loading videos and some buttons were not working. The agent identified that this is because the new code has not been deployed to production yet. The agent explained the user needs to save the changes to GitHub to trigger a Vercel deployment and then configure the videos in the admin panel on the live site.
+- Status: USER VERIFICATION PENDING
+- Agent Testing Done: Y
+- Which testing method agent to use? NA (User needs to save to GitHub to deploy to production and then perform manual testing)
 - User Testing Done: N
 
 **All Pending/In progress Issue list**:
-- Issue 1: (P0) Investigate why the  page is not found by Google.
+- Issue 1: (P0) Production site () is not updated with the latest features (Top Lessons, etc.), causing a broken user experience on that page.
 - Issue 2: (P1) GitHub Actions workflow for  build is reported as unstable (from previous fork).
 - Issue 3: (P2) Poor scrolling behavior in the Android WebView app (from previous fork).
 
 Issues Detail:
-- Issue 1: Investigate why the  page is not found by Google.
-    - Attempted fixes: None. The issue was just reported. This is likely an indexing problem, not a 404 error, as the agent successfully tested the page's existence.
+- Issue 1: Production site not updated.
+    - Attempted fixes: The agent has completed all development and testing on the preview environment. The agent has instructed the user on the necessary steps to deploy and configure the feature on production.
     - Next debug checklist:
-        1. Use Google Search Console's URL Inspection tool for .
-        2. Analyze the inspection results for errors, crawl status, indexing status, or canonicalization issues.
-        3. Verify the URL is present and correct in the generated .
-        4. Inspect the page's source code to ensure there are no accidental  tags.
-        5. Check if other newly created artist pages have the same issue.
-    - Why fix this issue and what will be achieved with the fix? This is critical to the success of the new artist landing page feature. Fixing it will ensure the 400+ new pages can be discovered and ranked by Google, driving organic traffic.
-    - Status: NOT STARTED
+        1. Instruct user to Save to GitHub to trigger the Vercel deployment.
+        2. Once deployed, instruct user to go to the admin panel on the production site.
+        3. User needs to add the  and  as environment variables in Vercel.
+        4. User needs to re-authenticate with YouTube OAuth on the production admin panel.
+        5. User needs to manually configure the Top 10 videos in the admin panel.
+    - Why fix this issue and what will be achieved with the fix? This will make the new Top Lessons feature, along with all other recent fixes and features, live for end-users.
+    - Status: USER VERIFICATION PENDING
     - Is recurring issue? N
-    - Should Test frontend/backend/both after fix? backend
-    - Blocked on other issue: None
+    - Should Test frontend/backend/both after fix? frontend
+    - Blocked on other issue: None. Blocked on user action.
 
 - Issue 2: GitHub Actions workflow for  build is unstable.
-    - Attempted fixes: Fixes for syntax errors in the workflow file were made during this session, but the underlying user-reported instability was not addressed.
+    - Attempted fixes: None in this session. This issue was carried over.
     - Next debug checklist:
         1.  Instruct the user to trigger a manual build.
         2.  Analyze build logs for failures.
@@ -61,9 +73,9 @@ Issues Detail:
     - Blocked on other issue: None
 
 - Issue 3: Poor scrolling behavior in the Android WebView app.
-    - Attempted fixes: None in this session.
+    - Attempted fixes: None in this session. This issue was carried over.
     - Next debug checklist:
-        1.  Review  for previous fixes and investigate alternatives.
+        1.  Review  for previous attempts and investigate alternatives.
     - Why fix this issue and what will be achieved with the fix? Fixes a major usability problem in the Android app.
     - Status: NOT STARTED
     - Is recurring issue? Y
@@ -71,78 +83,94 @@ Issues Detail:
     - Blocked on other issue: Issue 2 (for building the app).
 
 **In progress Task List**:
-- No in-progress development tasks. The current focus is on investigating the SEO issue.
+- None. All development tasks from this session are complete, pending deployment and verification by the user.
 
 **Upcoming and Future Tasks**
-- No new future tasks were requested by the user. The focus should be on resolving the pending issues.
+- None requested by the user. The immediate focus is on deploying the current set of features to production and addressing the long-standing Android issues.
 
 **Completed work in this session**
-- **Feature Development:**
-    - **Admin Ad Timer:** Implemented UI and API to allow admins to set the interstitial ad duration (5-30 seconds). (, )
-    - **Admin Image Upload:** Replaced the ad image URL input with a file upload component that stores images as Base64 in a new  MongoDB collection. (, , )
-    - **Artist Landing Pages:** Created over 400 dynamic, SEO-optimized landing pages for each artist (e.g., ). This included creating the dynamic route, fetching data, setting dynamic metadata, and handling not-found cases. ()
-- **Bug Fixes & Debugging:**
-    - **Critical YouTube API Failure:** Resolved a complex, multi-layered issue preventing video sync. The fix involved creating a new, dedicated YouTube API key, activating a closed Google Cloud billing account, and reverting a rolled-back Vercel deployment.
-    - **Artist Page Video Count:** Fixed a bug where artist pages showed incorrect lesson counts by using a regex query to match all artist name variations in MongoDB. ()
-- **SEO & Analytics:**
-    - **Google Analytics for Android:** Added UTM parameters to the Android WebView to distinguish app traffic in GA. ()
-    - **Firebase Integration:** Added the Firebase SDK to the Android app to enable app install tracking from Google Ads.
-    - **SEO Meta Tags:** Fixed missing translated  and  in search results by adding them to all i18n JSON files and dynamically setting them on the page. (, )
-    - **Canonical & Redirects:** Added canonical URL tags to fix Page with redirect errors in Google Search Console. ()
-    - **Schema Markup:** Implemented  schema on the homepage and  schema on the watch page. (, )
-    - **Sitemap Update:** Dynamically added all 400+ artist page URLs to the sitemap. ()
-    - **Internal Linking:** Added a Related Artists component to watch pages and search results.
-- **UI/UX & Android:**
-    - **Logo on Watch Page:** Added the animated homepage logo to the video watch page. ()
-    - **Android 16 Compatibility:** Fixed a Google Play Console warning by updating  to support resizability on large screens.
+- **Feature: Upcoming/Scheduled Videos System**
+    - Implemented YouTube OAuth 2.0 to allow the app to access the user's private scheduled videos.
+    - Created a Connect YouTube flow in the admin panel and guided the user through the complex Google Cloud Console setup.
+    - Built a Sync Scheduled Videos feature that fetches all scheduled videos from YouTube.
+    - Solved the expiring thumbnail issue by downloading images during sync and storing them as non-expiring Base64 data in MongoDB. ()
+    - Implemented automatic cleanup to remove videos from the 'Coming Soon' list after they go live. ()
+    - Created a new, fully-featured, SEO-optimized landing page at . ()
+    - Added social sharing, descriptive text, and internal artist links to the  page.
+    - Updated the homepage Coming Soon button to link to the new landing page, removing the old modal. ()
+- **Feature: Top 10 Lessons Page**
+    - Created a new landing page at  to showcase popular videos. ()
+    - Added a section to the admin panel to allow the user to manually define the top 10 videos by pasting YouTube URLs. ()
+    - Created API endpoints to save and retrieve the manually curated top 10 list. ()
+    - Added a new Top Lessons button to the homepage. ()
+- **Maintenance & Major Bug Fixes**
+    - **Next.js Upgrade**: Upgraded the app from a vulnerable version to Next.js . (, )
+    - **Breaking Change Fixes**:
+        - Fixed all API routes and page components by -ing , a breaking change in Next.js 16. This resolved issues with the admin login and i18n language switching. (, , )
+    - **Artist Page 404 Fix**: Corrected data mapping logic for artist names with special characters (e.g., Mötley Crüe), resolving Not Found errors. ()
+- **SEO & UI/UX Improvements**
+    - Added a Related Artists section with internal links to all artist pages. ()
+    - Fixed cropped thumbnails on video lists by using a correct 16:9 aspect ratio. ()
+    - Fixed a broken logo URL on artist pages. ()
+    - Fixed a React hydration error related to social sharing links. ()
+    - Added new pages (, ) to the sitemap. ()
 
 **Earlier issues found/mentioned but not fixed**
-   - The original pending issues from the previous fork related to the Android app remain unaddressed:
-     - Unstable  build workflow.
-     - Poor scrolling in the Android WebView.
+- The Next.js 16 upgrade introduced a deprecation warning for the  file. The agent noted this but decided to defer fixing it as it was non-critical and did not break functionality.
 
 **Known issue recurrence from previous fork**
-  - The unstable  build workflow and the Android scrolling issue are known recurring problems that were not addressed in this session.
+- The unstable  build workflow and the Android scrolling issue are known recurring problems that were not addressed in this session.
+- Recurrence count: 2
+- Status: NOT STARTED
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-- **Frontend**: Next.js 14, React, Tailwind CSS, Shadcn/UI (Accordion)
-- **Backend**: Next.js API Routes, Serverless Functions (Vercel)
-- **Database**: MongoDB (used regex  for queries)
-- **SEO**: Dynamic , Canonical Tags, JSON-LD (Schema.org: , ), Internal Linking, Dynamic Meta Tags
-- **Next.js Features**: Dynamic Routes (), , 
-- **Android**: WebView,  configuration, Firebase SDK, Google Analytics UTM parameters
-- **File Handling**: Base64 encoding for image storage in MongoDB to support serverless environments.
+- **Framework**: Next.js 16 (upgraded), React
+- **Authentication**: YouTube OAuth 2.0 for server-to-server API access.
+- **API**: Next.js API Routes, Vercel Serverless Functions.
+- **Database**: MongoDB.
+- **File/Data Handling**: Storing downloaded images as Base64 data URIs in MongoDB to create non-expiring thumbnails.
+- **Scheduling**: Vercel Cron Jobs configured (though not active on free plan). Implemented fallback logic (e.g., cleanup/refresh on page load).
+- **Breaking Changes**: Handled Next.js 16 breaking change where  in dynamic routes/pages became a Promise requiring .
+- **SEO**: Dynamic , internal linking, descriptive content for new landing pages.
 
 **key DB schema**
-- **settings**: 
-- **videos**: 
-- **uploads**:  (New collection)
+- **upcoming_videos**:  (New collection)
+- **settings**:  (Added  field for manual curation)
 
 **changes in tech stack**
-- Added **Firebase Analytics SDK** to the Android app.
+- Upgraded Next.js to .
+- Added libraries for Google OAuth ().
 
 **All files of reference**
-- : The core of the new artist landing pages feature. Contains the data fetching logic (using regex) and generates dynamic metadata.
-- : Updated to dynamically add all 427+ artist pages to the sitemap.
-- : New endpoint that handles file uploads by converting them to Base64 and storing them in MongoDB.
-- : Heavily modified to include the ad duration slider and the new image upload component.
-- : Modified to add Firebase initialization and Google Analytics UTM parameters.
-- : Modified to include Firebase dependencies.
-- : New file containing Firebase project configuration.
+- : The core of the YouTube integration. Handles OAuth callback, token storage, and the logic to sync scheduled videos, including downloading thumbnails as Base64.
+- : The central control panel for the new features. Contains UI for YouTube connection, syncing, and manual configuration of the top 10 videos.
+- : The new, SEO-rich landing page for upcoming videos.
+- : The new landing page for the most popular lessons.
+- : The API that serves the manually curated top videos list.
+- : A critical file that was fixed to handle the Next.js 16  breaking change.
+- : New file to define the Vercel Cron Job for daily syncs.
+
+**Areas that need refactoring**:
+- The  file uses a deprecated pattern according to a warning from the Next.js 16 upgrade. It currently handles  to non- redirects and is functional, but should be updated to the new standard to avoid future compatibility issues.
 
 **key api endpoints**
-- : Updated to save  and the new Base64 image URL.
-- : New endpoint to upload an image and store it in the  collection.
-- : New endpoint to retrieve and serve a stored image from the database.
-- : New endpoint to get a unique list of all artist names.
+- : Initiates the Google OAuth flow.
+- : Handles the redirect from Google after authorization.
+- : Triggers a sync of scheduled videos from YouTube.
+- : Retrieves the list of upcoming videos for the landing page.
+- : Retrieves the curated list of top 10 videos.
+-  (updated): Saves the curated top 10 videos list.
+- : Endpoint for the Vercel Cron Job.
 
 **Critical Info for New Agent**
-- The massive YouTube API key issue is **resolved**. The correct, working key is in the DadRock Youtube Google Cloud project, has **no application restrictions**, and is restricted only to the YouTube Data API v3. The key is correctly set in Vercel. The root cause was a combination of a closed billing account and a rolled-back Vercel deployment. Do not change the API key setup.
-- The immediate task is to investigate why the  page is not found by Google. This is an SEO/indexing problem, not a website 404 error. Start by using the Google Search Console URL Inspection tool.
-- The two long-standing Android issues (unstable build, poor scrolling) are still pending and should be addressed after the current SEO issue is resolved.
+- **Next.js 16 Upgrade**: The project is now on Next.js 16. A critical breaking change is that  in dynamic server components and API routes are now Promises and **must be ed**. Any new dynamic routes will need to follow this pattern.
+- **Production Deployment Pending**: The latest features ( page and its admin configuration) are complete but **not deployed to production**. The user needs to save to GitHub to deploy, then configure the feature in the admin panel on the live site. The feature will appear broken on production until this is done.
+- **YouTube OAuth Credentials**: The necessary  and  are in the chat history. These **must be added as environment variables in Vercel** for the production deployment to work.
+- **Thumbnail Handling**: YouTube thumbnail URLs for scheduled videos expire. The implemented solution is to download the images and store them as Base64 in the  collection. This is a robust, permanent fix.
+- **Vercel Cron Jobs**: A cron job is configured in  for daily syncs. However, this feature requires a Vercel Pro plan. The application has fallbacks (e.g., manual sync button, cleanup on page load) that work on the free tier.
 
 **documents created in this job**
 - 
@@ -152,42 +180,47 @@ Issues Detail:
 - 
 - 
 - 
+- 
+- 
 
 **Last 10 User Messages and any pending HUMAN messages**
-1. **user**:  - The current P0 issue. (IN PROGRESS)
-2. **user**:  - Request for a list of top 20 artist URLs to index. (Completed)
-3. **user**:  - Question about SEO strategy for new pages. (Answered)
-4. **user**:  - Asking for verification that the artist page video count fix works for everyone. (Completed)
-5. **user**:  - Bug report for the artist pages. (Completed)
-6. **user**:  - Confirmation to proceed with creating pages for all artists. (Completed)
-7. **user**:  - The initial request for the major artist landing page feature. (Completed)
-8. **user**:  - Bug report after re-enabling incorrect API key restrictions. (Completed)
-9. **user**:  - Confirmation that the YouTube sync is working and asking about security. (Answered)
-10. **user**:  - The user provided the final clue to solve the YouTube API issue. (Completed)
+1. **user**: Can the thumbnails be made smaller or the border bigger to prevent cropping? (Completed - fixed aspect ratio)
+2. **user**: Can we move the social sharing links to the top of the Coming Soon page? (Completed - links moved)
+3. **user**: Can we add a new Top Lessons page for the 10 most viewed videos, with similar layout and a new button on the homepage? (Completed - feature built)
+4. **user**: Can I manually add the top 10 videos in the admin panel? (Completed - feature built)
+5. **user**: The Top Lessons page is broken on production (buttons don't work, videos don't load). (In Progress - agent identified it's a deployment issue and provided instructions)
+6. **user**: Dusty (should the) coming soon button open the new landing page? (Completed - button now links to page)
+7. **user**: Why does it say this at the top left of artist pages? [image of broken logo] (Completed - fixed broken Imgur URL)
+8. **user**: The Coming Soon thumbnails disappeared again, but came back after manual sync. Can this be more automatic? (Completed - implemented Base64 storage for thumbnails)
+9. **user**: Do scheduled videos automatically delete from the Coming Soon page after they go live? (Completed - added auto-cleanup logic)
+10. **user**: I would like to make the Coming Soon pop-up its own URL landing page with many specific SEO and UI features. (Completed - feature built)
 
 **Project Health Check:**
-- Broken: None. The application is fully functional. The YouTube sync issue is resolved.
+- Broken: The  route on the production site is currently broken because the code has not been deployed yet. It functions correctly in the preview environment.
 - Mocked: None.
 
 **3rd Party Integrations**
-- **MongoDB Atlas**: Database provider. Requires user-provided .
+- **MongoDB Atlas**: Database provider.
 - **Google Cloud Platform**:
-    - **YouTube Data API v3**: Used for syncing videos. Requires a user-provided . This key is now in a dedicated DadRock Youtube project and is restricted only by API, not by application/HTTP referrer.
-    - **Billing**: A billing account is now active and linked to the projects.
-- **Firebase Analytics**: Integrated into the Android app for app install and event tracking. Requires .
+    - **YouTube Data API v3**: Used for syncing videos.
+    - **Google OAuth 2.0**: Used to get permission to access the user's private/scheduled YouTube videos. Requires user-provided  and  to be set in the environment.
+- **Firebase Analytics**: Integrated into the Android app.
 - **Google Analytics**: Used for website traffic analysis.
-- **Vercel**: Hosting and deployment platform.
+- **Vercel**: Hosting, deployment, and cron job platform.
 
 **Testing status**
 - Testing agent used after significant changes: NO
-- Troubleshoot agent used after agent stuck in loop: NO (though the agent went through a long manual troubleshooting process)
+- Troubleshoot agent used after agent stuck in loop: NO
 - Test files created: []
-- Known regressions: None.
+- Known regressions: None. The agent fixed all regressions that arose from the Next.js upgrade.
 
 **Credentials to test flow:**
-Admin panel password is in the  environment variable.
+- Admin Panel Password: Default is , but it's likely set in the  environment variable.
+- YouTube OAuth Credentials:
+    - Client ID: 
+    - Client Secret: 
+    These need to be added to the Vercel environment variables for production.
 
 **What agent forgot to execute**
-- The agent did not address the pre-existing Android-specific issues from the initial handover summary (unstable  build, poor scrolling). These were de-prioritized in favor of the user's numerous new feature requests and critical bug fixes.
-
+- The agent did not address the two long-standing Android issues from the previous fork: the unstable  build workflow and the poor WebView scrolling behavior. These were de-prioritized in favor of the user's numerous new feature requests.
 </analysis>

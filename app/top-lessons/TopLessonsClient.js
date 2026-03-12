@@ -58,19 +58,27 @@ function formatViewCount(count) {
 
 export default function TopLessonsClient({ initialVideos }) {
   const [videos, setVideos] = useState(initialVideos || []);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(!initialVideos || initialVideos.length === 0);
+  const [error, setError] = useState(null);
 
   // Refresh videos on mount
   useEffect(() => {
     const refreshVideos = async () => {
+      setIsLoading(true);
+      setError(null);
       try {
         const res = await fetch('/api/top-videos?limit=10');
         if (res.ok) {
           const data = await res.json();
           setVideos(data.videos || []);
+        } else {
+          setError('Unable to load top lessons. Please check the admin panel to configure them.');
         }
       } catch (err) {
         console.error('Failed to refresh top videos:', err);
+        setError('Unable to load top lessons. Please try again later.');
+      } finally {
+        setIsLoading(false);
       }
     };
     refreshVideos();
@@ -173,11 +181,42 @@ export default function TopLessonsClient({ initialVideos }) {
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 py-12">
         {/* Top Videos Grid */}
-        {videos.length === 0 ? (
+        {isLoading ? (
           <div className="text-center py-16">
-            <Trophy className="w-20 h-20 mx-auto mb-6 text-zinc-600" />
+            <Trophy className="w-20 h-20 mx-auto mb-6 text-zinc-600 animate-pulse" />
             <h2 className="text-2xl font-bold text-zinc-400 mb-2">Loading Top Lessons...</h2>
             <p className="text-zinc-500">Please wait while we fetch the most viewed videos.</p>
+          </div>
+        ) : error ? (
+          <div className="text-center py-16">
+            <Trophy className="w-20 h-20 mx-auto mb-6 text-zinc-600" />
+            <h2 className="text-2xl font-bold text-zinc-400 mb-2">Top Lessons Coming Soon</h2>
+            <p className="text-zinc-500 mb-6">Our most popular lessons are being configured.</p>
+            <p className="text-zinc-600 text-sm mb-8">{error}</p>
+            <a
+              href={YOUTUBE_CHANNEL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-500 rounded-full font-bold transition-colors"
+            >
+              <Youtube className="w-5 h-5" />
+              Visit Our YouTube Channel
+            </a>
+          </div>
+        ) : videos.length === 0 ? (
+          <div className="text-center py-16">
+            <Trophy className="w-20 h-20 mx-auto mb-6 text-zinc-600" />
+            <h2 className="text-2xl font-bold text-zinc-400 mb-2">No Top Lessons Configured</h2>
+            <p className="text-zinc-500 mb-6">Check back soon for our most popular lessons!</p>
+            <a
+              href={YOUTUBE_CHANNEL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-500 rounded-full font-bold transition-colors"
+            >
+              <Youtube className="w-5 h-5" />
+              Visit Our YouTube Channel
+            </a>
           </div>
         ) : (
           <div className="grid gap-6">
