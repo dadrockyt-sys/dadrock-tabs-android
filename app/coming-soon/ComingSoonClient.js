@@ -113,7 +113,7 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
           </nav>
 
           {/* Logo */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <Link href="/">
               <img 
                 src={LOGO_URL} 
@@ -121,6 +121,36 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
                 className="max-w-md mx-auto w-full drop-shadow-2xl hover:scale-105 transition-transform duration-300"
               />
             </Link>
+          </div>
+
+          {/* Social Share - Prominent Position */}
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <span className="text-zinc-400 text-sm font-medium">Share:</span>
+            <a
+              href={facebookShareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-10 h-10 bg-blue-600 hover:bg-blue-500 rounded-full transition-all hover:scale-110"
+              title="Share on Facebook"
+            >
+              <Facebook className="w-5 h-5" />
+            </a>
+            <a
+              href={twitterShareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-10 h-10 bg-sky-500 hover:bg-sky-400 rounded-full transition-all hover:scale-110"
+              title="Share on Twitter"
+            >
+              <Twitter className="w-5 h-5" />
+            </a>
+            <a
+              href={emailShareUrl}
+              className="flex items-center justify-center w-10 h-10 bg-zinc-700 hover:bg-zinc-600 rounded-full transition-all hover:scale-110"
+              title="Share via Email"
+            >
+              <Mail className="w-5 h-5" />
+            </a>
           </div>
 
           {/* Page Title */}
@@ -247,44 +277,6 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
             })}
           </div>
         )}
-
-        {/* Social Share Section */}
-        <section className="mt-16 p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800 text-center">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-2">
-            <Share2 className="w-6 h-6 text-amber-500" />
-            Share the Schedule
-          </h2>
-          <p className="text-zinc-400 mb-6">
-            Know someone who would love these upcoming lessons? Share the schedule with them!
-          </p>
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            <a
-              href={facebookShareUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-full font-medium transition-colors"
-            >
-              <Facebook className="w-5 h-5" />
-              Share on Facebook
-            </a>
-            <a
-              href={twitterShareUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-sky-500 hover:bg-sky-400 rounded-full font-medium transition-colors"
-            >
-              <Twitter className="w-5 h-5" />
-              Share on Twitter
-            </a>
-            <a
-              href={emailShareUrl}
-              className="flex items-center gap-2 px-6 py-3 bg-zinc-700 hover:bg-zinc-600 rounded-full font-medium transition-colors"
-            >
-              <Mail className="w-5 h-5" />
-              Share via Email
-            </a>
-          </div>
-        </section>
 
         {/* SEO Content Section */}
         <section className="mt-16 p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
