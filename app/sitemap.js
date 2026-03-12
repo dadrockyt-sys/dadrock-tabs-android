@@ -45,6 +45,14 @@ export default async function sitemap() {
     });
   });
 
+  // Add Coming Soon page
+  routes.push({
+    url: `${baseUrl}/coming-soon`,
+    lastModified: currentDate,
+    changeFrequency: 'daily',
+    priority: 0.9,
+  });
+
   // Add artist pages
   try {
     const db = await getDb();
