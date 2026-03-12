@@ -2,7 +2,117 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+const YOUTUBE_CLIENT_ID = process.env.YOUTUBE_CLIENT_ID;
+const YOUTUBE_CLIENT_SECRET = process.env.YOUTUBE_CLIENT_SECRET;
 const CHANNEL_ID = 'UCl9DFhCasFrFOD_5HjlUmwQ'; // DadRock Tabs channel
+
+// Helper to get a valid YouTube OAuth access token (with auto-refresh)
+async function getValidAccessToken(db) {
+  const tokens = await db.collection('settings').findOne({ type: 'youtube_oauth' });
+
+  if (!tokens?.access_token) {
+    return null;
+  }
+
+  // Check if token is expired (with 5 min buffer)
+  if (tokens.expires_at && Date.now() > tokens.expires_at - 300000) {
+    if (!tokens.refresh_token || !YOUTUBE_CLIENT_ID || !YOUTUBE_CLIENT_SECRET) {
+      return null;
+    }
+
+    try {
+      const refreshResponse = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          client_id: YOUTUBE_CLIENT_ID,
+          client_secret: YOUTUBE_CLIENT_SECRET,
+          refresh_token: tokens.refresh_token,
+          grant_type: 'refresh_token',
+        }),
+      });
+
+      const newTokens = await refreshResponse.json();
+
+      if (newTokens.error) {
+        console.error('Token refresh error:', newTokens);
+        return null;
+      }
+
+      await db.collection('settings').updateOne(
+        { type: 'youtube_oauth' },
+        {
+          $set: {
+            access_token: newTokens.access_token,
+            expires_at: Date.now() + (newTokens.expires_in * 1000),
+            updated_at: new Date().toISOString()
+          }
+        }
+      );
+
+      return newTokens.access_token;
+    } catch (err) {
+      console.error('Token refresh failed:', err);
+      return null;
+    }
+  }
+
+  return tokens.access_token;
+}
+
+// Fetch YouTube video statistics using OAuth token or API key
+async function fetchVideoStats(videoIds, db) {
+  const idsParam = videoIds.join(',');
+
+  // Try OAuth token first (more reliable, no API key restrictions)
+  const accessToken = await getValidAccessToken(db);
+  if (accessToken) {
+    try {
+      const statsUrl = `https://www.googleapis.com/youtube/v3/videos?id=${idsParam}&part=statistics`;
+      const res = await fetch(statsUrl, {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+      });
+      const data = await res.json();
+
+      if (data.items && !data.error) {
+        const statsMap = {};
+        for (const item of data.items) {
+          statsMap[item.id] = {
+            viewCount: parseInt(item.statistics?.viewCount || 0),
+            likeCount: parseInt(item.statistics?.likeCount || 0),
+          };
+        }
+        return statsMap;
+      }
+    } catch (err) {
+      console.error('OAuth stats fetch failed:', err);
+    }
+  }
+
+  // Fallback to API key
+  if (YOUTUBE_API_KEY) {
+    try {
+      const statsUrl = `https://www.googleapis.com/youtube/v3/videos?key=${YOUTUBE_API_KEY}&id=${idsParam}&part=statistics`;
+      const res = await fetch(statsUrl);
+      const data = await res.json();
+
+      if (data.items && !data.error) {
+        const statsMap = {};
+        for (const item of data.items) {
+          statsMap[item.id] = {
+            viewCount: parseInt(item.statistics?.viewCount || 0),
+            likeCount: parseInt(item.statistics?.likeCount || 0),
+          };
+        }
+        return statsMap;
+      }
+    } catch (err) {
+      console.error('API key stats fetch failed:', err);
+    }
+  }
+
+  return {}; // Return empty if both methods fail
+}
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -10,10 +120,10 @@ export async function GET(request) {
 
   try {
     const db = await getDb();
-    
+
     // First, check for manually configured top lessons
     const topLessonsConfig = await db.collection('settings').findOne({ type: 'top_lessons' });
-    
+
     if (topLessonsConfig?.lessons) {
       const manualLessons = topLessonsConfig.lessons
         .filter(lesson => lesson.youtubeUrl && lesson.videoId)
@@ -31,8 +141,20 @@ export async function GET(request) {
           description: '',
           position: lesson.position
         }));
-      
+
       if (manualLessons.length > 0) {
+        // Fetch real view/like counts from YouTube
+        const videoIds = manualLessons.map(v => v.videoId);
+        const statsMap = await fetchVideoStats(videoIds, db);
+
+        // Enrich manual lessons with real stats
+        for (const lesson of manualLessons) {
+          if (statsMap[lesson.videoId]) {
+            lesson.viewCount = statsMap[lesson.videoId].viewCount;
+            lesson.likeCount = statsMap[lesson.videoId].likeCount;
+          }
+        }
+
         return NextResponse.json({
           videos: manualLessons,
           total: manualLessons.length,
@@ -76,22 +198,22 @@ export async function GET(request) {
       }
     }
 
-    // Fallback: Try YouTube API
+    // Fallback: Try YouTube API search
     const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${CHANNEL_ID}&part=snippet&type=video&maxResults=50&order=viewCount`;
-    
+
     const searchResponse = await fetch(searchUrl);
     const searchData = await searchResponse.json();
 
     if (searchData.error) {
       console.error('YouTube API error:', searchData.error);
-      
+
       // If API fails, return most recent videos from DB as fallback
       const fallbackVideos = await db.collection('videos')
         .find({})
         .sort({ created_at: -1 })
         .limit(limit)
         .toArray();
-      
+
       return NextResponse.json({
         videos: fallbackVideos.map(video => ({
           id: video.id || video.videoId,
@@ -119,7 +241,7 @@ export async function GET(request) {
 
     // Fetch video statistics (view counts)
     const statsUrl = `https://www.googleapis.com/youtube/v3/videos?key=${YOUTUBE_API_KEY}&id=${videoIds}&part=snippet,statistics`;
-    
+
     const statsResponse = await fetch(statsUrl);
     const statsData = await statsResponse.json();
 
@@ -135,20 +257,20 @@ export async function GET(request) {
       .map(video => {
         const snippet = video.snippet;
         const stats = video.statistics;
-        
+
         // Parse title for song and artist
         let title = snippet.title || '';
         let artist = 'DadRock Tabs';
-        
+
         // Clean up title
         let cleanTitle = title.replace(/\s*(Guitar|Bass|TAB|TABS|Lesson|Tutorial|\+|\(|\)|\[|\]|HD|Official).*/gi, '').trim();
-        
+
         if (cleanTitle.includes(' - ')) {
           const parts = cleanTitle.split(' - ', 2);
           cleanTitle = parts[0].trim();
           artist = parts[1]?.trim() || artist;
         }
-        
+
         return {
           id: video.id,
           videoId: video.id,
