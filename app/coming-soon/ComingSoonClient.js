@@ -170,12 +170,12 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
                   className="flex flex-col md:flex-row gap-6 p-6 bg-zinc-900/80 rounded-2xl border border-zinc-800 hover:border-zinc-700 transition-all group"
                 >
                   {/* Thumbnail */}
-                  <div className="flex-shrink-0 w-full md:w-64 h-40 rounded-xl overflow-hidden bg-zinc-800">
+                  <div className="flex-shrink-0 w-full md:w-72 aspect-video rounded-xl overflow-hidden bg-zinc-800">
                     {video.thumbnail ? (
                       <img 
                         src={video.thumbnail}
                         alt={`${video.title} by ${cleanArtist} - Guitar Tab Lesson`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain bg-black group-hover:scale-105 transition-transform duration-300"
                         onError={(e) => {
                           e.target.style.display = 'none';
                           e.target.nextSibling.style.display = 'flex';
