@@ -336,11 +336,6 @@ export default function App({ initialLang = 'en' }) {
   const [syncStatus, setSyncStatus] = useState({ type: '', message: '' });
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
-
-  // Upcoming videos state
-  const [upcomingVideos, setUpcomingVideos] = useState([]);
-  const [showUpcomingModal, setShowUpcomingModal] = useState(false);
-  const [loadingUpcoming, setLoadingUpcoming] = useState(false);
   
   // Admin upcoming videos state
   const [adminUpcomingVideos, setAdminUpcomingVideos] = useState([]);
@@ -977,114 +972,15 @@ export default function App({ initialLang = 'en' }) {
             {t.subscribe}
           </a>
 
-          {/* Coming Soon Button */}
-          <button
-            onClick={() => {
-              setLoadingUpcoming(true);
-              fetch('/api/upcoming')
-                .then(res => res.json())
-                .then(data => {
-                  setUpcomingVideos(data.upcoming || []);
-                  setShowUpcomingModal(true);
-                })
-                .catch(err => console.error('Failed to load upcoming:', err))
-                .finally(() => setLoadingUpcoming(false));
-            }}
+          {/* Coming Soon Button - Links to dedicated landing page */}
+          <Link
+            href="/coming-soon"
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-purple-600 hover:bg-purple-500 text-white font-bold uppercase tracking-wide mb-10 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.45s' }}
-            disabled={loadingUpcoming}
           >
             <Calendar className="w-6 h-6" />
-            {loadingUpcoming ? 'Loading...' : (t.comingSoon || 'Coming Soon')}
-          </button>
-
-          {/* Coming Soon Modal */}
-          {showUpcomingModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-              <div className="relative w-full max-w-2xl max-h-[80vh] bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden">
-                {/* Header */}
-                <div className="sticky top-0 bg-zinc-900 border-b border-zinc-700 p-4 flex items-center justify-between">
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                    <Calendar className="w-6 h-6 text-purple-500" />
-                    {t.comingSoon || 'Coming Soon'}
-                  </h2>
-                  <button
-                    onClick={() => setShowUpcomingModal(false)}
-                    className="p-2 hover:bg-zinc-800 rounded-lg transition-colors"
-                  >
-                    <X className="w-5 h-5 text-zinc-400" />
-                  </button>
-                </div>
-                
-                {/* Content */}
-                <div className="p-4 overflow-y-auto max-h-[calc(80vh-80px)]">
-                  {upcomingVideos.length === 0 ? (
-                    <div className="text-center py-12">
-                      <Calendar className="w-16 h-16 mx-auto mb-4 text-zinc-600" />
-                      <p className="text-zinc-400 text-lg">{t.noUpcoming || 'No upcoming videos scheduled'}</p>
-                      <p className="text-zinc-500 text-sm mt-2">{t.checkBackSoon || 'Check back soon for new content!'}</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                      {upcomingVideos.map((video) => (
-                        <div key={video.id} className="flex gap-4 p-4 bg-zinc-800/50 rounded-xl border border-zinc-700">
-                          {video.thumbnail ? (
-                            <img 
-                              src={video.thumbnail} 
-                              alt={video.title}
-                              className="w-32 h-20 object-cover rounded-lg flex-shrink-0"
-                              onError={(e) => {
-                                // If thumbnail fails to load, show fallback
-                                e.target.style.display = 'none';
-                                e.target.nextSibling.style.display = 'flex';
-                              }}
-                            />
-                          ) : null}
-                          <div 
-                            className="w-32 h-20 bg-gradient-to-br from-purple-600/30 to-zinc-800 rounded-lg items-center justify-center flex-shrink-0 border border-purple-500/20"
-                            style={{ display: video.thumbnail ? 'none' : 'flex' }}
-                          >
-                            <div className="text-center">
-                              <Music className="w-6 h-6 text-purple-400 mx-auto" />
-                              <span className="text-xs text-purple-300 mt-1 block">Coming Soon</span>
-                            </div>
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h3 className="font-bold text-white text-lg truncate">{video.title}</h3>
-                            <p className="text-zinc-400 text-sm">{video.artist}</p>
-                            <div className="flex items-center gap-2 mt-2 text-purple-400 text-sm">
-                              <Clock className="w-4 h-4" />
-                              <span>{new Date(video.scheduled_date).toLocaleDateString(currentLang, { 
-                                weekday: 'long', 
-                                year: 'numeric', 
-                                month: 'long', 
-                                day: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit'
-                              })}</span>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                
-                {/* Footer */}
-                <div className="sticky bottom-0 bg-zinc-900 border-t border-zinc-700 p-4">
-                  <a
-                    href={YOUTUBE_CHANNEL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-3 rounded-full bg-red-600 hover:bg-red-500 text-white font-bold transition-colors"
-                  >
-                    <Youtube className="w-5 h-5" />
-                    {t.subscribeNotify || 'Subscribe & Turn On Notifications'}
-                  </a>
-                </div>
-              </div>
-            </div>
-          )}
+            {t.comingSoon || 'Coming Soon'}
+          </Link>
 
           {/* Popular Searches with Glassmorphism */}
           <div className="w-full max-w-2xl mb-10 fade-in-up" style={{ animationDelay: '0.6s' }}>
