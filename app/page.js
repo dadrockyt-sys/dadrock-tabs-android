@@ -1138,7 +1138,7 @@ export default function App({ initialLang = 'en' }) {
             </p>
             <div className="flex justify-center gap-4">
               <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? window.location.origin : 'https://dadrocktabs.com'}`}
+                href="https://www.facebook.com/sharer/sharer.php?u=https://dadrocktabs.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-500 flex items-center justify-center transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(37,99,235,0.5)]"
@@ -1146,7 +1146,7 @@ export default function App({ initialLang = 'en' }) {
                 <Facebook className="w-5 h-5 text-white" />
               </a>
               <a
-                href={`https://twitter.com/intent/tweet?url=${typeof window !== 'undefined' ? window.location.origin : 'https://dadrocktabs.com'}&text=Check out DadRock Tabs!`}
+                href="https://twitter.com/intent/tweet?url=https://dadrocktabs.com&text=Check%20out%20DadRock%20Tabs!"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 rounded-full bg-sky-500 hover:bg-sky-400 flex items-center justify-center transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(14,165,233,0.5)]"
@@ -1154,7 +1154,7 @@ export default function App({ initialLang = 'en' }) {
                 <Twitter className="w-5 h-5 text-white" />
               </a>
               <button
-                onClick={() => navigator.share?.({ url: window.location.href, title: 'DadRock Tabs' })}
+                onClick={() => navigator.share?.({ url: 'https://dadrocktabs.com', title: 'DadRock Tabs' })}
                 className="w-12 h-12 rounded-full bg-zinc-700 hover:bg-zinc-600 flex items-center justify-center transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(113,113,122,0.5)]"
               >
                 <Share2 className="w-5 h-5 text-white" />
