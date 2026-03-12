@@ -9,12 +9,43 @@ export async function GET(request) {
   const limit = parseInt(searchParams.get('limit') || '10');
 
   try {
-    // First try to get from our database (most reliable)
     const db = await getDb();
+    
+    // First, check for manually configured top lessons
+    const topLessonsConfig = await db.collection('settings').findOne({ type: 'top_lessons' });
+    
+    if (topLessonsConfig?.lessons) {
+      const manualLessons = topLessonsConfig.lessons
+        .filter(lesson => lesson.youtubeUrl && lesson.videoId)
+        .slice(0, limit)
+        .map(lesson => ({
+          id: lesson.videoId,
+          videoId: lesson.videoId,
+          title: lesson.title || 'Untitled',
+          fullTitle: lesson.title,
+          artist: lesson.artist || 'DadRock Tabs',
+          thumbnail: lesson.thumbnail || `https://i.ytimg.com/vi/${lesson.videoId}/hqdefault.jpg`,
+          viewCount: 0,
+          likeCount: 0,
+          publishedAt: null,
+          description: '',
+          position: lesson.position
+        }));
+      
+      if (manualLessons.length > 0) {
+        return NextResponse.json({
+          videos: manualLessons,
+          total: manualLessons.length,
+          source: 'manual'
+        });
+      }
+    }
+
+    // Fallback: Try to get from database
     const dbVideos = await db.collection('videos')
       .find({})
       .sort({ viewCount: -1 })
-      .limit(limit * 2) // Get more to filter
+      .limit(limit * 2)
       .toArray();
 
     // If we have videos in DB with view counts, use those

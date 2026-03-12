@@ -74,6 +74,22 @@ function convertToEmbedUrl(url) {
   return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
 }
 
+// Helper to extract video ID from YouTube URL
+function extractVideoId(url) {
+  if (!url) return '';
+  let videoId = null;
+  if (url.includes('youtube.com/watch?v=')) {
+    videoId = url.split('v=')[1]?.split('&')[0];
+  } else if (url.includes('youtu.be/')) {
+    videoId = url.split('youtu.be/')[1]?.split('?')[0];
+  } else if (url.includes('youtube.com/embed/')) {
+    videoId = url.split('embed/')[1]?.split('?')[0];
+  } else if (url.includes('youtube.com/shorts/')) {
+    videoId = url.split('shorts/')[1]?.split('?')[0];
+  }
+  return videoId || '';
+}
+
 export async function GET(request, context) {
   const params = await context.params;
   const pathSegments = params?.path || [];
@@ -216,6 +232,19 @@ export async function GET(request, context) {
           description: v.description
         })),
         total: upcoming.length 
+      });
+    }
+
+    // Admin: Get top lessons configuration
+    if (path === '/admin/top-lessons') {
+      if (!verifyAdmin(request)) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+      const db = await getDb();
+      const config = await db.collection('settings').findOne({ type: 'top_lessons' });
+      
+      return NextResponse.json({ 
+        lessons: config?.lessons || Array(10).fill(null).map((_, i) => ({ position: i + 1, youtubeUrl: '', title: '', artist: '' }))
       });
     }
 
@@ -485,6 +514,40 @@ export async function PUT(request, context) {
 
       const updatedVideo = await db.collection('videos').findOne({ id: videoId });
       return NextResponse.json(updatedVideo);
+    }
+
+    // Update top lessons (admin)
+    if (path === '/admin/top-lessons') {
+      if (!verifyAdmin(request)) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+
+      const body = await request.json();
+      const db = await getDb();
+
+      // Validate and process the lessons array
+      const lessons = (body.lessons || []).map((lesson, index) => ({
+        position: index + 1,
+        youtubeUrl: lesson.youtubeUrl || '',
+        title: lesson.title || '',
+        artist: lesson.artist || '',
+        videoId: extractVideoId(lesson.youtubeUrl || ''),
+        thumbnail: lesson.youtubeUrl ? `https://i.ytimg.com/vi/${extractVideoId(lesson.youtubeUrl)}/hqdefault.jpg` : ''
+      }));
+
+      await db.collection('settings').updateOne(
+        { type: 'top_lessons' },
+        { 
+          $set: { 
+            type: 'top_lessons',
+            lessons: lessons,
+            updated_at: new Date().toISOString()
+          } 
+        },
+        { upsert: true }
+      );
+
+      return NextResponse.json({ success: true, message: 'Top lessons updated successfully' });
     }
 
     return NextResponse.json({ error: 'Not found' }, { status: 404 });

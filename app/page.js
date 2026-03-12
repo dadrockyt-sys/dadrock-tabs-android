@@ -101,6 +101,22 @@ function getRelatedArtists(artistName, count = 6) {
   return related.slice(0, count);
 }
 
+// Helper to extract video ID from YouTube URL
+function extractVideoIdFromUrl(url) {
+  if (!url) return '';
+  let videoId = null;
+  if (url.includes('youtube.com/watch?v=')) {
+    videoId = url.split('v=')[1]?.split('&')[0];
+  } else if (url.includes('youtu.be/')) {
+    videoId = url.split('youtu.be/')[1]?.split('?')[0];
+  } else if (url.includes('youtube.com/embed/')) {
+    videoId = url.split('embed/')[1]?.split('?')[0];
+  } else if (url.includes('youtube.com/shorts/')) {
+    videoId = url.split('shorts/')[1]?.split('?')[0];
+  }
+  return videoId || '';
+}
+
 // Language Selector Component with SEO-friendly URLs
 function LanguageSelector({ currentLang }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -351,6 +367,11 @@ export default function App({ initialLang = 'en' }) {
   const [youtubeChannelName, setYoutubeChannelName] = useState('');
   const [isSyncingScheduled, setIsSyncingScheduled] = useState(false);
   const [scheduledSyncStatus, setScheduledSyncStatus] = useState({ type: '', message: '' });
+
+  // Top Lessons state
+  const [topLessons, setTopLessons] = useState(Array(10).fill(null).map((_, i) => ({ position: i + 1, youtubeUrl: '', title: '', artist: '' })));
+  const [isSavingTopLessons, setIsSavingTopLessons] = useState(false);
+  const [topLessonsSaveStatus, setTopLessonsSaveStatus] = useState({ type: '', message: '' });
 
   const t = getTranslation(currentLang);
 
@@ -809,6 +830,51 @@ export default function App({ initialLang = 'en' }) {
     }
   };
 
+  // Load top lessons configuration
+  const loadTopLessons = async () => {
+    try {
+      const authToken = sessionStorage.getItem('dadrock_admin_auth');
+      const res = await fetch('/api/admin/top-lessons', {
+        headers: { 'Authorization': 'Basic ' + btoa('admin:' + authToken) },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setTopLessons(data.lessons || Array(10).fill(null).map((_, i) => ({ position: i + 1, youtubeUrl: '', title: '', artist: '' })));
+      }
+    } catch (err) {
+      console.error('Failed to load top lessons:', err);
+    }
+  };
+
+  // Save top lessons configuration
+  const handleSaveTopLessons = async () => {
+    setIsSavingTopLessons(true);
+    setTopLessonsSaveStatus({ type: '', message: '' });
+    
+    try {
+      const authToken = sessionStorage.getItem('dadrock_admin_auth');
+      const res = await fetch('/api/admin/top-lessons', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Basic ' + btoa('admin:' + authToken),
+        },
+        body: JSON.stringify({ lessons: topLessons }),
+      });
+      
+      if (res.ok) {
+        setTopLessonsSaveStatus({ type: 'success', message: 'Top lessons saved successfully!' });
+      } else {
+        const data = await res.json();
+        setTopLessonsSaveStatus({ type: 'error', message: data.error || 'Failed to save' });
+      }
+    } catch (err) {
+      setTopLessonsSaveStatus({ type: 'error', message: 'Connection error. Please try again.' });
+    } finally {
+      setIsSavingTopLessons(false);
+    }
+  };
+
   // Countdown effect for interstitial ad
   useEffect(() => {
     if (currentPage === 'watch' && showAd && adCountdown > 0) {
@@ -826,6 +892,7 @@ export default function App({ initialLang = 'en' }) {
       loadAdminData();
       checkYoutubeConnection();
       loadUpcomingVideos();
+      loadTopLessons();
     }
   }, [currentPage, isAuthenticated]);
 
@@ -1858,6 +1925,93 @@ export default function App({ initialLang = 'en' }) {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Top Lessons Management Section */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <Trophy className="w-5 h-5 text-amber-500" />
+              Top 10 Lessons Configuration
+            </h2>
+            <p className="text-zinc-400 mb-6">
+              Manually set the top 10 most viewed lessons that appear on the Top Lessons page. 
+              Paste YouTube URLs for each position.
+            </p>
+            
+            {topLessonsSaveStatus.message && (
+              <div className={`flex items-center gap-2 p-3 rounded-lg mb-4 ${
+                topLessonsSaveStatus.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+              }`}>
+                {topLessonsSaveStatus.type === 'success' ? <CheckCircle className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+                {topLessonsSaveStatus.message}
+              </div>
+            )}
+
+            <div className="space-y-4">
+              {topLessons.map((lesson, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 bg-zinc-800/50 rounded-lg">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold ${
+                    index < 3 
+                      ? index === 0 ? 'bg-amber-500 text-black' : index === 1 ? 'bg-zinc-400 text-black' : 'bg-orange-600 text-white'
+                      : 'bg-zinc-700 text-zinc-300'
+                  }`}>
+                    {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`}
+                  </div>
+                  <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <input
+                      type="text"
+                      value={lesson.youtubeUrl}
+                      onChange={(e) => {
+                        const newLessons = [...topLessons];
+                        newLessons[index] = { ...newLessons[index], youtubeUrl: e.target.value };
+                        setTopLessons(newLessons);
+                      }}
+                      className="px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 text-sm"
+                      placeholder="YouTube URL"
+                    />
+                    <input
+                      type="text"
+                      value={lesson.title}
+                      onChange={(e) => {
+                        const newLessons = [...topLessons];
+                        newLessons[index] = { ...newLessons[index], title: e.target.value };
+                        setTopLessons(newLessons);
+                      }}
+                      className="px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 text-sm"
+                      placeholder="Song Title"
+                    />
+                    <input
+                      type="text"
+                      value={lesson.artist}
+                      onChange={(e) => {
+                        const newLessons = [...topLessons];
+                        newLessons[index] = { ...newLessons[index], artist: e.target.value };
+                        setTopLessons(newLessons);
+                      }}
+                      className="px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 text-sm"
+                      placeholder="Artist"
+                    />
+                  </div>
+                  {lesson.youtubeUrl && (
+                    <img 
+                      src={`https://i.ytimg.com/vi/${extractVideoIdFromUrl(lesson.youtubeUrl)}/default.jpg`}
+                      alt="Thumbnail preview"
+                      className="w-16 h-12 object-cover rounded hidden md:block"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={handleSaveTopLessons}
+              disabled={isSavingTopLessons}
+              className="mt-6 flex items-center gap-2 px-6 py-3 bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400 transition-colors disabled:opacity-50"
+            >
+              <Save className="w-5 h-5" />
+              {isSavingTopLessons ? 'Saving...' : 'Save Top Lessons'}
+            </button>
           </div>
 
           <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
