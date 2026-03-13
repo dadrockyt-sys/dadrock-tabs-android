@@ -81,5 +81,24 @@ export default async function sitemap() {
     console.error('Error fetching artists for sitemap:', error);
   }
 
+  // Add song pages
+  try {
+    const db = await getDb();
+    const songPages = await db.collection('song_pages').find({}, { projection: { slug: 1, updated_at: 1 } }).toArray();
+    
+    songPages.forEach(song => {
+      if (song.slug) {
+        routes.push({
+          url: `${baseUrl}/songs/${song.slug}`,
+          lastModified: song.updated_at || currentDate,
+          changeFrequency: 'monthly',
+          priority: 0.7,
+        });
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching song pages for sitemap:', error);
+  }
+
   return routes;
 }

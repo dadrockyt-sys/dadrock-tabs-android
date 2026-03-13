@@ -373,6 +373,11 @@ export default function App({ initialLang = 'en' }) {
   const [isSavingTopLessons, setIsSavingTopLessons] = useState(false);
   const [topLessonsSaveStatus, setTopLessonsSaveStatus] = useState({ type: '', message: '' });
 
+  // Song Pages state
+  const [isSyncingSongs, setIsSyncingSongs] = useState(false);
+  const [songSyncStatus, setSongSyncStatus] = useState({ type: '', message: '' });
+  const [songPageCount, setSongPageCount] = useState(0);
+
   const t = getTranslation(currentLang);
 
   // Featured video state
@@ -875,6 +880,44 @@ export default function App({ initialLang = 'en' }) {
     }
   };
 
+  // Sync top 100 song pages
+  const handleSyncSongPages = async () => {
+    setIsSyncingSongs(true);
+    setSongSyncStatus({ type: '', message: '' });
+    try {
+      const authToken = sessionStorage.getItem('dadrock_admin_auth');
+      const res = await fetch('/api/admin/sync-songs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Basic ' + btoa('admin:' + authToken),
+        },
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setSongSyncStatus({ type: 'success', message: data.message });
+        loadSongPageCount();
+      } else {
+        setSongSyncStatus({ type: 'error', message: data.error || 'Failed to sync songs' });
+      }
+    } catch (err) {
+      setSongSyncStatus({ type: 'error', message: 'Connection error. Please try again.' });
+    } finally {
+      setIsSyncingSongs(false);
+    }
+  };
+
+  // Load song page count
+  const loadSongPageCount = async () => {
+    try {
+      const res = await fetch('/api/songs?limit=1');
+      if (res.ok) {
+        const data = await res.json();
+        setSongPageCount(data.total || 0);
+      }
+    } catch (err) {}
+  };
+
   // Countdown effect for interstitial ad
   useEffect(() => {
     if (currentPage === 'watch' && showAd && adCountdown > 0) {
@@ -893,6 +936,7 @@ export default function App({ initialLang = 'en' }) {
       checkYoutubeConnection();
       loadUpcomingVideos();
       loadTopLessons();
+      loadSongPageCount();
     }
   }, [currentPage, isAuthenticated]);
 
@@ -2023,6 +2067,46 @@ export default function App({ initialLang = 'en' }) {
             >
               <Save className="w-5 h-5" />
               {isSavingTopLessons ? 'Saving...' : 'Save Top Lessons'}
+            </button>
+          </div>
+
+          {/* Song Pages Management Section */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <Music className="w-5 h-5 text-amber-500" />
+              Song Pages (SEO)
+            </h2>
+            <p className="text-zinc-400 mb-4">
+              Generate individual landing pages for your top 100 most viewed lessons (excluding shorts). 
+              Each page includes an embedded video, interstitial ad, and auto-generated SEO content.
+            </p>
+            <p className="text-zinc-300 mb-4">
+              Pages live at: <code className="text-amber-400 bg-zinc-800 px-2 py-1 rounded">dadrocktabs.com/songs/artist-song-name</code>
+            </p>
+            
+            {songPageCount > 0 && (
+              <div className="bg-zinc-800/50 rounded-lg p-3 mb-4 flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-green-400" />
+                <span className="text-zinc-300"><strong className="text-white">{songPageCount}</strong> song pages currently active</span>
+              </div>
+            )}
+
+            {songSyncStatus.message && (
+              <div className={`flex items-center gap-2 p-3 rounded-lg mb-4 ${
+                songSyncStatus.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+              }`}>
+                {songSyncStatus.type === 'success' ? <CheckCircle className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+                <span className="text-sm">{songSyncStatus.message}</span>
+              </div>
+            )}
+
+            <button
+              onClick={handleSyncSongPages}
+              disabled={isSyncingSongs}
+              className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-500 transition-colors disabled:opacity-50"
+            >
+              <Music className="w-5 h-5" />
+              {isSyncingSongs ? 'Syncing Top 100... (this may take a minute)' : 'Sync Top 100 Song Pages'}
             </button>
           </div>
 
