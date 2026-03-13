@@ -1215,6 +1215,18 @@ export default function App({ initialLang = 'en' }) {
           )}
         </main>
 
+        {/* About Section */}
+        <section className="w-full max-w-3xl mx-auto mt-16 px-4 text-center fade-in-up" style={{ animationDelay: '0.95s' }}>
+          <p className="text-zinc-400 text-base leading-relaxed mb-4">
+            DadRockTabs provides guitar and bass tab tutorials for classic rock
+            and heavy metal bands like AC/DC, Metallica, Black Sabbath, and Van Halen.
+          </p>
+          <p className="text-zinc-400 text-base leading-relaxed">
+            Each lesson includes synchronized tabs with the original music
+            so players can follow along and learn the exact riffs and bass lines.
+          </p>
+        </section>
+
         {/* Footer */}
         <footer className="py-10 text-center fade-in-up" style={{ animationDelay: '1s' }}>
           <a
