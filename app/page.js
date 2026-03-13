@@ -1646,6 +1646,18 @@ export default function App({ initialLang = 'en' }) {
             </p>
           </div>
 
+          {/* SEO Content */}
+          <div className="mt-12 w-full max-w-3xl mx-auto text-center">
+            <p className="text-zinc-400 text-base leading-relaxed mb-4">
+              DadRockTabs provides guitar and bass tab tutorials for classic rock
+              and heavy metal bands like AC/DC, Metallica, Black Sabbath, and Van Halen.
+            </p>
+            <p className="text-zinc-400 text-base leading-relaxed">
+              Each lesson includes synchronized tabs with the original music
+              so players can follow along and learn the exact riffs and bass lines.
+            </p>
+          </div>
+
           {/* Animated Logo with Marshall Amps */}
           <div className="mt-10 mb-6 relative flex items-center justify-center overflow-visible">
             {/* Sound Wave Rings */}
