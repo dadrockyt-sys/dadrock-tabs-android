@@ -60,7 +60,7 @@ export default async function SongPage({ params }) {
     }
 
     // Fetch ad settings
-    const settings = await db.collection('settings').findOne({ type: 'site_settings' });
+    const settings = await db.collection('settings').findOne({ type: 'site' });
     adSettings = {
       ad_link: settings?.ad_link || 'https://my-store-b8bb42.creator-spring.com/',
       ad_image: settings?.ad_image || '',

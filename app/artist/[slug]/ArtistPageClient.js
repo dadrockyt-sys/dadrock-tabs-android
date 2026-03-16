@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Play, Youtube, Music, Home, Users } from 'lucide-react';
+import { ArrowLeft, Play, Youtube, Music, Home, Users, ShoppingBag } from 'lucide-react';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
@@ -35,7 +35,6 @@ const defaultRelatedArtists = ['AC/DC', 'Metallica', 'Van Halen', 'Led Zeppelin'
 
 // Convert artist name to URL slug
 function artistToSlug(artist) {
-  // Handle special cases
   const specialSlugs = {
     'AC/DC': 'acdc',
     "Guns N' Roses": 'guns-n-roses',
@@ -65,7 +64,6 @@ function artistToSlug(artist) {
 
 // Get related artists for a given artist
 function getRelatedArtists(artistName) {
-  // Try to find in the map (check variations)
   const normalized = artistName.replace(/ -$/, '').trim();
   
   for (const [key, related] of Object.entries(relatedArtistsMap)) {
@@ -74,20 +72,119 @@ function getRelatedArtists(artistName) {
     }
   }
   
-  // Return default, excluding the current artist
   return defaultRelatedArtists.filter(a => a.toLowerCase() !== normalized.toLowerCase());
 }
 
-export default function ArtistPageClient({ artistName, videos, slug }) {
+export default function ArtistPageClient({ artistName, videos, slug, adSettings }) {
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [showAd, setShowAd] = useState(false);
+  const [adCountdown, setAdCountdown] = useState(adSettings?.ad_duration || 5);
+  const [pendingVideo, setPendingVideo] = useState(null);
+  const adDuration = adSettings?.ad_duration || 5;
+
+  // Handle video click - show ad first
+  const handleVideoClick = (video) => {
+    setPendingVideo(video);
+    setAdCountdown(adDuration);
+    setShowAd(true);
+  };
+
+  // Countdown effect for interstitial ad
+  useEffect(() => {
+    if (showAd && adCountdown > 0) {
+      const timer = setTimeout(() => setAdCountdown(adCountdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (adCountdown === 0 && showAd) {
+      setShowAd(false);
+      setSelectedVideo(pendingVideo);
+      setPendingVideo(null);
+    }
+  }, [showAd, adCountdown]);
 
   // Get YouTube embed URL
   const getEmbedUrl = (video) => {
     if (video.video_id) {
-      return `https://www.youtube.com/embed/${video.video_id}`;
+      return `https://www.youtube.com/embed/${video.video_id}?autoplay=1`;
     }
     return video.youtube_url?.replace('watch?v=', 'embed/') || '';
   };
+
+  // Interstitial Ad Screen
+  if (showAd && pendingVideo) {
+    return (
+      <div className="min-h-screen bg-black flex flex-col">
+        <header className="bg-black/95 border-b border-zinc-800 px-4 py-2 sm:py-3">
+          <div className="max-w-4xl mx-auto flex items-center gap-4">
+            <Link href="/">
+              <img src={LOGO_URL} alt="DadRock Tabs" className="w-10 h-10" />
+            </Link>
+            <div className="flex-1" />
+            <div className="text-zinc-400 text-sm">
+              Video starts in <span className="text-amber-500 font-bold text-lg">{adCountdown}</span> seconds
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
+          <div className="text-center mb-8">
+            <p className="text-zinc-500 text-sm uppercase tracking-wider mb-2">Sponsored</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+              {adSettings?.ad_headline || 'Check Out Our Merchandise!'}
+            </h2>
+            <p className="text-zinc-400">
+              {adSettings?.ad_description || 'Support DadRock Tabs by grabbing some awesome gear'}
+            </p>
+          </div>
+
+          <a
+            href={adSettings?.ad_link || 'https://my-store-b8bb42.creator-spring.com/'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full max-w-2xl mb-8"
+          >
+            <div className="bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 p-1 rounded-2xl hover:scale-[1.02] transition-transform">
+              <div className="bg-zinc-900 rounded-xl p-8 text-center">
+                {adSettings?.ad_image ? (
+                  <img src={adSettings.ad_image} alt={adSettings.ad_headline} className="w-full max-h-64 object-contain mx-auto mb-4 rounded-lg" />
+                ) : (
+                  <ShoppingBag className="w-16 h-16 mx-auto mb-4 text-amber-500" />
+                )}
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{adSettings?.ad_headline}</h3>
+                <p className="text-zinc-400 mb-4">{adSettings?.ad_description}</p>
+                <span className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 text-black font-bold rounded-full">
+                  <ShoppingBag className="w-5 h-5" />
+                  {adSettings?.ad_button_text || 'Shop Now'}
+                </span>
+              </div>
+            </div>
+          </a>
+
+          <div className="text-center">
+            <p className="text-zinc-500 mb-4">
+              Loading: <span className="text-white font-semibold">{pendingVideo.song || pendingVideo.title}</span> by {artistName}
+            </p>
+            <div className="w-64 h-2 bg-zinc-800 rounded-full overflow-hidden mx-auto">
+              <div
+                className="h-full bg-amber-500 transition-all duration-1000"
+                style={{ width: `${((adDuration - adCountdown) / adDuration) * 100}%` }}
+              />
+            </div>
+            <button
+              onClick={() => {
+                setShowAd(false);
+                setSelectedVideo(pendingVideo);
+                setPendingVideo(null);
+              }}
+              className="mt-6 text-zinc-500 hover:text-white text-sm underline"
+              disabled={adCountdown > 0}
+            >
+              {adCountdown > 0 ? `Skip in ${adCountdown}s` : 'Skip Ad'}
+            </button>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-white">
@@ -145,6 +242,7 @@ export default function ArtistPageClient({ artistName, videos, slug }) {
                 className="w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                 allowFullScreen
+                style={{ border: 'none' }}
               />
             </div>
             <div className="p-4 border-t border-zinc-800">
@@ -174,7 +272,7 @@ export default function ArtistPageClient({ artistName, videos, slug }) {
               className={`group bg-zinc-900/80 rounded-xl border border-zinc-800 overflow-hidden hover:border-amber-500/50 transition-all cursor-pointer ${
                 selectedVideo?.id === video.id ? 'ring-2 ring-amber-500' : ''
               }`}
-              onClick={() => setSelectedVideo(video)}
+              onClick={() => handleVideoClick(video)}
             >
               {/* Thumbnail */}
               <div className="relative aspect-video overflow-hidden">
@@ -218,7 +316,7 @@ export default function ArtistPageClient({ artistName, videos, slug }) {
               Each tutorial includes detailed tablature and demonstrations to help you nail every note.
             </p>
             <p>
-              Start learning {artistName} today and add some classic rock to your playing! 🎸
+              Start learning {artistName} today and add some classic rock to your playing!
             </p>
           </div>
         </section>
@@ -260,11 +358,11 @@ export default function ArtistPageClient({ artistName, videos, slug }) {
       {/* Footer */}
       <footer className="mt-16 border-t border-zinc-800 py-8">
         <div className="container mx-auto px-4 text-center text-zinc-400">
-          <p>© 2026 DadRock Tabs. Made with ❤️ for rock lovers.</p>
+          <p>© {new Date().getFullYear()} DadRock Tabs. Made with ❤️ for rock lovers.</p>
           <div className="mt-4 flex justify-center gap-6">
             <Link href="/" className="hover:text-amber-500 transition-colors">Home</Link>
             <a 
-              href="https://youtube.com/@dadrockytofficial" 
+              href="https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ" 
               target="_blank" 
               rel="noopener noreferrer"
               className="hover:text-amber-500 transition-colors flex items-center gap-1"

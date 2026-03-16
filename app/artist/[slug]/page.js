@@ -105,6 +105,17 @@ export default async function ArtistPage({ params }) {
     notFound();
   }
   
+  // Fetch ad settings
+  const settings = await db.collection('settings').findOne({ type: 'site' });
+  const adSettings = {
+    ad_link: settings?.ad_link || 'https://my-store-b8bb42.creator-spring.com/',
+    ad_image: settings?.ad_image || '',
+    ad_headline: settings?.ad_headline || 'Check Out Our Merchandise!',
+    ad_description: settings?.ad_description || 'Support DadRock Tabs by grabbing some awesome gear',
+    ad_button_text: settings?.ad_button_text || 'Shop Now',
+    ad_duration: settings?.ad_duration || 5,
+  };
+
   // Get the display name (use the clean version without " -")
   const displayArtistName = artistPattern;
   
@@ -162,6 +173,7 @@ export default async function ArtistPage({ params }) {
         artistName={displayArtistName} 
         videos={plainVideos} 
         slug={slug}
+        adSettings={adSettings}
       />
     </>
   );
