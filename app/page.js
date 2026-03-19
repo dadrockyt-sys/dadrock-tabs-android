@@ -380,6 +380,9 @@ export default function App({ initialLang = 'en' }) {
   const [manualSongUrl, setManualSongUrl] = useState('');
   const [isAddingManualSong, setIsAddingManualSong] = useState(false);
   const [manualSongStatus, setManualSongStatus] = useState({ type: '', message: '' });
+  const [songPagesList, setSongPagesList] = useState([]);
+  const [showSongsList, setShowSongsList] = useState(false);
+  const [deletingSongId, setDeletingSongId] = useState(null);
 
   const t = getTranslation(currentLang);
 
@@ -941,6 +944,7 @@ export default function App({ initialLang = 'en' }) {
         setManualSongStatus({ type: 'success', message: `Song page created: ${data.title} by ${data.artist} → /songs/${data.slug}` });
         setManualSongUrl('');
         loadSongPageCount();
+        if (showSongsList) loadSongPagesList();
       } else {
         setManualSongStatus({ type: 'error', message: data.error || 'Failed to create song page' });
       }
@@ -949,6 +953,39 @@ export default function App({ initialLang = 'en' }) {
     } finally {
       setIsAddingManualSong(false);
     }
+  };
+
+  // Load song pages list
+  const loadSongPagesList = async () => {
+    try {
+      const res = await fetch('/api/songs?limit=200');
+      if (res.ok) {
+        const data = await res.json();
+        setSongPagesList(data.songs || []);
+      }
+    } catch (err) {}
+  };
+
+  // Delete a song page
+  const handleDeleteSong = async (videoId, title) => {
+    if (!confirm(`Delete song page for "${title}"? This cannot be undone.`)) return;
+    setDeletingSongId(videoId);
+    try {
+      const authToken = sessionStorage.getItem('dadrock_admin_auth');
+      const res = await fetch('/api/admin/sync-songs', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Basic ' + btoa('admin:' + authToken),
+        },
+        body: JSON.stringify({ videoId }),
+      });
+      if (res.ok) {
+        setSongPagesList(prev => prev.filter(s => s.videoId !== videoId));
+        setSongPageCount(prev => prev - 1);
+      }
+    } catch (err) {}
+    setDeletingSongId(null);
   };
 
   // Countdown effect for interstitial ad
@@ -2183,6 +2220,64 @@ export default function App({ initialLang = 'en' }) {
                 }`}>
                   {manualSongStatus.type === 'success' ? <CheckCircle className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
                   <span className="text-sm">{manualSongStatus.message}</span>
+                </div>
+              )}
+            </div>
+
+            {/* View / Delete Song Pages */}
+            <div className="mt-6 pt-6 border-t border-zinc-700">
+              <button
+                onClick={() => {
+                  setShowSongsList(!showSongsList);
+                  if (!showSongsList) loadSongPagesList();
+                }}
+                className="flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors font-medium"
+              >
+                {showSongsList ? '▼' : '▶'} View All Song Pages ({songPageCount})
+              </button>
+
+              {showSongsList && (
+                <div className="mt-4 max-h-96 overflow-y-auto rounded-lg border border-zinc-700">
+                  {songPagesList.length === 0 ? (
+                    <p className="text-zinc-500 text-center py-6">No song pages found</p>
+                  ) : (
+                    <table className="w-full text-sm">
+                      <thead className="bg-zinc-800 sticky top-0">
+                        <tr>
+                          <th className="text-left px-3 py-2 text-zinc-400 font-medium">#</th>
+                          <th className="text-left px-3 py-2 text-zinc-400 font-medium">Song</th>
+                          <th className="text-left px-3 py-2 text-zinc-400 font-medium">Artist</th>
+                          <th className="text-left px-3 py-2 text-zinc-400 font-medium">Views</th>
+                          <th className="text-left px-3 py-2 text-zinc-400 font-medium">URL</th>
+                          <th className="text-right px-3 py-2 text-zinc-400 font-medium">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {songPagesList.map((song, idx) => (
+                          <tr key={song.videoId} className="border-t border-zinc-800 hover:bg-zinc-800/50">
+                            <td className="px-3 py-2 text-zinc-500">{idx + 1}</td>
+                            <td className="px-3 py-2 text-white font-medium truncate max-w-[150px]">{song.title}</td>
+                            <td className="px-3 py-2 text-zinc-300 truncate max-w-[120px]">{song.artist}</td>
+                            <td className="px-3 py-2 text-zinc-400">{song.viewCount ? song.viewCount.toLocaleString() : '0'}</td>
+                            <td className="px-3 py-2">
+                              <a href={`/songs/${song.slug}`} target="_blank" rel="noopener noreferrer" className="text-amber-500 hover:text-amber-400 text-xs truncate max-w-[120px] block">
+                                /songs/{song.slug}
+                              </a>
+                            </td>
+                            <td className="px-3 py-2 text-right">
+                              <button
+                                onClick={() => handleDeleteSong(song.videoId, song.title)}
+                                disabled={deletingSongId === song.videoId}
+                                className="px-3 py-1 bg-red-600/20 text-red-400 hover:bg-red-600/40 rounded text-xs font-medium transition-colors disabled:opacity-50"
+                              >
+                                {deletingSongId === song.videoId ? '...' : 'Delete'}
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
                 </div>
               )}
             </div>

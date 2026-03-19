@@ -344,3 +344,31 @@ export async function PUT(request) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
+
+
+export async function DELETE(request) {
+  if (!verifyAdmin(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const { videoId } = await request.json();
+    
+    if (!videoId) {
+      return NextResponse.json({ error: 'Video ID is required' }, { status: 400 });
+    }
+
+    const db = await getDb();
+    const result = await db.collection('song_pages').deleteOne({ videoId });
+
+    if (result.deletedCount === 0) {
+      return NextResponse.json({ error: 'Song page not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, message: 'Song page deleted' });
+
+  } catch (err) {
+    console.error('Delete song page error:', err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
