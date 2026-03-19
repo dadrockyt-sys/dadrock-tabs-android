@@ -377,6 +377,9 @@ export default function App({ initialLang = 'en' }) {
   const [isSyncingSongs, setIsSyncingSongs] = useState(false);
   const [songSyncStatus, setSongSyncStatus] = useState({ type: '', message: '' });
   const [songPageCount, setSongPageCount] = useState(0);
+  const [manualSongUrl, setManualSongUrl] = useState('');
+  const [isAddingManualSong, setIsAddingManualSong] = useState(false);
+  const [manualSongStatus, setManualSongStatus] = useState({ type: '', message: '' });
 
   const t = getTranslation(currentLang);
 
@@ -916,6 +919,36 @@ export default function App({ initialLang = 'en' }) {
         setSongPageCount(data.total || 0);
       }
     } catch (err) {}
+  };
+
+  // Add manual song page
+  const handleAddManualSong = async () => {
+    if (!manualSongUrl.trim()) return;
+    setIsAddingManualSong(true);
+    setManualSongStatus({ type: '', message: '' });
+    try {
+      const authToken = sessionStorage.getItem('dadrock_admin_auth');
+      const res = await fetch('/api/admin/sync-songs', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Basic ' + btoa('admin:' + authToken),
+        },
+        body: JSON.stringify({ youtubeUrl: manualSongUrl.trim() }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setManualSongStatus({ type: 'success', message: `Song page created: ${data.title} by ${data.artist} → /songs/${data.slug}` });
+        setManualSongUrl('');
+        loadSongPageCount();
+      } else {
+        setManualSongStatus({ type: 'error', message: data.error || 'Failed to create song page' });
+      }
+    } catch (err) {
+      setManualSongStatus({ type: 'error', message: 'Connection error. Please try again.' });
+    } finally {
+      setIsAddingManualSong(false);
+    }
   };
 
   // Countdown effect for interstitial ad
@@ -2120,6 +2153,39 @@ export default function App({ initialLang = 'en' }) {
               <Music className="w-5 h-5" />
               {isSyncingSongs ? 'Syncing Top 100... (this may take a minute)' : 'Sync Top 100 Song Pages'}
             </button>
+
+            {/* Manual Song Page Entry */}
+            <div className="mt-6 pt-6 border-t border-zinc-700">
+              <h3 className="text-lg font-semibold text-white mb-3">Add Song Page Manually</h3>
+              <p className="text-zinc-400 text-sm mb-3">
+                Paste a YouTube video URL to create an individual song page with SEO content.
+              </p>
+              <div className="flex gap-3">
+                <input
+                  type="text"
+                  value={manualSongUrl}
+                  onChange={(e) => setManualSongUrl(e.target.value)}
+                  placeholder="https://www.youtube.com/watch?v=..."
+                  className="flex-1 px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
+                  onKeyDown={(e) => e.key === 'Enter' && handleAddManualSong()}
+                />
+                <button
+                  onClick={handleAddManualSong}
+                  disabled={isAddingManualSong || !manualSongUrl.trim()}
+                  className="px-6 py-2 bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400 transition-colors disabled:opacity-50 whitespace-nowrap"
+                >
+                  {isAddingManualSong ? 'Adding...' : 'Add Song Page'}
+                </button>
+              </div>
+              {manualSongStatus.message && (
+                <div className={`mt-3 flex items-center gap-2 p-3 rounded-lg ${
+                  manualSongStatus.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                }`}>
+                  {manualSongStatus.type === 'success' ? <CheckCircle className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
+                  <span className="text-sm">{manualSongStatus.message}</span>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">

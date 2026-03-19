@@ -221,3 +221,126 @@ export async function POST(request) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
+
+
+function extractVideoId(url) {
+  if (!url) return null;
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+    /^([a-zA-Z0-9_-]{11})$/,
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+}
+
+export async function PUT(request) {
+  if (!verifyAdmin(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const { youtubeUrl } = await request.json();
+    
+    if (!youtubeUrl) {
+      return NextResponse.json({ error: 'YouTube URL is required' }, { status: 400 });
+    }
+
+    const videoId = extractVideoId(youtubeUrl);
+    if (!videoId) {
+      return NextResponse.json({ error: 'Invalid YouTube URL. Please use a valid YouTube video link.' }, { status: 400 });
+    }
+
+    const db = await getDb();
+
+    // Check if already exists
+    const existing = await db.collection('song_pages').findOne({ videoId });
+    if (existing) {
+      return NextResponse.json({ 
+        error: `Song page already exists: ${existing.title} by ${existing.artist} → /songs/${existing.slug}`,
+      }, { status: 409 });
+    }
+
+    // Fetch video details from YouTube using OAuth
+    const accessToken = await getValidAccessToken(db);
+    
+    let videoData = null;
+    
+    if (accessToken) {
+      try {
+        const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${videoId}`;
+        const res = await fetch(detailsUrl, {
+          headers: { 'Authorization': `Bearer ${accessToken}` }
+        });
+        const data = await res.json();
+        if (data.items && data.items.length > 0) {
+          videoData = data.items[0];
+        }
+      } catch (err) {
+        console.error('OAuth fetch failed:', err);
+      }
+    }
+
+    // Fallback to API key
+    if (!videoData) {
+      const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+      if (YOUTUBE_API_KEY) {
+        try {
+          const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?key=${YOUTUBE_API_KEY}&part=snippet,statistics,contentDetails&id=${videoId}`;
+          const res = await fetch(detailsUrl);
+          const data = await res.json();
+          if (data.items && data.items.length > 0) {
+            videoData = data.items[0];
+          }
+        } catch (err) {
+          console.error('API key fetch failed:', err);
+        }
+      }
+    }
+
+    if (!videoData) {
+      return NextResponse.json({ error: 'Could not fetch video details. Please check the URL and try again.' }, { status: 404 });
+    }
+
+    const snippet = videoData.snippet;
+    const stats = videoData.statistics;
+    const { song, artist } = parseVideoTitle(snippet.title);
+    const slug = generateSlug(artist, song);
+    const duration = parseDuration(videoData.contentDetails?.duration);
+
+    const songData = {
+      id: uuidv4(),
+      videoId: videoId,
+      title: song,
+      artist: artist,
+      fullTitle: snippet.title,
+      slug: slug,
+      thumbnail: snippet.thumbnails?.high?.url || snippet.thumbnails?.default?.url || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+      viewCount: parseInt(stats?.viewCount || 0),
+      likeCount: parseInt(stats?.likeCount || 0),
+      duration: duration,
+      publishedAt: snippet.publishedAt,
+      description: snippet.description?.substring(0, 500) || '',
+      manual: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+    await db.collection('song_pages').insertOne(songData);
+
+    return NextResponse.json({
+      success: true,
+      title: song,
+      artist: artist,
+      slug: slug,
+      videoId: videoId,
+      message: `Song page created: ${song} by ${artist}`,
+    });
+
+  } catch (err) {
+    console.error('Manual song page error:', err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
