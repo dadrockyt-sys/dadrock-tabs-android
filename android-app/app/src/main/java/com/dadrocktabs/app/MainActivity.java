@@ -39,10 +39,16 @@ public class MainActivity extends AppCompatActivity {
         // Initialize Firebase Analytics
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         
+        // Enable analytics collection explicitly
+        firebaseAnalytics.setAnalyticsCollectionEnabled(true);
+        
         // Log app open event
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.SOURCE, "android_app");
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+        
+        // Set user property to identify app users
+        firebaseAnalytics.setUserProperty("app_platform", "android");
 
         webView = findViewById(R.id.webView);
         progressBar = findViewById(R.id.progressBar);
