@@ -18,16 +18,16 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        gradle-version: '8.11.1'
+    - name: Update Gradle wrapper to 8.11.1
+      run: |
+        sed -i 's|distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-8.11.1-bin.zip|' gradle/wrapper/gradle-wrapper.properties
+        cat gradle/wrapper/gradle-wrapper.properties
     
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     
     - name: Build Release AAB
-      run: gradle bundleRelease --no-daemon
+      run: ./gradlew bundleRelease --no-daemon
     
     - name: Upload AAB
       uses: actions/upload-artifact@v4
