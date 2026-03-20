@@ -1,5 +1,8 @@
 import TopLessonsClient from './TopLessonsClient';
 
+// Force dynamic rendering - this page fetches real-time data
+export const dynamic = 'force-dynamic';
+
 // SEO Metadata
 export const metadata = {
   title: 'Top 10 Most Viewed Guitar Lessons | DadRock Tabs',

@@ -1,5 +1,7 @@
-import { Metadata } from 'next';
 import ComingSoonClient from './ComingSoonClient';
+
+// Force dynamic rendering - this page fetches real-time data
+export const dynamic = 'force-dynamic';
 
 // SEO Metadata
 export const metadata = {
