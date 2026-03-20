@@ -44,6 +44,7 @@ function generateSchema() {
 export default async function TopLessonsPage() {
   // Fetch top videos on the server for SEO
   let topVideos = [];
+  let adSettings = null;
   
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
@@ -59,6 +60,23 @@ export default async function TopLessonsPage() {
     console.error('Failed to fetch top videos:', err);
   }
 
+  // Fetch ad settings
+  try {
+    const { getDb } = await import('@/lib/mongodb');
+    const db = await getDb();
+    const settings = await db.collection('settings').findOne({ type: 'site' });
+    adSettings = {
+      ad_link: settings?.ad_link || 'https://my-store-b8bb42.creator-spring.com/',
+      ad_image: settings?.ad_image || '',
+      ad_headline: settings?.ad_headline || 'Check Out Our Merchandise!',
+      ad_description: settings?.ad_description || 'Support DadRock Tabs by grabbing some awesome gear',
+      ad_button_text: settings?.ad_button_text || 'Shop Now',
+      ad_duration: settings?.ad_duration || 5,
+    };
+  } catch (err) {
+    console.error('Failed to fetch ad settings:', err);
+  }
+
   return (
     <>
       <script
@@ -67,7 +85,7 @@ export default async function TopLessonsPage() {
           __html: JSON.stringify(generateSchema()),
         }}
       />
-      <TopLessonsClient initialVideos={topVideos} />
+      <TopLessonsClient initialVideos={topVideos} adSettings={adSettings} />
     </>
   );
 }

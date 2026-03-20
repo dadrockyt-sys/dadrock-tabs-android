@@ -10,7 +10,7 @@ import base64
 import sys
 
 # Configuration
-BASE_URL = "https://youtube-sync-preview.preview.emergentagent.com/api"
+BASE_URL = "https://admin-sync-hub-1.preview.emergentagent.com/api"
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "Babyty99"
 

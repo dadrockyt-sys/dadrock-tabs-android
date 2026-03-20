@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Trophy, Eye, ThumbsUp, Play, Youtube, Home, Facebook, Twitter, Mail, ExternalLink, Music } from 'lucide-react';
+import { Trophy, Eye, ThumbsUp, Play, Youtube, Home, Facebook, Twitter, Mail, ExternalLink, Music, ShoppingBag } from 'lucide-react';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
@@ -56,10 +56,39 @@ function formatViewCount(count) {
   return count.toString();
 }
 
-export default function TopLessonsClient({ initialVideos }) {
+export default function TopLessonsClient({ initialVideos, adSettings }) {
   const [videos, setVideos] = useState(initialVideos || []);
   const [isLoading, setIsLoading] = useState(!initialVideos || initialVideos.length === 0);
   const [error, setError] = useState(null);
+  const [showAd, setShowAd] = useState(false);
+  const [adCountdown, setAdCountdown] = useState(adSettings?.ad_duration || 5);
+  const [pendingVideoUrl, setPendingVideoUrl] = useState(null);
+  const [pendingVideoTitle, setPendingVideoTitle] = useState('');
+  const adDuration = adSettings?.ad_duration || 5;
+
+  // Handle video click - show ad first, then open YouTube
+  const handleVideoClick = (e, youtubeUrl, title) => {
+    e.preventDefault();
+    setPendingVideoUrl(youtubeUrl);
+    setPendingVideoTitle(title);
+    setAdCountdown(adDuration);
+    setShowAd(true);
+  };
+
+  // Countdown effect for interstitial ad
+  useEffect(() => {
+    if (showAd && adCountdown > 0) {
+      const timer = setTimeout(() => setAdCountdown(adCountdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (adCountdown === 0 && showAd) {
+      setShowAd(false);
+      if (pendingVideoUrl) {
+        window.open(pendingVideoUrl, '_blank');
+        setPendingVideoUrl(null);
+        setPendingVideoTitle('');
+      }
+    }
+  }, [showAd, adCountdown]);
 
   // Refresh videos on mount
   useEffect(() => {
@@ -100,6 +129,83 @@ export default function TopLessonsClient({ initialVideos }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-white">
+      {/* Interstitial Ad Overlay */}
+      {showAd && (
+        <div className="fixed inset-0 z-50 bg-black flex flex-col">
+          <header className="bg-black/95 border-b border-zinc-800 px-4 py-2 sm:py-3">
+            <div className="max-w-4xl mx-auto flex items-center gap-4">
+              <Link href="/">
+                <img src={LOGO_URL} alt="DadRock Tabs" className="w-10 h-10" />
+              </Link>
+              <div className="flex-1" />
+              <div className="text-zinc-400 text-sm">
+                Video opens in <span className="text-amber-500 font-bold text-lg">{adCountdown}</span> seconds
+              </div>
+            </div>
+          </header>
+
+          <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
+            <div className="text-center mb-8">
+              <p className="text-zinc-500 text-sm uppercase tracking-wider mb-2">Sponsored</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                {adSettings?.ad_headline || 'Check Out Our Merchandise!'}
+              </h2>
+              <p className="text-zinc-400">
+                {adSettings?.ad_description || 'Support DadRock Tabs by grabbing some awesome gear'}
+              </p>
+            </div>
+
+            <a
+              href={adSettings?.ad_link || 'https://my-store-b8bb42.creator-spring.com/'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full max-w-2xl mb-8"
+            >
+              <div className="bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 p-1 rounded-2xl hover:scale-[1.02] transition-transform">
+                <div className="bg-zinc-900 rounded-xl p-8 text-center">
+                  {adSettings?.ad_image ? (
+                    <img src={adSettings.ad_image} alt={adSettings.ad_headline} className="w-full max-h-64 object-contain mx-auto mb-4 rounded-lg" />
+                  ) : (
+                    <ShoppingBag className="w-16 h-16 mx-auto mb-4 text-amber-500" />
+                  )}
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{adSettings?.ad_headline}</h3>
+                  <p className="text-zinc-400 mb-4">{adSettings?.ad_description}</p>
+                  <span className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 text-black font-bold rounded-full">
+                    <ShoppingBag className="w-5 h-5" />
+                    {adSettings?.ad_button_text || 'Shop Now'}
+                  </span>
+                </div>
+              </div>
+            </a>
+
+            <div className="text-center">
+              <p className="text-zinc-500 mb-4">
+                Loading: <span className="text-white font-semibold">{pendingVideoTitle}</span>
+              </p>
+              <div className="w-64 h-2 bg-zinc-800 rounded-full overflow-hidden mx-auto">
+                <div
+                  className="h-full bg-amber-500 transition-all duration-1000"
+                  style={{ width: `${((adDuration - adCountdown) / adDuration) * 100}%` }}
+                />
+              </div>
+              <button
+                onClick={() => {
+                  setShowAd(false);
+                  if (pendingVideoUrl) {
+                    window.open(pendingVideoUrl, '_blank');
+                    setPendingVideoUrl(null);
+                    setPendingVideoTitle('');
+                  }
+                }}
+                className="mt-6 text-zinc-500 hover:text-white text-sm underline"
+                disabled={adCountdown > 0}
+              >
+                {adCountdown > 0 ? `Skip in ${adCountdown}s` : 'Skip Ad'}
+              </button>
+            </div>
+          </main>
+        </div>
+      )}
       {/* Header with Logo */}
       <header className="relative overflow-hidden">
         {/* Background Pattern */}
@@ -251,9 +357,8 @@ export default function TopLessonsClient({ initialVideos }) {
                   {/* Thumbnail */}
                   <a 
                     href={youtubeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-shrink-0 w-full md:w-72 aspect-video rounded-xl overflow-hidden bg-zinc-800 relative group/thumb"
+                    onClick={(e) => handleVideoClick(e, youtubeUrl, video.title)}
+                    className="flex-shrink-0 w-full md:w-72 aspect-video rounded-xl overflow-hidden bg-zinc-800 relative group/thumb cursor-pointer"
                   >
                     {video.thumbnail ? (
                       <img 
@@ -278,9 +383,8 @@ export default function TopLessonsClient({ initialVideos }) {
                       <div>
                         <a 
                           href={youtubeUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block"
+                          onClick={(e) => handleVideoClick(e, youtubeUrl, video.title)}
+                          className="block cursor-pointer"
                         >
                           <h2 className="text-2xl font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">
                             {video.title}
@@ -321,9 +425,8 @@ export default function TopLessonsClient({ initialVideos }) {
                     <div className="mt-4">
                       <a
                         href={youtubeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-5 py-2 bg-red-600 hover:bg-red-500 rounded-full font-medium transition-colors"
+                        onClick={(e) => handleVideoClick(e, youtubeUrl, video.title)}
+                        className="inline-flex items-center gap-2 px-5 py-2 bg-red-600 hover:bg-red-500 rounded-full font-medium transition-colors cursor-pointer"
                       >
                         <Play className="w-4 h-4" fill="currentColor" />
                         Watch Lesson
