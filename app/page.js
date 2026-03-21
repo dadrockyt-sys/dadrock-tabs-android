@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus, Trophy } from 'lucide-react';
+import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus, Trophy, Zap } from 'lucide-react';
 import { getTranslation, locales, localeNames, localeFlags } from '@/lib/i18n';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
@@ -1207,11 +1207,21 @@ export default function App({ initialLang = 'en' }) {
           {/* Top Lessons Button - Links to top viewed videos page */}
           <Link
             href="/top-lessons"
-            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-bold uppercase tracking-wide mb-10 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-bold uppercase tracking-wide mb-4 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.5s' }}
           >
             <Trophy className="w-6 h-6" />
             {t.topLessons || 'Top Lessons'}
+          </Link>
+
+          {/* DadRock Tabs Quickies Button */}
+          <Link
+            href="/quickies"
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold uppercase tracking-wide mb-10 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transitionDelay: '0.55s' }}
+          >
+            <Zap className="w-6 h-6" />
+            DadRock Tabs Quickies
           </Link>
 
           {/* Popular Searches with Glassmorphism */}
