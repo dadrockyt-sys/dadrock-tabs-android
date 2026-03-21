@@ -371,6 +371,106 @@ export async function POST(request, context) {
       }
     }
 
+    // YouTube cleanup - remove dead/unavailable video links
+    if (path === '/admin/youtube/cleanup') {
+      if (!verifyAdmin(request)) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+
+      const apiKey = YOUTUBE_API_KEY;
+      if (!apiKey) {
+        return NextResponse.json({ error: 'YouTube API key not configured' }, { status: 400 });
+      }
+
+      try {
+        const db = await getDb();
+        const allVideos = await db.collection('videos').find({}).toArray();
+
+        if (allVideos.length === 0) {
+          return NextResponse.json({ 
+            success: true, 
+            message: 'No videos in database to check.',
+            total_checked: 0, 
+            dead_removed: 0, 
+            removed_videos: [] 
+          });
+        }
+
+        // Extract video IDs from all stored videos
+        const videoMap = {}; // YouTube videoId -> array of DB documents
+        for (const video of allVideos) {
+          const ytId = extractVideoId(video.youtube_url);
+          if (ytId) {
+            if (!videoMap[ytId]) videoMap[ytId] = [];
+            videoMap[ytId].push(video);
+          }
+        }
+
+        const allYtIds = Object.keys(videoMap);
+        const aliveIds = new Set();
+
+        // Batch check via YouTube Data API (max 50 IDs per request)
+        for (let i = 0; i < allYtIds.length; i += 50) {
+          const batch = allYtIds.slice(i, i + 50);
+          const idsParam = batch.join(',');
+          const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=id,status&id=${idsParam}&key=${apiKey}`;
+          
+          const res = await fetch(apiUrl);
+          const data = await res.json();
+
+          if (data.error) {
+            console.error('YouTube API error during cleanup:', data.error);
+            return NextResponse.json({ error: `YouTube API error: ${data.error.message}` }, { status: 400 });
+          }
+
+          // Mark IDs that are still alive
+          for (const item of (data.items || [])) {
+            // Only consider embeddable/public videos as alive
+            if (item.status && (item.status.privacyStatus === 'public' || item.status.privacyStatus === 'unlisted')) {
+              aliveIds.add(item.id);
+            }
+          }
+        }
+
+        // Find dead video IDs (not returned by API = deleted/private/removed)
+        const deadYtIds = allYtIds.filter(id => !aliveIds.has(id));
+        const removedVideos = [];
+
+        // Remove dead videos from database
+        for (const deadId of deadYtIds) {
+          const dbVideos = videoMap[deadId];
+          for (const dbVideo of dbVideos) {
+            await db.collection('videos').deleteOne({ id: dbVideo.id });
+            removedVideos.push({
+              id: dbVideo.id,
+              song: dbVideo.song,
+              artist: dbVideo.artist,
+              youtube_url: dbVideo.youtube_url
+            });
+          }
+        }
+
+        // Also remove from song_pages if any dead videos exist there
+        if (deadYtIds.length > 0) {
+          for (const deadId of deadYtIds) {
+            await db.collection('song_pages').deleteMany({ videoId: deadId });
+          }
+        }
+
+        return NextResponse.json({
+          success: true,
+          message: `Cleanup complete! Found ${deadYtIds.length} dead videos out of ${allYtIds.length} checked. Removed ${removedVideos.length} entries.`,
+          total_checked: allYtIds.length,
+          dead_removed: removedVideos.length,
+          removed_videos: removedVideos
+        });
+
+      } catch (e) {
+        console.error('YouTube cleanup error:', e);
+        return NextResponse.json({ error: `Cleanup failed: ${e.message}` }, { status: 500 });
+      }
+    }
+
     // Create video (admin)
     if (path === '/admin/videos') {
       if (!verifyAdmin(request)) {

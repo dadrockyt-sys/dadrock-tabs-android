@@ -271,24 +271,36 @@ frontend:
         - agent: "main"
         - comment: "Admin panel with login, settings, stats"
 
+  - task: "YouTube Dead Link Cleanup API"
+    implemented: true
+    working: false
+    file: "/app/app/api/[[...path]]/route.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "POST /api/admin/youtube/cleanup - scans all videos in DB, batch-checks YouTube Data API for availability, removes dead/private/deleted videos. Also cleans up corresponding song_pages entries. Returns list of removed videos."
+        - working: false
+        - agent: "testing"
+        - comment: "✅ ENDPOINT STRUCTURE WORKING: Authentication (401 for unauthorized/wrong credentials), endpoint routing, and error handling all work correctly. ❌ YOUTUBE API CONFIGURATION ISSUE: API key configured for Android apps but used server-side. Error: 'Requests from this Android client application <empty> are blocked.' SOLUTION NEEDED: Reconfigure API key restrictions in Google Cloud Console to 'None' or 'Server applications' instead of 'Android apps', or create separate server-side API key."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 2
+  test_sequence: 3
   run_ui: false
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "YouTube Dead Link Cleanup API"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
 agent_communication:
     - agent: "main"
-    - message: "DadRock Tabs Next.js app has been built. All backend API endpoints are implemented. Please test the admin APIs including settings update, video CRUD, and stats endpoints. The admin password is 'dadrock2024' and uses Basic Auth with format 'admin:password'."
+    - message: "NEW FEATURE: YouTube Dead Link Cleanup. Please test POST /api/admin/youtube/cleanup endpoint. It requires Basic Auth (admin:Babyty99). It scans all videos, batch-checks them via YouTube Data API, and removes dead ones. Test: 1) Unauthorized access returns 401. 2) Authenticated request works and returns success with total_checked, dead_removed, removed_videos fields. 3) If YouTube API key is missing it returns proper error. Note: The endpoint uses the YOUTUBE_API_KEY env var which is already configured."
     - agent: "testing"
-    - message: "✅ COMPREHENSIVE BACKEND TESTING COMPLETE - All 10 API endpoints tested successfully including health, settings, videos with search, admin login, admin settings update, video CRUD operations, and admin stats. All authentication, authorization, YouTube URL processing, thumbnail generation, and error handling working perfectly. 7/7 major backend tasks PASS with 0 critical issues found."
-    - agent: "main"
-    - message: "NEW FEATURE ADDED: Interstitial Ad Duration Control. Please test: 1) GET /api/settings should return ad_duration field (default 5). 2) PUT /api/admin/settings with ad_duration should save it to database (validates min=5, max=30). 3) Values below 5 should be clamped to 5, values above 30 clamped to 30. Admin password is 'Babyty99' and uses Basic Auth format 'admin:Babyty99'."
-    - agent: "testing"
-    - message: "✅ INTERSTITIAL AD DURATION CONTROL TESTING COMPLETE - All 7 comprehensive test cases PASSED perfectly: Default value (5), valid save (15), persistence verification, minimum clamping (2->5), maximum clamping (60->30), integration with other ad settings, and unauthorized access rejection. Backend implementation is rock-solid with proper validation, clamping, persistence, and security."
+    - message: "TESTING COMPLETE: YouTube Dead Link Cleanup API endpoint structure is working correctly (authentication, routing, error handling). However, there's a YouTube API configuration issue - the API key is configured for Android apps but being used server-side, causing 'Requests from this Android client application <empty> are blocked.' All other endpoints (health, settings, admin stats) are working perfectly. SOLUTION: Reconfigure YouTube API key in Google Cloud Console from 'Android apps' restriction to 'None' or 'Server applications'."

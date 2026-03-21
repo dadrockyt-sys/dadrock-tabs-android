@@ -350,6 +350,10 @@ export default function App({ initialLang = 'en' }) {
   const [stats, setStats] = useState({ total_videos: 0, total_artists: 0 });
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncStatus, setSyncStatus] = useState({ type: '', message: '' });
+  const [isCleaning, setIsCleaning] = useState(false);
+  const [cleanupStatus, setCleanupStatus] = useState({ type: '', message: '' });
+  const [cleanupRemovedVideos, setCleanupRemovedVideos] = useState([]);
+  const [showRemovedList, setShowRemovedList] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
   
@@ -719,6 +723,43 @@ export default function App({ initialLang = 'en' }) {
       setSyncStatus({ type: 'error', message: 'Connection error. Please try again.' });
     } finally {
       setIsSyncing(false);
+    }
+  };
+
+  // Cleanup dead/removed YouTube videos
+  const handleYouTubeCleanup = async () => {
+    if (!confirm('This will scan all videos and remove any dead or unavailable YouTube links. Continue?')) return;
+    setIsCleaning(true);
+    setCleanupStatus({ type: '', message: '' });
+    setCleanupRemovedVideos([]);
+    setShowRemovedList(false);
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      const response = await fetch('/api/admin/youtube/cleanup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${authToken}`
+        }
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setCleanupStatus({ 
+          type: 'success', 
+          message: data.message 
+        });
+        if (data.removed_videos && data.removed_videos.length > 0) {
+          setCleanupRemovedVideos(data.removed_videos);
+        }
+        loadAdminData(); // Refresh stats
+      } else {
+        setCleanupStatus({ type: 'error', message: data.error || 'Cleanup failed' });
+      }
+    } catch (err) {
+      setCleanupStatus({ type: 'error', message: 'Connection error. Please try again.' });
+    } finally {
+      setIsCleaning(false);
     }
   };
 
@@ -1927,6 +1968,85 @@ export default function App({ initialLang = 'en' }) {
               <Youtube className="w-5 h-5" />
               {isSyncing ? 'Syncing...' : 'Sync from YouTube'}
             </button>
+
+            {/* Dead Link Cleanup */}
+            <div className="mt-6 pt-6 border-t border-zinc-700">
+              <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                <Trash2 className="w-4 h-4 text-orange-400" />
+                Clean Up Dead Links
+              </h3>
+              <p className="text-zinc-400 text-sm mb-4">
+                Scan all videos in the database and remove any that have been deleted, made private, or are no longer available on YouTube.
+              </p>
+              
+              {cleanupStatus.message && (
+                <div className={`flex items-center gap-2 p-3 rounded-lg mb-4 ${
+                  cleanupStatus.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                }`}>
+                  {cleanupStatus.type === 'success' ? <CheckCircle className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
+                  <span className="text-sm">{cleanupStatus.message}</span>
+                </div>
+              )}
+
+              <button
+                onClick={handleYouTubeCleanup}
+                disabled={isCleaning}
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-orange-600 text-white font-bold rounded-lg hover:bg-orange-500 transition-colors disabled:opacity-50"
+              >
+                {isCleaning ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Scanning... (this may take a moment)
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-5 h-5" />
+                    Scan &amp; Remove Dead Links
+                  </>
+                )}
+              </button>
+
+              {/* Show removed videos list */}
+              {cleanupRemovedVideos.length > 0 && (
+                <div className="mt-4">
+                  <button
+                    onClick={() => setShowRemovedList(!showRemovedList)}
+                    className="flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors font-medium text-sm"
+                  >
+                    {showRemovedList ? '▼' : '▶'} View Removed Videos ({cleanupRemovedVideos.length})
+                  </button>
+
+                  {showRemovedList && (
+                    <div className="mt-3 max-h-64 overflow-y-auto rounded-lg border border-zinc-700">
+                      <table className="w-full text-sm">
+                        <thead className="bg-zinc-800 sticky top-0">
+                          <tr>
+                            <th className="text-left px-3 py-2 text-zinc-400 font-medium">#</th>
+                            <th className="text-left px-3 py-2 text-zinc-400 font-medium">Song</th>
+                            <th className="text-left px-3 py-2 text-zinc-400 font-medium">Artist</th>
+                            <th className="text-left px-3 py-2 text-zinc-400 font-medium">URL</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {cleanupRemovedVideos.map((video, idx) => (
+                            <tr key={video.id} className="border-t border-zinc-800 hover:bg-zinc-800/50">
+                              <td className="px-3 py-2 text-zinc-500">{idx + 1}</td>
+                              <td className="px-3 py-2 text-white font-medium truncate max-w-[200px]">{video.song}</td>
+                              <td className="px-3 py-2 text-zinc-300 truncate max-w-[150px]">{video.artist}</td>
+                              <td className="px-3 py-2">
+                                <a href={video.youtube_url} target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 text-xs truncate max-w-[200px] block line-through">
+                                  {video.youtube_url}
+                                </a>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* YouTube OAuth & Scheduled Videos Section */}
