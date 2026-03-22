@@ -26,11 +26,26 @@ function artistToSlug(artistName) {
     .trim();
 }
 
+// Helper: generate hreflang alternates for a given path
+function generateLanguageAlternates(path = '') {
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  const languages = {};
+  for (const lang of locales) {
+    if (lang === 'en') {
+      languages[lang] = `${baseUrl}${cleanPath}`;
+    } else {
+      languages[lang] = `${baseUrl}/${lang}${cleanPath}`;
+    }
+  }
+  languages['x-default'] = `${baseUrl}${cleanPath}`;
+  return { languages };
+}
+
 export default async function sitemap() {
   const routes = [];
   const currentDate = new Date().toISOString();
   
-  // Add language routes
+  // Add language routes (homepage in all languages)
   locales.forEach(lang => {
     routes.push({
       url: lang === 'en' ? baseUrl : `${baseUrl}/${lang}`,
@@ -45,23 +60,34 @@ export default async function sitemap() {
     });
   });
 
-  // Add Coming Soon page
+  // Add Coming Soon page (with hreflang alternates)
   routes.push({
     url: `${baseUrl}/coming-soon`,
     lastModified: currentDate,
     changeFrequency: 'daily',
     priority: 0.9,
+    alternates: generateLanguageAlternates('/coming-soon'),
   });
 
-  // Add Top Lessons page
+  // Add Top Lessons page (with hreflang alternates)
   routes.push({
     url: `${baseUrl}/top-lessons`,
     lastModified: currentDate,
     changeFrequency: 'weekly',
     priority: 0.9,
+    alternates: generateLanguageAlternates('/top-lessons'),
   });
 
-  // Add artist pages
+  // Add Quickies page (with hreflang alternates)
+  routes.push({
+    url: `${baseUrl}/quickies`,
+    lastModified: currentDate,
+    changeFrequency: 'weekly',
+    priority: 0.9,
+    alternates: generateLanguageAlternates('/quickies'),
+  });
+
+  // Add artist pages (with hreflang alternates)
   try {
     const db = await getDb();
     const artists = await db.collection('videos').distinct('artist');
@@ -74,6 +100,7 @@ export default async function sitemap() {
           lastModified: currentDate,
           changeFrequency: 'weekly',
           priority: 0.8,
+          alternates: generateLanguageAlternates(`/artist/${slug}`),
         });
       }
     });
@@ -81,7 +108,7 @@ export default async function sitemap() {
     console.error('Error fetching artists for sitemap:', error);
   }
 
-  // Add song pages
+  // Add song pages (with hreflang alternates)
   try {
     const db = await getDb();
     const songPages = await db.collection('song_pages').find({}, { projection: { slug: 1, updated_at: 1 } }).toArray();
@@ -93,6 +120,7 @@ export default async function sitemap() {
           lastModified: song.updated_at || currentDate,
           changeFrequency: 'monthly',
           priority: 0.7,
+          alternates: generateLanguageAlternates(`/songs/${song.slug}`),
         });
       }
     });
