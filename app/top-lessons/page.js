@@ -1,4 +1,5 @@
 import TopLessonsClient from './TopLessonsClient';
+import { generateAlternates } from '@/lib/seo';
 
 // Force dynamic rendering - this page fetches real-time data
 export const dynamic = 'force-dynamic';
@@ -19,9 +20,7 @@ export const metadata = {
     title: 'Top 10 Most Viewed Guitar Lessons | DadRock Tabs',
     description: 'Discover the most popular guitar lessons at DadRock Tabs.',
   },
-  alternates: {
-    canonical: 'https://dadrocktabs.com/top-lessons',
-  },
+  alternates: generateAlternates('/top-lessons'),
 };
 
 // JSON-LD Schema for SEO

@@ -1,5 +1,6 @@
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
+import { generateAlternates } from '@/lib/seo';
 import ArtistPageClient from './ArtistPageClient';
 
 // Convert slug to artist name pattern for database lookup
@@ -79,9 +80,7 @@ export async function generateMetadata({ params }) {
       title,
       description,
     },
-    alternates: {
-      canonical: `https://dadrocktabs.com/artist/${slug}`,
-    },
+    alternates: generateAlternates(`/artist/${slug}`),
   };
 }
 

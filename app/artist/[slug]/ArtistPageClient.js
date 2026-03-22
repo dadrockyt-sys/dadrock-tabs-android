@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Play, Youtube, Music, Home, Users, ShoppingBag } from 'lucide-react';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
@@ -196,13 +197,16 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings 
               <img src={LOGO_URL} alt="DadRock Tabs" className="h-10 w-auto" />
               <span className="text-xl font-bold text-amber-500 hidden sm:block">DadRock Tabs</span>
             </Link>
-            <Link 
-              href="/"
-              className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
-            >
-              <Home className="w-4 h-4" />
-              <span>Home</span>
-            </Link>
+            <div className="flex items-center gap-3">
+              <LanguageSelector />
+              <Link 
+                href="/"
+                className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
+              >
+                <Home className="w-4 h-4" />
+                <span>Home</span>
+              </Link>
+            </div>
           </div>
         </div>
       </header>

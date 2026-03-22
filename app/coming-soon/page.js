@@ -1,4 +1,5 @@
 import ComingSoonClient from './ComingSoonClient';
+import { generateAlternates } from '@/lib/seo';
 
 // Force dynamic rendering - this page fetches real-time data
 export const dynamic = 'force-dynamic';
@@ -19,9 +20,7 @@ export const metadata = {
     title: 'Upcoming Guitar Lessons Schedule | DadRock Tabs',
     description: 'See what classic rock and metal guitar lessons are coming soon to DadRock Tabs.',
   },
-  alternates: {
-    canonical: 'https://dadrocktabs.com/coming-soon',
-  },
+  alternates: generateAlternates('/coming-soon'),
 };
 
 // JSON-LD Schema for SEO

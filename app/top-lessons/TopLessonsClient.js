@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Trophy, Eye, ThumbsUp, Play, Youtube, Home, Facebook, Twitter, Mail, ExternalLink, Music, ShoppingBag } from 'lucide-react';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
@@ -218,15 +219,18 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
               <Home className="w-5 h-5" />
               <span>Back to Home</span>
             </Link>
-            <a
-              href={YOUTUBE_CHANNEL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-500 rounded-full font-medium transition-colors"
-            >
-              <Youtube className="w-5 h-5" />
-              Subscribe
-            </a>
+            <div className="flex items-center gap-3">
+              <LanguageSelector />
+              <a
+                href={YOUTUBE_CHANNEL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-500 rounded-full font-medium transition-colors"
+              >
+                <Youtube className="w-5 h-5" />
+                Subscribe
+              </a>
+            </div>
           </nav>
 
           {/* Logo */}

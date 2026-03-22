@@ -1,4 +1,5 @@
 import { getDb } from '@/lib/mongodb';
+import { generateAlternates } from '@/lib/seo';
 import QuickiesClient from './QuickiesClient';
 
 // Force dynamic rendering
@@ -21,9 +22,7 @@ export const metadata = {
     title: 'DadRock Tabs Quickies - Quick Guitar & Bass Lessons',
     description: 'Quick guitar and bass tab lessons — short, sweet, and straight to the riff!',
   },
-  alternates: {
-    canonical: 'https://dadrocktabs.com/quickies',
-  },
+  alternates: generateAlternates('/quickies'),
 };
 
 // JSON-LD Schema for SEO

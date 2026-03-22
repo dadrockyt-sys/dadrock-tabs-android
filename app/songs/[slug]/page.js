@@ -1,5 +1,6 @@
 import { getDb } from '@/lib/mongodb';
 import { generateSeoContent } from '@/lib/artistData';
+import { generateAlternates } from '@/lib/seo';
 import SongPageClient from './SongPageClient';
 import { notFound } from 'next/navigation';
 
@@ -36,9 +37,7 @@ export async function generateMetadata({ params }) {
         description,
         images: [song.thumbnail],
       },
-      alternates: {
-        canonical: `https://dadrocktabs.com/songs/${slug}`,
-      },
+      alternates: generateAlternates(`/songs/${slug}`),
     };
   } catch {
     return { title: 'Song | DadRock Tabs' };
