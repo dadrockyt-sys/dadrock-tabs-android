@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus, Trophy, Zap } from 'lucide-react';
+import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus, Trophy, Zap, RefreshCw, Map } from 'lucide-react';
 import { getTranslation, locales, localeNames, localeFlags } from '@/lib/i18n';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
@@ -354,6 +354,19 @@ export default function App({ initialLang = 'en' }) {
   const [cleanupStatus, setCleanupStatus] = useState({ type: '', message: '' });
   const [cleanupRemovedVideos, setCleanupRemovedVideos] = useState([]);
   const [showRemovedList, setShowRemovedList] = useState(false);
+  
+  // Quickies sync state
+  const [isSyncingQuickies, setIsSyncingQuickies] = useState(false);
+  const [quickiesSyncStatus, setQuickiesSyncStatus] = useState({ type: '', message: '' });
+  
+  // Sitemap scan state
+  const [isScanningPages, setIsScanningPages] = useState(false);
+  const [scanResult, setScanResult] = useState(null);
+  const [scanStatus, setScanStatus] = useState({ type: '', message: '' });
+  
+  // Sitemap ping state
+  const [isPinging, setIsPinging] = useState(false);
+  const [pingStatus, setPingStatus] = useState({ type: '', message: '' });
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
   
@@ -774,6 +787,81 @@ export default function App({ initialLang = 'en' }) {
       }
     } catch (err) {
       console.error('Failed to check YouTube connection:', err);
+    }
+  };
+
+  // Sync DadRock Tabs Quickies from YouTube playlist
+  const handleSyncQuickies = async () => {
+    setIsSyncingQuickies(true);
+    setQuickiesSyncStatus({ type: '', message: '' });
+    try {
+      const res = await fetch('/api/quickies?sync=true');
+      const data = await res.json();
+      if (res.ok) {
+        setQuickiesSyncStatus({
+          type: 'success',
+          message: `Quickies synced! ${data.total} videos loaded from the playlist.`
+        });
+      } else {
+        setQuickiesSyncStatus({ type: 'error', message: data.error || 'Failed to sync quickies' });
+      }
+    } catch (err) {
+      setQuickiesSyncStatus({ type: 'error', message: 'Connection error. Please try again.' });
+    } finally {
+      setIsSyncingQuickies(false);
+    }
+  };
+
+  // Scan for pages not in sitemap
+  const handleScanPages = async () => {
+    setIsScanningPages(true);
+    setScanStatus({ type: '', message: '' });
+    setScanResult(null);
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      const res = await fetch('/api/admin/sitemap', {
+        headers: { 'Authorization': `Basic ${authToken}` }
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setScanResult(data);
+        if (data.missing_from_sitemap.length === 0) {
+          setScanStatus({ type: 'success', message: `All ${data.summary.total_pages} pages are in the sitemap. Everything is up to date!` });
+        } else {
+          setScanStatus({ type: 'error', message: `Found ${data.missing_from_sitemap.length} pages missing from the sitemap.` });
+        }
+      } else {
+        setScanStatus({ type: 'error', message: data.error || 'Scan failed' });
+      }
+    } catch (err) {
+      setScanStatus({ type: 'error', message: 'Connection error. Please try again.' });
+    } finally {
+      setIsScanningPages(false);
+    }
+  };
+
+  // Ping Google & Bing to re-crawl sitemap
+  const handlePingSitemap = async () => {
+    setIsPinging(true);
+    setPingStatus({ type: '', message: '' });
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      const res = await fetch('/api/admin/sitemap', {
+        method: 'POST',
+        headers: { 'Authorization': `Basic ${authToken}` }
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setPingStatus({ type: 'success', message: data.message });
+      } else {
+        setPingStatus({ type: 'error', message: data.error || 'Ping failed' });
+      }
+    } catch (err) {
+      setPingStatus({ type: 'error', message: 'Connection error. Please try again.' });
+    } finally {
+      setIsPinging(false);
     }
   };
 
@@ -2193,6 +2281,165 @@ export default function App({ initialLang = 'en' }) {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* DadRock Tabs Quickies Sync */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <Zap className="w-5 h-5 text-yellow-400" />
+              DadRock Tabs Quickies
+            </h2>
+            <p className="text-zinc-400 mb-4">
+              Sync videos from the DadRock Tabs Quickies YouTube playlist. This refreshes the quickies page with the latest videos from the playlist.
+            </p>
+
+            {quickiesSyncStatus.message && (
+              <div className={`flex items-center gap-2 p-3 rounded-lg mb-4 ${
+                quickiesSyncStatus.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+              }`}>
+                {quickiesSyncStatus.type === 'success' ? <CheckCircle className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
+                <span className="text-sm">{quickiesSyncStatus.message}</span>
+              </div>
+            )}
+
+            <button
+              onClick={handleSyncQuickies}
+              disabled={isSyncingQuickies}
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50"
+            >
+              {isSyncingQuickies ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                  Syncing Quickies...
+                </>
+              ) : (
+                <>
+                  <RefreshCw className="w-5 h-5" />
+                  Sync Quickies from YouTube
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Sitemap Management */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <Map className="w-5 h-5 text-blue-400" />
+              Sitemap Management
+            </h2>
+            <p className="text-zinc-400 mb-6">
+              Scan for new pages that aren't in the sitemap, and notify Google & Bing to re-crawl your updated sitemap.
+            </p>
+
+            {/* Scan for New Pages */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-white mb-2">Scan for New Pages</h3>
+              <p className="text-zinc-500 text-sm mb-4">
+                Checks all artist pages, song pages, and static pages against the current sitemap to find any missing entries.
+              </p>
+
+              {scanStatus.message && (
+                <div className={`flex items-center gap-2 p-3 rounded-lg mb-4 ${
+                  scanStatus.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-orange-500/20 text-orange-400'
+                }`}>
+                  {scanStatus.type === 'success' ? <CheckCircle className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
+                  <span className="text-sm">{scanStatus.message}</span>
+                </div>
+              )}
+
+              <button
+                onClick={handleScanPages}
+                disabled={isScanningPages}
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-500 transition-colors disabled:opacity-50"
+              >
+                {isScanningPages ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Scanning Pages...
+                  </>
+                ) : (
+                  <>
+                    <Search className="w-5 h-5" />
+                    Scan for New Pages
+                  </>
+                )}
+              </button>
+
+              {/* Scan Results */}
+              {scanResult && (
+                <div className="mt-4 bg-zinc-800/50 rounded-lg p-4">
+                  <h4 className="font-semibold text-white mb-3">Scan Results</h4>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                    <div className="bg-zinc-700/50 rounded-lg p-3 text-center">
+                      <div className="text-2xl font-bold text-amber-500">{scanResult.summary?.total_pages || 0}</div>
+                      <div className="text-xs text-zinc-400">Total Pages</div>
+                    </div>
+                    <div className="bg-zinc-700/50 rounded-lg p-3 text-center">
+                      <div className="text-2xl font-bold text-blue-400">{scanResult.pages_by_type?.artists || 0}</div>
+                      <div className="text-xs text-zinc-400">Artist Pages</div>
+                    </div>
+                    <div className="bg-zinc-700/50 rounded-lg p-3 text-center">
+                      <div className="text-2xl font-bold text-purple-400">{scanResult.pages_by_type?.songs || 0}</div>
+                      <div className="text-xs text-zinc-400">Song Pages</div>
+                    </div>
+                    <div className="bg-zinc-700/50 rounded-lg p-3 text-center">
+                      <div className="text-2xl font-bold text-green-400">{scanResult.summary?.in_sitemap || 0}</div>
+                      <div className="text-xs text-zinc-400">In Sitemap</div>
+                    </div>
+                  </div>
+
+                  {scanResult.missing_from_sitemap?.length > 0 && (
+                    <div className="mt-3">
+                      <p className="text-orange-400 font-medium text-sm mb-2">
+                        ⚠ {scanResult.missing_from_sitemap.length} pages missing from sitemap:
+                      </p>
+                      <div className="max-h-48 overflow-y-auto rounded border border-zinc-700">
+                        {scanResult.missing_from_sitemap.map((url, i) => (
+                          <div key={i} className="px-3 py-2 text-sm text-zinc-300 border-b border-zinc-800 last:border-0">
+                            {url}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Ping Search Engines */}
+            <div className="border-t border-zinc-700 pt-6">
+              <h3 className="text-lg font-semibold text-white mb-2">Update Sitemap & Notify Search Engines</h3>
+              <p className="text-zinc-500 text-sm mb-4">
+                Pings Google and Bing to re-crawl your sitemap. The sitemap is always generated dynamically, so this just tells search engines to check for updates.
+              </p>
+
+              {pingStatus.message && (
+                <div className={`flex items-center gap-2 p-3 rounded-lg mb-4 ${
+                  pingStatus.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                }`}>
+                  {pingStatus.type === 'success' ? <CheckCircle className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
+                  <span className="text-sm">{pingStatus.message}</span>
+                </div>
+              )}
+
+              <button
+                onClick={handlePingSitemap}
+                disabled={isPinging}
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-500 transition-colors disabled:opacity-50"
+              >
+                {isPinging ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Pinging Search Engines...
+                  </>
+                ) : (
+                  <>
+                    <Globe className="w-5 h-5" />
+                    Ping Google & Bing
+                  </>
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Top Lessons Management Section */}
