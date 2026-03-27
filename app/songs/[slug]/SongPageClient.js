@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Home, Youtube, Facebook, Twitter, Mail, Play, Eye, ThumbsUp, ShoppingBag, Music, ExternalLink, ArrowLeft } from 'lucide-react';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
+import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
@@ -34,6 +35,12 @@ export default function SongPageClient({ song, seoContent, adSettings }) {
   const [lang] = useLanguage();
   const t = getSubPageTranslation(lang);
   const [showAd, setShowAd] = useState(true);
+
+  // Update SEO meta tags when language changes
+  useEffect(() => {
+    const seo = getSeoMeta(lang, 'song', { song: song?.title || '', artist: song?.artist || '' });
+    updateDocumentMeta(seo.title, seo.description);
+  }, [lang, song?.title, song?.artist]);
   const [adCountdown, setAdCountdown] = useState(adSettings?.ad_duration || 5);
   const adDuration = adSettings?.ad_duration || 5;
 

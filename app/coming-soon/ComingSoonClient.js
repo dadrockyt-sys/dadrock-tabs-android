@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Calendar, Clock, Music, Youtube, Home, Facebook, Twitter, Share2, Mail, ExternalLink } from 'lucide-react';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
+import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
@@ -57,6 +58,12 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
   const [lang] = useLanguage();
   const t = getSubPageTranslation(lang);
   const [upcomingVideos, setUpcomingVideos] = useState(initialVideos || []);
+
+  // Update SEO meta tags when language changes
+  useEffect(() => {
+    const seo = getSeoMeta(lang, 'comingSoon');
+    updateDocumentMeta(seo.title, seo.description);
+  }, [lang]);
   const [total, setTotal] = useState(initialTotal || 0);
   const [isRefreshing, setIsRefreshing] = useState(false);
 

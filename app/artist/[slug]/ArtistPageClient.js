@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft, Play, Youtube, Music, Home, Users, ShoppingBag } from 'lucide-react';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
+import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
@@ -81,6 +82,12 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings 
   const [lang] = useLanguage();
   const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
+
+  // Update SEO meta tags when language changes
+  useEffect(() => {
+    const seo = getSeoMeta(lang, 'artist', { artist: artistName });
+    updateDocumentMeta(seo.title, seo.description);
+  }, [lang, artistName]);
   const [showAd, setShowAd] = useState(false);
   const [adCountdown, setAdCountdown] = useState(adSettings?.ad_duration || 5);
   const [pendingVideo, setPendingVideo] = useState(null);

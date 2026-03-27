@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Trophy, Eye, ThumbsUp, Play, Youtube, Home, Facebook, Twitter, Mail, ExternalLink, Music, ShoppingBag } from 'lucide-react';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
+import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
@@ -62,6 +63,12 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
   const [lang] = useLanguage();
   const t = getSubPageTranslation(lang);
   const [videos, setVideos] = useState(initialVideos || []);
+
+  // Update SEO meta tags when language changes
+  useEffect(() => {
+    const seo = getSeoMeta(lang, 'topLessons');
+    updateDocumentMeta(seo.title, seo.description);
+  }, [lang]);
   const [isLoading, setIsLoading] = useState(!initialVideos || initialVideos.length === 0);
   const [error, setError] = useState(null);
   const [showAd, setShowAd] = useState(false);
