@@ -1,26 +1,57 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { useRouter } from 'next/navigation';
 import { Globe, ChevronDown } from 'lucide-react';
 import { locales, localeNames, localeFlags } from '@/lib/i18n';
 
-export default function LanguageSelector({ currentLang = 'en' }) {
+const LANG_STORAGE_KEY = 'dadrock_language';
+
+// Hook to use language across any component
+export function useLanguage() {
+  const [lang, setLang] = useState('en');
+
+  useEffect(() => {
+    const stored = localStorage.getItem(LANG_STORAGE_KEY);
+    if (stored && locales.includes(stored)) {
+      setLang(stored);
+    }
+  }, []);
+
+  const changeLang = useCallback((newLang) => {
+    setLang(newLang);
+    localStorage.setItem(LANG_STORAGE_KEY, newLang);
+    // Dispatch custom event so all LanguageSelector instances + pages update
+    window.dispatchEvent(new CustomEvent('dadrock-lang-change', { detail: newLang }));
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.detail && locales.includes(e.detail)) {
+        setLang(e.detail);
+      }
+    };
+    window.addEventListener('dadrock-lang-change', handler);
+    return () => window.removeEventListener('dadrock-lang-change', handler);
+  }, []);
+
+  return [lang, changeLang];
+}
+
+export default function LanguageSelector({ onLanguageChange }) {
+  const [lang, changeLang] = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const handleLanguageChange = (lang) => {
+  const handleLanguageChange = (newLang) => {
     setIsOpen(false);
-    if (lang === 'en') {
-      router.push('/');
-    } else {
-      router.push(`/${lang}`);
+    changeLang(newLang);
+    if (onLanguageChange) {
+      onLanguageChange(newLang);
     }
   };
 
@@ -38,7 +69,7 @@ export default function LanguageSelector({ currentLang = 'en' }) {
         alignItems: 'flex-start',
         justifyContent: 'center',
         paddingTop: '60px',
-        backgroundColor: '#000000'
+        backgroundColor: 'rgba(0,0,0,0.95)'
       }}
     >
       {/* Dark backdrop - click to close */}
@@ -49,7 +80,6 @@ export default function LanguageSelector({ currentLang = 'en' }) {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: '#000000'
         }}
         onClick={() => setIsOpen(false)}
       />
@@ -78,7 +108,8 @@ export default function LanguageSelector({ currentLang = 'en' }) {
             borderBottom: '1px solid #525252',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            zIndex: 1,
           }}
         >
           <span style={{ color: '#ffffff', fontWeight: 'bold', fontSize: '18px' }}>Select Language</span>
@@ -104,10 +135,10 @@ export default function LanguageSelector({ currentLang = 'en' }) {
         
         {/* Language options */}
         <div style={{ backgroundColor: '#262626' }}>
-          {locales.map((lang) => (
+          {locales.map((locale) => (
             <button
-              key={lang}
-              onClick={() => handleLanguageChange(lang)}
+              key={locale}
+              onClick={() => handleLanguageChange(locale)}
               style={{ 
                 width: '100%',
                 display: 'flex',
@@ -115,17 +146,17 @@ export default function LanguageSelector({ currentLang = 'en' }) {
                 gap: '16px',
                 padding: '16px',
                 fontSize: '16px',
-                backgroundColor: lang === currentLang ? '#4a4a00' : '#262626',
-                color: lang === currentLang ? '#fbbf24' : '#e4e4e7',
+                backgroundColor: locale === lang ? '#4a4a00' : '#262626',
+                color: locale === lang ? '#fbbf24' : '#e4e4e7',
                 borderBottom: '1px solid #404040',
                 border: 'none',
                 cursor: 'pointer',
                 textAlign: 'left'
               }}
             >
-              <span style={{ fontSize: '24px' }}>{localeFlags[lang]}</span>
-              <span style={{ flex: 1, fontWeight: '500' }}>{localeNames[lang]}</span>
-              {lang === currentLang && <span style={{ color: '#fbbf24', fontWeight: 'bold', fontSize: '20px' }}>✓</span>}
+              <span style={{ fontSize: '24px' }}>{localeFlags[locale]}</span>
+              <span style={{ flex: 1, fontWeight: '500' }}>{localeNames[locale]}</span>
+              {locale === lang && <span style={{ color: '#fbbf24', fontWeight: 'bold', fontSize: '20px' }}>✓</span>}
             </button>
           ))}
         </div>
@@ -141,8 +172,8 @@ export default function LanguageSelector({ currentLang = 'en' }) {
         className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-sm font-medium text-zinc-300 hover:text-white bg-zinc-800/80 hover:bg-zinc-700 rounded-md transition-all border border-zinc-700/50"
       >
         <Globe className="w-4 h-4" />
-        <span>{localeFlags[currentLang]}</span>
-        <span className="text-xs uppercase">{currentLang}</span>
+        <span>{localeFlags[lang]}</span>
+        <span className="text-xs uppercase">{lang}</span>
         <ChevronDown className={`w-3 h-3 transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
 

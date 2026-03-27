@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Calendar, Clock, Music, Youtube, Home, Facebook, Twitter, Share2, Mail, ExternalLink } from 'lucide-react';
-import LanguageSelector from '@/components/LanguageSelector';
+import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
@@ -53,6 +54,8 @@ function artistToSlug(artist) {
 }
 
 export default function ComingSoonClient({ initialVideos, initialTotal }) {
+  const [lang] = useLanguage();
+  const t = getSubPageTranslation(lang);
   const [upcomingVideos, setUpcomingVideos] = useState(initialVideos || []);
   const [total, setTotal] = useState(initialTotal || 0);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -100,7 +103,7 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
           <nav className="flex items-center justify-between mb-8">
             <Link href="/" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
               <Home className="w-5 h-5" />
-              <span>Back to Home</span>
+              <span>{t.backToHome}</span>
             </Link>
             <div className="flex items-center gap-3">
               <LanguageSelector />
@@ -111,7 +114,7 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
                 className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-500 rounded-full font-medium transition-colors"
               >
                 <Youtube className="w-5 h-5" />
-                Subscribe
+                {t.subscribe}
               </a>
             </div>
           </nav>
@@ -129,7 +132,7 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
 
           {/* Social Share - Prominent Position */}
           <div className="flex items-center justify-center gap-3 mb-8">
-            <span className="text-zinc-400 text-sm font-medium">Share:</span>
+            <span className="text-zinc-400 text-sm font-medium">{t.shareThisPage}:</span>
             <a
               href={facebookShareUrl}
               target="_blank"
@@ -160,15 +163,14 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
           {/* Page Title */}
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
-              Upcoming Guitar Lessons
+              {t.upcomingLessons}
             </h1>
             <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-              See what classic rock and heavy metal songs are coming to DadRock Tabs. 
-              Subscribe to never miss a lesson!
+              {t.checkBackSoon}
             </p>
             <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-purple-600/20 border border-purple-500/30 rounded-full">
               <Calendar className="w-5 h-5 text-purple-400" />
-              <span className="text-purple-300 font-medium">{total} Lessons Scheduled</span>
+              <span className="text-purple-300 font-medium">{total} {t.upcomingLessons}</span>
             </div>
           </div>
         </div>
@@ -180,8 +182,8 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
         {upcomingVideos.length === 0 ? (
           <div className="text-center py-16">
             <Calendar className="w-20 h-20 mx-auto mb-6 text-zinc-600" />
-            <h2 className="text-2xl font-bold text-zinc-400 mb-2">No Upcoming Lessons Scheduled</h2>
-            <p className="text-zinc-500 mb-8">Check back soon for new content!</p>
+            <h2 className="text-2xl font-bold text-zinc-400 mb-2">{t.noUpcoming}</h2>
+            <p className="text-zinc-500 mb-8">{t.checkBackSoon}</p>
             <a
               href={YOUTUBE_CHANNEL}
               target="_blank"
@@ -351,10 +353,10 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <Link href="/" className="text-zinc-400 hover:text-white transition-colors">
-              ← Back to DadRock Tabs Home
+              ← {t.backToHome}
             </Link>
             <p className="text-zinc-500 text-sm">
-              © {new Date().getFullYear()} DadRock Tabs. Made with ❤️ for rock lovers.
+              {t.footer}
             </p>
             <div className="flex items-center gap-4">
               <a

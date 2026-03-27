@@ -3,13 +3,16 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Play, Youtube, Music, Home, Zap, ShoppingBag } from 'lucide-react';
-import LanguageSelector from '@/components/LanguageSelector';
+import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const YOUTUBE_CHANNEL = "https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ";
 const QUICKIES_PLAYLIST_URL = "https://www.youtube.com/playlist?list=PLEneI6e1FjBVRrw6FfSBK32RiT8N43v0H";
 
 export default function QuickiesClient({ initialVideos, adSettings }) {
+  const [lang] = useLanguage();
+  const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [showAd, setShowAd] = useState(false);
   const [adCountdown, setAdCountdown] = useState(adSettings?.ad_duration || 5);
@@ -54,14 +57,14 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
             </Link>
             <div className="flex-1" />
             <div className="text-zinc-400 text-sm">
-              Video starts in <span className="text-amber-500 font-bold text-lg">{adCountdown}</span> seconds
+              {t.videoStartsIn} <span className="text-amber-500 font-bold text-lg">{adCountdown}</span> {t.seconds}
             </div>
           </div>
         </header>
 
         <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
           <div className="text-center mb-8">
-            <p className="text-zinc-500 text-sm uppercase tracking-wider mb-2">Sponsored</p>
+            <p className="text-zinc-500 text-sm uppercase tracking-wider mb-2">{t.sponsored}</p>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
               {adSettings?.ad_headline || 'Check Out Our Merchandise!'}
             </h2>
@@ -113,7 +116,7 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
               className="mt-6 text-zinc-500 hover:text-white text-sm underline"
               disabled={adCountdown > 0}
             >
-              {adCountdown > 0 ? `Skip in ${adCountdown}s` : 'Skip Ad'}
+              {adCountdown > 0 ? `${t.skipIn} ${adCountdown}s` : t.skipAd}
             </button>
           </div>
         </main>
@@ -138,7 +141,7 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
                 className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
               >
                 <Home className="w-4 h-4" />
-                <span>Home</span>
+                <span>{t.home}</span>
               </Link>
             </div>
           </div>
@@ -148,9 +151,9 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
       <main className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Breadcrumb */}
         <nav className="mb-6 text-sm text-zinc-400">
-          <Link href="/" className="hover:text-amber-500 transition-colors">Home</Link>
+          <Link href="/" className="hover:text-amber-500 transition-colors">{t.home}</Link>
           <span className="mx-2">/</span>
-          <span className="text-white">DadRock Tabs Quickies</span>
+          <span className="text-white">{t.quickiesTitle}</span>
         </nav>
 
         {/* Page Header */}
@@ -161,14 +164,12 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
             <Zap className="inline w-10 h-10 ml-3 text-yellow-400" />
           </h1>
           <p className="text-lg text-zinc-300 max-w-3xl leading-relaxed">
-            Quick guitar and bass tab lessons — short, sweet, and straight to the riff! 
-            Perfect for when you want to learn a classic lick in just a few minutes. 
-            No fluff, just the good stuff.
+            {t.quickiesSubtitle}
           </p>
           <div className="mt-4 flex items-center gap-4 flex-wrap">
             <p className="text-amber-500 font-semibold">
               <Music className="w-5 h-5 inline mr-2" />
-              {initialVideos.length} quickie{initialVideos.length !== 1 ? 's' : ''} available
+              {initialVideos.length} {t.quickiesAvailable}
             </p>
             <a
               href={QUICKIES_PLAYLIST_URL}
@@ -177,7 +178,7 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
               className="inline-flex items-center gap-2 text-red-400 hover:text-red-300 transition-colors font-medium"
             >
               <Youtube className="w-5 h-5" />
-              Watch on YouTube
+              {t.watchOnYouTube}
             </a>
           </div>
         </div>
@@ -327,9 +328,9 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
       {/* Footer */}
       <footer className="mt-16 border-t border-zinc-800 py-8">
         <div className="container mx-auto px-4 text-center text-zinc-400">
-          <p>© {new Date().getFullYear()} DadRock Tabs. Made with ❤️ for rock lovers.</p>
+          <p>{t.footer}</p>
           <div className="mt-4 flex justify-center gap-6">
-            <Link href="/" className="hover:text-amber-500 transition-colors">Home</Link>
+            <Link href="/" className="hover:text-amber-500 transition-colors">{t.home}</Link>
             <a 
               href={YOUTUBE_CHANNEL}
               target="_blank" 

@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Trophy, Eye, ThumbsUp, Play, Youtube, Home, Facebook, Twitter, Mail, ExternalLink, Music, ShoppingBag } from 'lucide-react';
-import LanguageSelector from '@/components/LanguageSelector';
+import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
@@ -58,6 +59,8 @@ function formatViewCount(count) {
 }
 
 export default function TopLessonsClient({ initialVideos, adSettings }) {
+  const [lang] = useLanguage();
+  const t = getSubPageTranslation(lang);
   const [videos, setVideos] = useState(initialVideos || []);
   const [isLoading, setIsLoading] = useState(!initialVideos || initialVideos.length === 0);
   const [error, setError] = useState(null);
@@ -217,7 +220,7 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
           <nav className="flex items-center justify-between mb-8">
             <Link href="/" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
               <Home className="w-5 h-5" />
-              <span>Back to Home</span>
+              <span>{t.backToHome}</span>
             </Link>
             <div className="flex items-center gap-3">
               <LanguageSelector />
@@ -228,7 +231,7 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
                 className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-500 rounded-full font-medium transition-colors"
               >
                 <Youtube className="w-5 h-5" />
-                Subscribe
+                {t.subscribe}
               </a>
             </div>
           </nav>
@@ -246,7 +249,7 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
 
           {/* Social Share - Prominent Position */}
           <div className="flex items-center justify-center gap-3 mb-8">
-            <span className="text-zinc-400 text-sm font-medium">Share:</span>
+            <span className="text-zinc-400 text-sm font-medium">{t.shareThisPage}:</span>
             <a
               href={facebookShareUrl}
               target="_blank"
@@ -278,11 +281,10 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 bg-clip-text text-transparent flex items-center justify-center gap-3">
               <Trophy className="w-10 h-10 text-amber-500" />
-              Top 10 Most Viewed Lessons
+              {t.topLessonsTitle}
             </h1>
             <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-              Our most popular guitar and bass tutorials that rock fans love. 
-              Start with the hits!
+              {t.topLessonsSubtitle}
             </p>
           </div>
         </div>
@@ -414,7 +416,7 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
                       <div className="flex items-center gap-2 text-amber-400">
                         <Eye className="w-5 h-5" />
                         <span className="font-bold text-lg">{formatViewCount(video.viewCount)}</span>
-                        <span className="text-zinc-500 text-sm">views</span>
+                        <span className="text-zinc-500 text-sm">{t.views}</span>
                       </div>
                       {video.likeCount > 0 && (
                         <div className="flex items-center gap-2 text-green-400">
@@ -433,7 +435,7 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
                         className="inline-flex items-center gap-2 px-5 py-2 bg-red-600 hover:bg-red-500 rounded-full font-medium transition-colors cursor-pointer"
                       >
                         <Play className="w-4 h-4" fill="currentColor" />
-                        Watch Lesson
+                        {t.watchLesson}
                       </a>
                     </div>
                   </div>
@@ -510,10 +512,10 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <Link href="/" className="text-zinc-400 hover:text-white transition-colors">
-              ← Back to DadRock Tabs Home
+              ← {t.backToHome}
             </Link>
             <p className="text-zinc-500 text-sm">
-              © {new Date().getFullYear()} DadRock Tabs. Made with ❤️ for rock lovers.
+              {t.footer}
             </p>
             <div className="flex items-center gap-4">
               <Link href="/coming-soon" className="text-zinc-400 hover:text-purple-400 transition-colors">

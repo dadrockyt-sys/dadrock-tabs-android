@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Home, Youtube, Facebook, Twitter, Mail, Play, Eye, ThumbsUp, ShoppingBag, Music, ExternalLink, ArrowLeft } from 'lucide-react';
-import LanguageSelector from '@/components/LanguageSelector';
+import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
@@ -30,6 +31,8 @@ function formatViewCount(count) {
 }
 
 export default function SongPageClient({ song, seoContent, adSettings }) {
+  const [lang] = useLanguage();
+  const t = getSubPageTranslation(lang);
   const [showAd, setShowAd] = useState(true);
   const [adCountdown, setAdCountdown] = useState(adSettings?.ad_duration || 5);
   const adDuration = adSettings?.ad_duration || 5;
@@ -139,7 +142,7 @@ export default function SongPageClient({ song, seoContent, adSettings }) {
           <nav className="flex items-center justify-between mb-6">
             <Link href="/" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
               <Home className="w-5 h-5" />
-              <span>Back to Home</span>
+              <span>{t.backToHome}</span>
             </Link>
             <div className="flex items-center gap-3">
               <LanguageSelector />
@@ -168,7 +171,7 @@ export default function SongPageClient({ song, seoContent, adSettings }) {
 
           {/* Social Share */}
           <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="text-zinc-400 text-sm font-medium">Share:</span>
+            <span className="text-zinc-400 text-sm font-medium">{t.shareThisPage}:</span>
             <a href={facebookShareUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-10 h-10 bg-blue-600 hover:bg-blue-500 rounded-full transition-all hover:scale-110" title="Share on Facebook">
               <Facebook className="w-5 h-5" />
             </a>
@@ -298,10 +301,10 @@ export default function SongPageClient({ song, seoContent, adSettings }) {
         <div className="max-w-4xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <Link href="/" className="text-zinc-400 hover:text-white transition-colors">
-              ← Back to DadRock Tabs Home
+              ← {t.backToHome}
             </Link>
             <p className="text-zinc-500 text-sm">
-              © {new Date().getFullYear()} DadRock Tabs. Made with ❤️ for rock lovers.
+              {t.footer}
             </p>
             <a
               href={YOUTUBE_CHANNEL}

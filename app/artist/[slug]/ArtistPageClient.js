@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Play, Youtube, Music, Home, Users, ShoppingBag } from 'lucide-react';
-import LanguageSelector from '@/components/LanguageSelector';
+import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
@@ -77,6 +78,8 @@ function getRelatedArtists(artistName) {
 }
 
 export default function ArtistPageClient({ artistName, videos, slug, adSettings }) {
+  const [lang] = useLanguage();
+  const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [showAd, setShowAd] = useState(false);
   const [adCountdown, setAdCountdown] = useState(adSettings?.ad_duration || 5);
@@ -204,7 +207,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings 
                 className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
               >
                 <Home className="w-4 h-4" />
-                <span>Home</span>
+                <span>{t.home}</span>
               </Link>
             </div>
           </div>
@@ -214,7 +217,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings 
       <main className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Breadcrumb */}
         <nav className="mb-6 text-sm text-zinc-400">
-          <Link href="/" className="hover:text-amber-500 transition-colors">Home</Link>
+          <Link href="/" className="hover:text-amber-500 transition-colors">{t.home}</Link>
           <span className="mx-2">/</span>
           <span className="text-white">{artistName}</span>
         </nav>
@@ -265,7 +268,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings 
 
         {/* Section Title */}
         <h2 className="text-2xl font-bold mb-6 text-white">
-          {selectedVideo ? 'More Lessons' : 'Watch Full Lessons Below'}
+          {selectedVideo ? t.moreLessons : t.watchLesson}
         </h2>
 
         {/* Video Grid */}
@@ -362,9 +365,9 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings 
       {/* Footer */}
       <footer className="mt-16 border-t border-zinc-800 py-8">
         <div className="container mx-auto px-4 text-center text-zinc-400">
-          <p>© {new Date().getFullYear()} DadRock Tabs. Made with ❤️ for rock lovers.</p>
+          <p>{t.footer}</p>
           <div className="mt-4 flex justify-center gap-6">
-            <Link href="/" className="hover:text-amber-500 transition-colors">Home</Link>
+            <Link href="/" className="hover:text-amber-500 transition-colors">{t.home}</Link>
             <a 
               href="https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ" 
               target="_blank" 
