@@ -337,11 +337,10 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
         <section className="mt-16 text-center p-12 bg-gradient-to-r from-red-600/20 via-orange-600/20 to-amber-600/20 rounded-2xl border border-red-500/30">
           <Youtube className="w-16 h-16 mx-auto mb-6 text-red-500" />
           <h2 className="text-3xl font-bold text-white mb-4">
-            Never Miss a Lesson
+            {t.wantMoreLessons || 'Never Miss a Lesson'}
           </h2>
           <p className="text-xl text-zinc-300 mb-8 max-w-2xl mx-auto">
-            Subscribe to DadRock Tabs on YouTube and turn on notifications to get alerted 
-            the moment each new guitar lesson goes live!
+            {t.subscribeCtaText || 'Subscribe to DadRock Tabs on YouTube!'}
           </p>
           <a
             href={YOUTUBE_CHANNEL}
@@ -350,7 +349,7 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
             className="inline-flex items-center gap-3 px-8 py-4 bg-red-600 hover:bg-red-500 rounded-full text-xl font-bold transition-all hover:scale-105"
           >
             <Youtube className="w-7 h-7" />
-            Subscribe Now – It's Free!
+            {t.subscribe}
           </a>
         </section>
       </main>

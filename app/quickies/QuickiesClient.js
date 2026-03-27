@@ -213,7 +213,7 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
                 className="mt-3 flex items-center gap-2 text-amber-500 hover:text-amber-400 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Back to all quickies
+                {t.backToAllQuickies}
               </button>
             </div>
           </div>
@@ -221,15 +221,15 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
 
         {/* Section Title */}
         <h2 className="text-2xl font-bold mb-6 text-white">
-          {selectedVideo ? 'More Quickies' : 'Watch Quick Lessons Below'}
+          {selectedVideo ? t.moreQuickies : t.watchQuickie}
         </h2>
 
         {/* Empty State */}
         {initialVideos.length === 0 && (
           <div className="text-center py-20">
             <Zap className="w-16 h-16 mx-auto mb-4 text-zinc-600" />
-            <p className="text-zinc-400 text-lg">No quickies loaded yet.</p>
-            <p className="text-zinc-500 text-sm mt-2">Videos will appear once synced from YouTube.</p>
+            <p className="text-zinc-400 text-lg">{t.noQuickies}</p>
+            <p className="text-zinc-500 text-sm mt-2">{t.noQuickiesDesc}</p>
             <a
               href={QUICKIES_PLAYLIST_URL}
               target="_blank"
@@ -237,7 +237,7 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
               className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-red-600 hover:bg-red-500 text-white font-bold rounded-full transition-colors"
             >
               <Youtube className="w-5 h-5" />
-              Watch on YouTube Instead
+              {t.watchOnYouTubeInstead}
             </a>
           </div>
         )}
@@ -267,7 +267,7 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
                 {/* Quickie badge */}
                 <div className="absolute top-2 right-2 bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
                   <Zap className="w-3 h-3" />
-                  Quickie
+                  {t.quickieBadge}
                 </div>
               </div>
               
@@ -287,23 +287,12 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
         {/* SEO Content Section */}
         <section className="mt-16 p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
           <h2 className="text-2xl font-bold mb-4 text-amber-500">
-            About DadRock Tabs Quickies
+            {t.aboutQuickies}
           </h2>
           <div className="text-zinc-300 space-y-4">
-            <p>
-              DadRock Tabs Quickies are short, focused guitar and bass tab tutorials designed 
-              to get you playing fast. Each quickie breaks down a classic riff or lick in just 
-              a few minutes — no lengthy intros, just straight to the music.
-            </p>
-            <p>
-              Whether you're warming up before practice, learning something new during a break, 
-              or just want to jam along to your favorite classic rock and heavy metal tunes, 
-              these quickies are perfect for players of all levels.
-            </p>
-            <p>
-              New quickies are added regularly from the DadRock Tabs YouTube channel. 
-              Subscribe to never miss a new lesson!
-            </p>
+            <p>{t.aboutQuickiesP1 || t.aboutQuickies}</p>
+            <p>{t.aboutQuickiesP2 || ''}</p>
+            <p>{t.aboutQuickiesP3 || ''}</p>
           </div>
         </section>
 
@@ -316,7 +305,7 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
             className="inline-flex items-center gap-3 px-8 py-4 bg-red-600 hover:bg-red-500 text-white font-bold rounded-full transition-colors"
           >
             <Youtube className="w-6 h-6" />
-            Subscribe for More Quickies
+            {t.subscribeForMore}
           </a>
         </div>
 
@@ -327,7 +316,7 @@ export default function QuickiesClient({ initialVideos, adSettings }) {
             className="inline-flex items-center gap-3 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-full transition-colors"
           >
             <Home className="w-5 h-5" />
-            Back to Home
+            {t.backToHome}
           </Link>
         </div>
       </main>
