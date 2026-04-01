@@ -292,15 +292,29 @@ metadata:
   test_sequence: 3
   run_ui: false
 
+  - task: "i18n locale URL routing (middleware rewrite)"
+    implemented: true
+    working: true
+    file: "/app/middleware.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+        - agent: "main"
+        - comment: "Implemented middleware rewrite for localized URLs. Paths like /es/quickies, /pt/coming-soon, /ko/top-lessons, /fr/artist/acdc, /pt-br/top-lessons are now rewritten to their non-localized counterparts (/quickies, /coming-soon, etc.) and return 200 OK. This fixes GSC 404 errors. Manual curl testing confirmed all 14 locales return 200 for subpages. Homepage locale paths (/es, /fr, etc.) continue to be handled by [lang]/page.js."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ COMPREHENSIVE TESTING COMPLETE - All 22 test cases PASSED (100% success rate): 1) Localized subpages return 200: /es/quickies, /pt/coming-soon, /ko/top-lessons, /de/quickies, /fr/artist/acdc, /ja/coming-soon, /pt-br/top-lessons, /zh/quickies, /ru/quickies, /hi/top-lessons, /sv/coming-soon, /fi/quickies ✓ 2) Non-localized English pages work: /, /quickies, /coming-soon, /top-lessons ✓ 3) API routes not intercepted: /api/settings, /api/health ✓ 4) Localized homepage paths work: /es, /fr, /pt-br ✓ 5) Sitemap generates correctly with hreflang alternates ✓. Middleware successfully rewrites localized URLs to fix GSC 404 errors while preserving all other functionality."
+
 test_plan:
-  current_focus:
-    - "YouTube Dead Link Cleanup API"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
 agent_communication:
     - agent: "main"
-    - message: "NEW FEATURE: YouTube Dead Link Cleanup. Please test POST /api/admin/youtube/cleanup endpoint. It requires Basic Auth (admin:Babyty99). It scans all videos, batch-checks them via YouTube Data API, and removes dead ones. Test: 1) Unauthorized access returns 401. 2) Authenticated request works and returns success with total_checked, dead_removed, removed_videos fields. 3) If YouTube API key is missing it returns proper error. Note: The endpoint uses the YOUTUBE_API_KEY env var which is already configured."
+    - message: "FIX: Localized URL 404s resolved. Updated middleware.js to intercept /{locale}/{subpath} requests and rewrite them to /{subpath}. This fixes GSC 404 errors for URLs like /pt/artist/kenny-loggins, /es/quickies, /ko/top-lessons, etc. All 14 locales supported (en, es, pt, pt-br, de, fr, it, ja, ko, zh, ru, hi, sv, fi). Please test: 1) Localized subpages return 200 (e.g., GET /es/quickies, GET /pt/coming-soon, GET /ko/top-lessons, GET /fr/artist/acdc, GET /pt-br/top-lessons). 2) Non-localized pages still return 200 (e.g., GET /, GET /quickies, GET /coming-soon). 3) API routes still work (GET /api/settings, GET /api/health). 4) Localized homepage paths still work (GET /es, GET /fr). Base URL: http://localhost:3000"
     - agent: "testing"
-    - message: "TESTING COMPLETE: YouTube Dead Link Cleanup API endpoint structure is working correctly (authentication, routing, error handling). However, there's a YouTube API configuration issue - the API key is configured for Android apps but being used server-side, causing 'Requests from this Android client application <empty> are blocked.' All other endpoints (health, settings, admin stats) are working perfectly. SOLUTION: Reconfigure YouTube API key in Google Cloud Console from 'Android apps' restriction to 'None' or 'Server applications'."
+    - message: "✅ TESTING COMPLETE: i18n locale URL routing middleware fully verified. All 22 comprehensive test cases passed (100% success rate). Middleware successfully rewrites localized URLs (e.g., /es/quickies → /quickies) while preserving API routes, homepage paths, and sitemap generation. GSC 404 errors are now fixed. No issues found - middleware is working perfectly."

@@ -1,332 +1,233 @@
 #!/usr/bin/env python3
 """
-Backend API Testing Script for DadRock Tabs
-Tests the YouTube Dead Link Cleanup API and existing endpoints
+Backend Test Suite for DadRock Tabs i18n Locale URL Routing Middleware
+Tests the middleware at /app/middleware.js for localized URL rewrites
 """
 
-import requests
-import json
-import base64
+import asyncio
+import aiohttp
 import os
-from typing import Dict, Any
+import sys
+from typing import Dict, List, Tuple
 
 # Get base URL from environment
-BASE_URL = "https://admin-sync-hub-1.preview.emergentagent.com"
-API_BASE = f"{BASE_URL}/api"
+BASE_URL = os.getenv('NEXT_PUBLIC_BASE_URL', 'https://admin-sync-hub-1.preview.emergentagent.com')
 
-# Admin credentials
-ADMIN_USER = "admin"
-ADMIN_PASSWORD = "Babyty99"
+# Test configuration
+LOCALES = ['es', 'pt', 'ko', 'de', 'fr', 'ja', 'pt-br', 'zh', 'ru', 'hi', 'sv', 'fi']
+SUBPAGES = ['quickies', 'coming-soon', 'top-lessons', 'artist/acdc']
 
-def create_basic_auth_header(username: str, password: str) -> Dict[str, str]:
-    """Create Basic Auth header"""
-    credentials = f"{username}:{password}"
-    encoded_credentials = base64.b64encode(credentials.encode()).decode()
-    return {"Authorization": f"Basic {encoded_credentials}"}
-
-def test_unauthorized_cleanup():
-    """Test 1: Unauthorized access to cleanup endpoint"""
-    print("\n=== Test 1: Unauthorized access to cleanup endpoint ===")
-    try:
-        response = requests.post(f"{API_BASE}/admin/youtube/cleanup", timeout=30)
-        print(f"Status Code: {response.status_code}")
-        print(f"Response: {response.text}")
+class I18nMiddlewareTest:
+    def __init__(self):
+        self.base_url = BASE_URL
+        self.session = None
+        self.results = []
         
-        if response.status_code == 401:
-            print("✅ PASS: Unauthorized access correctly returns 401")
-            return True
-        else:
-            print(f"❌ FAIL: Expected 401, got {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ ERROR: {e}")
-        return False
-
-def test_wrong_credentials_cleanup():
-    """Test 2: Wrong credentials for cleanup endpoint"""
-    print("\n=== Test 2: Wrong credentials for cleanup endpoint ===")
-    try:
-        wrong_auth = create_basic_auth_header("admin", "wrongpassword")
-        response = requests.post(
-            f"{API_BASE}/admin/youtube/cleanup", 
-            headers=wrong_auth,
-            timeout=30
-        )
-        print(f"Status Code: {response.status_code}")
-        print(f"Response: {response.text}")
+    async def setup(self):
+        """Setup HTTP session"""
+        timeout = aiohttp.ClientTimeout(total=30)
+        self.session = aiohttp.ClientSession(timeout=timeout)
         
-        if response.status_code == 401:
-            print("✅ PASS: Wrong credentials correctly returns 401")
-            return True
-        else:
-            print(f"❌ FAIL: Expected 401, got {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ ERROR: {e}")
-        return False
-
-def test_authenticated_cleanup():
-    """Test 3: Authenticated cleanup request"""
-    print("\n=== Test 3: Authenticated cleanup request ===")
-    try:
-        auth_header = create_basic_auth_header(ADMIN_USER, ADMIN_PASSWORD)
-        response = requests.post(
-            f"{API_BASE}/admin/youtube/cleanup",
-            headers=auth_header,
-            timeout=60  # Longer timeout for cleanup operation
-        )
-        print(f"Status Code: {response.status_code}")
-        print(f"Response: {response.text}")
-        
-        if response.status_code == 200:
-            try:
-                data = response.json()
-                print("✅ PASS: Authenticated cleanup request returns 200")
-                return True, data
-            except json.JSONDecodeError:
-                print("❌ FAIL: Response is not valid JSON")
-                return False, None
-        elif response.status_code == 400:
-            # Check if it's a YouTube API issue
-            try:
-                data = response.json()
-                error_msg = data.get("error", "")
-                if "YouTube API key not configured" in error_msg:
-                    print("⚠️  WARNING: YouTube API key not configured - this is expected in some environments")
-                    return True, data
-                elif "YouTube API error" in error_msg:
-                    print(f"⚠️  WARNING: YouTube API configuration issue - {error_msg}")
-                    print("✅ PASS: Endpoint correctly handles YouTube API errors")
-                    # This is actually a pass - the endpoint is working, just the YouTube API has issues
-                    return True, data
+    async def cleanup(self):
+        """Cleanup HTTP session"""
+        if self.session:
+            await self.session.close()
+            
+    async def test_url(self, url: str, expected_status: int = 200, description: str = "") -> Tuple[bool, str]:
+        """Test a single URL and return (success, message)"""
+        try:
+            async with self.session.get(url, allow_redirects=True) as response:
+                status = response.status
+                success = status == expected_status
+                
+                if success:
+                    message = f"✅ {description}: {url} → {status}"
                 else:
-                    print(f"❌ FAIL: Bad request - {error_msg}")
-                    return False, None
-            except json.JSONDecodeError:
-                print(f"❌ FAIL: Expected 200, got {response.status_code}")
-                return False, None
-        else:
-            print(f"❌ FAIL: Expected 200, got {response.status_code}")
-            return False, None
-    except Exception as e:
-        print(f"❌ ERROR: {e}")
-        return False, None
-
-def test_response_structure(response_data: Dict[str, Any]):
-    """Test 4: Response structure validation"""
-    print("\n=== Test 4: Response structure validation ===")
-    try:
-        required_fields = ["success", "message", "total_checked", "dead_removed", "removed_videos"]
-        
-        if not response_data:
-            print("❌ FAIL: No response data to validate")
-            return False
+                    message = f"❌ {description}: {url} → {status} (expected {expected_status})"
+                    
+                return success, message
+                
+        except Exception as e:
+            message = f"❌ {description}: {url} → ERROR: {str(e)}"
+            return False, message
             
-        # Check if it's an error response (API key not configured or YouTube API error)
-        if "error" in response_data:
-            error_msg = response_data["error"]
-            if "YouTube API key not configured" in error_msg:
-                print("⚠️  WARNING: Cannot validate response structure - YouTube API key not configured")
-                return True
-            elif "YouTube API error" in error_msg:
-                print("⚠️  WARNING: Cannot validate response structure - YouTube API configuration issue")
-                print("✅ PASS: Endpoint correctly returns error for YouTube API issues")
-                return True
-            else:
-                print(f"❌ FAIL: Error in response - {error_msg}")
-                return False
+    async def test_localized_subpages(self) -> List[Tuple[bool, str]]:
+        """Test 1: Localized subpages return 200"""
+        print("\n=== TEST 1: Localized subpages return 200 ===")
+        results = []
         
-        missing_fields = []
-        for field in required_fields:
-            if field not in response_data:
-                missing_fields.append(field)
+        test_urls = [
+            f"{self.base_url}/es/quickies",
+            f"{self.base_url}/pt/coming-soon", 
+            f"{self.base_url}/ko/top-lessons",
+            f"{self.base_url}/de/quickies",
+            f"{self.base_url}/fr/artist/acdc",
+            f"{self.base_url}/ja/coming-soon",
+            f"{self.base_url}/pt-br/top-lessons",
+            f"{self.base_url}/zh/quickies",
+            f"{self.base_url}/ru/quickies",
+            f"{self.base_url}/hi/top-lessons",
+            f"{self.base_url}/sv/coming-soon",
+            f"{self.base_url}/fi/quickies"
+        ]
         
-        if missing_fields:
-            print(f"❌ FAIL: Missing required fields: {missing_fields}")
-            return False
-        
-        # Validate field types
-        if not isinstance(response_data["success"], bool):
-            print("❌ FAIL: 'success' field should be boolean")
-            return False
+        for url in test_urls:
+            success, message = await self.test_url(url, 200, "Localized subpage")
+            results.append((success, message))
+            print(message)
             
-        if not isinstance(response_data["message"], str):
-            print("❌ FAIL: 'message' field should be string")
-            return False
-            
-        if not isinstance(response_data["total_checked"], int):
-            print("❌ FAIL: 'total_checked' field should be integer")
-            return False
-            
-        if not isinstance(response_data["dead_removed"], int):
-            print("❌ FAIL: 'dead_removed' field should be integer")
-            return False
-            
-        if not isinstance(response_data["removed_videos"], list):
-            print("❌ FAIL: 'removed_videos' field should be array")
-            return False
+        return results
         
-        print("✅ PASS: Response structure is valid")
-        print(f"  - success: {response_data['success']} (bool)")
-        print(f"  - message: '{response_data['message']}' (string)")
-        print(f"  - total_checked: {response_data['total_checked']} (int)")
-        print(f"  - dead_removed: {response_data['dead_removed']} (int)")
-        print(f"  - removed_videos: {len(response_data['removed_videos'])} items (array)")
+    async def test_non_localized_pages(self) -> List[Tuple[bool, str]]:
+        """Test 2: Non-localized English pages still work (200)"""
+        print("\n=== TEST 2: Non-localized English pages still work ===")
+        results = []
         
-        return True
-    except Exception as e:
-        print(f"❌ ERROR: {e}")
-        return False
-
-def test_health_endpoint():
-    """Test 5: Health endpoint still works"""
-    print("\n=== Test 5: Health endpoint ===")
-    try:
-        response = requests.get(f"{API_BASE}/health", timeout=30)
-        print(f"Status Code: {response.status_code}")
-        print(f"Response: {response.text}")
+        test_urls = [
+            f"{self.base_url}/",
+            f"{self.base_url}/quickies",
+            f"{self.base_url}/coming-soon", 
+            f"{self.base_url}/top-lessons"
+        ]
         
-        if response.status_code == 200:
-            try:
-                data = response.json()
-                if "status" in data and data["status"] == "healthy":
-                    print("✅ PASS: Health endpoint working correctly")
-                    return True
+        for url in test_urls:
+            success, message = await self.test_url(url, 200, "Non-localized page")
+            results.append((success, message))
+            print(message)
+            
+        return results
+        
+    async def test_api_routes(self) -> List[Tuple[bool, str]]:
+        """Test 3: API routes still work (not intercepted by middleware)"""
+        print("\n=== TEST 3: API routes still work ===")
+        results = []
+        
+        test_urls = [
+            f"{self.base_url}/api/settings",
+            f"{self.base_url}/api/health"
+        ]
+        
+        for url in test_urls:
+            success, message = await self.test_url(url, 200, "API route")
+            results.append((success, message))
+            print(message)
+            
+        return results
+        
+    async def test_localized_homepage_paths(self) -> List[Tuple[bool, str]]:
+        """Test 4: Localized homepage paths still work (200)"""
+        print("\n=== TEST 4: Localized homepage paths still work ===")
+        results = []
+        
+        test_urls = [
+            f"{self.base_url}/es",
+            f"{self.base_url}/fr",
+            f"{self.base_url}/pt-br"
+        ]
+        
+        for url in test_urls:
+            success, message = await self.test_url(url, 200, "Localized homepage")
+            results.append((success, message))
+            print(message)
+            
+        return results
+        
+    async def test_sitemap_generation(self) -> List[Tuple[bool, str]]:
+        """Test 5: Sitemap still generates correctly"""
+        print("\n=== TEST 5: Sitemap generation ===")
+        results = []
+        
+        url = f"{self.base_url}/sitemap.xml"
+        
+        try:
+            async with self.session.get(url) as response:
+                status = response.status
+                content = await response.text()
+                
+                if status == 200:
+                    # Check if it's valid XML and contains hreflang alternates
+                    if 'xml' in content and 'hreflang' in content:
+                        success = True
+                        message = f"✅ Sitemap: {url} → {status} (contains XML with hreflang alternates)"
+                    else:
+                        success = False
+                        message = f"❌ Sitemap: {url} → {status} (missing XML or hreflang content)"
                 else:
-                    print("❌ FAIL: Health endpoint response invalid")
-                    return False
-            except json.JSONDecodeError:
-                print("❌ FAIL: Health endpoint response is not valid JSON")
-                return False
-        else:
-            print(f"❌ FAIL: Expected 200, got {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ ERROR: {e}")
-        return False
-
-def test_settings_endpoint():
-    """Test 6: Settings endpoint still works"""
-    print("\n=== Test 6: Settings endpoint ===")
-    try:
-        response = requests.get(f"{API_BASE}/settings", timeout=30)
-        print(f"Status Code: {response.status_code}")
-        print(f"Response: {response.text}")
+                    success = False
+                    message = f"❌ Sitemap: {url} → {status} (expected 200)"
+                    
+                results.append((success, message))
+                print(message)
+                
+        except Exception as e:
+            message = f"❌ Sitemap: {url} → ERROR: {str(e)}"
+            results.append((False, message))
+            print(message)
+            
+        return results
         
-        if response.status_code == 200:
-            try:
-                data = response.json()
-                required_fields = ["featured_video_url", "ad_duration"]
-                
-                missing_fields = []
-                for field in required_fields:
-                    if field not in data:
-                        missing_fields.append(field)
-                
-                if missing_fields:
-                    print(f"❌ FAIL: Missing required fields: {missing_fields}")
-                    return False
-                
-                print("✅ PASS: Settings endpoint working correctly")
-                print(f"  - featured_video_url: {data.get('featured_video_url')}")
-                print(f"  - ad_duration: {data.get('ad_duration')}")
-                return True
-            except json.JSONDecodeError:
-                print("❌ FAIL: Settings endpoint response is not valid JSON")
-                return False
-        else:
-            print(f"❌ FAIL: Expected 200, got {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ ERROR: {e}")
-        return False
-
-def test_admin_stats_endpoint():
-    """Test 7: Admin stats endpoint still works"""
-    print("\n=== Test 7: Admin stats endpoint ===")
-    try:
-        auth_header = create_basic_auth_header(ADMIN_USER, ADMIN_PASSWORD)
-        response = requests.get(
-            f"{API_BASE}/admin/stats",
-            headers=auth_header,
-            timeout=30
-        )
-        print(f"Status Code: {response.status_code}")
-        print(f"Response: {response.text}")
+    async def run_all_tests(self):
+        """Run all middleware tests"""
+        print(f"🧪 Testing i18n Locale URL Routing Middleware")
+        print(f"📍 Base URL: {self.base_url}")
+        print("=" * 80)
         
-        if response.status_code == 200:
-            try:
-                data = response.json()
-                required_fields = ["total_videos", "total_artists"]
-                
-                missing_fields = []
-                for field in required_fields:
-                    if field not in data:
-                        missing_fields.append(field)
-                
-                if missing_fields:
-                    print(f"❌ FAIL: Missing required fields: {missing_fields}")
-                    return False
-                
-                print("✅ PASS: Admin stats endpoint working correctly")
-                print(f"  - total_videos: {data.get('total_videos')}")
-                print(f"  - total_artists: {data.get('total_artists')}")
-                return True
-            except json.JSONDecodeError:
-                print("❌ FAIL: Admin stats endpoint response is not valid JSON")
-                return False
-        else:
-            print(f"❌ FAIL: Expected 200, got {response.status_code}")
-            return False
-    except Exception as e:
-        print(f"❌ ERROR: {e}")
-        return False
+        await self.setup()
+        
+        try:
+            # Run all test suites
+            test_1_results = await self.test_localized_subpages()
+            test_2_results = await self.test_non_localized_pages()
+            test_3_results = await self.test_api_routes()
+            test_4_results = await self.test_localized_homepage_paths()
+            test_5_results = await self.test_sitemap_generation()
+            
+            # Combine all results
+            all_results = test_1_results + test_2_results + test_3_results + test_4_results + test_5_results
+            
+            # Calculate summary
+            total_tests = len(all_results)
+            passed_tests = sum(1 for success, _ in all_results if success)
+            failed_tests = total_tests - passed_tests
+            
+            print("\n" + "=" * 80)
+            print("📊 TEST SUMMARY")
+            print("=" * 80)
+            print(f"Total Tests: {total_tests}")
+            print(f"✅ Passed: {passed_tests}")
+            print(f"❌ Failed: {failed_tests}")
+            print(f"Success Rate: {(passed_tests/total_tests)*100:.1f}%")
+            
+            if failed_tests > 0:
+                print("\n🚨 FAILED TESTS:")
+                for success, message in all_results:
+                    if not success:
+                        print(f"  {message}")
+                        
+            print("\n" + "=" * 80)
+            
+            # Return overall success
+            return failed_tests == 0
+            
+        finally:
+            await self.cleanup()
 
-def main():
-    """Run all tests"""
-    print("🚀 Starting YouTube Dead Link Cleanup API Tests")
-    print(f"Base URL: {BASE_URL}")
-    print(f"API Base: {API_BASE}")
-    
-    results = []
-    
-    # Test YouTube cleanup endpoint
-    results.append(test_unauthorized_cleanup())
-    results.append(test_wrong_credentials_cleanup())
-    
-    cleanup_success, cleanup_data = test_authenticated_cleanup()
-    results.append(cleanup_success)
-    
-    if cleanup_success and cleanup_data:
-        results.append(test_response_structure(cleanup_data))
-    else:
-        print("\n=== Test 4: Response structure validation ===")
-        print("⚠️  SKIP: Cannot validate response structure - cleanup request failed")
-        results.append(False)
-    
-    # Test existing endpoints
-    results.append(test_health_endpoint())
-    results.append(test_settings_endpoint())
-    results.append(test_admin_stats_endpoint())
-    
-    # Summary
-    passed = sum(results)
-    total = len(results)
-    
-    print(f"\n{'='*60}")
-    print(f"🏁 TEST SUMMARY")
-    print(f"{'='*60}")
-    print(f"Total Tests: {total}")
-    print(f"Passed: {passed}")
-    print(f"Failed: {total - passed}")
-    print(f"Success Rate: {(passed/total)*100:.1f}%")
-    
-    if passed == total:
-        print("🎉 ALL TESTS PASSED!")
-    else:
-        print("⚠️  SOME TESTS FAILED - Check output above for details")
-    
-    return passed == total
+async def main():
+    """Main test runner"""
+    try:
+        tester = I18nMiddlewareTest()
+        success = await tester.run_all_tests()
+        
+        if success:
+            print("🎉 ALL TESTS PASSED - i18n middleware is working correctly!")
+            sys.exit(0)
+        else:
+            print("💥 SOME TESTS FAILED - i18n middleware needs attention!")
+            sys.exit(1)
+            
+    except Exception as e:
+        print(f"💥 TEST RUNNER ERROR: {str(e)}")
+        sys.exit(1)
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
