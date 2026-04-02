@@ -363,6 +363,8 @@ export default function App({ initialLang = 'en' }) {
   const [isScanningPages, setIsScanningPages] = useState(false);
   const [scanResult, setScanResult] = useState(null);
   const [scanStatus, setScanStatus] = useState({ type: '', message: '' });
+  const [isAddingPages, setIsAddingPages] = useState(false);
+  const [addPagesResult, setAddPagesResult] = useState(null);
   
   // Sitemap ping state
   const [isPinging, setIsPinging] = useState(false);
@@ -826,6 +828,7 @@ export default function App({ initialLang = 'en' }) {
     setIsScanningPages(true);
     setScanStatus({ type: '', message: '' });
     setScanResult(null);
+    setAddPagesResult(null);
     try {
       const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
       const authToken = btoa(`admin:${storedPassword}`);
@@ -847,6 +850,44 @@ export default function App({ initialLang = 'en' }) {
       setScanStatus({ type: 'error', message: 'Connection error. Please try again.' });
     } finally {
       setIsScanningPages(false);
+    }
+  };
+
+  // Add missing pages to sitemap (verify + sync + ping)
+  const handleAddMissingPages = async () => {
+    setIsAddingPages(true);
+    setAddPagesResult(null);
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      
+      // Step 1: Trigger the add_missing_pages action
+      const res = await fetch('/api/admin/sitemap', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${authToken}` },
+        body: JSON.stringify({ action: 'add_missing_pages' }),
+      });
+      const data = await res.json();
+      
+      if (res.ok) {
+        setAddPagesResult(data);
+        
+        // Step 2: Auto-ping search engines to notify of sitemap updates
+        await fetch('/api/admin/sitemap', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${authToken}` },
+          body: JSON.stringify({ action: 'ping' }),
+        });
+        
+        // Step 3: Re-scan to verify
+        setTimeout(() => handleScanPages(), 2000);
+      } else {
+        setAddPagesResult({ success: false, message: data.error || 'Failed to add pages' });
+      }
+    } catch (err) {
+      setAddPagesResult({ success: false, message: 'Connection error. Please try again.' });
+    } finally {
+      setIsAddingPages(false);
     }
   };
 
@@ -2554,9 +2595,43 @@ export default function App({ initialLang = 'en' }) {
 
                   {scanResult.missing_from_sitemap?.length > 0 && (
                     <div className="mt-3">
-                      <p className="text-orange-400 font-medium text-sm mb-2">
-                        ⚠ {scanResult.missing_from_sitemap.length} pages missing from sitemap:
-                      </p>
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="text-orange-400 font-medium text-sm">
+                          ⚠ {scanResult.missing_from_sitemap.length} pages missing from sitemap:
+                        </p>
+                        <button
+                          onClick={handleAddMissingPages}
+                          disabled={isAddingPages}
+                          className="flex items-center gap-1 px-4 py-2 bg-green-600 text-white text-sm font-bold rounded-lg hover:bg-green-500 transition-colors disabled:opacity-50"
+                        >
+                          {isAddingPages ? (
+                            <>
+                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                              Syncing...
+                            </>
+                          ) : (
+                            <>
+                              <Plus className="w-4 h-4" />
+                              Add Missing Pages to Sitemap
+                            </>
+                          )}
+                        </button>
+                      </div>
+                      
+                      {addPagesResult && (
+                        <div className={`flex items-start gap-2 p-3 rounded-lg mb-3 ${
+                          addPagesResult.success ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                        }`}>
+                          {addPagesResult.success ? <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" /> : <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />}
+                          <div>
+                            <span className="text-sm font-medium">{addPagesResult.message}</span>
+                            {addPagesResult.action_taken && (
+                              <p className="text-xs mt-1 opacity-80">{addPagesResult.action_taken}</p>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      
                       <div className="max-h-48 overflow-y-auto rounded border border-zinc-700">
                         {scanResult.missing_from_sitemap.map((url, i) => (
                           <div key={i} className="px-3 py-2 text-sm text-zinc-300 border-b border-zinc-800 last:border-0">
