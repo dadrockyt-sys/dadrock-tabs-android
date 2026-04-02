@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus, Trophy, Zap, RefreshCw, Map } from 'lucide-react';
+import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus, Trophy, Zap, RefreshCw, Map, Activity, Shield, ExternalLink, Wifi, Database, FileText } from 'lucide-react';
 import { getTranslation, locales, localeNames, localeFlags } from '@/lib/i18n';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
@@ -369,6 +369,12 @@ export default function App({ initialLang = 'en' }) {
   const [pingStatus, setPingStatus] = useState({ type: '', message: '' });
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  
+  // Health check state
+  const [isRunningHealthCheck, setIsRunningHealthCheck] = useState(false);
+  const [healthReport, setHealthReport] = useState(null);
+  const [healthCheckMode, setHealthCheckMode] = useState('full');
+  const [isRemovingDeadVideos, setIsRemovingDeadVideos] = useState(false);
   
   // Admin upcoming videos state
   const [adminUpcomingVideos, setAdminUpcomingVideos] = useState([]);
@@ -862,6 +868,56 @@ export default function App({ initialLang = 'en' }) {
       setPingStatus({ type: 'error', message: 'Connection error. Please try again.' });
     } finally {
       setIsPinging(false);
+    }
+  };
+
+  // Website Health Check
+  const handleHealthCheck = async () => {
+    setIsRunningHealthCheck(true);
+    setHealthReport(null);
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      const res = await fetch(`/api/admin/health?mode=${healthCheckMode}`, {
+        headers: { 'Authorization': `Basic ${authToken}` }
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setHealthReport(data);
+      } else {
+        setHealthReport({ success: false, error: data.error || 'Health check failed' });
+      }
+    } catch (err) {
+      setHealthReport({ success: false, error: 'Connection error. Please try again.' });
+    } finally {
+      setIsRunningHealthCheck(false);
+    }
+  };
+
+  // Remove dead videos found by health check
+  const handleRemoveDeadVideos = async (videoIds) => {
+    if (!confirm(`Remove ${videoIds.length} dead video(s) from the database? This cannot be undone.`)) return;
+    setIsRemovingDeadVideos(true);
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      const res = await fetch('/api/admin/health', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${authToken}` },
+        body: JSON.stringify({ action: 'remove_dead_videos', video_ids: videoIds }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        // Refresh health report
+        handleHealthCheck();
+        loadStats();
+      } else {
+        alert(data.error || 'Failed to remove videos');
+      }
+    } catch (err) {
+      alert('Connection error. Please try again.');
+    } finally {
+      setIsRemovingDeadVideos(false);
     }
   };
 
@@ -2440,6 +2496,297 @@ export default function App({ initialLang = 'en' }) {
                 )}
               </button>
             </div>
+          </div>
+
+          {/* Website Health Check */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <Activity className="w-5 h-5 text-emerald-400" />
+              Website Health Check
+            </h2>
+            <p className="text-zinc-400 mb-4">
+              Comprehensive scan of your website: check for dead YouTube videos, broken internal URLs, API health, database stats, sitemap, and more.
+            </p>
+
+            {/* Mode selector */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {[
+                { value: 'full', label: 'Full Scan', desc: 'Everything' },
+                { value: 'quick', label: 'Quick Check', desc: 'APIs, sitemap, robots' },
+                { value: 'videos_only', label: 'Dead Videos Only', desc: 'YouTube links' },
+                { value: 'urls_only', label: 'Dead URLs Only', desc: 'Internal pages' },
+              ].map(m => (
+                <button
+                  key={m.value}
+                  onClick={() => setHealthCheckMode(m.value)}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    healthCheckMode === m.value
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
+                  }`}
+                >
+                  {m.label}
+                  <span className="block text-xs opacity-70">{m.desc}</span>
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={handleHealthCheck}
+              disabled={isRunningHealthCheck}
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-500 transition-colors disabled:opacity-50"
+            >
+              {isRunningHealthCheck ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Running Health Check...
+                </>
+              ) : (
+                <>
+                  <Shield className="w-5 h-5" />
+                  Run Health Check
+                </>
+              )}
+            </button>
+
+            {/* Health Report Results */}
+            {healthReport && (
+              <div className="mt-6">
+                {!healthReport.success && healthReport.error ? (
+                  <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/20 text-red-400">
+                    <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                    <span className="text-sm">{healthReport.error}</span>
+                  </div>
+                ) : (
+                  <>
+                    {/* Overall Status Banner */}
+                    <div className={`flex items-center gap-3 p-4 rounded-lg mb-4 ${
+                      healthReport.overall_status === 'healthy' ? 'bg-emerald-500/20 border border-emerald-500/30' :
+                      healthReport.overall_status === 'warning' ? 'bg-yellow-500/20 border border-yellow-500/30' :
+                      'bg-red-500/20 border border-red-500/30'
+                    }`}>
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xl ${
+                        healthReport.overall_status === 'healthy' ? 'bg-emerald-500/30' :
+                        healthReport.overall_status === 'warning' ? 'bg-yellow-500/30' :
+                        'bg-red-500/30'
+                      }`}>
+                        {healthReport.overall_status === 'healthy' ? '✅' : healthReport.overall_status === 'warning' ? '⚠️' : '🚨'}
+                      </div>
+                      <div>
+                        <p className={`font-bold text-lg ${
+                          healthReport.overall_status === 'healthy' ? 'text-emerald-400' :
+                          healthReport.overall_status === 'warning' ? 'text-yellow-400' :
+                          'text-red-400'
+                        }`}>
+                          {healthReport.overall_status === 'healthy' ? 'All Systems Healthy' :
+                           healthReport.overall_status === 'warning' ? 'Warnings Found' : 'Critical Issues'}
+                        </p>
+                        <p className="text-xs text-zinc-400">
+                          {healthReport.total_checks} checks completed • {new Date(healthReport.timestamp).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Issues Summary */}
+                    {healthReport.issues && healthReport.issues.length > 0 && (
+                      <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3 mb-4">
+                        <p className="text-yellow-400 font-semibold text-sm mb-2">Issues Found:</p>
+                        <ul className="text-sm text-yellow-300 space-y-1">
+                          {healthReport.issues.map((issue, i) => (
+                            <li key={i} className="flex items-center gap-2">
+                              <span className="text-yellow-500">•</span> {issue}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Check Results Grid */}
+                    <div className="space-y-3">
+                      {/* Database */}
+                      {healthReport.checks.database && (
+                        <div className="bg-zinc-800/50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-3">
+                            <Database className="w-4 h-4 text-blue-400" />
+                            <h4 className="font-semibold text-white">Database</h4>
+                            <span className={`ml-auto px-2 py-0.5 rounded-full text-xs font-medium ${
+                              healthReport.checks.database.status === 'ok' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
+                            }`}>
+                              {healthReport.checks.database.status === 'ok' ? '● Connected' : '● Error'}
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            {[
+                              { label: 'Videos', value: healthReport.checks.database.details?.videos || 0, color: 'text-red-400' },
+                              { label: 'Artists', value: healthReport.checks.database.details?.artists || 0, color: 'text-amber-400' },
+                              { label: 'Song Pages', value: healthReport.checks.database.details?.song_pages || 0, color: 'text-purple-400' },
+                              { label: 'Upcoming', value: healthReport.checks.database.details?.upcoming_videos || 0, color: 'text-blue-400' },
+                            ].map((stat, i) => (
+                              <div key={i} className="bg-zinc-700/50 rounded-lg p-2 text-center">
+                                <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
+                                <div className="text-xs text-zinc-400">{stat.label}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* API Endpoints */}
+                      {healthReport.checks.api_endpoints && (
+                        <div className="bg-zinc-800/50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-3">
+                            <Wifi className="w-4 h-4 text-cyan-400" />
+                            <h4 className="font-semibold text-white">API Endpoints</h4>
+                            <span className={`ml-auto px-2 py-0.5 rounded-full text-xs font-medium ${
+                              healthReport.checks.api_endpoints.status === 'ok' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
+                            }`}>
+                              {healthReport.checks.api_endpoints.details?.passed || 0}/{healthReport.checks.api_endpoints.details?.total_checked || 0} Passing
+                            </span>
+                          </div>
+                          <div className="space-y-1">
+                            {(healthReport.checks.api_endpoints.details?.results || []).map((r, i) => (
+                              <div key={i} className="flex items-center gap-2 text-sm">
+                                <span className={r.ok ? 'text-emerald-400' : 'text-red-400'}>{r.ok ? '✓' : '✗'}</span>
+                                <span className="text-zinc-300 font-mono text-xs">{r.url}</span>
+                                <span className={`text-xs ${r.ok ? 'text-zinc-500' : 'text-red-400'}`}>{r.status}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Sitemap & Robots */}
+                      {(healthReport.checks.sitemap || healthReport.checks.robots) && (
+                        <div className="bg-zinc-800/50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-3">
+                            <FileText className="w-4 h-4 text-indigo-400" />
+                            <h4 className="font-semibold text-white">SEO Files</h4>
+                          </div>
+                          <div className="space-y-2">
+                            {healthReport.checks.sitemap && (
+                              <div className="flex items-center gap-2 text-sm">
+                                <span className={healthReport.checks.sitemap.status === 'ok' ? 'text-emerald-400' : 'text-red-400'}>
+                                  {healthReport.checks.sitemap.status === 'ok' ? '✓' : '✗'}
+                                </span>
+                                <span className="text-zinc-300">sitemap.xml</span>
+                                {healthReport.checks.sitemap.details?.page_count > 0 && (
+                                  <span className="text-zinc-500 text-xs">({healthReport.checks.sitemap.details.page_count} URLs)</span>
+                                )}
+                              </div>
+                            )}
+                            {healthReport.checks.robots && (
+                              <div className="flex items-center gap-2 text-sm">
+                                <span className={healthReport.checks.robots.status === 'ok' ? 'text-emerald-400' : 'text-yellow-400'}>
+                                  {healthReport.checks.robots.status === 'ok' ? '✓' : '⚠'}
+                                </span>
+                                <span className="text-zinc-300">robots.txt</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Internal URLs */}
+                      {healthReport.checks.internal_urls && (
+                        <div className="bg-zinc-800/50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-3">
+                            <Globe className="w-4 h-4 text-green-400" />
+                            <h4 className="font-semibold text-white">Internal Pages</h4>
+                            <span className={`ml-auto px-2 py-0.5 rounded-full text-xs font-medium ${
+                              healthReport.checks.internal_urls.status === 'ok' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-yellow-500/20 text-yellow-400'
+                            }`}>
+                              {healthReport.checks.internal_urls.details?.alive || 0}/{healthReport.checks.internal_urls.details?.total_checked || 0} Alive
+                            </span>
+                          </div>
+                          {healthReport.checks.internal_urls.details?.dead > 0 && (
+                            <div className="mt-2">
+                              <p className="text-yellow-400 text-sm font-medium mb-2">Dead/Broken URLs:</p>
+                              <div className="max-h-48 overflow-y-auto rounded border border-zinc-700">
+                                {(healthReport.checks.internal_urls.details?.dead_urls || []).map((u, i) => (
+                                  <div key={i} className="flex items-center gap-2 px-3 py-2 text-sm border-b border-zinc-800 last:border-0">
+                                    <span className="text-red-400 font-mono text-xs">{u.status || 'ERR'}</span>
+                                    <span className="text-zinc-300 truncate">{u.url}</span>
+                                    {u.error && <span className="text-zinc-500 text-xs">({u.error})</span>}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          {healthReport.checks.internal_urls.details?.dead === 0 && (
+                            <p className="text-emerald-400 text-sm">All {healthReport.checks.internal_urls.details?.total_checked} internal pages are returning 200 OK.</p>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Dead Videos */}
+                      {healthReport.checks.dead_videos && (
+                        <div className="bg-zinc-800/50 rounded-lg p-4">
+                          <div className="flex items-center gap-2 mb-3">
+                            <Youtube className="w-4 h-4 text-red-400" />
+                            <h4 className="font-semibold text-white">YouTube Video Links</h4>
+                            <span className={`ml-auto px-2 py-0.5 rounded-full text-xs font-medium ${
+                              healthReport.checks.dead_videos.status === 'ok' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-yellow-500/20 text-yellow-400'
+                            }`}>
+                              {healthReport.checks.dead_videos.details?.alive || 0}/{healthReport.checks.dead_videos.details?.total_checked || 0} Alive
+                            </span>
+                          </div>
+                          <p className="text-xs text-zinc-500 mb-2">
+                            Method: {healthReport.checks.dead_videos.details?.method || 'N/A'}
+                            {healthReport.checks.dead_videos.details?.api_error && (
+                              <span className="text-yellow-400 ml-2">(API error: {healthReport.checks.dead_videos.details.api_error})</span>
+                            )}
+                          </p>
+                          {healthReport.checks.dead_videos.details?.dead > 0 && (
+                            <div className="mt-2">
+                              <div className="flex items-center justify-between mb-2">
+                                <p className="text-yellow-400 text-sm font-medium">
+                                  {healthReport.checks.dead_videos.details.dead} Dead Video(s) Found:
+                                </p>
+                                <button
+                                  onClick={() => handleRemoveDeadVideos(healthReport.checks.dead_videos.details.dead_videos.map(v => v.id))}
+                                  disabled={isRemovingDeadVideos}
+                                  className="flex items-center gap-1 px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-lg hover:bg-red-500 transition-colors disabled:opacity-50"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                  {isRemovingDeadVideos ? 'Removing...' : 'Remove All Dead Videos'}
+                                </button>
+                              </div>
+                              <div className="max-h-48 overflow-y-auto rounded border border-zinc-700">
+                                <table className="w-full text-sm">
+                                  <thead className="bg-zinc-800 sticky top-0">
+                                    <tr>
+                                      <th className="text-left px-3 py-2 text-zinc-400 font-medium">Song</th>
+                                      <th className="text-left px-3 py-2 text-zinc-400 font-medium">Artist</th>
+                                      <th className="text-left px-3 py-2 text-zinc-400 font-medium">URL</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {(healthReport.checks.dead_videos.details?.dead_videos || []).map((video, idx) => (
+                                      <tr key={idx} className="border-t border-zinc-800 hover:bg-zinc-800/50">
+                                        <td className="px-3 py-2 text-white font-medium truncate max-w-[150px]">{video.song}</td>
+                                        <td className="px-3 py-2 text-zinc-300 truncate max-w-[120px]">{video.artist}</td>
+                                        <td className="px-3 py-2">
+                                          <a href={video.youtube_url} target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 text-xs truncate max-w-[200px] block line-through">
+                                            {video.youtube_url}
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          )}
+                          {healthReport.checks.dead_videos.details?.dead === 0 && (
+                            <p className="text-emerald-400 text-sm">All {healthReport.checks.dead_videos.details?.total_checked} YouTube videos are alive and accessible.</p>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Top Lessons Management Section */}

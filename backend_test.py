@@ -1,233 +1,260 @@
 #!/usr/bin/env python3
 """
-Backend Test Suite for DadRock Tabs i18n Locale URL Routing Middleware
-Tests the middleware at /app/middleware.js for localized URL rewrites
+Backend Test Suite for DadRock Tabs Website Health Check API
+Tests the /api/admin/health endpoint with various modes and authentication scenarios.
 """
 
-import asyncio
-import aiohttp
-import os
-import sys
-from typing import Dict, List, Tuple
+import requests
+import json
+import base64
+import time
+from urllib.parse import urljoin
 
-# Get base URL from environment
-BASE_URL = os.getenv('NEXT_PUBLIC_BASE_URL', 'https://admin-sync-hub-1.preview.emergentagent.com')
+# Configuration
+BASE_URL = "https://admin-sync-hub-1.preview.emergentagent.com"
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "Babyty99"
 
-# Test configuration
-LOCALES = ['es', 'pt', 'ko', 'de', 'fr', 'ja', 'pt-br', 'zh', 'ru', 'hi', 'sv', 'fi']
-SUBPAGES = ['quickies', 'coming-soon', 'top-lessons', 'artist/acdc']
+def create_auth_header(username, password):
+    """Create Basic Auth header"""
+    credentials = f"{username}:{password}"
+    encoded_credentials = base64.b64encode(credentials.encode()).decode()
+    return {"Authorization": f"Basic {encoded_credentials}"}
 
-class I18nMiddlewareTest:
-    def __init__(self):
-        self.base_url = BASE_URL
-        self.session = None
-        self.results = []
-        
-    async def setup(self):
-        """Setup HTTP session"""
-        timeout = aiohttp.ClientTimeout(total=30)
-        self.session = aiohttp.ClientSession(timeout=timeout)
-        
-    async def cleanup(self):
-        """Cleanup HTTP session"""
-        if self.session:
-            await self.session.close()
-            
-    async def test_url(self, url: str, expected_status: int = 200, description: str = "") -> Tuple[bool, str]:
-        """Test a single URL and return (success, message)"""
-        try:
-            async with self.session.get(url, allow_redirects=True) as response:
-                status = response.status
-                success = status == expected_status
-                
-                if success:
-                    message = f"✅ {description}: {url} → {status}"
-                else:
-                    message = f"❌ {description}: {url} → {status} (expected {expected_status})"
-                    
-                return success, message
-                
-        except Exception as e:
-            message = f"❌ {description}: {url} → ERROR: {str(e)}"
-            return False, message
-            
-    async def test_localized_subpages(self) -> List[Tuple[bool, str]]:
-        """Test 1: Localized subpages return 200"""
-        print("\n=== TEST 1: Localized subpages return 200 ===")
-        results = []
-        
-        test_urls = [
-            f"{self.base_url}/es/quickies",
-            f"{self.base_url}/pt/coming-soon", 
-            f"{self.base_url}/ko/top-lessons",
-            f"{self.base_url}/de/quickies",
-            f"{self.base_url}/fr/artist/acdc",
-            f"{self.base_url}/ja/coming-soon",
-            f"{self.base_url}/pt-br/top-lessons",
-            f"{self.base_url}/zh/quickies",
-            f"{self.base_url}/ru/quickies",
-            f"{self.base_url}/hi/top-lessons",
-            f"{self.base_url}/sv/coming-soon",
-            f"{self.base_url}/fi/quickies"
-        ]
-        
-        for url in test_urls:
-            success, message = await self.test_url(url, 200, "Localized subpage")
-            results.append((success, message))
-            print(message)
-            
-        return results
-        
-    async def test_non_localized_pages(self) -> List[Tuple[bool, str]]:
-        """Test 2: Non-localized English pages still work (200)"""
-        print("\n=== TEST 2: Non-localized English pages still work ===")
-        results = []
-        
-        test_urls = [
-            f"{self.base_url}/",
-            f"{self.base_url}/quickies",
-            f"{self.base_url}/coming-soon", 
-            f"{self.base_url}/top-lessons"
-        ]
-        
-        for url in test_urls:
-            success, message = await self.test_url(url, 200, "Non-localized page")
-            results.append((success, message))
-            print(message)
-            
-        return results
-        
-    async def test_api_routes(self) -> List[Tuple[bool, str]]:
-        """Test 3: API routes still work (not intercepted by middleware)"""
-        print("\n=== TEST 3: API routes still work ===")
-        results = []
-        
-        test_urls = [
-            f"{self.base_url}/api/settings",
-            f"{self.base_url}/api/health"
-        ]
-        
-        for url in test_urls:
-            success, message = await self.test_url(url, 200, "API route")
-            results.append((success, message))
-            print(message)
-            
-        return results
-        
-    async def test_localized_homepage_paths(self) -> List[Tuple[bool, str]]:
-        """Test 4: Localized homepage paths still work (200)"""
-        print("\n=== TEST 4: Localized homepage paths still work ===")
-        results = []
-        
-        test_urls = [
-            f"{self.base_url}/es",
-            f"{self.base_url}/fr",
-            f"{self.base_url}/pt-br"
-        ]
-        
-        for url in test_urls:
-            success, message = await self.test_url(url, 200, "Localized homepage")
-            results.append((success, message))
-            print(message)
-            
-        return results
-        
-    async def test_sitemap_generation(self) -> List[Tuple[bool, str]]:
-        """Test 5: Sitemap still generates correctly"""
-        print("\n=== TEST 5: Sitemap generation ===")
-        results = []
-        
-        url = f"{self.base_url}/sitemap.xml"
-        
-        try:
-            async with self.session.get(url) as response:
-                status = response.status
-                content = await response.text()
-                
-                if status == 200:
-                    # Check if it's valid XML and contains hreflang alternates
-                    if 'xml' in content and 'hreflang' in content:
-                        success = True
-                        message = f"✅ Sitemap: {url} → {status} (contains XML with hreflang alternates)"
-                    else:
-                        success = False
-                        message = f"❌ Sitemap: {url} → {status} (missing XML or hreflang content)"
-                else:
-                    success = False
-                    message = f"❌ Sitemap: {url} → {status} (expected 200)"
-                    
-                results.append((success, message))
-                print(message)
-                
-        except Exception as e:
-            message = f"❌ Sitemap: {url} → ERROR: {str(e)}"
-            results.append((False, message))
-            print(message)
-            
-        return results
-        
-    async def run_all_tests(self):
-        """Run all middleware tests"""
-        print(f"🧪 Testing i18n Locale URL Routing Middleware")
-        print(f"📍 Base URL: {self.base_url}")
-        print("=" * 80)
-        
-        await self.setup()
-        
-        try:
-            # Run all test suites
-            test_1_results = await self.test_localized_subpages()
-            test_2_results = await self.test_non_localized_pages()
-            test_3_results = await self.test_api_routes()
-            test_4_results = await self.test_localized_homepage_paths()
-            test_5_results = await self.test_sitemap_generation()
-            
-            # Combine all results
-            all_results = test_1_results + test_2_results + test_3_results + test_4_results + test_5_results
-            
-            # Calculate summary
-            total_tests = len(all_results)
-            passed_tests = sum(1 for success, _ in all_results if success)
-            failed_tests = total_tests - passed_tests
-            
-            print("\n" + "=" * 80)
-            print("📊 TEST SUMMARY")
-            print("=" * 80)
-            print(f"Total Tests: {total_tests}")
-            print(f"✅ Passed: {passed_tests}")
-            print(f"❌ Failed: {failed_tests}")
-            print(f"Success Rate: {(passed_tests/total_tests)*100:.1f}%")
-            
-            if failed_tests > 0:
-                print("\n🚨 FAILED TESTS:")
-                for success, message in all_results:
-                    if not success:
-                        print(f"  {message}")
-                        
-            print("\n" + "=" * 80)
-            
-            # Return overall success
-            return failed_tests == 0
-            
-        finally:
-            await self.cleanup()
-
-async def main():
-    """Main test runner"""
+def test_health_check_api():
+    """Test the Website Health Check API at /api/admin/health"""
+    print("=" * 80)
+    print("TESTING: Website Health Check API (/api/admin/health)")
+    print("=" * 80)
+    
+    results = []
+    
+    # Test 1: GET /api/admin/health without auth → expect 401
+    print("\n1. Testing GET /api/admin/health without auth (expect 401)")
     try:
-        tester = I18nMiddlewareTest()
-        success = await tester.run_all_tests()
+        response = requests.get(f"{BASE_URL}/api/admin/health", timeout=30)
+        print(f"   Status: {response.status_code}")
+        print(f"   Response: {response.text[:200]}")
         
-        if success:
-            print("🎉 ALL TESTS PASSED - i18n middleware is working correctly!")
-            sys.exit(0)
+        if response.status_code == 401:
+            print("   ✅ PASS: Correctly returned 401 for unauthorized access")
+            results.append(("Auth check (no auth)", True))
         else:
-            print("💥 SOME TESTS FAILED - i18n middleware needs attention!")
-            sys.exit(1)
-            
+            print(f"   ❌ FAIL: Expected 401, got {response.status_code}")
+            results.append(("Auth check (no auth)", False))
     except Exception as e:
-        print(f"💥 TEST RUNNER ERROR: {str(e)}")
-        sys.exit(1)
+        print(f"   ❌ ERROR: {e}")
+        results.append(("Auth check (no auth)", False))
+    
+    # Test 2: GET /api/admin/health with wrong password → expect 401
+    print("\n2. Testing GET /api/admin/health with wrong password (expect 401)")
+    try:
+        wrong_auth = create_auth_header(ADMIN_USERNAME, "wrongpassword")
+        response = requests.get(f"{BASE_URL}/api/admin/health", headers=wrong_auth, timeout=30)
+        print(f"   Status: {response.status_code}")
+        print(f"   Response: {response.text[:200]}")
+        
+        if response.status_code == 401:
+            print("   ✅ PASS: Correctly returned 401 for wrong password")
+            results.append(("Auth check (wrong password)", True))
+        else:
+            print(f"   ❌ FAIL: Expected 401, got {response.status_code}")
+            results.append(("Auth check (wrong password)", False))
+    except Exception as e:
+        print(f"   ❌ ERROR: {e}")
+        results.append(("Auth check (wrong password)", False))
+    
+    # Test 3: GET /api/admin/health?mode=quick with auth → expect 200
+    print("\n3. Testing GET /api/admin/health?mode=quick with auth (expect 200)")
+    try:
+        auth_header = create_auth_header(ADMIN_USERNAME, ADMIN_PASSWORD)
+        response = requests.get(f"{BASE_URL}/api/admin/health?mode=quick", headers=auth_header, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"   Response keys: {list(data.keys())}")
+            
+            # Check for expected checks
+            expected_checks = ['database', 'api_endpoints', 'sitemap', 'robots']
+            checks = data.get('checks', {})
+            print(f"   Available checks: {list(checks.keys())}")
+            
+            all_checks_present = all(check in checks for check in expected_checks)
+            if all_checks_present:
+                print("   ✅ PASS: All expected checks present (database, api_endpoints, sitemap, robots)")
+                results.append(("Quick mode", True))
+            else:
+                missing = [c for c in expected_checks if c not in checks]
+                print(f"   ❌ FAIL: Missing checks: {missing}")
+                results.append(("Quick mode", False))
+        else:
+            print(f"   ❌ FAIL: Expected 200, got {response.status_code}")
+            print(f"   Response: {response.text[:200]}")
+            results.append(("Quick mode", False))
+    except Exception as e:
+        print(f"   ❌ ERROR: {e}")
+        results.append(("Quick mode", False))
+    
+    # Test 4: GET /api/admin/health?mode=videos_only with auth → expect 200 (10-30s timeout)
+    print("\n4. Testing GET /api/admin/health?mode=videos_only with auth (expect 200, 60s timeout)")
+    try:
+        auth_header = create_auth_header(ADMIN_USERNAME, ADMIN_PASSWORD)
+        start_time = time.time()
+        response = requests.get(f"{BASE_URL}/api/admin/health?mode=videos_only", headers=auth_header, timeout=60)
+        end_time = time.time()
+        duration = end_time - start_time
+        
+        print(f"   Status: {response.status_code}")
+        print(f"   Duration: {duration:.2f} seconds")
+        
+        if response.status_code == 200:
+            data = response.json()
+            checks = data.get('checks', {})
+            print(f"   Available checks: {list(checks.keys())}")
+            
+            # Should have database and dead_videos checks
+            expected_checks = ['database', 'dead_videos']
+            all_checks_present = all(check in checks for check in expected_checks)
+            
+            if all_checks_present:
+                print("   ✅ PASS: Videos only mode working with database and dead_videos checks")
+                results.append(("Videos only mode", True))
+            else:
+                missing = [c for c in expected_checks if c not in checks]
+                print(f"   ❌ FAIL: Missing checks: {missing}")
+                results.append(("Videos only mode", False))
+        else:
+            print(f"   ❌ FAIL: Expected 200, got {response.status_code}")
+            print(f"   Response: {response.text[:200]}")
+            results.append(("Videos only mode", False))
+    except Exception as e:
+        print(f"   ❌ ERROR: {e}")
+        results.append(("Videos only mode", False))
+    
+    # Test 5: GET /api/admin/health?mode=urls_only with auth → expect 200 (30-120s timeout)
+    print("\n5. Testing GET /api/admin/health?mode=urls_only with auth (expect 200, 180s timeout)")
+    try:
+        auth_header = create_auth_header(ADMIN_USERNAME, ADMIN_PASSWORD)
+        start_time = time.time()
+        response = requests.get(f"{BASE_URL}/api/admin/health?mode=urls_only", headers=auth_header, timeout=180)
+        end_time = time.time()
+        duration = end_time - start_time
+        
+        print(f"   Status: {response.status_code}")
+        print(f"   Duration: {duration:.2f} seconds")
+        
+        if response.status_code == 200:
+            data = response.json()
+            checks = data.get('checks', {})
+            print(f"   Available checks: {list(checks.keys())}")
+            
+            # Should have database and internal_urls checks
+            expected_checks = ['database', 'internal_urls']
+            all_checks_present = all(check in checks for check in expected_checks)
+            
+            if all_checks_present:
+                print("   ✅ PASS: URLs only mode working with database and internal_urls checks")
+                results.append(("URLs only mode", True))
+            else:
+                missing = [c for c in expected_checks if c not in checks]
+                print(f"   ❌ FAIL: Missing checks: {missing}")
+                results.append(("URLs only mode", False))
+        else:
+            print(f"   ❌ FAIL: Expected 200, got {response.status_code}")
+            print(f"   Response: {response.text[:200]}")
+            results.append(("URLs only mode", False))
+    except Exception as e:
+        print(f"   ❌ ERROR: {e}")
+        results.append(("URLs only mode", False))
+    
+    # Test 6: POST /api/admin/health with remove_dead_videos action → expect 200
+    print("\n6. Testing POST /api/admin/health with remove_dead_videos action (expect 200)")
+    try:
+        auth_header = create_auth_header(ADMIN_USERNAME, ADMIN_PASSWORD)
+        payload = {
+            "action": "remove_dead_videos",
+            "video_ids": ["nonexistent-id"]
+        }
+        response = requests.post(f"{BASE_URL}/api/admin/health", 
+                               headers={**auth_header, "Content-Type": "application/json"}, 
+                               json=payload, 
+                               timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"   Response: {data}")
+            
+            # Should have removed_count of 0 since ID doesn't exist
+            removed_count = data.get('removed_count', -1)
+            if removed_count == 0:
+                print("   ✅ PASS: Correctly returned removed_count=0 for nonexistent ID")
+                results.append(("POST remove dead videos", True))
+            else:
+                print(f"   ❌ FAIL: Expected removed_count=0, got {removed_count}")
+                results.append(("POST remove dead videos", False))
+        else:
+            print(f"   ❌ FAIL: Expected 200, got {response.status_code}")
+            print(f"   Response: {response.text[:200]}")
+            results.append(("POST remove dead videos", False))
+    except Exception as e:
+        print(f"   ❌ ERROR: {e}")
+        results.append(("POST remove dead videos", False))
+    
+    # Test 7: POST /api/admin/health without auth → expect 401
+    print("\n7. Testing POST /api/admin/health without auth (expect 401)")
+    try:
+        payload = {
+            "action": "remove_dead_videos",
+            "video_ids": ["test-id"]
+        }
+        response = requests.post(f"{BASE_URL}/api/admin/health", 
+                               headers={"Content-Type": "application/json"}, 
+                               json=payload, 
+                               timeout=30)
+        print(f"   Status: {response.status_code}")
+        print(f"   Response: {response.text[:200]}")
+        
+        if response.status_code == 401:
+            print("   ✅ PASS: Correctly returned 401 for unauthorized POST")
+            results.append(("POST unauthorized", True))
+        else:
+            print(f"   ❌ FAIL: Expected 401, got {response.status_code}")
+            results.append(("POST unauthorized", False))
+    except Exception as e:
+        print(f"   ❌ ERROR: {e}")
+        results.append(("POST unauthorized", False))
+    
+    # Summary
+    print("\n" + "=" * 80)
+    print("HEALTH CHECK API TEST SUMMARY")
+    print("=" * 80)
+    
+    passed = sum(1 for _, success in results if success)
+    total = len(results)
+    
+    for test_name, success in results:
+        status = "✅ PASS" if success else "❌ FAIL"
+        print(f"{status}: {test_name}")
+    
+    print(f"\nOverall: {passed}/{total} tests passed ({passed/total*100:.1f}%)")
+    
+    if passed == total:
+        print("🎉 ALL TESTS PASSED! Website Health Check API is working correctly.")
+        return True
+    else:
+        print("⚠️  Some tests failed. Please review the issues above.")
+        return False
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    print("Starting Website Health Check API Tests...")
+    print(f"Base URL: {BASE_URL}")
+    print(f"Testing endpoint: /api/admin/health")
+    
+    success = test_health_check_api()
+    
+    if success:
+        exit(0)
+    else:
+        exit(1)
