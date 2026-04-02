@@ -1,30 +1,9 @@
 import { locales } from '@/lib/i18n';
 import { getDb } from '@/lib/mongodb';
+import { artistToSlug } from '@/lib/slugify';
 
 // Use non-www as canonical (matches your redirect setup)
 const baseUrl = 'https://dadrocktabs.com';
-
-// Convert artist name to URL slug
-function artistToSlug(artistName) {
-  const specialCases = {
-    'AC/DC': 'acdc',
-    "Guns N' Roses": 'guns-n-roses',
-    'Motörhead': 'motorhead',
-    'Blue Öyster Cult': 'blue-oyster-cult',
-    'Mötley Crüe': 'motley-crue',
-  };
-  
-  if (specialCases[artistName]) {
-    return specialCases[artistName];
-  }
-  
-  return artistName
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .trim();
-}
 
 // Helper: generate hreflang alternates for a given path
 function generateLanguageAlternates(path = '') {

@@ -375,6 +375,9 @@ export default function App({ initialLang = 'en' }) {
   const [healthReport, setHealthReport] = useState(null);
   const [healthCheckMode, setHealthCheckMode] = useState('full');
   const [isRemovingDeadVideos, setIsRemovingDeadVideos] = useState(false);
+  const [isDeletingDeadUrls, setIsDeletingDeadUrls] = useState(false);
+  const [deadUrlAction, setDeadUrlAction] = useState('');
+  const [deletingDeadUrls, setDeletingDeadUrls] = useState({});
   
   // Admin upcoming videos state
   const [adminUpcomingVideos, setAdminUpcomingVideos] = useState([]);
@@ -908,7 +911,7 @@ export default function App({ initialLang = 'en' }) {
       });
       const data = await res.json();
       if (res.ok) {
-        // Refresh health report
+        alert(data.message || 'Dead videos removed successfully!');
         handleHealthCheck();
         loadStats();
       } else {
@@ -918,6 +921,111 @@ export default function App({ initialLang = 'en' }) {
       alert('Connection error. Please try again.');
     } finally {
       setIsRemovingDeadVideos(false);
+    }
+  };
+
+  // Delete videos for a specific dead artist URL
+  const handleDeleteDeadUrlArtist = async (deadUrl) => {
+    // Extract artist slug from URL like "/artist/ac-dc"
+    const match = deadUrl.match(/\/artist\/(.+)/);
+    if (!match) return;
+    
+    const slug = match[1];
+    // Convert slug back to approximate artist name
+    const artistName = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    
+    if (!confirm(`Delete all videos for "${artistName}" (slug: ${slug}) from the database?\n\nThis cannot be undone.`)) return;
+    
+    setDeletingDeadUrls(prev => ({ ...prev, [deadUrl]: true }));
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      
+      // First get details about what will be deleted
+      const detailRes = await fetch('/api/admin/health', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${authToken}` },
+        body: JSON.stringify({ action: 'get_dead_url_details', dead_urls: [deadUrl] }),
+      });
+      const detailData = await detailRes.json();
+      
+      if (detailData.success && detailData.details && detailData.details.length > 0) {
+        const detail = detailData.details[0];
+        if (detail.matched_artists.length > 0) {
+          // Delete videos for each matched artist
+          for (const artist of detail.matched_artists) {
+            await fetch('/api/admin/health', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${authToken}` },
+              body: JSON.stringify({ action: 'delete_artist_videos', artist_name: artist }),
+            });
+          }
+          alert(`Deleted videos for: ${detail.matched_artists.join(', ')}`);
+        } else {
+          alert(`No matching artists found in database for slug "${slug}". This URL may already be cleaned up.`);
+        }
+      }
+      
+      // Refresh health check
+      handleHealthCheck();
+      loadStats();
+    } catch (err) {
+      alert('Connection error. Please try again.');
+    } finally {
+      setDeletingDeadUrls(prev => ({ ...prev, [deadUrl]: false }));
+    }
+  };
+
+  // Delete ALL dead URL artists at once
+  const handleDeleteAllDeadUrls = async () => {
+    const deadUrls = healthReport?.checks?.internal_urls?.details?.dead_urls || [];
+    const artistUrls = deadUrls.filter(u => u.url.startsWith('/artist/'));
+    
+    if (artistUrls.length === 0) {
+      alert('No dead artist URLs to delete.');
+      return;
+    }
+    
+    if (!confirm(`Delete videos for ${artistUrls.length} dead artist URL(s)?\n\nThis will remove the database entries causing these broken links. This cannot be undone.`)) return;
+    
+    setIsDeletingDeadUrls(true);
+    setDeadUrlAction('Deleting dead URL artists...');
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      
+      // Get details for all dead URLs
+      const detailRes = await fetch('/api/admin/health', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${authToken}` },
+        body: JSON.stringify({ action: 'get_dead_url_details', dead_urls: artistUrls.map(u => u.url) }),
+      });
+      const detailData = await detailRes.json();
+      
+      let totalDeleted = 0;
+      if (detailData.success) {
+        for (const detail of (detailData.details || [])) {
+          for (const artist of detail.matched_artists) {
+            setDeadUrlAction(`Deleting "${artist}"...`);
+            const delRes = await fetch('/api/admin/health', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${authToken}` },
+              body: JSON.stringify({ action: 'delete_artist_videos', artist_name: artist }),
+            });
+            const delData = await delRes.json();
+            if (delData.success) totalDeleted += delData.removed_count;
+          }
+        }
+      }
+      
+      alert(`Done! Deleted ${totalDeleted} videos from ${artistUrls.length} dead artist URLs.`);
+      handleHealthCheck();
+      loadStats();
+    } catch (err) {
+      alert('Connection error. Please try again.');
+    } finally {
+      setIsDeletingDeadUrls(false);
+      setDeadUrlAction('');
     }
   };
 
@@ -2700,16 +2808,44 @@ export default function App({ initialLang = 'en' }) {
                           </div>
                           {healthReport.checks.internal_urls.details?.dead > 0 && (
                             <div className="mt-2">
-                              <p className="text-yellow-400 text-sm font-medium mb-2">Dead/Broken URLs:</p>
-                              <div className="max-h-48 overflow-y-auto rounded border border-zinc-700">
+                              <div className="flex items-center justify-between mb-2">
+                                <p className="text-yellow-400 text-sm font-medium">
+                                  {healthReport.checks.internal_urls.details.dead} Dead/Broken URL(s):
+                                </p>
+                                {healthReport.checks.internal_urls.details.dead_urls.some(u => u.url.startsWith('/artist/')) && (
+                                  <button
+                                    onClick={handleDeleteAllDeadUrls}
+                                    disabled={isDeletingDeadUrls}
+                                    className="flex items-center gap-1 px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-lg hover:bg-red-500 transition-colors disabled:opacity-50"
+                                  >
+                                    <Trash2 className="w-3 h-3" />
+                                    {isDeletingDeadUrls ? (deadUrlAction || 'Deleting...') : 'Delete All Dead Artist Videos'}
+                                  </button>
+                                )}
+                              </div>
+                              <div className="max-h-64 overflow-y-auto rounded border border-zinc-700">
                                 {(healthReport.checks.internal_urls.details?.dead_urls || []).map((u, i) => (
-                                  <div key={i} className="flex items-center gap-2 px-3 py-2 text-sm border-b border-zinc-800 last:border-0">
-                                    <span className="text-red-400 font-mono text-xs">{u.status || 'ERR'}</span>
-                                    <span className="text-zinc-300 truncate">{u.url}</span>
+                                  <div key={i} className="flex items-center gap-2 px-3 py-2 text-sm border-b border-zinc-800 last:border-0 group hover:bg-zinc-700/30">
+                                    <span className="text-red-400 font-mono text-xs w-8 flex-shrink-0">{u.status || 'ERR'}</span>
+                                    <span className="text-zinc-300 truncate flex-1">{u.url}</span>
                                     {u.error && <span className="text-zinc-500 text-xs">({u.error})</span>}
+                                    {u.url.startsWith('/artist/') && (
+                                      <button
+                                        onClick={() => handleDeleteDeadUrlArtist(u.url)}
+                                        disabled={deletingDeadUrls[u.url]}
+                                        className="opacity-0 group-hover:opacity-100 flex items-center gap-1 px-2 py-1 bg-red-600/80 text-white text-xs rounded hover:bg-red-500 transition-all disabled:opacity-50 flex-shrink-0"
+                                        title={`Delete videos for this artist`}
+                                      >
+                                        <Trash2 className="w-3 h-3" />
+                                        {deletingDeadUrls[u.url] ? '...' : 'Delete'}
+                                      </button>
+                                    )}
                                   </div>
                                 ))}
                               </div>
+                              <p className="text-zinc-500 text-xs mt-2">
+                                Hover over a dead URL to see the delete button. Deleting removes the database entries causing broken links.
+                              </p>
                             </div>
                           )}
                           {healthReport.checks.internal_urls.details?.dead === 0 && (

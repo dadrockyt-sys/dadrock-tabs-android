@@ -6,6 +6,7 @@ import { ArrowLeft, Play, Youtube, Music, Home, Users, ShoppingBag } from 'lucid
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
+import { artistToSlug } from '@/lib/slugify';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
@@ -35,35 +36,6 @@ const relatedArtistsMap = {
 
 // Default related artists for any artist not in the map
 const defaultRelatedArtists = ['AC/DC', 'Metallica', 'Van Halen', 'Led Zeppelin', 'Black Sabbath'];
-
-// Convert artist name to URL slug
-function artistToSlug(artist) {
-  const specialSlugs = {
-    'AC/DC': 'acdc',
-    "Guns N' Roses": 'guns-n-roses',
-    'Guns N Roses': 'guns-n-roses',
-    'Mötley Crüe': 'motley-crue',
-    'Motley Crue': 'motley-crue',
-    'Motörhead': 'motorhead',
-    'Motorhead': 'motorhead',
-    'Blue Öyster Cult': 'blue-oyster-cult',
-    'Blue Oyster Cult': 'blue-oyster-cult',
-    "Jane's Addiction": 'janes-addiction',
-    "Enuff Z'Nuff": 'enuff-znuff',
-    "Drivin' 'N' Cryin'": 'drivin-n-cryin',
-    'ZZ Top': 'zz-top',
-    'UFO': 'ufo',
-    'REO Speedwagon': 'reo-speedwagon',
-    'ELO': 'elo',
-    'BTO': 'bto',
-  };
-  
-  if (specialSlugs[artist]) {
-    return specialSlugs[artist];
-  }
-  
-  return artist.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-}
 
 // Get related artists for a given artist
 function getRelatedArtists(artistName) {

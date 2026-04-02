@@ -1,65 +1,55 @@
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import { generateAlternates } from '@/lib/seo';
+import { slugToArtistPattern, artistToSlug } from '@/lib/slugify';
 import ArtistPageClient from './ArtistPageClient';
 
-// Convert slug to artist name pattern for database lookup
-function slugToArtistPattern(slug) {
-  // Handle special cases - must match exactly what's in the database
-  const specialCases = {
-    // Symbols and special characters
-    'acdc': 'AC/DC',
-    
-    // Plain text versions (database doesn't use special chars like ö, ü)
-    'motorhead': 'Motorhead',
-    'blue-oyster-cult': 'Blue Oyster Cult',
-    'motley-crue': 'Motley Crue',
-    
-    // Apostrophe handling - database uses apostrophes
-    'janes-addiction': "Jane's Addiction",
-    'enuff-znuff': "Enuff Z'Nuff",
-    'drivin-n-cryin': "Drivin' 'N' Cryin'",
-    
-    // LA vs L.A. - database uses "LA Guns"
-    'la-guns': 'LA Guns',
-    
-    // Case sensitivity fixes
-    'zz-top': 'ZZ Top',
-    'ufo': 'UFO',
-    'reo-speedwagon': 'REO Speedwagon',
-    'elo': 'ELO',
-    'bto': 'BTO',
-  };
+// Find artist name from slug by checking the database
+// This handles cases where slugToArtistPattern can't reverse the slug correctly
+async function findArtistBySlug(db, slug) {
+  // First try the direct slug-to-pattern mapping
+  const directPattern = slugToArtistPattern(slug);
+  const escapedDirect = directPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const directCount = await db.collection('videos').countDocuments({
+    artist: { $regex: new RegExp(`^${escapedDirect}`, 'i') }
+  });
   
-  if (specialCases[slug]) {
-    return specialCases[slug];
+  if (directCount > 0) {
+    return { artistPattern: directPattern, method: 'direct' };
   }
   
-  // Convert slug back to name (replace hyphens with spaces, title case)
-  return slug
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+  // Fallback: get all unique artists, generate their slugs, find the match
+  const allArtists = await db.collection('videos').distinct('artist');
+  for (const artist of allArtists) {
+    const generatedSlug = artistToSlug(artist);
+    if (generatedSlug === slug) {
+      return { artistPattern: artist.replace(/ -$/, '').trim(), method: 'slug-match' };
+    }
+  }
+  
+  return null;
 }
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
-  const artistPattern = slugToArtistPattern(slug);
   
   const db = await getDb();
-  // Search for artist name at the start of the field (handles "Metallica -" and "Metallica")
-  const videoCount = await db.collection('videos').countDocuments({
-    artist: { $regex: new RegExp(`^${artistPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i') }
-  });
+  const result = await findArtistBySlug(db, slug);
   
-  if (videoCount === 0) {
+  if (!result) {
     return {
       title: 'Artist Not Found | DadRock Tabs',
       description: 'This artist page could not be found.',
     };
   }
+  
+  const artistPattern = result.artistPattern;
+  const escapedPattern = artistPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const videoCount = await db.collection('videos').countDocuments({
+    artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') }
+  });
   
   const title = `Learn ${artistPattern} Songs - Free Guitar & Bass Tabs | DadRock Tabs`;
   const description = `Learn how to play songs by ${artistPattern} with step-by-step guitar and bass tutorials. These riffs are some of the most recognizable classic rock riffs ever written and perfect for beginner and intermediate players. ${videoCount} lessons available.`;
@@ -88,12 +78,15 @@ export async function generateMetadata({ params }) {
 export default async function ArtistPage({ params }) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
-  const artistPattern = slugToArtistPattern(slug);
   
   const db = await getDb();
+  const result = await findArtistBySlug(db, slug);
   
-  // Find all videos for this artist (matches "Metallica", "Metallica -", etc.)
-  // Use regex to match artist names that START with the pattern
+  if (!result) {
+    notFound();
+  }
+  
+  const artistPattern = result.artistPattern;
   const escapedPattern = artistPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const videos = await db.collection('videos')
     .find({ artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') } })

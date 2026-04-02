@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { artistToSlug } from '@/lib/slugify';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Babyty99';
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY || '';
@@ -170,13 +171,17 @@ export async function GET(request) {
       const staticPages = ['/', '/coming-soon', '/top-lessons', '/quickies'];
       staticPages.forEach(p => internalUrls.push(`${BASE_URL}${p}`));
 
-      // Artist pages (from DB)
+      // Artist pages (from DB) — use shared slug utility for consistent slug generation
       try {
         const artists = await db.collection('videos').distinct('artist');
+        const seenSlugs = new Set();
         for (const artist of artists) {
           if (artist) {
-            const slug = artist.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            if (slug) internalUrls.push(`${BASE_URL}/artist/${slug}`);
+            const slug = artistToSlug(artist);
+            if (slug && !seenSlugs.has(slug)) {
+              seenSlugs.add(slug);
+              internalUrls.push(`${BASE_URL}/artist/${slug}`);
+            }
           }
         }
       } catch (e) { /* skip */ }
@@ -358,9 +363,7 @@ export async function POST(request) {
       }
 
       // Also clean up from song_pages
-      // Get the youtube URLs of removed videos to find their IDs
       for (const vid of video_ids) {
-        // Remove song pages that reference deleted videos
         await db.collection('song_pages').deleteMany({ videoId: vid });
       }
 
@@ -369,6 +372,96 @@ export async function POST(request) {
         message: `Removed ${removedCount} dead videos from database.`,
         removed_count: removedCount,
       });
+    }
+
+    // Delete videos by artist slug (for cleaning up dead artist URLs)
+    if (action === 'delete_artist_videos') {
+      const { artist_name } = body;
+      if (!artist_name) {
+        return NextResponse.json({ error: 'No artist name provided' }, { status: 400 });
+      }
+
+      const db = await getDb();
+      const escapedPattern = artist_name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      
+      // Find all matching videos
+      const matchingVideos = await db.collection('videos')
+        .find({ artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') } })
+        .toArray();
+      
+      if (matchingVideos.length === 0) {
+        return NextResponse.json({
+          success: true,
+          message: `No videos found for artist "${artist_name}".`,
+          removed_count: 0,
+        });
+      }
+
+      // Delete videos
+      const result = await db.collection('videos').deleteMany({
+        artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') }
+      });
+
+      // Also clean up song pages
+      for (const vid of matchingVideos) {
+        const ytId = extractVideoId(vid.youtube_url);
+        if (ytId) {
+          await db.collection('song_pages').deleteMany({ videoId: ytId });
+        }
+      }
+
+      return NextResponse.json({
+        success: true,
+        message: `Removed ${result.deletedCount} videos for artist "${artist_name}".`,
+        removed_count: result.deletedCount,
+        removed_videos: matchingVideos.map(v => ({ id: v.id, song: v.song, artist: v.artist })),
+      });
+    }
+
+    // Get details about dead URLs (what artists cause them)
+    if (action === 'get_dead_url_details') {
+      const { dead_urls } = body;
+      if (!dead_urls || !Array.isArray(dead_urls)) {
+        return NextResponse.json({ error: 'No URLs provided' }, { status: 400 });
+      }
+
+      const db = await getDb();
+      const allArtists = await db.collection('videos').distinct('artist');
+      
+      // Build slug → artist mapping
+      const slugToArtists = {};
+      for (const artist of allArtists) {
+        if (artist) {
+          const slug = artistToSlug(artist);
+          if (!slugToArtists[slug]) slugToArtists[slug] = [];
+          slugToArtists[slug].push(artist);
+        }
+      }
+
+      const details = [];
+      for (const deadUrl of dead_urls) {
+        // Extract slug from URL like "/artist/ac-dc"
+        const match = deadUrl.match(/\/artist\/(.+)/);
+        if (match) {
+          const slug = match[1];
+          const matchedArtists = slugToArtists[slug] || [];
+          const videoCount = matchedArtists.length > 0 
+            ? await db.collection('videos').countDocuments({
+                artist: { $in: matchedArtists.map(a => new RegExp(`^${a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i')) }
+              })
+            : 0;
+          
+          details.push({
+            url: deadUrl,
+            slug,
+            matched_artists: matchedArtists,
+            video_count: videoCount,
+            repairable: matchedArtists.length > 0,
+          });
+        }
+      }
+
+      return NextResponse.json({ success: true, details });
     }
 
     return NextResponse.json({ error: 'Unknown action' }, { status: 400 });
