@@ -381,6 +381,14 @@ export default function App({ initialLang = 'en' }) {
   const [deadUrlAction, setDeadUrlAction] = useState('');
   const [deletingDeadUrls, setDeletingDeadUrls] = useState({});
   
+  // AI SEO Content state
+  const [aiSeoStatus, setAiSeoStatus] = useState(null);
+  const [isGeneratingAi, setIsGeneratingAi] = useState(false);
+  const [aiGenerateMode, setAiGenerateMode] = useState('batch_artists');
+  const [aiBatchSize, setAiBatchSize] = useState(5);
+  const [aiResults, setAiResults] = useState(null);
+  const [aiProgress, setAiProgress] = useState('');
+  
   // Admin upcoming videos state
   const [adminUpcomingVideos, setAdminUpcomingVideos] = useState([]);
   const [newUpcomingTitle, setNewUpcomingTitle] = useState('');
@@ -1070,6 +1078,52 @@ export default function App({ initialLang = 'en' }) {
     }
   };
 
+  // AI SEO Content — Load status
+  const loadAiSeoStatus = async () => {
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      const res = await fetch('/api/admin/generate-seo', {
+        headers: { 'Authorization': `Basic ${authToken}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setAiSeoStatus(data);
+      }
+    } catch (e) { /* ignore */ }
+  };
+
+  // AI SEO Content — Generate
+  const handleGenerateAiSeo = async () => {
+    setIsGeneratingAi(true);
+    setAiResults(null);
+    setAiProgress(`Starting ${aiGenerateMode === 'batch_artists' ? 'artist' : 'song'} content generation...`);
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      const res = await fetch('/api/admin/generate-seo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${authToken}` },
+        body: JSON.stringify({ action: aiGenerateMode, batch_size: aiBatchSize }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setAiResults(data);
+        setAiProgress('');
+        loadAiSeoStatus();
+      } else {
+        setAiResults({ error: data.error || 'Generation failed' });
+        setAiProgress('');
+      }
+    } catch (err) {
+      setAiResults({ error: 'Connection error. Please try again.' });
+      setAiProgress('');
+    } finally {
+      setIsGeneratingAi(false);
+    }
+  };
+
+
   // Sync scheduled videos from YouTube
   const handleSyncScheduledVideos = async () => {
     setIsSyncingScheduled(true);
@@ -1341,6 +1395,7 @@ export default function App({ initialLang = 'en' }) {
       loadUpcomingVideos();
       loadTopLessons();
       loadSongPageCount();
+      loadAiSeoStatus();
     }
   }, [currentPage, isAuthenticated]);
 
@@ -2995,6 +3050,131 @@ export default function App({ initialLang = 'en' }) {
                       )}
                     </div>
                   </>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* AI SEO Content Generator */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <Zap className="w-5 h-5 text-purple-400" />
+              AI SEO Content Generator
+            </h2>
+            <p className="text-zinc-400 mb-4">
+              Use GPT to generate rich, educational content for artist and song pages — including band bios, playing style analysis, gear info, song backstories, and practice tips.
+            </p>
+
+            {/* Status Cards */}
+            {aiSeoStatus && (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
+                  <div className="text-2xl font-bold text-purple-400">{aiSeoStatus.artists?.with_ai_content || 0}</div>
+                  <div className="text-xs text-zinc-400">Artists with AI Content</div>
+                </div>
+                <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
+                  <div className="text-2xl font-bold text-zinc-400">{aiSeoStatus.artists?.without_ai_content || 0}</div>
+                  <div className="text-xs text-zinc-400">Artists Need Content</div>
+                </div>
+                <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
+                  <div className="text-2xl font-bold text-purple-400">{aiSeoStatus.songs?.with_ai_content || 0}</div>
+                  <div className="text-xs text-zinc-400">Songs with AI Content</div>
+                </div>
+                <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
+                  <div className="text-2xl font-bold text-zinc-400">{aiSeoStatus.songs?.without_ai_content || 0}</div>
+                  <div className="text-xs text-zinc-400">Songs Need Content</div>
+                </div>
+              </div>
+            )}
+
+            {/* Mode selector */}
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              <div className="flex gap-2">
+                {[
+                  { value: 'batch_artists', label: 'Generate Artist Content' },
+                  { value: 'batch_songs', label: 'Generate Song Content' },
+                ].map(m => (
+                  <button
+                    key={m.value}
+                    onClick={() => setAiGenerateMode(m.value)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      aiGenerateMode === m.value
+                        ? 'bg-purple-600 text-white'
+                        : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
+                    }`}
+                  >
+                    {m.label}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="text-zinc-400 text-sm">Batch size:</label>
+                <select
+                  value={aiBatchSize}
+                  onChange={e => setAiBatchSize(Number(e.target.value))}
+                  className="bg-zinc-800 text-white border border-zinc-700 rounded-lg px-3 py-2 text-sm"
+                >
+                  {[1, 3, 5, 10, 15, 20].map(n => (
+                    <option key={n} value={n}>{n}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <button
+              onClick={handleGenerateAiSeo}
+              disabled={isGeneratingAi}
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-500 transition-colors disabled:opacity-50"
+            >
+              {isGeneratingAi ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  {aiProgress || 'Generating...'}
+                </>
+              ) : (
+                <>
+                  <Zap className="w-5 h-5" />
+                  Generate {aiGenerateMode === 'batch_artists' ? 'Artist' : 'Song'} Content ({aiBatchSize})
+                </>
+              )}
+            </button>
+
+            {/* Generation Results */}
+            {aiResults && (
+              <div className="mt-4">
+                {aiResults.error ? (
+                  <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/20 text-red-400">
+                    <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                    <span className="text-sm">{aiResults.error}</span>
+                  </div>
+                ) : (
+                  <div className="bg-zinc-800/50 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-emerald-400 font-semibold text-sm">
+                        ✓ Generated {aiResults.processed} items • {aiResults.remaining} remaining
+                      </p>
+                      {aiResults.remaining > 0 && (
+                        <button
+                          onClick={handleGenerateAiSeo}
+                          disabled={isGeneratingAi}
+                          className="text-xs px-3 py-1 bg-purple-600 text-white rounded-lg hover:bg-purple-500 disabled:opacity-50"
+                        >
+                          Generate Next Batch
+                        </button>
+                      )}
+                    </div>
+                    <div className="space-y-1 max-h-48 overflow-y-auto">
+                      {(aiResults.results || []).map((r, i) => (
+                        <div key={i} className="flex items-center gap-2 text-sm">
+                          <span className={r.status === 'success' ? 'text-emerald-400' : 'text-red-400'}>
+                            {r.status === 'success' ? '✓' : '✗'}
+                          </span>
+                          <span className="text-zinc-300">{r.artist || r.song}</span>
+                          {r.error && <span className="text-red-400 text-xs">({r.error})</span>}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 )}
               </div>
             )}

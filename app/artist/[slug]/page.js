@@ -52,7 +52,19 @@ export async function generateMetadata({ params }) {
   });
   
   const title = `Learn ${artistPattern} Songs - Free Guitar & Bass Tabs | DadRock Tabs`;
-  const description = `Learn how to play songs by ${artistPattern} with step-by-step guitar and bass tutorials. These riffs are some of the most recognizable classic rock riffs ever written and perfect for beginner and intermediate players. ${videoCount} lessons available.`;
+  
+  // Try to use AI-generated meta description if available
+  let description;
+  try {
+    const aiContent = await db.collection('artist_seo_content').findOne({ artist: artistPattern });
+    if (aiContent?.content?.meta_description) {
+      description = aiContent.content.meta_description;
+    }
+  } catch { /* ignore */ }
+  
+  if (!description) {
+    description = `Learn how to play songs by ${artistPattern} with step-by-step guitar and bass tutorials. These riffs are some of the most recognizable classic rock riffs ever written and perfect for beginner and intermediate players. ${videoCount} lessons available.`;
+  }
   
   return {
     title,
@@ -111,6 +123,15 @@ export default async function ArtistPage({ params }) {
   // Get the display name (use the clean version without " -")
   const displayArtistName = artistPattern;
   
+  // Fetch AI-generated SEO content (server-side for SSR)
+  let aiSeoContent = null;
+  try {
+    const aiDoc = await db.collection('artist_seo_content').findOne({ artist: artistPattern });
+    if (aiDoc?.content) {
+      aiSeoContent = aiDoc.content;
+    }
+  } catch { /* ignore */ }
+  
   // Convert MongoDB documents to plain objects
   const plainVideos = videos.map(video => ({
     id: video.id,
@@ -166,6 +187,7 @@ export default async function ArtistPage({ params }) {
         videos={plainVideos} 
         slug={slug}
         adSettings={adSettings}
+        initialAiContent={aiSeoContent}
       />
     </>
   );

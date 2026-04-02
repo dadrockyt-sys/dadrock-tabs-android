@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Play, Youtube, Music, Home, Users, ShoppingBag } from 'lucide-react';
+import { ArrowLeft, Play, Youtube, Music, Home, Users, ShoppingBag, BookOpen, Guitar, Lightbulb, Star } from 'lucide-react';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
@@ -50,7 +50,7 @@ function getRelatedArtists(artistName) {
   return defaultRelatedArtists.filter(a => a.toLowerCase() !== normalized.toLowerCase());
 }
 
-export default function ArtistPageClient({ artistName, videos, slug, adSettings }) {
+export default function ArtistPageClient({ artistName, videos, slug, adSettings, initialAiContent }) {
   const [lang] = useLanguage();
   const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -64,6 +64,24 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings 
   const [adCountdown, setAdCountdown] = useState(adSettings?.ad_duration || 5);
   const [pendingVideo, setPendingVideo] = useState(null);
   const adDuration = adSettings?.ad_duration || 5;
+  const [aiContent, setAiContent] = useState(initialAiContent || null);
+
+  // Fetch AI-generated SEO content (client-side fallback if not provided via SSR)
+  useEffect(() => {
+    if (initialAiContent) return; // Already have it from SSR
+    async function fetchAiContent() {
+      try {
+        const res = await fetch(`/api/seo-content?type=artist&name=${encodeURIComponent(artistName)}`);
+        const data = await res.json();
+        if (data.found && data.content) {
+          setAiContent(data.content);
+        }
+      } catch (e) {
+        // Silently fail — will show default content
+      }
+    }
+    if (artistName) fetchAiContent();
+  }, [artistName, initialAiContent]);
 
   // Handle video click - show ad first
   const handleVideoClick = (video) => {
@@ -285,24 +303,88 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings 
           ))}
         </div>
 
-        {/* SEO Content Section */}
-        <section className="mt-16 p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
-          <h2 className="text-2xl font-bold mb-4 text-amber-500">
-            About {artistName} Guitar Tabs
-          </h2>
-          <div className="text-zinc-300 space-y-4">
-            <p>
-              Looking to learn {artistName} songs on guitar or bass? You've come to the right place! 
-              DadRock Tabs offers free video tutorials that break down every riff, chord, and solo 
-              so you can master your favorite {artistName} tracks.
-            </p>
-            <p>
-              Whether you're a beginner just starting out or an intermediate player looking to expand 
-              your repertoire, our step-by-step lessons make it easy to learn at your own pace. 
-              Each tutorial includes detailed tablature and demonstrations to help you nail every note.
-            </p>
-            <p>
-              Start learning {artistName} today and add some classic rock to your playing!
+        {/* SEO Content Section — AI-Enhanced */}
+        <section className="mt-16 space-y-8">
+          {/* Artist Bio */}
+          <div className="p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+            <h2 className="text-2xl font-bold mb-4 text-amber-500 flex items-center gap-2">
+              <Star className="w-6 h-6" />
+              About {artistName}
+            </h2>
+            <div className="text-zinc-300 space-y-4 leading-relaxed">
+              {aiContent?.bio ? (
+                aiContent.bio.split('\n').filter(Boolean).map((p, i) => <p key={i}>{p}</p>)
+              ) : (
+                <>
+                  <p>
+                    Looking to learn {artistName} songs on guitar or bass? You've come to the right place! 
+                    DadRock Tabs offers free video tutorials that break down every riff, chord, and solo 
+                    so you can master your favorite {artistName} tracks.
+                  </p>
+                  <p>
+                    Whether you're a beginner just starting out or an intermediate player looking to expand 
+                    your repertoire, our step-by-step lessons make it easy to learn at your own pace.
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Playing Style & Gear — only show if AI content available */}
+          {aiContent?.playing_style && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+                <h3 className="text-xl font-bold mb-3 text-white flex items-center gap-2">
+                  <Music className="w-5 h-5 text-amber-500" />
+                  Playing Style
+                </h3>
+                <p className="text-zinc-300 leading-relaxed">{aiContent.playing_style}</p>
+              </div>
+              {aiContent?.gear_info && (
+                <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+                  <h3 className="text-xl font-bold mb-3 text-white flex items-center gap-2">
+                    🎸 Gear & Equipment
+                  </h3>
+                  <p className="text-zinc-300 leading-relaxed">{aiContent.gear_info}</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Why Learn This Artist */}
+          {aiContent?.why_learn && (
+            <div className="p-6 bg-gradient-to-r from-amber-500/10 to-zinc-900/50 rounded-2xl border border-amber-500/20">
+              <h3 className="text-xl font-bold mb-3 text-amber-500 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5" />
+                Why Learn {artistName} Songs?
+              </h3>
+              <p className="text-zinc-300 leading-relaxed">{aiContent.why_learn}</p>
+            </div>
+          )}
+
+          {/* Fun Facts */}
+          {aiContent?.fun_facts && aiContent.fun_facts.length > 0 && (
+            <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+              <h3 className="text-xl font-bold mb-4 text-white flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-amber-500" />
+                Did You Know?
+              </h3>
+              <ul className="space-y-3">
+                {aiContent.fun_facts.map((fact, i) => (
+                  <li key={i} className="flex items-start gap-3 text-zinc-300">
+                    <span className="text-amber-500 font-bold text-lg mt-0.5">•</span>
+                    <span>{fact}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Available Lessons Count */}
+          <div className="text-center p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+            <p className="text-amber-500 font-semibold text-lg">
+              <Music className="w-5 h-5 inline mr-2" />
+              {videos.length} {artistName} lesson{videos.length !== 1 ? 's' : ''} available — Start learning today!
             </p>
           </div>
         </section>

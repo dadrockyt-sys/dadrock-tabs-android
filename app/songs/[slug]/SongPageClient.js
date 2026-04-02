@@ -2,28 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Home, Youtube, Facebook, Twitter, Mail, Play, Eye, ThumbsUp, ShoppingBag, Music, ExternalLink, ArrowLeft } from 'lucide-react';
+import { Home, Youtube, Facebook, Twitter, Mail, Play, Eye, ThumbsUp, ShoppingBag, Music, ExternalLink, ArrowLeft, BookOpen, Lightbulb, Star } from 'lucide-react';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
+import { artistToSlug } from '@/lib/slugify';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
-
-function artistToSlug(artist) {
-  if (!artist) return '';
-  const cleanArtist = artist.replace(/ -$/, '').trim();
-  const specialSlugs = {
-    'AC/DC': 'acdc', "Guns N' Roses": 'guns-n-roses', 'Mötley Crüe': 'motley-crue',
-    'Motley Crue': 'motley-crue', 'Motörhead': 'motorhead', 'Blue Öyster Cult': 'blue-oyster-cult',
-    "Jane's Addiction": 'janes-addiction', 'ZZ Top': 'zz-top', 'Van Halen': 'van-halen',
-    'Led Zeppelin': 'led-zeppelin', 'Black Sabbath': 'black-sabbath', 'Iron Maiden': 'iron-maiden',
-    'Judas Priest': 'judas-priest', 'Deep Purple': 'deep-purple', 'Ozzy Osbourne': 'ozzy-osbourne',
-    'Def Leppard': 'def-leppard', 'Bon Jovi': 'bon-jovi', 'Thin Lizzy': 'thin-lizzy',
-  };
-  if (specialSlugs[cleanArtist]) return specialSlugs[cleanArtist];
-  return cleanArtist.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-}
 
 function formatViewCount(count) {
   if (count >= 1000000) return (count / 1000000).toFixed(1) + 'M';
@@ -31,10 +17,26 @@ function formatViewCount(count) {
   return count.toString();
 }
 
-export default function SongPageClient({ song, seoContent, adSettings }) {
+export default function SongPageClient({ song, seoContent, adSettings, initialAiContent }) {
   const [lang] = useLanguage();
   const t = getSubPageTranslation(lang);
   const [showAd, setShowAd] = useState(true);
+  const [aiContent, setAiContent] = useState(initialAiContent || null);
+
+  // Fetch AI-generated SEO content for this song (client-side fallback)
+  useEffect(() => {
+    if (initialAiContent) return;
+    async function fetchAiContent() {
+      try {
+        const res = await fetch(`/api/seo-content?type=song&slug=${encodeURIComponent(song?.slug || '')}`);
+        const data = await res.json();
+        if (data.found && data.content) {
+          setAiContent(data.content);
+        }
+      } catch (e) { /* Silently fail */ }
+    }
+    if (song?.slug) fetchAiContent();
+  }, [song?.slug, initialAiContent]);
 
   // Update SEO meta tags when language changes
   useEffect(() => {
@@ -257,16 +259,76 @@ export default function SongPageClient({ song, seoContent, adSettings }) {
           </a>
         </div>
 
-        {/* SEO Content */}
-        <section className="p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800 mb-12">
-          <h2 className="text-2xl font-bold text-amber-500 mb-6">
-            {song.title} by {song.artist} – Guitar & Bass Tab Lesson
-          </h2>
-          <div className="prose prose-invert prose-lg max-w-none text-zinc-300 space-y-4">
-            <p>{seoContent.paragraph1}</p>
-            <p>{seoContent.paragraph2}</p>
-            <p>{seoContent.paragraph3}</p>
+        {/* SEO Content — AI-Enhanced */}
+        <section className="space-y-6 mb-12">
+          {/* Song Story */}
+          <div className="p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+            <h2 className="text-2xl font-bold text-amber-500 mb-4 flex items-center gap-2">
+              <Star className="w-6 h-6" />
+              {song.title} by {song.artist}
+            </h2>
+            <div className="text-zinc-300 space-y-4 leading-relaxed">
+              {aiContent?.song_story ? (
+                aiContent.song_story.split('\n').filter(Boolean).map((p, i) => <p key={i}>{p}</p>)
+              ) : (
+                <>
+                  <p>{seoContent.paragraph1}</p>
+                  <p>{seoContent.paragraph2}</p>
+                  <p>{seoContent.paragraph3}</p>
+                </>
+              )}
+            </div>
           </div>
+
+          {/* Lesson Overview & Difficulty — only show if AI content */}
+          {aiContent?.lesson_overview && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+                <h3 className="text-xl font-bold mb-3 text-white flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-amber-500" />
+                  What You'll Learn
+                </h3>
+                <p className="text-zinc-300 leading-relaxed">{aiContent.lesson_overview}</p>
+                {aiContent.difficulty_info && (
+                  <p className="mt-3 text-amber-400 text-sm font-medium">{aiContent.difficulty_info}</p>
+                )}
+              </div>
+
+              {/* Techniques */}
+              {aiContent?.techniques && aiContent.techniques.length > 0 && (
+                <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+                  <h3 className="text-xl font-bold mb-3 text-white flex items-center gap-2">
+                    🎸 Techniques Used
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {aiContent.techniques.map((tech, i) => (
+                      <span key={i} className="px-3 py-1 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Pro Tips */}
+          {aiContent?.pro_tips && aiContent.pro_tips.length > 0 && (
+            <div className="p-6 bg-gradient-to-r from-amber-500/10 to-zinc-900/50 rounded-2xl border border-amber-500/20">
+              <h3 className="text-xl font-bold mb-4 text-amber-500 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5" />
+                Practice Tips
+              </h3>
+              <ul className="space-y-3">
+                {aiContent.pro_tips.map((tip, i) => (
+                  <li key={i} className="flex items-start gap-3 text-zinc-300">
+                    <span className="text-amber-500 font-bold text-lg mt-0.5">💡</span>
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </section>
 
         {/* Subscribe CTA */}

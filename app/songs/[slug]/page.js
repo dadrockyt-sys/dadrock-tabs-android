@@ -49,6 +49,7 @@ export default async function SongPage({ params }) {
   
   let song = null;
   let adSettings = null;
+  let aiSeoContent = null;
 
   try {
     const db = await getDb();
@@ -57,6 +58,14 @@ export default async function SongPage({ params }) {
     if (!song) {
       notFound();
     }
+
+    // Fetch AI-generated SEO content (server-side for SSR)
+    try {
+      const aiDoc = await db.collection('song_seo_content').findOne({ slug });
+      if (aiDoc?.content) {
+        aiSeoContent = aiDoc.content;
+      }
+    } catch { /* ignore */ }
 
     // Fetch ad settings
     const settings = await db.collection('settings').findOne({ type: 'site' });
@@ -120,6 +129,7 @@ export default async function SongPage({ params }) {
         song={songData}
         seoContent={seoContent}
         adSettings={adSettings}
+        initialAiContent={aiSeoContent}
       />
     </>
   );

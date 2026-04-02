@@ -545,3 +545,7 @@ node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
 *.env
 *.env.*
 .next/dev/cache/turbopack/23c46498/00002430.sst
+-e 
+# Environment files
+*.env
+*.env.*
