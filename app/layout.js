@@ -19,6 +19,12 @@ export const metadata = {
     address: false,
     telephone: false,
   },
+  alternates: {
+    canonical: baseUrl,
+    languages: Object.fromEntries(
+      locales.map(lang => [lang, lang === 'en' ? baseUrl : `${baseUrl}/${lang}`])
+    ),
+  },
   openGraph: {
     title: 'DadRock Tabs - Guitar & Bass Tabs for Classic Rock',
     description: 'Free guitar and bass tabs for classic rock hits. Learn to play the songs that defined generations.',
@@ -49,33 +55,15 @@ export const metadata = {
   },
 };
 
-// Generate hreflang alternate links
-function generateAlternateLinks() {
-  const links = locales.map(lang => ({
-    rel: 'alternate',
-    hrefLang: lang,
-    href: lang === 'en' ? baseUrl : `${baseUrl}/${lang}`,
-  }));
-  
-  // Add x-default for search engines
-  links.push({
-    rel: 'alternate',
-    hrefLang: 'x-default',
-    href: baseUrl,
-  });
-  
-  return links;
-}
-
 export default function RootLayout({ children }) {
-  const alternateLinks = generateAlternateLinks();
-  const canonicalUrl = baseUrl; // Ensure canonical is the non-www version
-  
   return (
     <html lang="en" className="dark">
       <head>
-        {/* Canonical URL - tells Google this is the main version */}
-        <link rel="canonical" href={canonicalUrl} />
+        {/* 
+          IMPORTANT: Do NOT add <link rel="canonical"> or hreflang tags here.
+          Each page's generateMetadata() handles its own canonical and hreflang 
+          to avoid duplicate/conflicting tags that cause GSC errors.
+        */}
         
         {/* 80s Rock Style Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -101,16 +89,6 @@ export default function RootLayout({ children }) {
           }}
         />
         
-        {/* Hreflang tags for international SEO */}
-        {alternateLinks.map((link, index) => (
-          <link
-            key={index}
-            rel={link.rel}
-            hrefLang={link.hrefLang}
-            href={link.href}
-          />
-        ))}
-        
         {/* Structured Data for Rich Snippets */}
         <script
           type="application/ld+json"
@@ -123,14 +101,6 @@ export default function RootLayout({ children }) {
               "url": baseUrl,
               "description": "Free guitar and bass tabs for classic rock hits. Learn to play Led Zeppelin, AC/DC, Van Halen, and more!",
               "inLanguage": locales,
-              "potentialAction": {
-                "@type": "SearchAction",
-                "target": {
-                  "@type": "EntryPoint",
-                  "urlTemplate": `${baseUrl}/search?q={search_term_string}`
-                },
-                "query-input": "required name=search_term_string"
-              },
               "publisher": {
                 "@type": "Organization",
                 "name": "DadRock Tabs",
