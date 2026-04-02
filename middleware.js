@@ -116,7 +116,41 @@ export function middleware(request) {
     return new NextResponse('Forbidden', { status: 403 });
   }
 
-  // ─── 4. Locale handling (i18n URL rewriting) ───
+  // ─── 4. Handle trailing slashes ───
+  // Strip trailing slashes to prevent Next.js 308 redirects that GSC flags
+  if (pathname !== '/' && pathname.endsWith('/')) {
+    const cleanPath = pathname.slice(0, -1);
+    const cleanUrl = new URL(cleanPath, request.url);
+    cleanUrl.search = request.nextUrl.search;
+    return NextResponse.redirect(cleanUrl, 301);
+  }
+
+  // ─── 5. Handle /en → redirect to / (English is the default locale) ───
+  if (pathname === '/en') {
+    return NextResponse.redirect(new URL('/', request.url), 301);
+  }
+
+  // ─── 6. Handle /zn → redirect to /zh (common typo) ───
+  if (pathname === '/zn') {
+    return NextResponse.redirect(new URL('/zh', request.url), 301);
+  }
+  if (pathname.startsWith('/zn/')) {
+    const subpath = pathname.slice(3); // '/zn/quickies' → '/quickies'
+    return NextResponse.redirect(new URL(`/zh${subpath}`, request.url), 301);
+  }
+
+  // ─── 7. Handle /search → redirect to homepage (no search page exists) ───
+  if (pathname === '/search') {
+    return NextResponse.redirect(new URL('/', request.url), 301);
+  }
+
+  // ─── 8. Handle non-existent sitemap files ───
+  if (pathname.match(/^\/sitemap-[a-z]{2}\.xml$/)) {
+    // Redirect to the real sitemap
+    return NextResponse.redirect(new URL('/sitemap.xml', request.url), 301);
+  }
+
+  // ─── 8. Locale handling (i18n URL rewriting) ───
   let matchedLocale = null;
   let restPath = null;
 

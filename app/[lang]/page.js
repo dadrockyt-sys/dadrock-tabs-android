@@ -220,8 +220,16 @@ export async function generateMetadata({ params }) {
 
 // Import and re-export the main page component with lang param
 import HomePage from '../page';
+import { notFound } from 'next/navigation';
 
 export default async function LangPage({ params }) {
   const resolvedParams = await params;
-  return <HomePage initialLang={resolvedParams.lang} />;
+  const lang = resolvedParams.lang;
+  
+  // Validate that the lang is a supported locale — reject invalid paths like /fr_ or /abc
+  if (!locales.includes(lang)) {
+    notFound();
+  }
+  
+  return <HomePage initialLang={lang} />;
 }

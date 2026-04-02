@@ -2,6 +2,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Skip Next.js automatic trailing slash redirect (308) so our middleware handles it with 301
+  skipTrailingSlashRedirect: true,
   // Add empty turbopack config to silence the warning in Next.js 16
   turbopack: {},
   webpack(config, { dev }) {
