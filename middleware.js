@@ -3,21 +3,120 @@ import { NextResponse } from 'next/server';
 // Supported locales — must match lib/i18n.js and sitemap.js
 const locales = ['en', 'es', 'pt', 'pt-br', 'de', 'fr', 'it', 'ja', 'ko', 'zh', 'ru', 'hi', 'sv', 'fi'];
 
+// ─── Bot & Scanner User-Agent Patterns ───
+// These are vulnerability scanners, not legitimate crawlers
+const BLOCKED_UA_PATTERNS = [
+  // Vulnerability scanners
+  'sqlmap', 'nikto', 'nmap', 'masscan', 'zgrab', 'gobuster', 'dirbuster',
+  'wpscan', 'joomscan', 'droopescan', 'nuclei', 'httpx', 'subfinder',
+  'acunetix', 'netsparker', 'burpsuite', 'owasp', 'openvas', 'nessus',
+  'qualys', 'nexpose', 'arachni', 'w3af', 'skipfish', 'wapiti',
+  // Scraper/spam bots
+  'semrush', 'ahref', 'mj12bot', 'dotbot', 'blexbot', 'seekport',
+  'megaindex', 'ltx71', 'sogou', 'yandexbot',
+  // Generic attack tools
+  'python-requests', 'python-urllib', 'curl/', 'wget/', 'go-http-client',
+  'java/', 'libwww-perl', 'mechanize', 'scrapy', 'httpclient',
+  // Headless browsers used for scanning (not normal browsing)
+  'phantom', 'headlesschrome',
+];
+
+// ─── Honeypot / Attack Paths ───
+// Paths that vulnerability scanners commonly probe
+const BLOCKED_PATH_PATTERNS = [
+  // WordPress
+  '/wp-admin', '/wp-login', '/wp-content', '/wp-includes', '/wp-json',
+  '/xmlrpc.php', '/wp-cron', '/wp-config',
+  // PHP admin panels
+  '/phpmyadmin', '/pma', '/myadmin', '/mysql', '/dbadmin', '/phpinfo',
+  '/adminer', '/sqlmanager',
+  // Config/env files
+  '/.env', '/.git', '/.svn', '/.htaccess', '/.htpasswd', '/.DS_Store',
+  '/config.php', '/configuration.php', '/config.yml', '/config.json',
+  '/backup', '/database', '/dump', '/sql',
+  // CMS exploits
+  '/joomla', '/drupal', '/magento', '/typo3', '/modx',
+  '/administrator', '/user/login', '/admin.php',
+  // Shell/backdoor probes
+  '/shell', '/cmd', '/command', '/exec', '/eval',
+  '/c99', '/r57', '/wso', '/alfa', '/webshell', '/backdoor',
+  // Common scanner paths
+  '/cgi-bin', '/scripts', '/fckeditor', '/kcfinder',
+  '/elfinder', '/fileman', '/filemanager',
+  '/console', '/debug', '/trace', '/actuator',
+  '/_profiler', '/_debug', '/telescope',
+  // Misc attack vectors
+  '/etc/passwd', '/proc/self', '/../../',
+  '/vendor', '/node_modules', '/composer',
+];
+
+// ─── Blocked File Extensions (in URL path) ───
+const BLOCKED_EXTENSIONS = [
+  '.php', '.asp', '.aspx', '.jsp', '.cgi', '.pl',
+  '.sql', '.bak', '.old', '.orig', '.save', '.swp',
+  '.log', '.ini', '.conf', '.cfg',
+];
+
+function isBlockedBot(userAgent) {
+  if (!userAgent) return true; // No UA = suspicious
+  const ua = userAgent.toLowerCase();
+  return BLOCKED_UA_PATTERNS.some(pattern => ua.includes(pattern));
+}
+
+function isBlockedPath(pathname) {
+  const lower = pathname.toLowerCase();
+  
+  // Check exact path prefix matches
+  if (BLOCKED_PATH_PATTERNS.some(p => lower.startsWith(p))) return true;
+  
+  // Check blocked file extensions
+  if (BLOCKED_EXTENSIONS.some(ext => lower.endsWith(ext))) return true;
+  
+  // Check for directory traversal attempts
+  if (lower.includes('..') || lower.includes('%2e%2e')) return true;
+  
+  // Check for null byte injection
+  if (lower.includes('%00') || lower.includes('\x00')) return true;
+  
+  return false;
+}
+
+// Security headers applied to all responses
+function addSecurityHeaders(response) {
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('X-Frame-Options', 'SAMEORIGIN');
+  response.headers.set('X-XSS-Protection', '1; mode=block');
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), interest-cohort=()');
+  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  return response;
+}
+
 export function middleware(request) {
   const url = request.nextUrl.clone();
   const hostname = request.headers.get('host') || '';
+  const pathname = request.nextUrl.pathname;
+  const userAgent = request.headers.get('user-agent') || '';
   
-  // Redirect www to non-www
+  // ─── 1. Redirect www to non-www ───
   if (hostname.startsWith('www.')) {
     const newHostname = hostname.replace('www.', '');
     url.host = newHostname;
     return NextResponse.redirect(url, 301);
   }
 
-  const pathname = request.nextUrl.pathname;
+  // ─── 2. Block known vulnerability scanners ───
+  if (isBlockedBot(userAgent)) {
+    return new NextResponse('Forbidden', { status: 403 });
+  }
 
-  // Check if the path starts with a locale prefix
-  // Handle 'pt-br' first (longer match), then single-segment locales
+  // ─── 3. Block suspicious/attack paths ───
+  if (isBlockedPath(pathname)) {
+    // Return 403 instead of 404 — tells scanners the server is actively blocking
+    return new NextResponse('Forbidden', { status: 403 });
+  }
+
+  // ─── 4. Locale handling (i18n URL rewriting) ───
   let matchedLocale = null;
   let restPath = null;
 
@@ -28,13 +127,12 @@ export function middleware(request) {
   } else {
     // Check other single-segment locales
     for (const locale of locales) {
-      if (locale === 'pt-br') continue; // Already handled above
+      if (locale === 'pt-br') continue;
       if (pathname.startsWith(`/${locale}/`)) {
         matchedLocale = locale;
         restPath = pathname.slice(`/${locale}`.length);
         break;
       }
-      // Exact match for locale root (e.g., /es, /fr) — handled by [lang]/page.js
       if (pathname === `/${locale}`) {
         matchedLocale = locale;
         restPath = '';
@@ -43,31 +141,28 @@ export function middleware(request) {
     }
   }
 
-  // If no locale matched, continue normally
+  // If no locale matched, add security headers and continue
   if (!matchedLocale) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    return addSecurityHeaders(response);
   }
 
-  // If it's just the locale root (e.g., /es, /fr, /pt-br with no subpath),
-  // let the existing [lang]/page.js handle it
+  // If it's just the locale root, let [lang]/page.js handle it
   if (!restPath || restPath === '' || restPath === '/') {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    return addSecurityHeaders(response);
   }
 
-  // For subpaths like /es/artist/acdc, /pt/quickies, /ko/top-lessons, etc.
-  // Rewrite to the actual path (strip the locale prefix)
+  // For subpaths like /es/artist/acdc, rewrite to /artist/acdc
   const rewriteUrl = new URL(restPath, request.url);
   const response = NextResponse.rewrite(rewriteUrl);
-  
-  // Pass the locale as a header so pages can optionally read it server-side
   response.headers.set('x-locale', matchedLocale);
-  
-  return response;
+  return addSecurityHeaders(response);
 }
 
 export const config = {
   matcher: [
-    // Match all paths except static files, api routes, and Next.js internals
-    '/((?!_next/static|_next/image|favicon.ico|.*\\..*|api).*)',
+    // Match all paths except Next.js internals and actual static files
+    '/((?!_next/static|_next/image|favicon.ico|api).*)',
   ],
 };

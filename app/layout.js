@@ -70,7 +70,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Teko:wght@400;500;600;700&display=swap" rel="stylesheet" />
         
-        {/* Google Analytics GA4 + Firebase Analytics */}
+        {/* Google Analytics GA4 + Firebase Analytics — with bot filtering */}
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-92RKGQW8NJ"
@@ -78,13 +78,31 @@ export default function RootLayout({ children }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-92RKGQW8NJ', {
-                page_title: document.title,
-                page_location: window.location.href,
-              });
+              // Bot detection — skip GA tracking for known bots/scanners
+              (function() {
+                var ua = (navigator.userAgent || '').toLowerCase();
+                var botPatterns = [
+                  'bot', 'crawl', 'spider', 'slurp', 'mediapartners',
+                  'semrush', 'ahref', 'mj12bot', 'dotbot', 'blexbot',
+                  'python', 'curl', 'wget', 'java', 'perl', 'scrapy',
+                  'phantom', 'headless', 'sqlmap', 'nikto', 'nmap',
+                  'zgrab', 'masscan', 'gobuster', 'nuclei', 'httpx',
+                  'bytespider', 'yandex', 'sogou', 'baidu',
+                  'ltx71', 'megaindex', 'seekport'
+                ];
+                var isBot = botPatterns.some(function(p) { return ua.indexOf(p) !== -1; });
+                
+                if (!isBot) {
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  window.gtag = gtag;
+                  gtag('js', new Date());
+                  gtag('config', 'G-92RKGQW8NJ', {
+                    page_title: document.title,
+                    page_location: window.location.href,
+                  });
+                }
+              })();
             `,
           }}
         />
