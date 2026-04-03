@@ -220,21 +220,50 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
         </nav>
 
         {/* Artist Header */}
-        <div className="mb-10">
+        <div className="mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4 font-rock">
             <span className="text-amber-500">{artistName}</span>
             <span className="text-white"> Guitar & Bass Tabs</span>
           </h1>
-          <p className="text-lg text-zinc-300 max-w-3xl leading-relaxed">
-            Learn how to play songs by <strong>{artistName}</strong> with step-by-step guitar and bass tutorials. 
-            These riffs are some of the most recognizable classic rock riffs ever written and are perfect for 
-            beginner and intermediate players.
-          </p>
-          <p className="mt-4 text-amber-500 font-semibold">
+          <p className="mt-2 text-amber-500 font-semibold">
             <Music className="w-5 h-5 inline mr-2" />
             {videos.length} lesson{videos.length !== 1 ? 's' : ''} available
           </p>
         </div>
+
+        {/* About Artist — Shown ABOVE lessons */}
+        <div className="mb-8 p-6 sm:p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+          <h2 className="text-2xl font-bold mb-4 text-amber-500 flex items-center gap-2">
+            <Star className="w-6 h-6" />
+            About {artistName}
+          </h2>
+          <div className="text-zinc-300 space-y-4 leading-relaxed">
+            {aiContent?.bio ? (
+              aiContent.bio.split('\n').filter(Boolean).map((p, i) => <p key={i}>{p}</p>)
+            ) : (
+              <>
+                <p>
+                  Looking to learn {artistName} songs on guitar or bass? You've come to the right place! 
+                  DadRock Tabs offers free video tutorials that break down every riff, chord, and solo 
+                  so you can master your favorite {artistName} tracks.
+                </p>
+                <p>
+                  Whether you're a beginner just starting out or an intermediate player looking to expand 
+                  your repertoire, our step-by-step lessons make it easy to learn at your own pace.
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Hint to scroll for gear/playing style — only show if AI content has extra sections */}
+        {aiContent?.playing_style && (
+          <div className="mb-8 p-4 bg-gradient-to-r from-amber-500/10 to-zinc-900/30 rounded-xl border border-amber-500/20 text-center">
+            <p className="text-zinc-300 text-sm sm:text-base">
+              🎸 Want to know what <strong className="text-amber-400">gear</strong> {artistName} used, their <strong className="text-amber-400">playing style</strong>, and <strong className="text-amber-400">fun facts</strong>? Scroll below the lessons!
+            </p>
+          </div>
+        )}
 
         {/* Video Player (if selected) */}
         {selectedVideo && (
@@ -303,33 +332,8 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
           ))}
         </div>
 
-        {/* SEO Content Section — AI-Enhanced */}
+        {/* SEO Content Section — AI-Enhanced (below lessons) */}
         <section className="mt-16 space-y-8">
-          {/* Artist Bio */}
-          <div className="p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
-            <h2 className="text-2xl font-bold mb-4 text-amber-500 flex items-center gap-2">
-              <Star className="w-6 h-6" />
-              About {artistName}
-            </h2>
-            <div className="text-zinc-300 space-y-4 leading-relaxed">
-              {aiContent?.bio ? (
-                aiContent.bio.split('\n').filter(Boolean).map((p, i) => <p key={i}>{p}</p>)
-              ) : (
-                <>
-                  <p>
-                    Looking to learn {artistName} songs on guitar or bass? You've come to the right place! 
-                    DadRock Tabs offers free video tutorials that break down every riff, chord, and solo 
-                    so you can master your favorite {artistName} tracks.
-                  </p>
-                  <p>
-                    Whether you're a beginner just starting out or an intermediate player looking to expand 
-                    your repertoire, our step-by-step lessons make it easy to learn at your own pace.
-                  </p>
-                </>
-              )}
-            </div>
-          </div>
-
           {/* Playing Style & Gear — only show if AI content available */}
           {aiContent?.playing_style && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
