@@ -108,6 +108,8 @@ IMPORTANT: Return ONLY valid JSON, no markdown formatting, no code blocks. Write
 }
 
 // GET: Check status of AI-generated content
+// ?detail=artists — returns list of all unique artists with their AI content status
+// ?detail=songs — returns list of all songs with their AI content status
 export async function GET(request) {
   if (!verifyAdmin(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -115,9 +117,92 @@ export async function GET(request) {
 
   try {
     const db = await getDb();
+    const url = new URL(request.url);
+    const detail = url.searchParams.get('detail');
 
-    // Count artists and songs with/without AI content
-    const totalArtists = (await db.collection('videos').distinct('artist')).length;
+    // ─── Detailed artist list ───
+    if (detail === 'artists') {
+      const allRawArtists = await db.collection('videos').distinct('artist');
+      const existingContent = await db.collection('artist_seo_content').find({}, { projection: { slug: 1, artist: 1, generated_at: 1 } }).toArray();
+      const contentBySlug = {};
+      for (const c of existingContent) {
+        if (c.slug) contentBySlug[c.slug] = { artist: c.artist, generated_at: c.generated_at };
+      }
+
+      // Deduplicate raw artist names by slug
+      const seenSlugs = new Set();
+      const artistList = [];
+      for (const raw of allRawArtists) {
+        if (!raw) continue;
+        const slug = artistToSlug(raw);
+        if (!slug || seenSlugs.has(slug)) continue;
+        seenSlugs.add(slug);
+        const displayName = raw.replace(/ -$/, '').trim();
+        const hasContent = !!contentBySlug[slug];
+        artistList.push({
+          name: displayName,
+          slug,
+          has_content: hasContent,
+          generated_at: hasContent ? contentBySlug[slug].generated_at : null,
+        });
+      }
+
+      // Sort: artists without content first, then alphabetically
+      artistList.sort((a, b) => {
+        if (a.has_content !== b.has_content) return a.has_content ? 1 : -1;
+        return a.name.localeCompare(b.name);
+      });
+
+      return NextResponse.json({
+        success: true,
+        total: artistList.length,
+        with_content: artistList.filter(a => a.has_content).length,
+        without_content: artistList.filter(a => !a.has_content).length,
+        artists: artistList,
+      });
+    }
+
+    // ─── Detailed song list ───
+    if (detail === 'songs') {
+      const allSongs = await db.collection('song_pages').find({}, { projection: { slug: 1, title: 1, artist: 1 } }).toArray();
+      const existingContent = await db.collection('song_seo_content').find({}, { projection: { slug: 1, generated_at: 1 } }).toArray();
+      const contentBySlug = {};
+      for (const c of existingContent) {
+        if (c.slug) contentBySlug[c.slug] = { generated_at: c.generated_at };
+      }
+
+      const songList = allSongs.map(s => ({
+        title: s.title,
+        artist: s.artist,
+        slug: s.slug,
+        has_content: !!contentBySlug[s.slug],
+        generated_at: contentBySlug[s.slug]?.generated_at || null,
+      }));
+
+      songList.sort((a, b) => {
+        if (a.has_content !== b.has_content) return a.has_content ? 1 : -1;
+        return (a.title || '').localeCompare(b.title || '');
+      });
+
+      return NextResponse.json({
+        success: true,
+        total: songList.length,
+        with_content: songList.filter(s => s.has_content).length,
+        without_content: songList.filter(s => !s.has_content).length,
+        songs: songList,
+      });
+    }
+
+    // ─── Summary counts (default) ───
+    // Deduplicate artists by slug for accurate counts
+    const allRawArtists = await db.collection('videos').distinct('artist');
+    const seenSlugs = new Set();
+    for (const raw of allRawArtists) {
+      if (!raw) continue;
+      const slug = artistToSlug(raw);
+      if (slug) seenSlugs.add(slug);
+    }
+    const uniqueArtistCount = seenSlugs.size;
     const artistsWithContent = await db.collection('artist_seo_content').countDocuments();
 
     const totalSongs = await db.collection('song_pages').countDocuments();
@@ -126,9 +211,9 @@ export async function GET(request) {
     return NextResponse.json({
       success: true,
       artists: {
-        total: totalArtists,
+        total: uniqueArtistCount,
         with_ai_content: artistsWithContent,
-        without_ai_content: totalArtists - artistsWithContent,
+        without_ai_content: uniqueArtistCount - artistsWithContent,
       },
       songs: {
         total: totalSongs,

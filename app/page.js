@@ -388,6 +388,12 @@ export default function App({ initialLang = 'en' }) {
   const [aiBatchSize, setAiBatchSize] = useState(5);
   const [aiResults, setAiResults] = useState(null);
   const [aiProgress, setAiProgress] = useState('');
+  const [showAiDetailView, setShowAiDetailView] = useState(false);
+  const [aiDetailData, setAiDetailData] = useState(null);
+  const [aiDetailLoading, setAiDetailLoading] = useState(false);
+  const [aiDetailFilter, setAiDetailFilter] = useState('all'); // 'all', 'with', 'without'
+  const [aiDetailSearch, setAiDetailSearch] = useState('');
+  const [isGeneratingSingle, setIsGeneratingSingle] = useState(null); // slug of the artist being generated
   
   // Admin upcoming videos state
   const [adminUpcomingVideos, setAdminUpcomingVideos] = useState([]);
@@ -1093,6 +1099,43 @@ export default function App({ initialLang = 'en' }) {
     } catch (e) { /* ignore */ }
   };
 
+  // AI SEO Content — Load detailed artist/song list
+  const loadAiDetailView = async (type = 'artists') => {
+    setAiDetailLoading(true);
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      const res = await fetch(`/api/admin/generate-seo?detail=${type}`, {
+        headers: { 'Authorization': `Basic ${authToken}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setAiDetailData(data);
+      }
+    } catch (e) { /* ignore */ }
+    setAiDetailLoading(false);
+  };
+
+  // AI SEO Content — Generate for single artist
+  const handleGenerateSingleArtist = async (artistName, slug) => {
+    setIsGeneratingSingle(slug);
+    try {
+      const storedPassword = sessionStorage.getItem('dadrock_admin_auth');
+      const authToken = btoa(`admin:${storedPassword}`);
+      const res = await fetch('/api/admin/generate-seo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${authToken}` },
+        body: JSON.stringify({ action: 'generate_artist', artist_name: artistName }),
+      });
+      if (res.ok) {
+        // Refresh detail view and status
+        await loadAiDetailView('artists');
+        await loadAiSeoStatus();
+      }
+    } catch (err) { /* ignore */ }
+    setIsGeneratingSingle(null);
+  };
+
   // AI SEO Content — Generate
   const handleGenerateAiSeo = async () => {
     setIsGeneratingAi(true);
@@ -1111,6 +1154,10 @@ export default function App({ initialLang = 'en' }) {
         setAiResults(data);
         setAiProgress('');
         loadAiSeoStatus();
+        // Also refresh detail view if it's open
+        if (showAiDetailView) {
+          loadAiDetailView(aiGenerateMode === 'batch_songs' ? 'songs' : 'artists');
+        }
       } else {
         setAiResults({ error: data.error || 'Generation failed' });
         setAiProgress('');
@@ -3065,25 +3112,228 @@ export default function App({ initialLang = 'en' }) {
               Use GPT to generate rich, educational content for artist and song pages — including band bios, playing style analysis, gear info, song backstories, and practice tips.
             </p>
 
-            {/* Status Cards */}
+            {/* Status Cards with Progress Bar */}
             {aiSeoStatus && (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
-                  <div className="text-2xl font-bold text-purple-400">{aiSeoStatus.artists?.with_ai_content || 0}</div>
-                  <div className="text-xs text-zinc-400">Artists with AI Content</div>
+              <div className="mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                  <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
+                    <div className="text-2xl font-bold text-purple-400">{aiSeoStatus.artists?.with_ai_content || 0}</div>
+                    <div className="text-xs text-zinc-400">Artists with AI Content</div>
+                  </div>
+                  <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
+                    <div className="text-2xl font-bold text-zinc-400">{aiSeoStatus.artists?.without_ai_content || 0}</div>
+                    <div className="text-xs text-zinc-400">Artists Need Content</div>
+                  </div>
+                  <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
+                    <div className="text-2xl font-bold text-purple-400">{aiSeoStatus.songs?.with_ai_content || 0}</div>
+                    <div className="text-xs text-zinc-400">Songs with AI Content</div>
+                  </div>
+                  <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
+                    <div className="text-2xl font-bold text-zinc-400">{aiSeoStatus.songs?.without_ai_content || 0}</div>
+                    <div className="text-xs text-zinc-400">Songs Need Content</div>
+                  </div>
                 </div>
-                <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
-                  <div className="text-2xl font-bold text-zinc-400">{aiSeoStatus.artists?.without_ai_content || 0}</div>
-                  <div className="text-xs text-zinc-400">Artists Need Content</div>
+
+                {/* Artist Progress Bar */}
+                {aiSeoStatus.artists?.total > 0 && (
+                  <div className="mb-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs text-zinc-400">Artist Content Progress</span>
+                      <span className="text-xs font-semibold text-purple-400">
+                        {Math.round(((aiSeoStatus.artists?.with_ai_content || 0) / aiSeoStatus.artists.total) * 100)}%
+                      </span>
+                    </div>
+                    <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-purple-600 to-purple-400 rounded-full transition-all duration-500"
+                        style={{ width: `${((aiSeoStatus.artists?.with_ai_content || 0) / aiSeoStatus.artists.total) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Song Progress Bar */}
+                {aiSeoStatus.songs?.total > 0 && (
+                  <div className="mb-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs text-zinc-400">Song Content Progress</span>
+                      <span className="text-xs font-semibold text-purple-400">
+                        {Math.round(((aiSeoStatus.songs?.with_ai_content || 0) / aiSeoStatus.songs.total) * 100)}%
+                      </span>
+                    </div>
+                    <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-purple-600 to-purple-400 rounded-full transition-all duration-500"
+                        style={{ width: `${((aiSeoStatus.songs?.with_ai_content || 0) / aiSeoStatus.songs.total) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* View Details Button */}
+                <button
+                  onClick={() => {
+                    if (!showAiDetailView) {
+                      loadAiDetailView(aiGenerateMode === 'batch_songs' ? 'songs' : 'artists');
+                    }
+                    setShowAiDetailView(!showAiDetailView);
+                  }}
+                  className="mt-2 flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300 transition-colors"
+                >
+                  <ChevronDown className={`w-4 h-4 transition-transform ${showAiDetailView ? 'rotate-180' : ''}`} />
+                  {showAiDetailView ? 'Hide Details' : 'View All Artists/Songs Status'}
+                </button>
+              </div>
+            )}
+
+            {/* Detail View Panel */}
+            {showAiDetailView && (
+              <div className="mb-6 bg-zinc-800/30 rounded-lg border border-zinc-700 overflow-hidden">
+                {/* Detail Header */}
+                <div className="p-3 border-b border-zinc-700 flex flex-wrap items-center gap-3">
+                  {/* Type Toggle */}
+                  <div className="flex gap-1">
+                    <button
+                      onClick={() => { loadAiDetailView('artists'); }}
+                      className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${
+                        !aiDetailData?.songs ? 'bg-purple-600 text-white' : 'bg-zinc-700 text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      Artists
+                    </button>
+                    <button
+                      onClick={() => { loadAiDetailView('songs'); }}
+                      className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${
+                        aiDetailData?.songs ? 'bg-purple-600 text-white' : 'bg-zinc-700 text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      Songs
+                    </button>
+                  </div>
+
+                  {/* Filter */}
+                  <div className="flex gap-1">
+                    {[
+                      { value: 'all', label: 'All' },
+                      { value: 'without', label: 'Missing' },
+                      { value: 'with', label: 'Done' },
+                    ].map(f => (
+                      <button
+                        key={f.value}
+                        onClick={() => setAiDetailFilter(f.value)}
+                        className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${
+                          aiDetailFilter === f.value
+                            ? 'bg-zinc-600 text-white'
+                            : 'bg-zinc-800 text-zinc-500 hover:text-white'
+                        }`}
+                      >
+                        {f.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Search */}
+                  <div className="flex-1 min-w-[150px]">
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      value={aiDetailSearch}
+                      onChange={e => setAiDetailSearch(e.target.value)}
+                      className="w-full bg-zinc-800 text-white text-xs border border-zinc-700 rounded px-3 py-1.5 focus:outline-none focus:border-purple-500"
+                    />
+                  </div>
                 </div>
-                <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
-                  <div className="text-2xl font-bold text-purple-400">{aiSeoStatus.songs?.with_ai_content || 0}</div>
-                  <div className="text-xs text-zinc-400">Songs with AI Content</div>
-                </div>
-                <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
-                  <div className="text-2xl font-bold text-zinc-400">{aiSeoStatus.songs?.without_ai_content || 0}</div>
-                  <div className="text-xs text-zinc-400">Songs Need Content</div>
-                </div>
+
+                {/* Detail Content */}
+                {aiDetailLoading ? (
+                  <div className="p-8 text-center text-zinc-400">
+                    <div className="w-6 h-6 border-2 border-purple-400 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                    Loading...
+                  </div>
+                ) : aiDetailData ? (
+                  <div className="max-h-80 overflow-y-auto">
+                    {/* Artist list */}
+                    {aiDetailData.artists && (
+                      <div className="divide-y divide-zinc-800/50">
+                        {aiDetailData.artists
+                          .filter(a => {
+                            if (aiDetailFilter === 'with') return a.has_content;
+                            if (aiDetailFilter === 'without') return !a.has_content;
+                            return true;
+                          })
+                          .filter(a => !aiDetailSearch || a.name.toLowerCase().includes(aiDetailSearch.toLowerCase()))
+                          .map(a => (
+                            <div key={a.slug} className="flex items-center gap-3 px-4 py-2 hover:bg-zinc-800/40">
+                              <span className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs ${
+                                a.has_content ? 'bg-emerald-500/20 text-emerald-400' : 'bg-zinc-700/50 text-zinc-500'
+                              }`}>
+                                {a.has_content ? '✓' : '—'}
+                              </span>
+                              <span className="flex-1 text-sm text-zinc-200 truncate">{a.name}</span>
+                              {a.has_content ? (
+                                <span className="text-xs text-zinc-500 flex-shrink-0">
+                                  {a.generated_at ? new Date(a.generated_at).toLocaleDateString() : 'Done'}
+                                </span>
+                              ) : (
+                                <button
+                                  onClick={() => handleGenerateSingleArtist(a.name, a.slug)}
+                                  disabled={isGeneratingSingle === a.slug}
+                                  className="flex-shrink-0 px-3 py-1 text-xs bg-purple-600/80 text-white rounded hover:bg-purple-500 transition-colors disabled:opacity-50"
+                                >
+                                  {isGeneratingSingle === a.slug ? (
+                                    <span className="flex items-center gap-1">
+                                      <span className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                                      Generating...
+                                    </span>
+                                  ) : 'Generate'}
+                                </button>
+                              )}
+                            </div>
+                          ))
+                        }
+                      </div>
+                    )}
+                    {/* Song list */}
+                    {aiDetailData.songs && (
+                      <div className="divide-y divide-zinc-800/50">
+                        {aiDetailData.songs
+                          .filter(s => {
+                            if (aiDetailFilter === 'with') return s.has_content;
+                            if (aiDetailFilter === 'without') return !s.has_content;
+                            return true;
+                          })
+                          .filter(s => !aiDetailSearch || (s.title || '').toLowerCase().includes(aiDetailSearch.toLowerCase()) || (s.artist || '').toLowerCase().includes(aiDetailSearch.toLowerCase()))
+                          .map(s => (
+                            <div key={s.slug} className="flex items-center gap-3 px-4 py-2 hover:bg-zinc-800/40">
+                              <span className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs ${
+                                s.has_content ? 'bg-emerald-500/20 text-emerald-400' : 'bg-zinc-700/50 text-zinc-500'
+                              }`}>
+                                {s.has_content ? '✓' : '—'}
+                              </span>
+                              <div className="flex-1 min-w-0">
+                                <span className="text-sm text-zinc-200 truncate block">{s.title}</span>
+                                <span className="text-xs text-zinc-500">{s.artist}</span>
+                              </div>
+                              {s.has_content && (
+                                <span className="text-xs text-zinc-500 flex-shrink-0">
+                                  {s.generated_at ? new Date(s.generated_at).toLocaleDateString() : 'Done'}
+                                </span>
+                              )}
+                            </div>
+                          ))
+                        }
+                      </div>
+                    )}
+                  </div>
+                ) : null}
+
+                {/* Footer with count */}
+                {aiDetailData && (
+                  <div className="p-2 border-t border-zinc-700 text-center text-xs text-zinc-500">
+                    {aiDetailData.with_content || 0} done / {aiDetailData.total || 0} total 
+                    {aiDetailSearch && ` (filtered)`}
+                  </div>
+                )}
               </div>
             )}
 
