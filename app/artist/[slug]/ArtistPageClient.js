@@ -223,11 +223,11 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
         <div className="mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4 font-rock">
             <span className="text-amber-500">{artistName}</span>
-            <span className="text-white"> Guitar & Bass Tabs</span>
+            <span className="text-white"> {t.guitarBassTabs || 'Guitar & Bass Tabs'}</span>
           </h1>
           <p className="mt-2 text-amber-500 font-semibold">
             <Music className="w-5 h-5 inline mr-2" />
-            {videos.length} lesson{videos.length !== 1 ? 's' : ''} available
+            {videos.length} {t.artistLessons || 'lessons available'}
           </p>
         </div>
 
@@ -235,22 +235,15 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
         <div className="mb-8 p-6 sm:p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
           <h2 className="text-2xl font-bold mb-4 text-amber-500 flex items-center gap-2">
             <Star className="w-6 h-6" />
-            About {artistName}
+            {t.about || 'About'} {artistName}
           </h2>
           <div className="text-zinc-300 space-y-4 leading-relaxed">
             {aiContent?.bio ? (
               aiContent.bio.split('\n').filter(Boolean).map((p, i) => <p key={i}>{p}</p>)
             ) : (
               <>
-                <p>
-                  Looking to learn {artistName} songs on guitar or bass? You've come to the right place! 
-                  DadRock Tabs offers free video tutorials that break down every riff, chord, and solo 
-                  so you can master your favorite {artistName} tracks.
-                </p>
-                <p>
-                  Whether you're a beginner just starting out or an intermediate player looking to expand 
-                  your repertoire, our step-by-step lessons make it easy to learn at your own pace.
-                </p>
+                <p>{(t.defaultBioP1 || '').replace(/\{artist\}/g, artistName)}</p>
+                <p>{t.defaultBioP2 || ''}</p>
               </>
             )}
           </div>
@@ -260,7 +253,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
         {aiContent?.playing_style && (
           <div className="mb-8 p-4 bg-gradient-to-r from-amber-500/10 to-zinc-900/30 rounded-xl border border-amber-500/20 text-center">
             <p className="text-zinc-300 text-sm sm:text-base">
-              🎸 Want to know what <strong className="text-amber-400">gear</strong> {artistName} used, their <strong className="text-amber-400">playing style</strong>, and <strong className="text-amber-400">fun facts</strong>? Scroll below the lessons!
+              🎸 {t.scrollHintGear || 'Want to know what'} <strong className="text-amber-400">{t.scrollHintGearWord || 'gear'}</strong> {artistName} {t.scrollHintUsed || 'used, their'} <strong className="text-amber-400">{t.scrollHintStyle || 'playing style'}</strong>{t.scrollHintAnd || ', and'} <strong className="text-amber-400">{t.scrollHintFacts || 'fun facts'}</strong>{t.scrollHintEnd || '? Scroll below the lessons!'}
             </p>
           </div>
         )}
@@ -286,7 +279,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
                 className="mt-3 flex items-center gap-2 text-amber-500 hover:text-amber-400 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Back to all lessons
+                {t.backToAllLessons || 'Back to all lessons'}
               </button>
             </div>
           </div>
@@ -340,14 +333,14 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
               <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
                 <h3 className="text-xl font-bold mb-3 text-white flex items-center gap-2">
                   <Music className="w-5 h-5 text-amber-500" />
-                  Playing Style
+                  {t.playingStyle || 'Playing Style'}
                 </h3>
                 <p className="text-zinc-300 leading-relaxed">{aiContent.playing_style}</p>
               </div>
               {aiContent?.gear_info && (
                 <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
                   <h3 className="text-xl font-bold mb-3 text-white flex items-center gap-2">
-                    🎸 Gear & Equipment
+                    🎸 {t.gearEquipment || 'Gear & Equipment'}
                   </h3>
                   <p className="text-zinc-300 leading-relaxed">{aiContent.gear_info}</p>
                 </div>
@@ -360,7 +353,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
             <div className="p-6 bg-gradient-to-r from-amber-500/10 to-zinc-900/50 rounded-2xl border border-amber-500/20">
               <h3 className="text-xl font-bold mb-3 text-amber-500 flex items-center gap-2">
                 <Lightbulb className="w-5 h-5" />
-                Why Learn {artistName} Songs?
+                {t.whyLearn || 'Why Learn'} {artistName} {t.whyLearnSuffix || 'Songs?'}
               </h3>
               <p className="text-zinc-300 leading-relaxed">{aiContent.why_learn}</p>
             </div>
@@ -371,7 +364,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
             <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
               <h3 className="text-xl font-bold mb-4 text-white flex items-center gap-2">
                 <BookOpen className="w-5 h-5 text-amber-500" />
-                Did You Know?
+                {t.didYouKnow || 'Did You Know?'}
               </h3>
               <ul className="space-y-3">
                 {aiContent.fun_facts.map((fact, i) => (
@@ -388,7 +381,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
           <div className="text-center p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
             <p className="text-amber-500 font-semibold text-lg">
               <Music className="w-5 h-5 inline mr-2" />
-              {videos.length} {artistName} lesson{videos.length !== 1 ? 's' : ''} available — Start learning today!
+              {videos.length} {artistName} {t.lessonsAvailableCta || 'lesson(s) available — Start learning today!'}
             </p>
           </div>
         </section>
@@ -397,10 +390,10 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
         <section className="mt-10 p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
           <h2 className="text-2xl font-bold mb-4 text-white flex items-center gap-2">
             <Users className="w-6 h-6 text-amber-500" />
-            If You Like {artistName}, You'll Love...
+            {t.ifYouLike || 'If You Like'} {artistName}{t.youllLove || ', You\'ll Love...'}
           </h2>
           <p className="text-zinc-400 mb-6">
-            Check out guitar and bass tabs from these similar classic rock artists:
+            {t.checkOutSimilar || 'Check out guitar and bass tabs from these similar classic rock artists:'}
           </p>
           <div className="flex flex-wrap gap-3">
             {getRelatedArtists(artistName).map((relatedArtist) => (
@@ -422,7 +415,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
             className="inline-flex items-center gap-3 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-full transition-colors"
           >
             <Home className="w-5 h-5" />
-            Explore More Artists
+            {t.backToHome2 || 'Back to Home'}
           </Link>
         </div>
       </main>
