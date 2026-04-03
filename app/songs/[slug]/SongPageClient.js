@@ -20,7 +20,8 @@ function formatViewCount(count) {
 export default function SongPageClient({ song, seoContent, adSettings, initialAiContent }) {
   const [lang] = useLanguage();
   const t = getSubPageTranslation(lang);
-  const [showAd, setShowAd] = useState(true);
+  const [showAd, setShowAd] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const [aiContent, setAiContent] = useState(initialAiContent || null);
 
   // Fetch AI-generated SEO content for this song (client-side fallback)
@@ -63,6 +64,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
       return () => clearTimeout(timer);
     } else if (adCountdown === 0 && showAd) {
       setShowAd(false);
+      setVideoPlaying(true);
     }
   }, [showAd, adCountdown]);
 
@@ -127,7 +129,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
               />
             </div>
             <button
-              onClick={() => setShowAd(false)}
+              onClick={() => { setShowAd(false); setVideoPlaying(true); }}
               className="mt-6 text-zinc-500 hover:text-white text-sm underline"
               disabled={adCountdown > 0}
             >
@@ -232,35 +234,8 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
           </div>
         </div>
 
-        {/* Embedded Video */}
-        <div className="relative mb-6">
-          <div className="aspect-video rounded-xl overflow-hidden border border-zinc-800 bg-black">
-            <iframe
-              src={embedUrl}
-              title={`${song.title} by ${song.artist} - Guitar Tab Lesson`}
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-              allowFullScreen
-              style={{ border: 'none' }}
-            />
-          </div>
-        </div>
-
-        {/* Open in YouTube */}
-        <div className="flex justify-center gap-3 mb-12">
-          <a
-            href={youtubeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white font-medium rounded-full transition-all border border-zinc-700"
-          >
-            <Youtube className="w-4 h-4 text-red-500" />
-            Open in YouTube
-          </a>
-        </div>
-
-        {/* SEO Content — AI-Enhanced */}
-        <section className="space-y-6 mb-12">
+        {/* SEO Content — AI-Enhanced (ABOVE video) */}
+        <section className="space-y-6 mb-10">
           {/* Song Story */}
           <div className="p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
             <h2 className="text-2xl font-bold text-amber-500 mb-4 flex items-center gap-2">
@@ -279,7 +254,71 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
               )}
             </div>
           </div>
+        </section>
 
+        {/* Video Section — Thumbnail with Play Button or Embedded Player */}
+        <div className="relative mb-6">
+          {videoPlaying ? (
+            /* Embedded Video (after ad or direct play) */
+            <div className="aspect-video rounded-xl overflow-hidden border border-zinc-800 bg-black">
+              <iframe
+                src={embedUrl}
+                title={`${song.title} by ${song.artist} - Guitar Tab Lesson`}
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                allowFullScreen
+                style={{ border: 'none' }}
+              />
+            </div>
+          ) : (
+            /* Thumbnail with Play Button — Clicking triggers the ad */
+            <button
+              onClick={() => {
+                if (adSettings?.ad_link) {
+                  setAdCountdown(adSettings?.ad_duration || 5);
+                  setShowAd(true);
+                } else {
+                  setVideoPlaying(true);
+                }
+              }}
+              className="w-full aspect-video rounded-xl overflow-hidden border border-zinc-800 bg-black relative group cursor-pointer"
+            >
+              <img
+                src={song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`}
+                alt={`${song.title} by ${song.artist}`}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                onError={(e) => {
+                  e.target.src = `https://img.youtube.com/vi/${song.videoId}/hqdefault.jpg`;
+                }}
+              />
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
+                  <Play className="w-10 h-10 text-white ml-1" fill="white" />
+                </div>
+              </div>
+              <div className="absolute bottom-4 left-4 right-4 text-left">
+                <p className="text-white font-bold text-lg drop-shadow-lg">{t.watchLesson || 'Watch the Lesson'}</p>
+                <p className="text-zinc-300 text-sm drop-shadow-lg">{song.title} — {song.artist}</p>
+              </div>
+            </button>
+          )}
+        </div>
+
+        {/* Open in YouTube */}
+        <div className="flex justify-center gap-3 mb-12">
+          <a
+            href={youtubeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white font-medium rounded-full transition-all border border-zinc-700"
+          >
+            <Youtube className="w-4 h-4 text-red-500" />
+            Open in YouTube
+          </a>
+        </div>
+
+        {/* Additional AI Content (below video) */}
+        <section className="space-y-6 mb-12">
           {/* Lesson Overview & Difficulty — only show if AI content */}
           {aiContent?.lesson_overview && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
