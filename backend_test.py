@@ -1,260 +1,405 @@
 #!/usr/bin/env python3
 """
-Backend Test Suite for DadRock Tabs Website Health Check API
-Tests the /api/admin/health endpoint with various modes and authentication scenarios.
+Backend API Testing for DadRock Tabs - AI SEO Content APIs
+Tests the AI SEO Content Generation and Retrieval endpoints
 """
 
 import requests
 import json
 import base64
-import time
+import os
 from urllib.parse import urljoin
 
 # Configuration
 BASE_URL = "https://admin-sync-hub-1.preview.emergentagent.com"
-ADMIN_USERNAME = "admin"
+ADMIN_USER = "admin"
 ADMIN_PASSWORD = "Babyty99"
 
-def create_auth_header(username, password):
-    """Create Basic Auth header"""
-    credentials = f"{username}:{password}"
-    encoded_credentials = base64.b64encode(credentials.encode()).decode()
-    return {"Authorization": f"Basic {encoded_credentials}"}
+# Required User-Agent header (middleware blocks requests without proper UA)
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "Content-Type": "application/json"
+}
 
-def test_health_check_api():
-    """Test the Website Health Check API at /api/admin/health"""
-    print("=" * 80)
-    print("TESTING: Website Health Check API (/api/admin/health)")
-    print("=" * 80)
+def get_auth_headers():
+    """Get headers with Basic Auth for admin endpoints"""
+    auth_string = f"{ADMIN_USER}:{ADMIN_PASSWORD}"
+    auth_bytes = auth_string.encode('ascii')
+    auth_b64 = base64.b64encode(auth_bytes).decode('ascii')
     
-    results = []
+    headers = HEADERS.copy()
+    headers["Authorization"] = f"Basic {auth_b64}"
+    return headers
+
+def test_seo_content_retrieval():
+    """Test GET /api/seo-content endpoint (public)"""
+    print("\n" + "="*60)
+    print("TESTING: SEO Content Retrieval API (GET /api/seo-content)")
+    print("="*60)
     
-    # Test 1: GET /api/admin/health without auth → expect 401
-    print("\n1. Testing GET /api/admin/health without auth (expect 401)")
-    try:
-        response = requests.get(f"{BASE_URL}/api/admin/health", timeout=30)
-        print(f"   Status: {response.status_code}")
-        print(f"   Response: {response.text[:200]}")
-        
-        if response.status_code == 401:
-            print("   ✅ PASS: Correctly returned 401 for unauthorized access")
-            results.append(("Auth check (no auth)", True))
-        else:
-            print(f"   ❌ FAIL: Expected 401, got {response.status_code}")
-            results.append(("Auth check (no auth)", False))
-    except Exception as e:
-        print(f"   ❌ ERROR: {e}")
-        results.append(("Auth check (no auth)", False))
+    test_cases = [
+        {
+            "name": "Get AC/DC content by slug",
+            "params": {"type": "artist", "slug": "acdc"},
+            "expected_found": True
+        },
+        {
+            "name": "Get Pantera content by slug", 
+            "params": {"type": "artist", "slug": "pantera"},
+            "expected_found": True
+        },
+        {
+            "name": "Get nonexistent artist content",
+            "params": {"type": "artist", "slug": "nonexistent-artist"},
+            "expected_found": False
+        },
+        {
+            "name": "Get AC/DC content by name",
+            "params": {"type": "artist", "name": "AC/DC"},
+            "expected_found": True
+        },
+        {
+            "name": "Get song content (should not exist yet)",
+            "params": {"type": "song", "slug": "some-song"},
+            "expected_found": False
+        },
+        {
+            "name": "Missing parameters (should return 400)",
+            "params": {},
+            "expected_status": 400
+        },
+        {
+            "name": "Invalid type parameter",
+            "params": {"type": "invalid", "slug": "test"},
+            "expected_status": 400
+        }
+    ]
     
-    # Test 2: GET /api/admin/health with wrong password → expect 401
-    print("\n2. Testing GET /api/admin/health with wrong password (expect 401)")
-    try:
-        wrong_auth = create_auth_header(ADMIN_USERNAME, "wrongpassword")
-        response = requests.get(f"{BASE_URL}/api/admin/health", headers=wrong_auth, timeout=30)
-        print(f"   Status: {response.status_code}")
-        print(f"   Response: {response.text[:200]}")
-        
-        if response.status_code == 401:
-            print("   ✅ PASS: Correctly returned 401 for wrong password")
-            results.append(("Auth check (wrong password)", True))
-        else:
-            print(f"   ❌ FAIL: Expected 401, got {response.status_code}")
-            results.append(("Auth check (wrong password)", False))
-    except Exception as e:
-        print(f"   ❌ ERROR: {e}")
-        results.append(("Auth check (wrong password)", False))
+    passed = 0
+    total = len(test_cases)
     
-    # Test 3: GET /api/admin/health?mode=quick with auth → expect 200
-    print("\n3. Testing GET /api/admin/health?mode=quick with auth (expect 200)")
-    try:
-        auth_header = create_auth_header(ADMIN_USERNAME, ADMIN_PASSWORD)
-        response = requests.get(f"{BASE_URL}/api/admin/health?mode=quick", headers=auth_header, timeout=30)
-        print(f"   Status: {response.status_code}")
-        
-        if response.status_code == 200:
+    for i, test_case in enumerate(test_cases, 1):
+        try:
+            print(f"\n{i}. {test_case['name']}")
+            
+            url = f"{BASE_URL}/api/seo-content"
+            response = requests.get(url, params=test_case['params'], headers=HEADERS, timeout=10)
+            
+            print(f"   Request: GET {url}?{requests.compat.urlencode(test_case['params'])}")
+            print(f"   Status: {response.status_code}")
+            
+            # Check expected status code
+            expected_status = test_case.get('expected_status', 200)
+            if response.status_code != expected_status:
+                print(f"   ❌ FAIL: Expected status {expected_status}, got {response.status_code}")
+                print(f"   Response: {response.text[:200]}")
+                continue
+            
+            if response.status_code == 400:
+                print(f"   ✅ PASS: Correctly returned 400 error")
+                passed += 1
+                continue
+                
             data = response.json()
             print(f"   Response keys: {list(data.keys())}")
             
-            # Check for expected checks
-            expected_checks = ['database', 'api_endpoints', 'sitemap', 'robots']
-            checks = data.get('checks', {})
-            print(f"   Available checks: {list(checks.keys())}")
-            
-            all_checks_present = all(check in checks for check in expected_checks)
-            if all_checks_present:
-                print("   ✅ PASS: All expected checks present (database, api_endpoints, sitemap, robots)")
-                results.append(("Quick mode", True))
+            # Check found status
+            if 'expected_found' in test_case:
+                expected_found = test_case['expected_found']
+                actual_found = data.get('found', False)
+                
+                if actual_found == expected_found:
+                    if expected_found:
+                        # Verify content structure for found items
+                        required_fields = ['found', 'type', 'content']
+                        if test_case['params'].get('type') == 'artist':
+                            required_fields.extend(['name', 'slug'])
+                        
+                        missing_fields = [field for field in required_fields if field not in data]
+                        if missing_fields:
+                            print(f"   ❌ FAIL: Missing required fields: {missing_fields}")
+                            continue
+                        
+                        # Check content structure
+                        content = data.get('content', {})
+                        if isinstance(content, dict) and content:
+                            print(f"   Content sections: {list(content.keys())}")
+                            print(f"   ✅ PASS: Found content with proper structure")
+                        else:
+                            print(f"   ❌ FAIL: Content is not a valid object")
+                            continue
+                    else:
+                        print(f"   ✅ PASS: Correctly returned found=false")
+                    passed += 1
+                else:
+                    print(f"   ❌ FAIL: Expected found={expected_found}, got found={actual_found}")
             else:
-                missing = [c for c in expected_checks if c not in checks]
-                print(f"   ❌ FAIL: Missing checks: {missing}")
-                results.append(("Quick mode", False))
-        else:
-            print(f"   ❌ FAIL: Expected 200, got {response.status_code}")
+                print(f"   ✅ PASS: Request completed successfully")
+                passed += 1
+                
+        except requests.exceptions.RequestException as e:
+            print(f"   ❌ FAIL: Request error - {e}")
+        except json.JSONDecodeError as e:
+            print(f"   ❌ FAIL: JSON decode error - {e}")
             print(f"   Response: {response.text[:200]}")
-            results.append(("Quick mode", False))
-    except Exception as e:
-        print(f"   ❌ ERROR: {e}")
-        results.append(("Quick mode", False))
+        except Exception as e:
+            print(f"   ❌ FAIL: Unexpected error - {e}")
     
-    # Test 4: GET /api/admin/health?mode=videos_only with auth → expect 200 (10-30s timeout)
-    print("\n4. Testing GET /api/admin/health?mode=videos_only with auth (expect 200, 60s timeout)")
-    try:
-        auth_header = create_auth_header(ADMIN_USERNAME, ADMIN_PASSWORD)
-        start_time = time.time()
-        response = requests.get(f"{BASE_URL}/api/admin/health?mode=videos_only", headers=auth_header, timeout=60)
-        end_time = time.time()
-        duration = end_time - start_time
-        
-        print(f"   Status: {response.status_code}")
-        print(f"   Duration: {duration:.2f} seconds")
-        
-        if response.status_code == 200:
-            data = response.json()
-            checks = data.get('checks', {})
-            print(f"   Available checks: {list(checks.keys())}")
-            
-            # Should have database and dead_videos checks
-            expected_checks = ['database', 'dead_videos']
-            all_checks_present = all(check in checks for check in expected_checks)
-            
-            if all_checks_present:
-                print("   ✅ PASS: Videos only mode working with database and dead_videos checks")
-                results.append(("Videos only mode", True))
-            else:
-                missing = [c for c in expected_checks if c not in checks]
-                print(f"   ❌ FAIL: Missing checks: {missing}")
-                results.append(("Videos only mode", False))
-        else:
-            print(f"   ❌ FAIL: Expected 200, got {response.status_code}")
-            print(f"   Response: {response.text[:200]}")
-            results.append(("Videos only mode", False))
-    except Exception as e:
-        print(f"   ❌ ERROR: {e}")
-        results.append(("Videos only mode", False))
+    print(f"\n📊 SEO Content Retrieval Results: {passed}/{total} tests passed")
+    return passed == total
+
+def test_admin_generate_seo_get():
+    """Test GET /api/admin/generate-seo endpoint (admin stats)"""
+    print("\n" + "="*60)
+    print("TESTING: Admin SEO Generation Stats (GET /api/admin/generate-seo)")
+    print("="*60)
     
-    # Test 5: GET /api/admin/health?mode=urls_only with auth → expect 200 (30-120s timeout)
-    print("\n5. Testing GET /api/admin/health?mode=urls_only with auth (expect 200, 180s timeout)")
-    try:
-        auth_header = create_auth_header(ADMIN_USERNAME, ADMIN_PASSWORD)
-        start_time = time.time()
-        response = requests.get(f"{BASE_URL}/api/admin/health?mode=urls_only", headers=auth_header, timeout=180)
-        end_time = time.time()
-        duration = end_time - start_time
-        
-        print(f"   Status: {response.status_code}")
-        print(f"   Duration: {duration:.2f} seconds")
-        
-        if response.status_code == 200:
-            data = response.json()
-            checks = data.get('checks', {})
-            print(f"   Available checks: {list(checks.keys())}")
-            
-            # Should have database and internal_urls checks
-            expected_checks = ['database', 'internal_urls']
-            all_checks_present = all(check in checks for check in expected_checks)
-            
-            if all_checks_present:
-                print("   ✅ PASS: URLs only mode working with database and internal_urls checks")
-                results.append(("URLs only mode", True))
-            else:
-                missing = [c for c in expected_checks if c not in checks]
-                print(f"   ❌ FAIL: Missing checks: {missing}")
-                results.append(("URLs only mode", False))
-        else:
-            print(f"   ❌ FAIL: Expected 200, got {response.status_code}")
-            print(f"   Response: {response.text[:200]}")
-            results.append(("URLs only mode", False))
-    except Exception as e:
-        print(f"   ❌ ERROR: {e}")
-        results.append(("URLs only mode", False))
-    
-    # Test 6: POST /api/admin/health with remove_dead_videos action → expect 200
-    print("\n6. Testing POST /api/admin/health with remove_dead_videos action (expect 200)")
-    try:
-        auth_header = create_auth_header(ADMIN_USERNAME, ADMIN_PASSWORD)
-        payload = {
-            "action": "remove_dead_videos",
-            "video_ids": ["nonexistent-id"]
+    test_cases = [
+        {
+            "name": "Unauthorized access (no auth)",
+            "headers": HEADERS,
+            "expected_status": 401
+        },
+        {
+            "name": "Wrong credentials",
+            "headers": {**HEADERS, "Authorization": "Basic " + base64.b64encode(b"admin:wrongpass").decode()},
+            "expected_status": 401
+        },
+        {
+            "name": "Valid admin access",
+            "headers": get_auth_headers(),
+            "expected_status": 200
         }
-        response = requests.post(f"{BASE_URL}/api/admin/health", 
-                               headers={**auth_header, "Content-Type": "application/json"}, 
-                               json=payload, 
-                               timeout=30)
-        print(f"   Status: {response.status_code}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            print(f"   Response: {data}")
+    ]
+    
+    passed = 0
+    total = len(test_cases)
+    
+    for i, test_case in enumerate(test_cases, 1):
+        try:
+            print(f"\n{i}. {test_case['name']}")
             
-            # Should have removed_count of 0 since ID doesn't exist
-            removed_count = data.get('removed_count', -1)
-            if removed_count == 0:
-                print("   ✅ PASS: Correctly returned removed_count=0 for nonexistent ID")
-                results.append(("POST remove dead videos", True))
-            else:
-                print(f"   ❌ FAIL: Expected removed_count=0, got {removed_count}")
-                results.append(("POST remove dead videos", False))
-        else:
-            print(f"   ❌ FAIL: Expected 200, got {response.status_code}")
+            url = f"{BASE_URL}/api/admin/generate-seo"
+            response = requests.get(url, headers=test_case['headers'], timeout=10)
+            
+            print(f"   Request: GET {url}")
+            print(f"   Status: {response.status_code}")
+            
+            if response.status_code != test_case['expected_status']:
+                print(f"   ❌ FAIL: Expected status {test_case['expected_status']}, got {response.status_code}")
+                print(f"   Response: {response.text[:200]}")
+                continue
+            
+            if response.status_code == 401:
+                print(f"   ✅ PASS: Correctly rejected unauthorized access")
+                passed += 1
+                continue
+            
+            # For successful response, check structure
+            data = response.json()
+            print(f"   Response keys: {list(data.keys())}")
+            
+            required_fields = ['success', 'artists', 'songs', 'api_configured']
+            missing_fields = [field for field in required_fields if field not in data]
+            
+            if missing_fields:
+                print(f"   ❌ FAIL: Missing required fields: {missing_fields}")
+                continue
+            
+            # Check artists and songs structure
+            artists = data.get('artists', {})
+            songs = data.get('songs', {})
+            
+            artist_fields = ['total', 'with_ai_content', 'without_ai_content']
+            song_fields = ['total', 'with_ai_content', 'without_ai_content']
+            
+            missing_artist_fields = [field for field in artist_fields if field not in artists]
+            missing_song_fields = [field for field in song_fields if field not in songs]
+            
+            if missing_artist_fields or missing_song_fields:
+                print(f"   ❌ FAIL: Missing artist fields: {missing_artist_fields}, song fields: {missing_song_fields}")
+                continue
+            
+            print(f"   Artists: {artists['total']} total, {artists['with_ai_content']} with AI content")
+            print(f"   Songs: {songs['total']} total, {songs['with_ai_content']} with AI content")
+            print(f"   API configured: {data['api_configured']}")
+            print(f"   ✅ PASS: Valid stats response structure")
+            passed += 1
+            
+        except requests.exceptions.RequestException as e:
+            print(f"   ❌ FAIL: Request error - {e}")
+        except json.JSONDecodeError as e:
+            print(f"   ❌ FAIL: JSON decode error - {e}")
             print(f"   Response: {response.text[:200]}")
-            results.append(("POST remove dead videos", False))
-    except Exception as e:
-        print(f"   ❌ ERROR: {e}")
-        results.append(("POST remove dead videos", False))
+        except Exception as e:
+            print(f"   ❌ FAIL: Unexpected error - {e}")
     
-    # Test 7: POST /api/admin/health without auth → expect 401
-    print("\n7. Testing POST /api/admin/health without auth (expect 401)")
-    try:
-        payload = {
-            "action": "remove_dead_videos",
-            "video_ids": ["test-id"]
+    print(f"\n📊 Admin SEO Stats Results: {passed}/{total} tests passed")
+    return passed == total
+
+def test_admin_generate_seo_post():
+    """Test POST /api/admin/generate-seo endpoint (AI content generation)"""
+    print("\n" + "="*60)
+    print("TESTING: Admin SEO Content Generation (POST /api/admin/generate-seo)")
+    print("="*60)
+    
+    test_cases = [
+        {
+            "name": "Unauthorized access (no auth)",
+            "headers": HEADERS,
+            "body": {"action": "generate_artist", "artist_name": "Test Artist"},
+            "expected_status": 401
+        },
+        {
+            "name": "Wrong credentials",
+            "headers": {**HEADERS, "Authorization": "Basic " + base64.b64encode(b"admin:wrongpass").decode()},
+            "body": {"action": "generate_artist", "artist_name": "Test Artist"},
+            "expected_status": 401
+        },
+        {
+            "name": "Missing action parameter",
+            "headers": get_auth_headers(),
+            "body": {"artist_name": "Test Artist"},
+            "expected_status": 400
+        },
+        {
+            "name": "Generate AC/DC content (should be cached)",
+            "headers": get_auth_headers(),
+            "body": {"action": "generate_artist", "artist_name": "AC/DC"},
+            "expected_status": 200,
+            "expected_cached": True
+        },
+        {
+            "name": "Generate Pantera content (should be cached)",
+            "headers": get_auth_headers(),
+            "body": {"action": "generate_artist", "artist_name": "Pantera"},
+            "expected_status": 200,
+            "expected_cached": True
         }
-        response = requests.post(f"{BASE_URL}/api/admin/health", 
-                               headers={"Content-Type": "application/json"}, 
-                               json=payload, 
-                               timeout=30)
-        print(f"   Status: {response.status_code}")
-        print(f"   Response: {response.text[:200]}")
-        
-        if response.status_code == 401:
-            print("   ✅ PASS: Correctly returned 401 for unauthorized POST")
-            results.append(("POST unauthorized", True))
-        else:
-            print(f"   ❌ FAIL: Expected 401, got {response.status_code}")
-            results.append(("POST unauthorized", False))
-    except Exception as e:
-        print(f"   ❌ ERROR: {e}")
-        results.append(("POST unauthorized", False))
+    ]
     
-    # Summary
-    print("\n" + "=" * 80)
-    print("HEALTH CHECK API TEST SUMMARY")
-    print("=" * 80)
+    passed = 0
+    total = len(test_cases)
     
-    passed = sum(1 for _, success in results if success)
-    total = len(results)
+    for i, test_case in enumerate(test_cases, 1):
+        try:
+            print(f"\n{i}. {test_case['name']}")
+            
+            url = f"{BASE_URL}/api/admin/generate-seo"
+            response = requests.post(
+                url, 
+                headers=test_case['headers'], 
+                json=test_case['body'],
+                timeout=30  # Longer timeout for AI generation
+            )
+            
+            print(f"   Request: POST {url}")
+            print(f"   Body: {json.dumps(test_case['body'])}")
+            print(f"   Status: {response.status_code}")
+            
+            if response.status_code != test_case['expected_status']:
+                print(f"   ❌ FAIL: Expected status {test_case['expected_status']}, got {response.status_code}")
+                print(f"   Response: {response.text[:200]}")
+                continue
+            
+            if response.status_code == 401:
+                print(f"   ✅ PASS: Correctly rejected unauthorized access")
+                passed += 1
+                continue
+            
+            if response.status_code == 400:
+                print(f"   ✅ PASS: Correctly returned 400 for invalid request")
+                passed += 1
+                continue
+            
+            # For successful response, check structure
+            data = response.json()
+            print(f"   Response keys: {list(data.keys())}")
+            
+            required_fields = ['success']
+            missing_fields = [field for field in required_fields if field not in data]
+            
+            if missing_fields:
+                print(f"   ❌ FAIL: Missing required fields: {missing_fields}")
+                continue
+            
+            if not data.get('success'):
+                print(f"   ❌ FAIL: Success field is false")
+                print(f"   Response: {json.dumps(data, indent=2)}")
+                continue
+            
+            # Check if cached response is as expected
+            if 'expected_cached' in test_case:
+                expected_cached = test_case['expected_cached']
+                actual_cached = data.get('cached', False)
+                
+                if actual_cached == expected_cached:
+                    if expected_cached:
+                        print(f"   ✅ PASS: Content already exists (cached=true)")
+                    else:
+                        print(f"   ✅ PASS: New content generated (cached=false)")
+                    passed += 1
+                else:
+                    print(f"   ❌ FAIL: Expected cached={expected_cached}, got cached={actual_cached}")
+            else:
+                print(f"   ✅ PASS: Request completed successfully")
+                passed += 1
+            
+        except requests.exceptions.RequestException as e:
+            print(f"   ❌ FAIL: Request error - {e}")
+        except json.JSONDecodeError as e:
+            print(f"   ❌ FAIL: JSON decode error - {e}")
+            print(f"   Response: {response.text[:200]}")
+        except Exception as e:
+            print(f"   ❌ FAIL: Unexpected error - {e}")
     
-    for test_name, success in results:
-        status = "✅ PASS" if success else "❌ FAIL"
-        print(f"{status}: {test_name}")
+    print(f"\n📊 Admin SEO Generation Results: {passed}/{total} tests passed")
+    return passed == total
+
+def main():
+    """Run all AI SEO Content API tests"""
+    print("🚀 Starting AI SEO Content API Tests")
+    print(f"Base URL: {BASE_URL}")
+    print(f"Testing with User-Agent: {HEADERS['User-Agent']}")
     
-    print(f"\nOverall: {passed}/{total} tests passed ({passed/total*100:.1f}%)")
+    results = []
     
-    if passed == total:
-        print("🎉 ALL TESTS PASSED! Website Health Check API is working correctly.")
+    # Test SEO Content Retrieval API
+    results.append(test_seo_content_retrieval())
+    
+    # Test Admin SEO Generation Stats
+    results.append(test_admin_generate_seo_get())
+    
+    # Test Admin SEO Content Generation
+    results.append(test_admin_generate_seo_post())
+    
+    # Final summary
+    print("\n" + "="*60)
+    print("🏁 FINAL TEST SUMMARY")
+    print("="*60)
+    
+    test_names = [
+        "SEO Content Retrieval API",
+        "Admin SEO Generation Stats", 
+        "Admin SEO Content Generation"
+    ]
+    
+    passed_count = sum(results)
+    total_count = len(results)
+    
+    for i, (name, passed) in enumerate(zip(test_names, results)):
+        status = "✅ PASS" if passed else "❌ FAIL"
+        print(f"{i+1}. {name}: {status}")
+    
+    print(f"\n📊 Overall Results: {passed_count}/{total_count} test suites passed")
+    
+    if passed_count == total_count:
+        print("🎉 All AI SEO Content API tests PASSED!")
         return True
     else:
-        print("⚠️  Some tests failed. Please review the issues above.")
+        print("⚠️  Some tests FAILED - check details above")
         return False
 
 if __name__ == "__main__":
-    print("Starting Website Health Check API Tests...")
-    print(f"Base URL: {BASE_URL}")
-    print(f"Testing endpoint: /api/admin/health")
-    
-    success = test_health_check_api()
-    
-    if success:
-        exit(0)
-    else:
-        exit(1)
+    success = main()
+    exit(0 if success else 1)
