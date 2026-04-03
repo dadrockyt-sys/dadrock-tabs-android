@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { artistToSlug } from '@/lib/slugify';
 import OpenAI from 'openai';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Babyty99';
@@ -163,8 +164,9 @@ export async function POST(request) {
         return NextResponse.json({ error: 'artist_name required' }, { status: 400 });
       }
 
-      // Check if already generated
-      const existing = await db.collection('artist_seo_content').findOne({ artist: artist_name });
+      // Check if already generated — check by slug
+      const slug = artistToSlug(artist_name);
+      const existing = await db.collection('artist_seo_content').findOne({ slug });
       if (existing && !body.force) {
         return NextResponse.json({
           success: true,
@@ -181,15 +183,17 @@ export async function POST(request) {
         .project({ song: 1 })
         .toArray();
 
+      const displayName = artist_name.replace(/ -$/, '').trim();
       const songTitles = videos.map(v => v.song).filter(Boolean);
-      const content = await generateArtistContent(artist_name, videos.length, songTitles);
+      const content = await generateArtistContent(displayName, videos.length, songTitles);
 
-      // Store in DB
+      // Store in DB — use slug as the primary key
       await db.collection('artist_seo_content').updateOne(
-        { artist: artist_name },
+        { slug },
         {
           $set: {
-            artist: artist_name,
+            slug,
+            artist: displayName,
             content,
             generated_at: new Date(),
             model: 'gpt-5-nano',
@@ -198,7 +202,7 @@ export async function POST(request) {
         { upsert: true }
       );
 
-      return NextResponse.json({ success: true, artist: artist_name, content, cached: false });
+      return NextResponse.json({ success: true, artist: displayName, content, cached: false });
     }
 
     // ─── Generate content for a single song ───
@@ -247,27 +251,27 @@ export async function POST(request) {
       const limit = Math.min(batch_size || 5, 20); // Max 20 at a time
       const allArtists = await db.collection('videos').distinct('artist');
 
-      // Find artists without AI content
+      // Find artists without AI content — check by SLUG (the reliable key)
       const existingContent = await db.collection('artist_seo_content')
-        .find({}, { projection: { artist: 1 } }).toArray();
-      const existingSet = new Set(existingContent.map(c => c.artist));
+        .find({}, { projection: { slug: 1 } }).toArray();
+      const existingSlugSet = new Set(existingContent.map(c => c.slug).filter(Boolean));
 
-      const artistsNeedingContent = allArtists.filter(a => a && !existingSet.has(a));
-      // Deduplicate by slug
+      // Deduplicate by slug and skip already-generated
       const seenSlugs = new Set();
       const uniqueArtists = [];
-      for (const artist of artistsNeedingContent) {
-        const slug = artist.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-        if (!seenSlugs.has(slug)) {
+      for (const artist of allArtists) {
+        if (!artist) continue;
+        const slug = artistToSlug(artist);
+        if (slug && !seenSlugs.has(slug) && !existingSlugSet.has(slug)) {
           seenSlugs.add(slug);
-          uniqueArtists.push(artist);
+          uniqueArtists.push({ name: artist, slug });
         }
       }
 
       const batch = uniqueArtists.slice(0, limit);
       const results = [];
 
-      for (const artist of batch) {
+      for (const { name: artist, slug } of batch) {
         try {
           const escapedName = artist.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
           const videos = await db.collection('videos')
@@ -275,16 +279,18 @@ export async function POST(request) {
             .project({ song: 1 })
             .toArray();
 
+          // Use clean display name (strip trailing " -")
+          const displayName = artist.replace(/ -$/, '').trim();
           const songTitles = videos.map(v => v.song).filter(Boolean);
-          const content = await generateArtistContent(artist, videos.length, songTitles);
+          const content = await generateArtistContent(displayName, videos.length, songTitles);
 
           await db.collection('artist_seo_content').updateOne(
-            { artist },
-            { $set: { artist, content, generated_at: new Date(), model: 'gpt-5-nano' } },
+            { slug },
+            { $set: { slug, artist: displayName, content, generated_at: new Date(), model: 'gpt-5-nano' } },
             { upsert: true }
           );
 
-          results.push({ artist, status: 'success' });
+          results.push({ artist: displayName, status: 'success' });
         } catch (err) {
           results.push({ artist, status: 'error', error: err.message });
         }

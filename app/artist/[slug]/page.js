@@ -56,7 +56,8 @@ export async function generateMetadata({ params }) {
   // Try to use AI-generated meta description if available
   let description;
   try {
-    const aiContent = await db.collection('artist_seo_content').findOne({ artist: artistPattern });
+    const artistSlug = (await import('@/lib/slugify')).artistToSlug(artistPattern);
+    const aiContent = await db.collection('artist_seo_content').findOne({ slug: artistSlug });
     if (aiContent?.content?.meta_description) {
       description = aiContent.content.meta_description;
     }
@@ -123,10 +124,10 @@ export default async function ArtistPage({ params }) {
   // Get the display name (use the clean version without " -")
   const displayArtistName = artistPattern;
   
-  // Fetch AI-generated SEO content (server-side for SSR)
+  // Fetch AI-generated SEO content (server-side for SSR) — lookup by slug
   let aiSeoContent = null;
   try {
-    const aiDoc = await db.collection('artist_seo_content').findOne({ artist: artistPattern });
+    const aiDoc = await db.collection('artist_seo_content').findOne({ slug });
     if (aiDoc?.content) {
       aiSeoContent = aiDoc.content;
     }
