@@ -1,5 +1,7 @@
 import './globals.css';
+import { Suspense } from 'react';
 import { locales } from '@/lib/i18n';
+import GAPageTracker from '@/components/GAPageTracker';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://dadrocktabs.com';
 
@@ -74,6 +76,7 @@ export default function RootLayout({ children }) {
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-92RKGQW8NJ"
+          strategy="afterInteractive"
         />
         <script
           dangerouslySetInnerHTML={{
@@ -100,6 +103,8 @@ export default function RootLayout({ children }) {
                   gtag('config', 'G-92RKGQW8NJ', {
                     page_title: document.title,
                     page_location: window.location.href,
+                    page_path: window.location.pathname,
+                    send_page_view: true,
                   });
                 }
               })();
@@ -152,6 +157,9 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-screen bg-background antialiased">
+        <Suspense fallback={null}>
+          <GAPageTracker />
+        </Suspense>
         {children}
       </body>
     </html>
