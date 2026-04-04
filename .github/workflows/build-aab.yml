@@ -1,10 +1,10 @@
-name: Build Android AAB
+name: Build Signed AAB
 
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Version Code'
+      version_code:
+        description: 'Version Code (must be higher than last Play Store upload)'
         required: true
         default: '41'
 
@@ -21,18 +21,22 @@ jobs:
       
       - uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: '8.5'
+          gradle-version: '8.11.1'
       
-      - name: Update Version
+      - name: Update Version Code
         working-directory: android-app
         run: |
-          sed -i "s/versionCode [0-9]*/versionCode ${{ github.event.inputs.version }}/" app/build.gradle
+          sed -i "s/versionCode [0-9]*/versionCode ${{ github.event.inputs.version_code }}/" app/build.gradle
+          echo "✅ Version code set to ${{ github.event.inputs.version_code }}"
+          grep -E "versionCode|versionName" app/build.gradle
       
       - name: Decode Keystore
         working-directory: android-app
-        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > release.jks
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > release.jks
+          echo "✅ Keystore decoded"
       
-      - name: Build Signed AAB
+      - name: Build Signed Release AAB
         working-directory: android-app
         run: |
           gradle bundleRelease \
@@ -40,8 +44,11 @@ jobs:
             -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
             -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
             -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+          echo "✅ Signed AAB built successfully"
       
-      - uses: actions/upload-artifact@v4
+      - name: Upload Signed AAB
+        uses: actions/upload-artifact@v4
         with:
-          name: DadRockTabs-v${{ github.event.inputs.version }}-signed
+          name: DadRockTabs-v${{ github.event.inputs.version_code }}-signed
           path: android-app/app/build/outputs/bundle/release/*.aab
+          retention-days: 90
