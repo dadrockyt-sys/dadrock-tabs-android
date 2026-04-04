@@ -6,7 +6,7 @@ on:
       version:
         description: 'Version Code'
         required: true
-        default: '31'
+        default: '41'
 
 jobs:
   build:

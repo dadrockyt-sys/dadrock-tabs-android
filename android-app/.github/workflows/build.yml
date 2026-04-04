@@ -8,7 +8,7 @@ on:
       version:
         description: 'Version Code'
         required: true
-        default: '38'
+        default: '41'
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
       - name: Update Version
         working-directory: android-app
         run: |
-          sed -i "s/versionCode [0-9]*/versionCode ${{ github.event.inputs.version || '38' }}/" app/build.gradle
+          sed -i "s/versionCode [0-9]*/versionCode ${{ github.event.inputs.version || '41' }}/" app/build.gradle
       
       - name: Decode Keystore
         working-directory: android-app
