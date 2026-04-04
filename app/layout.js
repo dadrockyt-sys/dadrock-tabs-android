@@ -2,6 +2,7 @@ import './globals.css';
 import { Suspense } from 'react';
 import { locales } from '@/lib/i18n';
 import GAPageTracker from '@/components/GAPageTracker';
+import PlayStoreReviewBanner from '@/components/PlayStoreReviewBanner';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://dadrocktabs.com';
 
@@ -252,6 +253,7 @@ export default function RootLayout({ children }) {
         <Suspense fallback={null}>
           <GAPageTracker />
         </Suspense>
+        <PlayStoreReviewBanner />
         {children}
       </body>
     </html>
