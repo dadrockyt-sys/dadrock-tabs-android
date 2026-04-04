@@ -32,6 +32,13 @@ android {
         jvmTarget = '17'
     }
 
+    // Support 16 KB memory page sizes (required by Google Play)
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
+
     bundle {
         language {
             enableSplit = true
