@@ -30,20 +30,14 @@ jobs:
           echo "✅ Version code set to ${{ github.event.inputs.version_code }}"
           grep -E "versionCode|versionName" app/build.gradle
       
-      - name: Decode Keystore
-        working-directory: android-app
-        run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > release.jks
-          echo "✅ Keystore decoded"
-      
       - name: Build Signed Release AAB
         working-directory: android-app
         run: |
           gradle bundleRelease \
-            -Pandroid.injected.signing.store.file=$(pwd)/release.jks \
-            -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
-            -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
-            -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+            -Pandroid.injected.signing.store.file=$(pwd)/upload-keystore.p12 \
+            -Pandroid.injected.signing.store.password=dadrock2024 \
+            -Pandroid.injected.signing.key.alias=upload \
+            -Pandroid.injected.signing.key.password=dadrock2024
           echo "✅ Signed AAB built successfully"
       
       - name: Upload Signed AAB
