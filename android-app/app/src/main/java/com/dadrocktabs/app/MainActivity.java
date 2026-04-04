@@ -84,6 +84,21 @@ public class MainActivity extends AppCompatActivity {
                 super.onPageFinished(view, url);
                 progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
+                
+                // Log screen_view with proper page title and URL to Firebase Analytics
+                // This prevents "(not set)" in GA4 reports
+                String pageTitle = view.getTitle();
+                if (pageTitle == null || pageTitle.isEmpty()) {
+                    pageTitle = "DadRock Tabs";
+                }
+                
+                Bundle screenBundle = new Bundle();
+                screenBundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, pageTitle);
+                screenBundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "WebView");
+                screenBundle.putString("page_location", url);
+                screenBundle.putString("page_path", Uri.parse(url).getPath());
+                screenBundle.putString("page_title", pageTitle);
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, screenBundle);
             }
 
             @Override

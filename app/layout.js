@@ -94,6 +94,21 @@ export default function RootLayout({ children }) {
                 var isBot = botPatterns.some(function(p) { return ua.indexOf(p) !== -1; });
                 if (isBot) return;
 
+                // Detect Android WebView — Firebase SDK handles tracking natively
+                // The Android app sends screen_view events via Firebase Analytics,
+                // so we skip web gtag to prevent double-tracking and "(not set)" titles.
+                var isAndroidWebView = (
+                  (ua.indexOf('wv') !== -1 && ua.indexOf('android') !== -1) ||
+                  (window.navigator.userAgent.indexOf('; wv)') !== -1)
+                );
+                if (isAndroidWebView) {
+                  // Still define gtag so the GAPageTracker component doesn't error,
+                  // but make it a no-op
+                  window.dataLayer = window.dataLayer || [];
+                  window.gtag = function() {};
+                  return;
+                }
+
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 window.gtag = gtag;
