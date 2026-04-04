@@ -76,7 +76,6 @@ export default function RootLayout({ children }) {
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-92RKGQW8NJ"
-          strategy="afterInteractive"
         />
         <script
           dangerouslySetInnerHTML={{
@@ -100,12 +99,29 @@ export default function RootLayout({ children }) {
                   function gtag(){dataLayer.push(arguments);}
                   window.gtag = gtag;
                   gtag('js', new Date());
+
+                  // IMPORTANT: Delay config until Window Loaded so document.title is ready
+                  // This prevents "(not set)" page titles in GA4
                   gtag('config', 'G-92RKGQW8NJ', {
-                    page_title: document.title,
-                    page_location: window.location.href,
-                    page_path: window.location.pathname,
-                    send_page_view: true,
+                    send_page_view: false,  // We fire it manually after window load
                   });
+
+                  function fireInitialPageView() {
+                    var title = document.title || 'DadRock Tabs';
+                    gtag('event', 'page_view', {
+                      page_title: title,
+                      page_location: window.location.href,
+                      page_path: window.location.pathname,
+                      send_to: 'G-92RKGQW8NJ',
+                    });
+                  }
+
+                  // Use Window Loaded to ensure title is set
+                  if (document.readyState === 'complete') {
+                    fireInitialPageView();
+                  } else {
+                    window.addEventListener('load', fireInitialPageView);
+                  }
                 }
               })();
             `,
