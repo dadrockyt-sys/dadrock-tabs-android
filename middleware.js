@@ -59,7 +59,7 @@ const BLOCKED_EXTENSIONS = [
 
 // ─── Blocked Countries (ISO 3166-1 alpha-2) ───
 // Known bot farm traffic sources causing "(not set)" in GA4
-const BLOCKED_COUNTRIES = ['BD', 'NP', 'SG']; // Bangladesh, Nepal, Singapore
+const BLOCKED_COUNTRIES = ['BD', 'NP', 'SG', 'IN']; // Bangladesh, Nepal, Singapore, India
 
 function isBlockedBot(userAgent) {
   if (!userAgent) return true; // No UA = suspicious

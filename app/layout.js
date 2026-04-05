@@ -118,6 +118,7 @@ export default function RootLayout({ children }) {
                     'Asia/Dhaka',        // Bangladesh
                     'Asia/Kathmandu',    // Nepal
                     'Asia/Singapore',    // Singapore
+                    'Asia/Kolkata',      // India
                   ];
                   if (blockedTZ.indexOf(tz) !== -1) {
                     window.dataLayer = window.dataLayer || [];
