@@ -57,26 +57,10 @@ const BLOCKED_EXTENSIONS = [
   '.log', '.ini', '.conf', '.cfg',
 ];
 
-// ─── Blocked Countries (ISO 3166-1 alpha-2) ───
-// Known bot farm traffic sources causing "(not set)" in GA4
-const BLOCKED_COUNTRIES = ['BD', 'NP', 'SG', 'IN']; // Bangladesh, Nepal, Singapore, India
-
 function isBlockedBot(userAgent) {
   if (!userAgent) return true; // No UA = suspicious
   const ua = userAgent.toLowerCase();
   return BLOCKED_UA_PATTERNS.some(pattern => ua.includes(pattern));
-}
-
-function getCountryFromHeaders(request) {
-  // Check common CDN/proxy geo headers (uppercase country code)
-  return (
-    request.headers.get('x-vercel-ip-country') ||
-    request.headers.get('cf-ipcountry') ||
-    request.headers.get('x-country-code') ||
-    request.headers.get('x-geo-country') ||
-    request.geo?.country ||
-    ''
-  ).toUpperCase();
 }
 
 function isBlockedPath(pathname) {
@@ -123,12 +107,6 @@ export function middleware(request) {
 
   // ─── 2. Block known vulnerability scanners ───
   if (isBlockedBot(userAgent)) {
-    return new NextResponse('Forbidden', { status: 403 });
-  }
-
-  // ─── 2b. Block traffic from known bot-farm countries ───
-  const country = getCountryFromHeaders(request);
-  if (country && BLOCKED_COUNTRIES.includes(country)) {
     return new NextResponse('Forbidden', { status: 403 });
   }
 
