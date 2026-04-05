@@ -110,6 +110,22 @@ export default function RootLayout({ children }) {
                   return;
                 }
 
+                // Block GA tracking for known bot-farm countries
+                // Uses Intl timezone as a proxy for geo (no API call needed)
+                try {
+                  var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+                  var blockedTZ = [
+                    'Asia/Dhaka',        // Bangladesh
+                    'Asia/Kathmandu',    // Nepal
+                    'Asia/Singapore',    // Singapore
+                  ];
+                  if (blockedTZ.indexOf(tz) !== -1) {
+                    window.dataLayer = window.dataLayer || [];
+                    window.gtag = function() {};
+                    return;
+                  }
+                } catch(e) {}
+
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 window.gtag = gtag;
