@@ -118,11 +118,19 @@ export function middleware(request) {
 
   // ─── 4. Handle trailing slashes ───
   // Strip trailing slashes to prevent Next.js 308 redirects that GSC flags
+  // BUT skip locale root paths (e.g., /zh/, /fr/) — let locale handling serve them directly
+  // so GSC doesn't flag them as "Page with redirect"
   if (pathname !== '/' && pathname.endsWith('/')) {
-    const cleanPath = pathname.slice(0, -1);
-    const cleanUrl = new URL(cleanPath, request.url);
-    cleanUrl.search = request.nextUrl.search;
-    return NextResponse.redirect(cleanUrl, 301);
+    const withoutSlash = pathname.slice(0, -1);
+    const segment = withoutSlash.slice(1); // e.g., '/zh/' → 'zh'
+    const isLocaleRoot = locales.includes(segment);
+
+    if (!isLocaleRoot) {
+      const cleanUrl = new URL(withoutSlash, request.url);
+      cleanUrl.search = request.nextUrl.search;
+      return NextResponse.redirect(cleanUrl, 301);
+    }
+    // For locale roots like /zh/, fall through to locale handling below
   }
 
   // ─── 4b. Strip trailing dashes from artist/song slugs ───

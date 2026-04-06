@@ -109,5 +109,11 @@ DadRock Tabs is a guitar and bass tablature finder app for classic rock music. I
 - Lucide React icons
 - OpenAI SDK (GPT-5-nano for SEO content generation)
 
+## SEO & Middleware
+- Trailing slash handling: Locale root paths (e.g., `/zh/`, `/fr/`) are served directly without redirect; all other trailing slashes 301-redirect to non-slash version
+- Trailing dash handling: Artist/song slugs with trailing dashes (e.g., `/artist/rush-`) 301-redirect to clean slug
+- `skipTrailingSlashRedirect: true` in next.config.js to prevent Next.js default 308 redirects
+- Sitemaps generate clean URLs without trailing slashes
+
 ## Default Admin Password
 - `Babyty99` (configurable via ADMIN_PASSWORD env var)
