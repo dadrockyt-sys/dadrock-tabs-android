@@ -125,6 +125,17 @@ export function middleware(request) {
     return NextResponse.redirect(cleanUrl, 301);
   }
 
+  // ─── 4b. Strip trailing dashes from artist/song slugs ───
+  // GSC indexes URLs like /artist/rush- which don't match our slug format
+  const trailingDashMatch = pathname.match(/^\/((?:[a-z]{2}(?:-[a-z]{2})?\/)?(?:artist|songs))\/(.+)-$/);
+  if (trailingDashMatch) {
+    const prefix = trailingDashMatch[1];
+    const cleanSlug = trailingDashMatch[2];
+    const cleanUrl = new URL(`/${prefix}/${cleanSlug}`, request.url);
+    cleanUrl.search = request.nextUrl.search;
+    return NextResponse.redirect(cleanUrl, 301);
+  }
+
   // ─── 5. Handle /en → redirect to / (English is the default locale) ───
   if (pathname === '/en') {
     return NextResponse.redirect(new URL('/', request.url), 301);
