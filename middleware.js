@@ -99,9 +99,48 @@ export function middleware(request) {
   const userAgent = request.headers.get('user-agent') || '';
   
   // ─── 1. Redirect www to non-www ───
+  // Also apply path-level redirects in the same hop to avoid redirect chains
+  // (e.g., www.site.com/en/ → site.com/ in one redirect, not three)
   if (hostname.startsWith('www.')) {
     const newHostname = hostname.replace('www.', '');
     url.host = newHostname;
+
+    let cleanPath = pathname;
+
+    // Handle trailing slashes in the same hop
+    if (cleanPath !== '/' && cleanPath.endsWith('/')) {
+      const withoutSlash = cleanPath.slice(0, -1);
+      const segment = withoutSlash.slice(1);
+
+      if (segment === 'en') {
+        cleanPath = '/';
+      } else if (segment === 'zn') {
+        cleanPath = '/zh';
+      } else if (withoutSlash.match(/^\/sitemap-[a-z]{2}\.xml$/)) {
+        cleanPath = '/sitemap.xml';
+      } else if (!locales.includes(segment)) {
+        // Strip trailing slash for non-locale-root paths
+        cleanPath = withoutSlash;
+      }
+      // locale roots like /fr/ keep trailing slash — served directly after redirect
+    }
+
+    // Handle /en → /
+    if (cleanPath === '/en') cleanPath = '/';
+    // Handle /zn → /zh
+    if (cleanPath === '/zn') cleanPath = '/zh';
+    else if (cleanPath.startsWith('/zn/')) cleanPath = '/zh' + cleanPath.slice(3);
+    // Handle /search → /
+    if (cleanPath === '/search') cleanPath = '/';
+    // Handle /fr_ → /fr (known typo in GSC)
+    if (cleanPath.match(/^\/([a-z]{2})_$/)) {
+      const typoLocale = cleanPath.slice(1, 3);
+      if (locales.includes(typoLocale)) cleanPath = '/' + typoLocale;
+    }
+    // Handle sitemap-xx.xml → sitemap.xml
+    if (cleanPath.match(/^\/sitemap-[a-z]{2}\.xml$/)) cleanPath = '/sitemap.xml';
+
+    url.pathname = cleanPath;
     return NextResponse.redirect(url, 301);
   }
 
@@ -117,20 +156,35 @@ export function middleware(request) {
   }
 
   // ─── 4. Handle trailing slashes ───
-  // Strip trailing slashes to prevent Next.js 308 redirects that GSC flags
-  // BUT skip locale root paths (e.g., /zh/, /fr/) — let locale handling serve them directly
-  // so GSC doesn't flag them as "Page with redirect"
+  // Eliminate redirect chains by combining trailing slash strip with known redirects
   if (pathname !== '/' && pathname.endsWith('/')) {
     const withoutSlash = pathname.slice(0, -1);
     const segment = withoutSlash.slice(1); // e.g., '/zh/' → 'zh'
-    const isLocaleRoot = locales.includes(segment);
 
-    if (!isLocaleRoot) {
+    // /en/ → / directly (English is default locale, single-hop redirect)
+    if (segment === 'en') {
+      return NextResponse.redirect(new URL('/', request.url), 301);
+    }
+
+    // /zn/ → /zh directly (typo fix + trailing slash in one hop)
+    if (segment === 'zn') {
+      return NextResponse.redirect(new URL('/zh', request.url), 301);
+    }
+
+    // /sitemap-xx.xml/ → /sitemap.xml directly (skip intermediate step)
+    if (withoutSlash.match(/^\/sitemap-[a-z]{2}\.xml$/)) {
+      return NextResponse.redirect(new URL('/sitemap.xml', request.url), 301);
+    }
+
+    // Locale roots (/zh/, /fr/) → serve directly without redirect
+    if (locales.includes(segment)) {
+      // Fall through to locale handling below
+    } else {
+      // All other trailing slashes → redirect to clean URL
       const cleanUrl = new URL(withoutSlash, request.url);
       cleanUrl.search = request.nextUrl.search;
       return NextResponse.redirect(cleanUrl, 301);
     }
-    // For locale roots like /zh/, fall through to locale handling below
   }
 
   // ─── 4b. Strip trailing dashes from artist/song slugs ───
@@ -161,6 +215,12 @@ export function middleware(request) {
   // ─── 7. Handle /search → redirect to homepage (no search page exists) ───
   if (pathname === '/search') {
     return NextResponse.redirect(new URL('/', request.url), 301);
+  }
+
+  // ─── 7b. Handle locale typos like /fr_ → /fr ───
+  const localeTypoMatch = pathname.match(/^\/([a-z]{2})_$/);
+  if (localeTypoMatch && locales.includes(localeTypoMatch[1])) {
+    return NextResponse.redirect(new URL(`/${localeTypoMatch[1]}`, request.url), 301);
   }
 
   // ─── 8. Handle non-existent sitemap files ───
