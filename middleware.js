@@ -198,6 +198,24 @@ export function middleware(request) {
     return NextResponse.redirect(cleanUrl, 301);
   }
 
+  // ─── 4c. Redirect known missing songs to their artist pages ───
+  // These songs were indexed by GSC but don't exist in the database
+  const missingSongRedirects = {
+    'pantera-walk': 'pantera',
+    'dokken-tooth-and-nail': 'dokken',
+  };
+  const songSlugMatch = pathname.match(/^(?:\/[a-z]{2}(?:-[a-z]{2})?)?\/songs\/(.+)$/);
+  if (songSlugMatch) {
+    const songSlug = songSlugMatch[1];
+    const artistSlug = missingSongRedirects[songSlug];
+    if (artistSlug) {
+      // Extract locale prefix if present
+      const localePrefix = pathname.match(/^(\/[a-z]{2}(?:-[a-z]{2})?)\/songs\//);
+      const prefix = localePrefix ? localePrefix[1] : '';
+      return NextResponse.redirect(new URL(`${prefix}/artist/${artistSlug}`, request.url), 301);
+    }
+  }
+
   // ─── 5. Handle /en → redirect to / (English is the default locale) ───
   if (pathname === '/en') {
     return NextResponse.redirect(new URL('/', request.url), 301);
