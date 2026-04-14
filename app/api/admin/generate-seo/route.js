@@ -203,10 +203,14 @@ export async function GET(request) {
       if (slug) seenSlugs.add(slug);
     }
     const uniqueArtistCount = seenSlugs.size;
-    const artistsWithContent = await db.collection('artist_seo_content').countDocuments();
+    
+    // Count by UNIQUE slugs to avoid duplicates inflating the number
+    const artistContentSlugs = await db.collection('artist_seo_content').distinct('slug');
+    const artistsWithContent = artistContentSlugs.filter(s => s && seenSlugs.has(s)).length;
 
     const totalSongs = await db.collection('song_pages').countDocuments();
-    const songsWithContent = await db.collection('song_seo_content').countDocuments();
+    const songContentSlugs = await db.collection('song_seo_content').distinct('slug');
+    const songsWithContent = songContentSlugs.length;
 
     return NextResponse.json({
       success: true,
