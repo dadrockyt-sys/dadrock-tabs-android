@@ -235,7 +235,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
         </div>
 
         {/* SEO Content — AI-Enhanced (ABOVE video) */}
-        <section className="space-y-6 mb-10">
+        <section className="space-y-6 mb-6">
           {/* Song Story */}
           <div className="p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
             <h2 className="text-2xl font-bold text-amber-500 mb-4 flex items-center gap-2">
@@ -255,6 +255,15 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
             </div>
           </div>
         </section>
+
+        {/* "Want to know more" teaser — matching artist page pattern */}
+        {aiContent?.lesson_overview && (
+          <div className="text-center py-4 mb-6">
+            <p className="text-zinc-400 text-sm">
+              🎸 {t.scrollHintSong || 'Want to know the'} <strong className="text-amber-400">{t.scrollHintTechniques || 'techniques'}</strong>{t.scrollHintSongComma || ','} <strong className="text-amber-400">{t.scrollHintTips || 'practice tips'}</strong>{t.scrollHintSongAnd || ', and'} <strong className="text-amber-400">{t.scrollHintOverview || 'lesson details'}</strong>{t.scrollHintSongEnd || '? Scroll below the lesson!'}
+            </p>
+          </div>
+        )}
 
         {/* Video Section — Thumbnail with Play Button or Embedded Player */}
         <div className="relative mb-6">
