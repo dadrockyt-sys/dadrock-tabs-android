@@ -209,8 +209,11 @@ export async function GET(request) {
     const artistsWithContent = artistContentSlugs.filter(s => s && seenSlugs.has(s)).length;
 
     const totalSongs = await db.collection('song_pages').countDocuments();
+    // Cross-reference: only count songs that exist in BOTH song_pages and song_seo_content
+    const songPageSlugs = await db.collection('song_pages').distinct('slug');
+    const songPageSlugSet = new Set(songPageSlugs.filter(Boolean));
     const songContentSlugs = await db.collection('song_seo_content').distinct('slug');
-    const songsWithContent = songContentSlugs.length;
+    const songsWithContent = songContentSlugs.filter(s => s && songPageSlugSet.has(s)).length;
 
     return NextResponse.json({
       success: true,
