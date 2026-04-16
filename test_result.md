@@ -301,10 +301,40 @@ frontend:
         - agent: "testing"
         - comment: "✅ ENDPOINT STRUCTURE WORKING: Authentication (401 for unauthorized/wrong credentials), endpoint routing, and error handling all work correctly. ❌ YOUTUBE API CONFIGURATION ISSUE: API key configured for Android apps but used server-side. Error: 'Requests from this Android client application <empty> are blocked.' SOLUTION NEEDED: Reconfigure API key restrictions in Google Cloud Console to 'None' or 'Server applications' instead of 'Android apps', or create separate server-side API key."
 
+  - task: "GSC 404 fix - Artist page permanent redirect"
+    implemented: true
+    working: true
+    file: "/app/app/artist/[slug]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+        - agent: "main"
+        - comment: "Changed notFound() to permanentRedirect('/') in artist page. When findArtistBySlug returns null or videos.length === 0, the page returns 308 permanent redirect to homepage instead of 404. Verified: /artist/the-great-80s → 308→200, /artist/totally-nonexistent → 308→200, /artist/tesla → 200."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ COMPREHENSIVE TESTING COMPLETE - All 7 artist page test cases PASSED (100% success rate): 1) Valid artists return 200: /artist/tesla ✓, /artist/metallica ✓, /artist/acdc ✓, /artist/george-lynch-electric ✓, /artist/reb-beach ✓ 2) Invalid artists return 308 redirect to homepage: /artist/the-great-80s → 308→/ ✓, /artist/totally-nonexistent-artist → 308→/ ✓. Artist page permanent redirect functionality working perfectly - no more 404 errors for invalid artist URLs."
+
+  - task: "GSC 404 fix - Song page smart redirect"
+    implemented: true
+    working: true
+    file: "/app/app/songs/[slug]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+        - agent: "main"
+        - comment: "Changed notFound() to smart redirect. When song not found in song_pages: 1) Tries to extract artist from song slug by matching against all artists in DB. 2) If artist found, 308 redirects to /artist/{slug}. 3) If no match, 308 redirects to homepage. Verified: /songs/van-halen-best-of-both-worlds → 308→/artist/van-halen, /songs/totally-nonexistent → 308→/."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ COMPREHENSIVE TESTING COMPLETE - All 5 song page test cases PASSED (100% success rate): 1) Valid songs return 200: /songs/metallica-am-i-evil ✓, /songs/metallica-ride-the-lightning ✓ 2) Missing songs with artist match redirect to artist page: /songs/van-halen-best-of-both-worlds → 308→/artist/van-halen ✓ 3) Middleware-handled songs redirect correctly: /songs/pantera-walk → 301→/artist/pantera ✓ 4) Completely nonexistent songs redirect to homepage: /songs/totally-nonexistent-song → 308→/ ✓. Song page smart redirect functionality working perfectly - no more 404 errors for invalid song URLs."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 3
+  test_sequence: 4
   run_ui: false
 
   - task: "i18n locale URL routing (middleware rewrite)"
@@ -366,6 +396,6 @@ test_plan:
 
 agent_communication:
     - agent: "main"
-    - message: "TESTING AI SEO CONTENT APIS. Two endpoints to test: 1) GET /api/seo-content?type=artist&slug=acdc → should return {found:true} with AI content. 2) GET /api/seo-content?type=artist&slug=pantera → should return {found:true} with AI content. 3) GET /api/seo-content?type=artist&slug=nonexistent → should return {found:false}. 4) GET /api/admin/generate-seo with auth (Basic admin:Babyty99) → should return artist/song stats. 5) POST /api/admin/generate-seo with auth, body {action:'generate_artist', artist_name:'Metallica -'} → should generate AI content (may take 30-60s). IMPORTANT: ALL curl requests must include -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)' header since middleware blocks requests without proper UA. Base URL: http://localhost:3000"
+    - message: "TESTING GSC 404 FIX: Two key changes made to resolve 273 Google Search Console 'Not Found (404)' errors. 1) Artist page (app/artist/[slug]/page.js): Changed notFound() to permanentRedirect('/') when artist not found in DB. 2) Song page (app/songs/[slug]/page.js): Changed notFound() to smart redirect - tries to find artist from song slug and redirects to /artist/{artist-slug}, otherwise redirects to homepage. TEST CASES: a) /artist/tesla → 200 (valid artist), b) /artist/the-great-80s → 308 redirect to / (slug mismatch), c) /artist/totally-nonexistent → 308 redirect to / (not in DB), d) /songs/metallica-am-i-evil → 200 (valid song), e) /songs/van-halen-best-of-both-worlds → 308 redirect to /artist/van-halen (missing song, artist extracted), f) /songs/totally-nonexistent → 308 redirect to / (no match at all), g) /ja/artist/reb-beach- → 301 redirect to /ja/artist/reb-beach → 200 (trailing dash + locale). IMPORTANT: ALL curl requests must include -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)' or -A 'Mozilla/5.0 (compatible; Googlebot/2.1)' since middleware blocks requests without proper UA. Base URL: http://localhost:3000"
     - agent: "testing"
-    - message: "✅ AI SEO CONTENT API TESTING COMPLETE - All endpoints working perfectly! Tested 15 total test cases across 3 API endpoints with 100% success rate. 1) SEO Content Retrieval API (GET /api/seo-content): 7/7 tests passed - slug-based lookup, name fallback, proper validation, content structure verification. 2) Admin SEO Generation Stats (GET /api/admin/generate-seo): 3/3 tests passed - authentication, authorization, stats structure. 3) Admin SEO Content Generation (POST /api/admin/generate-seo): 5/5 tests passed - authentication, validation, caching behavior. All APIs properly handle User-Agent requirements, Basic Auth, parameter validation, and return correct response structures. Database contains 427 artists (4 with AI content) and 99 songs (0 with AI content). OpenAI API is properly configured."
+    - message: "✅ GSC 404 FIX TESTING COMPLETE - All 19 test cases PASSED (100% success rate). ARTIST PAGE TESTS: 7/7 passed - valid artists return 200, invalid artists return 308 redirect to homepage. SONG PAGE TESTS: 5/5 passed - valid songs return 200, missing songs with artist match redirect to artist page (308), middleware-handled songs redirect correctly (301), nonexistent songs redirect to homepage (308). LOCALIZED URL TESTS: 4/4 passed - locale + valid pages return 200, trailing dash handling works correctly. EXISTING FUNCTIONALITY: 3/3 passed - homepage, trailing dash cleanup, favicon all working. GSC 404 fix implementation is working perfectly - no more 404 errors for invalid artist/song URLs."

@@ -2,7 +2,8 @@ import { getDb } from '@/lib/mongodb';
 import { generateSeoContent } from '@/lib/artistData';
 import { generateAlternates } from '@/lib/seo';
 import SongPageClient from './SongPageClient';
-import { notFound } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
+import { artistToSlug } from '@/lib/slugify';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
@@ -44,21 +45,44 @@ export async function generateMetadata({ params }) {
   }
 }
 
+// Helper: try to find artist slug from a song slug like "van-halen-best-of-both-worlds"
+async function findArtistFromSongSlug(db, songSlug) {
+  const allArtists = await db.collection('videos').distinct('artist');
+  // Generate slugs for all artists and find which one the song slug starts with
+  // Sort by slug length descending so we match the longest (most specific) artist first
+  const artistSlugs = allArtists
+    .map(a => ({ name: a, slug: artistToSlug(a) }))
+    .filter(a => a.slug) // remove empty
+    .sort((a, b) => b.slug.length - a.slug.length);
+  
+  for (const { slug: aSlug } of artistSlugs) {
+    if (songSlug.startsWith(aSlug + '-') || songSlug === aSlug) {
+      return aSlug;
+    }
+  }
+  return null;
+}
+
 export default async function SongPage({ params }) {
   const { slug } = await params;
   
-  let song = null;
+  const db = await getDb();
+  const song = await db.collection('song_pages').findOne({ slug });
+  
+  if (!song) {
+    // Song not found — try to redirect to the artist page instead of 404
+    const artistSlug = await findArtistFromSongSlug(db, slug);
+    if (artistSlug) {
+      permanentRedirect(`/artist/${artistSlug}`);
+    }
+    // No artist match either — redirect to homepage
+    permanentRedirect('/');
+  }
+
   let adSettings = null;
   let aiSeoContent = null;
 
   try {
-    const db = await getDb();
-    song = await db.collection('song_pages').findOne({ slug });
-    
-    if (!song) {
-      notFound();
-    }
-
     // Fetch AI-generated SEO content (server-side for SSR)
     try {
       const aiDoc = await db.collection('song_seo_content').findOne({ slug });
@@ -79,7 +103,7 @@ export default async function SongPage({ params }) {
     };
   } catch (err) {
     console.error('Song page error:', err);
-    notFound();
+    permanentRedirect('/');
   }
 
   const cleanArtist = song.artist?.replace(/ -$/, '').trim() || 'DadRock Tabs';
