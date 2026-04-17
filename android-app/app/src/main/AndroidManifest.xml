@@ -28,9 +28,13 @@
         <meta-data
             android:name="firebase_analytics_collection_enabled"
             android:value="true" />
+        <!-- Disable automatic screen reporting — we log screen_view manually
+             in onPageFinished with the actual web page title. Automatic reporting
+             fires extra screen_view events without page_title, causing "(not set)"
+             entries in GA4 reports. -->
         <meta-data
             android:name="google_analytics_automatic_screen_reporting_enabled"
-            android:value="true" />
+            android:value="false" />
         
         <activity
             android:name=".MainActivity"

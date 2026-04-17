@@ -7,9 +7,12 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -40,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private FirebaseAnalytics firebaseAnalytics;
     private ReviewManager reviewManager;
+    private Handler mainHandler;
+    private boolean isShowingOfflinePage = false;
+    private String lastLoadedUrl = "";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -50,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         // Initialize Firebase Analytics
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         firebaseAnalytics.setAnalyticsCollectionEnabled(true);
+        
+        // Initialize main thread handler for delayed operations
+        mainHandler = new Handler(Looper.getMainLooper());
         
         // Log app open event
         Bundle bundle = new Bundle();
@@ -90,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 progressBar.setVisibility(View.VISIBLE);
+                
+                // If we're navigating away from the offline page, reset the flag
+                if (isShowingOfflinePage && url != null && !url.startsWith("file:///android_asset/")) {
+                    isShowingOfflinePage = false;
+                }
             }
 
             @Override
@@ -98,19 +112,50 @@ public class MainActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
                 
-                // Log screen_view with proper page title and URL to Firebase Analytics
-                String pageTitle = view.getTitle();
-                if (pageTitle == null || pageTitle.isEmpty()) {
-                    pageTitle = "DadRock Tabs";
+                // Don't track the offline error page in analytics
+                if (isShowingOfflinePage || (url != null && url.startsWith("file:///android_asset/"))) {
+                    return;
                 }
                 
-                Bundle screenBundle = new Bundle();
-                screenBundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, pageTitle);
-                screenBundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "WebView");
-                screenBundle.putString("page_location", url);
-                screenBundle.putString("page_path", Uri.parse(url).getPath());
-                screenBundle.putString("page_title", pageTitle);
-                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, screenBundle);
+                // Save the URL for retry after offline
+                if (url != null && url.contains("dadrocktabs.com")) {
+                    lastLoadedUrl = url;
+                }
+                
+                // Delay reading the title to allow React/Next.js to hydrate
+                // and update document.title via client-side rendering.
+                // onPageFinished fires when initial HTML is loaded, but the
+                // <title> tag may still be updating via JavaScript.
+                mainHandler.postDelayed(() -> {
+                    if (view == null) return;
+                    
+                    String pageTitle = view.getTitle();
+                    if (pageTitle == null || pageTitle.isEmpty() 
+                            || pageTitle.equals("about:blank")
+                            || pageTitle.equalsIgnoreCase("Web page not available")) {
+                        pageTitle = "DadRock Tabs";
+                    }
+                    
+                    Bundle screenBundle = new Bundle();
+                    screenBundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, pageTitle);
+                    screenBundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "WebView");
+                    screenBundle.putString("page_location", url);
+                    screenBundle.putString("page_path", Uri.parse(url).getPath());
+                    screenBundle.putString("page_title", pageTitle);
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, screenBundle);
+                }, 800); // 800ms delay for React hydration
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                
+                // Only handle main frame errors (not sub-resource failures like images)
+                if (request.isForMainFrame()) {
+                    // Show branded offline page instead of default "Web page not available"
+                    isShowingOfflinePage = true;
+                    view.loadUrl("file:///android_asset/offline.html");
+                }
             }
 
             @Override
@@ -150,7 +195,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Setup swipe to refresh
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            webView.reload();
+            // If showing offline page, retry the last real URL
+            if (isShowingOfflinePage && !lastLoadedUrl.isEmpty()) {
+                isShowingOfflinePage = false;
+                webView.loadUrl(lastLoadedUrl);
+            } else {
+                webView.reload();
+            }
         });
 
         swipeRefreshLayout.setColorSchemeResources(
