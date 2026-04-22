@@ -67,21 +67,62 @@ export default async function sitemap() {
   });
 
   // Add artist pages (with hreflang alternates)
+  // IMPORTANT: Deduplicate by slug and filter out junk entries
+  // (hashtag content, "Coming Soon" teasers, promotional videos, etc.)
   try {
     const db = await getDb();
     const artists = await db.collection('videos').distinct('artist');
     
+    // Junk patterns — these are not real artist pages
+    const junkPatterns = [
+      '#',                    // Hashtag content (e.g., "George Lynch  #Electric")
+      'Coming Soon',          // Coming soon teasers
+      'coming soon',
+      'Memorial Video',       // Memorial/tribute content
+      'Original Song',        // Original songs, not artist pages
+      'Greatest Drummers',    // Compilation/list videos
+      'Lead Singers',         // Compilation videos
+      'Welcome To The Jungle 2022', // One-off videos
+      'Highway To Hell',      // Song used as artist name
+      'Hold On Loosely',      // Song used as artist name
+      'Cities On Flame',      // Song used as artist name
+      'Face The Slayer',      // Non-artist content
+      'The Great 80',         // Non-artist content
+      'The DadRock',          // Channel self-reference
+      'DadRock Tabs',         // Channel self-reference
+      'Steppenwolf Be The First', // Discussion/debate video
+      'Children Of The Grave', // Song used as artist name
+      '80\'s Fretmasters',    // Compilation content
+    ];
+    
+    const seenSlugs = new Set();
+    
     artists.forEach(artist => {
-      if (artist) {
-        const slug = artistToSlug(artist);
-        routes.push({
-          url: `${baseUrl}/artist/${slug}`,
-          lastModified: currentDate,
-          changeFrequency: 'weekly',
-          priority: 0.8,
-          alternates: generateLanguageAlternates(`/artist/${slug}`),
-        });
+      if (!artist) return;
+      
+      // Skip junk entries
+      const isJunk = junkPatterns.some(pattern => artist.includes(pattern));
+      if (isJunk) return;
+      
+      // Skip standalone non-artist entries
+      if (artist === 'Lead' || artist === 'Danger Danger' || artist === 'Kimg Diamond') {
+        // Keep these — they're real artists (Danger Danger, King Diamond typo)
       }
+      
+      const slug = artistToSlug(artist);
+      if (!slug) return;
+      
+      // Deduplicate — only add each slug once
+      if (seenSlugs.has(slug)) return;
+      seenSlugs.add(slug);
+      
+      routes.push({
+        url: `${baseUrl}/artist/${slug}`,
+        lastModified: currentDate,
+        changeFrequency: 'weekly',
+        priority: 0.8,
+        alternates: generateLanguageAlternates(`/artist/${slug}`),
+      });
     });
   } catch (error) {
     console.error('Error fetching artists for sitemap:', error);
