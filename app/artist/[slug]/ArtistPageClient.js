@@ -284,20 +284,34 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
           <span className="text-white">{artistName}</span>
         </nav>
 
-        {/* Artist Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4 font-rock">
-            <span className="text-amber-500">{artistName}</span>
-            <span className="text-white"> {t.guitarBassTabs || 'Guitar & Bass Tabs'}</span>
-          </h1>
-          <p className="mt-2 text-amber-500 font-semibold">
-            <Music className="w-5 h-5 inline mr-2" />
-            {videos.length} {t.artistLessons || 'lessons available'}
-          </p>
+        {/* Hero Section — Dramatic Artist Header */}
+        <div className="relative mb-10 p-8 sm:p-12 rounded-3xl overflow-hidden hero-gradient-bg">
+          {/* Background accent elements */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-red-500/5 rounded-full blur-3xl" />
+          
+          <div className="relative z-10">
+            <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-8">
+              <div className="flex-1">
+                <p className="text-sm font-medium text-amber-500/80 uppercase tracking-widest mb-2 font-rock-alt">
+                  Guitar & Bass Tabs
+                </p>
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold font-rock text-gradient-gold neon-underline pb-2">
+                  {artistName}
+                </h1>
+              </div>
+              <div className="flex items-center gap-4 flex-shrink-0">
+                <div className="stat-badge px-5 py-3 rounded-2xl text-center">
+                  <div className="text-3xl font-bold text-amber-500 font-rock">{videos.length}</div>
+                  <div className="text-xs text-zinc-400 uppercase tracking-wider">{t.artistLessons || 'lessons'}</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* About Artist — Shown ABOVE lessons */}
-        <div className="mb-8 p-6 sm:p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+        <div className="mb-10 p-6 sm:p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800 section-accent reveal-section">
           <h2 className="text-2xl font-bold mb-4 text-amber-500 flex items-center gap-2">
             <Star className="w-6 h-6" />
             {t.about || 'About'} {artistName}
@@ -355,14 +369,15 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
           {selectedVideo ? t.moreLessons : t.watchLesson}
         </h2>
 
-        {/* Video Grid */}
+        {/* Video Grid — Enhanced with lesson numbers and glow effects */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {videos.map((video) => (
+          {videos.map((video, index) => (
             <div
               key={video.id || video.video_id}
-              className={`group bg-zinc-900/80 rounded-xl border border-zinc-800 overflow-hidden hover:border-amber-500/50 transition-all cursor-pointer ${
-                selectedVideo?.id === video.id ? 'ring-2 ring-amber-500' : ''
+              className={`group glow-card bg-zinc-900/80 rounded-xl border border-zinc-800 overflow-hidden cursor-pointer card-enter ${
+                selectedVideo?.id === video.id ? 'ring-2 ring-amber-500 border-amber-500/50' : ''
               }`}
+              style={{ animationDelay: `${Math.min(index * 0.05, 0.5)}s` }}
               onClick={() => handleVideoClick(video)}
             >
               {/* Thumbnail */}
@@ -370,13 +385,36 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
                 <img
                   src={video.thumbnail || `https://img.youtube.com/vi/${video.video_id}/mqdefault.jpg`}
                   alt={video.song || video.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
                 />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center">
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                
+                {/* Play button */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <div className="w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/30 scale-90 group-hover:scale-100 transition-transform duration-300">
                     <Play className="w-8 h-8 text-black ml-1" fill="black" />
                   </div>
                 </div>
+                
+                {/* Lesson number badge */}
+                <div className="absolute top-3 left-3 lesson-badge text-xs font-bold text-black px-2.5 py-1 rounded-lg">
+                  #{index + 1}
+                </div>
+                
+                {/* Now Playing indicator */}
+                {selectedVideo?.id === video.id && (
+                  <div className="absolute top-3 right-3 bg-amber-500 text-black text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                    <div className="flex items-end gap-0.5 h-4">
+                      <div className="w-1 bg-black rounded-full eq-bar-1" />
+                      <div className="w-1 bg-black rounded-full eq-bar-2" />
+                      <div className="w-1 bg-black rounded-full eq-bar-3" />
+                      <div className="w-1 bg-black rounded-full eq-bar-4" />
+                    </div>
+                    PLAYING
+                  </div>
+                )}
               </div>
               
               {/* Video Info */}
@@ -384,18 +422,25 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
                 <h3 className="font-semibold text-white group-hover:text-amber-500 transition-colors line-clamp-2">
                   {video.song || video.title}
                 </h3>
-                <p className="text-sm text-zinc-400 mt-1">{artistName}</p>
+                <p className="text-sm text-zinc-500 mt-1">{artistName}</p>
               </div>
             </div>
           ))}
         </div>
 
         {/* SEO Content Section — AI-Enhanced (below lessons) */}
-        <section className="mt-16 space-y-8">
+        <section className="mt-16 space-y-8 reveal-section">
+          {/* Section Divider */}
+          <div className="flex items-center gap-4 mb-8">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-500/30 to-transparent" />
+            <span className="text-amber-500 text-sm font-bold uppercase tracking-widest font-rock-alt">Deep Dive</span>
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-500/30 to-transparent" />
+          </div>
+
           {/* Playing Style & Gear — only show if AI content available */}
           {aiContent?.playing_style && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+              <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800 section-accent hover:border-zinc-700 transition-colors">
                 <h3 className="text-xl font-bold mb-3 text-white flex items-center gap-2">
                   <Music className="w-5 h-5 text-amber-500" />
                   {t.playingStyle || 'Playing Style'}
@@ -403,7 +448,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
                 <p className="text-zinc-300 leading-relaxed">{aiContent.playing_style}</p>
               </div>
               {aiContent?.gear_info && (
-                <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+                <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800 section-accent hover:border-zinc-700 transition-colors">
                   <h3 className="text-xl font-bold mb-3 text-white flex items-center gap-2">
                     🎸 {t.gearEquipment || 'Gear & Equipment'}
                   </h3>
@@ -415,7 +460,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
 
           {/* Why Learn This Artist */}
           {aiContent?.why_learn && (
-            <div className="p-6 bg-gradient-to-r from-amber-500/10 to-zinc-900/50 rounded-2xl border border-amber-500/20">
+            <div className="p-6 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-zinc-900/50 rounded-2xl border border-amber-500/20 section-accent">
               <h3 className="text-xl font-bold mb-3 text-amber-500 flex items-center gap-2">
                 <Lightbulb className="w-5 h-5" />
                 {t.whyLearn || 'Why Learn'} {artistName} {t.whyLearnSuffix || 'Songs?'}
@@ -426,7 +471,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
 
           {/* Fun Facts */}
           {aiContent?.fun_facts && aiContent.fun_facts.length > 0 && (
-            <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+            <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800 section-accent">
               <h3 className="text-xl font-bold mb-4 text-white flex items-center gap-2">
                 <BookOpen className="w-5 h-5 text-amber-500" />
                 {t.didYouKnow || 'Did You Know?'}
@@ -434,7 +479,9 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
               <ul className="space-y-3">
                 {aiContent.fun_facts.map((fact, i) => (
                   <li key={i} className="flex items-start gap-3 text-zinc-300">
-                    <span className="text-amber-500 font-bold text-lg mt-0.5">•</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-amber-500/10 border border-amber-500/30 rounded-full flex items-center justify-center text-amber-500 text-xs font-bold mt-0.5">
+                      {i + 1}
+                    </span>
                     <span>{fact}</span>
                   </li>
                 ))}
@@ -443,33 +490,41 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
           )}
 
           {/* Available Lessons Count */}
-          <div className="text-center p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
-            <p className="text-amber-500 font-semibold text-lg">
-              <Music className="w-5 h-5 inline mr-2" />
+          <div className="text-center p-8 rounded-2xl border border-zinc-800 hero-gradient-bg relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-red-500/5 rounded-full blur-2xl" />
+            <p className="text-amber-500 font-semibold text-xl relative z-10 font-rock">
+              <Music className="w-6 h-6 inline mr-2" />
               {videos.length} {artistName} {t.lessonsAvailableCta || 'lesson(s) available — Start learning today!'}
             </p>
           </div>
         </section>
 
-        {/* Related Artists Section - Internal Linking for SEO */}
-        <section className="mt-10 p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
-          <h2 className="text-2xl font-bold mb-4 text-white flex items-center gap-2">
-            <Users className="w-6 h-6 text-amber-500" />
-            {t.ifYouLike || 'If You Like'} {artistName}{t.youllLove || ', You\'ll Love...'}
-          </h2>
-          <p className="text-zinc-400 mb-6">
-            {t.checkOutSimilar || 'Check out guitar and bass tabs from these similar classic rock artists:'}
-          </p>
-          <div className="flex flex-wrap gap-3">
-            {getRelatedArtists(artistName).map((relatedArtist) => (
-              <Link
-                key={relatedArtist}
-                href={`/artist/${artistToSlug(relatedArtist)}`}
-                className="px-5 py-3 bg-zinc-800 hover:bg-amber-500 hover:text-black rounded-full font-medium transition-all border border-zinc-700 hover:border-amber-500"
-              >
-                {relatedArtist}
-              </Link>
-            ))}
+        {/* Related Artists Section - Internal Linking */}
+        <section className="mt-10 p-8 rounded-2xl border border-zinc-800 relative overflow-hidden hero-gradient-bg">
+          <div className="absolute top-0 left-0 w-48 h-48 bg-amber-500/3 rounded-full blur-3xl" />
+          <div className="relative z-10">
+            <h2 className="text-2xl font-bold mb-2 text-white flex items-center gap-2 font-rock">
+              <Users className="w-6 h-6 text-amber-500" />
+              {t.ifYouLike || 'If You Like'} {artistName}{t.youllLove || ', You\'ll Love...'}
+            </h2>
+            <p className="text-zinc-500 mb-6 text-sm">
+              {t.checkOutSimilar || 'Check out guitar and bass tabs from these similar classic rock artists:'}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {getRelatedArtists(artistName).map((relatedArtist) => (
+                <Link
+                  key={relatedArtist}
+                  href={`/artist/${artistToSlug(relatedArtist)}`}
+                  className="group/pill flex items-center gap-2 px-5 py-3 bg-zinc-800/80 hover:bg-amber-500 rounded-full font-medium transition-all border border-zinc-700 hover:border-amber-500 hover:text-black hover:shadow-lg hover:shadow-amber-500/20 hover:-translate-y-0.5"
+                >
+                  <span className="w-7 h-7 rounded-full bg-zinc-700 group-hover/pill:bg-amber-600 flex items-center justify-center text-xs font-bold text-zinc-300 group-hover/pill:text-black transition-colors">
+                    {relatedArtist.charAt(0)}
+                  </span>
+                  {relatedArtist}
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -486,20 +541,25 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 border-t border-zinc-800 py-8">
-        <div className="container mx-auto px-4 text-center text-zinc-400">
-          <p>{t.footer}</p>
-          <div className="mt-4 flex justify-center gap-6">
-            <Link href="/" className="hover:text-amber-500 transition-colors">{t.home}</Link>
-            <a 
-              href="https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:text-amber-500 transition-colors flex items-center gap-1"
-            >
-              <Youtube className="w-4 h-4" />
-              YouTube
-            </a>
+      <footer className="mt-16 border-t border-zinc-800">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <img src={LOGO_URL} alt="DadRock Tabs" className="w-8 h-8 opacity-50" />
+              <p className="text-zinc-500 text-sm">{t.footer}</p>
+            </div>
+            <div className="flex items-center gap-6">
+              <Link href="/" className="text-zinc-500 hover:text-amber-500 transition-colors text-sm">{t.home}</Link>
+              <a 
+                href="https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-zinc-500 hover:text-red-500 transition-colors flex items-center gap-1.5 text-sm"
+              >
+                <Youtube className="w-4 h-4" />
+                YouTube
+              </a>
+            </div>
           </div>
         </div>
       </footer>
