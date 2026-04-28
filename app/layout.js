@@ -58,6 +58,46 @@ export const metadata = {
   },
 };
 
+// WebSite + Organization structured data for Google rich results
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': 'https://dadrocktabs.com/#website',
+      'url': 'https://dadrocktabs.com',
+      'name': 'DadRock Tabs',
+      'description': 'Free guitar and bass tabs for classic rock hits. Learn to play Led Zeppelin, AC/DC, Van Halen, Metallica and more.',
+      'publisher': { '@id': 'https://dadrocktabs.com/#organization' },
+      'inLanguage': 'en',
+      'potentialAction': {
+        '@type': 'SearchAction',
+        'target': {
+          '@type': 'EntryPoint',
+          'urlTemplate': 'https://dadrocktabs.com/?search={search_term_string}'
+        },
+        'query-input': 'required name=search_term_string'
+      }
+    },
+    {
+      '@type': 'Organization',
+      '@id': 'https://dadrocktabs.com/#organization',
+      'name': 'DadRock Tabs',
+      'url': 'https://dadrocktabs.com',
+      'logo': {
+        '@type': 'ImageObject',
+        'url': 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png',
+        'width': 512,
+        'height': 512
+      },
+      'sameAs': [
+        'https://youtube.com/@dadrockytofficial'
+      ],
+      'description': 'DadRock Tabs provides free guitar and bass tablature video lessons for classic rock songs.'
+    }
+  ]
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
@@ -67,6 +107,12 @@ export default function RootLayout({ children }) {
           Each page's generateMetadata() handles its own canonical and hreflang 
           to avoid duplicate/conflicting tags that cause GSC errors.
         */}
+        
+        {/* WebSite + Organization structured data for rich results & sitelinks search box */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         
         {/* 80s Rock Style Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

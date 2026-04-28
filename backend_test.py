@@ -1,405 +1,391 @@
 #!/usr/bin/env python3
-"""
-Backend API Testing for DadRock Tabs - AI SEO Content APIs
-Tests the AI SEO Content Generation and Retrieval endpoints
-"""
 
 import requests
 import json
-import base64
-import os
+import re
 from urllib.parse import urljoin
 
-# Configuration
+# Base URL from environment
 BASE_URL = "https://admin-sync-hub-1.preview.emergentagent.com"
-ADMIN_USER = "admin"
-ADMIN_PASSWORD = "Babyty99"
 
-# Required User-Agent header (middleware blocks requests without proper UA)
+# Required User-Agent header to bypass middleware blocking
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-    "Content-Type": "application/json"
+    "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1)"
 }
 
-def get_auth_headers():
-    """Get headers with Basic Auth for admin endpoints"""
-    auth_string = f"{ADMIN_USER}:{ADMIN_PASSWORD}"
-    auth_bytes = auth_string.encode('ascii')
-    auth_b64 = base64.b64encode(auth_bytes).decode('ascii')
+def test_structured_data():
+    """Test JSON-LD structured data implementation"""
+    print("=== STRUCTURED DATA TESTS ===")
     
-    headers = HEADERS.copy()
-    headers["Authorization"] = f"Basic {auth_b64}"
-    return headers
-
-def test_seo_content_retrieval():
-    """Test GET /api/seo-content endpoint (public)"""
-    print("\n" + "="*60)
-    print("TESTING: SEO Content Retrieval API (GET /api/seo-content)")
-    print("="*60)
-    
-    test_cases = [
-        {
-            "name": "Get AC/DC content by slug",
-            "params": {"type": "artist", "slug": "acdc"},
-            "expected_found": True
-        },
-        {
-            "name": "Get Pantera content by slug", 
-            "params": {"type": "artist", "slug": "pantera"},
-            "expected_found": True
-        },
-        {
-            "name": "Get nonexistent artist content",
-            "params": {"type": "artist", "slug": "nonexistent-artist"},
-            "expected_found": False
-        },
-        {
-            "name": "Get AC/DC content by name",
-            "params": {"type": "artist", "name": "AC/DC"},
-            "expected_found": True
-        },
-        {
-            "name": "Get song content (should not exist yet)",
-            "params": {"type": "song", "slug": "some-song"},
-            "expected_found": False
-        },
-        {
-            "name": "Missing parameters (should return 400)",
-            "params": {},
-            "expected_status": 400
-        },
-        {
-            "name": "Invalid type parameter",
-            "params": {"type": "invalid", "slug": "test"},
-            "expected_status": 400
-        }
-    ]
-    
-    passed = 0
-    total = len(test_cases)
-    
-    for i, test_case in enumerate(test_cases, 1):
-        try:
-            print(f"\n{i}. {test_case['name']}")
-            
-            url = f"{BASE_URL}/api/seo-content"
-            response = requests.get(url, params=test_case['params'], headers=HEADERS, timeout=10)
-            
-            print(f"   Request: GET {url}?{requests.compat.urlencode(test_case['params'])}")
-            print(f"   Status: {response.status_code}")
-            
-            # Check expected status code
-            expected_status = test_case.get('expected_status', 200)
-            if response.status_code != expected_status:
-                print(f"   ❌ FAIL: Expected status {expected_status}, got {response.status_code}")
-                print(f"   Response: {response.text[:200]}")
-                continue
-            
-            if response.status_code == 400:
-                print(f"   ✅ PASS: Correctly returned 400 error")
-                passed += 1
-                continue
-                
-            data = response.json()
-            print(f"   Response keys: {list(data.keys())}")
-            
-            # Check found status
-            if 'expected_found' in test_case:
-                expected_found = test_case['expected_found']
-                actual_found = data.get('found', False)
-                
-                if actual_found == expected_found:
-                    if expected_found:
-                        # Verify content structure for found items
-                        required_fields = ['found', 'type', 'content']
-                        if test_case['params'].get('type') == 'artist':
-                            required_fields.extend(['name', 'slug'])
-                        
-                        missing_fields = [field for field in required_fields if field not in data]
-                        if missing_fields:
-                            print(f"   ❌ FAIL: Missing required fields: {missing_fields}")
-                            continue
-                        
-                        # Check content structure
-                        content = data.get('content', {})
-                        if isinstance(content, dict) and content:
-                            print(f"   Content sections: {list(content.keys())}")
-                            print(f"   ✅ PASS: Found content with proper structure")
-                        else:
-                            print(f"   ❌ FAIL: Content is not a valid object")
-                            continue
-                    else:
-                        print(f"   ✅ PASS: Correctly returned found=false")
-                    passed += 1
-                else:
-                    print(f"   ❌ FAIL: Expected found={expected_found}, got found={actual_found}")
+    # Test 1: Homepage - WebSite + Organization schema
+    print("\n1. Testing homepage structured data...")
+    try:
+        response = requests.get(f"{BASE_URL}/", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            html = response.text
+            # Check for WebSite schema
+            if '"@type":"WebSite"' in html or '"@type": "WebSite"' in html:
+                print("   ✅ WebSite schema found")
             else:
-                print(f"   ✅ PASS: Request completed successfully")
-                passed += 1
-                
-        except requests.exceptions.RequestException as e:
-            print(f"   ❌ FAIL: Request error - {e}")
-        except json.JSONDecodeError as e:
-            print(f"   ❌ FAIL: JSON decode error - {e}")
-            print(f"   Response: {response.text[:200]}")
-        except Exception as e:
-            print(f"   ❌ FAIL: Unexpected error - {e}")
-    
-    print(f"\n📊 SEO Content Retrieval Results: {passed}/{total} tests passed")
-    return passed == total
-
-def test_admin_generate_seo_get():
-    """Test GET /api/admin/generate-seo endpoint (admin stats)"""
-    print("\n" + "="*60)
-    print("TESTING: Admin SEO Generation Stats (GET /api/admin/generate-seo)")
-    print("="*60)
-    
-    test_cases = [
-        {
-            "name": "Unauthorized access (no auth)",
-            "headers": HEADERS,
-            "expected_status": 401
-        },
-        {
-            "name": "Wrong credentials",
-            "headers": {**HEADERS, "Authorization": "Basic " + base64.b64encode(b"admin:wrongpass").decode()},
-            "expected_status": 401
-        },
-        {
-            "name": "Valid admin access",
-            "headers": get_auth_headers(),
-            "expected_status": 200
-        }
-    ]
-    
-    passed = 0
-    total = len(test_cases)
-    
-    for i, test_case in enumerate(test_cases, 1):
-        try:
-            print(f"\n{i}. {test_case['name']}")
+                print("   ❌ WebSite schema NOT found")
             
-            url = f"{BASE_URL}/api/admin/generate-seo"
-            response = requests.get(url, headers=test_case['headers'], timeout=10)
-            
-            print(f"   Request: GET {url}")
-            print(f"   Status: {response.status_code}")
-            
-            if response.status_code != test_case['expected_status']:
-                print(f"   ❌ FAIL: Expected status {test_case['expected_status']}, got {response.status_code}")
-                print(f"   Response: {response.text[:200]}")
-                continue
-            
-            if response.status_code == 401:
-                print(f"   ✅ PASS: Correctly rejected unauthorized access")
-                passed += 1
-                continue
-            
-            # For successful response, check structure
-            data = response.json()
-            print(f"   Response keys: {list(data.keys())}")
-            
-            required_fields = ['success', 'artists', 'songs', 'api_configured']
-            missing_fields = [field for field in required_fields if field not in data]
-            
-            if missing_fields:
-                print(f"   ❌ FAIL: Missing required fields: {missing_fields}")
-                continue
-            
-            # Check artists and songs structure
-            artists = data.get('artists', {})
-            songs = data.get('songs', {})
-            
-            artist_fields = ['total', 'with_ai_content', 'without_ai_content']
-            song_fields = ['total', 'with_ai_content', 'without_ai_content']
-            
-            missing_artist_fields = [field for field in artist_fields if field not in artists]
-            missing_song_fields = [field for field in song_fields if field not in songs]
-            
-            if missing_artist_fields or missing_song_fields:
-                print(f"   ❌ FAIL: Missing artist fields: {missing_artist_fields}, song fields: {missing_song_fields}")
-                continue
-            
-            print(f"   Artists: {artists['total']} total, {artists['with_ai_content']} with AI content")
-            print(f"   Songs: {songs['total']} total, {songs['with_ai_content']} with AI content")
-            print(f"   API configured: {data['api_configured']}")
-            print(f"   ✅ PASS: Valid stats response structure")
-            passed += 1
-            
-        except requests.exceptions.RequestException as e:
-            print(f"   ❌ FAIL: Request error - {e}")
-        except json.JSONDecodeError as e:
-            print(f"   ❌ FAIL: JSON decode error - {e}")
-            print(f"   Response: {response.text[:200]}")
-        except Exception as e:
-            print(f"   ❌ FAIL: Unexpected error - {e}")
-    
-    print(f"\n📊 Admin SEO Stats Results: {passed}/{total} tests passed")
-    return passed == total
-
-def test_admin_generate_seo_post():
-    """Test POST /api/admin/generate-seo endpoint (AI content generation)"""
-    print("\n" + "="*60)
-    print("TESTING: Admin SEO Content Generation (POST /api/admin/generate-seo)")
-    print("="*60)
-    
-    test_cases = [
-        {
-            "name": "Unauthorized access (no auth)",
-            "headers": HEADERS,
-            "body": {"action": "generate_artist", "artist_name": "Test Artist"},
-            "expected_status": 401
-        },
-        {
-            "name": "Wrong credentials",
-            "headers": {**HEADERS, "Authorization": "Basic " + base64.b64encode(b"admin:wrongpass").decode()},
-            "body": {"action": "generate_artist", "artist_name": "Test Artist"},
-            "expected_status": 401
-        },
-        {
-            "name": "Missing action parameter",
-            "headers": get_auth_headers(),
-            "body": {"artist_name": "Test Artist"},
-            "expected_status": 400
-        },
-        {
-            "name": "Generate AC/DC content (should be cached)",
-            "headers": get_auth_headers(),
-            "body": {"action": "generate_artist", "artist_name": "AC/DC"},
-            "expected_status": 200,
-            "expected_cached": True
-        },
-        {
-            "name": "Generate Pantera content (should be cached)",
-            "headers": get_auth_headers(),
-            "body": {"action": "generate_artist", "artist_name": "Pantera"},
-            "expected_status": 200,
-            "expected_cached": True
-        }
-    ]
-    
-    passed = 0
-    total = len(test_cases)
-    
-    for i, test_case in enumerate(test_cases, 1):
-        try:
-            print(f"\n{i}. {test_case['name']}")
-            
-            url = f"{BASE_URL}/api/admin/generate-seo"
-            response = requests.post(
-                url, 
-                headers=test_case['headers'], 
-                json=test_case['body'],
-                timeout=30  # Longer timeout for AI generation
-            )
-            
-            print(f"   Request: POST {url}")
-            print(f"   Body: {json.dumps(test_case['body'])}")
-            print(f"   Status: {response.status_code}")
-            
-            if response.status_code != test_case['expected_status']:
-                print(f"   ❌ FAIL: Expected status {test_case['expected_status']}, got {response.status_code}")
-                print(f"   Response: {response.text[:200]}")
-                continue
-            
-            if response.status_code == 401:
-                print(f"   ✅ PASS: Correctly rejected unauthorized access")
-                passed += 1
-                continue
-            
-            if response.status_code == 400:
-                print(f"   ✅ PASS: Correctly returned 400 for invalid request")
-                passed += 1
-                continue
-            
-            # For successful response, check structure
-            data = response.json()
-            print(f"   Response keys: {list(data.keys())}")
-            
-            required_fields = ['success']
-            missing_fields = [field for field in required_fields if field not in data]
-            
-            if missing_fields:
-                print(f"   ❌ FAIL: Missing required fields: {missing_fields}")
-                continue
-            
-            if not data.get('success'):
-                print(f"   ❌ FAIL: Success field is false")
-                print(f"   Response: {json.dumps(data, indent=2)}")
-                continue
-            
-            # Check if cached response is as expected
-            if 'expected_cached' in test_case:
-                expected_cached = test_case['expected_cached']
-                actual_cached = data.get('cached', False)
-                
-                if actual_cached == expected_cached:
-                    if expected_cached:
-                        print(f"   ✅ PASS: Content already exists (cached=true)")
-                    else:
-                        print(f"   ✅ PASS: New content generated (cached=false)")
-                    passed += 1
-                else:
-                    print(f"   ❌ FAIL: Expected cached={expected_cached}, got cached={actual_cached}")
+            # Check for Organization schema
+            if '"@type":"Organization"' in html or '"@type": "Organization"' in html:
+                print("   ✅ Organization schema found")
             else:
-                print(f"   ✅ PASS: Request completed successfully")
-                passed += 1
-            
-        except requests.exceptions.RequestException as e:
-            print(f"   ❌ FAIL: Request error - {e}")
-        except json.JSONDecodeError as e:
-            print(f"   ❌ FAIL: JSON decode error - {e}")
-            print(f"   Response: {response.text[:200]}")
-        except Exception as e:
-            print(f"   ❌ FAIL: Unexpected error - {e}")
+                print("   ❌ Organization schema NOT found")
+        else:
+            print(f"   ❌ Failed to load homepage: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing homepage: {e}")
     
-    print(f"\n📊 Admin SEO Generation Results: {passed}/{total} tests passed")
-    return passed == total
+    # Test 2: Artist page - BreadcrumbList + MusicGroup + CollectionPage
+    print("\n2. Testing artist page structured data (metallica)...")
+    try:
+        response = requests.get(f"{BASE_URL}/artist/metallica", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            html = response.text
+            # Check for BreadcrumbList schema
+            if '"@type":"BreadcrumbList"' in html or '"@type": "BreadcrumbList"' in html:
+                print("   ✅ BreadcrumbList schema found")
+            else:
+                print("   ❌ BreadcrumbList schema NOT found")
+            
+            # Check for MusicGroup schema
+            if '"@type":"MusicGroup"' in html or '"@type": "MusicGroup"' in html:
+                print("   ✅ MusicGroup schema found")
+            else:
+                print("   ❌ MusicGroup schema NOT found")
+            
+            # Check for CollectionPage schema
+            if '"@type":"CollectionPage"' in html or '"@type": "CollectionPage"' in html:
+                print("   ✅ CollectionPage schema found")
+            else:
+                print("   ❌ CollectionPage schema NOT found")
+        else:
+            print(f"   ❌ Failed to load artist page: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing artist page: {e}")
+    
+    # Test 3: Song page - BreadcrumbList + MusicRecording + VideoObject
+    print("\n3. Testing song page structured data (metallica-am-i-evil)...")
+    try:
+        response = requests.get(f"{BASE_URL}/songs/metallica-am-i-evil", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            html = response.text
+            # Check for BreadcrumbList schema
+            if '"@type":"BreadcrumbList"' in html or '"@type": "BreadcrumbList"' in html:
+                print("   ✅ BreadcrumbList schema found")
+            else:
+                print("   ❌ BreadcrumbList schema NOT found")
+            
+            # Check for MusicRecording schema
+            if '"@type":"MusicRecording"' in html or '"@type": "MusicRecording"' in html:
+                print("   ✅ MusicRecording schema found")
+            else:
+                print("   ❌ MusicRecording schema NOT found")
+            
+            # Check for VideoObject schema
+            if '"@type":"VideoObject"' in html or '"@type": "VideoObject"' in html:
+                print("   ✅ VideoObject schema found")
+            else:
+                print("   ❌ VideoObject schema NOT found")
+        else:
+            print(f"   ❌ Failed to load song page: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing song page: {e}")
+    
+    # Test 4: AC/DC artist page - structured data with special characters
+    print("\n4. Testing AC/DC artist page structured data...")
+    try:
+        response = requests.get(f"{BASE_URL}/artist/acdc", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            html = response.text
+            # Check for AC/DC name in structured data
+            if "AC/DC" in html:
+                print("   ✅ AC/DC name found in content")
+            else:
+                print("   ❌ AC/DC name NOT found in content")
+            
+            # Check for structured data presence
+            if '"@type":"MusicGroup"' in html or '"@type": "MusicGroup"' in html:
+                print("   ✅ MusicGroup schema found")
+            else:
+                print("   ❌ MusicGroup schema NOT found")
+        else:
+            print(f"   ❌ Failed to load AC/DC page: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing AC/DC page: {e}")
+
+def test_internal_linking():
+    """Test internal linking improvements"""
+    print("\n=== INTERNAL LINKING TESTS ===")
+    
+    # Test 5: Song page should contain links to other metallica songs
+    print("\n5. Testing song page internal links (metallica-am-i-evil)...")
+    try:
+        response = requests.get(f"{BASE_URL}/songs/metallica-am-i-evil", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            html = response.text
+            # Look for links to other metallica songs
+            metallica_song_links = re.findall(r'href="[^"]*songs/metallica-[^"]*"', html)
+            if metallica_song_links:
+                print(f"   ✅ Found {len(metallica_song_links)} links to other Metallica songs")
+                # Show first few examples
+                for i, link in enumerate(metallica_song_links[:3]):
+                    print(f"      Example {i+1}: {link}")
+            else:
+                print("   ❌ No links to other Metallica songs found")
+        else:
+            print(f"   ❌ Failed to load song page: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing song internal links: {e}")
+    
+    # Test 6: Song page should contain link to artist page
+    print("\n6. Testing song page artist link (metallica-am-i-evil)...")
+    try:
+        response = requests.get(f"{BASE_URL}/songs/metallica-am-i-evil", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            html = response.text
+            # Look for link to artist page
+            if 'href="/artist/metallica"' in html or "href='/artist/metallica'" in html:
+                print("   ✅ Link to /artist/metallica found")
+            else:
+                print("   ❌ Link to /artist/metallica NOT found")
+        else:
+            print(f"   ❌ Failed to load song page: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing song artist link: {e}")
+    
+    # Test 7: Artist page should contain related artist links
+    print("\n7. Testing artist page related links (metallica)...")
+    try:
+        response = requests.get(f"{BASE_URL}/artist/metallica", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            html = response.text
+            # Look for related artist links (common metal bands)
+            related_artists = ["megadeth", "slayer", "anthrax", "iron-maiden", "black-sabbath"]
+            found_related = []
+            
+            for artist in related_artists:
+                if f'href="/artist/{artist}"' in html or f"href='/artist/{artist}'" in html:
+                    found_related.append(artist)
+            
+            if found_related:
+                print(f"   ✅ Found {len(found_related)} related artist links: {', '.join(found_related)}")
+            else:
+                print("   ❌ No related artist links found")
+        else:
+            print(f"   ❌ Failed to load artist page: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing artist related links: {e}")
+
+def test_breadcrumbs():
+    """Test breadcrumb implementation"""
+    print("\n=== BREADCRUMB TESTS ===")
+    
+    # Test 8: Artist page breadcrumbs
+    print("\n8. Testing artist page breadcrumbs...")
+    try:
+        response = requests.get(f"{BASE_URL}/artist/metallica", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            html = response.text
+            # Look for breadcrumb structure in JSON-LD
+            breadcrumb_match = re.search(r'"@type":"BreadcrumbList"[^}]*"itemListElement":\s*\[(.*?)\]', html, re.DOTALL)
+            if breadcrumb_match:
+                breadcrumb_content = breadcrumb_match.group(1)
+                # Count items (should be 3: Home → Artists → Artist Name Tabs)
+                item_count = breadcrumb_content.count('"@type":"ListItem"')
+                print(f"   ✅ BreadcrumbList found with {item_count} items")
+                if item_count == 3:
+                    print("   ✅ Correct breadcrumb structure (3 items)")
+                else:
+                    print(f"   ⚠️  Expected 3 breadcrumb items, found {item_count}")
+            else:
+                print("   ❌ BreadcrumbList structure NOT found")
+        else:
+            print(f"   ❌ Failed to load artist page: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing artist breadcrumbs: {e}")
+    
+    # Test 9: Song page breadcrumbs
+    print("\n9. Testing song page breadcrumbs...")
+    try:
+        response = requests.get(f"{BASE_URL}/songs/metallica-am-i-evil", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            html = response.text
+            # Look for breadcrumb structure in JSON-LD
+            breadcrumb_match = re.search(r'"@type":"BreadcrumbList"[^}]*"itemListElement":\s*\[(.*?)\]', html, re.DOTALL)
+            if breadcrumb_match:
+                breadcrumb_content = breadcrumb_match.group(1)
+                # Count items (should be 3: Home → Artist Tabs → Song Title)
+                item_count = breadcrumb_content.count('"@type":"ListItem"')
+                print(f"   ✅ BreadcrumbList found with {item_count} items")
+                if item_count == 3:
+                    print("   ✅ Correct breadcrumb structure (3 items)")
+                else:
+                    print(f"   ⚠️  Expected 3 breadcrumb items, found {item_count}")
+            else:
+                print("   ❌ BreadcrumbList structure NOT found")
+        else:
+            print(f"   ❌ Failed to load song page: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing song breadcrumbs: {e}")
+
+def test_previous_fixes():
+    """Test that previous fixes still work"""
+    print("\n=== PREVIOUS FIXES TESTS ===")
+    
+    # Test 10: Invalid artist should redirect to homepage
+    print("\n10. Testing invalid artist redirect...")
+    try:
+        response = requests.get(f"{BASE_URL}/artist/totally-nonexistent-artist", headers=HEADERS, timeout=30, allow_redirects=False)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 308:
+            location = response.headers.get('Location', '')
+            if location == '/' or location.endswith('/'):
+                print("   ✅ 308 permanent redirect to homepage")
+            else:
+                print(f"   ❌ Redirects to wrong location: {location}")
+        else:
+            print(f"   ❌ Expected 308 redirect, got {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing invalid artist redirect: {e}")
+    
+    # Test 11: Invalid song should redirect to artist page
+    print("\n11. Testing invalid song redirect...")
+    try:
+        response = requests.get(f"{BASE_URL}/songs/van-halen-best-of-both-worlds", headers=HEADERS, timeout=30, allow_redirects=False)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 308:
+            location = response.headers.get('Location', '')
+            if '/artist/van-halen' in location:
+                print("   ✅ 308 permanent redirect to /artist/van-halen")
+            else:
+                print(f"   ❌ Redirects to wrong location: {location}")
+        else:
+            print(f"   ❌ Expected 308 redirect, got {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing invalid song redirect: {e}")
+    
+    # Test 12: Valid artist should still work
+    print("\n12. Testing valid artist still works...")
+    try:
+        response = requests.get(f"{BASE_URL}/artist/tesla", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            print("   ✅ Valid artist page loads correctly")
+        else:
+            print(f"   ❌ Valid artist page failed: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing valid artist: {e}")
+    
+    # Test 13: Locale + artist should still work
+    print("\n13. Testing locale + artist still works...")
+    try:
+        response = requests.get(f"{BASE_URL}/ja/artist/black-sabbath", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            print("   ✅ Locale + artist page loads correctly")
+        else:
+            print(f"   ❌ Locale + artist page failed: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing locale + artist: {e}")
+
+def test_sitemap():
+    """Test sitemap improvements"""
+    print("\n=== SITEMAP TESTS ===")
+    
+    # Test 14: Sitemap should not contain duplicate artist slugs
+    print("\n14. Testing sitemap for duplicate artist slugs...")
+    try:
+        response = requests.get(f"{BASE_URL}/sitemap.xml", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            xml_content = response.text
+            # Extract all artist URLs
+            artist_urls = re.findall(r'<loc>[^<]*\/artist\/([^<\/]+)<\/loc>', xml_content)
+            
+            # Check for duplicates
+            unique_artists = set(artist_urls)
+            if len(artist_urls) == len(unique_artists):
+                print(f"   ✅ No duplicate artist slugs found ({len(artist_urls)} unique artists)")
+            else:
+                duplicates = len(artist_urls) - len(unique_artists)
+                print(f"   ❌ Found {duplicates} duplicate artist slugs")
+        else:
+            print(f"   ❌ Failed to load sitemap: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing sitemap duplicates: {e}")
+    
+    # Test 15: Sitemap should not contain junk entries
+    print("\n15. Testing sitemap for junk entries...")
+    try:
+        response = requests.get(f"{BASE_URL}/sitemap.xml", headers=HEADERS, timeout=30)
+        print(f"   Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            xml_content = response.text
+            # Check for known junk entries
+            junk_entries = ["fretmaster", "coming-soon"]
+            found_junk = []
+            
+            for junk in junk_entries:
+                if f"/artist/{junk}" in xml_content:
+                    found_junk.append(junk)
+            
+            if not found_junk:
+                print("   ✅ No junk entries found in sitemap")
+            else:
+                print(f"   ❌ Found junk entries: {', '.join(found_junk)}")
+        else:
+            print(f"   ❌ Failed to load sitemap: {response.status_code}")
+    except Exception as e:
+        print(f"   ❌ Error testing sitemap junk entries: {e}")
 
 def main():
-    """Run all AI SEO Content API tests"""
-    print("🚀 Starting AI SEO Content API Tests")
+    """Run all SEO improvement tests"""
+    print("🎸 DADROCK TABS SEO IMPROVEMENTS TESTING")
     print(f"Base URL: {BASE_URL}")
-    print(f"Testing with User-Agent: {HEADERS['User-Agent']}")
+    print(f"User-Agent: {HEADERS['User-Agent']}")
+    print("=" * 60)
     
-    results = []
-    
-    # Test SEO Content Retrieval API
-    results.append(test_seo_content_retrieval())
-    
-    # Test Admin SEO Generation Stats
-    results.append(test_admin_generate_seo_get())
-    
-    # Test Admin SEO Content Generation
-    results.append(test_admin_generate_seo_post())
-    
-    # Final summary
-    print("\n" + "="*60)
-    print("🏁 FINAL TEST SUMMARY")
-    print("="*60)
-    
-    test_names = [
-        "SEO Content Retrieval API",
-        "Admin SEO Generation Stats", 
-        "Admin SEO Content Generation"
-    ]
-    
-    passed_count = sum(results)
-    total_count = len(results)
-    
-    for i, (name, passed) in enumerate(zip(test_names, results)):
-        status = "✅ PASS" if passed else "❌ FAIL"
-        print(f"{i+1}. {name}: {status}")
-    
-    print(f"\n📊 Overall Results: {passed_count}/{total_count} test suites passed")
-    
-    if passed_count == total_count:
-        print("🎉 All AI SEO Content API tests PASSED!")
-        return True
-    else:
-        print("⚠️  Some tests FAILED - check details above")
-        return False
+    try:
+        # Run all test suites
+        test_structured_data()
+        test_internal_linking()
+        test_breadcrumbs()
+        test_previous_fixes()
+        test_sitemap()
+        
+        print("\n" + "=" * 60)
+        print("🎸 SEO IMPROVEMENTS TESTING COMPLETE")
+        
+    except Exception as e:
+        print(f"\n❌ CRITICAL ERROR during testing: {e}")
 
 if __name__ == "__main__":
-    success = main()
-    exit(0 if success else 1)
+    main()

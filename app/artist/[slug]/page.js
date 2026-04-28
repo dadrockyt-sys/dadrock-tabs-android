@@ -51,7 +51,17 @@ export async function generateMetadata({ params }) {
     artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') }
   });
   
-  const title = `Learn ${artistPattern} Songs - Free Guitar & Bass Tabs | DadRock Tabs`;
+  // Get first video thumbnail for OG image
+  let ogImage = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
+  try {
+    const firstVideo = await db.collection('videos').findOne(
+      { artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') } },
+      { projection: { thumbnail: 1 } }
+    );
+    if (firstVideo?.thumbnail) ogImage = firstVideo.thumbnail;
+  } catch { /* use default */ }
+  
+  const title = `${artistPattern} Guitar & Bass Tabs - ${videoCount} Free Lessons | DadRock Tabs`;
   
   // Try to use AI-generated meta description if available
   let description;
@@ -64,24 +74,26 @@ export async function generateMetadata({ params }) {
   } catch { /* ignore */ }
   
   if (!description) {
-    description = `Learn how to play songs by ${artistPattern} with step-by-step guitar and bass tutorials. These riffs are some of the most recognizable classic rock riffs ever written and perfect for beginner and intermediate players. ${videoCount} lessons available.`;
+    description = `Learn ${videoCount} songs by ${artistPattern} with free guitar and bass tab video lessons. Step-by-step tutorials perfect for beginner and intermediate players. Start playing ${artistPattern} riffs today!`;
   }
   
   return {
     title,
     description,
-    keywords: `${artistPattern} tabs, ${artistPattern} guitar tabs, ${artistPattern} bass tabs, ${artistPattern} tutorial, learn ${artistPattern} songs, ${artistPattern} lessons, classic rock tabs`,
+    keywords: `${artistPattern} tabs, ${artistPattern} guitar tabs, ${artistPattern} bass tabs, learn ${artistPattern} songs, ${artistPattern} tab lessons, how to play ${artistPattern}, ${artistPattern} riffs, classic rock tabs, free guitar tabs`,
     openGraph: {
-      title,
+      title: `${artistPattern} - Free Guitar & Bass Tab Lessons`,
       description,
       type: 'website',
       url: `https://dadrocktabs.com/artist/${slug}`,
       siteName: 'DadRock Tabs',
+      images: [{ url: ogImage, width: 480, height: 360, alt: `${artistPattern} Guitar Tabs` }],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: `${artistPattern} Guitar & Bass Tabs - ${videoCount} Free Lessons`,
       description,
+      images: [ogImage],
     },
     alternates: generateAlternates(`/artist/${slug}`),
   };
@@ -148,36 +160,69 @@ export default async function ArtistPage({ params }) {
     created_at: video.created_at,
   }));
   
-  // JSON-LD structured data for SEO
+  // JSON-LD structured data for SEO — MusicGroup + BreadcrumbList + CollectionPage
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    'name': `${displayArtistName} Guitar & Bass Tabs`,
-    'description': `Learn how to play songs by ${displayArtistName} with step-by-step guitar and bass tutorials.`,
-    'url': `https://dadrocktabs.com/artist/${slug}`,
-    'publisher': {
-      '@type': 'Organization',
-      'name': 'DadRock Tabs',
-      'url': 'https://dadrocktabs.com'
-    },
-    'mainEntity': {
-      '@type': 'MusicGroup',
-      'name': displayArtistName,
-      'genre': 'Rock'
-    },
-    'numberOfItems': plainVideos.length,
-    'itemListElement': plainVideos.slice(0, 10).map((video, index) => ({
-      '@type': 'ListItem',
-      'position': index + 1,
-      'item': {
-        '@type': 'VideoObject',
-        'name': video.song || video.title,
-        'description': `Guitar and bass tutorial for ${video.song || video.title} by ${displayArtistName}`,
-        'thumbnailUrl': video.thumbnail,
-        'uploadDate': video.created_at,
-        'contentUrl': video.youtube_url
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Home',
+            'item': 'https://dadrocktabs.com'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Artists',
+            'item': 'https://dadrocktabs.com'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': `${displayArtistName} Tabs`,
+            'item': `https://dadrocktabs.com/artist/${slug}`
+          }
+        ]
+      },
+      {
+        '@type': 'MusicGroup',
+        '@id': `https://dadrocktabs.com/artist/${slug}#artist`,
+        'name': displayArtistName,
+        'genre': 'Rock',
+        'description': `Learn how to play songs by ${displayArtistName} with free guitar and bass tablature video lessons.`,
+        'url': `https://dadrocktabs.com/artist/${slug}`,
+      },
+      {
+        '@type': 'CollectionPage',
+        'name': `${displayArtistName} Guitar & Bass Tabs`,
+        'description': `Learn how to play songs by ${displayArtistName} with step-by-step guitar and bass tutorials.`,
+        'url': `https://dadrocktabs.com/artist/${slug}`,
+        'isPartOf': { '@id': 'https://dadrocktabs.com/#website' },
+        'about': { '@id': `https://dadrocktabs.com/artist/${slug}#artist` },
+        'publisher': { '@id': 'https://dadrocktabs.com/#organization' },
+        'numberOfItems': plainVideos.length,
+        'mainEntity': {
+          '@type': 'ItemList',
+          'numberOfItems': plainVideos.length,
+          'itemListElement': plainVideos.slice(0, 10).map((video, index) => ({
+            '@type': 'ListItem',
+            'position': index + 1,
+            'item': {
+              '@type': 'VideoObject',
+              'name': video.song || video.title,
+              'description': `Guitar and bass tab tutorial for ${video.song || video.title} by ${displayArtistName}`,
+              'thumbnailUrl': video.thumbnail,
+              'uploadDate': video.created_at,
+              'contentUrl': video.youtube_url,
+              'publisher': { '@id': 'https://dadrocktabs.com/#organization' }
+            }
+          }))
+        }
       }
-    }))
+    ]
   };
   
   return (

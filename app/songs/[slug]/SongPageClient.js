@@ -17,7 +17,7 @@ function formatViewCount(count) {
   return count.toString();
 }
 
-export default function SongPageClient({ song, seoContent, adSettings, initialAiContent }) {
+export default function SongPageClient({ song, seoContent, adSettings, initialAiContent, moreSongs = [] }) {
   const [lang] = useLanguage();
   const t = getSubPageTranslation(lang);
   const [showAd, setShowAd] = useState(false);
@@ -198,6 +198,15 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 py-8">
+        {/* Breadcrumb Navigation */}
+        <nav className="mb-6 text-sm text-zinc-400">
+          <Link href="/" className="hover:text-amber-500 transition-colors">{t.home || 'Home'}</Link>
+          <span className="mx-2">/</span>
+          <Link href={`/artist/${artistSlug}`} className="hover:text-amber-500 transition-colors">{song.artist}</Link>
+          <span className="mx-2">/</span>
+          <span className="text-white">{song.title}</span>
+        </nav>
+
         {/* Song Title */}
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
@@ -378,6 +387,53 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
             </div>
           )}
         </section>
+
+        {/* More Songs by Artist — Internal Linking for SEO */}
+        {moreSongs.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-2">
+              <Music className="w-6 h-6 text-amber-500" />
+              More {song.artist} Tab Lessons
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {moreSongs.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/songs/${s.slug}`}
+                  className="group bg-zinc-900/80 rounded-xl border border-zinc-800 overflow-hidden hover:border-amber-500/50 transition-all"
+                >
+                  <div className="relative aspect-video overflow-hidden">
+                    <img
+                      src={s.thumbnail || `https://img.youtube.com/vi/${s.videoId}/mqdefault.jpg`}
+                      alt={`${s.title} by ${song.artist} - Guitar Tab`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center">
+                        <Play className="w-6 h-6 text-black ml-0.5" fill="black" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-3">
+                    <h3 className="font-semibold text-white group-hover:text-amber-500 transition-colors line-clamp-2 text-sm">
+                      {s.title}
+                    </h3>
+                    <p className="text-xs text-zinc-400 mt-1">{song.artist}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-4 text-center">
+              <Link
+                href={`/artist/${artistSlug}`}
+                className="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 transition-colors font-medium"
+              >
+                View all {song.artist} tabs →
+              </Link>
+            </div>
+          </section>
+        )}
 
         {/* Subscribe CTA */}
         <section className="text-center p-10 bg-gradient-to-r from-red-600/20 via-orange-600/20 to-amber-600/20 rounded-2xl border border-red-500/30 mb-12">

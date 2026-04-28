@@ -18,25 +18,27 @@ export async function generateMetadata({ params }) {
     }
 
     const cleanArtist = song.artist?.replace(/ -$/, '').trim() || 'DadRock Tabs';
-    const title = `${song.title} by ${cleanArtist} - Guitar & Bass Tab Lesson | DadRock Tabs`;
-    const description = `Learn to play ${song.title} by ${cleanArtist} with free guitar and bass tablature video lesson. Step-by-step tutorial with synchronized tabs from DadRock Tabs.`;
+    const title = `${song.title} - ${cleanArtist} | Free Guitar & Bass Tab Lesson`;
+    const description = `Learn to play "${song.title}" by ${cleanArtist} with our free guitar and bass tab video lesson. Step-by-step tutorial with synchronized tablature — perfect for all skill levels!`;
+    const ogImage = song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`;
 
     return {
       title,
       description,
-      keywords: `${song.title} guitar tab, ${cleanArtist} bass tab, ${song.title} lesson, ${cleanArtist} guitar tutorial, free guitar tabs, DadRock Tabs`,
+      keywords: `${song.title} tab, ${song.title} guitar tab, ${cleanArtist} ${song.title}, how to play ${song.title}, ${cleanArtist} bass tab, ${song.title} lesson, ${cleanArtist} guitar tutorial, free guitar tabs, DadRock Tabs`,
       openGraph: {
-        title,
+        title: `Learn "${song.title}" by ${cleanArtist} - Guitar & Bass Tab`,
         description,
         type: 'video.other',
         url: `https://dadrocktabs.com/songs/${slug}`,
-        images: [{ url: song.thumbnail }],
+        siteName: 'DadRock Tabs',
+        images: [{ url: ogImage, width: 1280, height: 720, alt: `${song.title} by ${cleanArtist} - Guitar Tab` }],
       },
       twitter: {
         card: 'summary_large_image',
-        title,
+        title: `${song.title} - ${cleanArtist} | Guitar & Bass Tab`,
         description,
-        images: [song.thumbnail],
+        images: [ogImage],
       },
       alternates: generateAlternates(`/songs/${slug}`),
     };
@@ -109,26 +111,62 @@ export default async function SongPage({ params }) {
   const cleanArtist = song.artist?.replace(/ -$/, '').trim() || 'DadRock Tabs';
   const seoContent = generateSeoContent(song.title, song.artist);
 
-  // JSON-LD Schema
+  // JSON-LD Schema — MusicRecording + VideoObject + BreadcrumbList
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'VideoObject',
-    name: `${song.title} - ${cleanArtist} Guitar Tab Tutorial`,
-    description: `Learn to play ${song.title} by ${cleanArtist} with this guitar and bass tablature video tutorial. Free lesson from DadRock Tabs.`,
-    thumbnailUrl: song.thumbnail,
-    uploadDate: song.publishedAt || new Date().toISOString(),
-    contentUrl: `https://www.youtube.com/watch?v=${song.videoId}`,
-    embedUrl: `https://www.youtube.com/embed/${song.videoId}`,
-    interactionStatistic: {
-      '@type': 'InteractionCounter',
-      interactionType: { '@type': 'WatchAction' },
-      userInteractionCount: song.viewCount || 0,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'DadRock Tabs',
-      url: 'https://dadrocktabs.com',
-    },
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Home',
+            'item': 'https://dadrocktabs.com'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': `${cleanArtist} Tabs`,
+            'item': `https://dadrocktabs.com/artist/${artistToSlug(cleanArtist)}`
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': song.title,
+            'item': `https://dadrocktabs.com/songs/${slug}`
+          }
+        ]
+      },
+      {
+        '@type': 'MusicRecording',
+        'name': song.title,
+        'byArtist': {
+          '@type': 'MusicGroup',
+          'name': cleanArtist,
+          'url': `https://dadrocktabs.com/artist/${artistToSlug(cleanArtist)}`
+        },
+        'genre': 'Rock',
+        'url': `https://dadrocktabs.com/songs/${slug}`,
+        'description': `Learn to play ${song.title} by ${cleanArtist} with free guitar and bass tablature.`
+      },
+      {
+        '@type': 'VideoObject',
+        'name': `${song.title} - ${cleanArtist} Guitar & Bass Tab Tutorial`,
+        'description': `Learn to play ${song.title} by ${cleanArtist} with this step-by-step guitar and bass tablature video lesson. Free tutorial from DadRock Tabs.`,
+        'thumbnailUrl': song.thumbnail,
+        'uploadDate': song.publishedAt || new Date().toISOString(),
+        'contentUrl': `https://www.youtube.com/watch?v=${song.videoId}`,
+        'embedUrl': `https://www.youtube.com/embed/${song.videoId}`,
+        'duration': song.duration ? `PT${Math.floor(song.duration / 60)}M${song.duration % 60}S` : undefined,
+        'interactionStatistic': {
+          '@type': 'InteractionCounter',
+          'interactionType': { '@type': 'WatchAction' },
+          'userInteractionCount': song.viewCount || 0,
+        },
+        'publisher': { '@id': 'https://dadrocktabs.com/#organization' },
+      }
+    ]
   };
 
   const songData = {
@@ -143,6 +181,25 @@ export default async function SongPage({ params }) {
     duration: song.duration || 0,
   };
 
+  // Fetch more songs by the same artist for internal linking
+  let moreSongsByArtist = [];
+  try {
+    const artistSongs = await db.collection('song_pages')
+      .find({ 
+        artist: { $regex: new RegExp(`^${cleanArtist.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i') },
+        slug: { $ne: slug } // Exclude current song
+      })
+      .limit(6)
+      .toArray();
+    
+    moreSongsByArtist = artistSongs.map(s => ({
+      slug: s.slug,
+      title: s.title,
+      thumbnail: s.thumbnail,
+      videoId: s.videoId,
+    }));
+  } catch { /* ignore */ }
+
   return (
     <>
       <script
@@ -154,6 +211,7 @@ export default async function SongPage({ params }) {
         seoContent={seoContent}
         adSettings={adSettings}
         initialAiContent={aiSeoContent}
+        moreSongs={moreSongsByArtist}
       />
     </>
   );

@@ -11,27 +11,92 @@ import { artistToSlug } from '@/lib/slugify';
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
 // Related artists mapping for internal linking (SEO boost)
+// Covers all major artists in the database for maximum cross-linking
 const relatedArtistsMap = {
+  // Classic Heavy Metal / Thrash
   'AC/DC': ['Van Halen', 'Def Leppard', 'Aerosmith', 'Kiss', 'Scorpions'],
-  'Metallica': ['Megadeth', 'Slayer', 'Anthrax', 'Iron Maiden', 'Black Sabbath'],
-  'Van Halen': ['AC/DC', 'Def Leppard', 'Motley Crue', 'Bon Jovi', 'Whitesnake'],
-  'Led Zeppelin': ['Deep Purple', 'Black Sabbath', 'Cream', 'The Who', 'Jimi Hendrix'],
-  'Black Sabbath': ['Ozzy Osbourne', 'Dio', 'Iron Maiden', 'Judas Priest', 'Metallica'],
-  'Ozzy Osbourne': ['Black Sabbath', 'Dio', 'Alice Cooper', 'Motley Crue', 'Quiet Riot'],
-  'Def Leppard': ['AC/DC', 'Van Halen', 'Bon Jovi', 'Whitesnake', 'Scorpions'],
-  'Guns N Roses': ['Motley Crue', 'Skid Row', 'Poison', 'Bon Jovi', 'Aerosmith'],
-  'Aerosmith': ['AC/DC', 'Van Halen', 'Guns N Roses', 'Kiss', 'Bon Jovi'],
+  'Metallica': ['Megadeth', 'Slayer', 'Anthrax', 'Pantera', 'Black Sabbath'],
+  'Black Sabbath': ['Ozzy Osbourne', 'Dio', 'Iron Maiden', 'Judas Priest', 'Deep Purple'],
   'Iron Maiden': ['Judas Priest', 'Black Sabbath', 'Metallica', 'Megadeth', 'Dio'],
   'Judas Priest': ['Iron Maiden', 'Black Sabbath', 'Accept', 'Scorpions', 'Dio'],
-  'Deep Purple': ['Led Zeppelin', 'Rainbow', 'Whitesnake', 'Uriah Heep', 'Black Sabbath'],
-  'Kiss': ['AC/DC', 'Twisted Sister', 'Motley Crue', 'Alice Cooper', 'Aerosmith'],
-  'Motley Crue': ['Poison', 'Ratt', 'Def Leppard', 'Van Halen', 'Guns N Roses'],
-  'Bon Jovi': ['Def Leppard', 'Journey', 'Foreigner', 'Van Halen', 'Whitesnake'],
-  'ZZ Top': ['Lynyrd Skynyrd', 'AC/DC', 'Allman Brothers', 'Stevie Ray Vaughan', 'Ted Nugent'],
-  'Scorpions': ['Accept', 'Def Leppard', 'UFO', 'Judas Priest', 'Dokken'],
-  'Whitesnake': ['Deep Purple', 'Def Leppard', 'Van Halen', 'Bon Jovi', 'Foreigner'],
+  'Megadeth': ['Metallica', 'Slayer', 'Anthrax', 'Pantera', 'Iron Maiden'],
+  'Slayer': ['Metallica', 'Megadeth', 'Anthrax', 'Pantera', 'Black Sabbath'],
+  'Anthrax': ['Metallica', 'Megadeth', 'Slayer', 'Iron Maiden', 'Pantera'],
+  'Pantera': ['Metallica', 'Slayer', 'Megadeth', 'Black Sabbath', 'Tool'],
   'Dio': ['Black Sabbath', 'Rainbow', 'Iron Maiden', 'Judas Priest', 'Ozzy Osbourne'],
+  'Ozzy Osbourne': ['Black Sabbath', 'Dio', 'Alice Cooper', 'Motley Crue', 'Quiet Riot'],
+  
+  // Classic Rock / Hard Rock  
+  'Van Halen': ['AC/DC', 'Def Leppard', 'Motley Crue', 'Bon Jovi', 'Aerosmith'],
+  'Led Zeppelin': ['Deep Purple', 'Black Sabbath', 'The Who', 'Cream', 'Aerosmith'],
+  'Aerosmith': ['AC/DC', 'Van Halen', 'Guns N Roses', 'Kiss', 'Bon Jovi'],
+  'Deep Purple': ['Led Zeppelin', 'Rainbow', 'Whitesnake', 'Black Sabbath', 'Uriah Heep'],
+  'Kiss': ['AC/DC', 'Twisted Sister', 'Motley Crue', 'Alice Cooper', 'Aerosmith'],
+  'ZZ Top': ['Lynyrd Skynyrd', 'AC/DC', 'Stevie Ray Vaughan', 'Ted Nugent', 'Bad Company'],
+  'Scorpions': ['Accept', 'Def Leppard', 'UFO', 'Judas Priest', 'Dokken'],
   'Rainbow': ['Deep Purple', 'Dio', 'Whitesnake', 'Black Sabbath', 'Uriah Heep'],
+  'Thin Lizzy': ['Iron Maiden', 'Def Leppard', 'UFO', 'Gary Moore', 'Whitesnake'],
+  'Rush': ['Yes', 'Dream Theater', 'Tool', 'Boston', 'Styx'],
+  'Boston': ['Journey', 'Styx', 'Foreigner', 'Rush', 'Kansas'],
+  'Journey': ['Boston', 'Foreigner', 'Styx', 'Bon Jovi', 'REO Speedwagon'],
+  'Foreigner': ['Journey', 'Boston', 'Styx', 'Bon Jovi', 'Def Leppard'],
+  'Styx': ['Journey', 'Boston', 'Rush', 'Foreigner', 'Kansas'],
+  'Cream': ['Led Zeppelin', 'Deep Purple', 'Jimi Hendrix', 'The Who', 'Eric Clapton'],
+  'Eric Clapton': ['Cream', 'Jimi Hendrix', 'Stevie Ray Vaughan', 'Joe Bonamassa', 'Gary Moore'],
+  'Joe Bonamassa': ['Eric Clapton', 'Stevie Ray Vaughan', 'Gary Moore', 'Joe Satriani', 'Santana'],
+  'Stevie Ray Vaughan': ['Eric Clapton', 'Jimi Hendrix', 'Joe Bonamassa', 'ZZ Top', 'Gary Moore'],
+  'Santana': ['Eric Clapton', 'Joe Satriani', 'Stevie Ray Vaughan', 'Jimi Hendrix', 'Joe Bonamassa'],
+  
+  // Hair Metal / Glam
+  'Def Leppard': ['AC/DC', 'Van Halen', 'Bon Jovi', 'Whitesnake', 'Scorpions'],
+  'Bon Jovi': ['Def Leppard', 'Journey', 'Foreigner', 'Van Halen', 'Whitesnake'],
+  'Motley Crue': ['Poison', 'Ratt', 'Def Leppard', 'Van Halen', 'Guns N Roses'],
+  'Poison': ['Motley Crue', 'Ratt', 'Warrant', 'Cinderella', 'Winger'],
+  'Ratt': ['Motley Crue', 'Poison', 'Dokken', 'Cinderella', 'Warrant'],
+  'Whitesnake': ['Deep Purple', 'Def Leppard', 'Van Halen', 'Bon Jovi', 'Foreigner'],
+  'Guns N Roses': ['Motley Crue', 'Skid Row', 'Poison', 'Aerosmith', 'Slash'],
+  'Dokken': ['Ratt', 'Scorpions', 'Queensryche', 'Winger', 'Great White'],
+  'Cinderella': ['Poison', 'Ratt', 'Warrant', 'Slaughter', 'Winger'],
+  'Warrant': ['Poison', 'Cinderella', 'Ratt', 'Slaughter', 'Firehouse'],
+  'Winger': ['Dokken', 'Mr. Big', 'Extreme', 'Cinderella', 'Warrant'],
+  'Skid Row': ['Guns N Roses', 'Motley Crue', 'Bon Jovi', 'Poison', 'Ratt'],
+  'Twisted Sister': ['Kiss', 'Motley Crue', 'Alice Cooper', 'Quiet Riot', 'Poison'],
+  'Quiet Riot': ['Ozzy Osbourne', 'Twisted Sister', 'Ratt', 'Motley Crue', 'Dokken'],
+  'Great White': ['Whitesnake', 'Dokken', 'Ratt', 'Tesla', 'Cinderella'],
+  'Tesla': ['Great White', 'Def Leppard', 'Dokken', 'Cinderella', 'Bon Jovi'],
+  'Firehouse': ['Warrant', 'Slaughter', 'Poison', 'Cinderella', 'Winger'],
+  'Slaughter': ['Warrant', 'Firehouse', 'Poison', 'Cinderella', 'Ratt'],
+  'Extreme': ['Mr. Big', 'Winger', 'Van Halen', 'Steve Vai', 'Joe Satriani'],
+  'Mr. Big': ['Extreme', 'Winger', 'Racer X', 'Steve Vai', 'Van Halen'],
+  'Alice Cooper': ['Kiss', 'Ozzy Osbourne', 'Twisted Sister', 'Motley Crue', 'Black Sabbath'],
+  'White Lion': ['Ratt', 'Dokken', 'Winger', 'Cinderella', 'Great White'],
+  'LA Guns': ['Guns N Roses', 'Motley Crue', 'Ratt', 'Poison', 'Faster Pussycat'],
+  
+  // Guitar Heroes / Shred
+  'Joe Satriani': ['Steve Vai', 'Eric Johnson', 'Santana', 'Joe Bonamassa', 'Extreme'],
+  'Steve Vai': ['Joe Satriani', 'Eric Johnson', 'Mr. Big', 'Racer X', 'Extreme'],
+  'Yngwie Malmsteen': ['Joe Satriani', 'Steve Vai', 'Racer X', 'Iron Maiden', 'Deep Purple'],
+  'Eric Johnson': ['Joe Satriani', 'Steve Vai', 'Stevie Ray Vaughan', 'Eric Clapton', 'Santana'],
+  'Racer X': ['Mr. Big', 'Steve Vai', 'Joe Satriani', 'Yngwie Malmsteen', 'Extreme'],
+  
+  // Grunge / Alternative
+  'Soundgarden': ['Alice In Chains', 'Pearl Jam', 'Stone Temple Pilots', 'Audioslave', 'Tool'],
+  'Alice In Chains': ['Soundgarden', 'Pearl Jam', 'Stone Temple Pilots', 'Nirvana', 'Tool'],
+  'Stone Temple Pilots': ['Alice In Chains', 'Soundgarden', 'Pearl Jam', 'Bush', 'Foo Fighters'],
+  'Foo Fighters': ['Stone Temple Pilots', 'Soundgarden', 'Audioslave', 'Queens Of The Stone Age', 'Alice In Chains'],
+  'Audioslave': ['Soundgarden', 'Rage Against The Machine', 'Foo Fighters', 'Tool', 'Alice In Chains'],
+  'Rage Against The Machine': ['Audioslave', 'Tool', 'Pantera', 'Soundgarden', 'Foo Fighters'],
+  'Tool': ['Rage Against The Machine', 'Soundgarden', 'Alice In Chains', 'Pantera', 'Rush'],
+  
+  // Southern Rock
+  'Lynyrd Skynyrd': ['ZZ Top', 'Allman Brothers', 'Bad Company', 'Molly Hatchet', 'Blackfoot'],
+  'Bad Company': ['Led Zeppelin', 'Lynyrd Skynyrd', 'Foreigner', 'ZZ Top', 'Free'],
+  'Molly Hatchet': ['Lynyrd Skynyrd', 'Blackfoot', 'ZZ Top', 'Bad Company', '38 Special'],
+  
+  // British Invasion / Classic
+  'The Rolling Stones': ['The Beatles', 'The Who', 'Led Zeppelin', 'The Kinks', 'Cream'],
+  'The Beatles': ['The Rolling Stones', 'The Who', 'The Kinks', 'Led Zeppelin', 'George Harrison'],
+  'The Who': ['Led Zeppelin', 'The Rolling Stones', 'Cream', 'Deep Purple', 'The Kinks'],
 };
 
 // Default related artists for any artist not in the map
