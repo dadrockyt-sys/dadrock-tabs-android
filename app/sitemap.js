@@ -1,6 +1,7 @@
 import { locales } from '@/lib/i18n';
 import { getDb } from '@/lib/mongodb';
 import { artistToSlug } from '@/lib/slugify';
+import { GENRES, ERAS } from '@/lib/genreData';
 
 // Use non-www as canonical (matches your redirect setup)
 const baseUrl = 'https://dadrocktabs.com';
@@ -65,6 +66,27 @@ export default async function sitemap() {
     priority: 0.9,
     alternates: generateLanguageAlternates('/quickies'),
   });
+
+  // Add Genre browse pages
+  for (const slug of Object.keys(GENRES)) {
+    routes.push({
+      url: `${baseUrl}/genre/${slug}`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    });
+  }
+
+  // Add Era browse pages
+  for (const slug of Object.keys(ERAS)) {
+    routes.push({
+      url: `${baseUrl}/era/${slug}`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    });
+  }
+
 
   // Add artist pages (with hreflang alternates)
   // IMPORTANT: Deduplicate by slug and filter out junk entries
