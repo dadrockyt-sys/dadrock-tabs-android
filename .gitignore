@@ -783,3 +783,4 @@ credentials.json
 *.key
 .credentials
 .next/dev/cache/turbopack/23c46498/00004570.sst
+.next/dev/cache/turbopack/23c46498/00004838.sst

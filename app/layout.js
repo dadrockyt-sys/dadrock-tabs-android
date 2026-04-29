@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { locales } from '@/lib/i18n';
 import GAPageTracker from '@/components/GAPageTracker';
 import PlayStoreReviewBanner from '@/components/PlayStoreReviewBanner';
+import FlameTransition from '@/components/FlameTransition';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://dadrocktabs.com';
 
@@ -329,6 +330,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-screen bg-background antialiased">
+        <FlameTransition />
         <Suspense fallback={null}>
           <GAPageTracker />
         </Suspense>
