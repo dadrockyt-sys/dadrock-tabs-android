@@ -6,6 +6,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus, Trophy, Zap, RefreshCw, Map, Activity, Shield, ExternalLink, Wifi, Database, FileText } from 'lucide-react';
 import { getTranslation, locales, localeNames, localeFlags } from '@/lib/i18n';
+import NewsletterSignup from '@/components/NewsletterSignup';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const DADROCK_TEXT_URL = "https://customer-assets.emergentagent.com/job_nextjs-deploy-3/artifacts/2vno1305_Picsart_26-02-16_06-05-32-255%281%29.png";
@@ -1785,6 +1786,31 @@ export default function App({ initialLang = 'en' }) {
             Each lesson includes synchronized tabs with the original music
             so players can follow along and learn the exact riffs and bass lines.
           </p>
+        </section>
+
+        {/* Newsletter & Quick Links */}
+        <section className="px-4 sm:px-6 py-12 max-w-4xl mx-auto fade-in-up" style={{ animationDelay: '0.9s' }}>
+          {/* Quick Browse Links */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            <Link href="/difficulty/beginner" className="p-4 bg-zinc-900/80 rounded-xl border border-zinc-800 hover:border-green-500/50 text-center transition-all group">
+              <span className="text-2xl block mb-1">🌱</span>
+              <span className="text-sm font-medium text-zinc-300 group-hover:text-green-400 transition-colors">Beginner</span>
+            </Link>
+            <Link href="/difficulty/intermediate" className="p-4 bg-zinc-900/80 rounded-xl border border-zinc-800 hover:border-amber-500/50 text-center transition-all group">
+              <span className="text-2xl block mb-1">🔥</span>
+              <span className="text-sm font-medium text-zinc-300 group-hover:text-amber-400 transition-colors">Intermediate</span>
+            </Link>
+            <Link href="/difficulty/advanced" className="p-4 bg-zinc-900/80 rounded-xl border border-zinc-800 hover:border-red-500/50 text-center transition-all group">
+              <span className="text-2xl block mb-1">⚡</span>
+              <span className="text-sm font-medium text-zinc-300 group-hover:text-red-400 transition-colors">Advanced</span>
+            </Link>
+            <Link href="/learn" className="p-4 bg-zinc-900/80 rounded-xl border border-zinc-800 hover:border-purple-500/50 text-center transition-all group">
+              <span className="text-2xl block mb-1">📖</span>
+              <span className="text-sm font-medium text-zinc-300 group-hover:text-purple-400 transition-colors">Guides</span>
+            </Link>
+          </div>
+          {/* Newsletter Signup */}
+          <NewsletterSignup />
         </section>
 
         {/* Footer */}
