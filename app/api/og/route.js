@@ -78,7 +78,7 @@ export async function GET(request) {
             padding: '60px',
             flex: 1,
             position: 'relative',
-            zIndex: '1',
+            zIndex: 1,
           }}
         >
           {/* Left: Text content */}
@@ -195,7 +195,7 @@ export async function GET(request) {
             padding: '20px 60px',
             borderTop: `1px solid ${c.accent}33`,
             position: 'relative',
-            zIndex: '1',
+            zIndex: 1,
           }}
         >
           <div

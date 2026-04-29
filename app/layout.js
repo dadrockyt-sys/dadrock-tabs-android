@@ -128,6 +128,13 @@ export default function RootLayout({ children }) {
         <link rel="dns-prefetch" href="https://img.youtube.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         
+        {/* PWA: Web App Manifest for installability */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#f59e0b" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="DadRock Tabs" />
+        
         {/* Google Analytics GA4 — with bot filtering & "(not set)" prevention */}
         <script
           async
@@ -327,6 +334,18 @@ export default function RootLayout({ children }) {
         </Suspense>
         <PlayStoreReviewBanner />
         {children}
+        {/* Service Worker Registration for PWA */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').catch(function() {});
+                });
+              }
+            `
+          }}
+        />
       </body>
     </html>
   );

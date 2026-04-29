@@ -8,6 +8,7 @@ import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
 import { artistToSlug } from '@/lib/slugify';
 import SearchBar from '@/components/SearchBar';
+import ProgressTracker from '@/components/ProgressTracker';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
@@ -245,6 +246,10 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
                 <span className="text-zinc-500 text-sm">likes</span>
               </div>
             )}
+          </div>
+          {/* Progress Tracker */}
+          <div className="mt-6 flex justify-center">
+            <ProgressTracker songSlug={song.slug} songTitle={song.title} />
           </div>
         </div>
 

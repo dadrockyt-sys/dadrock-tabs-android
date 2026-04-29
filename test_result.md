@@ -562,8 +562,56 @@ metadata:
         - agent: "testing"
         - comment: "✅ COMPREHENSIVE TESTING COMPLETE - All 4 era page test cases PASSED (100% success rate): 1) GET /era/70s-rock → 200 with CollectionPage+ItemList JSON-LD schema ✓ 2) GET /era/80s-rock → 200 with proper schema ✓ 3) GET /era/90s-rock → 200 with proper schema ✓ 4) GET /era/nonexistent-era → 404 (correct error handling) ✓. All era pages contain proper structured data for search engines and display artist grids with lesson counts from MongoDB."
 
+  - task: "Curated Playlists (/playlist/[slug])"
+    implemented: true
+    working: true
+    file: "/app/app/playlist/[slug]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: 6 curated playlists (beginner-riffs-starter-pack, essential-80s-solos, headbanger-classics, power-ballads, riff-workout, blues-rock-essentials) with ItemList JSON-LD schema and MusicRecording entries. Songs matched from DB with /songs/ links."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ CURATED PLAYLISTS TESTING COMPLETE - All 7 test cases PASSED (100% success rate): 1) GET /playlist/beginner-riffs-starter-pack → 200 with ItemList JSON-LD schema (10 MusicRecording entries) ✓ 2) GET /playlist/essential-80s-solos → 200 with ItemList schema (8 MusicRecording entries) ✓ 3) GET /playlist/headbanger-classics → 200 with ItemList schema (9 MusicRecording entries) ✓ 4) GET /playlist/power-ballads → 200 with ItemList schema (7 MusicRecording entries) ✓ 5) GET /playlist/riff-workout → 200 with ItemList schema (10 MusicRecording entries) ✓ 6) GET /playlist/blues-rock-essentials → 200 with ItemList schema (8 MusicRecording entries) ✓ 7) GET /playlist/nonexistent → 404 (correct error handling) ✓. All playlists contain songs matched from DB with /songs/ links. Playlists properly structured for search engines with ItemList+MusicRecording JSON-LD schema."
+
+  - task: "Newsletter API (/api/newsletter)"
+    implemented: true
+    working: true
+    file: "/app/app/api/newsletter/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: Newsletter subscription API with email validation, duplicate checking, MongoDB storage. POST endpoint accepts email, validates format, stores in newsletter_subscribers collection with UUID."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ NEWSLETTER API TESTING COMPLETE - All 4 test cases PASSED (100% success rate): 1) POST /api/newsletter with valid email → 200 with success message ✓ 2) POST /api/newsletter with existing email → 200 with already_subscribed=true ✓ 3) POST /api/newsletter with invalid email → 400 (correct validation) ✓ 4) POST /api/newsletter with empty body → 400 (correct validation) ✓. Email validation, duplicate detection, and MongoDB storage all working correctly."
+
+  - task: "PWA Support (manifest.json, sw.js)"
+    implemented: true
+    working: true
+    file: "/app/public/manifest.json, /app/public/sw.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: Progressive Web App support with /manifest.json containing app metadata (name='DadRock Tabs', theme_color, icons) and /sw.js service worker for caching. Homepage links to manifest for PWA installation."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ PWA SUPPORT TESTING COMPLETE - All 3 test cases PASSED (100% success rate): 1) GET /manifest.json → 200 with valid JSON containing name='DadRock Tabs', theme_color, and icons ✓ 2) GET /sw.js → 200 with service worker code containing addEventListener ✓ 3) GET / → 200 with HTML containing link to manifest.json ✓. PWA functionality ready for app installation and offline caching."
+
 test_plan:
-  current_focus: []
+  current_focus:
+    - "Curated Playlists (/playlist/[slug])"
+    - "PWA Support (manifest.json, sw.js)"
+    - "Newsletter API (/api/newsletter)"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -587,3 +635,7 @@ agent_communication:
     - message: "TESTING 6 NEW FEATURES (Batch 2 - Next Level SEO & UX): 1) HowTo Schema on Song Pages - added HowTo JSON-LD with 5 steps, supplies, tools targeting 'how to play [song]' queries. 2) Dynamic OG Image API at /api/og - edge-rendered 1200x630 PNG branded images for social sharing (params: title, artist, type, thumb). 3) Learn/Guides Content Hub at /learn and /learn/[slug] - 6 SEO guides with Article JSON-LD (easiest-guitar-riffs-beginners, how-to-read-guitar-tabs, palm-muting-technique-guide, best-songs-learn-guitar-solos, downpicking-speed-metallica, drop-d-tuning-songs). 4) Difficulty Browse Pages at /difficulty/[level] - beginner/intermediate/advanced pages with CollectionPage+ItemList JSON-LD, real artist counts from MongoDB. 5) Song of the Day API at /api/song-of-the-day - deterministic daily rotation. 6) Performance preconnect/dns-prefetch for YouTube and GA in layout. TEST CASES: a) GET /songs/metallica-am-i-evil → should contain HowTo JSON-LD with 5 HowToStep entries. b) GET /api/og?title=Test&type=song → 200 with content-type image/png. c) GET /learn → 200 with CollectionPage schema and guide listing. d) GET /learn/easiest-guitar-riffs-beginners → 200 with Article JSON-LD. e) GET /learn/nonexistent → 404. f) GET /difficulty/beginner → 200 with CollectionPage+ItemList schema. g) GET /difficulty/advanced → 200. h) GET /difficulty/nonexistent → 404. i) GET /api/song-of-the-day → 200 with JSON {song:{slug,title,artist}}. j) GET / → should contain preconnect links for youtube.com and ytimg.com. k) Sitemap should include /learn and /difficulty URLs. IMPORTANT: ALL curl requests must include -A 'Mozilla/5.0 (compatible; Googlebot/2.1)' since middleware blocks requests without proper UA. Base URL: http://localhost:3000"
     - agent: "testing"
     - message: "🎸 6 NEW FEATURES TESTING COMPLETE - All 6 test suites PASSED (100% success rate). HOWTO SCHEMA: ✅ /songs/metallica-am-i-evil contains complete HowTo JSON-LD with 5 HowToStep entries, HowToSupply, and HowToTool elements. DYNAMIC OG IMAGE API: ✅ 3/3 tests passed - /api/og generates proper PNG images for song, artist, and genre types. LEARN/GUIDES CONTENT HUB: ✅ 5/5 tests passed - /learn hub with CollectionPage schema, individual guides with Article schema, proper 404 handling. DIFFICULTY BROWSE PAGES: ✅ 4/4 tests passed - beginner (100 artists), intermediate (205 artists), advanced (50 artists) with CollectionPage+ItemList schemas, proper 404 handling. SONG OF THE DAY API: ✅ /api/song-of-the-day returns proper JSON structure with today's song 'Ain't Talkin' 'Bout Love' by Van Halen. PERFORMANCE OPTIMIZATION: ✅ Homepage contains 3 YouTube preconnect links, sitemap includes /learn and /difficulty URLs. All 6 new features are working perfectly and ready for production use."
+    - agent: "main"
+    - message: "TESTING NEW FEATURES: Curated Playlists, Newsletter API, PWA Support. 1) Curated Playlists at /playlist/[slug] - 6 playlists (beginner-riffs-starter-pack, essential-80s-solos, headbanger-classics, power-ballads, riff-workout, blues-rock-essentials) with ItemList JSON-LD schema and MusicRecording entries. Songs matched from DB with /songs/ links. 2) Newsletter API at /api/newsletter - POST endpoint for email subscriptions with validation, duplicate checking, MongoDB storage. 3) PWA Support - /manifest.json with app metadata, /sw.js service worker, homepage links to manifest. TEST CASES: a) GET /playlist/beginner-riffs-starter-pack → 200 with ItemList+MusicRecording schema, contains /songs/ links. b) GET /playlist/nonexistent → 404. c) POST /api/newsletter with valid email → 200 with success message. d) POST /api/newsletter with same email → 200 with already_subscribed=true. e) POST /api/newsletter with invalid email → 400. f) GET /manifest.json → 200 with valid JSON, name='DadRock Tabs'. g) GET /sw.js → 200 with service worker code. h) GET / → contains manifest.json link. REGRESSION: i) GET /songs/metallica-am-i-evil → 200 with HowTo schema. j) GET /api/song-of-the-day → 200 with song data. k) GET /sitemap.xml → contains learn, difficulty, playlist URLs. IMPORTANT: ALL page requests must include User-Agent header 'Mozilla/5.0 (compatible; Googlebot/2.1)' - middleware blocks without proper UA. API routes don't need UA header."
+    - agent: "testing"
+    - message: "🎸 NEW FEATURES TESTING COMPLETE - All 4 test suites PASSED (100% success rate). CURATED PLAYLISTS (/playlist/[slug]): ✅ 7/7 tests passed - all 6 playlists return 200 with ItemList JSON-LD schema containing MusicRecording entries (8-10 songs each), songs matched from DB with /songs/ links, nonexistent playlist returns 404. NEWSLETTER API (/api/newsletter): ✅ 4/4 tests passed - valid email subscription works, duplicate email handling correct (already_subscribed=true), invalid email returns 400, empty body returns 400. PWA SUPPORT: ✅ 3/3 tests passed - /manifest.json returns valid JSON with name='DadRock Tabs' and required fields, /sw.js contains service worker code, homepage links to manifest.json. EXISTING FEATURES (REGRESSION): ✅ 3/3 tests passed - song page contains HowTo schema and ProgressTracker, song-of-the-day API returns proper JSON, sitemap contains learn/difficulty/playlist URLs. All new features working perfectly with proper User-Agent handling. DadRock Tabs now has curated playlists, newsletter functionality, and PWA capabilities ready for production."

@@ -1,0 +1,23 @@
+{
+  "name": "DadRock Tabs",
+  "short_name": "DadRock",
+  "description": "Free guitar and bass tabs for classic rock. Learn to play your favorite songs with video tab lessons.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#f59e0b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["music", "education", "entertainment"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}

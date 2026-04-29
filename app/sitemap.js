@@ -4,6 +4,7 @@ import { artistToSlug } from '@/lib/slugify';
 import { GENRES, ERAS } from '@/lib/genreData';
 import { GUIDES } from '@/lib/guidesData';
 import { DIFFICULTY_LEVELS } from '@/lib/difficultyData';
+import { PLAYLISTS } from '@/lib/playlistData';
 
 // Use non-www as canonical (matches your redirect setup)
 const baseUrl = 'https://dadrocktabs.com';
@@ -109,6 +110,16 @@ export default async function sitemap() {
   for (const level of Object.keys(DIFFICULTY_LEVELS)) {
     routes.push({
       url: `${baseUrl}/difficulty/${level}`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    });
+  }
+
+  // Add Curated Playlist pages
+  for (const slug of Object.keys(PLAYLISTS)) {
+    routes.push({
+      url: `${baseUrl}/playlist/${slug}`,
       lastModified: currentDate,
       changeFrequency: 'monthly',
       priority: 0.7,
