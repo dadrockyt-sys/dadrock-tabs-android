@@ -291,15 +291,24 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
         </nav>
 
         {/* Hero Section — Dramatic Artist Header */}
-        <div className="relative mb-10 p-8 sm:p-12 rounded-3xl overflow-hidden hero-gradient-bg">
+        <div className="relative mb-10 p-8 sm:p-12 rounded-3xl overflow-hidden hero-gradient-bg fire-glow spotlight-sweep">
           {/* Background accent elements */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-red-500/5 rounded-full blur-3xl" />
           
+          {/* Ember sparks rising from bottom */}
+          <div className="ember-container">
+            <div className="ember" /><div className="ember" /><div className="ember" />
+            <div className="ember" /><div className="ember" /><div className="ember" />
+          </div>
+          
           <div className="relative z-10">
             <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-8">
               <div className="flex-1">
-                <p className="text-sm font-medium text-amber-500/80 uppercase tracking-widest mb-2 font-rock-alt">
+                <p className="text-sm font-medium text-amber-500/80 uppercase tracking-widest mb-2 font-rock-alt flex items-center gap-2">
+                  <span className="eq-visualizer" style={{ height: '16px' }}>
+                    <span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" />
+                  </span>
                   Guitar & Bass Tabs
                 </p>
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold font-rock text-gradient-gold neon-underline pb-2">
@@ -380,7 +389,7 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
           {videos.map((video, index) => (
             <div
               key={video.id || video.video_id}
-              className={`group glow-card bg-zinc-900/80 rounded-xl border border-zinc-800 overflow-hidden cursor-pointer card-enter ${
+              className={`group glow-card spotlight-sweep bg-zinc-900/80 rounded-xl border border-zinc-800 overflow-hidden cursor-pointer card-enter bass-drop-hover ${
                 selectedVideo?.id === video.id ? 'ring-2 ring-amber-500 border-amber-500/50' : ''
               }`}
               style={{ animationDelay: `${Math.min(index * 0.05, 0.5)}s` }}

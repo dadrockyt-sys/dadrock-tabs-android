@@ -1453,6 +1453,9 @@ export default function App({ initialLang = 'en' }) {
   if (currentPage === 'home') {
     return (
       <div className="min-h-screen bg-black overflow-y-auto bg-guitarist">
+        {/* ⚡ Lightning Flash Overlay */}
+        <div className="lightning-overlay" />
+
         {/* Header - with safe area padding for mobile notch/status bar */}
         <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-zinc-900 pt-safe">
           <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3">
@@ -1481,6 +1484,25 @@ export default function App({ initialLang = 'en' }) {
         <main className="flex flex-col items-center px-4 py-6 sm:py-10">
           {/* Logo with Marshall Amp Stacks - Bass Emanation Effect */}
           <div className={`mb-4 relative flex items-center justify-center overflow-visible transition-opacity duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}>
+            {/* 🎵 Floating Music Notes */}
+            {pageReady && (
+              <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 20 }}>
+                <span className="float-note" style={{ left: '8%' }}>🎵</span>
+                <span className="float-note" style={{ left: '22%' }}>🎶</span>
+                <span className="float-note" style={{ left: '48%' }}>♪</span>
+                <span className="float-note" style={{ left: '68%' }}>🎸</span>
+                <span className="float-note" style={{ left: '88%' }}>🤘</span>
+              </div>
+            )}
+            
+            {/* 🔥 Ember Sparks */}
+            {pageReady && (
+              <div className="ember-container" style={{ zIndex: 15 }}>
+                <div className="ember" /><div className="ember" /><div className="ember" />
+                <div className="ember" /><div className="ember" /><div className="ember" />
+              </div>
+            )}
+
             {/* Sound Wave Rings - Only animate when page is ready */}
             {pageReady && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -1543,7 +1565,7 @@ export default function App({ initialLang = 'en' }) {
                 className="h-12 sm:h-14 md:h-16"
                 style={{ filter: 'drop-shadow(0 0 10px rgba(251, 191, 36, 0.4))' }}
               />
-              <span className="text-amber-500 text-2xl sm:text-3xl md:text-4xl font-bold text-glow">{t.definition.pronunciation}</span>
+              <span className="text-amber-500 text-2xl sm:text-3xl md:text-4xl font-bold neon-flicker">{t.definition.pronunciation}</span>
             </div>
             <p className="text-amber-400/80 italic text-2xl sm:text-3xl md:text-4xl mt-2 tracking-widest font-rock-alt">{t.definition.partOfSpeech}</p>
             <p className="rock-definition mt-5 text-xl sm:text-2xl md:text-3xl px-2">
@@ -1622,16 +1644,23 @@ export default function App({ initialLang = 'en' }) {
 
           {/* Popular Searches with Glassmorphism */}
           <div className="w-full max-w-2xl mb-10 fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <div className="glass-card rounded-2xl p-6">
-              <p className="text-center text-zinc-300 mb-5 flex items-center justify-center gap-2 text-lg font-medium">
-                <span className="text-2xl">🔥</span> {t.popularSearches}
+            <div className="glass-card rounded-2xl p-6 fire-glow spotlight-sweep">
+              <p className="text-center text-zinc-300 mb-5 flex items-center justify-center gap-3 text-lg font-medium">
+                {/* Equalizer Visualizer */}
+                <span className="eq-visualizer">
+                  <span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" />
+                </span>
+                <span className="text-2xl rock-bounce">🔥</span> {t.popularSearches}
+                <span className="eq-visualizer">
+                  <span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" />
+                </span>
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 {popularArtists.map((artist, index) => (
                   <button
                     key={artist.name}
                     onClick={() => handleArtistClick(artist.name)}
-                    className="artist-btn px-5 py-2.5 rounded-full bg-zinc-800/80 border border-zinc-700 text-sm text-zinc-200 hover:text-white font-medium"
+                    className="artist-btn px-5 py-2.5 rounded-full bg-zinc-800/80 border border-zinc-700 text-sm text-zinc-200 hover:text-white font-medium bass-drop-hover"
                     style={{ animationDelay: `${0.7 + index * 0.05}s` }}
                   >
                     <span className="mr-1.5">{artist.emoji}</span> {artist.name}
@@ -1667,6 +1696,10 @@ export default function App({ initialLang = 'en' }) {
 
           {/* Share Section */}
           <div className="mb-10 fade-in-up" style={{ animationDelay: '0.8s' }}>
+            {/* Rock Divider */}
+            <div className="rock-divider mb-8 max-w-md mx-auto">
+              <span className="skull-divider">💀⚡💀</span>
+            </div>
             <p className="text-center text-zinc-300 mb-5 flex items-center justify-center gap-2 text-lg font-medium">
               <span className="text-2xl">📢</span> {t.shareDadRock}
             </p>
@@ -1790,6 +1823,13 @@ export default function App({ initialLang = 'en' }) {
 
         {/* Newsletter & Quick Links */}
         <section className="px-4 sm:px-6 py-12 max-w-4xl mx-auto fade-in-up" style={{ animationDelay: '0.9s' }}>
+          {/* Rock Divider with Vinyl */}
+          <div className="flex items-center justify-center gap-6 mb-8">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent" />
+            <div className="vinyl-record vinyl-spin flex-shrink-0" />
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-red-500/40 to-transparent" />
+          </div>
+          
           {/* Quick Browse Links */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
             <Link href="/difficulty/beginner" className="p-4 bg-zinc-900/80 rounded-xl border border-zinc-800 hover:border-green-500/50 text-center transition-all group">

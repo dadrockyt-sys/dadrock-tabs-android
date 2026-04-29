@@ -214,8 +214,14 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
         </nav>
 
         {/* Song Title */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
+        <div className="text-center mb-8 relative">
+          {/* Floating Notes around title */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+            <span className="float-note" style={{ left: '5%', fontSize: '14px' }}>♪</span>
+            <span className="float-note" style={{ left: '90%', fontSize: '14px' }}>🎵</span>
+            <span className="float-note" style={{ left: '50%', fontSize: '14px' }}>🤘</span>
+          </div>
+          <h1 className="text-3xl md:text-5xl font-bold mb-3 flame-text relative" style={{ zIndex: 1 }}>
             {song.title}
           </h1>
           <div className="flex items-center justify-center gap-3 flex-wrap">
@@ -255,8 +261,13 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
 
         {/* SEO Content — AI-Enhanced (ABOVE video) */}
         <section className="space-y-6 mb-6">
+          {/* Rock Divider */}
+          <div className="rock-divider max-w-sm mx-auto">
+            <span className="skull-divider">⚡🎸⚡</span>
+          </div>
+          
           {/* Song Story */}
-          <div className="p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+          <div className="p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800 spotlight-sweep">
             <h2 className="text-2xl font-bold text-amber-500 mb-4 flex items-center gap-2">
               <Star className="w-6 h-6" />
               {song.title} by {song.artist}
