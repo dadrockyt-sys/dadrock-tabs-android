@@ -237,6 +237,96 @@ backend:
         - agent: "testing"
         - comment: "✅ COMPREHENSIVE TESTING COMPLETE - 6/7 test cases PASSED (85.7%): 1) Auth check (no auth) → 401 ✓ 2) Auth check (wrong password) → 401 ✓ 3) Quick mode → 200 with database, api_endpoints, sitemap, robots checks ✓ 4) Videos only mode → 200 with database, dead_videos checks (5.65s) ✓ 5) URLs only mode → TIMEOUT (expected 30-120s, infrastructure limit) 6) POST remove_dead_videos → 200 with removed_count=0 ✓ 7) POST unauthorized → 401 ✓. Core functionality working correctly, URLs mode timeout is expected behavior for large datasets."
 
+  - task: "HowTo Schema on Song Pages"
+    implemented: true
+    working: true
+    file: "/app/app/songs/[slug]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: Added HowTo JSON-LD schema to song pages with 5 steps, supplies, and tools targeting 'how to play [song]' queries for enhanced SEO."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ HOWTO SCHEMA TESTING COMPLETE - GET /songs/metallica-am-i-evil → 200 with complete HowTo JSON-LD schema. Found 5 HowToStep entries, HowToSupply elements (guitar, pick, amplifier), and HowToTool elements (computer, tuner). Schema properly structured for Google rich results targeting 'how to play' search queries."
+
+  - task: "Dynamic OG Image API (/api/og)"
+    implemented: true
+    working: true
+    file: "/app/app/api/og/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: Edge-rendered 1200x630 PNG branded images for social sharing with params: title, artist, type, thumb. Supports song, artist, genre, era types."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ DYNAMIC OG IMAGE API TESTING COMPLETE - All 3 test cases PASSED (100% success rate): 1) GET /api/og?title=Test&type=song → 200 with content-type: image/png ✓ 2) GET /api/og?title=Metallica&artist=&type=artist → 200 with content-type: image/png ✓ 3) GET /api/og?title=Thrash+Metal&type=genre → 200 with content-type: image/png ✓. API correctly generates branded social media images for all content types."
+
+  - task: "Learn/Guides Content Hub (/learn)"
+    implemented: true
+    working: true
+    file: "/app/app/learn/page.js, /app/app/learn/[slug]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: Content hub at /learn and /learn/[slug] with 6 SEO guides featuring Article JSON-LD (easiest-guitar-riffs-beginners, how-to-read-guitar-tabs, palm-muting-technique-guide, etc.)."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ LEARN/GUIDES CONTENT HUB TESTING COMPLETE - All 5 test cases PASSED (100% success rate): 1) GET /learn → 200 with CollectionPage JSON-LD schema ✓ 2) GET /learn/easiest-guitar-riffs-beginners → 200 with Article JSON-LD ✓ 3) GET /learn/palm-muting-technique-guide → 200 with Article JSON-LD ✓ 4) GET /learn/how-to-read-guitar-tabs → 200 with Article JSON-LD ✓ 5) GET /learn/nonexistent-guide → 404 (correct error handling) ✓. Content hub properly structured with SEO-optimized guides and schemas."
+
+  - task: "Difficulty Browse Pages (/difficulty/[level])"
+    implemented: true
+    working: true
+    file: "/app/app/difficulty/[level]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: Difficulty browse pages at /difficulty/[level] for beginner/intermediate/advanced with CollectionPage+ItemList JSON-LD and real artist counts from MongoDB."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ DIFFICULTY BROWSE PAGES TESTING COMPLETE - All 4 test cases PASSED (100% success rate): 1) GET /difficulty/beginner → 200 with CollectionPage+ItemList JSON-LD schema and 100 artist links ✓ 2) GET /difficulty/intermediate → 200 with proper schema and 205 artist links ✓ 3) GET /difficulty/advanced → 200 with proper schema and 50 artist links ✓ 4) GET /difficulty/nonexistent → 404 (correct error handling) ✓. All difficulty pages contain proper structured data and display real artist counts from database."
+
+  - task: "Song of the Day API (/api/song-of-the-day)"
+    implemented: true
+    working: true
+    file: "/app/app/api/song-of-the-day/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: Deterministic daily rotation API that returns a different song each day based on date hash for consistent daily content."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ SONG OF THE DAY API TESTING COMPLETE - GET /api/song-of-the-day → 200 with correct JSON structure. Response contains song object with required fields (slug, title, artist) and date field. Today's song: 'Ain't Talkin' 'Bout Love' by Van Halen. API provides deterministic daily rotation for consistent content delivery."
+
+  - task: "Performance Optimization (Preconnect/DNS-Prefetch)"
+    implemented: true
+    working: true
+    file: "/app/app/layout.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: Added preconnect and dns-prefetch links for YouTube domains (youtube.com, i.ytimg.com, img.youtube.com) and Google Analytics in layout for faster loading."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ PERFORMANCE OPTIMIZATION TESTING COMPLETE - GET / → 200 with 3 YouTube preconnect links found (youtube.com, i.ytimg.com, img.youtube.com). GET /sitemap.xml → 200 with /learn and /difficulty URLs included. Performance optimizations properly implemented for faster video thumbnail and content loading."
+
 frontend:
   - task: "Home page with search and featured video"
     implemented: true
@@ -493,3 +583,7 @@ agent_communication:
     - message: "TESTING 3 NEW SEO FEATURES: 1) Video Sitemap at /video-sitemap.xml - generates XML with video:video entries from song_pages + videos collections. 2) Genre Pages at /genre/[slug] - 8 genres (thrash-metal, hair-metal, classic-hard-rock, heavy-metal, grunge-alternative, blues-rock, guitar-shred, southern-rock). 3) Era Pages at /era/[slug] - 3 eras (70s-rock, 80s-rock, 90s-rock). TEST CASES: a) GET /video-sitemap.xml → should return 200 with Content-Type: application/xml, contain <urlset>, <video:video>, <video:thumbnail_loc>, <video:title>, <video:content_loc>. b) GET /genre/thrash-metal → should return 200 with CollectionPage+ItemList JSON-LD schema, contain artist links (/artist/metallica etc). c) GET /genre/hair-metal → should return 200 with proper metadata and artist grid. d) GET /era/80s-rock → should return 200 with CollectionPage schema. e) GET /era/70s-rock → should return 200. f) GET /genre/nonexistent → should return 404. g) GET /era/nonexistent → should return 404. h) Verify robots.txt references video-sitemap.xml. i) Verify /sitemap.xml includes genre and era URLs. IMPORTANT: ALL curl requests must include -A 'Mozilla/5.0 (compatible; Googlebot/2.1)' since middleware blocks requests without proper UA. Base URL: http://localhost:3000"
     - agent: "testing"
     - message: "🎸 3 NEW SEO FEATURES TESTING COMPLETE - All 14 test cases PASSED (100% success rate). VIDEO SITEMAP XML (/video-sitemap.xml): ✅ 5/5 tests passed - returns 200 with application/xml Content-Type, proper XML structure with urlset and video namespaces, contains 3271 video entries with all required elements (thumbnail_loc, title, description, content_loc, player_loc, publication_date), XML properly escaped. GENRE BROWSE PAGES (/genre/[slug]): ✅ 4/4 tests passed - thrash-metal, hair-metal, classic-hard-rock all return 200 with CollectionPage+ItemList JSON-LD schema and artist links, nonexistent genre returns 404. ERA BROWSE PAGES (/era/[slug]): ✅ 4/4 tests passed - 70s-rock, 80s-rock, 90s-rock all return 200 with CollectionPage+ItemList JSON-LD schema, nonexistent era returns 404. INTEGRATION TESTS: ✅ 2/2 tests passed - robots.txt contains video-sitemap.xml reference, sitemap.xml includes genre and era URLs. All 3 new SEO features are working perfectly and ready for search engine indexing."
+    - agent: "main"
+    - message: "TESTING 6 NEW FEATURES (Batch 2 - Next Level SEO & UX): 1) HowTo Schema on Song Pages - added HowTo JSON-LD with 5 steps, supplies, tools targeting 'how to play [song]' queries. 2) Dynamic OG Image API at /api/og - edge-rendered 1200x630 PNG branded images for social sharing (params: title, artist, type, thumb). 3) Learn/Guides Content Hub at /learn and /learn/[slug] - 6 SEO guides with Article JSON-LD (easiest-guitar-riffs-beginners, how-to-read-guitar-tabs, palm-muting-technique-guide, best-songs-learn-guitar-solos, downpicking-speed-metallica, drop-d-tuning-songs). 4) Difficulty Browse Pages at /difficulty/[level] - beginner/intermediate/advanced pages with CollectionPage+ItemList JSON-LD, real artist counts from MongoDB. 5) Song of the Day API at /api/song-of-the-day - deterministic daily rotation. 6) Performance preconnect/dns-prefetch for YouTube and GA in layout. TEST CASES: a) GET /songs/metallica-am-i-evil → should contain HowTo JSON-LD with 5 HowToStep entries. b) GET /api/og?title=Test&type=song → 200 with content-type image/png. c) GET /learn → 200 with CollectionPage schema and guide listing. d) GET /learn/easiest-guitar-riffs-beginners → 200 with Article JSON-LD. e) GET /learn/nonexistent → 404. f) GET /difficulty/beginner → 200 with CollectionPage+ItemList schema. g) GET /difficulty/advanced → 200. h) GET /difficulty/nonexistent → 404. i) GET /api/song-of-the-day → 200 with JSON {song:{slug,title,artist}}. j) GET / → should contain preconnect links for youtube.com and ytimg.com. k) Sitemap should include /learn and /difficulty URLs. IMPORTANT: ALL curl requests must include -A 'Mozilla/5.0 (compatible; Googlebot/2.1)' since middleware blocks requests without proper UA. Base URL: http://localhost:3000"
+    - agent: "testing"
+    - message: "🎸 6 NEW FEATURES TESTING COMPLETE - All 6 test suites PASSED (100% success rate). HOWTO SCHEMA: ✅ /songs/metallica-am-i-evil contains complete HowTo JSON-LD with 5 HowToStep entries, HowToSupply, and HowToTool elements. DYNAMIC OG IMAGE API: ✅ 3/3 tests passed - /api/og generates proper PNG images for song, artist, and genre types. LEARN/GUIDES CONTENT HUB: ✅ 5/5 tests passed - /learn hub with CollectionPage schema, individual guides with Article schema, proper 404 handling. DIFFICULTY BROWSE PAGES: ✅ 4/4 tests passed - beginner (100 artists), intermediate (205 artists), advanced (50 artists) with CollectionPage+ItemList schemas, proper 404 handling. SONG OF THE DAY API: ✅ /api/song-of-the-day returns proper JSON structure with today's song 'Ain't Talkin' 'Bout Love' by Van Halen. PERFORMANCE OPTIMIZATION: ✅ Homepage contains 3 YouTube preconnect links, sitemap includes /learn and /difficulty URLs. All 6 new features are working perfectly and ready for production use."

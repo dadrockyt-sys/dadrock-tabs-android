@@ -2,6 +2,8 @@ import { locales } from '@/lib/i18n';
 import { getDb } from '@/lib/mongodb';
 import { artistToSlug } from '@/lib/slugify';
 import { GENRES, ERAS } from '@/lib/genreData';
+import { GUIDES } from '@/lib/guidesData';
+import { DIFFICULTY_LEVELS } from '@/lib/difficultyData';
 
 // Use non-www as canonical (matches your redirect setup)
 const baseUrl = 'https://dadrocktabs.com';
@@ -81,6 +83,32 @@ export default async function sitemap() {
   for (const slug of Object.keys(ERAS)) {
     routes.push({
       url: `${baseUrl}/era/${slug}`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    });
+  }
+
+  // Add Learn/Guides pages
+  routes.push({
+    url: `${baseUrl}/learn`,
+    lastModified: currentDate,
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  });
+  for (const slug of Object.keys(GUIDES)) {
+    routes.push({
+      url: `${baseUrl}/learn/${slug}`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    });
+  }
+
+  // Add Difficulty browse pages
+  for (const level of Object.keys(DIFFICULTY_LEVELS)) {
+    routes.push({
+      url: `${baseUrl}/difficulty/${level}`,
       lastModified: currentDate,
       changeFrequency: 'monthly',
       priority: 0.7,

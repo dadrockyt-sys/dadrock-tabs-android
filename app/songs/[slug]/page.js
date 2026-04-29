@@ -20,7 +20,8 @@ export async function generateMetadata({ params }) {
     const cleanArtist = song.artist?.replace(/ -$/, '').trim() || 'DadRock Tabs';
     const title = `${song.title} - ${cleanArtist} | Free Guitar & Bass Tab Lesson`;
     const description = `Learn to play "${song.title}" by ${cleanArtist} with our free guitar and bass tab video lesson. Step-by-step tutorial with synchronized tablature — perfect for all skill levels!`;
-    const ogImage = song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`;
+    const thumbUrl = song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`;
+    const ogImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(cleanArtist)}&type=song&thumb=${encodeURIComponent(thumbUrl)}`;
 
     return {
       title,
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }) {
         type: 'video.other',
         url: `https://dadrocktabs.com/songs/${slug}`,
         siteName: 'DadRock Tabs',
-        images: [{ url: ogImage, width: 1280, height: 720, alt: `${song.title} by ${cleanArtist} - Guitar Tab` }],
+        images: [{ url: ogImage, width: 1200, height: 630, alt: `${song.title} by ${cleanArtist} - Guitar Tab` }],
       },
       twitter: {
         card: 'summary_large_image',
@@ -111,7 +112,8 @@ export default async function SongPage({ params }) {
   const cleanArtist = song.artist?.replace(/ -$/, '').trim() || 'DadRock Tabs';
   const seoContent = generateSeoContent(song.title, song.artist);
 
-  // JSON-LD Schema — MusicRecording + VideoObject + BreadcrumbList
+  // JSON-LD Schema — MusicRecording + VideoObject + BreadcrumbList + HowTo
+  const durationMinutes = song.duration ? Math.floor(song.duration / 60) : 5;
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -165,6 +167,62 @@ export default async function SongPage({ params }) {
           'userInteractionCount': song.viewCount || 0,
         },
         'publisher': { '@id': 'https://dadrocktabs.com/#organization' },
+      },
+      {
+        '@type': 'HowTo',
+        'name': `How to Play "${song.title}" by ${cleanArtist} on Guitar`,
+        'description': `Step-by-step guide to learning "${song.title}" by ${cleanArtist} using free guitar and bass tablature video lessons from DadRock Tabs.`,
+        'totalTime': `PT${durationMinutes + 15}M`,
+        'estimatedCost': { '@type': 'MonetaryAmount', 'currency': 'USD', 'value': '0' },
+        'supply': [
+          { '@type': 'HowToSupply', 'name': 'Electric or acoustic guitar' },
+          { '@type': 'HowToSupply', 'name': 'Guitar pick' },
+          { '@type': 'HowToSupply', 'name': 'Guitar amplifier (optional)' }
+        ],
+        'tool': [
+          { '@type': 'HowToTool', 'name': 'Computer or smartphone for video playback' },
+          { '@type': 'HowToTool', 'name': 'Guitar tuner' }
+        ],
+        'step': [
+          {
+            '@type': 'HowToStep',
+            'position': 1,
+            'name': 'Watch the Full Lesson',
+            'text': `Start by watching the complete tab tutorial video for "${song.title}" by ${cleanArtist} to get familiar with the song structure, riffs, and overall feel.`,
+            'url': `https://dadrocktabs.com/songs/${slug}`,
+            'image': song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`,
+          },
+          {
+            '@type': 'HowToStep',
+            'position': 2,
+            'name': 'Learn the Main Riff',
+            'text': `Focus on the main guitar riff of "${song.title}". Follow the on-screen tablature notation, playing each note slowly. Pay attention to the picking pattern and timing.`,
+            'url': `https://dadrocktabs.com/songs/${slug}`,
+          },
+          {
+            '@type': 'HowToStep',
+            'position': 3,
+            'name': 'Practice at Slow Tempo',
+            'text': `Use YouTube's playback speed controls to slow the video to 0.5x or 0.75x speed. Practice each section until you can play it cleanly without mistakes.`,
+            'url': `https://dadrocktabs.com/songs/${slug}`,
+          },
+          {
+            '@type': 'HowToStep',
+            'position': 4,
+            'name': 'Build Up to Full Speed',
+            'text': `Gradually increase the playback speed as you get comfortable. Work through the verse, chorus, and bridge sections until you can play the full song at normal tempo.`,
+            'url': `https://dadrocktabs.com/songs/${slug}`,
+          },
+          {
+            '@type': 'HowToStep',
+            'position': 5,
+            'name': 'Play Along with the Recording',
+            'text': `Once you've mastered the tab, play along with the original ${cleanArtist} recording to test your timing and feel. Congratulations — you've learned "${song.title}"!`,
+            'url': `https://dadrocktabs.com/songs/${slug}`,
+          }
+        ],
+        'image': song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`,
+        'url': `https://dadrocktabs.com/songs/${slug}`,
       }
     ]
   };

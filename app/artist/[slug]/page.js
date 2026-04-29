@@ -77,6 +77,8 @@ export async function generateMetadata({ params }) {
     description = `Learn ${videoCount} songs by ${artistPattern} with free guitar and bass tab video lessons. Step-by-step tutorials perfect for beginner and intermediate players. Start playing ${artistPattern} riffs today!`;
   }
   
+  const dynamicOgImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(artistPattern)}&type=artist&thumb=${encodeURIComponent(ogImage)}`;
+
   return {
     title,
     description,
@@ -87,13 +89,13 @@ export async function generateMetadata({ params }) {
       type: 'website',
       url: `https://dadrocktabs.com/artist/${slug}`,
       siteName: 'DadRock Tabs',
-      images: [{ url: ogImage, width: 480, height: 360, alt: `${artistPattern} Guitar Tabs` }],
+      images: [{ url: dynamicOgImage, width: 1200, height: 630, alt: `${artistPattern} Guitar Tabs` }],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${artistPattern} Guitar & Bass Tabs - ${videoCount} Free Lessons`,
       description,
-      images: [ogImage],
+      images: [dynamicOgImage],
     },
     alternates: generateAlternates(`/artist/${slug}`),
   };
