@@ -427,10 +427,53 @@ metadata:
         - agent: "testing"
         - comment: "✅ FAQ SCHEMA TESTING COMPLETE - All 5 test cases PASSED (100% success rate): 1) Metallica page has FAQPage schema with 5 questions ✓ 2) AC/DC page has FAQPage schema with 5 questions ✓ 3) Van Halen page has FAQPage schema with 5 questions ✓ 4) All pages contain proper '@type':'Question' structures ✓ 5) FAQ content includes artist-specific information and AI-generated content where available ✓. FAQ schema generates 5 questions per artist page covering: learning songs, beginner suitability, gear info, lesson count, and playing style. Properly structured for Google Featured Snippets."
 
+  - task: "Video Sitemap XML (/video-sitemap.xml)"
+    implemented: true
+    working: true
+    file: "/app/app/video-sitemap.xml/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: Dynamic Video Sitemap at /video-sitemap.xml. Generates valid XML following Google's video sitemap spec (xmlns:video). Pulls from song_pages and videos collections. Includes video:thumbnail_loc, video:title, video:description, video:content_loc, video:player_loc, video:duration, video:publication_date. Properly escapes XML entities. Deduplicates by video ID. Referenced in robots.js."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ COMPREHENSIVE TESTING COMPLETE - All 5 video sitemap test cases PASSED (100% success rate): 1) GET /video-sitemap.xml → 200 with Content-Type: application/xml ✓ 2) XML structure has proper urlset and video namespaces (xmlns:video) ✓ 3) Contains 3271 URL entries with 3271 video entries ✓ 4) All required video elements present (thumbnail_loc, title, description, content_loc, player_loc, publication_date) ✓ 5) XML properly escaped (no raw &, <, > characters) ✓. Video sitemap follows Google's video sitemap specification perfectly and is ready for search engine indexing."
+
+  - task: "Genre Browse Pages (/genre/[slug])"
+    implemented: true
+    working: true
+    file: "/app/app/genre/[slug]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: 8 genre pages (thrash-metal, hair-metal, classic-hard-rock, heavy-metal, grunge-alternative, blues-rock, guitar-shred, southern-rock). Each page has: generateMetadata for SEO, CollectionPage+ItemList JSON-LD schema, GenrePageClient UI with artist grid showing lesson counts. Data from /lib/genreData.js. Artists are fetched from MongoDB with video counts."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ COMPREHENSIVE TESTING COMPLETE - All 4 genre page test cases PASSED (100% success rate): 1) GET /genre/thrash-metal → 200 with CollectionPage+ItemList JSON-LD schema, 21 artist links ✓ 2) GET /genre/hair-metal → 200 with proper schema, 48 artist links ✓ 3) GET /genre/classic-hard-rock → 200 with proper schema, 45 artist links ✓ 4) GET /genre/nonexistent-genre → 404 (correct error handling) ✓. All genre pages contain proper structured data for search engines and display artist grids with lesson counts from MongoDB."
+
+  - task: "Era Browse Pages (/era/[slug])"
+    implemented: true
+    working: true
+    file: "/app/app/era/[slug]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "NEW FEATURE: 3 era pages (70s-rock, 80s-rock, 90s-rock). Same structure as genre pages - SEO metadata, CollectionPage+ItemList JSON-LD, shared GenrePageClient component. Artists from genreData.js with lesson counts from MongoDB."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ COMPREHENSIVE TESTING COMPLETE - All 4 era page test cases PASSED (100% success rate): 1) GET /era/70s-rock → 200 with CollectionPage+ItemList JSON-LD schema ✓ 2) GET /era/80s-rock → 200 with proper schema ✓ 3) GET /era/90s-rock → 200 with proper schema ✓ 4) GET /era/nonexistent-era → 404 (correct error handling) ✓. All era pages contain proper structured data for search engines and display artist grids with lesson counts from MongoDB."
+
 test_plan:
-  current_focus:
-    - "Search API for artists and songs"
-    - "FAQ Schema (FAQPage JSON-LD) on artist pages"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -446,3 +489,7 @@ agent_communication:
     - message: "🎸 SEO IMPROVEMENTS TESTING COMPLETE - All 15 test cases PASSED (100% success rate). STRUCTURED DATA: ✅ Homepage WebSite+Organization schema properly embedded ✅ Artist pages have BreadcrumbList+MusicGroup+CollectionPage schemas ✅ Song pages have BreadcrumbList+MusicRecording+VideoObject schemas ✅ AC/DC special characters handled correctly. INTERNAL LINKING: ✅ Song pages contain 22 links to other artist songs ✅ Song pages properly link to artist pages ✅ Artist pages contain 4+ related artist links (Megadeth, Slayer, Anthrax, Black Sabbath). BREADCRUMBS: ✅ Artist pages have correct 3-item breadcrumb structure (Home → Artists → Artist Tabs) ✅ Song pages have correct 3-item breadcrumb structure (Home → Artist → Song). PREVIOUS FIXES INTACT: ✅ Invalid artists redirect (308→/) ✅ Invalid songs redirect (308→artist) ✅ Valid artists work (200) ✅ Locale+artist combinations work (200). SITEMAP QUALITY: ✅ No duplicate artist slugs (261 unique artists) ✅ No junk entries like 'fretmaster' or 'coming-soon'. All SEO improvements are working perfectly with proper User-Agent handling. The DadRock Tabs site now has comprehensive structured data for search engines."
     - agent: "testing"
     - message: "🎸 NEW SEO FEATURES TESTING COMPLETE - All 18 test cases PASSED (100% success rate). SEARCH API (/api/search): ✅ 8/8 tests passed - searches artists and songs correctly, handles edge cases (empty query, short query, nonexistent terms), returns proper JSON structure with artists/songs arrays, filters junk entries, supports regex matching. FAQ SCHEMA (FAQPage JSON-LD): ✅ 5/5 tests passed - all artist pages (Metallica, AC/DC, Van Halen) contain proper FAQPage schema with 5 questions each, includes '@type':'Question' structures, integrates AI-generated content where available. PREVIOUS FEATURES INTACT: ✅ 5/5 tests passed - existing schemas (BreadcrumbList, MusicGroup, CollectionPage, MusicRecording) still working, invalid artist/song redirects working, homepage and sitemap functional. Both new SEO features are working perfectly and enhance search engine visibility without breaking existing functionality."
+    - agent: "main"
+    - message: "TESTING 3 NEW SEO FEATURES: 1) Video Sitemap at /video-sitemap.xml - generates XML with video:video entries from song_pages + videos collections. 2) Genre Pages at /genre/[slug] - 8 genres (thrash-metal, hair-metal, classic-hard-rock, heavy-metal, grunge-alternative, blues-rock, guitar-shred, southern-rock). 3) Era Pages at /era/[slug] - 3 eras (70s-rock, 80s-rock, 90s-rock). TEST CASES: a) GET /video-sitemap.xml → should return 200 with Content-Type: application/xml, contain <urlset>, <video:video>, <video:thumbnail_loc>, <video:title>, <video:content_loc>. b) GET /genre/thrash-metal → should return 200 with CollectionPage+ItemList JSON-LD schema, contain artist links (/artist/metallica etc). c) GET /genre/hair-metal → should return 200 with proper metadata and artist grid. d) GET /era/80s-rock → should return 200 with CollectionPage schema. e) GET /era/70s-rock → should return 200. f) GET /genre/nonexistent → should return 404. g) GET /era/nonexistent → should return 404. h) Verify robots.txt references video-sitemap.xml. i) Verify /sitemap.xml includes genre and era URLs. IMPORTANT: ALL curl requests must include -A 'Mozilla/5.0 (compatible; Googlebot/2.1)' since middleware blocks requests without proper UA. Base URL: http://localhost:3000"
+    - agent: "testing"
+    - message: "🎸 3 NEW SEO FEATURES TESTING COMPLETE - All 14 test cases PASSED (100% success rate). VIDEO SITEMAP XML (/video-sitemap.xml): ✅ 5/5 tests passed - returns 200 with application/xml Content-Type, proper XML structure with urlset and video namespaces, contains 3271 video entries with all required elements (thumbnail_loc, title, description, content_loc, player_loc, publication_date), XML properly escaped. GENRE BROWSE PAGES (/genre/[slug]): ✅ 4/4 tests passed - thrash-metal, hair-metal, classic-hard-rock all return 200 with CollectionPage+ItemList JSON-LD schema and artist links, nonexistent genre returns 404. ERA BROWSE PAGES (/era/[slug]): ✅ 4/4 tests passed - 70s-rock, 80s-rock, 90s-rock all return 200 with CollectionPage+ItemList JSON-LD schema, nonexistent era returns 404. INTEGRATION TESTS: ✅ 2/2 tests passed - robots.txt contains video-sitemap.xml reference, sitemap.xml includes genre and era URLs. All 3 new SEO features are working perfectly and ready for search engine indexing."

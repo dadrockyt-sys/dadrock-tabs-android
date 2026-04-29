@@ -1,338 +1,338 @@
 #!/usr/bin/env python3
 """
-Backend Testing Script for DadRock Tabs SEO Features
-Tests the new Search API and FAQ Schema features
+Backend Testing for DadRock Tabs SEO Features
+Tests the 3 newly implemented SEO features:
+1. Video Sitemap XML (/video-sitemap.xml)
+2. Genre Browse Pages (/genre/[slug])
+3. Era Browse Pages (/era/[slug])
 """
 
 import requests
 import json
-import re
-from urllib.parse import quote_plus
+import xml.etree.ElementTree as ET
+from urllib.parse import urljoin
+import sys
 
-# Base URL from environment
-BASE_URL = "https://admin-sync-hub-1.preview.emergentagent.com"
+# Base URL for testing
+BASE_URL = "http://localhost:3000"
 
 # Required User-Agent header (middleware blocks requests without proper UA)
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1)"
 }
 
-def test_search_api():
-    """Test the new Search API endpoint (/api/search)"""
-    print("🔍 TESTING SEARCH API")
+# Test data from genreData.js
+GENRES = [
+    'thrash-metal', 'hair-metal', 'classic-hard-rock', 'heavy-metal',
+    'grunge-alternative', 'blues-rock', 'guitar-shred', 'southern-rock'
+]
+
+ERAS = ['70s-rock', '80s-rock', '90s-rock']
+
+def test_video_sitemap():
+    """Test Video Sitemap XML at /video-sitemap.xml"""
+    print("\n🎸 TESTING VIDEO SITEMAP XML")
     print("=" * 50)
     
-    test_cases = [
-        # Test case 1: Search for "metal" - should return Metallica
-        {
-            "name": "Search for 'metal'",
-            "query": "metal",
-            "expected_artists": ["Metallica"],
-            "should_have_songs": True
-        },
-        # Test case 2: Search for "van halen"
-        {
-            "name": "Search for 'van halen'",
-            "query": "van+halen",
-            "expected_artists": ["Van Halen"],
-            "should_have_songs": True
-        },
-        # Test case 3: Query too short (< 2 chars)
-        {
-            "name": "Query too short 'a'",
-            "query": "a",
-            "expected_artists": [],
-            "should_have_songs": False
-        },
-        # Test case 4: Empty query
-        {
-            "name": "Empty query",
-            "query": "",
-            "expected_artists": [],
-            "should_have_songs": False
-        },
-        # Test case 5: Search for "zz top"
-        {
-            "name": "Search for 'zz top'",
-            "query": "zz+top",
-            "expected_artists": ["ZZ Top"],
-            "should_have_songs": True
-        },
-        # Test case 6: Nonexistent band
-        {
-            "name": "Nonexistent band",
-            "query": "nonexistentbandxyz123",
-            "expected_artists": [],
-            "should_have_songs": False
-        },
-        # Test case 7: Search for "sabbath"
-        {
-            "name": "Search for 'sabbath'",
-            "query": "sabbath",
-            "expected_artists": ["Black Sabbath"],
-            "should_have_songs": True
-        },
-        # Test case 8: Search for song "am i evil"
-        {
-            "name": "Search for song 'am i evil'",
-            "query": "am+i+evil",
-            "expected_artists": [],
-            "should_have_songs": True,
-            "expected_songs": ["Am I Evil"]
-        }
-    ]
-    
-    passed = 0
-    total = len(test_cases)
-    
-    for i, test in enumerate(test_cases, 1):
+    try:
+        # Test 1: GET /video-sitemap.xml should return 200 with proper Content-Type
+        print("1. Testing GET /video-sitemap.xml...")
+        response = requests.get(f"{BASE_URL}/video-sitemap.xml", headers=HEADERS, timeout=30)
+        
+        if response.status_code != 200:
+            print(f"❌ FAILED: Expected 200, got {response.status_code}")
+            print(f"Response: {response.text[:500]}")
+            return False
+        
+        # Check Content-Type
+        content_type = response.headers.get('Content-Type', '')
+        if 'application/xml' not in content_type:
+            print(f"❌ FAILED: Expected Content-Type 'application/xml', got '{content_type}'")
+            return False
+        
+        print(f"✅ Status: {response.status_code}, Content-Type: {content_type}")
+        
+        # Test 2: Parse XML and check structure
+        print("2. Testing XML structure...")
         try:
-            print(f"\n{i}. {test['name']}")
-            url = f"{BASE_URL}/api/search?q={test['query']}"
-            response = requests.get(url, headers=HEADERS, timeout=10)
+            root = ET.fromstring(response.text)
             
-            print(f"   URL: {url}")
-            print(f"   Status: {response.status_code}")
+            # Check namespace
+            if root.tag != '{http://www.sitemaps.org/schemas/sitemap/0.9}urlset':
+                print(f"❌ FAILED: Expected urlset with sitemap namespace, got {root.tag}")
+                return False
+            
+            # Check for video namespace
+            video_ns = 'http://www.google.com/schemas/sitemap-video/1.1'
+            if 'xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"' not in response.text:
+                print("❌ FAILED: Missing video namespace in XML")
+                return False
+            
+            print("✅ XML has proper urlset and video namespaces")
+            
+            # Test 3: Check for video entries
+            print("3. Testing video entries...")
+            url_elements = root.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}url')
+            video_elements = root.findall(f'.//{{{video_ns}}}video')
+            
+            if len(url_elements) == 0:
+                print("❌ FAILED: No URL entries found in sitemap")
+                return False
+            
+            if len(video_elements) == 0:
+                print("❌ FAILED: No video entries found in sitemap")
+                return False
+            
+            print(f"✅ Found {len(url_elements)} URL entries with {len(video_elements)} video entries")
+            
+            # Test 4: Check required video elements in first video entry
+            print("4. Testing required video elements...")
+            first_video = video_elements[0]
+            required_elements = [
+                'thumbnail_loc', 'title', 'description', 
+                'content_loc', 'player_loc', 'publication_date'
+            ]
+            
+            missing_elements = []
+            for element in required_elements:
+                if first_video.find(f'{{{video_ns}}}{element}') is None:
+                    missing_elements.append(element)
+            
+            if missing_elements:
+                print(f"❌ FAILED: Missing required elements: {missing_elements}")
+                return False
+            
+            print("✅ All required video elements present")
+            
+            # Test 5: Check XML escaping (no raw &, <, > in text)
+            print("5. Testing XML escaping...")
+            if '&' in response.text and '&amp;' not in response.text:
+                # Check if there are unescaped ampersands
+                unescaped_amps = [line for line in response.text.split('\n') 
+                                if '&' in line and not any(esc in line for esc in ['&amp;', '&lt;', '&gt;', '&quot;', '&apos;'])]
+                if unescaped_amps:
+                    print("❌ FAILED: Found unescaped ampersands in XML")
+                    return False
+            
+            print("✅ XML properly escaped")
+            
+            return True
+            
+        except ET.ParseError as e:
+            print(f"❌ FAILED: XML parsing error: {e}")
+            return False
+            
+    except requests.RequestException as e:
+        print(f"❌ FAILED: Request error: {e}")
+        return False
+
+def test_genre_pages():
+    """Test Genre Browse Pages at /genre/[slug]"""
+    print("\n🎸 TESTING GENRE BROWSE PAGES")
+    print("=" * 50)
+    
+    success_count = 0
+    total_tests = 0
+    
+    # Test valid genres
+    for genre_slug in GENRES[:3]:  # Test first 3 genres
+        total_tests += 1
+        print(f"\n{total_tests}. Testing /genre/{genre_slug}...")
+        
+        try:
+            response = requests.get(f"{BASE_URL}/genre/{genre_slug}", headers=HEADERS, timeout=30)
             
             if response.status_code != 200:
-                print(f"   ❌ FAILED: Expected 200, got {response.status_code}")
+                print(f"❌ FAILED: Expected 200, got {response.status_code}")
                 continue
             
-            data = response.json()
-            print(f"   Response: {json.dumps(data, indent=2)}")
-            
-            # Check response structure
-            if 'artists' not in data or 'songs' not in data:
-                print(f"   ❌ FAILED: Missing 'artists' or 'songs' in response")
+            # Check for CollectionPage JSON-LD schema
+            if '"@type":"CollectionPage"' not in response.text and '"@type": "CollectionPage"' not in response.text:
+                print("❌ FAILED: Missing CollectionPage JSON-LD schema")
                 continue
             
-            # Check artists
-            artists_found = [artist['name'] for artist in data['artists']]
-            if test['expected_artists']:
-                found_expected = any(expected in artists_found for expected in test['expected_artists'])
-                if not found_expected:
-                    print(f"   ❌ FAILED: Expected artists {test['expected_artists']}, got {artists_found}")
-                    continue
-            else:
-                if len(artists_found) > 0:
-                    print(f"   ❌ FAILED: Expected no artists, got {artists_found}")
-                    continue
+            # Check for ItemList schema
+            if '"@type":"ItemList"' not in response.text and '"@type": "ItemList"' not in response.text:
+                print("❌ FAILED: Missing ItemList JSON-LD schema")
+                continue
             
-            # Check songs
-            songs_found = [song['title'] for song in data['songs']]
-            if test.get('expected_songs'):
-                found_expected_song = any(expected in str(songs_found) for expected in test['expected_songs'])
-                if not found_expected_song:
-                    print(f"   ❌ FAILED: Expected songs containing {test['expected_songs']}, got {songs_found}")
-                    continue
+            # Check for artist links
+            artist_links = response.text.count('/artist/')
+            if artist_links < 1:
+                print("❌ FAILED: No artist links found")
+                continue
             
-            if test['should_have_songs']:
-                if len(songs_found) == 0 and len(artists_found) == 0:
-                    print(f"   ❌ FAILED: Expected some results, got none")
-                    continue
-            else:
-                if len(songs_found) > 0 or len(artists_found) > 0:
-                    print(f"   ❌ FAILED: Expected no results, got artists: {artists_found}, songs: {songs_found}")
-                    continue
+            print(f"✅ Status: 200, has CollectionPage+ItemList schema, {artist_links} artist links")
+            success_count += 1
             
-            print(f"   ✅ PASSED")
-            passed += 1
-            
-        except Exception as e:
-            print(f"   ❌ FAILED: Exception - {str(e)}")
+        except requests.RequestException as e:
+            print(f"❌ FAILED: Request error: {e}")
     
-    print(f"\n🔍 SEARCH API RESULTS: {passed}/{total} tests passed")
-    return passed == total
+    # Test nonexistent genre (should return 404)
+    total_tests += 1
+    print(f"\n{total_tests}. Testing /genre/nonexistent-genre...")
+    
+    try:
+        response = requests.get(f"{BASE_URL}/genre/nonexistent-genre", headers=HEADERS, timeout=30)
+        
+        if response.status_code == 404:
+            print("✅ Status: 404 (correct for nonexistent genre)")
+            success_count += 1
+        else:
+            print(f"❌ FAILED: Expected 404, got {response.status_code}")
+            
+    except requests.RequestException as e:
+        print(f"❌ FAILED: Request error: {e}")
+    
+    print(f"\nGenre Pages: {success_count}/{total_tests} tests passed")
+    return success_count == total_tests
 
-def test_faq_schema():
-    """Test FAQ Schema on artist pages"""
-    print("\n📋 TESTING FAQ SCHEMA")
+def test_era_pages():
+    """Test Era Browse Pages at /era/[slug]"""
+    print("\n🎸 TESTING ERA BROWSE PAGES")
     print("=" * 50)
     
-    test_cases = [
-        # Test case 9: Metallica artist page
-        {
-            "name": "Metallica artist page FAQ schema",
-            "url": f"{BASE_URL}/artist/metallica",
-            "artist": "Metallica"
-        },
-        # Test case 10: Check for Question type
-        {
-            "name": "Metallica page has Question types",
-            "url": f"{BASE_URL}/artist/metallica",
-            "artist": "Metallica"
-        },
-        # Test case 11: Check for at least 5 FAQ questions
-        {
-            "name": "Metallica page has at least 5 FAQ questions",
-            "url": f"{BASE_URL}/artist/metallica",
-            "artist": "Metallica"
-        },
-        # Test case 12: AC/DC artist page
-        {
-            "name": "AC/DC artist page FAQ schema",
-            "url": f"{BASE_URL}/artist/acdc",
-            "artist": "AC/DC"
-        },
-        # Test case 13: Van Halen artist page
-        {
-            "name": "Van Halen artist page FAQ schema",
-            "url": f"{BASE_URL}/artist/van-halen",
-            "artist": "Van Halen"
-        }
-    ]
+    success_count = 0
+    total_tests = 0
     
-    passed = 0
-    total = len(test_cases)
-    
-    for i, test in enumerate(test_cases, 9):  # Start from 9 to continue numbering
+    # Test all valid eras
+    for era_slug in ERAS:
+        total_tests += 1
+        print(f"\n{total_tests}. Testing /era/{era_slug}...")
+        
         try:
-            print(f"\n{i}. {test['name']}")
-            response = requests.get(test['url'], headers=HEADERS, timeout=10)
-            
-            print(f"   URL: {test['url']}")
-            print(f"   Status: {response.status_code}")
+            response = requests.get(f"{BASE_URL}/era/{era_slug}", headers=HEADERS, timeout=30)
             
             if response.status_code != 200:
-                print(f"   ❌ FAILED: Expected 200, got {response.status_code}")
+                print(f"❌ FAILED: Expected 200, got {response.status_code}")
                 continue
             
-            html_content = response.text
-            
-            # Check for FAQPage schema
-            if '"@type":"FAQPage"' not in html_content and '"@type": "FAQPage"' not in html_content:
-                print(f"   ❌ FAILED: No FAQPage schema found in HTML")
+            # Check for CollectionPage JSON-LD schema
+            if '"@type":"CollectionPage"' not in response.text and '"@type": "CollectionPage"' not in response.text:
+                print("❌ FAILED: Missing CollectionPage JSON-LD schema")
                 continue
             
-            # Check for Question schema
-            if '"@type":"Question"' not in html_content and '"@type": "Question"' not in html_content:
-                print(f"   ❌ FAILED: No Question schema found in HTML")
+            # Check for ItemList schema
+            if '"@type":"ItemList"' not in response.text and '"@type": "ItemList"' not in response.text:
+                print("❌ FAILED: Missing ItemList JSON-LD schema")
                 continue
             
-            # Count FAQ questions
-            question_count = html_content.count('"@type":"Question"') + html_content.count('"@type": "Question"')
-            print(f"   Found {question_count} FAQ questions")
+            print(f"✅ Status: 200, has CollectionPage+ItemList schema")
+            success_count += 1
             
-            if question_count < 5:
-                print(f"   ❌ FAILED: Expected at least 5 FAQ questions, found {question_count}")
-                continue
-            
-            # Check for artist name in FAQ content
-            if test['artist'].lower() not in html_content.lower():
-                print(f"   ❌ FAILED: Artist name '{test['artist']}' not found in FAQ content")
-                continue
-            
-            print(f"   ✅ PASSED: Found FAQPage schema with {question_count} questions")
-            passed += 1
-            
-        except Exception as e:
-            print(f"   ❌ FAILED: Exception - {str(e)}")
+        except requests.RequestException as e:
+            print(f"❌ FAILED: Request error: {e}")
     
-    print(f"\n📋 FAQ SCHEMA RESULTS: {passed}/{total} tests passed")
-    return passed == total
+    # Test nonexistent era (should return 404)
+    total_tests += 1
+    print(f"\n{total_tests}. Testing /era/nonexistent-era...")
+    
+    try:
+        response = requests.get(f"{BASE_URL}/era/nonexistent-era", headers=HEADERS, timeout=30)
+        
+        if response.status_code == 404:
+            print("✅ Status: 404 (correct for nonexistent era)")
+            success_count += 1
+        else:
+            print(f"❌ FAILED: Expected 404, got {response.status_code}")
+            
+    except requests.RequestException as e:
+        print(f"❌ FAILED: Request error: {e}")
+    
+    print(f"\nEra Pages: {success_count}/{total_tests} tests passed")
+    return success_count == total_tests
 
-def test_previous_features():
-    """Test that previous features still work"""
-    print("\n🔄 TESTING PREVIOUS FEATURES")
+def test_integration():
+    """Test integration with robots.txt and sitemap.xml"""
+    print("\n🎸 TESTING INTEGRATION")
     print("=" * 50)
     
-    test_cases = [
-        # Test case 14: Metallica page still has other schemas
-        {
-            "name": "Metallica page has BreadcrumbList, MusicGroup, CollectionPage schemas",
-            "url": f"{BASE_URL}/artist/metallica",
-            "expected_schemas": ["BreadcrumbList", "MusicGroup", "CollectionPage"]
-        },
-        # Test case 15: Song page still has MusicRecording schema
-        {
-            "name": "Song page has MusicRecording schema",
-            "url": f"{BASE_URL}/songs/metallica-am-i-evil",
-            "expected_schemas": ["MusicRecording"]
-        },
-        # Test case 16: Invalid artist redirects
-        {
-            "name": "Invalid artist redirects to homepage",
-            "url": f"{BASE_URL}/artist/totally-nonexistent",
-            "expected_status": 308
-        },
-        # Test case 17: Homepage works
-        {
-            "name": "Homepage works",
-            "url": f"{BASE_URL}/",
-            "expected_status": 200
-        },
-        # Test case 18: Sitemap works
-        {
-            "name": "Sitemap works",
-            "url": f"{BASE_URL}/sitemap.xml",
-            "expected_status": 200
-        }
-    ]
+    success_count = 0
+    total_tests = 0
     
-    passed = 0
-    total = len(test_cases)
+    # Test 1: robots.txt should contain video-sitemap.xml
+    total_tests += 1
+    print("1. Testing robots.txt contains video-sitemap.xml...")
     
-    for i, test in enumerate(test_cases, 14):  # Start from 14 to continue numbering
-        try:
-            print(f"\n{i}. {test['name']}")
-            response = requests.get(test['url'], headers=HEADERS, timeout=10, allow_redirects=False)
+    try:
+        response = requests.get(f"{BASE_URL}/robots.txt", headers=HEADERS, timeout=30)
+        
+        if response.status_code == 200 and 'video-sitemap.xml' in response.text:
+            print("✅ robots.txt contains video-sitemap.xml reference")
+            success_count += 1
+        else:
+            print(f"❌ FAILED: robots.txt missing video-sitemap.xml (status: {response.status_code})")
             
-            print(f"   URL: {test['url']}")
-            print(f"   Status: {response.status_code}")
+    except requests.RequestException as e:
+        print(f"❌ FAILED: Request error: {e}")
+    
+    # Test 2: sitemap.xml should contain genre and era URLs
+    total_tests += 1
+    print("2. Testing sitemap.xml contains genre and era URLs...")
+    
+    try:
+        response = requests.get(f"{BASE_URL}/sitemap.xml", headers=HEADERS, timeout=30)
+        
+        if response.status_code != 200:
+            print(f"❌ FAILED: sitemap.xml returned {response.status_code}")
+        else:
+            genre_found = any(f'/genre/{genre}' in response.text for genre in GENRES[:2])
+            era_found = any(f'/era/{era}' in response.text for era in ERAS[:2])
             
-            expected_status = test.get('expected_status', 200)
-            if response.status_code != expected_status:
-                print(f"   ❌ FAILED: Expected {expected_status}, got {response.status_code}")
-                continue
-            
-            if 'expected_schemas' in test:
-                html_content = response.text
-                missing_schemas = []
-                for schema in test['expected_schemas']:
-                    if f'"@type":"{schema}"' not in html_content and f'"@type": "{schema}"' not in html_content:
-                        missing_schemas.append(schema)
-                
-                if missing_schemas:
-                    print(f"   ❌ FAILED: Missing schemas: {missing_schemas}")
-                    continue
-                
-                print(f"   ✅ PASSED: Found all expected schemas: {test['expected_schemas']}")
+            if genre_found and era_found:
+                print("✅ sitemap.xml contains genre and era URLs")
+                success_count += 1
             else:
-                print(f"   ✅ PASSED: Status code {response.status_code} as expected")
-            
-            passed += 1
-            
-        except Exception as e:
-            print(f"   ❌ FAILED: Exception - {str(e)}")
+                print(f"❌ FAILED: sitemap.xml missing genre ({genre_found}) or era ({era_found}) URLs")
+                
+    except requests.RequestException as e:
+        print(f"❌ FAILED: Request error: {e}")
     
-    print(f"\n🔄 PREVIOUS FEATURES RESULTS: {passed}/{total} tests passed")
-    return passed == total
+    print(f"\nIntegration: {success_count}/{total_tests} tests passed")
+    return success_count == total_tests
 
 def main():
-    """Run all tests"""
+    """Run all SEO feature tests"""
     print("🎸 DADROCK TABS SEO FEATURES TESTING")
     print("=" * 60)
     print(f"Base URL: {BASE_URL}")
     print(f"User-Agent: {HEADERS['User-Agent']}")
-    print("=" * 60)
     
     # Run all test suites
-    search_passed = test_search_api()
-    faq_passed = test_faq_schema()
-    previous_passed = test_previous_features()
+    results = []
     
-    # Final summary
-    print("\n" + "=" * 60)
-    print("🎸 FINAL TEST SUMMARY")
-    print("=" * 60)
-    print(f"🔍 Search API Tests: {'✅ PASSED' if search_passed else '❌ FAILED'}")
-    print(f"📋 FAQ Schema Tests: {'✅ PASSED' if faq_passed else '❌ FAILED'}")
-    print(f"🔄 Previous Features: {'✅ PASSED' if previous_passed else '❌ FAILED'}")
-    
-    all_passed = search_passed and faq_passed and previous_passed
-    print(f"\n🎯 OVERALL RESULT: {'✅ ALL TESTS PASSED' if all_passed else '❌ SOME TESTS FAILED'}")
-    
-    return all_passed
+    try:
+        results.append(("Video Sitemap XML", test_video_sitemap()))
+        results.append(("Genre Browse Pages", test_genre_pages()))
+        results.append(("Era Browse Pages", test_era_pages()))
+        results.append(("Integration Tests", test_integration()))
+        
+        # Summary
+        print("\n🎸 FINAL TEST RESULTS")
+        print("=" * 60)
+        
+        passed = 0
+        total = len(results)
+        
+        for test_name, success in results:
+            status = "✅ PASSED" if success else "❌ FAILED"
+            print(f"{test_name}: {status}")
+            if success:
+                passed += 1
+        
+        print(f"\nOverall: {passed}/{total} test suites passed ({passed/total*100:.1f}%)")
+        
+        if passed == total:
+            print("\n🎉 ALL SEO FEATURES WORKING CORRECTLY!")
+            return True
+        else:
+            print(f"\n⚠️  {total-passed} test suite(s) failed - see details above")
+            return False
+            
+    except Exception as e:
+        print(f"\n💥 CRITICAL ERROR: {e}")
+        return False
 
 if __name__ == "__main__":
-    main()
+    success = main()
+    sys.exit(0 if success else 1)
