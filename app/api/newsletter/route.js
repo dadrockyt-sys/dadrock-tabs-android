@@ -38,7 +38,7 @@ export async function POST(request) {
   }
 }
 
-// GET: Admin endpoint to view subscriber count
+// GET: Admin endpoint to view all subscribers
 export async function GET(request) {
   try {
     const authHeader = request.headers.get('authorization');
@@ -47,15 +47,25 @@ export async function GET(request) {
     }
 
     const db = await getDb();
+    const { searchParams } = new URL(request.url);
+    const showAll = searchParams.get('all') === 'true';
+
     const count = await db.collection('newsletter_subscribers').countDocuments({ active: true });
-    const recent = await db.collection('newsletter_subscribers')
-      .find({ active: true })
+    const subscribers = await db.collection('newsletter_subscribers')
+      .find(showAll ? {} : { active: true })
       .sort({ subscribed_at: -1 })
-      .limit(10)
-      .project({ email: 1, subscribed_at: 1 })
+      .project({ email: 1, subscribed_at: 1, active: 1 })
       .toArray();
 
-    return NextResponse.json({ total_subscribers: count, recent });
+    return NextResponse.json({ 
+      total_active: count,
+      total_shown: subscribers.length,
+      subscribers: subscribers.map(s => ({
+        email: s.email,
+        subscribed_at: s.subscribed_at,
+        active: s.active !== false,
+      }))
+    });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch' }, { status: 500 });
   }
