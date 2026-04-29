@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Play, Youtube, Music, Home, Users, ShoppingBag, BookOpen, Guitar, Lightbulb, Star } from 'lucide-react';
+import { ArrowLeft, Play, Youtube, Music, Home, Users, ShoppingBag, BookOpen, Guitar, Lightbulb, Star, Search } from 'lucide-react';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
 import { artistToSlug } from '@/lib/slugify';
+import SearchBar from '@/components/SearchBar';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
@@ -115,10 +116,11 @@ function getRelatedArtists(artistName) {
   return defaultRelatedArtists.filter(a => a.toLowerCase() !== normalized.toLowerCase());
 }
 
-export default function ArtistPageClient({ artistName, videos, slug, adSettings, initialAiContent }) {
+export default function ArtistPageClient({ artistName, videos, slug, adSettings, initialAiContent, faqItems = [] }) {
   const [lang] = useLanguage();
   const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [openFaq, setOpenFaq] = useState(null);
 
   // Update SEO meta tags when language changes
   useEffect(() => {
@@ -256,20 +258,24 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
     <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 text-white">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <img src={LOGO_URL} alt="DadRock Tabs" className="h-10 w-auto" />
-              <span className="text-xl font-bold text-amber-500 hidden sm:block">DadRock Tabs</span>
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity flex-shrink-0">
+              <img src={LOGO_URL} alt="DadRock Tabs" className="h-9 w-auto" />
+              <span className="text-lg font-bold text-amber-500 hidden sm:block font-rock">DadRock Tabs</span>
             </Link>
-            <div className="flex items-center gap-3">
+            {/* Search Bar — compact in header */}
+            <div className="hidden md:block flex-1 max-w-sm mx-4">
+              <SearchBar variant="compact" placeholder={t.searchPlaceholder || 'Search artists & songs...'} />
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0">
               <LanguageSelector />
               <Link 
                 href="/"
                 className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
               >
                 <Home className="w-4 h-4" />
-                <span>{t.home}</span>
+                <span className="hidden sm:inline">{t.home}</span>
               </Link>
             </div>
           </div>
@@ -499,6 +505,44 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
             </p>
           </div>
         </section>
+
+
+        {/* FAQ Section — For Google Featured Snippets */}
+        {faqItems.length > 0 && (
+          <section className="mt-10 reveal-section">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-zinc-700 to-transparent" />
+              <h2 className="text-xl font-bold text-white flex items-center gap-2 font-rock-alt uppercase tracking-wider text-sm">
+                <BookOpen className="w-5 h-5 text-amber-500" />
+                Frequently Asked Questions
+              </h2>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-zinc-700 to-transparent" />
+            </div>
+            <div className="space-y-3">
+              {faqItems.map((faq, i) => (
+                <div
+                  key={i}
+                  className="bg-zinc-900/50 rounded-xl border border-zinc-800 overflow-hidden transition-colors hover:border-zinc-700"
+                >
+                  <button
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    className="w-full flex items-center justify-between p-5 text-left"
+                  >
+                    <span className="font-medium text-white pr-4">{faq.question}</span>
+                    <span className={`text-amber-500 text-xl font-bold transition-transform duration-200 ${openFaq === i ? 'rotate-45' : ''}`}>
+                      +
+                    </span>
+                  </button>
+                  {openFaq === i && (
+                    <div className="px-5 pb-5 text-zinc-400 leading-relaxed border-t border-zinc-800 pt-4">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Related Artists Section - Internal Linking */}
         <section className="mt-10 p-8 rounded-2xl border border-zinc-800 relative overflow-hidden hero-gradient-bg">

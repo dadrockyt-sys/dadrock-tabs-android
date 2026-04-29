@@ -403,9 +403,34 @@ metadata:
         - agent: "testing"
         - comment: "✅ COMPREHENSIVE SEO TESTING COMPLETE - All 15 test cases PASSED (100% success rate): STRUCTURED DATA: ✓ Homepage WebSite+Organization schema ✓ Artist page BreadcrumbList+MusicGroup+CollectionPage schema ✓ Song page BreadcrumbList+MusicRecording+VideoObject schema ✓ AC/DC special characters handling. INTERNAL LINKING: ✓ Song pages contain 22 links to other artist songs ✓ Song pages link to artist pages ✓ Artist pages contain 4+ related artist links. BREADCRUMBS: ✓ Artist pages have 3-item breadcrumb structure ✓ Song pages have 3-item breadcrumb structure. PREVIOUS FIXES: ✓ Invalid artists redirect (308→/) ✓ Invalid songs redirect (308→artist) ✓ Valid artists work (200) ✓ Locale+artist works (200). SITEMAP: ✓ No duplicate artist slugs (261 unique) ✓ No junk entries. All SEO improvements working perfectly with proper User-Agent handling."
 
+  - task: "Search API for artists and songs"
+    implemented: true
+    working: true
+    file: "/app/app/api/search/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+        - agent: "testing"
+        - comment: "✅ SEARCH API TESTING COMPLETE - All 8 test cases PASSED (100% success rate): 1) Search 'metal' → returns Metallica + songs ✓ 2) Search 'van halen' → returns Van Halen + songs ✓ 3) Query too short 'a' → returns empty results ✓ 4) Empty query → returns empty results ✓ 5) Search 'zz top' → returns ZZ Top + songs ✓ 6) Nonexistent band → returns empty results ✓ 7) Search 'sabbath' → returns Black Sabbath + songs ✓ 8) Search song 'am i evil' → finds Am I Evil song ✓. API properly filters junk entries, handles regex escaping, returns structured JSON with artists/songs arrays, and respects 2-character minimum query length."
+
+  - task: "FAQ Schema (FAQPage JSON-LD) on artist pages"
+    implemented: true
+    working: true
+    file: "/app/app/artist/[slug]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+        - agent: "testing"
+        - comment: "✅ FAQ SCHEMA TESTING COMPLETE - All 5 test cases PASSED (100% success rate): 1) Metallica page has FAQPage schema with 5 questions ✓ 2) AC/DC page has FAQPage schema with 5 questions ✓ 3) Van Halen page has FAQPage schema with 5 questions ✓ 4) All pages contain proper '@type':'Question' structures ✓ 5) FAQ content includes artist-specific information and AI-generated content where available ✓. FAQ schema generates 5 questions per artist page covering: learning songs, beginner suitability, gear info, lesson count, and playing style. Properly structured for Google Featured Snippets."
+
 test_plan:
   current_focus:
-    - "SEO improvements - Structured Data, Meta Tags, Internal Linking"
+    - "Search API for artists and songs"
+    - "FAQ Schema (FAQPage JSON-LD) on artist pages"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -419,3 +444,5 @@ agent_communication:
     - message: "🎸 FRONTEND UI TESTING COMPLETE - All 10 test cases PASSED (100% success rate) after fixing middleware blocking issue. CRITICAL ISSUE FOUND & FIXED: Middleware was blocking headless browsers (Playwright) with 'Forbidden' error. Added temporary allowlist for testing user agents in middleware.js. HOMEPAGE: ✅ Loads correctly with DadRock branding, no Forbidden errors. ARTIST PAGES: ✅ Valid artists (Metallica, AC/DC) load with video content. ✅ Invalid artists redirect to homepage (308). ✅ Trailing dash redirects work (tesla- → tesla). SONG PAGES: ✅ Valid songs load correctly. ✅ Missing songs redirect to artist pages (308). LOCALIZED PAGES: ✅ Japanese/Korean/Chinese pages work correctly. ✅ All redirects work smoothly in browser. ✅ User-facing UI functionality verified. GSC 404 fix changes DO NOT break user-facing UI - all functionality working perfectly."
     - agent: "testing"
     - message: "🎸 SEO IMPROVEMENTS TESTING COMPLETE - All 15 test cases PASSED (100% success rate). STRUCTURED DATA: ✅ Homepage WebSite+Organization schema properly embedded ✅ Artist pages have BreadcrumbList+MusicGroup+CollectionPage schemas ✅ Song pages have BreadcrumbList+MusicRecording+VideoObject schemas ✅ AC/DC special characters handled correctly. INTERNAL LINKING: ✅ Song pages contain 22 links to other artist songs ✅ Song pages properly link to artist pages ✅ Artist pages contain 4+ related artist links (Megadeth, Slayer, Anthrax, Black Sabbath). BREADCRUMBS: ✅ Artist pages have correct 3-item breadcrumb structure (Home → Artists → Artist Tabs) ✅ Song pages have correct 3-item breadcrumb structure (Home → Artist → Song). PREVIOUS FIXES INTACT: ✅ Invalid artists redirect (308→/) ✅ Invalid songs redirect (308→artist) ✅ Valid artists work (200) ✅ Locale+artist combinations work (200). SITEMAP QUALITY: ✅ No duplicate artist slugs (261 unique artists) ✅ No junk entries like 'fretmaster' or 'coming-soon'. All SEO improvements are working perfectly with proper User-Agent handling. The DadRock Tabs site now has comprehensive structured data for search engines."
+    - agent: "testing"
+    - message: "🎸 NEW SEO FEATURES TESTING COMPLETE - All 18 test cases PASSED (100% success rate). SEARCH API (/api/search): ✅ 8/8 tests passed - searches artists and songs correctly, handles edge cases (empty query, short query, nonexistent terms), returns proper JSON structure with artists/songs arrays, filters junk entries, supports regex matching. FAQ SCHEMA (FAQPage JSON-LD): ✅ 5/5 tests passed - all artist pages (Metallica, AC/DC, Van Halen) contain proper FAQPage schema with 5 questions each, includes '@type':'Question' structures, integrates AI-generated content where available. PREVIOUS FEATURES INTACT: ✅ 5/5 tests passed - existing schemas (BreadcrumbList, MusicGroup, CollectionPage, MusicRecording) still working, invalid artist/song redirects working, homepage and sitemap functional. Both new SEO features are working perfectly and enhance search engine visibility without breaking existing functionality."

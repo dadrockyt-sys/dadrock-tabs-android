@@ -7,6 +7,7 @@ import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
 import { artistToSlug } from '@/lib/slugify';
+import SearchBar from '@/components/SearchBar';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
@@ -153,8 +154,12 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
           <nav className="flex items-center justify-between mb-6">
             <Link href="/" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
               <Home className="w-5 h-5" />
-              <span>{t.backToHome}</span>
+              <span className="hidden sm:inline">{t.backToHome}</span>
             </Link>
+            {/* Search Bar in Header */}
+            <div className="hidden md:block flex-1 max-w-sm mx-4">
+              <SearchBar variant="compact" placeholder={t.searchPlaceholder || 'Search artists & songs...'} />
+            </div>
             <div className="flex items-center gap-3">
               <LanguageSelector />
               <a
@@ -164,7 +169,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
                 className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-500 rounded-full font-medium transition-colors"
               >
                 <Youtube className="w-5 h-5" />
-                Subscribe
+                <span className="hidden sm:inline">Subscribe</span>
               </a>
             </div>
           </nav>
