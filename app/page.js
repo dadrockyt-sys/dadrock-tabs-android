@@ -1600,6 +1600,24 @@ export default function App({ initialLang = 'en' }) {
             </div>
           </form>
 
+          {/* 🎲 Random Song Button */}
+          <button
+            onClick={async () => {
+              try {
+                const res = await fetch('/api/random-song');
+                const data = await res.json();
+                if (data.slug) {
+                  window.location.href = `/songs/${data.slug}`;
+                }
+              } catch (e) { console.error(e); }
+            }}
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 hover:from-red-500 hover:via-orange-400 hover:to-amber-400 text-white font-bold uppercase tracking-wide mb-4 transition-all duration-500 fire-glow bass-drop-hover ${pageReady ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transitionDelay: '0.35s' }}
+          >
+            <span className="text-xl rock-bounce">🎲</span>
+            Random Song
+          </button>
+
           {/* Subscribe Button with Pulse Glow */}
           <a
             href={YOUTUBE_CHANNEL}
