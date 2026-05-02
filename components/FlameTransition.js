@@ -43,9 +43,9 @@ const FIRE_PALETTE = buildFirePalette();
 const MAX_HEAT = 63;
 
 const PIXEL_SIZE = 2;         // Finer resolution for smoother look
-const BURN_IN_TIME = 1000;    // ms for fire to cover screen
-const HOLD_TIME = 200;        // ms to hold at full coverage
-const BURN_OUT_TIME = 900;    // ms for fire to fade away
+const BURN_IN_TIME = 700;     // ms for fire to cover screen
+const HOLD_TIME = 100;        // ms to hold at full coverage
+const BURN_OUT_TIME = 600;    // ms for fire to fade away
 const MAX_PARTICLES = 250;    // Ember particle count
 
 // ─── Ember Particle class ───
