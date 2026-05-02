@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
-// Fire color palette — maps heat intensity (0-36) to RGB
+// Fire color palette — maps heat intensity (0-36) to RGB (classic doom fire)
 const FIRE_PALETTE = [
   [0,0,0],[7,7,7],[31,7,7],[47,15,7],[71,15,7],[87,23,7],[103,31,7],[119,31,7],
   [143,39,7],[159,47,7],[175,63,7],[191,71,7],[199,71,7],[223,79,7],[223,87,7],
@@ -25,64 +25,97 @@ export default function FlameTransition() {
   const prevPathRef = useRef(pathname);
   const pendingHref = useRef(null);
   const canvasRef = useRef(null);
-  const fireRef = useRef(null);
+  const fireRef = useRef(null);      // { buffer, width, height }
   const rafRef = useRef(null);
   const phaseRef = useRef('idle');
   const startTimeRef = useRef(0);
+  const ctxRef = useRef(null);
+  const imageDataRef = useRef(null);
+  const canvasSizeRef = useRef({ w: 0, h: 0 });
 
-  // Update phase ref for animation loop access
+  // Keep phase ref in sync for the animation loop
   useEffect(() => {
     phaseRef.current = phase;
   }, [phase]);
 
-  // Detect route changes — trigger burn-out
+  // Detect route changes — trigger burn-out (fire dies down naturally)
   useEffect(() => {
     if (pathname !== prevPathRef.current) {
       prevPathRef.current = pathname;
+      // Start burn-out from wherever the fire currently is
+      phaseRef.current = 'burn-out';
       setPhase('burn-out');
       startTimeRef.current = performance.now();
-      setTimeout(() => {
+
+      // Schedule cleanup after burn-out completes
+      const timer = setTimeout(() => {
         setPhase('idle');
-        stopFire();
-      }, BURN_OUT_TIME + 100);
+        stopAnimation();
+        // Clear refs for next transition
+        fireRef.current = null;
+        ctxRef.current = null;
+        imageDataRef.current = null;
+      }, BURN_OUT_TIME + 200);
+
+      return () => clearTimeout(timer);
     }
   }, [pathname]);
 
-  // Initialize fire buffer
-  const initFire = useCallback((width, height) => {
-    const fw = Math.ceil(width / PIXEL_SIZE);
-    const fh = Math.ceil(height / PIXEL_SIZE);
-    const buffer = new Uint8Array(fw * fh);
-    fireRef.current = { buffer, width: fw, height: fh };
-    return { buffer, fw, fh };
+  // Stop the animation loop
+  const stopAnimation = useCallback(() => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
   }, []);
 
-  // Start the fire animation
-  const startFire = useCallback(() => {
+  // Initialize or resize the canvas + fire buffer
+  const ensureCanvas = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return false;
 
     const width = window.innerWidth;
     const height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
 
-    const { buffer, fw, fh } = initFire(width, height);
-    const ctx = canvas.getContext('2d');
-    const imageData = ctx.createImageData(width, height);
+    // Only reinitialize if canvas size changed or no buffer exists
+    if (canvasSizeRef.current.w !== width || canvasSizeRef.current.h !== height || !fireRef.current) {
+      canvas.width = width;
+      canvas.height = height;
+      canvasSizeRef.current = { w: width, h: height };
 
-    startTimeRef.current = performance.now();
+      const fw = Math.ceil(width / PIXEL_SIZE);
+      const fh = Math.ceil(height / PIXEL_SIZE);
+      const buffer = new Uint8Array(fw * fh);
+      fireRef.current = { buffer, width: fw, height: fh };
+
+      ctxRef.current = canvas.getContext('2d');
+      imageDataRef.current = ctxRef.current.createImageData(width, height);
+    }
+
+    return true;
+  }, []);
+
+  // The main animation loop — reads phaseRef to decide behavior
+  const runAnimation = useCallback(() => {
+    if (!ensureCanvas()) return;
+
+    const { buffer, width: fw, height: fh } = fireRef.current;
+    const ctx = ctxRef.current;
+    const imageData = imageDataRef.current;
+    const { w: canvasW, h: canvasH } = canvasSizeRef.current;
 
     const animate = () => {
       const currentPhase = phaseRef.current;
-      if (currentPhase === 'idle') return;
+      if (currentPhase === 'idle') {
+        rafRef.current = null;
+        return;
+      }
 
       const elapsed = performance.now() - startTimeRef.current;
 
       if (currentPhase === 'burn-in') {
-        // Gradually ignite the bottom rows
+        // Gradually ignite bottom rows — more as time progresses
         const progress = Math.min(elapsed / BURN_IN_TIME, 1);
-        // Set bottom rows on fire — more rows as time progresses
         const igniteRows = Math.max(1, Math.floor(progress * 3));
         for (let row = 0; row < igniteRows; row++) {
           const y = fh - 1 - row;
@@ -90,10 +123,11 @@ export default function FlameTransition() {
             buffer[y * fw + x] = 36; // Max heat
           }
         }
-        // Also add random sparks ahead of the fire front
+        // Add random sparks ahead of the fire front for drama
         if (progress > 0.2) {
           const sparkY = Math.floor(fh * (1 - progress * 0.8));
-          for (let i = 0; i < fw * 0.3; i++) {
+          const sparkCount = Math.floor(fw * 0.3);
+          for (let i = 0; i < sparkCount; i++) {
             const sx = Math.floor(Math.random() * fw);
             const sy = sparkY + Math.floor(Math.random() * 5);
             if (sy >= 0 && sy < fh) {
@@ -102,26 +136,24 @@ export default function FlameTransition() {
           }
         }
       } else if (currentPhase === 'burn-out') {
-        // Kill the fire from bottom — stop adding heat
+        // Gradually reduce the heat source at the bottom
         const progress = Math.min(elapsed / BURN_OUT_TIME, 1);
-        // Gradually reduce bottom row intensity
+        // Diminish bottom row heat over time
+        const bottomHeat = Math.max(0, Math.floor(36 * (1 - progress * 1.5)));
         for (let x = 0; x < fw; x++) {
           const idx = (fh - 1) * fw + x;
-          buffer[idx] = Math.max(0, Math.floor(36 * (1 - progress)));
+          buffer[idx] = Math.min(buffer[idx], bottomHeat);
         }
-        // Also cool down from bottom up
-        const coolRows = Math.floor(progress * fh * 0.5);
-        for (let row = 0; row < coolRows; row++) {
-          const y = fh - 1 - row;
-          if (y >= 0) {
-            for (let x = 0; x < fw; x++) {
-              buffer[y * fw + x] = Math.max(0, buffer[y * fw + x] - 2);
-            }
+        // Actively cool the entire buffer to speed up disappearance
+        if (progress > 0.3) {
+          const coolStrength = Math.floor((progress - 0.3) * 4);
+          for (let i = 0; i < buffer.length; i++) {
+            buffer[i] = Math.max(0, buffer[i] - coolStrength);
           }
         }
       }
 
-      // Propagate fire upward (the core doom fire algorithm)
+      // Propagate fire upward (core doom fire algorithm)
       for (let x = 0; x < fw; x++) {
         for (let y = 1; y < fh; y++) {
           const src = y * fw + x;
@@ -137,20 +169,19 @@ export default function FlameTransition() {
         }
       }
 
-      // Render fire buffer to canvas
+      // Render fire buffer to canvas pixels
       const pixels = imageData.data;
       for (let y = 0; y < fh; y++) {
         for (let x = 0; x < fw; x++) {
           const heat = buffer[y * fw + x];
           const color = FIRE_PALETTE[Math.min(heat, 36)];
 
-          // Fill the PIXEL_SIZE x PIXEL_SIZE block
           for (let py = 0; py < PIXEL_SIZE; py++) {
             for (let px = 0; px < PIXEL_SIZE; px++) {
               const realX = x * PIXEL_SIZE + px;
               const realY = y * PIXEL_SIZE + py;
-              if (realX < width && realY < height) {
-                const idx = (realY * width + realX) * 4;
+              if (realX < canvasW && realY < canvasH) {
+                const idx = (realY * canvasW + realX) * 4;
                 pixels[idx] = color[0];
                 pixels[idx + 1] = color[1];
                 pixels[idx + 2] = color[2];
@@ -165,25 +196,35 @@ export default function FlameTransition() {
       rafRef.current = requestAnimationFrame(animate);
     };
 
+    // Cancel any existing loop before starting new one
+    stopAnimation();
     rafRef.current = requestAnimationFrame(animate);
-  }, [initFire]);
+  }, [ensureCanvas, stopAnimation]);
 
-  const stopFire = useCallback(() => {
-    if (rafRef.current) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
-    }
-  }, []);
-
-  // Start/stop fire based on phase
+  // Start animation when entering burn-in (fresh fire)
+  // For burn-out, the existing animation loop continues with preserved buffer
   useEffect(() => {
-    if (phase === 'burn-in' || phase === 'burn-out') {
-      startFire();
+    if (phase === 'burn-in') {
+      // Fresh fire — reinitialize buffer
+      fireRef.current = null;
+      runAnimation();
+    } else if (phase === 'burn-out') {
+      // Continue animation with existing fire buffer (if available)
+      // If no existing buffer (edge case), start fresh anyway
+      if (!rafRef.current) {
+        runAnimation();
+      }
+      // If animation is already running, it will read the updated phaseRef
     }
-    return () => stopFire();
-  }, [phase, startFire, stopFire]);
 
-  // Intercept link clicks
+    return () => {
+      if (phase === 'idle') {
+        stopAnimation();
+      }
+    };
+  }, [phase, runAnimation, stopAnimation]);
+
+  // Intercept internal link clicks to trigger flame transition
   useEffect(() => {
     function handleClick(e) {
       if (phaseRef.current !== 'idle') return;
@@ -194,12 +235,14 @@ export default function FlameTransition() {
       const href = anchor.getAttribute('href');
       if (!href) return;
 
+      // Skip external links, mailto, tel, anchors, new tabs, downloads
       if (
         href.startsWith('http') || href.startsWith('mailto:') ||
         href.startsWith('tel:') || href.startsWith('#') ||
         anchor.target === '_blank' || anchor.hasAttribute('download')
       ) return;
 
+      // Skip same page and API routes
       if (href === pathname || href.startsWith('/api/')) return;
 
       e.preventDefault();
@@ -242,6 +285,14 @@ export default function FlameTransition() {
 
     return () => { delete window.__flameNavigate; };
   }, [router]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      stopAnimation();
+      delete window.__flameNavigate;
+    };
+  }, [stopAnimation]);
 
   if (phase === 'idle') return null;
 
