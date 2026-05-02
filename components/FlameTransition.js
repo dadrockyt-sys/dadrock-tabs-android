@@ -1,40 +1,192 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
-const FLAME_COLUMNS = 14;
-const BURN_IN_DURATION = 800; // ms — how long the flames take to cover the screen
-const HOLD_DURATION = 200;   // ms — brief hold at full coverage before navigating
+// Fire color palette — maps heat intensity (0-36) to RGB
+const FIRE_PALETTE = [
+  [0,0,0],[7,7,7],[31,7,7],[47,15,7],[71,15,7],[87,23,7],[103,31,7],[119,31,7],
+  [143,39,7],[159,47,7],[175,63,7],[191,71,7],[199,71,7],[223,79,7],[223,87,7],
+  [223,87,7],[215,95,7],[215,103,15],[207,111,15],[207,119,15],[207,127,15],
+  [207,135,23],[199,135,23],[199,143,23],[199,151,31],[191,159,31],[191,159,31],
+  [191,167,39],[191,167,39],[191,175,47],[183,175,47],[183,183,47],[183,183,55],
+  [207,207,111],[223,223,159],[239,239,199],[255,255,255]
+];
+
+const PIXEL_SIZE = 4;         // Each "fire pixel" is 4x4 real pixels
+const BURN_IN_TIME = 900;     // ms for fire to cover screen
+const HOLD_TIME = 150;        // ms to hold at full coverage
+const BURN_OUT_TIME = 800;    // ms for fire to fade away
 
 export default function FlameTransition() {
   const pathname = usePathname();
   const router = useRouter();
-  const [phase, setPhase] = useState('idle'); // 'idle' | 'burn-in' | 'burn-out'
+  const [phase, setPhase] = useState('idle');
   const prevPathRef = useRef(pathname);
   const pendingHref = useRef(null);
-  const timeoutRef = useRef(null);
+  const canvasRef = useRef(null);
+  const fireRef = useRef(null);
+  const rafRef = useRef(null);
+  const phaseRef = useRef('idle');
+  const startTimeRef = useRef(0);
 
-  // When pathname changes (new page loaded), play burn-out
+  // Update phase ref for animation loop access
+  useEffect(() => {
+    phaseRef.current = phase;
+  }, [phase]);
+
+  // Detect route changes — trigger burn-out
   useEffect(() => {
     if (pathname !== prevPathRef.current) {
       prevPathRef.current = pathname;
-      // New page has loaded — reveal it with burn-out
       setPhase('burn-out');
-      timeoutRef.current = setTimeout(() => {
+      startTimeRef.current = performance.now();
+      setTimeout(() => {
         setPhase('idle');
-      }, 900);
+        stopFire();
+      }, BURN_OUT_TIME + 100);
     }
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
   }, [pathname]);
 
-  // Intercept ALL internal link clicks
+  // Initialize fire buffer
+  const initFire = useCallback((width, height) => {
+    const fw = Math.ceil(width / PIXEL_SIZE);
+    const fh = Math.ceil(height / PIXEL_SIZE);
+    const buffer = new Uint8Array(fw * fh);
+    fireRef.current = { buffer, width: fw, height: fh };
+    return { buffer, fw, fh };
+  }, []);
+
+  // Start the fire animation
+  const startFire = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const { buffer, fw, fh } = initFire(width, height);
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.createImageData(width, height);
+
+    startTimeRef.current = performance.now();
+
+    const animate = () => {
+      const currentPhase = phaseRef.current;
+      if (currentPhase === 'idle') return;
+
+      const elapsed = performance.now() - startTimeRef.current;
+
+      if (currentPhase === 'burn-in') {
+        // Gradually ignite the bottom rows
+        const progress = Math.min(elapsed / BURN_IN_TIME, 1);
+        // Set bottom rows on fire — more rows as time progresses
+        const igniteRows = Math.max(1, Math.floor(progress * 3));
+        for (let row = 0; row < igniteRows; row++) {
+          const y = fh - 1 - row;
+          for (let x = 0; x < fw; x++) {
+            buffer[y * fw + x] = 36; // Max heat
+          }
+        }
+        // Also add random sparks ahead of the fire front
+        if (progress > 0.2) {
+          const sparkY = Math.floor(fh * (1 - progress * 0.8));
+          for (let i = 0; i < fw * 0.3; i++) {
+            const sx = Math.floor(Math.random() * fw);
+            const sy = sparkY + Math.floor(Math.random() * 5);
+            if (sy >= 0 && sy < fh) {
+              buffer[sy * fw + sx] = Math.floor(Math.random() * 20) + 10;
+            }
+          }
+        }
+      } else if (currentPhase === 'burn-out') {
+        // Kill the fire from bottom — stop adding heat
+        const progress = Math.min(elapsed / BURN_OUT_TIME, 1);
+        // Gradually reduce bottom row intensity
+        for (let x = 0; x < fw; x++) {
+          const idx = (fh - 1) * fw + x;
+          buffer[idx] = Math.max(0, Math.floor(36 * (1 - progress)));
+        }
+        // Also cool down from bottom up
+        const coolRows = Math.floor(progress * fh * 0.5);
+        for (let row = 0; row < coolRows; row++) {
+          const y = fh - 1 - row;
+          if (y >= 0) {
+            for (let x = 0; x < fw; x++) {
+              buffer[y * fw + x] = Math.max(0, buffer[y * fw + x] - 2);
+            }
+          }
+        }
+      }
+
+      // Propagate fire upward (the core doom fire algorithm)
+      for (let x = 0; x < fw; x++) {
+        for (let y = 1; y < fh; y++) {
+          const src = y * fw + x;
+          const heat = buffer[src];
+          if (heat === 0) {
+            buffer[(y - 1) * fw + x] = 0;
+          } else {
+            const randIdx = Math.round(Math.random() * 3);
+            const dstX = Math.min(fw - 1, Math.max(0, x - randIdx + 1));
+            const dst = (y - 1) * fw + dstX;
+            buffer[dst] = Math.max(0, heat - Math.floor(Math.random() * 2));
+          }
+        }
+      }
+
+      // Render fire buffer to canvas
+      const pixels = imageData.data;
+      for (let y = 0; y < fh; y++) {
+        for (let x = 0; x < fw; x++) {
+          const heat = buffer[y * fw + x];
+          const color = FIRE_PALETTE[Math.min(heat, 36)];
+
+          // Fill the PIXEL_SIZE x PIXEL_SIZE block
+          for (let py = 0; py < PIXEL_SIZE; py++) {
+            for (let px = 0; px < PIXEL_SIZE; px++) {
+              const realX = x * PIXEL_SIZE + px;
+              const realY = y * PIXEL_SIZE + py;
+              if (realX < width && realY < height) {
+                const idx = (realY * width + realX) * 4;
+                pixels[idx] = color[0];
+                pixels[idx + 1] = color[1];
+                pixels[idx + 2] = color[2];
+                pixels[idx + 3] = heat > 0 ? 255 : 0;
+              }
+            }
+          }
+        }
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+  }, [initFire]);
+
+  const stopFire = useCallback(() => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+  }, []);
+
+  // Start/stop fire based on phase
+  useEffect(() => {
+    if (phase === 'burn-in' || phase === 'burn-out') {
+      startFire();
+    }
+    return () => stopFire();
+  }, [phase, startFire, stopFire]);
+
+  // Intercept link clicks
   useEffect(() => {
     function handleClick(e) {
-      // Don't intercept if already transitioning
-      if (phase !== 'idle') return;
+      if (phaseRef.current !== 'idle') return;
 
       const anchor = e.target.closest('a');
       if (!anchor) return;
@@ -42,94 +194,63 @@ export default function FlameTransition() {
       const href = anchor.getAttribute('href');
       if (!href) return;
 
-      // Skip external links, special protocols, new tabs, downloads
       if (
-        href.startsWith('http') ||
-        href.startsWith('mailto:') ||
-        href.startsWith('tel:') ||
-        href.startsWith('#') ||
-        anchor.target === '_blank' ||
-        anchor.hasAttribute('download')
-      ) {
-        return;
-      }
+        href.startsWith('http') || href.startsWith('mailto:') ||
+        href.startsWith('tel:') || href.startsWith('#') ||
+        anchor.target === '_blank' || anchor.hasAttribute('download')
+      ) return;
 
-      // Skip same page
-      if (href === pathname) return;
+      if (href === pathname || href.startsWith('/api/')) return;
 
-      // Skip API routes
-      if (href.startsWith('/api/')) return;
-
-      // PREVENT the default navigation
       e.preventDefault();
       e.stopPropagation();
 
-      // Store the destination
       pendingHref.current = href;
-
-      // Start burn-in (flames cover the screen)
       setPhase('burn-in');
+      startTimeRef.current = performance.now();
 
-      // After flames fully cover, navigate to the new page
-      timeoutRef.current = setTimeout(() => {
-        router.push(pendingHref.current);
-        pendingHref.current = null;
-      }, BURN_IN_DURATION + HOLD_DURATION);
+      setTimeout(() => {
+        if (pendingHref.current) {
+          router.push(pendingHref.current);
+          pendingHref.current = null;
+        }
+      }, BURN_IN_TIME + HOLD_TIME);
     }
 
     document.addEventListener('click', handleClick, true);
     return () => document.removeEventListener('click', handleClick, true);
-  }, [pathname, phase, router]);
+  }, [pathname, router]);
 
-  // Also handle programmatic navigation (like the Random Song button)
+  // Global flame navigate for programmatic navigation (Random Song button etc.)
   useEffect(() => {
-    // Override window.location assignments for internal navigation
-    const originalAssign = window.location.assign;
-    const originalHref = Object.getOwnPropertyDescriptor(window.location, 'href');
-
-    // Patch fetch-then-navigate pattern (Random Song button uses window.location.href)
-    // We'll add a global helper
     window.__flameNavigate = (href) => {
-      if (phase !== 'idle') {
+      if (phaseRef.current !== 'idle') {
         router.push(href);
         return;
       }
       pendingHref.current = href;
       setPhase('burn-in');
+      startTimeRef.current = performance.now();
+
       setTimeout(() => {
-        router.push(href);
-        pendingHref.current = null;
-      }, BURN_IN_DURATION + HOLD_DURATION);
+        if (pendingHref.current) {
+          router.push(pendingHref.current);
+          pendingHref.current = null;
+        }
+      }, BURN_IN_TIME + HOLD_TIME);
     };
 
-    return () => {
-      delete window.__flameNavigate;
-    };
-  }, [phase, router]);
+    return () => { delete window.__flameNavigate; };
+  }, [router]);
 
   if (phase === 'idle') return null;
 
   return (
-    <div className={`flame-overlay ${phase}`} aria-hidden="true">
-      {/* Fire columns */}
-      <div className="flame-curtain">
-        {Array.from({ length: FLAME_COLUMNS }).map((_, i) => (
-          <div
-            key={i}
-            className={`flame-col flame-col-${i % 12}`}
-            style={{
-              left: `${(i / FLAME_COLUMNS) * 100}%`,
-              width: `${(100 / FLAME_COLUMNS) + 0.5}%`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Hot white center flash */}
-      <div className="flame-flash" />
-
-      {/* Top smoke */}
-      <div className="flame-smoke-top" />
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none"
+      style={{ zIndex: 99999 }}
+      aria-hidden="true"
+    />
   );
 }
