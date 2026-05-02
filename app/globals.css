@@ -556,194 +556,194 @@
    🔥 FLAME PAGE TRANSITION 🔥
    ═══════════════════════════════════════════════════ */
 
-.flame-transition-overlay {
+.flame-overlay {
   position: fixed;
   inset: 0;
   z-index: 99999;
-  pointer-events: none;
+  pointer-events: all;
   overflow: hidden;
 }
 
-/* The flame curtain container */
 .flame-curtain {
   position: absolute;
   inset: 0;
 }
 
 /* Individual flame columns */
-.flame-column {
+.flame-col {
   position: absolute;
   top: 0;
   bottom: 0;
-  background: linear-gradient(
-    0deg,
-    #ff4500 0%,
-    #ff6600 15%,
-    #ff8800 30%,
-    #ffaa00 45%,
-    #ffcc00 55%,
-    #ff8800 70%,
-    #ff4500 85%,
-    #cc0000 100%
-  );
-  transform: translateY(100%);
   will-change: transform;
+  transform: translateY(110%);
 }
 
-/* Burn-in: flames rise from bottom to cover the page */
-.flame-transition-overlay.burn-in .flame-column {
-  animation: flameRise 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* Burn-out: flames drop away to reveal new page */
-.flame-transition-overlay.burn-out .flame-column {
-  transform: translateY(0%);
-  animation: flameDrop 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes flameRise {
-  0% {
-    transform: translateY(100%) scaleX(1.2);
-    opacity: 0.8;
-    filter: brightness(1.5);
-  }
-  30% {
-    opacity: 1;
-    filter: brightness(2);
-  }
-  100% {
-    transform: translateY(0%) scaleX(1);
-    opacity: 1;
-    filter: brightness(1);
-  }
-}
-
-@keyframes flameDrop {
-  0% {
-    transform: translateY(0%) scaleX(1);
-    opacity: 1;
-    filter: brightness(1);
-  }
-  30% {
-    filter: brightness(1.8);
-  }
-  100% {
-    transform: translateY(-100%) scaleX(1.2);
-    opacity: 0;
-    filter: brightness(2);
-  }
-}
-
-/* Staggered timing for each column - creates natural fire wave */
-.flame-col-0 { animation-delay: 0.02s !important; }
-.flame-col-1 { animation-delay: 0.06s !important; }
-.flame-col-2 { animation-delay: 0.01s !important; }
-.flame-col-3 { animation-delay: 0.08s !important; }
-.flame-col-4 { animation-delay: 0.03s !important; }
-.flame-col-5 { animation-delay: 0.09s !important; }
-.flame-col-6 { animation-delay: 0.00s !important; }
-.flame-col-7 { animation-delay: 0.07s !important; }
-.flame-col-8 { animation-delay: 0.04s !important; }
-.flame-col-9 { animation-delay: 0.10s !important; }
-.flame-col-10 { animation-delay: 0.05s !important; }
-.flame-col-11 { animation-delay: 0.02s !important; }
-
-/* Add flickering variation to columns */
-.flame-column:nth-child(odd) {
+/* Varied flame gradients for natural look */
+.flame-col:nth-child(odd) {
   background: linear-gradient(
     0deg,
-    #ff3300 0%,
-    #ff5500 10%,
-    #ff7700 25%,
-    #ffbb00 40%,
-    #ffdd33 50%,
-    #ffbb00 60%,
-    #ff7700 75%,
-    #ff3300 90%,
+    #8b0000 0%,
+    #cc2200 10%,
+    #ff4400 20%,
+    #ff6600 30%,
+    #ff8800 40%,
+    #ffaa00 50%,
+    #ffcc33 60%,
+    #ffee66 70%,
+    #ffcc33 80%,
+    #ff8800 90%,
+    #cc2200 100%
+  );
+}
+
+.flame-col:nth-child(even) {
+  background: linear-gradient(
+    0deg,
+    #660000 0%,
+    #aa1100 10%,
+    #ee3300 20%,
+    #ff5500 30%,
+    #ff7700 40%,
+    #ffbb00 50%,
+    #ffdd44 60%,
+    #ffbb00 70%,
+    #ff7700 80%,
+    #ee3300 90%,
+    #881100 100%
+  );
+}
+
+.flame-col:nth-child(3n) {
+  background: linear-gradient(
+    0deg,
+    #990000 0%,
+    #dd2200 15%,
+    #ff5500 25%,
+    #ff9900 40%,
+    #ffcc00 50%,
+    #ffffff88 55%,
+    #ffcc00 60%,
+    #ff9900 70%,
+    #ff5500 85%,
     #aa0000 100%
   );
 }
 
-.flame-column:nth-child(3n) {
-  background: linear-gradient(
-    0deg,
-    #cc2200 0%,
-    #ff4400 15%,
-    #ff8800 30%,
-    #ffcc44 50%,
-    #ff9900 65%,
-    #ff5500 80%,
-    #bb1100 100%
-  );
+/* === BURN-IN: Flames RISE from bottom to cover page === */
+.flame-overlay.burn-in .flame-col {
+  animation: flameRiseIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* Center burst - bright flash in the middle during transition */
-.flame-center-burst {
+/* Staggered delays - creates a wave of fire */
+.flame-overlay.burn-in .flame-col-0 { animation-delay: 0.00s; }
+.flame-overlay.burn-in .flame-col-1 { animation-delay: 0.04s; }
+.flame-overlay.burn-in .flame-col-2 { animation-delay: 0.02s; }
+.flame-overlay.burn-in .flame-col-3 { animation-delay: 0.07s; }
+.flame-overlay.burn-in .flame-col-4 { animation-delay: 0.01s; }
+.flame-overlay.burn-in .flame-col-5 { animation-delay: 0.06s; }
+.flame-overlay.burn-in .flame-col-6 { animation-delay: 0.03s; }
+.flame-overlay.burn-in .flame-col-7 { animation-delay: 0.08s; }
+.flame-overlay.burn-in .flame-col-8 { animation-delay: 0.02s; }
+.flame-overlay.burn-in .flame-col-9 { animation-delay: 0.05s; }
+.flame-overlay.burn-in .flame-col-10 { animation-delay: 0.04s; }
+.flame-overlay.burn-in .flame-col-11 { animation-delay: 0.09s; }
+
+/* === BURN-OUT: Flames FALL away to reveal new page === */
+.flame-overlay.burn-out .flame-col {
+  transform: translateY(0%);
+  animation: flameFallOut 0.8s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
+.flame-overlay.burn-out .flame-col-0 { animation-delay: 0.03s; }
+.flame-overlay.burn-out .flame-col-1 { animation-delay: 0.00s; }
+.flame-overlay.burn-out .flame-col-2 { animation-delay: 0.06s; }
+.flame-overlay.burn-out .flame-col-3 { animation-delay: 0.02s; }
+.flame-overlay.burn-out .flame-col-4 { animation-delay: 0.08s; }
+.flame-overlay.burn-out .flame-col-5 { animation-delay: 0.01s; }
+.flame-overlay.burn-out .flame-col-6 { animation-delay: 0.05s; }
+.flame-overlay.burn-out .flame-col-7 { animation-delay: 0.03s; }
+.flame-overlay.burn-out .flame-col-8 { animation-delay: 0.07s; }
+.flame-overlay.burn-out .flame-col-9 { animation-delay: 0.01s; }
+.flame-overlay.burn-out .flame-col-10 { animation-delay: 0.04s; }
+.flame-overlay.burn-out .flame-col-11 { animation-delay: 0.06s; }
+
+@keyframes flameRiseIn {
+  0% {
+    transform: translateY(110%) scaleX(1.3);
+    filter: brightness(2) saturate(1.5);
+  }
+  40% {
+    transform: translateY(30%) scaleX(1.1);
+    filter: brightness(1.5) saturate(1.3);
+  }
+  100% {
+    transform: translateY(0%) scaleX(1);
+    filter: brightness(1) saturate(1);
+  }
+}
+
+@keyframes flameFallOut {
+  0% {
+    transform: translateY(0%) scaleX(1);
+    filter: brightness(1) saturate(1);
+    opacity: 1;
+  }
+  50% {
+    filter: brightness(1.8) saturate(1.5);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-110%) scaleX(1.3);
+    filter: brightness(2.5) saturate(2);
+    opacity: 0;
+  }
+}
+
+/* Central white-hot flash */
+.flame-flash {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: radial-gradient(circle, #fff8 0%, #ffcc0066 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,200,0,0.5) 30%, transparent 70%);
   transform: translate(-50%, -50%);
   opacity: 0;
+  pointer-events: none;
 }
 
-.flame-transition-overlay.burn-in .flame-center-burst {
-  animation: centerBurst 0.4s ease-out 0.1s forwards;
+.flame-overlay.burn-in .flame-flash {
+  animation: flashBurst 0.6s ease-out 0.3s forwards;
 }
 
-@keyframes centerBurst {
+@keyframes flashBurst {
   0% { width: 0; height: 0; opacity: 0; }
-  50% { width: 120vw; height: 120vh; opacity: 0.6; }
-  100% { width: 150vw; height: 150vh; opacity: 0; }
+  30% { opacity: 0.8; }
+  60% { width: 200vmax; height: 200vmax; opacity: 0.4; }
+  100% { width: 250vmax; height: 250vmax; opacity: 0; }
 }
 
-/* Smoke wisps at the top */
-.flame-smoke {
+/* Top smoke during burn-out */
+.flame-smoke-top {
   position: absolute;
-  top: -20px;
+  top: 0;
   left: 0;
   right: 0;
-  height: 120px;
-  background: linear-gradient(
-    to bottom,
-    rgba(50, 50, 50, 0.8) 0%,
-    rgba(80, 50, 30, 0.4) 40%,
-    transparent 100%
-  );
+  height: 200px;
+  background: linear-gradient(to bottom, rgba(40,20,10,0.9) 0%, rgba(60,30,10,0.5) 30%, transparent 100%);
   opacity: 0;
-  filter: blur(8px);
-}
-
-.flame-transition-overlay.burn-in .flame-smoke {
-  animation: smokeRise 0.5s ease-out 0.2s forwards;
-}
-
-.flame-transition-overlay.burn-out .flame-smoke {
-  animation: smokeFade 0.3s ease-out forwards;
-}
-
-@keyframes smokeRise {
-  0% { opacity: 0; transform: translateY(40px); }
-  60% { opacity: 0.7; }
-  100% { opacity: 0.5; transform: translateY(0); }
-}
-
-@keyframes smokeFade {
-  0% { opacity: 0.5; }
-  100% { opacity: 0; transform: translateY(-40px); }
-}
-
-/* Add a subtle orange glow during transition */
-.flame-transition-overlay.burn-in::after,
-.flame-transition-overlay.burn-out::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center bottom, #ff660033 0%, transparent 70%);
+  filter: blur(10px);
   pointer-events: none;
+}
+
+.flame-overlay.burn-out .flame-smoke-top {
+  animation: smokeReveal 0.8s ease-out forwards;
+}
+
+@keyframes smokeReveal {
+  0% { opacity: 0.8; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-60px); }
 }
 
 

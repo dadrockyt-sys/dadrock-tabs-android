@@ -437,7 +437,16 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
                 <h3 className="font-semibold text-white group-hover:text-amber-500 transition-colors line-clamp-2">
                   {video.song || video.title}
                 </h3>
-                <p className="text-sm text-zinc-500 mt-1">{artistName}</p>
+                <div className="flex items-center justify-between mt-1">
+                  <p className="text-sm text-zinc-500">{artistName}</p>
+                  <Link
+                    href={`/songs/${(artistName + '-' + (video.song || video.title)).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`}
+                    className="text-xs text-amber-500/70 hover:text-amber-400 font-medium transition-colors"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    View Tab →
+                  </Link>
+                </div>
               </div>
             </div>
           ))}

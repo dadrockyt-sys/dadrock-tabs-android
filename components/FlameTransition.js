@@ -1,45 +1,48 @@
 'use client';
 
-import { useEffect, useState, useCallback, useRef } from 'react';
-import { usePathname } from 'next/navigation';
+import { useEffect, useState, useRef } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
-// Number of flame columns for the fire curtain effect
-const FLAME_COLUMNS = 12;
+const FLAME_COLUMNS = 14;
+const BURN_IN_DURATION = 800; // ms — how long the flames take to cover the screen
+const HOLD_DURATION = 200;   // ms — brief hold at full coverage before navigating
 
 export default function FlameTransition() {
   const pathname = usePathname();
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [phase, setPhase] = useState('idle'); // 'idle' | 'burn-in' | 'hold' | 'burn-out'
+  const router = useRouter();
+  const [phase, setPhase] = useState('idle'); // 'idle' | 'burn-in' | 'burn-out'
   const prevPathRef = useRef(pathname);
+  const pendingHref = useRef(null);
   const timeoutRef = useRef(null);
 
-  // Detect route changes
+  // When pathname changes (new page loaded), play burn-out
   useEffect(() => {
     if (pathname !== prevPathRef.current) {
-      // Route changed — start burn-out (reveal) phase
+      prevPathRef.current = pathname;
+      // New page has loaded — reveal it with burn-out
       setPhase('burn-out');
       timeoutRef.current = setTimeout(() => {
-        setIsTransitioning(false);
         setPhase('idle');
-      }, 600);
-      prevPathRef.current = pathname;
+      }, 900);
     }
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [pathname]);
 
-  // Intercept link clicks to trigger the burn-in animation
+  // Intercept ALL internal link clicks
   useEffect(() => {
     function handleClick(e) {
-      // Find the closest anchor tag
+      // Don't intercept if already transitioning
+      if (phase !== 'idle') return;
+
       const anchor = e.target.closest('a');
       if (!anchor) return;
 
       const href = anchor.getAttribute('href');
       if (!href) return;
 
-      // Skip external links, hash links, and special protocols
+      // Skip external links, special protocols, new tabs, downloads
       if (
         href.startsWith('http') ||
         href.startsWith('mailto:') ||
@@ -51,52 +54,82 @@ export default function FlameTransition() {
         return;
       }
 
-      // Skip if it's the same page
+      // Skip same page
       if (href === pathname) return;
 
       // Skip API routes
       if (href.startsWith('/api/')) return;
 
-      // Trigger burn-in animation
-      setIsTransitioning(true);
+      // PREVENT the default navigation
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Store the destination
+      pendingHref.current = href;
+
+      // Start burn-in (flames cover the screen)
       setPhase('burn-in');
+
+      // After flames fully cover, navigate to the new page
+      timeoutRef.current = setTimeout(() => {
+        router.push(pendingHref.current);
+        pendingHref.current = null;
+      }, BURN_IN_DURATION + HOLD_DURATION);
     }
 
     document.addEventListener('click', handleClick, true);
     return () => document.removeEventListener('click', handleClick, true);
-  }, [pathname]);
+  }, [pathname, phase, router]);
 
-  if (!isTransitioning && phase === 'idle') return null;
+  // Also handle programmatic navigation (like the Random Song button)
+  useEffect(() => {
+    // Override window.location assignments for internal navigation
+    const originalAssign = window.location.assign;
+    const originalHref = Object.getOwnPropertyDescriptor(window.location, 'href');
+
+    // Patch fetch-then-navigate pattern (Random Song button uses window.location.href)
+    // We'll add a global helper
+    window.__flameNavigate = (href) => {
+      if (phase !== 'idle') {
+        router.push(href);
+        return;
+      }
+      pendingHref.current = href;
+      setPhase('burn-in');
+      setTimeout(() => {
+        router.push(href);
+        pendingHref.current = null;
+      }, BURN_IN_DURATION + HOLD_DURATION);
+    };
+
+    return () => {
+      delete window.__flameNavigate;
+    };
+  }, [phase, router]);
+
+  if (phase === 'idle') return null;
 
   return (
-    <div
-      className={`flame-transition-overlay ${phase}`}
-      aria-hidden="true"
-    >
-      {/* Fire curtain — individual flame columns that rise/fall at staggered times */}
+    <div className={`flame-overlay ${phase}`} aria-hidden="true">
+      {/* Fire columns */}
       <div className="flame-curtain">
         {Array.from({ length: FLAME_COLUMNS }).map((_, i) => (
           <div
             key={i}
-            className={`flame-column flame-col-${i}`}
+            className={`flame-col flame-col-${i % 12}`}
             style={{
               left: `${(i / FLAME_COLUMNS) * 100}%`,
-              width: `${(100 / FLAME_COLUMNS) + 1}%`,
-              animationDelay: `${
-                phase === 'burn-in'
-                  ? Math.random() * 0.15
-                  : Math.random() * 0.15
-              }s`,
+              width: `${(100 / FLAME_COLUMNS) + 0.5}%`,
             }}
           />
         ))}
       </div>
 
-      {/* Central ember burst */}
-      <div className="flame-center-burst" />
+      {/* Hot white center flash */}
+      <div className="flame-flash" />
 
-      {/* Smoke wisps at the top */}
-      <div className="flame-smoke" />
+      {/* Top smoke */}
+      <div className="flame-smoke-top" />
     </div>
   );
 }

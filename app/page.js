@@ -266,10 +266,23 @@ function LanguageSelector({ currentLang }) {
 
 // Video Card Component
 function VideoCard({ video, onClick }) {
+  // Build song page slug from artist + song
+  const songSlug = video.slug || `${(video.artist || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${(video.song || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`.replace(/(^-|-$)/g, '');
+
+  const handleClick = () => {
+    // Navigate to the song page with flame transition
+    if (window.__flameNavigate && songSlug) {
+      window.__flameNavigate(`/songs/${songSlug}`);
+    } else {
+      // Fallback to inline play
+      onClick(video);
+    }
+  };
+
   return (
     <div
       className="video-card group flex items-center gap-3 p-2 bg-zinc-900/50 hover:bg-zinc-800 rounded-lg border border-zinc-800 cursor-pointer transition-all"
-      onClick={() => onClick(video)}
+      onClick={handleClick}
     >
       <div className="relative w-24 h-16 sm:w-28 sm:h-[72px] flex-shrink-0 overflow-hidden rounded-md">
         <img
@@ -1453,9 +1466,6 @@ export default function App({ initialLang = 'en' }) {
   if (currentPage === 'home') {
     return (
       <div className="min-h-screen bg-black overflow-y-auto bg-guitarist">
-        {/* ⚡ Lightning Flash Overlay */}
-        <div className="lightning-overlay" />
-
         {/* Header - with safe area padding for mobile notch/status bar */}
         <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-zinc-900 pt-safe">
           <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3">
@@ -1607,7 +1617,11 @@ export default function App({ initialLang = 'en' }) {
                 const res = await fetch('/api/random-song');
                 const data = await res.json();
                 if (data.slug) {
-                  window.location.href = `/songs/${data.slug}`;
+                  if (window.__flameNavigate) {
+                    window.__flameNavigate(`/songs/${data.slug}`);
+                  } else {
+                    window.location.href = `/songs/${data.slug}`;
+                  }
                 }
               } catch (e) { console.error(e); }
             }}
