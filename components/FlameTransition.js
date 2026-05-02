@@ -3,20 +3,119 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
-// Fire color palette — maps heat intensity (0-36) to RGB (classic doom fire)
-const FIRE_PALETTE = [
-  [0,0,0],[7,7,7],[31,7,7],[47,15,7],[71,15,7],[87,23,7],[103,31,7],[119,31,7],
-  [143,39,7],[159,47,7],[175,63,7],[191,71,7],[199,71,7],[223,79,7],[223,87,7],
-  [223,87,7],[215,95,7],[215,103,15],[207,111,15],[207,119,15],[207,127,15],
-  [207,135,23],[199,135,23],[199,143,23],[199,151,31],[191,159,31],[191,159,31],
-  [191,167,39],[191,167,39],[191,175,47],[183,175,47],[183,183,47],[183,183,55],
-  [207,207,111],[223,223,159],[239,239,199],[255,255,255]
-];
+// ─── Smooth fire color palette (64 entries for smoother gradients) ───
+function buildFirePalette() {
+  const palette = [];
+  const keyColors = [
+    [0, 0, 0],       // 0  - black
+    [20, 4, 2],      // 8  - very dark red
+    [60, 8, 4],      // 14 - dark maroon
+    [120, 16, 4],    // 20 - deep red
+    [180, 30, 4],    // 26 - red
+    [210, 60, 8],    // 32 - red-orange
+    [230, 90, 10],   // 38 - orange
+    [240, 130, 20],  // 44 - bright orange
+    [250, 170, 40],  // 50 - yellow-orange
+    [255, 210, 80],  // 56 - yellow
+    [255, 240, 160], // 60 - pale yellow
+    [255, 255, 220], // 63 - near white
+  ];
+  const stops = [0, 8, 14, 20, 26, 32, 38, 44, 50, 56, 60, 63];
 
-const PIXEL_SIZE = 4;         // Each "fire pixel" is 4x4 real pixels
-const BURN_IN_TIME = 900;     // ms for fire to cover screen
-const HOLD_TIME = 150;        // ms to hold at full coverage
-const BURN_OUT_TIME = 800;    // ms for fire to fade away
+  for (let i = 0; i <= 63; i++) {
+    let segIdx = 0;
+    for (let s = 0; s < stops.length - 1; s++) {
+      if (i >= stops[s] && i <= stops[s + 1]) { segIdx = s; break; }
+    }
+    const t = (i - stops[segIdx]) / (stops[segIdx + 1] - stops[segIdx]);
+    const c0 = keyColors[segIdx];
+    const c1 = keyColors[segIdx + 1];
+    palette.push([
+      Math.round(c0[0] + (c1[0] - c0[0]) * t),
+      Math.round(c0[1] + (c1[1] - c0[1]) * t),
+      Math.round(c0[2] + (c1[2] - c0[2]) * t),
+    ]);
+  }
+  return palette;
+}
+
+const FIRE_PALETTE = buildFirePalette();
+const MAX_HEAT = 63;
+
+const PIXEL_SIZE = 2;         // Finer resolution for smoother look
+const BURN_IN_TIME = 1000;    // ms for fire to cover screen
+const HOLD_TIME = 200;        // ms to hold at full coverage
+const BURN_OUT_TIME = 900;    // ms for fire to fade away
+const MAX_PARTICLES = 250;    // Ember particle count
+
+// ─── Ember Particle class ───
+class Ember {
+  constructor(screenW, screenH, fromBottom = true) {
+    this.reset(screenW, screenH, fromBottom);
+  }
+
+  reset(screenW, screenH, fromBottom = true) {
+    this.x = Math.random() * screenW;
+    this.y = fromBottom ? screenH + Math.random() * 40 : screenH * (0.4 + Math.random() * 0.6);
+    this.vx = (Math.random() - 0.5) * 1.5;
+    this.vy = -(1.5 + Math.random() * 3.5);
+    this.size = 1 + Math.random() * 3;
+    this.life = 0.8 + Math.random() * 0.4;
+    this.maxLife = this.life;
+    this.brightness = 0.5 + Math.random() * 0.5;
+    // Color: white-hot → yellow → orange → red
+    const colorRand = Math.random();
+    if (colorRand < 0.15) {
+      this.color = [255, 255, 200]; // white-hot
+    } else if (colorRand < 0.4) {
+      this.color = [255, 220, 50];  // bright yellow
+    } else if (colorRand < 0.7) {
+      this.color = [255, 140, 20];  // orange
+    } else {
+      this.color = [255, 60, 10];   // red
+    }
+    this.turbulenceOffset = Math.random() * 1000;
+    this.turbulenceSpeed = 2 + Math.random() * 3;
+    this.active = true;
+  }
+
+  update(dt, time) {
+    this.life -= dt;
+    if (this.life <= 0) { this.active = false; return; }
+
+    // Turbulence
+    const turb = Math.sin(time * this.turbulenceSpeed + this.turbulenceOffset) * 0.8;
+    this.x += this.vx + turb;
+    this.y += this.vy;
+    this.vy *= 0.995; // Slow down slightly
+    this.size *= 0.998; // Shrink slightly
+  }
+
+  draw(ctx) {
+    if (!this.active) return;
+    const alpha = (this.life / this.maxLife) * this.brightness;
+    if (alpha <= 0.01) return;
+
+    const [r, g, b] = this.color;
+
+    // Soft glow circle
+    const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3);
+    gradient.addColorStop(0, `rgba(${r},${g},${b},${alpha})`);
+    gradient.addColorStop(0.3, `rgba(${r},${g},${b},${alpha * 0.5})`);
+    gradient.addColorStop(1, `rgba(${r},${g},${b},0)`);
+
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Bright core
+    ctx.fillStyle = `rgba(${Math.min(255, r + 50)},${Math.min(255, g + 50)},${Math.min(255, b + 30)},${alpha * 0.9})`;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size * 0.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
 
 export default function FlameTransition() {
   const pathname = usePathname();
@@ -25,43 +124,34 @@ export default function FlameTransition() {
   const prevPathRef = useRef(pathname);
   const pendingHref = useRef(null);
   const canvasRef = useRef(null);
-  const fireRef = useRef(null);      // { buffer, width, height }
+  const fireRef = useRef(null);
   const rafRef = useRef(null);
   const phaseRef = useRef('idle');
   const startTimeRef = useRef(0);
-  const ctxRef = useRef(null);
-  const imageDataRef = useRef(null);
-  const canvasSizeRef = useRef({ w: 0, h: 0 });
+  const particlesRef = useRef([]);
+  const lastFrameRef = useRef(0);
 
-  // Keep phase ref in sync for the animation loop
-  useEffect(() => {
-    phaseRef.current = phase;
-  }, [phase]);
+  useEffect(() => { phaseRef.current = phase; }, [phase]);
 
-  // Detect route changes — trigger burn-out (fire dies down naturally)
+  // Detect route change → burn-out
   useEffect(() => {
     if (pathname !== prevPathRef.current) {
       prevPathRef.current = pathname;
-      // Start burn-out from wherever the fire currently is
       phaseRef.current = 'burn-out';
       setPhase('burn-out');
       startTimeRef.current = performance.now();
 
-      // Schedule cleanup after burn-out completes
       const timer = setTimeout(() => {
         setPhase('idle');
         stopAnimation();
-        // Clear refs for next transition
         fireRef.current = null;
-        ctxRef.current = null;
-        imageDataRef.current = null;
-      }, BURN_OUT_TIME + 200);
+        particlesRef.current = [];
+      }, BURN_OUT_TIME + 300);
 
       return () => clearTimeout(timer);
     }
   }, [pathname]);
 
-  // Stop the animation loop
   const stopAnimation = useCallback(() => {
     if (rafRef.current) {
       cancelAnimationFrame(rafRef.current);
@@ -69,91 +159,123 @@ export default function FlameTransition() {
     }
   }, []);
 
-  // Initialize or resize the canvas + fire buffer
-  const ensureCanvas = useCallback(() => {
+  // ─── Main animation engine ───
+  const runAnimation = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return false;
+    if (!canvas) return;
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
 
-    // Only reinitialize if canvas size changed or no buffer exists
-    if (canvasSizeRef.current.w !== width || canvasSizeRef.current.h !== height || !fireRef.current) {
-      canvas.width = width;
-      canvas.height = height;
-      canvasSizeRef.current = { w: width, h: height };
+    const ctx = canvas.getContext('2d');
 
-      const fw = Math.ceil(width / PIXEL_SIZE);
-      const fh = Math.ceil(height / PIXEL_SIZE);
-      const buffer = new Uint8Array(fw * fh);
-      fireRef.current = { buffer, width: fw, height: fh };
+    // Fire grid
+    const fw = Math.ceil(W / PIXEL_SIZE);
+    const fh = Math.ceil(H / PIXEL_SIZE);
 
-      ctxRef.current = canvas.getContext('2d');
-      imageDataRef.current = ctxRef.current.createImageData(width, height);
+    // Reuse existing buffer for burn-out, fresh for burn-in
+    if (!fireRef.current || fireRef.current.width !== fw || fireRef.current.height !== fh) {
+      fireRef.current = {
+        buffer: new Uint8Array(fw * fh),
+        width: fw,
+        height: fh,
+      };
     }
 
-    return true;
-  }, []);
+    const { buffer } = fireRef.current;
 
-  // The main animation loop — reads phaseRef to decide behavior
-  const runAnimation = useCallback(() => {
-    if (!ensureCanvas()) return;
+    // Create offscreen canvas for fire rendering
+    const offCanvas = document.createElement('canvas');
+    offCanvas.width = W;
+    offCanvas.height = H;
+    const offCtx = offCanvas.getContext('2d');
+    const offImageData = offCtx.createImageData(W, H);
 
-    const { buffer, width: fw, height: fh } = fireRef.current;
-    const ctx = ctxRef.current;
-    const imageData = imageDataRef.current;
-    const { w: canvasW, h: canvasH } = canvasSizeRef.current;
+    // Initialize particles
+    if (particlesRef.current.length === 0) {
+      for (let i = 0; i < MAX_PARTICLES; i++) {
+        particlesRef.current.push(new Ember(W, H, true));
+      }
+    }
 
-    const animate = () => {
+    lastFrameRef.current = performance.now();
+
+    const animate = (now) => {
       const currentPhase = phaseRef.current;
       if (currentPhase === 'idle') {
         rafRef.current = null;
         return;
       }
 
-      const elapsed = performance.now() - startTimeRef.current;
+      const dt = Math.min((now - lastFrameRef.current) / 1000, 0.05);
+      lastFrameRef.current = now;
+      const elapsed = now - startTimeRef.current;
+      const time = now / 1000;
 
+      // ─── Update fire simulation ───
       if (currentPhase === 'burn-in') {
-        // Gradually ignite bottom rows — more as time progresses
         const progress = Math.min(elapsed / BURN_IN_TIME, 1);
-        const igniteRows = Math.max(1, Math.floor(progress * 3));
+        // Ignite bottom rows — scale with progress for dramatic buildup
+        const igniteRows = Math.max(2, Math.floor(progress * 8));
         for (let row = 0; row < igniteRows; row++) {
           const y = fh - 1 - row;
-          for (let x = 0; x < fw; x++) {
-            buffer[y * fw + x] = 36; // Max heat
+          if (y >= 0) {
+            for (let x = 0; x < fw; x++) {
+              const variation = Math.random() < 0.85 ? MAX_HEAT : MAX_HEAT - Math.floor(Math.random() * 10);
+              buffer[y * fw + x] = variation;
+            }
           }
         }
-        // Add random sparks ahead of the fire front for drama
-        if (progress > 0.2) {
-          const sparkY = Math.floor(fh * (1 - progress * 0.8));
-          const sparkCount = Math.floor(fw * 0.3);
+        // Dense sparks ahead of the fire front to fill the screen faster
+        if (progress > 0.1) {
+          const frontY = Math.floor(fh * (1 - progress * 0.9));
+          const sparkCount = Math.floor(fw * 0.5 * progress);
           for (let i = 0; i < sparkCount; i++) {
             const sx = Math.floor(Math.random() * fw);
-            const sy = sparkY + Math.floor(Math.random() * 5);
+            const sy = frontY + Math.floor(Math.random() * Math.max(4, fh * progress * 0.4));
             if (sy >= 0 && sy < fh) {
-              buffer[sy * fw + sx] = Math.floor(Math.random() * 20) + 10;
+              const sparkHeat = Math.floor(Math.random() * 20) + (MAX_HEAT - 20);
+              buffer[sy * fw + sx] = Math.max(buffer[sy * fw + sx], sparkHeat);
+            }
+          }
+        }
+        // Vertical fire jets — random columns of intense heat that shoot upward
+        if (progress > 0.2) {
+          const jetCount = Math.floor(fw * 0.05 * progress);
+          for (let j = 0; j < jetCount; j++) {
+            const jx = Math.floor(Math.random() * fw);
+            const jetHeight = Math.floor(fh * progress * (0.3 + Math.random() * 0.5));
+            for (let dy = 0; dy < jetHeight; dy++) {
+              const jy = fh - 1 - dy;
+              if (jy >= 0) {
+                // Slight horizontal drift for organic look
+                const drift = jx + Math.floor((Math.random() - 0.5) * 3);
+                const dx = Math.min(fw - 1, Math.max(0, drift));
+                const jetHeat = Math.max(0, MAX_HEAT - Math.floor(dy * (MAX_HEAT / jetHeight) * 0.6));
+                buffer[jy * fw + dx] = Math.max(buffer[jy * fw + dx], jetHeat);
+              }
             }
           }
         }
       } else if (currentPhase === 'burn-out') {
-        // Gradually reduce the heat source at the bottom
         const progress = Math.min(elapsed / BURN_OUT_TIME, 1);
-        // Diminish bottom row heat over time
-        const bottomHeat = Math.max(0, Math.floor(36 * (1 - progress * 1.5)));
+        // Kill the heat source at bottom immediately
+        const bottomHeat = Math.max(0, Math.floor(MAX_HEAT * Math.max(0, 1 - progress * 3)));
         for (let x = 0; x < fw; x++) {
-          const idx = (fh - 1) * fw + x;
-          buffer[idx] = Math.min(buffer[idx], bottomHeat);
+          buffer[(fh - 1) * fw + x] = Math.min(buffer[(fh - 1) * fw + x], bottomHeat);
+          // Also kill the second row
+          if (fh > 1) buffer[(fh - 2) * fw + x] = Math.min(buffer[(fh - 2) * fw + x], bottomHeat);
         }
-        // Actively cool the entire buffer to speed up disappearance
-        if (progress > 0.3) {
-          const coolStrength = Math.floor((progress - 0.3) * 4);
-          for (let i = 0; i < buffer.length; i++) {
-            buffer[i] = Math.max(0, buffer[i] - coolStrength);
-          }
+        // Aggressive global cooling — eases in then accelerates
+        const coolAmount = Math.floor(progress * progress * 16) + (progress > 0.1 ? 1 : 0);
+        for (let i = 0; i < buffer.length; i++) {
+          buffer[i] = Math.max(0, buffer[i] - coolAmount);
         }
       }
 
-      // Propagate fire upward (core doom fire algorithm)
+      // ─── Doom fire propagation ───
       for (let x = 0; x < fw; x++) {
         for (let y = 1; y < fh; y++) {
           const src = y * fw + x;
@@ -161,70 +283,150 @@ export default function FlameTransition() {
           if (heat === 0) {
             buffer[(y - 1) * fw + x] = 0;
           } else {
-            const randIdx = Math.round(Math.random() * 3);
-            const dstX = Math.min(fw - 1, Math.max(0, x - randIdx + 1));
-            const dst = (y - 1) * fw + dstX;
-            buffer[dst] = Math.max(0, heat - Math.floor(Math.random() * 2));
+            const rand = Math.round(Math.random() * 3);
+            const dstX = Math.min(fw - 1, Math.max(0, x - rand + 1));
+            const decay = Math.floor(Math.random() * 2);
+            buffer[(y - 1) * fw + dstX] = Math.max(0, heat - decay);
           }
         }
       }
 
-      // Render fire buffer to canvas pixels
-      const pixels = imageData.data;
+      // ─── Render fire to offscreen canvas ───
+      const pixels = offImageData.data;
       for (let y = 0; y < fh; y++) {
         for (let x = 0; x < fw; x++) {
           const heat = buffer[y * fw + x];
-          const color = FIRE_PALETTE[Math.min(heat, 36)];
+          if (heat === 0) {
+            // Transparent pixel blocks
+            for (let py = 0; py < PIXEL_SIZE; py++) {
+              for (let px = 0; px < PIXEL_SIZE; px++) {
+                const rX = x * PIXEL_SIZE + px;
+                const rY = y * PIXEL_SIZE + py;
+                if (rX < W && rY < H) {
+                  const idx = (rY * W + rX) * 4;
+                  pixels[idx + 3] = 0;
+                }
+              }
+            }
+            continue;
+          }
+          const color = FIRE_PALETTE[Math.min(heat, MAX_HEAT)];
 
           for (let py = 0; py < PIXEL_SIZE; py++) {
             for (let px = 0; px < PIXEL_SIZE; px++) {
-              const realX = x * PIXEL_SIZE + px;
-              const realY = y * PIXEL_SIZE + py;
-              if (realX < canvasW && realY < canvasH) {
-                const idx = (realY * canvasW + realX) * 4;
+              const rX = x * PIXEL_SIZE + px;
+              const rY = y * PIXEL_SIZE + py;
+              if (rX < W && rY < H) {
+                const idx = (rY * W + rX) * 4;
                 pixels[idx] = color[0];
                 pixels[idx + 1] = color[1];
                 pixels[idx + 2] = color[2];
-                pixels[idx + 3] = heat > 0 ? 255 : 0;
+                pixels[idx + 3] = Math.min(255, heat * 6);
               }
             }
           }
         }
       }
+      offCtx.putImageData(offImageData, 0, 0);
 
-      ctx.putImageData(imageData, 0, 0);
+      // ─── Composite to main canvas ───
+      ctx.clearRect(0, 0, W, H);
+
+      // During burn-out, reduce intensity progressively
+      const isBurnOut = currentPhase === 'burn-out';
+      const burnOutFade = isBurnOut ? Math.max(0, 1 - (elapsed / BURN_OUT_TIME)) : 1;
+
+      // Layer 1: Blurred fire base (warm glow)
+      ctx.save();
+      ctx.filter = 'blur(6px)';
+      ctx.globalAlpha = 0.7 * burnOutFade;
+      ctx.drawImage(offCanvas, 0, 0);
+      ctx.restore();
+
+      // Layer 2: Slightly blurred fire (medium detail)
+      ctx.save();
+      ctx.filter = 'blur(2px)';
+      ctx.globalAlpha = 0.85 * (isBurnOut ? Math.max(0.3, burnOutFade) : 1);
+      ctx.drawImage(offCanvas, 0, 0);
+      ctx.restore();
+
+      // Layer 3: Sharp fire on top (fine detail + brightness) — fade faster during burn-out
+      ctx.save();
+      ctx.globalAlpha = 0.6 * (isBurnOut ? burnOutFade * burnOutFade : 1);
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.drawImage(offCanvas, 0, 0);
+      ctx.restore();
+
+      // ─── Ember particles ───
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      const particles = particlesRef.current;
+      let activeCount = 0;
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        if (p.active) {
+          p.update(dt, time);
+          p.draw(ctx);
+          activeCount++;
+          // Remove particles that go off screen
+          if (p.y < -50 || p.x < -50 || p.x > W + 50) {
+            p.active = false;
+          }
+        }
+      }
+
+      // Respawn dead particles during burn-in or early burn-out
+      if (currentPhase === 'burn-in' || (currentPhase === 'burn-out' && elapsed < BURN_OUT_TIME * 0.5)) {
+        const spawnRate = currentPhase === 'burn-in'
+          ? Math.min(elapsed / BURN_IN_TIME, 1) * 0.8
+          : Math.max(0, 1 - (elapsed / (BURN_OUT_TIME * 0.5))) * 0.3;
+
+        for (let i = 0; i < particles.length; i++) {
+          if (!particles[i].active && Math.random() < spawnRate * 0.15) {
+            particles[i].reset(W, H, true);
+          }
+        }
+      }
+      ctx.restore();
+
+      // ─── Heat haze / glow at the top edge ───
+      if (currentPhase === 'burn-in') {
+        const progress = Math.min(elapsed / BURN_IN_TIME, 1);
+        if (progress > 0.3) {
+          const hazeAlpha = (progress - 0.3) * 0.15;
+          const gradient = ctx.createLinearGradient(0, 0, 0, H * 0.3);
+          gradient.addColorStop(0, `rgba(40, 10, 0, ${hazeAlpha})`);
+          gradient.addColorStop(1, 'rgba(40, 10, 0, 0)');
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, W, H * 0.3);
+        }
+      }
+
       rafRef.current = requestAnimationFrame(animate);
     };
 
-    // Cancel any existing loop before starting new one
     stopAnimation();
     rafRef.current = requestAnimationFrame(animate);
-  }, [ensureCanvas, stopAnimation]);
+  }, [stopAnimation]);
 
-  // Start animation when entering burn-in (fresh fire)
-  // For burn-out, the existing animation loop continues with preserved buffer
+  // Phase-based animation control
   useEffect(() => {
     if (phase === 'burn-in') {
-      // Fresh fire — reinitialize buffer
       fireRef.current = null;
+      particlesRef.current = [];
       runAnimation();
     } else if (phase === 'burn-out') {
-      // Continue animation with existing fire buffer (if available)
-      // If no existing buffer (edge case), start fresh anyway
       if (!rafRef.current) {
         runAnimation();
       }
-      // If animation is already running, it will read the updated phaseRef
     }
-
     return () => {
-      if (phase === 'idle') {
-        stopAnimation();
-      }
+      if (phase === 'idle') stopAnimation();
     };
   }, [phase, runAnimation, stopAnimation]);
 
-  // Intercept internal link clicks to trigger flame transition
+  // ─── Click interceptor for internal links ───
   useEffect(() => {
     function handleClick(e) {
       if (phaseRef.current !== 'idle') return;
@@ -235,14 +437,12 @@ export default function FlameTransition() {
       const href = anchor.getAttribute('href');
       if (!href) return;
 
-      // Skip external links, mailto, tel, anchors, new tabs, downloads
       if (
         href.startsWith('http') || href.startsWith('mailto:') ||
         href.startsWith('tel:') || href.startsWith('#') ||
         anchor.target === '_blank' || anchor.hasAttribute('download')
       ) return;
 
-      // Skip same page and API routes
       if (href === pathname || href.startsWith('/api/')) return;
 
       e.preventDefault();
@@ -264,7 +464,7 @@ export default function FlameTransition() {
     return () => document.removeEventListener('click', handleClick, true);
   }, [pathname, router]);
 
-  // Global flame navigate for programmatic navigation (Random Song button etc.)
+  // ─── Global programmatic navigation (Random Song, etc.) ───
   useEffect(() => {
     window.__flameNavigate = (href) => {
       if (phaseRef.current !== 'idle') {
