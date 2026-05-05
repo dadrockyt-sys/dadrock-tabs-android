@@ -4,6 +4,7 @@ import { locales } from '@/lib/i18n';
 import GAPageTracker from '@/components/GAPageTracker';
 import PlayStoreReviewBanner from '@/components/PlayStoreReviewBanner';
 import FlameTransition from '@/components/FlameTransition';
+import ExitIntentPopup from '@/components/ExitIntentPopup';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://dadrocktabs.com';
 
@@ -56,6 +57,13 @@ export const metadata = {
   verification: {
     // Add your Google Search Console verification code here if you have one
     // google: 'your-verification-code',
+  },
+  alternates: {
+    ...({
+      types: {
+        'application/rss+xml': '/api/rss',
+      },
+    }),
   },
 };
 
@@ -331,6 +339,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-screen bg-background antialiased">
         <FlameTransition />
+        <ExitIntentPopup />
         <Suspense fallback={null}>
           <GAPageTracker />
         </Suspense>

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus, Trophy, Zap, RefreshCw, Map, Activity, Shield, ExternalLink, Wifi, Database, FileText } from 'lucide-react';
 import { getTranslation, locales, localeNames, localeFlags } from '@/lib/i18n';
 import NewsletterSignup from '@/components/NewsletterSignup';
+import GamificationPanel from '@/components/Gamification';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const DADROCK_TEXT_URL = "https://customer-assets.emergentagent.com/job_nextjs-deploy-3/artifacts/2vno1305_Picsart_26-02-16_06-05-32-255%281%29.png";
@@ -1667,11 +1668,31 @@ export default function App({ initialLang = 'en' }) {
           {/* DadRock Tabs Quickies Button */}
           <Link
             href="/quickies"
-            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold uppercase tracking-wide mb-10 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold uppercase tracking-wide mb-4 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.55s' }}
           >
             <Zap className="w-6 h-6" />
             DadRock Tabs Quickies
+          </Link>
+
+          {/* Guitar Tools Button */}
+          <Link
+            href="/tools"
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-teal-600 hover:bg-teal-500 text-white font-bold uppercase tracking-wide mb-4 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transitionDelay: '0.6s' }}
+          >
+            <Music className="w-6 h-6" />
+            Guitar Tools
+          </Link>
+
+          {/* What's New Button */}
+          <Link
+            href="/whats-new"
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-green-600 hover:bg-green-500 text-white font-bold uppercase tracking-wide mb-10 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transitionDelay: '0.65s' }}
+          >
+            <RefreshCw className="w-6 h-6" />
+            What&apos;s New
           </Link>
 
           {/* Popular Searches with Glassmorphism */}
@@ -1883,6 +1904,11 @@ export default function App({ initialLang = 'en' }) {
           </div>
           {/* Newsletter Signup */}
           <NewsletterSignup />
+          
+          {/* Gamification Panel */}
+          <div className="mt-8">
+            <GamificationPanel />
+          </div>
         </section>
 
         {/* Footer */}
