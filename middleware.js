@@ -284,11 +284,12 @@ export function middleware(request) {
     return addSecurityHeaders(response);
   }
 
-  // For subpaths like /es/artist/acdc, rewrite to /artist/acdc
-  const rewriteUrl = new URL(restPath, request.url);
-  const response = NextResponse.rewrite(rewriteUrl);
-  response.headers.set('x-locale', matchedLocale);
-  return addSecurityHeaders(response);
+  // For subpaths like /es/artist/acdc → 301 redirect to /artist/acdc
+  // This eliminates "Duplicate without user-selected canonical" GSC errors
+  // by consolidating all locale subpath traffic to the English canonical URL
+  const redirectUrl = new URL(restPath, request.url);
+  redirectUrl.search = request.nextUrl.search;
+  return NextResponse.redirect(redirectUrl, 301);
 }
 
 export const config = {

@@ -65,7 +65,7 @@ export async function generateMetadata({ params }) {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://dadrocktabs.com';
 
-  // Generate alternate language links
+  // Generate alternate language links — only for the homepage
   const languages = {};
   locales.forEach(l => {
     languages[l] = l === 'en' ? baseUrl : `${baseUrl}/${l}`;
@@ -103,8 +103,8 @@ export async function generateMetadata({ params }) {
       },
       {
         '@type': 'WebPage',
-        '@id': lang === 'en' ? `${baseUrl}/#webpage` : `${baseUrl}/${lang}/#webpage`,
-        'url': lang === 'en' ? baseUrl : `${baseUrl}/${lang}`,
+        '@id': `${baseUrl}/#webpage`,
+        'url': baseUrl,
         'name': titles[lang] || titles.en,
         'description': descriptions[lang] || descriptions.en,
         'isPartOf': { '@id': `${baseUrl}/#website` },
@@ -175,7 +175,9 @@ export async function generateMetadata({ params }) {
     description: descriptions[lang] || descriptions.en,
     keywords: keywords[lang] || keywords.en,
     alternates: {
-      canonical: lang === 'en' ? baseUrl : `${baseUrl}/${lang}`,
+      // ALL locale pages point canonical to the English homepage
+      // This tells Google the English version is the primary page
+      canonical: baseUrl,
       languages: languages,
     },
     openGraph: {
@@ -184,7 +186,7 @@ export async function generateMetadata({ params }) {
       type: 'website',
       locale: lang,
       alternateLocale: locales.filter(l => l !== lang),
-      url: lang === 'en' ? baseUrl : `${baseUrl}/${lang}`,
+      url: baseUrl,
       siteName: 'DadRock Tabs',
       images: [
         {
@@ -202,10 +204,12 @@ export async function generateMetadata({ params }) {
       images: ['https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png'],
     },
     robots: {
-      index: true,
+      // NOINDEX locale pages — they're UI translations of the same English content
+      // This prevents "Alternate page with proper canonical tag" GSC errors
+      index: false,
       follow: true,
       googleBot: {
-        index: true,
+        index: false,
         follow: true,
         'max-video-preview': -1,
         'max-image-preview': 'large',

@@ -1,4 +1,3 @@
-import { locales } from '@/lib/i18n';
 import { getDb } from '@/lib/mongodb';
 import { artistToSlug } from '@/lib/slugify';
 import { GENRES, ERAS } from '@/lib/genreData';
@@ -9,68 +8,62 @@ import { PLAYLISTS } from '@/lib/playlistData';
 // Use non-www as canonical (matches your redirect setup)
 const baseUrl = 'https://dadrocktabs.com';
 
-// Helper: generate hreflang alternates for a given path
-function generateLanguageAlternates(path = '') {
-  const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  const languages = {};
-  for (const lang of locales) {
-    if (lang === 'en') {
-      languages[lang] = `${baseUrl}${cleanPath}`;
-    } else {
-      languages[lang] = `${baseUrl}/${lang}${cleanPath}`;
-    }
-  }
-  languages['x-default'] = `${baseUrl}${cleanPath}`;
-  return { languages };
-}
-
 export default async function sitemap() {
   const routes = [];
   const currentDate = new Date().toISOString();
   
-  // Add language routes (homepage in all languages)
-  locales.forEach(lang => {
-    routes.push({
-      url: lang === 'en' ? baseUrl : `${baseUrl}/${lang}`,
-      lastModified: currentDate,
-      changeFrequency: 'daily',
-      priority: lang === 'en' ? 1 : 0.9,
-      alternates: {
-        languages: Object.fromEntries(
-          locales.map(l => [l, l === 'en' ? baseUrl : `${baseUrl}/${l}`])
-        ),
-      },
-    });
+  // ─── HOMEPAGE (English only — locale pages are noindexed) ───
+  routes.push({
+    url: baseUrl,
+    lastModified: currentDate,
+    changeFrequency: 'daily',
+    priority: 1,
   });
 
-  // Add Coming Soon page (with hreflang alternates)
+  // ─── STATIC PAGES ───
   routes.push({
     url: `${baseUrl}/coming-soon`,
     lastModified: currentDate,
     changeFrequency: 'daily',
     priority: 0.9,
-    alternates: generateLanguageAlternates('/coming-soon'),
   });
 
-  // Add Top Lessons page (with hreflang alternates)
   routes.push({
     url: `${baseUrl}/top-lessons`,
     lastModified: currentDate,
     changeFrequency: 'weekly',
     priority: 0.9,
-    alternates: generateLanguageAlternates('/top-lessons'),
   });
 
-  // Add Quickies page (with hreflang alternates)
   routes.push({
     url: `${baseUrl}/quickies`,
     lastModified: currentDate,
     changeFrequency: 'weekly',
     priority: 0.9,
-    alternates: generateLanguageAlternates('/quickies'),
   });
 
-  // Add Genre browse pages
+  routes.push({
+    url: `${baseUrl}/tools`,
+    lastModified: currentDate,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  });
+
+  routes.push({
+    url: `${baseUrl}/whats-new`,
+    lastModified: currentDate,
+    changeFrequency: 'daily',
+    priority: 0.8,
+  });
+
+  routes.push({
+    url: `${baseUrl}/learn`,
+    lastModified: currentDate,
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  });
+
+  // ─── GENRE PAGES ───
   for (const slug of Object.keys(GENRES)) {
     routes.push({
       url: `${baseUrl}/genre/${slug}`,
@@ -80,7 +73,7 @@ export default async function sitemap() {
     });
   }
 
-  // Add Era browse pages
+  // ─── ERA PAGES ───
   for (const slug of Object.keys(ERAS)) {
     routes.push({
       url: `${baseUrl}/era/${slug}`,
@@ -90,13 +83,7 @@ export default async function sitemap() {
     });
   }
 
-  // Add Learn/Guides pages
-  routes.push({
-    url: `${baseUrl}/learn`,
-    lastModified: currentDate,
-    changeFrequency: 'weekly',
-    priority: 0.8,
-  });
+  // ─── LEARN/GUIDES PAGES ───
   for (const slug of Object.keys(GUIDES)) {
     routes.push({
       url: `${baseUrl}/learn/${slug}`,
@@ -106,7 +93,7 @@ export default async function sitemap() {
     });
   }
 
-  // Add Difficulty browse pages
+  // ─── DIFFICULTY PAGES ───
   for (const level of Object.keys(DIFFICULTY_LEVELS)) {
     routes.push({
       url: `${baseUrl}/difficulty/${level}`,
@@ -116,7 +103,7 @@ export default async function sitemap() {
     });
   }
 
-  // Add Curated Playlist pages
+  // ─── PLAYLIST PAGES ───
   for (const slug of Object.keys(PLAYLISTS)) {
     routes.push({
       url: `${baseUrl}/playlist/${slug}`,
@@ -126,54 +113,28 @@ export default async function sitemap() {
     });
   }
 
-
-  // Add artist pages (with hreflang alternates)
-  // IMPORTANT: Deduplicate by slug and filter out junk entries
-  // (hashtag content, "Coming Soon" teasers, promotional videos, etc.)
+  // ─── ARTIST PAGES (no hreflang — locale artist pages don't exist) ───
   try {
     const db = await getDb();
     const artists = await db.collection('videos').distinct('artist');
     
-    // Junk patterns — these are not real artist pages
     const junkPatterns = [
-      '#',                    // Hashtag content (e.g., "George Lynch  #Electric")
-      'Coming Soon',          // Coming soon teasers
-      'coming soon',
-      'Memorial Video',       // Memorial/tribute content
-      'Original Song',        // Original songs, not artist pages
-      'Greatest Drummers',    // Compilation/list videos
-      'Lead Singers',         // Compilation videos
-      'Welcome To The Jungle 2022', // One-off videos
-      'Highway To Hell',      // Song used as artist name
-      'Hold On Loosely',      // Song used as artist name
-      'Cities On Flame',      // Song used as artist name
-      'Face The Slayer',      // Non-artist content
-      'The Great 80',         // Non-artist content
-      'The DadRock',          // Channel self-reference
-      'DadRock Tabs',         // Channel self-reference
-      'Steppenwolf Be The First', // Discussion/debate video
-      'Children Of The Grave', // Song used as artist name
-      '80\'s Fretmasters',    // Compilation content
+      '#', 'Coming Soon', 'coming soon', 'Memorial Video', 'Original Song',
+      'Greatest Drummers', 'Lead Singers', 'Welcome To The Jungle 2022',
+      'Highway To Hell', 'Hold On Loosely', 'Cities On Flame', 'Face The Slayer',
+      'The Great 80', 'The DadRock', 'DadRock Tabs', 'Steppenwolf Be The First',
+      'Children Of The Grave', '80\'s Fretmasters',
     ];
     
     const seenSlugs = new Set();
     
     artists.forEach(artist => {
       if (!artist) return;
-      
-      // Skip junk entries
       const isJunk = junkPatterns.some(pattern => artist.includes(pattern));
       if (isJunk) return;
       
-      // Skip standalone non-artist entries
-      if (artist === 'Lead' || artist === 'Danger Danger' || artist === 'Kimg Diamond') {
-        // Keep these — they're real artists (Danger Danger, King Diamond typo)
-      }
-      
       const slug = artistToSlug(artist);
       if (!slug) return;
-      
-      // Deduplicate — only add each slug once
       if (seenSlugs.has(slug)) return;
       seenSlugs.add(slug);
       
@@ -182,14 +143,13 @@ export default async function sitemap() {
         lastModified: currentDate,
         changeFrequency: 'weekly',
         priority: 0.8,
-        alternates: generateLanguageAlternates(`/artist/${slug}`),
       });
     });
   } catch (error) {
     console.error('Error fetching artists for sitemap:', error);
   }
 
-  // Add song pages (with hreflang alternates)
+  // ─── SONG PAGES (no hreflang — locale song pages don't exist) ───
   try {
     const db = await getDb();
     const songPages = await db.collection('song_pages').find({}, { projection: { slug: 1, updated_at: 1 } }).toArray();
@@ -201,7 +161,6 @@ export default async function sitemap() {
           lastModified: song.updated_at || currentDate,
           changeFrequency: 'monthly',
           priority: 0.7,
-          alternates: generateLanguageAlternates(`/songs/${song.slug}`),
         });
       }
     });
