@@ -354,6 +354,37 @@ export default function RootLayout({ children }) {
                   navigator.serviceWorker.register('/sw.js').catch(function() {});
                 });
               }
+
+              // Disable pull-to-refresh in Android WebView/TWA
+              // CSS overscroll-behavior doesn't work in all WebView configurations,
+              // so we intercept touch events at the JavaScript level
+              (function() {
+                var startY = 0;
+                var touching = false;
+
+                document.addEventListener('touchstart', function(e) {
+                  if (e.touches.length === 1) {
+                    startY = e.touches[0].clientY;
+                    touching = true;
+                  }
+                }, { passive: true });
+
+                document.addEventListener('touchmove', function(e) {
+                  if (!touching || e.touches.length !== 1) return;
+
+                  var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+                  var deltaY = e.touches[0].clientY - startY;
+
+                  // If at top of page and pulling down → prevent refresh
+                  if (scrollTop <= 0 && deltaY > 0) {
+                    e.preventDefault();
+                  }
+                }, { passive: false });
+
+                document.addEventListener('touchend', function() {
+                  touching = false;
+                }, { passive: true });
+              })();
             `
           }}
         />
