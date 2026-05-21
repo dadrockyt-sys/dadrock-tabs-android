@@ -351,7 +351,25 @@ export default function RootLayout({ children }) {
             __html: `
               if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js').catch(function() {});
+                  navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                    // Force check for SW update on every page load
+                    reg.update();
+                    // If a new SW is waiting, activate it immediately
+                    if (reg.waiting) {
+                      reg.waiting.postMessage('skipWaiting');
+                    }
+                    reg.addEventListener('updatefound', function() {
+                      var newWorker = reg.installing;
+                      if (newWorker) {
+                        newWorker.addEventListener('statechange', function() {
+                          if (newWorker.state === 'activated') {
+                            // New SW active — reload to get fresh content
+                            window.location.reload();
+                          }
+                        });
+                      }
+                    });
+                  }).catch(function() {});
                 });
               }
 
