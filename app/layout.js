@@ -338,17 +338,6 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-screen bg-background antialiased">
-        <div id="scroll-container" style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          overflowX: 'hidden',
-          overflowY: 'auto',
-          WebkitOverflowScrolling: 'touch',
-          overscrollBehavior: 'none',
-        }}>
         <FlameTransition />
         <ExitIntentPopup />
         <Suspense fallback={null}>
@@ -356,7 +345,6 @@ export default function RootLayout({ children }) {
         </Suspense>
         <PlayStoreReviewBanner />
         {children}
-        </div>
         {/* Service Worker Registration for PWA */}
         <script
           dangerouslySetInnerHTML={{
@@ -364,9 +352,7 @@ export default function RootLayout({ children }) {
               if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
                   navigator.serviceWorker.register('/sw.js').then(function(reg) {
-                    // Force check for SW update on every page load
                     reg.update();
-                    // If a new SW is waiting, activate it immediately
                     if (reg.waiting) {
                       reg.waiting.postMessage('skipWaiting');
                     }
@@ -375,7 +361,6 @@ export default function RootLayout({ children }) {
                       if (newWorker) {
                         newWorker.addEventListener('statechange', function() {
                           if (newWorker.state === 'activated') {
-                            // New SW active — reload to get fresh content
                             window.location.reload();
                           }
                         });
@@ -384,43 +369,6 @@ export default function RootLayout({ children }) {
                   }).catch(function() {});
                 });
               }
-
-              // Disable pull-to-refresh in Android WebView/TWA
-              // Body is fixed, scrolling happens in #scroll-container
-              // This handler catches any edge cases
-              (function() {
-                var startY = 0;
-                var touching = false;
-                var scrollEl = null;
-
-                function getScrollEl() {
-                  if (!scrollEl) scrollEl = document.getElementById('scroll-container');
-                  return scrollEl;
-                }
-
-                document.addEventListener('touchstart', function(e) {
-                  if (e.touches.length === 1) {
-                    startY = e.touches[0].clientY;
-                    touching = true;
-                  }
-                }, { passive: true });
-
-                document.addEventListener('touchmove', function(e) {
-                  if (!touching || e.touches.length !== 1) return;
-                  var el = getScrollEl();
-                  var scrollTop = el ? el.scrollTop : 0;
-                  var deltaY = e.touches[0].clientY - startY;
-
-                  // At top of scroll container and pulling down → block
-                  if (scrollTop <= 0 && deltaY > 0) {
-                    e.preventDefault();
-                  }
-                }, { passive: false });
-
-                document.addEventListener('touchend', function() {
-                  touching = false;
-                }, { passive: true });
-              })();
             `
           }}
         />
