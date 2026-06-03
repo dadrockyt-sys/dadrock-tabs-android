@@ -75,6 +75,33 @@ public class MainActivity extends AppCompatActivity {
         webView = findViewById(R.id.webView);
         progressBar = findViewById(R.id.progressBar);
 
+        // Disable ALL overscroll/pull-to-refresh behavior
+        webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+        // Block pull-to-refresh touch gesture at the native level
+        // This intercepts the swipe-down-at-top gesture before Chrome's 
+        // built-in pull-to-refresh can activate
+        webView.setOnTouchListener(new View.OnTouchListener() {
+            private float startY;
+            @Override
+            public boolean onTouch(View v, android.view.MotionEvent event) {
+                switch (event.getAction()) {
+                    case android.view.MotionEvent.ACTION_DOWN:
+                        startY = event.getY();
+                        break;
+                    case android.view.MotionEvent.ACTION_MOVE:
+                        float deltaY = event.getY() - startY;
+                        // If at top of page and pulling down, block the event
+                        // from reaching the parent (prevents pull-to-refresh)
+                        if (webView.getScrollY() == 0 && deltaY > 0) {
+                            v.getParent().requestDisallowInterceptTouchEvent(true);
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
+
         // Configure WebView settings
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
