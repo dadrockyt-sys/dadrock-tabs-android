@@ -2,7 +2,7 @@ import { getDb } from '@/lib/mongodb';
 import { generateSeoContent } from '@/lib/artistData';
 import { generateAlternates } from '@/lib/seo';
 import SongPageClient from './SongPageClient';
-import { permanentRedirect } from 'next/navigation';
+import { permanentRedirect, notFound } from 'next/navigation';
 import { artistToSlug } from '@/lib/slugify';
 
 // Generate metadata for SEO
@@ -73,13 +73,8 @@ export default async function SongPage({ params }) {
   const song = await db.collection('song_pages').findOne({ slug });
   
   if (!song) {
-    // Song not found — try to redirect to the artist page instead of 404
-    const artistSlug = await findArtistFromSongSlug(db, slug);
-    if (artistSlug) {
-      permanentRedirect(`/artist/${artistSlug}`);
-    }
-    // No artist match either — redirect to homepage
-    permanentRedirect('/');
+    // Song not found — return proper 404 so Google de-indexes this URL
+    notFound();
   }
 
   let adSettings = null;
