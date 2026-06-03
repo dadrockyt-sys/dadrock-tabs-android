@@ -20,7 +20,6 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     
     private WebView webView;
     private ProgressBar progressBar;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private FirebaseAnalytics firebaseAnalytics;
     private ReviewManager reviewManager;
     private Handler mainHandler;
@@ -76,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         webView = findViewById(R.id.webView);
         progressBar = findViewById(R.id.progressBar);
-        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         // Configure WebView settings
         WebSettings webSettings = webView.getSettings();
@@ -110,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
                 
                 // Don't track the offline error page in analytics
                 if (isShowingOfflinePage || (url != null && url.startsWith("file:///android_asset/"))) {
@@ -192,22 +188,6 @@ public class MainActivity extends AppCompatActivity {
                 progressBar.setProgress(newProgress);
             }
         });
-
-        // Setup swipe to refresh
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            // If showing offline page, retry the last real URL
-            if (isShowingOfflinePage && !lastLoadedUrl.isEmpty()) {
-                isShowingOfflinePage = false;
-                webView.loadUrl(lastLoadedUrl);
-            } else {
-                webView.reload();
-            }
-        });
-
-        swipeRefreshLayout.setColorSchemeResources(
-            android.R.color.holo_orange_dark,
-            android.R.color.holo_red_dark
-        );
 
         // Load the website with tracking params
         if (savedInstanceState == null) {
