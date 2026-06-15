@@ -1,5 +1,5 @@
 import { getDb } from '@/lib/mongodb';
-import { permanentRedirect } from 'next/navigation';
+import { permanentRedirect, notFound } from 'next/navigation';
 import { generateAlternates } from '@/lib/seo';
 import { slugToArtistPattern, artistToSlug } from '@/lib/slugify';
 import ArtistPageClient from './ArtistPageClient';
@@ -110,9 +110,8 @@ export default async function ArtistPage({ params }) {
   const result = await findArtistBySlug(db, slug);
   
   if (!result) {
-    // Artist not found — permanent redirect to homepage instead of 404
-    // This resolves GSC "Not found (404)" errors for dead/invalid artist URLs
-    permanentRedirect('/');
+    // Artist not found — return proper 404 so Google de-indexes this URL
+    notFound();
   }
   
   const artistPattern = result.artistPattern;
@@ -123,8 +122,8 @@ export default async function ArtistPage({ params }) {
     .toArray();
   
   if (videos.length === 0) {
-    // Artist pattern matched but no videos found — redirect to homepage
-    permanentRedirect('/');
+    // Artist pattern matched but no videos found — return 404
+    notFound();
   }
   
   // Fetch ad settings
