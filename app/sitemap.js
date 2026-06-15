@@ -150,17 +150,44 @@ export default async function sitemap() {
   }
 
   // ─── SONG PAGES (no hreflang — locale song pages don't exist) ───
+  // High-priority songs (best SEO opportunities based on popularity)
+  const highPrioritySongs = [
+    'metallica-master-of-puppets',
+    'metallica-enter-sandman',
+    'led-zeppelin-stairway-to-heaven',
+    'black-sabbath-war-pigs',
+    'metallica-one',
+    'pantera-cemetery-gates',
+    'slayer-angel-of-death',
+    'megadeth-holy-wars-the-punishment-due',
+    'black-sabbath-heaven-and-hell',
+    'led-zeppelin-dazed-and-confused',
+    'metallica-seek-and-destroy',
+    'metallica-for-whom-the-bell-tolls',
+    'metallica-creeping-death',
+    'black-sabbath-iron-man',
+    'ozzy-osbourne-crazy-train',
+    'van-halen-eruption',
+    'ac-dc-back-in-black',
+    'metallica-fade-to-black',
+    'pantera-walk',
+    'slayer-raining-blood',
+  ];
+
   try {
     const db = await getDb();
     const songPages = await db.collection('song_pages').find({}, { projection: { slug: 1, updated_at: 1 } }).toArray();
     
     songPages.forEach(song => {
       if (song.slug) {
+        // Boost priority for high-value songs that can rank well
+        const isHighPriority = highPrioritySongs.includes(song.slug);
+        
         routes.push({
           url: `${baseUrl}/songs/${song.slug}`,
           lastModified: song.updated_at || currentDate,
-          changeFrequency: 'monthly',
-          priority: 0.7,
+          changeFrequency: isHighPriority ? 'weekly' : 'monthly',
+          priority: isHighPriority ? 0.9 : 0.7,
         });
       }
     });

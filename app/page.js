@@ -1723,9 +1723,47 @@ export default function App({ initialLang = 'en' }) {
             </div>
           </div>
 
+          {/* Top Song Lessons - High Priority SEO Links */}
+          <div className="w-full max-w-4xl mb-10 fade-in-up" style={{ animationDelay: '0.65s' }}>
+            <div className="glass-card rounded-2xl p-6 fire-glow">
+              <p className="text-center text-zinc-300 mb-5 flex items-center justify-center gap-3 text-lg font-medium">
+                <span className="text-2xl">⭐</span> Top Guitar Lessons
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {[
+                  { song: 'Master of Puppets', artist: 'Metallica', slug: 'metallica-master-of-puppets', emoji: '🤘' },
+                  { song: 'War Pigs', artist: 'Black Sabbath', slug: 'black-sabbath-war-pigs', emoji: '🖤' },
+                  { song: 'Cemetery Gates', artist: 'Pantera', slug: 'pantera-cemetery-gates', emoji: '🐆' },
+                  { song: 'Angel of Death', artist: 'Slayer', slug: 'slayer-angel-of-death', emoji: '🗡️' },
+                  { song: 'Holy Wars', artist: 'Megadeth', slug: 'megadeth-holy-wars-the-punishment-due', emoji: '☠️' },
+                  { song: 'Heaven and Hell', artist: 'Black Sabbath', slug: 'black-sabbath-heaven-and-hell', emoji: '🎸' },
+                  { song: 'Dazed And Confused', artist: 'Led Zeppelin', slug: 'led-zeppelin-dazed-and-confused', emoji: '🎵' },
+                  { song: 'Pour Some Sugar On Me', artist: 'Def Leppard', slug: 'def-leppard-pour-some-sugar-on-me', emoji: '🔥' },
+                  { song: 'Still Of The Night', artist: 'Whitesnake', slug: 'whitesnake-still-of-the-night', emoji: '🐍' },
+                ].map((item, index) => (
+                  <Link
+                    key={item.slug}
+                    href={`/songs/${item.slug}`}
+                    className="group relative overflow-hidden rounded-lg bg-zinc-800/60 border border-zinc-700 hover:border-amber-500 p-4 transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(245,158,11,0.3)]"
+                    style={{ animationDelay: `${0.7 + index * 0.03}s` }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 to-amber-500/0 group-hover:from-amber-500/10 group-hover:to-red-500/10 transition-all duration-300" />
+                    <div className="relative">
+                      <div className="text-2xl mb-1">{item.emoji}</div>
+                      <h3 className="font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-1 text-sm">
+                        {item.song}
+                      </h3>
+                      <p className="text-xs text-zinc-400 mt-1">{item.artist}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Featured Video */}
           {featuredVideo?.url && (
-            <div className="w-full max-w-2xl mb-10 fade-in-up" style={{ animationDelay: '0.7s' }}>
+            <div className="w-full max-w-2xl mb-10 fade-in-up" style={{ animationDelay: '0.8s' }}>
               <p className="text-center text-zinc-300 mb-5 flex items-center justify-center gap-2 text-lg font-medium">
                 <span className="text-2xl">🎬</span> {t.featuredLesson}
               </p>
@@ -1911,18 +1949,103 @@ export default function App({ initialLang = 'en' }) {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="py-10 text-center fade-in-up" style={{ animationDelay: '1s' }}>
-          <a
-            href="mailto:Dadrockyt@gmail.com"
-            className="artist-btn inline-flex items-center gap-2 px-6 py-3 text-sm text-zinc-300 hover:text-white bg-zinc-800/80 rounded-full border border-zinc-700 font-medium"
-          >
-            <Mail className="w-4 h-4" />
-            {t.contact}
-          </a>
-          <p className="text-sm text-zinc-500 mt-6">
-            {t.footer}
-          </p>
+        {/* Footer with Enhanced Sitemap */}
+        <footer className="py-12 border-t border-zinc-800 fade-in-up" style={{ animationDelay: '1s' }}>
+          <div className="max-w-6xl mx-auto px-6">
+            {/* Footer Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left">
+              {/* Top Artists */}
+              <div>
+                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">🎸 Top Artists</h3>
+                <ul className="space-y-2 text-sm">
+                  <li><Link href="/artist/metallica" className="text-zinc-400 hover:text-white transition-colors">Metallica</Link></li>
+                  <li><Link href="/artist/led-zeppelin" className="text-zinc-400 hover:text-white transition-colors">Led Zeppelin</Link></li>
+                  <li><Link href="/artist/black-sabbath" className="text-zinc-400 hover:text-white transition-colors">Black Sabbath</Link></li>
+                  <li><Link href="/artist/ac-dc" className="text-zinc-400 hover:text-white transition-colors">AC/DC</Link></li>
+                  <li><Link href="/artist/van-halen" className="text-zinc-400 hover:text-white transition-colors">Van Halen</Link></li>
+                  <li><Link href="/artist/pantera" className="text-zinc-400 hover:text-white transition-colors">Pantera</Link></li>
+                </ul>
+              </div>
+
+              {/* Browse Content */}
+              <div>
+                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">📚 Browse</h3>
+                <ul className="space-y-2 text-sm">
+                  <li><Link href="/genre/heavy-metal" className="text-zinc-400 hover:text-white transition-colors">Heavy Metal</Link></li>
+                  <li><Link href="/genre/classic-rock" className="text-zinc-400 hover:text-white transition-colors">Classic Rock</Link></li>
+                  <li><Link href="/genre/hair-metal" className="text-zinc-400 hover:text-white transition-colors">Hair Metal</Link></li>
+                  <li><Link href="/era/70s" className="text-zinc-400 hover:text-white transition-colors">70s Tabs</Link></li>
+                  <li><Link href="/era/80s" className="text-zinc-400 hover:text-white transition-colors">80s Tabs</Link></li>
+                  <li><Link href="/era/90s" className="text-zinc-400 hover:text-white transition-colors">90s Tabs</Link></li>
+                </ul>
+              </div>
+
+              {/* By Difficulty */}
+              <div>
+                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">📊 By Level</h3>
+                <ul className="space-y-2 text-sm">
+                  <li><Link href="/difficulty/beginner" className="text-zinc-400 hover:text-white transition-colors">Beginner Tabs</Link></li>
+                  <li><Link href="/difficulty/intermediate" className="text-zinc-400 hover:text-white transition-colors">Intermediate</Link></li>
+                  <li><Link href="/difficulty/advanced" className="text-zinc-400 hover:text-white transition-colors">Advanced</Link></li>
+                  <li><Link href="/top-lessons" className="text-zinc-400 hover:text-white transition-colors">Top 10 Lessons</Link></li>
+                  <li><Link href="/coming-soon" className="text-zinc-400 hover:text-white transition-colors">Coming Soon</Link></li>
+                  <li><Link href="/quickies" className="text-zinc-400 hover:text-white transition-colors">Quick Riffs</Link></li>
+                </ul>
+              </div>
+
+              {/* Resources */}
+              <div>
+                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">🔧 Resources</h3>
+                <ul className="space-y-2 text-sm">
+                  <li><Link href="/learn" className="text-zinc-400 hover:text-white transition-colors">Learning Guides</Link></li>
+                  <li><Link href="/tools" className="text-zinc-400 hover:text-white transition-colors">Guitar Tools</Link></li>
+                  <li><Link href="/whats-new" className="text-zinc-400 hover:text-white transition-colors">What&apos;s New</Link></li>
+                  <li><a href="https://youtube.com/@dadrockytofficial" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-white transition-colors">YouTube Channel</a></li>
+                  <li><a href="https://buymeacoffee.com/dadrockytq/commissions" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-white transition-colors">Request a Tab</a></li>
+                  <li><a href="mailto:Dadrockyt@gmail.com" className="text-zinc-400 hover:text-white transition-colors">Contact Us</a></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="border-t border-zinc-800 mb-6"></div>
+
+            {/* Copyright & Social */}
+            <div className="text-center">
+              <div className="flex justify-center gap-4 mb-4">
+                <a
+                  href="https://youtube.com/@dadrockytofficial"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-500 hover:text-red-500 transition-colors"
+                  aria-label="YouTube"
+                >
+                  <Youtube className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://www.facebook.com/sharer/sharer.php?u=https://dadrocktabs.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-500 hover:text-blue-500 transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://twitter.com/intent/tweet?url=https://dadrocktabs.com&text=Check%20out%20DadRock%20Tabs!"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-500 hover:text-sky-400 transition-colors"
+                  aria-label="Twitter"
+                >
+                  <Twitter className="w-6 h-6" />
+                </a>
+              </div>
+              <p className="text-sm text-zinc-500">
+                {t.footer}
+              </p>
+            </div>
+          </div>
         </footer>
       </div>
     );
