@@ -85,10 +85,11 @@ export default function PartnersPage() {
 
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
           <a
-            href="mailto:dadrocktabsyt@gmail.com"
+            href="/partners-media-kit.png"
+download
             className="bg-amber-500 hover:bg-amber-400 text-black font-black px-8 py-4 rounded-xl shadow-lg shadow-amber-500/30 transition"
           >
-            ✉ Request Our Media Kit
+            📥 Download Media Kit
           </a>
 
           <a
