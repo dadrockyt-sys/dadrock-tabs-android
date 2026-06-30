@@ -241,4 +241,46 @@ export default function PartnersPage() {
 
       <section className="max-w-7xl mx-auto mb-16 relative z-10">
 
-        <div className="rounded-3xl overflow-hidden border border-amber-500/40 bg
+        <div className="rounded-3xl overflow-hidden border border-amber-500/40 bg-gradient-to-r from-amber-500/20 via-orange-500/10 to-black shadow-2xl">
+  <div className="p-10 sm:p-16 text-center">
+    <img
+      src={LOGO_URL}
+      alt="DadRock Tabs"
+      className="mx-auto h-24 object-contain mb-8"
+    />
+
+    <h2 className="text-4xl sm:text-5xl font-black text-amber-400 mb-6">
+      Let's Build Something Great Together
+    </h2>
+
+    <p className="text-xl text-zinc-200 max-w-4xl mx-auto leading-relaxed mb-10">
+      Whether you're launching a new guitar, promoting music software,
+      introducing a new pedal, or growing your brand, DadRock Tabs can
+      help you reach one of YouTube's most passionate classic rock
+      communities.
+    </p>
+
+    <div className="flex flex-col sm:flex-row justify-center gap-4">
+      <a
+        href="mailto:DadRockYT@gmail.com"
+        className="bg-amber-500 hover:bg-amber-400 text-black font-black px-10 py-5 rounded-xl shadow-xl transition"
+      >
+        📩 Contact DadRock Tabs
+      </a>
+
+      <a
+        href={YOUTUBE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="border border-amber-500 text-white font-black px-10 py-5 rounded-xl hover:bg-amber-500/10 transition"
+      >
+        ▶ Visit Our Channel
+      </a>
+    </div>
+  </div>
+</div>
+</section>
+
+</main>
+);
+}
