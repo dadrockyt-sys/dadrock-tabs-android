@@ -11,11 +11,11 @@ export default function PartnersPage() {
       </p>
 
       <a
-        href="mailto:your-email@example.com"
+        href="mailto:dadrocktabsyt@gmail.com"
         className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded-xl"
       >
-        Contact DadRock Tabs
-      </a>
+        Request Our Media Kit
+          </a>
     </main>
   );
 }
