@@ -903,3 +903,8 @@ credentials.json
 *.pem
 *.key
 .credentials
+*.p12
+*.jks
+*.keystore
+*.pem
+*.key
