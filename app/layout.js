@@ -14,7 +14,7 @@ export const metadata = {
     default: 'DadRock Tabs - Guitar & Bass Tabs for Classic Rock',
     template: '%s | DadRock Tabs',
   },
-  description: 'Free guitar and bass tabs for classic rock hits. Learn to play Led Zeppelin, AC/DC, Van Halen, and more! Your go-to database for dad rock guitar tutorials.',
+  description: 'Learn classic rock and metal guitar with synchronized video lessons, artist guides, practice tips, and guitar & bass tablature resources.',
   keywords: 'guitar tabs, bass tabs, classic rock, dad rock, guitar lessons, Led Zeppelin, AC/DC, Van Halen, Metallica, rock music tutorials',
   authors: [{ name: 'DadRock Tabs' }],
   creator: 'DadRock Tabs',
@@ -32,7 +32,7 @@ export const metadata = {
   },
   openGraph: {
     title: 'DadRock Tabs - Guitar & Bass Tabs for Classic Rock',
-    description: 'Free guitar and bass tabs for classic rock hits. Learn to play the songs that defined generations.',
+    description: 'Learn classic rock and metal guitar with synchronized video lessons, artist guides, practice tips, and guitar & bass tablature resources.',
     url: baseUrl,
     siteName: 'DadRock Tabs',
     locale: 'en_US',
@@ -41,7 +41,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'DadRock Tabs - Guitar & Bass Tabs for Classic Rock',
-    description: 'Free guitar and bass tabs for classic rock hits.',
+    description: 'Learn classic rock and metal guitar with synchronized video lessons, artist guides, practice tips, and guitar & bass tablature resources.',
   },
   robots: {
     index: true,
