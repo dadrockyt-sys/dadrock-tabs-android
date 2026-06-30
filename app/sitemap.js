@@ -57,6 +57,13 @@ export default async function sitemap() {
   });
 
   routes.push({
+  url: `${baseUrl}/partners`,
+  lastModified: currentDate,
+  changeFrequency: 'weekly',
+  priority: 0.95,
+});
+
+  routes.push({
     url: `${baseUrl}/learn`,
     lastModified: currentDate,
     changeFrequency: 'weekly',
