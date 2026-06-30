@@ -170,7 +170,6 @@ export default async function sitemap() {
     'van-halen-eruption',
     'ac-dc-back-in-black',
     'metallica-fade-to-black',
-    'pantera-walk',
     'slayer-raining-blood',
   ];
 
