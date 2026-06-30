@@ -1,4 +1,4 @@
-const BANNER_URL = "https://customer-assets.emergentagent.com/job_nextjs-deploy-3/artifacts/q10t8nk7_Picsart_26-02-17_18-51-12-061.png";
+const BANNER_URL = "/dadrock-logo.png";
   
 export default function PartnersPage() {
   const stats = [
