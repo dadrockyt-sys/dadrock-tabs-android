@@ -1487,6 +1487,13 @@ export default function App({ initialLang = 'en' }) {
                 <ShoppingBag className="w-4 h-4" />
                 <span>Support Merch</span>
               </a>
+
+                  <a
+  href="/partners"
+  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-bold text-amber-400 border border-amber-500 rounded-lg hover:bg-amber-500 hover:text-black transition"
+>
+  Partners
+</a>
             </div>
           </div>
         </header>
