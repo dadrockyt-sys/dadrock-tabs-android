@@ -17,6 +17,20 @@ export default function PartnersPage() {
     ["Giveaways", "Create excitement through community contests and product promotions."],
   ];
 
+  const brands = [
+  "Fender",
+  "Gibson",
+  "Ernie Ball",
+  "Dunlop",
+  "Boss",
+  "Positive Grid",
+  "Sweetwater",
+  "Thomann",
+  "D'Addario",
+  "Elixir",
+  "IK Multimedia",
+  "Neural DSP",
+];
   return (
     <main className="min-h-screen bg-black bg-guitarist text-white px-4 py-10 sm:py-16">
       <section className="max-w-6xl mx-auto text-center transition-opacity duration-500">
@@ -43,7 +57,7 @@ export default function PartnersPage() {
           </a>
 
           <a
-            href="https://www.youtube.com/@DadRockTabs"
+            href="https://youtube.com/@dadrockytofficial?si=f6MJkmqvUKyy2WFJ"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-zinc-900/80 hover:bg-zinc-800 text-white font-bold px-8 py-4 rounded-xl border border-zinc-700 transition"
@@ -136,6 +150,27 @@ export default function PartnersPage() {
         </div>
       </section>
 
+            <section className="max-w-6xl mx-auto mb-16">
+  <h2 className="text-3xl font-bold text-center mb-3">
+    Brands We’d Love To Work With
+  </h2>
+
+  <p className="text-zinc-400 text-center max-w-3xl mx-auto mb-8">
+    DadRock Tabs is a natural fit for guitar gear, music software,
+    accessories, education platforms, and creator-focused brands.
+  </p>
+
+  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+    {brands.map((brand) => (
+      <div
+        key={brand}
+        className="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-5 text-center font-bold text-zinc-200 hover:text-amber-400 hover:border-amber-500/40 transition"
+      >
+        {brand}
+      </div>
+    ))}
+  </div>
+</section>
       <section className="max-w-5xl mx-auto text-center bg-gradient-to-br from-amber-500/20 to-orange-600/10 border border-amber-500/30 rounded-3xl p-8 sm:p-12 shadow-xl">
         <h2 className="text-3xl font-bold mb-4">
           Let’s Build Something Great Together
