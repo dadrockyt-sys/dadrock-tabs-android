@@ -1,5 +1,5 @@
 const LOGO_URL = "/dadrock-logo.png";
-const YOUTUBE_URL = "https://youtube.com/@dadrockytofficial?si=TjBWK-QMUu7vdcrI",
+const YOUTUBE_URL = "https://youtube.com/@dadrockytofficial?si=TjBWK-QMUu7vdcrI";
 
 export default function PartnersPage() {
   const stats = [
