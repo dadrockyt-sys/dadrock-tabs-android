@@ -18,8 +18,8 @@ export async function generateMetadata({ params }) {
     }
 
     const cleanArtist = song.artist?.replace(/ -$/, '').trim() || 'DadRock Tabs';
-    const title = `${song.title} - ${cleanArtist} | Free Guitar & Bass Tab Lesson`;
-    const description = `Learn to play "${song.title}" by ${cleanArtist} with our free guitar and bass tab video lesson. Step-by-step tutorial with synchronized tablature — perfect for all skill levels!`;
+    const title = `${song.title} Guitar Lesson - ${cleanArtist} | DadRock Tabs`;
+    const description = `Learn "${song.title}" by ${cleanArtist} with a video-based guitar and bass practice lesson featuring synchronized tablature-style guidance, techniques, and practice tips.`;
     const thumbUrl = song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`;
     const ogImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(cleanArtist)}&type=song&thumb=${encodeURIComponent(thumbUrl)}`;
 
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
       description,
       keywords: `${song.title} tab, ${song.title} guitar tab, ${cleanArtist} ${song.title}, how to play ${song.title}, ${cleanArtist} bass tab, ${song.title} lesson, ${cleanArtist} guitar tutorial, free guitar tabs, DadRock Tabs`,
       openGraph: {
-        title: `Learn "${song.title}" by ${cleanArtist} - Guitar & Bass Tab`,
+        title: `${song.title} Guitar Lesson - ${cleanArtist}`,
         description,
         type: 'video.other',
         url: `https://dadrocktabs.com/songs/${slug}`,
