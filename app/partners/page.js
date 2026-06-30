@@ -261,10 +261,11 @@ export default function PartnersPage() {
     </p>
 
     <div className="flex flex-col sm:flex-row justify-center gap-4">
-      <a
-        href="mailto:DadRockYT@gmail.com"
-        className="bg-amber-500 hover:bg-amber-400 text-black font-black px-10 py-5 rounded-xl shadow-xl transition"
-      >
+    <a
+  href="/partners-media-kit.png"
+  download
+  className="bg-amber-500 hover:bg-amber-400 text-black font-black px-8 py-4 rounded-xl shadow-lg shadow-amber-500/30 transition"
+>
         📩 Contact DadRock Tabs
       </a>
 
