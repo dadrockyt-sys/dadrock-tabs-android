@@ -15,6 +15,7 @@ const BANNER_URL = "https://customer-assets.emergentagent.com/job_nextjs-deploy-
 const HEADPHONES_URL = "https://customer-assets.emergentagent.com/job_bd94fdc7-4b49-4099-93f6-493e89650cc1/artifacts/735ybmfu_Picsart_26-02-22_08-30-43-163.png";
 const MARSHALL_AMP_URL = "https://customer-assets.emergentagent.com/job_bd94fdc7-4b49-4099-93f6-493e89650cc1/artifacts/slh9sg74_Picsart_26-02-22_08-40-16-701.png";
 const YOUTUBE_CHANNEL = "https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ";
+const PARTNERS_PAGE = "/partners";
 
 const popularArtists = [
   { name: "Pantera", emoji: "🐆" },
