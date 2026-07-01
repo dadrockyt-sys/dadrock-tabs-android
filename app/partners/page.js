@@ -85,11 +85,11 @@ export default function PartnersPage() {
 
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
           <a
-            href="/partners-media-kit.png"
+            href="/media-kit/DadRockTabs-Agency-Media-Kit-2026.pdf"
 download
             className="bg-amber-500 hover:bg-amber-400 text-black font-black px-8 py-4 rounded-xl shadow-lg shadow-amber-500/30 transition"
           >
-            📥 Download Media Kit
+            📥 Download 2026 Agency Media Kit
           </a>
 
           <a
@@ -263,11 +263,11 @@ download
 
     <div className="flex flex-col sm:flex-row justify-center gap-4">
     <a
-  href="/partners-media-kit.png"
+  href="/media-kit/DadRockTabs-Agency-Media-Kit-2026.pdf"
   download
   className="bg-amber-500 hover:bg-amber-400 text-black font-black px-8 py-4 rounded-xl shadow-lg shadow-amber-500/30 transition"
 >
-        📩 Contact DadRock Tabs
+        📥 Download 2026 Agency Media Kit
       </a>
 
       <a
