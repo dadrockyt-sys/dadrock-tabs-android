@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
       return { title: 'Song Not Found | DadRock Tabs' };
     }
 
-    const cleanArtist = song.artist?.replace(/ -$/, '').trim() || 'DadRock Tabs';
+    const cleanArtist = song.artist?.replace(/\s*-\s*$/, '').trim() || 'DadRock Tabs';
     const title = `${song.title} Guitar Lesson - ${cleanArtist} | DadRock Tabs`;
     const description = `Learn "${song.title}" by ${cleanArtist} with a video-based guitar and bass practice lesson featuring synchronized tablature-style guidance, techniques, and practice tips.`;
     const thumbUrl = song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`;
@@ -104,7 +104,7 @@ export default async function SongPage({ params }) {
     permanentRedirect('/');
   }
 
-  const cleanArtist = song.artist?.replace(/ -$/, '').trim() || 'DadRock Tabs';
+  const cleanArtist = song.artist?.replace(/\s*-\s*$/, '').trim() || 'DadRock Tabs';
   const seoContent = generateSeoContent(song.title, song.artist);
 
   // JSON-LD Schema — MusicRecording + VideoObject + BreadcrumbList + HowTo
