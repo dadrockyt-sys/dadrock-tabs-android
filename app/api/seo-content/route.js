@@ -9,6 +9,7 @@ export async function GET(request) {
   const type = url.searchParams.get('type'); // 'artist' or 'song'
   const name = url.searchParams.get('name'); // artist name
   const slug = url.searchParams.get('slug'); // song slug or artist slug
+  const lang = url.searchParams.get('lang') || 'en';
 
   if (!type || (type === 'artist' && !name && !slug) || (type === 'song' && !slug)) {
     return NextResponse.json({ error: 'Missing parameters. Need type=artist&name=... or type=song&slug=...' }, { status: 400 });
@@ -39,7 +40,10 @@ export async function GET(request) {
         type: 'artist',
         name: content.artist,
         slug: content.slug,
-        content: content.content,
+        content:
+  content.content?.[lang] ||
+  content.content?.en ||
+  content.content,
         generated_at: content.generated_at,
       });
     }
