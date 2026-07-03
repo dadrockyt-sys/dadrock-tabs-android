@@ -1,5 +1,4 @@
 import { getDb } from '@/lib/mongodb';
-import { permanentRedirect, notFound } from 'next/navigation';
 import { notFound } from 'next/navigation';
 import { slugToArtistPattern, artistToSlug } from '@/lib/slugify';
 import ArtistPageClient from './ArtistPageClient';
@@ -216,7 +215,7 @@ if (!locales.includes(lang)) {
         '@type': 'CollectionPage',
         'name': `${displayArtistName} Guitar & Bass Tabs`,
         'description': `Learn how to play songs by ${displayArtistName} with step-by-step guitar and bass tutorials.`,
-        'url': `https://dadrocktabs.com/${lang}/artist/${slug}`
+        'url': `https://dadrocktabs.com/${lang}/artist/${slug}`,
         'isPartOf': { '@id': 'https://dadrocktabs.com/#website' },
         'about': { '@id': `https://dadrocktabs.com/artist/${slug}#artist` },
         'publisher': { '@id': 'https://dadrocktabs.com/#organization' },
