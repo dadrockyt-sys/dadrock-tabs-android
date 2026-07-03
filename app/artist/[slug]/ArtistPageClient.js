@@ -120,7 +120,7 @@ function getRelatedArtists(artistName) {
 export default function ArtistPageClient({ artistName, videos, slug, adSettings, initialAiContent, faqItems = [] }) {
   const [lang] = useLanguage();
 const pathname = usePathname();
-const isSpanish = pathname?.startsWith('/es');
+const isSpanish = pathname?.includes('/es/');
 const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
