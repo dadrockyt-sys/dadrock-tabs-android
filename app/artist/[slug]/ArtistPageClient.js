@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ArrowLeft, Play, Youtube, Music, Home, Users, ShoppingBag, BookOpen, Guitar, Lightbulb, Star, Search } from 'lucide-react';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
@@ -118,7 +119,9 @@ function getRelatedArtists(artistName) {
 
 export default function ArtistPageClient({ artistName, videos, slug, adSettings, initialAiContent, faqItems = [] }) {
   const [lang] = useLanguage();
-  const t = getSubPageTranslation(lang);
+const pathname = usePathname();
+const isSpanish = pathname?.startsWith('/es');
+const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
 
@@ -329,12 +332,12 @@ export default function ArtistPageClient({ artistName, videos, slug, adSettings,
         <div className="mb-10 p-6 sm:p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800 section-accent reveal-section">
           <h2 className="text-2xl font-bold mb-4 text-amber-500 flex items-center gap-2">
             <Star className="w-6 h-6" />
-          {lang?.startsWith('es')
+          {isSpanish
   ? `Aprende el estilo de guitarra y bajo de ${artistName}`
   : `Learn ${artistName}'s Guitar & Bass Style`}
           </h2>
           <p className="text-zinc-400 mb-6 leading-relaxed">
-          {lang?.startsWith('es')
+          {isSpanish
   ? `Descubre cómo ${artistName} desarrolló su sonido característico de guitarra y bajo, las técnicas que encontrarás en su música y las mejores lecciones para comenzar tu aprendizaje.`
   : `Discover how ${artistName} developed their signature guitar and bass sound, the techniques you'll encounter in their music, and the best lessons to begin your learning journey.`}
 </p>
