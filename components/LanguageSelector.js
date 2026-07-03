@@ -12,11 +12,19 @@ export function useLanguage() {
   const [lang, setLang] = useState('en');
 
   useEffect(() => {
-    const stored = localStorage.getItem(LANG_STORAGE_KEY);
-    if (stored && locales.includes(stored)) {
-      setLang(stored);
-    }
-  }, []);
+  const pathLocale = window.location.pathname.split('/')[1];
+
+  if (pathLocale && locales.includes(pathLocale)) {
+    setLang(pathLocale);
+    localStorage.setItem(LANG_STORAGE_KEY, pathLocale);
+    return;
+  }
+
+  const stored = localStorage.getItem(LANG_STORAGE_KEY);
+  if (stored && locales.includes(stored)) {
+    setLang(stored);
+  }
+}, []);
 
   const changeLang = useCallback((newLang) => {
     setLang(newLang);
