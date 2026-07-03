@@ -32,12 +32,12 @@ jobs:
 
       - name: Run SEO translations
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          MONGO_URL: ${{ secrets.MONGO_URL }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          LANGUAGES: ${{ github.event.inputs.languages }}
-          LIMIT: ${{ github.event.inputs.limit }}
-        run: node scripts/translate-seo-content.js
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  MONGO_URL: ${{ secrets.MONGO_URL }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  TARGET_LANGS: fr,de,it,pt,pt-br,ja,ko,zh,ru,hi,sv,fi
+  CONCURRENCY: 2
+run: node scripts/translate-seo-content.js
 
       - name: Commit translation updates
         run: |
