@@ -25,11 +25,14 @@ export const metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: baseUrl,
-    languages: Object.fromEntries(
-      locales.map(lang => [lang, lang === 'en' ? baseUrl : `${baseUrl}/${lang}`])
-    ),
+  canonical: baseUrl,
+  languages: Object.fromEntries(
+    locales.map(lang => [lang, lang === 'en' ? baseUrl : `${baseUrl}/${lang}`])
+  ),
+  types: {
+    'application/rss+xml': '/api/rss',
   },
+},
   openGraph: {
     title: 'DadRock Tabs - Guitar & Bass Tabs for Classic Rock',
     description: 'Learn classic rock and metal guitar with synchronized video lessons, artist guides, practice tips, and guitar & bass tablature resources.',
@@ -59,13 +62,14 @@ export const metadata = {
     // google: 'your-verification-code',
   },
   alternates: {
-    ...({
-      types: {
-        'application/rss+xml': '/api/rss',
-      },
-    }),
+  canonical: baseUrl,
+  languages: Object.fromEntries(
+    locales.map(lang => [lang, lang === 'en' ? baseUrl : `${baseUrl}/${lang}`])
+  ),
+  types: {
+    'application/rss+xml': '/api/rss',
   },
-};
+},
 
 // WebSite + Organization structured data for Google rich results
 const websiteJsonLd = {
