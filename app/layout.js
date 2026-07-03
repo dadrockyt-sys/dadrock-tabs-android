@@ -61,15 +61,7 @@ export const metadata = {
     // Add your Google Search Console verification code here if you have one
     // google: 'your-verification-code',
   },
-  alternates: {
-  canonical: baseUrl,
-  languages: Object.fromEntries(
-    locales.map(lang => [lang, lang === 'en' ? baseUrl : `${baseUrl}/${lang}`])
-  ),
-  types: {
-    'application/rss+xml': '/api/rss',
-  },
-},
+};
 
 // WebSite + Organization structured data for Google rich results
 const websiteJsonLd = {
