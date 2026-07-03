@@ -139,7 +139,7 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: pageL
     if (initialAiContent) return; // Already have it from SSR
     async function fetchAiContent() {
       try {
-        const res = await fetch(`/api/seo-content?type=artist&name=${encodeURIComponent(artistName)}`);
+        const res = await fetch(`/api/seo-content?type=artist&name=${encodeURIComponent(artistName)}&lang=${lang}`);
         const data = await res.json();
         if (data.found && data.content) {
           setAiContent(data.content);
