@@ -157,12 +157,15 @@ if (!locales.includes(lang)) {
   
   // Fetch AI-generated SEO content (server-side for SSR) — lookup by slug
   let aiSeoContent = null;
-  try {
-    const aiDoc = await db.collection('artist_seo_content').findOne({ slug });
-    if (aiDoc?.content) {
-      aiSeoContent = aiDoc.content;
-    }
-  } catch { /* ignore */ }
+try {
+  const aiDoc = await db.collection('artist_seo_content').findOne({ slug });
+  if (aiDoc?.content) {
+    aiSeoContent =
+      aiDoc.content?.[lang] ||
+      aiDoc.content?.en ||
+      aiDoc.content;
+  }
+} catch { /* ignore */ }
   
   // Convert MongoDB documents to plain objects
   const plainVideos = videos.map(video => ({
