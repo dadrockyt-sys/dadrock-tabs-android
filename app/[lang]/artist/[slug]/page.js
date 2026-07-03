@@ -1,6 +1,6 @@
 import { getDb } from '@/lib/mongodb';
 import { permanentRedirect, notFound } from 'next/navigation';
-import { generateAlternates } from '@/lib/seo';
+import { notFound } from 'next/navigation';
 import { slugToArtistPattern, artistToSlug } from '@/lib/slugify';
 import ArtistPageClient from './ArtistPageClient';
 import { locales } from '@/lib/i18n';
@@ -108,6 +108,7 @@ if (!locales.includes(lang)) {
     },
     alternates: {
   canonical: `https://dadrocktabs.com/${lang}/artist/${slug}`,
+},
   };
 }
 
@@ -205,11 +206,11 @@ if (!locales.includes(lang)) {
       },
       {
         '@type': 'MusicGroup',
-        '@id': `https://dadrocktabs.com/${lang}/artist/${slug}#artist`
+        '@id': `https://dadrocktabs.com/${lang}/artist/${slug}#artist`,
         'name': displayArtistName,
         'genre': 'Rock',
         'description': `Learn how to play songs by ${displayArtistName} with free guitar and bass tablature video lessons.`,
-        'url': `https://dadrocktabs.com/${lang}/artist/${slug}`
+        'url': `https://dadrocktabs.com/${lang}/artist/${slug}`,
       },
       {
         '@type': 'CollectionPage',
