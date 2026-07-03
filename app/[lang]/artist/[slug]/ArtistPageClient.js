@@ -330,14 +330,10 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: pageL
         <div className="mb-10 p-6 sm:p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800 section-accent reveal-section">
           <h2 className="text-2xl font-bold mb-4 text-amber-500 flex items-center gap-2">
   <Star className="w-6 h-6" />
-  {lang === 'es'
-    ? `Aprende el estilo de guitarra y bajo de ${artistName}`
-    : `Learn ${artistName}'s Guitar & Bass Style`}
+  {(t.artistStyleTitle || "Learn {artist}'s Guitar & Bass Style").replace(/\{artist\}/g, artistName)}
 </h2>
-          <p className="text-zinc-400 mb-6 leading-relaxed">
-  {lang === 'es'
-    ? `Descubre cómo ${artistName} desarrolló su sonido característico de guitarra y bajo, las técnicas que encontrarás en su música y las mejores lecciones para comenzar tu aprendizaje.`
-    : `Discover how ${artistName} developed their signature guitar and bass sound, the techniques you'll encounter in their music, and the best lessons to begin your learning journey.`}
+  <p className="text-zinc-400 mb-6 leading-relaxed">
+  {(t.artistStyleDescription || "Discover how {artist} developed their signature guitar and bass sound, the techniques you'll encounter in their music, and the best lessons to begin your learning journey.").replace(/\{artist\}/g, artistName)}
 </p>
           <div className="text-zinc-300 space-y-4 leading-relaxed">
             {aiContent?.bio ? (
