@@ -116,8 +116,9 @@ function getRelatedArtists(artistName) {
   return defaultRelatedArtists.filter(a => a.toLowerCase() !== normalized.toLowerCase());
 }
 
-export default function ArtistPageClient({ artistName, videos, slug, adSettings, initialAiContent, faqItems = [] }) {
-  const [lang] = useLanguage();
+export default function ArtistPageClient({ artistName, videos, slug, lang: pageLang, adSettings, initialAiContent, faqItems = [] }) {
+  const [browserLang] = useLanguage();
+  const lang = pageLang || browserLang;
   const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
