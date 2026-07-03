@@ -1,1 +1,229 @@
+#!/usr/bin/env node
 
+const { MongoClient } = require('mongodb');
+
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017';
+const DB_NAME = process.env.DB_NAME || 'dadrock_tabs';
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
+
+const CONCURRENCY = Number(process.env.CONCURRENCY || 2);
+const MODEL = process.env.OPENAI_MODEL || 'gpt-5-nano';
+
+// Change this in GitHub Actions with TARGET_LANGS
+// Example: es,fr,de,it,pt,pt-br,ja,ko,zh,ru,hi,sv,fi
+const TARGET_LANGS = (process.env.TARGET_LANGS || 'es')
+  .split(',')
+  .map(lang => lang.trim())
+  .filter(Boolean);
+
+const LANGUAGE_NAMES = {
+  es: 'Spanish',
+  fr: 'French',
+  de: 'German',
+  it: 'Italian',
+  pt: 'Portuguese',
+  'pt-br': 'Brazilian Portuguese',
+  ja: 'Japanese',
+  ko: 'Korean',
+  zh: 'Chinese',
+  ru: 'Russian',
+  hi: 'Hindi',
+  sv: 'Swedish',
+  fi: 'Finnish',
+};
+
+function getApiKey() {
+  if (OPENAI_API_KEY) return OPENAI_API_KEY;
+
+  try {
+    const fs = require('fs');
+    const env = fs.readFileSync('/app/.env', 'utf8');
+    const match = env.match(/OPENAI_API_KEY=(.+)/);
+    return match ? match[1].trim() : '';
+  } catch {
+    return '';
+  }
+}
+
+const API_KEY = getApiKey();
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function extractOutputText(data) {
+  let text = '';
+
+  for (const item of data.output || []) {
+    if (item.type === 'message') {
+      for (const content of item.content || []) {
+        if (content.type === 'output_text' && content.text) {
+          text += content.text;
+        }
+      }
+    }
+  }
+
+  return text.trim();
+}
+
+function parseJsonFromText(text) {
+  try {
+    return JSON.parse(text);
+  } catch {
+    const codeBlockMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+    if (codeBlockMatch) {
+      return JSON.parse(codeBlockMatch[1]);
+    }
+
+    const objectMatch = text.match(/\{[\s\S]*\}/);
+    if (objectMatch) {
+      return JSON.parse(objectMatch[0]);
+    }
+
+    throw new Error('Could not parse translation JSON');
+  }
+}
+async function callOpenAI(prompt) {
+  const response = await fetch('https://api.openai.com/v1/responses', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: MODEL,
+      input: prompt,
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(`OpenAI API error ${response.status}: ${err}`);
+  }
+
+  const data = await response.json();
+
+  const text = extractOutputText(data);
+
+  if (!text) {
+    throw new Error('OpenAI returned no text.');
+  }
+
+  return parseJsonFromText(text);
+}
+
+async function translateArtistContent(artistName, englishContent, languageCode) {
+  const language = LANGUAGE_NAMES[languageCode] || languageCode;
+
+  const prompt = `
+Translate this DadRock Tabs SEO content into ${language}.
+
+Rules:
+
+- Keep every JSON key exactly the same.
+- Translate only the values.
+- Artist names, album names, song titles, equipment brands and guitar terminology stay unchanged.
+- Keep the writing natural for guitar and bass players.
+- Return ONLY valid JSON.
+
+JSON:
+
+${JSON.stringify(englishContent, null, 2)}
+`;
+
+  return await callOpenAI(prompt);
+}
+
+async function processQueue(items, worker) {
+  let completed = 0;
+  let failed = 0;
+
+  for (let i = 0; i < items.length; i += CONCURRENCY) {
+    const batch = items.slice(i, i + CONCURRENCY);
+
+    const results = await Promise.allSettled(
+      batch.map(worker)
+    );
+
+    for (const result of results) {
+      if (result.status === 'fulfilled') {
+        completed++;
+      } else {
+        failed++;
+        console.error(result.reason);
+      }
+    }
+
+    console.log(
+      `Progress ${completed + failed}/${items.length} (${completed} complete, ${failed} failed)`
+    );
+
+    await sleep(1000);
+  }
+}
+async function main() {
+  if (!API_KEY) {
+    console.error('No OPENAI_API_KEY found.');
+    process.exit(1);
+  }
+
+  console.log('🌎 Translating artist SEO content...');
+  console.log(`Database: ${DB_NAME}`);
+  console.log(`Languages: ${TARGET_LANGS.join(', ')}`);
+
+  const client = await MongoClient.connect(MONGO_URL);
+  const db = client.db(DB_NAME);
+
+  const docs = await db.collection('artist_seo_content').find({}).toArray();
+
+  const jobs = [];
+
+  for (const doc of docs) {
+    if (!doc.content) continue;
+
+    const englishContent = doc.content.en || doc.content;
+
+    for (const lang of TARGET_LANGS) {
+      if (doc.content?.[lang]) continue;
+
+      jobs.push({
+        doc,
+        lang,
+        englishContent,
+      });
+    }
+  }
+
+  console.log(`Translation jobs: ${jobs.length}`);
+
+  await processQueue(jobs, async ({ doc, lang, englishContent }) => {
+    const translatedContent = await translateArtistContent(
+      doc.artist || doc.slug || 'Unknown Artist',
+      englishContent,
+      lang
+    );
+
+    await db.collection('artist_seo_content').updateOne(
+      { _id: doc._id },
+      {
+        $set: {
+          'content.en': englishContent,
+          [`content.${lang}`]: translatedContent,
+          [`translated_at_${lang}`]: new Date(),
+        },
+      }
+    );
+
+    console.log(`✅ ${doc.artist || doc.slug} → ${lang}`);
+  });
+
+  await client.close();
+
+  console.log('🎉 Translation complete!');
+}
+
+main().catch((err) => {
+  console.error('Fatal error:', err);
+  process.exit(1);
+});
