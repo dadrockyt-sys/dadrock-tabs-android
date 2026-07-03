@@ -217,7 +217,7 @@ if (!locales.includes(lang)) {
         'description': `Learn how to play songs by ${displayArtistName} with step-by-step guitar and bass tutorials.`,
         'url': `https://dadrocktabs.com/${lang}/artist/${slug}`,
         'isPartOf': { '@id': 'https://dadrocktabs.com/#website' },
-        'about': { '@id': `https://dadrocktabs.com/artist/${slug}#artist` },
+        'about': { '@id': `https://dadrocktabs.com/${lang}/artist/${slug}#artist` },
         'publisher': { '@id': 'https://dadrocktabs.com/#organization' },
         'numberOfItems': plainVideos.length,
         'mainEntity': {
@@ -291,13 +291,14 @@ if (!locales.includes(lang)) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <ArtistPageClient 
-        artistName={displayArtistName} 
-        videos={plainVideos} 
-        slug={slug}
-        adSettings={adSettings}
-        initialAiContent={aiSeoContent}
-        faqItems={faqItems}
-      />
+  artistName={displayArtistName} 
+  videos={plainVideos} 
+  slug={slug}
+  lang={lang}
+  adSettings={adSettings}
+  initialAiContent={aiSeoContent}
+  faqItems={faqItems}
+/>
     </>
   );
     }
