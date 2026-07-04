@@ -198,7 +198,7 @@ async function main() {
 
     const englishContent = doc.content.en || doc.content;
 
-    const missingLangs = TARGET_LANGS.filter(lang => !doc.content?.[lang]);
+    const missingLangs = TARGET_LANGS;
 
     if (missingLangs.length === 0) continue;
 
