@@ -40,13 +40,14 @@ async function main() {
 
   const bad = docs.find(d => !d.slug || d.slug === 'undefined');
 
-console.log('\nOne complete legacy document:\n');
+  const legacy = docs.find(d => d.artist === '.38 Special -');
+const current = docs.find(d => d.slug === '38-special');
 
-if (bad) {
-  console.log(JSON.stringify(bad, null, 2));
-} else {
-  console.log('No legacy documents found.');
-}
+console.log('\n=== LEGACY DOCUMENT ===\n');
+console.log(JSON.stringify(legacy, null, 2));
+
+console.log('\n=== CURRENT DOCUMENT ===\n');
+console.log(JSON.stringify(current, null, 2));
 
   await client.close();
 }
