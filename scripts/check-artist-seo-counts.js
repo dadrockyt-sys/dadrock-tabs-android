@@ -38,13 +38,15 @@ async function main() {
   console.log(`Unique normalized artists: ${artists.size}`);
   console.log(`Unique artists with valid slug: ${artistsWithGoodSlug.size}`);
 
-  console.log('\nSample missing/undefined slug docs:');
-  docs
-    .filter(d => !d.slug || d.slug === 'undefined')
-    .slice(0, 25)
-    .forEach(d => {
-      console.log(`artist="${d.artist}" slug="${d.slug}" id=${d._id}`);
-    });
+  const bad = docs.find(d => !d.slug || d.slug === 'undefined');
+
+console.log('\nOne complete legacy document:\n');
+
+if (bad) {
+  console.log(JSON.stringify(bad, null, 2));
+} else {
+  console.log('No legacy documents found.');
+}
 
   await client.close();
 }
