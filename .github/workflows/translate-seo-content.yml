@@ -4,13 +4,33 @@ on:
   workflow_dispatch:
     inputs:
       languages:
-        description: "Languages to translate"
-        required: false
-        default: "fr,de,it,pt,pt-br,ja,ko,zh,ru,hi,sv,fi"
+        description: "Language to translate"
+        required: true
+        default: "fr"
+        type: choice
+        options:
+          - fr
+          - de
+          - it
+          - pt
+          - pt-br
+          - ja
+          - ko
+          - zh
+          - ru
+          - hi
+          - sv
+          - fi
+
+      limit:
+        description: "Max artists per run"
+        required: true
+        default: "25"
 
 jobs:
   translate:
     runs-on: ubuntu-latest
+    timeout-minutes: 330
 
     steps:
       - name: Checkout repo
@@ -32,6 +52,7 @@ jobs:
           MONGO_URL: ${{ secrets.MONGO_URL }}
           DB_NAME: ${{ secrets.DB_NAME }}
           TARGET_LANGS: ${{ github.event.inputs.languages }}
+          LIMIT: ${{ github.event.inputs.limit }}
           CONCURRENCY: 2
         run: node scripts/translate-seo-content.js
 
