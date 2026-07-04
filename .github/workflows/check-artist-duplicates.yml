@@ -23,4 +23,4 @@ jobs:
         env:
           MONGO_URL: ${{ secrets.MONGO_URL }}
           DB_NAME: ${{ secrets.DB_NAME }}
-        run: node scripts/check-artist-seo-counts.js
+        run: node scripts/cleanup-confirmed-artist-seo-duplicates.js
