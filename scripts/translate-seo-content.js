@@ -210,8 +210,8 @@ async function main() {
   }
 
   console.log(`Artist translation jobs: ${jobs.length}`);
-
-    await processQueue(jobs, async ({ doc, englishContent, missingLangs }) => {
+  await processQueue(jobs, async ({ doc, englishContent, missingLangs }) => {
+  
     const artistName = doc.artist || doc.slug || 'Unknown Artist';
 
     const translatedByLang = await translateArtistContent(
@@ -231,7 +231,8 @@ async function main() {
 
       updates[`content.${lang}`] = translatedByLang[lang];
       updates[`translated_at_${lang}`] = new Date();
-
+    }
+      
     await db.collection('artist_seo_content').updateOne(
       { _id: doc._id },
       { $set: updates }
