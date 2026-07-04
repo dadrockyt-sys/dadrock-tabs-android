@@ -113,7 +113,41 @@ async function callOpenAI(prompt) {
   return parseJsonFromText(text);
 }
 
-async function translateArtistContent(artistName, englishContent, languageCode) {
+async function translateArtistContent(artistName, englishContent) {
+  const languages = TARGET_LANGS
+    .map(code => `${code}: ${LANGUAGE_NAMES[code] || code}`)
+    .join('\n');
+
+  const prompt = `
+Translate this DadRock Tabs SEO content into ALL of these languages.
+
+Languages:
+${languages}
+
+Rules:
+
+- Return ONE JSON object.
+- Top level keys must be the language codes.
+- Keep every JSON key exactly the same.
+- Translate ONLY the values.
+- Artist names, album names, song titles, equipment brands and guitar terminology stay unchanged.
+- Return ONLY valid JSON.
+
+Example format:
+
+{
+  "fr": { ... },
+  "de": { ... },
+  "it": { ... }
+}
+
+English JSON:
+
+${JSON.stringify(englishContent, null, 2)}
+`;
+
+  return await callOpenAI(prompt);
+}
   const language = LANGUAGE_NAMES[languageCode] || languageCode;
 
   const prompt = `
