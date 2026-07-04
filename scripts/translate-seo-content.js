@@ -242,20 +242,7 @@ async function main() {
     const missingLangs = TARGET_LANGS.filter(lang => {
   const translatedContent = doc.content?.[lang];
 
-  if (!translatedContent || typeof translatedContent !== 'object') {
-    return true;
-  }
-
-  const englishKeys = Object.keys(englishContent).filter(key => {
-    return typeof englishContent[key] === 'string' && englishContent[key].trim().length > 20;
-  });
-
-  return !englishKeys.every(key => {
-    return (
-      typeof translatedContent[key] === 'string' &&
-      translatedContent[key].trim().length > 20
-    );
-  });
+  return !hasMeaningfulTranslation(translatedContent, englishContent);
 });
 
     if (missingLangs.length === 0) {
