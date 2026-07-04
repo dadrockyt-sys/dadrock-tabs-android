@@ -293,13 +293,13 @@ try {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <ArtistPageClient 
-  artistName={displayArtistName} 
-  videos={plainVideos} 
+      <ArtistPageClient
+  artistName={artistName}
+  videos={videos}
   slug={slug}
   lang={lang}
   adSettings={adSettings}
-  initialAiContent={aiSeoContent}
+  initialAiContent={aiContent}
   faqItems={faqItems}
 />
     </>
