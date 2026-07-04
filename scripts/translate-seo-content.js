@@ -148,7 +148,6 @@ ${JSON.stringify(englishContent, null, 2)}
 
   return await callOpenAI(prompt);
 }
-  const language = LANGUAGE_NAMES[languageCode] || languageCode;
 
   const prompt = `
 Translate this DadRock Tabs SEO content into ${language}.
