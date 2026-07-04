@@ -294,12 +294,12 @@ try {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <ArtistPageClient
-  artistName={artistName}
-  videos={videos}
+  artistName={displayArtistName}
+  videos={plainVideos}
   slug={slug}
   lang={lang}
   adSettings={adSettings}
-  initialAiContent={aiContent}
+  initialAiContent={aiSeoContent}
   faqItems={faqItems}
 />
     </>
