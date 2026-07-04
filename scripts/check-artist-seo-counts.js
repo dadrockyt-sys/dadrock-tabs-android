@@ -40,14 +40,18 @@ async function main() {
 
   const bad = docs.find(d => !d.slug || d.slug === 'undefined');
 
-  const legacy = docs.find(d => d.artist === '.38 Special -');
-const current = docs.find(d => d.slug === '38-special');
+  console.log("\n=== .38 SPECIAL DOCUMENT SUMMARY ===\n");
 
-console.log('\n=== LEGACY DOCUMENT ===\n');
-console.log(JSON.stringify(legacy, null, 2));
-
-console.log('\n=== CURRENT DOCUMENT ===\n');
-console.log(JSON.stringify(current, null, 2));
+docs
+  .filter(d => d.artist && d.artist.includes(".38"))
+  .forEach(d => {
+    console.log({
+      artist: d.artist,
+      slug: d.slug,
+      hasContent: !!d.content,
+      id: String(d._id)
+    });
+  });
 
   await client.close();
 }
