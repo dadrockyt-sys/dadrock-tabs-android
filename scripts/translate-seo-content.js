@@ -191,25 +191,25 @@ async function main() {
 
   const docs = await db.collection('artist_seo_content').find({}).toArray();
 
-  const jobs = [];
+    const jobs = [];
 
   for (const doc of docs) {
     if (!doc.content) continue;
 
     const englishContent = doc.content.en || doc.content;
 
-    for (const lang of TARGET_LANGS) {
-      if (doc.content?.[lang]) continue;
+    const missingLangs = TARGET_LANGS.filter(lang => !doc.content?.[lang]);
 
-      jobs.push({
-        doc,
-        lang,
-        englishContent,
-      });
-    }
+    if (missingLangs.length === 0) continue;
+
+    jobs.push({
+      doc,
+      englishContent,
+      missingLangs,
+    });
   }
 
-  console.log(`Translation jobs: ${jobs.length}`);
+  console.log(`Artist translation jobs: ${jobs.length}`);
 
   await processQueue(jobs, async ({ doc, lang, englishContent }) => {
     const translatedContent = await translateArtistContent(
