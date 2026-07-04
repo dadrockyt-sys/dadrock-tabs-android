@@ -240,8 +240,23 @@ async function main() {
     const englishContent = doc.content.en || doc.content;
 
     const missingLangs = TARGET_LANGS.filter(lang => {
-      return !hasMeaningfulTranslation(doc.content?.[lang], englishContent);
-    });
+  const translatedContent = doc.content?.[lang];
+
+  if (!translatedContent || typeof translatedContent !== 'object') {
+    return true;
+  }
+
+  const englishKeys = Object.keys(englishContent).filter(key => {
+    return typeof englishContent[key] === 'string' && englishContent[key].trim().length > 20;
+  });
+
+  return !englishKeys.every(key => {
+    return (
+      typeof translatedContent[key] === 'string' &&
+      translatedContent[key].trim().length > 20
+    );
+  });
+});
 
     if (missingLangs.length === 0) {
       skipped++;
