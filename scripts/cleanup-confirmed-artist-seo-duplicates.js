@@ -65,9 +65,13 @@ async function main() {
   const ids = toDelete.map(d => d._id);
   const result = await col.deleteMany({ _id: { $in: ids } });
 
-  console.log(`\nDeleted ${result.deletedCount} confirmed duplicate records.`);
+console.log(`\nDeleted ${result.deletedCount} confirmed duplicate records.`);
 
-  await client.close();
+const remaining = await col.countDocuments();
+
+console.log(`Documents remaining: ${remaining}`);
+
+await client.close();
 }
 
 main().catch(err => {
