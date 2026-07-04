@@ -71,8 +71,6 @@ function hasMeaningfulTranslation(translatedContent, englishContent) {
     return translatedValue.trim().length >= minLength;
   });
 }
-  return text.trim();
-}
 function extractOutputText(data) {
   let text = '';
 
