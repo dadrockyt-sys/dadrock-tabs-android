@@ -55,20 +55,40 @@ function hasMeaningfulTranslation(translatedContent, englishContent) {
   if (!englishContent || typeof englishContent !== 'object') return false;
 
   const englishKeys = Object.keys(englishContent).filter(key => {
-    return typeof englishContent[key] === 'string';
+    return typeof englishContent[key] === 'string' && englishContent[key].trim().length > 20;
   });
 
   if (englishKeys.length === 0) return false;
 
   return englishKeys.every(key => {
-    const englishValue = englishContent[key];
+    const englishValue = englishContent[key].trim();
     const translatedValue = translatedContent[key];
 
     if (typeof translatedValue !== 'string') return false;
 
-    const minLength = Math.min(20, Math.floor(englishValue.trim().length * 0.25));
+    const cleanedTranslated = translatedValue.trim();
 
-    return translatedValue.trim().length >= minLength;
+    if (cleanedTranslated.length < 20) return false;
+
+    // If the translated field is exactly the same as English, it is NOT translated
+    if (cleanedTranslated === englishValue) return false;
+
+    // If most of the English text is still present, it is NOT translated
+    const englishWords = englishValue
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .split(/\s+/)
+      .filter(word => word.length > 4);
+
+    const translatedLower = cleanedTranslated.toLowerCase();
+
+    const matchingWords = englishWords.filter(word => translatedLower.includes(word));
+
+    if (englishWords.length > 10 && matchingWords.length / englishWords.length > 0.35) {
+      return false;
+    }
+
+    return true;
   });
 }
 function extractOutputText(data) {
