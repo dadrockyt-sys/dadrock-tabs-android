@@ -222,7 +222,7 @@ async function main() {
     const englishContent = doc.content.en || doc.content;
 
     const missingLangs = TARGET_LANGS.filter(lang => {
-      return !hasMeaningfulTranslation(doc.content?.[lang]);
+      return !hasMeaningfulTranslation(doc.content?.[lang], englishContent);
     });
 
     if (missingLangs.length === 0) {
