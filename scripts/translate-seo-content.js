@@ -211,25 +211,34 @@ async function main() {
 
   console.log(`Artist translation jobs: ${jobs.length}`);
 
-  await processQueue(jobs, async ({ doc, lang, englishContent }) => {
-    const translatedContent = await translateArtistContent(
-      doc.artist || doc.slug || 'Unknown Artist',
-      englishContent,
-      lang
+    await processQueue(jobs, async ({ doc, englishContent, missingLangs }) => {
+    const artistName = doc.artist || doc.slug || 'Unknown Artist';
+
+    const translatedByLang = await translateArtistContent(
+      artistName,
+      englishContent
     );
+
+    const updates = {
+      'content.en': englishContent,
+    };
+
+    for (const lang of missingLangs) {
+      if (!translatedByLang?.[lang]) {
+        console.warn(`⚠️ Missing ${lang} translation for ${artistName}`);
+        continue;
+      }
+
+      updates[`content.${lang}`] = translatedByLang[lang];
+      updates[`translated_at_${lang}`] = new Date();
+    }
 
     await db.collection('artist_seo_content').updateOne(
       { _id: doc._id },
-      {
-        $set: {
-          'content.en': englishContent,
-          [`content.${lang}`]: translatedContent,
-          [`translated_at_${lang}`]: new Date(),
-        },
-      }
+      { $set: updates }
     );
 
-    console.log(`✅ ${doc.artist || doc.slug} → ${lang}`);
+    console.log(`✅ ${artistName} → ${missingLangs.join(', ')}`);
   });
 
   await client.close();
