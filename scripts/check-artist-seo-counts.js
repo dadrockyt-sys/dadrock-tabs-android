@@ -54,25 +54,17 @@ const trailingDashDocs = docs.filter(d =>
   normalizeArtist(d.artist).endsWith('-')
 );
 
-let confirmedDuplicates = 0;
-let noModernMatch = 0;
+console.log('\n=== REMAINING RECORDS WITHOUT SLUG ===\n');
 
-for (const legacy of trailingDashDocs) {
-  const cleanedArtist = normalizeArtist(legacy.artist).replace(/\s*-\s*$/, '');
-  const modernMatches = docsByArtist.get(cleanedArtist) || [];
-  const hasModernSluggedMatch = modernMatches.some(d => d.slug && d.slug !== 'undefined');
+const remaining = docs.filter(d => !d.slug || d.slug === 'undefined');
 
-  if (hasModernSluggedMatch) {
-    confirmedDuplicates++;
-  } else {
-    noModernMatch++;
-    console.log(`NO MATCH: artist="${legacy.artist}" id=${legacy._id}`);
-  }
-}
+console.log(`Remaining without slug: ${remaining.length}`);
 
-console.log(`Trailing dash legacy docs: ${trailingDashDocs.length}`);
-console.log(`Confirmed duplicates with modern slugged match: ${confirmedDuplicates}`);
-console.log(`Trailing dash docs with NO modern match: ${noModernMatch}`);
+remaining
+  .sort((a, b) => (a.artist || '').localeCompare(b.artist || ''))
+  .forEach(d => {
+    console.log(`artist="${d.artist}" id=${d._id}`);
+  });
 
   await client.close();
 }
