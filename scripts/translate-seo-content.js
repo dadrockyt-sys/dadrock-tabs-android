@@ -7,11 +7,10 @@ const DB_NAME = process.env.DB_NAME || 'dadrock_tabs';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 
 const CONCURRENCY = Number(process.env.CONCURRENCY || 2);
+const LIMIT = Number(process.env.LIMIT || 25);
 const MODEL = process.env.OPENAI_MODEL || 'gpt-5-nano';
 
-// Change this in GitHub Actions with TARGET_LANGS
-// Example: es,fr,de,it,pt,pt-br,ja,ko,zh,ru,hi,sv,fi
-const TARGET_LANGS = (process.env.TARGET_LANGS || 'es')
+const TARGET_LANGS = (process.env.TARGET_LANGS || 'fr')
   .split(',')
   .map(lang => lang.trim())
   .filter(Boolean);
@@ -51,6 +50,14 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function hasMeaningfulTranslation(content) {
+  if (!content || typeof content !== 'object') return false;
+
+  const values = Object.values(content).filter(v => typeof v === 'string');
+  const joined = values.join(' ').trim();
+
+  return joined.length > 100;
+}
 function extractOutputText(data) {
   let text = '';
 
@@ -84,6 +91,7 @@ function parseJsonFromText(text) {
     throw new Error('Could not parse translation JSON');
   }
 }
+
 async function callOpenAI(prompt) {
   const response = await fetch('https://api.openai.com/v1/responses', {
     method: 'POST',
@@ -103,7 +111,6 @@ async function callOpenAI(prompt) {
   }
 
   const data = await response.json();
-
   const text = extractOutputText(data);
 
   if (!text) {
@@ -112,33 +119,29 @@ async function callOpenAI(prompt) {
 
   return parseJsonFromText(text);
 }
-
-async function translateArtistContent(artistName, englishContent) {
-  const languages = TARGET_LANGS
+async function translateArtistContent(artistName, englishContent, missingLangs) {
+  const languages = missingLangs
     .map(code => `${code}: ${LANGUAGE_NAMES[code] || code}`)
     .join('\n');
 
   const prompt = `
-Translate this DadRock Tabs SEO content into ALL of these languages.
+Translate this DadRock Tabs SEO content for artist "${artistName}".
 
 Languages:
 ${languages}
 
 Rules:
-
 - Return ONE JSON object.
 - Top level keys must be the language codes.
 - Keep every JSON key exactly the same.
 - Translate ONLY the values.
-- Artist names, album names, song titles, equipment brands and guitar terminology stay unchanged.
+- Artist names, album names, song titles, equipment brands, and guitar terminology stay unchanged.
 - Return ONLY valid JSON.
 
 Example format:
 
 {
-  "fr": { ... },
-  "de": { ... },
-  "it": { ... }
+  "fr": { ... }
 }
 
 English JSON:
@@ -156,9 +159,7 @@ async function processQueue(items, worker) {
   for (let i = 0; i < items.length; i += CONCURRENCY) {
     const batch = items.slice(i, i + CONCURRENCY);
 
-    const results = await Promise.allSettled(
-      batch.map(worker)
-    );
+    const results = await Promise.allSettled(batch.map(worker));
 
     for (const result of results) {
       if (result.status === 'fulfilled') {
@@ -185,38 +186,61 @@ async function main() {
   console.log('🌎 Translating artist SEO content...');
   console.log(`Database: ${DB_NAME}`);
   console.log(`Languages: ${TARGET_LANGS.join(', ')}`);
+  console.log(`Limit: ${LIMIT}`);
+  console.log(`Concurrency: ${CONCURRENCY}`);
 
   const client = await MongoClient.connect(MONGO_URL);
   const db = client.db(DB_NAME);
 
-  const docs = await db.collection('artist_seo_content').find({}).toArray();
+  const docs = await db
+    .collection('artist_seo_content')
+    .find({})
+    .sort({ artist: 1, slug: 1 })
+    .toArray();
 
   const jobs = [];
+  let skipped = 0;
 
   for (const doc of docs) {
     if (!doc.content) continue;
 
+    const artistName = doc.artist || doc.slug || 'Unknown Artist';
     const englishContent = doc.content.en || doc.content;
 
-    const missingLangs = TARGET_LANGS;
+    const missingLangs = TARGET_LANGS.filter(lang => {
+      return !hasMeaningfulTranslation(doc.content?.[lang]);
+    });
 
-    if (missingLangs.length === 0) continue;
+    if (missingLangs.length === 0) {
+      skipped++;
+      console.log(`⏭️ Skipping ${artistName} — already translated`);
+      continue;
+    }
 
     jobs.push({
       doc,
+      artistName,
       englishContent,
       missingLangs,
     });
+
+    if (jobs.length >= LIMIT) break;
   }
 
-  console.log(`Artist translation jobs: ${jobs.length}`);
-  await processQueue(jobs, async ({ doc, englishContent, missingLangs }) => {
-  
-    const artistName = doc.artist || doc.slug || 'Unknown Artist';
+  console.log(`Skipped already translated artists: ${skipped}`);
+  console.log(`Artist translation jobs this run: ${jobs.length}`);
 
+  if (jobs.length === 0) {
+    console.log('✅ Nothing to translate.');
+    await client.close();
+    return;
+  }
+
+  await processQueue(jobs, async ({ doc, artistName, englishContent, missingLangs }) => {
     const translatedByLang = await translateArtistContent(
       artistName,
-      englishContent
+      englishContent,
+      missingLangs
     );
 
     const updates = {
@@ -232,7 +256,7 @@ async function main() {
       updates[`content.${lang}`] = translatedByLang[lang];
       updates[`translated_at_${lang}`] = new Date();
     }
-      
+
     await db.collection('artist_seo_content').updateOne(
       { _id: doc._id },
       { $set: updates }
@@ -250,4 +274,3 @@ main().catch((err) => {
   console.error('Fatal error:', err);
   process.exit(1);
 });
-
