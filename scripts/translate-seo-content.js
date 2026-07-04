@@ -149,25 +149,6 @@ ${JSON.stringify(englishContent, null, 2)}
   return await callOpenAI(prompt);
 }
 
-  const prompt = `
-Translate this DadRock Tabs SEO content into ${language}.
-
-Rules:
-
-- Keep every JSON key exactly the same.
-- Translate only the values.
-- Artist names, album names, song titles, equipment brands and guitar terminology stay unchanged.
-- Keep the writing natural for guitar and bass players.
-- Return ONLY valid JSON.
-
-JSON:
-
-${JSON.stringify(englishContent, null, 2)}
-`;
-
-  return await callOpenAI(prompt);
-}
-
 async function processQueue(items, worker) {
   let completed = 0;
   let failed = 0;
