@@ -73,7 +73,21 @@ function hasMeaningfulTranslation(translatedContent, englishContent) {
 }
   return text.trim();
 }
+function extractOutputText(data) {
+  let text = '';
 
+  for (const item of data.output || []) {
+    if (item.type === 'message') {
+      for (const content of item.content || []) {
+        if (content.type === 'output_text' && content.text) {
+          text += content.text;
+        }
+      }
+    }
+  }
+
+  return text.trim();
+}
 function parseJsonFromText(text) {
   try {
     return JSON.parse(text);
