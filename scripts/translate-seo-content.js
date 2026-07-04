@@ -50,27 +50,27 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function hasMeaningfulTranslation(content) {
-  if (!content || typeof content !== 'object') return false;
+function hasMeaningfulTranslation(translatedContent, englishContent) {
+  if (!translatedContent || typeof translatedContent !== 'object') return false;
+  if (!englishContent || typeof englishContent !== 'object') return false;
 
-  const values = Object.values(content).filter(v => typeof v === 'string');
-  const joined = values.join(' ').trim();
+  const englishKeys = Object.keys(englishContent).filter(key => {
+    return typeof englishContent[key] === 'string';
+  });
 
-  return joined.length > 100;
+  if (englishKeys.length === 0) return false;
+
+  return englishKeys.every(key => {
+    const englishValue = englishContent[key];
+    const translatedValue = translatedContent[key];
+
+    if (typeof translatedValue !== 'string') return false;
+
+    const minLength = Math.min(20, Math.floor(englishValue.trim().length * 0.25));
+
+    return translatedValue.trim().length >= minLength;
+  });
 }
-function extractOutputText(data) {
-  let text = '';
-
-  for (const item of data.output || []) {
-    if (item.type === 'message') {
-      for (const content of item.content || []) {
-        if (content.type === 'output_text' && content.text) {
-          text += content.text;
-        }
-      }
-    }
-  }
-
   return text.trim();
 }
 
