@@ -17,7 +17,7 @@ async function main() {
   await client.connect();
 
   const db = client.db(DB_NAME);
-  const col = db.collection('artistSeo');
+  const col = db.collection('artist_seo_content');
 
   const docs = await col.find({}).toArray();
 
