@@ -242,9 +242,6 @@ async function main() {
     const missingLangs = TARGET_LANGS.filter(lang => {
       return !hasMeaningfulTranslation(doc.content?.[lang], englishContent);
     });
-    if (artistName === ".38 Special") {
-  console.log("FULL DOC:", JSON.stringify(doc, null, 2));
-    }
 
     if (missingLangs.length === 0) {
       skipped++;
