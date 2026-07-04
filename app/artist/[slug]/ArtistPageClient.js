@@ -574,33 +574,32 @@ const t = getSubPageTranslation(lang);
 {/* Artist Learning Guide */}
 <section className="mt-10 p-8 rounded-2xl border border-zinc-800 bg-zinc-900/60">
   <h2 className="text-2xl font-bold mb-4 text-white font-rock">
-    Learn to Play {artistName} Guitar
+    {(t.learningGuideTitle || "Learn to Play {artist} Guitar").replace(/\{artist\}/g, artistName)}
   </h2>
 
   <p className="text-zinc-400 mb-6 text-sm leading-relaxed">
-    Explore {artistName} guitar and bass lessons with a focus on riffs, rhythm parts,
-    classic rock techniques, and practice-friendly video lessons.
+    {(t.learningGuideDescription || "Explore {artist} guitar and bass lessons with a focus on riffs, rhythm parts, classic rock techniques, and practice-friendly video lessons.").replace(/\{artist\}/g, artistName)}
   </p>
 
   <div className="grid md:grid-cols-3 gap-4">
     <div className="p-4 rounded-xl bg-black/40 border border-zinc-800">
-      <h3 className="text-amber-500 font-bold mb-2">Start Here</h3>
+      <h3 className="text-amber-500 font-bold mb-2">{t.learningGuideStartHere || 'Start Here'}</h3>
       <p className="text-zinc-400 text-sm">
-        Begin with the most recognizable riffs and rhythm parts before moving into harder songs.
+        {t.learningGuideStartHereText || 'Begin with the most recognizable riffs and rhythm parts before moving into harder songs.'}
       </p>
     </div>
 
     <div className="p-4 rounded-xl bg-black/40 border border-zinc-800">
-      <h3 className="text-amber-500 font-bold mb-2">Techniques</h3>
+      <h3 className="text-amber-500 font-bold mb-2">{t.learningGuideTechniques || 'Techniques'}</h3>
       <p className="text-zinc-400 text-sm">
-        Practice power chords, timing, picking control, bends, vibrato, and classic rock phrasing.
+        {t.learningGuideTechniquesText || 'Practice power chords, timing, picking control, bends, vibrato, and classic rock phrasing.'}
       </p>
     </div>
 
     <div className="p-4 rounded-xl bg-black/40 border border-zinc-800">
-      <h3 className="text-amber-500 font-bold mb-2">Next Step</h3>
+      <h3 className="text-amber-500 font-bold mb-2">{t.learningGuideNextStep || 'Next Step'}</h3>
       <p className="text-zinc-400 text-sm">
-        Use the lessons below to build a practice path from easier songs to more advanced parts.
+        {t.learningGuideNextStepText || 'Use the lessons below to build a practice path from easier songs to more advanced parts.'}
       </p>
     </div>
   </div>
