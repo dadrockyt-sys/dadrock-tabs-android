@@ -1,1 +1,51 @@
+name: Translate Song SEO Content
 
+on:
+  workflow_dispatch:
+    inputs:
+      language:
+        description: "Language to translate"
+        required: true
+        default: "fr"
+        type: choice
+        options:
+          - es
+          - fr
+          - de
+          - it
+          - pt
+          - pt-br
+          - ja
+          - ko
+          - zh
+          - ru
+          - hi
+          - sv
+          - fi
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+              - name: Translate Song SEO
+        env:
+          MONGO_URL: ${{ secrets.MONGO_URL }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5-nano
+          TARGET_LANG: ${{ github.event.inputs.language }}
+          CONCURRENCY: 2
+        run: |
+          node scripts/translate-song-seo-content.js
