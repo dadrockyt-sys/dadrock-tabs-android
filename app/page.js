@@ -322,6 +322,8 @@ export default function App({ initialLang = 'en' }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [logoClickCount, setLogoClickCount] = useState(0);
   const [pageReady, setPageReady] = useState(false);
+
+  const t = homepageTranslations[currentLang] || homepageTranslations.en;
   
   // Sync currentLang with initialLang when it changes (e.g., navigation to /hi, /es, etc.)
   useEffect(() => {
