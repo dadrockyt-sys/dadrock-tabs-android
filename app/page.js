@@ -448,8 +448,6 @@ export default function App({ initialLang = 'en' }) {
   const [showSongsList, setShowSongsList] = useState(false);
   const [deletingSongId, setDeletingSongId] = useState(null);
 
-  const t = getTranslation(currentLang);
-
   // Featured video state
   const [featuredVideo, setFeaturedVideo] = useState(null);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
