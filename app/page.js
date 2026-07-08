@@ -4168,7 +4168,7 @@ export default function App({ initialLang = 'en' }) {
           <div className="mt-8 text-center">
             <button onClick={() => setCurrentPage('home')} className="text-zinc-400 hover:text-white inline-flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
-              Back to Home
+              {t.home || 'Home'}
             </button>
           </div>
                         <a
