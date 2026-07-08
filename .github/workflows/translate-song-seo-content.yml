@@ -39,7 +39,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-              - name: Translate Song SEO
+
+      - name: Translate Song SEO
         env:
           MONGO_URL: ${{ secrets.MONGO_URL }}
           DB_NAME: ${{ secrets.DB_NAME }}
@@ -47,5 +48,4 @@ jobs:
           OPENAI_MODEL: gpt-5-nano
           TARGET_LANG: ${{ github.event.inputs.language }}
           CONCURRENCY: 2
-        run: |
-          node scripts/translate-song-seo-content.js
+        run: node scripts/translate-song-seo-content.js
