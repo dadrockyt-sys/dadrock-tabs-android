@@ -1641,7 +1641,7 @@ export default function App({ initialLang = 'en' }) {
             style={{ transitionDelay: '0.35s' }}
           >
             <span className="text-xl rock-bounce">🎲</span>
-            Random Song
+            🎲 {t.randomSong}
           </button>
 
           {/* Subscribe Button with Pulse Glow */}
