@@ -12,6 +12,12 @@ import SearchBar from '@/components/SearchBar';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
+const getLocalizedPath = (path, lang) => {
+  if (!lang || lang === 'en') return path;
+  return path === '/' ? `/${lang}` : `/${lang}${path}`;
+};
+
+
 // Related artists mapping for internal linking (SEO boost)
 // Covers all major artists in the database for maximum cross-linking
 const relatedArtistsMap = {
@@ -263,7 +269,7 @@ const t = getSubPageTranslation(lang);
       <header className="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity flex-shrink-0">
+            <Link href={getLocalizedPath('/', lang)} className="flex items...
               <img src={LOGO_URL} alt="DadRock Tabs" className="h-9 w-auto" />
               <span className="text-lg font-bold text-amber-500 hidden sm:block font-rock">DadRock Tabs</span>
             </Link>
@@ -274,7 +280,7 @@ const t = getSubPageTranslation(lang);
             <div className="flex items-center gap-3 flex-shrink-0">
               <LanguageSelector />
               <Link 
-                href="/"
+                href={getLocalizedPath('/', lang)}
                 className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
               >
                 <Home className="w-4 h-4" />
@@ -288,7 +294,10 @@ const t = getSubPageTranslation(lang);
       <main className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Breadcrumb */}
         <nav className="mb-6 text-sm text-zinc-400">
-          <Link href="/" className="hover:text-amber-500 transition-colors">{t.home}</Link>
+          <Link
+  href={getLocalizedPath('/', lang)}
+  className="hover:text-amber-500 transition-colors"
+>
           <span className="mx-2">/</span>
           <span className="text-white">{artistName}</span>
         </nav>
@@ -635,7 +644,7 @@ const t = getSubPageTranslation(lang);
         {/* Back to Home */}
         <div className="mt-12 text-center">
           <Link
-            href="/"
+            href={getLocalizedPath('/', lang)}
             className="inline-flex items-center gap-3 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-full transition-colors"
           >
             <Home className="w-5 h-5" />
@@ -653,7 +662,7 @@ const t = getSubPageTranslation(lang);
               <p className="text-zinc-500 text-sm">{t.footer}</p>
             </div>
             <div className="flex items-center gap-6">
-              <Link href="/" className="text-zinc-500 hover:text-amber-500 transition-colors text-sm">{t.home}</Link>
+              href={getLocalizedPath('/', lang)}
               <a 
                 href="https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ" 
                 target="_blank" 
