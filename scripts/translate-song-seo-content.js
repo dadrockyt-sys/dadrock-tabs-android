@@ -89,11 +89,18 @@ ${JSON.stringify(source, null, 2)}
   }
 
     const data = await res.json();
-    const text = data.output_text || data.output?.[0]?.content?.[0]?.text;
 
-  if (!text) throw new Error('No translation text returned');
+const text =
+  data.output_text ||
+  data.output
+    ?.flatMap(item => item.content || [])
+    ?.map(content => content.text || '')
+    ?.join('')
+    ?.trim();
 
-  return JSON.parse(text);
+if (!text) throw new Error('No translation text returned');
+
+return JSON.parse(text);
 }
 
 async function worker(items, db, workerId) {
