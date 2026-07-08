@@ -84,9 +84,10 @@ export default async function SongPage({ params }) {
     // Fetch AI-generated SEO content (server-side for SSR)
     try {
       const aiDoc = await db.collection('song_seo_content').findOne({ slug });
-      if (aiDoc?.content) {
-        aiSeoContent = aiDoc.content;
-      }
+
+if (aiDoc?.content) {
+  aiSeoContent = aiDoc.content;
+}
     } catch { /* ignore */ }
 
     // Fetch ad settings
