@@ -87,4 +87,88 @@ ${JSON.stringify(source, null, 2)}
     throw new Error(`OpenAI error ${res.status}: ${text}`);
   }
 
-  const data = await res
+    const data = await res.json();
+    const text = data.output_text || data.output?.[0]?.content?.[0]?.text;
+
+  if (!text) throw new Error('No translation text returned');
+
+  return JSON.parse(text);
+}
+
+async function worker(items, db, workerId) {
+  while (items.length) {
+    const song = items.shift();
+
+    try {
+      const slug = song.slug;
+      const seoCol = db.collection('song_seo_content');
+
+      let seoDoc = await seoCol.findOne({ slug });
+
+      if (seoDoc?.translations?.[TARGET_LANG]) {
+        console.log(`⏭️  [${workerId}] Skipping ${slug} — already translated`);
+        continue;
+      }
+
+      const translated = await translateSong(song, seoDoc?.content || null);
+
+      await seoCol.updateOne(
+        { slug },
+        {
+          $set: {
+            slug,
+            title: song.title,
+            artist: song.artist,
+            updated_at: new Date().toISOString(),
+            [`translations.${TARGET_LANG}`]: translated,
+          },
+          $setOnInsert: {
+            created_at: new Date().toISOString(),
+          },
+        },
+        { upsert: true }
+      );
+
+      console.log(`✅ [${workerId}] Translated ${slug} to ${TARGET_LANG}`);
+    } catch (err) {
+      console.error(`❌ [${workerId}] Failed ${song.slug}:`, err.message);
+    }
+  }
+}
+async function main() {
+  requireEnv();
+
+  console.log('🎵 Translating song SEO content...');
+  console.log(`Database: ${DB_NAME}`);
+  console.log(`Language: ${TARGET_LANG}`);
+  console.log(`Concurrency: ${CONCURRENCY}`);
+
+  const client = new MongoClient(MONGO_URL);
+  await client.connect();
+
+  try {
+    const db = client.db(DB_NAME);
+
+    const songs = await db.collection('song_pages')
+      .find({ slug: { $exists: true, $ne: '' } })
+      .sort({ viewCount: -1 })
+      .toArray();
+
+    console.log(`Found ${songs.length} song pages`);
+
+    const items = [...songs];
+
+    await Promise.all(
+      Array.from({ length: CONCURRENCY }, (_, i) => worker(items, db, i + 1))
+    );
+
+    console.log('🎉 Song translation complete');
+  } finally {
+    await client.close();
+  }
+}
+
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});
