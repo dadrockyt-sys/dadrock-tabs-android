@@ -59,10 +59,11 @@ JSON format:
   "artist": "...",
   "description": "...",
   "seoContent": {
-    "intro": "...",
-    "techniques": "...",
-    "practiceTips": "...",
-    "gear": "..."
+    "song_story": "...",
+    "lesson_overview": "...",
+    "difficulty_info": "...",
+    "techniques": ["...", "..."],
+    "pro_tips": ["...", "..."]
   }
 }
 
@@ -120,7 +121,7 @@ async function worker(items, db, workerId) {
             title: song.title,
             artist: song.artist,
             updated_at: new Date().toISOString(),
-            [`translations.${TARGET_LANG}`]: translated,
+            [`translations.${TARGET_LANG}`]: translated.seoContent || translated,
           },
           $setOnInsert: {
             created_at: new Date().toISOString(),
