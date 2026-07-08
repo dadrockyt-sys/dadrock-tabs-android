@@ -6,7 +6,6 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus, Trophy, Zap, RefreshCw, Map, Activity, Shield, ExternalLink, Wifi, Database, FileText } from 'lucide-react';
 import { getTranslation, locales, localeNames, localeFlags } from '@/lib/i18n';
-import { homepageTranslations } from '@/lib/homepageTranslations';
 import NewsletterSignup from '@/components/NewsletterSignup';
 import GamificationPanel from '@/components/Gamification';
 
@@ -326,7 +325,7 @@ export default function App({ initialLang = 'en' }) {
   const [logoClickCount, setLogoClickCount] = useState(0);
   const [pageReady, setPageReady] = useState(false);
 
-  const t = homepageTranslations[currentLang] || homepageTranslations.en;
+  const t = getTranslation(currentLang);
   
   // Sync currentLang with initialLang when it changes (e.g., navigation to /hi, /es, etc.)
   useEffect(() => {
