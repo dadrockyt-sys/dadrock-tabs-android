@@ -299,13 +299,16 @@ const t = getSubPageTranslation(lang);
       <main className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Breadcrumb */}
         <nav className="mb-6 text-sm text-zinc-400">
-          <Link
-  href={getLocalizedPath('/', lang)}
-  className="hover:text-amber-500 transition-colors"
->
-          <span className="mx-2">/</span>
-          <span className="text-white">{artistName}</span>
-        </nav>
+  <Link
+    href={getLocalizedPath('/', lang)}
+    className="hover:text-amber-500 transition-colors"
+  >
+    {t.home}
+  </Link>
+
+  <span className="mx-2">/</span>
+  <span className="text-white">{artistName}</span>
+</nav>
 
         {/* Hero Section — Dramatic Artist Header */}
         <div className="relative mb-10 p-8 sm:p-12 rounded-3xl overflow-hidden hero-gradient-bg fire-glow spotlight-sweep">
