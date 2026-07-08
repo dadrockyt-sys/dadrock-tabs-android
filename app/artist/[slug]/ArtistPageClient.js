@@ -269,10 +269,15 @@ const t = getSubPageTranslation(lang);
       <header className="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
-            <Link href={getLocalizedPath('/', lang)} className="flex items...
-              <img src={LOGO_URL} alt="DadRock Tabs" className="h-9 w-auto" />
-              <span className="text-lg font-bold text-amber-500 hidden sm:block font-rock">DadRock Tabs</span>
-            </Link>
+            <Link
+  href={getLocalizedPath('/', lang)}
+  className="flex items-center gap-3 hover:opacity-80 transition-opacity flex-shrink-0"
+>
+  <img src={LOGO_URL} alt="DadRock Tabs" className="h-9 w-auto" />
+  <span className="text-lg font-bold text-amber-500 hidden sm:block font-rock">
+    DadRock Tabs
+  </span>
+</Link>
             {/* Search Bar — compact in header */}
             <div className="hidden md:block flex-1 max-w-sm mx-4">
               <SearchBar variant="compact" placeholder={t.searchPlaceholder || 'Search artists & songs...'} />
