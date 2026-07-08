@@ -4172,7 +4172,7 @@ export default function App({ initialLang = 'en' }) {
   href={PARTNERS_PAGE}
   className="fixed bottom-5 right-5 z-50 bg-amber-500 hover:bg-amber-400 text-black font-black px-5 py-3 rounded-full shadow-lg shadow-amber-500/30 border border-amber-300 transition"
 >
-  🤝 Partner With DadRock
+  🤝 {t.partners}
 </a>
         </main>
       </div>
