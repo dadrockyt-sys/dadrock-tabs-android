@@ -327,6 +327,7 @@ export default function App({ initialLang = 'en' }) {
   const [pageReady, setPageReady] = useState(false);
 
   const t = getTranslation(currentLang);
+  const homeT = homepageTranslations[currentLang] || homepageTranslations.en;
   
   // Sync currentLang with initialLang when it changes (e.g., navigation to /hi, /es, etc.)
   useEffect(() => {
