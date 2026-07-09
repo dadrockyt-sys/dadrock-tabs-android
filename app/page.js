@@ -1683,7 +1683,7 @@ export default function App({ initialLang = 'en' }) {
             style={{ transitionDelay: '0.55s' }}
           >
             <Zap className="w-6 h-6" />
-            DadRock Tabs Quickies
+            {t.quickies || 'DadRock Tabs Quickies'}
           </Link>
 
           {/* Guitar Tools Button */}
@@ -1693,7 +1693,7 @@ export default function App({ initialLang = 'en' }) {
             style={{ transitionDelay: '0.6s' }}
           >
             <Music className="w-6 h-6" />
-            Guitar Tools
+            {t.guitarTools || 'Guitar Tools'}
           </Link>
 
           {/* What's New Button */}
@@ -1703,7 +1703,7 @@ export default function App({ initialLang = 'en' }) {
             style={{ transitionDelay: '0.65s' }}
           >
             <RefreshCw className="w-6 h-6" />
-            What&apos;s New
+            {t.whatsNew || "What's New"}
           </Link>
 
           {/* Popular Searches with Glassmorphism */}
