@@ -1,7 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import { generateSeoContent } from '@/lib/artistData';
 import { generateAlternates } from '@/lib/seo';
-import SongPageClient from './SongPageClient';
+import SongPageClient from '../../../songs/[slug]/SongPageClient';
 import { permanentRedirect, notFound } from 'next/navigation';
 import { artistToSlug } from '@/lib/slugify';
 
