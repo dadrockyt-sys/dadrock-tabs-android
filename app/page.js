@@ -1662,7 +1662,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
           {/* Coming Soon Button - Links to dedicated landing page */}
           <Link
-            href={isLocalePage ? `/${currentLocale}/coming-soon` : '/coming-soon'}
+            href={currentLang === 'en' ? '/coming-soon' : `/${currentLang}/coming-soon`}
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-purple-600 hover:bg-purple-500 text-white font-bold uppercase tracking-wide mb-10 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.45s' }}
           >
@@ -1672,7 +1672,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
           {/* Top Lessons Button - Links to top viewed videos page */}
           <Link
-            href={isLocalePage ? `/${currentLocale}/top-lessons` : '/top-lessons'}
+            href={currentLang === 'en' ? '/top-lessons' : `/${currentLang}/top-lessons`}
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-bold uppercase tracking-wide mb-4 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.5s' }}
           >
@@ -1682,7 +1682,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
           {/* DadRock Tabs Quickies Button */}
           <Link
-            href={isLocalePage ? `/${currentLocale}/quickies` : '/quickies'}
+            href={currentLang === 'en' ? '/quickies' : `/${currentLang}/quickies`}
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold uppercase tracking-wide mb-4 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.55s' }}
           >
@@ -1692,7 +1692,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
           {/* Guitar Tools Button */}
           <Link
-            href={isLocalePage ? `/${currentLocale}/tools` : '/tools'}
+            href={currentLang === 'en' ? '/tools' : `/${currentLang}/tools`}
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-teal-600 hover:bg-teal-500 text-white font-bold uppercase tracking-wide mb-4 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.6s' }}
           >
@@ -1702,7 +1702,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
           {/* What's New Button */}
           <Link
-            href={isLocalePage ? `/${currentLocale}/whats-new` : '/whats-new'}
+            href={currentLang === 'en' ? '/whats-new' : `/${currentLang}/whats-new`}
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-green-600 hover:bg-green-500 text-white font-bold uppercase tracking-wide mb-10 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.65s' }}
           >
