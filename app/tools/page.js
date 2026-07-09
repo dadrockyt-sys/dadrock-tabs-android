@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 // ─── METRONOME ───
 function Metronome() {
@@ -268,12 +269,17 @@ function ChordReference() {
 
 // ─── MAIN TOOLS PAGE ───
 export default function ToolsPage() {
+  const pathname = usePathname();
+  const currentLang = pathname?.split('/')[1];
+  const homeHref = currentLang && currentLang !== 'tools' ? `/${currentLang}` : '/';
+  
   return (
+    
     <div className="min-h-screen bg-gray-950 text-white">
       {/* Header */}
       <header className="border-b border-gray-800 py-4 px-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/" className="text-orange-400 hover:text-orange-300 flex items-center gap-2">
+          <Link href={homeHref} className="text-orange-400 hover:text-orange-300 flex items-center gap-2">
             ← Back to Home
           </Link>
           <h1 className="text-xl font-bold text-orange-400">🎸 Guitar Tools</h1>
