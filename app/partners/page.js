@@ -1,7 +1,18 @@
+'use client';
+
+import Link from 'next/link';
+import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
+import { getLocalizedPath } from '@/lib/i18n';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
+
 const LOGO_URL = "/dadrock-logo.png";
 const YOUTUBE_URL = "https://youtube.com/@dadrockytofficial?si=TjBWK-QMUu7vdcrI";
 
 export default function PartnersPage() {
+  const [selectedLang] = useLanguage();
+  const currentLang = selectedLang || 'en';
+  const t = getSubPageTranslation(currentLang);
+  
   const stats = [
     ["75K+", "YouTube Subscribers", "🎸"],
     ["723K+", "Monthly YouTube Views", "👁️"],
@@ -46,22 +57,24 @@ export default function PartnersPage() {
       </div>
 
       <header className="max-w-7xl mx-auto flex items-center justify-between border-b border-amber-500/30 pb-4 mb-10 relative z-10">
-        <a href="/">
+        <Link href={getLocalizedPath('/', currentLang)}>
           <img
             src={LOGO_URL}
             alt="DadRock Tabs"
             className="h-16 sm:h-20 object-contain"
           />
-        </a>
+        </Link>
+
+       <LanguageSelector />
 
         <nav className="hidden md:flex items-center gap-7 text-sm font-extrabold tracking-wide text-zinc-200">
-          <a href="/" className="hover:text-amber-400 transition">HOME</a>
-          <a href="/artist/acdc" className="hover:text-amber-400 transition">ARTISTS</a>
-          <a href="/songs/acdc-back-in-black" className="hover:text-amber-400 transition">SONGS</a>
-          <a href="/learn" className="hover:text-amber-400 transition">LESSONS</a>
-          <a href="/partners" className="text-amber-400 border border-amber-500 rounded-lg px-4 py-2">
-            PARTNERS
-          </a>
+          <Link href={getLocalizedPath('/', currentLang)} className="hover:text-amber-400 transition">HOME</Link>
+          <Link href={getLocalizedPath('/artist/acdc', currentLang)} className="hover:text-amber-400 transition">ARTISTS</Link>
+          <Link href={getLocalizedPath('/songs/acdc-back-in-black', currentLang)} className="hover:text-amber-400 transition">SONGS</Link>
+          <Link href={getLocalizedPath('/learn', currentLang)} className="hover:text-amber-400 transition">LESSONS</Link>
+          <Link href={getLocalizedPath('/partners', currentLang)} className="text-amber-400 border border-amber-500 rounded-lg px-4 py-2">
+  PARTNERS
+</Link>
         </nav>
       </header>
 
