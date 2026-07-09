@@ -2403,7 +2403,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
           {/* Related Artists Section for Internal Linking */}
           <div className="mt-12 w-full">
             <h3 className="text-xl font-bold text-amber-500 text-center mb-6 font-rock">
-              🎸 Explore More Artists Like {selectedVideo.artist}
+              🎸 {homeT.exploreMoreArtistsLike} {selectedVideo.artist}
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {getRelatedArtists(selectedVideo.artist, 6).map((artist, index) => (
