@@ -106,7 +106,17 @@ if (aiDoc?.content) {
   }
 
   const cleanArtist = song.artist?.replace(/\s*-\s*$/, '').trim() || 'DadRock Tabs';
-  const seoContent = generateSeoContent(song.title, song.artist);
+  let seoContent = generateSeoContent(song.title, song.artist);
+
+  if (lang !== 'en') {
+  const songSeoDoc = await db.collection('song_seo_content').findOne({
+    slug: song.slug
+  });
+
+  if (songSeoDoc?.translations?.[lang]) {
+    seoContent = songSeoDoc.translations[lang];
+  }
+  }
 
   // JSON-LD Schema — MusicRecording + VideoObject + BreadcrumbList + HowTo
   const durationMinutes = song.duration ? Math.floor(song.duration / 60) : 5;
