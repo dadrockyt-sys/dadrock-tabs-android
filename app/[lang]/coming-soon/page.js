@@ -1,4 +1,4 @@
-import ComingSoonClient from './ComingSoonClient';
+import ComingSoonClient from '../../coming-soon/ComingSoonClient';
 import { generateAlternates } from '@/lib/seo';
 
 // Force dynamic rendering - this page fetches real-time data
