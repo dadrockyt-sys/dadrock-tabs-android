@@ -1629,8 +1629,7 @@ export default function App({ initialLang = 'en' }) {
                 const res = await fetch('/api/random-song');
                 const data = await res.json();
                 if (data.slug) {
-  const prefix = currentLang === 'en' ? '' : `/${currentLang}`;
-  const songUrl = `${prefix}/songs/${data.slug}`;
+  const songUrl = `/songs/${data.slug}`;
 
   if (window.__flameNavigate) {
     window.__flameNavigate(songUrl);
