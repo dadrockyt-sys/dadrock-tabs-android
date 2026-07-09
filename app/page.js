@@ -1629,8 +1629,9 @@ export default function App({ initialLang = 'en' }) {
                 const res = await fetch('/api/random-song');
                 const data = await res.json();
                 if (data.slug) {
-  const songPath = `/songs/${data.slug}`;
-const songUrl = lang === 'en' ? songPath : `/${lang}${songPath}`;
+  const currentLocale = window.location.pathname.split('/')[1];
+const isLocalePage = ['es', 'pt', 'pt-br', 'de', 'fr', 'it', 'ja', 'ko', 'zh', 'ru', 'hi', 'sv', 'fi'].includes(currentLocale);
+const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/${data.slug}`;
 
   if (window.__flameNavigate) {
     window.__flameNavigate(songUrl);
