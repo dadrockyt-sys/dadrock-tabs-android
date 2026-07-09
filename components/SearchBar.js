@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Search, X, Music, User, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
-export default function SearchBar({ variant = 'full', placeholder = 'Search artists & songs...' }) {
+export default function SearchBar({ variant = 'full', placeholder = 'Search artists & songs...', currentLang = 'en' }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState({ artists: [], songs: [] });
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +15,7 @@ export default function SearchBar({ variant = 'full', placeholder = 'Search arti
   const dropdownRef = useRef(null);
   const debounceRef = useRef(null);
   const router = useRouter();
+  const prefix = currentLang === 'en' ? '' : `/${currentLang}`;
 
   // Debounced search
   const performSearch = useCallback(async (searchQuery) => {
@@ -70,17 +71,19 @@ export default function SearchBar({ variant = 'full', placeholder = 'Search arti
       e.preventDefault();
       setSelectedIndex(prev => Math.max(prev - 1, -1));
     } else if (e.key === 'Enter' && selectedIndex >= 0) {
-      e.preventDefault();
-      const item = allResults[selectedIndex];
-      if (item.type === 'artist') {
-        router.push(`/artist/${item.slug}`);
-      } else {
-        router.push(`/songs/${item.slug}`);
-      }
-      setIsOpen(false);
-      setQuery('');
-    } else if (e.key === 'Escape') {
-      setIsOpen(false);
+  e.preventDefault();
+  const item = allResults[selectedIndex];
+
+  if (item.type === 'artist') {
+  router.push(`${prefix}/artist/${item.slug}`);
+} else {
+  router.push(`${prefix}/songs/${item.slug}`);
+  }
+
+  setIsOpen(false);
+  setQuery('');
+} else if (e.key === 'Escape') {
+  setIsOpen(false);
     }
   };
 
@@ -135,7 +138,7 @@ export default function SearchBar({ variant = 'full', placeholder = 'Search arti
               {results.artists.map((artist, i) => (
                 <button
                   key={artist.slug}
-                  onClick={() => handleNavigate(`/artist/${artist.slug}`)}
+                  onClick={() => handleNavigate(`${prefix}/artist/${artist.slug}`)}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors ${
                     selectedIndex === i ? 'bg-amber-500/10 text-amber-500' : 'hover:bg-zinc-800 text-white'
                   }`}
@@ -166,7 +169,7 @@ export default function SearchBar({ variant = 'full', placeholder = 'Search arti
                 return (
                   <button
                     key={song.slug}
-                    onClick={() => handleNavigate(`/songs/${song.slug}`)}
+                    onClick={() => handleNavigate(`${prefix}/songs/${song.slug}`)}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors ${
                       selectedIndex === idx ? 'bg-amber-500/10 text-amber-500' : 'hover:bg-zinc-800 text-white'
                     }`}
