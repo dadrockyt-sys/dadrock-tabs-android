@@ -2162,8 +2162,8 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
           {!loading && searchResults.length > 0 && (
             <div className="mt-12 border-t border-zinc-800 pt-8">
               <h3 className="text-xl font-bold text-amber-500 mb-6 font-rock">
-                🎸 Explore More Classic Rock & Metal Artists
-              </h3>
+            🎸 {homeT.exploreMoreArtists}
+            </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                 {getRelatedArtists(activeSearch, 12).map((artist, index) => (
                   <button
