@@ -1998,7 +1998,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
               {/* By Difficulty */}
               <div>
-                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">📊 By Level</h3>
+                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">📊 {homeT.byLevel}</h3>
                 <ul className="space-y-2 text-sm">
                   <li><Link href="/difficulty/beginner" className="text-zinc-400 hover:text-white transition-colors">Beginner Tabs</Link></li>
                   <li><Link href="/difficulty/intermediate" className="text-zinc-400 hover:text-white transition-colors">Intermediate</Link></li>
