@@ -13,7 +13,8 @@ const QUICKIES_PLAYLIST_URL = "https://www.youtube.com/playlist?list=PLEneI6e1Fj
 
 export default function QuickiesClient({ initialVideos = [], initialTotal = 0, adSettings = {}, currentLang }) {
   const [selectedLang] = useLanguage();
-const lang = currentLang || selectedLang || 'en';
+const urlLang = typeof window !== 'undefined' ? window.location.pathname.split('/')[1] : '';
+const lang = currentLang || urlLang || selectedLang || 'en';
   const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
