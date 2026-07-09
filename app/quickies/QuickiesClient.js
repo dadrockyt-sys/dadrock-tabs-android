@@ -160,7 +160,7 @@ const lang = urlLang || currentLang || selectedLang || 'en';
       <main className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Breadcrumb */}
         <nav className="mb-6 text-sm text-zinc-400">
-          <Link href="/" className="hover:text-amber-500 transition-colors">{t.home}</Link>
+          <Link href={lang === 'en' ? '/' : `/${lang}`} className="hover:text-amber-500 transition-colors">{t.home}</Link>
           <span className="mx-2">/</span>
           <span className="text-white">{t.quickiesTitle}</span>
         </nav>
@@ -314,7 +314,7 @@ const lang = urlLang || currentLang || selectedLang || 'en';
         {/* Back to Home */}
         <div className="mt-8 text-center">
           <Link
-            href="/"
+            href={lang === 'en' ? '/' : `/${lang}`}
             className="inline-flex items-center gap-3 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-full transition-colors"
           >
             <Home className="w-5 h-5" />
@@ -328,7 +328,7 @@ const lang = urlLang || currentLang || selectedLang || 'en';
         <div className="container mx-auto px-4 text-center text-zinc-400">
           <p>{t.footer}</p>
           <div className="mt-4 flex justify-center gap-6">
-            <Link href="/" className="hover:text-amber-500 transition-colors">{t.home}</Link>
+            <Link href={lang === 'en' ? '/' : `/${lang}`} className="hover:text-amber-500 transition-colors">{t.home}</Link>
             <a 
               href={YOUTUBE_CHANNEL}
               target="_blank" 
