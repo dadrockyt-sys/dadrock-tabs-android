@@ -1957,11 +1957,11 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
             </Link>
           </div>
           {/* Newsletter Signup */}
-          <NewsletterSignup />
+          <NewsletterSignup lang={currentLang} />
           
           {/* Gamification Panel */}
           <div className="mt-8">
-            <GamificationPanel />
+            <GamificationPanel lang={currentLang} />
           </div>
         </section>
 
