@@ -1918,13 +1918,16 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
         {/* About Section */}
         <section className="w-full max-w-3xl mx-auto mt-16 px-4 text-center fade-in-up" style={{ animationDelay: '0.95s' }}>
           <p className="text-zinc-400 text-base leading-relaxed mb-4">
-            DadRockTabs provides guitar and bass tab tutorials for classic rock
-            and heavy metal bands like AC/DC, Metallica, Black Sabbath, and Van Halen.
-          </p>
-          <p className="text-zinc-400 text-base leading-relaxed">
-            Each lesson includes synchronized tabs with the original music
-            so players can follow along and learn the exact riffs and bass lines.
-          </p>
+  {currentLang === 'es'
+    ? 'DadRock Tabs ofrece tutoriales de tablaturas para guitarra y bajo de bandas de rock clásico y heavy metal como AC/DC, Metallica, Black Sabbath y Van Halen.'
+    : 'DadRock Tabs provides guitar and bass tab tutorials for classic rock and heavy metal bands like AC/DC, Metallica, Black Sabbath, and Van Halen.'}
+</p>
+
+<p className="text-zinc-400 text-base leading-relaxed">
+  {currentLang === 'es'
+    ? 'Cada lección incluye tablaturas sincronizadas con la música original para que los músicos puedan seguirlas y aprender los riffs y las líneas de bajo exactos.'
+    : 'Each lesson includes synchronized tabs with the original music so players can follow along and learn the exact riffs and bass lines.'}
+</p>
         </section>
 
         {/* Newsletter & Quick Links */}
