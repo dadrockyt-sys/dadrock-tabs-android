@@ -11,8 +11,9 @@ const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder
 const YOUTUBE_CHANNEL = "https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ";
 const QUICKIES_PLAYLIST_URL = "https://www.youtube.com/playlist?list=PLEneI6e1FjBVRrw6FfSBK32RiT8N43v0H";
 
-export default function QuickiesClient({ initialVideos, adSettings }) {
-  const [lang] = useLanguage();
+export default function QuickiesClient({ initialVideos, initialTotal, adSettings, currentLang }) {
+  const [selectedLang] = useLanguage();
+const lang = currentLang || selectedLang || 'en';
   const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
