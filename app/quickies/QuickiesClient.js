@@ -60,7 +60,7 @@ const lang = currentLang || selectedLang || 'en';
       <div className="min-h-screen bg-black flex flex-col">
         <header className="bg-black/95 border-b border-zinc-800 px-4 py-2 sm:py-3">
           <div className="max-w-4xl mx-auto flex items-center gap-4">
-            <Link href="/">
+            <Link href={lang === 'en' ? '/' : `/${lang}`}>
               <img src={LOGO_URL} alt="DadRock Tabs" className="w-10 h-10" />
             </Link>
             <div className="flex-1" />
@@ -138,14 +138,14 @@ const lang = currentLang || selectedLang || 'en';
       <header className="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <Link href={lang === 'en' ? '/' : `/${lang}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
               <img src={LOGO_URL} alt="DadRock Tabs" className="h-10 w-auto" />
               <span className="text-xl font-bold text-amber-500 hidden sm:block">DadRock Tabs</span>
             </Link>
             <div className="flex items-center gap-3">
               <LanguageSelector />
               <Link 
-                href="/"
+                href={lang === 'en' ? '/' : `/${lang}`}
                 className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
               >
                 <Home className="w-4 h-4" />
