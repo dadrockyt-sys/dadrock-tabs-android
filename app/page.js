@@ -1760,7 +1760,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                 ].map((item, index) => (
                   <Link
                     key={item.slug}
-                    href={`/songs/${item.slug}`}
+                    href={getLocalizedPath(`/songs/${item.slug}`, currentLang)}
                     className="group relative overflow-hidden rounded-lg bg-zinc-800/60 border border-zinc-700 hover:border-amber-500 p-4 transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(245,158,11,0.3)]"
                     style={{ animationDelay: `${0.7 + index * 0.03}s` }}
                   >
