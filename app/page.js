@@ -2001,7 +2001,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                 <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">📊 {homeT.byLevel}</h3>
                 <ul className="space-y-2 text-sm">
                   <li><Link href={getLocalizedPath('/difficulty/beginner', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Beginner Tabs</Link></li>
-                  <li><Link href="/difficulty/intermediate" className="text-zinc-400 hover:text-white transition-colors">Intermediate</Link></li>
+                  <li><Link href={getLocalizedPath('/difficulty/intermediate', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Intermediate</Link></li>
                   <li><Link href={getLocalizedPath('/difficulty/advanced', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Advanced</Link></li>
                   <li><Link href="/top-lessons" className="text-zinc-400 hover:text-white transition-colors">Top 10 Lessons</Link></li>
                   <li><Link href="/coming-soon" className="text-zinc-400 hover:text-white transition-colors">Coming Soon</Link></li>
