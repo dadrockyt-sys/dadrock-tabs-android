@@ -2002,7 +2002,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                 <ul className="space-y-2 text-sm">
                   <li><Link href="/difficulty/beginner" className="text-zinc-400 hover:text-white transition-colors">Beginner Tabs</Link></li>
                   <li><Link href="/difficulty/intermediate" className="text-zinc-400 hover:text-white transition-colors">Intermediate</Link></li>
-                  <li><Link href="/difficulty/advanced" className="text-zinc-400 hover:text-white transition-colors">Advanced</Link></li>
+                  <li><Link href={getLocalizedPath('/difficulty/advanced', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Advanced</Link></li>
                   <li><Link href="/top-lessons" className="text-zinc-400 hover:text-white transition-colors">Top 10 Lessons</Link></li>
                   <li><Link href="/coming-soon" className="text-zinc-400 hover:text-white transition-colors">Coming Soon</Link></li>
                   <li><Link href="/quickies" className="text-zinc-400 hover:text-white transition-colors">Quick Riffs</Link></li>
