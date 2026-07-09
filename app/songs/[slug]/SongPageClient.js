@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Home, Youtube, Facebook, Twitter, Mail, Play, Eye, ThumbsUp, ShoppingBag, Music, ExternalLink, ArrowLeft, BookOpen, Lightbulb, Star } from 'lucide-react';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
@@ -25,14 +24,6 @@ function formatViewCount(count) {
 
 export default function SongPageClient({ song, seoContent, adSettings, initialAiContent, moreSongs = [], currentLang = 'en' }) {
   const [lang] = useLanguage();
-  const router = useRouter();
-
-useEffect(() => {
-  if (!song?.slug || lang === currentLang) return;
-
-  const prefix = lang === 'en' ? '' : `/${lang}`;
-  router.push(`${prefix}/songs/${song.slug}`);
-}, [lang, currentLang, song?.slug, router]);
   const t = getSubPageTranslation(lang);
   const [showAd, setShowAd] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
