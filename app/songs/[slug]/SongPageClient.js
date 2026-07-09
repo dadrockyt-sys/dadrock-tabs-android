@@ -156,7 +156,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
         <div className="max-w-4xl mx-auto px-4 py-6">
           {/* Navigation */}
           <nav className="flex items-center justify-between mb-6">
-            <Link href="/" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
+            <Link href={lang === 'en' ? '/' : `/${lang}`} className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
               <Home className="w-5 h-5" />
               <span className="hidden sm:inline">{t.backToHome}</span>
             </Link>
@@ -180,7 +180,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
 
           {/* Logo */}
           <div className="text-center mb-4">
-            <Link href="/">
+            <Link href={lang === 'en' ? '/' : `/${lang}`}>
               <img
                 src={LOGO_URL}
                 alt="DadRock Tabs"
@@ -209,9 +209,9 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
       <main className="max-w-4xl mx-auto px-4 py-8">
         {/* Breadcrumb Navigation */}
         <nav className="mb-6 text-sm text-zinc-400">
-          <Link href="/" className="hover:text-amber-500 transition-colors">{t.home || 'Home'}</Link>
+          <Link href={lang === 'en' ? '/' : `/${lang}`} className="hover:text-amber-500 transition-colors">
           <span className="mx-2">/</span>
-          <Link href={`/artist/${artistSlug}`} className="hover:text-amber-500 transition-colors">{song.artist}</Link>
+          <Link href={lang === 'en' ? `/artist/${artistSlug}` : `/${lang}/artist/${artistSlug}`} className="hover:text-amber-500 transition-colors">
           <span className="mx-2">/</span>
           <span className="text-white">{song.title}</span>
         </nav>
