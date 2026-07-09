@@ -108,7 +108,7 @@ export default function ComingSoonClient({ initialVideos, initialTotal, currentL
         <div className="max-w-6xl mx-auto px-4 py-8">
           {/* Navigation */}
           <nav className="flex items-center justify-between mb-8">
-            <Link href={currentLang === 'en' ? '/' : `/${currentLang}`} className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
+            <Link href={lang === 'en' ? '/' : `/${lang}`} className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
               <Home className="w-5 h-5" />
               <span>{t.backToHome}</span>
             </Link>
@@ -128,7 +128,7 @@ export default function ComingSoonClient({ initialVideos, initialTotal, currentL
 
           {/* Logo */}
           <div className="text-center mb-6">
-            <Link href={currentLang === 'en' ? '/' : `/${currentLang}`}>
+            <Link href={lang === 'en' ? '/' : `/${lang}`}>
               <img 
                 src={LOGO_URL} 
                 alt="DadRock Tabs - Free Guitar and Bass Tabs" 
