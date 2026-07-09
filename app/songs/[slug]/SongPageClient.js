@@ -27,11 +27,11 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
   const t = getSubPageTranslation(lang);
   const [showAd, setShowAd] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const [aiContent, setAiContent] = useState(initialAiContent || null);
+  const [aiContent, setAiContent] = useState(seoContent || initialAiContent || null);
 
   // Fetch AI-generated SEO content for this song (client-side fallback)
   useEffect(() => {
-    if (initialAiContent) return;
+    if (seoContent || initialAiContent) return;
     async function fetchAiContent() {
       try {
         const res = await fetch(`/api/seo-content?type=song&slug=${encodeURIComponent(song?.slug || '')}`);
