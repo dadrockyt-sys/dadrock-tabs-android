@@ -1645,7 +1645,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
             style={{ transitionDelay: '0.35s' }}
           >
             <span className="text-xl rock-bounce">🎲</span>
-            🎲 {t.randomSong}
+            🎲 {t.randomSong || 'Random Song'}
           </button>
 
           {/* Subscribe Button with Pulse Glow */}
