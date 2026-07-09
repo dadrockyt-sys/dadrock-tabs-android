@@ -54,7 +54,7 @@ function artistToSlug(artist) {
   return cleanArtist.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 }
 
-export default function ComingSoonClient({ initialVideos, initialTotal }) {
+export default function ComingSoonClient({ initialVideos, initialTotal, currentLang = 'en' }) {
   const [lang] = useLanguage();
   const t = getSubPageTranslation(lang);
   const [upcomingVideos, setUpcomingVideos] = useState(initialVideos || []);
