@@ -2,8 +2,12 @@
 
 import Link from 'next/link';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
-import { getLocalizedPath } from '@/lib/i18n';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
+
+function getLocalizedPath(path, lang) {
+  if (!lang || lang === 'en') return path;
+  return `/${lang}${path}`;
+}
 
 const LOGO_URL = "/dadrock-logo.png";
 const YOUTUBE_URL = "https://youtube.com/@dadrockytofficial?si=TjBWK-QMUu7vdcrI";
