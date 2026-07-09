@@ -108,7 +108,7 @@ export default function ComingSoonClient({ initialVideos, initialTotal }) {
         <div className="max-w-6xl mx-auto px-4 py-8">
           {/* Navigation */}
           <nav className="flex items-center justify-between mb-8">
-            <Link href={currentLang === 'en' ? '/' : `/${currentLang}`} className="flex items-center...
+            <Link href={currentLang === 'en' ? '/' : `/${currentLang}`} className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
               <Home className="w-5 h-5" />
               <span>{t.backToHome}</span>
             </Link>
