@@ -67,7 +67,7 @@ async function findArtistFromSongSlug(db, songSlug) {
 }
 
 export default async function SongPage({ params }) {
-  const { slug } = await params;
+  const { lang, slug } = await params;
   
   const db = await getDb();
   const song = await db.collection('song_pages').findOne({ slug });
