@@ -21,7 +21,7 @@ function formatViewCount(count) {
   if (count >= 1000) return (count / 1000).toFixed(1) + 'K';
   return count.toString();
 }
-
+, 
 export default function SongPageClient({ song, seoContent, adSettings, initialAiContent, moreSongs = [], currentLang = 'en' }) {
   const [lang] = useLanguage();
   const t = getSubPageTranslation(lang);
