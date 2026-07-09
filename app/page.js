@@ -1971,7 +1971,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
             {/* Footer Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left">
               {/* Top Artists */}
-              <div>
+                            <div>
                 <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">🎸 {homeT.topArtists}</h3>
                 <ul className="space-y-2 text-sm">
                   <li><Link href={getLocalizedPath('/artist/metallica', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Metallica</Link></li>
@@ -1987,12 +1987,12 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
               <div>
                 <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">📚 {homeT.browse}</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><Link href="/genre/heavy-metal" className="text-zinc-400 hover:text-white transition-colors">Heavy Metal</Link></li>
-                  <li><Link href="/genre/classic-rock" className="text-zinc-400 hover:text-white transition-colors">Classic Rock</Link></li>
-                  <li><Link href="/genre/hair-metal" className="text-zinc-400 hover:text-white transition-colors">Hair Metal</Link></li>
-                  <li><Link href="/era/70s" className="text-zinc-400 hover:text-white transition-colors">70s Tabs</Link></li>
-                  <li><Link href="/era/80s" className="text-zinc-400 hover:text-white transition-colors">80s Tabs</Link></li>
-                  <li><Link href="/era/90s" className="text-zinc-400 hover:text-white transition-colors">90s Tabs</Link></li>
+                  <li><Link href={getLocalizedPath('/genre/heavy-metal', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Heavy Metal</Link></li>
+                  <li><Link href={getLocalizedPath('/genre/classic-rock', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Classic Rock</Link></li>
+                  <li><Link href={getLocalizedPath('/genre/hair-metal', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Hair Metal</Link></li>
+                  <li><Link href={getLocalizedPath('/era/70s', currentLang)} className="text-zinc-400 hover:text-white transition-colors">70s Tabs</Link></li>
+                  <li><Link href={getLocalizedPath('/era/80s', currentLang)} className="text-zinc-400 hover:text-white transition-colors">80s Tabs</Link></li>
+                  <li><Link href={getLocalizedPath('/era/90s', currentLang)} className="text-zinc-400 hover:text-white transition-colors">90s Tabs</Link></li>
                 </ul>
               </div>
 
