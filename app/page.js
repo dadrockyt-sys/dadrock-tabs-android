@@ -1742,7 +1742,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
           <div className="w-full max-w-4xl mb-10 fade-in-up" style={{ animationDelay: '0.65s' }}>
             <div className="glass-card rounded-2xl p-6 fire-glow">
               <p className="text-center text-zinc-300 mb-5 flex items-center justify-center gap-3 text-lg font-medium">
-                <span className="text-2xl">⭐</span> Top Guitar Lessons
+                <span className="text-2xl">⭐</span> {lang === 'es' ? 'Mejores lecciones de guitarra' : 'Top Guitar Lessons'}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {[
