@@ -1662,7 +1662,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
           {/* Coming Soon Button - Links to dedicated landing page */}
           <Link
-            href={lang === 'en' ? '/coming-soon' : `/${lang}/coming-soon`}
+            href={isLocalePage ? `/${currentLocale}/coming-soon` : '/coming-soon'}
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-purple-600 hover:bg-purple-500 text-white font-bold uppercase tracking-wide mb-10 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.45s' }}
           >
@@ -1672,7 +1672,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
           {/* Top Lessons Button - Links to top viewed videos page */}
           <Link
-            href={lang === 'en' ? '/top-lessons' : `/${lang}/top-lessons`}
+            href={isLocalePage ? `/${currentLocale}/top-lessons` : '/top-lessons'}
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-amber-600 hover:bg-amber-500 text-white font-bold uppercase tracking-wide mb-4 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.5s' }}
           >
@@ -1682,7 +1682,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
           {/* DadRock Tabs Quickies Button */}
           <Link
-            href={lang === 'en' ? '/quickies' : `/${lang}/quickies`}
+            href={isLocalePage ? `/${currentLocale}/quickies` : '/quickies'}
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold uppercase tracking-wide mb-4 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.55s' }}
           >
@@ -1692,7 +1692,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
           {/* Guitar Tools Button */}
           <Link
-            href={lang === 'en' ? '/tools' : `/${lang}/tools`}
+            href={isLocalePage ? `/${currentLocale}/tools` : '/tools'}
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-teal-600 hover:bg-teal-500 text-white font-bold uppercase tracking-wide mb-4 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.6s' }}
           >
@@ -1702,7 +1702,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
           {/* What's New Button */}
           <Link
-            href={lang === 'en' ? '/whats-new' : `/${lang}/whats-new`}
+            href={isLocalePage ? `/${currentLocale}/whats-new` : '/whats-new'}
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-full bg-green-600 hover:bg-green-500 text-white font-bold uppercase tracking-wide mb-10 transition-all duration-500 ${pageReady ? 'opacity-100' : 'opacity-0'}`}
             style={{ transitionDelay: '0.65s' }}
           >
