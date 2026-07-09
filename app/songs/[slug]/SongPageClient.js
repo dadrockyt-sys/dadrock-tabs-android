@@ -209,12 +209,25 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
       <main className="max-w-4xl mx-auto px-4 py-8">
         {/* Breadcrumb Navigation */}
         <nav className="mb-6 text-sm text-zinc-400">
-          <Link href={lang === 'en' ? '/' : `/${lang}`} className="hover:text-amber-500 transition-colors">
-          <span className="mx-2">/</span>
-          <Link href={lang === 'en' ? `/artist/${artistSlug}` : `/${lang}/artist/${artistSlug}`} className="hover:text-amber-500 transition-colors">
-          <span className="mx-2">/</span>
-          <span className="text-white">{song.title}</span>
-        </nav>
+  <Link
+    href={lang === 'en' ? '/' : `/${lang}`}
+    className="hover:text-amber-500 transition-colors"
+  >
+    Home
+  </Link>
+
+  <span className="mx-2">/</span>
+
+  <Link
+    href={lang === 'en' ? `/artist/${artistSlug}` : `/${lang}/artist/${artistSlug}`}
+    className="hover:text-amber-500 transition-colors"
+  >
+    {song.artist}
+  </Link>
+
+  <span className="mx-2">/</span>
+  <span className="text-white">{song.title}</span>
+</nav>
 
         {/* Song Title */}
         <div className="text-center mb-8 relative">
