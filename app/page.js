@@ -1985,7 +1985,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
               {/* Browse Content */}
               <div>
-                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">📚 Browse</h3>
+                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">📚 {homeT.browse}</h3>
                 <ul className="space-y-2 text-sm">
                   <li><Link href="/genre/heavy-metal" className="text-zinc-400 hover:text-white transition-colors">Heavy Metal</Link></li>
                   <li><Link href="/genre/classic-rock" className="text-zinc-400 hover:text-white transition-colors">Classic Rock</Link></li>
