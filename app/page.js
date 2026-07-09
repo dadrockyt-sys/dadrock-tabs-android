@@ -1972,7 +1972,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left">
               {/* Top Artists */}
               <div>
-                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">🎸 Top Artists</h3>
+                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">🎸 {homeT.topArtists}</h3>
                 <ul className="space-y-2 text-sm">
                   <li><Link href="/artist/metallica" className="text-zinc-400 hover:text-white transition-colors">Metallica</Link></li>
                   <li><Link href="/artist/led-zeppelin" className="text-zinc-400 hover:text-white transition-colors">Led Zeppelin</Link></li>
