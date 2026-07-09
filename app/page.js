@@ -1974,12 +1974,12 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
               <div>
                 <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">🎸 {homeT.topArtists}</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><Link href="/artist/metallica" className="text-zinc-400 hover:text-white transition-colors">Metallica</Link></li>
-                  <li><Link href="/artist/led-zeppelin" className="text-zinc-400 hover:text-white transition-colors">Led Zeppelin</Link></li>
-                  <li><Link href="/artist/black-sabbath" className="text-zinc-400 hover:text-white transition-colors">Black Sabbath</Link></li>
-                  <li><Link href="/artist/ac-dc" className="text-zinc-400 hover:text-white transition-colors">AC/DC</Link></li>
-                  <li><Link href="/artist/van-halen" className="text-zinc-400 hover:text-white transition-colors">Van Halen</Link></li>
-                  <li><Link href="/artist/pantera" className="text-zinc-400 hover:text-white transition-colors">Pantera</Link></li>
+                  <li><Link href={getLocalizedPath('/artist/metallica', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Metallica</Link></li>
+                  <li><Link href={getLocalizedPath('/artist/led-zeppelin', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Led Zeppelin</Link></li>
+                  <li><Link href={getLocalizedPath('/artist/black-sabbath', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Black Sabbath</Link></li>
+                  <li><Link href={getLocalizedPath('/artist/ac-dc', currentLang)} className="text-zinc-400 hover:text-white transition-colors">AC/DC</Link></li>
+                  <li><Link href={getLocalizedPath('/artist/van-halen', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Van Halen</Link></li>
+                  <li><Link href={getLocalizedPath('/artist/pantera', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Pantera</Link></li>
                 </ul>
               </div>
 
