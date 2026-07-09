@@ -1939,7 +1939,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
           
           {/* Quick Browse Links */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-            <Link href="/difficulty/beginner" className="p-4 bg-zinc-900/80 rounded-xl border border-zinc-800 hover:border-green-500/50 text-center transition-all group">
+            <Link href={getLocalizedPath('/difficulty/beginner', currentLang)} className="p-4 bg-zinc-900/80 rounded-xl border border-zinc-800 hover:border-green-500/50 text-center transition-all group">
               <span className="text-2xl block mb-1">🌱</span>
               <span className="text-sm font-medium text-zinc-300 group-hover:text-green-400 transition-colors">{homeT.beginner}</span>
             </Link>
