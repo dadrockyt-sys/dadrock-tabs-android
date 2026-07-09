@@ -2009,13 +2009,13 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                 </ul>
               </div>
 
-              {/* Resources */}
+                            {/* Resources */}
               <div>
                 <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">🔧 {homeT.resources}</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><Link href="/learn" className="text-zinc-400 hover:text-white transition-colors">Learning Guides</Link></li>
-                  <li><Link href="/tools" className="text-zinc-400 hover:text-white transition-colors">Guitar Tools</Link></li>
-                  <li><Link href="/whats-new" className="text-zinc-400 hover:text-white transition-colors">What&apos;s New</Link></li>
+                  <li><Link href={getLocalizedPath('/learn', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Learning Guides</Link></li>
+                  <li><Link href={getLocalizedPath('/tools', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Guitar Tools</Link></li>
+                  <li><Link href={getLocalizedPath('/whats-new', currentLang)} className="text-zinc-400 hover:text-white transition-colors">What&apos;s New</Link></li>
                   <li><a href="https://youtube.com/@dadrockytofficial" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-white transition-colors">YouTube Channel</a></li>
                   <li><a href="https://buymeacoffee.com/dadrockytq/commissions" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-white transition-colors">Request a Tab</a></li>
                   <li><a href="mailto:Dadrockyt@gmail.com" className="text-zinc-400 hover:text-white transition-colors">Contact Us</a></li>
