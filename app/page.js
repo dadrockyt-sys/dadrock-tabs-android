@@ -2011,7 +2011,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 
               {/* Resources */}
               <div>
-                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">🔧 Resources</h3>
+                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">🔧 {homeT.resources}</h3>
                 <ul className="space-y-2 text-sm">
                   <li><Link href="/learn" className="text-zinc-400 hover:text-white transition-colors">Learning Guides</Link></li>
                   <li><Link href="/tools" className="text-zinc-400 hover:text-white transition-colors">Guitar Tools</Link></li>
