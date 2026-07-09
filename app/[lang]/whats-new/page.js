@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function WhatsNewPage({ params }) {
-  const lang = params?.lang || 'en';
+  const lang = typeof window !== 'undefined' ? window.location.pathname.split('/')[1] : 'en';
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
