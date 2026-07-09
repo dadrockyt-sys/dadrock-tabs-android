@@ -55,13 +55,26 @@ export default function LanguageSelector({ onLanguageChange }) {
     setMounted(true);
   }, []);
 
-  const handleLanguageChange = (newLang) => {
-    setIsOpen(false);
-    changeLang(newLang);
-    if (onLanguageChange) {
-      onLanguageChange(newLang);
-    }
-  };
+ const handleLanguageChange = (newLang) => {
+  setIsOpen(false);
+  changeLang(newLang);
+
+  const currentPath = window.location.pathname;
+  const parts = currentPath.split('/').filter(Boolean);
+
+  if (parts[0] && locales.includes(parts[0])) {
+    parts.shift();
+  }
+
+  const cleanPath = '/' + parts.join('/');
+  const newPath = newLang === 'en' ? cleanPath : `/${newLang}${cleanPath}`;
+
+  window.location.href = newPath || '/';
+
+  if (onLanguageChange) {
+    onLanguageChange(newLang);
+  }
+};
 
   // Modal content to be portaled to body
   const modalContent = isOpen && mounted ? createPortal(
