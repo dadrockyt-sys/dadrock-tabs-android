@@ -72,7 +72,7 @@ export default async function ComingSoonPage({ params }) {
           __html: JSON.stringify(generateSchema(total)),
         }}
       />
-      <ComingSoonClient initialVideos={upcomingVideos} total={total} currentLang={params?.lang || 'en'} />
+      <ComingSoonClient initialVideos={upcomingVideos} initialTotal={total} currentLang={params?.lang || 'en'} />
     </>
   );
 }
