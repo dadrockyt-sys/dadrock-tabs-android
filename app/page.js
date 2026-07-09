@@ -1629,7 +1629,7 @@ export default function App({ initialLang = 'en' }) {
                 const res = await fetch('/api/random-song');
                 const data = await res.json();
                 if (data.slug) {
-  const songUrl = `/songs/${data.slug}`;
+  const songUrl = lang === 'en' ? `/songs/${data.slug}` : `/${lang}/songs/${data.slug}`;
 
   if (window.__flameNavigate) {
     window.__flameNavigate(songUrl);
