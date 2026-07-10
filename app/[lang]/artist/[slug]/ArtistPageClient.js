@@ -614,7 +614,7 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
               {getRelatedArtists(artistName).map((relatedArtist) => (
                 <Link
                   key={relatedArtist}
-                  href={`/artist/${artistToSlug(relatedArtist)}`}
+                  href={lang === 'en' ? `/artist/${artistToSlug(relatedArtist)}` : `/${lang}/artist/${artistToSlug(relatedArtist)}`}
                   className="group/pill flex items-center gap-2 px-5 py-3 bg-zinc-800/80 hover:bg-amber-500 rounded-full font-medium transition-all border border-zinc-700 hover:border-amber-500 hover:text-black hover:shadow-lg hover:shadow-amber-500/20 hover:-translate-y-0.5"
                 >
                   <span className="w-7 h-7 rounded-full bg-zinc-700 group-hover/pill:bg-amber-600 flex items-center justify-center text-xs font-bold text-zinc-300 group-hover/pill:text-black transition-colors">
@@ -630,7 +630,7 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
         {/* Back to Home */}
         <div className="mt-12 text-center">
           <Link
-            href="/"
+            href={homeHref}
             className="inline-flex items-center gap-3 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-full transition-colors"
           >
             <Home className="w-5 h-5" />
@@ -648,7 +648,7 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
               <p className="text-zinc-500 text-sm">{t.footer}</p>
             </div>
             <div className="flex items-center gap-6">
-              <Link href="/" className="text-zinc-500 hover:text-amber-500 transition-colors text-sm">{t.home}</Link>
+              <Link href={homeHref} className="text-zinc-500 hover:text-amber-500 transition-colors text-sm">{t.home}</Link>
               <a 
                 href="https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ" 
                 target="_blank" 
