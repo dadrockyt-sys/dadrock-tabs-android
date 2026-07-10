@@ -652,7 +652,7 @@ const t = getSubPageTranslation(lang);
         {/* Back to Home */}
         <div className="mt-12 text-center">
           <Link
-            href={currentLang === 'en' ? '/' : `/${currentLang}`}
+            href={lang === 'en' ? '/' : `/${lang}`}
             className="inline-flex items-center gap-3 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-full transition-colors"
           >
             <Home className="w-5 h-5" />
