@@ -295,7 +295,7 @@ const homeHref = lang === 'en' ? '/' : `/${lang}`;
       <header className="border-b border-gray-800 py-4 px-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link href={homeHref} className="text-orange-400 hover:text-orange-300 flex items-center gap-2">
-            ← Back to Home
+            {t.backHome}
           </Link>
           <h1 className="text-xl font-bold text-orange-400">🎸 Guitar Tools</h1>
         </div>
