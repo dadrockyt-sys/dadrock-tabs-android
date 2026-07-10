@@ -57,18 +57,14 @@ export default function LanguageSelector({ onLanguageChange }) {
   setIsOpen(false);
   changeLang(newLang);
 
-  const handleLanguageChange = (newLang) => {
-  setIsOpen(false);
-  changeLang(newLang);
-
   if (onLanguageChange) {
     onLanguageChange(newLang);
   }
 };
 
   // Modal content to be portaled to body
-  const modalContent = isOpen && mounted ? createPortal(
-    <div 
+const modalContent = isOpen && mounted ? createPortal(
+  <div
       style={{ 
         position: 'fixed',
         top: 0,
