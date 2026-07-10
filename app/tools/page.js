@@ -275,7 +275,7 @@ export default function ToolsPage() {
 
 const toolsT = {
   en: {
-    backHome: '← Back to Home',
+    backHome: '← Back To Home',
     pageTitle: '🎸 Guitar Tools',
     heroTitle: 'Free Guitar Tools',
     heroText: 'Everything you need to practice — no apps to download, no signup required.',
