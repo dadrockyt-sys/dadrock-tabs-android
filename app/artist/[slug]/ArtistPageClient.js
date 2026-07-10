@@ -124,9 +124,13 @@ function getRelatedArtists(artistName) {
 }
 
 export default function ArtistPageClient({ artistName, videos, slug, adSettings, initialAiContent, faqItems = [] }) {
-  const [lang] = useLanguage();
+  const [selectedLang] = useLanguage();
 const pathname = usePathname();
-const isSpanish = pathname?.includes('/es/');
+const urlLang = pathname?.split('/')[1] || '';
+const lang = urlLang && ['es', 'pt', 'pt-br', 'de', 'fr', 'it', 'ja', 'ko', 'zh', 'ru', 'hi', 'sv', 'fi'].includes(urlLang)
+  ? urlLang
+  : selectedLang || 'en';
+const isSpanish = lang === 'es';
 const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
