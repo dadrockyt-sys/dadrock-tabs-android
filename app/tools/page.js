@@ -284,6 +284,33 @@ const toolsT = {
     seoTitle: 'Why Use These Tools?',
     seoP1: 'Every guitarist needs a metronome for timing, a tuner for pitch accuracy, and a chord reference for learning new shapes. These free browser-based tools require no downloads or signups — just bookmark this page and use them whenever you practice.',
     seoP2: 'The metronome supports common time signatures and tempos from 40-240 BPM. The reference tuner plays standard tuning pitches (E A D G B E). The chord reference shows finger positions for the most common open chords.',
+  },
+  fr: {
+    backHome: "← Retour à l'accueil",
+    pageTitle: '🎸 Outils de guitare',
+    heroTitle: 'Outils de guitare gratuits',
+    heroText: 'Tout ce dont vous avez besoin pour pratiquer — aucune application à télécharger, aucune inscription requise.',
+    seoTitle: 'Pourquoi utiliser ces outils ?',
+    seoP1: "Chaque guitariste a besoin d'un métronome pour le rythme, d'un accordeur pour la justesse et d'une référence d'accords pour apprendre de nouvelles positions.",
+    seoP2: "Le métronome prend en charge les signatures rythmiques courantes et les tempos de 40 à 240 BPM. L'accordeur joue les notes d'accordage standard.",
+  },
+  es: {
+    backHome: '← Volver al inicio',
+    pageTitle: '🎸 Herramientas de guitarra',
+    heroTitle: 'Herramientas de guitarra gratis',
+    heroText: 'Todo lo que necesitas para practicar — sin descargar apps ni registrarte.',
+    seoTitle: '¿Por qué usar estas herramientas?',
+    seoP1: 'Todo guitarrista necesita un metrónomo, un afinador y una referencia de acordes para practicar mejor.',
+    seoP2: 'El metrónomo admite tempos de 40 a 240 BPM. El afinador reproduce la afinación estándar de guitarra.',
+  },
+  de: {
+    backHome: '← Zurück zur Startseite',
+    pageTitle: '🎸 Gitarren-Tools',
+    heroTitle: 'Kostenlose Gitarren-Tools',
+    heroText: 'Alles, was du zum Üben brauchst — keine App, keine Anmeldung.',
+    seoTitle: 'Warum diese Tools verwenden?',
+    seoP1: 'Jeder Gitarrist braucht ein Metronom, ein Stimmgerät und eine Akkordübersicht zum Üben.',
+    seoP2: 'Das Metronom unterstützt Tempi von 40 bis 240 BPM. Das Stimmgerät spielt die Standardstimmung.',
   }
 };
 
