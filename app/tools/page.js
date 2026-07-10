@@ -297,14 +297,14 @@ const homeHref = lang === 'en' ? '/' : `/${lang}`;
           <Link href={homeHref} className="text-orange-400 hover:text-orange-300 flex items-center gap-2">
             {t.backHome}
           </Link>
-          <h1 className="text-xl font-bold text-orange-400">🎸 Guitar Tools</h1>
+          <h1 className="text-xl font-bold text-white">{t.pageTitle}</h1>
         </div>
       </header>
 
       <main className="max-w-6xl mx-auto px-6 py-8">
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-white mb-2">Free Guitar Tools</h2>
-          <p className="text-gray-400">Everything you need to practice — no apps to download, no signup required.</p>
+          <h2 className="text-3xl font-bold text-white mb-3">{t.heroTitle}</h2>
+          <p className="text-gray-400">{t.heroText}</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -318,15 +318,9 @@ const homeHref = lang === 'en' ? '/' : `/${lang}`;
 
         {/* SEO Content */}
         <div className="mt-12 prose prose-invert max-w-none">
-          <h2 className="text-xl font-bold text-orange-400">Why Use These Tools?</h2>
-          <p className="text-gray-400">
-            Every guitarist needs a metronome for timing, a tuner for pitch accuracy, and a chord reference for learning new shapes. 
-            These free browser-based tools require no downloads or signups — just bookmark this page and use them whenever you practice.
-          </p>
-          <p className="text-gray-400">
-            The metronome supports common time signatures and tempos from 40-240 BPM. The reference tuner plays standard tuning pitches (E A D G B E). 
-            The chord reference shows finger positions for the most common open chords.
-          </p>
+          <h2 className="text-2xl font-bold mb-4">{t.seoTitle}</h2>
+          <p className="text-gray-400">{t.seoP1}</p>
+          <p className="text-gray-400">{t.seoP2}</p>
         </div>
       </main>
     </div>
