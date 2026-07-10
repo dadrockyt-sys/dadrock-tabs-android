@@ -364,7 +364,97 @@ const toolsT = {
     seoTitle: 'Warum diese Tools verwenden?',
     seoP1: 'Jeder Gitarrist braucht ein Metronom, ein Stimmgerät und eine Akkordübersicht zum Üben.',
     seoP2: 'Das Metronom unterstützt Tempi von 40 bis 240 BPM. Das Stimmgerät spielt die Standardstimmung.',
-  }
+  },
+it: {
+  backHome: '← Torna alla home',
+  pageTitle: '🎸 Strumenti per chitarra',
+  heroTitle: 'Strumenti gratuiti per chitarra',
+  heroText: 'Tutto ciò che ti serve per esercitarti: nessuna app da scaricare e nessuna registrazione richiesta.',
+  seoTitle: 'Perché usare questi strumenti?',
+  seoP1: 'Ogni chitarrista ha bisogno di un metronomo per il tempo, di un accordatore per l’intonazione e di un riferimento per gli accordi.',
+  seoP2: 'Il metronomo supporta tempi da 40 a 240 BPM. L’accordatore riproduce l’accordatura standard (E A D G B E). Il riferimento degli accordi mostra le diteggiature degli accordi aperti più comuni.'
+},
+pt: {
+  backHome: '← Voltar ao início',
+  pageTitle: '🎸 Ferramentas para guitarra',
+  heroTitle: 'Ferramentas gratuitas para guitarra',
+  heroText: 'Tudo o que você precisa para praticar — sem aplicativos, sem downloads e sem cadastro.',
+  seoTitle: 'Por que usar estas ferramentas?',
+  seoP1: 'Todo guitarrista precisa de um metrônomo para ritmo, um afinador para precisão de afinação e uma referência de acordes.',
+  seoP2: 'O metrônomo suporta tempos de 40–240 BPM. O afinador reproduz a afinação padrão (E A D G B E). A referência de acordes mostra as posições dos dedos para os acordes abertos mais comuns.'
+},
+'pt-br': {
+  backHome: '← Voltar ao início',
+  pageTitle: '🎸 Ferramentas para guitarra',
+  heroTitle: 'Ferramentas gratuitas para guitarra',
+  heroText: 'Tudo o que você precisa para praticar — sem aplicativos, sem downloads e sem cadastro.',
+  seoTitle: 'Por que usar estas ferramentas?',
+  seoP1: 'Todo guitarrista precisa de um metrônomo para ritmo, um afinador para precisão de afinação e uma referência de acordes.',
+  seoP2: 'O metrônomo suporta tempos de 40–240 BPM. O afinador reproduz a afinação padrão (E A D G B E). A referência de acordes mostra as posições dos dedos para os acordes abertos mais comuns.'
+},
+ja: {
+  backHome: '← ホームへ戻る',
+  pageTitle: '🎸 ギターツール',
+  heroTitle: '無料ギターツール',
+  heroText: '練習に必要なものがすべてここに。ダウンロードも登録も不要です。',
+  seoTitle: 'これらのツールを使う理由',
+  seoP1: 'すべてのギタリストにメトロノーム、チューナー、コードリファレンスは欠かせません。',
+  seoP2: 'メトロノームは40〜240 BPMに対応しています。チューナーは標準チューニング（E A D G B E）を再生します。'
+},
+ko: {
+  backHome: '← 홈으로',
+  pageTitle: '🎸 기타 도구',
+  heroTitle: '무료 기타 도구',
+  heroText: '연습에 필요한 모든 것. 다운로드나 회원가입이 필요 없습니다.',
+  seoTitle: '왜 이 도구를 사용해야 할까요?',
+  seoP1: '모든 기타리스트에게는 메트로놈, 튜너, 코드 참고 자료가 필요합니다.',
+  seoP2: '메트로놈은 40~240 BPM을 지원합니다. 튜너는 표준 튜닝(E A D G B E)을 재생합니다.'
+},
+zh: {
+  backHome: '← 返回首页',
+  pageTitle: '🎸 吉他工具',
+  heroTitle: '免费吉他工具',
+  heroText: '练习所需的一切——无需下载，无需注册。',
+  seoTitle: '为什么使用这些工具？',
+  seoP1: '每位吉他手都需要节拍器、调音器和和弦参考。',
+  seoP2: '节拍器支持40–240 BPM。调音器播放标准调弦（E A D G B E）。'
+},
+ru: {
+  backHome: '← Назад домой',
+  pageTitle: '🎸 Гитарные инструменты',
+  heroTitle: 'Бесплатные гитарные инструменты',
+  heroText: 'Всё, что нужно для занятий — без скачивания и регистрации.',
+  seoTitle: 'Зачем использовать эти инструменты?',
+  seoP1: 'Каждому гитаристу нужны метроном, тюнер и справочник аккордов.',
+  seoP2: 'Метроном поддерживает темп от 40 до 240 BPM. Тюнер воспроизводит стандартный строй (E A D G B E).'
+},
+hi: {
+  backHome: '← होम पर वापस जाएँ',
+  pageTitle: '🎸 गिटार टूल्स',
+  heroTitle: 'निःशुल्क गिटार टूल्स',
+  heroText: 'अभ्यास के लिए ज़रूरी सब कुछ — बिना डाउनलोड और बिना साइन-अप।',
+  seoTitle: 'इन टूल्स का उपयोग क्यों करें?',
+  seoP1: 'हर गिटारवादक को मेट्रोनोम, ट्यूनर और कॉर्ड संदर्भ की आवश्यकता होती है।',
+  seoP2: 'मेट्रोनोम 40–240 BPM का समर्थन करता है। ट्यूनर मानक ट्यूनिंग (E A D G B E) बजाता है।'
+},
+sv: {
+  backHome: '← Tillbaka till startsidan',
+  pageTitle: '🎸 Gitarrverktyg',
+  heroTitle: 'Gratis gitarrverktyg',
+  heroText: 'Allt du behöver för att öva – inga nedladdningar eller registrering krävs.',
+  seoTitle: 'Varför använda dessa verktyg?',
+  seoP1: 'Varje gitarrist behöver en metronom, en stämapparat och ett ackordreferensverktyg.',
+  seoP2: 'Metronomen stöder 40–240 BPM. Stämapparaten spelar standardstämning (E A D G B E).'
+},
+fi: {
+  backHome: '← Takaisin etusivulle',
+  pageTitle: '🎸 Kitaratyökalut',
+  heroTitle: 'Ilmaiset kitaratyökalut',
+  heroText: 'Kaikki mitä tarvitset harjoitteluun – ei latauksia eikä rekisteröitymistä.',
+  seoTitle: 'Miksi käyttää näitä työkaluja?',
+  seoP1: 'Jokainen kitaristi tarvitsee metronomin, virittimen ja sointuviitteen.',
+  seoP2: 'Metronomi tukee 40–240 BPM:n tempoja. Viritin soittaa vakiovirityksen (E A D G B E).'
+}
 };
 
 const t = toolsT[currentLang] || toolsT[lang] || toolsT.en;
