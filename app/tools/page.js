@@ -271,9 +271,9 @@ function ChordReference() {
 
 // ─── MAIN TOOLS PAGE ───
 export default function ToolsPage() {
-  const pathname = usePathname();
-  const currentLang = pathname?.split('/')[1];
-  const lang = currentLang && currentLang !== 'tools' ? currentLang : 'en';
+  const { lang } = useLanguage();
+const pathname = usePathname();
+const currentLang = pathname.split('/')[1] || lang;
 
 const toolsT = {
   en: {
@@ -328,7 +328,13 @@ const homeHref = lang === 'en' ? '/' : `/${lang}`;
           </Link>
           <div className="flex items-center gap-3">
   <h1 className="text-xl font-bold text-white">{t.pageTitle}</h1>
-  <LanguageSelector />
+  <LanguageSelector
+  onLanguageChange={(newLang) => {
+    window.location.href = newLang === 'en'
+      ? '/tools'
+      : `/${newLang}/tools`;
+  }}
+/>
 </div>
         </div>
       </header>
