@@ -6,14 +6,13 @@ import { usePathname } from 'next/navigation';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 
 // ─── METRONOME ───
-function Metronome() {
+function Metronome({ lang = 'en' }) {
   const [bpm, setBpm] = useState(120);
   const [playing, setPlaying] = useState(false);
   const [beat, setBeat] = useState(0);
   const [timeSignature, setTimeSignature] = useState(4);
   const intervalRef = useRef(null);
   const audioCtxRef = useRef(null);
-  const { lang } = useLanguage();
 
   const playClick = useCallback((accent = false) => {
     if (!audioCtxRef.current) {
@@ -47,10 +46,18 @@ function Metronome() {
     }
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
   }, [playing, bpm, timeSignature, playClick]);
+  const metronomeT = {
+  en: { title: 'Metronome', start: 'Start', stop: 'Stop' },
+  es: { title: 'Metrónomo', start: 'Iniciar', stop: 'Detener' },
+  fr: { title: 'Métronome', start: 'Démarrer', stop: 'Arrêter' },
+  de: { title: 'Metronom', start: 'Start', stop: 'Stopp' }
+};
+
+const mt = metronomeT[lang] || metronomeT.en;
 
   return (
     <div className="bg-gray-800/50 border border-orange-500/30 rounded-xl p-6">
-      <h3 className="text-xl font-bold text-orange-400 mb-4">🥁 Metronome</h3>
+      <h3 className="text-xl font-bold text-orange-400 mb-4">🥁 {mt.title}</h3>
       
       {/* BPM Display */}
       <div className="text-center mb-4">
@@ -101,7 +108,7 @@ function Metronome() {
               : 'bg-green-600 hover:bg-green-700 text-white'
           }`}
         >
-          {playing ? '⏹ Stop' : '▶ Start'}
+          {playing ? `⏹ ${mt.stop}` : `▶ ${mt.start}`}
         </button>
         <div className="flex gap-1">
           <button onClick={() => setBpm(Math.max(40, bpm - 5))} className="px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white">-5</button>
@@ -346,7 +353,7 @@ const homeHref = currentLang === 'en' ? '/' : `/${currentLang}`;
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          <Metronome />
+          <Metronome lang={currentLang} />
           <GuitarTuner />
         </div>
 
