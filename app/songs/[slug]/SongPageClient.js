@@ -472,7 +472,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
                 href={`/artist/${artistSlug}`}
                 className="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 transition-colors font-medium"
               >
-                View all {song.artist} tabs →
+                {t.viewAllTabs.replace('{artist}', song.artist)} →
               </Link>
             </div>
           </section>
