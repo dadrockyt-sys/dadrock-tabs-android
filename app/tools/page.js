@@ -223,7 +223,7 @@ const gt = tunerT[lang] || tunerT.en;
         ))}
       </div>
 
-      <p className="text-xs text-gray-500 mt-4">Standard tuning: E A D G B E</p>
+     <p className="text-xs text-gray-500 mt-4">{gt.standard}</p>
     </div>
   );
 }
