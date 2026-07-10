@@ -84,21 +84,20 @@ export default function PartnersPage() {
 
       <section className="max-w-7xl mx-auto text-center relative z-10 mb-12">
         <p className="text-2xl sm:text-4xl font-black italic text-white mb-1">
-          PARTNER WITH
+          {t.partnerWith}
         </p>
 
         <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black mb-6 text-amber-400 drop-shadow-[0_0_22px_rgba(251,191,36,0.55)]">
-          DADROCK TABS
+          {t.partnerTitle}
         </h1>
 
         <p className="text-amber-400 font-extrabold tracking-wide mb-4">
-          SPONSORSHIPS • BRAND DEALS • MUSIC PARTNERSHIPS
+          {t.partnerTagline}
         </p>
 
         <p className="text-lg sm:text-xl text-zinc-200 max-w-4xl mx-auto mb-8 leading-relaxed">
-          DadRock Tabs helps classic rock and metal fans learn the guitar and bass
-          parts they love through YouTube, DadRockTabs.com, and the DadRock Tabs Android app.
-        </p>
+  {t.partnerIntro}
+</p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
           <a
@@ -106,7 +105,7 @@ export default function PartnersPage() {
 download
             className="bg-amber-500 hover:bg-amber-400 text-black font-black px-8 py-4 rounded-xl shadow-lg shadow-amber-500/30 transition"
           >
-            📥 Download 2026 Agency Media Kit
+            {t.downloadMediaKit}
           </a>
 
           <a
@@ -115,7 +114,7 @@ download
             rel="noopener noreferrer"
             className="bg-black/70 hover:bg-zinc-900 text-white font-black px-8 py-4 rounded-xl border border-amber-500/50 transition"
           >
-            ▶ Visit YouTube Channel
+            {t.visitYouTubeChannel}
           </a>
         </div>
       </section>
