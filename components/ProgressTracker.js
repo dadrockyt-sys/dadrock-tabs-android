@@ -82,7 +82,7 @@ const t = getSubPageTranslation(lang);
               ? config.color 
               : 'bg-zinc-800/50 text-zinc-500 border-zinc-700 hover:border-zinc-500'
           }`}
-          title="Track progress"
+          title={t.trackYourProgress}
         >
           {config ? `${config.icon} ${config.label}` : '📋'}
         </button>
@@ -119,7 +119,7 @@ const t = getSubPageTranslation(lang);
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-xs text-zinc-500 uppercase tracking-wider font-medium">Track Your Progress</p>
+      <p className="text-xs text-zinc-500 uppercase tracking-wider font-medium">{t.trackYourProgress}</p>
       <div className="flex flex-wrap gap-2">
         {Object.entries(STATUS_CONFIG).map(([key, cfg]) => (
           <button
