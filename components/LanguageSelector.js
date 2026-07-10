@@ -19,11 +19,9 @@ export function useLanguage() {
     localStorage.setItem(LANG_STORAGE_KEY, pathLocale);
     return;
   }
-
-  const stored = localStorage.getItem(LANG_STORAGE_KEY);
-  if (stored && locales.includes(stored)) {
-    setLang(stored);
-  }
+setLang('en');
+localStorage.setItem(LANG_STORAGE_KEY, 'en');
+  
 }, []);
 
   const changeLang = useCallback((newLang) => {
