@@ -274,7 +274,7 @@ const t = getSubPageTranslation(lang);
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
             <Link
-  href={getLocalizedPath('/', lang)}
+  href={lang === 'en' ? '/' : `/${lang}`}
   className="flex items-center gap-3 hover:opacity-80 transition-opacity flex-shrink-0"
 >
   <img src={LOGO_URL} alt="DadRock Tabs" className="h-9 w-auto" />
@@ -289,7 +289,7 @@ const t = getSubPageTranslation(lang);
             <div className="flex items-center gap-3 flex-shrink-0">
               <LanguageSelector />
               <Link 
-                href={getLocalizedPath('/', lang)}
+                href={lang === 'en' ? '/' : `/${lang}`}
                 className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
               >
                 <Home className="w-4 h-4" />
