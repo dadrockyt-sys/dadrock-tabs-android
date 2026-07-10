@@ -251,10 +251,10 @@ function ChordReference({ lang = 'en' }) {
 
   const chord = chords[selectedChord];
   const chordT = {
-  en: { title: 'Chord Reference', frets: 'Frets', fingers: 'Fingers' },
-  es: { title: 'Referencia de acordes', frets: 'Trastes', fingers: 'Dedos' },
-  fr: { title: 'Référence des accords', frets: 'Frettes', fingers: 'Doigts' },
-  de: { title: 'Akkordreferenz', frets: 'Bünde', fingers: 'Finger' }
+  en: { title: 'Chord Reference', frets: 'Frets', fingers: 'Fingers', fretInfo: 'Fret positions from nut (0 = open, x = mute)' },
+  es: { title: 'Referencia de acordes', frets: 'Trastes', fingers: 'Dedos', fretInfo: 'Posiciones de los trastes desde la cejuela (0 = al aire, x = silenciada)' },
+  fr: { title: 'Référence des accords', frets: 'Frettes', fingers: 'Doigts', fretInfo: 'Positions des frettes depuis le sillet (0 = corde à vide, x = corde étouffée)' },
+  de: { title: 'Akkordreferenz', frets: 'Bünde', fingers: 'Finger', fretInfo: 'Bundpositionen vom Sattel (0 = leer, x = gedämpft)' }
 };
 
 const ct = chordT[lang] || chordT.en;
@@ -303,7 +303,9 @@ const ct = chordT[lang] || chordT.en;
             ))}
           </div>
         </div>
-        <p className="text-gray-500 text-xs mt-4">Fret positions from nut (0 = open, x = mute)</p>
+        <p className="text-sm text-zinc-500 mt-4">
+  {ct.fretInfo}
+</p>
       </div>
     </div>
   );
