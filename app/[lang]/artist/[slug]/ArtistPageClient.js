@@ -118,7 +118,7 @@ function getRelatedArtists(artistName) {
 
 export default function ArtistPageClient({ artistName, videos, slug, lang: propLang, adSettings, initialAiContent, faqItems = [] }) {
   const [browserLang] = useLanguage();
-  const lang = propLang || browserLang || 'en';
+  const lang = browserLang || propLang || 'en';
   const homeHref = propLang && propLang !== 'en' ? `/${propLang}` : '/';
   const t = getSubPageTranslation(lang);
   const [selectedVideo, setSelectedVideo] = useState(null);
