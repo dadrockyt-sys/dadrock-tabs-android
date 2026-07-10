@@ -304,7 +304,7 @@ const t = getSubPageTranslation(lang);
         {/* Breadcrumb */}
         <nav className="mb-6 text-sm text-zinc-400">
   <Link
-    href={getLocalizedPath('/', lang)}
+    href={lang === 'en' ? '/' : `/${lang}`}
     className="hover:text-amber-500 transition-colors"
   >
     {t.home}
