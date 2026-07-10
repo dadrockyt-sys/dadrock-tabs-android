@@ -674,7 +674,6 @@ const t = getSubPageTranslation(lang);
               <p className="text-zinc-500 text-sm">{t.footer}</p>
             </div>
             <div className="flex items-center gap-6">
-              href={getLocalizedPath('/', lang)}
               <a 
                 href="https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ" 
                 target="_blank" 
