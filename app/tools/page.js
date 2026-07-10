@@ -50,7 +50,7 @@ function Metronome({ lang = 'en' }) {
   en: { title: 'Metronome', start: 'Start', stop: 'Stop' },
   es: { title: 'Metrónomo', start: 'Iniciar', stop: 'Detener' },
   fr: { title: 'Métronome', start: 'Démarrer', stop: 'Arrêter' },
-  de: { title: 'Metronom', start: 'Start', stop: 'Stopp' }
+  de: { title: 'Metronom', start: 'Start', stop: 'Stopp' },
   it: { title: 'Metronomo', start: 'Avvia', stop: 'Stop' },
   pt: { title: 'Metrônomo', start: 'Iniciar', stop: 'Parar' },
   'pt-br': { title: 'Metrônomo', start: 'Iniciar', stop: 'Parar' },
