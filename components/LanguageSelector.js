@@ -66,11 +66,6 @@ export default function LanguageSelector({ onLanguageChange }) {
   }
 };
 
-  if (onLanguageChange) {
-    onLanguageChange(newLang);
-  }
-};
-
   // Modal content to be portaled to body
   const modalContent = isOpen && mounted ? createPortal(
     <div 
