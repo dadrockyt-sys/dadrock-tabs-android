@@ -262,7 +262,7 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
       <header className="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity flex-shrink-0">
+            <Link href={homeHref} className="flex items-center gap-3 hover:opacity-80 transition-opacity flex-shrink-0">
               <img src={LOGO_URL} alt="DadRock Tabs" className="h-9 w-auto" />
               <span className="text-lg font-bold text-amber-500 hidden sm:block font-rock">DadRock Tabs</span>
             </Link>
@@ -287,7 +287,7 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
       <main className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Breadcrumb */}
         <nav className="mb-6 text-sm text-zinc-400">
-          <Link href="/" className="hover:text-amber-500 transition-colors">{t.home}</Link>
+          <Link href={homeHref} className="hover:text-amber-500 transition-colors">{t.home}</Link>
           <span className="mx-2">/</span>
           <span className="text-white">{artistName}</span>
         </nav>
