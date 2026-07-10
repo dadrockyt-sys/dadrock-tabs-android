@@ -314,7 +314,7 @@ const toolsT = {
   }
 };
 
-const t = toolsT[lang] || toolsT.en;
+const t = toolsT[currentLang] || toolsT[lang] || toolsT.en;
 const homeHref = lang === 'en' ? '/' : `/${lang}`;
   
   return (
