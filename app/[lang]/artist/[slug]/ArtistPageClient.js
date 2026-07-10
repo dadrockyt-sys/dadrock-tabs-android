@@ -271,7 +271,13 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
               <SearchBar variant="compact" placeholder={t.searchPlaceholder || 'Search artists & songs...'} />
             </div>
             <div className="flex items-center gap-3 flex-shrink-0">
-              <LanguageSelector />
+              <LanguageSelector
+  onLanguageChange={(newLang) => {
+    window.location.href = newLang === 'en'
+      ? `/artist/${slug}`
+      : `/${newLang}/artist/${slug}`;
+  }}
+/>
               <Link 
                 href={homeHref}
                 className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
