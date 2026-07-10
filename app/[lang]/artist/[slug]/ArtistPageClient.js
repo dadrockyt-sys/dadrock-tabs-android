@@ -273,7 +273,7 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
             <div className="flex items-center gap-3 flex-shrink-0">
               <LanguageSelector />
               <Link 
-                href="/"
+                href={homeHref}
                 className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
               >
                 <Home className="w-4 h-4" />
