@@ -2016,7 +2016,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                   <li><Link href={getLocalizedPath('/learn', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Learning Guides</Link></li>
                   <li><Link href={getLocalizedPath('/tools', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Guitar Tools</Link></li>
                   <li><Link href={getLocalizedPath('/whats-new', currentLang)} className="text-zinc-400 hover:text-white transition-colors">What&apos;s New</Link></li>
-                  <li><Link href={getLocalizedPath('/partners-media-kit', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Partners & Media Kit</Link></li>
+                  <li><Link href={getLocalizedPath('/partners', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Partners & Media Kit</Link></li>
                   <li><a href="https://youtube.com/@dadrockytofficial" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-white transition-colors">YouTube Channel</a></li>
                   <li><a href="https://buymeacoffee.com/dadrockytq/commissions" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-white transition-colors">Request a Tab</a></li>
                   <li><a href="mailto:Dadrockyt@gmail.com" className="text-zinc-400 hover:text-white transition-colors">Contact Us</a></li>
