@@ -204,7 +204,57 @@ function GuitarTuner({ lang = 'en' }) {
     title: 'Referenz-Stimmgerät',
     text: 'Klicke auf eine Saite, um ihren Referenzton zu hören. Stimme deine Gitarre nach Gehör.',
     standard: 'Standardstimmung: E A D G B E'
-  }
+  },  
+  it: {
+  title: 'Accordatore di riferimento',
+  text: 'Tocca una corda per ascoltare la nota di riferimento. Accorda la tua chitarra a orecchio.',
+  standard: 'Accordatura standard: E A D G B E'
+},
+pt: {
+  title: 'Afinador de referência',
+  text: 'Clique em uma corda para ouvir sua nota de referência. Afine seu violão de ouvido.',
+  standard: 'Afinação padrão: E A D G B E'
+},
+'pt-br': {
+  title: 'Afinador de referência',
+  text: 'Clique em uma corda para ouvir sua nota de referência. Afine sua guitarra de ouvido.',
+  standard: 'Afinação padrão: E A D G B E'
+},
+ja: {
+  title: 'リファレンスチューナー',
+  text: '弦をタップして基準音を聞き、耳でチューニングしましょう。',
+  standard: '標準チューニング: E A D G B E'
+},
+ko: {
+  title: '기준 튜너',
+  text: '현을 눌러 기준음을 듣고 귀로 튜닝하세요.',
+  standard: '표준 튜닝: E A D G B E'
+},
+zh: {
+  title: '参考调音器',
+  text: '点击琴弦播放参考音，用耳朵调音。',
+  standard: '标准调弦：E A D G B E'
+},
+ru: {
+  title: 'Эталонный тюнер',
+  text: 'Нажмите на струну, чтобы услышать эталонный тон и настроить гитару на слух.',
+  standard: 'Стандартный строй: E A D G B E'
+},
+hi: {
+  title: 'रेफरेंस ट्यूनर',
+  text: 'संदर्भ स्वर सुनने के लिए किसी स्ट्रिंग पर टैप करें और कान से गिटार ट्यून करें।',
+  standard: 'स्टैंडर्ड ट्यूनिंग: E A D G B E'
+},
+sv: {
+  title: 'Referensstämmare',
+  text: 'Tryck på en sträng för att höra referenstonen och stäm gitarren på gehör.',
+  standard: 'Standardstämning: E A D G B E'
+},
+fi: {
+  title: 'Vertailuviritin',
+  text: 'Napauta kieltä kuullaksesi vertailusävelen ja viritä kitara korvakuulolta.',
+  standard: 'Vakioviritys: E A D G B E'
+}     
 };
 
 const gt = tunerT[lang] || tunerT.en;
