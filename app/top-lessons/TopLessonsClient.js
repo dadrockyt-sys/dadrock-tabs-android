@@ -459,40 +459,14 @@ const t = getSubPageTranslation(lang);
         {/* SEO Content Section */}
         <section className="mt-16 p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
           <h2 className="text-3xl font-bold text-amber-500 mb-6">
-            About DadRock Tabs Top Guitar Lessons
+            {t.aboutTopLessons}
           </h2>
           <div className="prose prose-invert prose-lg max-w-none text-zinc-300 space-y-4">
-            <p>
-              Welcome to the DadRock Tabs hall of fame – our top 10 most-viewed guitar and bass lessons of all time! 
-              These tutorials have resonated with thousands of guitarists worldwide, becoming the go-to resources 
-              for learning iconic classic rock and heavy metal songs. From face-melting solos to thundering bass 
-              lines, these lessons represent the best of what DadRock Tabs has to offer.
-            </p>
-            <p>
-              Each lesson in our top 10 has been watched, rewatched, and mastered by guitarists at every skill level. 
-              These aren't just any songs – they're the tracks that define classic rock and heavy metal: the riffs 
-              that made legends, the solos that inspired generations, and the grooves that get your head banging. 
-              Artists like Van Halen, Metallica, AC/DC, Led Zeppelin, Black Sabbath, and Ozzy Osbourne are heavily 
-              featured because their music is timeless.
-            </p>
-            <p>
-              What makes these lessons so popular? It's our step-by-step approach that breaks down complex parts 
-              into manageable chunks. Whether you're tackling your first power chord or perfecting a sweep-picked 
-              arpeggio, our video tutorials guide you through every note with clear demonstrations and on-screen 
-              tablature. Plus, they're completely free – no subscriptions, no paywalls, just pure rock education.
-            </p>
-            <p>
-              If you're new to DadRock Tabs, starting with our most-viewed lessons is a great way to dive in. 
-              These songs are popular for a reason – they're fun to play, they sound impressive, and they'll 
-              build your skills for more challenging material. Many of our viewers return to these lessons 
-              multiple times as they improve, discovering new nuances and techniques with each viewing.
-            </p>
-            <p>
-              Don't forget to subscribe to our YouTube channel to stay updated when new lessons drop. Who knows – 
-              the next video we upload might become a future top 10 contender! In the meantime, grab your guitar, 
-              crank up your amp, and start learning from the best. These are the lessons that made DadRock Tabs 
-              what it is today, and we're proud to share them with rock guitarists around the world.
-            </p>
+            <p>{t.aboutTopLessonsP1}</p>
+            <p>{t.aboutTopLessonsP2}</p>
+            <p>{t.aboutTopLessonsP3}</p>
+            <p>{t.aboutTopLessonsP4}</p>
+            <p>{t.aboutTopLessonsP5}</p>
           </div>
         </section>
 
