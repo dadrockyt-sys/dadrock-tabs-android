@@ -254,7 +254,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
                 className="inline-flex items-center gap-1 text-sm text-amber-500 hover:text-amber-400 transition-colors"
               >
                 <ExternalLink className="w-4 h-4" />
-                View all {song.artist} tabs
+                {t.viewAllTabs.replace('{artist}', song.artist)}
               </Link>
             )}
           </div>
