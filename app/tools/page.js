@@ -51,7 +51,17 @@ function Metronome({ lang = 'en' }) {
   es: { title: 'Metrónomo', start: 'Iniciar', stop: 'Detener' },
   fr: { title: 'Métronome', start: 'Démarrer', stop: 'Arrêter' },
   de: { title: 'Metronom', start: 'Start', stop: 'Stopp' }
-};
+  it: { title: 'Metronomo', start: 'Avvia', stop: 'Stop' },
+  pt: { title: 'Metrônomo', start: 'Iniciar', stop: 'Parar' },
+  'pt-br': { title: 'Metrônomo', start: 'Iniciar', stop: 'Parar' },
+  ja: { title: 'メトロノーム', start: '開始', stop: '停止' },
+  ko: { title: '메트로놈', start: '시작', stop: '정지' },
+  zh: { title: '节拍器', start: '开始', stop: '停止' },
+  ru: { title: 'Метроном', start: 'Старт', stop: 'Стоп' },
+  hi: { title: 'मेट्रोनोम', start: 'शुरू', stop: 'रोकें' },
+  sv: { title: 'Metronom', start: 'Start', stop: 'Stopp' },
+  fi: { title: 'Metronomi', start: 'Käynnistä', stop: 'Pysäytä' }
+}:
 
 const mt = metronomeT[lang] || metronomeT.en;
 
