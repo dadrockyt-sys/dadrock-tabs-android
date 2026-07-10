@@ -61,7 +61,7 @@ function Metronome({ lang = 'en' }) {
   hi: { title: 'मेट्रोनोम', start: 'शुरू', stop: 'रोकें' },
   sv: { title: 'Metronom', start: 'Start', stop: 'Stopp' },
   fi: { title: 'Metronomi', start: 'Käynnistä', stop: 'Pysäytä' }
-}:
+};
 
 const mt = metronomeT[lang] || metronomeT.en;
 
