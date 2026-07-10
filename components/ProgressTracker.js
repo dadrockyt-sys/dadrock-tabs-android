@@ -1,15 +1,13 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useLanguage } from '@/components/LanguageSelector';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 const STORAGE_KEY = 'dadrock_progress';
 
 // Status options: null (not tracked), 'want', 'learning', 'learned'
-const STATUS_CONFIG = {
-  want: { label: 'Want to Learn', icon: '📌', color: 'bg-blue-500/20 text-blue-400 border-blue-500/50', hoverColor: 'hover:bg-blue-500/30' },
-  learning: { label: 'Learning', icon: '🎯', color: 'bg-amber-500/20 text-amber-400 border-amber-500/50', hoverColor: 'hover:bg-amber-500/30' },
-  learned: { label: 'Learned', icon: '✅', color: 'bg-green-500/20 text-green-400 border-green-500/50', hoverColor: 'hover:bg-green-500/30' },
-};
+
 
 function getProgress() {
   if (typeof window === 'undefined') return {};
@@ -33,6 +31,25 @@ function saveProgress(progress) {
 export default function ProgressTracker({ songSlug, songTitle, compact = false }) {
   const [status, setStatus] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const { lang } = useLanguage();
+const t = getSubPageTranslation(lang);
+  const STATUS_CONFIG = {
+  want: {
+    label: t.wantToLearn,
+    icon: '📌',
+    color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+  },
+  learning: {
+    label: t.learning,
+    icon: '🎯',
+    color: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+  },
+  learned: {
+    label: t.learned,
+    icon: '✅',
+    color: 'bg-green-500/20 text-green-400 border-green-500/30',
+  },
+};
 
   useEffect(() => {
     const progress = getProgress();
