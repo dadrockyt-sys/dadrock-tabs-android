@@ -386,7 +386,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
               <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
                 <h3 className="text-xl font-bold mb-3 text-white flex items-center gap-2">
                   <BookOpen className="w-5 h-5 text-amber-500" />
-                  What You'll Learn
+                  {t.whatYoullLearn}
                 </h3>
                 <p className="text-zinc-300 leading-relaxed">{aiContent.lesson_overview}</p>
                 {aiContent.difficulty_info && (
