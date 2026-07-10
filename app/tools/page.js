@@ -172,6 +172,8 @@ function GuitarTuner({ lang = 'en' }) {
     oscRef.current = osc;
     setActiveString(string.name);
     setTimeout(() => setActiveString(null), 2000);
+      };
+  
     const tunerT = {
   en: {
     title: 'Reference Tuner',
