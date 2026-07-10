@@ -166,7 +166,6 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
             </div>
             <div className="flex items-center gap-3">
               <LanguageSelector
-              <LanguageSelector
   onLanguageChange={(newLang) => {
     window.location.href = newLang === 'en'
       ? `/songs/${song?.slug}`
