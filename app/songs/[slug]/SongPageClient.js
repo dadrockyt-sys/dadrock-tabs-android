@@ -165,7 +165,13 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
               <SearchBar variant="compact" placeholder={t.searchPlaceholder || 'Search artists & songs...'} />
             </div>
             <div className="flex items-center gap-3">
-              <LanguageSelector />
+              <LanguageSelector
+  onLanguageChange={(newLang) => {
+    window.location.href = newLang === 'en'
+      ? `/songs/${slug}`
+      : `/${newLang}/songs/${slug}`;
+  }}
+/>
               <a
                 href={YOUTUBE_CHANNEL}
                 target="_blank"
