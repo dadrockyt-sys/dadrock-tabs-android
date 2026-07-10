@@ -54,6 +54,8 @@ function Metronome({ lang = 'en' }) {
 };
 
 const mt = metronomeT[lang] || metronomeT.en;
+<h3 className="text-xl font-bold text-orange-400 mb-4">🎵 {gt.title}</h3>
+<p className="text-gray-400 text-sm mb-4">{gt.text}</p>
 
   return (
     <div className="bg-gray-800/50 border border-orange-500/30 rounded-xl p-6">
@@ -135,7 +137,7 @@ const mt = metronomeT[lang] || metronomeT.en;
 }
 
 // ─── GUITAR TUNER ───
-function GuitarTuner() {
+function GuitarTuner({ lang = 'en' }) {
   const [activeString, setActiveString] = useState(null);
   const audioCtxRef = useRef(null);
   const oscRef = useRef(null);
@@ -172,12 +174,35 @@ function GuitarTuner() {
     oscRef.current = osc;
     setActiveString(string.name);
     setTimeout(() => setActiveString(null), 2000);
+    const tunerT = {
+  en: {
+    title: 'Reference Tuner',
+    text: 'Click a string to hear its reference pitch. Tune your guitar by ear.',
+    standard: 'Standard tuning: E A D G B E'
+  },
+  es: {
+    title: 'Afinador de referencia',
+    text: 'Haz clic en una cuerda para escuchar su tono de referencia. Afina tu guitarra de oído.',
+    standard: 'Afinación estándar: E A D G B E'
+  },
+  fr: {
+    title: 'Accordeur de référence',
+    text: 'Cliquez sur une corde pour entendre sa hauteur de référence. Accordez votre guitare à l’oreille.',
+    standard: 'Accordage standard : E A D G B E'
+  },
+  de: {
+    title: 'Referenz-Stimmgerät',
+    text: 'Klicke auf eine Saite, um ihren Referenzton zu hören. Stimme deine Gitarre nach Gehör.',
+    standard: 'Standardstimmung: E A D G B E'
+  }
+};
+
+const gt = tunerT[lang] || tunerT.en;
   };
 
   return (
     <div className="bg-gray-800/50 border border-orange-500/30 rounded-xl p-6">
-      <h3 className="text-xl font-bold text-orange-400 mb-4">🎵 Reference Tuner</h3>
-      <p className="text-gray-400 text-sm mb-4">Click a string to hear its reference pitch. Tune your guitar by ear.</p>
+      
       
       <div className="space-y-2">
         {strings.map(s => (
@@ -355,7 +380,7 @@ const homeHref = currentLang === 'en' ? '/' : `/${currentLang}`;
 
         <div className="grid md:grid-cols-2 gap-8">
           <Metronome lang={currentLang} />
-          <GuitarTuner />
+          <GuitarTuner lang={currentLang} />
         </div>
 
         <div className="mt-8">
