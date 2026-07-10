@@ -59,17 +59,14 @@ export default function LanguageSelector({ onLanguageChange }) {
   setIsOpen(false);
   changeLang(newLang);
 
-  const currentPath = window.location.pathname;
-  const parts = currentPath.split('/').filter(Boolean);
+  const handleLanguageChange = (newLang) => {
+  setIsOpen(false);
+  changeLang(newLang);
 
-  if (parts[0] && locales.includes(parts[0])) {
-    parts.shift();
+  if (onLanguageChange) {
+    onLanguageChange(newLang);
   }
-
-  const cleanPath = '/' + parts.join('/');
-  const newPath = newLang === 'en' ? cleanPath : `/${newLang}${cleanPath}`;
-
-  window.location.href = newPath || '/';
+};
 
   if (onLanguageChange) {
     onLanguageChange(newLang);
