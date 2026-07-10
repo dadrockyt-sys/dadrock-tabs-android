@@ -271,7 +271,22 @@ function ChordReference() {
 export default function ToolsPage() {
   const pathname = usePathname();
   const currentLang = pathname?.split('/')[1];
-  const homeHref = currentLang && currentLang !== 'tools' ? `/${currentLang}` : '/';
+  const lang = currentLang && currentLang !== 'tools' ? currentLang : 'en';
+
+const toolsT = {
+  en: {
+    backHome: '← Back to Home',
+    pageTitle: '🎸 Guitar Tools',
+    heroTitle: 'Free Guitar Tools',
+    heroText: 'Everything you need to practice — no apps to download, no signup required.',
+    seoTitle: 'Why Use These Tools?',
+    seoP1: 'Every guitarist needs a metronome for timing, a tuner for pitch accuracy, and a chord reference for learning new shapes. These free browser-based tools require no downloads or signups — just bookmark this page and use them whenever you practice.',
+    seoP2: 'The metronome supports common time signatures and tempos from 40-240 BPM. The reference tuner plays standard tuning pitches (E A D G B E). The chord reference shows finger positions for the most common open chords.',
+  }
+};
+
+const t = toolsT[lang] || toolsT.en;
+const homeHref = lang === 'en' ? '/' : `/${lang}`;
   
   return (
     
