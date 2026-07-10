@@ -280,7 +280,8 @@ function ChordReference() {
 export default function ToolsPage() {
   const { lang } = useLanguage();
 const pathname = usePathname();
-const currentLang = pathname.split('/')[1] || lang;
+const pathLocale = pathname.split('/')[1];
+const currentLang = pathLocale && pathLocale !== 'tools' ? pathLocale : lang;
 
 const toolsT = {
   en: {
