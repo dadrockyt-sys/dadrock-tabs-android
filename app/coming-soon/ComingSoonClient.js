@@ -294,42 +294,14 @@ export default function ComingSoonClient({ initialVideos, initialTotal, currentL
         {/* SEO Content Section */}
         <section className="mt-16 p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800">
           <h2 className="text-3xl font-bold text-amber-500 mb-6">
-            About DadRock Tabs Upcoming Lessons Schedule
+            {t.aboutComingSoon}
           </h2>
           <div className="prose prose-invert prose-lg max-w-none text-zinc-300 space-y-4">
-            <p>
-              Welcome to the DadRock Tabs upcoming lessons schedule – your preview of the latest guitar and bass 
-              tablature tutorials coming to our channel. We specialize in teaching classic rock, heavy metal, 
-              hair metal, and blues songs from the greatest era of rock music. Our schedule is regularly updated 
-              with new lessons featuring legendary artists like Van Halen, Metallica, AC/DC, Led Zeppelin, 
-              Black Sabbath, Ozzy Osbourne, Def Leppard, Iron Maiden, Judas Priest, and many more iconic bands.
-            </p>
-            <p>
-              Every lesson on DadRock Tabs is completely free and designed to help guitarists and bass players 
-              of all skill levels master their favorite songs. Whether you're a beginner looking to learn your 
-              first power chord riff or an experienced player wanting to tackle complex solos, our step-by-step 
-              video tutorials break down every note, technique, and nuance so you can play along with confidence. 
-              We cover everything from simple rhythm parts to intricate lead guitar work and thundering bass lines.
-            </p>
-            <p>
-              The "Coming Soon" schedule above shows all the lessons we have queued up and ready to release. 
-              Each entry includes the song title, artist name, and exact release date and time so you know 
-              exactly when to tune in. Click on any artist name to explore our existing library of tutorials 
-              for that band – chances are we already have dozens of lessons ready for you to learn right now!
-            </p>
-            <p>
-              Don't miss a single lesson! Subscribe to the DadRock Tabs YouTube channel and turn on notifications 
-              to get alerted the moment each new tutorial goes live. Our community of rock guitarists spans the 
-              globe, united by our love for the timeless music that defined generations. Join us and keep the 
-              spirit of classic rock alive – one riff at a time.
-            </p>
-            <p>
-              DadRock Tabs is more than just a guitar lesson channel – it's a celebration of the music that 
-              dads everywhere have been passing down to their kids for decades. From the explosive energy of 
-              80s hair metal to the raw power of 70s hard rock, from the precision of thrash metal to the 
-              soulful bends of blues rock, we cover it all. Bookmark this page and check back regularly to 
-              see what's coming next. Your next favorite song to learn might be just days away!
-            </p>
+            <p>{t.aboutComingSoonP1}</p>
+            <p>{t.aboutComingSoonP2}</p>
+            <p>{t.aboutComingSoonP3}</p>
+            <p>{t.aboutComingSoonP4}</p>
+            <p>{t.aboutComingSoonP5}</p>
           </div>
         </section>
 
