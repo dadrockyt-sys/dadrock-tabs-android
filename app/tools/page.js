@@ -254,7 +254,17 @@ function ChordReference({ lang = 'en' }) {
   en: { title: 'Chord Reference', frets: 'Frets', fingers: 'Fingers', fretInfo: 'Fret positions from nut (0 = open, x = mute)' },
   es: { title: 'Referencia de acordes', frets: 'Trastes', fingers: 'Dedos', fretInfo: 'Posiciones de los trastes desde la cejuela (0 = al aire, x = silenciada)' },
   fr: { title: 'Référence des accords', frets: 'Frettes', fingers: 'Doigts', fretInfo: 'Positions des frettes depuis le sillet (0 = corde à vide, x = corde étouffée)' },
-  de: { title: 'Akkordreferenz', frets: 'Bünde', fingers: 'Finger', fretInfo: 'Bundpositionen vom Sattel (0 = leer, x = gedämpft)' }
+  de: { title: 'Akkordreferenz', frets: 'Bünde', fingers: 'Finger', fretInfo: 'Bundpositionen vom Sattel (0 = leer, x = gedämpft)' },
+  it: { title: 'Riferimento accordi', frets: 'Tasti', fingers: 'Dita', fretInfo: 'Posizioni dei tasti dal capotasto (0 = corda a vuoto, x = corda muta)' },
+  pt: { title: 'Referência de acordes', frets: 'Trastes', fingers: 'Dedos', fretInfo: 'Posições dos trastes a partir da pestana (0 = corda solta, x = abafada)' },
+  pt-br: { title: 'Referência de acordes', frets: 'Trastes', fingers: 'Dedos', fretInfo: 'Posições dos trastes a partir da pestana (0 = corda solta, x = abafada)' },
+  ja: { title: 'コードリファレンス', frets: 'フレット', fingers: '指', fretInfo: 'ナットからのフレット位置（0 = 開放弦、x = ミュート）' },
+  ko: { title: '코드 참조', frets: '프렛', fingers: '손가락', fretInfo: '너트 기준 프렛 위치 (0 = 개방현, x = 뮤트)' },
+  zh: { title: '和弦参考', frets: '品格', fingers: '手指', fretInfo: '从弦枕开始的品位位置（0 = 空弦，x = 闷音）' },
+  ru: { title: 'Справочник аккордов', frets: 'Лады', fingers: 'Пальцы', fretInfo: 'Позиции ладов от верхнего порожка (0 = открытая струна, x = приглушено)' },
+  hi: { title: 'कॉर्ड संदर्भ', frets: 'फ्रेट्स', fingers: 'उंगलियाँ', fretInfo: 'नट से फ्रेट की स्थिति (0 = खुली स्ट्रिंग, x = म्यूट)' },
+  sv: { title: 'Ackordreferens', frets: 'Band', fingers: 'Fingrar', fretInfo: 'Bandpositioner från sadeln (0 = öppen sträng, x = dämpad)' },
+  fi: { title: 'Sointuviite', frets: 'Nauhat', fingers: 'Sormet', fretInfo: 'Nauhojen sijainnit satulasta (0 = avoin kieli, x = mykistetty)' }
 };
 
 const ct = chordT[lang] || chordT.en;
