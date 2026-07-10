@@ -257,7 +257,7 @@ function ChordReference({ lang = 'en' }) {
   de: { title: 'Akkordreferenz', frets: 'Bünde', fingers: 'Finger', fretInfo: 'Bundpositionen vom Sattel (0 = leer, x = gedämpft)' },
   it: { title: 'Riferimento accordi', frets: 'Tasti', fingers: 'Dita', fretInfo: 'Posizioni dei tasti dal capotasto (0 = corda a vuoto, x = corda muta)' },
   pt: { title: 'Referência de acordes', frets: 'Trastes', fingers: 'Dedos', fretInfo: 'Posições dos trastes a partir da pestana (0 = corda solta, x = abafada)' },
-  pt-br: { title: 'Referência de acordes', frets: 'Trastes', fingers: 'Dedos', fretInfo: 'Posições dos trastes a partir da pestana (0 = corda solta, x = abafada)' },
+  'pt-br': { title: 'Referência de acordes', frets: 'Trastes', fingers: 'Dedos', fretInfo: 'Posições dos trastes a partir da pestana (0 = corda solta, x = abafada)' },
   ja: { title: 'コードリファレンス', frets: 'フレット', fingers: '指', fretInfo: 'ナットからのフレット位置（0 = 開放弦、x = ミュート）' },
   ko: { title: '코드 참조', frets: '프렛', fingers: '손가락', fretInfo: '너트 기준 프렛 위치 (0 = 개방현, x = 뮤트)' },
   zh: { title: '和弦参考', frets: '品格', fingers: '手指', fretInfo: '从弦枕开始的品位位置（0 = 空弦，x = 闷音）' },
