@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 
 // ─── METRONOME ───
 function Metronome() {
@@ -12,6 +13,7 @@ function Metronome() {
   const [timeSignature, setTimeSignature] = useState(4);
   const intervalRef = useRef(null);
   const audioCtxRef = useRef(null);
+  const { lang } = useLanguage();
 
   const playClick = useCallback((accent = false) => {
     if (!audioCtxRef.current) {
@@ -297,7 +299,10 @@ const homeHref = lang === 'en' ? '/' : `/${lang}`;
           <Link href={homeHref} className="text-orange-400 hover:text-orange-300 flex items-center gap-2">
             {t.backHome}
           </Link>
-          <h1 className="text-xl font-bold text-white">{t.pageTitle}</h1>
+          <div className="flex items-center gap-3">
+  <h1 className="text-xl font-bold text-white">{t.pageTitle}</h1>
+  <LanguageSelector />
+</div>
         </div>
       </header>
 
