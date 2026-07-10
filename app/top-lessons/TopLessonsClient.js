@@ -60,8 +60,12 @@ function formatViewCount(count) {
 }
 
 export default function TopLessonsClient({ initialVideos, adSettings }) {
-  const [lang] = useLanguage();
-  const t = getSubPageTranslation(lang);
+  const [selectedLang] = useLanguage();
+const urlLang = typeof window !== 'undefined' ? window.location.pathname.split('/')[1] : '';
+const lang = urlLang && ['es', 'pt', 'pt-br', 'de', 'fr', 'it', 'ja', 'ko', 'zh', 'ru', 'hi', 'sv', 'fi'].includes(urlLang)
+  ? urlLang
+  : selectedLang || 'en';
+const t = getSubPageTranslation(lang);
   const [videos, setVideos] = useState(initialVideos || []);
 
   // Update SEO meta tags when language changes
@@ -145,7 +149,7 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
         <div className="fixed inset-0 z-50 bg-black flex flex-col">
           <header className="bg-black/95 border-b border-zinc-800 px-4 py-2 sm:py-3">
             <div className="max-w-4xl mx-auto flex items-center gap-4">
-              <Link href="/">
+              <Link href={lang === 'en' ? '/' : `/${lang}`}>
                 <img src={LOGO_URL} alt="DadRock Tabs" className="w-10 h-10" />
               </Link>
               <div className="flex-1" />
@@ -225,7 +229,7 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
         <div className="max-w-6xl mx-auto px-4 py-8">
           {/* Navigation */}
           <nav className="flex items-center justify-between mb-8">
-            <Link href="/" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
+            <Link href={lang === 'en' ? '/' : `/${lang}`} className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
               <Home className="w-5 h-5" />
               <span>{t.backToHome}</span>
             </Link>
@@ -245,7 +249,7 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
 
           {/* Logo */}
           <div className="text-center mb-6">
-            <Link href="/">
+            <Link href={lang === 'en' ? '/' : `/${lang}`}>
               <img 
                 src={LOGO_URL} 
                 alt="DadRock Tabs - Free Guitar and Bass Tabs" 
@@ -407,7 +411,7 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
                           <span className="text-lg text-zinc-400">{cleanArtist}</span>
                           {artistSlug && (
                             <Link
-                              href={`/artist/${artistSlug}`}
+                              href={lang === 'en' ? `/artist/${artistSlug}` : `/${lang}/artist/${artistSlug}`}
                               className="inline-flex items-center gap-1 text-sm text-amber-500 hover:text-amber-400 transition-colors"
                             >
                               <ExternalLink className="w-4 h-4" />
@@ -517,14 +521,14 @@ export default function TopLessonsClient({ initialVideos, adSettings }) {
       <footer className="mt-16 py-8 border-t border-zinc-800">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <Link href="/" className="text-zinc-400 hover:text-white transition-colors">
+            <Link href={lang === 'en' ? '/' : `/${lang}`} className="text-zinc-400 hover:text-white transition-colors">
               ← {t.backToHome}
             </Link>
             <p className="text-zinc-500 text-sm">
               {t.footer}
             </p>
             <div className="flex items-center gap-4">
-              <Link href="/coming-soon" className="text-zinc-400 hover:text-purple-400 transition-colors">
+              <Link href={lang === 'en' ? '/coming-soon' : `/${lang}/coming-soon`} className="text-zinc-400 hover:text-purple-400 transition-colors">
                 Coming Soon
               </Link>
               <a
