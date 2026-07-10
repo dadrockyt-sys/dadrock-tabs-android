@@ -2,7 +2,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import { generateAlternates } from '@/lib/seo';
 import { slugToArtistPattern, artistToSlug } from '@/lib/slugify';
-import ArtistPageClient from '../../../artist/[slug]/ArtistPageClient';
+import ArtistPageClient from './ArtistPageClient';
 
 // Find artist name from slug by checking the database
 async function findArtistBySlug(db, slug) {
