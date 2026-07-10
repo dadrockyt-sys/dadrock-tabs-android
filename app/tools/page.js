@@ -231,7 +231,7 @@ const gt = tunerT[lang] || tunerT.en;
 }
 
 // ─── CHORD REFERENCE ───
-function ChordReference() {
+function ChordReference({ lang = 'en' }) {
   const [selectedChord, setSelectedChord] = useState('C');
 
   const chords = {
@@ -250,10 +250,18 @@ function ChordReference() {
   };
 
   const chord = chords[selectedChord];
+  const chordT = {
+  en: { title: 'Chord Reference', frets: 'Frets', fingers: 'Fingers' },
+  es: { title: 'Referencia de acordes', frets: 'Trastes', fingers: 'Dedos' },
+  fr: { title: 'Référence des accords', frets: 'Frettes', fingers: 'Doigts' },
+  de: { title: 'Akkordreferenz', frets: 'Bünde', fingers: 'Finger' }
+};
+
+const ct = chordT[lang] || chordT.en;
 
   return (
     <div className="bg-gray-800/50 border border-orange-500/30 rounded-xl p-6">
-      <h3 className="text-xl font-bold text-orange-400 mb-4">🎼 Chord Reference</h3>
+      <h3 className="text-xl font-bold text-orange-400 mb-4">🎼 {ct.title}</h3>
       
       {/* Chord selector */}
       <div className="flex flex-wrap gap-2 mb-6">
@@ -384,7 +392,7 @@ const homeHref = currentLang === 'en' ? '/' : `/${currentLang}`;
         </div>
 
         <div className="mt-8">
-          <ChordReference />
+          <ChordReference lang={currentLang} />
         </div>
 
         {/* SEO Content */}
