@@ -54,8 +54,6 @@ function Metronome({ lang = 'en' }) {
 };
 
 const mt = metronomeT[lang] || metronomeT.en;
-<h3 className="text-xl font-bold text-orange-400 mb-4">🎵 {gt.title}</h3>
-<p className="text-gray-400 text-sm mb-4">{gt.text}</p>
 
   return (
     <div className="bg-gray-800/50 border border-orange-500/30 rounded-xl p-6">
@@ -198,11 +196,11 @@ function GuitarTuner({ lang = 'en' }) {
 };
 
 const gt = tunerT[lang] || tunerT.en;
-  };
 
   return (
     <div className="bg-gray-800/50 border border-orange-500/30 rounded-xl p-6">
-      
+      <h3 className="text-xl font-bold text-orange-400 mb-4">🎵 {gt.title}</h3>
+<p className="text-gray-400 text-sm mb-4">{gt.text}</p>
       
       <div className="space-y-2">
         {strings.map(s => (
