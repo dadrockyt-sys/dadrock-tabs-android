@@ -105,7 +105,7 @@ const t = getSubPageTranslation(lang);
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateStatus(status); }}
                 className="w-full text-left px-3 py-1.5 rounded-md text-xs text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-all"
               >
-                ✕ Remove
+                ✕ {t.remove}
               </button>
             )}
           </div>
