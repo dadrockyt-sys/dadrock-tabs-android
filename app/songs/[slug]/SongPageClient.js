@@ -519,7 +519,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
 
         {/* Comments & Ratings */}
         <div className="max-w-4xl mx-auto px-4">
-          <Comments songSlug={song?.slug} songTitle={song?.title} />
+          <Comments songSlug={song?.slug} songTitle={song?.title} lang={lang} />
         </div>
       </main>
 
