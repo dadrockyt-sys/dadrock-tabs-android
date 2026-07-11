@@ -436,7 +436,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-2">
               <Music className="w-6 h-6 text-amber-500" />
-              More {song.artist} Tab Lessons
+              {(t.moreArtistLessons || 'More {artist} Tab Lessons').replace('{artist}', song.artist)}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {moreSongs.map((s) => (
