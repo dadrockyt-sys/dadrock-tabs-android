@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 
-export default function Comments({ songSlug, songTitle }) {
-  const { lang } = useLanguage();
+export default function Comments({ songSlug, songTitle, lang: pageLang }) {
+  const { lang: selectedLang } = useLanguage();
+const lang = pageLang || selectedLang;
 const t = getSubPageTranslation(lang);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
