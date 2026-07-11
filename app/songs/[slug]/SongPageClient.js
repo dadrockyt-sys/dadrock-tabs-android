@@ -264,14 +264,14 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
               <div className="flex items-center gap-2 text-amber-400">
                 <Eye className="w-5 h-5" />
                 <span className="font-bold text-lg">{formatViewCount(song.viewCount)}</span>
-                <span className="text-zinc-500 text-sm">views</span>
+                <span className="text-zinc-500 text-sm">{t.views}</span>
               </div>
             )}
             {song.likeCount > 0 && (
               <div className="flex items-center gap-2 text-green-400">
                 <ThumbsUp className="w-5 h-5" />
                 <span className="font-bold">{formatViewCount(song.likeCount)}</span>
-                <span className="text-zinc-500 text-sm">likes</span>
+                <span className="text-zinc-500 text-sm">{t.views}</span>
               </div>
             )}
           </div>
