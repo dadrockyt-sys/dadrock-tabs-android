@@ -1,9 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useLanguage } from '@/components/LanguageSelector';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 export default function ShareCard({ song, type = 'learned', value = '' }) {
   const [showShare, setShowShare] = useState(false);
+  const { lang } = useLanguage();
+const t = getSubPageTranslation(lang);
 
   if (!song && type === 'learned') return null;
 
@@ -29,7 +33,7 @@ export default function ShareCard({ song, type = 'learned', value = '' }) {
         onClick={() => setShowShare(!showShare)}
         className="text-lg px-8 py-4 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold rounded-xl shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2"
       >
-        <span className="text-xl">📤</span> Share
+        <span className="text-xl">📤</span> {t.share}
       </button>
 
       {showShare && (
