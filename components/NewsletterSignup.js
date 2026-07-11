@@ -1,11 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { useLanguage } from '@/components/LanguageSelector';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 export default function NewsletterSignup({ variant = 'default' }) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState(null); // null, 'loading', 'success', 'already', 'error'
   const [message, setMessage] = useState('');
+  const { lang } = useLanguage();
+const t = getSubPageTranslation(lang);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -70,10 +74,10 @@ export default function NewsletterSignup({ variant = 'default' }) {
     <div className="p-6 sm:p-8 bg-gradient-to-br from-zinc-900 via-zinc-900 to-zinc-800 rounded-2xl border border-zinc-700">
       <div className="text-center max-w-md mx-auto">
         <h3 className="text-xl font-bold text-white mb-2">
-          🎸 Get New Lessons in Your Inbox
+          🎸 {t.newsletterTitle}
         </h3>
         <p className="text-zinc-400 text-sm mb-5">
-          We'll notify you when new tab lessons drop. No spam, just riffs.
+          {t.newsletterSubtitle}
         </p>
 
         {status === 'success' || status === 'already' ? (
@@ -86,7 +90,7 @@ export default function NewsletterSignup({ variant = 'default' }) {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
+              placeholder={t.emailPlaceholder}
               className="flex-1 px-5 py-3 bg-zinc-800 border border-zinc-600 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"
               required
             />
@@ -95,7 +99,7 @@ export default function NewsletterSignup({ variant = 'default' }) {
               disabled={status === 'loading'}
               className="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl transition-colors disabled:opacity-50 whitespace-nowrap"
             >
-              {status === 'loading' ? 'Subscribing...' : 'Subscribe Free'}
+              {status === 'loading' ? 'Subscribing...' : {t.subscribeFree}
             </button>
           </form>
         )}
@@ -105,7 +109,7 @@ export default function NewsletterSignup({ variant = 'default' }) {
         )}
 
         <p className="text-zinc-600 text-xs mt-4">
-          Join 500+ guitarists. Unsubscribe anytime.
+          {t.newsletterFooter}
         </p>
       </div>
     </div>
