@@ -1,8 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useLanguage } from '@/components/LanguageSelector';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 export default function Comments({ songSlug, songTitle }) {
+  const { lang } = useLanguage();
+const t = getSubPageTranslation(lang);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
@@ -61,7 +65,7 @@ export default function Comments({ songSlug, songTitle }) {
 
   return (
     <div className="mt-8 bg-gray-900/50 border border-gray-700/50 rounded-xl p-6">
-      <h3 className="text-xl font-bold text-orange-400 mb-4">💬 Comments & Ratings</h3>
+      <h3 className="text-xl font-bold text-orange-400 mb-4">💬 {t.commentsAndRatings}</h3>
 
       {/* Submit Form */}
       <form onSubmit={handleSubmit} className="mb-6 space-y-3">
