@@ -28,10 +28,11 @@ function saveProgress(progress) {
   }
 }
 
-export default function ProgressTracker({ songSlug, songTitle, compact = false }) {
+export default function ProgressTracker({ songSlug, songTitle, compact = false, lang: pageLang }) {
   const [status, setStatus] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const { lang } = useLanguage();
+  const { lang: selectedLang } = useLanguage();
+const lang = pageLang || selectedLang;
 const t = getSubPageTranslation(lang);
   const STATUS_CONFIG = {
   want: {
