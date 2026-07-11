@@ -512,7 +512,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
 
         {/* Share */}
 <div className="max-w-4xl mx-auto mt-8 px-4 flex justify-center">
-  <ShareCard song={song} type="learned" />
+  <ShareCard song={song} type="learned" lang={lang} />
 </div>
 
         {/* Comments & Ratings */}
