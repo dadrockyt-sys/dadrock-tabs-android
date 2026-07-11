@@ -374,7 +374,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white font-medium rounded-full transition-all border border-zinc-700"
           >
             <Youtube className="w-4 h-4 text-red-500" />
-            Open in YouTube
+            {t.watchOnYouTube}
           </a>
         </div>
 
