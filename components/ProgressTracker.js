@@ -137,9 +137,9 @@ const t = getSubPageTranslation(lang);
       </div>
       {config && (
         <p className="text-xs text-zinc-500 mt-1">
-          {status === 'want' && `"${songTitle}" added to your wish list`}
-          {status === 'learning' && `Keep practicing "${songTitle}" — you've got this! 🎸`}
-          {status === 'learned' && `Congrats! You've mastered "${songTitle}" 🏆`}
+          {status === 'want' && t.wishlistAdded}
+{status === 'learning' && t.keepPracticing}
+{status === 'learned' && t.mastered}
         </p>
       )}
     </div>
