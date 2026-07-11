@@ -10,7 +10,6 @@ import { artistToSlug } from '@/lib/slugify';
 import SearchBar from '@/components/SearchBar';
 import ProgressTracker from '@/components/ProgressTracker';
 import Comments from '@/components/Comments';
-import SongEmbed from '@/components/SongEmbed';
 import ShareCard from '@/components/ShareCard';
 
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
@@ -511,11 +510,10 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
           </Link>
         </div>
 
-        {/* Share & Embed */}
-        <div className="max-w-4xl mx-auto mt-8 px-4 flex flex-wrap items-center gap-4">
-          <ShareCard song={song} type="learned" />
-          <SongEmbed song={song} />
-        </div>
+        {/* Share */}
+<div className="max-w-4xl mx-auto mt-8 px-4 flex flex-wrap items-center gap-4">
+  <ShareCard song={song} type="learned" />
+</div>
 
         {/* Comments & Ratings */}
         <div className="max-w-4xl mx-auto px-4">
