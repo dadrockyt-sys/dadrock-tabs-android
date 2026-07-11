@@ -481,9 +481,9 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
         {/* Subscribe CTA */}
         <section className="text-center p-10 bg-gradient-to-r from-red-600/20 via-orange-600/20 to-amber-600/20 rounded-2xl border border-red-500/30 mb-12">
           <Youtube className="w-12 h-12 mx-auto mb-4 text-red-500" />
-          <h2 className="text-2xl font-bold text-white mb-3">Want More Lessons?</h2>
+          <h2 className="text-2xl font-bold text-white mb-3">{t.wantMoreLessons}</h2>
           <p className="text-lg text-zinc-300 mb-6 max-w-xl mx-auto">
-            Subscribe to DadRock Tabs on YouTube for free guitar and bass lessons every week!
+            {t.subscribeCtaText}
           </p>
           <a
             href={YOUTUBE_CHANNEL}
@@ -492,7 +492,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
             className="inline-flex items-center gap-3 px-8 py-4 bg-red-600 hover:bg-red-500 rounded-full text-lg font-bold transition-all hover:scale-105"
           >
             <Youtube className="w-6 h-6" />
-            Subscribe – It's Free!
+            {t.subscribeNow}
           </a>
         </section>
 
