@@ -74,7 +74,7 @@ const t = getSubPageTranslation(lang);
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Your name"
+            placeholder={t.yourName}
             maxLength={50}
             className="flex-1 px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-orange-500"
           />
@@ -94,7 +94,7 @@ const t = getSubPageTranslation(lang);
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          placeholder={`Share your experience learning ${songTitle}...`}
+          placeholder={t.commentPlaceholder.replace('{song}', songTitle)}
           maxLength={500}
           rows={3}
           className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-orange-500 resize-none"
@@ -106,17 +106,17 @@ const t = getSubPageTranslation(lang);
             disabled={submitting || !name.trim() || !comment.trim()}
             className="px-4 py-2 bg-orange-600 hover:bg-orange-500 disabled:bg-gray-600 disabled:cursor-not-allowed text-white text-sm font-bold rounded-lg transition-colors"
           >
-            {submitting ? 'Posting...' : 'Post Comment'}
+            {submitting ? t.posting : t.postComment}
           </button>
         </div>
-        {success && <p className="text-green-400 text-sm">✓ Comment posted!</p>}
+        {success && <p className="text-green-400 text-sm">✓ {t.commentPosted}</p>}
       </form>
 
       {/* Comments List */}
       {loading ? (
-        <p className="text-gray-500 text-sm">Loading comments...</p>
+        <p className="text-sm text-gray-500"> {t.loadingComments}</p>
       ) : comments.length === 0 ? (
-        <p className="text-gray-500 text-sm text-center py-4">No comments yet. Be the first to share your experience!</p>
+        <p className="text-sm text-center py-4">{t.noCommentsYet}</p>
       ) : (
         <div className="space-y-4">
           {comments.map((c) => (
