@@ -94,7 +94,7 @@ const t = getSubPageTranslation(lang);
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          placeholder={t.commentPlaceholder.replace('{song}', songTitle)}
+          placeholder={(t.commentPlaceholder || 'Share your experience learning {song}...').replace('{song}', songTitle || '')}
           maxLength={500}
           rows={3}
           className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white text-sm placeholder:text-gray-500 focus:outline-none focus:border-orange-500 resize-none"
@@ -106,7 +106,7 @@ const t = getSubPageTranslation(lang);
             disabled={submitting || !name.trim() || !comment.trim()}
             className="px-4 py-2 bg-orange-600 hover:bg-orange-500 disabled:bg-gray-600 disabled:cursor-not-allowed text-white text-sm font-bold rounded-lg transition-colors"
           >
-            {submitting ? t.posting : t.postComment}
+            {submitting ? (t.posting || 'Posting...') : (t.postComment || 'Post Comment')}
           </button>
         </div>
         {success && <p className="text-green-400 text-sm">✓ {t.commentPosted}</p>}
@@ -116,7 +116,7 @@ const t = getSubPageTranslation(lang);
       {loading ? (
         <p className="text-sm text-gray-500"> {t.loadingComments}</p>
       ) : comments.length === 0 ? (
-        <p className="text-sm text-center py-4">{t.noCommentsYet}</p>
+        <p className="text-sm text-center py-4">{t.noCommentsYet || 'No comments yet. Be the first to share your experience!'}</p>
       ) : (
         <div className="space-y-4">
           {comments.map((c) => (
