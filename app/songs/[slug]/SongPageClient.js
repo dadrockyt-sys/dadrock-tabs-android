@@ -219,7 +219,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
     href={lang === 'en' ? '/' : `/${lang}`}
     className="hover:text-amber-500 transition-colors"
   >
-    Home
+    {t.home}
   </Link>
 
   <span className="mx-2">/</span>
