@@ -148,6 +148,8 @@ const t = getSubPageTranslation(lang);
 
 // Stats component for homepage or profile
 export function ProgressStats() {
+    const { lang } = useLanguage();
+  const t = getSubPageTranslation(lang);
   const [stats, setStats] = useState({ want: 0, learning: 0, learned: 0, total: 0 });
 
   useEffect(() => {
@@ -166,20 +168,20 @@ export function ProgressStats() {
 
   return (
     <div className="flex items-center gap-4 p-4 bg-zinc-900/50 rounded-xl border border-zinc-800">
-      <div className="text-sm font-medium text-zinc-300">Your Progress:</div>
+      <div className="text-sm font-medium text-zinc-300">{t.trackYourProgress}:</div>
       {stats.learned > 0 && (
         <span className="text-xs px-2 py-1 rounded-lg bg-green-500/20 text-green-400">
-          ✅ {stats.learned} learned
+          ✅ {stats.learned} {t.learned}
         </span>
       )}
       {stats.learning > 0 && (
         <span className="text-xs px-2 py-1 rounded-lg bg-amber-500/20 text-amber-400">
-          🎯 {stats.learning} learning
+          🎯 {stats.learning} {t.learning}
         </span>
       )}
       {stats.want > 0 && (
         <span className="text-xs px-2 py-1 rounded-lg bg-blue-500/20 text-blue-400">
-          📌 {stats.want} want to learn
+          📌 {stats.want} {t.wantToLearn}
         </span>
       )}
     </div>
