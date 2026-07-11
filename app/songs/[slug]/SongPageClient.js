@@ -27,7 +27,9 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
   const t = getSubPageTranslation(lang);
   const [showAd, setShowAd] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const [aiContent, setAiContent] = useState(seoContent || initialAiContent || null);
+  const [aiContent, setAiContent] = useState(
+  initialAiContent || seoContent?.content || seoContent || null
+);
 
   // Fetch AI-generated SEO content for this song (client-side fallback)
   useEffect(() => {
