@@ -499,7 +499,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
         {/* Browse More Links */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link href="/top-lessons" className="text-amber-400 hover:text-amber-300 transition-colors font-medium">
-            🏆 Top 10 Lessons
+            🏆 {t.topLessonsTitle}
           </Link>
           <span className="text-zinc-700 hidden sm:inline">|</span>
           <Link href="/coming-soon" className="text-purple-400 hover:text-purple-300 transition-colors font-medium">
