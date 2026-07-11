@@ -85,8 +85,11 @@ export default async function SongPage({ params }) {
     try {
       const aiDoc = await db.collection('song_seo_content').findOne({ slug });
 
-if (aiDoc?.content) {
-  aiSeoContent = aiDoc.content;
+if (aiDoc) {
+  aiSeoContent = {
+    content: aiDoc.content || null,
+    translations: aiDoc.translations || {},
+  };
 }
     } catch { /* ignore */ }
 
