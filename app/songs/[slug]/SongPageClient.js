@@ -398,7 +398,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
               {aiContent?.techniques && aiContent.techniques.length > 0 && (
                 <div className="p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
                   <h3 className="text-xl font-bold mb-3 text-white flex items-center gap-2">
-                    🎸 Techniques Used
+                    🎸 {t.techniquesUsed}
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {aiContent.techniques.map((tech, i) => (
