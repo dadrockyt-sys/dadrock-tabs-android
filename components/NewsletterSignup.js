@@ -7,6 +7,7 @@ export default function NewsletterSignup({ variant = 'default', lang = 'en' }) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState(null); // null, 'loading', 'success', 'already', 'error'
   const [message, setMessage] = useState('');
+  
 const t = getSubPageTranslation(lang);
 
   async function handleSubmit(e) {
