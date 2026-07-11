@@ -27,9 +27,9 @@ export default function ShareCard({ song, type = 'learned', value = '' }) {
     <div className="inline-block">
       <button
         onClick={() => setShowShare(!showShare)}
-        className="text-sm bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition-all"
+        className="text-lg px-8 py-4 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold rounded-xl shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2"
       >
-        <span>📤</span> Share
+        <span className="text-xl">📤</span> Share
       </button>
 
       {showShare && (
