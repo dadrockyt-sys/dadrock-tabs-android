@@ -4,9 +4,10 @@ import { useState } from 'react';
 import { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 
-export default function ShareCard({ song, type = 'learned', value = '' }) {
+export default function ShareCard({ song, type = 'learned', value = '', lang: pageLang }) {
   const [showShare, setShowShare] = useState(false);
-  const { lang } = useLanguage();
+  const { lang: selectedLang } = useLanguage();
+const lang = pageLang || selectedLang;
 const t = getSubPageTranslation(lang);
 
   if (!song && type === 'learned') return null;
