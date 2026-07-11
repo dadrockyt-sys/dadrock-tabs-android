@@ -507,7 +507,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
           </Link>
           <span className="text-zinc-700 hidden sm:inline">|</span>
           <Link href="/" className="text-zinc-400 hover:text-white transition-colors font-medium">
-            🏠 Back to Home
+            ← {t.backToHome}
           </Link>
         </div>
 
