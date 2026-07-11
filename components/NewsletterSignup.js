@@ -1,14 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 
-export default function NewsletterSignup({ variant = 'default' }) {
+export default function NewsletterSignup({ variant = 'default', lang = 'en' }) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState(null); // null, 'loading', 'success', 'already', 'error'
   const [message, setMessage] = useState('');
-  const { lang } = useLanguage();
 const t = getSubPageTranslation(lang);
 
   async function handleSubmit(e) {
