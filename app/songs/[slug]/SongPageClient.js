@@ -271,7 +271,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
               <div className="flex items-center gap-2 text-green-400">
                 <ThumbsUp className="w-5 h-5" />
                 <span className="font-bold">{formatViewCount(song.likeCount)}</span>
-                <span className="text-zinc-500 text-sm">{t.views}</span>
+                <span className="text-zinc-500 text-sm">{t.likes}</span>
               </div>
             )}
           </div>
