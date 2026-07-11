@@ -503,7 +503,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
           </Link>
           <span className="text-zinc-700 hidden sm:inline">|</span>
           <Link href="/coming-soon" className="text-purple-400 hover:text-purple-300 transition-colors font-medium">
-            📅 Coming Soon
+            📅 {t.comingSoon}
           </Link>
           <span className="text-zinc-700 hidden sm:inline">|</span>
           <Link href="/" className="text-zinc-400 hover:text-white transition-colors font-medium">
