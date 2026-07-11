@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 const BADGES = [
   { id: 'first_song', name: 'First Riff', desc: 'Learn your first song', icon: '🎸', requirement: 1 },
@@ -92,18 +93,29 @@ function checkBadges(stats) {
   return earned;
 }
 
-export default function GamificationPanel({ compact = false }) {
+export default function GamificationPanel({ compact = false, lang = 'en' }) {
+  const t = getSubPageTranslation(lang);
   const { stats, getLevel: getLevelInfo, BADGES: allBadges } = useGamification();
   const levelInfo = getLevelInfo();
+  const translatedLevelTitle = {
+  Beginner: t.levelBeginner,
+  Novice: t.levelNovice,
+  Intermediate: t.levelIntermediate,
+  Advanced: t.levelAdvanced,
+  Expert: t.levelExpert,
+  Master: t.levelMaster,
+  Virtuoso: t.levelVirtuoso,
+  'Rock God': t.levelRockGod,
+}[levelInfo.title] || levelInfo.title;
   const progressPercent = levelInfo.next ? ((stats.xp % (levelInfo.next - (levelInfo.level > 1 ? [0,0,100,300,600,1000,1500,2500][levelInfo.level-1] : 0))) / (levelInfo.next - (levelInfo.level > 1 ? [0,0,100,300,600,1000,1500,2500][levelInfo.level-1] : 0))) * 100 : 100;
 
   if (compact) {
     return (
       <div className="flex items-center gap-3 bg-gradient-to-r from-orange-900/30 to-red-900/30 border border-orange-500/30 rounded-lg px-4 py-2">
         <span className="text-orange-400 font-bold text-sm">Lv.{levelInfo.level}</span>
-        <span className="text-xs text-gray-400">{levelInfo.title}</span>
+        <span className="text-xs text-gray-400">{translatedLevelTitle}</span>
         <span className="text-orange-300 text-xs">{stats.xp} XP</span>
-        {stats.streak > 1 && <span className="text-xs">🔥 {stats.streak} day streak</span>}
+        {stats.streak > 1 && <span className="text-xs">🔥 {stats.streak} {t.dayStreakLower}</span>}
       </div>
     );
   }
@@ -113,14 +125,16 @@ export default function GamificationPanel({ compact = false }) {
       {/* Level & XP */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-orange-400 font-bold text-lg">Level {levelInfo.level}: {levelInfo.title}</h3>
-          <p className="text-gray-400 text-sm">{stats.xp} XP total</p>
+          <h3 className="text-orange-400 font-bold text-lg">
+  {t.level} {levelInfo.level}: {translatedLevelTitle}
+</h3>
+          <p className="text-gray-400 text-sm">{stats.xp} {t.xpTotal}</p>
         </div>
         <div className="text-right">
           {stats.streak > 0 && (
             <div className="text-orange-300">
               <span className="text-2xl">🔥</span>
-              <span className="font-bold text-lg ml-1">{stats.streak}</span>
+              <span className="text-xs text-gray-400 block">{t.dayStreakLower}</span>
               <span className="text-xs text-gray-400 block">day streak</span>
             </div>
           )}
@@ -136,7 +150,9 @@ export default function GamificationPanel({ compact = false }) {
               style={{ width: `${Math.min(100, progressPercent)}%` }}
             />
           </div>
-          <p className="text-xs text-gray-500 mt-1">{stats.xp} / {levelInfo.next} XP to next level</p>
+          <p className="text-xs text-gray-500 mt-1">
+  {stats.xp} / {levelInfo.next} {t.xpToNextLevel}
+</p>
         </div>
       )}
 
@@ -144,21 +160,21 @@ export default function GamificationPanel({ compact = false }) {
       <div className="grid grid-cols-3 gap-3 mb-4">
         <div className="text-center p-2 bg-gray-800/50 rounded-lg">
           <div className="text-xl font-bold text-yellow-400">{stats.songsLearned}</div>
-          <div className="text-xs text-gray-400">Songs Learned</div>
+          <div className="text-xs text-gray-400">{t.songsLearned}</div>
         </div>
         <div className="text-center p-2 bg-gray-800/50 rounded-lg">
           <div className="text-xl font-bold text-orange-400">{stats.streak}</div>
-          <div className="text-xs text-gray-400">Day Streak</div>
+          <div className="text-xs text-gray-400">{t.dayStreak}</div>
         </div>
         <div className="text-center p-2 bg-gray-800/50 rounded-lg">
           <div className="text-xl font-bold text-red-400">{(stats.badges || []).length}</div>
-          <div className="text-xs text-gray-400">Badges</div>
+          <div className="text-xs text-gray-400">{t.badges}</div>
         </div>
       </div>
 
       {/* Badges */}
       <div>
-        <h4 className="text-sm font-semibold text-gray-300 mb-2">Badges</h4>
+        <h4 className="text-sm font-semibold text-gray-300 mb-2">{t.badges}</h4>
         <div className="flex flex-wrap gap-2">
           {allBadges.map(badge => {
             const earned = (stats.badges || []).includes(badge.id);
