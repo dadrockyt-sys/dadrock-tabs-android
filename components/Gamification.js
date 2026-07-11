@@ -102,7 +102,9 @@ export default function GamificationPanel({ compact = false, lang = 'en' }) {
   twenty_songs: t.badgeGuitarHero,
   fifty_songs: t.badgeLegend,
   streak_3: t.badgeOnFire,
-  streak_
+  streak_7: t.badgeUnstoppable,
+  streak_30: t.badgeIronWill,
+};
   const { stats, getLevel: getLevelInfo, BADGES: allBadges } = useGamification();
   const levelInfo = getLevelInfo();
   const translatedLevelTitle = {
