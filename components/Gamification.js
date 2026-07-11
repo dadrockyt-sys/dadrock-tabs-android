@@ -95,6 +95,14 @@ function checkBadges(stats) {
 
 export default function GamificationPanel({ compact = false, lang = 'en' }) {
   const t = getSubPageTranslation(lang);
+  const badgeTranslations = {
+  first_song: t.badgeFirstRiff,
+  five_songs: t.badgeJamSession,
+  ten_songs: t.badgeRockSolid,
+  twenty_songs: t.badgeGuitarHero,
+  fifty_songs: t.badgeLegend,
+  streak_3: t.badgeOnFire,
+  streak_
   const { stats, getLevel: getLevelInfo, BADGES: allBadges } = useGamification();
   const levelInfo = getLevelInfo();
   const translatedLevelTitle = {
@@ -177,8 +185,10 @@ export default function GamificationPanel({ compact = false, lang = 'en' }) {
         <h4 className="text-sm font-semibold text-gray-300 mb-2">{t.badges}</h4>
         <div className="flex flex-wrap gap-2">
           {allBadges.map(badge => {
-            const earned = (stats.badges || []).includes(badge.id);
-            return (
+  const earned = (stats.badges || []).includes(badge.id);
+  const translatedName = badgeTranslations[badge.id] || badge.name;
+
+  return (
               <div
                 key={badge.id}
                 className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs ${
@@ -189,7 +199,7 @@ export default function GamificationPanel({ compact = false, lang = 'en' }) {
                 title={badge.desc}
               >
                 <span className={earned ? '' : 'grayscale opacity-40'}>{badge.icon}</span>
-                <span>{badge.name}</span>
+                <span>{translatedName}</span>
               </div>
             );
           })}
