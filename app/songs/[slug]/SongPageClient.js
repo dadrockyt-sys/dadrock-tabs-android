@@ -417,7 +417,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
             <div className="p-6 bg-gradient-to-r from-amber-500/10 to-zinc-900/50 rounded-2xl border border-amber-500/20">
               <h3 className="text-xl font-bold mb-4 text-amber-500 flex items-center gap-2">
                 <Lightbulb className="w-5 h-5" />
-                Practice Tips
+                {t.practiceTips}
               </h3>
               <ul className="space-y-3">
                 {aiContent.pro_tips.map((tip, i) => (
