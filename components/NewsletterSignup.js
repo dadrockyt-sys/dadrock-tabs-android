@@ -99,7 +99,7 @@ const t = getSubPageTranslation(lang);
               disabled={status === 'loading'}
               className="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl transition-colors disabled:opacity-50 whitespace-nowrap"
             >
-              {status === 'loading' ? 'Subscribing...' : t.subscribeFree}
+              {status === 'loading' ? t.subscribing : t.subscribeFree}
             </button>
           </form>
         )}
