@@ -61,7 +61,7 @@ const t = getSubPageTranslation(lang);
 
   const formatDate = (dateStr) => {
     const d = new Date(dateStr);
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return d.toLocaleDateString(lang === 'en' ? 'en-US' : lang, {month: 'short',day: 'numeric',year: 'numeric',});
   };
 
   return (
