@@ -27,23 +27,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
   const t = getSubPageTranslation(lang);
   const [showAd, setShowAd] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const getLocalizedAiContent = (source, currentLang) => {
-  if (!source) return null;
-
-  if (currentLang === 'en') {
-    return source.content || source;
-  }
-
-  return source.translations?.[currentLang] || source.content || source;
-};
-
-const [aiContent, setAiContent] = useState(() =>
-  getLocalizedAiContent(initialAiContent, lang)
-);
-
-useEffect(() => {
-  setAiContent(getLocalizedAiContent(initialAiContent, lang));
-}, [initialAiContent, lang]);
+  const [aiContent, setAiContent] = useState(seoContent || initialAiContent || null);
 
   // Fetch AI-generated SEO content for this song (client-side fallback)
   useEffect(() => {
@@ -562,4 +546,4 @@ useEffect(() => {
       </footer>
     </div>
   );
-}
+            }
