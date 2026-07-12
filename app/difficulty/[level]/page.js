@@ -602,7 +602,7 @@ export async function generateMetadata({ params }) {
 const difficulty = DIFFICULTY_LEVELS[level];
 
   const title = `${difficulty.name} Guitar Tabs - Easy ${difficulty.name} Songs to Learn | DadRock Tabs`;
-  const description = `${difficulty.longDescription.substring(0, 155)}...`;
+  const description = `${t.levels[level].longDescription.slice(0, 155)}...`;
 
   return {
     title,
@@ -723,11 +723,11 @@ const difficulty = DIFFICULTY_LEVELS[level];
                 <div className="flex items-center gap-4 flex-shrink-0">
                   <div className="px-5 py-3 rounded-2xl text-center bg-zinc-800/80 border border-zinc-700">
                     <div className="text-3xl font-bold text-amber-500">{artistData.length}</div>
-                    <div className="text-xs text-zinc-400 uppercase tracking-wider">Artists</div>
+                    <div className="text-xs text-zinc-400 uppercase tracking-wider">{t.artists}</div>
                   </div>
                   <div className="px-5 py-3 rounded-2xl text-center bg-zinc-800/80 border border-zinc-700">
                     <div className="text-3xl font-bold text-amber-500">{totalLessons}</div>
-                    <div className="text-xs text-zinc-400 uppercase tracking-wider">Lessons</div>
+                    <div className="text-xs text-zinc-400 uppercase tracking-wider">{t.lessons}</div>
                   </div>
                 </div>
               </div>
@@ -737,7 +737,7 @@ const difficulty = DIFFICULTY_LEVELS[level];
           {/* About */}
           <div className="mb-10 p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
             <h2 className="text-xl font-bold mb-3 text-amber-500">{t.about}</h2>
-            <p className="text-zinc-300 leading-relaxed">{difficulty.longDescription}</p>
+            <p className="text-zinc-300 leading-relaxed">{t.levels[level].longDescription}</p>
             <p className="text-zinc-500 text-sm mt-3"><strong>Key criteria:</strong> {difficulty.criteria}</p>
           </div>
 
