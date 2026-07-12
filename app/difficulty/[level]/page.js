@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getDb } from '@/lib/mongodb';
 import { artistToSlug } from '@/lib/slugify';
 import Link from 'next/link';
+import DifficultyHeader from './DifficultyHeader';
 
 export async function generateMetadata({ params }) {
   const { level } = await params;
