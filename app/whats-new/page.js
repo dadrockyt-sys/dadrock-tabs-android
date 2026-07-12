@@ -141,7 +141,6 @@ export default function WhatsNewPage() {
           {data?.stats && (
             <div className="flex justify-center gap-6 mt-4">
               <div className="text-center">
-                          <div className="text-center">
                 <span className="text-2xl font-bold text-orange-400">
                   {data.stats.totalSongs}
                 </span>
