@@ -4,6 +4,37 @@ import { getDb } from '@/lib/mongodb';
 import { artistToSlug } from '@/lib/slugify';
 import Link from 'next/link';
 import DifficultyHeader from './DifficultyHeader';
+import { headers } from 'next/headers';
+
+const difficultyT = {
+  en: {
+    home: 'Home',
+    difficultyLevel: 'Difficulty Level',
+    artists: 'Artists',
+    lessons: 'Lessons',
+    whatToExpect: 'What to Expect',
+    songs: 'songs',
+    availableArtists: 'available artists',
+    browseSongs: 'Browse Songs',
+    beginner: 'Beginner',
+    intermediate: 'Intermediate',
+    advanced: 'Advanced'
+  },
+
+  es: {
+    home: 'Inicio',
+    difficultyLevel: 'Nivel de dificultad',
+    artists: 'Artistas',
+    lessons: 'Lecciones',
+    whatToExpect: 'Qué esperar',
+    songs: 'canciones',
+    availableArtists: 'artistas disponibles',
+    browseSongs: 'Ver canciones',
+    beginner: 'Principiante',
+    intermediate: 'Intermedio',
+    advanced: 'Avanzado'
+  }
+};
 
 export async function generateMetadata({ params }) {
   const { level } = await params;
@@ -33,6 +64,7 @@ export function generateStaticParams() {
 
 export default async function DifficultyPage({ params }) {
   const { level, lang = 'en' } = await params;
+  const t = difficultyT[lang] || difficultyT.en;
   const difficulty = DIFFICULTY_LEVELS[level];
 
   if (!difficulty) {
