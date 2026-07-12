@@ -2,9 +2,28 @@
 
 import Link from 'next/link';
 import LanguageSelector from '@/components/LanguageSelector';
+import { usePathname } from 'next/navigation';
 
-export default function DifficultyHeader({ lang = 'en', level }) {
-  const homeHref = lang === 'en' ? '/' : `/${lang}`;
+export default function DifficultyHeader({ level }) {
+  const pathname = usePathname();
+  const pathLocale = pathname.split('/')[1];
+
+  const supportedLocales = [
+    'es', 'pt', 'pt-br', 'de', 'fr', 'it',
+    'ja', 'ko', 'zh', 'ru', 'hi', 'sv', 'fi'
+  ];
+
+  const currentLang = supportedLocales.includes(pathLocale)
+    ? pathLocale
+    : 'en';
+
+  const pathname = usePathname();
+const pathLocale = pathname.split('/')[1];
+const currentLang = pathLocale || 'en';
+
+const homeHref = currentLang === 'en'
+  ? '/'
+  : `/${currentLang}`;
 
   return (
     <header className="sticky top-0 z-50 bg-zinc-950/95 border-b border-zinc-800">
