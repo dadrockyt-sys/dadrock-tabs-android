@@ -1,5 +1,8 @@
 import QuickiesClient from '../../quickies/QuickiesClient';
 
-export default function QuickiesPage({ params }) {
-  return <QuickiesClient currentLang={params?.lang || 'en'} />;
+export default async function QuickiesPage({ params }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang || 'en';
+
+  return <QuickiesClient currentLang={lang} />;
 }
