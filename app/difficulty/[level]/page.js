@@ -711,13 +711,14 @@ const difficulty = DIFFICULTY_LEVELS[level];
                   <span className="text-4xl mb-3 block">{difficulty.icon}</span>
                   <p className="text-sm font-medium text-amber-500/80 uppercase tracking-widest mb-2">
                     {t.difficultyLevel}
-                  </p>
+            </p>
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-                    {difficulty.name} <span className="text-amber-500">Guitar Tabs</span>
-                  </h1>
-                  <p className="text-zinc-300 text-lg max-w-2xl leading-relaxed">
-                    {difficulty.description}
-                  </p>
+  {t.levels[level].title}
+</h1>
+
+<p className="text-zinc-300 text-lg max-w-2xl leading-relaxed">
+  {t.levels[level].description}
+</p>
                 </div>
                 <div className="flex items-center gap-4 flex-shrink-0">
                   <div className="px-5 py-3 rounded-2xl text-center bg-zinc-800/80 border border-zinc-700">
