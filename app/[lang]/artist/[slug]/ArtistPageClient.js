@@ -317,7 +317,7 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
                   <span className="eq-visualizer" style={{ height: '16px' }}>
                     <span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" /><span className="bar" />
                   </span>
-                  Guitar & Bass Tabs
+                  {t.guitarBassTabs}
                 </p>
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold font-rock text-gradient-gold neon-underline pb-2">
                   {artistName}
