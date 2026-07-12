@@ -11,6 +11,7 @@ async function findArtistBySlug(db, slug) {
   const directPattern = slugToArtistPattern(slug);
   const escapedDirect = directPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const directCount = await db.collection('videos').countDocuments({
+    import { getSubPageTranslation } from '@/lib/subPageI18n';
     artist: { $regex: new RegExp(`^${escapedDirect}`, 'i') }
   });
   
@@ -116,6 +117,7 @@ export default async function ArtistPage({ params }) {
   const resolvedParams = await params;
   const lang = resolvedParams.lang;
 const slug = resolvedParams.slug;
+  const t = getSubPageTranslation(lang);
 
 if (!locales.includes(lang)) {
   notFound();
