@@ -272,6 +272,7 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
             </div>
             <div className="flex items-center gap-3 flex-shrink-0">
               <LanguageSelector
+  currentLang={propLang}
   onLanguageChange={(newLang) => {
     window.location.href = newLang === 'en'
       ? `/artist/${slug}`
