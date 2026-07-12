@@ -612,10 +612,10 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
           <div className="relative z-10">
             <h2 className="text-2xl font-bold mb-2 text-white flex items-center gap-2 font-rock">
               <Users className="w-6 h-6 text-amber-500" />
-              Similar Artists to {artistName}
+              {t.similarArtistsTitle.replace('{artist}', artistName)}
             </h2>
             <p className="text-zinc-500 mb-6 text-sm">
-              If you're learning {artistName} on guitar or bass, these related artists use similar riffs, tunings, playing styles, and classic rock techniques.
+              {t.similarArtistsDescription.replace('{artist}', artistName)}
             </p>
             <div className="flex flex-wrap gap-3">
               {getRelatedArtists(artistName).map((relatedArtist) => (
