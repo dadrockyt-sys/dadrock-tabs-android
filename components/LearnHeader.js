@@ -14,11 +14,6 @@ export default function LearnHeader() {
       ? '/'
       : `/${currentLang}`;
 
-  const handleLanguageChange = (newLang) => {
-    localStorage.setItem('dadrock-language', newLang);
-    window.location.href = '/learn';
-  };
-
   return (
     <header className="border-b border-zinc-800 bg-zinc-950">
       <div className="container mx-auto flex max-w-5xl items-center justify-between px-4 py-5">
@@ -30,7 +25,7 @@ export default function LearnHeader() {
           <span>{t.backToHome}</span>
         </Link>
 
-        <LanguageSelector onLanguageChange={handleLanguageChange} />
+        <LanguageSelector />
       </div>
     </header>
   );
