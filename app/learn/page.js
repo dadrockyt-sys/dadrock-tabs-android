@@ -83,7 +83,7 @@ export default async function LearnPage({ params }) {
                   category === 'Technique' ? 'bg-amber-500/20 text-amber-400' :
                   'bg-purple-500/20 text-purple-400'
                 }`}>
-                  {category}
+                  {category === 'Beginner' ? t.beginner : category === 'Technique' ? t.technique : t.theory}
                 </span>
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
