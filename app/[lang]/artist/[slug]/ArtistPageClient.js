@@ -544,7 +544,7 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-zinc-700 to-transparent" />
               <h2 className="text-xl font-bold text-white flex items-center gap-2 font-rock-alt uppercase tracking-wider text-sm">
                 <BookOpen className="w-5 h-5 text-amber-500" />
-                Frequently Asked Questions
+                {t.faqTitle}
               </h2>
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-zinc-700 to-transparent" />
             </div>
