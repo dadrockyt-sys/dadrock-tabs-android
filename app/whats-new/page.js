@@ -195,7 +195,6 @@ export default function WhatsNewPage() {
 
                   <div className="text-right">
                     {song.difficulty && (
-                                          {song.difficulty && (
                       <span className="text-xs bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
                         {song.difficulty}
                       </span>
