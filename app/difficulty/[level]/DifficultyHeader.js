@@ -16,12 +16,7 @@ export default function DifficultyHeader({ level }) {
   const currentLang = supportedLocales.includes(pathLocale)
     ? pathLocale
     : 'en';
-
-  const pathname = usePathname();
-const pathLocale = pathname.split('/')[1];
-const currentLang = pathLocale || 'en';
-
-const homeHref = currentLang === 'en'
+  const homeHref = currentLang === 'en'
   ? '/'
   : `/${currentLang}`;
 
