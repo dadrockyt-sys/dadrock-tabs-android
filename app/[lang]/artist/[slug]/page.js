@@ -250,23 +250,23 @@ try {
   const topSongs = plainVideos.slice(0, 5).map(v => v.song || v.title).filter(Boolean);
   const faqItems = [
     {
-      question: `How do I learn ${displayArtistName} songs on guitar?`,
+      question: t.faqLearnQuestion.replace('{artist}', displayArtistName),
       answer: `DadRock Tabs offers ${plainVideos.length} free video lessons for ${displayArtistName} songs with synchronized guitar and bass tablature. Simply select a lesson, watch the video tutorial, and follow along with the on-screen tabs. Popular lessons include ${topSongs.slice(0, 3).join(', ')}.`
     },
     {
-      question: `Are ${displayArtistName} songs good for beginners?`,
+      question: t.faqBeginnerQuestion.replace('{artist}', displayArtistName),
       answer: aiSeoContent?.why_learn || `Many ${displayArtistName} songs feature iconic riffs that are great for developing fundamental rock guitar skills. Start with simpler songs and work your way up to more complex pieces. Our video tutorials break down each song step-by-step.`
     },
     {
-      question: `What guitar gear does ${displayArtistName} use?`,
+      question: t.faqGearQuestion.replace('{artist}', displayArtistName),
       answer: aiSeoContent?.gear_info || `${displayArtistName} is known for a distinctive rock tone. Visit our lesson pages to learn more about the gear and settings that can help you achieve a similar sound.`
     },
     {
-      question: `How many ${displayArtistName} tab lessons are available?`,
+      question: t.faqLessonsQuestion.replace('{artist}', displayArtistName),
       answer: `We currently have ${plainVideos.length} free ${displayArtistName} guitar and bass tab video lessons available on DadRock Tabs, including ${topSongs.slice(0, 3).join(', ')}${topSongs.length > 3 ? ' and more' : ''}.`
     },
     {
-      question: `What is ${displayArtistName}'s playing style?`,
+      question: t.faqStyleQuestion.replace('{artist}', displayArtistName),
       answer: aiSeoContent?.playing_style || `${displayArtistName} is known for their distinctive rock guitar style. Our tab lessons help you learn the key techniques and riffs that define their sound.`
     },
   ];
