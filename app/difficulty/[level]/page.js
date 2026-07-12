@@ -5,6 +5,10 @@ import { artistToSlug } from '@/lib/slugify';
 import Link from 'next/link';
 import DifficultyHeader from './DifficultyHeader';
 import { headers } from 'next/headers';
+function getLocalizedPath(path, lang) {
+  if (!lang || lang === 'en') return path;
+  return path === '/' ? `/${lang}` : `/${lang}${path}`;
+}
 
 const difficultyT = {
   en: {
