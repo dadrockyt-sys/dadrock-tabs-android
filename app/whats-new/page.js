@@ -76,7 +76,6 @@ export default function WhatsNewPage() {
     if (!dateStr) return t.recentlyAdded;
 
     const localeMap = {
-      const localeMap = {
   en: 'en-US',
   es: 'es-ES',
   pt: 'pt-PT',
