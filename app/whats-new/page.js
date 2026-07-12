@@ -202,6 +202,7 @@ const whatsNewT = {
   recentlyAdded: 'Lisätty äskettäin',
   stayUpdated: 'Pysy ajan tasalla uusista lisäyksistä:',
   rss: '📡 Tilaa RSS-syöte',
+  },
 };
 
 export default function WhatsNewPage() {
