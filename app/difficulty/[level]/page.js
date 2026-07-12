@@ -600,6 +600,7 @@ const difficultyT = {
 export async function generateMetadata({ params }) {
   const { level, lang } = await params;
 const difficulty = DIFFICULTY_LEVELS[level];
+  const t = difficultyT[lang] || difficultyT.en;
 
   const title = `${difficulty.name} Guitar Tabs - Easy ${difficulty.name} Songs to Learn | DadRock Tabs`;
   const description = `${t.levels[level].longDescription.slice(0, 155)}...`;
