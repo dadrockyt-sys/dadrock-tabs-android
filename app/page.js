@@ -1947,14 +1947,25 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
               <span className="text-2xl block mb-1">🔥</span>
               <span className="text-sm font-medium text-zinc-300 group-hover:text-amber-400 transition-colors">{homeT.intermediate}</span>
             </Link>
-            <Link href={getLocalizedPath('/difficulty/advanced', currentLang)}
-              <span className="text-2xl block mb-1">⚡</span>
-              <span className="text-sm font-medium text-zinc-300 group-hover:text-red-400 transition-colors">{homeT.advanced}</span>
-            </Link>
-            <Link href={getLocalizedPath('/learn', currentLang)}
-              <span className="text-2xl block mb-1">📖</span>
-              <span className="text-sm font-medium text-zinc-300 group-hover:text-purple-400 transition-colors">{homeT.guides}</span>
-            </Link>
+  <Link
+  href={getLocalizedPath('/difficulty/advanced', currentLang)}
+  className="p-4 bg-zinc-900/80 rounded-xl border border-zinc-800 hover:border-red-500/50 text-center transition-all group"
+>
+  <span className="text-2xl block mb-1">⚡</span>
+  <span className="text-sm font-medium text-zinc-300 group-hover:text-red-400 transition-colors">
+    {homeT.advanced}
+  </span>
+</Link>
+
+<Link
+  href={getLocalizedPath('/learn', currentLang)}
+  className="p-4 bg-zinc-900/80 rounded-xl border border-zinc-800 hover:border-purple-500/50 text-center transition-all group"
+>
+  <span className="text-2xl block mb-1">📖</span>
+  <span className="text-sm font-medium text-zinc-300 group-hover:text-purple-400 transition-colors">
+    {homeT.guides}
+  </span>
+</Link>
           </div>
           {/* Newsletter Signup */}
           <NewsletterSignup lang={currentLang} />
