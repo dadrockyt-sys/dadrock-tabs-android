@@ -76,12 +76,22 @@ export default function WhatsNewPage() {
     if (!dateStr) return t.recentlyAdded;
 
     const localeMap = {
-      en: 'en-US',
-      es: 'es-ES',
-      pt: 'pt
-            hi: 'hi-IN',
-      sv: 'sv-SE',
-      fi: 'fi-FI',
+      const localeMap = {
+  en: 'en-US',
+  es: 'es-ES',
+  pt: 'pt-PT',
+  'pt-br': 'pt-BR',
+  de: 'de-DE',
+  fr: 'fr-FR',
+  it: 'it-IT',
+  ja: 'ja-JP',
+  ko: 'ko-KR',
+  zh: 'zh-CN',
+  ru: 'ru-RU',
+  hi: 'hi-IN',
+  sv: 'sv-SE',
+  fi: 'fi-FI',
+};
     };
 
     const d = new Date(dateStr);
