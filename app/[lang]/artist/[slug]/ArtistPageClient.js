@@ -469,7 +469,7 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
           {/* Section Divider */}
           <div className="flex items-center gap-4 mb-8">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-500/30 to-transparent" />
-            <span className="text-amber-500 text-sm font-bold uppercase tracking-widest font-rock-alt">Deep Dive</span>
+            <span className="text-amber-500 text-sm font-bold uppercase tracking-widest font-rock-alt">{t.deepDive}</span>
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-500/30 to-transparent" />
           </div>
 
