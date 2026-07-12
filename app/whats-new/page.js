@@ -61,7 +61,7 @@ const whatsNewT = {
   rss: '📡 Assinar o feed RSS',
 },
 
-  pt-br: {
+  'pt-br': {
   backHome: '← Voltar ao início',
   pageTitle: '🆕 Novidades',
   latestAdditions: 'Últimas adições',
