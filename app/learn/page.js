@@ -1,6 +1,7 @@
 import { getAllGuides } from '@/lib/guidesData';
 import Link from 'next/link';
 import LearnHeader from '@/components/LearnHeader';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 export const metadata = {
   title: 'Learn Guitar - Free Guides, Tips & Techniques | DadRock Tabs',
@@ -15,7 +16,10 @@ export const metadata = {
   },
 };
 
-export default function LearnPage() {
+export default async function LearnPage({ params }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams?.lang || 'en';
+  const t = getSubPageTranslation(lang);
   const guides = getAllGuides();
   const categories = [...new Set(guides.map(g => g.category))];
 
@@ -63,10 +67,10 @@ export default function LearnPage() {
           {/* Hero */}
           <div className="mb-12 text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-              <span className="text-amber-500">Learn</span> Guitar
+              <span className="text-amber-500">{t.learn}</span> {t.guitar}
             </h1>
             <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-              Free guides, techniques, and tips to level up your playing. From beginner riffs to advanced shredding.
+              {t.learnSubtitle}
             </p>
           </div>
 
