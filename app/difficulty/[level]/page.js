@@ -294,7 +294,7 @@ const difficulty = DIFFICULTY_LEVELS[level];
         <footer className="mt-16 border-t border-zinc-800">
           <div className="container mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-zinc-500 text-sm">© {new Date().getFullYear()} DadRock Tabs. Free guitar & bass lessons.</p>
-            href={getLocalizedPath('/', currentLang)} className="text-zinc-500 hover:text-amber-400 transition-colors">{t.home}</Link>
+            <Link href={getLocalizedPath('/', currentLang)} className="text-zinc-500 hover:text-amber-400 transition-colors">{t.home}</Link>
           </div>
         </footer>
       </div>
