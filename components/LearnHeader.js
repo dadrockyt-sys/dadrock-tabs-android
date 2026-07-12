@@ -1,18 +1,47 @@
 'use client';
 
 import Link from 'next/link';
-import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
+import { usePathname } from 'next/navigation';
+import LanguageSelector from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 
+const supportedLanguages = [
+  'es',
+  'pt',
+  'pt-br',
+  'de',
+  'fr',
+  'it',
+  'ja',
+  'ko',
+  'zh',
+  'ru',
+  'hi',
+  'sv',
+  'fi'
+];
+
 export default function LearnHeader() {
-  const { lang } = useLanguage();
-  const currentLang = lang || 'en';
+  const pathname = usePathname();
+  const pathLanguage = pathname.split('/')[1];
+
+  const currentLang = supportedLanguages.includes(pathLanguage)
+    ? pathLanguage
+    : 'en';
+
   const t = getSubPageTranslation(currentLang);
 
   const homeHref =
     currentLang === 'en'
       ? '/'
       : `/${currentLang}`;
+
+  const handleLanguageChange = (newLang) => {
+    window.location.href =
+      newLang === 'en'
+        ? '/learn'
+        : `/${newLang}/learn`;
+  };
 
   return (
     <header className="border-b border-zinc-800 bg-zinc-950">
@@ -25,7 +54,7 @@ export default function LearnHeader() {
           <span>{t.backToHome}</span>
         </Link>
 
-        <LanguageSelector />
+        <LanguageSelector onLanguageChange={handleLanguageChange} />
       </div>
     </header>
   );
