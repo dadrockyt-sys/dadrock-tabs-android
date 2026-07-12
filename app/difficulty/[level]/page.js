@@ -32,7 +32,7 @@ export function generateStaticParams() {
 }
 
 export default async function DifficultyPage({ params }) {
-  const { level } = await params;
+  const { level, lang = 'en' } = await params;
   const difficulty = DIFFICULTY_LEVELS[level];
 
   if (!difficulty) {
@@ -99,25 +99,7 @@ export default async function DifficultyPage({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="min-h-screen bg-zinc-950 text-white">
-        {/* Header */}
-        <header className="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800">
-          <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <img 
-                src="https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png" 
-                alt="DadRock Tabs" 
-                className="h-9 w-auto" 
-              />
-              <span className="text-lg font-bold text-amber-500 hidden sm:block">DadRock Tabs</span>
-            </Link>
-            <Link 
-              href="/"
-              className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
-            >
-              Home
-            </Link>
-          </div>
-        </header>
+        <DifficultyHeader lang={lang} level={level} />
 
         <main className="container mx-auto px-4 py-8 max-w-6xl">
           {/* Breadcrumb */}
