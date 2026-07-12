@@ -13,26 +13,78 @@ const difficultyT = {
     artists: 'Artists',
     lessons: 'Lessons',
     whatToExpect: 'What to Expect',
-    songs: 'songs',
+    songs: 'Songs',
     availableArtists: 'available artists',
     browseSongs: 'Browse Songs',
-    beginner: 'Beginner',
-    intermediate: 'Intermediate',
-    advanced: 'Advanced'
+
+    levels: {
+      beginner: {
+        name: 'Beginner',
+        title: 'Beginner Guitar Tabs',
+        description:
+          'Easy songs perfect for new guitar players. Simple riffs, basic chords, and slow tempos.',
+        longDescription:
+          'These songs are ideal for guitarists in their first 6 months of playing. They feature simple power chord progressions, slow-to-moderate tempos, basic strumming patterns, and straightforward single-note riffs. Most can be learned in a single practice session.'
+      },
+
+      intermediate: {
+        name: 'Intermediate',
+        title: 'Intermediate Guitar Tabs',
+        description:
+          'Songs that challenge your technique with faster riffs, barre chords, and moderate solos.',
+        longDescription:
+          'Intermediate songs require comfort with barre chords, palm muting at moderate speeds, basic lead techniques such as bending, hammer-ons, and pull-offs, and the ability to switch between clean and distorted sections. Expect faster tempos and more complex song structures.'
+      },
+
+      advanced: {
+        name: 'Advanced',
+        title: 'Advanced Guitar Tabs',
+        description:
+          'Complex songs featuring fast shredding, intricate solos, and demanding techniques.',
+        longDescription:
+          'Advanced songs demand mastery of speed picking, including alternate picking and downpicking at high BPM, sweep picking, tapping, complex time signatures, extended solos, and multi-part arrangements. These are the songs that separate serious guitarists from casual players.'
+      }
+    }
   },
 
-  es: {
+    es: {
     home: 'Inicio',
     difficultyLevel: 'Nivel de dificultad',
     artists: 'Artistas',
     lessons: 'Lecciones',
     whatToExpect: 'Qué esperar',
-    songs: 'canciones',
+    songs: 'Canciones',
     availableArtists: 'artistas disponibles',
     browseSongs: 'Ver canciones',
-    beginner: 'Principiante',
-    intermediate: 'Intermedio',
-    advanced: 'Avanzado'
+
+    levels: {
+      beginner: {
+        name: 'Principiante',
+        title: 'Tablaturas de guitarra para principiantes',
+        description:
+          'Canciones fáciles, perfectas para nuevos guitarristas. Riffs sencillos, acordes básicos y tempos lentos.',
+        longDescription:
+          'Estas canciones son ideales para guitarristas durante sus primeros 6 meses de aprendizaje. Incluyen progresiones sencillas de acordes de quinta, tempos lentos o moderados, patrones básicos de rasgueo y riffs directos de una sola nota. La mayoría puede aprenderse en una sola sesión de práctica.'
+      },
+
+      intermediate: {
+        name: 'Intermedio',
+        title: 'Tablaturas de guitarra de nivel intermedio',
+        description:
+          'Canciones que desafían tu técnica con riffs más rápidos, acordes con cejilla y solos moderados.',
+        longDescription:
+          'Las canciones de nivel intermedio requieren comodidad con los acordes con cejilla, palm muting a velocidades moderadas, técnicas básicas de guitarra solista como bends, hammer-ons y pull-offs, y la capacidad de cambiar entre secciones limpias y distorsionadas. Encontrarás tempos más rápidos y estructuras más complejas.'
+      },
+
+      advanced: {
+        name: 'Avanzado',
+        title: 'Tablaturas de guitarra avanzadas',
+        description:
+          'Canciones complejas con shredding rápido, solos elaborados y técnicas exigentes.',
+        longDescription:
+          'Las canciones avanzadas exigen dominar la púa rápida, tanto alternada como hacia abajo a BPM altos, sweep picking, tapping, compases complejos, solos extensos y arreglos de varias partes. Son las canciones que distinguen a los guitarristas serios de los músicos ocasionales.'
+      }
+    }
   }
 };
 
