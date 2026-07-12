@@ -91,7 +91,6 @@ export default function WhatsNewPage() {
   sv: 'sv-SE',
   fi: 'fi-FI',
 };
-    };
 
     const d = new Date(dateStr);
 
