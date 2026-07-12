@@ -146,11 +146,14 @@ const lang = urlLang && ['es', 'pt', 'pt-br', 'de', 'fr', 'it', 'ja', 'ko', 'zh'
               <span className="text-xl font-bold text-amber-500 hidden sm:block">DadRock Tabs</span>
             </Link>
             <div className="flex items-center gap-3">
-              <LanguageSelector />
-              <Link 
-                href={lang === 'en' ? '/' : `/${lang}`}
-                className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm transition-colors"
-              >
+              <LanguageSelector
+  onLanguageChange={(newLang) => {
+    window.location.href =
+      newLang === 'en'
+        ? '/quickies'
+        : `/${newLang}/quickies`;
+  }}
+/>
                 <Home className="w-4 h-4" />
                 <span>{t.home}</span>
               </Link>
