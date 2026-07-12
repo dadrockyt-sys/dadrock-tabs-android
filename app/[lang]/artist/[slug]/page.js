@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { slugToArtistPattern, artistToSlug } from '@/lib/slugify';
 import ArtistPageClient from './ArtistPageClient';
 import { locales } from '@/lib/i18n';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 
 // Find artist name from slug by checking the database
 // This handles cases where slugToArtistPattern can't reverse the slug correctly
@@ -11,7 +12,6 @@ async function findArtistBySlug(db, slug) {
   const directPattern = slugToArtistPattern(slug);
   const escapedDirect = directPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const directCount = await db.collection('videos').countDocuments({
-    import { getSubPageTranslation } from '@/lib/subPageI18n';
     artist: { $regex: new RegExp(`^${escapedDirect}`, 'i') }
   });
   
