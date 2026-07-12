@@ -3,6 +3,14 @@
 import Link from 'next/link';
 import LanguageSelector from '@/components/LanguageSelector';
 import { usePathname } from 'next/navigation';
+const headerT = {
+  en: {
+    home: 'Home'
+  },
+  es: {
+    home: 'Inicio'
+  }
+};
 
 export default function DifficultyHeader({ level }) {
   const pathname = usePathname();
@@ -16,6 +24,7 @@ export default function DifficultyHeader({ level }) {
   const currentLang = supportedLocales.includes(pathLocale)
     ? pathLocale
     : 'en';
+  const t = headerT[currentLang] || headerT.en;
   const homeHref = currentLang === 'en'
   ? '/'
   : `/${currentLang}`;
@@ -51,7 +60,7 @@ export default function DifficultyHeader({ level }) {
             href={homeHref}
             className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full transition-colors"
           >
-            Home
+            {t.home}
           </Link>
         </div>
       </div>
