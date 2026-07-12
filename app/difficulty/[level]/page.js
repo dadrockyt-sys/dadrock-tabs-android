@@ -593,7 +593,7 @@ const difficultyT = {
         'Edistyneet kappaleet vaativat speed pickingin hallintaa, mukaan lukien alternate picking ja nopea downpicking, sweep picking, tapping, monimutkaiset tahtilajit, pitkät soolot ja useista osista koostuvat sovitukset. Nämä kappaleet erottavat omistautuneet kitaristit satunnaisista soittajista.'
     }
   }
-},
+};
 
 
 export async function generateMetadata({ params }) {
