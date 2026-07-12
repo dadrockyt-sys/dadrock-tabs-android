@@ -89,9 +89,8 @@ const difficultyT = {
 };
 
 export async function generateMetadata({ params }) {
-  const { level } = await params;
-  const difficulty = DIFFICULTY_LEVELS[level];
-  if (!difficulty) return { title: 'Not Found | DadRock Tabs' };
+  const { level, lang } = await params;
+const difficulty = DIFFICULTY_LEVELS[level];
 
   const title = `${difficulty.name} Guitar Tabs - Easy ${difficulty.name} Songs to Learn | DadRock Tabs`;
   const description = `${difficulty.longDescription.substring(0, 155)}...`;
@@ -115,9 +114,10 @@ export function generateStaticParams() {
 }
 
 export default async function DifficultyPage({ params }) {
-  const { level, lang = 'en' } = await params;
-  const t = difficultyT[lang] || difficultyT.en;
-  const difficulty = DIFFICULTY_LEVELS[level];
+  const { level, lang } = await params;
+const currentLang = lang || 'en';
+const t = difficultyT[currentLang] || difficultyT.en;
+const difficulty = DIFFICULTY_LEVELS[level];
 
   if (!difficulty) {
     notFound();
@@ -183,14 +183,14 @@ export default async function DifficultyPage({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="min-h-screen bg-zinc-950 text-white">
-        <DifficultyHeader lang={lang} level={level} />
+        <DifficultyHeader lang={currentLang} level={level} />
 
         <main className="container mx-auto px-4 py-8 max-w-6xl">
           {/* Breadcrumb */}
           <nav className="mb-6 text-sm text-zinc-400">
-            <Link href="/" className="hover:text-amber-500 transition-colors">Home</Link>
+            <Link href={getLocalizedPath('/', currentLang)} className="hover:text-amber-400 transition-colors">{t.home}</Link>
             <span className="mx-2">/</span>
-            <span className="text-white">{difficulty.name} Songs</span>
+            <span className="text-white">{difficulty.name} {t.songs}</span>
           </nav>
 
           {/* Hero */}
@@ -201,7 +201,7 @@ export default async function DifficultyPage({ params }) {
                 <div className="flex-1">
                   <span className="text-4xl mb-3 block">{difficulty.icon}</span>
                   <p className="text-sm font-medium text-amber-500/80 uppercase tracking-widest mb-2">
-                    Difficulty Level
+                    {t.difficultyLevel}
                   </p>
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
                     {difficulty.name} <span className="text-amber-500">Guitar Tabs</span>
@@ -226,7 +226,7 @@ export default async function DifficultyPage({ params }) {
 
           {/* About */}
           <div className="mb-10 p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800">
-            <h2 className="text-xl font-bold mb-3 text-amber-500">What to Expect</h2>
+            <h2 className="text-xl font-bold mb-3 text-amber-500">{t.about}</h2>
             <p className="text-zinc-300 leading-relaxed">{difficulty.longDescription}</p>
             <p className="text-zinc-500 text-sm mt-3"><strong>Key criteria:</strong> {difficulty.criteria}</p>
           </div>
@@ -234,13 +234,13 @@ export default async function DifficultyPage({ params }) {
           {/* Artist Grid */}
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6 text-white">
-              {difficulty.name} Artists ({artistData.length})
-            </h2>
+  {difficulty.name} {t.artists} ({artistData.length})
+</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {artistData.map((artist, index) => (
                 <Link
                   key={artist.slug}
-                  href={`/artist/${artist.slug}`}
+                  href={getLocalizedPath(`/artist/${artist.slug}`, currentLang)}
                   className="group bg-zinc-900/80 rounded-xl border border-zinc-800 overflow-hidden hover:border-amber-500/50 transition-all duration-300"
                 >
                   <div className="relative h-36 overflow-hidden">
@@ -256,7 +256,7 @@ export default async function DifficultyPage({ params }) {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/50 to-transparent" />
                     <div className="absolute top-3 right-3 text-xs font-bold text-black px-2.5 py-1 rounded-lg bg-amber-500">
-                      {artist.lessonCount} lessons
+                      {artist.lessonCount} {t.lessons}
                     </div>
                   </div>
                   <div className="p-4">
@@ -272,14 +272,14 @@ export default async function DifficultyPage({ params }) {
 
           {/* Other Difficulty Levels */}
           <section className="mt-12 p-8 rounded-2xl border border-zinc-800 bg-zinc-900/30">
-            <h2 className="text-xl font-bold mb-4">Browse Other Difficulty Levels</h2>
+            <h2 className="text-xl font-bold mb-4">{t.browseOtherLevels}</h2>
             <div className="flex flex-wrap gap-4">
               {Object.entries(DIFFICULTY_LEVELS)
                 .filter(([key]) => key !== level)
                 .map(([key, diff]) => (
                   <Link
                     key={key}
-                    href={`/difficulty/${key}`}
+                    href={getLocalizedPath(`/difficulty/${key}`, currentLang)}
                     className="flex items-center gap-2 px-5 py-3 bg-zinc-800 hover:bg-amber-500 hover:text-black rounded-full font-medium transition-all border border-zinc-700 hover:border-amber-500"
                   >
                     <span>{diff.icon}</span>
@@ -294,7 +294,7 @@ export default async function DifficultyPage({ params }) {
         <footer className="mt-16 border-t border-zinc-800">
           <div className="container mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-zinc-500 text-sm">© {new Date().getFullYear()} DadRock Tabs. Free guitar & bass lessons.</p>
-            <Link href="/" className="text-zinc-500 hover:text-amber-500 text-sm transition-colors">Home</Link>
+            href={getLocalizedPath('/', currentLang)} className="text-zinc-500 hover:text-amber-400 transition-colors">{t.home}</Link>
           </div>
         </footer>
       </div>
