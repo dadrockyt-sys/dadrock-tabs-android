@@ -385,8 +385,16 @@ const ct = chordT[lang] || chordT.en;
 export default function ToolsPage() {
   const { lang } = useLanguage();
 const pathname = usePathname();
+const supportedLocales = [
+  'es', 'pt', 'pt-br', 'de', 'fr', 'it',
+  'ja', 'ko', 'zh', 'ru', 'hi', 'sv', 'fi'
+];
+
 const pathLocale = pathname.split('/')[1];
-const currentLang = pathLocale && pathLocale !== 'tools' ? pathLocale : lang;
+
+const currentLang = supportedLocales.includes(pathLocale)
+  ? pathLocale
+  : 'en';
 
 const toolsT = {
   en: {
