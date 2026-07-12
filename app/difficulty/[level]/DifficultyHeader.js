@@ -44,5 +44,3 @@ export default function DifficultyHeader({ lang = 'en', level }) {
     </header>
   );
 }
-  );
-}
