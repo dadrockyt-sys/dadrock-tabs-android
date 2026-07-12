@@ -1,32 +1,59 @@
 'use client';
 
 import Link from 'next/link';
-import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
+import { usePathname } from 'next/navigation';
+import LanguageSelector from '@/components/LanguageSelector';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
+
+const supportedLanguages = [
+  'es',
+  'pt',
+  'pt-br',
+  'de',
+  'fr',
+  'it',
+  'ja',
+  'ko',
+  'zh',
+  'ru',
+  'hi',
+  'sv',
+  'fi'
+];
 
 export default function LearnHeader() {
-  const { lang } = useLanguage();
+  const pathname = usePathname();
+  const pathLanguage = pathname.split('/')[1];
+
+  const currentLang = supportedLanguages.includes(pathLanguage)
+    ? pathLanguage
+    : 'en';
+
+  const t = getSubPageTranslation(currentLang);
+
+  const homeHref = currentLang === 'en'
+    ? '/'
+    : `/${currentLang}`;
+
+  const handleLanguageChange = (newLang) => {
+    window.location.href =
+      newLang === 'en'
+        ? '/learn'
+        : `/${newLang}/learn`;
+  };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/95 backdrop-blur">
-      <div className="container mx-auto flex items-center justify-between px-4 py-4 max-w-5xl">
-        <Link href={lang === 'en' ? '/' : `/${lang}`} className="flex items-center">
-          <img
-            src="https://customer-assets.emergentagent.com/job_tabs-guitar/artifacts/j2jx9l1j_dadrock-logo.png"
-            alt="DadRock Tabs"
-            className="h-9 w-auto"
-          />
+    <header className="border-b border-zinc-800 bg-zinc-950">
+      <div className="container mx-auto flex max-w-5xl items-center justify-between px-4 py-5">
+        <Link
+          href={homeHref}
+          className="flex items-center gap-2 text-zinc-300 transition-colors hover:text-white"
+        >
+          <span className="text-xl">⌂</span>
+          <span>{t.backToHome}</span>
         </Link>
 
-        <div className="flex items-center gap-3">
-          <LanguageSelector />
-
-          <Link
-            href={lang === 'en' ? '/' : `/${lang}`}
-            className="rounded-xl bg-zinc-800 px-5 py-3 font-medium hover:bg-zinc-700 transition-colors"
-          >
-            Home
-          </Link>
-        </div>
+        <LanguageSelector onLanguageChange={handleLanguageChange} />
       </div>
     </header>
   );
