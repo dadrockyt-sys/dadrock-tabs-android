@@ -1,1 +1,67 @@
+name: Translate Guide Content
 
+on:
+  workflow_dispatch:
+    inputs:
+      language:
+        description: "Language to translate"
+        required: true
+        type: choice
+        options:
+          - pt
+          - pt-br
+          - de
+          - fr
+          - it
+          - ja
+          - ko
+          - zh
+          - ru
+          - hi
+          - sv
+          - fi
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Translate guide content
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5-nano
+          LANGUAGE: ${{ github.event.inputs.language }}
+        run: |
+          node scripts/translate-guide-content.js
+                - name: Commit translated content
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add lib/generatedGuideContentTranslations.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Add guide translations (${{ github.event.inputs.language }})"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
