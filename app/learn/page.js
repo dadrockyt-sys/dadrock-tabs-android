@@ -76,9 +76,9 @@ export default async function LearnPage({ params }) {
         <main className="container mx-auto px-4 py-8 max-w-5xl">
           {/* Breadcrumb */}
           <nav className="mb-6 text-sm text-zinc-400">
-            <Link href="/" className="hover:text-amber-500 transition-colors">Home</Link>
+            <Link href={getLocalizedPath('/', lang)} className="hover:text-amber-500 transition-colors">{t.home}</Link>
             <span className="mx-2">/</span>
-            <span className="text-white">Learn Guitar</span>
+            <span className="text-white">{t.learn}</span>
           </nav>
 
           {/* Hero */}
@@ -153,8 +153,8 @@ export default async function LearnPage({ params }) {
           <div className="container mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-zinc-500 text-sm">© {new Date().getFullYear()} DadRock Tabs. Free guitar & bass lessons.</p>
             <div className="flex gap-4">
-              <Link href="/" className="text-zinc-500 hover:text-amber-500 text-sm transition-colors">Home</Link>
-              <Link href="/learn" className="text-zinc-500 hover:text-amber-500 text-sm transition-colors">Learn</Link>
+              <Link href={getLocalizedPath('/', lang)} className="text-zinc-500 hover:text-amber-500 text-sm transition-colors">{t.home}</Link>
+              <Link href={getLocalizedPath('/learn', lang)} className="text-zinc-500 hover:text-amber-500 text-sm transition-colors">{t.learn}</Link>
             </div>
           </div>
         </footer>
