@@ -273,7 +273,7 @@ export default async function GuidePage({ params }) {
               {labels.moreGuides}
             </h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {GUIDES
+                            {Object.values(GUIDES)
                 .filter((item) => item.slug !== guide.slug)
                 .slice(0, 4)
                 .map((item) => (
