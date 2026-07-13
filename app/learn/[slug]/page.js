@@ -29,7 +29,6 @@ function getLocalizedPath(path, lang) {
 
 function getGuideContent(guide, slug, lang) {
   const translatedContent =
-  const translatedContent =
   generatedGuideContentTranslations?.[lang]?.[slug] ||
   GUIDE_CONTENT_TRANSLATIONS?.[lang]?.[slug];
 
