@@ -95,28 +95,23 @@ export default async function LearnPage({ params }) {
           {categories.map(category => (
             <section key={category} className="mb-12">
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                <span className={`px-3 py-1 rounded-lg text-sm font-semibold ${
-                  {guides
-  .filter((guide) => {
-    const guideCategory =
-      typeof guide.category === 'object'
-        ? guide.category.en
-        : guide.category;
-
-    return guideCategory === category;
-  })
-  .map((guide) => (
-                  category === 'Technique' ? 'bg-amber-500/20 text-amber-400' :
-                  'bg-purple-500/20 text-purple-400'
-                }`}>
-                  {category === 'Beginner'
-  ? t.beginner
-  : category === 'Technique'
-    ? t.technique
-    : category === 'Intermediate'
-      ? t.intermediate
-      : category}
-                </span>
+                <span
+  className={`px-3 py-1 rounded-lg text-sm font-semibold ${
+    category === 'Beginner'
+      ? 'bg-green-500/20 text-green-400'
+      : category === 'Technique'
+        ? 'bg-amber-500/20 text-amber-400'
+        : 'bg-purple-500/20 text-purple-400'
+  }`}
+>
+  {category === 'Beginner'
+    ? t.beginner
+    : category === 'Technique'
+      ? t.technique
+      : category === 'Intermediate'
+        ? t.intermediate
+        : category}
+</span>
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {guides
