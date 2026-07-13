@@ -119,7 +119,16 @@ export default async function LearnPage({ params }) {
                 </span>
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {guides.filter(g => g.category === category).map(guide => (
+                {guides
+  .filter((guide) => {
+    const guideCategory =
+      typeof guide.category === 'object'
+        ? guide.category.en
+        : guide.category;
+
+    return guideCategory === category;
+  })
+  .map((guide) => (
                   <Link
                     key={guide.slug}
                     href={getLocalizedPath(`/learn/${guide.slug}`, lang)}
