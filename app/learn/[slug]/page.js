@@ -212,9 +212,9 @@ const categoryLabel = getLocalizedValue(guide.category, lang);
               <div className="mb-4 flex items-center gap-3">
                 <span
                   className={`rounded-lg px-3 py-1 text-xs font-semibold ${
-                    guide.category === 'Beginner'
+                    categoryKey === 'Beginner'
                       ? 'bg-green-500/20 text-green-400'
-                      : guide.category === 'Technique'
+                      : categoryKey === 'Technique'
                         ? 'bg-amber-500/20 text-amber-400'
                         : 'bg-purple-500/20 text-purple-400'
                   }`}
