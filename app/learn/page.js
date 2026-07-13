@@ -2,6 +2,9 @@ import { getAllGuides } from '@/lib/guidesData';
 import Link from 'next/link';
 import LearnHeader from '@/components/LearnHeader';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
+function getLocalizedPath(path, lang) {
+  return lang === 'en' ? path : `/${lang}${path}`;
+}
 
 export const metadata = {
   title: 'Learn Guitar - Free Guides, Tips & Techniques | DadRock Tabs',
