@@ -177,6 +177,143 @@ export default async function GuidePage({ params }) {
           __html: JSON.stringify(jsonLd)
         }}
       />
+      <div className="min-h-screen bg-zinc-950 text-white">
+        <LearnHeader />
+
+        <main className="container mx-auto max-w-3xl px-4 py-8">
+          <nav className="mb-6 text-sm text-zinc-400">
+            <Link
+              href={homePath}
+              className="transition-colors hover:text-amber-500"
+            >
+              {labels.home}
+            </Link>
+
+            <span className="mx-2">/</span>
+
+            <Link
+              href={learnPath}
+              className="transition-colors hover:text-amber-500"
+            >
+              {labels.learn}
+            </Link>
+            <span className="mx-2">/</span>
+
+            <span className="text-white">{guideTitle}</span>
+          </nav>
+
+          <article>
+            <header className="mb-8">
+              <div className="mb-4 flex items-center gap-3">
+                <span
+                  className={`rounded-lg px-3 py-1 text-xs font-semibold ${
+                    guide.category === 'Beginner'
+                      ? 'bg-green-500/20 text-green-400'
+                      : guide.category === 'Technique'
+                        ? 'bg-amber-500/20 text-amber-400'
+                        : 'bg-purple-500/20 text-purple-400'
+                  }`}
+                >
+                  {categoryLabel}
+                </span>
+
+                <span className="text-sm text-zinc-500">
+                  {guideReadTime}
+                </span>
+              </div>
+
+              <h1 className="mb-4 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
+                {guideTitle}
+              </h1>
+              <p className="text-xl leading-relaxed text-zinc-400">
+                {guideDescription}
+              </p>
+            </header>
+
+            <div
+              className="prose prose-invert prose-zinc max-w-none
+                prose-headings:text-white prose-headings:font-bold
+                prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-amber-500
+                prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
+                prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:mb-4
+                prose-li:text-zinc-300
+                prose-strong:text-white
+                prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-700 prose-pre:rounded-xl
+                prose-a:text-amber-500 prose-a:no-underline hover:prose-a:underline"
+              dangerouslySetInnerHTML={{
+                __html: guideContent
+              }}
+            />
+            {guide.relatedArtists?.length > 0 && (
+              <section className="mt-12 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
+                <h2 className="mb-4 text-xl font-bold text-amber-500">
+                  {labels.relatedArtists}
+                </h2>
+
+                <div className="flex flex-wrap gap-3">
+                  {guide.relatedArtists.map((artistSlug) => (
+                    <Link
+                      key={artistSlug}
+                      href={getLocalizedPath(`/artist/${artistSlug}`, lang)}
+                      className="rounded-full border border-zinc-700 bg-zinc-800 px-4 py-2 text-sm font-medium transition-all hover:border-amber-500 hover:bg-amber-500 hover:text-black"
+                    >
+                      {artistSlug
+                        .replace(/-/g, ' ')
+                        .replace(/\b\w/g, c => c.toUpperCase())}
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+
+          </article>
+
+          <section className="mt-12">
+            <h2 className="mb-4 text-xl font-bold">
+              {labels.moreGuides}
+            </h2>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {GUIDES
+                .filter((item) => item.slug !== guide.slug)
+                .slice(0, 4)
+                .map((item) => (
+                  <Link
+                    key={item.slug}
+                    href={getLocalizedPath(`/learn/${item.slug}`, lang)}
+                    className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition-all hover:border-amber-500 hover:bg-zinc-900"
+                  >
+                    <h3 className="mb-2 font-bold text-white">
+                      {getLocalizedValue(item.title, lang)}
+                    </h3>
+
+                    <p className="text-sm text-zinc-400">
+                      {getLocalizedValue(item.description, lang)}
+                    </p>
+                  </Link>
+                ))}
+            </div>
+          </section>
+        </main>
+
+        <footer className="border-t border-zinc-800 py-8">
+          <div className="container mx-auto max-w-3xl px-4 text-center text-sm text-zinc-500">
+            <p>{labels.freeLessons}</p>
+
+            <Link
+              href={learnPath}
+              className="mt-4 inline-block text-amber-500 transition-colors hover:text-amber-400"
+            >
+              ← {labels.allGuides}
+            </Link>
+          </div>
+        </footer>
+      </div>
+    </>
+  );
+}
+
+
+
 
 
 
