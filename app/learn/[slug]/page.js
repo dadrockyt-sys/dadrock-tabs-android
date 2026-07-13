@@ -7,8 +7,6 @@ export async function generateMetadata({ params }) {
   const guide = GUIDES[slug];
   const guideTitle = typeof guide?.title === 'object' ? guide.title.en : guide?.title;
 const guideDescription = typeof guide?.description === 'object' ? guide.description.en : guide?.description;
-  const guideTitle = typeof guide?.title === 'object' ? guide.title.en : guide?.title;
-const guideDescription = typeof guide?.description === 'object' ? guide.description.en : guide?.description;
   if (!guide) return { title: 'Guide Not Found | DadRock Tabs' };
 
   return {
