@@ -273,31 +273,6 @@ const categoryLabel = getLocalizedValue(guide.category, lang);
 
           </article>
 
-          <section className="mt-12">
-            <h2 className="mb-4 text-xl font-bold">
-              {labels.moreGuides}
-            </h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                            {Object.values(GUIDES)
-                .filter((item) => item.slug !== guide.slug)
-                .slice(0, 4)
-                .map((item) => (
-                  <Link
-                    key={item.slug}
-                    href={getLocalizedPath(`/learn/${item.slug}`, lang)}
-                    className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition-all hover:border-amber-500 hover:bg-zinc-900"
-                  >
-                    <h3 className="mb-2 font-bold text-white">
-                      {getLocalizedValue(item.title, lang)}
-                    </h3>
-
-                    <p className="text-sm text-zinc-400">
-                      {getLocalizedValue(item.description, lang)}
-                    </p>
-                  </Link>
-                ))}
-            </div>
-          </section>
         </main>
 
         <footer className="border-t border-zinc-800 py-8">
