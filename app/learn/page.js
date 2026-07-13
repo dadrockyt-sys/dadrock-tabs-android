@@ -103,12 +103,12 @@ export default async function LearnPage({ params }) {
                       <span className="text-3xl">{guide.icon}</span>
                       <div className="flex-1">
                         <h3 className="font-bold text-lg text-white group-hover:text-amber-500 transition-colors mb-2">
-                          {guide.title}
+                          {typeof guide.title === 'object' ? (guide.title[lang] || guide.title.en) : guide.title}
                         </h3>
                         <p className="text-zinc-400 text-sm leading-relaxed mb-3">
-                          {guide.description}
+                          {typeof guide.description === 'object' ? (guide.description[lang] || guide.description.en) : guide.description}
                         </p>
-                        <span className="text-xs text-zinc-500">{guide.readTime}</span>
+                        <span className="text-xs text-zinc-500">{typeof guide.readTime === 'object' ? (guide.readTime[lang] || guide.readTime.en) : guide.readTime}</span>
                       </div>
                     </div>
                   </Link>
