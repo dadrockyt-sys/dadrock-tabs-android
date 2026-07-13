@@ -190,7 +190,7 @@ export default async function GuidePage({ params }) {
                     className="group p-4 bg-zinc-900/50 rounded-xl border border-zinc-800 hover:border-amber-500/50 transition-all"
                   >
                     <span className="text-2xl">{g.icon}</span>
-                    <h3 className="font-medium text-sm mt-2 group-hover:text-amber-500 transition-colors">{g.title}</h3>
+                    <h3 className="font-medium text-sm mt-2 group-hover:text-amber-500 transition-colors">{typeof g.title === 'object' ? g.title.en : g.title}</h3>
                   </Link>
                 ))}
             </div>
