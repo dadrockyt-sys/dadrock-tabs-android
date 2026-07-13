@@ -17,6 +17,13 @@ function getLocalizedValue(value, lang) {
 
 function getLocalizedPath(path, lang) {
   return lang === 'en' ? path : `/${lang}${path}`;
+  function getArtistSlug(slug) {
+  const slugMap = {
+    'ac-dc': 'acdc'
+  };
+
+  return slugMap[slug] || slug;
+  }
 }
 
 function getGuideContent(guide, slug, lang) {
@@ -254,7 +261,7 @@ export default async function GuidePage({ params }) {
                   {guide.relatedArtists.map((artistSlug) => (
                     <Link
                       key={artistSlug}
-                      href={getLocalizedPath(`/artist/${artistSlug}`, lang)}
+                      href={getLocalizedPath(`/artist/${getArtistSlug(artistSlug)}`, lang)}
                       className="rounded-full border border-zinc-700 bg-zinc-800 px-4 py-2 text-sm font-medium transition-all hover:border-amber-500 hover:bg-amber-500 hover:text-black"
                     >
                       {artistSlug
