@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import LanguageSelector from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 
