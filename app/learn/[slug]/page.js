@@ -2,6 +2,7 @@ import {
   GUIDES,
   GUIDE_CONTENT_TRANSLATIONS
 } from '@/lib/guidesData';
+import generatedGuideContentTranslations from '@/lib/generatedGuideContentTranslations.json';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -28,7 +29,9 @@ function getLocalizedPath(path, lang) {
 
 function getGuideContent(guide, slug, lang) {
   const translatedContent =
-    GUIDE_CONTENT_TRANSLATIONS?.[lang]?.[slug];
+  const translatedContent =
+  generatedGuideContentTranslations?.[lang]?.[slug] ||
+  GUIDE_CONTENT_TRANSLATIONS?.[lang]?.[slug];
 
   if (translatedContent) {
     return translatedContent;
