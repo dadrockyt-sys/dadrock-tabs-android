@@ -61,6 +61,10 @@ export default function LearnHeader() {
   return (
     <header className="border-b border-zinc-800 bg-zinc-950">
       <div className="container mx-auto flex max-w-5xl items-center justify-between px-4 py-5">
+    <LanguageSelector
+  currentLang={currentLang}
+  onLanguageChange={handleLanguageChange}
+/>
         <Link
           href={homeHref}
           className="flex items-center gap-2 text-zinc-300 transition-colors hover:text-white"
