@@ -96,7 +96,7 @@ export default async function LearnPage({ params }) {
                 {guides.filter(g => g.category === category).map(guide => (
                   <Link
                     key={guide.slug}
-                    href={`/learn/${guide.slug}`}
+                    href={getLocalizedPath(`/learn/${guide.slug}`, lang)}
                     className="group bg-zinc-900/80 rounded-xl border border-zinc-800 p-6 hover:border-amber-500/50 hover:bg-zinc-900 transition-all duration-300"
                   >
                     <div className="flex items-start gap-4">
