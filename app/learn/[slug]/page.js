@@ -45,6 +45,9 @@ export default async function GuidePage({ params }) {
     notFound();
   }
 
+    const guideTitle = typeof guide.title === 'object' ? guide.title.en : guide.title;
+  const guideDescription = typeof guide.description === 'object' ? guide.description.en : guide.description;
+
   // JSON-LD Article schema
   const jsonLd = {
     '@context': 'https://schema.org',
