@@ -5,26 +5,34 @@ import Link from 'next/link';
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const guide = GUIDES[slug];
+  const guideTitle = typeof guide?.title === 'object' ? guide.title.en : guide?.title;
+const guideDescription = typeof guide?.description === 'object' ? guide.description.en : guide?.description;
+  const guideTitle = typeof guide?.title === 'object' ? guide.title.en : guide?.title;
+const guideDescription = typeof guide?.description === 'object' ? guide.description.en : guide?.description;
   if (!guide) return { title: 'Guide Not Found | DadRock Tabs' };
 
   return {
-    title: `${guide.title} | DadRock Tabs`,
-    description: guide.description,
-    keywords: guide.keywords,
-    openGraph: {
-      title: guide.title,
-      description: guide.description,
-      type: 'article',
-      url: `https://dadrocktabs.com/learn/${slug}`,
-      siteName: 'DadRock Tabs',
-      images: [{ url: `https://dadrocktabs.com/api/og?title=${encodeURIComponent(guide.title)}&type=genre`, width: 1200, height: 630 }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: guide.title,
-      description: guide.description,
-    },
-  };
+  title: `${guideTitle} | DadRock Tabs`,
+  description: guideDescription,
+  keywords: guide.keywords,
+  openGraph: {
+    title: guideTitle,
+    description: guideDescription,
+    type: 'article',
+    url: `https://dadrocktabs.com/learn/${slug}`,
+    siteName: 'DadRock Tabs',
+    images: [{
+      url: `https://dadrocktabs.com/api/og?title=${encodeURIComponent(guideTitle)}&type=genre`,
+      width: 1200,
+      height: 630
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: guideTitle,
+    description: guideDescription,
+  },
+};
 }
 
 export function generateStaticParams() {
@@ -43,8 +51,8 @@ export default async function GuidePage({ params }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    'headline': guide.title,
-    'description': guide.description,
+    'headline': guideTitle,
+'description': guideDescription,
     'url': `https://dadrocktabs.com/learn/${slug}`,
     'author': {
       '@type': 'Organization',
@@ -110,7 +118,7 @@ export default async function GuidePage({ params }) {
             <span className="mx-2">/</span>
             <Link href="/learn" className="hover:text-amber-500 transition-colors">Learn</Link>
             <span className="mx-2">/</span>
-            <span className="text-white">{guide.title}</span>
+            <span className="text-white">{guideTitle}</span>
           </nav>
 
           {/* Article Header */}
@@ -127,10 +135,10 @@ export default async function GuidePage({ params }) {
                 <span className="text-zinc-500 text-sm">{guide.readTime}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-                {guide.title}
+                {guideTitle}
               </h1>
               <p className="text-xl text-zinc-400 leading-relaxed">
-                {guide.description}
+                {guideDescription}
               </p>
             </header>
 
