@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import LanguageSelector from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
-import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 
 const supportedLanguages = [
   'es',
@@ -23,7 +23,6 @@ const supportedLanguages = [
 
 export default function LearnHeader() {
   const pathname = usePathname();
-  const { lang } = useLanguage();
   const pathLanguage = pathname.split('/')[1];
 
   const currentLang = supportedLanguages.includes(pathLanguage)
@@ -38,33 +37,23 @@ export default function LearnHeader() {
       : `/${currentLang}`;
 
   const handleLanguageChange = (newLang) => {
-  localStorage.setItem('dadrock-language', newLang);
+    const parts = pathname.split('/').filter(Boolean);
 
-  const parts = pathname.split('/').filter(Boolean);
+    if (supportedLanguages.includes(parts[0])) {
+      parts.shift();
+    }
 
-  if (supportedLanguages.includes(parts[0])) {
-    parts.shift();
-  }
+    const basePath = `/${parts.join('/')}`;
 
-  if (parts[0] === 'learn') {
-    parts.shift();
-  }
-
-  const basePath = `/learn/${slug}`;
-
-  window.location.href =
-    newLang === 'en'
-      ? basePath
-      : `/${newLang}${basePath}`;
-};
+    window.location.href =
+      newLang === 'en'
+        ? basePath
+        : `/${newLang}${basePath}`;
+  };
 
   return (
     <header className="border-b border-zinc-800 bg-zinc-950">
       <div className="container mx-auto flex max-w-5xl items-center justify-between px-4 py-5">
-    <LanguageSelector
-  currentLang={currentLang}
-  onLanguageChange={handleLanguageChange}
-/>
         <Link
           href={homeHref}
           className="flex items-center gap-2 text-zinc-300 transition-colors hover:text-white"
@@ -73,7 +62,10 @@ export default function LearnHeader() {
           <span>{t.backToHome}</span>
         </Link>
 
-        <LanguageSelector onLanguageChange={handleLanguageChange} />
+        <LanguageSelector
+          currentLang={currentLang}
+          onLanguageChange={handleLanguageChange}
+        />
       </div>
     </header>
   );
