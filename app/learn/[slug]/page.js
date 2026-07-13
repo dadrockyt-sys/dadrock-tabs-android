@@ -7,6 +7,10 @@ export async function generateMetadata({ params }) {
   const guide = GUIDES[slug];
   const guideTitle = typeof guide?.title === 'object' ? guide.title.en : guide?.title;
 const guideDescription = typeof guide?.description === 'object' ? guide.description.en : guide?.description;
+  const guideContent =
+  typeof guide?.content === 'object'
+    ? guide.content.en
+    : guide?.content;
   if (!guide) return { title: 'Guide Not Found | DadRock Tabs' };
 
   return {
@@ -40,6 +44,10 @@ export function generateStaticParams() {
 export default async function GuidePage({ params }) {
   const { slug } = await params;
   const guide = GUIDES[slug];
+  const guideContent =
+  typeof guide?.content === 'object'
+    ? guide.content.en
+    : guide?.content;
 
   if (!guide) {
     notFound();
@@ -154,7 +162,7 @@ export default async function GuidePage({ params }) {
                 prose-strong:text-white
                 prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-700 prose-pre:rounded-xl
                 prose-a:text-amber-500 prose-a:no-underline hover:prose-a:underline"
-              dangerouslySetInnerHTML={{ __html: guide.content }}
+                dangerouslySetInnerHTML={{ __html: guideContent }}
             />
 
             {/* Related Artists */}
