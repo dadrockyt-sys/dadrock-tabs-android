@@ -139,16 +139,12 @@ export default async function GuidePage({ params }) {
       t.freeLessons || 'Free guitar & bass lessons.'
   };
 
-  const categoryLabel =
-    guide.category === 'Beginner'
-      ? t.beginner || 'Beginner'
-      : guide.category === 'Technique'
-        ? t.technique || 'Technique'
-        : guide.category === 'Intermediate'
-          ? t.intermediate || 'Intermediate'
-          : guide.category === 'Advanced'
-            ? t.advanced || 'Advanced'
-            : t.theory || guide.category;
+  const categoryKey =
+  typeof guide.category === 'string'
+    ? guide.category
+    : guide.category?.en || 'Beginner';
+
+const categoryLabel = getLocalizedValue(guide.category, lang);
 
   const jsonLd = {
     '@context': 'https://schema.org',
