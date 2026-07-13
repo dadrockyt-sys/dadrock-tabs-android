@@ -37,11 +37,25 @@ export default function LearnHeader() {
       : `/${currentLang}`;
 
   const handleLanguageChange = (newLang) => {
-    window.location.href =
-      newLang === 'en'
-        ? '/learn'
-        : `/${newLang}/learn`;
-  };
+  localStorage.setItem('dadrock-language', newLang);
+
+  const parts = pathname.split('/').filter(Boolean);
+
+  if (supportedLanguages.includes(parts[0])) {
+    parts.shift();
+  }
+
+  if (parts[0] === 'learn') {
+    parts.shift();
+  }
+
+  const basePath = `/learn/${slug}`;
+
+  window.location.href =
+    newLang === 'en'
+      ? basePath
+      : `/${newLang}${basePath}`;
+};
 
   return (
     <header className="border-b border-zinc-800 bg-zinc-950">
