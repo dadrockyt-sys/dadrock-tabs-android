@@ -18,11 +18,7 @@ const TARGET_LANGUAGES = {
   fi: 'Finnish',
 };
 
-const GUIDE_SLUGS = [
-  'easy-guitar-solos-beginners',
-  'downpicking-speed-metallica',
-  'drop-d-tuning-songs',
-];
+const GUIDE_SLUGS = Object.keys(GUIDES);
 
 const OUTPUT_FILE = path.join(
   process.cwd(),
