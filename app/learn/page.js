@@ -24,7 +24,15 @@ export default async function LearnPage({ params }) {
   const lang = resolvedParams?.lang || 'en';
   const t = getSubPageTranslation(lang);
   const guides = getAllGuides();
-  const categories = [...new Set(guides.map(g => g.category))];
+  const categories = [
+  ...new Set(
+    guides.map((guide) =>
+      typeof guide.category === 'object'
+        ? guide.category.en
+        : guide.category
+    )
+  ),
+];
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -41,9 +49,15 @@ export default async function LearnPage({ params }) {
         'position': i + 1,
         'item': {
           '@type': 'Article',
-          'name': guide.title,
+          'name':
+  typeof guide.title === 'object'
+    ? guide.title[lang] || guide.title.en
+    : guide.title,
           'url': `https://dadrocktabs.com/learn/${guide.slug}`,
-          'description': guide.description,
+          'description':
+  typeof guide.description === 'object'
+    ? guide.description[lang] || guide.description.en
+    : guide.description,
         }
       }))
     }
