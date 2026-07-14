@@ -1981,31 +1981,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
           <div className="max-w-6xl mx-auto px-6">
             {/* Footer Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left">
-              {/* Top Artists */}
-                            <div>
-                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">🎸 {homeT.topArtists}</h3>
-                <ul className="space-y-2 text-sm">
-                  <li><Link href={getLocalizedPath('/artist/metallica', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Metallica</Link></li>
-                  <li><Link href={getLocalizedPath('/artist/led-zeppelin', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Led Zeppelin</Link></li>
-                  <li><Link href={getLocalizedPath('/artist/black-sabbath', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Black Sabbath</Link></li>
-                  <li><Link href={getLocalizedPath('/artist/ac-dc', currentLang)} className="text-zinc-400 hover:text-white transition-colors">AC/DC</Link></li>
-                  <li><Link href={getLocalizedPath('/artist/van-halen', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Van Halen</Link></li>
-                  <li><Link href={getLocalizedPath('/artist/pantera', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Pantera</Link></li>
-                </ul>
-              </div>
 
-              {/* Browse Content */}
-              <div>
-                <h3 className="text-amber-500 font-bold text-sm uppercase mb-3">📚 {homeT.browse}</h3>
-                <ul className="space-y-2 text-sm">
-                  <li><Link href={getLocalizedPath('/genre/heavy-metal', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Heavy Metal</Link></li>
-                  <li><Link href={getLocalizedPath('/genre/classic-rock', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Classic Rock</Link></li>
-                  <li><Link href={getLocalizedPath('/genre/hair-metal', currentLang)} className="text-zinc-400 hover:text-white transition-colors">Hair Metal</Link></li>
-                  <li><Link href={getLocalizedPath('/era/70s', currentLang)} className="text-zinc-400 hover:text-white transition-colors">70s Tabs</Link></li>
-                  <li><Link href={getLocalizedPath('/era/80s', currentLang)} className="text-zinc-400 hover:text-white transition-colors">80s Tabs</Link></li>
-                  <li><Link href={getLocalizedPath('/era/90s', currentLang)} className="text-zinc-400 hover:text-white transition-colors">90s Tabs</Link></li>
-                </ul>
-              </div>
 
               {/* By Difficulty */}
               <div>
