@@ -206,10 +206,10 @@ export async function generateMetadata({ params }) {
     robots: {
       // NOINDEX locale pages — they're UI translations of the same English content
       // This prevents "Alternate page with proper canonical tag" GSC errors
-      index: false,
+      index: true,
       follow: true,
       googleBot: {
-        index: false,
+        index: true,
         follow: true,
         'max-video-preview': -1,
         'max-image-preview': 'large',
