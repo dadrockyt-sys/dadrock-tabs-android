@@ -1,3 +1,9 @@
+🌐 Website: https://dadrock-tabs-android.vercel.app
+
+📱 Android App: https://play.google.com/store/apps/details?id=...
+
+🎥 YouTube: https://youtube.com/@dadrockytofficial?si=EMlnuPg4Kv9P7YIz
+
 🎸 DadRock Tabs
 
 AI-powered guitar and bass lessons, bringing classic rock to musicians worldwide in 14 languages.
