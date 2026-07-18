@@ -6,6 +6,11 @@
 
 # 🎸 DadRock Tabs
 
+![Languages](https://img.shields.io/badge/Languages-14-blue)
+![Platform](https://img.shields.io/badge/Platform-Web%20%2B%20Android-green)
+![Built%20With](https://img.shields.io/badge/Built%20With-ChatGPT%20%2B%20OpenAI-success)
+![YouTube](https://img.shields.io/badge/YouTube-75K%2B%20Subscribers-red)
+
 **AI-powered guitar and bass lessons, bringing classic rock to musicians worldwide in 14 languages.**
 
 About the Project
