@@ -1,6 +1,6 @@
 🌐 Website: https://dadrock-tabs-android.vercel.app
 
-📱 Android App: https://play.google.com/store/apps/details?id=...
+📱 Android App: https://play.google.com/store/apps/details?id=com.dadrocktabs.app
 
 🎥 YouTube: https://youtube.com/@dadrockytofficial?si=EMlnuPg4Kv9P7YIz
 
