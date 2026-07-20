@@ -619,11 +619,18 @@ export default function App({ initialLang = 'en' }) {
   };
 
   const handleArtistClick = (artist) => {
-    setSearchQuery(artist);
-    setSearchType('artist');
-    setCurrentPage('search');
-    performSearch(artist, 'artist');
-  };
+  const artistSlug = artist
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/\//g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+  window.location.href =
+    initialLang === 'en'
+      ? `/artist/${artistSlug}`
+      : `/${initialLang}/artist/${artistSlug}`;
+};
 
   const handleVideoClick = (video) => {
     setSelectedVideo(video);
