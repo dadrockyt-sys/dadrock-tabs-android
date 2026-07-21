@@ -3,15 +3,31 @@ import { getDb } from '@/lib/mongodb';
 import { locales } from '@/lib/i18n';
 import { artistToSlug } from '@/lib/slugify';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Babyty99';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const SITE_URL = 'https://dadrocktabs.com';
 
 function verifyAdmin(request) {
-  const authHeader = request.headers.get('Authorization');
-  if (!authHeader || !authHeader.startsWith('Basic ')) return false;
-  const decoded = atob(authHeader.split(' ')[1]);
-  const [, password] = decoded.split(':');
-  return password === ADMIN_PASSWORD;
+  if (!ADMIN_PASSWORD) {
+    console.error('ADMIN_PASSWORD environment variable is missing');
+    return false;
+  }
+
+  const authHeader = request.headers.get('authorization');
+
+  if (!authHeader || !authHeader.startsWith('Basic ')) {
+    return false;
+  }
+
+  try {
+    const decoded = Buffer.from(
+      authHeader.split(' ')[1],
+      'base64'
+    ).toString('utf8');
+
+    return decoded === `admin:${ADMIN_PASSWORD}`;
+  } catch {
+    return false;
+  }
 }
 
 // GET /api/admin/sitemap/scan - Scan all pages and compare with sitemap
