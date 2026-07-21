@@ -165,9 +165,18 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
       const timer = setTimeout(() => setAdCountdown(adCountdown - 1), 1000);
       return () => clearTimeout(timer);
     } else if (adCountdown === 0 && showAd) {
-      setShowAd(false);
-      setSelectedVideo(pendingVideo);
-      setPendingVideo(null);
+      const youtubeUrl =
+  pendingVideo?.youtube_url ||
+  (pendingVideo?.video_id
+    ? `https://www.youtube.com/watch?v=${pendingVideo.video_id}`
+    : '');
+
+setShowAd(false);
+setPendingVideo(null);
+
+if (youtubeUrl) {
+  window.location.href = youtubeUrl;
+}
     }
   }, [showAd, adCountdown]);
 
@@ -241,10 +250,19 @@ export default function ArtistPageClient({ artistName, videos, slug, lang: propL
             </div>
             <button
               onClick={() => {
-                setShowAd(false);
-                setSelectedVideo(pendingVideo);
-                setPendingVideo(null);
-              }}
+  const youtubeUrl =
+    pendingVideo?.youtube_url ||
+    (pendingVideo?.video_id
+      ? `https://www.youtube.com/watch?v=${pendingVideo.video_id}`
+      : '');
+
+  setShowAd(false);
+  setPendingVideo(null);
+
+  if (youtubeUrl) {
+    window.location.href = youtubeUrl;
+  }
+}}
               className="mt-6 text-zinc-500 hover:text-white text-sm underline"
               disabled={adCountdown > 0}
             >
