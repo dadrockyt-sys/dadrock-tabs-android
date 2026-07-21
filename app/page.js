@@ -1873,7 +1873,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
 >
   <Handshake className="w-5 h-5 text-blue-500" />
   <span>
-    {t.partnershipOpportunities || 'Partnership Opportunities'}
+    {homeT.partnershipOpportunities || 'Partnership Opportunities'}
   </span>
 </Link>
 
