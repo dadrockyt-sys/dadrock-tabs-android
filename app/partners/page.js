@@ -134,17 +134,20 @@ download
       </section>
 
       <section className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-6 mb-16 relative z-10">
-        <div className="bg-black/75 border border-amber-500/40 rounded-3xl p-6 sm:p-10 shadow-xl">
+                <div className="bg-black/75 border border-zinc-700 rounded-3xl p-6 sm:p-10 shadow-xl">
           <h2 className="text-3xl sm:text-4xl font-black text-amber-400 mb-5">
-  {t.whyPartnerTitle}
-</h2>
+            {t.whyPartnerTitle}
+          </h2>
 
-          <p className="text-zinc-200 text-lg leading-relaxed mb-5">
-  {t.whyPartnerParagraph1}
+          <div className="space-y-4">
+            <p className="text-zinc-200 text-lg leading-relaxed">
+              {t.whyPartnerParagraph1}
+            </p>
 
-        <p className="text-zinc-300 leading-relaxed">
-  {t.whyPartnerParagraph2}
-</p>
+            <p className="text-zinc-300 leading-relaxed">
+              {t.whyPartnerParagraph2}
+            </p>
+          </div>
         </div>
 
         <div className="bg-gradient-to-br from-amber-500/20 to-orange-700/10 border border-amber-500/40 rounded-3xl p-6 sm:p-10 shadow-xl">
