@@ -1493,7 +1493,7 @@ export default function App({ initialLang = 'en' }) {
               </a>
 
                   <a
-  href="/partners"
+  href={getLocalizedPath('/partners', currentLang)}
   className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-bold text-amber-400 border border-amber-500 rounded-lg hover:bg-amber-500 hover:text-black transition"
 >
   Partners
@@ -2001,7 +2001,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                   <li><Link href={getLocalizedPath('/learn', currentLang)} className="text-zinc-400 hover:text-white transition-colors">{homeT.guides}</Link></li>
                   <li><Link href={getLocalizedPath('/tools', currentLang)} className="text-zinc-400 hover:text-white transition-colors">{homeT.guitarTools}</Link></li>
                   <li><Link href={getLocalizedPath('/whats-new', currentLang)} className="text-zinc-400 hover:text-white transition-colors">{homeT.whatsNew}</Link></li>
-                  <li><Link href="/partners" className="text-zinc-400 hover:text-white transition-colors">{homeT.partners}</Link></li>
+                  <li><Link href={getLocalizedPath('/partners', currentLang)} className="text-zinc-400 hover:text-white transition-colors">{homeT.partners}</Link></li>
                   <li><a href="https://youtube.com/@dadrockytofficial" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-white transition-colors">{homeT.youtubeChannel}</a></li>
                   <li><a href="https://buymeacoffee.com/dadrockytq/commissions" target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-white transition-colors">{homeT.requestTab}</a></li>
                   <li><a href="mailto:Dadrockyt@gmail.com" className="text-zinc-400 hover:text-white transition-colors">{homeT.contactUs}</a></li>
