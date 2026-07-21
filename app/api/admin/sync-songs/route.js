@@ -2,29 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { v4 as uuidv4 } from 'uuid';
 
-function verifyAdmin(request) {
-  if (!ADMIN_PASSWORD) {
-    console.error('ADMIN_PASSWORD environment variable is missing');
-    return false;
-  }
-
-  const authHeader = request.headers.get('authorization');
-
-  if (!authHeader || !authHeader.startsWith('Basic ')) {
-    return false;
-  }
-
-  try {
-    const decoded = Buffer.from(
-      authHeader.split(' ')[1],
-      'base64'
-    ).toString('utf8');
-
-    return decoded === `admin:${ADMIN_PASSWORD}`;
-  } catch {
-    return false;
-  }
-}
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const YOUTUBE_CLIENT_ID = process.env.YOUTUBE_CLIENT_ID;
 const YOUTUBE_CLIENT_SECRET = process.env.YOUTUBE_CLIENT_SECRET;
 
