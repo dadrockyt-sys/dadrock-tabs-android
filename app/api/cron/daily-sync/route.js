@@ -13,12 +13,16 @@ const CHANNEL_ID = 'UCl9DFhCasFrFOD_5HjlUmwQ'; // DadRock Tabs channel
 // Verify cron secret to prevent unauthorized access
 function verifyCronSecret(request) {
   const authHeader = request.headers.get('authorization');
-  const cronSecret = process.env.CRON_SECRET;
-  
-  // If no CRON_SECRET is set, allow the request (for testing)
-  if (!cronSecret) return true;
-  
-  return authHeader === `Bearer ${cronSecret}`;
+const cronSecret = process.env.CRON_SECRET;
+
+// Never allow requests if the secret is missing
+if (!cronSecret) {
+  console.error('CRON_SECRET environment variable is missing');
+  return false;
+}
+
+return authHeader === `Bearer ${cronSecret}`;
+  ${cronSecret}`;
 }
 
 // Helper to refresh access token
