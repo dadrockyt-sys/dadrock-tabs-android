@@ -3,21 +3,30 @@ import { getDb } from '@/lib/mongodb';
 import { v4 as uuidv4 } from 'uuid';
 
 // Admin password from env
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Babyty99';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const YOUTUBE_CLIENT_ID = process.env.YOUTUBE_CLIENT_ID;
 const YOUTUBE_CLIENT_SECRET = process.env.YOUTUBE_CLIENT_SECRET;
 
 // Helper to verify admin auth
 function verifyAdmin(request) {
+  if (!ADMIN_PASSWORD) {
+    console.error('ADMIN_PASSWORD environment variable is missing');
+    return false;
+  }
+
   const authHeader = request.headers.get('authorization');
+
   if (!authHeader || !authHeader.startsWith('Basic ')) {
     return false;
   }
+
   try {
-    const base64Credentials = authHeader.split(' ')[1];
-    const credentials = Buffer.from(base64Credentials, 'base64').toString('utf8');
-    const [, password] = credentials.split(':');
-    return password === ADMIN_PASSWORD;
+    const decoded = Buffer.from(
+      authHeader.split(' ')[1],
+      'base64'
+    ).toString('utf8');
+
+    return decoded === `admin:${ADMIN_PASSWORD}`;
   } catch {
     return false;
   }
