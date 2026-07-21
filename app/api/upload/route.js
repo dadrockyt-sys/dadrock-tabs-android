@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { v4 as uuidv4 } from 'uuid';
 
 // Admin password from env
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Babyty99';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 // Helper to verify admin auth
 function verifyAdmin(request) {
@@ -15,7 +15,7 @@ function verifyAdmin(request) {
     const base64Credentials = authHeader.split(' ')[1];
     const credentials = Buffer.from(base64Credentials, 'base64').toString('utf8');
     const [, password] = credentials.split(':');
-    return password === ADMIN_PASSWORD;
+    return Boolean(ADMIN_PASSWORD) && password === ADMIN_PASSWORD;
   } catch {
     return false;
   }
