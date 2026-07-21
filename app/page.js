@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Search, ShoppingBag, Youtube, Share2, Heart, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus, Trophy, Zap, RefreshCw, Map, Activity, Shield, ExternalLink, Wifi, Database, FileText } from 'lucide-react';
+import { Search, ShoppingBag, Youtube, Share2, Heart, Handshake, MessageSquarePlus, Mail, Globe, ChevronDown, Play, User, ArrowLeft, Lock, Save, AlertCircle, CheckCircle, Music, LogOut, Settings, Facebook, Twitter, Maximize, Smartphone, Upload, X, Image, Calendar, Clock, Trash2, Plus, Trophy, Zap, RefreshCw, Map, Activity, Shield, ExternalLink, Wifi, Database, FileText } from 'lucide-react';
 import { getTranslation, locales, localeNames, localeFlags } from '@/lib/i18n';
 import { homepageTranslations } from '@/lib/homepageTranslations';
 import NewsletterSignup from '@/components/NewsletterSignup';
@@ -1866,6 +1866,13 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                 {t.merchandise}
               </a>
             </div>
+                <Link
+  href={getLocalizedPath('/partners', currentLang)}
+  className="artist-btn w-full flex items-center justify-center gap-2 py-3.5 rounded-xl mt-3"
+>
+  <Handshake className="w-5 h-5 text-blue-500" />
+  {t.partnershipOpportunitiesTitle}
+</Link>
           </div>
 
           {/* FAQ Section for SEO */}
