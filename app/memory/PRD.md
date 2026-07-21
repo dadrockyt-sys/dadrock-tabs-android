@@ -115,5 +115,5 @@ DadRock Tabs is a guitar and bass tablature finder app for classic rock music. I
 - `skipTrailingSlashRedirect: true` in next.config.js to prevent Next.js default 308 redirects
 - Sitemaps generate clean URLs without trailing slashes
 
-## Default Admin Password
-- `Babyty99` (configurable via ADMIN_PASSWORD env var)
+## Admin Authentication
+- No default password. Set `ADMIN_PASSWORD` in your environment.
