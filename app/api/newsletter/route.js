@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(request) {
   try {
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
     const body = await request.json();
     const { email } = body;
 
@@ -39,12 +40,27 @@ export async function POST(request) {
 }
 
 // GET: Admin endpoint to view all subscribers
-export async function GET(request) {
-  try {
-    const authHeader = request.headers.get('authorization');
-    if (!authHeader || authHeader !== 'Basic ' + btoa('admin:Babyty99')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+const authHeader = request.headers.get('authorization');
+
+if (!ADMIN_PASSWORD) {
+  console.error('ADMIN_PASSWORD environment variable is missing');
+
+  return NextResponse.json(
+    { error: 'Server configuration error' },
+    { status: 500 }
+  );
+}
+
+const expectedAuth =
+  'Basic ' +
+  Buffer.from(`admin:${ADMIN_PASSWORD}`).toString('base64');
+
+if (!authHeader || authHeader !== expectedAuth) {
+  return NextResponse.json(
+    { error: 'Unauthorized' },
+    { status: 401 }
+  );
+}
 
     const db = await getDb();
     const { searchParams } = new URL(request.url);
