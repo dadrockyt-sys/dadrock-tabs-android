@@ -1,6 +1,6 @@
 import { locales } from '@/lib/i18n';
 import { notFound } from 'next/navigation';
-import PartnersPage from '../../../partners/page';
+import PartnersPage from '../../partners/page';
 
 export async function generateStaticParams() {
   return locales
