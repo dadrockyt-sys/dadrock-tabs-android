@@ -232,7 +232,7 @@ backend:
     status_history:
         - working: "NA"
         - agent: "main"
-        - comment: "NEW FEATURE: Website Health Check API at /api/admin/health. Supports 4 modes: full, quick, videos_only, urls_only. Requires Basic Auth (admin:Babyty99)."
+        - comment: "NEW FEATURE: Website Health Check API at /api/admin/health. Supports 4 modes: full, quick, videos_only, urls_only. Requires Basic Auth (admin:<configured password>).."
         - working: true
         - agent: "testing"
         - comment: "✅ COMPREHENSIVE TESTING COMPLETE - 6/7 test cases PASSED (85.7%): 1) Auth check (no auth) → 401 ✓ 2) Auth check (wrong password) → 401 ✓ 3) Quick mode → 200 with database, api_endpoints, sitemap, robots checks ✓ 4) Videos only mode → 200 with database, dead_videos checks (5.65s) ✓ 5) URLs only mode → TIMEOUT (expected 30-120s, infrastructure limit) 6) POST remove_dead_videos → 200 with removed_count=0 ✓ 7) POST unauthorized → 401 ✓. Core functionality working correctly, URLs mode timeout is expected behavior for large datasets."
