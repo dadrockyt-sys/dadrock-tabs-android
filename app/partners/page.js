@@ -18,22 +18,22 @@ export default function PartnersPage() {
   const t = getSubPageTranslation(currentLang);
   
   const stats = [
-    ["75K+", "YouTube Subscribers", "🎸"],
-    ["723K+", "Monthly YouTube Views", "👁️"],
-    ["231K+", "Monthly Audience", "👥"],
-    ["3,200+", "Lesson Videos", "▶️"],
-    ["371", "Artists Covered", "🎶"],
-    ["732+", "Indexed Website Pages", "🌎"],
-  ];
+  ["75K+", t.youtubeSubscribers, "🎸"],
+  ["723K+", t.monthlyYouTubeViews, "👁️"],
+  ["231K+", t.monthlyAudience, "👥"],
+  ["3,200+", t.lessonVideos, "▶️"],
+  ["371", t.artistsCovered, "🎶"],
+  ["732+", t.indexedWebsitePages, "🌎"],
+];
 
   const opportunities = [
-    ["Sponsored Lessons", "Feature a brand naturally inside guitar and bass lesson content.", "🎸"],
-    ["Product Reviews", "Showcase guitars, pedals, amps, strings, apps, software, or accessories.", "🎛️"],
-    ["Affiliate Campaigns", "Drive targeted traffic from viewers actively learning and buying gear.", "🔗"],
-    ["Website Placement", "Promote offers across DadRockTabs.com lesson and artist pages.", "🖥️"],
-    ["Android App Promotion", "Reach users directly through the DadRock Tabs mobile experience.", "📱"],
-    ["Giveaways", "Create excitement through community contests and product promotions.", "🎁"],
-  ];
+  [t.sponsoredLessons, t.sponsoredLessonsDescription, "🎸"],
+  [t.productReviews, t.productReviewsDescription, "🎛️"],
+  [t.affiliateCampaigns, t.affiliateCampaignsDescription, "🔗"],
+  [t.websitePlacement, t.websitePlacementDescription, "🖥️"],
+  [t.androidAppPromotion, t.androidAppPromotionDescription, "📱"],
+  [t.giveaways, t.giveawaysDescription, "🎁"],
+];
 
   const brands = [
     "Fender",
@@ -136,45 +136,39 @@ download
       <section className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-6 mb-16 relative z-10">
         <div className="bg-black/75 border border-amber-500/40 rounded-3xl p-6 sm:p-10 shadow-xl">
           <h2 className="text-3xl sm:text-4xl font-black text-amber-400 mb-5">
-            Why Brands Partner With DadRock Tabs
-          </h2>
+  {t.whyPartnerTitle}
+</h2>
 
           <p className="text-zinc-200 text-lg leading-relaxed mb-5">
-            DadRock Tabs reaches guitar and bass players who are actively searching
-            for lessons, tabs, tones, amps, pedals, strings, software, and music
-            learning tools.
-          </p>
+  {t.whyPartnerParagraph1}
 
-          <p className="text-zinc-300 leading-relaxed">
-            Our content is educational, search-driven, and built around iconic songs
-            musicians return to again and again — creating long-term exposure instead
-            of one-time impressions.
-          </p>
+        <p className="text-zinc-300 leading-relaxed">
+  {t.whyPartnerParagraph2}
+</p>
         </div>
 
         <div className="bg-gradient-to-br from-amber-500/20 to-orange-700/10 border border-amber-500/40 rounded-3xl p-6 sm:p-10 shadow-xl">
           <h2 className="text-3xl sm:text-4xl font-black text-amber-400 mb-5">
-            A Multi-Platform Music Brand
-          </h2>
+  {t.multiPlatformTitle}
+</h2>
 
-          <div className="space-y-4 text-zinc-200">
-            <p>🎥 YouTube lessons, Shorts, and long-form educational videos</p>
-            <p>🌐 DadRockTabs.com artist hubs and song lesson pages</p>
-            <p>📱 Android app presence through Google Play</p>
-            <p>🔍 Search-driven discovery from musicians looking to learn</p>
-          </div>
+<div className="space-y-4 text-zinc-200">
+  <p>🎥 {t.multiPlatformYouTube}</p>
+  <p>🌐 {t.multiPlatformWebsite}</p>
+  <p>📱 {t.multiPlatformAndroid}</p>
+  <p>🔍 {t.multiPlatformSearch}</p>
+</div>
         </div>
       </section>
 
       <section className="max-w-7xl mx-auto mb-16 relative z-10">
         <h2 className="text-4xl sm:text-5xl font-black text-center text-amber-400 mb-4">
-          Partnership Opportunities
-        </h2>
+  {t.partnershipOpportunitiesTitle}
+</h2>
 
-        <p className="text-zinc-300 text-center max-w-3xl mx-auto mb-8">
-          Flexible sponsorship options for brands that want to reach classic rock,
-          metal, guitar, bass, and music gear audiences.
-        </p>
+<p className="text-zinc-300 text-center max-w-3xl mx-auto mb-8">
+  {t.partnershipOpportunitiesDescription}
+</p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {opportunities.map(([title, description, icon]) => (
@@ -195,14 +189,12 @@ download
       </section>
       <section className="max-w-7xl mx-auto mb-16 relative z-10">
         <h2 className="text-4xl sm:text-5xl font-black text-center text-amber-400 mb-4">
-          Brands We'd Love To Work With
-        </h2>
+  {t.brandsTitle}
+</h2>
 
-        <p className="text-zinc-300 text-center max-w-3xl mx-auto mb-10">
-          DadRock Tabs is a natural fit for guitar manufacturers, strings,
-          pedals, amplifiers, music software, online education, creator tools,
-          and lifestyle brands that connect with musicians.
-        </p>
+<p className="text-zinc-300 text-center max-w-3xl mx-auto mb-10">
+  {t.brandsDescription}
+</p>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
           {brands.map((brand) => (
@@ -220,37 +212,37 @@ download
 
       <section className="max-w-7xl mx-auto mb-16 relative z-10">
         <h2 className="text-4xl sm:text-5xl font-black text-center text-amber-400 mb-10">
-          Audience Snapshot
-        </h2>
+  {t.audienceSnapshotTitle}
+</h2>
 
         <div className="grid lg:grid-cols-2 gap-6">
 
           <div className="bg-black/75 border border-amber-500/40 rounded-3xl p-8 shadow-xl">
             <h3 className="text-2xl font-black text-amber-400 mb-4">
-              🎸 Guitarists With Buying Power
-            </h3>
+  🎸 {t.buyingPowerTitle}
+</h3>
 
             <ul className="space-y-3 text-zinc-200">
-              <li>✔ 95% Male Audience</li>
-              <li>✔ Core age 25–64</li>
-              <li>✔ Passionate classic rock & heavy metal fans</li>
-              <li>✔ Long-form educational content</li>
-              <li>✔ Highly engaged repeat viewers</li>
-            </ul>
+  <li>✔ {t.buyingPower1}</li>
+  <li>✔ {t.buyingPower2}</li>
+  <li>✔ {t.buyingPower3}</li>
+  <li>✔ {t.buyingPower4}</li>
+  <li>✔ {t.buyingPower5}</li>
+</ul>
           </div>
 
           <div className="bg-black/75 border border-amber-500/40 rounded-3xl p-8 shadow-xl">
             <h3 className="text-2xl font-black text-amber-400 mb-4">
-              🌎 Global Reach
-            </h3>
+  🌎 {t.globalReachTitle}
+</h3>
 
             <ul className="space-y-3 text-zinc-200">
-              <li>🇺🇸 United States</li>
-              <li>🇯🇵 Japan</li>
-              <li>🇧🇷 Brazil</li>
-              <li>🇨🇦 Canada</li>
-              <li>🌍 Viewers from around the world</li>
-            </ul>
+  <li>🇺🇸 {t.countryUnitedStates}</li>
+  <li>🇯🇵 {t.countryJapan}</li>
+  <li>🇧🇷 {t.countryBrazil}</li>
+  <li>🇨🇦 {t.countryCanada}</li>
+  <li>🌍 {t.countryWorldwide}</li>
+</ul>
           </div>
 
         </div>
@@ -267,32 +259,28 @@ download
     />
 
     <h2 className="text-4xl sm:text-5xl font-black text-amber-400 mb-6">
-      Let's Build Something Great Together
-    </h2>
+  {t.ctaTitle}
+</h2>
 
     <p className="text-xl text-zinc-200 max-w-4xl mx-auto leading-relaxed mb-10">
-      Whether you're launching a new guitar, promoting music software,
-      introducing a new pedal, or growing your brand, DadRock Tabs can
-      help you reach one of YouTube's most passionate classic rock
-      communities.
-    </p>
+  {t.ctaDescription}
+</p>
 
-    <div className="flex flex-col sm:flex-row justify-center gap-4">
-    <a
-  href="/media-kit/DadRockTabs-Agency-Media-Kit-2026.pdf"
-  download
-  className="bg-amber-500 hover:bg-amber-400 text-black font-black px-8 py-4 rounded-xl shadow-lg shadow-amber-500/30 transition"
->
-        📥 Download 2026 Agency Media Kit
-      </a>
-
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+  <a
+    href="/media-kit/DadRockTabs-Agency-Media-Kit-2026.pdf"
+    download
+    className="bg-amber-500 hover:bg-amber-400 text-black font-black px-8 py-4 rounded-xl shadow-lg shadow-amber-500/30 transition"
+  >
+    {t.downloadMediaKit}
+  </a>
       <a
         href={YOUTUBE_URL}
         target="_blank"
         rel="noopener noreferrer"
         className="border border-amber-500 text-white font-black px-10 py-5 rounded-xl hover:bg-amber-500/10 transition"
       >
-        ▶ Visit Our Channel
+        {t.visitYouTubeChannel}
       </a>
     </div>
   </div>
