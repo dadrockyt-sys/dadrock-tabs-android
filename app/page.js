@@ -272,18 +272,9 @@ function LanguageSelector({ currentLang }) {
 
 // Video Card Component
 function VideoCard({ video, onClick }) {
-  // Build song page slug from artist + song
-  const songSlug = video.slug || `${(video.artist || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${(video.song || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`.replace(/(^-|-$)/g, '');
-
   const handleClick = () => {
-    // Navigate to the song page with flame transition
-    if (window.__flameNavigate && songSlug) {
-      window.__flameNavigate(`/songs/${songSlug}`);
-    } else {
-      // Fallback to inline play
-      onClick(video);
-    }
-  };
+  onClick(video);
+};
 
   return (
     <div
