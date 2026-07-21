@@ -2,15 +2,32 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { artistToSlug } from '@/lib/slugify';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Babyty99';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY || '';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://dadrocktabs.com';
 
 function verifyAdmin(request) {
+  if (!ADMIN_PASSWORD) {
+    console.error('ADMIN_PASSWORD environment variable is missing');
+    return false;
+  }
+
   const authHeader = request.headers.get('authorization');
-  if (!authHeader || !authHeader.startsWith('Basic ')) return false;
-  const decoded = atob(authHeader.split(' ')[1]);
-  return decoded === `admin:${ADMIN_PASSWORD}`;
+
+  if (!authHeader || !authHeader.startsWith('Basic ')) {
+    return false;
+  }
+
+  try {
+    const decoded = Buffer.from(
+      authHeader.split(' ')[1],
+      'base64'
+    ).toString('utf8');
+
+    return decoded === `admin:${ADMIN_PASSWORD}`;
+  } catch {
+    return false;
+  }
 }
 
 // Extract YouTube video ID from URL
