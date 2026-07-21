@@ -5,7 +5,10 @@
  */
 
 const BASE_URL = 'http://localhost:3000';
-const AUTH = 'Basic ' + Buffer.from('admin:Babyty99').toString('base64');
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+const AUTH =
+  'Basic ' +
+  Buffer.from(`admin:${ADMIN_PASSWORD}`).toString('base64');
 const BATCH_SIZE = 20;
 const DELAY_BETWEEN_BATCHES_MS = 2000; // 2 second pause between batches
 
