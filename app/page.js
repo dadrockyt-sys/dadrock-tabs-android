@@ -1865,14 +1865,14 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                 <ShoppingBag className="w-5 h-5 text-amber-500" />
                 {t.merchandise}
               </a>
-            </div>
-                <a
+              <Link
   href={getLocalizedPath('/partners', currentLang)}
-  className="artist-btn w-full flex items-center justify-center gap-2 py-3.5 rounded-full"
+  className="artist-btn w-full basis-full flex items-center justify-center gap-2"
 >
   <Handshake className="w-5 h-5 text-blue-500" />
-  Partnership Opportunities
-</a>
+  {t.partnershipOpportunities}
+</Link>
+  </div>
           </div>
 
           {/* FAQ Section for SEO */}
