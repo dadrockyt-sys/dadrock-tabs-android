@@ -22,7 +22,6 @@ if (!cronSecret) {
 }
 
 return authHeader === `Bearer ${cronSecret}`;
-  ${cronSecret}`;
 }
 
 // Helper to refresh access token
