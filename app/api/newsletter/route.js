@@ -2,9 +2,10 @@ import { getDb } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+
 export async function POST(request) {
   try {
-    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
     const body = await request.json();
     const { email } = body;
 
@@ -40,49 +41,62 @@ export async function POST(request) {
 }
 
 // GET: Admin endpoint to view all subscribers
-const authHeader = request.headers.get('authorization');
+export async function GET(request) {
+  try {
+    const authHeader = request.headers.get('authorization');
 
-if (!ADMIN_PASSWORD) {
-  console.error('ADMIN_PASSWORD environment variable is missing');
+    if (!ADMIN_PASSWORD) {
+      console.error('ADMIN_PASSWORD environment variable is missing');
 
-  return NextResponse.json(
-    { error: 'Server configuration error' },
-    { status: 500 }
-  );
-}
+      return NextResponse.json(
+        { error: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
 
-const expectedAuth =
-  'Basic ' +
-  Buffer.from(`admin:${ADMIN_PASSWORD}`).toString('base64');
+    const expectedAuth =
+      'Basic ' +
+      Buffer.from(`admin:${ADMIN_PASSWORD}`).toString('base64');
 
-if (!authHeader || authHeader !== expectedAuth) {
-  return NextResponse.json(
-    { error: 'Unauthorized' },
-    { status: 401 }
-  );
-}
+    if (!authHeader || authHeader !== expectedAuth) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
 
     const db = await getDb();
     const { searchParams } = new URL(request.url);
     const showAll = searchParams.get('all') === 'true';
 
-    const count = await db.collection('newsletter_subscribers').countDocuments({ active: true });
-    const subscribers = await db.collection('newsletter_subscribers')
+    const count = await db
+      .collection('newsletter_subscribers')
+      .countDocuments({ active: true });
+
+    const subscribers = await db
+      .collection('newsletter_subscribers')
       .find(showAll ? {} : { active: true })
       .sort({ subscribed_at: -1 })
-      .project({ email: 1, subscribed_at: 1, active: 1 })
+      .project({
+        email: 1,
+        subscribed_at: 1,
+        active: 1
+      })
       .toArray();
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       total_active: count,
       total_shown: subscribers.length,
-      subscribers: subscribers.map(s => ({
+      subscribers: subscribers.map((s) => ({
         email: s.email,
         subscribed_at: s.subscribed_at,
-        active: s.active !== false,
+        active: s.active !== false
       }))
     });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to fetch' },
+      { status: 500 }
+    );
   }
 }
