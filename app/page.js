@@ -1867,10 +1867,12 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
               </a>
               <Link
   href={getLocalizedPath('/partners', currentLang)}
-  className="artist-btn w-full basis-full flex items-center justify-center gap-2"
+  className="w-full flex items-center justify-center gap-2 rounded-full border-2 border-blue-500 bg-zinc-900/80 px-6 py-4 text-white font-semibold hover:bg-blue-500/10 transition-colors"
 >
   <Handshake className="w-5 h-5 text-blue-500" />
-  {t.partnershipOpportunities}
+  <span>
+    {t.partnershipOpportunities || 'Partnership Opportunities'}
+  </span>
 </Link>
   </div>
           </div>
