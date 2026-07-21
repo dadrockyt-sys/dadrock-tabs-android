@@ -1865,7 +1865,9 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                 <ShoppingBag className="w-5 h-5 text-amber-500" />
                 {t.merchandise}
               </a>
-              <Link
+              </div>
+
+<Link
   href={getLocalizedPath('/partners', currentLang)}
   className="w-full flex items-center justify-center gap-2 rounded-full border-2 border-blue-500 bg-zinc-900/80 px-6 py-4 text-white font-semibold hover:bg-blue-500/10 transition-colors"
 >
@@ -1874,8 +1876,8 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
     {t.partnershipOpportunities || 'Partnership Opportunities'}
   </span>
 </Link>
-  </div>
-          </div>
+
+</div>
 
           {/* FAQ Section for SEO */}
           {t.faq && t.faq.length > 0 && (
