@@ -181,7 +181,7 @@ const [previewReady, setPreviewReady] = useState(false);
   <div className="flex items-center justify-between gap-3">
     <div className="min-w-0 flex-1">
       <Image
-        src="/dadrock-tabs-logo.png"
+        src="/DadRock-Tabs-Logo.png"
         alt="DadRock Tabs"
         width={340}
         height={120}
