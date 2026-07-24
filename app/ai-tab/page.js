@@ -4,6 +4,7 @@ import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, Guitar, FileText, Sparkles } from 'lucide-react';
+import PayPalCheckoutButton from '@/components/PayPalCheckoutButton';
 
 function AiTabGeneratorContent() {
   const searchParams = useSearchParams();
@@ -13,6 +14,7 @@ function AiTabGeneratorContent() {
   const [selectedType, setSelectedType] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
 const [previewReady, setPreviewReady] = useState(false);
+  const [paymentCompleted, setPaymentCompleted] = useState(false);
   const handleGeneratePreview = () => {
   if (!selectedType || isGenerating) return;
 
@@ -213,27 +215,54 @@ E|----------------|----------------|`}
       </pre>
     </div>
 
-    <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+    {!paymentCompleted ? (
+  <div className="mt-5 rounded-xl border border-zinc-300 bg-zinc-50 p-4">
+    <h3 className="mb-3 text-center font-bold text-black">
+      Unlock the printable PDF — $2.99 USD
+    </h3>
+
+    <PayPalCheckoutButton
+      song={song}
+      artist={artist}
+      transcriptionType={selectedType}
+      onPaymentCompleted={() => {
+        setPaymentCompleted(true);
+      }}
+    />
+  </div>
+) : (
+  <div className="mt-5 space-y-3">
+    <div className="rounded-xl border border-green-500/40 bg-green-500/10 p-4 text-center">
+      <p className="font-bold text-green-700">
+        ✓ Payment completed
+      </p>
+
+      <p className="mt-1 text-sm text-zinc-600">
+        Your printable tab is unlocked.
+      </p>
+    </div>
+
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       <button
         type="button"
         onClick={() =>
-          alert('PayPal checkout for $2.99 USD will open here.')
+          alert('The finished PDF download will be connected next.')
         }
         className="rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-3 font-bold text-white"
       >
-        Download PDF — $2.99 USD
+        Download PDF
       </button>
 
       <button
         type="button"
-        onClick={() =>
-          alert('Payment will be required before printing.')
-        }
+        onClick={() => window.print()}
         className="rounded-xl border border-zinc-400 bg-zinc-100 px-4 py-3 font-bold text-black"
       >
-        Print Tab — $2.99 USD
+        Print Tab
       </button>
     </div>
+  </div>
+)}
   </section>
 )}
           </div>
