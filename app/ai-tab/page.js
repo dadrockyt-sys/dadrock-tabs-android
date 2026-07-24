@@ -178,34 +178,27 @@ const [previewReady, setPreviewReady] = useState(false);
 {previewReady && (
   <section className="overflow-hidden rounded-2xl border border-amber-500/30 bg-white text-black shadow-xl">
   <div className="border-b-4 border-amber-500 bg-zinc-950 px-5 py-5 text-white">
-    <div className="flex items-start justify-between gap-3 sm:items-center">
-      <div className="flex min-w-0 flex-1 items-center gap-3">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-amber-400 bg-black text-2xl">
-          🎸
-        </div>
+  <div className="flex items-center justify-between gap-3">
+    <div className="min-w-0 flex-1">
+      <Image
+        src="/dadrock-tabs-logo.png"
+        alt="DadRock Tabs"
+        width={340}
+        height={120}
+        className="h-16 w-auto object-contain"
+        priority
+      />
 
-        <div>
-          <div>
-  <Image
-    src="/dadrock-tabs-logo.png"
-    alt="DadRock Tabs"
-    width={340}
-    height={120}
-    className="h-16 w-auto object-contain"
-    priority
-  />
+      <p className="mt-1 text-xs font-semibold uppercase tracking-[0.25em] text-amber-400">
+        AI Guitar Transcription
+      </p>
+    </div>
 
-  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-400">
-    AI Guitar Transcription
-  </p>
-</div>
-      </div>
-
-      <div className="shrink-0 rounded-full border border-amber-400/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-400 sm:px-3 sm:text-xs">
-        Preview
-      </div>
+    <div className="shrink-0 rounded-full border border-amber-400/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-400 sm:px-3 sm:text-xs">
+      Preview
     </div>
   </div>
+</div>
 
   <div className="p-5 sm:p-7">
     <div className="border-b-2 border-zinc-900 pb-5">
