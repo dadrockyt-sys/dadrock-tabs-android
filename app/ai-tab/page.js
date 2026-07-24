@@ -169,14 +169,9 @@ const [previewReady, setPreviewReady] = useState(false);
 </button>
 
             <p className="text-center text-xs text-zinc-500">
-              PDF download price: $2.99 USD after preview
-            </p>
-          </div>
-        </section>
-      </div>
-    </main>
-  );
-}
+  PDF download price: $2.99 USD after preview
+</p>
+
 {previewReady && (
   <section className="rounded-2xl border border-amber-500/30 bg-white p-5 text-black shadow-xl">
     <div className="mb-5 border-b border-zinc-300 pb-4 text-center">
@@ -189,7 +184,8 @@ const [previewReady, setPreviewReady] = useState(false);
       </h2>
 
       <p className="text-zinc-600">
-        {artist} — {selectedType.charAt(0).toUpperCase() + selectedType.slice(1)} Tab
+        {artist} —{' '}
+        {selectedType.charAt(0).toUpperCase() + selectedType.slice(1)} Tab
       </p>
     </div>
 
@@ -240,6 +236,12 @@ E|----------------|----------------|`}
     </div>
   </section>
 )}
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
 
 export default function AiTabGeneratorPage() {
   return (
