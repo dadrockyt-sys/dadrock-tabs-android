@@ -9,6 +9,7 @@ import { getTranslation, locales, localeNames, localeFlags } from '@/lib/i18n';
 import { homepageTranslations } from '@/lib/homepageTranslations';
 import NewsletterSignup from '@/components/NewsletterSignup';
 import GamificationPanel from '@/components/Gamification';
+import AiTabButton from '@/components/AiTabButton';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const DADROCK_TEXT_URL = "https://customer-assets.emergentagent.com/job_nextjs-deploy-3/artifacts/2vno1305_Picsart_26-02-16_06-05-32-255%281%29.png";
@@ -271,12 +272,13 @@ function LanguageSelector({ currentLang }) {
 }
 
 // Video Card Component
-function VideoCard({ video, onClick }) {
+function VideoCard({ video, onClick, lang }) {
   const handleClick = () => {
   onClick(video);
 };
 
   return (
+    <div>
     <div
       className="video-card group flex items-center gap-3 p-2 bg-zinc-900/50 hover:bg-zinc-800 rounded-lg border border-zinc-800 cursor-pointer transition-all"
       onClick={handleClick}
@@ -303,6 +305,13 @@ function VideoCard({ video, onClick }) {
           <span className="text-xs sm:text-sm truncate">{video.artist}</span>
         </div>
       </div>
+           
+            <AiTabButton
+  song={video.song}
+  artist={video.artist}
+  lang={lang}
+/>
+</div>
     </div>
   );
 }
@@ -2143,7 +2152,12 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
           {!loading && searchResults.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
               {searchResults.map((video) => (
-                <VideoCard key={video.id} video={video} onClick={handleVideoClick} />
+                <VideoCard
+  key={video.id}
+  video={video}
+  onClick={handleVideoClick}
+  lang={currentLang}
+/>
               ))}
             </div>
           )}
