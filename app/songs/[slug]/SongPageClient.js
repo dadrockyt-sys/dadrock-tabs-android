@@ -283,6 +283,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
     lang={lang}
   />
 </div>
+</div>
 
         {/* SEO Content — AI-Enhanced (ABOVE video) */}
         <section className="space-y-6 mb-6">
