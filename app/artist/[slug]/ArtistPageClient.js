@@ -9,6 +9,7 @@ import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
 import { artistToSlug } from '@/lib/slugify';
 import SearchBar from '@/components/SearchBar';
+import AiTabButton from '@/components/AiTabButton';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
@@ -480,25 +481,11 @@ const t = getSubPageTranslation(lang);
     <p className="text-sm text-zinc-500">{artistName}</p>
   </div>
 
-    <Link
-  href={`/ai-tab?song=${encodeURIComponent(
-    video.song || video.title
-  )}&artist=${encodeURIComponent(
-    video.artist || artistName
-  )}`}
-  onClick={(event) => {
-    event.stopPropagation();
-  }}
-  className="mt-4 block w-full rounded-xl border border-amber-400/70 bg-gradient-to-r from-amber-500 via-orange-500 to-red-600 px-4 py-3 text-left text-white shadow-lg shadow-orange-500/20 transition-all hover:scale-[1.02] hover:shadow-orange-500/40"
->
-  <span className="block text-base font-bold">
-    🎸 AI Tab Generator
-  </span>
-
-  <span className="mt-1 block text-xs text-white/90">
-    Create a printable PDF of this song using AI.
-  </span>
-</Link>
+    <AiTabButton
+  song={video.song || video.title}
+  artist={video.artist || artistName}
+  lang={lang}
+/>
 </div>
             </div>
           ))}
