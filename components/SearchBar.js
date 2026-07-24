@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, X, Music, User, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import AiTabButton from '@/components/AiTabButton';
 
 export default function SearchBar({ variant = 'full', placeholder = 'Search artists & songs...', currentLang = 'en' }) {
   const [query, setQuery] = useState('');
