@@ -292,6 +292,11 @@ const lang = urlLang && ['es', 'pt', 'pt-br', 'de', 'fr', 'it', 'ja', 'ko', 'zh'
                 {video.artist && video.artist !== 'DadRock Tabs' && (
                   <p className="text-sm text-zinc-400 mt-1">{video.artist}</p>
                 )}
+<AiTabButton
+  song={video.song || video.title}
+  artist={video.artist}
+  lang={lang}
+/>
               </div>
             </div>
           ))}
