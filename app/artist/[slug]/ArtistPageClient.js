@@ -471,14 +471,35 @@ const t = getSubPageTranslation(lang);
               </div>
               
               {/* Video Info */}
-              <div className="p-4">
-                <h3 className="font-semibold text-white group-hover:text-amber-500 transition-colors line-clamp-2">
-                  {video.song || video.title}
-                </h3>
-                <div className="mt-1">
-                  <p className="text-sm text-zinc-500">{artistName}</p>
-                </div>
-              </div>
+<div className="p-4">
+  <h3 className="font-semibold text-white group-hover:text-amber-500 transition-colors line-clamp-2">
+    {video.song || video.title}
+  </h3>
+
+  <div className="mt-1">
+    <p className="text-sm text-zinc-500">{artistName}</p>
+  </div>
+
+  <button
+    type="button"
+    onClick={(event) => {
+      event.stopPropagation();
+
+      alert(
+        `🎸 AI Tab Generator\n\n${video.song || video.title} by ${artistName}\n\nComing soon: Create a printable PDF of this song using AI.`
+      );
+    }}
+    className="mt-4 w-full rounded-xl border border-amber-400/70 bg-gradient-to-r from-amber-500 via-orange-500 to-red-600 px-4 py-3 text-left text-white shadow-lg shadow-orange-500/20 transition-all hover:scale-[1.02] hover:shadow-orange-500/40"
+  >
+    <span className="block text-base font-bold">
+      🎸 AI Tab Generator
+    </span>
+
+    <span className="mt-1 block text-xs text-white/90">
+      Create a printable PDF of this song using AI.
+    </span>
+  </button>
+</div>
             </div>
           ))}
         </div>
