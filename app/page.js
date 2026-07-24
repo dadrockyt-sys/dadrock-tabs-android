@@ -305,13 +305,13 @@ function VideoCard({ video, onClick, lang }) {
           <span className="text-xs sm:text-sm truncate">{video.artist}</span>
         </div>
       </div>
+            </div>
            
             <AiTabButton
   song={video.song}
   artist={video.artist}
   lang={lang}
 />
-</div>
     </div>
   );
 }
