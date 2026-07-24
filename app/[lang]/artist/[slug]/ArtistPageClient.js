@@ -471,6 +471,12 @@ if (youtubeUrl) {
                 <div className="flex items-center justify-between mt-1">
                   <p className="text-sm text-zinc-500">{artistName}</p>
                 </div>
+
+                  <AiTabButton
+  song={video.song || video.title}
+  artist={video.artist || artistName}
+  lang={lang}
+/>
               </div>
             </div>
           ))}
