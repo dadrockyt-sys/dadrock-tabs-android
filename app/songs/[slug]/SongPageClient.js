@@ -279,7 +279,11 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
           <div className="mt-6 flex justify-center">
             {/* Progress Tracker */}
 <div className="mt-6 flex justify-center">
-  <ProgressTracker songSlug={song.slug} songTitle={song.title} lang={lang} />
+  <ProgressTracker
+    songSlug={song.slug}
+    songTitle={song.title}
+    lang={lang}
+  />
 </div>
 
 <div className="mt-6">
