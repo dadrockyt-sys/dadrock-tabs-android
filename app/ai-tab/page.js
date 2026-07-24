@@ -185,13 +185,13 @@ const [previewReady, setPreviewReady] = useState(false);
         alt="DadRock Tabs"
         width={340}
         height={120}
-        className="h-16 w-auto object-contain"
+        className="mx-auto h-20 w-auto object-contain"
         priority
       />
 
-      <p className="mt-1 text-xs font-semibold uppercase tracking-[0.25em] text-amber-400">
-        AI Guitar Transcription
-      </p>
+      <p className="mt-3 text-center text-xs font-semibold uppercase tracking-[0.35em] text-amber-400">
+  AI Guitar Transcription
+</p>
     </div>
 
     <div className="shrink-0 rounded-full border border-amber-400/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-400 sm:px-3 sm:text-xs">
