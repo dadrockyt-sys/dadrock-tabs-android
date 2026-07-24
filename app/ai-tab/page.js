@@ -11,6 +11,19 @@ function AiTabGeneratorContent() {
   const song = searchParams.get('song') || 'Selected Song';
   const artist = searchParams.get('artist') || 'Unknown Artist';
   const [selectedType, setSelectedType] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
+const [previewReady, setPreviewReady] = useState(false);
+  const handleGeneratePreview = () => {
+  if (!selectedType || isGenerating) return;
+
+  setIsGenerating(true);
+  setPreviewReady(false);
+
+  setTimeout(() => {
+    setIsGenerating(false);
+    setPreviewReady(true);
+  }, 2500);
+};
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-zinc-900 px-4 py-8 text-white">
@@ -136,17 +149,23 @@ function AiTabGeneratorContent() {
 
             <button
   type="button"
-  disabled={!selectedType}
+  disabled={!selectedType || isGenerating}
+  onClick={handleGeneratePreview}
   className={`flex w-full items-center justify-center gap-2 rounded-xl py-4 font-bold transition-all ${
-    selectedType
+    selectedType && !isGenerating
       ? 'bg-gradient-to-r from-amber-500 to-red-600 text-white hover:scale-[1.02]'
       : 'cursor-not-allowed bg-zinc-700 text-zinc-400'
   }`}
 >
-  <FileText className="h-5 w-5" />
-  {selectedType
-    ? `Generate ${selectedType.charAt(0).toUpperCase() + selectedType.slice(1)} Tab`
-    : 'Select a transcription'}
+  <FileText className={`h-5 w-5 ${isGenerating ? 'animate-pulse' : ''}`} />
+
+  {isGenerating
+    ? 'AI is creating your preview...'
+    : selectedType
+      ? `Generate ${
+          selectedType.charAt(0).toUpperCase() + selectedType.slice(1)
+        } Tab`
+      : 'Select a transcription'}
 </button>
 
             <p className="text-center text-xs text-zinc-500">
@@ -158,6 +177,69 @@ function AiTabGeneratorContent() {
     </main>
   );
 }
+{previewReady && (
+  <section className="rounded-2xl border border-amber-500/30 bg-white p-5 text-black shadow-xl">
+    <div className="mb-5 border-b border-zinc-300 pb-4 text-center">
+      <p className="text-xs font-bold uppercase tracking-widest text-zinc-500">
+        DadRock Tabs AI Preview
+      </p>
+
+      <h2 className="mt-2 text-2xl font-bold">
+        {song}
+      </h2>
+
+      <p className="text-zinc-600">
+        {artist} — {selectedType.charAt(0).toUpperCase() + selectedType.slice(1)} Tab
+      </p>
+    </div>
+
+    <div className="relative overflow-hidden rounded-xl border border-zinc-300 bg-white p-4 font-mono text-sm leading-7">
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <span className="-rotate-12 text-5xl font-black text-zinc-300/40">
+          PREVIEW
+        </span>
+      </div>
+
+      <pre className="relative z-10 overflow-x-auto whitespace-pre">
+{`e|----------------|----------------|
+B|------8b10------|--8-------------|
+G|--7h9-----------|-----9--7--------|
+D|----------------|-----------9--7--|
+A|----------------|----------------|
+E|----------------|----------------|
+
+e|----------------|----------------|
+B|----------------|----------------|
+G|--7-------------|--7h9--7--------|
+D|-----9--7-------|----------9--7---|
+A|-----------9----|----------------|
+E|----------------|----------------|`}
+      </pre>
+    </div>
+
+    <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <button
+        type="button"
+        onClick={() =>
+          alert('PayPal checkout for $2.99 USD will open here.')
+        }
+        className="rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-3 font-bold text-white"
+      >
+        Download PDF — $2.99 USD
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          alert('Payment will be required before printing.')
+        }
+        className="rounded-xl border border-zinc-400 bg-zinc-100 px-4 py-3 font-bold text-black"
+      >
+        Print Tab — $2.99 USD
+      </button>
+    </div>
+  </section>
+)}
 
 export default function AiTabGeneratorPage() {
   return (
