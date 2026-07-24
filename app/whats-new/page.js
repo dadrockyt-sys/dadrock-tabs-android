@@ -324,51 +324,61 @@ export default function WhatsNewPage() {
         ) : (
           <div className="space-y-3">
             {(data?.recentSongs || []).map((song, i) => (
-              <Link
-                key={song.slug || i}
-                href={
-                  currentLang === 'en'
-                    ? `/songs/${song.slug}`
-                    : `/${currentLang}/songs/${song.slug}`
-                }
-                className="block bg-gray-900/50 hover:bg-gray-800/50 border border-gray-700/50 hover:border-orange-500/30 rounded-xl p-4 transition-all"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-orange-400 font-bold text-lg w-8">
-                      #{i + 1}
-                    </span>
+              <div
+  key={song.slug || i}
+  className="bg-gray-900/50 border border-gray-700/50 rounded-xl p-4"
+>
+  <Link
+    href={
+      currentLang === 'en'
+        ? `/songs/${song.slug}`
+        : `/${currentLang}/songs/${song.slug}`
+    }
+    className="block hover:bg-gray-800/30 rounded-lg transition-all"
+  >
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <span className="text-orange-400 font-bold text-lg w-8">
+          #{i + 1}
+        </span>
 
-                    <div>
-                      <h3 className="font-semibold text-white">
-                        {song.title}
-                      </h3>
+        <div>
+          <h3 className="font-semibold text-white">
+            {song.title}
+          </h3>
 
-                      <p className="text-sm text-gray-400">
-                        {song.artist}
-                      </p>
-                    </div>
-                  </div>
+          <p className="text-sm text-gray-400">
+            {song.artist}
+          </p>
+        </div>
+      </div>
 
-                  <div className="text-right">
-                    {song.difficulty && (
-                      <span className="text-xs bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
-                        {song.difficulty}
-                      </span>
-                    )}
+      <div className="text-right">
+        {song.difficulty && (
+          <span className="text-xs bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
+            {song.difficulty}
+          </span>
+        )}
 
-                    {song.avgRating && (
-                      <div className="text-yellow-400 text-xs mt-1">
-                        {'★'.repeat(Math.round(song.avgRating))}
-                      </div>
-                    )}
+        {song.avgRating && (
+          <div className="text-yellow-400 text-xs mt-1">
+            {'★'.repeat(Math.round(song.avgRating))}
+          </div>
+        )}
 
-                    <p className="text-xs text-gray-500 mt-1">
-                      {formatDate(song.created_at)}
-                    </p>
-                  </div>
-                </div>
-              </Link>
+        <p className="text-xs text-gray-500 mt-1">
+          {formatDate(song.created_at)}
+        </p>
+      </div>
+    </div>
+  </Link>
+
+  <AiTabButton
+    song={song.title}
+    artist={song.artist}
+    lang={currentLang}
+  />
+</div>
             ))}
           </div>
         )}
