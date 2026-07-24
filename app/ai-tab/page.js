@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, Guitar, FileText, Sparkles } from 'lucide-react';
@@ -10,6 +10,7 @@ function AiTabGeneratorContent() {
 
   const song = searchParams.get('song') || 'Selected Song';
   const artist = searchParams.get('artist') || 'Unknown Artist';
+  const [selectedType, setSelectedType] = useState('');
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-zinc-900 px-4 py-8 text-white">
@@ -60,36 +61,60 @@ function AiTabGeneratorContent() {
               </h2>
 
               <div className="space-y-3">
-                <button
-                  type="button"
-                  className="w-full rounded-xl border border-zinc-700 bg-zinc-800 p-4 text-left transition-colors hover:border-amber-500 hover:bg-zinc-700"
-                >
-                  <span className="block font-bold">🎸 Lead Guitar</span>
-                  <span className="mt-1 block text-sm text-zinc-400">
-                    Solos, lead melodies, bends and fills
-                  </span>
-                </button>
+  <button
+    type="button"
+    onClick={() => setSelectedType('lead')}
+    className={`w-full rounded-xl border p-4 text-left transition-all ${
+      selectedType === 'lead'
+        ? 'border-amber-400 bg-amber-500/15 shadow-lg shadow-amber-500/20'
+        : 'border-zinc-700 bg-zinc-800 hover:border-amber-500 hover:bg-zinc-700'
+    }`}
+  >
+    <span className="flex items-center justify-between font-bold">
+      <span>🎸 Lead Guitar</span>
+      {selectedType === 'lead' && <span className="text-amber-400">✓</span>}
+    </span>
+    <span className="mt-1 block text-sm text-zinc-400">
+      Solos, lead melodies, bends and fills
+    </span>
+  </button>
 
-                <button
-                  type="button"
-                  className="w-full rounded-xl border border-zinc-700 bg-zinc-800 p-4 text-left transition-colors hover:border-amber-500 hover:bg-zinc-700"
-                >
-                  <span className="block font-bold">🎸 Rhythm Guitar</span>
-                  <span className="mt-1 block text-sm text-zinc-400">
-                    Riffs, chords and rhythm sections
-                  </span>
-                </button>
+  <button
+    type="button"
+    onClick={() => setSelectedType('rhythm')}
+    className={`w-full rounded-xl border p-4 text-left transition-all ${
+      selectedType === 'rhythm'
+        ? 'border-amber-400 bg-amber-500/15 shadow-lg shadow-amber-500/20'
+        : 'border-zinc-700 bg-zinc-800 hover:border-amber-500 hover:bg-zinc-700'
+    }`}
+  >
+    <span className="flex items-center justify-between font-bold">
+      <span>🎸 Rhythm Guitar</span>
+      {selectedType === 'rhythm' && <span className="text-amber-400">✓</span>}
+    </span>
+    <span className="mt-1 block text-sm text-zinc-400">
+      Riffs, chords and rhythm sections
+    </span>
+  </button>
 
-                <button
-                  type="button"
-                  className="w-full rounded-xl border border-zinc-700 bg-zinc-800 p-4 text-left transition-colors hover:border-amber-500 hover:bg-zinc-700"
-                >
-                  <span className="block font-bold">🎸 Bass Guitar</span>
-                  <span className="mt-1 block text-sm text-zinc-400">
-                    Bass lines and fills
-                  </span>
-                </button>
-              </div>
+  <button
+    type="button"
+    onClick={() => setSelectedType('bass')}
+    className={`w-full rounded-xl border p-4 text-left transition-all ${
+      selectedType === 'bass'
+        ? 'border-amber-400 bg-amber-500/15 shadow-lg shadow-amber-500/20'
+        : 'border-zinc-700 bg-zinc-800 hover:border-amber-500 hover:bg-zinc-700'
+    }`}
+  >
+    <span className="flex items-center justify-between font-bold">
+      <span>🎸 Bass Guitar</span>
+      {selectedType === 'bass' && <span className="text-amber-400">✓</span>}
+    </span>
+    <span className="mt-1 block text-sm text-zinc-400">
+      Bass lines and fills
+    </span>
+  </button>
+</div>
             </div>
 
             <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5">
@@ -110,13 +135,19 @@ function AiTabGeneratorContent() {
             </div>
 
             <button
-              type="button"
-              disabled
-              className="flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-red-600 px-5 py-4 font-bold text-white opacity-60"
-            >
-              <FileText className="h-5 w-5" />
-              Generate AI Tab — Coming Next
-            </button>
+  type="button"
+  disabled={!selectedType}
+  className={`flex w-full items-center justify-center gap-2 rounded-xl py-4 font-bold transition-all ${
+    selectedType
+      ? 'bg-gradient-to-r from-amber-500 to-red-600 text-white hover:scale-[1.02]'
+      : 'cursor-not-allowed bg-zinc-700 text-zinc-400'
+  }`}
+>
+  <FileText className="h-5 w-5" />
+  {selectedType
+    ? `Generate ${selectedType.charAt(0).toUpperCase() + selectedType.slice(1)} Tab`
+    : 'Select a transcription'}
+</button>
 
             <p className="text-center text-xs text-zinc-500">
               PDF download price: $2.99 USD after preview
