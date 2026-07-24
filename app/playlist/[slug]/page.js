@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getDb } from '@/lib/mongodb';
 import { artistToSlug } from '@/lib/slugify';
 import Link from 'next/link';
+import AiTabButton from '@/components/AiTabButton';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -176,43 +177,56 @@ export default async function PlaylistPage({ params }) {
               {matchedSongs.map((song, index) => {
                 const href = song.slug ? `/songs/${song.slug}` : `/artist/${song.artistSlug}`;
                 return (
-                  <Link
-                    key={index}
-                    href={href}
-                    className="group flex items-center gap-4 p-4 bg-zinc-900/60 rounded-xl border border-zinc-800 hover:border-amber-500/50 hover:bg-zinc-900 transition-all"
-                  >
-                    {/* Track number */}
-                    <div className="w-8 text-center text-zinc-500 font-mono text-sm group-hover:text-amber-500 transition-colors flex-shrink-0">
-                      {index + 1}
-                    </div>
+                  <div
+  key={index}
+  className="p-4 bg-zinc-900/60 rounded-xl border border-zinc-800"
+>
+  <Link
+    href={href}
+    className="group flex items-center gap-4 hover:bg-zinc-900 transition-all rounded-lg"
+  >
+    {/* Track number */}
+    <div className="w-8 text-center text-zinc-500 font-mono text-sm group-hover:text-amber-500 transition-colors flex-shrink-0">
+      {index + 1}
+    </div>
 
-                    {/* Thumbnail */}
-                    {song.thumbnail && (
-                      <div className="w-16 h-12 rounded-lg overflow-hidden flex-shrink-0">
-                        <img
-                          src={song.thumbnail}
-                          alt={song.title}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                      </div>
-                    )}
+    {/* Thumbnail */}
+    {song.thumbnail && (
+      <div className="w-16 h-12 rounded-lg overflow-hidden flex-shrink-0">
+        <img
+          src={song.thumbnail}
+          alt={song.title}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    )}
 
-                    {/* Song info */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-white group-hover:text-amber-500 transition-colors truncate">
-                        {song.title}
-                      </h3>
-                      <p className="text-sm text-zinc-500 truncate">{song.artist}</p>
-                    </div>
+    {/* Song info */}
+    <div className="flex-1 min-w-0">
+      <h3 className="font-medium text-white group-hover:text-amber-500 transition-colors truncate">
+        {song.title}
+      </h3>
+      <p className="text-sm text-zinc-500 truncate">
+        {song.artist}
+      </p>
+    </div>
 
-                    {/* Duration */}
-                    {song.duration > 0 && (
-                      <span className="text-xs text-zinc-600 flex-shrink-0">
-                        {Math.floor(song.duration / 60)}:{String(song.duration % 60).padStart(2, '0')}
-                      </span>
-                    )}
-                  </Link>
+    {/* Duration */}
+    {song.duration > 0 && (
+      <span className="text-xs text-zinc-600 flex-shrink-0">
+        {Math.floor(song.duration / 60)}:
+        {String(song.duration % 60).padStart(2, '0')}
+      </span>
+    )}
+  </Link>
+
+  <AiTabButton
+    song={song.title}
+    artist={song.artist}
+    lang="en"
+  />
+</div>
                 );
               })}
             </div>
