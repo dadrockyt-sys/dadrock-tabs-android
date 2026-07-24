@@ -168,8 +168,8 @@ export default function SearchBar({ variant = 'full', placeholder = 'Search arti
               {results.songs.map((song, i) => {
                 const idx = results.artists.length + i;
                 return (
+                  <div key={song.slug}>
                   <button
-                    key={song.slug}
                     onClick={() => handleNavigate(`${prefix}/songs/${song.slug}`)}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors ${
                       selectedIndex === idx ? 'bg-amber-500/10 text-amber-500' : 'hover:bg-zinc-800 text-white'
@@ -188,6 +188,12 @@ export default function SearchBar({ variant = 'full', placeholder = 'Search arti
                     </div>
                     <Music className="w-4 h-4 text-zinc-600 flex-shrink-0 ml-auto" />
                   </button>
+<AiTabButton
+  song={song.title}
+  artist={song.artist}
+  lang={currentLang}
+/>
+</div>
                 );
               })}
             </div>
