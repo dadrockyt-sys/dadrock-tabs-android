@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, Guitar, FileText, Sparkles } from 'lucide-react';
 import PayPalCheckoutButton from '@/components/PayPalCheckoutButton';
-import Image from 'next/image';
 
 function AiTabGeneratorContent() {
   const searchParams = useSearchParams();
@@ -178,20 +177,16 @@ const [previewReady, setPreviewReady] = useState(false);
 {previewReady && (
   <section className="overflow-hidden rounded-2xl border border-amber-500/30 bg-white text-black shadow-xl">
   <div className="border-b-4 border-amber-500 bg-zinc-950 px-5 py-5 text-white">
-    <div className="flex items-center justify-between gap-4">
-      <div className="flex items-center gap-3">
+    <div className="flex items-start justify-between gap-3 sm:items-center">
+      <div className="flex min-w-0 flex-1 items-center gap-3">
         <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-amber-400 bg-black text-2xl">
           🎸
         </div>
 
         <div>
-          <Image
-  src="/logo.png"
-  alt="DadRock Tabs"
-  width={240}
-  height={60}
-  className="h-12 w-auto"
-/>
+          <p className="text-lg font-black uppercase tracking-wide sm:text-xl">
+  DadRock Tabs
+</p>
 
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-400">
             AI Guitar Transcription
@@ -199,7 +194,7 @@ const [previewReady, setPreviewReady] = useState(false);
         </div>
       </div>
 
-      <div className="rounded-full border border-amber-400/60 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-400">
+      <div className="shrink-0 rounded-full border border-amber-400/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-400 sm:px-3 sm:text-xs">
         Preview
       </div>
     </div>
