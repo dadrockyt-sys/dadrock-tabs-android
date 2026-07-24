@@ -284,15 +284,6 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
   />
 </div>
 
-<div className="mt-6">
-  <AiTabButton
-    song={song.title}
-    artist={song.artist}
-    lang={lang}
-  />
-</div>
-</div>
-
         {/* SEO Content — AI-Enhanced (ABOVE video) */}
         <section className="space-y-6 mb-6">
           {/* Rock Divider */}
@@ -389,6 +380,14 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
             {t.watchOnYouTube}
           </a>
         </div>
+
+<div className="mt-6">
+  <AiTabButton
+    song={song.title}
+    artist={song.artist}
+    lang={lang}
+  />
+</div>
 
         {/* Additional AI Content (below video) */}
         <section className="space-y-6 mb-12">
