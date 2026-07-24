@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, Guitar, FileText, Sparkles } from 'lucide-react';
 import PayPalCheckoutButton from '@/components/PayPalCheckoutButton';
+import Image from 'next/image';
 
 function AiTabGeneratorContent() {
   const searchParams = useSearchParams();
@@ -184,14 +185,20 @@ const [previewReady, setPreviewReady] = useState(false);
         </div>
 
         <div>
-          <p className="text-lg font-black uppercase tracking-wide sm:text-xl">
-  DadRock Tabs
-</p>
+          <div>
+  <Image
+    src="/dadrock-tabs-logo.png"
+    alt="DadRock Tabs"
+    width={340}
+    height={120}
+    className="h-16 w-auto object-contain"
+    priority
+  />
 
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-400">
-            AI Guitar Transcription
-          </p>
-        </div>
+  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-400">
+    AI Guitar Transcription
+  </p>
+</div>
       </div>
 
       <div className="shrink-0 rounded-full border border-amber-400/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-400 sm:px-3 sm:text-xs">
