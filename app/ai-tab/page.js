@@ -175,20 +175,86 @@ const [previewReady, setPreviewReady] = useState(false);
 </p>
 
 {previewReady && (
-  <section className="rounded-2xl border border-amber-500/30 bg-white p-5 text-black shadow-xl">
-    <div className="mb-5 border-b border-zinc-300 pb-4 text-center">
-      <p className="text-xs font-bold uppercase tracking-widest text-zinc-500">
-        DadRock Tabs AI Preview
+  <section className="overflow-hidden rounded-2xl border border-amber-500/30 bg-white text-black shadow-xl">
+  <div className="border-b-4 border-amber-500 bg-zinc-950 px-5 py-5 text-white">
+    <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center gap-3">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-amber-400 bg-black text-2xl">
+          🎸
+        </div>
+
+        <div>
+          <p className="text-lg font-black uppercase tracking-wide">
+            DadRock Tabs
+          </p>
+
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-400">
+            AI Guitar Transcription
+          </p>
+        </div>
+      </div>
+
+      <div className="rounded-full border border-amber-400/60 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-400">
+        Preview
+      </div>
+    </div>
+  </div>
+
+  <div className="p-5 sm:p-7">
+    <div className="border-b-2 border-zinc-900 pb-5">
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
+        Printable Guitar Tab
       </p>
 
-      <h2 className="mt-2 text-2xl font-bold">
+      <h2 className="mt-2 text-3xl font-black leading-tight text-zinc-950">
         {song}
       </h2>
 
-      <p className="text-zinc-600">
-        {artist} —{' '}
-        {selectedType.charAt(0).toUpperCase() + selectedType.slice(1)} Tab
+      <p className="mt-1 text-xl font-semibold text-zinc-600">
+        {artist}
       </p>
+
+      <div className="mt-5 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+        <div className="rounded-lg border border-zinc-300 bg-zinc-50 p-3">
+          <p className="text-xs font-bold uppercase text-zinc-500">
+            Instrument
+          </p>
+
+          <p className="mt-1 font-bold capitalize text-zinc-900">
+            {selectedType}
+          </p>
+        </div>
+
+        <div className="rounded-lg border border-zinc-300 bg-zinc-50 p-3">
+          <p className="text-xs font-bold uppercase text-zinc-500">
+            Tuning
+          </p>
+
+          <p className="mt-1 font-bold text-zinc-900">
+            Standard
+          </p>
+        </div>
+
+        <div className="rounded-lg border border-zinc-300 bg-zinc-50 p-3">
+          <p className="text-xs font-bold uppercase text-zinc-500">
+            Difficulty
+          </p>
+
+          <p className="mt-1 font-bold text-zinc-900">
+            Intermediate
+          </p>
+        </div>
+
+        <div className="rounded-lg border border-zinc-300 bg-zinc-50 p-3">
+          <p className="text-xs font-bold uppercase text-zinc-500">
+            Format
+          </p>
+
+          <p className="mt-1 font-bold text-zinc-900">
+            Guitar TAB
+          </p>
+        </div>
+      </div>
     </div>
 
     <div className="relative overflow-hidden rounded-xl border border-zinc-300 bg-white p-4 font-mono text-sm leading-7">
@@ -263,6 +329,7 @@ E|----------------|----------------|`}
     </div>
   </div>
 )}
+</div>
   </section>
 )}
           </div>
