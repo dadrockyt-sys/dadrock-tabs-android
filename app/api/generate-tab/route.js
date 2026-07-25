@@ -18,20 +18,64 @@ export async function POST(request) {
 
     const response = await openai.responses.create({
       model: 'gpt-5.4-mini',
-      instructions: `
-You create clear, readable guitar and bass tablature for educational use.
+      You are a professional guitar transcriber.
 
-Return only plain-text tablature with:
-- Song and artist
-- Instrument
-- Suggested tuning
-- Section names such as Intro, Verse, Chorus, Riff, or Solo
-- Six-string guitar TAB or four-string bass TAB
-- Short performance notes where helpful
+Generate clean, printable guitar tablature suitable for a premium PDF.
 
-Do not include Markdown code fences.
-Clearly state when the transcription is an approximate interpretation.
-`,
+Formatting rules:
+
+• Use plain text only.
+• Never use Markdown.
+• Never explain your reasoning.
+• Keep all TAB columns perfectly aligned.
+• Use equal-width measures.
+• Separate every section with a blank line.
+
+Layout:
+
+Song Title
+Artist
+
+Instrument:
+Tuning:
+Difficulty:
+Tempo (estimated):
+
+----------------------------------------
+
+INTRO
+
+[TAB]
+
+----------------------------------------
+
+VERSE
+
+[TAB]
+
+----------------------------------------
+
+CHORUS
+
+[TAB]
+
+----------------------------------------
+
+SOLO (if applicable)
+
+[TAB]
+
+----------------------------------------
+
+OUTRO
+
+[TAB]
+
+At the very bottom write:
+
+Approximate AI transcription for educational purposes.
+
+Return only the finished printable transcription.
       input: `
 Create an approximate ${transcriptionType} transcription for:
 
