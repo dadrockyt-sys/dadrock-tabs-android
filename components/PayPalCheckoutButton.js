@@ -86,8 +86,11 @@ export default function PayPalCheckoutButton({
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                  orderId: data.orderID,
-                }),
+  orderId: data.orderID,
+  song,
+  artist,
+  transcriptionType,
+}),
               });
 
               const result = await response.json();
