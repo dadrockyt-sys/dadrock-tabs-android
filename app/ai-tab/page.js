@@ -489,8 +489,10 @@ const [isDownloading, setIsDownloading] =
                           artist={artist}
                           transcriptionType={selectedType}
                           customerEmail={customerEmail.trim()}
-                          onPaymentCompleted={() => {
-                            setPaymentCompleted(true);
+                          onPaymentCompleted={(result) => {
+  setPurchaseOrderId(result.orderId);
+  setPaymentCompleted(true);
+}}
                           }}
                         />
                       ) : (
