@@ -77,6 +77,7 @@ At the very bottom write:
 Approximate AI transcription for educational purposes.
 
 Return only the finished printable transcription.
+`,
       input: `
 Create an approximate ${transcriptionType} transcription for:
 
