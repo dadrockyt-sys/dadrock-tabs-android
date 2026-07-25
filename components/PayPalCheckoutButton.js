@@ -107,12 +107,8 @@ export default function PayPalCheckoutButton({
 
 if (typeof onPaymentCompleted === 'function') {
   onPaymentCompleted({
-    orderId:
-      result.orderId ||
-      result.orderID ||
-      result.id ||
-      result.order?.id,
-  });
+  orderId: data.orderID,
+});
 }
             },
 
