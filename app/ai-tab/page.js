@@ -490,7 +490,15 @@ const [isDownloading, setIsDownloading] =
                           transcriptionType={selectedType}
                           customerEmail={customerEmail.trim()}
                           onPaymentCompleted={(result) => {
-  setPurchaseOrderId(result.orderId);
+  const receivedOrderId = result?.orderId || '';
+
+  alert(
+    receivedOrderId
+      ? `PayPal order received: ${receivedOrderId}`
+      : 'ERROR: PayPal order ID was not received.'
+  );
+
+  setPurchaseOrderId(receivedOrderId);
   setPaymentCompleted(true);
 }}
                         />
