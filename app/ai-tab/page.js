@@ -36,6 +36,12 @@ function AiTabGeneratorContent() {
   const [paymentCompleted, setPaymentCompleted] =
     useState(false);
 
+  const [purchaseOrderId, setPurchaseOrderId] =
+  useState('');
+
+const [isDownloading, setIsDownloading] =
+  useState(false);
+
   const [generatedTab, setGeneratedTab] =
     useState('');
 
@@ -52,6 +58,7 @@ function AiTabGeneratorContent() {
     setGeneratedTab('');
     setGenerationError('');
     setPaymentCompleted(false);
+    setPurchaseOrderId('');
 
     try {
       const response = await fetch(
@@ -90,6 +97,74 @@ function AiTabGeneratorContent() {
       setIsGenerating(false);
     }
   };
+
+  const handleDownloadPdf = async () => {
+  if (!purchaseOrderId || isDownloading) {
+    return;
+  }
+
+  setIsDownloading(true);
+  setGenerationError('');
+
+  try {
+    const response = await fetch(
+      '/api/generate-tab-pdf',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          orderId: purchaseOrderId,
+          song,
+          artist,
+          transcriptionType: selectedType,
+          generatedTab,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      const data = await response.json();
+
+      throw new Error(
+        data.error || 'The PDF could not be generated.'
+      );
+    }
+
+    const pdfBlob = await response.blob();
+    const downloadUrl =
+      window.URL.createObjectURL(pdfBlob);
+
+    const disposition =
+      response.headers.get('Content-Disposition');
+
+    const fileNameMatch =
+      disposition?.match(/filename="([^"]+)"/i);
+
+    const fileName =
+      fileNameMatch?.[1] || 'dadrock-ai-tab.pdf';
+
+    const link = document.createElement('a');
+
+    link.href = downloadUrl;
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    window.URL.revokeObjectURL(downloadUrl);
+  } catch (error) {
+    setGenerationError(
+      error instanceof Error
+        ? error.message
+        : 'The PDF could not be downloaded.'
+    );
+  } finally {
+    setIsDownloading(false);
+  }
+};
 
   const emailIsValid =
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
