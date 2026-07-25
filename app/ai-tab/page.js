@@ -115,12 +115,13 @@ const [isDownloading, setIsDownloading] =
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          orderId: purchaseOrderId,
-          song,
-          artist,
-          transcriptionType: selectedType,
-          generatedTab,
-        }),
+  orderId: purchaseOrderId,
+  song,
+  artist,
+  transcriptionType: selectedType,
+  generatedTab,
+  customerEmail: customerEmail.trim(),
+}),
       }
     );
 
@@ -528,14 +529,11 @@ const [isDownloading, setIsDownloading] =
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <button
                           type="button"
-                          onClick={() =>
-                            alert(
-                              'The finished PDF download will be connected next.'
-                            )
-                          }
+                          onClick={handleDownloadPdf}
+disabled={isDownloading}
                           className="rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-3 font-bold text-white"
                         >
-                          Download PDF
+                          {isDownloading ? 'Preparing PDF...' : 'Download PDF'}
                         </button>
 
                         <button
