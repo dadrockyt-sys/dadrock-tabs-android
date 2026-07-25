@@ -105,8 +105,6 @@ export default function PayPalCheckoutButton({
 
               setPaymentCompleted(true);
 
-alert(`PayPal approved: ${data.orderID}`);
-
 onPaymentCompleted({
   orderId: data.orderID,
 });
