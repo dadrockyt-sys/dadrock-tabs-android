@@ -493,7 +493,6 @@ const [isDownloading, setIsDownloading] =
   setPurchaseOrderId(result.orderId);
   setPaymentCompleted(true);
 }}
-                          }}
                         />
                       ) : (
                         <p className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-center text-sm text-amber-700">
