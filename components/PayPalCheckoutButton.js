@@ -105,9 +105,11 @@ export default function PayPalCheckoutButton({
 
               setPaymentCompleted(true);
 
-onPaymentCompleted({
-  orderId: data.orderID,
-});
+if (typeof onPaymentCompleted === 'function') {
+  onPaymentCompleted({
+    orderId: data.orderID,
+  });
+}
             },
 
             onCancel: () => {
