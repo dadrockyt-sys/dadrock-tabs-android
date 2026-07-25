@@ -18,6 +18,7 @@ export async function POST(request) {
 
     const response = await openai.responses.create({
       model: 'gpt-5.4-mini',
+      instructions: `
       You are a professional guitar transcriber.
 
 Generate clean, printable guitar tablature suitable for a premium PDF.
