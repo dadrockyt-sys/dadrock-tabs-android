@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { resend } from '@/lib/resend';
 import { NextResponse } from 'next/server';
 import {
   PDFDocument,
@@ -432,22 +433,42 @@ export async function POST(request) {
     const generatedTab = cleanTabText(
       body?.generatedTab
     );
+    const customerEmail = cleanText(
+  body?.customerEmail,
+  254
+).toLowerCase();
+
+const emailIsValid =
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+    customerEmail
+  );
 
     if (
-      !orderId ||
-      !song ||
-      !artist ||
-      !transcriptionType ||
-      !generatedTab
-    ) {
-      return NextResponse.json(
-        {
-          error:
-            'Order ID, song, artist, transcription type, and tab are required.',
-        },
-        { status: 400 }
-      );
-    }
+  !orderId ||
+  !song ||
+  !artist ||
+  !transcriptionType ||
+  !generatedTab ||
+  !customerEmail
+) {
+  return NextResponse.json(
+    {
+      error:
+        'Order ID, song, artist, transcription type, tab, and customer email are required.',
+    },
+    { status: 400 }
+  );
+}
+
+if (!emailIsValid) {
+  return NextResponse.json(
+    {
+      error:
+        'Please provide a valid email address.',
+    },
+    { status: 400 }
+  );
+}
 
     if (!/^[A-Z0-9]+$/i.test(orderId)) {
       return NextResponse.json(
