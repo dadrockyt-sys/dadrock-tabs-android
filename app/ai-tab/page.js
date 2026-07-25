@@ -16,16 +16,45 @@ function AiTabGeneratorContent() {
   const [isGenerating, setIsGenerating] = useState(false);
 const [previewReady, setPreviewReady] = useState(false);
   const [paymentCompleted, setPaymentCompleted] = useState(false);
-  const handleGeneratePreview = () => {
+  const [generatedTab, setGeneratedTab] = useState('');
+const [generationError, setGenerationError] = useState('');
+  const handleGeneratePreview = async () => {
   if (!selectedType || isGenerating) return;
 
   setIsGenerating(true);
   setPreviewReady(false);
+  setGeneratedTab('');
+  setGenerationError('');
+  setPaymentCompleted(false);
 
-  setTimeout(() => {
-    setIsGenerating(false);
+  try {
+    const response = await fetch('/api/generate-tab', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        song,
+        artist,
+        transcriptionType: selectedType,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'The tab could not be generated.');
+    }
+
+    setGeneratedTab(data.tab);
     setPreviewReady(true);
-  }, 2500);
+  } catch (error) {
+    setGenerationError(
+      error.message || 'Something went wrong while generating the tab.'
+    );
+  } finally {
+    setIsGenerating(false);
+  }
 };
 
   return (
