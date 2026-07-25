@@ -8,6 +8,7 @@ export default function PayPalCheckoutButton({
   song,
   artist,
   transcriptionType,
+  customerEmail,
   onPaymentCompleted,
 }) {
   const containerRef = useRef(null);
@@ -90,6 +91,7 @@ export default function PayPalCheckoutButton({
   song,
   artist,
   transcriptionType,
+  customerEmail,
 }),
               });
 
@@ -180,7 +182,13 @@ export default function PayPalCheckoutButton({
     return () => {
       isCancelled = true;
     };
-  }, [song, artist, transcriptionType, onPaymentCompleted]);
+  }, [
+  song,
+  artist,
+  transcriptionType,
+  customerEmail,
+  onPaymentCompleted,
+]);
 
   if (paymentCompleted) {
     return (
