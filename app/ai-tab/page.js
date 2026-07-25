@@ -286,15 +286,15 @@ const [generationError, setGenerationError] = useState('');
       </div>
     </div>
 
-    <div className="relative overflow-hidden rounded-xl border border-zinc-300 bg-white p-4 font-mono text-sm leading-7">
+    <div className="relative mt-6 overflow-hidden border-y-2 border-black bg-white px-5 py-8 font-mono text-[13px] leading-6 sm:px-8 sm:text-sm sm:leading-7">
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <span className="-rotate-12 text-5xl font-black text-zinc-300/40">
           PREVIEW
         </span>
       </div>
 
-      <pre className="relative z-10 overflow-x-auto whitespace-pre-wrap break-words">
-  {generatedTab}
+      <pre className="relative z-10 mx-auto max-w-full overflow-x-auto whitespace-pre font-mono text-black">
+{generatedTab}
 </pre>
     </div>
 
