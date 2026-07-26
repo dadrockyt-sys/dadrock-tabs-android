@@ -6,19 +6,19 @@ import {
   useRef,
   useState,
 } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+
 import {
   ArrowLeft,
   Check,
-  CreditCard,
+  ChevronDown,
   Download,
   FileAudio,
   FileText,
-  Guitar,
-  Music,
-  Printer,
+  Music2,
   ShieldCheck,
   Sparkles,
   Upload,
@@ -37,20 +37,49 @@ const TRANSCRIPTION_TYPES = [
   {
     value: 'lead-guitar',
     label: 'Lead Guitar',
-    description: 'Solos, melodies, bends, and fills',
+    description:
+      'Solos, melodies, bends, and fills',
     icon: '🎸',
+    iconClass: 'text-red-400',
   },
   {
     value: 'rhythm-guitar',
     label: 'Rhythm Guitar',
-    description: 'Riffs, chords, and backing parts',
+    description:
+      'Riffs, chords, and backing parts',
     icon: '🎸',
+    iconClass: 'text-blue-400',
   },
   {
     value: 'bass-guitar',
     label: 'Bass Guitar',
-    description: 'Bass lines, grooves, and runs',
+    description:
+      'Bass lines, grooves, and runs',
     icon: '🎸',
+    iconClass: 'text-emerald-400',
+  },
+];
+
+const PROCESS_STEPS = [
+  {
+    number: 1,
+    label: 'Upload Audio',
+  },
+  {
+    number: 2,
+    label: 'Separate Parts',
+  },
+  {
+    number: 3,
+    label: 'Detect Notes',
+  },
+  {
+    number: 4,
+    label: 'Generate Tab',
+  },
+  {
+    number: 5,
+    label: 'Preview & Pay',
   },
 ];
 
@@ -59,42 +88,46 @@ const FAQ_ITEMS = [
     question:
       'How accurate will my AI-generated tab be?',
     answer:
-      'Accuracy depends on the recording quality, instrument clarity, tuning, and complexity of the song. You can review the generated preview before purchasing the polished PDF.',
+      'Accuracy depends on the clarity of the instrument, recording quality, tuning, tempo, and complexity. You can review the preview before paying.',
   },
   {
     question:
       'What audio files can I upload?',
     answer:
-      'The generator accepts common audio formats such as MP3, WAV, M4A, AAC, and similar browser-supported audio files.',
+      'You can upload common audio formats including MP3, WAV, M4A, and AAC, up to 100 MB.',
   },
   {
     question:
       'Can I generate guitar and bass tabs?',
     answer:
-      'Yes. You can choose lead guitar, rhythm guitar, or bass guitar before generating your preview.',
+      'Yes. Choose lead guitar, rhythm guitar, or bass guitar before generating your transcription.',
   },
   {
     question:
       'What happens to my uploaded audio?',
     answer:
-      'Your audio is used only to process the requested transcription. It is not displayed publicly or added to the DadRock Tabs lesson library.',
+      'Your recording is used only to process your private transcription request and is never published as a DadRock Tabs lesson.',
   },
   {
     question:
       'What do I receive after payment?',
     answer:
-      'After successful payment, you can download a polished, printable PDF containing your generated tablature.',
+      'You receive a polished, printable DadRock Tabs PDF containing the completed tablature.',
   },
 ];
 
 function AiTabGeneratorContent() {
   const searchParams = useSearchParams();
   const [selectedLang] = useLanguage();
+  const fileInputRef = useRef(null);
 
   const currentLang =
     selectedLang || 'en';
 
-  const fileInputRef = useRef(null);
+  const localizedHomePath =
+    currentLang === 'en'
+      ? '/'
+      : `/${currentLang}`;
 
   const [youtubeUrl, setYoutubeUrl] =
     useState(
@@ -153,8 +186,7 @@ function AiTabGeneratorContent() {
     statusMessage,
     setStatusMessage,
   ] = useState('');
-
-  const [
+    const [
     paymentCompleted,
     setPaymentCompleted,
   ] = useState(false);
@@ -171,7 +203,8 @@ function AiTabGeneratorContent() {
 
   const [openFaq, setOpenFaq] =
     useState(null);
-    const formIsComplete = useMemo(
+
+  const formIsComplete = useMemo(
     () =>
       Boolean(
         songTitle.trim() &&
@@ -188,12 +221,6 @@ function AiTabGeneratorContent() {
       copyrightConfirmed,
     ]
   );
-
-  const localizedHomePath =
-    !currentLang ||
-    currentLang === 'en'
-      ? '/'
-      : `/${currentLang}`;
 
   const handleFileChange = (event) => {
     const selectedFile =
@@ -265,7 +292,7 @@ function AiTabGeneratorContent() {
         isGenerating
       ) {
         setStatusMessage(
-          'Upload an audio file, choose an instrument, enter the song information, and confirm the copyright statement.'
+          'Upload an audio file, enter the song information, choose an instrument, and confirm the copyright statement.'
         );
 
         return;
@@ -343,7 +370,6 @@ function AiTabGeneratorContent() {
         setGenerationError(
           'The PayPal order could not be verified.'
         );
-
         return;
       }
 
@@ -388,7 +414,7 @@ function AiTabGeneratorContent() {
         setPaymentCompleted(true);
 
         setStatusMessage(
-          'Payment successful! Your polished tab PDF is ready to download.'
+          'Payment successful! Your polished PDF is ready.'
         );
       } catch (error) {
         setPaymentCompleted(false);
@@ -403,23 +429,25 @@ function AiTabGeneratorContent() {
       }
     };
 
-  const handlePaymentCancelled = () => {
-    setGenerationError('');
+  const handlePaymentCancelled =
+    () => {
+      setGenerationError('');
 
-    setStatusMessage(
-      'Payment was cancelled. You have not been charged.'
-    );
-  };
+      setStatusMessage(
+        'Payment cancelled.'
+      );
+    };
 
-  const handlePaymentError = () => {
-    setPaymentCompleted(false);
-    setPurchaseOrderId('');
-    setStatusMessage('');
+  const handlePaymentError =
+    () => {
+      setPaymentCompleted(false);
+      setPurchaseOrderId('');
+      setStatusMessage('');
 
-    setGenerationError(
-      'PayPal encountered an error. Please try again.'
-    );
-  };
+      setGenerationError(
+        'PayPal encountered an error.'
+      );
+    };
 
   const handleDownloadPdf =
     async () => {
@@ -431,7 +459,6 @@ function AiTabGeneratorContent() {
       }
 
       setIsDownloading(true);
-      setGenerationError('');
 
       try {
         const response = await fetch(
@@ -445,7 +472,8 @@ function AiTabGeneratorContent() {
             body: JSON.stringify({
               orderId:
                 purchaseOrderId,
-              song: songTitle.trim(),
+              song:
+                songTitle.trim(),
               artist:
                 artistName.trim(),
               transcriptionType:
@@ -458,65 +486,36 @@ function AiTabGeneratorContent() {
         );
 
         if (!response.ok) {
-          let errorMessage =
-            'The PDF could not be generated.';
-
-          try {
-            const data =
-              await response.json();
-
-            errorMessage =
-              data.error ||
-              errorMessage;
-          } catch {
-            // Keep the default message.
-          }
-
           throw new Error(
-            errorMessage
+            'The PDF could not be generated.'
           );
         }
 
         const pdfBlob =
           await response.blob();
 
-        const downloadUrl =
+        const url =
           window.URL.createObjectURL(
             pdfBlob
           );
 
-        const disposition =
-          response.headers.get(
-            'Content-Disposition'
-          );
-
-        const fileNameMatch =
-          disposition?.match(
-            /filename="?([^"]+)"?/i
-          );
-
-        const fileName =
-          fileNameMatch?.[1] ||
-          'dadrock-ai-tab.pdf';
-
-        const downloadLink =
+        const link =
           document.createElement('a');
 
-        downloadLink.href =
-          downloadUrl;
-
-        downloadLink.download =
-          fileName;
+        link.href = url;
+        link.download =
+          'dadrock-ai-tab.pdf';
 
         document.body.appendChild(
-          downloadLink
+          link
         );
 
-        downloadLink.click();
-        downloadLink.remove();
+        link.click();
+
+        link.remove();
 
         window.URL.revokeObjectURL(
-          downloadUrl
+          url
         );
       } catch (error) {
         setGenerationError(
@@ -556,55 +555,53 @@ function AiTabGeneratorContent() {
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <div className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(249,115,22,0.15),transparent_35%)]" />
+      <div className="mx-auto w-full max-w-6xl px-3 py-4 sm:px-5 lg:px-6">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <Link
+            href={localizedHomePath}
+            className="inline-flex items-center gap-2 text-xs font-bold text-amber-400 transition hover:text-orange-300 sm:text-sm"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to DadRock Tabs
+          </Link>
 
-        <div className="relative mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
-          <div className="mb-5 flex items-center justify-between gap-4">
-            <Link
-              href={localizedHomePath}
-              className="inline-flex items-center gap-2 text-sm font-bold text-amber-400 transition hover:text-orange-300"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to DadRock Tabs
-            </Link>
+          <LanguageSelector />
+        </div>
 
-            <LanguageSelector />
+        <header className="text-center">
+          <Image
+            src="/Dadrock-Tabs-Logo.png"
+            alt="DadRock Tabs"
+            width={850}
+            height={420}
+            priority
+            className="mx-auto h-auto w-full max-w-xl object-contain sm:max-w-2xl"
+          />
+
+          <div className="mx-auto -mt-2 max-w-5xl rounded-2xl border border-orange-500/60 bg-black px-4 py-4 shadow-[0_0_24px_rgba(249,115,22,0.2)] sm:px-7 sm:py-5">
+            <h1 className="text-2xl font-black tracking-tight text-white sm:text-4xl">
+              AI Guitar &amp; Bass Tab Generator
+            </h1>
+
+            <p className="mx-auto mt-2 max-w-3xl text-sm leading-5 text-zinc-300 sm:text-base">
+              Upload any song and get printable guitar or bass
+              tabs in minutes with the power of AI.
+            </p>
           </div>
+        </header>
 
-          <header className="text-center">
-            <Image
-              src="/dadrockmetal.png"
-              alt="DadRock Tabs"
-              width={760}
-              height={330}
-              priority
-              className="mx-auto h-auto w-full max-w-2xl object-contain"
-            />
+        <section className="mt-3 grid gap-3 lg:grid-cols-2">
+          <div className="space-y-3">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5">
+              <div className="flex items-start gap-3">
+                <Youtube className="mt-0.5 h-5 w-5 shrink-0 text-red-500" />
 
-            <div className="mx-auto mt-2 max-w-5xl rounded-3xl border border-orange-500/50 bg-black/80 px-5 py-7 shadow-[0_0_35px_rgba(249,115,22,0.18)] sm:px-10">
-              <h1 className="text-3xl font-black tracking-tight text-white sm:text-5xl">
-                AI Guitar &amp; Bass Tab Generator
-              </h1>
-
-              <p className="mx-auto mt-3 max-w-3xl text-base leading-7 text-zinc-300 sm:text-lg">
-                Upload any song and get printable guitar or bass
-                tabs in minutes with the power of AI.
-              </p>
-            </div>
-          </header>
-
-          <section className="mt-5 grid gap-4 lg:grid-cols-2">
-            <div className="rounded-3xl border border-zinc-800 bg-zinc-950/85 p-5 shadow-xl sm:p-6">
-              <div className="flex items-center gap-3">
-                <Youtube className="h-6 w-6 text-red-500" />
-
-                <div>
-                  <h2 className="text-xl font-black text-white">
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-base font-black text-white sm:text-lg">
                     YouTube reference link
                   </h2>
 
-                  <p className="mt-1 text-sm text-zinc-400">
+                  <p className="mt-1 text-xs leading-5 text-zinc-400 sm:text-sm">
                     Paste a YouTube link to identify and preview
                     the recording.
                   </p>
@@ -618,197 +615,209 @@ function AiTabGeneratorContent() {
                   setYoutubeUrl(event.target.value)
                 }
                 placeholder="https://www.youtube.com/watch?v=..."
-                className="mt-5 w-full rounded-2xl border border-zinc-700 bg-black px-4 py-4 text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                className="mt-3 w-full rounded-xl border border-zinc-700 bg-black px-3 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
               />
-
-              <div className="mt-5 border-t border-zinc-800 pt-5">
-                <div className="flex items-center gap-3">
-                  <Music className="h-6 w-6 text-amber-400" />
-
-                  <h2 className="text-xl font-black text-white">
-                    Song Information
-                  </h2>
-                </div>
-
-                <div className="mt-4 space-y-4">
-                  <div>
-                    <label
-                      htmlFor="song-title"
-                      className="mb-2 block text-sm font-bold text-zinc-300"
-                    >
-                      Song Title
-                    </label>
-
-                    <input
-                      id="song-title"
-                      type="text"
-                      value={songTitle}
-                      onChange={(event) =>
-                        setSongTitle(event.target.value)
-                      }
-                      placeholder="Enter the song title"
-                      className="w-full rounded-2xl border border-zinc-700 bg-black px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
-                    />
-                  </div>
-                    <div>
-                    <label
-                      htmlFor="artist-name"
-                      className="mb-2 block text-sm font-bold text-zinc-300"
-                    >
-                      Artist or Band
-                    </label>
-
-                    <input
-                      id="artist-name"
-                      type="text"
-                      value={artistName}
-                      onChange={(event) =>
-                        setArtistName(event.target.value)
-                      }
-                      placeholder="Enter the artist or band"
-                      className="w-full rounded-2xl border border-zinc-700 bg-black px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
 
-            <div className="rounded-3xl border border-zinc-800 bg-zinc-950/85 p-5 shadow-xl sm:p-6">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5">
               <div className="flex items-center gap-3">
-                <Upload className="h-6 w-6 text-orange-400" />
+                <Music2 className="h-5 w-5 text-amber-400" />
+
+                <h2 className="text-base font-black text-white sm:text-lg">
+                  Song Information
+                </h2>
+              </div>
+
+              <div className="mt-3 grid gap-3">
+                <div>
+                  <label
+                    htmlFor="song-title"
+                    className="mb-1.5 block text-xs font-bold text-zinc-300 sm:text-sm"
+                  >
+                    Song Title
+                  </label>
+
+                  <input
+                    id="song-title"
+                    type="text"
+                    value={songTitle}
+                    onChange={(event) =>
+                      setSongTitle(event.target.value)
+                    }
+                    placeholder="Enter the song title"
+                    className="w-full rounded-xl border border-zinc-700 bg-black px-3 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
+                  />
+                </div>
 
                 <div>
-                  <h2 className="text-xl font-black text-white">
-                    Upload your audio
-                  </h2>
+                  <label
+                    htmlFor="artist-name"
+                    className="mb-1.5 block text-xs font-bold text-zinc-300 sm:text-sm"
+                  >
+                    Artist or Band
+                  </label>
 
-                  <p className="mt-1 text-sm text-zinc-400">
-                    MP3, WAV, M4A, AAC, or another supported audio
-                    format up to 100 MB.
-                  </p>
+                  <input
+                    id="artist-name"
+                    type="text"
+                    value={artistName}
+                    onChange={(event) =>
+                      setArtistName(event.target.value)
+                    }
+                    placeholder="Enter the artist or band"
+                    className="w-full rounded-xl border border-zinc-700 bg-black px-3 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
+                  />
                 </div>
               </div>
+            </div>
+          </div>
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5">
+            <div className="flex items-start gap-3">
+              <Upload className="mt-0.5 h-5 w-5 shrink-0 text-orange-400" />
 
-              <label
-                htmlFor="audio-file"
-                className="mt-5 flex min-h-56 cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-zinc-700 bg-black/60 px-5 py-8 text-center transition hover:border-orange-500 hover:bg-orange-500/5"
-              >
-                <FileAudio className="h-12 w-12 text-orange-400" />
+              <div>
+                <h2 className="text-base font-black text-white sm:text-lg">
+                  Upload Audio
+                </h2>
 
-                <span className="mt-4 text-lg font-black text-white">
-                  Choose an audio file
-                </span>
+                <p className="mt-1 text-xs leading-5 text-zinc-400 sm:text-sm">
+                  Choose an MP3, WAV, M4A, or AAC file from your
+                  device.
+                </p>
+              </div>
+            </div>
 
-                <span className="mt-2 text-sm text-zinc-500">
-                  Tap here to browse files on your device
-                </span>
+            <label
+              htmlFor="audio-file"
+              className="mt-3 flex min-h-52 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-zinc-700 bg-black px-4 py-6 text-center transition hover:border-orange-500 hover:bg-orange-500/5 sm:min-h-64"
+            >
+              <FileAudio className="h-11 w-11 text-orange-400 sm:h-14 sm:w-14" />
 
-                <input
-                  ref={fileInputRef}
-                  id="audio-file"
-                  type="file"
-                  accept="audio/*"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
-              </label>
+              <span className="mt-3 rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-5 py-2 text-sm font-black text-white shadow-[0_0_18px_rgba(249,115,22,0.3)]">
+                Browse Audio Files
+              </span>
 
-              {audioFile && (
-                <div className="mt-4 flex items-center justify-between gap-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4">
-                  <div className="min-w-0">
-                    <p className="truncate font-bold text-emerald-300">
-                      {audioFile.name}
-                    </p>
+              <span className="mt-3 text-xs text-zinc-400">
+                or tap here to select your audio
+              </span>
 
-                    <p className="mt-1 text-xs text-zinc-400">
-                      {(audioFile.size / 1024 / 1024).toFixed(1)} MB
-                    </p>
-                  </div>
+              <span className="mt-1 text-[11px] text-zinc-600">
+                Supported formats: MP3, WAV, M4A, AAC
+              </span>
 
-                  <button
-                    type="button"
-                    onClick={removeAudioFile}
-                    className="rounded-full border border-zinc-700 bg-black p-2 text-zinc-300 transition hover:border-red-500 hover:text-red-400"
-                    aria-label="Remove audio file"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
+              <input
+                ref={fileInputRef}
+                id="audio-file"
+                type="file"
+                accept="audio/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </label>
+
+            {audioFile && (
+              <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-3">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-bold text-emerald-300">
+                    {audioFile.name}
+                  </p>
+
+                  <p className="mt-0.5 text-xs text-zinc-500">
+                    {(audioFile.size / 1024 / 1024).toFixed(1)} MB
+                  </p>
                 </div>
-              )}
-            </div>
-          </section>
 
-          <section className="mt-5 rounded-3xl border border-zinc-800 bg-zinc-950/85 p-5 shadow-xl sm:p-7">
-            <div className="text-center">
-              <p className="text-sm font-black uppercase tracking-[0.25em] text-orange-400">
-                Choose your transcription
-              </p>
+                <button
+                  type="button"
+                  onClick={removeAudioFile}
+                  className="rounded-full border border-zinc-700 bg-black p-2 text-zinc-400 transition hover:border-red-500 hover:text-red-400"
+                  aria-label="Remove audio file"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
 
-              <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">
-                Which instrument do you want tabbed?
-              </h2>
-            </div>
+        <section className="mt-3 rounded-2xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5">
+          <div className="flex items-center gap-3">
+            <Music2 className="h-5 w-5 text-amber-400" />
 
-            <div className="mt-6 grid gap-4 md:grid-cols-3">
-              {TRANSCRIPTION_TYPES.map((type) => {
-                const isSelected =
-                  selectedType === type.value;
+            <h2 className="text-base font-black text-white sm:text-lg">
+              Choose the Part to Transcribe
+            </h2>
+          </div>
 
-                return (
-                  <button
-                    key={type.value}
-                    type="button"
-                    onClick={() =>
-                      setSelectedType(type.value)
-                    }
-                    className={`relative rounded-3xl border p-6 text-left transition ${
+          <div className="mt-3 grid gap-3 md:grid-cols-3">
+            {TRANSCRIPTION_TYPES.map((type) => {
+              const isSelected =
+                selectedType === type.value;
+
+              return (
+                <button
+                  key={type.value}
+                  type="button"
+                  onClick={() =>
+                    setSelectedType(type.value)
+                  }
+                  className={`relative flex items-center gap-3 rounded-2xl border px-4 py-3 text-left transition ${
+                    isSelected
+                      ? 'border-orange-500 bg-orange-500/12 shadow-[0_0_18px_rgba(249,115,22,0.16)]'
+                      : 'border-zinc-800 bg-black hover:border-orange-500/70'
+                  }`}
+                >
+                  <span className={`text-3xl ${type.iconClass}`}>
+                    {type.icon}
+                  </span>
+
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-black text-white">
+                      {type.label}
+                    </span>
+
+                    <span className="mt-0.5 block text-xs leading-4 text-zinc-400">
+                      {type.description}
+                    </span>
+                  </span>
+
+                  <span
+                    className={`h-5 w-5 shrink-0 rounded-full border ${
                       isSelected
-                        ? 'border-orange-500 bg-orange-500/15 shadow-[0_0_24px_rgba(249,115,22,0.18)]'
-                        : 'border-zinc-800 bg-black/60 hover:border-orange-500/70'
+                        ? 'border-orange-500 bg-orange-500'
+                        : 'border-zinc-600 bg-black'
                     }`}
                   >
                     {isSelected && (
-                      <span className="absolute right-4 top-4 rounded-full bg-orange-500 p-1 text-white">
-                        <Check className="h-4 w-4" />
-                      </span>
+                      <Check className="h-full w-full p-0.5 text-white" />
                     )}
-
-                    <div className="text-5xl">
-                      {type.icon}
-                    </div>
-
-                    <h3 className="mt-5 text-xl font-black text-white">
-                      {type.label}
-                    </h3>
-
-                    <p className="mt-2 text-sm leading-6 text-zinc-400">
-                      {type.description}
-                    </p>
-                  </button>
-                );
-              })}
-            </div>
-              </section>
-          <section className="mt-5 rounded-3xl border border-orange-500/40 bg-gradient-to-r from-orange-500/15 via-orange-500/8 to-transparent p-6 shadow-[0_0_35px_rgba(249,115,22,0.18)]">
-            <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-center">
-              <div>
-                <div className="flex items-start gap-3 rounded-2xl border border-zinc-700 bg-black/40 p-4">
-                  <ShieldCheck className="mt-1 h-6 w-6 text-emerald-400" />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+        <section className="mt-3 rounded-2xl border border-orange-500/40 bg-gradient-to-r from-orange-500/10 via-orange-500/5 to-transparent p-4 sm:p-5">
+          <div className="grid gap-5 lg:grid-cols-[1fr_320px] lg:items-center">
+            <div>
+              <div className="rounded-2xl border border-zinc-700 bg-black/40 p-4">
+                <div className="flex items-start gap-3">
+                  <ShieldCheck className="mt-0.5 h-5 w-5 text-emerald-400" />
 
                   <div>
-                    <h3 className="font-black text-white">
+                    <h3 className="text-sm font-black text-white">
                       Copyright Confirmation
                     </h3>
 
-                    <p className="mt-2 text-sm leading-6 text-zinc-400">
+                    <p className="mt-2 text-xs leading-5 text-zinc-400">
                       Only upload recordings you own or have
-                      permission to use. DadRock Tabs does not
-                      store or publish your uploaded audio.
+                      permission to use. Your upload is used only
+                      to generate your private transcription.
                     </p>
                   </div>
                 </div>
 
-                <label className="mt-5 flex cursor-pointer items-start gap-4 rounded-2xl border border-zinc-700 bg-black/40 p-4">
+                <label className="mt-4 flex cursor-pointer items-start gap-3">
                   <input
                     type="checkbox"
                     checked={copyrightConfirmed}
@@ -820,15 +829,14 @@ function AiTabGeneratorContent() {
                     className="mt-1 h-5 w-5 accent-orange-500"
                   />
 
-                  <span className="text-sm leading-6 text-zinc-300">
+                  <span className="text-xs leading-5 text-zinc-300">
                     I confirm that I own this recording or have
-                    permission to generate a private AI
-                    transcription.
+                    permission to create this AI transcription.
                   </span>
                 </label>
 
-                <div className="mt-6">
-                  <label className="mb-2 block text-sm font-bold text-zinc-300">
+                <div className="mt-4">
+                  <label className="mb-2 block text-xs font-bold text-zinc-300">
                     Email address (optional)
                   </label>
 
@@ -841,105 +849,104 @@ function AiTabGeneratorContent() {
                       )
                     }
                     placeholder="you@example.com"
-                    className="w-full rounded-2xl border border-zinc-700 bg-black px-4 py-3 text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
+                    className="w-full rounded-xl border border-zinc-700 bg-black px-3 py-3 text-sm text-white outline-none placeholder:text-zinc-600 focus:border-orange-500"
                   />
                 </div>
 
                 {statusMessage && (
-                  <div className="mt-5 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-300">
+                  <div className="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-xs text-emerald-300">
                     {statusMessage}
                   </div>
                 )}
 
                 {generationError && (
-                  <div className="mt-5 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300">
+                  <div className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
                     {generationError}
                   </div>
                 )}
               </div>
+            </div>
 
-              <div className="text-center">
-                <button
-                  type="button"
-                  onClick={handleGeneratePreview}
-                  disabled={!formIsComplete || isGenerating}
-                  className="w-full rounded-3xl bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-6 text-2xl font-black text-white shadow-[0_0_35px_rgba(249,115,22,0.35)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  {isGenerating ? (
-                    <>
-                      <Sparkles className="mx-auto mb-2 h-8 w-8 animate-pulse" />
-                      Generating...
-                    </>
-                  ) : (
-                    <>
-                      🎸 Generate My AI Tab
-                    </>
-                  )}
-                </button>
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={handleGeneratePreview}
+                disabled={
+                  !formIsComplete ||
+                  isGenerating
+                }
+                className="w-full rounded-3xl bg-gradient-to-r from-orange-500 to-red-500 px-6 py-6 text-xl font-black text-white shadow-[0_0_35px_rgba(249,115,22,0.35)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                {isGenerating ? (
+                  <>
+                    <Sparkles className="mx-auto mb-2 h-7 w-7 animate-pulse" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    🎸 Generate My AI Tab
+                  </>
+                )}
+              </button>
 
-                <p className="mt-4 text-sm text-zinc-400">
-                  Preview first • Pay only if you're happy
+              <p className="mt-3 text-xs text-zinc-400">
+                Preview first • Pay only if you're happy
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 grid grid-cols-5 gap-2 overflow-x-auto">
+            {PROCESS_STEPS.map((step) => (
+              <div
+                key={step.number}
+                className="min-w-[88px] rounded-xl border border-zinc-800 bg-black/50 p-3 text-center"
+              >
+                <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-sm font-black text-white">
+                  {step.number}
+                </div>
+
+                <p className="mt-2 text-[11px] font-bold text-zinc-300">
+                  {step.label}
                 </p>
               </div>
-            </div>
+            ))}
+          </div>
+        </section>
+        {previewReady && (
+          <section className="mt-3 rounded-2xl border border-orange-500/40 bg-zinc-950 p-4 sm:p-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-orange-400">
+                  Your AI Transcription
+                </p>
 
-            <div className="mt-10 grid gap-4 md:grid-cols-5">
-              {[
-                'Upload',
-                'Analyze',
-                'Generate',
-                'Preview',
-                'Download',
-              ].map((step, index) => (
-                <div
-                  key={step}
-                  className="rounded-2xl border border-zinc-800 bg-black/50 p-5 text-center"
-                >
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-orange-500 text-lg font-black text-white">
-                    {index + 1}
-                  </div>
+                <h2 className="mt-1 text-xl font-black text-white sm:text-2xl">
+                  Preview Your Generated Tab
+                </h2>
 
-                  <p className="mt-4 font-bold text-white">
-                    {step}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </section>
-          {previewReady && (
-            <section className="mt-5 rounded-3xl border border-orange-500/40 bg-zinc-950/90 p-5 shadow-[0_0_35px_rgba(249,115,22,0.15)] sm:p-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <p className="text-sm font-black uppercase tracking-[0.25em] text-orange-400">
-                    Your AI transcription
-                  </p>
-
-                  <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">
-                    Preview your generated tab
-                  </h2>
-
-                  <p className="mt-2 text-sm text-zinc-400">
-                    {songTitle} by {artistName}
-                  </p>
-                </div>
-
-                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-sm font-black text-emerald-300">
-                  <Check className="h-4 w-4" />
-                  Preview Ready
-                </span>
+                <p className="mt-1 text-xs text-zinc-400 sm:text-sm">
+                  {songTitle} by {artistName}
+                </p>
               </div>
 
-              <div className="mt-6 overflow-hidden rounded-3xl border border-zinc-800 bg-black">
-                <div className="flex items-center justify-between border-b border-zinc-800 px-5 py-4">
-                  <div className="flex items-center gap-3">
-                    <FileText className="h-5 w-5 text-orange-400" />
+              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs font-black text-emerald-300">
+                <Check className="h-4 w-4" />
+                Preview Ready
+              </span>
+            </div>
 
-                    <span className="font-black text-white">
+            <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_320px]">
+              <div className="overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-200">
+                <div className="flex items-center justify-between border-b border-zinc-300 bg-white px-4 py-3 text-black">
+                  <div className="flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-orange-500" />
+
+                    <span className="text-sm font-black">
                       DadRock AI Tab Preview
                     </span>
                   </div>
 
-                  <span className="rounded-full bg-zinc-900 px-3 py-1 text-xs font-bold text-zinc-400">
+                  <span className="rounded-full bg-zinc-100 px-3 py-1 text-[11px] font-bold text-zinc-600">
                     {TRANSCRIPTION_TYPES.find(
                       (type) =>
                         type.value === selectedType
@@ -947,56 +954,63 @@ function AiTabGeneratorContent() {
                   </span>
                 </div>
 
-                <pre className="max-h-[520px] overflow-auto whitespace-pre-wrap p-5 font-mono text-xs leading-6 text-zinc-200 sm:p-7 sm:text-sm">
-                  {generatedTab ||
-                    'Your generated tablature will appear here.'}
-                </pre>
+                <div className="bg-white p-4 text-black sm:p-6">
+                  <div className="mx-auto max-w-3xl rounded-xl border border-zinc-300 bg-white p-4 shadow-sm sm:p-6">
+                    <div className="border-b border-zinc-300 pb-4 text-center">
+                      <h3 className="text-xl font-black">
+                        {songTitle}
+                      </h3>
+
+                      <p className="mt-1 text-sm text-zinc-600">
+                        {artistName}
+                      </p>
+
+                      <p className="mt-2 text-xs font-bold uppercase tracking-[0.15em] text-orange-500">
+                        DadRock Tabs AI Transcription
+                      </p>
+                    </div>
+
+                    <pre className="mt-4 max-h-[520px] overflow-auto whitespace-pre-wrap font-mono text-[11px] leading-5 text-zinc-900 sm:text-xs">
+                      {generatedTab ||
+                        'Your generated tablature will appear here.'}
+                    </pre>
+                  </div>
+                </div>
               </div>
 
               {!paymentCompleted ? (
-                <div className="mt-6 grid gap-6 rounded-3xl border border-orange-500/30 bg-gradient-to-br from-orange-500/15 to-transparent p-6 lg:grid-cols-[1fr_0.8fr] lg:items-center">
-                  <div>
-                    <div className="flex items-center gap-3">
-                      <Printer className="h-7 w-7 text-orange-400" />
+                <div className="rounded-2xl border border-orange-500/30 bg-gradient-to-b from-orange-500/12 to-black p-4">
+                  <div className="text-center">
+                    <Download className="mx-auto h-8 w-8 text-orange-400" />
 
-                      <h3 className="text-2xl font-black text-white">
-                        Get the polished printable PDF
-                      </h3>
-                    </div>
+                    <h3 className="mt-3 text-xl font-black text-white">
+                      Download the Polished PDF
+                    </h3>
 
-                    <p className="mt-4 leading-7 text-zinc-300">
-                      Unlock the complete professionally formatted
-                      tablature PDF for printing, practice, and
-                      offline use.
+                    <p className="mt-2 text-xs leading-5 text-zinc-400">
+                      Unlock the complete printable PDF after
+                      reviewing your AI-generated preview.
                     </p>
-
-                    <div className="mt-5 space-y-3 text-sm text-zinc-300">
-                      <p className="flex items-center gap-3">
-                        <Check className="h-5 w-5 text-emerald-400" />
-                        Clean portrait PDF layout
-                      </p>
-
-                      <p className="flex items-center gap-3">
-                        <Check className="h-5 w-5 text-emerald-400" />
-                        Complete guitar or bass transcription
-                      </p>
-
-                      <p className="flex items-center gap-3">
-                        <Check className="h-5 w-5 text-emerald-400" />
-                        Instant download after payment
-                      </p>
-                    </div>
                   </div>
 
-                  <div className="rounded-3xl border border-zinc-700 bg-black/70 p-5">
-                    <div className="mb-5 text-center">
-                      <CreditCard className="mx-auto h-8 w-8 text-orange-400" />
+                  <div className="mt-4 space-y-2 text-xs text-zinc-300">
+                    <p className="flex items-center gap-2">
+                      <Check className="h-4 w-4 text-emerald-400" />
+                      Clean portrait layout
+                    </p>
 
-                      <p className="mt-3 text-sm font-bold text-zinc-400">
-                        Secure payment with PayPal
-                      </p>
-                    </div>
+                    <p className="flex items-center gap-2">
+                      <Check className="h-4 w-4 text-emerald-400" />
+                      Full guitar or bass tab
+                    </p>
 
+                    <p className="flex items-center gap-2">
+                      <Check className="h-4 w-4 text-emerald-400" />
+                      Instant download
+                    </p>
+                  </div>
+
+                  <div className="mt-5 rounded-xl border border-zinc-700 bg-black p-3">
                     <PayPalCheckoutButton
                       song={songTitle.trim()}
                       artist={artistName.trim()}
@@ -1009,192 +1023,192 @@ function AiTabGeneratorContent() {
                   </div>
                 </div>
               ) : (
-                <div className="mt-6 rounded-3xl border border-emerald-500/30 bg-emerald-500/10 p-6">
-                  <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex items-start gap-4">
-                      <div className="rounded-full bg-emerald-500 p-3 text-white">
-                        <Check className="h-6 w-6" />
-                      </div>
-
-                      <div>
-                        <h3 className="text-2xl font-black text-white">
-                          Payment complete
-                        </h3>
-
-                        <p className="mt-2 text-emerald-300">
-                          Your polished DadRock tab PDF is ready to
-                          download.
-                        </p>
-                      </div>
+                <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="rounded-full bg-emerald-500 p-2 text-white">
+                      <Check className="h-5 w-5" />
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={handleDownloadPdf}
-                      disabled={isDownloading}
-                      className="inline-flex items-center justify-center gap-3 rounded-2xl bg-emerald-500 px-6 py-4 text-lg font-black text-white transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      <Download className="h-5 w-5" />
+                    <div>
+                      <h3 className="text-lg font-black text-white">
+                        Payment Complete
+                      </h3>
 
-                      {isDownloading
-                        ? 'Preparing PDF...'
-                        : 'Download Polished PDF'}
-                    </button>
+                      <p className="mt-1 text-xs leading-5 text-emerald-300">
+                        Your polished DadRock Tabs PDF is ready.
+                      </p>
+                    </div>
                   </div>
 
                   <button
                     type="button"
+                    onClick={handleDownloadPdf}
+                    disabled={isDownloading}
+                    className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-3 text-sm font-black text-white transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <Download className="h-4 w-4" />
+
+                    {isDownloading
+                      ? 'Preparing PDF...'
+                      : 'Download Polished PDF'}
+                  </button>
+
+                  <button
+                    type="button"
                     onClick={handleStartOver}
-                    className="mt-5 w-full rounded-2xl border border-zinc-700 bg-black/50 px-5 py-3 font-bold text-zinc-200 transition hover:border-orange-500 hover:text-white"
+                    className="mt-3 w-full rounded-xl border border-zinc-700 bg-black/50 px-4 py-3 text-sm font-bold text-zinc-200 transition hover:border-orange-500 hover:text-white"
                   >
                     Generate Another Tab
                   </button>
                 </div>
               )}
-            </section>
-          )}
-
-          <section className="mt-5 grid gap-4 md:grid-cols-3">
-            <div className="rounded-3xl border border-zinc-800 bg-zinc-950/85 p-6 text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/15">
-                <Sparkles className="h-7 w-7 text-orange-400" />
-              </div>
-
-              <h2 className="mt-5 text-xl font-black text-white">
-                AI-Powered Accuracy
-              </h2>
-
-              <p className="mt-3 text-sm leading-6 text-zinc-400">
-                Advanced transcription technology analyzes the
-                guitar or bass parts in your recording.
-              </p>
-            </div>
-
-            <div className="rounded-3xl border border-zinc-800 bg-zinc-950/85 p-6 text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/15">
-                <ShieldCheck className="h-7 w-7 text-orange-400" />
-              </div>
-
-              <h2 className="mt-5 text-xl font-black text-white">
-                Private and Secure
-              </h2>
-
-              <p className="mt-3 text-sm leading-6 text-zinc-400">
-                Your uploaded recording is used only for your
-                transcription request and is never published.
-              </p>
-            </div>
-
-            <div className="rounded-3xl border border-zinc-800 bg-zinc-950/85 p-6 text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/15">
-                <FileText className="h-7 w-7 text-orange-400" />
-              </div>
-
-              <h2 className="mt-5 text-xl font-black text-white">
-                Print-Ready PDF
-              </h2>
-
-              <p className="mt-3 text-sm leading-6 text-zinc-400">
-                Receive a polished tablature document designed for
-                printing, practice, and offline use.
-              </p>
             </div>
           </section>
+        )}
 
-          <section className="mt-5 rounded-3xl border border-zinc-800 bg-zinc-950/85 p-5 sm:p-7">
-            <div className="text-center">
-              <p className="text-sm font-black uppercase tracking-[0.25em] text-orange-400">
-                Frequently Asked Questions
-              </p>
+        <section className="mt-3 grid gap-3 md:grid-cols-3">
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4">
+            <div className="flex items-start gap-3">
+              <Sparkles className="mt-0.5 h-5 w-5 text-orange-400" />
 
-              <h2 className="mt-2 text-3xl font-black text-white">
-                Everything you need to know
-              </h2>
+              <div>
+                <h2 className="text-sm font-black text-white">
+                  AI-Powered Separation
+                </h2>
+
+                <p className="mt-1 text-xs leading-5 text-zinc-400">
+                  AI isolates the selected guitar or bass part
+                  before analyzing the notes.
+                </p>
+              </div>
             </div>
+          </div>
 
-            <div className="mx-auto mt-7 max-w-4xl space-y-3">
-              {FAQ_ITEMS.map((item, index) => {
-                const isOpen =
-                  openFaq === index;
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4">
+            <div className="flex items-start gap-3">
+              <ShieldCheck className="mt-0.5 h-5 w-5 text-emerald-400" />
 
-                return (
-                  <div
-                    key={item.question}
-                    className="overflow-hidden rounded-2xl border border-zinc-800 bg-black/50"
-                  >
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setOpenFaq(
-                          isOpen ? null : index
-                        )
-                      }
-                      className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left"
-                    >
-                      <span className="font-black text-white">
-                        {item.question}
-                      </span>
+              <div>
+                <h2 className="text-sm font-black text-white">
+                  Private and Secure
+                </h2>
 
-                      <span className="text-2xl font-light text-orange-400">
-                        {isOpen ? '−' : '+'}
-                      </span>
-                    </button>
-
-                    {isOpen && (
-                      <div className="border-t border-zinc-800 px-5 py-5 text-sm leading-7 text-zinc-400">
-                        {item.answer}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                <p className="mt-1 text-xs leading-5 text-zinc-400">
+                  Your recording is used only for your private
+                  transcription request.
+                </p>
+              </div>
             </div>
-          </section>
-          <footer className="mt-5 border-t border-zinc-900 py-8 text-center">
-            <div className="flex flex-wrap items-center justify-center gap-5 text-sm font-bold text-zinc-500">
-              <Link
-                href={localizedHomePath}
-                className="transition hover:text-orange-400"
-              >
-                DadRock Tabs
-              </Link>
+          </div>
 
-              <Link
-                href="/privacy"
-                className="transition hover:text-orange-400"
-              >
-                Privacy
-              </Link>
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4">
+            <div className="flex items-start gap-3">
+              <FileText className="mt-0.5 h-5 w-5 text-blue-400" />
 
-              <Link
-                href="/terms"
-                className="transition hover:text-orange-400"
-              >
-                Terms
-              </Link>
+              <div>
+                <h2 className="text-sm font-black text-white">
+                  Print-Ready PDF
+                </h2>
+
+                <p className="mt-1 text-xs leading-5 text-zinc-400">
+                  Download a polished portrait PDF designed for
+                  practice and printing.
+                </p>
+              </div>
             </div>
+          </div>
+        </section>
 
-            <p className="mt-4 text-xs leading-6 text-zinc-600">
-              AI-generated tablature may require review and
-              correction. Use only audio you own or have permission
-              to transcribe.
+        <section className="mt-3 rounded-2xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5">
+          <div className="text-center">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-orange-400">
+              Frequently Asked Questions
             </p>
-          </footer>
-        </div>
+
+            <h2 className="mt-1 text-xl font-black text-white sm:text-2xl">
+              Everything You Need to Know
+            </h2>
+          </div>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            {FAQ_ITEMS.map((item, index) => {
+              const isOpen =
+                openFaq === index;
+
+              return (
+                <div
+                  key={item.question}
+                  className="overflow-hidden rounded-xl border border-zinc-800 bg-black/50"
+                >
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setOpenFaq(
+                        isOpen ? null : index
+                      )
+                    }
+                    className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left"
+                  >
+                    <span className="text-sm font-black text-white">
+                      {item.question}
+                    </span>
+
+                    <ChevronDown
+                      className={`h-4 w-4 shrink-0 text-orange-400 transition ${
+                        isOpen
+                          ? 'rotate-180'
+                          : ''
+                      }`}
+                    />
+                  </button>
+
+                  {isOpen && (
+                    <div className="border-t border-zinc-800 px-4 py-4 text-xs leading-5 text-zinc-400">
+                      {item.answer}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+        <footer className="mt-4 border-t border-zinc-800 py-6 text-center">
+          <Image
+            src="/Dadrock-Tabs-Logo.png"
+            alt="DadRock Tabs"
+            width={360}
+            height={180}
+            className="mx-auto h-auto w-full max-w-48 object-contain"
+          />
+
+          <p className="mx-auto mt-2 max-w-2xl text-xs leading-5 text-zinc-500">
+            AI-generated tablature may require small corrections.
+            Always use your ears and compare the transcription with
+            the original recording.
+          </p>
+
+          <Link
+            href={localizedHomePath}
+            className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-orange-400 transition hover:text-orange-300"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Return to DadRock Tabs
+          </Link>
+        </footer>
       </div>
     </main>
   );
 }
 
-export default function AiTabPage() {
+export default function AiTabGeneratorPage() {
   return (
     <Suspense
       fallback={
         <main className="flex min-h-screen items-center justify-center bg-black text-white">
           <div className="text-center">
-            <Sparkles className="mx-auto h-10 w-10 animate-pulse text-orange-400" />
+            <Sparkles className="mx-auto h-8 w-8 animate-pulse text-orange-400" />
 
-            <p className="mt-4 font-bold text-zinc-300">
+            <p className="mt-3 text-sm font-bold text-zinc-300">
               Loading AI Tab Generator...
             </p>
           </div>
@@ -1204,4 +1218,4 @@ export default function AiTabPage() {
       <AiTabGeneratorContent />
     </Suspense>
   );
-      }
+}
