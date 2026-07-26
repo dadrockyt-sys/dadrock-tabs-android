@@ -789,8 +789,8 @@ function AiTabGeneratorContent() {
                 AI Powered Transcription
               </div>
 
-              <h1 className="text-3xl font-black tracking-tight text-white sm:text-5xl">
-                AI Guitar & Bass Tab Generator
+              <h1 className="text-[1.8rem] font-black tracking-tight text-white sm:text-5xl">
+                Guitar & Bass Tab Generator
               </h1>
 
               <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base">
