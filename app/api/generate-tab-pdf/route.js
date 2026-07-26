@@ -513,6 +513,33 @@ if (!emailIsValid) {
       transcriptionType,
     });
 
+    const emailResult = await resend.emails.send({
+  from:
+    process.env.RESEND_FROM_EMAIL ||
+    'DadRock Tabs <onboarding@resend.dev>',
+  to: customerEmail,
+  subject: `${song} — ${transcriptionType} tab PDF`,
+  html: `
+    <h2>Your DadRock Tabs PDF is ready</h2>
+    <p><strong>${song}</strong> by ${artist}</p>
+    <p>Your ${transcriptionType} transcription is attached.</p>
+    <p>Thank you for supporting DadRock Tabs.</p>
+  `,
+  attachments: [
+    {
+      filename: fileName,
+      content: Buffer.from(pdfBytes),
+    },
+  ],
+});
+
+if (emailResult.error) {
+  console.error(
+    'Resend email error:',
+    emailResult.error
+  );
+}
+
     return new NextResponse(pdfBytes, {
       status: 200,
       headers: {
