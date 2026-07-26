@@ -34,7 +34,7 @@ import PayPalCheckoutButton from
 
 const TRANSCRIPTION_TYPES = [
   {
-    value: 'lead-guitar',
+    value: 'lead',
     label: 'Lead Guitar',
     description:
       'Solos, melodies, bends, and fills',
@@ -531,7 +531,7 @@ function AiTabGeneratorContent() {
     setYoutubeUrl('');
     setSongTitle('');
     setArtistName('');
-    setSelectedType('lead-guitar');
+    setSelectedType('lead');
     setAudioFile(null);
     setCopyrightConfirmed(false);
     setCustomerEmail('');
