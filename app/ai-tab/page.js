@@ -895,7 +895,7 @@ function AiTabGeneratorContent() {
             {PROCESS_STEPS.map((step) => (
               <div
                 key={step.number}
-                className="min-w-[88px] rounded-xl border border-zinc-800 bg-black/50 p-3 text-center"
+                className="rounded-xl border border-zinc-800 bg-black/50 p-3 text-center"
               >
                 <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-sm font-black text-white">
                   {step.number}
