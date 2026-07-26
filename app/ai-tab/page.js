@@ -271,22 +271,6 @@ const fetchYoutubeVideoInfo = async (videoId) => {
     setYoutubeVideoInfo(null);
     setYoutubeInfoError('');
   }
-}, [youtubeVideoId, isValidYouTubeUrl]);
-  {isLoadingYoutubeInfo && (
-  <div className="mt-3 rounded-xl border border-orange-500/30 bg-orange-500/5 p-3">
-    <p className="text-xs font-semibold text-orange-300">
-      Finding your YouTube video...
-    </p>
-  </div>
-)}
-
-{youtubeInfoError && !isLoadingYoutubeInfo && (
-  <div className="mt-3 rounded-xl border border-red-500/30 bg-red-500/5 p-3">
-    <p className="text-xs font-semibold text-red-300">
-      {youtubeInfoError}
-    </p>
-  </div>
-)}
 
 {youtubeVideoInfo && !isLoadingYoutubeInfo && (
   <div className="mt-3 overflow-hidden rounded-xl border border-green-500/30 bg-zinc-900/80">
