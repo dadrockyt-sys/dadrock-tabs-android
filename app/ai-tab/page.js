@@ -958,6 +958,7 @@ const fetchYoutubeVideoInfo = async (videoId) => {
       ? '✓ Valid YouTube link'
       : 'Please enter a valid YouTube link.'}
   </p>
+)}
 {isLoadingYoutubeInfo && (
   <div className="mt-3 rounded-xl border border-orange-500/30 bg-orange-500/5 p-3">
     <p className="text-xs font-semibold text-orange-300">
