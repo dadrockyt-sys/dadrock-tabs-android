@@ -574,7 +574,7 @@ function AiTabGeneratorContent() {
   className="mx-auto h-auto w-full max-w-[30rem] object-contain"
 />
 
-         <div className="mx-auto -mt-8 max-w-5xl rounded-2xl border border-orange-500/60 bg-black px-4 py-4 shadow-[0_0_24px_rgba(249,115,22,0.2)] sm:-mt-10 sm:px-7 sm:py-5">
+         className="mx-auto mt-2 max-w-5xl rounded-2xl border border-orange-500/60 bg-black px-4 py-4 shadow-[0_0_24px_rgba(249,115,22,0.2)] sm:mt-3 sm:px-7 sm:py-5"
             <h1 className="text-2xl font-black tracking-tight text-white sm:text-4xl">
               AI Guitar &amp; Bass Tab Generator
             </h1>
