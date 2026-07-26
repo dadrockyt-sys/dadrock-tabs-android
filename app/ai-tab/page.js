@@ -272,6 +272,63 @@ const fetchYoutubeVideoInfo = async (videoId) => {
     setYoutubeInfoError('');
   }
 }, [youtubeVideoId, isValidYouTubeUrl]);
+  {isLoadingYoutubeInfo && (
+  <div className="mt-3 rounded-xl border border-orange-500/30 bg-orange-500/5 p-3">
+    <p className="text-xs font-semibold text-orange-300">
+      Finding your YouTube video...
+    </p>
+  </div>
+)}
+
+{youtubeInfoError && !isLoadingYoutubeInfo && (
+  <div className="mt-3 rounded-xl border border-red-500/30 bg-red-500/5 p-3">
+    <p className="text-xs font-semibold text-red-300">
+      {youtubeInfoError}
+    </p>
+  </div>
+)}
+
+{youtubeVideoInfo && !isLoadingYoutubeInfo && (
+  <div className="mt-3 overflow-hidden rounded-xl border border-green-500/30 bg-zinc-900/80">
+    {youtubeVideoInfo.thumbnail && (
+      <div className="relative aspect-video w-full overflow-hidden bg-black">
+        <img
+          src={youtubeVideoInfo.thumbnail}
+          alt={youtubeVideoInfo.title}
+          className="h-full w-full object-cover"
+        />
+
+        {youtubeVideoInfo.duration && (
+          <span className="absolute bottom-2 right-2 rounded-md bg-black/85 px-2 py-1 text-xs font-bold text-white">
+            {youtubeVideoInfo.duration}
+          </span>
+        )}
+      </div>
+    )}
+
+    <div className="p-3">
+      <div className="mb-2 flex items-center gap-2">
+        <span className="h-2 w-2 rounded-full bg-green-400" />
+
+        <p className="text-xs font-bold uppercase tracking-wide text-green-400">
+          Video found
+        </p>
+      </div>
+
+      <h3 className="line-clamp-2 text-sm font-bold leading-5 text-white">
+        {youtubeVideoInfo.title}
+      </h3>
+
+      <p className="mt-1 text-xs text-zinc-400">
+        {youtubeVideoInfo.channelTitle}
+      </p>
+
+      <p className="mt-2 text-xs font-semibold text-orange-300">
+        Ready for DadRock Tab Studio
+      </p>
+    </div>
+  </div>
+)}
 
   const formIsComplete = useMemo(
     () =>
