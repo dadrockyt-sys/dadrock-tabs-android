@@ -533,8 +533,6 @@ if (!emailIsValid) {
   ],
 });
 
-    console.log('Resend response:', emailResult);
-
 if (emailResult.error) {
   console.error(
     'Resend email error:',
