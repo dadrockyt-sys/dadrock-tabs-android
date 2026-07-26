@@ -50,7 +50,7 @@ const TRANSCRIPTION_TYPES = [
     iconClass: 'text-blue-400',
   },
   {
-    value: 'bass-guitar',
+    value: 'bass',
     label: 'Bass Guitar',
     description:
       'Bass lines, grooves, and runs',
