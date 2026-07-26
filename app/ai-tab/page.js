@@ -788,6 +788,7 @@ function AiTabGeneratorContent() {
                 );
               })}
             </div>
+              </section>
           <section className="mt-5 rounded-3xl border border-orange-500/40 bg-gradient-to-r from-orange-500/15 via-orange-500/8 to-transparent p-6 shadow-[0_0_35px_rgba(249,115,22,0.18)]">
             <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-center">
               <div>
