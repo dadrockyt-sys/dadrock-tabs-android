@@ -425,10 +425,22 @@ def analyze(payload: dict) -> dict:
             f"uploaded{suffix}"
         )
 
-        response = requests.get(
-            audio_url,
-            timeout=120,
-        )
+        blob_token = str(
+    payload.get("blobToken") or ""
+).strip()
+
+request_headers = {}
+
+if blob_token:
+    request_headers["Authorization"] = (
+        f"Bearer {blob_token}"
+    )
+
+response = requests.get(
+    audio_url,
+    headers=request_headers,
+    timeout=120,
+)
 
         if not response.ok:
             raise HTTPException(
