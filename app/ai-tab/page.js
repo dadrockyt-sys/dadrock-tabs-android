@@ -1014,7 +1014,6 @@ const fetchYoutubeVideoInfo = async (videoId) => {
     </div>
   </div>
 )}
-)}
 
                 <p className="mt-2 text-xs leading-5 text-zinc-500">
                   Use this as a reference when
