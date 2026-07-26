@@ -571,10 +571,10 @@ function AiTabGeneratorContent() {
           <img
   src="/DadRock-Tabs-Logo.png"
   alt="DadRock Tabs"
-  className="mx-auto h-auto w-full max-w-2xl object-contain"
+  className="mx-auto h-auto w-full max-w-lg object-contain"
 />
 
-          <div className="mx-auto -mt-2 max-w-5xl rounded-2xl border border-orange-500/60 bg-black px-4 py-4 shadow-[0_0_24px_rgba(249,115,22,0.2)] sm:px-7 sm:py-5">
+          className="mx-auto -mt-8 max-w-5xl rounded-2xl border border-orange-500/60 bg-black px-4 py-4 shadow-[0_0_24px_rgba(249,115,22,0.2)] sm:-mt-10 sm:px-7 sm:py-5"
             <h1 className="text-2xl font-black tracking-tight text-white sm:text-4xl">
               AI Guitar &amp; Bass Tab Generator
             </h1>
@@ -871,7 +871,7 @@ function AiTabGeneratorContent() {
                   !formIsComplete ||
                   isGenerating
                 }
-                className="w-full rounded-3xl bg-gradient-to-r from-orange-500 to-red-500 px-6 py-6 text-xl font-black text-white shadow-[0_0_35px_rgba(249,115,22,0.35)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-40"
+                className="w-full rounded-3xl bg-gradient-to-r from-amber-400 via-orange-500 to-red-600 px-6 py-7 text-2xl font-black tracking-tight text-white shadow-[0_0_50px_rgba(249,115,22,0.55)] transition duration-300 hover:scale-[1.03] hover:shadow-[0_0_70px_rgba(249,115,22,0.75)] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isGenerating ? (
                   <>
@@ -880,7 +880,7 @@ function AiTabGeneratorContent() {
                   </>
                 ) : (
                   <>
-                    🎸 Generate My AI Tab
+                    🎸 Generate Professional AI Tab
                   </>
                 )}
               </button>
