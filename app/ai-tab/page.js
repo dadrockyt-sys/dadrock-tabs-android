@@ -210,6 +210,8 @@ function AiTabGeneratorContent() {
       artistName.trim() &&
       selectedType &&
       (audioFile || youtubeUrl.trim()) &&
+      customerEmail.trim() &&
+      customerEmail.includes('@') &&
       copyrightConfirmed
     ),
   [
@@ -218,6 +220,7 @@ function AiTabGeneratorContent() {
     selectedType,
     audioFile,
     youtubeUrl,
+    customerEmail,
     copyrightConfirmed,
   ]
 );
