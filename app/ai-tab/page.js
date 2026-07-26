@@ -805,7 +805,7 @@ function AiTabGeneratorContent() {
   </h2>
 
   <p className="mx-auto mt-1.5 max-w-2xl text-xs leading-5 text-zinc-400 sm:mt-2 sm:text-sm sm:leading-6">
-    Upload your song, choose the instrument part, preview the
+    Upload your song, choose Lead Rhythm or Bass, preview the
     transcription, and download a polished PDF.
   </p>
 </div>
