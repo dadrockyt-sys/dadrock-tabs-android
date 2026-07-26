@@ -845,6 +845,7 @@ function AiTabGeneratorContent() {
                       )
                     }
                     placeholder="you@example.com"
+required
                     className="w-full rounded-xl border border-zinc-700 bg-black px-3 py-3 text-sm text-white outline-none placeholder:text-zinc-600 focus:border-orange-500"
                   />
                 </div>
