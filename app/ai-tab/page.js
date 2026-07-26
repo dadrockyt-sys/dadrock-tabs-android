@@ -204,22 +204,23 @@ function AiTabGeneratorContent() {
     useState(null);
 
   const formIsComplete = useMemo(
-    () =>
-      Boolean(
-        songTitle.trim() &&
-          artistName.trim() &&
-          selectedType &&
-          audioFile &&
-          copyrightConfirmed
-      ),
-    [
-      songTitle,
-      artistName,
-      selectedType,
-      audioFile,
-      copyrightConfirmed,
-    ]
-  );
+  () =>
+    Boolean(
+      songTitle.trim() &&
+      artistName.trim() &&
+      selectedType &&
+      (audioFile || youtubeUrl.trim()) &&
+      copyrightConfirmed
+    ),
+  [
+    songTitle,
+    artistName,
+    selectedType,
+    audioFile,
+    youtubeUrl,
+    copyrightConfirmed,
+  ]
+);
 
   const handleFileChange = (event) => {
     const selectedFile =
