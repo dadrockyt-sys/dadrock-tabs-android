@@ -146,7 +146,7 @@ function AiTabGeneratorContent() {
   const [
     selectedType,
     setSelectedType,
-  ] = useState('lead-guitar');
+  ] = useState('lead');
 
   const [audioFile, setAudioFile] =
     useState(null);
