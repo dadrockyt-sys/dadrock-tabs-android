@@ -131,6 +131,13 @@ function AiTabGeneratorContent() {
   const [youtubeUrl, setYoutubeUrl] = useState(
     searchParams.get('youtube') || ''
   );
+  const youtubeVideoId =
+  youtubeUrl.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/|live\/))([A-Za-z0-9_-]{11})/
+  )?.[1] || null;
+
+const hasYouTubeUrl = youtubeUrl.trim().length > 0;
+const isValidYouTubeUrl = Boolean(youtubeVideoId);
     const [songTitle, setSongTitle] = useState(
     searchParams.get('title') || ''
   );
@@ -881,8 +888,25 @@ function AiTabGeneratorContent() {
                     resetGeneratedResults();
                   }}
                   placeholder="https://youtube.com/watch?v=..."
-                  className="w-full rounded-xl border border-zinc-700 bg-black/60 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
+                  className={`w-full rounded-xl border bg-black/60 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 ${
+  !hasYouTubeUrl
+    ? 'border-zinc-700 focus:border-orange-500'
+    : isValidYouTubeUrl
+      ? 'border-green-500/70 focus:border-green-400'
+      : 'border-red-500/70 focus:border-red-400'
+}`}
                 />
+                  {hasYouTubeUrl && (
+  <p
+    className={`mt-2 text-xs font-semibold ${
+      isValidYouTubeUrl ? 'text-green-400' : 'text-red-400'
+    }`}
+  >
+    {isValidYouTubeUrl
+      ? '✓ Valid YouTube link'
+      : 'Please enter a valid YouTube link.'}
+  </p>
+)}
 
                 <p className="mt-2 text-xs leading-5 text-zinc-500">
                   Use this as a reference when
