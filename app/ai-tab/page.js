@@ -800,57 +800,51 @@ function AiTabGeneratorContent() {
               </p>
             </div>
           </div>
-            <div className="px-5 py-6 sm:px-8">
-            <div className="mb-5 text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-400">
-                Everything You Need
-              </p>
+            <div className="mb-4 text-center sm:mb-5">
+  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-400 sm:text-xs">
+    Everything You Need
+  </p>
 
-              <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">
-                Everything You Need in One Place
-              </h2>
+  <h2 className="mt-1.5 text-xl font-black text-white sm:mt-2 sm:text-3xl">
+    Everything You Need in One Place
+  </h2>
 
-              <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
-                Upload your song, choose the
-                instrument part, preview the
-                transcription, and download a
-                polished PDF.
-              </p>
-            </div>
+  <p className="mx-auto mt-1.5 max-w-2xl text-xs leading-5 text-zinc-400 sm:mt-2 sm:text-sm sm:leading-6">
+    Upload your song, choose the instrument part, preview the
+    transcription, and download a polished PDF.
+  </p>
+</div>
 
-            <div className="grid gap-3 sm:grid-cols-3">
-              {BENEFITS.map(
-                ({
-                  title,
-                  description,
-                  icon: Icon,
-                }) => (
-                  <div
-                    key={title}
-                    className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4 transition hover:border-orange-500/40"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-orange-300">
-                        <Icon
-                          size={20}
-                        />
-                      </div>
-
-                      <div>
-                        <h3 className="text-sm font-bold text-white">
-                          {title}
-                        </h3>
-
-                        <p className="mt-1 text-xs leading-5 text-zinc-400">
-                          {description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )
-              )}
-            </div>
+<div className="grid gap-2 sm:grid-cols-3 sm:gap-3">
+  {BENEFITS.map(
+    ({
+      title,
+      description,
+      icon: Icon,
+    }) => (
+      <div
+        key={title}
+        className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 transition hover:border-orange-500/40 sm:rounded-2xl sm:p-4"
+      >
+        <div className="flex items-center gap-3 sm:items-start">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-orange-500/30 bg-orange-500/10 text-orange-300 sm:h-10 sm:w-10 sm:rounded-xl">
+            <Icon size={18} className="sm:h-5 sm:w-5" />
           </div>
+
+          <div className="min-w-0 flex-1">
+            <h3 className="text-sm font-bold leading-5 text-white">
+              {title}
+            </h3>
+
+            <p className="mt-0.5 text-[11px] leading-4 text-zinc-400 sm:mt-1 sm:text-xs sm:leading-5">
+              {description}
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  )}
+</div>
 
           <div className="border-t border-zinc-800 bg-black/20 px-5 py-6 sm:px-8">
             <div className="grid gap-4 lg:grid-cols-2">
