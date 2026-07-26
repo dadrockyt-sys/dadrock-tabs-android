@@ -793,7 +793,7 @@ function AiTabGeneratorContent() {
                 Guitar & Bass Tab Generator
               </h1>
 
-              <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base">
+              <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400 sm:mt-3 sm:text-base">
                 Turn any audio into a professional guitar or bass TAB PDF
               </p>
             </div>
