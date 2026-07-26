@@ -217,13 +217,15 @@ const [youtubeInfoError, setYoutubeInfoError] = useState('');
   }, [customerEmail]);
 
   const hasAudioSource = useMemo(
-    () =>
-      Boolean(
-        audioFile ||
-          youtubeUrl.trim()
-      ),
-    [audioFile, youtubeUrl]
-    const fetchYoutubeVideoInfo = async (videoId) => {
+  () =>
+    Boolean(
+      audioFile ||
+      youtubeUrl.trim()
+    ),
+  [audioFile, youtubeUrl]
+);
+
+const fetchYoutubeVideoInfo = async (videoId) => {
   if (!videoId) {
     setYoutubeVideoInfo(null);
     setYoutubeInfoError('');
