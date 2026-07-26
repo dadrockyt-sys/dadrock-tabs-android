@@ -8,6 +8,7 @@ import {
   useState,
 } from 'react';
 
+import { upload } from '@vercel/blob/client';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
@@ -410,97 +411,63 @@ if (filenameParts.length >= 2) {
     setPurchaseOrderId('');
 
     try {
-      const formData = new FormData();
-
-      formData.append(
-        'songTitle',
-        songTitle.trim()
-      );
-
-      formData.append(
-        'artistName',
-        artistName.trim()
-      );
-
-      formData.append(
-        'transcriptionType',
-        selectedType
-      );
-
-      formData.append(
-        'customerEmail',
-        customerEmail.trim()
-      );
-
-      formData.append(
-        'copyrightConfirmed',
-        String(copyrightConfirmed)
-      );
-
-      if (youtubeUrl.trim()) {
-        formData.append(
-          'youtubeUrl',
-          youtubeUrl.trim()
-        );
-      }
-
-      if (audioFile) {
-        formData.append(
-          'audioFile',
-          audioFile
-        );
-      }
-
       setStatusMessage(
-        'Analyzing your audio and building your preview...'
-      );
+  'Uploading your audio securely...'
+);
 
-      const response = await fetch(
-        '/api/generate-tab',
-        {
-          method: 'POST',
-          body: formData,
-        }
-      );
+if (!audioFile) {
+  throw new Error(
+    'Please upload an audio file before continuing.'
+  );
+}
 
-      const data = await response.json().catch(
-        () => ({})
-      );
+const safeFileName = audioFile.name
+  .replace(/[^a-zA-Z0-9._-]/g, '-')
+  .replace(/-+/g, '-')
+  .slice(0, 120);
 
-      if (!response.ok) {
-        throw new Error(
-          data.error ||
-            data.message ||
-            'Unable to generate your tab preview.'
-        );
-      }
+const uploadedBlob = await upload(
+  `audio/${Date.now()}-${safeFileName}`,
+  audioFile,
+  {
+    access: 'private',
 
-      const transcription =
-        data.generatedTab ||
-        data.tab ||
-        data.transcription ||
-        '';
+    handleUploadUrl:
+      '/api/audio-upload',
 
-      if (!transcription) {
-        throw new Error(
-          'The transcription service returned an empty preview.'
-        );
-      }
+    clientPayload: JSON.stringify({
+      song: songTitle.trim(),
+      artist: artistName.trim(),
+      transcriptionType: selectedType,
+      copyrightConfirmed,
+      customerEmail:
+        customerEmail.trim(),
+    }),
+  }
+);
 
-      setGeneratedTab(transcription);
-      setPreviewReady(true);
+setStatusMessage(
+  'Audio uploaded successfully. Preparing analysis...'
+);
 
-      setStatusMessage(
-        'Your preview is ready. Review it before continuing to payment.'
-      );
-            window.setTimeout(() => {
-        document
-          .getElementById('tab-preview')
-          ?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
-      }, 150);
+console.log('Audio Blob uploaded:', {
+  pathname: uploadedBlob.pathname,
+  url: uploadedBlob.url,
+});
+
+      setGeneratedTab('');
+setPreviewReady(false);
+
+setStatusMessage(
+  'Audio uploaded successfully. The AI analyzer connection is the next step.'
+);
+
+console.log('Audio ready for analysis:', {
+  pathname: uploadedBlob.pathname,
+  url: uploadedBlob.url,
+});
+
+return;
     } catch (error) {
       console.error(
         'AI tab generation error:',
