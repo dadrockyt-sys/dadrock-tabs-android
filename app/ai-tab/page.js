@@ -42,7 +42,7 @@ const TRANSCRIPTION_TYPES = [
     iconClass: 'text-red-400',
   },
   {
-    value: 'rhythm-guitar',
+    value: 'rhythm',
     label: 'Rhythm Guitar',
     description:
       'Riffs, chords, and backing parts',
