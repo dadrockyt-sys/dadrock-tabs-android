@@ -1461,8 +1461,18 @@ function AiTabGeneratorContent() {
                       className="mt-0.5 shrink-0 text-amber-400"
                     />
 
-                    Review this
-                     {previewReady && (
+                    Review this preview carefully.
+AI-generated tablature may
+require small corrections for
+tuning, timing, or complex
+overlapping instruments.
+                  </div>
+                </div>
+              </section>
+            </div>
+          )}
+
+          {previewReady && (
             <div className="border-t border-zinc-800 bg-black/20 px-5 py-6 sm:px-8">
               <div className="grid gap-4 lg:grid-cols-2">
                 <section className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-5">
