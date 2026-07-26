@@ -799,11 +799,8 @@ function AiTabGeneratorContent() {
             </div>
           </div>
             <div className="mb-4 text-center sm:mb-5">
-  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-400 sm:text-xs">
-    Everything You Need
-  </p>
 
-  <h2 className="mt-1.5 text-xl font-black text-white sm:mt-2 sm:text-3xl">
+  <h2 className="text-xl font-black text-white sm:text-3xl">
     Everything You Need in One Place
   </h2>
 
