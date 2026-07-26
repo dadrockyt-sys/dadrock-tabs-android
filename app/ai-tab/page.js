@@ -271,6 +271,7 @@ const fetchYoutubeVideoInfo = async (videoId) => {
     setYoutubeVideoInfo(null);
     setYoutubeInfoError('');
   }
+    }, [youtubeVideoId, isValidYouTubeUrl]);
 
   const formIsComplete = useMemo(
     () =>
