@@ -794,9 +794,8 @@ function AiTabGeneratorContent() {
               </h1>
 
               <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base">
-                Turn a song into a clean,
-                printable guitar or bass
-                tablature PDF.
+                Turn any audio into a professional 
+                    guitar or bass tablature
               </p>
             </div>
           </div>
