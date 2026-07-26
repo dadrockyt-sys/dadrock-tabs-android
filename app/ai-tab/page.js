@@ -138,6 +138,9 @@ function AiTabGeneratorContent() {
 
 const hasYouTubeUrl = youtubeUrl.trim().length > 0;
 const isValidYouTubeUrl = Boolean(youtubeVideoId);
+  const [youtubeVideoInfo, setYoutubeVideoInfo] = useState(null);
+const [isLoadingYoutubeInfo, setIsLoadingYoutubeInfo] = useState(false);
+const [youtubeInfoError, setYoutubeInfoError] = useState('');
     const [songTitle, setSongTitle] = useState(
     searchParams.get('title') || ''
   );
@@ -220,6 +223,53 @@ const isValidYouTubeUrl = Boolean(youtubeVideoId);
           youtubeUrl.trim()
       ),
     [audioFile, youtubeUrl]
+    const fetchYoutubeVideoInfo = async (videoId) => {
+  if (!videoId) {
+    setYoutubeVideoInfo(null);
+    setYoutubeInfoError('');
+    return;
+  }
+    useEffect(() => {
+  if (isValidYouTubeUrl) {
+    fetchYoutubeVideoInfo(youtubeVideoId);
+  } else {
+    setYoutubeVideoInfo(null);
+    setYoutubeInfoError('');
+  }
+}, [youtubeVideoId, isValidYouTubeUrl]);
+
+  setIsLoadingYoutubeInfo(true);
+  setYoutubeInfoError('');
+  setYoutubeVideoInfo(null);
+
+  try {
+    const response = await fetch(
+      `/api/youtube-video-info?videoId=${encodeURIComponent(videoId)}`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.error || 'Unable to retrieve this YouTube video.'
+      );
+    }
+
+    setYoutubeVideoInfo(data);
+
+    if (data.title) {
+      setSongTitle(data.title);
+    }
+  } catch (error) {
+    setYoutubeInfoError(
+      error instanceof Error
+        ? error.message
+        : 'Unable to retrieve this YouTube video.'
+    );
+  } finally {
+    setIsLoadingYoutubeInfo(false);
+  }
+};
   );
 
   const formIsComplete = useMemo(
