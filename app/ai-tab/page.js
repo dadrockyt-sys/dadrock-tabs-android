@@ -272,7 +272,6 @@ const fetchYoutubeVideoInfo = async (videoId) => {
     setIsLoadingYoutubeInfo(false);
   }
 };
-  );
 
   const formIsComplete = useMemo(
     () =>
