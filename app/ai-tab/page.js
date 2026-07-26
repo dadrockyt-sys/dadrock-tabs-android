@@ -568,14 +568,11 @@ function AiTabGeneratorContent() {
         </div>
 
         <header className="text-center">
-          <Image
-            src="/Dadrock-Tabs-Logo.png"
-            alt="DadRock Tabs"
-            width={850}
-            height={420}
-            priority
-            className="mx-auto h-auto w-full max-w-xl object-contain sm:max-w-2xl"
-          />
+          <img
+  src="/DadRock-Tabs-Logo.png"
+  alt="DadRock Tabs"
+  className="mx-auto h-auto w-full max-w-2xl object-contain"
+/>
 
           <div className="mx-auto -mt-2 max-w-5xl rounded-2xl border border-orange-500/60 bg-black px-4 py-4 shadow-[0_0_24px_rgba(249,115,22,0.2)] sm:px-7 sm:py-5">
             <h1 className="text-2xl font-black tracking-tight text-white sm:text-4xl">
@@ -1172,13 +1169,11 @@ function AiTabGeneratorContent() {
           </div>
         </section>
         <footer className="mt-4 border-t border-zinc-800 py-6 text-center">
-          <Image
-            src="/Dadrock-Tabs-Logo.png"
-            alt="DadRock Tabs"
-            width={360}
-            height={180}
-            className="mx-auto h-auto w-full max-w-48 object-contain"
-          />
+          <img
+  src="/DadRock-Tabs-Logo.png"
+  alt="DadRock Tabs"
+  className="mx-auto h-auto w-full max-w-48 object-contain"
+/>
 
           <p className="mx-auto mt-2 max-w-2xl text-xs leading-5 text-zinc-500">
             AI-generated tablature may require small corrections.
