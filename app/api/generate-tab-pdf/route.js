@@ -230,6 +230,13 @@ async function createTabPdf({
   artist,
   transcriptionType,
   generatedTab,
+  tuning,
+  tempo,
+  timeSignature,
+  keySignature,
+  difficulty,
+  techniques,
+  confidence,
 }) {
   const pdfDoc = await PDFDocument.create();
 
