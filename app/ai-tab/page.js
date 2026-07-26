@@ -833,7 +833,7 @@ function AiTabGeneratorContent() {
 
                 <div className="mt-4">
                   <label className="mb-2 block text-xs font-bold text-zinc-300">
-                    Email address (optional)
+                    Email address
                   </label>
 
                   <input
