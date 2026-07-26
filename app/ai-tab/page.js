@@ -349,6 +349,27 @@ const fetchYoutubeVideoInfo = async (videoId) => {
     }
 
     setAudioFile(selectedFile);
+    const filenameWithoutExtension = selectedFile.name
+  .replace(/\.[^/.]+$/, '')
+  .trim();
+
+const filenameParts = filenameWithoutExtension
+  .split(/\s+-\s+/)
+  .map((part) => part.trim())
+  .filter(Boolean);
+
+if (filenameParts.length >= 2) {
+  const parsedArtist = filenameParts.shift();
+  const parsedSong = filenameParts.join(' - ');
+
+  if (!artistName.trim()) {
+    setArtistName(parsedArtist);
+  }
+
+  if (!songTitle.trim()) {
+    setSongTitle(parsedSong);
+  }
+}
   };
 
   const removeAudioFile = () => {
