@@ -847,7 +847,7 @@ function AiTabGeneratorContent() {
                         event.target.value
                       )
                     }
-                    placeholder="you@example.com"
+                    placeholder="Enter the email address for your finished PDF"
 required
                     className="w-full rounded-xl border border-zinc-700 bg-black px-3 py-3 text-sm text-white outline-none placeholder:text-zinc-600 focus:border-orange-500"
                   />
