@@ -891,7 +891,7 @@ function AiTabGeneratorContent() {
             </div>
           </div>
 
-          <div className="mt-6 grid grid-cols-5 gap-2 overflow-x-auto">
+          <div className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-5 [&>*:last-child]:col-span-2 [&>*:last-child]:sm:col-span-1">
             {PROCESS_STEPS.map((step) => (
               <div
                 key={step.number}
