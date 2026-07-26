@@ -568,23 +568,22 @@ function AiTabGeneratorContent() {
         </div>
 
         <header className="text-center">
-          <img
-  src="/DadRock-Tabs-Logo.png"
-  alt="DadRock Tabs"
-  <div className="mx-auto h-auto w-full max-w-[30rem] object-contain"
-/>
+  <img
+    src="/DadRock-Tabs-Logo.png"
+    alt="DadRock Tabs"
+    className="mx-auto h-auto w-full max-w-[30rem] object-contain"
+  />
 
-         className="mx-auto mt-2 max-w-5xl rounded-2xl border border-orange-500/60 bg-black px-4 py-4 shadow-[0_0_24px_rgba(249,115,22,0.2)] sm:mt-3 sm:px-7 sm:py-5"
-            <h1 className="text-2xl font-black tracking-tight text-white sm:text-4xl">
-              AI Guitar &amp; Bass Tab Generator
-            </h1>
+  <div className="mx-auto mt-2 max-w-5xl rounded-2xl border border-orange-500/60 bg-black px-4 py-4 shadow-[0_0_24px_rgba(249,115,22,0.2)] sm:mt-3 sm:px-7 sm:py-5">
+    <h1 className="text-2xl font-black tracking-tight text-white sm:text-4xl">
+      AI Guitar &amp; Bass Tab Generator
+    </h1>
 
-            <p className="mx-auto mt-2 max-w-3xl text-sm leading-5 text-zinc-300 sm:text-base">
-              Upload any song and get printable guitar or bass
-              tabs in minutes with the power of AI.
-            </p>
-          </div>
-        </header>
+    <p className="mx-auto mt-2 max-w-3xl text-sm leading-5 text-zinc-300 sm:text-base">
+      Upload any song and get printable guitar or bass tabs in minutes with the power of AI.
+    </p>
+  </div>
+</header>
 
         <section className="mt-3 grid gap-3 lg:grid-cols-2">
           <div className="space-y-3">
