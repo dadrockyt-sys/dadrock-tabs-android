@@ -772,7 +772,7 @@ function AiTabGeneratorContent() {
           <LanguageSelector />
         </header>
 
-        <section className="overflow-hidden rounded-[28px] border border-orange-500/30 bg-gradient-to-b from-zinc-950 via-[#111111] to-zinc-950 shadow-2xl shadow-orange-950/20">
+        <div className="overflow-hidden rounded-[28px] border border-orange-500/30 bg-gradient-to-b from-zinc-950 via-[#111111] to-zinc-950 shadow-2xl shadow-orange-950/20">
           <div className="border-b border-zinc-800 px-5 py-7 text-center sm:px-8">
             <img
               src={LOGO_URL}
@@ -1763,7 +1763,7 @@ function AiTabGeneratorContent() {
               DadRock Tabs. All rights reserved.
             </p>
           </footer>
-        </section>
+        </div>
       </div>
     </main>
   );
