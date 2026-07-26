@@ -231,14 +231,6 @@ const fetchYoutubeVideoInfo = async (videoId) => {
     setYoutubeInfoError('');
     return;
   }
-    useEffect(() => {
-  if (isValidYouTubeUrl) {
-    fetchYoutubeVideoInfo(youtubeVideoId);
-  } else {
-    setYoutubeVideoInfo(null);
-    setYoutubeInfoError('');
-  }
-}, [youtubeVideoId, isValidYouTubeUrl]);
 
   setIsLoadingYoutubeInfo(true);
   setYoutubeInfoError('');
@@ -272,6 +264,14 @@ const fetchYoutubeVideoInfo = async (videoId) => {
     setIsLoadingYoutubeInfo(false);
   }
 };
+  useEffect(() => {
+  if (isValidYouTubeUrl) {
+    fetchYoutubeVideoInfo(youtubeVideoId);
+  } else {
+    setYoutubeVideoInfo(null);
+    setYoutubeInfoError('');
+  }
+}, [youtubeVideoId, isValidYouTubeUrl]);
 
   const formIsComplete = useMemo(
     () =>
