@@ -137,6 +137,26 @@ style_replacements = {
 for old, new in style_replacements.items():
     text = text.replace(old, new)
 
+# Restore Version 1-style instrument card emphasis.
+text = text.replace(
+    'className={`rounded-2xl border p-4 text-left transition ${',
+    'className={`rounded-2xl border p-5 text-left transition ${',
+)
+text = text.replace(
+    'className={`flex h-10 w-10 items-center justify-center rounded-xl border ${',
+    'className={`flex h-12 w-12 items-center justify-center rounded-xl border ${',
+)
+text = text.replace('<Icon\n                              size={20}\n                            />', '<Icon\n                              size={25}\n                            />')
+text = text.replace(
+    'className="mt-4 text-sm font-black text-white"',
+    'className="mt-4 text-xl font-black leading-tight text-white"',
+)
+text = text.replace(
+    'className="mt-1 text-xs leading-5 text-zinc-500"',
+    'className="mt-2 text-sm leading-6 text-zinc-400"',
+    1,
+)
+
 # Restore the original dynamic generate button wording.
 old_button = """{isGenerating ? (
                     <>
@@ -177,10 +197,10 @@ new_button = """{isGenerating ? (
                   )}"""
 text = text.replace(old_button, new_button)
 
-# Make the primary action visually match the original button proportions.
+# Make the primary action larger and more prominent.
 text = text.replace(
-    'className={`flex w-full items-center justify-center gap-3 rounded-2xl px-6 py-4 text-lg font-black transition ${',
     'className={`flex w-full items-center justify-center gap-2 rounded-xl py-4 font-bold transition-all ${',
+    'className={`flex w-full items-center justify-center gap-3 rounded-xl px-5 py-4 text-lg font-black transition-all ${',
 )
 text = text.replace(
     "? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:scale-[1.01]'",
@@ -200,4 +220,4 @@ else:
     if removed_cards == 0 and "YouTube Reference" in text:
         raise RuntimeError("Could not safely locate and remove the YouTube input card")
     path.write_text(text, encoding="utf-8")
-    print("Matched the AI tab outline, text sizing, and button labels to the saved original version.")
+    print("Restored larger transcription card and primary button typography.")
