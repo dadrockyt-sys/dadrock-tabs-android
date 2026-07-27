@@ -30,6 +30,7 @@ import {
   Upload,
   X,
   Youtube,
+  Ticket,
 } from 'lucide-react';
 
 import LanguageSelector, {
@@ -40,23 +41,25 @@ import PayPalCheckoutButton from '@/components/PayPalCheckoutButton';
 
 const LOGO_URL = '/DadRock-Tabs-Logo.png';
 
+const PRICE = '2.99';
+
 const TRANSCRIPTION_TYPES = [
   {
     value: 'lead',
     title: 'Lead Guitar',
-    description: 'Solos, melodies, bends, and fills',
+    description: 'Solos, melodies, bends and fills',
     emoji: '🎸',
   },
   {
     value: 'rhythm',
     title: 'Rhythm Guitar',
-    description: 'Riffs, chords, and backing parts',
+    description: 'Riffs, chords and backing parts',
     emoji: '🎸',
   },
   {
     value: 'bass',
     title: 'Bass Guitar',
-    description: 'Bass lines, grooves, and runs',
+    description: 'Bass lines, grooves and runs',
     emoji: '🎸',
   },
 ];
@@ -64,54 +67,62 @@ const TRANSCRIPTION_TYPES = [
 const BENEFITS = [
   {
     title: 'Upload Any Song',
-    description: 'Use a YouTube link or audio file.',
+    description:
+      'Use a YouTube link or upload your own audio.',
     icon: Headphones,
   },
   {
-    title: 'Choose Your Part',
-    description: 'Lead, rhythm, or bass guitar.',
+    title: 'Choose Your Instrument',
+    description:
+      'Generate Lead Guitar, Rhythm Guitar or Bass.',
     icon: Guitar,
   },
   {
-    title: 'Preview Before Payment',
-    description: 'Review the tab before purchasing.',
+    title: 'Preview Before You Pay',
+    description:
+      'View a watermarked sample before unlocking.',
     icon: FileText,
   },
 ];
 
 const PROCESS_STEPS = [
-  'Upload Audio',
-  'Separate Parts',
+  'Choose Source',
+  'Analyze Audio',
   'Detect Notes',
   'Generate Tab',
-  'Preview & Pay',
+  'Unlock PDF',
 ];
 
 const FAQ_ITEMS = [
   {
-    question: 'How accurate will my AI-generated tab be?',
+    question:
+      'How accurate are AI generated tabs?',
     answer:
-      'Accuracy depends on recording quality, tuning, effects, instrument separation, and performance complexity. Small corrections may sometimes be required.',
+      'Accuracy depends on recording quality, tuning, effects and instrument separation. Minor corrections may occasionally be required.',
   },
   {
-    question: 'What audio files can I upload?',
+    question:
+      'What audio formats are supported?',
     answer:
-      'You can upload MP3, WAV, M4A, or AAC audio files from your device.',
+      'MP3, WAV, AAC and M4A files are currently supported.',
   },
   {
-    question: 'Can I generate guitar and bass tabs?',
+    question:
+      'Can I generate Bass tabs?',
     answer:
-      'Yes. Choose lead guitar, rhythm guitar, or bass before generating your transcription.',
+      'Yes. Choose Lead Guitar, Rhythm Guitar or Bass before generating your transcription.',
   },
   {
-    question: 'What happens to my uploaded audio?',
+    question:
+      'Do you keep my uploaded audio?',
     answer:
-      'Your audio is used only to process your private transcription request.',
+      'No. Audio is processed only for your transcription request.',
   },
   {
-    question: 'What do I receive after payment?',
+    question:
+      'What happens after payment?',
     answer:
-      'You receive a polished PDF that can be downloaded immediately and delivered to your email.',
+      'Your polished PDF becomes available immediately and is also emailed to you.',
   },
 ];
 
@@ -125,45 +136,77 @@ function getLocalizedPath(path, language) {
 
 function AiTabGeneratorContent() {
   const searchParams = useSearchParams();
-  const [selectedLanguage] = useLanguage();
 
-  const currentLanguage = selectedLanguage || 'en';
+  const [selectedLanguage] =
+    useLanguage();
+
+  const currentLanguage =
+    selectedLanguage || 'en';
+
   const fileInputRef = useRef(null);
 
-  const [youtubeUrl, setYoutubeUrl] = useState(
-    searchParams.get('youtube') || ''
-  );
-  const youtubeVideoId =
-  youtubeUrl.match(
-    /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/|live\/))([A-Za-z0-9_-]{11})/
-  )?.[1] || null;
+  /* -----------------------------
+     SOURCE
+  ------------------------------ */
 
-const hasYouTubeUrl = youtubeUrl.trim().length > 0;
-const isValidYouTubeUrl = Boolean(youtubeVideoId);
-  const [youtubeVideoInfo, setYoutubeVideoInfo] = useState(null);
-const [isLoadingYoutubeInfo, setIsLoadingYoutubeInfo] = useState(false);
-const [youtubeInfoError, setYoutubeInfoError] = useState('');
-    const [songTitle, setSongTitle] = useState(
-    searchParams.get('title') || ''
-  );
+  const [youtubeUrl, setYoutubeUrl] =
+    useState(
+      searchParams.get('youtube') || ''
+    );
 
-  const [artistName, setArtistName] = useState(
-    searchParams.get('artist') || ''
-  );
+  const [audioFile, setAudioFile] =
+    useState(null);
 
-  const [selectedType, setSelectedType] = useState('lead');
+  const [youtubeVideoInfo,
+    setYoutubeVideoInfo] =
+    useState(null);
 
-  const [audioFile, setAudioFile] = useState(null);
+  const [
+    isLoadingYoutubeInfo,
+    setIsLoadingYoutubeInfo,
+  ] = useState(false);
+
+  const [
+    youtubeInfoError,
+    setYoutubeInfoError,
+  ] = useState('');
+
+  /* -----------------------------
+     SONG
+  ------------------------------ */
+
+  const [songTitle, setSongTitle] =
+    useState(
+      searchParams.get('title') || ''
+    );
+
+  const [artistName, setArtistName] =
+    useState(
+      searchParams.get('artist') || ''
+    );
+
+  const [
+    selectedType,
+    setSelectedType,
+  ] = useState('lead');
+
+  /* -----------------------------
+     USER
+  ------------------------------ */
+
+  const [
+    customerEmail,
+    setCustomerEmail,
+  ] = useState('');
 
   const [
     copyrightConfirmed,
     setCopyrightConfirmed,
   ] = useState(false);
 
-  const [
-    customerEmail,
-    setCustomerEmail,
-  ] = useState('');
+  /* -----------------------------
+     GENERATION
+  ------------------------------ */
 
   const [
     generatedTab,
@@ -176,8 +219,23 @@ const [youtubeInfoError, setYoutubeInfoError] = useState('');
   ] = useState(false);
 
   const [
+    paymentCompleted,
+    setPaymentCompleted,
+  ] = useState(false);
+
+  const [
+    purchaseOrderId,
+    setPurchaseOrderId,
+  ] = useState('');
+
+  const [
     isGenerating,
     setIsGenerating,
+  ] = useState(false);
+
+  const [
+    isDownloading,
+    setIsDownloading,
   ] = useState(false);
 
   const [
@@ -190,90 +248,78 @@ const [youtubeInfoError, setYoutubeInfoError] = useState('');
     setStatusMessage,
   ] = useState('');
 
-  const [
-    paymentCompleted,
-    setPaymentCompleted,
-  ] = useState(false);
+  /* -----------------------------
+     NEW PREVIEW SYSTEM
+  ------------------------------ */
 
   const [
-    purchaseOrderId,
-    setPurchaseOrderId,
+    previewPdfUrl,
+    setPreviewPdfUrl,
   ] = useState('');
 
   const [
-    isDownloading,
-    setIsDownloading,
+    previewUnlocked,
+    setPreviewUnlocked,
   ] = useState(false);
 
   const [
-    openFaq,
-    setOpenFaq,
-  ] = useState(null);
+    usingFreeToken,
+    setUsingFreeToken,
+  ] = useState(false);
+
+  /* -----------------------------
+     FAQ
+  ------------------------------ */
+
+  const [openFaq, setOpenFaq] =
+    useState(null);
+    /* -----------------------------
+     DERIVED SOURCE INFORMATION
+  ------------------------------ */
+
+  const youtubeVideoId = useMemo(() => {
+    const match = youtubeUrl.match(
+      /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/|live\/))([A-Za-z0-9_-]{11})/
+    );
+
+    return match?.[1] || null;
+  }, [youtubeUrl]);
+
+  const hasYouTubeUrl =
+    youtubeUrl.trim().length > 0;
+
+  const isValidYouTubeUrl =
+    Boolean(youtubeVideoId);
+
+  const sourceType = audioFile
+    ? 'audio'
+    : isValidYouTubeUrl
+      ? 'youtube'
+      : null;
+
+  const hasValidSource =
+    sourceType !== null;
 
   const emailIsValid = useMemo(() => {
-    const trimmedEmail = customerEmail.trim();
+    const trimmedEmail =
+      customerEmail.trim();
 
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
       trimmedEmail
     );
   }, [customerEmail]);
 
-  const hasAudioSource = useMemo(
-  () =>
-    Boolean(
-      audioFile ||
-      youtubeUrl.trim()
-    ),
-  [audioFile, youtubeUrl]
-);
-
-const fetchYoutubeVideoInfo = async (videoId) => {
-  if (!videoId) {
-    setYoutubeVideoInfo(null);
-    setYoutubeInfoError('');
-    return;
-  }
-
-  setIsLoadingYoutubeInfo(true);
-  setYoutubeInfoError('');
-  setYoutubeVideoInfo(null);
-
-  try {
-    const response = await fetch(
-      `/api/youtube-video-info?videoId=${encodeURIComponent(videoId)}`
+  const selectedTypeDetails =
+    useMemo(
+      () =>
+        TRANSCRIPTION_TYPES.find(
+          (type) =>
+            type.value ===
+            selectedType
+        ) ||
+        TRANSCRIPTION_TYPES[0],
+      [selectedType]
     );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        data.error || 'Unable to retrieve this YouTube video.'
-      );
-    }
-
-    setYoutubeVideoInfo(data);
-
-    if (data.title) {
-      setSongTitle(data.title);
-    }
-  } catch (error) {
-    setYoutubeInfoError(
-      error instanceof Error
-        ? error.message
-        : 'Unable to retrieve this YouTube video.'
-    );
-  } finally {
-    setIsLoadingYoutubeInfo(false);
-  }
-};
-  useEffect(() => {
-  if (isValidYouTubeUrl) {
-    fetchYoutubeVideoInfo(youtubeVideoId);
-  } else {
-    setYoutubeVideoInfo(null);
-    setYoutubeInfoError('');
-  }
-    }, [youtubeVideoId, isValidYouTubeUrl]);
 
   const formIsComplete = useMemo(
     () =>
@@ -281,7 +327,7 @@ const fetchYoutubeVideoInfo = async (videoId) => {
         songTitle.trim() &&
           artistName.trim() &&
           selectedType &&
-          hasAudioSource &&
+          hasValidSource &&
           copyrightConfirmed &&
           emailIsValid
       ),
@@ -289,24 +335,173 @@ const fetchYoutubeVideoInfo = async (videoId) => {
       songTitle,
       artistName,
       selectedType,
-      hasAudioSource,
+      hasValidSource,
       copyrightConfirmed,
       emailIsValid,
     ]
   );
 
+  /* -----------------------------
+     RESET HELPERS
+  ------------------------------ */
+
+  const clearPreviewPdfUrl = () => {
+    if (
+      previewPdfUrl &&
+      previewPdfUrl.startsWith('blob:')
+    ) {
+      window.URL.revokeObjectURL(
+        previewPdfUrl
+      );
+    }
+
+    setPreviewPdfUrl('');
+  };
+
   const resetGeneratedResults = () => {
+    clearPreviewPdfUrl();
+
     setGeneratedTab('');
     setPreviewReady(false);
+    setPreviewUnlocked(false);
     setPaymentCompleted(false);
     setPurchaseOrderId('');
+    setUsingFreeToken(false);
     setStatusMessage('');
     setGenerationError('');
   };
 
-  const handleFileChange = (event) => {
+  useEffect(() => {
+    return () => {
+      if (
+        previewPdfUrl &&
+        previewPdfUrl.startsWith('blob:')
+      ) {
+        window.URL.revokeObjectURL(
+          previewPdfUrl
+        );
+      }
+    };
+  }, [previewPdfUrl]);
+
+  /* -----------------------------
+     YOUTUBE VIDEO LOOKUP
+  ------------------------------ */
+
+  const fetchYoutubeVideoInfo =
+    async (videoId) => {
+      if (!videoId) {
+        setYoutubeVideoInfo(null);
+        setYoutubeInfoError('');
+        return;
+      }
+
+      setIsLoadingYoutubeInfo(true);
+      setYoutubeInfoError('');
+      setYoutubeVideoInfo(null);
+
+      try {
+        const response = await fetch(
+          `/api/youtube-video-info?videoId=${encodeURIComponent(
+            videoId
+          )}`
+        );
+
+        const data = await response
+          .json()
+          .catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(
+            data.error ||
+              'Unable to retrieve this YouTube video.'
+          );
+        }
+
+        setYoutubeVideoInfo(data);
+
+        if (
+          data.title &&
+          !songTitle.trim()
+        ) {
+          setSongTitle(data.title);
+        }
+
+        if (
+          data.channelTitle &&
+          !artistName.trim()
+        ) {
+          setArtistName(
+            data.channelTitle
+          );
+        }
+      } catch (error) {
+        setYoutubeInfoError(
+          error instanceof Error
+            ? error.message
+            : 'Unable to retrieve this YouTube video.'
+        );
+      } finally {
+        setIsLoadingYoutubeInfo(false);
+      }
+    };
+
+  useEffect(() => {
+    const lookupDelay =
+      window.setTimeout(() => {
+        if (isValidYouTubeUrl) {
+          fetchYoutubeVideoInfo(
+            youtubeVideoId
+          );
+          return;
+        }
+
+        setYoutubeVideoInfo(null);
+        setYoutubeInfoError('');
+        setIsLoadingYoutubeInfo(false);
+      }, 400);
+
+    return () => {
+      window.clearTimeout(
+        lookupDelay
+      );
+    };
+  }, [
+    youtubeVideoId,
+    isValidYouTubeUrl,
+  ]);
+
+  /* -----------------------------
+     SOURCE SELECTION
+  ------------------------------ */
+
+  const handleYoutubeUrlChange = (
+    event
+  ) => {
+    const nextUrl =
+      event.target.value;
+
+    setYoutubeUrl(nextUrl);
+    resetGeneratedResults();
+
+    if (nextUrl.trim()) {
+      setAudioFile(null);
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+    /* -----------------------------
+     AUDIO FILE HANDLING
+  ------------------------------ */
+
+  const handleFileChange = (
+    event
+  ) => {
     const selectedFile =
-      event.target.files?.[0] || null;
+      event.target.files?.[0] ||
+      null;
 
     resetGeneratedResults();
 
@@ -338,8 +533,10 @@ const fetchYoutubeVideoInfo = async (videoId) => {
       !allowedExtension
     ) {
       setAudioFile(null);
-            if (fileInputRef.current) {
-        fileInputRef.current.value = '';
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value =
+          '';
       }
 
       setGenerationError(
@@ -350,27 +547,43 @@ const fetchYoutubeVideoInfo = async (videoId) => {
     }
 
     setAudioFile(selectedFile);
-    const filenameWithoutExtension = selectedFile.name
-  .replace(/\.[^/.]+$/, '')
-  .trim();
 
-const filenameParts = filenameWithoutExtension
-  .split(/\s+-\s+/)
-  .map((part) => part.trim())
-  .filter(Boolean);
+    setYoutubeUrl('');
+    setYoutubeVideoInfo(null);
+    setYoutubeInfoError('');
 
-if (filenameParts.length >= 2) {
-  const parsedArtist = filenameParts.shift();
-  const parsedSong = filenameParts.join(' - ');
+    const filenameWithoutExtension =
+      selectedFile.name
+        .replace(/\.[^/.]+$/, '')
+        .trim();
 
-  if (!artistName.trim()) {
-    setArtistName(parsedArtist);
-  }
+    const filenameParts =
+      filenameWithoutExtension
+        .split(/\s+-\s+/)
+        .map((part) => part.trim())
+        .filter(Boolean);
 
-  if (!songTitle.trim()) {
-    setSongTitle(parsedSong);
-  }
-}
+    if (filenameParts.length >= 2) {
+      const parsedArtist =
+        filenameParts.shift();
+
+      const parsedSong =
+        filenameParts.join(' - ');
+
+      if (
+        parsedArtist &&
+        !artistName.trim()
+      ) {
+        setArtistName(parsedArtist);
+      }
+
+      if (
+        parsedSong &&
+        !songTitle.trim()
+      ) {
+        setSongTitle(parsedSong);
+      }
+    }
   };
 
   const removeAudioFile = () => {
@@ -378,185 +591,125 @@ if (filenameParts.length >= 2) {
     resetGeneratedResults();
 
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value =
+        '';
     }
   };
 
-  const handleGeneratePreview = async () => {
-    setGenerationError('');
-    setStatusMessage('');
+  /* -----------------------------
+     AUDIO UPLOAD
+  ------------------------------ */
 
-    if (!formIsComplete || isGenerating) {
-      setGenerationError(
-        'Please complete every required field before generating your tab.'
-      );
-      return;
-    }
-
-    if (
-      !['lead', 'rhythm', 'bass'].includes(
-        selectedType
-      )
-    ) {
-      setGenerationError(
-        'Please choose lead guitar, rhythm guitar, or bass guitar.'
-      );
-      return;
-    }
-
-    setIsGenerating(true);
-    setPreviewReady(false);
-    setPaymentCompleted(false);
-    setGeneratedTab('');
-    setPurchaseOrderId('');
-
-    try {
-      setStatusMessage(
-  'Uploading your audio securely...'
-);
-
-if (!audioFile) {
-  throw new Error(
-    'Please upload an audio file before continuing.'
-  );
-}
-
-const safeFileName = audioFile.name
-  .replace(/[^a-zA-Z0-9._-]/g, '-')
-  .replace(/-+/g, '-')
-  .slice(0, 120);
-
-const uploadedBlob = await upload(
-  `audio/${Date.now()}-${safeFileName}`,
-  audioFile,
-  {
-    access: 'private',
-
-    handleUploadUrl:
-      '/api/audio-upload',
-
-    clientPayload: JSON.stringify({
-      song: songTitle.trim(),
-      artist: artistName.trim(),
-      transcriptionType: selectedType,
-      copyrightConfirmed,
-      customerEmail:
-        customerEmail.trim(),
-    }),
-  }
-);
-
-setStatusMessage(
-  'Audio uploaded successfully. Preparing analysis...'
-);
-
-console.log('Audio Blob uploaded:', {
-  pathname: uploadedBlob.pathname,
-  url: uploadedBlob.url,
-});
-
-      setGeneratedTab('');
-setPreviewReady(false);
-
-setStatusMessage(
-  'Audio uploaded successfully. Analyzing your selected instrument...'
-);
-
-const analyzerResponse = await fetch(
-  '/api/analyze-audio-tab',
-  {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      audioUrl: uploadedBlob.url,
-      pathname: uploadedBlob.pathname,
-      song: songTitle.trim(),
-      artist: artistName.trim(),
-      transcriptionType: selectedType,
-    }),
-  }
-);
-
-const analyzerData = await analyzerResponse
-  .json()
-  .catch(() => ({}));
-
-if (!analyzerResponse.ok) {
-  throw new Error(
-    analyzerData?.error ||
-      'The audio analyzer could not generate tablature.'
-  );
-}
-
-if (!analyzerData?.generatedTab) {
-  throw new Error(
-    'The analyzer returned no tablature.'
-  );
-}
-
-     setGeneratedTab(analyzerData.generatedTab);
-
-setPreviewReady(true);
-
-setTimeout(() => {
-  document
-    .getElementById('tab-preview')
-    ?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-}, 150);
-
-setStatusMessage(
-  'Your AI tablature preview is ready.'
-);
-    } catch (error) {
-      console.error(
-        'AI tab generation error:',
-        error
-      );
-
-      setGenerationError(
-        error instanceof Error
-          ? error.message
-          : 'Unable to generate your tab preview.'
-      );
-
-      setStatusMessage('');
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const handlePaymentApproved = async (
-    orderId
-  ) => {
-    setGenerationError('');
-    setStatusMessage(
-      'Confirming your PayPal payment...'
-    );
-
-    try {
-      if (!orderId) {
+  const uploadAudioSource =
+    async () => {
+      if (!audioFile) {
         throw new Error(
-          'PayPal did not return an order ID.'
+          'Please choose an audio file before continuing.'
         );
       }
 
+      setStatusMessage(
+        'Uploading your audio securely...'
+      );
+
+      const safeFileName =
+        audioFile.name
+          .replace(
+            /[^a-zA-Z0-9._-]/g,
+            '-'
+          )
+          .replace(/-+/g, '-')
+          .slice(0, 120);
+
+      const uploadedBlob =
+        await upload(
+          `audio/${Date.now()}-${safeFileName}`,
+          audioFile,
+          {
+            access: 'private',
+
+            handleUploadUrl:
+              '/api/audio-upload',
+
+            clientPayload:
+              JSON.stringify({
+                song:
+                  songTitle.trim(),
+                artist:
+                  artistName.trim(),
+                transcriptionType:
+                  selectedType,
+                copyrightConfirmed,
+                customerEmail:
+                  customerEmail.trim(),
+              }),
+          }
+        );
+
+      if (
+        !uploadedBlob?.url ||
+        !uploadedBlob?.pathname
+      ) {
+        throw new Error(
+          'The audio upload did not return a valid file reference.'
+        );
+      }
+
+      return {
+        audioUrl:
+          uploadedBlob.url,
+        pathname:
+          uploadedBlob.pathname,
+      };
+    };
+
+  /* -----------------------------
+     ANALYZER REQUEST
+  ------------------------------ */
+
+  const requestTabAnalysis =
+    async ({
+      source,
+      audioUrl = null,
+      pathname = null,
+    }) => {
+      const endpoint =
+        source === 'youtube'
+          ? '/api/analyze-youtube-tab'
+          : '/api/analyze-audio-tab';
+
+      setStatusMessage(
+        source === 'youtube'
+          ? 'Preparing the YouTube audio for analysis...'
+          : 'Analyzing your selected instrument...'
+      );
+
       const response = await fetch(
-        '/api/paypal/capture-order',
+        endpoint,
         {
           method: 'POST',
+
           headers: {
             'Content-Type':
               'application/json',
           },
+
           body: JSON.stringify({
-            orderId,
-            songTitle: songTitle.trim(),
-            artistName: artistName.trim(),
+            source,
+            audioUrl,
+            pathname,
+            youtubeUrl:
+              source === 'youtube'
+                ? youtubeUrl.trim()
+                : null,
+            youtubeVideoId:
+              source === 'youtube'
+                ? youtubeVideoId
+                : null,
+            song:
+              songTitle.trim(),
+            artist:
+              artistName.trim(),
             transcriptionType:
               selectedType,
             customerEmail:
@@ -573,161 +726,81 @@ setStatusMessage(
         throw new Error(
           data.error ||
             data.message ||
-            'Unable to confirm your PayPal payment.'
+            'The analyzer could not generate tablature.'
         );
       }
-
-      const paymentStatus =
-        data.status ||
-        data.captureStatus ||
-        '';
-
-      const acceptedStatuses = [
-        'COMPLETED',
-        'APPROVED',
-        'SUCCESS',
-      ];
 
       if (
-        paymentStatus &&
-        !acceptedStatuses.includes(
-          String(
-            paymentStatus
-          ).toUpperCase()
-        )
+        !data.generatedTab ||
+        typeof data.generatedTab !==
+          'string'
       ) {
         throw new Error(
-          'PayPal has not marked this payment as completed.'
+          'The analyzer returned no tablature.'
         );
       }
 
-      setPurchaseOrderId(orderId);
-      setPaymentCompleted(true);
+      return data;
+    };
+    /* -----------------------------
+     WATERMARKED PREVIEW PDF
+  ------------------------------ */
 
+  const requestPreviewPdf =
+    async (tabContent) => {
       setStatusMessage(
-        'Payment confirmed. Your finished PDF is ready.'
+        'Creating your watermarked tab preview...'
       );
 
-      window.setTimeout(() => {
-        document
-          .getElementById(
-            'download-section'
-          )
-          ?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
-      }, 150);
-    } catch (error) {
-      console.error(
-        'PayPal capture error:',
-        error
-      );
-
-      setPaymentCompleted(false);
-
-      setGenerationError(
-        error instanceof Error
-          ? error.message
-          : 'Unable to confirm your PayPal payment.'
-      );
-
-      setStatusMessage('');
-    }
-  };
-    const handlePaymentCancelled = () => {
-    setPaymentCompleted(false);
-    setGenerationError('');
-
-    setStatusMessage(
-      'PayPal checkout was cancelled. Your preview is still available.'
-    );
-  };
-
-  const handlePaymentError = (error) => {
-    console.error(
-      'PayPal checkout error:',
-      error
-    );
-
-    setPaymentCompleted(false);
-    setStatusMessage('');
-
-    setGenerationError(
-      error instanceof Error
-        ? error.message
-        : 'PayPal checkout could not be completed.'
-    );
-  };
-
-  const handleDownloadPdf = async () => {
-    setGenerationError('');
-    setStatusMessage('');
-
-    if (!paymentCompleted) {
-      setGenerationError(
-        'Payment must be completed before downloading the finished PDF.'
-      );
-      return;
-    }
-
-    if (!purchaseOrderId) {
-      setGenerationError(
-        'The confirmed PayPal order ID is missing.'
-      );
-      return;
-    }
-
-    if (!generatedTab.trim()) {
-      setGenerationError(
-        'There is no generated transcription available for the PDF.'
-      );
-      return;
-    }
-
-    if (isDownloading) {
-      return;
-    }
-
-    setIsDownloading(true);
-
-    setStatusMessage(
-      'Creating your finished PDF and preparing email delivery...'
-    );
-
-    try {
       const response = await fetch(
-        '/api/generate-tab-pdf',
+        '/api/generate-tab-preview',
         {
           method: 'POST',
+
           headers: {
             'Content-Type':
               'application/json',
           },
+
           body: JSON.stringify({
-            orderId: purchaseOrderId,
-            songTitle: songTitle.trim(),
-            artistName: artistName.trim(),
+            songTitle:
+              songTitle.trim(),
+
+            artistName:
+              artistName.trim(),
+
             transcriptionType:
               selectedType,
-            customerEmail:
-              customerEmail.trim(),
-            generatedTab,
+
+            generatedTab:
+              tabContent,
+
             youtubeUrl:
-              youtubeUrl.trim() || null,
+              sourceType === 'youtube'
+                ? youtubeUrl.trim()
+                : null,
+
+            previewSystems: 4,
+
+            watermark:
+              'DADROCK TABS PREVIEW',
+
+            locked:
+              true,
           }),
         }
       );
 
       if (!response.ok) {
-        const errorData = await response
-          .json()
-          .catch(() => ({}));
+        const errorData =
+          await response
+            .json()
+            .catch(() => ({}));
 
         throw new Error(
           errorData.error ||
             errorData.message ||
-            'Unable to create your finished PDF.'
+            'Unable to create the watermarked preview.'
         );
       }
 
@@ -741,98 +814,663 @@ setStatusMessage(
           'application/pdf'
         )
       ) {
+        throw new Error(
+          'The preview server did not return a valid PDF.'
+        );
+      }
+
+      const previewBlob =
+        await response.blob();
+
+      clearPreviewPdfUrl();
+
+      const objectUrl =
+        window.URL.createObjectURL(
+          previewBlob
+        );
+
+      setPreviewPdfUrl(objectUrl);
+
+      return objectUrl;
+    };
+
+  /* -----------------------------
+     GENERATE PREVIEW
+  ------------------------------ */
+
+  const handleGeneratePreview =
+    async () => {
+      setGenerationError('');
+      setStatusMessage('');
+
+      if (
+        !formIsComplete ||
+        isGenerating
+      ) {
+        setGenerationError(
+          'Please complete every required field before generating your tab.'
+        );
+
+        return;
+      }
+
+      if (
+        ![
+          'lead',
+          'rhythm',
+          'bass',
+        ].includes(selectedType)
+      ) {
+        setGenerationError(
+          'Please choose Lead Guitar, Rhythm Guitar, or Bass Guitar.'
+        );
+
+        return;
+      }
+
+      if (!sourceType) {
+        setGenerationError(
+          'Please provide a valid YouTube link or upload an audio file.'
+        );
+
+        return;
+      }
+
+      setIsGenerating(true);
+      setGeneratedTab('');
+      setPreviewReady(false);
+      setPreviewUnlocked(false);
+      setPaymentCompleted(false);
+      setPurchaseOrderId('');
+      setUsingFreeToken(false);
+
+      clearPreviewPdfUrl();
+
+      try {
+        let analysisSource = {
+          source: sourceType,
+          audioUrl: null,
+          pathname: null,
+        };
+
+        if (
+          sourceType === 'audio'
+        ) {
+          const uploadedAudio =
+            await uploadAudioSource();
+
+          analysisSource = {
+            source: 'audio',
+
+            audioUrl:
+              uploadedAudio.audioUrl,
+
+            pathname:
+              uploadedAudio.pathname,
+          };
+        }
+
+        if (
+          sourceType === 'youtube'
+        ) {
+          setStatusMessage(
+            'Sending the YouTube reference to the DadRock analyzer...'
+          );
+        }
+
+        const analyzerData =
+          await requestTabAnalysis(
+            analysisSource
+          );
+
+        const tabContent =
+          analyzerData.generatedTab.trim();
+
+        setGeneratedTab(
+          tabContent
+        );
+
+        await requestPreviewPdf(
+          tabContent
+        );
+
+        setPreviewReady(true);
+
+        setStatusMessage(
+          'Your watermarked AI tablature preview is ready.'
+        );
+
+        window.setTimeout(() => {
+          document
+            .getElementById(
+              'tab-preview'
+            )
+            ?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+        }, 150);
+      } catch (error) {
+        console.error(
+          'AI tab preview error:',
+          error
+        );
+
+        setGeneratedTab('');
+        setPreviewReady(false);
+        clearPreviewPdfUrl();
+
+        setGenerationError(
+          error instanceof Error
+            ? error.message
+            : 'Unable to generate your tab preview.'
+        );
+
+        setStatusMessage('');
+      } finally {
+        setIsGenerating(false);
+      }
+    };
+    /* -----------------------------
+     PAYPAL UNLOCK
+  ------------------------------ */
+
+  const handlePaymentApproved =
+    async (orderId) => {
+      setGenerationError('');
+
+      setStatusMessage(
+        'Confirming your PayPal payment...'
+      );
+
+      try {
+        if (!orderId) {
+          throw new Error(
+            'PayPal did not return an order ID.'
+          );
+        }
+
+        const response = await fetch(
+          '/api/paypal/capture-order',
+          {
+            method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'application/json',
+            },
+
+            body: JSON.stringify({
+              orderId,
+
+              songTitle:
+                songTitle.trim(),
+
+              artistName:
+                artistName.trim(),
+
+              transcriptionType:
+                selectedType,
+
+              customerEmail:
+                customerEmail.trim(),
+
+              amount: PRICE,
+            }),
+          }
+        );
+
         const data = await response
           .json()
           .catch(() => ({}));
 
-        throw new Error(
-          data.error ||
-            data.message ||
-            'The server did not return a valid PDF file.'
+        if (!response.ok) {
+          throw new Error(
+            data.error ||
+              data.message ||
+              'Unable to confirm your PayPal payment.'
+          );
+        }
+
+        const paymentStatus =
+          data.status ||
+          data.captureStatus ||
+          '';
+
+        const acceptedStatuses = [
+          'COMPLETED',
+          'APPROVED',
+          'SUCCESS',
+        ];
+
+        if (
+          paymentStatus &&
+          !acceptedStatuses.includes(
+            String(
+              paymentStatus
+            ).toUpperCase()
+          )
+        ) {
+          throw new Error(
+            'PayPal has not marked this payment as completed.'
+          );
+        }
+
+        setPurchaseOrderId(
+          orderId
         );
+
+        setPaymentCompleted(
+          true
+        );
+
+        setPreviewUnlocked(
+          true
+        );
+
+        setUsingFreeToken(
+          false
+        );
+
+        setStatusMessage(
+          'Payment confirmed. Your full PDF is now unlocked.'
+        );
+
+        window.setTimeout(() => {
+          document
+            .getElementById(
+              'download-section'
+            )
+            ?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+        }, 150);
+      } catch (error) {
+        console.error(
+          'PayPal capture error:',
+          error
+        );
+
+        setPaymentCompleted(
+          false
+        );
+
+        setPreviewUnlocked(
+          false
+        );
+
+        setGenerationError(
+          error instanceof Error
+            ? error.message
+            : 'Unable to confirm your PayPal payment.'
+        );
+
+        setStatusMessage('');
       }
+    };
 
-      const pdfBlob = await response.blob();
-
-      const downloadUrl =
-        window.URL.createObjectURL(
-          pdfBlob
-        );
-
-      const safeArtist =
-        artistName
-          .trim()
-          .replace(
-            /[^a-z0-9]+/gi,
-            '-'
-          )
-          .replace(
-            /^-+|-+$/g,
-            ''
-          )
-          .toLowerCase() ||
-        'artist';
-            const safeTitle =
-        songTitle
-          .trim()
-          .replace(
-            /[^a-z0-9]+/gi,
-            '-'
-          )
-          .replace(
-            /^-+|-+$/g,
-            ''
-          )
-          .toLowerCase() ||
-        'song';
-
-      const downloadLink =
-        document.createElement('a');
-
-      downloadLink.href = downloadUrl;
-
-      downloadLink.download =
-        `${safeArtist}-${safeTitle}-${selectedType}-tab.pdf`;
-
-      document.body.appendChild(
-        downloadLink
-      );
-
-      downloadLink.click();
-      downloadLink.remove();
-
-      window.URL.revokeObjectURL(
-        downloadUrl
-      );
+  const handlePaymentCancelled =
+    () => {
+      setPaymentCompleted(false);
+      setPreviewUnlocked(false);
+      setGenerationError('');
 
       setStatusMessage(
-        'Your PDF has downloaded. A copy is also being sent to your email.'
+        'PayPal checkout was cancelled. Your preview is still available.'
       );
-    } catch (error) {
+    };
+
+  const handlePaymentError =
+    (error) => {
       console.error(
-        'PDF download error:',
+        'PayPal checkout error:',
         error
       );
+
+      setPaymentCompleted(false);
+      setPreviewUnlocked(false);
+      setStatusMessage('');
 
       setGenerationError(
         error instanceof Error
           ? error.message
-          : 'Unable to download your finished PDF.'
+          : 'PayPal checkout could not be completed.'
+      );
+    };
+
+  /* -----------------------------
+     FREE TOKEN UNLOCK
+  ------------------------------ */
+
+  const handleFreeTokenUnlock =
+    async () => {
+      if (
+        usingFreeToken ||
+        previewUnlocked
+      ) {
+        return;
+      }
+
+      setUsingFreeToken(true);
+      setGenerationError('');
+
+      setStatusMessage(
+        'Checking your free token...'
       );
 
-      setStatusMessage('');
-    } finally {
-      setIsDownloading(false);
-    }
-  };
+      try {
+        const response = await fetch(
+          '/api/free-tab-token',
+          {
+            method: 'POST',
 
-  const selectedTypeDetails =
-    TRANSCRIPTION_TYPES.find(
-      (type) =>
-        type.value ===
-        selectedType
-    ) ||
-    TRANSCRIPTION_TYPES[0];
+            headers: {
+              'Content-Type':
+                'application/json',
+            },
+
+            body: JSON.stringify({
+              customerEmail:
+                customerEmail.trim(),
+
+              songTitle:
+                songTitle.trim(),
+
+              artistName:
+                artistName.trim(),
+
+              transcriptionType:
+                selectedType,
+
+              youtubeUrl:
+                sourceType ===
+                'youtube'
+                  ? youtubeUrl.trim()
+                  : null,
+            }),
+          }
+        );
+
+        const data = await response
+          .json()
+          .catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(
+            data.error ||
+              data.message ||
+              'Your free token could not be used.'
+          );
+        }
+
+        if (
+          !data.success &&
+          !data.unlocked
+        ) {
+          throw new Error(
+            'No valid free token was found for this email address.'
+          );
+        }
+
+        const tokenReference =
+          data.tokenId ||
+          data.reference ||
+          `FREE-${Date.now()}`;
+
+        setPurchaseOrderId(
+          tokenReference
+        );
+
+        setPaymentCompleted(
+          false
+        );
+
+        setPreviewUnlocked(
+          true
+        );
+
+        setStatusMessage(
+          'Free token accepted. Your full PDF is now unlocked.'
+        );
+
+        window.setTimeout(() => {
+          document
+            .getElementById(
+              'download-section'
+            )
+            ?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+        }, 150);
+      } catch (error) {
+        console.error(
+          'Free token error:',
+          error
+        );
+
+        setPreviewUnlocked(
+          false
+        );
+
+        setGenerationError(
+          error instanceof Error
+            ? error.message
+            : 'Unable to use your free token.'
+        );
+
+        setStatusMessage('');
+      } finally {
+        setUsingFreeToken(false);
+      }
+    };
+    /* -----------------------------
+     FINISHED PDF DOWNLOAD
+  ------------------------------ */
+
+  const handleDownloadPdf =
+    async () => {
+      setGenerationError('');
+      setStatusMessage('');
+
+      if (!previewUnlocked) {
+        setGenerationError(
+          'Unlock the finished PDF before downloading.'
+        );
+
+        return;
+      }
+
+      if (!purchaseOrderId) {
+        setGenerationError(
+          'The unlock reference is missing.'
+        );
+
+        return;
+      }
+
+      if (!generatedTab.trim()) {
+        setGenerationError(
+          'There is no generated transcription available for the PDF.'
+        );
+
+        return;
+      }
+
+      if (isDownloading) {
+        return;
+      }
+
+      setIsDownloading(true);
+
+      setStatusMessage(
+        'Creating your finished PDF and preparing email delivery...'
+      );
+
+      try {
+        const response = await fetch(
+          '/api/generate-tab-pdf',
+          {
+            method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'application/json',
+            },
+
+            body: JSON.stringify({
+              orderId:
+                paymentCompleted
+                  ? purchaseOrderId
+                  : null,
+
+              tokenReference:
+                !paymentCompleted
+                  ? purchaseOrderId
+                  : null,
+
+              unlockMethod:
+                paymentCompleted
+                  ? 'paypal'
+                  : 'free-token',
+
+              songTitle:
+                songTitle.trim(),
+
+              artistName:
+                artistName.trim(),
+
+              transcriptionType:
+                selectedType,
+
+              customerEmail:
+                customerEmail.trim(),
+
+              generatedTab,
+
+              youtubeUrl:
+                sourceType === 'youtube'
+                  ? youtubeUrl.trim()
+                  : null,
+
+              sourceType,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData =
+            await response
+              .json()
+              .catch(() => ({}));
+
+          throw new Error(
+            errorData.error ||
+              errorData.message ||
+              'Unable to create your finished PDF.'
+          );
+        }
+
+        const contentType =
+          response.headers.get(
+            'content-type'
+          ) || '';
+
+        if (
+          !contentType.includes(
+            'application/pdf'
+          )
+        ) {
+          const data = await response
+            .json()
+            .catch(() => ({}));
+
+          throw new Error(
+            data.error ||
+              data.message ||
+              'The server did not return a valid PDF file.'
+          );
+        }
+
+        const pdfBlob =
+          await response.blob();
+
+        const downloadUrl =
+          window.URL.createObjectURL(
+            pdfBlob
+          );
+
+        const safeArtist =
+          artistName
+            .trim()
+            .replace(
+              /[^a-z0-9]+/gi,
+              '-'
+            )
+            .replace(
+              /^-+|-+$/g,
+              ''
+            )
+            .toLowerCase() ||
+          'artist';
+
+        const safeTitle =
+          songTitle
+            .trim()
+            .replace(
+              /[^a-z0-9]+/gi,
+              '-'
+            )
+            .replace(
+              /^-+|-+$/g,
+              ''
+            )
+            .toLowerCase() ||
+          'song';
+
+        const downloadLink =
+          document.createElement('a');
+
+        downloadLink.href =
+          downloadUrl;
+
+        downloadLink.download =
+          `${safeArtist}-${safeTitle}-${selectedType}-tab.pdf`;
+
+        document.body.appendChild(
+          downloadLink
+        );
+
+        downloadLink.click();
+        downloadLink.remove();
+
+        window.setTimeout(() => {
+          window.URL.revokeObjectURL(
+            downloadUrl
+          );
+        }, 1000);
+
+        setStatusMessage(
+          'Your PDF has downloaded. A copy is also being sent to your email.'
+        );
+      } catch (error) {
+        console.error(
+          'PDF download error:',
+          error
+        );
+
+        setGenerationError(
+          error instanceof Error
+            ? error.message
+            : 'Unable to download your finished PDF.'
+        );
+
+        setStatusMessage('');
+      } finally {
+        setIsDownloading(false);
+      }
+    };
 
   return (
     <main className="min-h-screen bg-[#090909] text-white">
@@ -851,20 +1489,15 @@ setStatusMessage(
             )}
             className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950/80 px-4 py-2 text-sm font-semibold text-zinc-300 transition hover:border-orange-500/60 hover:text-white"
           >
-            <ArrowLeft
-              size={17}
-            />
+            <ArrowLeft size={17} />
 
-            <span>
-              Back Home
-            </span>
+            <span>Back Home</span>
           </Link>
 
           <LanguageSelector />
         </header>
-
-        <div className="overflow-hidden rounded-[28px] border border-orange-500/30 bg-gradient-to-b from-zinc-950 via-[#111111] to-zinc-950 shadow-2xl shadow-orange-950/20">
-          <div className="border-b border-zinc-800 px-5 py-7 text-center sm:px-8">
+          <div className="overflow-hidden rounded-[28px] border border-orange-500/30 bg-gradient-to-b from-zinc-950 via-[#111111] to-zinc-950 shadow-2xl shadow-orange-950/20">
+          <section className="border-b border-zinc-800 px-5 py-7 text-center sm:px-8">
             <img
               src={LOGO_URL}
               alt="DadRock Tabs"
@@ -873,82 +1506,106 @@ setStatusMessage(
 
             <div className="mx-auto max-w-3xl">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-orange-500/40 bg-orange-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">
-                <Sparkles
-                  size={15}
-                />
+                <Sparkles size={15} />
 
                 AI Powered Transcription
               </div>
 
-              <h1 className="whitespace-nowrap text-[1.55rem] font-black tracking-tight text-white sm:text-5xl">
+              <h1 className="text-3xl font-black tracking-tight text-white sm:text-5xl">
                 Guitar & Bass Tab Generator
               </h1>
 
-              <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400 sm:mt-3 sm:text-base">
-                Turn any audio into a professional guitar or bass TAB PDF
+              <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base">
+                Turn your audio or YouTube
+                reference into professional
+                guitar or bass tablature.
               </p>
             </div>
-          </div>
-            <div className="mb-4 text-center sm:mb-5">
+          </section>
 
-  <h2 className="text-xl font-black text-white sm:text-3xl">
-    Everything You Need in One Place
-  </h2>
+          <section className="px-5 py-6 sm:px-8">
+            <div className="mb-5 text-center">
+              <h2 className="text-xl font-black text-white sm:text-3xl">
+                Everything You Need in One Place
+              </h2>
 
-  <p className="mx-auto mt-1.5 max-w-2xl text-xs leading-5 text-zinc-400 sm:mt-2 sm:text-sm sm:leading-6">
-    Upload your song, choose Lead Rhythm or Bass, preview the
-    transcription, and download a polished PDF.
-  </p>
-</div>
+              <p className="mx-auto mt-2 max-w-2xl text-xs leading-5 text-zinc-400 sm:text-sm sm:leading-6">
+                Choose your source, select Lead,
+                Rhythm, or Bass, review a short
+                watermarked preview, then unlock
+                the finished PDF.
+              </p>
+            </div>
 
-<div className="grid gap-2 sm:grid-cols-3 sm:gap-3">
-  {BENEFITS.map(
-    ({
-      title,
-      description,
-      icon: Icon,
-    }) => (
-      <div
-        key={title}
-        className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-3 py-2.5 transition hover:border-orange-500/40 sm:rounded-2xl sm:p-4"
-      >
-        <div className="flex items-center gap-3 sm:items-start">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-orange-500/30 bg-orange-500/10 text-orange-300 sm:h-10 sm:w-10 sm:rounded-xl">
-            <Icon size={18} className="sm:h-5 sm:w-5" />
-          </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {BENEFITS.map(
+                ({
+                  title,
+                  description,
+                  icon: Icon,
+                }) => (
+                  <div
+                    key={title}
+                    className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4 transition hover:border-orange-500/40"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-orange-300">
+                        <Icon size={20} />
+                      </div>
 
-          <div className="min-w-0 flex-1">
-            <h3 className="text-sm font-bold leading-5 text-white">
-              {title}
-            </h3>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-sm font-bold leading-5 text-white">
+                          {title}
+                        </h3>
 
-            <p className="mt-0.5 text-[11px] leading-4 text-zinc-400 sm:mt-1 sm:text-xs sm:leading-5">
-              {description}
-            </p>
-          </div>
-        </div>
-      </div>
-    )
-  )}
-</div>
+                        <p className="mt-1 text-xs leading-5 text-zinc-400">
+                          {description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          </section>
 
-          <div className="border-t border-zinc-800 bg-black/20 px-5 py-6 sm:px-8">
+          <section className="border-t border-zinc-800 bg-black/20 px-5 py-6 sm:px-8">
+            <div className="mb-5 text-center">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-400">
+                Step One
+              </p>
+
+              <h2 className="mt-2 text-2xl font-black text-white">
+                Choose Your Audio Source
+              </h2>
+
+              <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
+                Paste a public YouTube link or
+                upload an audio file from your
+                device.
+              </p>
+            </div>
+
             <div className="grid gap-4 lg:grid-cols-2">
-              <section className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-5">
+              <section
+                className={`rounded-2xl border p-5 transition ${
+                  sourceType === 'youtube'
+                    ? 'border-red-500/50 bg-red-500/5'
+                    : 'border-zinc-800 bg-zinc-950/80'
+                }`}
+              >
                 <div className="mb-4 flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-red-500/30 bg-red-500/10 text-red-300">
-                    <Youtube
-                      size={21}
-                    />
+                    <Youtube size={21} />
                   </div>
 
                   <div>
-                    <h2 className="text-lg font-black text-white">
+                    <h3 className="text-lg font-black text-white">
                       YouTube Reference
-                    </h2>
+                    </h3>
 
                     <p className="text-xs text-zinc-500">
-                      Paste a public song URL
+                      Paste a public video URL
                     </p>
                   </div>
                 </div>
@@ -964,152 +1621,152 @@ setStatusMessage(
                   id="youtube-url"
                   type="url"
                   value={youtubeUrl}
-                  onChange={(event) => {
-                    setYoutubeUrl(
-                      event.target.value
-                    );
-
-                    resetGeneratedResults();
-                  }}
+                  onChange={
+                    handleYoutubeUrlChange
+                  }
                   placeholder="https://youtube.com/watch?v=..."
                   className={`w-full rounded-xl border bg-black/60 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 ${
-  !hasYouTubeUrl
-    ? 'border-zinc-700 focus:border-orange-500'
-    : isValidYouTubeUrl
-      ? 'border-green-500/70 focus:border-green-400'
-      : 'border-red-500/70 focus:border-red-400'
-}`}
+                    !hasYouTubeUrl
+                      ? 'border-zinc-700 focus:border-orange-500'
+                      : isValidYouTubeUrl
+                        ? 'border-green-500/70 focus:border-green-400'
+                        : 'border-red-500/70 focus:border-red-400'
+                  }`}
                 />
-                  {hasYouTubeUrl && (
-  <p
-    className={`mt-2 text-xs font-semibold ${
-      isValidYouTubeUrl ? 'text-green-400' : 'text-red-400'
-    }`}
-  >
-    {isValidYouTubeUrl
-      ? '✓ Valid YouTube link'
-      : 'Please enter a valid YouTube link.'}
-  </p>
-)}
-{isLoadingYoutubeInfo && (
-  <div className="mt-3 rounded-xl border border-orange-500/30 bg-orange-500/5 p-3">
-    <p className="text-xs font-semibold text-orange-300">
-      Finding your YouTube video...
-    </p>
-  </div>
-)}
 
-{youtubeInfoError && !isLoadingYoutubeInfo && (
-  <div className="mt-3 rounded-xl border border-red-500/30 bg-red-500/5 p-3">
-    <p className="text-xs font-semibold text-red-300">
-      {youtubeInfoError}
-    </p>
-  </div>
-)}
+                {hasYouTubeUrl && (
+                  <p
+                    className={`mt-2 text-xs font-semibold ${
+                      isValidYouTubeUrl
+                        ? 'text-green-400'
+                        : 'text-red-400'
+                    }`}
+                  >
+                    {isValidYouTubeUrl
+                      ? '✓ Valid YouTube link'
+                      : 'Please enter a valid YouTube link.'}
+                  </p>
+                )}
 
-{youtubeVideoInfo && !isLoadingYoutubeInfo && (
-  <div className="mt-3 overflow-hidden rounded-xl border border-green-500/30 bg-zinc-900/80">
-    {youtubeVideoInfo.thumbnail && (
-      <div className="relative aspect-video w-full overflow-hidden bg-black">
-        <img
-          src={youtubeVideoInfo.thumbnail}
-          alt={youtubeVideoInfo.title}
-          className="h-full w-full object-cover"
-        />
-        {youtubeVideoInfo.duration && (
-          <span className="absolute bottom-2 right-2 rounded-md bg-black/85 px-2 py-1 text-xs font-bold text-white">
-            {youtubeVideoInfo.duration}
-          </span>
-        )}
-      </div>
-    )}
+                {isLoadingYoutubeInfo && (
+                  <div className="mt-3 flex items-center gap-2 rounded-xl border border-orange-500/30 bg-orange-500/5 p-3 text-xs font-semibold text-orange-300">
+                    <Loader2
+                      size={16}
+                      className="animate-spin"
+                    />
 
-    <div className="p-3">
-      <div className="mb-2 flex items-center gap-2">
-        <span className="h-2 w-2 rounded-full bg-green-400" />
-        <p className="text-xs font-bold uppercase tracking-wide text-green-400">
-          Video found
-        </p>
-      </div>
+                    Finding your YouTube video...
+                  </div>
+                )}
+                {youtubeInfoError && (
+                  <div className="mt-3 rounded-xl border border-red-500/30 bg-red-500/5 p-3 text-xs font-semibold leading-5 text-red-300">
+                    {youtubeInfoError}
+                  </div>
+                )}
 
-      <h3 className="line-clamp-2 text-sm font-bold leading-5 text-white">
-        {youtubeVideoInfo.title}
-      </h3>
+                {youtubeVideoInfo &&
+                  !isLoadingYoutubeInfo && (
+                    <div className="mt-4 overflow-hidden rounded-xl border border-zinc-800 bg-black/60">
+                      {youtubeVideoInfo.thumbnail && (
+                        <img
+                          src={
+                            youtubeVideoInfo.thumbnail
+                          }
+                          alt={
+                            youtubeVideoInfo.title ||
+                            'YouTube video'
+                          }
+                          className="aspect-video w-full object-cover"
+                        />
+                      )}
 
-      <p className="mt-1 text-xs text-zinc-400">
-        {youtubeVideoInfo.channelTitle}
-      </p>
+                      <div className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-500/10 text-red-400">
+                            <Play
+                              size={18}
+                              fill="currentColor"
+                            />
+                          </div>
 
-      <p className="mt-2 text-xs font-semibold text-orange-300">
-        Ready for DadRock Tab Studio
-      </p>
-    </div>
-  </div>
-)}
+                          <div className="min-w-0 flex-1">
+                            <p className="line-clamp-2 text-sm font-bold leading-5 text-white">
+                              {
+                                youtubeVideoInfo.title
+                              }
+                            </p>
 
-                <p className="mt-2 text-xs leading-5 text-zinc-500">
-                  Use this as a reference when
-                  you do not have an audio file
-                  saved on your device.
-                </p>
+                            {youtubeVideoInfo.channelTitle && (
+                              <p className="mt-1 truncate text-xs text-zinc-500">
+                                {
+                                  youtubeVideoInfo.channelTitle
+                                }
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
               </section>
 
-              <section className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-5">
+              <section
+                className={`rounded-2xl border p-5 transition ${
+                  sourceType === 'audio'
+                    ? 'border-orange-500/50 bg-orange-500/5'
+                    : 'border-zinc-800 bg-zinc-950/80'
+                }`}
+              >
                 <div className="mb-4 flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-orange-300">
-                    <Upload
-                      size={21}
-                    />
+                    <Upload size={21} />
                   </div>
 
                   <div>
-                    <h2 className="text-lg font-black text-white">
+                    <h3 className="text-lg font-black text-white">
                       Upload Audio
-                    </h2>
+                    </h3>
 
                     <p className="text-xs text-zinc-500">
-                      MP3, WAV, M4A, or AAC
+                      MP3, WAV, M4A or AAC
                     </p>
                   </div>
                 </div>
-                <input
-                  ref={fileInputRef}
-                  id="audio-file"
-                  type="file"
-                  accept=".mp3,.wav,.m4a,.aac,audio/*"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
 
                 {!audioFile ? (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      fileInputRef.current?.click()
-                    }
-                    className="flex min-h-[128px] w-full flex-col items-center justify-center rounded-2xl border border-dashed border-zinc-700 bg-black/40 px-5 py-6 text-center transition hover:border-orange-500/60 hover:bg-orange-500/5"
+                  <label
+                    htmlFor="audio-upload"
+                    className="flex min-h-[190px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-zinc-700 bg-black/40 px-5 py-8 text-center transition hover:border-orange-500/60 hover:bg-orange-500/5"
                   >
-                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-300">
-                      <FileAudio
-                        size={24}
-                      />
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-300">
+                      <Upload size={25} />
                     </div>
 
-                    <span className="text-sm font-bold text-white">
-                      Choose Audio File
-                    </span>
+                    <p className="mt-4 text-sm font-black text-white">
+                      Tap to choose an audio file
+                    </p>
 
-                    <span className="mt-1 text-xs text-zinc-500">
-                      Tap to browse your device
-                    </span>
-                  </button>
+                    <p className="mt-2 max-w-xs text-xs leading-5 text-zinc-500">
+                      Upload a clear recording for
+                      the strongest transcription
+                      results.
+                    </p>
+
+                    <input
+                      id="audio-upload"
+                      type="file"
+                      accept=".mp3,.wav,.m4a,.aac,audio/mpeg,audio/wav,audio/x-m4a,audio/aac"
+                      onChange={
+                        handleFileChange
+                      }
+                      className="hidden"
+                    />
+                  </label>
                 ) : (
                   <div className="rounded-2xl border border-green-500/30 bg-green-500/5 p-4">
-                    <div className="flex items-start gap-3">
+                    <div className="flex items-center gap-3">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-green-500/30 bg-green-500/10 text-green-300">
-                        <Check
-                          size={22}
-                        />
+                        <Music size={21} />
                       </div>
 
                       <div className="min-w-0 flex-1">
@@ -1129,292 +1786,108 @@ setStatusMessage(
 
                       <button
                         type="button"
-                        onClick={removeAudioFile}
+                        onClick={
+                          removeAudioFile
+                        }
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-zinc-700 text-zinc-400 transition hover:border-red-500/60 hover:text-red-300"
                         aria-label="Remove audio file"
-                        className="rounded-lg border border-zinc-700 p-2 text-zinc-400 transition hover:border-red-500/50 hover:text-red-300"
                       >
-                        <X
-                          size={17}
-                        />
+                        <X size={17} />
                       </button>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() =>
-                        fileInputRef.current?.click()
-                      }
-                      className="mt-4 w-full rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-xs font-bold text-zinc-300 transition hover:border-orange-500/50 hover:text-white"
-                    >
-                      Replace File
-                    </button>
+                    <div className="mt-4 flex items-center gap-2 rounded-xl border border-green-500/20 bg-black/30 px-3 py-2 text-xs font-semibold text-green-300">
+                      <CheckCircle2
+                        size={15}
+                      />
+
+                      Audio file ready for analysis
+                    </div>
                   </div>
                 )}
-
-                <p className="mt-2 text-xs leading-5 text-zinc-500">
-                  For the best result, upload a
-                  clear recording with minimal
-                  background noise.
-                </p>
               </section>
             </div>
-          </div>
+          </section>
+          <section className="border-t border-zinc-800 px-5 py-6 sm:px-8">
+            <div className="mb-5 text-center">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-400">
+                Step Two
+              </p>
 
-          <div className="border-t border-zinc-800 px-5 py-6 sm:px-8">
-            <section className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-5">
-              <div className="mb-5 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-orange-300">
-                  <Music2
-                    size={21}
-                  />
-                </div>
+              <h2 className="mt-2 text-2xl font-black text-white">
+                Add Song Details
+              </h2>
 
-                <div>
-                  <h2 className="text-lg font-black text-white">
-                    Song Information
-                  </h2>
+              <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
+                Confirm the song, artist,
+                delivery email, and instrument
+                part you want transcribed.
+              </p>
+            </div>
 
-                  <p className="text-xs text-zinc-500">
-                    Add the title and artist
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="song-title"
-                    className="mb-2 block text-sm font-semibold text-zinc-300"
-                  >
-                    Song Title
-                  </label>
-
-                  <input
-                    id="song-title"
-                    type="text"
-                    value={songTitle}
-                    onChange={(event) => {
-                      setSongTitle(
-                        event.target.value
-                      );
-
-                      resetGeneratedResults();
-                    }}
-                    placeholder="Enter song title"
-                    className="w-full rounded-xl border border-zinc-700 bg-black/60 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="artist-name"
-                    className="mb-2 block text-sm font-semibold text-zinc-300"
-                  >
-                    Artist Name
-                  </label>
-
-                  <input
-                    id="artist-name"
-                    type="text"
-                    value={artistName}
-                    onChange={(event) => {
-                      setArtistName(
-                        event.target.value
-                      );
-
-                      resetGeneratedResults();
-                    }}
-                    placeholder="Enter artist name"
-                    className="w-full rounded-xl border border-zinc-700 bg-black/60 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
-                  />
-                </div>
-              </div>
-            </section>
-          </div>
-
-          <div className="border-t border-zinc-800 bg-black/20 px-5 py-6 sm:px-8">
-            <section>
-              <div className="mb-5 text-center">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-400">
-                  Choose Your Instrument
-                </p>
-
-                <h2 className="mt-2 text-2xl font-black text-white">
-                  Which Part Should We Transcribe?
-                </h2>
-
-                <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
-                  Select the main instrument part
-                  you want included in your
-                  finished tablature PDF.
-                </p>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-3">
-                {TRANSCRIPTION_TYPES.map(
-                  ({
-                    value,
-                    title,
-                    description,
-                    emoji,
-                  }) => {
-                    const isSelected =
-                      selectedType === value;
-
-                    return (
-                      <button
-                        key={value}
-                        type="button"
-                        onClick={() => {
-                          setSelectedType(value);
-                          resetGeneratedResults();
-                        }}
-                        className={`relative rounded-2xl border p-5 text-left transition ${
-                          isSelected
-                            ? 'border-orange-500 bg-orange-500/10 shadow-lg shadow-orange-950/20'
-                            : 'border-zinc-800 bg-zinc-950/80 hover:border-orange-500/40'
-                        }`}
-                      >
-                        {isSelected && (
-                          <div className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-black">
-                            <Check
-                              size={16}
-                              strokeWidth={3}
-                            />
-                          </div>
-                        )}
-
-                        <div className="mb-4 text-3xl">
-                          {emoji}
-                        </div>
-
-                        <h3 className="text-base font-black text-white">
-                          {title}
-                        </h3>
-
-                        <p className="mt-2 text-xs leading-5 text-zinc-500">
-                          {description}
-                        </p>
-
-                        <div
-                          className={`mt-4 rounded-xl px-3 py-2 text-center text-xs font-bold ${
-                            isSelected
-                              ? 'bg-orange-500 text-black'
-                              : 'border border-zinc-700 bg-black/40 text-zinc-400'
-                          }`}
-                        >
-                          {isSelected
-                            ? 'Selected'
-                            : 'Select Part'}
-                        </div>
-                      </button>
-                    );
-                  }
-                )}
-              </div>
-
-              <div className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-center text-xs text-zinc-400">
-                <Guitar
-                  size={16}
-                  className="shrink-0 text-orange-400"
-                />
-
-                <span>
-                  Selected:{' '}
-                  <strong className="text-white">
-                    {selectedTypeDetails.title}
-                  </strong>
-                </span>
-              </div>
-            </section>
-          </div>
-
-          <div className="border-t border-zinc-800 px-5 py-6 sm:px-8">
             <div className="grid gap-4 lg:grid-cols-2">
-              <section className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-5">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-green-500/30 bg-green-500/10 text-green-300">
-                    <ShieldCheck
-                      size={21}
-                    />
-                  </div>
-
-                  <div>
-                    <h2 className="text-lg font-black text-white">
-                      Copyright Confirmation
-                    </h2>
-
-                    <p className="text-xs text-zinc-500">
-                      Required before processing
-                    </p>
-                  </div>
-                </div>
-                <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-zinc-800 bg-black/40 p-4 transition hover:border-green-500/40">
-                  <input
-                    type="checkbox"
-                    checked={copyrightConfirmed}
-                    onChange={(event) => {
-                      setCopyrightConfirmed(
-                        event.target.checked
-                      );
-
-                      resetGeneratedResults();
-                    }}
-                    className="mt-1 h-5 w-5 shrink-0 accent-orange-500"
-                  />
-
-                  <span>
-                    <span className="block text-sm font-bold text-white">
-                      I confirm I have permission
-                      to use this audio.
-                    </span>
-
-                    <span className="mt-1 block text-xs leading-5 text-zinc-500">
-                      This tool is intended for
-                      private educational use,
-                      original recordings, or audio
-                      you are legally permitted to
-                      process.
-                    </span>
-                  </span>
-                </label>
-
-                <div className="mt-4 flex items-start gap-3 rounded-xl border border-amber-500/20 bg-amber-500/5 p-3 text-xs leading-5 text-amber-100/70">
-                  <LockKeyhole
-                    size={17}
-                    className="mt-0.5 shrink-0 text-amber-400"
-                  />
-
-                  Uploaded audio is used only to
-                  process your private
-                  transcription request.
-                </div>
-              </section>
-
-              <section className="rounded-2xl border border-orange-500/30 bg-gradient-to-b from-orange-500/10 to-zinc-950 p-5">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-500/40 bg-orange-500/15 text-orange-300">
-                    <Mail
-                      size={21}
-                    />
-                  </div>
-
-                  <div>
-                    <h2 className="text-lg font-black text-white">
-                      Delivery Email
-                    </h2>
-
-                    <p className="text-xs text-zinc-500">
-                      Required for PDF delivery
-                    </p>
-                  </div>
-                </div>
-
+              <div>
                 <label
-                  htmlFor="customer-email"
+                  htmlFor="song-title"
                   className="mb-2 block text-sm font-semibold text-zinc-300"
                 >
-                  Email Address
+                  Song Title
                 </label>
+
+                <input
+                  id="song-title"
+                  type="text"
+                  value={songTitle}
+                  onChange={(event) => {
+                    setSongTitle(
+                      event.target.value
+                    );
+
+                    resetGeneratedResults();
+                  }}
+                  placeholder="Enter the song title"
+                  className="w-full rounded-xl border border-zinc-700 bg-black/60 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="artist-name"
+                  className="mb-2 block text-sm font-semibold text-zinc-300"
+                >
+                  Artist Name
+                </label>
+
+                <input
+                  id="artist-name"
+                  type="text"
+                  value={artistName}
+                  onChange={(event) => {
+                    setArtistName(
+                      event.target.value
+                    );
+
+                    resetGeneratedResults();
+                  }}
+                  placeholder="Enter the artist name"
+                  className="w-full rounded-xl border border-zinc-700 bg-black/60 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-500"
+                />
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <label
+                htmlFor="customer-email"
+                className="mb-2 block text-sm font-semibold text-zinc-300"
+              >
+                Email for PDF Delivery
+              </label>
+
+              <div className="relative">
+                <Mail
+                  size={18}
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500"
+                />
 
                 <input
                   id="customer-email"
@@ -1428,526 +1901,705 @@ setStatusMessage(
                     resetGeneratedResults();
                   }}
                   placeholder="you@example.com"
-                  autoComplete="email"
-                  className={`w-full rounded-xl border bg-black/60 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 ${
-                    customerEmail &&
-                    !emailIsValid
-                      ? 'border-red-500'
-                      : 'border-zinc-700 focus:border-orange-500'
+                  className={`w-full rounded-xl border bg-black/60 py-3 pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-600 ${
+                    !customerEmail
+                      ? 'border-zinc-700 focus:border-orange-500'
+                      : isEmailValid
+                        ? 'border-green-500/70 focus:border-green-400'
+                        : 'border-red-500/70 focus:border-red-400'
                   }`}
                 />
+              </div>
 
-                {customerEmail &&
-                  !emailIsValid && (
-                    <p className="mt-2 text-xs text-red-300">
-                      Please enter a valid email
-                      address.
-                    </p>
-                  )}
-
-                <button
-                  type="button"
-                  onClick={handleGeneratePreview}
-                  disabled={
-                    !formIsComplete ||
-                    isGenerating
-                  }
-                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-4 text-base font-black text-black shadow-xl shadow-orange-950/30 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+              {customerEmail && (
+                <p
+                  className={`mt-2 text-xs font-semibold ${
+                    isEmailValid
+                      ? 'text-green-400'
+                      : 'text-red-400'
+                  }`}
                 >
-                  {isGenerating ? (
-                    <>
-                      <Loader2
-                        size={21}
-                        className="animate-spin"
-                      />
-
-                      Generating Preview...
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles
-                        size={21}
-                      />
-
-                      Generate My AI Tab
-                    </>
-                  )}
-                </button>
-
-                <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-                  {PROCESS_STEPS.slice(
-                    0,
-                    3
-                  ).map((step, index) => (
-                    <div
-                      key={step}
-                      className="rounded-xl border border-zinc-800 bg-black/40 px-2 py-3"
-                    >
-                      <span className="block text-xs font-black text-orange-400">
-                        {index + 1}
-                      </span>
-
-                      <span className="mt-1 block text-[10px] leading-4 text-zinc-500">
-                        {step}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </section>
+                  {isEmailValid
+                    ? '✓ Valid delivery email'
+                    : 'Please enter a valid email address.'}
+                </p>
+              )}
             </div>
 
-            {(generationError ||
-              statusMessage) && (
-              <div
-                className={`mt-4 rounded-2xl border px-4 py-3 text-sm leading-6 ${
-                  generationError
-                    ? 'border-red-500/40 bg-red-500/10 text-red-200'
-                    : 'border-green-500/30 bg-green-500/10 text-green-200'
-                }`}
-              >
-                {generationError ||
-                  statusMessage}
-              </div>
-            )}
-          </div>
-          <div className="border-t border-zinc-800 bg-black/20 px-5 py-6 sm:px-8">
-            <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-4">
-                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-orange-300">
-                  <Headphones
-                    size={20}
-                  />
-                </div>
-
-                <h3 className="text-sm font-black text-white">
-                  How Audio Is Processed
+            <div className="mt-6">
+              <div className="mb-3">
+                <h3 className="text-lg font-black text-white">
+                  Choose Your Instrument Part
                 </h3>
 
-                <p className="mt-2 text-xs leading-5 text-zinc-500">
-                  The selected instrument is
-                  separated, analyzed, and
-                  converted into readable
-                  tablature.
+                <p className="mt-1 text-xs leading-5 text-zinc-500">
+                  Select the part you want the AI
+                  analyzer to isolate and
+                  transcribe.
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-4">
-                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl border border-green-500/30 bg-green-500/10 text-green-300">
-                  <LockKeyhole
-                    size={20}
-                  />
-                </div>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {TRANSCRIPTION_TYPES.map(
+                  (type) => {
+                    const Icon =
+                      type.icon;
 
-                <h3 className="text-sm font-black text-white">
-                  Private Processing
-                </h3>
-
-                <p className="mt-2 text-xs leading-5 text-zinc-500">
-                  Your uploaded audio and
-                  generated transcription are
-                  used only for your private
-                  request.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-4">
-                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-500/10 text-blue-300">
-                  <FileText
-                    size={20}
-                  />
-                </div>
-
-                <h3 className="text-sm font-black text-white">
-                  Preview Before Payment
-                </h3>
-
-                <p className="mt-2 text-xs leading-5 text-zinc-500">
-                  Review your generated tab
-                  before opening PayPal and
-                  purchasing the finished PDF.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {previewReady && (
-            <div
-              id="tab-preview"
-              className="scroll-mt-6 border-t border-zinc-800 px-5 py-6 sm:px-8"
-            >
-              <section className="overflow-hidden rounded-2xl border border-orange-500/30 bg-zinc-950/90">
-                <div className="flex flex-col gap-3 border-b border-zinc-800 bg-orange-500/5 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-orange-400">
-                      AI Preview
-                    </p>
-
-                    <h2 className="mt-1 text-xl font-black text-white">
-                      {songTitle} — {artistName}
-                    </h2>
-
-                    <p className="mt-1 text-xs text-zinc-500">
-                      {selectedTypeDetails.title}
-                    </p>
-                  </div>
-
-                  <div className="inline-flex items-center gap-2 self-start rounded-full border border-green-500/30 bg-green-500/10 px-3 py-2 text-xs font-bold text-green-300">
-                    <Check
-                      size={15}
-                    />
-
-                    Preview Ready
-                  </div>
-                </div>
-
-                <div className="p-5">
-                  <div className="overflow-x-auto rounded-2xl border border-zinc-800 bg-black p-4">
-                    <pre className="min-h-[260px] whitespace-pre-wrap break-words font-mono text-xs leading-6 text-zinc-200 sm:text-sm">
-                      {generatedTab}
-                    </pre>
-                  </div>
-
-                  <div className="mt-4 flex items-start gap-3 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4 text-xs leading-5 text-amber-100/70">
-                    <ShieldCheck
-                      size={18}
-                      className="mt-0.5 shrink-0 text-amber-400"
-                    />
-
-                    Review this preview carefully.
-AI-generated tablature may
-require small corrections for
-tuning, timing, or complex
-overlapping instruments.
-                  </div>
-                </div>
-              </section>
-            </div>
-          )}
-
-          {previewReady && (
-            <div className="border-t border-zinc-800 bg-black/20 px-5 py-6 sm:px-8">
-              <div className="grid gap-4 lg:grid-cols-2">
-                <section className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-5">
-                  <div className="mb-4 flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-500/10 text-blue-300">
-                      <ShieldCheck
-                        size={21}
-                      />
-                    </div>
-
-                    <div>
-                      <h2 className="text-lg font-black text-white">
-                        Secure PayPal Checkout
-                      </h2>
-
-                      <p className="text-xs text-zinc-500">
-                        Pay only after reviewing
-                        your preview
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mb-4 rounded-2xl border border-zinc-800 bg-black/40 p-4">
-                    <div className="flex items-center justify-between gap-4">
-                      <div>
-                        <p className="text-sm font-bold text-white">
-                          Finished Tab PDF
-                        </p>
-
-                        <p className="mt-1 text-xs text-zinc-500">
-                          Printable PDF plus email
-                          delivery
-                        </p>
-                      </div>
-
-                      <p className="text-2xl font-black text-orange-400">
-                        $4.99
-                      </p>
-                    </div>
-                  </div>
-
-                  {!paymentCompleted ? (
-                    <PayPalCheckoutButton
-                      amount="4.99"
-                      description={`${songTitle} by ${artistName} — ${selectedTypeDetails.title} Tab PDF`}
-                      customerEmail={customerEmail.trim()}
-                      songTitle={songTitle.trim()}
-                      artistName={artistName.trim()}
-                      transcriptionType={selectedType}
-                      onApprove={handlePaymentApproved}
-                      onCancel={handlePaymentCancelled}
-                      onError={handlePaymentError}
-                    />
-                  ) : (
-                    <div className="flex items-center gap-3 rounded-2xl border border-green-500/30 bg-green-500/10 p-4">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-500 text-black">
-                        <Check
-                          size={21}
-                          strokeWidth={3}
-                        />
-                      </div>
-
-                      <div>
-                        <p className="text-sm font-black text-green-200">
-                          Payment Confirmed
-                        </p>
-
-                        <p className="mt-1 text-xs text-green-100/60">
-                          Your finished PDF is now
-                          unlocked.
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  <p className="mt-4 text-center text-[11px] leading-5 text-zinc-600">
-                    Payments are processed securely
-                    by PayPal. DadRock Tabs does not
-                    store your payment details.
-                  </p>
-                </section>
-
-                <section
-                  id="download-section"
-                  className="scroll-mt-6 rounded-2xl border border-orange-500/30 bg-gradient-to-b from-orange-500/10 to-zinc-950 p-5"
-                >
-                  <div className="mb-4 flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-500/40 bg-orange-500/15 text-orange-300">
-                      <Download
-                        size={21}
-                      />
-                    </div>
-
-                    <div>
-                      <h2 className="text-lg font-black text-white">
-                        Download Your PDF
-                      </h2>
-
-                      <p className="text-xs text-zinc-500">
-                        Available after payment
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="rounded-2xl border border-zinc-800 bg-black/40 p-4">
-                    <div className="flex items-center gap-3">
-                      <FileText
-                        size={34}
-                        className="shrink-0 text-orange-400"
-                      />
-
-                      <div className="min-w-0">
-                        <p className="truncate text-sm font-black text-white">
-                          {artistName} — {songTitle}
-                        </p>
-
-                        <p className="mt-1 text-xs text-zinc-500">
-                          {selectedTypeDetails.title}
-                          {' • '}
-                          Portrait PDF
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={handleDownloadPdf}
-                    disabled={
-                      !paymentCompleted ||
-                      isDownloading
-                    }
-                    className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-4 text-base font-black text-black shadow-xl shadow-orange-950/30 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    {isDownloading ? (
-                      <>
-                        <Loader2
-                          size={21}
-                          className="animate-spin"
-                        />
-
-                        Creating PDF...
-                      </>
-                    ) : (
-                      <>
-                        <Download
-                          size={21}
-                        />
-
-                        Download Finished PDF
-                      </>
-                    )}
-                  </button>
-
-                  <div className="mt-4 flex items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-950/70 p-3 text-xs leading-5 text-zinc-500">
-                    <Mail
-                      size={17}
-                      className="mt-0.5 shrink-0 text-orange-400"
-                    />
-
-                    A copy will also be sent to{' '}
-                    <strong className="break-all text-zinc-300">
-                      {customerEmail}
-                    </strong>
-                  </div>
-                </section>
-              </div>
-            </div>
-          )}
-          <div className="border-t border-zinc-800 px-5 py-6 sm:px-8">
-            <section className="mx-auto max-w-4xl">
-              <div className="mb-5 text-center">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-400">
-                  Questions
-                </p>
-
-                <h2 className="mt-2 text-2xl font-black text-white">
-                  Frequently Asked Questions
-                </h2>
-
-                <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
-                  Quick answers about uploads,
-                  accuracy, privacy, payment, and
-                  PDF delivery.
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {FAQ_ITEMS.map(
-                  ({
-                    question,
-                    answer,
-                  }, index) => {
-                    const isOpen =
-                      openFaq === index;
+                    const isSelected =
+                      selectedType ===
+                      type.value;
 
                     return (
-                      <div
-                        key={question}
-                        className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/80"
+                      <button
+                        key={
+                          type.value
+                        }
+                        type="button"
+                        onClick={() => {
+                          setSelectedType(
+                            type.value
+                          );
+
+                          resetGeneratedResults();
+                        }}
+                        className={`rounded-2xl border p-4 text-left transition ${
+                          isSelected
+                            ? 'border-orange-500 bg-orange-500/10 shadow-lg shadow-orange-950/20'
+                            : 'border-zinc-800 bg-zinc-950/80 hover:border-zinc-700'
+                        }`}
                       >
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setOpenFaq(
-                              isOpen
-                                ? null
-                                : index
-                            )
-                          }
-                          aria-expanded={isOpen}
-                          className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
-                        >
-                          <span className="text-sm font-bold text-white sm:text-base">
-                            {question}
-                          </span>
-
-                          <ChevronDown
-                            size={19}
-                            className={`shrink-0 text-orange-400 transition-transform ${
-                              isOpen
-                                ? 'rotate-180'
-                                : ''
+                        <div className="flex items-start justify-between gap-3">
+                          <div
+                            className={`flex h-10 w-10 items-center justify-center rounded-xl border ${
+                              isSelected
+                                ? 'border-orange-500/50 bg-orange-500/15 text-orange-300'
+                                : 'border-zinc-700 bg-zinc-900 text-zinc-400'
                             }`}
-                          />
-                        </button>
-
-                        {isOpen && (
-                          <div className="border-t border-zinc-800 px-5 py-4">
-                            <p className="text-sm leading-6 text-zinc-400">
-                              {answer}
-                            </p>
+                          >
+                            <Icon
+                              size={20}
+                            />
                           </div>
-                        )}
-                      </div>
+
+                          {isSelected && (
+                            <CheckCircle2
+                              size={19}
+                              className="text-orange-400"
+                            />
+                          )}
+                        </div>
+
+                        <h4 className="mt-4 text-sm font-black text-white">
+                          {type.label}
+                        </h4>
+
+                        <p className="mt-1 text-xs leading-5 text-zinc-500">
+                          {
+                            type.description
+                          }
+                        </p>
+                      </button>
                     );
                   }
                 )}
               </div>
+            </div>
+          </section>
+          <section className="border-t border-zinc-800 px-5 py-6 sm:px-8">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-5">
+
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={copyrightConfirmed}
+                  onChange={(event) => {
+                    setCopyrightConfirmed(
+                      event.target.checked
+                    );
+                  }}
+                  className="mt-1 h-5 w-5 rounded border-zinc-600 bg-zinc-900 text-orange-500"
+                />
+
+                <span className="text-sm leading-6 text-zinc-300">
+                  I confirm that I have permission
+                  to analyze this recording and that
+                  I understand this AI transcription
+                  is generated for educational and
+                  personal practice purposes.
+                </span>
+              </label>
+
+              <div className="mt-6">
+
+                <button
+                  type="button"
+                  disabled={
+                    !formIsComplete ||
+                    isGenerating
+                  }
+                  onClick={
+                    handleGeneratePreview
+                  }
+                  className={`flex w-full items-center justify-center gap-3 rounded-2xl px-6 py-4 text-lg font-black transition ${
+                    formIsComplete &&
+                    !isGenerating
+                      ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:scale-[1.01]'
+                      : 'cursor-not-allowed bg-zinc-800 text-zinc-500'
+                  }`}
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2
+                        size={22}
+                        className="animate-spin"
+                      />
+
+                      Generating AI Preview...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles size={22} />
+
+                      Generate Watermarked Preview
+                    </>
+                  )}
+                </button>
+
+              </div>
+
+              <div className="mt-5 grid gap-3 sm:grid-cols-4">
+
+                {PROCESS_STEPS.map(
+                  (
+                    step,
+                    index
+                  ) => (
+                    <div
+                      key={step.title}
+                      className="rounded-xl border border-zinc-800 bg-black/40 p-4"
+                    >
+                      <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-orange-500/15 text-sm font-black text-orange-300">
+                        {index + 1}
+                      </div>
+
+                      <h3 className="text-sm font-bold text-white">
+                        {step.title}
+                      </h3>
+
+                      <p className="mt-2 text-xs leading-5 text-zinc-500">
+                        {step.description}
+                      </p>
+                    </div>
+                  )
+                )}
+
+              </div>
+
+              {statusMessage && (
+
+                <div className="mt-6 rounded-2xl border border-blue-500/30 bg-blue-500/10 p-4">
+
+                  <div className="flex items-center gap-3">
+
+                    <Loader2
+                      size={18}
+                      className={
+                        isGenerating
+                          ? 'animate-spin text-blue-300'
+                          : 'text-blue-300'
+                      }
+                    />
+
+                    <p className="text-sm font-semibold text-blue-200">
+                      {statusMessage}
+                    </p>
+
+                  </div>
+
+                </div>
+
+              )}
+
+              {generationError && (
+
+                <div className="mt-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4">
+
+                  <div className="flex items-start gap-3">
+
+                    <AlertCircle
+                      size={20}
+                      className="mt-0.5 text-red-400"
+                    />
+
+                    <div>
+
+                      <h3 className="font-bold text-red-300">
+                        Something went wrong
+                      </h3>
+
+                      <p className="mt-1 text-sm leading-6 text-red-200">
+                        {generationError}
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              )}
+
+            </div>
+
+          </section>
+          {previewReady &&
+            previewPdfUrl && (
+              <section
+                id="tab-preview"
+                className="border-t border-zinc-800 bg-black/30 px-5 py-7 sm:px-8"
+              >
+                <div className="mb-5 text-center">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-400">
+                    Step Three
+                  </p>
+
+                  <h2 className="mt-2 text-2xl font-black text-white">
+                    Review Your Tab Preview
+                  </h2>
+
+                  <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
+                    Your preview contains a short,
+                    watermarked sample. Unlock the
+                    complete polished PDF below.
+                  </p>
+                </div>
+
+                <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950">
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 px-4 py-3">
+                    <div className="flex min-w-0 items-center gap-3">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-orange-300">
+                        <FileText size={20} />
+                      </div>
+
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-black text-white">
+                          {songTitle}
+                        </p>
+
+                        <p className="truncate text-xs text-zinc-500">
+                          {artistName} ·{' '}
+                          {
+                            selectedTypeDetails?.label
+                          }
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-xs font-bold text-amber-300">
+                      <Lock size={14} />
+
+                      Watermarked Preview
+                    </div>
+                  </div>
+
+                  <div className="relative bg-zinc-900">
+                    <iframe
+                      src={`${previewPdfUrl}#toolbar=0&navpanes=0&scrollbar=1`}
+                      title={`${songTitle} tab preview`}
+                      className="h-[520px] w-full bg-white sm:h-[680px]"
+                    />
+
+                    {!previewUnlocked && (
+                      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex min-h-[150px] items-end justify-center bg-gradient-to-t from-black via-black/90 to-transparent px-4 pb-5">
+                        <div className="text-center">
+                          <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full border border-orange-500/40 bg-orange-500/15 text-orange-300">
+                            <Lock size={20} />
+                          </div>
+
+                          <p className="mt-3 text-sm font-black text-white">
+                            Full transcription locked
+                          </p>
+
+                          <p className="mt-1 text-xs text-zinc-400">
+                            Unlock every page and
+                            remove the preview watermark.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {!previewUnlocked && (
+                  <div className="mt-5 rounded-2xl border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-amber-500/5 p-5">
+                    <div className="text-center">
+                      <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-black/30 px-3 py-1.5 text-xs font-bold text-orange-300">
+                        <ShieldCheck size={15} />
+
+                        Secure Unlock
+                      </div>
+
+                      <h3 className="mt-3 text-xl font-black text-white">
+                        Unlock the Complete PDF
+                      </h3>
+
+                      <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-zinc-400">
+                        Receive the full portrait
+                        tablature PDF with every
+                        generated section included.
+                      </p>
+                    </div>
+
+                    <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                      <button
+                        type="button"
+                        onClick={
+                          handleFreeTokenUnlock
+                        }
+                        disabled={usingFreeToken}
+                        className="flex min-h-[54px] items-center justify-center gap-2 rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3 text-sm font-black text-green-300 transition hover:bg-green-500/15 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {usingFreeToken ? (
+                          <Loader2
+                            size={19}
+                            className="animate-spin"
+                          />
+                        ) : (
+                          <Ticket size={19} />
+                        )}
+
+                        {usingFreeToken
+                          ? 'Checking Token...'
+                          : 'Use Free Token'}
+                      </button>
+
+                      <div className="min-h-[54px] rounded-xl border border-zinc-700 bg-white p-2">
+                        <PayPalButton
+                          amount={PRICE}
+                          description={`${artistName} - ${songTitle} ${selectedTypeDetails?.label || 'Tab'} PDF`}
+                          onApproved={
+                            handlePaymentApproved
+                          }
+                          onCancelled={
+                            handlePaymentCancelled
+                          }
+                          onError={
+                            handlePaymentError
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <p className="mt-4 text-center text-xs leading-5 text-zinc-500">
+                      Pay once: ${PRICE} CAD. Your
+                      unlocked PDF can be downloaded
+                      immediately and delivered by
+                      email.
+                    </p>
+                  </div>
+                )}
+              </section>
+            )}
+          {previewUnlocked && (
+            <section
+              id="download-section"
+              className="border-t border-zinc-800 bg-green-500/[0.03] px-5 py-7 sm:px-8"
+            >
+              <div className="rounded-2xl border border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/5 p-5 sm:p-6">
+                <div className="text-center">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-green-500/40 bg-green-500/15 text-green-300">
+                    <CheckCircle2 size={28} />
+                  </div>
+
+                  <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-green-400">
+                    PDF Unlocked
+                  </p>
+
+                  <h2 className="mt-2 text-2xl font-black text-white">
+                    Your Full Tab Is Ready
+                  </h2>
+
+                  <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
+                    Download the complete,
+                    watermark-free PDF and keep it
+                    for practice, printing, or
+                    reference.
+                  </p>
+                </div>
+
+                <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                  <div className="rounded-xl border border-zinc-800 bg-black/30 p-4 text-center">
+                    <FileText
+                      size={22}
+                      className="mx-auto text-orange-300"
+                    />
+
+                    <p className="mt-2 text-sm font-bold text-white">
+                      Full PDF
+                    </p>
+
+                    <p className="mt-1 text-xs leading-5 text-zinc-500">
+                      Every generated section
+                      included
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-zinc-800 bg-black/30 p-4 text-center">
+                    <ShieldCheck
+                      size={22}
+                      className="mx-auto text-green-300"
+                    />
+
+                    <p className="mt-2 text-sm font-bold text-white">
+                      No Watermark
+                    </p>
+
+                    <p className="mt-1 text-xs leading-5 text-zinc-500">
+                      Clean, polished final
+                      tablature
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-zinc-800 bg-black/30 p-4 text-center">
+                    <Mail
+                      size={22}
+                      className="mx-auto text-blue-300"
+                    />
+
+                    <p className="mt-2 text-sm font-bold text-white">
+                      Email Copy
+                    </p>
+
+                    <p className="mt-1 text-xs leading-5 text-zinc-500">
+                      Delivered to your saved
+                      email
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={
+                    handleDownloadPdf
+                  }
+                  disabled={isDownloading}
+                  className="mt-6 flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 px-6 py-4 text-lg font-black text-white transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isDownloading ? (
+                    <>
+                      <Loader2
+                        size={22}
+                        className="animate-spin"
+                      />
+
+                      Creating Your PDF...
+                    </>
+                  ) : (
+                    <>
+                      <Download size={22} />
+
+                      Download Full PDF
+                    </>
+                  )}
+                </button>
+
+                <div className="mt-4 rounded-xl border border-green-500/20 bg-black/30 px-4 py-3 text-center">
+                  <p className="text-xs leading-5 text-zinc-400">
+                    Unlocked using{' '}
+                    <span className="font-bold text-green-300">
+                      {paymentCompleted
+                        ? 'PayPal'
+                        : 'a Free Token'}
+                    </span>
+                    .
+                  </p>
+
+                  {purchaseOrderId && (
+                    <p className="mt-1 break-all text-[11px] text-zinc-600">
+                      Reference:{' '}
+                      {purchaseOrderId}
+                    </p>
+                  )}
+                </div>
+              </div>
             </section>
-          </div>
+          )}
 
-          <footer className="border-t border-zinc-800 bg-black/30 px-5 py-6 text-center sm:px-8">
-            <img
-              src={LOGO_URL}
-              alt="DadRock Tabs"
-              className="mx-auto h-auto w-full max-w-[230px] object-contain opacity-90"
-            />
+          <section className="border-t border-zinc-800 px-5 py-7 sm:px-8">
+            <div className="mb-5 text-center">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-400">
+                How It Works
+              </p>
 
-            <p className="mx-auto mt-3 max-w-xl text-xs leading-5 text-zinc-500">
-              AI-generated guitar and bass
-              tablature for private educational
-              use. Always review generated tabs
-              before relying on them.
-            </p>
+              <h2 className="mt-2 text-2xl font-black text-white">
+                From Audio to Finished Tab
+              </h2>
 
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-zinc-500">
+              <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
+                The DadRock analyzer follows a
+                simple four-step process from
+                source selection to PDF delivery.
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {PROCESS_STEPS.map(
+                (
+                  step,
+                  index
+                ) => (
+                  <div
+                    key={`process-${step.title}`}
+                    className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-sm font-black text-orange-300">
+                        {index + 1}
+                      </div>
+
+                      {index <
+                        PROCESS_STEPS.length -
+                          1 && (
+                        <ArrowRight
+                          size={18}
+                          className="hidden text-zinc-700 lg:block"
+                        />
+                      )}
+                    </div>
+
+                    <h3 className="mt-4 text-sm font-black text-white">
+                      {step.title}
+                    </h3>
+
+                    <p className="mt-2 text-xs leading-5 text-zinc-500">
+                      {step.description}
+                    </p>
+                  </div>
+                )
+              )}
+            </div>
+          </section>
+          <section className="border-t border-zinc-800 px-5 py-8 sm:px-8">
+            <div className="text-center">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-400">
+                Frequently Asked Questions
+              </p>
+
+              <h2 className="mt-2 text-2xl font-black text-white">
+                AI Tab Generator FAQ
+              </h2>
+
+              <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-zinc-400">
+                Everything you need to know before
+                generating your guitar or bass
+                tablature.
+              </p>
+            </div>
+
+            <div className="mt-8 space-y-4">
+              {FAQ_ITEMS.map((faq, index) => {
+                const isOpen =
+                  openFaq === index;
+
+                return (
+                  <div
+                    key={faq.question}
+                    className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/70"
+                  >
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setOpenFaq(
+                          isOpen
+                            ? null
+                            : index
+                        )
+                      }
+                      className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition hover:bg-white/[0.02]"
+                    >
+                      <span className="text-sm font-bold text-white sm:text-base">
+                        {faq.question}
+                      </span>
+
+                      {isOpen ? (
+                        <ChevronUp
+                          size={20}
+                          className="shrink-0 text-orange-400"
+                        />
+                      ) : (
+                        <ChevronDown
+                          size={20}
+                          className="shrink-0 text-zinc-500"
+                        />
+                      )}
+                    </button>
+
+                    {isOpen && (
+                      <div className="border-t border-zinc-800 px-5 pb-5 pt-4">
+                        <p className="text-sm leading-7 text-zinc-400">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="border-t border-zinc-800 bg-gradient-to-b from-zinc-950 to-black px-5 py-8 sm:px-8">
+            <div className="mx-auto max-w-3xl text-center">
+              <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">
+                <Guitar size={15} />
+
+                DadRock AI
+              </div>
+
+              <h2 className="mt-5 text-3xl font-black text-white">
+                Learn Songs Faster
+              </h2>
+
+              <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-zinc-400">
+                Upload your own recording or paste
+                a YouTube reference and let the
+                DadRock AI transcription engine
+                build beautiful printable guitar or
+                bass tablature in minutes.
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <div className="rounded-full border border-zinc-700 bg-zinc-900/60 px-4 py-2 text-xs font-semibold text-zinc-300">
+                  🎸 Guitar
+                </div>
+
+                <div className="rounded-full border border-zinc-700 bg-zinc-900/60 px-4 py-2 text-xs font-semibold text-zinc-300">
+                  🎵 Bass
+                </div>
+
+                <div className="rounded-full border border-zinc-700 bg-zinc-900/60 px-4 py-2 text-xs font-semibold text-zinc-300">
+                  📄 PDF
+                </div>
+
+                <div className="rounded-full border border-zinc-700 bg-zinc-900/60 px-4 py-2 text-xs font-semibold text-zinc-300">
+                  🤖 AI Powered
+                </div>
+              </div>
+
               <Link
                 href={getLocalizedPath(
                   '/',
                   currentLanguage
                 )}
-                className="transition hover:text-orange-400"
+                className="mt-8 inline-flex items-center gap-3 rounded-full border border-orange-500/40 bg-orange-500/10 px-6 py-3 text-sm font-black text-orange-300 transition hover:border-orange-400 hover:bg-orange-500/20"
               >
-                Home
+                <Home size={18} />
+
+                Back to DadRock Tabs
               </Link>
-
-              <span aria-hidden="true">
-                •
-              </span>
-
-              <Link
-                href={getLocalizedPath(
-                  '/partners',
-                  currentLanguage
-                )}
-                className="transition hover:text-orange-400"
-              >
-                Partnership Opportunities
-              </Link>
-
-              <span aria-hidden="true">
-                •
-              </span>
-
-              <a
-                href="https://youtube.com/@dadrockytofficial"
-                target="_blank"
-                rel="noreferrer"
-                className="transition hover:text-orange-400"
-              >
-                YouTube
-              </a>
             </div>
-
-            <p className="mt-4 text-[11px] text-zinc-700">
-              © {new Date().getFullYear()}{' '}
-              DadRock Tabs. All rights reserved.
-            </p>
-          </footer>
+          </section>
         </div>
       </div>
     </main>
-  );
-}
-
-export default function AiTabGeneratorPage() {
-  return (
-    <Suspense
-      fallback={
-        <main className="flex min-h-screen items-center justify-center bg-[#090909] text-white">
-          <div className="flex items-center gap-3 text-sm font-bold text-zinc-400">
-            <Loader2
-              size={22}
-              className="animate-spin text-orange-400"
-            />
-
-            Loading AI Tab Generator...
-          </div>
-        </main>
-      }
-    >
-      <AiTabGeneratorContent />
-    </Suspense>
   );
                 }
