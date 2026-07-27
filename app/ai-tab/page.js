@@ -92,29 +92,6 @@ const BENEFITS = [
   },
 ];
 
-const PROCESS_STEPS = [
-  {
-    title: 'Choose Source',
-    description: 'Upload an audio file you possess and may legally analyze.',
-  },
-  {
-    title: 'Analyze Audio',
-    description: 'The analyzer isolates the selected instrument part.',
-  },
-  {
-    title: 'Detect Notes',
-    description: 'Pitch and timing information are converted into notes.',
-  },
-  {
-    title: 'Generate Tab',
-    description: 'The detected notes are arranged as playable tablature.',
-  },
-  {
-    title: 'Unlock PDF',
-    description: 'Preview the result and unlock the finished PDF.',
-  },
-];
-
 const FAQ_ITEMS = [
   {
     question:
@@ -2248,60 +2225,6 @@ function AiTabGeneratorContent() {
             </section>
           )}
 
-          <section className="border-t border-zinc-800 px-5 py-7 sm:px-8">
-            <div className="mb-5 text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-400">
-                How It Works
-              </p>
-
-              <h2 className="mt-2 text-2xl font-black text-white">
-                From Audio to Finished Tab
-              </h2>
-
-              <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
-                The DadRock analyzer follows a
-                simple four-step process from
-                audio upload to PDF delivery.
-              </p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {PROCESS_STEPS.map(
-                (
-                  step,
-                  index
-                ) => (
-                  <div
-                    key={`process-${step.title}`}
-                    className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-4"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-sm font-black text-orange-300">
-                        {index + 1}
-                      </div>
-
-                      {index <
-                        PROCESS_STEPS.length -
-                          1 && (
-                        <ArrowRight
-                          size={18}
-                          className="hidden text-zinc-700 lg:block"
-                        />
-                      )}
-                    </div>
-
-                    <h3 className="mt-3 text-[13px] font-black leading-tight text-white sm:text-lg">
-                      {step.title}
-                    </h3>
-
-                    <p className="mt-2 text-xs leading-5 text-zinc-500">
-                      {step.description}
-                    </p>
-                  </div>
-                )
-              )}
-            </div>
-          </section>
           <section className="border-t border-zinc-800 px-5 py-8 sm:px-8">
             <div className="text-center">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-400">
