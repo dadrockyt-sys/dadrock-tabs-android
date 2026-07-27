@@ -15,6 +15,7 @@ import { useSearchParams } from 'next/navigation';
 import {
   ArrowLeft,
   Check,
+  CheckCircle2,
   ChevronDown,
   ChevronUp,
   Download,
@@ -26,7 +27,9 @@ import {
   Loader2,
   LockKeyhole,
   Mail,
+  Music,
   Music2,
+  Play,
   ShieldCheck,
   Sparkles,
   Upload,
@@ -1906,7 +1909,7 @@ function AiTabGeneratorContent() {
                   className={`w-full rounded-xl border bg-black/60 py-3 pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-600 ${
                     !customerEmail
                       ? 'border-zinc-700 focus:border-orange-500'
-                      : isEmailValid
+                      : emailIsValid
                         ? 'border-green-500/70 focus:border-green-400'
                         : 'border-red-500/70 focus:border-red-400'
                   }`}
@@ -1916,12 +1919,12 @@ function AiTabGeneratorContent() {
               {customerEmail && (
                 <p
                   className={`mt-2 text-xs font-semibold ${
-                    isEmailValid
+                    emailIsValid
                       ? 'text-green-400'
                       : 'text-red-400'
                   }`}
                 >
-                  {isEmailValid
+                  {emailIsValid
                     ? '✓ Valid delivery email'
                     : 'Please enter a valid email address.'}
                 </p>
@@ -1944,8 +1947,7 @@ function AiTabGeneratorContent() {
               <div className="grid gap-3 sm:grid-cols-3">
                 {TRANSCRIPTION_TYPES.map(
                   (type) => {
-                    const Icon =
-                      type.icon;
+                    const Icon = Guitar;
 
                     const isSelected =
                       selectedType ===
@@ -1992,7 +1994,7 @@ function AiTabGeneratorContent() {
                         </div>
 
                         <h4 className="mt-4 text-sm font-black text-white">
-                          {type.label}
+                          {type.title}
                         </h4>
 
                         <p className="mt-1 text-xs leading-5 text-zinc-500">
