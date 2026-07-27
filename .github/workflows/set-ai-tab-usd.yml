@@ -1,0 +1,30 @@
+name: Set AI Tab price to USD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/set-ai-tab-usd.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-currency:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set AI Tab PayPal currency to USD
+        run: python .github/scripts/set_ai_tab_usd.py
+
+      - name: Commit USD currency update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/ai-tab/page.js components/PayPalCheckoutButton.js app/api/paypal/create-order/route.js app/api/paypal/capture-order/route.js app/api/generate-tab-pdf/route.js
+          git diff --cached --quiet || git commit -m "Set AI Tab PayPal price to 2.99 USD"
+          git push
