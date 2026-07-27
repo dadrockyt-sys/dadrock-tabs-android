@@ -1,4 +1,4 @@
-name: Move preview download button
+name: Remove redundant mobile preview card
 
 on:
   push:
@@ -14,15 +14,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Update preview layout
-        run: python .github/scripts/move_preview_download_button.py
+      - name: Remove repeated mobile preview card
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('app/ai-tab/page.js')
+          text = path.read_text()
+
+          start_marker = '                    <div className="p-5 sm:hidden">'
+          end_marker = '''                    <iframe
+                       src={`${previewPdfUrl}#toolbar=0&navpanes=0&scrollbar=1`}'''
+
+          start = text.find(start_marker)
+          end = text.find(end_marker, start)
+
+          if start == -1 or end == -1:
+              raise SystemExit('Redundant mobile preview card not found')
+
+          text = text[:start] + text[end:]
+          path.write_text(text)
+          PY
 
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add app/ai-tab/page.js
-          git diff --cached --quiet || git commit -m "Move preview download button into launcher card"
+          git diff --cached --quiet || git commit -m "Remove redundant mobile preview card"
           git push
-
-# run 2
