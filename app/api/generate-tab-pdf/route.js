@@ -1,13 +1,14 @@
 import { createHash } from 'node:crypto';
 import { resend } from '@/lib/resend';
 import { createTabPdf } from '@/lib/createTabPdf';
+import { getDb } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const PRICE = '2.99';
-const CURRENCY = 'USD';
+const CURRENCY = 'CAD';
 
 const ALLOWED_TRANSCRIPTION_TYPES = [
   'lead',
@@ -160,11 +161,39 @@ async function verifyPayPalOrder({
   }
 }
 
+async function verifyFreeToken({
+  tokenReference,
+  customerEmail,
+  song,
+  artist,
+  transcriptionType,
+}) {
+  const db = await getDb();
+  const token = await db.collection('tab_tokens').findOne({
+    code: tokenReference,
+    assignedEmail: customerEmail,
+    redemptions: {
+      $elemMatch: {
+        customerEmail,
+        songTitle: song,
+        artistName: artist,
+        transcriptionType,
+      },
+    },
+  });
+
+  if (!token) {
+    throw new Error('Free token redemption could not be verified.');
+  }
+}
+
 export async function POST(request) {
   try {
     const body = await request.json();
 
     const orderId = cleanText(body?.orderId, 40);
+    const tokenReference = cleanText(body?.tokenReference, 100);
+    const unlockMethod = cleanText(body?.unlockMethod, 20).toLowerCase();
     const song = cleanText(body?.song, 120);
     const artist = cleanText(body?.artist, 120);
     const transcriptionType = cleanText(
@@ -190,7 +219,7 @@ export async function POST(request) {
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail);
 
     if (
-      !orderId ||
+      (!orderId && !tokenReference) ||
       !song ||
       !artist ||
       !transcriptionType ||
@@ -200,7 +229,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           error:
-            'Order ID, song, artist, transcription type, tab, and customer email are required.',
+            'An unlock reference, song, artist, transcription type, tab, and customer email are required.',
         },
         { status: 400 }
       );
@@ -213,9 +242,19 @@ export async function POST(request) {
       );
     }
 
-    if (!/^[A-Z0-9]+$/i.test(orderId)) {
+    if (
+      unlockMethod === 'paypal' &&
+      !/^[A-Z0-9]+$/i.test(orderId)
+    ) {
       return NextResponse.json(
         { error: 'Invalid PayPal order ID.' },
+        { status: 400 }
+      );
+    }
+
+    if (!['paypal', 'free-token'].includes(unlockMethod)) {
+      return NextResponse.json(
+        { error: 'Invalid PDF unlock method.' },
         { status: 400 }
       );
     }
@@ -230,12 +269,22 @@ export async function POST(request) {
       );
     }
 
-    await verifyPayPalOrder({
-      orderId,
-      song,
-      artist,
-      transcriptionType,
-    });
+    if (unlockMethod === 'paypal') {
+      await verifyPayPalOrder({
+        orderId,
+        song,
+        artist,
+        transcriptionType,
+      });
+    } else {
+      await verifyFreeToken({
+        tokenReference,
+        customerEmail,
+        song,
+        artist,
+        transcriptionType,
+      });
+    }
 
     const pdfBytes = await createTabPdf({
       song,

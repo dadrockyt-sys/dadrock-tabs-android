@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 
 const PRICE = '2.99';
-const CURRENCY = 'USD';
+const CURRENCY = 'CAD';
 
 const ALLOWED_TRANSCRIPTION_TYPES = ['lead', 'rhythm', 'bass'];
 

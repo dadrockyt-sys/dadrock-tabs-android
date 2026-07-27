@@ -10,6 +10,8 @@ export default function PayPalCheckoutButton({
   transcriptionType,
   customerEmail,
   onPaymentCompleted,
+  onPaymentCancelled,
+  onPaymentError,
 }) {
   const containerRef = useRef(null);
   const hasRenderedRef = useRef(false);
@@ -116,6 +118,9 @@ if (typeof onPaymentCompleted === 'function') {
               setPaymentError(
                 'Checkout was cancelled. You have not been charged.'
               );
+              if (typeof onPaymentCancelled === 'function') {
+                onPaymentCancelled();
+              }
             },
 
             onError: (error) => {
@@ -126,6 +131,9 @@ if (typeof onPaymentCompleted === 'function') {
                   ? error.message
                   : 'PayPal checkout could not be completed.'
               );
+              if (typeof onPaymentError === 'function') {
+                onPaymentError(error);
+              }
             },
           })
           .render(containerRef.current);
@@ -164,7 +172,7 @@ if (typeof onPaymentCompleted === 'function') {
       script.src =
         `https://www.paypal.com/sdk/js` +
         `?client-id=${encodeURIComponent(clientId)}` +
-        `&currency=USD&intent=capture`;
+        `&currency=CAD&intent=capture`;
 
       script.async = true;
       script.onload = renderPayPalButtons;
@@ -190,6 +198,8 @@ if (typeof onPaymentCompleted === 'function') {
   transcriptionType,
   customerEmail,
   onPaymentCompleted,
+  onPaymentCancelled,
+  onPaymentError,
 ]);
 
   if (paymentCompleted) {

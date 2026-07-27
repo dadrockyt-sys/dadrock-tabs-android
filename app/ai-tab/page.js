@@ -956,138 +956,35 @@ function AiTabGeneratorContent() {
   ------------------------------ */
 
   const handlePaymentApproved =
-    async (orderId) => {
+    ({ orderId } = {}) => {
       setGenerationError('');
 
+      if (!orderId) {
+        setPaymentCompleted(false);
+        setPreviewUnlocked(false);
+        setStatusMessage('');
+        setGenerationError(
+          'PayPal did not return an order ID.'
+        );
+        return;
+      }
+
+      setPurchaseOrderId(orderId);
+      setPaymentCompleted(true);
+      setPreviewUnlocked(true);
+      setUsingFreeToken(false);
       setStatusMessage(
-        'Confirming your PayPal payment...'
+        'Payment confirmed. Your full PDF is now unlocked.'
       );
 
-      try {
-        if (!orderId) {
-          throw new Error(
-            'PayPal did not return an order ID.'
-          );
-        }
-
-        const response = await fetch(
-          '/api/paypal/capture-order',
-          {
-            method: 'POST',
-
-            headers: {
-              'Content-Type':
-                'application/json',
-            },
-
-            body: JSON.stringify({
-              orderId,
-
-              songTitle:
-                songTitle.trim(),
-
-              artistName:
-                artistName.trim(),
-
-              transcriptionType:
-                selectedType,
-
-              customerEmail:
-                customerEmail.trim(),
-
-              amount: PRICE,
-            }),
-          }
-        );
-
-        const data = await response
-          .json()
-          .catch(() => ({}));
-
-        if (!response.ok) {
-          throw new Error(
-            data.error ||
-              data.message ||
-              'Unable to confirm your PayPal payment.'
-          );
-        }
-
-        const paymentStatus =
-          data.status ||
-          data.captureStatus ||
-          '';
-
-        const acceptedStatuses = [
-          'COMPLETED',
-          'APPROVED',
-          'SUCCESS',
-        ];
-
-        if (
-          paymentStatus &&
-          !acceptedStatuses.includes(
-            String(
-              paymentStatus
-            ).toUpperCase()
-          )
-        ) {
-          throw new Error(
-            'PayPal has not marked this payment as completed.'
-          );
-        }
-
-        setPurchaseOrderId(
-          orderId
-        );
-
-        setPaymentCompleted(
-          true
-        );
-
-        setPreviewUnlocked(
-          true
-        );
-
-        setUsingFreeToken(
-          false
-        );
-
-        setStatusMessage(
-          'Payment confirmed. Your full PDF is now unlocked.'
-        );
-
-        window.setTimeout(() => {
-          document
-            .getElementById(
-              'download-section'
-            )
-            ?.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-            });
-        }, 150);
-      } catch (error) {
-        console.error(
-          'PayPal capture error:',
-          error
-        );
-
-        setPaymentCompleted(
-          false
-        );
-
-        setPreviewUnlocked(
-          false
-        );
-
-        setGenerationError(
-          error instanceof Error
-            ? error.message
-            : 'Unable to confirm your PayPal payment.'
-        );
-
-        setStatusMessage('');
-      }
+      window.setTimeout(() => {
+        document
+          .getElementById('download-section')
+          ?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+      }, 150);
     };
 
   const handlePaymentCancelled =
@@ -1154,10 +1051,10 @@ function AiTabGeneratorContent() {
               customerEmail:
                 customerEmail.trim(),
 
-              songTitle:
+              song:
                 songTitle.trim(),
 
-              artistName:
+              artist:
                 artistName.trim(),
 
               transcriptionType:
@@ -2015,17 +1912,13 @@ function AiTabGeneratorContent() {
 
                       <div className="min-h-[54px] rounded-xl border border-zinc-700 bg-white p-2">
                         <PayPalCheckoutButton
-                          amount={PRICE}
-                          description={`${artistName} - ${songTitle} ${selectedTypeDetails?.title || 'Tab'} PDF`}
-                          onApproved={
-                            handlePaymentApproved
-                          }
-                          onCancelled={
-                            handlePaymentCancelled
-                          }
-                          onError={
-                            handlePaymentError
-                          }
+                          song={songTitle.trim()}
+                          artist={artistName.trim()}
+                          transcriptionType={selectedType}
+                          customerEmail={customerEmail.trim()}
+                          onPaymentCompleted={handlePaymentApproved}
+                          onPaymentCancelled={handlePaymentCancelled}
+                          onPaymentError={handlePaymentError}
                         />
                       </div>
                     </div>
