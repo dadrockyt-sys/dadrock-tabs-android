@@ -763,17 +763,17 @@ function AiTabGeneratorContent() {
           },
 
           body: JSON.stringify({
-            songTitle:
-              songTitle.trim(),
+  song:
+    songTitle.trim(),
 
-            artistName:
-              artistName.trim(),
+  artist:
+    artistName.trim(),
 
-            transcriptionType:
-              selectedType,
+  transcriptionType:
+    selectedType,
 
-            generatedTab:
-              tabContent,
+  generatedTab:
+    tabContent,
 
             youtubeUrl:
               sourceType === 'youtube'
