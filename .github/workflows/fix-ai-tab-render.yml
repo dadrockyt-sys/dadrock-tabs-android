@@ -2,6 +2,10 @@ name: Fix AI Tab Render
 
 on:
   workflow_dispatch: {}
+  push:
+    paths:
+      - '.github/workflows/fix-ai-tab-render.yml'
+      - '.github/scripts/remove_orphaned_process_jsx.py'
 
 permissions:
   contents: write
@@ -16,58 +20,24 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Remove malformed process JSX
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
+        run: python .github/scripts/remove_orphaned_process_jsx.py
 
-          path = Path('app/ai-tab/page.js')
-          text = path.read_text(encoding='utf-8')
-          original = text
-
-          # Remove the orphaned tail left behind after deleting PROCESS_STEPS.map(...).
-          pattern = re.compile(
-              r'\n\s*<h3 className="text-sm font-bold text-white">\s*'
-              r'\{step\.title\}\s*</h3>\s*'
-              r'<p className="mt-2 text-xs leading-5 text-zinc-500">\s*'
-              r'\{step\.description\}\s*</p>\s*'
-              r'</div>\s*\)\s*\)}\s*</div>',
-              re.DOTALL,
-          )
-          text, count = pattern.subn('\n', text, count=1)
-
-          if count == 0:
-              # Narrow fallback anchored to the exact broken identifiers.
-              start = text.find('<h3 className="text-sm font-bold text-white">\n                        {step.title}')
-              end_marker = '\n              {statusMessage && ('
-              if start != -1:
-                  end = text.find(end_marker, start)
-                  if end != -1:
-                      text = text[:start] + text[end:]
-                      count = 1
-
-          if '{step.title}' in text or '{step.description}' in text:
-              raise RuntimeError('Malformed process JSX still remains in app/ai-tab/page.js')
-
-          if text == original:
-              raise RuntimeError('The expected malformed JSX was not found; no file change was made.')
-
-          path.write_text(text, encoding='utf-8')
-          print(f'Removed malformed process JSX ({count} block).')
-          PY
-
-      - name: Verify broken token is gone
+      - name: Verify broken process JSX is gone
         shell: bash
         run: |
           if grep -n "step.title\|step.description" app/ai-tab/page.js; then
-            echo "Process-card JSX still remains."
+            echo "Malformed process-card JSX still remains."
             exit 1
           fi
 
       - name: Commit repaired page
         shell: bash
         run: |
+          if git diff --quiet -- app/ai-tab/page.js; then
+            echo "No page change was required."
+            exit 0
+          fi
+
           git config user.name "DadRock Tabs Repair"
           git config user.email "actions@users.noreply.github.com"
           git add app/ai-tab/page.js
