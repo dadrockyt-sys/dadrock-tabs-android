@@ -1952,6 +1952,15 @@ function AiTabGeneratorContent() {
                     </span>
                   </a>
 
+                  <a
+                    href={previewPdfUrl}
+                    download={`${artistName || 'DadRock'}-${songTitle || 'Tab'}-${selectedType || 'preview'}-preview.pdf`}
+                    className="mx-4 mb-5 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-red-600 px-4 py-3 font-black text-white transition hover:scale-[1.01]"
+                  >
+                    <Download size={19} />
+                    Download Preview PDF
+                  </a>
+
                   <div className="relative bg-zinc-900">
                     <div className="p-5 sm:hidden">
                       <div className="rounded-2xl border border-zinc-700 bg-black/40 p-5 text-center">
@@ -1979,14 +1988,6 @@ function AiTabGeneratorContent() {
                             {`${songTitle || 'Tab'} PDF Preview`}
                           </a>
 
-                          <a
-                            href={previewPdfUrl}
-                            download={`${artistName || 'DadRock'}-${songTitle || 'Tab'}-${selectedType || 'preview'}-preview.pdf`}
-                            className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-red-600 px-4 py-3 font-black text-white transition hover:scale-[1.01]"
-                          >
-                            <Download size={19} />
-                            Download Preview PDF
-                          </a>
                         </div>
                       </div>
                     </div>
