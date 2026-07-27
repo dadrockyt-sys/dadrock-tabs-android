@@ -1914,7 +1914,7 @@ function AiTabGeneratorContent() {
                   </p>
 
                   <h2 className="mt-2 text-2xl font-black text-white">
-                    Review Your Tab Preview
+                    Tab Studio Preview
                   </h2>
 
                   <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
@@ -1925,32 +1925,32 @@ function AiTabGeneratorContent() {
                 </div>
 
                 <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950">
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 px-4 py-3">
-                    <div className="flex min-w-0 items-center gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-orange-300">
-                        <FileText size={20} />
-                      </div>
-
-                      <div className="min-w-0">
-                        <p className="truncate text-sm font-black text-white">
-                          {songTitle}
-                        </p>
-
-                        <p className="truncate text-xs text-zinc-500">
-                          {artistName} ·{' '}
-                          {
-                            selectedTypeDetails?.title
-                          }
-                        </p>
-                      </div>
+                  <a
+                    href={previewPdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex w-full flex-col items-center justify-center gap-3 border-b border-zinc-800 px-4 py-5 text-center transition hover:bg-orange-500/5"
+                  >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-orange-300">
+                      <FileText size={24} />
                     </div>
 
-                    <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-xs font-bold text-amber-300">
-                      <Lock size={14} />
+                    <div className="min-w-0">
+                      <p className="truncate text-base font-black text-white">
+                        {songTitle}
+                      </p>
 
-                      Watermarked Preview
+                      <p className="truncate text-sm text-zinc-500">
+                        {artistName} ·{' '}
+                        {selectedTypeDetails?.title}
+                      </p>
                     </div>
-                  </div>
+
+                    <span className="mt-1 inline-flex items-center gap-2 rounded-xl border border-orange-500/50 bg-orange-500/10 px-5 py-3 font-black text-orange-200">
+                      Click Here For Preview
+                      <ArrowRight size={19} />
+                    </span>
+                  </a>
 
                   <div className="relative bg-zinc-900">
                     <div className="p-5 sm:hidden">
@@ -1961,7 +1961,7 @@ function AiTabGeneratorContent() {
                         />
 
                         <h3 className="mt-3 text-lg font-black text-white">
-                          Watermarked preview ready
+                          {`${songTitle || 'Tab'} PDF Preview`}
                         </h3>
 
                         <p className="mt-1 hidden text-xs leading-5 text-zinc-400 sm:block">
@@ -1976,7 +1976,7 @@ function AiTabGeneratorContent() {
                             className="flex w-full items-center justify-center gap-2 rounded-xl border border-orange-500/50 bg-orange-500/10 px-4 py-3 font-black text-orange-200 transition hover:bg-orange-500/20"
                           >
                             <FileText size={19} />
-                            Open Preview PDF
+                            {`${songTitle || 'Tab'} PDF Preview`}
                           </a>
 
                           <a
@@ -1996,25 +1996,6 @@ function AiTabGeneratorContent() {
                       title={`${songTitle} tab preview`}
                       className="hidden h-[680px] w-full bg-white sm:block"
                     />
-
-                    {!previewUnlocked && (
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex min-h-[150px] items-end justify-center bg-gradient-to-t from-black via-black/90 to-transparent px-4 pb-5">
-                        <div className="text-center">
-                          <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full border border-orange-500/40 bg-orange-500/15 text-orange-300">
-                            <Lock size={20} />
-                          </div>
-
-                          <p className="mt-3 text-sm font-black text-white">
-                            Full transcription locked
-                          </p>
-
-                          <p className="mt-1 text-xs text-zinc-400">
-                            Unlock every page and
-                            remove the preview watermark.
-                          </p>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
 
