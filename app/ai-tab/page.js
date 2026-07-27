@@ -1497,11 +1497,11 @@ function AiTabGeneratorContent() {
               </div>
 
               <h1 className="text-2xl font-bold text-white sm:text-3xl">
-                AI Tab Generator
+                Tab Generator Studio
               </h1>
 
               <p className="mt-1 text-sm text-zinc-400">
-                Turn an audio file you possess into professional guitar or bass tablature.
+                Create professional-quality guitar or bass tablature from your audio.
               </p>
             </div>
           </section>
@@ -2342,7 +2342,7 @@ function AiTabGeneratorContent() {
               </p>
 
               <h2 className="mt-2 text-2xl font-black text-white">
-                AI Tab Generator FAQ
+                Tab Generator Studio FAQ
               </h2>
 
               <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-zinc-400">
@@ -2473,7 +2473,7 @@ export default function AiTabGeneratorPage() {
               />
 
               <p className="mt-4 text-sm font-semibold text-zinc-400">
-                Loading AI Tab Generator...
+                Loading Tab Generator Studio...
               </p>
             </div>
           </div>
