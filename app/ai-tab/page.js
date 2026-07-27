@@ -459,15 +459,49 @@ console.log('Audio Blob uploaded:', {
 setPreviewReady(false);
 
 setStatusMessage(
-  'Audio uploaded successfully. The AI analyzer connection is the next step.'
+  'Audio uploaded successfully. Analyzing your selected instrument...'
 );
 
-console.log('Audio ready for analysis:', {
-  pathname: uploadedBlob.pathname,
-  url: uploadedBlob.url,
-});
+const analyzerResponse = await fetch(
+  '/api/analyze-audio-tab',
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      audioUrl: uploadedBlob.url,
+      pathname: uploadedBlob.pathname,
+      song: songTitle.trim(),
+      artist: artistName.trim(),
+      transcriptionType: selectedType,
+    }),
+  }
+);
 
-return;
+const analyzerData = await analyzerResponse
+  .json()
+  .catch(() => ({}));
+
+if (!analyzerResponse.ok) {
+  throw new Error(
+    analyzerData?.error ||
+      'The audio analyzer could not generate tablature.'
+  );
+}
+
+if (!analyzerData?.generatedTab) {
+  throw new Error(
+    'The analyzer returned no tablature.'
+  );
+}
+
+setGeneratedTab(analyzerData.generatedTab);
+setPreviewReady(true);
+
+setStatusMessage(
+  'Your AI tablature preview is ready.'
+);
     } catch (error) {
       console.error(
         'AI tab generation error:',
