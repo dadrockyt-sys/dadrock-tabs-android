@@ -126,7 +126,9 @@ style_replacements = {
     'className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-16 pt-4 sm:px-6 lg:px-8"':
         'className="relative z-10 mx-auto w-full max-w-2xl px-4 py-8"',
     'className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950/80 px-4 py-2 text-sm font-semibold text-zinc-300 transition hover:border-orange-500/60 hover:text-white"':
-        'className="mb-8 inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-amber-400"',
+        'className="inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-amber-400"',
+    'className="mb-8 inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-amber-400"':
+        'className="inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-amber-400"',
     '<span>Back Home</span>': '<span>Back to DadRock Tabs</span>',
     'className="overflow-hidden rounded-[28px] border border-orange-500/30 bg-gradient-to-b from-zinc-950 via-[#111111] to-zinc-950 shadow-2xl shadow-orange-950/20"':
         'className="overflow-hidden rounded-3xl border border-amber-500/40 bg-zinc-900 shadow-2xl shadow-orange-500/10"',
@@ -144,6 +146,13 @@ style_replacements = {
 }
 for old, new in style_replacements.items():
     text = text.replace(old, new)
+
+# Keep both header controls vertically aligned.
+text = text.replace(
+    'className="mb-5 flex items-center justify-between gap-3"',
+    'className="mb-5 flex items-center justify-between gap-3"',
+    1,
+)
 
 # Restore the SEO/benefits section to its proper stacked-mobile layout.
 text = re.sub(
@@ -258,4 +267,4 @@ else:
     if removed_cards == 0 and "YouTube Reference" in text:
         raise RuntimeError("Could not safely locate and remove the YouTube input card")
     path.write_text(text, encoding="utf-8")
-    print("Restored SEO cards and compacted only the transcription selector.")
+    print("Aligned the AI tab header and preserved the intended compact layouts.")
