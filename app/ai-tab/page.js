@@ -14,6 +14,8 @@ import { useSearchParams } from 'next/navigation';
 
 import {
   ArrowLeft,
+  ArrowRight,
+  AlertCircle,
   Check,
   CheckCircle2,
   ChevronDown,
@@ -25,6 +27,7 @@ import {
   Headphones,
   Home,
   Loader2,
+  Lock,
   LockKeyhole,
   Mail,
   Music,
@@ -91,11 +94,26 @@ const BENEFITS = [
 ];
 
 const PROCESS_STEPS = [
-  'Choose Source',
-  'Analyze Audio',
-  'Detect Notes',
-  'Generate Tab',
-  'Unlock PDF',
+  {
+    title: 'Choose Source',
+    description: 'Paste a YouTube link or upload an audio file.',
+  },
+  {
+    title: 'Analyze Audio',
+    description: 'The analyzer isolates the selected instrument part.',
+  },
+  {
+    title: 'Detect Notes',
+    description: 'Pitch and timing information are converted into notes.',
+  },
+  {
+    title: 'Generate Tab',
+    description: 'The detected notes are arranged as playable tablature.',
+  },
+  {
+    title: 'Unlock PDF',
+    description: 'Preview the result and unlock the finished PDF.',
+  },
 ];
 
 const FAQ_ITEMS = [
@@ -2193,7 +2211,7 @@ function AiTabGeneratorContent() {
                         <p className="truncate text-xs text-zinc-500">
                           {artistName} ·{' '}
                           {
-                            selectedTypeDetails?.label
+                            selectedTypeDetails?.title
                           }
                         </p>
                       </div>
@@ -2278,9 +2296,9 @@ function AiTabGeneratorContent() {
                       </button>
 
                       <div className="min-h-[54px] rounded-xl border border-zinc-700 bg-white p-2">
-                        <PayPalButton
+                        <PayPalCheckoutButton
                           amount={PRICE}
-                          description={`${artistName} - ${songTitle} ${selectedTypeDetails?.label || 'Tab'} PDF`}
+                          description={`${artistName} - ${songTitle} ${selectedTypeDetails?.title || 'Tab'} PDF`}
                           onApproved={
                             handlePaymentApproved
                           }
