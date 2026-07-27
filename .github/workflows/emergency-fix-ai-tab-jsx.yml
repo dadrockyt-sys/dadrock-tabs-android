@@ -1,0 +1,76 @@
+name: Emergency Fix AI Tab JSX
+
+on:
+  push:
+    paths:
+      - '.github/workflows/emergency-fix-ai-tab-jsx.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Remove malformed orphaned JSX
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('app/ai-tab/page.js')
+          lines = path.read_text(encoding='utf-8').splitlines(keepends=True)
+
+          title_index = next(
+              (i for i, line in enumerate(lines) if '{step.title}' in line),
+              None,
+          )
+          status_index = next(
+              (i for i, line in enumerate(lines) if '{statusMessage && (' in line),
+              None,
+          )
+
+          if title_index is None:
+              raise RuntimeError('Could not find the orphaned {step.title} marker.')
+          if status_index is None or status_index <= title_index:
+              raise RuntimeError('Could not find the status-message block after the orphaned JSX.')
+
+          # Start at the opening <h3> immediately before {step.title}.
+          start = title_index
+          while start > 0 and '<h3' not in lines[start]:
+              start -= 1
+          if '<h3' not in lines[start]:
+              raise RuntimeError('Could not find the opening <h3> for the orphaned block.')
+
+          # Remove through the final blank/closing fragment before statusMessage.
+          del lines[start:status_index]
+
+          repaired = ''.join(lines)
+          if '{step.title}' in repaired or '{step.description}' in repaired:
+              raise RuntimeError('Orphaned process-card JSX remains after repair.')
+
+          path.write_text(repaired, encoding='utf-8')
+          print(f'Removed malformed JSX lines {start + 1} through {status_index}.')
+          PY
+
+      - name: Verify repaired area
+        shell: bash
+        run: |
+          if grep -n "step.title\|step.description" app/ai-tab/page.js; then
+            echo "Orphaned JSX still exists."
+            exit 1
+          fi
+          sed -n '1875,1905p' app/ai-tab/page.js
+
+      - name: Commit repaired page
+        shell: bash
+        run: |
+          git config user.name "DadRock Tabs Repair"
+          git config user.email "actions@users.noreply.github.com"
+          git add app/ai-tab/page.js
+          git commit -m "Directly fix AI tab JSX parse error"
+          git push
