@@ -1072,10 +1072,10 @@ function AiTabGeneratorContent() {
               customerEmail:
                 customerEmail.trim(),
 
-              songTitle:
+              song:
                 songTitle.trim(),
 
-              artistName:
+              artist:
                 artistName.trim(),
 
               transcriptionType:
@@ -1208,6 +1208,13 @@ function AiTabGeneratorContent() {
       setStatusMessage(
         'Creating your finished PDF and preparing email delivery...'
       );
+
+      document
+        .getElementById('download-section')
+        ?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
 
       try {
         const response = await fetch(
