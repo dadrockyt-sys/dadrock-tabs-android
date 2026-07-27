@@ -420,27 +420,27 @@ def analyze(payload: dict) -> dict:
     }:
         suffix = ".audio"
 
+    blob_token = str(
+        payload.get("blobToken") or ""
+    ).strip()
+
+    request_headers = {}
+
+    if blob_token:
+        request_headers["Authorization"] = (
+            f"Bearer {blob_token}"
+        )
+
     with tempfile.TemporaryDirectory() as temp_dir:
         audio_path = Path(temp_dir) / (
             f"uploaded{suffix}"
         )
 
-        blob_token = str(
-    payload.get("blobToken") or ""
-).strip()
-
-request_headers = {}
-
-if blob_token:
-    request_headers["Authorization"] = (
-        f"Bearer {blob_token}"
-    )
-
-response = requests.get(
-    audio_url,
-    headers=request_headers,
-    timeout=120,
-)
+        response = requests.get(
+            audio_url,
+            headers=request_headers,
+            timeout=120,
+        )
 
         if not response.ok:
             raise HTTPException(
