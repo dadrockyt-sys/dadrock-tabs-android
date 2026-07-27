@@ -46,6 +46,9 @@ jobs:
       - name: Repair mobile PDF preview
         run: python .github/scripts/fix_mobile_pdf_preview.py
 
+      - name: Update loading message
+        run: python .github/scripts/update_ai_tab_loading_text.py
+
       - name: Commit repaired page
         shell: bash
         run: |
@@ -57,5 +60,5 @@ jobs:
           git config user.name "DadRock Tabs Repair"
           git config user.email "actions@users.noreply.github.com"
           git add app/ai-tab/page.js
-          git commit -m "Fix mobile watermarked PDF preview"
+          git commit -m "Update Tab Studio analysis message"
           git push
