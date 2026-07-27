@@ -964,7 +964,7 @@ function AiTabGeneratorContent() {
   ------------------------------ */
 
   const handlePaymentApproved =
-    ({ orderId } = {}) => {
+    async ({ orderId } = {}) => {
       setGenerationError('');
 
       if (!orderId) {
@@ -982,8 +982,13 @@ function AiTabGeneratorContent() {
       setPreviewUnlocked(true);
       setUsingFreeToken(false);
       setStatusMessage(
-        'Payment confirmed. Your full PDF is now unlocked.'
+        'Payment confirmed. Creating and emailing your full PDF...'
       );
+
+      await handleDownloadPdf({
+        unlockReference: orderId,
+        unlockMethod: 'paypal',
+      });
 
       window.setTimeout(() => {
         document
