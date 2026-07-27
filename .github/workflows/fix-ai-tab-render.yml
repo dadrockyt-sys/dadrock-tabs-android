@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Apply targeted render fixes
+      - name: Apply all known runtime fixes
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -22,23 +22,64 @@ jobs:
           text = path.read_text()
           original = text
 
-          if 'CheckCircle2,' not in text:
-              text = text.replace('  Check,\n', '  Check,\n  CheckCircle2,\n', 1)
-          if re.search(r'^\s*Music,\s*$', text, re.M) is None:
-              text = text.replace('  Mail,\n', '  Mail,\n  Music,\n', 1)
-          if re.search(r'^\s*Play,\s*$', text, re.M) is None:
-              text = text.replace('  Music2,\n', '  Music2,\n  Play,\n', 1)
+          required_icons = [
+              ('AlertCircle', '  ArrowLeft,\n'),
+              ('ArrowRight', '  ArrowLeft,\n'),
+              ('CheckCircle2', '  Check,\n'),
+              ('Lock', '  Loader2,\n'),
+              ('Music', '  Mail,\n'),
+              ('Play', '  Music2,\n'),
+          ]
+
+          for icon, anchor in required_icons:
+              if re.search(rf'^\s*{icon},\s*$', text, re.M) is None:
+                  text = text.replace(anchor, anchor + f'  {icon},\n', 1)
 
           text = text.replace('isEmailValid', 'emailIsValid')
           text = text.replace('type.label', 'type.title')
+          text = text.replace('selectedTypeDetails?.label', 'selectedTypeDetails?.title')
+          text = text.replace('<PayPalButton', '<PayPalCheckoutButton')
+          text = text.replace('</PayPalButton>', '</PayPalCheckoutButton>')
+
           text = re.sub(
               r'const\s+Icon\s*=\s*type\.icon\s*;',
               'const Icon = Guitar;',
               text,
           )
 
+          old_steps = """const PROCESS_STEPS = [
+  'Choose Source',
+  'Analyze Audio',
+  'Detect Notes',
+  'Generate Tab',
+  'Unlock PDF',
+];"""
+          new_steps = """const PROCESS_STEPS = [
+  {
+    title: 'Choose Source',
+    description: 'Paste a YouTube link or upload an audio file.',
+  },
+  {
+    title: 'Analyze Audio',
+    description: 'The analyzer isolates the selected instrument part.',
+  },
+  {
+    title: 'Detect Notes',
+    description: 'Pitch and timing information are converted into notes.',
+  },
+  {
+    title: 'Generate Tab',
+    description: 'The detected notes are arranged as playable tablature.',
+  },
+  {
+    title: 'Unlock PDF',
+    description: 'Preview the result and unlock the finished PDF.',
+  },
+];"""
+          text = text.replace(old_steps, new_steps)
+
           if text == original:
-              print('No changes needed; repair is already applied.')
+              print('No changes needed; all known repairs are already applied.')
           else:
               path.write_text(text)
           PY
@@ -52,5 +93,5 @@ jobs:
           git config user.name "DadRock Tabs Repair"
           git config user.email "actions@users.noreply.github.com"
           git add app/ai-tab/page.js
-          git commit -m "Fix AI tab client render errors"
+          git commit -m "Fix remaining AI tab runtime errors"
           git push
