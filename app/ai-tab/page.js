@@ -2306,11 +2306,7 @@ function AiTabGeneratorContent() {
               </h2>
 
               <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-zinc-400">
-                Upload your own recording or paste
-                a YouTube reference and let the
-                DadRock AI transcription engine
-                build beautiful printable guitar or
-                bass tablature in minutes.
+                Upload your audio and let the DadRock Tab Studio create beautiful printable PDF Tab for guitar or bass in minutes.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
