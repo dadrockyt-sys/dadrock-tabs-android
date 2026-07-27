@@ -1,0 +1,26 @@
+name: Move preview download button
+
+on:
+  push:
+    paths:
+      - '.github/workflows/move-preview-download-button.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update preview layout
+        run: python .github/scripts/move_preview_download_button.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/ai-tab/page.js
+          git diff --cached --quiet || git commit -m "Move preview download button into launcher card"
+          git push
