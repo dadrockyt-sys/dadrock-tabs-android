@@ -1568,7 +1568,7 @@ function AiTabGeneratorContent() {
                     <input
                       id="audio-upload"
                       type="file"
-                      accept=".mp3,.wav,.m4a,.aac,audio/mpeg,audio/wav,audio/x-m4a,audio/aac"
+                      accept="audio/*,.mp3,.wav,.m4a,.aac"
                       onChange={
                         handleFileChange
                       }
