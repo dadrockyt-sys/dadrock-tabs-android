@@ -37,7 +37,6 @@ import {
   Sparkles,
   Upload,
   X,
-  Youtube,
   Ticket,
 } from 'lucide-react';
 
@@ -74,9 +73,9 @@ const TRANSCRIPTION_TYPES = [
 
 const BENEFITS = [
   {
-    title: 'Upload Any Song',
+    title: 'Upload Your Audio',
     description:
-      'Use a YouTube link or upload your own audio.',
+      'Upload an audio file you possess and have permission to analyze.',
     icon: Headphones,
   },
   {
@@ -96,7 +95,7 @@ const BENEFITS = [
 const PROCESS_STEPS = [
   {
     title: 'Choose Source',
-    description: 'Paste a YouTube link or upload an audio file.',
+    description: 'Upload an audio file you possess and may legally analyze.',
   },
   {
     title: 'Analyze Audio',
@@ -314,11 +313,7 @@ function AiTabGeneratorContent() {
   const isValidYouTubeUrl =
     Boolean(youtubeVideoId);
 
-  const sourceType = audioFile
-    ? 'audio'
-    : isValidYouTubeUrl
-      ? 'youtube'
-      : null;
+  const sourceType = audioFile ? 'audio' : null;
 
   const hasValidSource =
     sourceType !== null;
@@ -696,16 +691,9 @@ function AiTabGeneratorContent() {
       audioUrl = null,
       pathname = null,
     }) => {
-      const endpoint =
-        source === 'youtube'
-          ? '/api/analyze-youtube-tab'
-          : '/api/analyze-audio-tab';
+      const endpoint = '/api/analyze-audio-tab';
 
-      setStatusMessage(
-        source === 'youtube'
-          ? 'Preparing the YouTube audio for analysis...'
-          : 'Analyzing your selected instrument...'
-      );
+      setStatusMessage('Analyzing your uploaded audio...');
 
       const response = await fetch(
         endpoint,
@@ -721,14 +709,6 @@ function AiTabGeneratorContent() {
             source,
             audioUrl,
             pathname,
-            youtubeUrl:
-              source === 'youtube'
-                ? youtubeUrl.trim()
-                : null,
-            youtubeVideoId:
-              source === 'youtube'
-                ? youtubeVideoId
-                : null,
             song:
               songTitle.trim(),
             artist:
@@ -797,11 +777,6 @@ function AiTabGeneratorContent() {
 
   generatedTab:
     tabContent,
-
-            youtubeUrl:
-              sourceType === 'youtube'
-                ? youtubeUrl.trim()
-                : null,
 
             previewSystems: 4,
 
@@ -893,7 +868,7 @@ function AiTabGeneratorContent() {
 
       if (!sourceType) {
         setGenerationError(
-          'Please provide a valid YouTube link or upload an audio file.'
+          'Please upload an audio file before continuing.'
         );
 
         return;
@@ -931,14 +906,6 @@ function AiTabGeneratorContent() {
             pathname:
               uploadedAudio.pathname,
           };
-        }
-
-        if (
-          sourceType === 'youtube'
-        ) {
-          setStatusMessage(
-            'Sending the YouTube reference to the DadRock analyzer...'
-          );
         }
 
         const analyzerData =
@@ -1372,11 +1339,6 @@ function AiTabGeneratorContent() {
 
               generatedTab,
 
-              youtubeUrl:
-                sourceType === 'youtube'
-                  ? youtubeUrl.trim()
-                  : null,
-
               sourceType,
             }),
           }
@@ -1599,7 +1561,7 @@ function AiTabGeneratorContent() {
               </p>
 
               <h2 className="mt-2 text-2xl font-black text-white">
-                Choose Your Audio Source
+                Upload Your Audio
               </h2>
 
               <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
@@ -1609,129 +1571,7 @@ function AiTabGeneratorContent() {
               </p>
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-2">
-              <section
-                className={`rounded-2xl border p-5 transition ${
-                  sourceType === 'youtube'
-                    ? 'border-red-500/50 bg-red-500/5'
-                    : 'border-zinc-800 bg-zinc-950/80'
-                }`}
-              >
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-red-500/30 bg-red-500/10 text-red-300">
-                    <Youtube size={21} />
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-black text-white">
-                      YouTube Reference
-                    </h3>
-
-                    <p className="text-xs text-zinc-500">
-                      Paste a public video URL
-                    </p>
-                  </div>
-                </div>
-
-                <label
-                  htmlFor="youtube-url"
-                  className="mb-2 block text-sm font-semibold text-zinc-300"
-                >
-                  YouTube URL
-                </label>
-
-                <input
-                  id="youtube-url"
-                  type="url"
-                  value={youtubeUrl}
-                  onChange={
-                    handleYoutubeUrlChange
-                  }
-                  placeholder="https://youtube.com/watch?v=..."
-                  className={`w-full rounded-xl border bg-black/60 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 ${
-                    !hasYouTubeUrl
-                      ? 'border-zinc-700 focus:border-orange-500'
-                      : isValidYouTubeUrl
-                        ? 'border-green-500/70 focus:border-green-400'
-                        : 'border-red-500/70 focus:border-red-400'
-                  }`}
-                />
-
-                {hasYouTubeUrl && (
-                  <p
-                    className={`mt-2 text-xs font-semibold ${
-                      isValidYouTubeUrl
-                        ? 'text-green-400'
-                        : 'text-red-400'
-                    }`}
-                  >
-                    {isValidYouTubeUrl
-                      ? '✓ Valid YouTube link'
-                      : 'Please enter a valid YouTube link.'}
-                  </p>
-                )}
-
-                {isLoadingYoutubeInfo && (
-                  <div className="mt-3 flex items-center gap-2 rounded-xl border border-orange-500/30 bg-orange-500/5 p-3 text-xs font-semibold text-orange-300">
-                    <Loader2
-                      size={16}
-                      className="animate-spin"
-                    />
-
-                    Finding your YouTube video...
-                  </div>
-                )}
-                {youtubeInfoError && (
-                  <div className="mt-3 rounded-xl border border-red-500/30 bg-red-500/5 p-3 text-xs font-semibold leading-5 text-red-300">
-                    {youtubeInfoError}
-                  </div>
-                )}
-
-                {youtubeVideoInfo &&
-                  !isLoadingYoutubeInfo && (
-                    <div className="mt-4 overflow-hidden rounded-xl border border-zinc-800 bg-black/60">
-                      {youtubeVideoInfo.thumbnail && (
-                        <img
-                          src={
-                            youtubeVideoInfo.thumbnail
-                          }
-                          alt={
-                            youtubeVideoInfo.title ||
-                            'YouTube video'
-                          }
-                          className="aspect-video w-full object-cover"
-                        />
-                      )}
-
-                      <div className="p-4">
-                        <div className="flex items-start gap-3">
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-500/10 text-red-400">
-                            <Play
-                              size={18}
-                              fill="currentColor"
-                            />
-                          </div>
-
-                          <div className="min-w-0 flex-1">
-                            <p className="line-clamp-2 text-sm font-bold leading-5 text-white">
-                              {
-                                youtubeVideoInfo.title
-                              }
-                            </p>
-
-                            {youtubeVideoInfo.channelTitle && (
-                              <p className="mt-1 truncate text-xs text-zinc-500">
-                                {
-                                  youtubeVideoInfo.channelTitle
-                                }
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-              </section>
+            <div className="mx-auto max-w-2xl">
 
               <section
                 className={`rounded-2xl border p-5 transition ${
@@ -2460,7 +2300,7 @@ function AiTabGeneratorContent() {
               <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
                 The DadRock analyzer follows a
                 simple four-step process from
-                source selection to PDF delivery.
+                audio upload to PDF delivery.
               </p>
             </div>
 
