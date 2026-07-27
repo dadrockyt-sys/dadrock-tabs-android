@@ -37,6 +37,9 @@ jobs:
       - name: Remove repeated benefits section
         run: python .github/scripts/remove_ai_tab_benefits.py
 
+      - name: Restore email placement
+        run: python .github/scripts/move_ai_tab_email.py
+
       - name: Commit repaired page
         shell: bash
         run: |
@@ -48,5 +51,5 @@ jobs:
           git config user.name "DadRock Tabs Repair"
           git config user.email "actions@users.noreply.github.com"
           git add app/ai-tab/page.js
-          git commit -m "Simplify AI tab landing flow"
+          git commit -m "Restore AI tab email validation flow"
           git push
