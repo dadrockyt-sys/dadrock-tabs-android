@@ -47,7 +47,7 @@ youtube_card_pattern = re.compile(
 )
 text, removed_cards = youtube_card_pattern.subn("\n", text, count=1)
 
-# The upload card should use the full available width now.
+# The upload card should use the original compact content width.
 text = text.replace(
     '            <div className="grid gap-4 lg:grid-cols-2">',
     '            <div className="mx-auto max-w-2xl">',
@@ -107,20 +107,97 @@ replacements = {
 for old, new in replacements.items():
     text = text.replace(old, new)
 
-# Update the process step if it still contains the earlier wording.
 text = text.replace(
     "description: 'Paste a YouTube link or upload an audio file.',",
     "description: 'Upload an audio file you possess and may legally analyze.',",
 )
 
-# Remove now-unused YouTube icon import. Other YouTube state can remain harmlessly
-# isolated for now; it is no longer visible, valid, or submitted.
+# Match the cleaner outline, spacing, text scale, and labels from the saved original version.
+style_replacements = {
+    'className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-16 pt-4 sm:px-6 lg:px-8"':
+        'className="relative z-10 mx-auto w-full max-w-2xl px-4 py-8"',
+    'className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950/80 px-4 py-2 text-sm font-semibold text-zinc-300 transition hover:border-orange-500/60 hover:text-white"':
+        'className="mb-8 inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-amber-400"',
+    '<span>Back Home</span>': '<span>Back to DadRock Tabs</span>',
+    'className="overflow-hidden rounded-[28px] border border-orange-500/30 bg-gradient-to-b from-zinc-950 via-[#111111] to-zinc-950 shadow-2xl shadow-orange-950/20"':
+        'className="overflow-hidden rounded-3xl border border-amber-500/40 bg-zinc-900 shadow-2xl shadow-orange-500/10"',
+    'className="text-3xl font-black tracking-tight text-white sm:text-5xl"':
+        'className="text-2xl font-bold text-white sm:text-3xl"',
+    'Guitar & Bass Tab Generator': 'AI Tab Generator',
+    'className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base"':
+        'className="mt-1 text-sm text-zinc-400"',
+    'Everything You Need in One Place': 'Create a printable PDF using AI',
+    'className="text-xl font-black text-white sm:text-3xl"':
+        'className="text-xl font-bold text-white"',
+    'Choose Your Instrument Part': 'Choose your transcription',
+    'className="text-lg font-black text-white"':
+        'className="text-xl font-bold text-white"',
+}
+
+for old, new in style_replacements.items():
+    text = text.replace(old, new)
+
+# Restore the original dynamic generate button wording.
+old_button = """{isGenerating ? (
+                    <>
+                      <Loader2
+                        size={22}
+                        className=\"animate-spin\"
+                      />
+
+                      Generating AI Preview...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles size={22} />
+
+                      Generate Watermarked Preview
+                    </>
+                  )}"""
+new_button = """{isGenerating ? (
+                    <>
+                      <Loader2
+                        size={22}
+                        className=\"animate-spin\"
+                      />
+
+                      AI is creating your preview...
+                    </>
+                  ) : (
+                    <>
+                      <FileText size={22} />
+
+                      {selectedType
+                        ? `Generate ${
+                            selectedType.charAt(0).toUpperCase() +
+                            selectedType.slice(1)
+                          } Tab`
+                        : 'Select a transcription'}
+                    </>
+                  )}"""
+text = text.replace(old_button, new_button)
+
+# Make the primary action visually match the original button proportions.
+text = text.replace(
+    'className={`flex w-full items-center justify-center gap-3 rounded-2xl px-6 py-4 text-lg font-black transition ${',
+    'className={`flex w-full items-center justify-center gap-2 rounded-xl py-4 font-bold transition-all ${',
+)
+text = text.replace(
+    "? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:scale-[1.01]'",
+    "? 'bg-gradient-to-r from-amber-500 to-red-600 text-white hover:scale-[1.02]'",
+)
+text = text.replace(
+    ": 'cursor-not-allowed bg-zinc-800 text-zinc-500'",
+    ": 'cursor-not-allowed bg-zinc-700 text-zinc-400'",
+)
+
+# Remove now-unused YouTube icon import.
 text = re.sub(r"^\s*Youtube,\s*\n", "", text, flags=re.MULTILINE)
 
 if text == original:
-    print("No changes needed; the AI tab page is already audio-only.")
+    print("No changes needed; the AI tab page already matches the saved original styling.")
 else:
     if removed_cards == 0 and "YouTube Reference" in text:
         raise RuntimeError("Could not safely locate and remove the YouTube input card")
     path.write_text(text, encoding="utf-8")
-    print("Converted the AI tab generator to an uploaded-audio-only workflow.")
+    print("Matched the AI tab outline, text sizing, and button labels to the saved original version.")
