@@ -43,6 +43,9 @@ jobs:
       - name: Enable Android M4A uploads
         run: python .github/scripts/fix_m4a_upload.py
 
+      - name: Repair mobile PDF preview
+        run: python .github/scripts/fix_mobile_pdf_preview.py
+
       - name: Commit repaired page
         shell: bash
         run: |
@@ -54,5 +57,5 @@ jobs:
           git config user.name "DadRock Tabs Repair"
           git config user.email "actions@users.noreply.github.com"
           git add app/ai-tab/page.js
-          git commit -m "Enable M4A audio uploads on Android"
+          git commit -m "Fix mobile watermarked PDF preview"
           git push
