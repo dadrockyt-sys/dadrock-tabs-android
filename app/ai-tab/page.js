@@ -2603,3 +2603,28 @@ function AiTabGeneratorContent() {
     </main>
   );
                 }
+
+export default function AiTabGeneratorPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-[#090909] text-white">
+          <div className="flex min-h-screen items-center justify-center">
+            <div className="text-center">
+              <Loader2
+                size={32}
+                className="mx-auto animate-spin text-orange-400"
+              />
+
+              <p className="mt-4 text-sm font-semibold text-zinc-400">
+                Loading AI Tab Generator...
+              </p>
+            </div>
+          </div>
+        </main>
+      }
+    >
+      <AiTabGeneratorContent />
+    </Suspense>
+  );
+}
