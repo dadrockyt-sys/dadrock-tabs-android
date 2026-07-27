@@ -40,6 +40,9 @@ jobs:
       - name: Restore email placement
         run: python .github/scripts/move_ai_tab_email.py
 
+      - name: Enable Android M4A uploads
+        run: python .github/scripts/fix_m4a_upload.py
+
       - name: Commit repaired page
         shell: bash
         run: |
@@ -51,5 +54,5 @@ jobs:
           git config user.name "DadRock Tabs Repair"
           git config user.email "actions@users.noreply.github.com"
           git add app/ai-tab/page.js
-          git commit -m "Restore AI tab email validation flow"
+          git commit -m "Enable M4A audio uploads on Android"
           git push
