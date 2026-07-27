@@ -1465,23 +1465,23 @@ function AiTabGeneratorContent() {
         <div className="absolute bottom-[-220px] right-[-160px] h-[420px] w-[420px] rounded-full bg-amber-500/5 blur-[130px]" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-16 pt-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-2xl px-4 py-8">
         <header className="mb-5 flex items-center justify-between gap-3">
           <Link
             href={getLocalizedPath(
               '/',
               currentLanguage
             )}
-            className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950/80 px-4 py-2 text-sm font-semibold text-zinc-300 transition hover:border-orange-500/60 hover:text-white"
+            className="mb-8 inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-amber-400"
           >
             <ArrowLeft size={17} />
 
-            <span>Back Home</span>
+            <span>Back to DadRock Tabs</span>
           </Link>
 
           <LanguageSelector />
         </header>
-          <div className="overflow-hidden rounded-[28px] border border-orange-500/30 bg-gradient-to-b from-zinc-950 via-[#111111] to-zinc-950 shadow-2xl shadow-orange-950/20">
+          <div className="overflow-hidden rounded-3xl border border-amber-500/40 bg-zinc-900 shadow-2xl shadow-orange-500/10">
           <section className="border-b border-zinc-800 px-5 py-7 text-center sm:px-8">
             <img
               src={LOGO_URL}
@@ -1496,11 +1496,11 @@ function AiTabGeneratorContent() {
                 AI Powered Transcription
               </div>
 
-              <h1 className="text-3xl font-black tracking-tight text-white sm:text-5xl">
-                Guitar & Bass Tab Generator
+              <h1 className="text-2xl font-bold text-white sm:text-3xl">
+                AI Tab Generator
               </h1>
 
-              <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base">
+              <p className="mt-1 text-sm text-zinc-400">
                 Turn your audio or YouTube
                 reference into professional
                 guitar or bass tablature.
@@ -1510,8 +1510,8 @@ function AiTabGeneratorContent() {
 
           <section className="px-5 py-6 sm:px-8">
             <div className="mb-5 text-center">
-              <h2 className="text-xl font-black text-white sm:text-3xl">
-                Everything You Need in One Place
+              <h2 className="text-xl font-bold text-white">
+                Create a printable PDF using AI
               </h2>
 
               <p className="mx-auto mt-2 max-w-2xl text-xs leading-5 text-zinc-400 sm:text-sm sm:leading-6">
@@ -1586,7 +1586,7 @@ function AiTabGeneratorContent() {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-black text-white">
+                    <h3 className="text-xl font-bold text-white">
                       Upload Audio
                     </h3>
 
@@ -1688,7 +1688,7 @@ function AiTabGeneratorContent() {
               </p>
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-2">
+            <div className="mx-auto max-w-2xl">
               <div>
                 <label
                   htmlFor="song-title"
@@ -1791,8 +1791,8 @@ function AiTabGeneratorContent() {
 
             <div className="mt-6">
               <div className="mb-3">
-                <h3 className="text-lg font-black text-white">
-                  Choose Your Instrument Part
+                <h3 className="text-xl font-bold text-white">
+                  Choose your transcription
                 </h3>
 
                 <p className="mt-1 text-xs leading-5 text-zinc-500">
@@ -1902,11 +1902,11 @@ function AiTabGeneratorContent() {
                   onClick={
                     handleGeneratePreview
                   }
-                  className={`flex w-full items-center justify-center gap-3 rounded-2xl px-6 py-4 text-lg font-black transition ${
+                  className={`flex w-full items-center justify-center gap-2 rounded-xl py-4 font-bold transition-all ${
                     formIsComplete &&
                     !isGenerating
-                      ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:scale-[1.01]'
-                      : 'cursor-not-allowed bg-zinc-800 text-zinc-500'
+                      ? 'bg-gradient-to-r from-amber-500 to-red-600 text-white hover:scale-[1.02]'
+                      : 'cursor-not-allowed bg-zinc-700 text-zinc-400'
                   }`}
                 >
                   {isGenerating ? (
@@ -1916,13 +1916,18 @@ function AiTabGeneratorContent() {
                         className="animate-spin"
                       />
 
-                      Generating AI Preview...
+                      AI is creating your preview...
                     </>
                   ) : (
                     <>
-                      <Sparkles size={22} />
+                      <FileText size={22} />
 
-                      Generate Watermarked Preview
+                      {selectedType
+                        ? `Generate ${
+                            selectedType.charAt(0).toUpperCase() +
+                            selectedType.slice(1)
+                          } Tab`
+                        : 'Select a transcription'}
                     </>
                   )}
                 </button>
