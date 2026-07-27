@@ -49,9 +49,6 @@ jobs:
       - name: Update loading message
         run: python .github/scripts/update_ai_tab_loading_text.py
 
-      - name: Remove numbered process cards
-        run: python .github/scripts/remove_ai_tab_process_cards.py
-
       - name: Remove orphaned process JSX
         run: python .github/scripts/remove_orphaned_process_jsx.py
 
