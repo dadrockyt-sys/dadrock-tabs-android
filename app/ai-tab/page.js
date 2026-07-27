@@ -1962,36 +1962,6 @@ function AiTabGeneratorContent() {
                   </a>
 
                   <div className="relative bg-zinc-900">
-                    <div className="p-5 sm:hidden">
-                      <div className="rounded-2xl border border-zinc-700 bg-black/40 p-5 text-center">
-                        <FileText
-                          size={38}
-                          className="mx-auto text-orange-300"
-                        />
-
-                        <h3 className="mt-3 text-lg font-black text-white">
-                          {`${songTitle || 'Tab'} PDF Preview`}
-                        </h3>
-
-                        <p className="mt-1 hidden text-xs leading-5 text-zinc-400 sm:block">
-                          Android browsers cannot reliably display a temporary PDF inside the page. Open it in a new tab or download it to your device.
-                        </p>
-
-                        <div className="mt-5 grid gap-3">
-                          <a
-                            href={previewPdfUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex w-full items-center justify-center gap-2 rounded-xl border border-orange-500/50 bg-orange-500/10 px-4 py-3 font-black text-orange-200 transition hover:bg-orange-500/20"
-                          >
-                            <FileText size={19} />
-                            {`${songTitle || 'Tab'} PDF Preview`}
-                          </a>
-
-                        </div>
-                      </div>
-                    </div>
-
                     <iframe
                       src={`${previewPdfUrl}#toolbar=0&navpanes=0&scrollbar=1`}
                       title={`${songTitle} tab preview`}
