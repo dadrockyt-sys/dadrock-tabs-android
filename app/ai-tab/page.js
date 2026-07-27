@@ -1859,29 +1859,6 @@ function AiTabGeneratorContent() {
 
               {statusMessage && (
 
-                <div className="mt-6 rounded-2xl border border-blue-500/30 bg-blue-500/10 p-4">
-
-                  <div className="flex items-center gap-3">
-
-                    <Loader2
-                      size={18}
-                      className={
-                        isGenerating
-                          ? 'animate-spin text-blue-300'
-                          : 'text-blue-300'
-                      }
-                    />
-
-                    <p className="text-sm font-semibold text-blue-200">
-                      {statusMessage}
-                    </p>
-
-                  </div>
-
-                </div>
-
-              )}
-
               {generationError && (
 
                 <div className="mt-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4">
