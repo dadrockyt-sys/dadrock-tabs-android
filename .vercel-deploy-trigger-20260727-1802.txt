@@ -1,0 +1,6 @@
+Trigger a fresh Vercel production deployment after upgrading to Vercel Pro.
+
+Includes latest fixes through commit 7bf32e20d927a0365ccc40b33afbce40d98b9fe0:
+- token redemption accepts song/artist and songTitle/artistName
+- automatic PDF delivery state repair
+- full PDF download and email request repair
