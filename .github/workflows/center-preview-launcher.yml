@@ -1,0 +1,31 @@
+name: Center preview launcher
+
+on:
+  push:
+    paths:
+      - '.github/scripts/center_preview_launcher.py'
+      - '.github/workflows/center-preview-launcher.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update preview launcher
+        run: python .github/scripts/center_preview_launcher.py
+
+      - name: Commit preview polish
+        run: |
+          if git diff --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/ai-tab/page.js
+          git commit -m "Center and activate tab preview launcher"
+          git push
