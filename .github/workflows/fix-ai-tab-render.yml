@@ -52,6 +52,9 @@ jobs:
       - name: Remove numbered process cards
         run: python .github/scripts/remove_ai_tab_process_cards.py
 
+      - name: Remove orphaned process JSX
+        run: python .github/scripts/remove_orphaned_process_jsx.py
+
       - name: Commit repaired page
         shell: bash
         run: |
@@ -63,5 +66,5 @@ jobs:
           git config user.name "DadRock Tabs Repair"
           git config user.email "actions@users.noreply.github.com"
           git add app/ai-tab/page.js
-          git commit -m "Remove AI tab process cards"
+          git commit -m "Fix AI tab JSX parse error"
           git push
