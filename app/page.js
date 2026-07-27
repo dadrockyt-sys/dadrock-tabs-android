@@ -420,12 +420,6 @@ export default function App({ initialLang = 'en' }) {
   
   // Admin upcoming videos state
   const [adminUpcomingVideos, setAdminUpcomingVideos] = useState([]);
-  const [newUpcomingTitle, setNewUpcomingTitle] = useState('');
-  const [newUpcomingArtist, setNewUpcomingArtist] = useState('');
-  const [newUpcomingDate, setNewUpcomingDate] = useState('');
-  const [newUpcomingThumbnail, setNewUpcomingThumbnail] = useState('');
-  const [newUpcomingDescription, setNewUpcomingDescription] = useState('');
-  const [isAddingUpcoming, setIsAddingUpcoming] = useState(false);
 
   // Tab Studio token management state
   const [tabTokens, setTabTokens] = useState([]);
@@ -1337,44 +1331,6 @@ export default function App({ initialLang = 'en' }) {
       }
     } catch (err) {
       console.error('Failed to load upcoming videos:', err);
-    }
-  };
-
-  // Add upcoming video manually
-  const handleAddUpcoming = async () => {
-    if (!newUpcomingTitle || !newUpcomingDate) return;
-    
-    setIsAddingUpcoming(true);
-    try {
-      const authToken = sessionStorage.getItem('dadrock_admin_auth');
-      const res = await fetch('/api/admin/upcoming', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Basic ' + btoa('admin:' + authToken),
-        },
-        body: JSON.stringify({
-          title: newUpcomingTitle,
-          artist: newUpcomingArtist,
-          scheduled_date: new Date(newUpcomingDate).toISOString(),
-          thumbnail: newUpcomingThumbnail,
-          description: newUpcomingDescription
-        }),
-      });
-      
-      if (res.ok) {
-        // Clear form and reload list
-        setNewUpcomingTitle('');
-        setNewUpcomingArtist('');
-        setNewUpcomingDate('');
-        setNewUpcomingThumbnail('');
-        setNewUpcomingDescription('');
-        loadUpcomingVideos();
-      }
-    } catch (err) {
-      console.error('Failed to add upcoming video:', err);
-    } finally {
-      setIsAddingUpcoming(false);
     }
   };
 
@@ -2826,7 +2782,7 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
               Upcoming / Scheduled Videos
             </h2>
             <p className="text-zinc-400 mb-4">
-              Connect your YouTube account to automatically import scheduled videos, or add them manually.
+              Connect your YouTube account to automatically import scheduled videos.
             </p>
             
             {/* YouTube OAuth Connection Status */}
@@ -2873,51 +2829,6 @@ const songUrl = isLocalePage ? `/${currentLocale}/songs/${data.slug}` : `/songs/
                 </button>
               </div>
             )}
-
-            {/* Manual Add Upcoming Video */}
-            <div className="border-t border-zinc-700 pt-6">
-              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                <Plus className="w-5 h-5 text-amber-500" />
-                Add Upcoming Video Manually
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <input
-                  type="text"
-                  value={newUpcomingTitle}
-                  onChange={(e) => setNewUpcomingTitle(e.target.value)}
-                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
-                  placeholder="Song Title"
-                />
-                <input
-                  type="text"
-                  value={newUpcomingArtist}
-                  onChange={(e) => setNewUpcomingArtist(e.target.value)}
-                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
-                  placeholder="Artist Name"
-                />
-                <input
-                  type="datetime-local"
-                  value={newUpcomingDate}
-                  onChange={(e) => setNewUpcomingDate(e.target.value)}
-                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
-                />
-                <input
-                  type="text"
-                  value={newUpcomingThumbnail}
-                  onChange={(e) => setNewUpcomingThumbnail(e.target.value)}
-                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
-                  placeholder="Thumbnail URL (optional)"
-                />
-              </div>
-              <button
-                onClick={handleAddUpcoming}
-                disabled={isAddingUpcoming || !newUpcomingTitle || !newUpcomingDate}
-                className="flex items-center gap-2 px-6 py-3 bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400 transition-colors disabled:opacity-50"
-              >
-                <Plus className="w-5 h-5" />
-                {isAddingUpcoming ? 'Adding...' : 'Add Upcoming Video'}
-              </button>
-            </div>
 
             {/* List of Upcoming Videos */}
             {adminUpcomingVideos.length > 0 && (
