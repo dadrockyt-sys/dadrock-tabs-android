@@ -1,0 +1,29 @@
+name: Run PDF delivery trigger repair
+
+on:
+  push:
+    paths:
+      - '.github/workflows/run-pdf-delivery-trigger-repair.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply repair
+        run: python .github/scripts/fix_pdf_delivery_trigger.py
+      - name: Commit repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/ai-tab/page.js
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+          else
+            git commit -m "Make PDF delivery automatic after token unlock"
+            git push
+          fi
