@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/remove-manual-upcoming-video.yml
+      - '.github/workflows/remove-manual-upcoming-video.yml'
 
 permissions:
   contents: write
@@ -14,10 +14,7 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v4
 
       - name: Remove manual upcoming-video UI and code
         run: |
@@ -27,132 +24,41 @@ jobs:
           path = Path('app/page.js')
           text = path.read_text()
 
-          state_block = """  const [newUpcomingTitle, setNewUpcomingTitle] = useState('');
-  const [newUpcomingArtist, setNewUpcomingArtist] = useState('');
-  const [newUpcomingDate, setNewUpcomingDate] = useState('');
-  const [newUpcomingThumbnail, setNewUpcomingThumbnail] = useState('');
-  const [newUpcomingDescription, setNewUpcomingDescription] = useState('');
-  const [isAddingUpcoming, setIsAddingUpcoming] = useState(false);
-"""
+          state_start = "  const [newUpcomingTitle, setNewUpcomingTitle] = useState('');\n"
+          state_end = "  const [isAddingUpcoming, setIsAddingUpcoming] = useState(false);\n"
+          start = text.index(state_start)
+          end = text.index(state_end, start) + len(state_end)
+          text = text[:start] + text[end:]
 
-          handler_block = """  // Add upcoming video manually
-  const handleAddUpcoming = async () => {
-    if (!newUpcomingTitle || !newUpcomingDate) return;
-    
-    setIsAddingUpcoming(true);
-    try {
-      const authToken = sessionStorage.getItem('dadrock_admin_auth');
-      const res = await fetch('/api/admin/upcoming', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Basic ' + btoa('admin:' + authToken),
-        },
-        body: JSON.stringify({
-          title: newUpcomingTitle,
-          artist: newUpcomingArtist,
-          scheduled_date: new Date(newUpcomingDate).toISOString(),
-          thumbnail: newUpcomingThumbnail,
-          description: newUpcomingDescription
-        }),
-      });
-      
-      if (res.ok) {
-        // Clear form and reload list
-        setNewUpcomingTitle('');
-        setNewUpcomingArtist('');
-        setNewUpcomingDate('');
-        setNewUpcomingThumbnail('');
-        setNewUpcomingDescription('');
-        loadUpcomingVideos();
-      }
-    } catch (err) {
-      console.error('Failed to add upcoming video:', err);
-    } finally {
-      setIsAddingUpcoming(false);
-    }
-  };
+          handler_start = "  // Add upcoming video manually\n"
+          handler_end = "  // Delete upcoming video\n"
+          start = text.index(handler_start)
+          end = text.index(handler_end, start)
+          text = text[:start] + text[end:]
 
-"""
+          ui_start = "            {/* Manual Add Upcoming Video */}\n"
+          ui_end = "            {/* List of Upcoming Videos */}\n"
+          start = text.index(ui_start)
+          end = text.index(ui_end, start)
+          text = text[:start] + text[end:]
 
-          ui_block = """            {/* Manual Add Upcoming Video */}
-            <div className="border-t border-zinc-700 pt-6">
-              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                <Plus className="w-5 h-5 text-amber-500" />
-                Add Upcoming Video Manually
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <input
-                  type="text"
-                  value={newUpcomingTitle}
-                  onChange={(e) => setNewUpcomingTitle(e.target.value)}
-                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
-                  placeholder="Song Title"
-                />
-                <input
-                  type="text"
-                  value={newUpcomingArtist}
-                  onChange={(e) => setNewUpcomingArtist(e.target.value)}
-                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
-                  placeholder="Artist Name"
-                />
-                <input
-                  type="datetime-local"
-                  value={newUpcomingDate}
-                  onChange={(e) => setNewUpcomingDate(e.target.value)}
-                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
-                />
-                <input
-                  type="text"
-                  value={newUpcomingThumbnail}
-                  onChange={(e) => setNewUpcomingThumbnail(e.target.value)}
-                  className="px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
-                  placeholder="Thumbnail URL (optional)"
-                />
-              </div>
-              <button
-                onClick={handleAddUpcoming}
-                disabled={isAddingUpcoming || !newUpcomingTitle || !newUpcomingDate}
-                className="flex items-center gap-2 px-6 py-3 bg-amber-500 text-black font-bold rounded-lg hover:bg-amber-400 transition-colors disabled:opacity-50"
-              >
-                <Plus className="w-5 h-5" />
-                {isAddingUpcoming ? 'Adding...' : 'Add Upcoming Video'}
-              </button>
-            </div>
+          old_copy = 'Connect your YouTube account to automatically import scheduled videos, or add them manually.'
+          new_copy = 'Connect your YouTube account to automatically import scheduled videos.'
+          if old_copy not in text:
+              raise SystemExit('Expected upcoming-video description not found')
+          text = text.replace(old_copy, new_copy, 1)
 
-"""
-
-          replacements = [
-              (state_block, ''),
-              (handler_block, ''),
-              (ui_block, ''),
-              ('Connect your YouTube account to automatically import scheduled videos, or add them manually.',
-               'Connect your YouTube account to automatically import scheduled videos.'),
-          ]
-
-          for old, new in replacements:
-              if old not in text:
-                  raise SystemExit(f'Expected block not found: {old[:80]!r}')
-              text = text.replace(old, new, 1)
-
-          forbidden = [
-              'Add Upcoming Video Manually',
-              'handleAddUpcoming',
-              'newUpcomingTitle',
-              'isAddingUpcoming',
-          ]
-          for value in forbidden:
+          for value in ('Add Upcoming Video Manually', 'handleAddUpcoming', 'newUpcomingTitle', 'isAddingUpcoming'):
               if value in text:
-                  raise SystemExit(f'Cleanup incomplete; still found {value!r}')
+                  raise SystemExit(f'Cleanup incomplete: {value}')
 
           path.write_text(text)
           PY
 
-      - name: Remove one-time workflow and commit cleanup
+      - name: Commit cleanup
         run: |
-          rm .github/workflows/remove-manual-upcoming-video.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app/page.js .github/workflows/remove-manual-upcoming-video.yml
-          git commit -m "Remove manual upcoming video form"
+          git add app/page.js
+          git diff --cached --quiet || git commit -m "Remove manual upcoming video form"
           git push
