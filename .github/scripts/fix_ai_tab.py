@@ -32,7 +32,7 @@ text = re.sub(
     text,
 )
 
-# Make uploaded audio the only accepted source.
+# Uploaded audio is the only accepted source.
 text = re.sub(
     r"const sourceType = audioFile\s*\? 'audio'\s*:\s*isValidYouTubeUrl\s*\? 'youtube'\s*:\s*null;",
     "const sourceType = audioFile ? 'audio' : null;",
@@ -40,7 +40,6 @@ text = re.sub(
     count=1,
 )
 
-# Remove the visible YouTube input card while preserving the upload card.
 youtube_card_pattern = re.compile(
     r"\n\s*<section\n\s*className=\{`rounded-2xl border p-5 transition \$\{\n\s*sourceType === 'youtube'.*?\n\s*</section>\n(?=\s*<section\n\s*className=\{`rounded-2xl border p-5 transition \$\{\n\s*sourceType === 'audio')",
     re.DOTALL,
@@ -53,7 +52,6 @@ text = text.replace(
     1,
 )
 
-# Route all analysis requests through the existing uploaded-audio endpoint.
 text = re.sub(
     r"const endpoint =\s*source === 'youtube'\s*\? '/api/analyze-youtube-tab'\s*:\s*'/api/analyze-audio-tab';",
     "const endpoint = '/api/analyze-audio-tab';",
@@ -67,7 +65,6 @@ text = re.sub(
     count=1,
 )
 
-# Remove YouTube-only fields from payloads.
 text = re.sub(
     r"\n\s*youtubeUrl:\s*source === 'youtube'\s*\? youtubeUrl\.trim\(\)\s*:\s*null,\s*\n\s*youtubeVideoId:\s*source === 'youtube'\s*\? youtubeVideoId\s*:\s*null,",
     "",
@@ -85,20 +82,38 @@ text = re.sub(
     count=1,
 )
 
-replacements = {
+# Audio-only user-facing wording, including line-wrapped JSX text.
+text = re.sub(
+    r"Turn your audio or YouTube\s+reference into professional\s+guitar or bass tablature\.",
+    "Turn an audio file you possess into professional guitar or bass tablature.",
+    text,
+)
+text = re.sub(
+    r"Choose your source, select Lead,\s+Rhythm, or Bass, review a short\s+watermarked preview, then unlock\s+the finished PDF\.",
+    "Upload your audio, select Lead, Rhythm, or Bass, review a short watermarked preview, then unlock the finished PDF.",
+    text,
+)
+text = re.sub(
+    r"Paste a public YouTube link or\s+upload an audio file from your\s+device\.",
+    "Upload an audio file from your device that you possess and have permission to analyze.",
+    text,
+)
+text = re.sub(
+    r"I confirm that I have permission\s+to analyze this recording and that\s+I understand this AI transcription\s+is generated for educational and\s+personal practice purposes\.",
+    "I confirm that I possess this audio file, have permission to analyze it, and understand this AI transcription is generated for educational and personal practice purposes.",
+    text,
+)
+
+simple_replacements = {
     "Use a YouTube link or upload your own audio.": "Upload an audio file you possess and have permission to analyze.",
-    "Turn your audio or YouTube reference into professional guitar or bass tablature.": "Turn an audio file you possess into professional guitar or bass tablature.",
-    "Choose your source, select Lead, Rhythm, or Bass, review a short watermarked preview, then unlock the finished PDF.": "Upload your audio, select Lead, Rhythm, or Bass, review a short watermarked preview, then unlock the finished PDF.",
-    "Paste a public YouTube link or upload an audio file from your device.": "Upload an audio file from your device that you possess and have permission to analyze.",
     "Choose Your Audio Source": "Upload Your Audio",
     "Please provide a valid YouTube link or upload an audio file.": "Please upload an audio file before continuing.",
     "Paste a YouTube link or upload an audio file.": "Upload an audio file you possess and may legally analyze.",
     "Upload Any Song": "Upload Your Audio",
     "source selection to PDF delivery.": "audio upload to PDF delivery.",
     "Upload your own recording or paste a YouTube reference and let the DadRock AI transcription engine": "Upload an audio file you possess and let the DadRock AI transcription engine",
-    "I confirm that I have permission to analyze this recording and that I understand this AI transcription is generated for educational and personal practice purposes.": "I confirm that I possess this audio file, have permission to analyze it, and understand this AI transcription is generated for educational and personal practice purposes.",
 }
-for old, new in replacements.items():
+for old, new in simple_replacements.items():
     text = text.replace(old, new)
 
 text = text.replace(
@@ -130,15 +145,26 @@ style_replacements = {
 for old, new in style_replacements.items():
     text = text.replace(old, new)
 
-# Put all three transcription choices on one mobile row with no horizontal slider.
-text = text.replace(
-    'className="grid gap-3 sm:grid-cols-3"',
-    'className="grid grid-cols-3 gap-2 sm:gap-3"',
-    1,
+# Restore the SEO/benefits section to its proper stacked-mobile layout.
+text = re.sub(
+    r'<div className="grid grid-cols-3 gap-2 sm:gap-3">\s*\{BENEFITS\.map',
+    '<div className="grid gap-3 sm:grid-cols-3">\n              {BENEFITS.map',
+    text,
+    count=1,
 )
+
+# Apply the compact three-column layout ONLY to the transcription selector.
+text = re.sub(
+    r'<div className="grid gap-3 sm:grid-cols-3">\s*\{TRANSCRIPTION_TYPES\.map',
+    '<div className="grid grid-cols-3 gap-2 sm:gap-3">\n                {TRANSCRIPTION_TYPES.map',
+    text,
+    count=1,
+)
+
+# Compact transcription cards only. These patterns are unique to the mapped buttons.
 text = text.replace(
     'className={`rounded-2xl border p-5 text-left transition ${',
-    'className={`min-w-0 rounded-xl border p-2.5 text-center transition sm:rounded-2xl sm:p-4 ${',
+    'className={`relative min-w-0 rounded-xl border p-2.5 text-center transition sm:rounded-2xl sm:p-4 ${',
     1,
 )
 text = text.replace(
@@ -151,7 +177,11 @@ text = text.replace(
     'className={`flex h-10 w-10 items-center justify-center rounded-xl border sm:h-12 sm:w-12 ${',
     1,
 )
-text = text.replace('<Icon\n                              size={25}\n                            />', '<Icon\n                              size={22}\n                            />', 1)
+text = text.replace(
+    '<Icon\n                              size={25}\n                            />',
+    '<Icon\n                              size={22}\n                            />',
+    1,
+)
 text = text.replace(
     'className="mt-4 text-xl font-black leading-tight text-white"',
     'className="mt-3 text-[13px] font-black leading-tight text-white sm:text-lg"',
@@ -162,15 +192,9 @@ text = text.replace(
     'className="mt-1 hidden text-xs leading-5 text-zinc-400 sm:block"',
     1,
 )
-# Keep the selected check visible without stealing card width.
 text = text.replace(
     '<CheckCircle2\n                              size={19}\n                              className="text-orange-400"\n                            />',
     '<CheckCircle2\n                              size={16}\n                              className="absolute right-2 top-2 text-orange-400 sm:right-3 sm:top-3"\n                            />',
-    1,
-)
-text = text.replace(
-    'className={`min-w-0 rounded-xl border p-2.5 text-center transition sm:rounded-2xl sm:p-4 ${',
-    'className={`relative min-w-0 rounded-xl border p-2.5 text-center transition sm:rounded-2xl sm:p-4 ${',
     1,
 )
 
@@ -229,9 +253,9 @@ text = text.replace(
 text = re.sub(r"^\s*Youtube,\s*\n", "", text, flags=re.MULTILINE)
 
 if text == original:
-    print("No changes needed; the transcription choices are already compact.")
+    print("No changes needed; the intended layouts are already applied.")
 else:
     if removed_cards == 0 and "YouTube Reference" in text:
         raise RuntimeError("Could not safely locate and remove the YouTube input card")
     path.write_text(text, encoding="utf-8")
-    print("Placed all three transcription choices in one compact mobile row.")
+    print("Restored SEO cards and compacted only the transcription selector.")
