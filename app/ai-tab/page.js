@@ -2298,7 +2298,7 @@ function AiTabGeneratorContent() {
               <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">
                 <Guitar size={15} />
 
-                DadRock AI
+                DadRock Tab Studio
               </div>
 
               <h2 className="mt-5 text-3xl font-black text-white">
