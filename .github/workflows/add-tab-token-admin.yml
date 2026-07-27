@@ -1,0 +1,26 @@
+name: Add Tab Studio token admin
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-tab-token-admin.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-admin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add token management as admin function three
+        run: python .github/scripts/add_tab_token_admin.py
+
+      - name: Commit admin token manager
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/page.js
+          git diff --cached --quiet || git commit -m "Add Tab Studio token management to admin panel"
+          git push
