@@ -1509,7 +1509,7 @@ function AiTabGeneratorContent() {
           <section className="px-5 py-6 sm:px-8">
             <div className="mb-5 text-center">
               <h2 className="text-xl font-bold text-white">
-                Create a printable PDF using AI
+                Everything You Need in One Place
               </h2>
 
               <p className="mx-auto mt-2 max-w-2xl text-xs leading-5 text-zinc-400 sm:text-sm sm:leading-6">
@@ -2323,7 +2323,7 @@ function AiTabGeneratorContent() {
                       )}
                     </div>
 
-                    <h3 className="mt-4 text-xl font-black leading-tight text-white">
+                    <h3 className="mt-3 text-[13px] font-black leading-tight text-white sm:text-lg">
                       {step.title}
                     </h3>
 
