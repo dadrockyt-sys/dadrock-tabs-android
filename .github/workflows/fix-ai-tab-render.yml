@@ -18,6 +18,22 @@ jobs:
       - name: Apply runtime repairs
         run: python .github/scripts/fix_ai_tab.py
 
+      - name: Update hero branding
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('app/ai-tab/page.js')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace('AI Tab Generator', 'Tab Generator Studio')
+          text = text.replace(
+              'Turn an audio file you possess into professional guitar or bass tablature.',
+              'Create professional-quality guitar or bass tablature from your audio.'
+          )
+          path.write_text(text, encoding='utf-8')
+          PY
+
       - name: Commit repaired page
         shell: bash
         run: |
@@ -29,5 +45,5 @@ jobs:
           git config user.name "DadRock Tabs Repair"
           git config user.email "actions@users.noreply.github.com"
           git add app/ai-tab/page.js
-          git commit -m "Fix remaining AI tab runtime errors"
+          git commit -m "Update AI tab hero branding"
           git push
