@@ -1881,21 +1881,6 @@ function AiTabGeneratorContent() {
 
               </div>
 
-              <div className="mt-5 grid gap-3 sm:grid-cols-4">
-
-                {PROCESS_STEPS.map(
-                  (
-                    step,
-                    index
-                  ) => (
-                    <div
-                      key={step.title}
-                      className="rounded-xl border border-zinc-800 bg-black/40 p-4"
-                    >
-                      <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-orange-500/15 text-sm font-black text-orange-300">
-                        {index + 1}
-                      </div>
-
                       <h3 className="text-sm font-bold text-white">
                         {step.title}
                       </h3>
@@ -2028,7 +2013,7 @@ function AiTabGeneratorContent() {
                           Watermarked preview ready
                         </h3>
 
-                        <p className="mt-2 text-sm leading-6 text-zinc-400">
+                        <p className="mt-1 hidden text-xs leading-5 text-zinc-400 sm:block">
                           Android browsers cannot reliably display a temporary PDF inside the page. Open it in a new tab or download it to your device.
                         </p>
 
