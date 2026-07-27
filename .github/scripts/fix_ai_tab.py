@@ -82,7 +82,7 @@ text = re.sub(
     count=1,
 )
 
-# Audio-only user-facing wording, including line-wrapped JSX text.
+# Remove all remaining YouTube language and restore the Version 1 section heading.
 text = re.sub(
     r"Turn your audio or YouTube\s+reference into professional\s+guitar or bass tablature\.",
     "Turn an audio file you possess into professional guitar or bass tablature.",
@@ -106,12 +106,16 @@ text = re.sub(
 
 simple_replacements = {
     "Use a YouTube link or upload your own audio.": "Upload an audio file you possess and have permission to analyze.",
+    "Turn your audio or YouTube reference into professional guitar or bass tablature.": "Turn an audio file you possess into professional guitar or bass tablature.",
+    "Choose your source, select Lead, Rhythm, or Bass, review a short watermarked preview, then unlock the finished PDF.": "Upload your audio, select Lead, Rhythm, or Bass, review a short watermarked preview, then unlock the finished PDF.",
+    "Paste a public YouTube link or upload an audio file from your device.": "Upload an audio file from your device that you possess and have permission to analyze.",
     "Choose Your Audio Source": "Upload Your Audio",
     "Please provide a valid YouTube link or upload an audio file.": "Please upload an audio file before continuing.",
     "Paste a YouTube link or upload an audio file.": "Upload an audio file you possess and may legally analyze.",
     "Upload Any Song": "Upload Your Audio",
     "source selection to PDF delivery.": "audio upload to PDF delivery.",
     "Upload your own recording or paste a YouTube reference and let the DadRock AI transcription engine": "Upload an audio file you possess and let the DadRock AI transcription engine",
+    "Create a printable PDF using AI": "Everything You Need in One Place",
 }
 for old, new in simple_replacements.items():
     text = text.replace(old, new)
@@ -137,7 +141,6 @@ style_replacements = {
     'Guitar & Bass Tab Generator': 'AI Tab Generator',
     'className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base"':
         'className="mt-1 text-sm text-zinc-400"',
-    'Everything You Need in One Place': 'Create a printable PDF using AI',
     'className="text-xl font-black text-white sm:text-3xl"':
         'className="text-xl font-bold text-white"',
     'Choose Your Instrument Part': 'Choose your transcription',
@@ -146,13 +149,6 @@ style_replacements = {
 }
 for old, new in style_replacements.items():
     text = text.replace(old, new)
-
-# Keep both header controls vertically aligned.
-text = text.replace(
-    'className="mb-5 flex items-center justify-between gap-3"',
-    'className="mb-5 flex items-center justify-between gap-3"',
-    1,
-)
 
 # Restore the SEO/benefits section to its proper stacked-mobile layout.
 text = re.sub(
@@ -170,7 +166,7 @@ text = re.sub(
     count=1,
 )
 
-# Compact transcription cards only. These patterns are unique to the mapped buttons.
+# Compact transcription cards only.
 text = text.replace(
     'className={`rounded-2xl border p-5 text-left transition ${',
     'className={`relative min-w-0 rounded-xl border p-2.5 text-center transition sm:rounded-2xl sm:p-4 ${',
@@ -262,9 +258,9 @@ text = text.replace(
 text = re.sub(r"^\s*Youtube,\s*\n", "", text, flags=re.MULTILINE)
 
 if text == original:
-    print("No changes needed; the intended layouts are already applied.")
+    print("No changes needed; the intended layouts and audio-only copy are already applied.")
 else:
     if removed_cards == 0 and "YouTube Reference" in text:
         raise RuntimeError("Could not safely locate and remove the YouTube input card")
     path.write_text(text, encoding="utf-8")
-    print("Aligned the AI tab header and preserved the intended compact layouts.")
+    print("Restored the original section heading and removed remaining YouTube copy.")
