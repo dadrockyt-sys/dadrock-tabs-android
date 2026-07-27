@@ -1605,7 +1605,7 @@ function AiTabGeneratorContent() {
                       <Upload size={25} />
                     </div>
 
-                    <p className="mt-4 text-sm font-black text-white">
+                    <p className="mt-4 text-xl font-black leading-tight text-white">
                       Tap to choose an audio file
                     </p>
 
@@ -1795,7 +1795,7 @@ function AiTabGeneratorContent() {
                   Choose your transcription
                 </h3>
 
-                <p className="mt-1 text-xs leading-5 text-zinc-500">
+                <p className="mt-2 text-sm leading-6 text-zinc-400">
                   Select the part you want the AI
                   analyzer to isolate and
                   transcribe.
@@ -1824,7 +1824,7 @@ function AiTabGeneratorContent() {
 
                           resetGeneratedResults();
                         }}
-                        className={`rounded-2xl border p-4 text-left transition ${
+                        className={`rounded-2xl border p-5 text-left transition ${
                           isSelected
                             ? 'border-orange-500 bg-orange-500/10 shadow-lg shadow-orange-950/20'
                             : 'border-zinc-800 bg-zinc-950/80 hover:border-zinc-700'
@@ -1832,14 +1832,14 @@ function AiTabGeneratorContent() {
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div
-                            className={`flex h-10 w-10 items-center justify-center rounded-xl border ${
+                            className={`flex h-12 w-12 items-center justify-center rounded-xl border ${
                               isSelected
                                 ? 'border-orange-500/50 bg-orange-500/15 text-orange-300'
                                 : 'border-zinc-700 bg-zinc-900 text-zinc-400'
                             }`}
                           >
                             <Icon
-                              size={20}
+                              size={25}
                             />
                           </div>
 
@@ -1851,7 +1851,7 @@ function AiTabGeneratorContent() {
                           )}
                         </div>
 
-                        <h4 className="mt-4 text-sm font-black text-white">
+                        <h4 className="mt-4 text-xl font-black leading-tight text-white">
                           {type.title}
                         </h4>
 
@@ -1902,7 +1902,7 @@ function AiTabGeneratorContent() {
                   onClick={
                     handleGeneratePreview
                   }
-                  className={`flex w-full items-center justify-center gap-2 rounded-xl py-4 font-bold transition-all ${
+                  className={`flex w-full items-center justify-center gap-3 rounded-xl px-5 py-4 text-lg font-black transition-all ${
                     formIsComplete &&
                     !isGenerating
                       ? 'bg-gradient-to-r from-amber-500 to-red-600 text-white hover:scale-[1.02]'
@@ -2334,7 +2334,7 @@ function AiTabGeneratorContent() {
                       )}
                     </div>
 
-                    <h3 className="mt-4 text-sm font-black text-white">
+                    <h3 className="mt-4 text-xl font-black leading-tight text-white">
                       {step.title}
                     </h3>
 
