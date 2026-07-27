@@ -1924,7 +1924,7 @@ function AiTabGeneratorContent() {
                     </div>
 
                     <p className="mt-4 text-center text-xs leading-5 text-zinc-500">
-                      Pay once: ${PRICE} CAD. Your
+                      Pay once: ${PRICE} USD. Your
                       unlocked PDF can be downloaded
                       immediately and delivered by
                       email.

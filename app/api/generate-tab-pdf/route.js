@@ -8,7 +8,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const PRICE = '2.99';
-const CURRENCY = 'CAD';
+const CURRENCY = 'USD';
 
 const ALLOWED_TRANSCRIPTION_TYPES = [
   'lead',

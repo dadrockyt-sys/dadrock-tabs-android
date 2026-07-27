@@ -172,7 +172,7 @@ if (typeof onPaymentCompleted === 'function') {
       script.src =
         `https://www.paypal.com/sdk/js` +
         `?client-id=${encodeURIComponent(clientId)}` +
-        `&currency=CAD&intent=capture`;
+        `&currency=USD&intent=capture`;
 
       script.async = true;
       script.onload = renderPayPalButtons;
