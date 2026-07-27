@@ -1,0 +1,30 @@
+name: Repair AI Tab unlock flow
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/repair-ai-tab-unlock.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Repair token and PayPal unlock flow
+        run: python .github/scripts/repair_ai_tab_unlock.py
+
+      - name: Commit repaired AI Tab flow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/ai-tab/page.js components/PayPalCheckoutButton.js app/api/paypal/create-order/route.js app/api/paypal/capture-order/route.js app/api/generate-tab-pdf/route.js
+          git diff --cached --quiet || git commit -m "Repair AI Tab token and PayPal unlock flow"
+          git push
