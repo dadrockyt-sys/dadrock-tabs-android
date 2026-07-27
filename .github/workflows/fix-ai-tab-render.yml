@@ -15,51 +15,59 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Apply runtime repairs
-        run: python .github/scripts/fix_ai_tab.py
-
-      - name: Update hero branding
+      - name: Remove malformed process JSX
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
 
           path = Path('app/ai-tab/page.js')
           text = path.read_text(encoding='utf-8')
-          text = text.replace('AI Tab Generator', 'Tab Generator Studio')
-          text = text.replace(
-              'Turn an audio file you possess into professional guitar or bass tablature.',
-              'Create professional-quality guitar or bass tablature from your audio.'
+          original = text
+
+          # Remove the orphaned tail left behind after deleting PROCESS_STEPS.map(...).
+          pattern = re.compile(
+              r'\n\s*<h3 className="text-sm font-bold text-white">\s*'
+              r'\{step\.title\}\s*</h3>\s*'
+              r'<p className="mt-2 text-xs leading-5 text-zinc-500">\s*'
+              r'\{step\.description\}\s*</p>\s*'
+              r'</div>\s*\)\s*\)}\s*</div>',
+              re.DOTALL,
           )
+          text, count = pattern.subn('\n', text, count=1)
+
+          if count == 0:
+              # Narrow fallback anchored to the exact broken identifiers.
+              start = text.find('<h3 className="text-sm font-bold text-white">\n                        {step.title}')
+              end_marker = '\n              {statusMessage && ('
+              if start != -1:
+                  end = text.find(end_marker, start)
+                  if end != -1:
+                      text = text[:start] + text[end:]
+                      count = 1
+
+          if '{step.title}' in text or '{step.description}' in text:
+              raise RuntimeError('Malformed process JSX still remains in app/ai-tab/page.js')
+
+          if text == original:
+              raise RuntimeError('The expected malformed JSX was not found; no file change was made.')
+
           path.write_text(text, encoding='utf-8')
+          print(f'Removed malformed process JSX ({count} block).')
           PY
 
-      - name: Remove repeated benefits section
-        run: python .github/scripts/remove_ai_tab_benefits.py
-
-      - name: Restore email placement
-        run: python .github/scripts/move_ai_tab_email.py
-
-      - name: Enable Android M4A uploads
-        run: python .github/scripts/fix_m4a_upload.py
-
-      - name: Repair mobile PDF preview
-        run: python .github/scripts/fix_mobile_pdf_preview.py
-
-      - name: Update loading message
-        run: python .github/scripts/update_ai_tab_loading_text.py
-
-      - name: Remove orphaned process JSX
-        run: python .github/scripts/remove_orphaned_process_jsx.py
+      - name: Verify broken token is gone
+        shell: bash
+        run: |
+          if grep -n "step.title\|step.description" app/ai-tab/page.js; then
+            echo "Process-card JSX still remains."
+            exit 1
+          fi
 
       - name: Commit repaired page
         shell: bash
         run: |
-          if git diff --quiet -- app/ai-tab/page.js; then
-            echo "No page changes were required."
-            exit 0
-          fi
-
           git config user.name "DadRock Tabs Repair"
           git config user.email "actions@users.noreply.github.com"
           git add app/ai-tab/page.js
