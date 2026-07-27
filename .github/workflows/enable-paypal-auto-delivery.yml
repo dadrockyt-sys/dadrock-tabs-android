@@ -1,0 +1,29 @@
+name: Enable PayPal automatic PDF delivery
+
+on:
+  push:
+    paths:
+      - '.github/workflows/enable-paypal-auto-delivery.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python .github/scripts/enable_paypal_auto_delivery.py
+      - name: Commit repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/ai-tab/page.js
+          git diff --cached --quiet || git commit -m "Enable automatic PayPal PDF download and email"
+          git push
