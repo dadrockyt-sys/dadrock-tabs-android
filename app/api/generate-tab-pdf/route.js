@@ -171,7 +171,11 @@ async function verifyFreeToken({
   const db = await getDb();
   const token = await db.collection('tab_tokens').findOne({
     code: tokenReference,
-    assignedEmail: customerEmail,
+    $or: [
+      { assignedEmail: null },
+      { assignedEmail: { $exists: false } },
+      { assignedEmail: customerEmail },
+    ],
     redemptions: {
       $elemMatch: {
         customerEmail,

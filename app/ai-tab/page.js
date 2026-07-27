@@ -266,6 +266,12 @@ function AiTabGeneratorContent() {
     setUsingFreeToken,
   ] = useState(false);
 
+  const [showTokenEntry, setShowTokenEntry] =
+    useState(false);
+
+  const [freeTokenCode, setFreeTokenCode] =
+    useState('');
+
   /* -----------------------------
      FAQ
   ------------------------------ */
@@ -362,6 +368,8 @@ function AiTabGeneratorContent() {
     setPaymentCompleted(false);
     setPurchaseOrderId('');
     setUsingFreeToken(false);
+    setShowTokenEntry(false);
+    setFreeTokenCode('');
     setStatusMessage('');
     setGenerationError('');
   };
@@ -1029,6 +1037,17 @@ function AiTabGeneratorContent() {
         return;
       }
 
+      const normalizedToken = freeTokenCode
+        .trim()
+        .toUpperCase();
+
+      if (!normalizedToken) {
+        setGenerationError(
+          'Enter your free token code before unlocking.'
+        );
+        return;
+      }
+
       setUsingFreeToken(true);
       setGenerationError('');
 
@@ -1048,13 +1067,15 @@ function AiTabGeneratorContent() {
             },
 
             body: JSON.stringify({
+              tokenCode: normalizedToken,
+
               customerEmail:
                 customerEmail.trim(),
 
-              song:
+              songTitle:
                 songTitle.trim(),
 
-              artist:
+              artistName:
                 artistName.trim(),
 
               transcriptionType:
@@ -1106,6 +1127,9 @@ function AiTabGeneratorContent() {
         setPreviewUnlocked(
           true
         );
+
+        setShowTokenEntry(false);
+        setFreeTokenCode('');
 
         setStatusMessage(
           'Free token accepted. Your full PDF is now unlocked.'
@@ -1888,27 +1912,78 @@ function AiTabGeneratorContent() {
                     </div>
 
                     <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                      <button
-                        type="button"
-                        onClick={
-                          handleFreeTokenUnlock
-                        }
-                        disabled={usingFreeToken}
-                        className="flex min-h-[54px] items-center justify-center gap-2 rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3 text-sm font-black text-green-300 transition hover:bg-green-500/15 disabled:cursor-not-allowed disabled:opacity-60"
-                      >
-                        {usingFreeToken ? (
-                          <Loader2
-                            size={19}
-                            className="animate-spin"
-                          />
-                        ) : (
+                      <div className="space-y-3">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowTokenEntry(
+                              (current) => !current
+                            );
+                            setGenerationError('');
+                          }}
+                          disabled={usingFreeToken}
+                          className="flex min-h-[54px] w-full items-center justify-center gap-2 rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3 text-sm font-black text-green-300 transition hover:bg-green-500/15 disabled:cursor-not-allowed disabled:opacity-60"
+                        >
                           <Ticket size={19} />
-                        )}
+                          Use Free Token
+                        </button>
 
-                        {usingFreeToken
-                          ? 'Checking Token...'
-                          : 'Use Free Token'}
-                      </button>
+                        {showTokenEntry && (
+                          <div className="rounded-xl border border-green-500/30 bg-black/40 p-3">
+                            <label
+                              htmlFor="free-token-code"
+                              className="mb-2 block text-xs font-bold uppercase tracking-wide text-green-300"
+                            >
+                              Enter Token Code
+                            </label>
+
+                            <input
+                              id="free-token-code"
+                              type="text"
+                              value={freeTokenCode}
+                              onChange={(event) =>
+                                setFreeTokenCode(
+                                  event.target.value.toUpperCase()
+                                )
+                              }
+                              onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                  event.preventDefault();
+                                  handleFreeTokenUnlock();
+                                }
+                              }}
+                              placeholder="DRT-XXXX-XXXX-XXXX"
+                              autoCapitalize="characters"
+                              autoComplete="off"
+                              spellCheck={false}
+                              className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-3 text-center font-mono text-sm uppercase tracking-wider text-white outline-none transition focus:border-green-500"
+                            />
+
+                            <button
+                              type="button"
+                              onClick={handleFreeTokenUnlock}
+                              disabled={
+                                usingFreeToken ||
+                                !freeTokenCode.trim()
+                              }
+                              className="mt-3 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg bg-green-500 px-4 py-3 text-sm font-black text-black transition hover:bg-green-400 disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                              {usingFreeToken ? (
+                                <Loader2
+                                  size={18}
+                                  className="animate-spin"
+                                />
+                              ) : (
+                                <LockKeyhole size={18} />
+                              )}
+
+                              {usingFreeToken
+                                ? 'Checking Token...'
+                                : 'Redeem Token & Unlock'}
+                            </button>
+                          </div>
+                        )}
+                      </div>
 
                       <div className="min-h-[54px] rounded-xl border border-zinc-700 bg-white p-2">
                         <PayPalCheckoutButton
