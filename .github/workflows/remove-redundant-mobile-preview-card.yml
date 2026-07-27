@@ -1,0 +1,26 @@
+name: Remove redundant mobile preview card
+
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-redundant-mobile-preview-card.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Remove redundant mobile preview card
+        run: python .github/scripts/remove_redundant_mobile_preview_card.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/ai-tab/page.js
+          git diff --cached --quiet || git commit -m "Remove redundant mobile preview card"
+          git push
