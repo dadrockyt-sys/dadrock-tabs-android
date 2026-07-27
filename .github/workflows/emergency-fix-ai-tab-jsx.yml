@@ -39,14 +39,12 @@ jobs:
           if status_index is None or status_index <= title_index:
               raise RuntimeError('Could not find the status-message block after the orphaned JSX.')
 
-          # Start at the opening <h3> immediately before {step.title}.
           start = title_index
           while start > 0 and '<h3' not in lines[start]:
               start -= 1
           if '<h3' not in lines[start]:
               raise RuntimeError('Could not find the opening <h3> for the orphaned block.')
 
-          # Remove through the final blank/closing fragment before statusMessage.
           del lines[start:status_index]
 
           repaired = ''.join(lines)
@@ -74,3 +72,5 @@ jobs:
           git add app/ai-tab/page.js
           git commit -m "Directly fix AI tab JSX parse error"
           git push
+
+# Existing workflow touched to trigger the emergency repair.
