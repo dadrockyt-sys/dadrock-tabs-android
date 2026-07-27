@@ -1,0 +1,30 @@
+name: Add free token entry
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/add-free-token-entry.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair-token-flow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Add token entry and secure redemption
+        run: python .github/scripts/add_free_token_entry.py
+
+      - name: Commit repaired token flow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/ai-tab/page.js app/api/free-tab-token/route.js app/api/generate-tab-pdf/route.js
+          git diff --cached --quiet || git commit -m "Add free token input and redemption flow"
+          git push
