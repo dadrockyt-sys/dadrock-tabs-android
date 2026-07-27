@@ -1132,8 +1132,13 @@ function AiTabGeneratorContent() {
         setFreeTokenCode('');
 
         setStatusMessage(
-          'Free token accepted. Your full PDF is now unlocked.'
+          'Free token accepted. Creating and emailing your full PDF...'
         );
+
+        await handleDownloadPdf({
+          unlockReference: tokenReference,
+          unlockMethod: 'free-token',
+        });
 
         window.setTimeout(() => {
           document
@@ -1171,7 +1176,7 @@ function AiTabGeneratorContent() {
   ------------------------------ */
 
   const handleDownloadPdf =
-    async () => {
+    async ({ unlockReference = '', unlockMethod = '' } = {}) => {
       setGenerationError('');
       setStatusMessage('');
 
@@ -1183,7 +1188,14 @@ function AiTabGeneratorContent() {
         return;
       }
 
-      if (!purchaseOrderId) {
+      const resolvedUnlockReference =
+        unlockReference || purchaseOrderId;
+
+      const resolvedUnlockMethod =
+        unlockMethod ||
+        (paymentCompleted ? 'paypal' : 'free-token');
+
+      if (!resolvedUnlockReference) {
         setGenerationError(
           'The unlock reference is missing.'
         );
@@ -1229,19 +1241,17 @@ function AiTabGeneratorContent() {
 
             body: JSON.stringify({
               orderId:
-                paymentCompleted
-                  ? purchaseOrderId
+                resolvedUnlockMethod === 'paypal'
+                  ? resolvedUnlockReference
                   : null,
 
               tokenReference:
-                !paymentCompleted
-                  ? purchaseOrderId
+                resolvedUnlockMethod === 'free-token'
+                  ? resolvedUnlockReference
                   : null,
 
               unlockMethod:
-                paymentCompleted
-                  ? 'paypal'
-                  : 'free-token',
+                resolvedUnlockMethod,
 
               songTitle:
                 songTitle.trim(),
@@ -2094,11 +2104,11 @@ function AiTabGeneratorContent() {
 
                 <button
                   type="button"
-                  onClick={
-                    handleDownloadPdf
-                  }
+                  onClick={() => {
+                    handleDownloadPdf();
+                  }}
                   disabled={isDownloading}
-                  className="mt-6 flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 px-6 py-4 text-lg font-black text-white transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="relative z-20 mt-6 flex w-full touch-manipulation items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 px-6 py-4 text-lg font-black text-white transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isDownloading ? (
                     <>
