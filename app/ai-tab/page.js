@@ -1878,21 +1878,7 @@ function AiTabGeneratorContent() {
                     </>
                   )}
                 </button>
-
-              </div>
-
-                      <h3 className="text-sm font-bold text-white">
-                        {step.title}
-                      </h3>
-
-                      <p className="mt-2 text-xs leading-5 text-zinc-500">
-                        {step.description}
-                      </p>
-                    </div>
-                  )
-                )}
-
-              </div>
+                </div>
 
               {statusMessage && (
 
