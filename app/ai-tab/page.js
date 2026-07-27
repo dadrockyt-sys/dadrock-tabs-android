@@ -1688,56 +1688,6 @@ function AiTabGeneratorContent() {
               </div>
             </div>
 
-            <div className="mt-4">
-              <label
-                htmlFor="customer-email"
-                className="mb-2 block text-sm font-semibold text-zinc-300"
-              >
-                Email for PDF Delivery
-              </label>
-
-              <div className="relative">
-                <Mail
-                  size={18}
-                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500"
-                />
-
-                <input
-                  id="customer-email"
-                  type="email"
-                  value={customerEmail}
-                  onChange={(event) => {
-                    setCustomerEmail(
-                      event.target.value
-                    );
-
-                    resetGeneratedResults();
-                  }}
-                  placeholder="you@example.com"
-                  className={`w-full rounded-xl border bg-black/60 py-3 pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-600 ${
-                    !customerEmail
-                      ? 'border-zinc-700 focus:border-orange-500'
-                      : emailIsValid
-                        ? 'border-green-500/70 focus:border-green-400'
-                        : 'border-red-500/70 focus:border-red-400'
-                  }`}
-                />
-              </div>
-
-              {customerEmail && (
-                <p
-                  className={`mt-2 text-xs font-semibold ${
-                    emailIsValid
-                      ? 'text-green-400'
-                      : 'text-red-400'
-                  }`}
-                >
-                  {emailIsValid
-                    ? '✓ Valid delivery email'
-                    : 'Please enter a valid email address.'}
-                </p>
-              )}
-            </div>
 
             <div className="mt-6">
               <div className="mb-3">
@@ -1836,6 +1786,57 @@ function AiTabGeneratorContent() {
                   I confirm that I possess this audio file, have permission to analyze it, and understand this AI transcription is generated for educational and personal practice purposes.
                 </span>
               </label>
+
+              <div className="mt-6">
+              <label
+                htmlFor="customer-email"
+                className="mb-2 block text-sm font-semibold text-zinc-300"
+              >
+                Email for PDF Delivery
+              </label>
+
+              <div className="relative">
+                <Mail
+                  size={18}
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500"
+                />
+
+                <input
+                  id="customer-email"
+                  type="email"
+                  value={customerEmail}
+                  onChange={(event) => {
+                    setCustomerEmail(
+                      event.target.value
+                    );
+
+                    resetGeneratedResults();
+                  }}
+                  placeholder="you@example.com"
+                  className={`w-full rounded-xl border bg-black/60 py-3 pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-600 ${
+                    !customerEmail
+                      ? 'border-zinc-700 focus:border-orange-500'
+                      : emailIsValid
+                        ? 'border-green-500/70 focus:border-green-400'
+                        : 'border-red-500/70 focus:border-red-400'
+                  }`}
+                />
+              </div>
+
+              {customerEmail && (
+                <p
+                  className={`mt-2 text-xs font-semibold ${
+                    emailIsValid
+                      ? 'text-green-400'
+                      : 'text-red-400'
+                  }`}
+                >
+                  {emailIsValid
+                    ? '✓ Valid delivery email'
+                    : 'Please enter a valid email address.'}
+                </p>
+              )}
+              </div>
 
               <div className="mt-6">
 
