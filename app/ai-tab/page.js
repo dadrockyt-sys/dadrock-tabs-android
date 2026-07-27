@@ -496,8 +496,18 @@ if (!analyzerData?.generatedTab) {
   );
 }
 
-setGeneratedTab(analyzerData.generatedTab);
+     setGeneratedTab(analyzerData.generatedTab);
+
 setPreviewReady(true);
+
+setTimeout(() => {
+  document
+    .getElementById('tab-preview')
+    ?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+}, 150);
 
 setStatusMessage(
   'Your AI tablature preview is ready.'
