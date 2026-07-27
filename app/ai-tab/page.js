@@ -1472,7 +1472,7 @@ function AiTabGeneratorContent() {
               '/',
               currentLanguage
             )}
-            className="mb-8 inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-amber-400"
+            className="inline-flex items-center gap-2 text-zinc-400 transition-colors hover:text-amber-400"
           >
             <ArrowLeft size={17} />
 
@@ -1501,9 +1501,7 @@ function AiTabGeneratorContent() {
               </h1>
 
               <p className="mt-1 text-sm text-zinc-400">
-                Turn your audio or YouTube
-                reference into professional
-                guitar or bass tablature.
+                Turn an audio file you possess into professional guitar or bass tablature.
               </p>
             </div>
           </section>
@@ -1515,14 +1513,11 @@ function AiTabGeneratorContent() {
               </h2>
 
               <p className="mx-auto mt-2 max-w-2xl text-xs leading-5 text-zinc-400 sm:text-sm sm:leading-6">
-                Choose your source, select Lead,
-                Rhythm, or Bass, review a short
-                watermarked preview, then unlock
-                the finished PDF.
+                Upload your audio, select Lead, Rhythm, or Bass, review a short watermarked preview, then unlock the finished PDF.
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+            <div className="grid gap-3 sm:grid-cols-3">
               {BENEFITS.map(
                 ({
                   title,
@@ -1565,9 +1560,7 @@ function AiTabGeneratorContent() {
               </h2>
 
               <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
-                Paste a public YouTube link or
-                upload an audio file from your
-                device.
+                Upload an audio file from your device that you possess and have permission to analyze.
               </p>
             </div>
 
@@ -1802,7 +1795,7 @@ function AiTabGeneratorContent() {
                 </p>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-3">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3">
                 {TRANSCRIPTION_TYPES.map(
                   (type) => {
                     const Icon = Guitar;
@@ -1851,7 +1844,7 @@ function AiTabGeneratorContent() {
                           )}
                         </div>
 
-                        <h4 className="mt-4 text-xl font-black leading-tight text-white">
+                        <h4 className="mt-3 text-[13px] font-black leading-tight text-white sm:text-lg">
                           {type.title}
                         </h4>
 
@@ -1883,11 +1876,7 @@ function AiTabGeneratorContent() {
                 />
 
                 <span className="text-sm leading-6 text-zinc-300">
-                  I confirm that I have permission
-                  to analyze this recording and that
-                  I understand this AI transcription
-                  is generated for educational and
-                  personal practice purposes.
+                  I confirm that I possess this audio file, have permission to analyze it, and understand this AI transcription is generated for educational and personal practice purposes.
                 </span>
               </label>
 
