@@ -47,7 +47,6 @@ youtube_card_pattern = re.compile(
 )
 text, removed_cards = youtube_card_pattern.subn("\n", text, count=1)
 
-# The upload card should use the original compact content width.
 text = text.replace(
     '            <div className="grid gap-4 lg:grid-cols-2">',
     '            <div className="mx-auto max-w-2xl">',
@@ -61,7 +60,6 @@ text = re.sub(
     text,
     count=1,
 )
-
 text = re.sub(
     r"setStatusMessage\(\s*source === 'youtube'\s*\? 'Preparing the YouTube audio for analysis\.\.\.'\s*:\s*'Analyzing your selected instrument\.\.\.'\s*\);",
     "setStatusMessage('Analyzing your uploaded audio...');",
@@ -69,7 +67,7 @@ text = re.sub(
     count=1,
 )
 
-# Remove YouTube-only fields from analyzer, preview, token, and download payloads.
+# Remove YouTube-only fields from payloads.
 text = re.sub(
     r"\n\s*youtubeUrl:\s*source === 'youtube'\s*\? youtubeUrl\.trim\(\)\s*:\s*null,\s*\n\s*youtubeVideoId:\s*source === 'youtube'\s*\? youtubeVideoId\s*:\s*null,",
     "",
@@ -80,8 +78,6 @@ text = re.sub(
     "",
     text,
 )
-
-# Remove the unreachable YouTube branch from preview generation.
 text = re.sub(
     r"\n\s*if \(\s*sourceType === 'youtube'\s*\) \{\s*setStatusMessage\(\s*'Sending the YouTube reference to the DadRock analyzer\.\.\.'\s*\);\s*\}",
     "",
@@ -89,7 +85,6 @@ text = re.sub(
     count=1,
 )
 
-# Update validation and user-facing language to audio-only wording.
 replacements = {
     "Use a YouTube link or upload your own audio.": "Upload an audio file you possess and have permission to analyze.",
     "Turn your audio or YouTube reference into professional guitar or bass tablature.": "Turn an audio file you possess into professional guitar or bass tablature.",
@@ -103,7 +98,6 @@ replacements = {
     "Upload your own recording or paste a YouTube reference and let the DadRock AI transcription engine": "Upload an audio file you possess and let the DadRock AI transcription engine",
     "I confirm that I have permission to analyze this recording and that I understand this AI transcription is generated for educational and personal practice purposes.": "I confirm that I possess this audio file, have permission to analyze it, and understand this AI transcription is generated for educational and personal practice purposes.",
 }
-
 for old, new in replacements.items():
     text = text.replace(old, new)
 
@@ -112,7 +106,7 @@ text = text.replace(
     "description: 'Upload an audio file you possess and may legally analyze.',",
 )
 
-# Match the cleaner outline, spacing, text scale, and labels from the saved original version.
+# Match the cleaner Version 1 presentation.
 style_replacements = {
     'className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-16 pt-4 sm:px-6 lg:px-8"':
         'className="relative z-10 mx-auto w-full max-w-2xl px-4 py-8"',
@@ -133,27 +127,50 @@ style_replacements = {
     'className="text-lg font-black text-white"':
         'className="text-xl font-bold text-white"',
 }
-
 for old, new in style_replacements.items():
     text = text.replace(old, new)
 
-# Restore Version 1-style instrument card emphasis.
+# Put all three transcription choices on one mobile row with no horizontal slider.
 text = text.replace(
-    'className={`rounded-2xl border p-4 text-left transition ${',
+    'className="grid gap-3 sm:grid-cols-3"',
+    'className="grid grid-cols-3 gap-2 sm:gap-3"',
+    1,
+)
+text = text.replace(
     'className={`rounded-2xl border p-5 text-left transition ${',
+    'className={`min-w-0 rounded-xl border p-2.5 text-center transition sm:rounded-2xl sm:p-4 ${',
+    1,
 )
 text = text.replace(
-    'className={`flex h-10 w-10 items-center justify-center rounded-xl border ${',
+    'className="flex items-start justify-between gap-3"',
+    'className="flex items-center justify-center"',
+    1,
+)
+text = text.replace(
     'className={`flex h-12 w-12 items-center justify-center rounded-xl border ${',
+    'className={`flex h-10 w-10 items-center justify-center rounded-xl border sm:h-12 sm:w-12 ${',
+    1,
 )
-text = text.replace('<Icon\n                              size={20}\n                            />', '<Icon\n                              size={25}\n                            />')
+text = text.replace('<Icon\n                              size={25}\n                            />', '<Icon\n                              size={22}\n                            />', 1)
 text = text.replace(
-    'className="mt-4 text-sm font-black text-white"',
     'className="mt-4 text-xl font-black leading-tight text-white"',
+    'className="mt-3 text-[13px] font-black leading-tight text-white sm:text-lg"',
+    1,
 )
 text = text.replace(
-    'className="mt-1 text-xs leading-5 text-zinc-500"',
     'className="mt-2 text-sm leading-6 text-zinc-400"',
+    'className="mt-1 hidden text-xs leading-5 text-zinc-400 sm:block"',
+    1,
+)
+# Keep the selected check visible without stealing card width.
+text = text.replace(
+    '<CheckCircle2\n                              size={19}\n                              className="text-orange-400"\n                            />',
+    '<CheckCircle2\n                              size={16}\n                              className="absolute right-2 top-2 text-orange-400 sm:right-3 sm:top-3"\n                            />',
+    1,
+)
+text = text.replace(
+    'className={`min-w-0 rounded-xl border p-2.5 text-center transition sm:rounded-2xl sm:p-4 ${',
+    'className={`relative min-w-0 rounded-xl border p-2.5 text-center transition sm:rounded-2xl sm:p-4 ${',
     1,
 )
 
@@ -196,8 +213,6 @@ new_button = """{isGenerating ? (
                     </>
                   )}"""
 text = text.replace(old_button, new_button)
-
-# Make the primary action larger and more prominent.
 text = text.replace(
     'className={`flex w-full items-center justify-center gap-2 rounded-xl py-4 font-bold transition-all ${',
     'className={`flex w-full items-center justify-center gap-3 rounded-xl px-5 py-4 text-lg font-black transition-all ${',
@@ -211,13 +226,12 @@ text = text.replace(
     ": 'cursor-not-allowed bg-zinc-700 text-zinc-400'",
 )
 
-# Remove now-unused YouTube icon import.
 text = re.sub(r"^\s*Youtube,\s*\n", "", text, flags=re.MULTILINE)
 
 if text == original:
-    print("No changes needed; the AI tab page already matches the saved original styling.")
+    print("No changes needed; the transcription choices are already compact.")
 else:
     if removed_cards == 0 and "YouTube Reference" in text:
         raise RuntimeError("Could not safely locate and remove the YouTube input card")
     path.write_text(text, encoding="utf-8")
-    print("Restored larger transcription card and primary button typography.")
+    print("Placed all three transcription choices in one compact mobile row.")
