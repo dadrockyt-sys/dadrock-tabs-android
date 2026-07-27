@@ -1180,16 +1180,20 @@ function AiTabGeneratorContent() {
       setGenerationError('');
       setStatusMessage('');
 
-      if (!previewUnlocked) {
+      const resolvedUnlockReference =
+        unlockReference || purchaseOrderId;
+
+      const hasExplicitUnlock = Boolean(
+        unlockReference && unlockMethod
+      );
+
+      if (!previewUnlocked && !hasExplicitUnlock) {
         setGenerationError(
           'Unlock the finished PDF before downloading.'
         );
 
         return;
       }
-
-      const resolvedUnlockReference =
-        unlockReference || purchaseOrderId;
 
       const resolvedUnlockMethod =
         unlockMethod ||
@@ -1253,10 +1257,10 @@ function AiTabGeneratorContent() {
               unlockMethod:
                 resolvedUnlockMethod,
 
-              songTitle:
+              song:
                 songTitle.trim(),
 
-              artistName:
+              artist:
                 artistName.trim(),
 
               transcriptionType:
