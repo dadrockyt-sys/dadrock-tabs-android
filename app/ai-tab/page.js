@@ -1506,49 +1506,6 @@ function AiTabGeneratorContent() {
             </div>
           </section>
 
-          <section className="px-5 py-6 sm:px-8">
-            <div className="mb-5 text-center">
-              <h2 className="text-xl font-bold text-white">
-                Everything You Need in One Place
-              </h2>
-
-              <p className="mx-auto mt-2 max-w-2xl text-xs leading-5 text-zinc-400 sm:text-sm sm:leading-6">
-                Upload your audio, select Lead, Rhythm, or Bass, review a short watermarked preview, then unlock the finished PDF.
-              </p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-3">
-              {BENEFITS.map(
-                ({
-                  title,
-                  description,
-                  icon: Icon,
-                }) => (
-                  <div
-                    key={title}
-                    className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4 transition hover:border-orange-500/40"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10 text-orange-300">
-                        <Icon size={20} />
-                      </div>
-
-                      <div className="min-w-0 flex-1">
-                        <h3 className="text-sm font-bold leading-5 text-white">
-                          {title}
-                        </h3>
-
-                        <p className="mt-1 text-xs leading-5 text-zinc-400">
-                          {description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )
-              )}
-            </div>
-          </section>
-
           <section className="border-t border-zinc-800 bg-black/20 px-5 py-6 sm:px-8">
             <div className="mb-5 text-center">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-400">
