@@ -727,7 +727,7 @@ function AiTabGeneratorContent() {
   ------------------------------ */
 
   const requestPreviewPdf =
-    async (tabContent) => {
+    async (tabContent, analysisMetadata = {}) => {
       setStatusMessage(
         'Creating your watermarked tab preview...'
       );
@@ -754,6 +754,18 @@ function AiTabGeneratorContent() {
 
   generatedTab:
     tabContent,
+
+  tuning:
+    analysisMetadata.tuning || 'Standard Tuning',
+
+  tempo:
+    analysisMetadata.tempo || 120,
+
+  timeSignature:
+    analysisMetadata.timeSignature || '4/4',
+
+  keySignature:
+    analysisMetadata.keySignature || '',
 
             previewSystems: 4,
 
@@ -898,7 +910,8 @@ function AiTabGeneratorContent() {
         );
 
         await requestPreviewPdf(
-          tabContent
+          tabContent,
+          analyzerData
         );
 
         setPreviewReady(true);
