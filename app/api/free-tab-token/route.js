@@ -13,9 +13,12 @@ export async function POST(request) {
     const body = await request.json();
     const tokenCode = clean(body.tokenCode, 40).toUpperCase();
     const customerEmail = clean(body.customerEmail).toLowerCase();
-    const songTitle = clean(body.songTitle, 120);
-    const artistName = clean(body.artistName, 120);
-    const transcriptionType = clean(body.transcriptionType, 40).toLowerCase();
+    const songTitle = clean(body.songTitle || body.song, 120);
+    const artistName = clean(body.artistName || body.artist, 120);
+    const transcriptionType = clean(
+      body.transcriptionType,
+      40
+    ).toLowerCase();
 
     if (!tokenCode) {
       return NextResponse.json(
@@ -26,21 +29,37 @@ export async function POST(request) {
 
     if (!/^DRT-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{4}$/.test(tokenCode)) {
       return NextResponse.json(
-        { error: 'Enter a valid token in the format DRT-XXXX-XXXX-XXXX.' },
+        {
+          error:
+            'Enter a valid token in the format DRT-XXXX-XXXX-XXXX.',
+        },
         { status: 400 }
       );
     }
 
-    if (!customerEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)) {
+    if (
+      !customerEmail ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)
+    ) {
       return NextResponse.json(
-        { error: 'Enter the email address being used for this PDF.' },
+        {
+          error:
+            'Enter the email address being used for this PDF.',
+        },
         { status: 400 }
       );
     }
 
-    if (!songTitle || !artistName || !['lead', 'rhythm', 'bass'].includes(transcriptionType)) {
+    if (
+      !songTitle ||
+      !artistName ||
+      !['lead', 'rhythm', 'bass'].includes(transcriptionType)
+    ) {
       return NextResponse.json(
-        { error: 'Song, artist, and transcription type are required.' },
+        {
+          error:
+            'Song, artist, and transcription type are required.',
+        },
         { status: 400 }
       );
     }
@@ -73,7 +92,10 @@ export async function POST(request) {
 
     if (!token) {
       return NextResponse.json(
-        { error: 'This token is invalid, expired, already used, or assigned to another email.' },
+        {
+          error:
+            'This token is invalid, expired, already used, or assigned to another email.',
+        },
         { status: 404 }
       );
     }
@@ -84,7 +106,9 @@ export async function POST(request) {
       songTitle,
       artistName,
       transcriptionType,
-      youtubeUrl: body.youtubeUrl ? String(body.youtubeUrl) : null,
+      youtubeUrl: body.youtubeUrl
+        ? String(body.youtubeUrl)
+        : null,
     };
 
     const result = await collection.findOneAndUpdate(
