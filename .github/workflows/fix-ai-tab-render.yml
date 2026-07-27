@@ -1,95 +1,31 @@
 name: Fix AI Tab Render
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 permissions:
   contents: write
 
 jobs:
   repair:
+    name: Repair AI tab page
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - name: Apply all known runtime fixes
+      - name: Apply runtime repairs
+        run: python .github/scripts/fix_ai_tab.py
+
+      - name: Commit repaired page
+        shell: bash
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          path = Path('app/ai-tab/page.js')
-          text = path.read_text()
-          original = text
-
-          required_icons = [
-              ('AlertCircle', '  ArrowLeft,\n'),
-              ('ArrowRight', '  ArrowLeft,\n'),
-              ('CheckCircle2', '  Check,\n'),
-              ('Lock', '  Loader2,\n'),
-              ('Music', '  Mail,\n'),
-              ('Play', '  Music2,\n'),
-          ]
-
-          for icon, anchor in required_icons:
-              if re.search(rf'^\s*{icon},\s*$', text, re.M) is None:
-                  text = text.replace(anchor, anchor + f'  {icon},\n', 1)
-
-          text = text.replace('isEmailValid', 'emailIsValid')
-          text = text.replace('type.label', 'type.title')
-          text = text.replace('selectedTypeDetails?.label', 'selectedTypeDetails?.title')
-          text = text.replace('<PayPalButton', '<PayPalCheckoutButton')
-          text = text.replace('</PayPalButton>', '</PayPalCheckoutButton>')
-
-          text = re.sub(
-              r'const\s+Icon\s*=\s*type\.icon\s*;',
-              'const Icon = Guitar;',
-              text,
-          )
-
-          old_steps = """const PROCESS_STEPS = [
-  'Choose Source',
-  'Analyze Audio',
-  'Detect Notes',
-  'Generate Tab',
-  'Unlock PDF',
-];"""
-          new_steps = """const PROCESS_STEPS = [
-  {
-    title: 'Choose Source',
-    description: 'Paste a YouTube link or upload an audio file.',
-  },
-  {
-    title: 'Analyze Audio',
-    description: 'The analyzer isolates the selected instrument part.',
-  },
-  {
-    title: 'Detect Notes',
-    description: 'Pitch and timing information are converted into notes.',
-  },
-  {
-    title: 'Generate Tab',
-    description: 'The detected notes are arranged as playable tablature.',
-  },
-  {
-    title: 'Unlock PDF',
-    description: 'Preview the result and unlock the finished PDF.',
-  },
-];"""
-          text = text.replace(old_steps, new_steps)
-
-          if text == original:
-              print('No changes needed; all known repairs are already applied.')
-          else:
-              path.write_text(text)
-          PY
-
-      - name: Commit repair
-        run: |
-          if git diff --quiet; then
-            echo "Nothing to commit"
+          if git diff --quiet -- app/ai-tab/page.js; then
+            echo "No page changes were required."
             exit 0
           fi
+
           git config user.name "DadRock Tabs Repair"
           git config user.email "actions@users.noreply.github.com"
           git add app/ai-tab/page.js
