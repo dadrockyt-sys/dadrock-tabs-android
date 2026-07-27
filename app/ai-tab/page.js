@@ -1857,8 +1857,6 @@ function AiTabGeneratorContent() {
                 </button>
                 </div>
 
-              {statusMessage && (
-
               {generationError && (
 
                 <div className="mt-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4">
