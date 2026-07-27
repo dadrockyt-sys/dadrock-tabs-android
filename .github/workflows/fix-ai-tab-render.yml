@@ -1,9 +1,7 @@
 name: Fix AI Tab Render
 
 on:
-  push:
-    paths:
-      - '.github/workflows/fix-ai-tab-render.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -40,13 +38,17 @@ jobs:
           )
 
           if text == original:
-              raise SystemExit('No changes were needed; repair may already be applied.')
-
-          path.write_text(text)
+              print('No changes needed; repair is already applied.')
+          else:
+              path.write_text(text)
           PY
 
       - name: Commit repair
         run: |
+          if git diff --quiet; then
+            echo "Nothing to commit"
+            exit 0
+          fi
           git config user.name "DadRock Tabs Repair"
           git config user.email "actions@users.noreply.github.com"
           git add app/ai-tab/page.js
