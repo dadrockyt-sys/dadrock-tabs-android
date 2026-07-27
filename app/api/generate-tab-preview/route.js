@@ -28,27 +28,24 @@ export async function POST(request) {
   try {
     const body = await request.json();
 
-    const song = cleanText(
-      body?.song,
-      120
-    );
-    const artist = cleanText(
-      body?.artist,
-      120
-    );
+    const song = cleanText(body?.song, 120);
+    const artist = cleanText(body?.artist, 120);
     const transcriptionType = cleanText(
       body?.transcriptionType,
       40
     ).toLowerCase();
-    const generatedTab = cleanTabText(
-      body?.generatedTab
+    const generatedTab = cleanTabText(body?.generatedTab);
+    const tuning = cleanText(body?.tuning, 80) || 'Standard Tuning';
+    const tempo = Math.min(
+      300,
+      Math.max(20, Number(body?.tempo) || 120)
     );
+    const timeSignature =
+      cleanText(body?.timeSignature, 20) || '4/4';
+    const keySignature = cleanText(body?.keySignature, 40);
     const previewSystems = Math.min(
       4,
-      Math.max(
-        1,
-        Number(body?.previewSystems) || 4
-      )
+      Math.max(1, Number(body?.previewSystems) || 4)
     );
 
     if (
@@ -66,11 +63,7 @@ export async function POST(request) {
       );
     }
 
-    if (
-      !ALLOWED_TRANSCRIPTION_TYPES.includes(
-        transcriptionType
-      )
-    ) {
+    if (!ALLOWED_TRANSCRIPTION_TYPES.includes(transcriptionType)) {
       return NextResponse.json(
         {
           error:
@@ -85,29 +78,25 @@ export async function POST(request) {
       artist,
       transcriptionType,
       generatedTab,
+      tuning,
+      tempo,
+      timeSignature,
+      keySignature,
       preview: true,
       previewSystems,
     });
 
-    return new NextResponse(
-      Buffer.from(pdfBytes),
-      {
-        status: 200,
-        headers: {
-          'Content-Type':
-            'application/pdf',
-          'Content-Disposition':
-            'inline; filename="dadrock-tab-preview.pdf"',
-          'Cache-Control':
-            'no-store, max-age=0',
-        },
-      }
-    );
+    return new NextResponse(Buffer.from(pdfBytes), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition':
+          'inline; filename="dadrock-tab-preview.pdf"',
+        'Cache-Control': 'no-store, max-age=0',
+      },
+    });
   } catch (error) {
-    console.error(
-      'Generate tab preview error:',
-      error
-    );
+    console.error('Generate tab preview error:', error);
 
     return NextResponse.json(
       {
