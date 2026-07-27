@@ -1522,7 +1522,7 @@ function AiTabGeneratorContent() {
               </p>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
               {BENEFITS.map(
                 ({
                   title,
@@ -1605,7 +1605,7 @@ function AiTabGeneratorContent() {
                       <Upload size={25} />
                     </div>
 
-                    <p className="mt-4 text-xl font-black leading-tight text-white">
+                    <p className="mt-3 text-[13px] font-black leading-tight text-white sm:text-lg">
                       Tap to choose an audio file
                     </p>
 
@@ -1795,7 +1795,7 @@ function AiTabGeneratorContent() {
                   Choose your transcription
                 </h3>
 
-                <p className="mt-2 text-sm leading-6 text-zinc-400">
+                <p className="mt-1 hidden text-xs leading-5 text-zinc-400 sm:block">
                   Select the part you want the AI
                   analyzer to isolate and
                   transcribe.
@@ -1824,29 +1824,29 @@ function AiTabGeneratorContent() {
 
                           resetGeneratedResults();
                         }}
-                        className={`rounded-2xl border p-5 text-left transition ${
+                        className={`relative min-w-0 rounded-xl border p-2.5 text-center transition sm:rounded-2xl sm:p-4 ${
                           isSelected
                             ? 'border-orange-500 bg-orange-500/10 shadow-lg shadow-orange-950/20'
                             : 'border-zinc-800 bg-zinc-950/80 hover:border-zinc-700'
                         }`}
                       >
-                        <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-center justify-center">
                           <div
-                            className={`flex h-12 w-12 items-center justify-center rounded-xl border ${
+                            className={`flex h-10 w-10 items-center justify-center rounded-xl border sm:h-12 sm:w-12 ${
                               isSelected
                                 ? 'border-orange-500/50 bg-orange-500/15 text-orange-300'
                                 : 'border-zinc-700 bg-zinc-900 text-zinc-400'
                             }`}
                           >
                             <Icon
-                              size={25}
+                              size={22}
                             />
                           </div>
 
                           {isSelected && (
                             <CheckCircle2
-                              size={19}
-                              className="text-orange-400"
+                              size={16}
+                              className="absolute right-2 top-2 text-orange-400 sm:right-3 sm:top-3"
                             />
                           )}
                         </div>
