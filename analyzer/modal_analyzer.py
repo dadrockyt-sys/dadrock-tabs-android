@@ -1,5 +1,7 @@
+import json
 import math
 import os
+import subprocess
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -35,6 +37,11 @@ STANDARD_BASS_TUNING = [
 ]
 
 MAX_FRET = 24
+MIN_AUDIO_DURATION_SECONDS = 3.0
+MAX_AUDIO_DURATION_SECONDS = 15 * 60
+MAX_AUDIO_SIZE_BYTES = 50 * 1024 * 1024
+NORMALIZED_SAMPLE_RATE = 44100
+NORMALIZED_CHANNELS = 2
 
 
 def choose_string_and_fret(
@@ -267,7 +274,6 @@ def create_tab(
         columns.append(column)
 
     tab_lines: list[str] = []
-
     section_size = 20
 
     for start_index in range(
@@ -293,6 +299,203 @@ def create_tab(
         tab_lines.append("")
 
     return "\n".join(tab_lines).strip()
+
+
+def inspect_audio_file(
+    audio_path: str,
+) -> dict[str, Any]:
+    command = [
+        "ffprobe",
+        "-v",
+        "error",
+        "-print_format",
+        "json",
+        "-show_format",
+        "-show_streams",
+        audio_path,
+    ]
+
+    try:
+        completed = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            timeout=60,
+            check=False,
+        )
+    except subprocess.TimeoutExpired as error:
+        raise ValueError(
+            "The uploaded audio inspection timed out."
+        ) from error
+
+    if completed.returncode != 0:
+        raise ValueError(
+            "The uploaded file could not be read as audio."
+        )
+
+    try:
+        probe_data = json.loads(completed.stdout)
+    except json.JSONDecodeError as error:
+        raise ValueError(
+            "The uploaded audio returned invalid metadata."
+        ) from error
+
+    audio_stream = next(
+        (
+            stream
+            for stream in probe_data.get("streams", [])
+            if stream.get("codec_type") == "audio"
+        ),
+        None,
+    )
+
+    if not audio_stream:
+        raise ValueError(
+            "The uploaded file contains no audio stream."
+        )
+
+    format_data = probe_data.get("format", {})
+
+    def safe_float(value: Any) -> float:
+        try:
+            return float(value or 0)
+        except (TypeError, ValueError):
+            return 0.0
+
+    def safe_int(value: Any) -> int:
+        try:
+            return int(float(value or 0))
+        except (TypeError, ValueError):
+            return 0
+
+    duration_seconds = safe_float(
+        format_data.get("duration")
+        or audio_stream.get("duration")
+    )
+
+    metadata = {
+        "durationSeconds": round(duration_seconds, 3),
+        "sampleRate": safe_int(
+            audio_stream.get("sample_rate")
+        ),
+        "channels": safe_int(
+            audio_stream.get("channels")
+        ),
+        "channelLayout": (
+            audio_stream.get("channel_layout")
+            or None
+        ),
+        "codec": (
+            audio_stream.get("codec_name")
+            or None
+        ),
+        "bitrate": safe_int(
+            format_data.get("bit_rate")
+            or audio_stream.get("bit_rate")
+        ),
+        "formatName": (
+            format_data.get("format_name")
+            or None
+        ),
+        "fileSize": safe_int(
+            format_data.get("size")
+        ),
+    }
+
+    return metadata
+
+
+def validate_audio_metadata(
+    metadata: dict[str, Any],
+) -> None:
+    duration_seconds = float(
+        metadata.get("durationSeconds") or 0
+    )
+    file_size = int(metadata.get("fileSize") or 0)
+    sample_rate = int(metadata.get("sampleRate") or 0)
+    channels = int(metadata.get("channels") or 0)
+
+    if duration_seconds < MIN_AUDIO_DURATION_SECONDS:
+        raise ValueError(
+            "The uploaded audio must be at least 3 seconds long."
+        )
+
+    if duration_seconds > MAX_AUDIO_DURATION_SECONDS:
+        raise ValueError(
+            "The uploaded audio cannot be longer than 15 minutes."
+        )
+
+    if file_size <= 0:
+        raise ValueError(
+            "The uploaded audio file appears to be empty."
+        )
+
+    if file_size > MAX_AUDIO_SIZE_BYTES:
+        raise ValueError(
+            "The uploaded audio cannot be larger than 50 MB."
+        )
+
+    if sample_rate <= 0:
+        raise ValueError(
+            "The uploaded audio sample rate could not be detected."
+        )
+
+    if channels <= 0:
+        raise ValueError(
+            "The uploaded audio channel information could not be detected."
+        )
+
+
+def normalize_audio_file(
+    source_path: str,
+    output_path: str,
+) -> None:
+    command = [
+        "ffmpeg",
+        "-y",
+        "-v",
+        "error",
+        "-i",
+        source_path,
+        "-map",
+        "0:a:0",
+        "-vn",
+        "-ar",
+        str(NORMALIZED_SAMPLE_RATE),
+        "-ac",
+        str(NORMALIZED_CHANNELS),
+        "-c:a",
+        "pcm_s16le",
+        output_path,
+    ]
+
+    try:
+        completed = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            timeout=180,
+            check=False,
+        )
+    except subprocess.TimeoutExpired as error:
+        raise ValueError(
+            "The uploaded audio normalization timed out."
+        ) from error
+
+    if completed.returncode != 0:
+        raise ValueError(
+            "The uploaded audio could not be normalized."
+        )
+
+    normalized_file = Path(output_path)
+
+    if (
+        not normalized_file.exists()
+        or normalized_file.stat().st_size <= 0
+    ):
+        raise ValueError(
+            "The normalized audio file was not created."
+        )
 
 
 def analyze_audio_file(
@@ -436,11 +639,20 @@ def analyze(payload: dict) -> dict:
             f"uploaded{suffix}"
         )
 
-        response = requests.get(
-            audio_url,
-            headers=request_headers,
-            timeout=120,
-        )
+        try:
+            response = requests.get(
+                audio_url,
+                headers=request_headers,
+                timeout=120,
+            )
+        except requests.RequestException as error:
+            raise HTTPException(
+                status_code=502,
+                detail=(
+                    "The analyzer could not "
+                    "download the audio file."
+                ),
+            ) from error
 
         if not response.ok:
             raise HTTPException(
@@ -451,13 +663,65 @@ def analyze(payload: dict) -> dict:
                 ),
             )
 
+        if len(response.content) > MAX_AUDIO_SIZE_BYTES:
+            raise HTTPException(
+                status_code=413,
+                detail=(
+                    "The uploaded audio cannot "
+                    "be larger than 50 MB."
+                ),
+            )
+
         audio_path.write_bytes(
             response.content
         )
 
-        result = analyze_audio_file(
-            str(audio_path),
-            transcription_type,
-        )
+        try:
+            audio_metadata = inspect_audio_file(
+                str(audio_path)
+            )
+
+            validate_audio_metadata(
+                audio_metadata
+            )
+
+            normalized_path = (
+                Path(temp_dir) / "normalized.wav"
+            )
+
+            normalize_audio_file(
+                str(audio_path),
+                str(normalized_path),
+            )
+
+            normalized_metadata = inspect_audio_file(
+                str(normalized_path)
+            )
+
+            result = analyze_audio_file(
+                str(normalized_path),
+                transcription_type,
+            )
+        except ValueError as error:
+            raise HTTPException(
+                status_code=400,
+                detail=str(error),
+            ) from error
+
+        result["audioMetadata"] = audio_metadata
+        result["normalizedAudio"] = {
+            "sampleRate": normalized_metadata[
+                "sampleRate"
+            ],
+            "channels": normalized_metadata[
+                "channels"
+            ],
+            "codec": normalized_metadata[
+                "codec"
+            ],
+            "formatName": normalized_metadata[
+                "formatName"
+            ],
+        }
 
     return result
