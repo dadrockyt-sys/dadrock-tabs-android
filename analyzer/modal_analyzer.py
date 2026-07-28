@@ -547,30 +547,41 @@ def analyze_audio_file(
 
     _, _, note_events = predict(audio_path)
 
-    normalized_events: list[dict[str, Any]] = []
+        normalized_events: list[dict[str, Any]] = []
 
-previous_string_index: int | None = None
-previous_fret: int | None = None
+    previous_string_index: int | None = None
+    previous_fret: int | None = None
 
-sorted_note_events = sorted(
-    note_events,
-    key=lambda event: (
-        float(
-            event.get("start_time")
-            or event.get("start")
-            or 0
+    sorted_note_events = sorted(
+        note_events,
+        key=lambda event: (
+            float(
+                event.get("start_time")
+                or event.get("start")
+                or 0
+            )
+            if isinstance(event, dict)
+            else float(event[0])
+        ),
+    )
+
+    for note_event in sorted_note_events:
+        normalized_event = normalize_note_event(
+            note_event,
+            transcription_type,
+            previous_string_index,
+            previous_fret,
         )
-        if isinstance(event, dict)
-        else float(event[0])
-    ),
-)
 
-for note_event in sorted_note_events:
-    normalized_event = normalize_note_event(
-        note_event,
-        transcription_type,
-        previous_string_index,
-        previous_fret,
+        if normalized_event is not None:
+            normalized_events.append(
+                normalized_event
+            )
+
+            previous_string_index = normalized_event[
+                "stringIndex"
+            ]
+            previous_fret = normalized_event["fret"]
     )
 
     if normalized_event is not None:
