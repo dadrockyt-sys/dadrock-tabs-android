@@ -8,6 +8,13 @@ function clean(value, maximumLength = 254) {
   return String(value || '').trim().slice(0, maximumLength);
 }
 
+function tokenError(code, error, status) {
+  return NextResponse.json(
+    { code, error },
+    { status }
+  );
+}
+
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -21,19 +28,18 @@ export async function POST(request) {
     ).toLowerCase();
 
     if (!tokenCode) {
-      return NextResponse.json(
-        { error: 'Enter your free token code.' },
-        { status: 400 }
+      return tokenError(
+        'TOKEN_NOT_FOUND',
+        'Enter your free token code.',
+        400
       );
     }
 
     if (!/^DRT-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{4}$/.test(tokenCode)) {
-      return NextResponse.json(
-        {
-          error:
-            'Enter a valid token in the format DRT-XXXX-XXXX-XXXX.',
-        },
-        { status: 400 }
+      return tokenError(
+        'TOKEN_NOT_FOUND',
+        'Enter a valid token in the format DRT-XXXX-XXXX-XXXX.',
+        400
       );
     }
 
@@ -70,33 +76,49 @@ export async function POST(request) {
 
     const token = await collection.findOne({
       code: tokenCode,
-      active: true,
-      usesRemaining: { $gt: 0 },
-      $and: [
-        {
-          $or: [
-            { assignedEmail: null },
-            { assignedEmail: { $exists: false } },
-            { assignedEmail: customerEmail },
-          ],
-        },
-        {
-          $or: [
-            { expiresAt: null },
-            { expiresAt: { $exists: false } },
-            { expiresAt: { $gt: now } },
-          ],
-        },
-      ],
     });
 
     if (!token) {
-      return NextResponse.json(
-        {
-          error:
-            'This token is invalid, expired, already used, or assigned to another email.',
-        },
-        { status: 404 }
+      return tokenError(
+        'TOKEN_NOT_FOUND',
+        'We could not find a token with this code.',
+        404
+      );
+    }
+
+    if (token.active !== true) {
+      return tokenError(
+        'TOKEN_INACTIVE',
+        'This token is inactive and cannot be used.',
+        403
+      );
+    }
+
+    if (Number(token.usesRemaining) <= 0) {
+      return tokenError(
+        'TOKEN_EXHAUSTED',
+        'All available uses for this token have already been redeemed.',
+        409
+      );
+    }
+
+    const assignedEmail = clean(token.assignedEmail).toLowerCase();
+    if (assignedEmail && assignedEmail !== customerEmail) {
+      return tokenError(
+        'TOKEN_EMAIL_MISMATCH',
+        'This token is assigned to a different email address.',
+        403
+      );
+    }
+
+    if (
+      token.expiresAt &&
+      new Date(token.expiresAt).getTime() <= now.getTime()
+    ) {
+      return tokenError(
+        'TOKEN_EXPIRED',
+        'This token has expired.',
+        410
       );
     }
 
@@ -126,9 +148,10 @@ export async function POST(request) {
     );
 
     if (!result) {
-      return NextResponse.json(
-        { error: 'This token is no longer available.' },
-        { status: 409 }
+      return tokenError(
+        'TOKEN_EXHAUSTED',
+        'This token is no longer available. Its final use may have just been redeemed.',
+        409
       );
     }
 
