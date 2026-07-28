@@ -1,10 +1,6 @@
 import OpenAI from 'openai';
 import { NextResponse } from 'next/server';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const ALLOWED_TRANSCRIPTION_TYPES = ['lead', 'rhythm', 'bass'];
 const PREVIEW_LINE_LIMIT = 24;
 
@@ -30,6 +26,21 @@ dadrocktabs.com
 
 export async function POST(request) {
   try {
+    const apiKey = process.env.OPENAI_API_KEY;
+
+    if (!apiKey) {
+      return NextResponse.json(
+        {
+          error: 'OPENAI_API_KEY is not configured.',
+        },
+        { status: 503 }
+      );
+    }
+
+    const openai = new OpenAI({
+      apiKey,
+    });
+
     const requestBody = await request.json();
 
     const song = cleanText(requestBody.song);
