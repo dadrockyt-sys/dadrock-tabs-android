@@ -273,6 +273,8 @@ function AiTabGeneratorContent() {
     useState('');
   const [tokenError, setTokenError] =
   useState('');
+  const [tokenErrorTitle, setTokenErrorTitle] =
+  useState('');
 
 const [tokenUsesRemaining, setTokenUsesRemaining] =
   useState(null);
@@ -1967,6 +1969,8 @@ setTokenError('');
                               (current) => !current
                             );
                             setGenerationError('');
+                            setTokenError('');
+setTokenUsesRemaining(null);
                           }}
                           disabled={usingFreeToken}
                           className="flex min-h-[54px] w-full items-center justify-center gap-2 rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3 text-sm font-black text-green-300 transition hover:bg-green-500/15 disabled:cursor-not-allowed disabled:opacity-60"
