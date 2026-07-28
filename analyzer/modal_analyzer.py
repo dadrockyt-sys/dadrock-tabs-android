@@ -162,6 +162,8 @@ def estimate_bend_semitones(
 def normalize_note_event(
     note_event: Any,
     transcription_type: str,
+    previous_string_index: int | None = None,
+    previous_fret: int | None = None,
 ) -> dict[str, Any] | None:
     if isinstance(note_event, dict):
         start_time = float(
@@ -214,8 +216,10 @@ def normalize_note_event(
         )
 
     string_position = choose_string_and_fret(
-        midi_pitch,
-        transcription_type,
+    midi_pitch,
+    transcription_type,
+    previous_string_index,
+    previous_fret,
     )
 
     if string_position is None:
