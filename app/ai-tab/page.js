@@ -2032,6 +2032,19 @@ setTokenError('');
                         )}
                       </div>
 
+                      {tokenError && (
+  <p className="mt-3 text-sm font-semibold text-red-400">
+    ❌ {tokenError}
+  </p>
+)}
+
+{tokenUsesRemaining !== null && (
+  <p className="mt-2 text-sm font-semibold text-green-400">
+    ✅ Token accepted — {tokenUsesRemaining}{' '}
+    {tokenUsesRemaining === 1 ? 'use' : 'uses'} remaining
+  </p>
+)}
+
                       <div className="min-h-[54px] rounded-xl border border-zinc-700 bg-white p-2">
                         <PayPalCheckoutButton
                           song={songTitle.trim()}
