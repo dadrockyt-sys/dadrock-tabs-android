@@ -1064,6 +1064,7 @@ const [tokenUsesRemaining, setTokenUsesRemaining] =
       setUsingFreeToken(true);
       setGenerationError('');
       setTokenError('');
+setTokenErrorTitle('');
 setTokenUsesRemaining(null);
 
       setStatusMessage(
