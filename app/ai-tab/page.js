@@ -271,6 +271,11 @@ function AiTabGeneratorContent() {
 
   const [freeTokenCode, setFreeTokenCode] =
     useState('');
+  const [tokenError, setTokenError] =
+  useState('');
+
+const [tokenUsesRemaining, setTokenUsesRemaining] =
+  useState(null);
 
   /* -----------------------------
      FAQ
@@ -1047,14 +1052,17 @@ function AiTabGeneratorContent() {
         .toUpperCase();
 
       if (!normalizedToken) {
-        setGenerationError(
-          'Enter your free token code before unlocking.'
-        );
-        return;
+  setTokenError(
+    'Enter your free token code before unlocking.'
+  );
+  setTokenUsesRemaining(null);
+  return;
       }
 
       setUsingFreeToken(true);
       setGenerationError('');
+      setTokenError('');
+setTokenUsesRemaining(null);
 
       setStatusMessage(
         'Checking your free token...'
@@ -1100,11 +1108,19 @@ function AiTabGeneratorContent() {
           .catch(() => ({}));
 
         if (!response.ok) {
-          throw new Error(
-            data.error ||
-              data.message ||
-              'Your free token could not be used.'
-          );
+  setTokenError(
+    data.error ||
+    data.message ||
+    'Invalid token.'
+  );
+
+  setTokenUsesRemaining(null);
+
+  throw new Error(
+    data.error ||
+    data.message ||
+    'Invalid token.'
+  );
         }
 
         if (
@@ -1133,6 +1149,11 @@ function AiTabGeneratorContent() {
           true
         );
 
+        setTokenUsesRemaining(
+  data.usesRemaining ?? null
+);
+
+setTokenError('');
         setShowTokenEntry(false);
         setFreeTokenCode('');
 
