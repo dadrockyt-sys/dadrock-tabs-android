@@ -2195,7 +2195,7 @@ setTokenUsesRemaining(null);
                     <span className="font-bold text-green-300">
                       {paymentCompleted
                         ? 'PayPal'
-                        : 'a Free Pass'
+                        : 'a Free Pass'}
                     </span>
                     .
                   </p>
