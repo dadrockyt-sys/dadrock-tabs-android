@@ -7,7 +7,7 @@ import modal
 import modal_analyzer_v15 as engine
 
 app = modal.App("dadrock-tab-analyzer")
-image = engine.image
+image = engine.image.add_local_python_source("modal_analyzer_v15")
 
 
 def to_json_safe(value: Any) -> Any:
