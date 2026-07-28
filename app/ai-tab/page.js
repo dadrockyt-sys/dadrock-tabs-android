@@ -2204,10 +2204,11 @@ setTokenUsesRemaining(null);
   <p className="mt-2 text-sm font-semibold text-green-300">
     {tokenUsesRemaining > 0 ? (
   <>
-    🎉 Free Pass redeemed successfully!{' '}
-    {tokenUsesRemaining}{' '}
-    {tokenUsesRemaining === 1 ? 'use' : 'uses'} remaining.
-  </>
+  🎉 Free Pass redeemed successfully!
+  <br />
+  {tokenUsesRemaining}{' '}
+  {tokenUsesRemaining === 1 ? 'use' : 'uses'} remaining.
+</>
 ) : (
   <>
     🎉 Final redemption complete! This Free Pass has now been fully redeemed.
