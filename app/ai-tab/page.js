@@ -1111,18 +1111,30 @@ setTokenUsesRemaining(null);
           .catch(() => ({}));
 
         if (!response.ok) {
+  const errorTitles = {
+    TOKEN_NOT_FOUND: 'Token Not Found',
+    TOKEN_EXPIRED: 'Token Expired',
+    TOKEN_EXHAUSTED: 'Token Fully Used',
+    TOKEN_EMAIL_MISMATCH: 'Wrong Email Address',
+    TOKEN_INACTIVE: 'Invalid Token',
+  };
+
+  setTokenErrorTitle(
+    errorTitles[data.code] || 'Invalid Token'
+  );
+
   setTokenError(
     data.error ||
-    data.message ||
-    'Invalid token.'
+      data.message ||
+      'This token could not be used.'
   );
 
   setTokenUsesRemaining(null);
 
   throw new Error(
     data.error ||
-    data.message ||
-    'Invalid token.'
+      data.message ||
+      'This token could not be used.'
   );
         }
 
