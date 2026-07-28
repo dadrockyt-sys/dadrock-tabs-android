@@ -571,17 +571,6 @@ def analyze_audio_file(
             transcription_type,
             previous_string_index,
             previous_fret,
-        )
-
-        if normalized_event is not None:
-            normalized_events.append(
-                normalized_event
-            )
-
-            previous_string_index = normalized_event[
-                "stringIndex"
-            ]
-            previous_fret = normalized_event["fret"]
     )
 
     if normalized_event is not None:
