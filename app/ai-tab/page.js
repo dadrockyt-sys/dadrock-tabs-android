@@ -2205,7 +2205,6 @@ setTokenUsesRemaining(null);
     {tokenUsesRemaining > 0 ? (
       <>
         🎉 Free Pass redeemed successfully!
-4 uses remaining.{tokenUsesRemaining}{' '}
         {tokenUsesRemaining === 1 ? 'use' : 'uses'} remaining.
       </>
     ) : (
