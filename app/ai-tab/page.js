@@ -1988,11 +1988,13 @@ setTokenError('');
                               id="free-token-code"
                               type="text"
                               value={freeTokenCode}
-                              onChange={(event) =>
-                                setFreeTokenCode(
-                                  event.target.value.toUpperCase()
-                                )
-                              }
+                              onChange={(event) => {
+  setFreeTokenCode(
+    event.target.value.toUpperCase()
+  );
+  setTokenError('');
+  setTokenUsesRemaining(null);
+}}
                               onKeyDown={(event) => {
                                 if (event.key === 'Enter') {
                                   event.preventDefault();
