@@ -2195,25 +2195,33 @@ setTokenUsesRemaining(null);
                     <span className="font-bold text-green-300">
                       {paymentCompleted
                         ? 'PayPal'
-                        : 'a Free Token'}
+                        : 'a Free Pass'
                     </span>
                     .
                   </p>
 
-                  {!paymentCompleted &&
-  tokenUsesRemaining !== null && (
-    <p className="mt-2 text-sm font-semibold text-green-300">
-      🎉 Token redeemed successfully!{' '}
-{tokenUsesRemaining}{' '}
-{tokenUsesRemaining === 1 ? 'use' : 'uses'} remaining.
-    </p>
-  )}
+                  {!paymentCompleted && tokenUsesRemaining !== null && (
+  <p className="mt-2 text-sm font-semibold text-green-300">
+    {tokenUsesRemaining > 0 ? (
+      <>
+        🎉 Free Pass redeemed successfully!
+4 uses remaining.{tokenUsesRemaining}{' '}
+        {tokenUsesRemaining === 1 ? 'use' : 'uses'} remaining.
+      </>
+    ) : (
+      <>
+        🎉 Final redemption complete!
+This Free Pass has now been fully redeemed.
+      </>
+    )}
+  </p>
+)}
 
                   {purchaseOrderId && (
                     <p className="mt-1 break-all text-[11px] text-zinc-600">
-                      Reference:{' '}
-                      {purchaseOrderId}
-                    </p>
+  {paymentCompleted ? 'PayPal Reference:' : 'Free Pass ID:'}{' '}
+  {purchaseOrderId}
+</p>
                   )}
                 </div>
               </div>
