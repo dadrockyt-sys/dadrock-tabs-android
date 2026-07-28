@@ -1169,7 +1169,6 @@ setTokenUsesRemaining(null);
 );
 
 setTokenError('');
-        setShowTokenEntry(false);
         setFreeTokenCode('');
 
         setStatusMessage(
