@@ -47,6 +47,8 @@ NORMALIZED_CHANNELS = 2
 def choose_string_and_fret(
     midi_pitch: int,
     transcription_type: str,
+    previous_string_index: int | None = None,
+    previous_fret: int | None = None,
 ) -> tuple[int, int] | None:
     tuning = (
         STANDARD_BASS_TUNING
@@ -65,14 +67,49 @@ def choose_string_and_fret(
     if not candidates:
         return None
 
-    # First version:
-    # favour lower fret numbers, then thicker strings.
+    def candidate_score(
+        candidate: tuple[int, int],
+    ) -> float:
+        string_index, fret = candidate
+
+        if transcription_type == "bass":
+            ideal_fret = 5
+        elif transcription_type == "rhythm":
+            ideal_fret = 3
+        else:
+            ideal_fret = 7
+
+        score = abs(fret - ideal_fret) * 0.35
+
+        if fret == 0:
+            score += (
+                -1.0
+                if transcription_type in {"rhythm", "bass"}
+                else 1.25
+            )
+
+        if previous_fret is not None:
+            fret_distance = abs(fret - previous_fret)
+            score += fret_distance * 1.15
+
+            if fret_distance > 5:
+                score += (fret_distance - 5) * 2.0
+
+        if previous_string_index is not None:
+            string_distance = abs(
+                string_index - previous_string_index
+            )
+
+            score += string_distance * 0.8
+
+            if string_distance > 2:
+                score += (string_distance - 2) * 1.5
+
+        return score
+
     return min(
         candidates,
-        key=lambda item: (
-            item[1],
-            -item[0],
-        ),
+        key=candidate_score,
     )
 
 
