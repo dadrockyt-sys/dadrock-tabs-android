@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createTabPdf } from '@/lib/createTabPdf';
+import { createTabPdf } from '@/lib/createTabPdfPolished';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
