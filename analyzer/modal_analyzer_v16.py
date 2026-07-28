@@ -49,7 +49,7 @@ def to_json_safe(value: Any) -> Any:
     memory=4096,
     secrets=[modal.Secret.from_name("dadrock-analyzer-secret")],
 )
-@app.fastapi_endpoint(method="POST")
+@modal.fastapi_endpoint(method="POST")
 def analyze(payload: dict) -> dict:
     import requests
     from fastapi import HTTPException
