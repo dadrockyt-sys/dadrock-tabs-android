@@ -2200,6 +2200,15 @@ setTokenUsesRemaining(null);
                     .
                   </p>
 
+                  {!paymentCompleted &&
+  tokenUsesRemaining !== null && (
+    <p className="mt-2 text-sm font-semibold text-green-300">
+      🎉 Token redeemed successfully!{' '}
+{tokenUsesRemaining}{' '}
+{tokenUsesRemaining === 1 ? 'use' : 'uses'} remaining.
+    </p>
+  )}
+
                   {purchaseOrderId && (
                     <p className="mt-1 break-all text-[11px] text-zinc-600">
                       Reference:{' '}
