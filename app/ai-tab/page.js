@@ -2211,8 +2211,10 @@ setTokenUsesRemaining(null);
 </>
 ) : (
   <>
-    🎉 Final redemption complete! This Free Pass has now been fully redeemed.
-  </>
+  🎉 Final redemption complete!
+  <br />
+  This Free Pass has now been fully redeemed.
+</>
 )}
   </p>
 )}
