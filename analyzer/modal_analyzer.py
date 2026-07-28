@@ -549,16 +549,39 @@ def analyze_audio_file(
 
     normalized_events: list[dict[str, Any]] = []
 
-    for note_event in note_events:
-        normalized_event = normalize_note_event(
-            note_event,
-            transcription_type,
+previous_string_index: int | None = None
+previous_fret: int | None = None
+
+sorted_note_events = sorted(
+    note_events,
+    key=lambda event: (
+        float(
+            event.get("start_time")
+            or event.get("start")
+            or 0
+        )
+        if isinstance(event, dict)
+        else float(event[0])
+    ),
+)
+
+for note_event in sorted_note_events:
+    normalized_event = normalize_note_event(
+        note_event,
+        transcription_type,
+        previous_string_index,
+        previous_fret,
+    )
+
+    if normalized_event is not None:
+        normalized_events.append(
+            normalized_event
         )
 
-        if normalized_event is not None:
-            normalized_events.append(
-                normalized_event
-            )
+        previous_string_index = normalized_event[
+            "stringIndex"
+        ]
+        previous_fret = normalized_event["fret"]
 
     generated_tab = create_tab(
         normalized_events,
