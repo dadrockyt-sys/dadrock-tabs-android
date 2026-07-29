@@ -156,8 +156,12 @@ def run_protected_analyzer(
     audio_bytes: bytes,
     audio_name: str,
     transcription_type: str,
-) -> str:
-    """Run protected V71 and return JSON text, avoiding NumPy pickle handoff."""
+) -> bytes:
+    """Run protected V71 and return UTF-8 JSON bytes.
+
+    Returning bytes guarantees that Modal cannot pickle NumPy values into the
+    response consumed by the lightweight local Codespace environment.
+    """
     suffix = Path(audio_name).suffix or ".m4a"
     with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as temporary_file:
         temporary_file.write(audio_bytes)
@@ -165,7 +169,8 @@ def run_protected_analyzer(
 
     try:
         result = analyzer.analyze_audio_file(temporary_path, transcription_type)
-        return json.dumps(result, default=json_default)
+        json_text = json.dumps(result, default=json_default, separators=(",", ":"))
+        return json_text.encode("utf-8")
     finally:
         Path(temporary_path).unlink(missing_ok=True)
 
@@ -187,12 +192,18 @@ def main(
     fixture = json.loads(fixture_file.read_text(encoding="utf-8"))
     audio_bytes = audio_file.read_bytes()
 
-    result_json = run_protected_analyzer.remote(
+    result_payload = run_protected_analyzer.remote(
         audio_bytes,
         audio_file.name,
         str(fixture.get("transcriptionType") or "lead"),
     )
-    result = json.loads(result_json)
+    if not isinstance(result_payload, (bytes, bytearray)):
+        raise TypeError(
+            "Protected analyzer returned an unexpected payload type: "
+            f"{type(result_payload).__name__}"
+        )
+    result = json.loads(bytes(result_payload).decode("utf-8"))
+
     contour_report = harmonic.analyse_harmonic_evidence.remote(
         audio_bytes, audio_file.name, fixture
     )
@@ -213,7 +224,7 @@ def main(
     )
     ready_count = sum(1 for item in annotations if item["notationReady"])
     report = {
-        "benchmarkVersion": 4,
+        "benchmarkVersion": 5,
         "benchmarkType": "bend-technique-notation-handoff",
         "protectedAnalyzer": result.get("engineVersion"),
         "expectedBendCount": expected_count,
