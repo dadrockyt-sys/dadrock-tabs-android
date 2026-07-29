@@ -1,92 +1,177 @@
 {
-  "fixtureVersion": 1,
-  "name": "stairway-intro-reference",
-  "description": "Benchmark fixture for the first 12 displayed measures of the Stairway intro test clip. Exact note assignments can be expanded from a trusted human transcription without changing the evaluator.",
+  "fixtureVersion": 2,
+  "name": "stairway-intro-phrase-reference",
+  "description": "Phrase-accurate benchmark rebuilt from a trusted human transcription. It rewards the intentional movement between fifth-position Am shapes, low-position D/F# shapes, and open Fmaj7 and G/B-Am shapes instead of treating every position change as an error.",
   "transcriptionType": "lead",
   "timingToleranceSeconds": 0.12,
   "notes": [],
-  "measureExpectations": [
+  "positionSegments": [
     {
+      "segment": "M01-Am",
       "measure": 1,
+      "chord": "Am",
+      "startProgress": 0.0,
+      "endProgress": 0.083333,
       "preferredUpperFretMin": 5,
-      "preferredUpperFretMax": 8,
+      "preferredUpperFretMax": 7,
       "allowOpenUpperStrings": false
     },
     {
+      "segment": "M02a-C-over-G",
       "measure": 2,
+      "chord": "C/G",
+      "startProgress": 0.083333,
+      "endProgress": 0.125,
       "preferredUpperFretMin": 5,
       "preferredUpperFretMax": 8,
       "allowOpenUpperStrings": false
     },
     {
+      "segment": "M02b-D-over-F-sharp",
+      "measure": 2,
+      "chord": "D/F#",
+      "startProgress": 0.125,
+      "endProgress": 0.166667,
+      "preferredUpperFretMin": 2,
+      "preferredUpperFretMax": 4,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "segment": "M03-Fmaj7",
       "measure": 3,
-      "preferredUpperFretMin": 5,
-      "preferredUpperFretMax": 8,
-      "allowOpenUpperStrings": false
-    },
-    {
-      "measure": 4,
-      "preferredUpperFretMin": 5,
-      "preferredUpperFretMax": 8,
-      "allowOpenUpperStrings": false
-    },
-    {
-      "measure": 5,
-      "preferredUpperFretMin": 5,
-      "preferredUpperFretMax": 8,
-      "allowOpenUpperStrings": false
-    },
-    {
-      "measure": 6,
-      "preferredUpperFretMin": 5,
-      "preferredUpperFretMax": 8,
-      "allowOpenUpperStrings": false
-    },
-    {
-      "measure": 7,
-      "preferredUpperFretMin": 5,
-      "preferredUpperFretMax": 8,
-      "allowOpenUpperStrings": false
-    },
-    {
-      "measure": 8,
-      "preferredUpperFretMin": 5,
-      "preferredUpperFretMax": 8,
-      "allowOpenUpperStrings": false,
-      "allowLowBassException": true
-    },
-    {
-      "measure": 9,
-      "preferredUpperFretMin": 5,
-      "preferredUpperFretMax": 8,
-      "allowOpenUpperStrings": false,
-      "allowLowBassException": true
-    },
-    {
-      "measure": 10,
-      "preferredUpperFretMin": 5,
-      "preferredUpperFretMax": 8,
-      "allowOpenUpperStrings": false,
-      "allowLowBassException": true
-    },
-    {
-      "measure": 11,
-      "preferredUpperFretMin": 0,
-      "preferredUpperFretMax": 5,
-      "allowOpenUpperStrings": true
-    },
-    {
-      "measure": 12,
+      "chord": "Fmaj7",
+      "startProgress": 0.166667,
+      "endProgress": 0.25,
       "preferredUpperFretMin": 0,
       "preferredUpperFretMax": 3,
       "allowOpenUpperStrings": true
+    },
+    {
+      "segment": "M04-G-over-B-to-Am",
+      "measure": 4,
+      "chord": "G/B - Am",
+      "startProgress": 0.25,
+      "endProgress": 0.333333,
+      "preferredUpperFretMin": 0,
+      "preferredUpperFretMax": 3,
+      "allowOpenUpperStrings": true,
+      "allowLowBassRunToFrets": [7, 8]
+    },
+    {
+      "segment": "M05-Am",
+      "measure": 5,
+      "chord": "Am",
+      "startProgress": 0.333333,
+      "endProgress": 0.416667,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 7,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "segment": "M06a-C-over-G",
+      "measure": 6,
+      "chord": "C/G",
+      "startProgress": 0.416667,
+      "endProgress": 0.458333,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "segment": "M06b-D-over-F-sharp",
+      "measure": 6,
+      "chord": "D/F#",
+      "startProgress": 0.458333,
+      "endProgress": 0.5,
+      "preferredUpperFretMin": 2,
+      "preferredUpperFretMax": 4,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "segment": "M07-Am",
+      "measure": 7,
+      "chord": "Am",
+      "startProgress": 0.5,
+      "endProgress": 0.583333,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 7,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "segment": "M08a-C-over-G",
+      "measure": 8,
+      "chord": "C/G",
+      "startProgress": 0.583333,
+      "endProgress": 0.625,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "segment": "M08b-D-over-F-sharp",
+      "measure": 8,
+      "chord": "D/F#",
+      "startProgress": 0.625,
+      "endProgress": 0.666667,
+      "preferredUpperFretMin": 2,
+      "preferredUpperFretMax": 4,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "segment": "M09-Fmaj7",
+      "measure": 9,
+      "chord": "Fmaj7",
+      "startProgress": 0.666667,
+      "endProgress": 0.75,
+      "preferredUpperFretMin": 0,
+      "preferredUpperFretMax": 3,
+      "allowOpenUpperStrings": true
+    },
+    {
+      "segment": "M10-G-over-B-to-Am",
+      "measure": 10,
+      "chord": "G/B - Am",
+      "startProgress": 0.75,
+      "endProgress": 0.833333,
+      "preferredUpperFretMin": 0,
+      "preferredUpperFretMax": 3,
+      "allowOpenUpperStrings": true,
+      "allowLowBassRunToFrets": [7, 8]
+    },
+    {
+      "segment": "M11-Am",
+      "measure": 11,
+      "chord": "Am",
+      "startProgress": 0.833333,
+      "endProgress": 0.916667,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 7,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "segment": "M12a-C-over-G",
+      "measure": 12,
+      "chord": "C/G",
+      "startProgress": 0.916667,
+      "endProgress": 0.958333,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "segment": "M12b-D-over-F-sharp",
+      "measure": 12,
+      "chord": "D/F#",
+      "startProgress": 0.958333,
+      "endProgress": 1.0,
+      "preferredUpperFretMin": 2,
+      "preferredUpperFretMax": 4,
+      "allowOpenUpperStrings": false
     }
   ],
   "globalExpectations": {
-    "preferredUpperPositionMin": 5,
-    "preferredUpperPositionMax": 8,
-    "maxLargeUpperPositionShifts": 2,
-    "maxUnnecessaryOpenCollapses": 1,
-    "maxUpperFretWithoutPitchRequirement": 9
+    "expectedLargePositionShifts": 4,
+    "movementPolicy": "intentional-shifts-between-open-low-and-fifth-position-chord-shapes-are-correct",
+    "trustedPattern": "Am | C/G-D/F# | Fmaj7 | G/B-Am | Am | C/G-D/F# repeated"
   }
 }
