@@ -12,11 +12,11 @@ import modal
 import modal_analyzer_v71 as analyzer
 
 app = modal.App("dadrock-bend-contour-benchmark")
-image = (
-    analyzer.image
-    .pip_install("librosa>=0.10.2", "soundfile>=0.12.1")
-    .add_local_python_source("modal_analyzer_v71")
-)
+
+# V71's image already contains Basic Pitch and its librosa/soundfile dependencies.
+# Do not append a pip build step after V71's local Python sources: Modal rejects
+# image build steps that occur after add_local_python_source().
+image = analyzer.image.add_local_python_source("modal_analyzer_v71")
 
 
 def rolling_median(values: list[float | None], radius: int = 2) -> list[float | None]:
