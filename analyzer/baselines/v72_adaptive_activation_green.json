@@ -1,0 +1,27 @@
+{
+  "baselineName": "V72 adaptive three-way activation green baseline",
+  "benchmarkType": "v72-adaptive-three-way-activation",
+  "engineVersion": "7.2-phase-1-adaptive-three-way-instrument-separation-v3",
+  "passed": true,
+  "requiredLayeredModes": {
+    "bass": "strict-three-way-register-gate",
+    "rhythm": "strict-three-way-register-gate",
+    "lead": "strict-three-way-register-gate"
+  },
+  "minimumLayeredEventCounts": {
+    "bass": 62,
+    "rhythm": 39,
+    "lead": 14
+  },
+  "requiredStairwayMode": "protected-v71-fallback",
+  "minimumStairwayEventCount": 49,
+  "requiredChecks": [
+    "layeredBassActivates",
+    "layeredRhythmActivates",
+    "layeredLeadActivates",
+    "layeredBassHasEvents",
+    "layeredRhythmHasEvents",
+    "layeredLeadHasEvents",
+    "stairwayFallsBackToV71"
+  ]
+}
