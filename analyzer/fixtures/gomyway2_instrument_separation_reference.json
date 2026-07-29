@@ -1,0 +1,37 @@
+{
+  "fixtureVersion": 1,
+  "fixtureName": "Go My Way separate instruments test",
+  "audioFile": "public/DadRock TABS - gomyway2test.m4a",
+  "tempoBpm": 129,
+  "transcriptionTypes": ["lead", "bass"],
+  "expectedLayers": [
+    {
+      "id": "bass",
+      "label": "bass guitar",
+      "midiRange": [28, 52],
+      "minimumEventCount": 2
+    },
+    {
+      "id": "main-guitar",
+      "label": "original guitar riff",
+      "midiRange": [52, 64],
+      "minimumEventCount": 4
+    },
+    {
+      "id": "octave-lead",
+      "label": "lead guitar one octave higher",
+      "midiRange": [64, 76],
+      "minimumEventCount": 3
+    }
+  ],
+  "separationExpectations": {
+    "leadPrimaryLayer": "octave-lead",
+    "bassPrimaryLayer": "bass",
+    "maximumLeadBassContaminationRatio": 0.35,
+    "maximumBassLeadContaminationRatio": 0.35
+  },
+  "protectedBaselines": [
+    "analyzer/baselines/stairway_v71_green.json",
+    "analyzer/baselines/gomyway_bends_green.json"
+  ]
+}
