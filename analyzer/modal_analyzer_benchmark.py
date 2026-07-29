@@ -1,16 +1,4 @@
-"""Run Jimmy PAIge against a repeatable fixture without deploying the website.
-
-Example:
-    modal run analyzer/modal_analyzer_benchmark.py \
-        --audio-path ./stairway-test.mp3
-
-Optional:
-    modal run analyzer/modal_analyzer_benchmark.py \
-        --audio-path ./stairway-test.mp3 \
-        --fixture-path analyzer/fixtures/stairway_intro_reference.json \
-        --result-output /tmp/jimmy-result.json \
-        --report-output /tmp/jimmy-report.json
-"""
+"""Run Jimmy PAIge against a repeatable phrase-accurate fixture."""
 
 from __future__ import annotations
 
@@ -21,14 +9,14 @@ from typing import Any
 
 import modal
 import modal_analyzer_v55 as analyzer
-import evaluate_fingering
+import evaluate_fingering_v2 as evaluate_fingering
 
 app = modal.App("dadrock-tab-analyzer-benchmark")
 
 image = (
     analyzer.image
     .add_local_python_source("modal_analyzer_v55")
-    .add_local_python_source("evaluate_fingering")
+    .add_local_python_source("evaluate_fingering_v2")
 )
 
 
@@ -112,4 +100,4 @@ def main(
     print(f"Analyzer result: {result_output}")
     print(f"Benchmark report: {report_output}")
     print("\nUse this same command after every analyzer change.")
-    print("Only deploy a new website analyzer when the benchmark score improves.")
+    print("Only deploy a new website analyzer when the phrase benchmark improves.")
