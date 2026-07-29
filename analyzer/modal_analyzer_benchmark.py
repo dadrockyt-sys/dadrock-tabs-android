@@ -1,4 +1,4 @@
-"""Run Jimmy PAIge against a repeatable phrase-accurate fixture."""
+"""Run Jimmy PAIge against aligned harmonic windows and retain legacy scoring."""
 
 from __future__ import annotations
 
@@ -8,15 +8,26 @@ from pathlib import Path
 from typing import Any
 
 import modal
-import modal_analyzer_v67 as analyzer
-import evaluate_fingering_v2 as evaluate_fingering
+import modal_analyzer_v68 as analyzer
+import evaluate_fingering_v3 as evaluate_fingering
 
 app = modal.App("dadrock-tab-analyzer-benchmark")
 
-image = analyzer.image.add_local_python_source("modal_analyzer_v67").add_local_python_source("evaluate_fingering_v2")
+image = (
+    analyzer.image
+    .add_local_python_source("modal_analyzer_v68")
+    .add_local_python_source("evaluate_fingering_v3")
+    .add_local_python_source("evaluate_fingering_v2")
+)
+
 
 @app.function(image=image, timeout=900, memory=4096)
-def analyze_and_score(audio_bytes: bytes, filename: str, transcription_type: str, fixture: dict[str, Any]) -> dict[str, Any]:
+def analyze_and_score(
+    audio_bytes: bytes,
+    filename: str,
+    transcription_type: str,
+    fixture: dict[str, Any],
+) -> dict[str, Any]:
     suffix = Path(filename).suffix.lower() or ".audio"
     with tempfile.TemporaryDirectory() as temp_dir:
         source = Path(temp_dir) / f"source{suffix}"
@@ -35,10 +46,20 @@ def analyze_and_score(audio_bytes: bytes, filename: str, transcription_type: str
             "formatName": normalized_metadata["formatName"],
         }
         report = evaluate_fingering.evaluate(result, fixture)
-        return {"result": analyzer.to_json_safe(result), "report": analyzer.to_json_safe(report)}
+        return {
+            "result": analyzer.to_json_safe(result),
+            "report": analyzer.to_json_safe(report),
+        }
+
 
 @app.local_entrypoint()
-def main(audio_path: str, fixture_path: str = "analyzer/fixtures/stairway_intro_reference.json", transcription_type: str = "lead", result_output: str = "/tmp/jimmy-result.json", report_output: str = "/tmp/jimmy-report.json") -> None:
+def main(
+    audio_path: str,
+    fixture_path: str = "analyzer/fixtures/stairway_intro_reference.json",
+    transcription_type: str = "lead",
+    result_output: str = "/tmp/jimmy-result.json",
+    report_output: str = "/tmp/jimmy-report.json",
+) -> None:
     audio_file = Path(audio_path)
     fixture_file = Path(fixture_path)
     if not audio_file.is_file():
@@ -47,15 +68,27 @@ def main(audio_path: str, fixture_path: str = "analyzer/fixtures/stairway_intro_
         raise FileNotFoundError(f"Fixture file not found: {fixture_file}")
     if transcription_type not in {"lead", "rhythm", "bass"}:
         raise ValueError("transcription_type must be lead, rhythm, or bass")
+
     fixture = evaluate_fingering.load_json(fixture_file)
-    payload = analyze_and_score.remote(audio_file.read_bytes(), audio_file.name, transcription_type, fixture)
+    payload = analyze_and_score.remote(
+        audio_file.read_bytes(),
+        audio_file.name,
+        transcription_type,
+        fixture,
+    )
     result = dict(payload["result"])
     report = dict(payload["report"])
-    Path(result_output).write_text(json.dumps(result, indent=2, sort_keys=True), encoding="utf-8")
-    Path(report_output).write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
+    Path(result_output).write_text(
+        json.dumps(result, indent=2, sort_keys=True),
+        encoding="utf-8",
+    )
+    Path(report_output).write_text(
+        json.dumps(report, indent=2, sort_keys=True),
+        encoding="utf-8",
+    )
     evaluate_fingering.print_report(report)
     print("\nSaved files")
     print(f"Analyzer result: {result_output}")
     print(f"Benchmark report: {report_output}")
     print("\nUse this same command after every analyzer change.")
-    print("Only deploy a new website analyzer when the phrase benchmark improves.")
+    print("Compare the aligned score first; the legacy score remains in the JSON.")
