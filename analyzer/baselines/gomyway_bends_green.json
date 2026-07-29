@@ -1,0 +1,26 @@
+{
+  "baselineName": "Go My Way full-step bend notation green baseline",
+  "benchmarkVersion": 7,
+  "benchmarkType": "bend-technique-notation-handoff-single-worker",
+  "protectedAnalyzer": "7.1-phase-1-canonical-timeline-voicing-handoff",
+  "expectedBendCount": 4,
+  "continuousEvidenceCount": 4,
+  "annotationCount": 4,
+  "notationReadyCount": 4,
+  "syntheticSourceAnchorCount": 0,
+  "notationAccuracy": 1.0,
+  "passed": true,
+  "requiredTechnique": {
+    "stringIndex": 2,
+    "fret": 2,
+    "amountSemitones": 2,
+    "release": true,
+    "notation": "2b4r2"
+  },
+  "requiredBendIds": [
+    "M01-G2-full",
+    "M02-G2-full",
+    "M03-G2-full",
+    "M04-G2-full"
+  ]
+}
