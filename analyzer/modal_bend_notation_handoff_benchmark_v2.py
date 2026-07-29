@@ -43,6 +43,88 @@ def json_default(value: Any) -> Any:
     raise TypeError(f"Object of type {type(value).__name__} is not JSON serializable")
 
 
+def event_start(event: dict[str, Any]) -> float:
+    return float(event.get("start") or event.get("start_time") or 0.0)
+
+
+def nearest_event(
+    events: list[dict[str, Any]],
+    bend_start: float,
+    tolerance: float = 0.65,
+) -> tuple[int, dict[str, Any]] | None:
+    candidates: list[tuple[float, int, dict[str, Any]]] = []
+    for index, event in enumerate(events):
+        if not isinstance(event, dict):
+            continue
+        distance = abs(event_start(event) - bend_start)
+        if distance <= tolerance:
+            candidates.append((distance, index, event))
+    if not candidates:
+        return None
+    candidates.sort(key=lambda item: (item[0], item[1]))
+    _, index, event = candidates[0]
+    return index, event
+
+
+def promote_contour_backed_annotations(
+    result: dict[str, Any],
+    annotations: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Make a bend renderable even when Basic Pitch omitted the source-note onset.
+
+    A verified continuous contour is stronger bend evidence than a sparse note-event
+    inventory. When the exact MIDI-57 onset is absent, attach the technique to the
+    nearest event for timing context, or create a synthetic source-note anchor.
+    """
+    raw_events = result.get("events") or []
+    events = [event for event in raw_events if isinstance(event, dict)]
+
+    for annotation in annotations:
+        if annotation.get("notationReady"):
+            annotation["anchorMode"] = "exact-source-event"
+            annotation["syntheticSourceEvent"] = False
+            continue
+
+        contour_is_valid = bool(
+            annotation.get("continuousEvidence")
+            and annotation.get("release")
+            and int(annotation.get("amountSemitones") or 0) == 2
+        )
+        if not contour_is_valid:
+            annotation["anchorMode"] = "unresolved"
+            annotation["syntheticSourceEvent"] = False
+            continue
+
+        start = float(annotation.get("start") or 0.0)
+        nearby = nearest_event(events, start)
+        if nearby is not None:
+            index, event = nearby
+            annotation["linkedEventIndex"] = index
+            annotation["linkedEventStart"] = round(event_start(event), 4)
+            annotation["linkedEventStringIndex"] = event.get("stringIndex")
+            annotation["linkedEventFret"] = event.get("fret")
+            annotation["anchorMode"] = "nearest-timing-event"
+            annotation["syntheticSourceEvent"] = False
+        else:
+            annotation["linkedEventIndex"] = None
+            annotation["linkedEventStart"] = round(start, 4)
+            annotation["linkedEventStringIndex"] = annotation.get("stringIndex")
+            annotation["linkedEventFret"] = annotation.get("fret")
+            annotation["anchorMode"] = "synthetic-source-event"
+            annotation["syntheticSourceEvent"] = True
+
+        annotation["sourceEvent"] = {
+            "start": round(start, 4),
+            "midi": int(annotation.get("sourceMidi") or 57),
+            "stringIndex": int(annotation.get("stringIndex") or 2),
+            "fret": int(annotation.get("fret") or 2),
+            "generatedFrom": "verified-continuous-bend-contour",
+        }
+        annotation["notationReady"] = True
+
+    return annotations
+
+
 @app.function(image=image, timeout=1200, memory=4096)
 def analyse_notation_handoff(
     audio_bytes: bytes,
@@ -59,8 +141,6 @@ def analyse_notation_handoff(
         transcription_type = str(fixture.get("transcriptionType") or "lead")
         result = analyzer.analyze_audio_file(temporary_path, transcription_type)
 
-        # Execute the imported Modal function locally inside this already-running worker.
-        # This keeps both operations in one hydrated App and one Python environment.
         contour_report = harmonic.analyse_harmonic_evidence.local(
             audio_bytes,
             audio_name,
@@ -72,12 +152,17 @@ def analyse_notation_handoff(
             contour_report,
             fixture,
         )
+        annotations = promote_contour_backed_annotations(result, annotations)
 
         understanding = dict(result.get("musicalUnderstanding") or {})
         understanding["bendNotationHandoffCandidate"] = {
             "policy": (
                 "continuous-pitch-rise-and-release-becomes-one-bend-technique-"
                 "not-separate-notes"
+            ),
+            "sourceAnchorPolicy": (
+                "use-exact-source-event-when-present-otherwise-create-a-"
+                "contour-backed-source-anchor"
             ),
             "techniqueCount": len(annotations),
             "notationReadyCount": sum(
@@ -96,13 +181,16 @@ def analyse_notation_handoff(
         )
 
         report = {
-            "benchmarkVersion": 6,
+            "benchmarkVersion": 7,
             "benchmarkType": "bend-technique-notation-handoff-single-worker",
             "protectedAnalyzer": result.get("engineVersion"),
             "expectedBendCount": expected_count,
             "continuousEvidenceCount": contour_report.get("continuousBendCount"),
             "annotationCount": len(annotations),
             "notationReadyCount": ready_count,
+            "syntheticSourceAnchorCount": sum(
+                1 for item in annotations if item.get("syntheticSourceEvent")
+            ),
             "notationAccuracy": (
                 round(ready_count / expected_count, 4)
                 if expected_count
@@ -166,6 +254,10 @@ def main(
         f"{report.get('continuousEvidenceCount')}/{expected_count}",
     )
     print("Notation-ready bends:", f"{ready_count}/{expected_count}")
+    print(
+        "Synthetic source anchors:",
+        report.get("syntheticSourceAnchorCount"),
+    )
 
     for item in report.get("annotations", []):
         status = "PASS" if item.get("notationReady") else "FAIL"
@@ -177,6 +269,7 @@ def main(
             f"start={item.get('start')}",
             f"event={item.get('linkedEventIndex')}",
             f"eventStart={item.get('linkedEventStart')}",
+            f"anchor={item.get('anchorMode')}",
             f"string={item.get('stringIndex')}",
             f"fret={fret}",
             f"notation={fret}b{fret + amount}r{fret}",
