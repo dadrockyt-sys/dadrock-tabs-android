@@ -134,20 +134,38 @@ def build_technique_annotations(
     return annotations
 
 
+def json_default(value: Any) -> Any:
+    """Convert NumPy-like values to ordinary JSON data inside the worker."""
+    if hasattr(value, "item"):
+        try:
+            return value.item()
+        except (TypeError, ValueError):
+            pass
+    if hasattr(value, "tolist"):
+        try:
+            return value.tolist()
+        except (TypeError, ValueError):
+            pass
+    if isinstance(value, Path):
+        return str(value)
+    raise TypeError(f"Object of type {type(value).__name__} is not JSON serializable")
+
+
 @app.function(image=image, timeout=600, memory=4096)
 def run_protected_analyzer(
     audio_bytes: bytes,
     audio_name: str,
     transcription_type: str,
-) -> dict[str, Any]:
-    """Write uploaded audio inside the worker, then run protected V71."""
+) -> str:
+    """Run protected V71 and return JSON text, avoiding NumPy pickle handoff."""
     suffix = Path(audio_name).suffix or ".m4a"
     with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as temporary_file:
         temporary_file.write(audio_bytes)
         temporary_path = temporary_file.name
 
     try:
-        return analyzer.analyze_audio_file(temporary_path, transcription_type)
+        result = analyzer.analyze_audio_file(temporary_path, transcription_type)
+        return json.dumps(result, default=json_default)
     finally:
         Path(temporary_path).unlink(missing_ok=True)
 
@@ -169,11 +187,12 @@ def main(
     fixture = json.loads(fixture_file.read_text(encoding="utf-8"))
     audio_bytes = audio_file.read_bytes()
 
-    result = run_protected_analyzer.remote(
+    result_json = run_protected_analyzer.remote(
         audio_bytes,
         audio_file.name,
         str(fixture.get("transcriptionType") or "lead"),
     )
+    result = json.loads(result_json)
     contour_report = harmonic.analyse_harmonic_evidence.remote(
         audio_bytes, audio_file.name, fixture
     )
@@ -194,7 +213,7 @@ def main(
     )
     ready_count = sum(1 for item in annotations if item["notationReady"])
     report = {
-        "benchmarkVersion": 3,
+        "benchmarkVersion": 4,
         "benchmarkType": "bend-technique-notation-handoff",
         "protectedAnalyzer": result.get("engineVersion"),
         "expectedBendCount": expected_count,
