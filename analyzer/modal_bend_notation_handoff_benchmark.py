@@ -133,6 +133,15 @@ def build_technique_annotations(
     return annotations
 
 
+@app.function(image=image, timeout=600, memory=4096)
+def run_protected_analyzer(
+    audio_path: str,
+    transcription_type: str,
+) -> dict[str, Any]:
+    """Run the protected V71 Python function inside a Modal worker."""
+    return analyzer.analyze_audio_file(audio_path, transcription_type)
+
+
 @app.local_entrypoint()
 def main(
     audio_path: str,
@@ -150,7 +159,7 @@ def main(
     fixture = json.loads(fixture_file.read_text(encoding="utf-8"))
     audio_bytes = audio_file.read_bytes()
 
-    result = analyzer.analyze_audio_file.remote(
+    result = run_protected_analyzer.remote(
         str(audio_file), str(fixture.get("transcriptionType") or "lead")
     )
     contour_report = harmonic.analyse_harmonic_evidence.remote(
@@ -173,7 +182,7 @@ def main(
     )
     ready_count = sum(1 for item in annotations if item["notationReady"])
     report = {
-        "benchmarkVersion": 1,
+        "benchmarkVersion": 2,
         "benchmarkType": "bend-technique-notation-handoff",
         "protectedAnalyzer": result.get("engineVersion"),
         "expectedBendCount": expected_count,
