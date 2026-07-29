@@ -14,10 +14,17 @@ from pathlib import Path
 from typing import Any
 
 import modal
+import modal_analyzer_v19 as legacy_assignments
+import modal_analyzer_v46 as legacy_bridge
 import modal_analyzer_v71 as analyzer
 
 app = modal.App("dadrock-instrument-separation-benchmark")
-image = analyzer.image.add_local_python_source("modal_analyzer_v71")
+image = (
+    analyzer.image
+    .add_local_python_source("modal_analyzer_v19")
+    .add_local_python_source("modal_analyzer_v46")
+    .add_local_python_source("modal_analyzer_v71")
+)
 
 
 def json_default(value: Any) -> Any:
@@ -115,6 +122,12 @@ def analyse_instruments(
     audio_name: str,
     fixture: dict[str, Any],
 ) -> bytes:
+    # V63's emergency fallback walks through the historical module chain and
+    # expects v46.group_assignments, but that helper was removed from v46.
+    # Restore only that missing callback inside this benchmark worker. V71's
+    # source files and both protected production baselines remain untouched.
+    legacy_bridge.group_assignments = legacy_assignments.group_assignments
+
     suffix = Path(audio_name).suffix or ".m4a"
     with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as temporary_file:
         temporary_file.write(audio_bytes)
@@ -165,9 +178,10 @@ def analyse_instruments(
         bass_contamination = ratio(bass_lead, bass_primary + bass_lead)
 
         report = {
-            "benchmarkVersion": 1,
+            "benchmarkVersion": 2,
             "benchmarkType": "multi-instrument-register-separation-inventory",
             "protectedAnalyzer": lead_result.get("engineVersion"),
+            "fallbackRepair": "v46.group_assignments<-v19.group_assignments",
             "leadSummary": lead_summary,
             "bassSummary": bass_summary,
             "layerChecks": layer_checks,
@@ -239,9 +253,10 @@ def main(
         encoding="utf-8",
     )
 
-    print("JIMMY PAIGE SEPARATE-INSTRUMENTS INVENTORY BENCHMARK")
-    print("=" * 62)
+    print("JIMMY PAIGE SEPARATE-INSTRUMENTS INVENTORY BENCHMARK V2")
+    print("=" * 65)
     print("Protected analyzer:", report.get("protectedAnalyzer"))
+    print("Fallback repair:", report.get("fallbackRepair"))
 
     lead = report.get("leadSummary") or {}
     bass = report.get("bassSummary") or {}
