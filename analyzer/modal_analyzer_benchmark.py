@@ -8,12 +8,12 @@ from pathlib import Path
 from typing import Any
 
 import modal
-import modal_analyzer_v65 as analyzer
+import modal_analyzer_v66 as analyzer
 import evaluate_fingering_v2 as evaluate_fingering
 
 app = modal.App("dadrock-tab-analyzer-benchmark")
 
-image = analyzer.image.add_local_python_source("modal_analyzer_v65").add_local_python_source("evaluate_fingering_v2")
+image = analyzer.image.add_local_python_source("modal_analyzer_v66").add_local_python_source("evaluate_fingering_v2")
 
 @app.function(image=image, timeout=900, memory=4096)
 def analyze_and_score(audio_bytes: bytes, filename: str, transcription_type: str, fixture: dict[str, Any]) -> dict[str, Any]:
