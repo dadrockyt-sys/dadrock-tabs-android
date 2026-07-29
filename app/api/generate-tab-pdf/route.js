@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { resend } from '@/lib/resend';
-import { createTabPdf } from '@/lib/createTabPdf';
+import { createTabPdf } from '@/lib/createTabPdfPolished';
 import { getDb } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
