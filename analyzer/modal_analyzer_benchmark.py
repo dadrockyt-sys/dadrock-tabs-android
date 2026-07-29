@@ -20,14 +20,14 @@ from pathlib import Path
 from typing import Any
 
 import modal
-import modal_analyzer_v44 as analyzer
+import modal_analyzer_v45 as analyzer
 import evaluate_fingering
 
 app = modal.App("dadrock-tab-analyzer-benchmark")
 
 image = (
     analyzer.image
-    .add_local_python_source("modal_analyzer_v44")
+    .add_local_python_source("modal_analyzer_v45")
     .add_local_python_source("evaluate_fingering")
 )
 
@@ -111,5 +111,6 @@ def main(
     print("\nSaved files")
     print(f"Analyzer result: {result_output}")
     print(f"Benchmark report: {report_output}")
-    print("\nUse this same command after every analyzer change.")
-    print("Only deploy a new website analyzer when the benchmark score improves.")
+    print("\nDiagnostic result path:")
+    print("  musicalUnderstanding.topPathDiagnostics")
+    print("Use the same benchmark command; do not deploy v45 to the website.")
