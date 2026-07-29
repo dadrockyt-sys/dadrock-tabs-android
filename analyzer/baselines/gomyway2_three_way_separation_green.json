@@ -1,0 +1,26 @@
+{
+  "baselineName": "Go My Way 2 three-way instrument separation green baseline",
+  "benchmarkVersion": 5,
+  "benchmarkType": "three-way-register-gated-instrument-separation",
+  "protectedAnalyzer": "7.1-phase-1-canonical-timeline-voicing-handoff",
+  "passed": true,
+  "policy": {
+    "bass": [28, 51],
+    "rhythm": [52, 63],
+    "lead": [64, 76]
+  },
+  "requiredParts": {
+    "bass": {
+      "minimumObservedEventCount": 62,
+      "maximumContaminationRatio": 0.0
+    },
+    "rhythm": {
+      "minimumObservedEventCount": 39,
+      "maximumContaminationRatio": 0.0
+    },
+    "lead": {
+      "minimumObservedEventCount": 14,
+      "maximumContaminationRatio": 0.0
+    }
+  }
+}
