@@ -1,0 +1,90 @@
+{
+  "fixtureVersion": 1,
+  "name": "gomyway-intro-bend-reference",
+  "description": "Four-measure Em riff reference with drums. Each measure begins with a full-step bend at G-string fret 2, reaches the pitch of G-string fret 4, releases, and resolves to the open G string. Measures 1 and 3 share one ending; measures 2 and 4 share the alternate ending with a B/G-string fret-3 dyad.",
+  "transcriptionType": "lead",
+  "tempoBpm": 129,
+  "timeSignature": "4/4",
+  "measureCount": 4,
+  "sourceAudio": "public/DadRock TABS - gomywaytest.m4a",
+  "referenceImage": "user-provided-tab-reference-2026-07-29",
+  "expectedBends": [
+    {
+      "bendId": "M01-G2-full",
+      "measure": 1,
+      "startProgress": 0.0,
+      "endProgress": 0.12,
+      "stringIndex": 2,
+      "fret": 2,
+      "sourceMidi": 57,
+      "targetMidi": 59,
+      "bendSemitones": 2,
+      "bendType": "full",
+      "releaseExpected": true,
+      "releaseToMidi": 55
+    },
+    {
+      "bendId": "M02-G2-full",
+      "measure": 2,
+      "startProgress": 0.25,
+      "endProgress": 0.37,
+      "stringIndex": 2,
+      "fret": 2,
+      "sourceMidi": 57,
+      "targetMidi": 59,
+      "bendSemitones": 2,
+      "bendType": "full",
+      "releaseExpected": true,
+      "releaseToMidi": 55
+    },
+    {
+      "bendId": "M03-G2-full",
+      "measure": 3,
+      "startProgress": 0.5,
+      "endProgress": 0.62,
+      "stringIndex": 2,
+      "fret": 2,
+      "sourceMidi": 57,
+      "targetMidi": 59,
+      "bendSemitones": 2,
+      "bendType": "full",
+      "releaseExpected": true,
+      "releaseToMidi": 55
+    },
+    {
+      "bendId": "M04-G2-full",
+      "measure": 4,
+      "startProgress": 0.75,
+      "endProgress": 0.87,
+      "stringIndex": 2,
+      "fret": 2,
+      "sourceMidi": 57,
+      "targetMidi": 59,
+      "bendSemitones": 2,
+      "bendType": "full",
+      "releaseExpected": true,
+      "releaseToMidi": 55
+    }
+  ],
+  "expectedRiffNotes": [
+    {
+      "pattern": "A",
+      "measures": [1, 3],
+      "tablature": ["G2-full-bend-release", "G0", "D2", "D0", "D2", "E0", "E0"]
+    },
+    {
+      "pattern": "B",
+      "measures": [2, 4],
+      "tablature": ["G2-full-bend-release", "G0", "D2", "E0", "D0", "D2", "B3+G3"]
+    }
+  ],
+  "globalExpectations": {
+    "expectedBendCount": 4,
+    "expectedFullStepBends": 4,
+    "expectedReleasedBends": 4,
+    "expectedRepeatedPhraseConsistency": true,
+    "drumsPresent": true,
+    "keyCenter": "Em",
+    "movementPolicy": "keep-the-riff-in-open-position-and-represent-the-G-string-fret-2-pitch-rise-as-a-full-bend-not-as-separate-fretted-notes"
+  }
+}
