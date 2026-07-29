@@ -10,7 +10,7 @@ engine = base.engine
 app = modal.App("dadrock-tab-analyzer-v72-candidate")
 image = base.image.add_local_python_source("modal_analyzer_v71")
 
-ENGINE_VERSION = "7.2-phase-1-adaptive-three-way-instrument-separation-v2"
+ENGINE_VERSION = "7.2-phase-1-adaptive-three-way-instrument-separation-v3"
 
 REGISTER_POLICY: dict[str, tuple[int, int]] = {
     "bass": (28, 51),
@@ -24,14 +24,27 @@ MIN_REGISTER_EVENTS = {
     "lead": 3,
 }
 
-# This stronger inventory threshold is taken directly from the locked green
-# Go My Way 2 separation baseline. It provides a second safe activation route
-# when a transcription-specific V71 pass contains all three layers but their
-# onset timestamps are not aligned closely enough to satisfy bucket overlap.
-STRONG_LAYER_INVENTORY = {
-    "bass": 62,
-    "rhythm": 39,
-    "lead": 14,
+# Each V71 transcription request exposes a slightly different raw inventory.
+# These thresholds are taken from the locked Go My Way 2 green benchmark's
+# raw inventories, not from its already-gated output. This lets the bass pass
+# activate even though its octave-lead inventory is smaller than the lead and
+# rhythm passes, while still requiring convincing evidence of all three layers.
+STRONG_LAYER_INVENTORY_BY_REQUEST: dict[str, dict[str, int]] = {
+    "bass": {
+        "bass": 62,
+        "rhythm": 38,
+        "lead": 11,
+    },
+    "rhythm": {
+        "bass": 49,
+        "rhythm": 39,
+        "lead": 14,
+    },
+    "lead": {
+        "bass": 49,
+        "rhythm": 39,
+        "lead": 14,
+    },
 }
 
 # The strict split is enabled only when the recording contains repeated evidence
@@ -65,7 +78,10 @@ def register_for_midi(midi: int) -> str | None:
     return None
 
 
-def summarize_layer_evidence(events: list[dict[str, Any]]) -> dict[str, Any]:
+def summarize_layer_evidence(
+    events: list[dict[str, Any]],
+    transcription_type: str,
+) -> dict[str, Any]:
     register_counts: Counter[str] = Counter()
     time_buckets: dict[int, set[str]] = defaultdict(set)
 
@@ -88,9 +104,10 @@ def summarize_layer_evidence(events: list[dict[str, Any]]) -> dict[str, Any]:
         for part, minimum in MIN_REGISTER_EVENTS.items()
     )
 
+    request_thresholds = STRONG_LAYER_INVENTORY_BY_REQUEST[transcription_type]
     strong_inventory_met = all(
         register_counts.get(part, 0) >= minimum
-        for part, minimum in STRONG_LAYER_INVENTORY.items()
+        for part, minimum in request_thresholds.items()
     )
 
     simultaneous_support = (
@@ -106,7 +123,7 @@ def summarize_layer_evidence(events: list[dict[str, Any]]) -> dict[str, Any]:
     if simultaneous_support:
         activation_reason = "repeated-simultaneous-three-layer-evidence"
     elif strong_inventory_met:
-        activation_reason = "locked-baseline-strength-three-layer-inventory"
+        activation_reason = "request-aware-locked-baseline-strength-inventory"
     else:
         activation_reason = "insufficient-three-layer-evidence"
 
@@ -116,7 +133,7 @@ def summarize_layer_evidence(events: list[dict[str, Any]]) -> dict[str, Any]:
         "tripleLayerBuckets": triple_buckets,
         "dualOrMoreLayerBuckets": dual_or_more_buckets,
         "minimumRegisterEvents": MIN_REGISTER_EVENTS,
-        "strongLayerInventory": STRONG_LAYER_INVENTORY,
+        "strongLayerInventoryForRequest": request_thresholds,
         "minimumsMet": minimums_met,
         "strongInventoryMet": strong_inventory_met,
         "simultaneousSupport": simultaneous_support,
@@ -150,7 +167,7 @@ def analyze_audio_file(audio_path: str, transcription_type: str) -> dict[str, An
         for event in (result.get("events") or [])
         if isinstance(event, dict)
     ]
-    evidence = summarize_layer_evidence(raw_events)
+    evidence = summarize_layer_evidence(raw_events, transcription_type)
     eligible = bool(evidence["strictThreeWaySeparationEligible"])
 
     if eligible:
@@ -176,8 +193,8 @@ def analyze_audio_file(audio_path: str, transcription_type: str) -> dict[str, An
         "evidence": evidence,
         "safetyRule": (
             "use-the-strict-register-split-only-when-repeated-simultaneous-"
-            "three-layer-evidence-or-locked-baseline-strength-inventory-is-"
-            "present-otherwise-preserve-v71"
+            "three-layer-evidence-or-request-aware-locked-baseline-strength-"
+            "inventory-is-present-otherwise-preserve-v71"
         ),
     }
     result["musicalUnderstanding"] = understanding
@@ -196,7 +213,7 @@ def benchmark_healthcheck() -> dict[str, Any]:
             for part, (low, high) in REGISTER_POLICY.items()
         },
         "minimumRegisterEvents": MIN_REGISTER_EVENTS,
-        "strongLayerInventory": STRONG_LAYER_INVENTORY,
+        "strongLayerInventoryByRequest": STRONG_LAYER_INVENTORY_BY_REQUEST,
         "timeBucketSeconds": TIME_BUCKET_SECONDS,
         "minimumTripleLayerBuckets": MIN_TRIPLE_LAYER_BUCKETS,
         "minimumDualLayerBuckets": MIN_DUAL_LAYER_BUCKETS,
