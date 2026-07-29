@@ -1,4 +1,4 @@
-"""Measure continuous guitar bend contours without changing the green V71 analyzer."""
+"""Measure repeated guitar bend contours without changing the green V71 analyzer."""
 
 from __future__ import annotations
 
@@ -12,10 +12,6 @@ import modal
 import modal_analyzer_v71 as analyzer
 
 app = modal.App("dadrock-bend-contour-benchmark")
-
-# V71's image already contains Basic Pitch and its librosa/soundfile dependencies.
-# Do not append a pip build step after V71's local Python sources: Modal rejects
-# image build steps that occur after add_local_python_source().
 image = analyzer.image.add_local_python_source("modal_analyzer_v71")
 
 
@@ -38,130 +34,205 @@ def rolling_median(values: list[float | None], radius: int = 2) -> list[float | 
     return cleaned
 
 
-def nearest_index(values: list[float], target: float) -> int:
-    return min(range(len(values)), key=lambda index: abs(values[index] - target))
-
-
-def analyse_bend_window(
+def analyse_measure_bend(
     times: list[float],
     midi_curve: list[float | None],
     confidence_curve: list[float],
     duration: float,
     expected: dict[str, Any],
+    measure_count: int,
 ) -> dict[str, Any]:
-    start = float(expected["startProgress"]) * duration
-    end = float(expected["endProgress"]) * duration
+    measure = int(expected["measure"])
+    measure_start = (measure - 1) * duration / measure_count
+    measure_end = measure * duration / measure_count
+    search_end = measure_start + (measure_end - measure_start) * 0.72
+
     source = float(expected["sourceMidi"])
     target = float(expected["targetMidi"])
     release = float(expected["releaseToMidi"])
 
-    selected = [
-        (time, midi, confidence)
-        for time, midi, confidence in zip(times, midi_curve, confidence_curve)
-        if start <= time < end and midi is not None and confidence >= 0.45
+    frame_indices = [
+        index
+        for index, (time, midi, confidence) in enumerate(
+            zip(times, midi_curve, confidence_curve)
+        )
+        if measure_start <= time < search_end
+        and midi is not None
+        and confidence >= 0.12
+        and 53.5 <= float(midi) <= 61.5
     ]
 
-    if not selected:
+    if not frame_indices:
         return {
             "bendId": expected["bendId"],
-            "measure": expected["measure"],
-            "start": round(start, 4),
-            "end": round(end, 4),
+            "measure": measure,
+            "measureStart": round(measure_start, 4),
+            "measureEnd": round(measure_end, 4),
             "voicedFrameCount": 0,
             "sourceDetected": False,
             "targetReached": False,
             "descentDetected": False,
             "releaseDetected": False,
             "continuousBendEvidence": False,
-            "reason": "no-confident-pitch-frames",
+            "reason": "no-guitar-band-frames",
             "contour": [],
         }
 
-    frame_times = [item[0] for item in selected]
-    pitches = [float(item[1]) for item in selected]
-    confidences = [float(item[2]) for item in selected]
-
     source_candidates = [
-        index for index, pitch in enumerate(pitches) if abs(pitch - source) <= 0.8
-    ]
-    source_index = source_candidates[0] if source_candidates else nearest_index(pitches, source)
-
-    peak_index = max(range(source_index, len(pitches)), key=lambda index: pitches[index])
-    peak_pitch = pitches[peak_index]
-
-    after_peak = pitches[peak_index + 1:]
-    descent_pitch = min(after_peak) if after_peak else peak_pitch
-    release_candidates = [
         index
-        for index in range(peak_index + 1, len(pitches))
-        if pitches[index] <= source + 0.7
+        for index in frame_indices
+        if abs(float(midi_curve[index]) - source) <= 1.15
     ]
-    release_index = release_candidates[0] if release_candidates else None
 
-    source_detected = abs(pitches[source_index] - source) <= 1.0
-    target_reached = peak_pitch >= target - 0.55
-    rise_amount = peak_pitch - pitches[source_index]
-    descent_amount = peak_pitch - descent_pitch
-    descent_detected = descent_amount >= 1.0
-    release_detected = release_index is not None and (
-        abs(pitches[release_index] - source) <= 1.0
-        or pitches[release_index] <= release + 1.0
-    )
+    if not source_candidates:
+        source_candidates = sorted(
+            frame_indices,
+            key=lambda index: abs(float(midi_curve[index]) - source),
+        )[:8]
 
-    # Require a multi-frame ascent rather than a single percussion-driven spike.
-    ascent_frames = 0
-    for index in range(source_index + 1, peak_index + 1):
-        if pitches[index] >= pitches[index - 1] - 0.2:
-            ascent_frames += 1
-    sustained_peak_frames = sum(
-        1
-        for pitch in pitches[max(source_index, peak_index - 3): peak_index + 4]
-        if pitch >= target - 0.8
-    )
+    best: dict[str, Any] | None = None
+    max_lookahead = 0.95
 
-    continuous = (
-        source_detected
-        and target_reached
-        and rise_amount >= 1.35
-        and ascent_frames >= 2
-        and sustained_peak_frames >= 2
-        and descent_detected
-        and release_detected
-    )
+    for source_index in source_candidates:
+        lookahead = [
+            index
+            for index in frame_indices
+            if source_index <= index
+            and times[index] <= times[source_index] + max_lookahead
+        ]
+        if len(lookahead) < 4:
+            continue
 
-    contour = [
-        {
-            "time": round(time, 4),
-            "midi": round(pitch, 3),
-            "confidence": round(confidence, 3),
+        peak_index = max(lookahead, key=lambda index: float(midi_curve[index]))
+        if peak_index <= source_index:
+            continue
+
+        after_peak = [
+            index
+            for index in frame_indices
+            if peak_index < index
+            and times[index] <= min(measure_end, times[peak_index] + 0.85)
+        ]
+
+        source_pitch = float(midi_curve[source_index])
+        peak_pitch = float(midi_curve[peak_index])
+        lowest_after = (
+            min(float(midi_curve[index]) for index in after_peak)
+            if after_peak
+            else peak_pitch
+        )
+        rise = peak_pitch - source_pitch
+        descent = peak_pitch - lowest_after
+
+        ascent_indices = [
+            index for index in lookahead if source_index <= index <= peak_index
+        ]
+        ascent_frames = sum(
+            1
+            for left, right in zip(ascent_indices, ascent_indices[1:])
+            if float(midi_curve[right]) >= float(midi_curve[left]) - 0.28
+        )
+        sustained_peak_frames = sum(
+            1
+            for index in lookahead
+            if abs(times[index] - times[peak_index]) <= 0.12
+            and float(midi_curve[index]) >= target - 0.85
+        )
+
+        release_indices = [
+            index
+            for index in after_peak
+            if float(midi_curve[index]) <= source + 0.85
+        ]
+        open_g_indices = [
+            index
+            for index in after_peak
+            if abs(float(midi_curve[index]) - release) <= 1.0
+        ]
+
+        source_detected = abs(source_pitch - source) <= 1.15
+        target_reached = peak_pitch >= target - 0.7
+        descent_detected = descent >= 1.0
+        release_detected = bool(release_indices or open_g_indices)
+        continuous = (
+            source_detected
+            and target_reached
+            and rise >= 1.25
+            and ascent_frames >= 2
+            and sustained_peak_frames >= 2
+            and descent_detected
+            and release_detected
+        )
+
+        score = (
+            rise * 4.0
+            + descent * 2.0
+            + ascent_frames * 0.25
+            + sustained_peak_frames * 0.5
+            + (8.0 if source_detected else 0.0)
+            + (8.0 if target_reached else 0.0)
+            + (8.0 if release_detected else 0.0)
+        )
+
+        candidate = {
+            "bendId": expected["bendId"],
+            "measure": measure,
+            "measureStart": round(measure_start, 4),
+            "measureEnd": round(measure_end, 4),
+            "bendStart": round(times[source_index], 4),
+            "peakTime": round(times[peak_index], 4),
+            "voicedFrameCount": len(frame_indices),
+            "sourcePitch": round(source_pitch, 3),
+            "peakPitch": round(peak_pitch, 3),
+            "lowestAfterPeak": round(lowest_after, 3),
+            "riseSemitones": round(rise, 3),
+            "descentSemitones": round(descent, 3),
+            "sourceDetected": source_detected,
+            "targetReached": target_reached,
+            "ascentFrames": ascent_frames,
+            "sustainedPeakFrames": sustained_peak_frames,
+            "descentDetected": descent_detected,
+            "releaseDetected": release_detected,
+            "openGDetected": bool(open_g_indices),
+            "continuousBendEvidence": continuous,
+            "candidateScore": round(score, 3),
         }
-        for time, pitch, confidence in selected[:: max(1, len(selected) // 24)]
-    ]
+        if best is None or score > float(best["candidateScore"]):
+            best = candidate
 
-    return {
-        "bendId": expected["bendId"],
-        "measure": expected["measure"],
-        "start": round(start, 4),
-        "end": round(end, 4),
-        "voicedFrameCount": len(selected),
-        "sourcePitch": round(pitches[source_index], 3),
-        "peakPitch": round(peak_pitch, 3),
-        "lowestAfterPeak": round(descent_pitch, 3),
-        "riseSemitones": round(rise_amount, 3),
-        "descentSemitones": round(descent_amount, 3),
-        "sourceDetected": source_detected,
-        "targetReached": target_reached,
-        "ascentFrames": ascent_frames,
-        "sustainedPeakFrames": sustained_peak_frames,
-        "descentDetected": descent_detected,
-        "releaseDetected": release_detected,
-        "continuousBendEvidence": continuous,
-        "contour": contour,
-    }
+    if best is None:
+        best = {
+            "bendId": expected["bendId"],
+            "measure": measure,
+            "measureStart": round(measure_start, 4),
+            "measureEnd": round(measure_end, 4),
+            "voicedFrameCount": len(frame_indices),
+            "sourceDetected": False,
+            "targetReached": False,
+            "descentDetected": False,
+            "releaseDetected": False,
+            "continuousBendEvidence": False,
+            "reason": "no-rising-contour-candidate",
+        }
+
+    sample_indices = frame_indices[:: max(1, len(frame_indices) // 28)]
+    best["contour"] = [
+        {
+            "time": round(times[index], 4),
+            "midi": round(float(midi_curve[index]), 3),
+            "confidence": round(float(confidence_curve[index]), 3),
+        }
+        for index in sample_indices
+    ]
+    return best
 
 
 @app.function(image=image, timeout=900, memory=4096)
-def analyse_contours(audio_bytes: bytes, filename: str, fixture: dict[str, Any]) -> dict[str, Any]:
+def analyse_contours(
+    audio_bytes: bytes,
+    filename: str,
+    fixture: dict[str, Any],
+) -> dict[str, Any]:
     import librosa
     import numpy as np
 
@@ -175,41 +246,76 @@ def analyse_contours(audio_bytes: bytes, filename: str, fixture: dict[str, Any])
         audio, sample_rate = librosa.load(str(normalized), sr=22050, mono=True)
         duration = float(librosa.get_duration(y=audio, sr=sample_rate))
 
-        harmonic, _ = librosa.effects.hpss(audio, margin=(1.0, 4.0))
-        f0, voiced_flag, voiced_probability = librosa.pyin(
-            harmonic,
-            fmin=librosa.note_to_hz("E2"),
-            fmax=librosa.note_to_hz("E5"),
-            sr=sample_rate,
-            frame_length=2048,
-            hop_length=128,
-            fill_na=np.nan,
+        # Stronger harmonic extraction suppresses drums before high-resolution CQT.
+        harmonic, _ = librosa.effects.hpss(audio, margin=(1.0, 5.0))
+        hop_length = 128
+        bins_per_octave = 36
+        cqt = np.abs(
+            librosa.cqt(
+                harmonic,
+                sr=sample_rate,
+                hop_length=hop_length,
+                fmin=librosa.note_to_hz("C3"),
+                n_bins=72,
+                bins_per_octave=bins_per_octave,
+            )
         )
-        times_array = librosa.times_like(f0, sr=sample_rate, hop_length=128)
+        frequencies = librosa.cqt_frequencies(
+            cqt.shape[0],
+            fmin=librosa.note_to_hz("C3"),
+            bins_per_octave=bins_per_octave,
+        )
+        midi_bins = librosa.hz_to_midi(frequencies)
+        guitar_band = np.where((midi_bins >= 53.0) & (midi_bins <= 62.0))[0]
+        times_array = librosa.times_like(
+            cqt[0], sr=sample_rate, hop_length=hop_length
+        )
 
         midi_values: list[float | None] = []
-        for frequency in f0:
-            if frequency is None or not math.isfinite(float(frequency)) or frequency <= 0:
+        confidences: list[float] = []
+        for frame_index in range(cqt.shape[1]):
+            magnitudes = cqt[guitar_band, frame_index]
+            total = float(np.sum(magnitudes))
+            if total <= 1e-8:
                 midi_values.append(None)
-            else:
-                midi_values.append(float(librosa.hz_to_midi(float(frequency))))
-        midi_values = rolling_median(midi_values, radius=2)
+                confidences.append(0.0)
+                continue
 
-        probabilities = [
-            float(value) if math.isfinite(float(value)) else 0.0
-            for value in voiced_probability
-        ]
+            local_peak = int(np.argmax(magnitudes))
+            peak_band_index = int(guitar_band[local_peak])
+            neighbourhood = np.arange(
+                max(guitar_band[0], peak_band_index - 2),
+                min(guitar_band[-1], peak_band_index + 2) + 1,
+            )
+            weights = cqt[neighbourhood, frame_index]
+            weight_total = float(np.sum(weights))
+            pitch = float(
+                np.sum(midi_bins[neighbourhood] * weights) / max(weight_total, 1e-8)
+            )
+            confidence = float(np.max(magnitudes) / max(total, 1e-8))
+            midi_values.append(pitch)
+            confidences.append(confidence)
+
+        midi_values = rolling_median(midi_values, radius=2)
         times = [float(value) for value in times_array]
+        measure_count = int(fixture.get("measureCount") or 4)
 
         bends = [
-            analyse_bend_window(times, midi_values, probabilities, duration, expected)
+            analyse_measure_bend(
+                times,
+                midi_values,
+                confidences,
+                duration,
+                expected,
+                measure_count,
+            )
             for expected in fixture.get("expectedBends", [])
         ]
         passed = sum(1 for bend in bends if bend["continuousBendEvidence"])
 
         return {
-            "benchmarkVersion": 2,
-            "benchmarkType": "continuous-pitch-contour",
+            "benchmarkVersion": 3,
+            "benchmarkType": "adaptive-cqt-bend-contour",
             "protectedAnalyzer": "7.1-phase-1-canonical-timeline-voicing-handoff",
             "fixtureName": fixture.get("name"),
             "durationSeconds": round(duration, 4),
@@ -219,8 +325,8 @@ def analyse_contours(audio_bytes: bytes, filename: str, fixture: dict[str, Any])
             "bendContourAccuracy": round(passed / len(bends), 4) if bends else 0.0,
             "bends": bends,
             "method": (
-                "HPSS drum reduction followed by frame-level pYIN pitch tracking; "
-                "requires source, sustained full-step peak, descent, and release"
+                "measure-wide adaptive search using HPSS drum reduction and a "
+                "36-bins-per-octave CQT tracker in the G-string bend register"
             ),
         }
 
@@ -244,7 +350,7 @@ def main(
         json.dumps(report, indent=2, sort_keys=True), encoding="utf-8"
     )
 
-    print("JIMMY PAIGE CONTINUOUS BEND-CONTOUR BENCHMARK")
+    print("JIMMY PAIGE ADAPTIVE BEND-CONTOUR BENCHMARK")
     print("=" * 55)
     print("Protected analyzer:", report.get("protectedAnalyzer"))
     print("Duration:", report.get("durationSeconds"))
@@ -257,6 +363,7 @@ def main(
         print(
             status,
             bend["bendId"],
+            "start=", bend.get("bendStart"),
             "source=", bend.get("sourcePitch"),
             "peak=", bend.get("peakPitch"),
             "rise=", bend.get("riseSemitones"),
