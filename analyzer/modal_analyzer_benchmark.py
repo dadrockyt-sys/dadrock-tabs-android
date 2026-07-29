@@ -20,14 +20,14 @@ from pathlib import Path
 from typing import Any
 
 import modal
-import modal_analyzer_v43 as analyzer
+import modal_analyzer_v44 as analyzer
 import evaluate_fingering
 
 app = modal.App("dadrock-tab-analyzer-benchmark")
 
 image = (
     analyzer.image
-    .add_local_python_source("modal_analyzer_v43")
+    .add_local_python_source("modal_analyzer_v44")
     .add_local_python_source("evaluate_fingering")
 )
 
