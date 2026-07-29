@@ -1,4 +1,4 @@
-"""Run Jimmy PAIge against aligned harmonic windows and retain legacy scoring."""
+"""Run Jimmy PAIge against one canonical non-overlapping harmonic timeline."""
 
 from __future__ import annotations
 
@@ -8,14 +8,15 @@ from pathlib import Path
 from typing import Any
 
 import modal
-import modal_analyzer_v68 as analyzer
-import evaluate_fingering_v3 as evaluate_fingering
+import modal_analyzer_v69 as analyzer
+import evaluate_fingering_v4 as evaluate_fingering
 
 app = modal.App("dadrock-tab-analyzer-benchmark")
 
 image = (
     analyzer.image
-    .add_local_python_source("modal_analyzer_v68")
+    .add_local_python_source("modal_analyzer_v69")
+    .add_local_python_source("evaluate_fingering_v4")
     .add_local_python_source("evaluate_fingering_v3")
     .add_local_python_source("evaluate_fingering_v2")
 )
@@ -91,4 +92,4 @@ def main(
     print(f"Analyzer result: {result_output}")
     print(f"Benchmark report: {report_output}")
     print("\nUse this same command after every analyzer change.")
-    print("Compare the aligned score first; the legacy score remains in the JSON.")
+    print("Compare the canonical timeline score first; older scores remain in the JSON.")
