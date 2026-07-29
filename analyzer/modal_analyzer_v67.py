@@ -15,7 +15,7 @@ image = (
     .add_local_python_source("modal_analyzer_v47")
 )
 
-v25 = previous.previous.v25
+v25 = v63.v25
 _PAIR_DIAGNOSTICS: list[dict[str, Any]] = []
 
 
@@ -53,8 +53,6 @@ def paired_transition_adjustment(
         if first_center is None or second_center is None:
             continue
 
-        # Stairway-style guitarist movement: hold C/G in fifth position,
-        # then deliberately move to low D/F# instead of lowering C/G early.
         if first_name == "C/G" and second_name == "D/F#":
             first_ok = 5.0 <= first_center <= 8.0
             second_ok = 2.0 <= second_center <= 4.0
@@ -66,11 +64,17 @@ def paired_transition_adjustment(
                     adjustment += (5.0 - first_center) * 55.0 + 45.0
                     reason += "protect-CG-before-shift;"
                 if not 2.0 <= second_center <= 4.0:
-                    adjustment += min(abs(second_center - 2.0), abs(second_center - 4.0)) * 45.0 + 35.0
+                    adjustment += min(
+                        abs(second_center - 2.0),
+                        abs(second_center - 4.0),
+                    ) * 45.0 + 35.0
                     reason += "require-low-DFsharp;"
 
-        # Keep fifth-position Am stable before the intentional open-position turn.
-        elif first_name == "Am" and second_name in {"Fmaj7", "G/B-Am", "G/B - Am"}:
+        elif first_name == "Am" and second_name in {
+            "Fmaj7",
+            "G/B-Am",
+            "G/B - Am",
+        }:
             if 5.0 <= first_center <= 7.0 and 0.0 <= second_center <= 3.0:
                 adjustment -= 70.0
                 reason = "reward-Am-to-open-turn"
@@ -78,8 +82,10 @@ def paired_transition_adjustment(
                 adjustment += (5.0 - first_center) * 45.0 + 35.0
                 reason = "protect-Am-before-open-turn"
 
-        # Once in open position, keep G/B-Am low rather than bouncing to fret 5.
-        elif first_name == "Fmaj7" and second_name in {"G/B-Am", "G/B - Am"}:
+        elif first_name == "Fmaj7" and second_name in {
+            "G/B-Am",
+            "G/B - Am",
+        }:
             if 0.0 <= first_center <= 3.0 and 0.0 <= second_center <= 3.0:
                 adjustment -= 65.0
                 reason = "reward-open-Fmaj7-to-GBAm"
@@ -113,7 +119,12 @@ def pair_aware_build_phrase_paths(
     anchor: int,
     previous_assignment: list[tuple[dict[str, Any], int, int]] | None,
 ) -> list[tuple[float, list[list[tuple[dict[str, Any], int, int]]]]]:
-    candidates = _original_builder(groups, transcription_type, anchor, previous_assignment)
+    candidates = _original_builder(
+        groups,
+        transcription_type,
+        anchor,
+        previous_assignment,
+    )
     rescored: list[tuple[float, Any, list[dict[str, Any]]]] = []
 
     for score, path in candidates:
@@ -125,7 +136,11 @@ def pair_aware_build_phrase_paths(
         {
             "phraseIndex": len(_PAIR_DIAGNOSTICS),
             "anchor": int(anchor),
-            "phraseStart": round(v63.previous.group_start(groups[0]), 4) if groups else None,
+            "phraseStart": (
+                round(v63.previous.group_start(groups[0]), 4)
+                if groups
+                else None
+            ),
             "candidateCount": len(rescored),
             "winnerScore": round(rescored[0][0], 3) if rescored else None,
             "winnerPairs": rescored[0][2] if rescored else [],
