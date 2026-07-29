@@ -1,0 +1,92 @@
+{
+  "fixtureVersion": 1,
+  "name": "stairway-intro-reference",
+  "description": "Benchmark fixture for the first 12 displayed measures of the Stairway intro test clip. Exact note assignments can be expanded from a trusted human transcription without changing the evaluator.",
+  "transcriptionType": "lead",
+  "timingToleranceSeconds": 0.12,
+  "notes": [],
+  "measureExpectations": [
+    {
+      "measure": 1,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "measure": 2,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "measure": 3,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "measure": 4,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "measure": 5,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "measure": 6,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "measure": 7,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false
+    },
+    {
+      "measure": 8,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false,
+      "allowLowBassException": true
+    },
+    {
+      "measure": 9,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false,
+      "allowLowBassException": true
+    },
+    {
+      "measure": 10,
+      "preferredUpperFretMin": 5,
+      "preferredUpperFretMax": 8,
+      "allowOpenUpperStrings": false,
+      "allowLowBassException": true
+    },
+    {
+      "measure": 11,
+      "preferredUpperFretMin": 0,
+      "preferredUpperFretMax": 5,
+      "allowOpenUpperStrings": true
+    },
+    {
+      "measure": 12,
+      "preferredUpperFretMin": 0,
+      "preferredUpperFretMax": 3,
+      "allowOpenUpperStrings": true
+    }
+  ],
+  "globalExpectations": {
+    "preferredUpperPositionMin": 5,
+    "preferredUpperPositionMax": 8,
+    "maxLargeUpperPositionShifts": 2,
+    "maxUnnecessaryOpenCollapses": 1,
+    "maxUpperFretWithoutPitchRequirement": 9
+  }
+}
