@@ -9,6 +9,7 @@ not separate fretted notes.
 from __future__ import annotations
 
 import json
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -135,11 +136,20 @@ def build_technique_annotations(
 
 @app.function(image=image, timeout=600, memory=4096)
 def run_protected_analyzer(
-    audio_path: str,
+    audio_bytes: bytes,
+    audio_name: str,
     transcription_type: str,
 ) -> dict[str, Any]:
-    """Run the protected V71 Python function inside a Modal worker."""
-    return analyzer.analyze_audio_file(audio_path, transcription_type)
+    """Write uploaded audio inside the worker, then run protected V71."""
+    suffix = Path(audio_name).suffix or ".m4a"
+    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as temporary_file:
+        temporary_file.write(audio_bytes)
+        temporary_path = temporary_file.name
+
+    try:
+        return analyzer.analyze_audio_file(temporary_path, transcription_type)
+    finally:
+        Path(temporary_path).unlink(missing_ok=True)
 
 
 @app.local_entrypoint()
@@ -160,7 +170,9 @@ def main(
     audio_bytes = audio_file.read_bytes()
 
     result = run_protected_analyzer.remote(
-        str(audio_file), str(fixture.get("transcriptionType") or "lead")
+        audio_bytes,
+        audio_file.name,
+        str(fixture.get("transcriptionType") or "lead"),
     )
     contour_report = harmonic.analyse_harmonic_evidence.remote(
         audio_bytes, audio_file.name, fixture
@@ -182,7 +194,7 @@ def main(
     )
     ready_count = sum(1 for item in annotations if item["notationReady"])
     report = {
-        "benchmarkVersion": 2,
+        "benchmarkVersion": 3,
         "benchmarkType": "bend-technique-notation-handoff",
         "protectedAnalyzer": result.get("engineVersion"),
         "expectedBendCount": expected_count,
