@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from modal_analyzer_v8_section_benchmark import run_benchmark
+from modal_analyzer_v8_section_benchmark import app, run_benchmark
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -24,11 +24,14 @@ def main() -> None:
         raise FileNotFoundError(f"Missing reference fixture: {FIXTURE_PATH}")
 
     fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
-    result_bytes = run_benchmark.remote(
-        AUDIO_PATH.read_bytes(),
-        AUDIO_PATH.name,
-        fixture,
-    )
+
+    # Hydrate the Modal app before invoking the remote function.
+    with app.run():
+        result_bytes = run_benchmark.remote(
+            AUDIO_PATH.read_bytes(),
+            AUDIO_PATH.name,
+            fixture,
+        )
 
     report = json.loads(result_bytes.decode("utf-8"))
     OUTPUT_PATH.write_text(
