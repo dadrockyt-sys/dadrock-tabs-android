@@ -37,6 +37,92 @@ function buildProofTab(rowCount, transcriptionType = 'lead') {
   ).join('\n\n');
 }
 
+function cleanLabel(value) {
+  return String(value || '')
+    .replace(/[^\x20-\x7E]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function buildReadableProofGrid(measureGrid) {
+  const rows = Array.isArray(measureGrid?.rows)
+    ? measureGrid.rows
+    : [];
+
+  const readableRows = rows.map((row) => {
+    const fragments = Array.isArray(row?.fragments)
+      ? [...row.fragments]
+      : [];
+
+    fragments.sort((a, b) => {
+      const measureDifference =
+        Number(a?.measureNumber || 0) -
+        Number(b?.measureNumber || 0);
+
+      if (measureDifference !== 0) {
+        return measureDifference;
+      }
+
+      return (
+        Number(a?.rowStartRatio || 0) -
+        Number(b?.rowStartRatio || 0)
+      );
+    });
+
+    const kept = [];
+    const chordMeasures = new Set();
+    const pointMarkerKeys = new Set();
+
+    for (const fragment of fragments) {
+      const type = cleanLabel(fragment?.markerType);
+      const measureNumber = Number(fragment?.measureNumber || 0);
+      const label = cleanLabel(fragment?.label);
+
+      if (type === 'chord-label') {
+        if (!label || chordMeasures.has(measureNumber)) {
+          continue;
+        }
+
+        chordMeasures.add(measureNumber);
+        kept.push(fragment);
+        continue;
+      }
+
+      const isPointMarker =
+        type === 'muted-attack' ||
+        type === 'rest' ||
+        type === 'slide';
+
+      if (isPointMarker) {
+        const key = `${measureNumber}:${type}:${label}`;
+
+        if (pointMarkerKeys.has(key)) {
+          continue;
+        }
+
+        pointMarkerKeys.add(key);
+      }
+
+      kept.push(fragment);
+    }
+
+    return {
+      ...row,
+      fragments: kept,
+      fragmentCount: kept.length,
+      markerTypes: [...new Set(
+        kept.map((fragment) => cleanLabel(fragment?.markerType))
+      )].filter(Boolean),
+    };
+  });
+
+  return {
+    ...measureGrid,
+    rows: readableRows,
+    proofDisplayMode: 'first-chord-per-measure-deduplicated',
+  };
+}
+
 export async function GET() {
   if (process.env.NODE_ENV === 'production') {
     return NextResponse.json(
@@ -66,6 +152,7 @@ export async function GET() {
       measureGrid.rowCount,
       transcriptionType
     );
+    const readableMeasureGrid = buildReadableProofGrid(measureGrid);
 
     const pdfBytes = await createTabPdf({
       song: 'Go My Way',
@@ -77,7 +164,7 @@ export async function GET() {
       generatedTab,
       preview: false,
       enableV7MeasureGrid: true,
-      measureGrid,
+      measureGrid: readableMeasureGrid,
     });
 
     return new NextResponse(pdfBytes, {
