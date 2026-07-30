@@ -1,0 +1,45 @@
+{
+  "fixtureVersion": 1,
+  "name": "Go My Way 2 full three-part tablature reference",
+  "audioPath": "public/DadRock TABS - gomyway2test.m4a",
+  "tempoBpm": 129,
+  "notes": "Reference transcribed from the user-supplied bass, rhythm, and octave-lead screenshots. This fixture is diagnostic training ground truth and does not replace any locked green baseline.",
+  "parts": {
+    "rhythm": {
+      "register": [52, 63],
+      "requiredFrets": [0, 2, 3],
+      "allowedFrets": [0, 2, 3],
+      "expectedStrings": [1, 2, 3, 4, 5],
+      "requiredTechniques": ["bend", "release"],
+      "expectedMotifs": [
+        [2, 0, 2, 0, 2, 0, 0],
+        [2, 0, 2, 0, 2, 0, 0, 3, 3]
+      ],
+      "referenceDescription": "Open-position Em riff. G-string fret 2 full bend and release, open-string movement, D-string fret 2, and fret-3 double-stop endings."
+    },
+    "lead": {
+      "register": [64, 76],
+      "requiredFrets": [12, 14],
+      "allowedFrets": [12, 14],
+      "expectedStrings": [1, 2, 3, 4],
+      "requiredTechniques": ["bend", "release", "palm-mute"],
+      "expectedMotifs": [
+        [14, 12, 14, 14, 12, 14, 12],
+        [14, 12, 14, 14, 12, 14, 12]
+      ],
+      "referenceDescription": "Octave-higher lead around frets 12-14 with full bends, releases, and palm-muted repeated notes."
+    },
+    "bass": {
+      "register": [28, 51],
+      "requiredFrets": [5, 7],
+      "allowedFrets": [5, 7, 12, 14],
+      "expectedStrings": [0, 1, 2, 3],
+      "requiredTechniques": ["slide", "mute", "rest"],
+      "expectedMotifs": [
+        [7, 7, 7, 5, 7, 5],
+        [7, 5, 7, 7, 5, 7, 5, 7]
+      ],
+      "referenceDescription": "Bass riff centred on frets 5 and 7, with rests/dead notes and a later slide into fret 14."
+    }
+  }
+}
