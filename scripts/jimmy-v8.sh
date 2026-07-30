@@ -33,6 +33,7 @@ run_python_checks() {
     analyzer/song_section_detection_v8.py \
     analyzer/notation_cleanup_v8.py \
     analyzer/intro_motif_stabilization_v8.py \
+    analyzer/intro_fingering_normalization_v8.py \
     analyzer/professional_intro_accuracy_benchmark_v8.py \
     analyzer/modal_analyzer_v8_section_benchmark.py \
     analyzer/modal_analyzer_v8_notation_benchmark.py \
@@ -77,16 +78,20 @@ if notation_path.exists():
     notation = json.loads(notation_path.read_text())
     cleanup = notation.get("cleanupDiagnostics", {})
     motif = notation.get("motifDiagnostics", {})
+    fingering = notation.get("fingeringDiagnostics", {})
     print("Notation pass:", notation.get("passed"))
     print("Protected V7 unchanged:", notation.get("protectedBaselinesChanged") is False)
     print("Raw events:", len(notation.get("rhythmEvents", [])))
     print("Cleaned events:", len(notation.get("renderEvents", [])))
     print("Motif events:", len(notation.get("motifStabilizedEvents", [])))
+    print("Fingering events:", len(notation.get("fingeringNormalizedEvents", [])))
     print("Nearby retriggers removed:", cleanup.get("nearbyRetriggerEventsRemoved"))
     print("Intro input events:", motif.get("inputIntroEventCount"))
     print("Intro output events:", motif.get("outputIntroEventCount"))
     print("Low-support intro events rejected:", motif.get("rejectedLowSupportIntroEvents"))
     print("Repeated intro retriggers removed:", motif.get("repeatedPairRetriggersRemoved"))
+    print("Intro fingerings normalized:", fingering.get("changedIntroFingerings"))
+    print("Fingering pitch preserved:", fingering.get("pitchPreserved"))
 else:
     print("Notation report: missing")
 
@@ -95,6 +100,7 @@ print()
 if professional_path.exists():
     professional = json.loads(professional_path.read_text())
     score = professional.get("score", {})
+    print("Selected event layer:", professional.get("selectedEventLayer"))
     print("Professional intro pass:", score.get("passed"))
     print("Professional intro overall score:", score.get("overallScore"))
     print("Professional intro target:", score.get("targetScore"))
