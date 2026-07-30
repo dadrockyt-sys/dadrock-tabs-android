@@ -1,5 +1,5 @@
 {
-  "fixtureVersion": 2,
+  "fixtureVersion": 3,
   "fixtureType": "gomyway-full-song-chord-sustain-reference",
   "audioPath": "public/gomywayfullaitest.m4a",
   "transcriptionType": "rhythm",
@@ -7,6 +7,18 @@
   "tempo": 129,
   "timeSignature": "4/4",
   "expectedMeasureCount": 113,
+  "referenceSections": [
+    {"label": "Intro", "startMeasure": 1, "endMeasure": 16},
+    {"label": "Verse 1", "startMeasure": 17, "endMeasure": 32},
+    {"label": "Chorus", "startMeasure": 33, "endMeasure": 38},
+    {"label": "Riff", "startMeasure": 39, "endMeasure": 46},
+    {"label": "Verse 2", "startMeasure": 47, "endMeasure": 62},
+    {"label": "Chorus", "startMeasure": 63, "endMeasure": 69},
+    {"label": "Bridge", "startMeasure": 70, "endMeasure": 77},
+    {"label": "Solo", "startMeasure": 78, "endMeasure": 94},
+    {"label": "Riff", "startMeasure": 95, "endMeasure": 102},
+    {"label": "Ending", "startMeasure": 103, "endMeasure": 113}
+  ],
   "onsetToleranceSeconds": 0.085,
   "minimumChordNotes": 3,
   "minimumSustainSeconds": 0.35,
@@ -54,6 +66,7 @@
     "repeatedChordAttacks": true,
     "sustainTies": true,
     "preserveFullSongTimeline": true,
-    "noSyntheticNotes": true
+    "noSyntheticNotes": true,
+    "matchProfessionalSectionMap": true
   }
 }
