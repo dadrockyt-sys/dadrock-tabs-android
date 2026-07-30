@@ -33,6 +33,7 @@ run_python_checks() {
     analyzer/song_section_detection_v8.py \
     analyzer/notation_cleanup_v8.py \
     analyzer/intro_motif_stabilization_v8.py \
+    analyzer/professional_intro_accuracy_benchmark_v8.py \
     analyzer/modal_analyzer_v8_section_benchmark.py \
     analyzer/modal_analyzer_v8_notation_benchmark.py \
     analyzer/run_v8_section_benchmark.py \
@@ -45,6 +46,9 @@ run_benchmarks() {
 
   say "Running V8 notation benchmark"
   python analyzer/run_v8_notation_benchmark.py
+
+  say "Running professional intro note-accuracy benchmark"
+  python analyzer/professional_intro_accuracy_benchmark_v8.py
 }
 
 print_summary() {
@@ -56,6 +60,7 @@ from pathlib import Path
 
 section_path = Path("public/gomyway-full-song-v8-sections.json")
 notation_path = Path("public/gomyway-full-song-v8-notation.json")
+professional_path = Path("public/gomyway-full-song-v8-professional-intro-score.json")
 
 if section_path.exists():
     section = json.loads(section_path.read_text())
@@ -84,6 +89,22 @@ if notation_path.exists():
     print("Repeated intro retriggers removed:", motif.get("repeatedPairRetriggersRemoved"))
 else:
     print("Notation report: missing")
+
+print()
+
+if professional_path.exists():
+    professional = json.loads(professional_path.read_text())
+    score = professional.get("score", {})
+    print("Professional intro pass:", score.get("passed"))
+    print("Professional intro overall score:", score.get("overallScore"))
+    print("Professional intro target:", score.get("targetScore"))
+    print("Note identity recall:", score.get("identityRecall"))
+    print("Note identity precision:", score.get("identityPrecision"))
+    print("Timing accuracy:", score.get("timingAccuracy"))
+    print("Technique accuracy:", score.get("techniqueAccuracy"))
+    print("False positives:", score.get("falsePositiveCount"))
+else:
+    print("Professional intro report: missing")
 PY
 }
 
@@ -135,7 +156,7 @@ Usage: bash scripts/jimmy-v8.sh <mode>
 
 Modes:
   sync     Pull the current Jimmy PAIge V8 branch.
-  test     Pull, compile Python, run both benchmarks, and print results.
+  test     Pull, compile Python, run all benchmarks, and print results.
   build    Run test mode and then yarn build.
   preview  Run build mode and then start yarn dev on port 3000.
   rerun    Skip git pull; rerun checks, benchmarks, and build.
