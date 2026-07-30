@@ -22,8 +22,19 @@ sync_branch() {
   current_branch="$(git branch --show-current)"
   [[ "$current_branch" == "$BRANCH" ]] || fail "Expected branch $BRANCH, found $current_branch"
 
+  before_pull="$(git rev-parse HEAD)"
   git pull --ff-only origin "$BRANCH"
+  after_pull="$(git rev-parse HEAD)"
   git log -1 --oneline
+
+  # A running Bash process keeps the old script body in memory even when
+  # git pull replaces this file. Re-exec the freshly pulled workflow once so
+  # new benchmark stages and summary fields take effect immediately.
+  if [[ "$before_pull" != "$after_pull" && "${JIMMY_V8_REEXECUTED:-0}" != "1" ]]; then
+    say "Reloading updated Jimmy PAIge workflow"
+    export JIMMY_V8_REEXECUTED=1
+    exec bash "$REPO_ROOT/scripts/jimmy-v8.sh" "$MODE"
+  fi
 }
 
 run_python_checks() {
@@ -54,6 +65,7 @@ run_benchmarks() {
 
 print_summary() {
   say "Jimmy PAIge V8 benchmark summary"
+  printf 'Workflow commit: %s\n' "$(git rev-parse --short HEAD)"
 
   python - <<'PY'
 import json
@@ -79,6 +91,7 @@ if notation_path.exists():
     cleanup = notation.get("cleanupDiagnostics", {})
     motif = notation.get("motifDiagnostics", {})
     fingering = notation.get("fingeringDiagnostics", {})
+    print("Notation benchmark type:", notation.get("benchmarkType"))
     print("Notation pass:", notation.get("passed"))
     print("Protected V7 unchanged:", notation.get("protectedBaselinesChanged") is False)
     print("Raw events:", len(notation.get("rhythmEvents", [])))
