@@ -10,7 +10,6 @@ PAIR_LENGTH = 2
 PAIR_COUNT = 8
 MIN_PAIR_SUPPORT = 3
 MAX_PAIR_PHASE_SHIFT = 4
-RHYTHM_SLOT_SIZE = 2
 
 Signature = tuple[int, int, int, int]
 
@@ -37,25 +36,58 @@ def _measure_offset(measure_number: int) -> int:
     return (measure_number - INTRO_START_MEASURE) % PAIR_LENGTH
 
 
-def _rhythm_slot(event: dict[str, Any]) -> int:
-    """Return a tolerant rhythmic identity for repeated attacks.
+def _annotate_occurrence_ranks(
+    intro_events: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Number repeated attacks by order inside each measure/string/fret lane.
 
-    The previous V8 signature used only measure offset, string and fret. That
-    collapsed every repeated attack of the same note inside a measure into one
-    event. A two-step slot keeps separate attacks while still tolerating small
-    onset drift between repeated two-measure pairs.
+    Fixed time buckets preserved noise whenever an onset happened to land in the
+    same broad slot. Occurrence order instead compares the first attack with the
+    first attack, the second with the second, and so on across all repeated
+    two-measure intro pairs. No notes are synthesized and source pitch is kept.
     """
 
-    step = max(0, min(15, _safe_int(event.get("quantizedStep"))))
-    return int(round(step / RHYTHM_SLOT_SIZE)) * RHYTHM_SLOT_SIZE
+    grouped: dict[tuple[int, int, int], list[dict[str, Any]]] = defaultdict(list)
+    for event in intro_events:
+        key = (
+            _safe_int(event.get("measureNumber")),
+            _safe_int(event.get("stringIndex")),
+            _safe_int(event.get("fret")),
+        )
+        grouped[key].append(event)
+
+    annotated: list[dict[str, Any]] = []
+    for events in grouped.values():
+        events.sort(
+            key=lambda event: (
+                _safe_int(event.get("quantizedStep")),
+                _safe_float(event.get("startTime")),
+                _safe_int(event.get("sourceEventIndex")),
+            )
+        )
+        for occurrence_rank, event in enumerate(events):
+            item = dict(event)
+            item["motifOccurrenceRank"] = occurrence_rank
+            annotated.append(item)
+
+    annotated.sort(
+        key=lambda event: (
+            _safe_int(event.get("measureNumber")),
+            _safe_int(event.get("quantizedStep")),
+            _safe_int(event.get("stringIndex")),
+            _safe_int(event.get("fret")),
+            _safe_int(event.get("motifOccurrenceRank")),
+        )
+    )
+    return annotated
 
 
 def _signature(event: dict[str, Any]) -> Signature:
     return (
         _measure_offset(_safe_int(event.get("measureNumber"), 1)),
-        _rhythm_slot(event),
         _safe_int(event.get("stringIndex")),
         _safe_int(event.get("fret")),
+        _safe_int(event.get("motifOccurrenceRank")),
     )
 
 
@@ -77,11 +109,8 @@ def _best_event_per_pair_signature(
         signature = _signature(event)
         key = (pair_id, signature)
         previous = best.get(key)
-        target_step = signature[1]
-        if previous is None or _event_quality(event, target_step) > _event_quality(
-            previous,
-            target_step,
-        ):
+        step = _safe_int(event.get("quantizedStep"))
+        if previous is None or _event_quality(event, step) > _event_quality(previous, step):
             best[key] = event
     return best
 
@@ -137,11 +166,12 @@ def _estimate_pair_phase_offsets(
 def stabilize_intro_motif(
     render_events: list[dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    """Stabilize the repeated measures 1-16 intro without synthesizing notes.
+    """Stabilize measures 1-16 using ordered repeated-attack consensus.
 
-    V8 aligns each repeated two-measure pair to the strongest observed pair,
-    computes rhythmic consensus, and preserves separate repeated attacks by
-    including a tolerant rhythmic slot in each motif signature.
+    Each two-measure pair is aligned to the strongest observed pair. Repeated
+    attacks are matched by occurrence order within their measure/string/fret
+    lane, then retained only when that ordered attack appears in enough pairs.
+    This avoids both the old one-note collapse and the noisy fixed-slot method.
     """
 
     intro_events = [
@@ -161,10 +191,12 @@ def stabilize_intro_motif(
         )
     ]
 
+    ranked_intro = _annotate_occurrence_ranks(intro_events)
+
     observations: dict[Signature, list[dict[str, Any]]] = defaultdict(list)
     pair_presence: dict[Signature, set[int]] = defaultdict(set)
 
-    for event in intro_events:
+    for event in ranked_intro:
         signature = _signature(event)
         observations[signature].append(event)
         pair_presence[signature].add(
@@ -181,7 +213,7 @@ def stabilize_intro_motif(
         if count >= MIN_PAIR_SUPPORT
     }
 
-    best_initial = _best_event_per_pair_signature(intro_events)
+    best_initial = _best_event_per_pair_signature(ranked_intro)
     canonical_pair = _choose_canonical_pair(best_initial, accepted_signatures)
     pair_phase_offsets = _estimate_pair_phase_offsets(
         best_initial,
@@ -208,34 +240,15 @@ def stabilize_intro_motif(
         for signature in accepted_signatures
     }
 
-    slot_candidates: dict[tuple[int, int, int], list[Signature]] = defaultdict(list)
-    for signature in accepted_signatures:
-        offset, _slot, string_index, _fret = signature
-        slot_candidates[(offset, median_steps[signature], string_index)].append(signature)
-
-    dominant_signatures: set[Signature] = set()
-    conflicting_signatures_removed = 0
-    for candidates in slot_candidates.values():
-        winner = max(
-            candidates,
-            key=lambda signature: (
-                support_counts[signature],
-                len(observations[signature]),
-                -signature[3],
-            ),
-        )
-        dominant_signatures.add(winner)
-        conflicting_signatures_removed += max(0, len(candidates) - 1)
-
     best_by_pair_and_signature: dict[
         tuple[int, Signature],
         dict[str, Any],
     ] = {}
     repeated_retriggers_removed = 0
 
-    for event in intro_events:
+    for event in ranked_intro:
         signature = _signature(event)
-        if signature not in dominant_signatures:
+        if signature not in accepted_signatures:
             continue
 
         pair_id = _pair_index(_safe_int(event.get("measureNumber"), INTRO_START_MEASURE))
@@ -260,7 +273,6 @@ def stabilize_intro_motif(
         phase_offset = pair_phase_offsets.get(pair_id, 0)
         item = dict(event)
         item["motifOriginalStep"] = original_step
-        item["motifRhythmSlot"] = signature[1]
         item["motifPairPhaseOffset"] = phase_offset
         item["motifConsensusStep"] = target_step
         item["motifSupportPairs"] = support_counts[signature]
@@ -305,12 +317,17 @@ def stabilize_intro_motif(
         )
     )
 
+    occurrence_histogram = Counter(
+        _safe_int(event.get("motifOccurrenceRank"))
+        for event in stabilized_intro
+    )
+
     diagnostics = {
         "introMeasureRange": [INTRO_START_MEASURE, INTRO_END_MEASURE],
         "pairLengthMeasures": PAIR_LENGTH,
         "pairCount": PAIR_COUNT,
         "minimumPairSupport": MIN_PAIR_SUPPORT,
-        "rhythmSlotSize": RHYTHM_SLOT_SIZE,
+        "matchingStrategy": "ordered-occurrence-consensus",
         "canonicalPairIndex": canonical_pair,
         "pairPhaseOffsets": {str(key): value for key, value in sorted(pair_phase_offsets.items())},
         "maximumPairPhaseShift": MAX_PAIR_PHASE_SHIFT,
@@ -318,13 +335,13 @@ def stabilize_intro_motif(
         "inputIntroEventCount": len(intro_events),
         "outputIntroEventCount": len(deduped),
         "rejectedLowSupportIntroEvents": sum(
-            1 for event in intro_events if _signature(event) not in accepted_signatures
+            1 for event in ranked_intro if _signature(event) not in accepted_signatures
         ),
-        "conflictingMotifSignaturesRemoved": conflicting_signatures_removed,
         "repeatedPairRetriggersRemoved": repeated_retriggers_removed,
         "medianSnapDuplicatesRemoved": snap_duplicates_removed,
         "medianSnappedIntroEvents": moved_count,
-        "acceptedMotifSignatureCount": len(dominant_signatures),
+        "acceptedMotifSignatureCount": len(accepted_signatures),
+        "acceptedOccurrenceRankHistogram": dict(sorted(occurrence_histogram.items())),
         "motifEventCount": len(motif_events),
         "supportHistogram": dict(sorted(Counter(support_counts.values()).items())),
         "readOnly": True,
