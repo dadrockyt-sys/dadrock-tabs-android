@@ -8,7 +8,6 @@ INTRO_START_MEASURE = 1
 INTRO_END_MEASURE = 16
 PAIR_LENGTH = 2
 MIN_PAIR_SUPPORT = 3
-STEP_TOLERANCE = 1
 
 
 def _safe_int(value: Any, fallback: int = 0) -> int:
@@ -41,14 +40,24 @@ def _signature(event: dict[str, Any]) -> tuple[int, int, int]:
     )
 
 
+def _event_quality(event: dict[str, Any], target_step: int) -> tuple[float, float, float, int]:
+    return (
+        -abs(_safe_int(event.get("quantizedStep")) - target_step),
+        _safe_float(event.get("confidence")),
+        _safe_float(event.get("duration")),
+        -_safe_int(event.get("sourceEventIndex")),
+    )
+
+
 def stabilize_intro_motif(
     render_events: list[dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    """Stabilize repeated intro drawing events without changing source notes.
+    """Stabilize the repeated measures 1-16 intro without synthesizing notes.
 
-    Only measures 1-16 are considered. Events outside the intro pass through unchanged.
-    Inside the intro, note identities must repeat across at least three two-measure pairs.
-    Surviving attacks are snapped to the median sixteenth-note step for that identity.
+    The protected source events remain untouched. Inside the intro, a note identity must
+    occur in at least three two-measure pairs. Each accepted identity receives one median
+    rhythmic slot, one best evidence event per pair, and one dominant fret choice per
+    string/slot. Measures outside the intro pass through unchanged.
     """
 
     intro_events = [
@@ -89,48 +98,79 @@ def stabilize_intro_motif(
     }
 
     median_steps = {
-        signature: int(
-            round(
-                median(
-                    _safe_int(event.get("quantizedStep"))
-                    for event in observations[signature]
-                )
-            )
-        )
+        signature: int(round(median(
+            _safe_int(event.get("quantizedStep"))
+            for event in observations[signature]
+        )))
         for signature in accepted_signatures
     }
 
-    stabilized_intro: list[dict[str, Any]] = []
-    rejected_intro: list[dict[str, Any]] = []
-    moved_count = 0
+    # When competing frets land on the same string and consensus slot, retain the
+    # identity supported by the most repeated pairs. This suppresses analyzer drift
+    # without inventing a replacement note.
+    slot_candidates: dict[tuple[int, int, int], list[tuple[int, int, int]]] = defaultdict(list)
+    for signature in accepted_signatures:
+        offset, string_index, _fret = signature
+        slot_candidates[(offset, median_steps[signature], string_index)].append(signature)
+
+    dominant_signatures: set[tuple[int, int, int]] = set()
+    conflicting_signatures_removed = 0
+    for candidates in slot_candidates.values():
+        winner = max(
+            candidates,
+            key=lambda signature: (
+                support_counts[signature],
+                len(observations[signature]),
+                -signature[2],
+            ),
+        )
+        dominant_signatures.add(winner)
+        conflicting_signatures_removed += max(0, len(candidates) - 1)
+
+    # Keep at most one evidence event for each accepted identity in each repeated pair.
+    best_by_pair_and_signature: dict[
+        tuple[int, tuple[int, int, int]],
+        dict[str, Any],
+    ] = {}
+    repeated_retriggers_removed = 0
 
     for event in intro_events:
         signature = _signature(event)
-        if signature not in accepted_signatures:
-            rejected_intro.append(event)
+        if signature not in dominant_signatures:
             continue
 
+        pair_id = _pair_index(_safe_int(event.get("measureNumber"), INTRO_START_MEASURE))
+        key = (pair_id, signature)
+        target_step = median_steps[signature]
+        previous = best_by_pair_and_signature.get(key)
+
+        if previous is None or _event_quality(event, target_step) > _event_quality(previous, target_step):
+            if previous is not None:
+                repeated_retriggers_removed += 1
+            best_by_pair_and_signature[key] = event
+        else:
+            repeated_retriggers_removed += 1
+
+    stabilized_intro: list[dict[str, Any]] = []
+    moved_count = 0
+
+    for (_pair_id, signature), event in best_by_pair_and_signature.items():
         target_step = median_steps[signature]
         original_step = _safe_int(event.get("quantizedStep"))
-        if abs(original_step - target_step) <= STEP_TOLERANCE:
-            resolved_step = target_step
-        else:
-            # Keep evidence-backed outliers rather than forcing a large timing change.
-            resolved_step = original_step
-
         item = dict(event)
         item["motifOriginalStep"] = original_step
         item["motifConsensusStep"] = target_step
         item["motifSupportPairs"] = support_counts[signature]
         item["motifStabilized"] = True
-        item["quantizedStep"] = resolved_step
-        item["positionInMeasure"] = round(resolved_step / 16.0, 6)
-        if resolved_step != original_step:
+        item["quantizedStep"] = target_step
+        item["positionInMeasure"] = round(target_step / 16.0, 6)
+        if target_step != original_step:
             moved_count += 1
         stabilized_intro.append(item)
 
-    # Remove exact duplicates introduced by median snapping while keeping best source evidence.
+    # Median snapping can place two retained evidence events on the same note slot.
     deduped: dict[tuple[int, int, int, int], dict[str, Any]] = {}
+    snap_duplicates_removed = 0
     for event in stabilized_intro:
         key = (
             _safe_int(event.get("measureNumber")),
@@ -139,17 +179,15 @@ def stabilize_intro_motif(
             _safe_int(event.get("fret")),
         )
         previous = deduped.get(key)
-        quality = (
-            _safe_float(event.get("confidence")),
-            _safe_float(event.get("duration")),
-            -_safe_int(event.get("sourceEventIndex")),
-        )
-        previous_quality = (
-            _safe_float(previous.get("confidence")),
-            _safe_float(previous.get("duration")),
-            -_safe_int(previous.get("sourceEventIndex")),
-        ) if previous else None
-        if previous is None or quality > previous_quality:
+        if previous is None:
+            deduped[key] = event
+            continue
+
+        snap_duplicates_removed += 1
+        if _event_quality(event, _safe_int(event.get("quantizedStep"))) > _event_quality(
+            previous,
+            _safe_int(previous.get("quantizedStep")),
+        ):
             deduped[key] = event
 
     motif_events = list(deduped.values()) + outside_events
@@ -169,9 +207,14 @@ def stabilize_intro_motif(
         "minimumPairSupport": MIN_PAIR_SUPPORT,
         "inputIntroEventCount": len(intro_events),
         "outputIntroEventCount": len(deduped),
-        "rejectedLowSupportIntroEvents": len(rejected_intro),
+        "rejectedLowSupportIntroEvents": sum(
+            1 for event in intro_events if _signature(event) not in accepted_signatures
+        ),
+        "conflictingMotifSignaturesRemoved": conflicting_signatures_removed,
+        "repeatedPairRetriggersRemoved": repeated_retriggers_removed,
+        "medianSnapDuplicatesRemoved": snap_duplicates_removed,
         "medianSnappedIntroEvents": moved_count,
-        "acceptedMotifSignatureCount": len(accepted_signatures),
+        "acceptedMotifSignatureCount": len(dominant_signatures),
         "motifEventCount": len(motif_events),
         "supportHistogram": dict(sorted(Counter(support_counts.values()).items())),
         "readOnly": True,
