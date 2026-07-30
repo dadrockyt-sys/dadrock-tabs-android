@@ -38,13 +38,24 @@ def bind_marker(
     segment_end = min(song_duration, segment_start + segment_seconds)
     segment_duration = max(0.0001, segment_end - segment_start)
 
+    clipped_end = min(end, segment_end)
+    spans_following_segments = end > segment_end
+
     bound = dict(marker)
     bound.update({
         "layoutSegmentIndex": segment_index,
         "layoutSegmentStart": round(segment_start, 4),
         "layoutSegmentEnd": round(segment_end, 4),
-        "layoutStartRatio": round((start - segment_start) / segment_duration, 6),
-        "layoutEndRatio": round((end - segment_start) / segment_duration, 6),
+        "layoutStartRatio": round(
+            max(0.0, min(1.0, (start - segment_start) / segment_duration)),
+            6,
+        ),
+        "layoutEndRatio": round(
+            max(0.0, min(1.0, (clipped_end - segment_start) / segment_duration)),
+            6,
+        ),
+        "layoutOriginalEnd": round(end, 4),
+        "layoutSpansFollowingSegments": spans_following_segments,
         "layoutBindingMode": "read-only-time-segment",
         "layoutBindingReadOnly": True,
     })
@@ -148,6 +159,11 @@ def build_binding(
             "markers": len(bound_markers),
             "eventLinkedMarkers": len(event_linked),
             "occupiedSegments": sum(1 for segment in segments if segment.get("markerCount")),
+            "markersSpanningFollowingSegments": sum(
+                1
+                for marker in bound_markers
+                if marker.get("layoutSpansFollowingSegments") is True
+            ),
         },
         "checks": checks,
         "passed": all(checks.values()),
@@ -157,8 +173,9 @@ def build_binding(
         "protectedBaselinesChanged": False,
         "trainingRule": (
             "Notation markers may be bound to deterministic printable time segments only. "
-            "The binding must not alter production events, generated tab, pitches, frets, "
-            "timing, note count, or PDF rendering."
+            "Spans that continue beyond the starting segment are clipped for layout ratios "
+            "while retaining their original end time. The binding must not alter production "
+            "events, generated tab, pitches, frets, timing, note count, or PDF rendering."
         ),
     }
 
