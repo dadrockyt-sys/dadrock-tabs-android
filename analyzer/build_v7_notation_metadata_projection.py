@@ -135,6 +135,11 @@ def build_projection(timeline: dict[str, Any]) -> dict[str, Any]:
         "sourceBenchmarkType": timeline.get("benchmarkType"),
         "rhythmVocabulary": timeline.get("rhythmVocabulary") or [],
         "rhythmPromotions": timeline.get("rhythmPromotions") or {},
+        "noteEvents": [
+            dict(item)
+            for item in (timeline.get("leadEvents") or [])
+            if isinstance(item, dict)
+        ],
         "notationMetadata": {
             "chordLabels": harmony_markers,
             "leadBendReleaseMarkers": lead_release_markers,
@@ -149,6 +154,7 @@ def build_projection(timeline: dict[str, Any]) -> dict[str, Any]:
             "leadPalmMutedEvents": int(timeline.get("leadPalmMutedEventCount") or 0),
             "bassMarkers": len(bass_markers),
             "allMarkers": len(all_markers),
+            "noteEvents": len(timeline.get("leadEvents") or []),
         },
         "checks": checks,
         "passed": all(checks.values()),

@@ -31,6 +31,26 @@ def event_end(event: dict[str, Any]) -> float:
     return max(start, float(event.get("end") or event.get("end_time") or start))
 
 
+def project_note_event(event: dict[str, Any], event_index: int) -> dict[str, Any]:
+    return {
+        "eventIndex": event_index,
+        "start": round(event_start(event), 6),
+        "end": round(event_end(event), 6),
+        "stringIndex": int(event.get("stringIndex") or event.get("string_index") or 0),
+        "fret": int(event.get("fret") or 0),
+        "midiPitch": int(event.get("midiPitch") or event.get("pitch") or 0),
+        "confidence": round(float(
+            event.get("confidence")
+            or event.get("noteConfidence")
+            or event.get("probability")
+            or event.get("amplitude")
+            or event.get("velocity")
+            or 0.0
+        ), 6),
+        "readOnly": True,
+    }
+
+
 def ordered_events(result: dict[str, Any]) -> list[dict[str, Any]]:
     return sorted(
         [event for event in (result.get("events") or []) if isinstance(event, dict)],
@@ -223,6 +243,10 @@ def run_benchmark(
         "leadReleaseRanges": lead_release_ranges,
         "leadPalmMuteClusters": palm_clusters,
         "leadPalmMutedEventCount": len(palm_indices),
+        "leadEvents": [
+            project_note_event(event, index)
+            for index, event in enumerate(lead_events)
+        ],
         "bassPoints": bass_points,
         "checks": checks,
         "passed": all(checks.values()),
