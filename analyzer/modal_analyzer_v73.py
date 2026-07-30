@@ -14,6 +14,10 @@ app = modal.App("dadrock-tab-analyzer-v73-candidate")
 image = (
     base.image
     .add_local_python_source("modal_analyzer_v72")
+    .add_local_python_source("modal_analyzer_v15")
+    .add_local_python_source("modal_analyzer_v19")
+    .add_local_python_source("modal_analyzer_v46")
+    .add_local_python_source("modal_gomyway2_full_reference_benchmark")
     .add_local_python_source("modal_gomyway2_octave_lead_voicing_benchmark")
     .add_local_python_source("modal_gomyway2_lead_technique_handoff_benchmark_v3")
     .add_local_python_source("modal_gomyway2_rhythm_open_position_benchmark")
