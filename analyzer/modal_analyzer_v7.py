@@ -21,6 +21,9 @@ try:
     from production_lead_technique_diagnostics import (
         attach_lead_technique_diagnostics,
     )
+    from production_bass_technique_diagnostics import (
+        attach_bass_technique_diagnostics,
+    )
 except ImportError:
     from analyzer.modal_analyzer import (
         MAX_AUDIO_SIZE_BYTES,
@@ -34,6 +37,9 @@ except ImportError:
     )
     from analyzer.production_lead_technique_diagnostics import (
         attach_lead_technique_diagnostics,
+    )
+    from analyzer.production_bass_technique_diagnostics import (
+        attach_bass_technique_diagnostics,
     )
 
 
@@ -54,6 +60,8 @@ image = (
         "reference_aware_harmony",
         "production_lead_technique_diagnostics",
         "lead_technique_diagnostics_v7",
+        "production_bass_technique_diagnostics",
+        "bass_technique_diagnostics_v7",
     )
 )
 
@@ -133,6 +141,12 @@ def normalize_lead_technique_context(
     return enabled, bend_evidence
 
 
+def normalize_bass_technique_context(payload: dict[str, Any]) -> bool:
+    """Accept the bass-technique opt-in only when it is an explicit boolean."""
+
+    return payload.get("enableReferenceGuidedBassTechniques") is True
+
+
 def analyze_audio_file(
     audio_path: str,
     transcription_type: str,
@@ -141,6 +155,7 @@ def analyze_audio_file(
     *,
     enable_reference_guided_lead_techniques: bool = False,
     bend_evidence_present: bool = False,
+    enable_reference_guided_bass_techniques: bool = False,
 ) -> dict[str, Any]:
     """Run V6 analysis, then attach opt-in read-only V7 diagnostics."""
 
@@ -156,13 +171,21 @@ def analyze_audio_file(
         expected_progression=expected_progression,
     )
 
-    return attach_lead_technique_diagnostics(
+    result = attach_lead_technique_diagnostics(
         result,
         transcription_type,
         enable_reference_guided_techniques=(
             enable_reference_guided_lead_techniques
         ),
         bend_evidence_present=bend_evidence_present,
+    )
+
+    return attach_bass_technique_diagnostics(
+        result,
+        transcription_type,
+        enable_reference_guided_techniques=(
+            enable_reference_guided_bass_techniques
+        ),
     )
 
 
@@ -226,6 +249,9 @@ def analyze(payload: dict) -> dict:
         enable_reference_guided_lead_techniques,
         bend_evidence_present,
     ) = normalize_lead_technique_context(payload)
+    enable_reference_guided_bass_techniques = (
+        normalize_bass_technique_context(payload)
+    )
 
     suffix = Path(audio_url).suffix.lower()
 
@@ -312,6 +338,9 @@ def analyze(payload: dict) -> dict:
                     enable_reference_guided_lead_techniques
                 ),
                 bend_evidence_present=bend_evidence_present,
+                enable_reference_guided_bass_techniques=(
+                    enable_reference_guided_bass_techniques
+                ),
             )
         except ValueError as error:
             raise HTTPException(
