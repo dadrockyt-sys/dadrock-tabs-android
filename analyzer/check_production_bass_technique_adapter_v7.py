@@ -58,9 +58,9 @@ def main() -> None:
             == "diagnostic-only"
         ),
         "detectsFiveSevenContour": (
-            analysis.get("fiveSevenContourDetected") is True
+            analysis.get("contour5And7Detected") is True
         ),
-        "detectsSlideTarget": analysis.get("slideTargetDetected") is True,
+        "detectsSlideTarget": analysis.get("slideDetected") is True,
         "detectsMutedAttack": analysis.get("mutedAttackDetected") is True,
         "detectsRest": analysis.get("restDetected") is True,
         "tabUnchanged": contextual.get("generatedTab") == before["generatedTab"],
