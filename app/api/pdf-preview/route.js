@@ -28,25 +28,40 @@ async function loadNotationBenchmark() {
   try {
     const raw = await fs.readFile(notationPath, 'utf8');
     const report = JSON.parse(raw);
+    const motifEvents = Array.isArray(report.motifStabilizedEvents)
+      ? report.motifStabilizedEvents
+      : [];
     const renderEvents = Array.isArray(report.renderEvents)
       ? report.renderEvents
       : [];
     const rhythmEvents = Array.isArray(report.rhythmEvents)
       ? report.rhythmEvents
       : [];
-    const selectedEvents = renderEvents.length > 0
-      ? renderEvents
-      : rhythmEvents;
+    const selectedEvents = motifEvents.length > 0
+      ? motifEvents
+      : renderEvents.length > 0
+        ? renderEvents
+        : rhythmEvents;
     const cleanup = report.cleanupDiagnostics || {};
+    const motif = report.motifDiagnostics || {};
 
     return {
       selectedEvents,
       rawEventCount: rhythmEvents.length,
-      renderEventCount: selectedEvents.length,
+      cleanedEventCount: renderEvents.length,
+      motifEventCount: motifEvents.length,
+      selectedEventCount: selectedEvents.length,
       usedCleanedEvents: renderEvents.length > 0,
+      usedMotifEvents: motifEvents.length > 0,
       passed: report.passed === true,
       nearbyRetriggersRemoved: Number(
         cleanup.nearbyRetriggerEventsRemoved || 0
+      ),
+      rejectedIntroEvents: Number(
+        motif.rejectedLowSupportIntroEvents || 0
+      ),
+      medianSnappedIntroEvents: Number(
+        motif.medianSnappedIntroEvents || 0
       ),
     };
   } catch (error) {
@@ -54,10 +69,15 @@ async function loadNotationBenchmark() {
       return {
         selectedEvents: [],
         rawEventCount: 0,
-        renderEventCount: 0,
+        cleanedEventCount: 0,
+        motifEventCount: 0,
+        selectedEventCount: 0,
         usedCleanedEvents: false,
+        usedMotifEvents: false,
         passed: false,
         nearbyRetriggersRemoved: 0,
+        rejectedIntroEvents: 0,
+        medianSnappedIntroEvents: 0,
       };
     }
     throw error;
@@ -84,19 +104,34 @@ export async function GET() {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition':
-          'inline; filename="jimmy-paige-v8-notation-cleanup-pass-2.pdf"',
+          'inline; filename="jimmy-paige-v8-intro-motif-pass-3.pdf"',
         'Cache-Control': 'no-store, no-cache, must-revalidate',
         'X-Jimmy-Paige-Notation-Raw-Events': String(
           notation.rawEventCount
         ),
-        'X-Jimmy-Paige-Notation-Render-Events': String(
-          notation.renderEventCount
+        'X-Jimmy-Paige-Notation-Cleaned-Events': String(
+          notation.cleanedEventCount
+        ),
+        'X-Jimmy-Paige-Notation-Motif-Events': String(
+          notation.motifEventCount
+        ),
+        'X-Jimmy-Paige-Notation-Selected-Events': String(
+          notation.selectedEventCount
         ),
         'X-Jimmy-Paige-Notation-Cleaned': String(
           notation.usedCleanedEvents
         ),
+        'X-Jimmy-Paige-Notation-Motif-Stabilized': String(
+          notation.usedMotifEvents
+        ),
         'X-Jimmy-Paige-Retriggers-Removed': String(
           notation.nearbyRetriggersRemoved
+        ),
+        'X-Jimmy-Paige-Intro-Events-Rejected': String(
+          notation.rejectedIntroEvents
+        ),
+        'X-Jimmy-Paige-Intro-Events-Median-Snapped': String(
+          notation.medianSnappedIntroEvents
         ),
         'X-Jimmy-Paige-Notation-Passed': String(notation.passed),
       },
