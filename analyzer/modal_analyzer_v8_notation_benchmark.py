@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 import modal
+import intro_fingering_normalization_v8 as fingering_normalizer
 import intro_motif_stabilization_v8 as motif_stabilizer
 import modal_analyzer_v7 as analyzer
 import notation_cleanup_v8 as notation_cleanup
@@ -25,6 +26,7 @@ image = analyzer.image.add_local_python_source(
     "song_section_detection_v8",
     "notation_cleanup_v8",
     "intro_motif_stabilization_v8",
+    "intro_fingering_normalization_v8",
 )
 
 STANDARD_GUITAR_OPEN_MIDI = (64, 59, 55, 50, 45, 40)
@@ -174,8 +176,9 @@ def run_benchmark(
         for index, event in enumerate(rhythm_events)
     ]
     render_events, cleanup = notation_cleanup.clean_render_events(projected_events)
-    motif_events, motif_diagnostics = motif_stabilizer.stabilize_intro_motif(
-        render_events
+    motif_events, motif_diagnostics = motif_stabilizer.stabilize_intro_motif(render_events)
+    fingering_events, fingering_diagnostics = (
+        fingering_normalizer.normalize_intro_fingering(motif_events)
     )
 
     fingerprints = section_detector.build_measure_fingerprints(
@@ -204,6 +207,10 @@ def run_benchmark(
         int(event.get("sourceEventIndex", -1)) in projected_by_index
         for event in motif_events
     )
+    fingering_traceable = all(
+        int(event.get("sourceEventIndex", -1)) in projected_by_index
+        for event in fingering_events
+    )
     source_values_preserved = all(
         int(event.get("stringIndex", -1))
         == int(projected_by_index[int(event["sourceEventIndex"])]["stringIndex"])
@@ -213,12 +220,21 @@ def run_benchmark(
         == int(projected_by_index[int(event["sourceEventIndex"])]["midiPitch"])
         for event in motif_events
     )
+    fingering_pitch_preserved = all(
+        int(event.get("midiPitch", -1))
+        == STANDARD_GUITAR_OPEN_MIDI[int(event.get("stringIndex", 0))]
+        + int(event.get("fret", 0))
+        for event in fingering_events
+        if 1 <= int(event.get("measureNumber", 0)) <= 16
+        and 0 <= int(event.get("stringIndex", -1)) < 6
+    )
 
     checks = {
         "rhythmProductionUnchanged": production_unchanged,
         "rhythmEventsPresent": bool(projected_events),
         "renderEventsPresent": bool(render_events),
         "motifEventsPresent": bool(motif_events),
+        "fingeringEventsPresent": bool(fingering_events),
         "eventsWithinMeasureGrid": all(
             1 <= int(event["measureNumber"]) <= total_measures
             and 0.0 <= float(event["positionInMeasure"]) < 1.0
@@ -229,21 +245,29 @@ def run_benchmark(
             and 0.0 <= float(event["positionInMeasure"]) < 1.0
             for event in motif_events
         ),
+        "fingeringEventsWithinMeasureGrid": all(
+            1 <= int(event["measureNumber"]) <= total_measures
+            and 0.0 <= float(event["positionInMeasure"]) < 1.0
+            for event in fingering_events
+        ),
         "validStringAndFret": all(
             0 <= int(event["stringIndex"]) <= 5 and int(event["fret"]) >= 0
-            for event in motif_events
+            for event in fingering_events
         ),
         "renderEventsTraceable": render_traceable,
         "motifEventsTraceable": motif_traceable,
+        "fingeringEventsTraceable": fingering_traceable,
         "sourcePitchStringAndFretPreserved": source_values_preserved,
+        "fingeringPitchPreserved": fingering_pitch_preserved,
         "motifCountDoesNotExceedCleaned": len(motif_events) <= len(render_events),
+        "fingeringCountMatchesMotif": len(fingering_events) == len(motif_events),
         "sectionsPresent": bool(sections),
         "noSyntheticNotes": rhythm_analysis.get("noSyntheticNotes") is True,
     }
 
     report = {
         "benchmarkVersion": 8,
-        "benchmarkType": "v8-read-only-rhythm-intro-motif-stabilization",
+        "benchmarkType": "v8-read-only-rhythm-intro-fingering-normalization",
         "audioName": audio_name,
         "tempo": tempo,
         "timeSignature": time_signature,
@@ -253,17 +277,19 @@ def run_benchmark(
         "rhythmEvents": projected_events,
         "renderEvents": render_events,
         "motifStabilizedEvents": motif_events,
+        "fingeringNormalizedEvents": fingering_events,
         "cleanupDiagnostics": cleanup,
         "motifDiagnostics": motif_diagnostics,
+        "fingeringDiagnostics": fingering_diagnostics,
         "harmonyRanges": harmony_ranges,
         "checks": checks,
         "passed": all(checks.values()),
         "protectedBaselinesChanged": False,
         "trainingRule": (
-            "V8 motif events are traceable read-only derivatives of locked V7 rhythm events. "
-            "The intro layer may reject low-support drawing events and median-snap repeated "
-            "attack positions, but must never alter protected analyzer output or source pitch, "
-            "fret, string, confidence, timing evidence, generated tab, or source event count."
+            "V8 display events are traceable read-only derivatives of locked V7 rhythm events. "
+            "The fingering layer may choose an equivalent string/fret location for the same MIDI "
+            "pitch, but must preserve source pitch, timing evidence, measure, event traceability, "
+            "generated tab, protected analyzer output, and source event count."
         ),
     }
     return json.dumps(report, separators=(",", ":")).encode("utf-8")
