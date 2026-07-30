@@ -34,7 +34,7 @@ def run_one(
     audio_bytes: bytes,
     audio_name: str,
     *,
-    enable_reference_guided_techniques: bool,
+    enable_reference_guided_lead_techniques: bool,
     bend_evidence_present: bool,
 ) -> dict[str, Any]:
     suffix = Path(audio_name).suffix or ".m4a"
@@ -46,8 +46,8 @@ def run_one(
         return analyzer.analyze_audio_file(
             temporary_path,
             "lead",
-            enable_reference_guided_techniques=(
-                enable_reference_guided_techniques
+            enable_reference_guided_lead_techniques=(
+                enable_reference_guided_lead_techniques
             ),
             bend_evidence_present=bend_evidence_present,
         )
@@ -60,19 +60,19 @@ def run_benchmark(audio_bytes: bytes, audio_name: str) -> bytes:
     generic = run_one(
         audio_bytes,
         audio_name,
-        enable_reference_guided_techniques=False,
+        enable_reference_guided_lead_techniques=False,
         bend_evidence_present=False,
     )
     contextual = run_one(
         audio_bytes,
         audio_name,
-        enable_reference_guided_techniques=True,
+        enable_reference_guided_lead_techniques=True,
         bend_evidence_present=True,
     )
     no_bend_context = run_one(
         audio_bytes,
         audio_name,
-        enable_reference_guided_techniques=True,
+        enable_reference_guided_lead_techniques=True,
         bend_evidence_present=False,
     )
 
