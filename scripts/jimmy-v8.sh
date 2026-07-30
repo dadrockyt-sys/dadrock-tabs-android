@@ -43,14 +43,19 @@ run_python_checks() {
     analyzer/intro_motif_stabilization_v8.py \
     analyzer/intro_pitch_contour_v8.py \
     analyzer/intro_fingering_normalization_v8.py \
+    analyzer/rhythm_candidate_analyzer_v8.py \
     analyzer/professional_intro_accuracy_benchmark_v8.py \
     analyzer/modal_analyzer_v8_section_benchmark.py \
     analyzer/modal_analyzer_v8_notation_benchmark.py \
     analyzer/run_v8_section_benchmark.py \
-    analyzer/run_v8_notation_benchmark.py
+    analyzer/run_v8_notation_benchmark.py \
+    analyzer/run_v8_rhythm_candidate_benchmark.py
 }
 
 run_benchmarks() {
+  say "Running V8 direct-audio rhythm candidate benchmark"
+  python analyzer/run_v8_rhythm_candidate_benchmark.py
+
   say "Running V8 section benchmark"
   python analyzer/run_v8_section_benchmark.py
 
@@ -69,9 +74,25 @@ print_summary() {
 import json
 from pathlib import Path
 
+candidate_path = Path("public/gomyway-full-song-v8-rhythm-candidates.json")
 section_path = Path("public/gomyway-full-song-v8-sections.json")
 notation_path = Path("public/gomyway-full-song-v8-notation.json")
 professional_path = Path("public/gomyway-full-song-v8-professional-intro-score.json")
+
+if candidate_path.exists():
+    candidate = json.loads(candidate_path.read_text())
+    diagnostics = candidate.get("diagnostics", {})
+    print("Direct rhythm candidate pass:", candidate.get("passed"))
+    print("Direct rhythm source:", diagnostics.get("candidateAnalyzer"))
+    print("Independent of V7 events:", diagnostics.get("independentOfV7Events"))
+    print("Renderer changed by candidates:", diagnostics.get("rendererChanged"))
+    print("Direct rhythm candidates:", diagnostics.get("candidateCount"))
+    print("Intro direct rhythm candidates:", diagnostics.get("introCandidateCount"))
+    print("Intro onset-step histogram:", diagnostics.get("introStepHistogram"))
+else:
+    print("Direct rhythm candidate report: missing")
+
+print()
 
 if section_path.exists():
     section = json.loads(section_path.read_text())
@@ -93,6 +114,7 @@ if notation_path.exists():
     print("Notation benchmark type:", notation.get("benchmarkType"))
     print("Notation pass:", notation.get("passed"))
     print("Protected V7 unchanged:", notation.get("protectedBaselinesChanged") is False)
+    print("Motif matching strategy:", motif.get("matchingStrategy"))
     print("Raw events:", len(notation.get("rhythmEvents", [])))
     print("Cleaned events:", len(notation.get("renderEvents", [])))
     print("Motif events:", len(notation.get("motifStabilizedEvents", [])))
