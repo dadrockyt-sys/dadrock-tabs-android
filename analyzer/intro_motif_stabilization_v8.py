@@ -11,8 +11,6 @@ PAIR_COUNT = 8
 MIN_PAIR_SUPPORT = 3
 MAX_PAIR_PHASE_SHIFT = 4
 
-Signature = tuple[int, int, int, int]
-
 
 def _safe_int(value: Any, fallback: int = 0) -> int:
     try:
@@ -36,58 +34,11 @@ def _measure_offset(measure_number: int) -> int:
     return (measure_number - INTRO_START_MEASURE) % PAIR_LENGTH
 
 
-def _annotate_occurrence_ranks(
-    intro_events: list[dict[str, Any]],
-) -> list[dict[str, Any]]:
-    """Number repeated attacks by order inside each measure/string/fret lane.
-
-    Fixed time buckets preserved noise whenever an onset happened to land in the
-    same broad slot. Occurrence order instead compares the first attack with the
-    first attack, the second with the second, and so on across all repeated
-    two-measure intro pairs. No notes are synthesized and source pitch is kept.
-    """
-
-    grouped: dict[tuple[int, int, int], list[dict[str, Any]]] = defaultdict(list)
-    for event in intro_events:
-        key = (
-            _safe_int(event.get("measureNumber")),
-            _safe_int(event.get("stringIndex")),
-            _safe_int(event.get("fret")),
-        )
-        grouped[key].append(event)
-
-    annotated: list[dict[str, Any]] = []
-    for events in grouped.values():
-        events.sort(
-            key=lambda event: (
-                _safe_int(event.get("quantizedStep")),
-                _safe_float(event.get("startTime")),
-                _safe_int(event.get("sourceEventIndex")),
-            )
-        )
-        for occurrence_rank, event in enumerate(events):
-            item = dict(event)
-            item["motifOccurrenceRank"] = occurrence_rank
-            annotated.append(item)
-
-    annotated.sort(
-        key=lambda event: (
-            _safe_int(event.get("measureNumber")),
-            _safe_int(event.get("quantizedStep")),
-            _safe_int(event.get("stringIndex")),
-            _safe_int(event.get("fret")),
-            _safe_int(event.get("motifOccurrenceRank")),
-        )
-    )
-    return annotated
-
-
-def _signature(event: dict[str, Any]) -> Signature:
+def _signature(event: dict[str, Any]) -> tuple[int, int, int]:
     return (
         _measure_offset(_safe_int(event.get("measureNumber"), 1)),
         _safe_int(event.get("stringIndex")),
         _safe_int(event.get("fret")),
-        _safe_int(event.get("motifOccurrenceRank")),
     )
 
 
@@ -102,8 +53,8 @@ def _event_quality(event: dict[str, Any], target_step: int) -> tuple[float, floa
 
 def _best_event_per_pair_signature(
     intro_events: list[dict[str, Any]],
-) -> dict[tuple[int, Signature], dict[str, Any]]:
-    best: dict[tuple[int, Signature], dict[str, Any]] = {}
+) -> dict[tuple[int, tuple[int, int, int]], dict[str, Any]]:
+    best: dict[tuple[int, tuple[int, int, int]], dict[str, Any]] = {}
     for event in intro_events:
         pair_id = _pair_index(_safe_int(event.get("measureNumber"), INTRO_START_MEASURE))
         signature = _signature(event)
@@ -116,8 +67,8 @@ def _best_event_per_pair_signature(
 
 
 def _choose_canonical_pair(
-    best_by_pair_signature: dict[tuple[int, Signature], dict[str, Any]],
-    accepted_signatures: set[Signature],
+    best_by_pair_signature: dict[tuple[int, tuple[int, int, int]], dict[str, Any]],
+    accepted_signatures: set[tuple[int, int, int]],
 ) -> int:
     pair_scores: dict[int, tuple[int, float, float]] = {}
     for pair_id in range(PAIR_COUNT):
@@ -135,8 +86,8 @@ def _choose_canonical_pair(
 
 
 def _estimate_pair_phase_offsets(
-    best_by_pair_signature: dict[tuple[int, Signature], dict[str, Any]],
-    accepted_signatures: set[Signature],
+    best_by_pair_signature: dict[tuple[int, tuple[int, int, int]], dict[str, Any]],
+    accepted_signatures: set[tuple[int, int, int]],
     canonical_pair: int,
 ) -> dict[int, int]:
     canonical_steps = {
@@ -166,12 +117,11 @@ def _estimate_pair_phase_offsets(
 def stabilize_intro_motif(
     render_events: list[dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    """Stabilize measures 1-16 using ordered repeated-attack consensus.
+    """Stabilize the repeated measures 1-16 intro without synthesizing notes.
 
-    Each two-measure pair is aligned to the strongest observed pair. Repeated
-    attacks are matched by occurrence order within their measure/string/fret
-    lane, then retained only when that ordered attack appears in enough pairs.
-    This avoids both the old one-note collapse and the noisy fixed-slot method.
+    V8 first aligns each repeated two-measure pair to the strongest observed pair,
+    then computes rhythmic consensus. This corrects whole-pair onset drift before
+    median snapping while preserving every retained source note, string and fret.
     """
 
     intro_events = [
@@ -191,12 +141,10 @@ def stabilize_intro_motif(
         )
     ]
 
-    ranked_intro = _annotate_occurrence_ranks(intro_events)
+    observations: dict[tuple[int, int, int], list[dict[str, Any]]] = defaultdict(list)
+    pair_presence: dict[tuple[int, int, int], set[int]] = defaultdict(set)
 
-    observations: dict[Signature, list[dict[str, Any]]] = defaultdict(list)
-    pair_presence: dict[Signature, set[int]] = defaultdict(set)
-
-    for event in ranked_intro:
+    for event in intro_events:
         signature = _signature(event)
         observations[signature].append(event)
         pair_presence[signature].add(
@@ -213,7 +161,7 @@ def stabilize_intro_motif(
         if count >= MIN_PAIR_SUPPORT
     }
 
-    best_initial = _best_event_per_pair_signature(ranked_intro)
+    best_initial = _best_event_per_pair_signature(intro_events)
     canonical_pair = _choose_canonical_pair(best_initial, accepted_signatures)
     pair_phase_offsets = _estimate_pair_phase_offsets(
         best_initial,
@@ -221,7 +169,7 @@ def stabilize_intro_motif(
         canonical_pair,
     )
 
-    adjusted_steps: dict[tuple[int, Signature], int] = {}
+    adjusted_steps: dict[tuple[int, tuple[int, int, int]], int] = {}
     for (pair_id, signature), event in best_initial.items():
         adjusted_steps[(pair_id, signature)] = max(
             0,
@@ -240,15 +188,34 @@ def stabilize_intro_motif(
         for signature in accepted_signatures
     }
 
+    slot_candidates: dict[tuple[int, int, int], list[tuple[int, int, int]]] = defaultdict(list)
+    for signature in accepted_signatures:
+        offset, string_index, _fret = signature
+        slot_candidates[(offset, median_steps[signature], string_index)].append(signature)
+
+    dominant_signatures: set[tuple[int, int, int]] = set()
+    conflicting_signatures_removed = 0
+    for candidates in slot_candidates.values():
+        winner = max(
+            candidates,
+            key=lambda signature: (
+                support_counts[signature],
+                len(observations[signature]),
+                -signature[2],
+            ),
+        )
+        dominant_signatures.add(winner)
+        conflicting_signatures_removed += max(0, len(candidates) - 1)
+
     best_by_pair_and_signature: dict[
-        tuple[int, Signature],
+        tuple[int, tuple[int, int, int]],
         dict[str, Any],
     ] = {}
     repeated_retriggers_removed = 0
 
-    for event in ranked_intro:
+    for event in intro_events:
         signature = _signature(event)
-        if signature not in accepted_signatures:
+        if signature not in dominant_signatures:
             continue
 
         pair_id = _pair_index(_safe_int(event.get("measureNumber"), INTRO_START_MEASURE))
@@ -317,17 +284,12 @@ def stabilize_intro_motif(
         )
     )
 
-    occurrence_histogram = Counter(
-        _safe_int(event.get("motifOccurrenceRank"))
-        for event in stabilized_intro
-    )
-
     diagnostics = {
         "introMeasureRange": [INTRO_START_MEASURE, INTRO_END_MEASURE],
         "pairLengthMeasures": PAIR_LENGTH,
         "pairCount": PAIR_COUNT,
         "minimumPairSupport": MIN_PAIR_SUPPORT,
-        "matchingStrategy": "ordered-occurrence-consensus",
+        "matchingStrategy": "single-event-signature-baseline",
         "canonicalPairIndex": canonical_pair,
         "pairPhaseOffsets": {str(key): value for key, value in sorted(pair_phase_offsets.items())},
         "maximumPairPhaseShift": MAX_PAIR_PHASE_SHIFT,
@@ -335,13 +297,13 @@ def stabilize_intro_motif(
         "inputIntroEventCount": len(intro_events),
         "outputIntroEventCount": len(deduped),
         "rejectedLowSupportIntroEvents": sum(
-            1 for event in ranked_intro if _signature(event) not in accepted_signatures
+            1 for event in intro_events if _signature(event) not in accepted_signatures
         ),
+        "conflictingMotifSignaturesRemoved": conflicting_signatures_removed,
         "repeatedPairRetriggersRemoved": repeated_retriggers_removed,
         "medianSnapDuplicatesRemoved": snap_duplicates_removed,
         "medianSnappedIntroEvents": moved_count,
-        "acceptedMotifSignatureCount": len(accepted_signatures),
-        "acceptedOccurrenceRankHistogram": dict(sorted(occurrence_histogram.items())),
+        "acceptedMotifSignatureCount": len(dominant_signatures),
         "motifEventCount": len(motif_events),
         "supportHistogram": dict(sorted(Counter(support_counts.values()).items())),
         "readOnly": True,
