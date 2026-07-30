@@ -110,7 +110,7 @@ PY
 
 run_build() {
   say "Building DadRock Tabs"
-  yarn build
+  NODE_OPTIONS="--max-old-space-size=768" yarn build
 }
 
 start_preview() {
@@ -141,7 +141,9 @@ case "$MODE" in
     run_python_checks
     run_benchmarks
     print_summary
-    run_build
+    # A production build is intentionally skipped here. On small Codespaces it
+    # can be terminated with exit 143 before the dev preview starts. The
+    # dedicated build mode still performs the full production build.
     start_preview
     ;;
   rerun)
@@ -157,9 +159,9 @@ Usage: bash scripts/jimmy-v8.sh <mode>
 Modes:
   sync     Pull the current Jimmy PAIge V8 branch.
   test     Pull, compile Python, run all benchmarks, and print results.
-  build    Run test mode and then yarn build.
-  preview  Run build mode and then start yarn dev on port 3000.
-  rerun    Skip git pull; rerun checks, benchmarks, and build.
+  build    Run test mode and then a memory-capped production build.
+  preview  Pull, test, score, and start yarn dev without a production build.
+  rerun    Skip git pull; rerun checks, benchmarks, and production build.
 USAGE
     exit 2
     ;;
