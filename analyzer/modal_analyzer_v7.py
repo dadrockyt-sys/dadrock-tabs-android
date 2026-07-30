@@ -45,13 +45,81 @@ image = (
         "modal_analyzer",
         "production_chord_diagnostics",
         "chord_sustain",
+        "reference_aware_harmony",
     )
 )
+
+
+def normalize_verified_context(
+    payload: dict[str, Any],
+) -> tuple[list[dict[str, Any]] | None, list[str] | None]:
+    """Accept optional verified context without trusting malformed payload data."""
+
+    raw_chords = payload.get("referenceChords")
+    raw_progression = payload.get("expectedProgression")
+
+    if not isinstance(raw_chords, list) or not isinstance(raw_progression, list):
+        return None, None
+
+    reference_chords: list[dict[str, Any]] = []
+    for raw_chord in raw_chords:
+        if not isinstance(raw_chord, dict):
+            continue
+
+        name = str(raw_chord.get("name") or "").strip()
+        raw_pitch_classes = raw_chord.get("pitchClasses")
+        if not name or not isinstance(raw_pitch_classes, list):
+            continue
+
+        pitch_classes: list[int] = []
+        for value in raw_pitch_classes:
+            try:
+                pitch_class = int(value) % 12
+            except (TypeError, ValueError):
+                continue
+            if pitch_class not in pitch_classes:
+                pitch_classes.append(pitch_class)
+
+        if len(pitch_classes) < 2:
+            continue
+
+        reference_chords.append(
+            {
+                "name": name[:64],
+                "pitchClasses": pitch_classes,
+            }
+        )
+
+    expected_progression = [
+        str(value).strip()[:64]
+        for value in raw_progression
+        if str(value).strip()
+    ]
+
+    if not reference_chords or not expected_progression:
+        return None, None
+
+    allowed_names = {
+        str(chord.get("name") or "")
+        for chord in reference_chords
+    }
+    filtered_progression = [
+        name
+        for name in expected_progression
+        if name in allowed_names
+    ]
+
+    if not filtered_progression:
+        return None, None
+
+    return reference_chords, filtered_progression
 
 
 def analyze_audio_file(
     audio_path: str,
     transcription_type: str,
+    reference_chords: list[dict[str, Any]] | None = None,
+    expected_progression: list[str] | None = None,
 ) -> dict[str, Any]:
     """Run V6 production analysis, then attach read-only V7 diagnostics."""
 
@@ -63,6 +131,8 @@ def analyze_audio_file(
     return attach_rhythm_chord_diagnostics(
         result,
         transcription_type,
+        reference_chords=reference_chords,
+        expected_progression=expected_progression,
     )
 
 
@@ -118,6 +188,10 @@ def analyze(payload: dict) -> dict:
             status_code=400,
             detail="A valid audioUrl is required.",
         )
+
+    reference_chords, expected_progression = (
+        normalize_verified_context(payload)
+    )
 
     suffix = Path(audio_url).suffix.lower()
 
@@ -198,6 +272,8 @@ def analyze(payload: dict) -> dict:
             result = analyze_audio_file(
                 str(normalized_path),
                 transcription_type,
+                reference_chords=reference_chords,
+                expected_progression=expected_progression,
             )
         except ValueError as error:
             raise HTTPException(
