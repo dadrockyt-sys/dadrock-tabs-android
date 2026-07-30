@@ -1,0 +1,39 @@
+{
+  "benchmarkVersion": 6,
+  "benchmarkType": "gomyway-chorus-soft-register-progression-aware-chord-sustain",
+  "analysisPath": "raw-basic-pitch-soft-register-progression-aware-windows",
+  "sliceStart": 155.0,
+  "sliceDuration": 20.0,
+  "minimumEventCount": 102,
+  "minimumHarmonicWindowCount": 248,
+  "minimumChordWindowCount": 178,
+  "minimumMatchedChordWindowCount": 130,
+  "minimumCollapsedChordCount": 27,
+  "minimumSustainedChordCount": 27,
+  "requiredChordVocabulary": [
+    "A(tp2)",
+    "D",
+    "E",
+    "G",
+    "G6"
+  ],
+  "minimumRepeatedAttackCounts": {
+    "A(tp2)": 5,
+    "D": 6,
+    "E": 4,
+    "G": 3,
+    "G6": 9
+  },
+  "requiredChecks": [
+    "rawEventsPresent",
+    "softRegisterWindowsPresent",
+    "matchedChordWindows",
+    "twoOrMoreChordTypes",
+    "sustainEvidence",
+    "repeatedChordEvidence",
+    "sliceDurationPreserved",
+    "noSyntheticNotes"
+  ],
+  "passed": true,
+  "protectedBaselinesChanged": false
+}
