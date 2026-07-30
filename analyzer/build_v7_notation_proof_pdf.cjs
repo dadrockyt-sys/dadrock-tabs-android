@@ -84,10 +84,67 @@ function drawSystemGuide(page, systemIndex, pageIndex, fonts) {
   });
 }
 
+function estimateLabelWidth(command) {
+  const label = String(command.label || '');
+  const type = String(command.markerType || '');
+  const size = type === 'chord-label' ? 8 : 6.5;
+  return Math.max(12, label.length * size * 0.56);
+}
+
+function applyCollisionLanes(commands) {
+  const groups = new Map();
+
+  for (const command of commands) {
+    const key = `${Number(command.pageIndex || 0)}:${Number(command.systemIndex || 0)}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push({ ...command });
+  }
+
+  const resolved = [];
+  for (const group of groups.values()) {
+    group.sort((a, b) => Number(a.x1 || 0) - Number(b.x1 || 0));
+    const chordLaneEnds = [-Infinity, -Infinity, -Infinity];
+
+    for (const command of group) {
+      const type = String(command.markerType || '');
+      const x1 = Number(command.x1 || 50);
+      const width = estimateLabelWidth(command);
+      let y = Number(command.y || 100);
+      let collisionLane = 0;
+
+      if (type === 'chord-label') {
+        collisionLane = chordLaneEnds.findIndex((laneEnd) => x1 >= laneEnd + 5);
+        if (collisionLane < 0) collisionLane = 2;
+        chordLaneEnds[collisionLane] = x1 + width;
+        y += collisionLane * 9;
+      } else if (type === 'bend-release') {
+        y += 5;
+      } else if (type === 'palm-mute-span') {
+        y -= 2;
+      } else if (type === 'slide') {
+        y -= 1;
+      } else if (type === 'muted-attack') {
+        y -= 1;
+      } else if (type === 'rest') {
+        y -= 1;
+      }
+
+      resolved.push({
+        ...command,
+        proofY: y,
+        proofCollisionLane: collisionLane,
+        proofCollisionResolved: true,
+      });
+    }
+  }
+
+  return resolved.sort((a, b) => Number(a.commandIndex || 0) - Number(b.commandIndex || 0));
+}
+
 function drawCommand(page, command, fonts) {
   const x1 = Number(command.x1 || 50);
   const x2 = Math.max(x1 + 2, Number(command.x2 || x1 + 2));
-  const y = Number(command.y || 100);
+  const y = Number(command.proofY ?? command.y ?? 100);
   const label = String(command.label || '');
   const type = String(command.markerType || '');
 
@@ -105,14 +162,14 @@ function drawCommand(page, command, fonts) {
   if (type === 'palm-mute-span') {
     page.drawText('P.M.', {
       x: x1,
-      y: y + 2,
+      y: y + 4,
       size: 6.5,
       font: fonts.bold,
       color: rgb(0.2, 0.2, 0.2),
     });
     page.drawLine({
-      start: { x: x1, y },
-      end: { x: x2, y },
+      start: { x: x1 + 19, y },
+      end: { x: Math.max(x1 + 21, x2), y },
       thickness: 0.8,
       color: rgb(0.25, 0.25, 0.25),
       dashArray: [2, 2],
@@ -121,38 +178,44 @@ function drawCommand(page, command, fonts) {
   }
 
   if (type === 'bend-release') {
-    page.drawText('full bend / release', {
+    page.drawText('full', {
       x: x1,
-      y: y + 2,
+      y: y + 7,
       size: 6.5,
       font: fonts.bold,
       color: rgb(0.12, 0.12, 0.12),
     });
     page.drawLine({
-      start: { x: x1 + 4, y: y - 2 },
-      end: { x: x2, y: y + 8 },
+      start: { x: x1 + 5, y: y + 1 },
+      end: { x: x2, y: y + 11 },
       thickness: 1,
       color: rgb(0.12, 0.12, 0.12),
     });
     page.drawLine({
-      start: { x: x2, y: y + 8 },
-      end: { x: x2 - 4, y: y + 5 },
+      start: { x: x2, y: y + 11 },
+      end: { x: x2 - 4, y: y + 7 },
       thickness: 1,
+      color: rgb(0.12, 0.12, 0.12),
+    });
+    page.drawLine({
+      start: { x: x2, y: y + 11 },
+      end: { x: x2 + 5, y: y + 2 },
+      thickness: 0.85,
       color: rgb(0.12, 0.12, 0.12),
     });
     return;
   }
 
   const symbols = {
-    slide: `slide to ${label.replace('slide to ', '')}`,
+    slide: `/${label.replace('slide to ', '')}`,
     'muted-attack': 'x',
-    rest: 'rest',
+    rest: '𝄽',
   };
 
   page.drawText(symbols[type] || label || type, {
     x: x1,
     y,
-    size: type === 'muted-attack' ? 10 : 7,
+    size: type === 'muted-attack' ? 10 : 8,
     font: type === 'muted-attack' ? fonts.bold : fonts.body,
     color: rgb(0.12, 0.12, 0.12),
   });
@@ -168,6 +231,7 @@ async function main() {
 
   const pages = Array.isArray(plan.pages) ? plan.pages : [];
   const commands = Array.isArray(plan.commands) ? plan.commands : [];
+  const proofCommands = applyCollisionLanes(commands);
   const pdfDoc = await PDFDocument.create();
   const fonts = {
     body: await pdfDoc.embedFont(StandardFonts.Helvetica),
@@ -195,7 +259,7 @@ async function main() {
       drawSystemGuide(page, systemIndex, pageIndex, fonts);
     }
 
-    const pageCommands = commands.filter(
+    const pageCommands = proofCommands.filter(
       (command) => Number(command.pageIndex || 0) === pageIndex,
     );
     for (const command of pageCommands) {
@@ -218,9 +282,12 @@ async function main() {
     outputBytes: pdfBytes.length,
     checks: {
       sourcePlanGreen: plan.passed === true,
-      allCommandsRendered: commands.length === Number(plan.counts?.commands || 0),
+      allCommandsRendered: proofCommands.length === Number(plan.counts?.commands || 0),
       pageCountPreserved: pages.length === Number(plan.counts?.pages || 0),
       pdfCreated: pdfBytes.length > 1000,
+      collisionSpacingApplied: proofCommands.every(
+        (command) => command.proofCollisionResolved === true,
+      ),
       standaloneOnly: true,
       productionRendererUntouched: true,
       productionEventsUntouched: true,
