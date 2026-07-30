@@ -1,0 +1,34 @@
+{
+  "name": "Are You Gonna Go My Way — professional rhythm intro reference",
+  "source": "User-provided professional rendered reference screenshots",
+  "instrument": "rhythm",
+  "timeSignature": "4/4",
+  "tempo": 129,
+  "measureRange": [1, 16],
+  "stepsPerMeasure": 16,
+  "notes": [
+    {"measure": 1, "step": 2, "stringIndex": 2, "fret": 2, "technique": "full-bend"},
+    {"measure": 1, "step": 4, "stringIndex": 2, "fret": 0},
+    {"measure": 1, "step": 6, "stringIndex": 3, "fret": 2},
+    {"measure": 1, "step": 9, "stringIndex": 4, "fret": 0},
+    {"measure": 1, "step": 11, "stringIndex": 3, "fret": 2},
+    {"measure": 1, "step": 14, "stringIndex": 5, "fret": 0},
+
+    {"measure": 2, "step": 2, "stringIndex": 2, "fret": 2, "technique": "full-bend"},
+    {"measure": 2, "step": 4, "stringIndex": 2, "fret": 0},
+    {"measure": 2, "step": 6, "stringIndex": 3, "fret": 2},
+    {"measure": 2, "step": 9, "stringIndex": 4, "fret": 0},
+    {"measure": 2, "step": 11, "stringIndex": 3, "fret": 2},
+    {"measure": 2, "step": 14, "stringIndex": 1, "fret": 3, "chordId": "ending-double-stop"},
+    {"measure": 2, "step": 14, "stringIndex": 2, "fret": 3, "chordId": "ending-double-stop"}
+  ],
+  "repeat": {
+    "sourceMeasures": [1, 2],
+    "targetMeasureStarts": [3, 5, 7, 9, 11, 13, 15]
+  },
+  "notesAboutFixture": [
+    "This fixture is a benchmark target only and is never used as production output.",
+    "It captures the repeated low-register two-measure rhythm shape visible in the supplied reference.",
+    "Technique, duration and articulation scoring will become stricter as the analyzer begins emitting them."
+  ]
+}
