@@ -56,13 +56,13 @@ function markerLane(fragment) {
   return 3;
 }
 
-function drawMeasureRow(page, row, rowSlot, fonts, grid) {
+function drawMeasureRow(page, row, rowSlot, fonts) {
   const top = FIRST_ROW_TOP - rowSlot * ROW_HEIGHT;
   const tabTop = top - 48;
   const tabBottom = tabTop - 42;
   const measureWidth = (RIGHT - LEFT) / 6;
 
-  page.drawText(`Measures ${row.firstMeasure}–${row.lastMeasure}`, {
+  page.drawText(`Measures ${row.firstMeasure}-${row.lastMeasure}`, {
     x: LEFT,
     y: top + 18,
     size: 8,
@@ -145,10 +145,10 @@ function drawMeasureRow(page, row, rowSlot, fonts, grid) {
     }
 
     if (fragment.continuesFromPreviousMeasure === true) {
-      page.drawText('←', { x: Math.max(LEFT, x1 - 8), y: adjustedY, size: 6, font: fonts.body });
+      page.drawText('<', { x: Math.max(LEFT, x1 - 8), y: adjustedY, size: 6, font: fonts.body });
     }
     if (fragment.continuesIntoNextMeasure === true) {
-      page.drawText('→', { x: Math.min(RIGHT - 6, x2 + 1), y: adjustedY, size: 6, font: fonts.body });
+      page.drawText('>', { x: Math.min(RIGHT - 6, x2 + 1), y: adjustedY, size: 6, font: fonts.body });
     }
   }
 }
@@ -171,14 +171,14 @@ async function main() {
 
   for (let pageIndex = 0; pageIndex < pageCount; pageIndex += 1) {
     const page = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-    page.drawText('DadRock V7 Measure-Grid Proof — 4/4 • 6 Measures per Row', {
+    page.drawText('DadRock V7 Measure-Grid Proof - 4/4 - 6 Measures per Row', {
       x: LEFT,
       y: 756,
       size: 12.5,
       font: fonts.bold,
       color: rgb(0.05, 0.05, 0.05),
     });
-    page.drawText(`${grid.tempoBpm} BPM • Page ${pageIndex + 1} of ${pageCount} • read-only proof`, {
+    page.drawText(`${grid.tempoBpm} BPM | Page ${pageIndex + 1} of ${pageCount} | read-only proof`, {
       x: LEFT,
       y: 740,
       size: 7,
@@ -187,7 +187,7 @@ async function main() {
     });
 
     const pageRows = rows.slice(pageIndex * ROWS_PER_PAGE, (pageIndex + 1) * ROWS_PER_PAGE);
-    pageRows.forEach((row, rowSlot) => drawMeasureRow(page, row, rowSlot, fonts, grid));
+    pageRows.forEach((row, rowSlot) => drawMeasureRow(page, row, rowSlot, fonts));
   }
 
   const pdfBytes = await pdfDoc.save();
