@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -14,8 +15,33 @@ image = voicing.image.add_local_python_source(
 
 
 def has_bend(event: dict[str, Any]) -> bool:
-    text = voicing.base.event_text(event)
-    return any(token in text for token in ("bend", "b4", "full"))
+    """Return True only for explicit bend evidence on this event.
+
+    The previous benchmark searched the complete event text for the word
+    ``full``. Some inherited metadata describes the whole phrase as a full
+    lead passage, so that broad check accidentally classified every 12/14
+    note as a bend and prevented palm-mute handoff.
+    """
+
+    for key in (
+        "bend",
+        "isBend",
+        "bendRelease",
+        "bendAmount",
+        "bendSemitones",
+        "bendTarget",
+        "bendTargetFret",
+    ):
+        value = event.get(key)
+        if value not in (None, False, 0, 0.0, "", "none", "None"):
+            return True
+
+    technique = str(event.get("technique") or "").strip().lower()
+    if technique in {"bend", "full-bend", "full bend", "bend-release"}:
+        return True
+
+    notation = str(event.get("notation") or "").strip().lower()
+    return bool(re.search(r"\d+b(?:\d+)?", notation))
 
 
 def add_lead_technique_handoff(
@@ -45,10 +71,16 @@ def add_lead_technique_handoff(
 
             event["bendRelease"] = True
             event["releaseTargetFret"] = 12
-            event["notation"] = "14b16r14" if event.get("notation") is None else event.get("notation")
+            event["notation"] = (
+                "14b16r14"
+                if event.get("notation") is None
+                else event.get("notation")
+            )
             release_event["release"] = True
             release_event["releasedFromFret"] = 14
-            release_event["techniquePolicy"] = "reference-guided-full-bend-release"
+            release_event["techniquePolicy"] = (
+                "reference-guided-full-bend-release"
+            )
             release_pairs.append(
                 {
                     "bendIndex": index,
@@ -59,9 +91,14 @@ def add_lead_technique_handoff(
             )
             break
 
-    # In the reference, the repeated 12/14 notes after the bend-release pickup
-    # are palm muted. Mark only ordinary repeated notes after the first verified
-    # release, never the bend or release events themselves.
+    # In the reference, the ordinary repeated 12/14 notes following the
+    # bend-release pickup are palm muted. Mark those events without modifying
+    # pitch, fret, timing, or the verified bend/release pair.
+    paired_indices = {
+        int(pair[key])
+        for pair in release_pairs
+        for key in ("bendIndex", "releaseIndex")
+    }
     first_release_start = min(
         (
             voicing.base.event_start(ordered[pair["releaseIndex"]])
@@ -69,17 +106,30 @@ def add_lead_technique_handoff(
         ),
         default=None,
     )
+
     if first_release_start is not None:
+        candidates: list[int] = []
         for index, event in enumerate(ordered):
             fret = voicing.event_fret(event)
             start = voicing.base.event_start(event)
             if fret not in {12, 14} or start <= first_release_start:
                 continue
+            if index in paired_indices:
+                continue
             if has_bend(event) or bool(event.get("release")):
                 continue
+            candidates.append(index)
+
+        # A repeated 12/14 cell is the musical evidence for palm muting.
+        # Require at least two eligible notes where possible, but preserve a
+        # single valid note rather than manufacturing an event.
+        for index in candidates:
+            event = ordered[index]
             event["palmMute"] = True
             event["technique"] = "palm-mute"
-            event["techniquePolicy"] = "reference-guided-repeated-lead-palm-mute"
+            event["techniquePolicy"] = (
+                "reference-guided-repeated-lead-palm-mute"
+            )
             palm_muted_indices.append(index)
 
     diagnostics = {
@@ -124,7 +174,7 @@ def analyse_techniques(
     technique_checks = after.get("techniqueChecks") or {}
 
     report = {
-        "benchmarkVersion": 1,
+        "benchmarkVersion": 2,
         "benchmarkType": "gomyway2-lead-release-palm-mute-handoff",
         "engineVersion": voicing.base.analyzer.ENGINE_VERSION,
         "instrumentSeparationMode": lead_result.get("instrumentSeparationMode"),
@@ -202,7 +252,7 @@ def main(
     after = report.get("after") or {}
     diagnostics = report.get("techniqueDiagnostics") or {}
 
-    print("JIMMY PAIGE LEAD TECHNIQUE HANDOFF BENCHMARK V1")
+    print("JIMMY PAIGE LEAD TECHNIQUE HANDOFF BENCHMARK V2")
     print("=" * 62)
     print("Engine:", report.get("engineVersion"))
     print("Mode:", report.get("instrumentSeparationMode"))
