@@ -50,10 +50,10 @@ def _quality(event: dict[str, Any]) -> tuple[float, float, int]:
     )
 
 
-def _find_contour(
+def _find_rise_and_return(
     events: list[dict[str, Any]],
     start_index: int,
-) -> tuple[int, int] | None:
+) -> tuple[int, int, int] | None:
     start = events[start_index]
     start_pitch = _safe_int(start.get("midiPitch"))
     start_step = _safe_int(start.get("quantizedStep"))
@@ -78,7 +78,6 @@ def _find_contour(
     if rise_index is None:
         return None
 
-    rise_step = _safe_int(events[rise_index].get("quantizedStep"))
     for index in range(rise_index + 1, len(events)):
         candidate = events[index]
         step = _safe_int(candidate.get("quantizedStep"))
@@ -87,7 +86,45 @@ def _find_contour(
         if _safe_int(candidate.get("stringIndex"), -1) != string_index:
             continue
         if abs(_safe_int(candidate.get("midiPitch")) - start_pitch) <= 1:
-            return rise_index, index
+            rise_pitch = _safe_int(events[rise_index].get("midiPitch"))
+            return rise_index, index, max(1, min(3, rise_pitch - start_pitch))
+
+    return None
+
+
+def _find_direct_release(
+    events: list[dict[str, Any]],
+    start_index: int,
+) -> tuple[int, int] | None:
+    """Recognize a bend when transcription captures only fretted start and release.
+
+    Some source separators do not emit the temporary raised pitch of a bend. They
+    instead produce the fretted attack followed by a lower same-string release.
+    Repeated support across the intro is required before this display-only layer
+    labels that contour as a bend.
+    """
+
+    start = events[start_index]
+    start_pitch = _safe_int(start.get("midiPitch"))
+    start_step = _safe_int(start.get("quantizedStep"))
+    string_index = _safe_int(start.get("stringIndex"), -1)
+
+    if start_pitch <= 0 or string_index < 0:
+        return None
+
+    for index in range(start_index + 1, len(events)):
+        candidate = events[index]
+        step = _safe_int(candidate.get("quantizedStep"))
+        if step - start_step > MAX_RELEASE_STEPS:
+            break
+        if _safe_int(candidate.get("stringIndex"), -1) != string_index:
+            continue
+
+        fall = start_pitch - _safe_int(candidate.get("midiPitch"))
+        if 1 <= fall <= 4:
+            # A fall of two semitones is the strongest full-bend-release signal.
+            bend_semitones = 2 if fall >= 2 else 1
+            return index, bend_semitones
 
     return None
 
@@ -97,9 +134,10 @@ def reconstruct_intro_pitch_contours(
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Create a read-only V8 display layer for repeated bend contours.
 
-    This pass never changes the locked V7 event list. It removes only redundant
-    display retriggers, recognizes observed rise-and-return contours as bends,
-    and keeps every retained item traceable to its original source event.
+    This pass never changes the locked V7 event list. It recognizes either an
+    observed rise-and-return contour or a repeated direct same-string release,
+    removes only redundant display retriggers, and keeps every retained item
+    traceable to its original source event.
     """
 
     intro = [
@@ -131,35 +169,42 @@ def reconstruct_intro_pitch_contours(
             )
         )
 
-    contour_observations: dict[tuple[int, int, int, int], set[int]] = defaultdict(set)
-    contour_instances: list[tuple[int, int, int, int, int, int]] = []
+    contour_observations: dict[tuple[int, int, int, int, str], set[int]] = defaultdict(set)
+    contour_instances: list[tuple[int, int, int | None, int, int, int, str]] = []
 
     for measure, measure_events in by_measure.items():
         for index, event in enumerate(measure_events):
-            contour = _find_contour(measure_events, index)
-            if contour is None:
-                continue
-            rise_index, release_index = contour
-            rise = measure_events[rise_index]
-            release = measure_events[release_index]
-            pitch_delta = max(
-                1,
-                min(
-                    3,
-                    _safe_int(rise.get("midiPitch"))
-                    - _safe_int(event.get("midiPitch")),
-                ),
-            )
+            observed = _find_rise_and_return(measure_events, index)
+            if observed is not None:
+                rise_index, release_index, pitch_delta = observed
+                contour_kind = "rise-return"
+            else:
+                direct = _find_direct_release(measure_events, index)
+                if direct is None:
+                    continue
+                release_index, pitch_delta = direct
+                rise_index = None
+                contour_kind = "direct-release"
+
             signature = (
                 _measure_offset(measure),
                 _safe_int(event.get("quantizedStep")),
                 _safe_int(event.get("stringIndex")),
                 pitch_delta,
+                contour_kind,
             )
             pair_id = _pair_index(measure)
             contour_observations[signature].add(pair_id)
             contour_instances.append(
-                (measure, index, rise_index, release_index, pair_id, pitch_delta)
+                (
+                    measure,
+                    index,
+                    rise_index,
+                    release_index,
+                    pair_id,
+                    pitch_delta,
+                    contour_kind,
+                )
             )
 
     accepted = {
@@ -171,23 +216,36 @@ def reconstruct_intro_pitch_contours(
     remove_keys: set[tuple[int, int, int, int]] = set()
     bend_start_keys: dict[tuple[int, int, int, int], int] = {}
     release_keys: set[tuple[int, int, int, int]] = set()
+    accepted_direct_release_count = 0
 
-    for measure, start_index, rise_index, release_index, _pair_id, pitch_delta in contour_instances:
+    for (
+        measure,
+        start_index,
+        rise_index,
+        release_index,
+        _pair_id,
+        pitch_delta,
+        contour_kind,
+    ) in contour_instances:
         measure_events = by_measure[measure]
         start = measure_events[start_index]
-        rise = measure_events[rise_index]
         release = measure_events[release_index]
         signature = (
             _measure_offset(measure),
             _safe_int(start.get("quantizedStep")),
             _safe_int(start.get("stringIndex")),
             pitch_delta,
+            contour_kind,
         )
         if signature not in accepted:
             continue
+
         bend_start_keys[_event_key(start)] = pitch_delta
-        remove_keys.add(_event_key(rise))
         release_keys.add(_event_key(release))
+        if rise_index is not None:
+            remove_keys.add(_event_key(measure_events[rise_index]))
+        else:
+            accepted_direct_release_count += 1
 
     deduped: dict[tuple[int, int, int], dict[str, Any]] = {}
     retriggers_removed = 0
@@ -222,13 +280,22 @@ def reconstruct_intro_pitch_contours(
         key = _event_key(item)
         if key in bend_start_keys:
             semitones = bend_start_keys[key]
-            item["technique"] = "bend"
+            label = "full-bend" if semitones >= 2 else "half-bend"
+            item["technique"] = label
+            techniques = item.get("techniques") or []
+            if isinstance(techniques, str):
+                techniques = [techniques]
+            item["techniques"] = list(dict.fromkeys([*techniques, label]))
             item["bendSemitones"] = semitones
             item["bendAmount"] = "full" if semitones >= 2 else "half"
             item["pitchContourReconstructed"] = True
             bends_marked += 1
         elif key in release_keys:
-            item["technique"] = "bendRelease"
+            item["technique"] = "bend-release"
+            techniques = item.get("techniques") or []
+            if isinstance(techniques, str):
+                techniques = [techniques]
+            item["techniques"] = list(dict.fromkeys([*techniques, "bend-release"]))
             item["pitchContourReconstructed"] = True
             releases_marked += 1
         reconstructed_intro.append(item)
@@ -249,6 +316,7 @@ def reconstruct_intro_pitch_contours(
         "inputIntroEventCount": len(intro),
         "outputIntroEventCount": len(reconstructed_intro),
         "acceptedContourSignatureCount": len(accepted),
+        "acceptedDirectReleaseInstances": accepted_direct_release_count,
         "minimumContourPairSupport": MIN_CONTOUR_PAIR_SUPPORT,
         "bendEventsMarked": bends_marked,
         "bendReleaseEventsMarked": releases_marked,
