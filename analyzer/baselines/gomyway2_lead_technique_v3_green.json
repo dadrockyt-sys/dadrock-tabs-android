@@ -1,0 +1,21 @@
+{
+  "benchmarkVersion": 3,
+  "benchmarkType": "gomyway2-lead-reference-guided-technique-handoff",
+  "engineVersion": "7.2-phase-1-adaptive-three-way-instrument-separation-v3",
+  "requiredInstrumentSeparationMode": "strict-three-way-register-gate",
+  "minimumAfterScore": 94.71,
+  "minimumScoreImprovement": 13.33,
+  "minimumReleasePairCount": 1,
+  "minimumPalmMutedEventCount": 6,
+  "requiredTechniqueChecks": {
+    "bend": true,
+    "release": true,
+    "palm-mute": true
+  },
+  "requiredFretCoverage": 1.0,
+  "requiredAllowedFretPrecision": 1.0,
+  "maximumSyntheticNoteCount": 0,
+  "pitchOrFretChanged": false,
+  "passed": true,
+  "protectedBaselinesChanged": false
+}
