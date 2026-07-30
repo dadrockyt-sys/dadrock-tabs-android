@@ -7,6 +7,7 @@ from typing import Any
 
 import modal
 import modal_analyzer_v7 as analyzer
+import notation_cleanup_v8 as notation_cleanup
 import song_section_detection_v8 as section_detector
 
 app = modal.App("dadrock-v8-notation-benchmark")
@@ -21,6 +22,7 @@ image = analyzer.image.add_local_python_source(
     "production_bass_technique_diagnostics",
     "bass_technique_diagnostics_v7",
     "song_section_detection_v8",
+    "notation_cleanup_v8",
 )
 
 STANDARD_GUITAR_OPEN_MIDI = (64, 59, 55, 50, 45, 40)
@@ -169,6 +171,8 @@ def run_benchmark(
         _project_event(event, index, measure_seconds, total_measures)
         for index, event in enumerate(rhythm_events)
     ]
+    render_events, cleanup = notation_cleanup.clean_render_events(projected_events)
+
     fingerprints = section_detector.build_measure_fingerprints(
         rhythm_events,
         tempo=tempo,
@@ -183,25 +187,52 @@ def run_benchmark(
         and len(rhythm_generic.get("events") or []) == len(rhythm.get("events") or [])
     )
 
+    projected_by_index = {
+        int(event["eventIndex"]): event
+        for event in projected_events
+    }
+    render_traceable = all(
+        int(event.get("sourceEventIndex", -1)) in projected_by_index
+        for event in render_events
+    )
+    source_values_preserved = all(
+        int(event.get("stringIndex", -1))
+        == int(projected_by_index[int(event["sourceEventIndex"])]["stringIndex"])
+        and int(event.get("fret", -1))
+        == int(projected_by_index[int(event["sourceEventIndex"])]["fret"])
+        and int(event.get("midiPitch", -1))
+        == int(projected_by_index[int(event["sourceEventIndex"])]["midiPitch"])
+        for event in render_events
+    )
+
     checks = {
         "rhythmProductionUnchanged": production_unchanged,
         "rhythmEventsPresent": bool(projected_events),
+        "renderEventsPresent": bool(render_events),
         "eventsWithinMeasureGrid": all(
             1 <= int(event["measureNumber"]) <= total_measures
             and 0.0 <= float(event["positionInMeasure"]) < 1.0
             for event in projected_events
         ),
+        "renderEventsWithinMeasureGrid": all(
+            1 <= int(event["measureNumber"]) <= total_measures
+            and 0.0 <= float(event["positionInMeasure"]) < 1.0
+            for event in render_events
+        ),
         "validStringAndFret": all(
             0 <= int(event["stringIndex"]) <= 5 and int(event["fret"]) >= 0
-            for event in projected_events
+            for event in render_events
         ),
+        "renderEventsTraceable": render_traceable,
+        "sourcePitchStringAndFretPreserved": source_values_preserved,
+        "renderCountDoesNotExceedRaw": len(render_events) <= len(projected_events),
         "sectionsPresent": bool(sections),
         "noSyntheticNotes": rhythm_analysis.get("noSyntheticNotes") is True,
     }
 
     report = {
         "benchmarkVersion": 8,
-        "benchmarkType": "v8-read-only-rhythm-notation-projection",
+        "benchmarkType": "v8-read-only-rhythm-notation-cleanup",
         "audioName": audio_name,
         "tempo": tempo,
         "timeSignature": time_signature,
@@ -209,14 +240,17 @@ def run_benchmark(
         "totalMeasures": total_measures,
         "sections": sections,
         "rhythmEvents": projected_events,
+        "renderEvents": render_events,
+        "cleanupDiagnostics": cleanup,
         "harmonyRanges": harmony_ranges,
         "checks": checks,
         "passed": all(checks.values()),
         "protectedBaselinesChanged": False,
         "trainingRule": (
-            "V8 notation is a read-only projection of locked V7 rhythm events. "
-            "It may calculate measure placement and drawing metadata but must never alter "
-            "event count, pitch, fret, string, timing, confidence, or generated tab."
+            "V8 render events are traceable read-only derivatives of locked V7 rhythm events. "
+            "They may quantize drawing positions, cluster attacks, and omit duplicate or weak "
+            "drawing events, but must never alter protected analyzer output, source pitches, "
+            "frets, strings, timing, confidence, generated tab, or source event count."
         ),
     }
     return json.dumps(report, separators=(",", ":")).encode("utf-8")
