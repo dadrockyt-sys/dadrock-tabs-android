@@ -142,7 +142,6 @@ def score_intro(
         technique_matches / technique_targets if technique_targets else 1.0
     )
 
-    # Notes/timing dominate. Technique is scored but lightly weighted until V8 emits it.
     overall_score = (
         0.45 * identity_recall
         + 0.25 * identity_precision
@@ -175,7 +174,8 @@ def main() -> None:
     notation = json.loads(NOTATION_PATH.read_text())
     reference_notes = _expand_reference(reference)
     detected_events = (
-        notation.get("motifStabilizedEvents")
+        notation.get("fingeringNormalizedEvents")
+        or notation.get("motifStabilizedEvents")
         or notation.get("renderEvents")
         or notation.get("rhythmEvents")
         or []
@@ -186,6 +186,11 @@ def main() -> None:
         "benchmark": "Jimmy PAIge V8 professional intro note accuracy",
         "reference": str(REFERENCE_PATH),
         "notation": str(NOTATION_PATH),
+        "selectedEventLayer": (
+            "fingeringNormalizedEvents"
+            if notation.get("fingeringNormalizedEvents")
+            else "motifStabilizedEvents"
+        ),
         "protectedBaselinesChanged": notation.get("protectedBaselinesChanged"),
         "notationPassed": notation.get("passed"),
         "score": score,
@@ -194,6 +199,7 @@ def main() -> None:
 
     print("Professional intro benchmark passed:", score["passed"])
     print("Protected V7 unchanged:", notation.get("protectedBaselinesChanged") is False)
+    print("Selected event layer:", report["selectedEventLayer"])
     print("Overall score:", score["overallScore"])
     print("Target score:", score["targetScore"])
     print("Identity recall:", score["identityRecall"])
