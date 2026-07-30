@@ -1,0 +1,19 @@
+{
+  "benchmarkVersion": 2,
+  "benchmarkType": "gomyway2-bass-reference-voicing-technique-handoff-v2",
+  "engineVersion": "7.2-phase-1-adaptive-three-way-instrument-separation-v3",
+  "requiredMode": "strict-three-way-register-gate",
+  "minimumAfterScore": 97.0,
+  "minimumScoreImprovement": 21.95,
+  "minimumAllowedFretPrecision": 0.85,
+  "minimumRequiredFretCoverage": 1.0,
+  "minimumBestMotifScore": 0.75,
+  "minimumExactCandidateCoverage": 1.0,
+  "requiredSlidePolicy": "target-metadata-no-retune",
+  "requiredSlideTargetFret": 14,
+  "maximumSyntheticNoteCount": 0,
+  "pitchOrFretChanged": false,
+  "protectedBaselinesChanged": false,
+  "requiredFrets": [5, 7],
+  "requiredTechniques": ["slide", "mute", "rest"]
+}
