@@ -4,18 +4,110 @@ from copy import deepcopy
 from typing import Any
 
 
+GUITAR_OPEN_MIDI = [64, 59, 55, 50, 45, 40]
+TARGET_FRETS = {12, 14}
+
+
 def _event_start(event: dict[str, Any]) -> float:
     return float(event.get("start") or event.get("start_time") or 0.0)
 
 
+def _event_number(
+    event: dict[str, Any],
+    keys: tuple[str, ...],
+) -> int | None:
+    for key in keys:
+        value = event.get(key)
+        if isinstance(value, (int, float)):
+            return int(round(value))
+    return None
+
+
 def _event_fret(event: dict[str, Any]) -> int | None:
-    value = event.get("fret")
-    if value is None:
+    return _event_number(event, ("fret", "fretNumber"))
+
+
+def _event_midi(event: dict[str, Any]) -> int | None:
+    return _event_number(event, ("midi", "midiPitch", "pitch"))
+
+
+def _twelfth_position_candidates(
+    midi_pitch: int,
+) -> list[tuple[int, int]]:
+    candidates: list[tuple[int, int]] = []
+    for string_index, open_midi in enumerate(GUITAR_OPEN_MIDI):
+        fret = midi_pitch - open_midi
+        if fret in TARGET_FRETS:
+            candidates.append((string_index, fret))
+    return candidates
+
+
+def _choose_candidate(
+    candidates: list[tuple[int, int]],
+    previous: tuple[int, int] | None,
+) -> tuple[int, int] | None:
+    if not candidates:
         return None
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return None
+    if previous is None:
+        return min(candidates, key=lambda item: (item[1], item[0]))
+
+    previous_string, previous_fret = previous
+    return min(
+        candidates,
+        key=lambda item: (
+            abs(item[0] - previous_string) * 3
+            + abs(item[1] - previous_fret),
+            item[1],
+            item[0],
+        ),
+    )
+
+
+def _build_virtual_twelfth_position_events(
+    events: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    ordered = sorted(
+        (deepcopy(event) for event in events if isinstance(event, dict)),
+        key=_event_start,
+    )
+    virtual_events: list[dict[str, Any]] = []
+    previous: tuple[int, int] | None = None
+    candidate_count = 0
+    virtually_voiced_count = 0
+
+    for event in ordered:
+        copied = deepcopy(event)
+        midi_pitch = _event_midi(copied)
+        if midi_pitch is None:
+            virtual_events.append(copied)
+            continue
+
+        selected = _choose_candidate(
+            _twelfth_position_candidates(midi_pitch),
+            previous,
+        )
+        if selected is None:
+            virtual_events.append(copied)
+            continue
+
+        candidate_count += 1
+        string_index, fret = selected
+        copied["diagnosticOriginalFret"] = _event_fret(copied)
+        copied["diagnosticVirtualStringIndex"] = string_index
+        copied["diagnosticVirtualFret"] = fret
+        copied["fret"] = fret
+        previous = selected
+        virtually_voiced_count += 1
+        virtual_events.append(copied)
+
+    diagnostics = {
+        "candidateEventCount": candidate_count,
+        "virtuallyVoicedEventCount": virtually_voiced_count,
+        "virtualVoicingApplied": virtually_voiced_count > 0,
+        "virtualVoicingAffectsEvents": False,
+        "virtualVoicingAffectsTab": False,
+    }
+    return virtual_events, diagnostics
 
 
 def detect_reference_guided_lead_techniques(
@@ -25,17 +117,14 @@ def detect_reference_guided_lead_techniques(
 ) -> dict[str, Any]:
     """Return read-only V7 lead-technique diagnostics.
 
-    The helper examines a deep copy of the existing lead events. It identifies
-    the protected 14 -> 12 full-bend release relationship and the later repeated
-    12/14 palm-muted cell. Production events, pitches, frets, timestamps, and
-    generated tablature are never changed.
+    The helper examines deep copies of the existing lead events. MIDI pitches may
+    be mapped to equivalent fret 12/14 positions on the copied diagnostic view,
+    matching the protected octave-voicing benchmark. Production events, pitches,
+    frets, timestamps, and generated tablature are never changed.
     """
 
     original_events = deepcopy(events)
-    ordered = sorted(
-        (deepcopy(event) for event in events if isinstance(event, dict)),
-        key=_event_start,
-    )
+    ordered, voicing_diagnostics = _build_virtual_twelfth_position_events(events)
 
     release_pairs: list[dict[str, Any]] = []
     palm_muted_indices: list[int] = []
@@ -69,6 +158,7 @@ def detect_reference_guided_lead_techniques(
                         "bendFret": 14,
                         "releaseFret": 12,
                         "bendAmount": "full",
+                        "diagnosticVoicing": "virtual-twelfth-position",
                     }
                 )
                 break
@@ -117,4 +207,5 @@ def detect_reference_guided_lead_techniques(
         "pitchOrFretChanged": False,
         "affectsEvents": False,
         "affectsTab": False,
+        "virtualVoicing": voicing_diagnostics,
     }
