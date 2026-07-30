@@ -1,3 +1,5 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { createJimmyPaigeV8Pdf } from '@/lib/tabRenderer/pdfV8';
 
 export const runtime = 'nodejs';
@@ -16,8 +18,34 @@ const GOMYWAY_V8_SECTIONS = [
   { label: 'Ending', startMeasure: 103, endMeasure: 113 },
 ];
 
+async function loadNotationBenchmark() {
+  const notationPath = path.join(
+    process.cwd(),
+    'public',
+    'gomyway-full-song-v8-notation.json'
+  );
+
+  try {
+    const raw = await fs.readFile(notationPath, 'utf8');
+    const report = JSON.parse(raw);
+
+    return {
+      rhythmEvents: Array.isArray(report.rhythmEvents)
+        ? report.rhythmEvents
+        : [],
+      passed: report.passed === true,
+    };
+  } catch (error) {
+    if (error?.code === 'ENOENT') {
+      return { rhythmEvents: [], passed: false };
+    }
+    throw error;
+  }
+}
+
 export async function GET() {
   try {
+    const notation = await loadNotationBenchmark();
     const pdfBytes = await createJimmyPaigeV8Pdf({
       songTitle: 'Are You Gonna Go My Way',
       artistName: 'Lenny Kravitz',
@@ -27,14 +55,20 @@ export async function GET() {
       timeSignature: '4/4',
       bpm: 129,
       sections: GOMYWAY_V8_SECTIONS,
+      rhythmEvents: notation.rhythmEvents,
     });
 
     return new Response(Buffer.from(pdfBytes), {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'inline; filename="jimmy-paige-v8-preview.pdf"',
+        'Content-Disposition':
+          'inline; filename="jimmy-paige-v8-notation-pass-1.pdf"',
         'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'X-Jimmy-Paige-Notation-Events': String(
+          notation.rhythmEvents.length
+        ),
+        'X-Jimmy-Paige-Notation-Passed': String(notation.passed),
       },
     });
   } catch (error) {
