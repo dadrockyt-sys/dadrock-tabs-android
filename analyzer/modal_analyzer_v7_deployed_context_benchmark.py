@@ -79,13 +79,15 @@ def run_benchmark(
     contextual_analysis = contextual_rhythm.get("chordAnalysis") or {}
     generic_vocabulary = set(generic_analysis.get("chordVocabulary") or [])
     contextual_vocabulary = set(contextual_analysis.get("chordVocabulary") or [])
+    promotions = contextual_analysis.get("referenceAwarePromotions") or {}
 
     checks = {
         "genericModeUnchanged": generic_analysis.get("referenceAwareMode") is None,
         "contextModeEnabled": contextual_analysis.get("referenceAwareMode") == "verified-context-two-tone",
-        "contextPromotesE": "E" in contextual_vocabulary,
-        "contextPromotesG": "G" in contextual_vocabulary,
-        "contextDoesNotPromoteD": "D" not in contextual_vocabulary,
+        "contextPromotesE": promotions.get("E") is True and "E" in contextual_vocabulary,
+        "contextPromotesG": promotions.get("G") is True and "G" in contextual_vocabulary,
+        "contextDoesNotPromoteD": promotions.get("D") is not True,
+        "preservesExistingD": ("D" in generic_vocabulary) == ("D" in contextual_vocabulary),
         "preservesG6": "G6" in contextual_vocabulary,
         "preservesATp2": "A(tp2)" in contextual_vocabulary,
         "genericTabPresent": bool(generic_rhythm.get("generatedTab")),
@@ -103,14 +105,15 @@ def run_benchmark(
         "audioName": audio_name,
         "genericVocabulary": sorted(generic_vocabulary),
         "contextualVocabulary": sorted(contextual_vocabulary),
-        "referenceAwarePromotions": contextual_analysis.get("referenceAwarePromotions") or {},
+        "referenceAwarePromotions": promotions,
         "eventCount": len(contextual_rhythm.get("events") or []),
         "checks": checks,
         "passed": all(checks.values()),
         "protectedBaselinesChanged": False,
         "trainingRule": (
             "Verified context may enrich read-only rhythm diagnostics only. "
-            "It must not change generated tab, note events, lead, or bass."
+            "It must not change generated tab, note events, lead, or bass. "
+            "A chord already found generically is preserved even when context does not promote it."
         ),
     }
     return json.dumps(report, default=json_default, separators=(",", ":")).encode("utf-8")
