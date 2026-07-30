@@ -28,6 +28,9 @@ async function loadNotationBenchmark() {
   try {
     const raw = await fs.readFile(notationPath, 'utf8');
     const report = JSON.parse(raw);
+    const fingeringEvents = Array.isArray(report.fingeringNormalizedEvents)
+      ? report.fingeringNormalizedEvents
+      : [];
     const motifEvents = Array.isArray(report.motifStabilizedEvents)
       ? report.motifStabilizedEvents
       : [];
@@ -37,22 +40,27 @@ async function loadNotationBenchmark() {
     const rhythmEvents = Array.isArray(report.rhythmEvents)
       ? report.rhythmEvents
       : [];
-    const selectedEvents = motifEvents.length > 0
-      ? motifEvents
-      : renderEvents.length > 0
-        ? renderEvents
-        : rhythmEvents;
+    const selectedEvents = fingeringEvents.length > 0
+      ? fingeringEvents
+      : motifEvents.length > 0
+        ? motifEvents
+        : renderEvents.length > 0
+          ? renderEvents
+          : rhythmEvents;
     const cleanup = report.cleanupDiagnostics || {};
     const motif = report.motifDiagnostics || {};
+    const fingering = report.fingeringDiagnostics || {};
 
     return {
       selectedEvents,
       rawEventCount: rhythmEvents.length,
       cleanedEventCount: renderEvents.length,
       motifEventCount: motifEvents.length,
+      fingeringEventCount: fingeringEvents.length,
       selectedEventCount: selectedEvents.length,
       usedCleanedEvents: renderEvents.length > 0,
       usedMotifEvents: motifEvents.length > 0,
+      usedFingeringEvents: fingeringEvents.length > 0,
       passed: report.passed === true,
       nearbyRetriggersRemoved: Number(
         cleanup.nearbyRetriggerEventsRemoved || 0
@@ -63,6 +71,9 @@ async function loadNotationBenchmark() {
       medianSnappedIntroEvents: Number(
         motif.medianSnappedIntroEvents || 0
       ),
+      changedIntroFingerings: Number(
+        fingering.changedIntroFingerings || 0
+      ),
     };
   } catch (error) {
     if (error?.code === 'ENOENT') {
@@ -71,13 +82,16 @@ async function loadNotationBenchmark() {
         rawEventCount: 0,
         cleanedEventCount: 0,
         motifEventCount: 0,
+        fingeringEventCount: 0,
         selectedEventCount: 0,
         usedCleanedEvents: false,
         usedMotifEvents: false,
+        usedFingeringEvents: false,
         passed: false,
         nearbyRetriggersRemoved: 0,
         rejectedIntroEvents: 0,
         medianSnappedIntroEvents: 0,
+        changedIntroFingerings: 0,
       };
     }
     throw error;
@@ -104,7 +118,7 @@ export async function GET() {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition':
-          'inline; filename="jimmy-paige-v8-intro-motif-pass-3.pdf"',
+          'inline; filename="jimmy-paige-v8-fingering-normalization.pdf"',
         'Cache-Control': 'no-store, no-cache, must-revalidate',
         'X-Jimmy-Paige-Notation-Raw-Events': String(
           notation.rawEventCount
@@ -115,6 +129,9 @@ export async function GET() {
         'X-Jimmy-Paige-Notation-Motif-Events': String(
           notation.motifEventCount
         ),
+        'X-Jimmy-Paige-Notation-Fingering-Events': String(
+          notation.fingeringEventCount
+        ),
         'X-Jimmy-Paige-Notation-Selected-Events': String(
           notation.selectedEventCount
         ),
@@ -124,6 +141,9 @@ export async function GET() {
         'X-Jimmy-Paige-Notation-Motif-Stabilized': String(
           notation.usedMotifEvents
         ),
+        'X-Jimmy-Paige-Notation-Fingering-Normalized': String(
+          notation.usedFingeringEvents
+        ),
         'X-Jimmy-Paige-Retriggers-Removed': String(
           notation.nearbyRetriggersRemoved
         ),
@@ -132,6 +152,9 @@ export async function GET() {
         ),
         'X-Jimmy-Paige-Intro-Events-Median-Snapped': String(
           notation.medianSnappedIntroEvents
+        ),
+        'X-Jimmy-Paige-Intro-Fingerings-Changed': String(
+          notation.changedIntroFingerings
         ),
         'X-Jimmy-Paige-Notation-Passed': String(notation.passed),
       },
