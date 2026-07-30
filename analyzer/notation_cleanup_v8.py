@@ -5,8 +5,10 @@ from typing import Any
 
 SIXTEENTH_STEPS = 16
 ATTACK_CLUSTER_STEPS = 1
-MIN_DURATION_SECONDS = 0.035
-LOW_CONFIDENCE_THRESHOLD = 0.08
+NEAR_DUPLICATE_STEPS = 1
+MIN_DURATION_SECONDS = 0.045
+SHORT_EVENT_SECONDS = 0.075
+LOW_CONFIDENCE_THRESHOLD = 0.12
 
 
 def _safe_float(value: Any, fallback: float = 0.0) -> float:
@@ -70,6 +72,57 @@ def _dedupe_same_attack(events: list[dict[str, Any]]) -> tuple[list[dict[str, An
     ), removed
 
 
+def _dedupe_nearby_retriggers(
+    events: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], int]:
+    """Collapse same-note retriggers quantized within one sixteenth step."""
+    by_note: dict[tuple[int, int], list[dict[str, Any]]] = defaultdict(list)
+    for event in events:
+        by_note[
+            (
+                _safe_int(event.get("stringIndex")),
+                _safe_int(event.get("fret")),
+            )
+        ].append(event)
+
+    kept: list[dict[str, Any]] = []
+    removed = 0
+    for note_events in by_note.values():
+        note_events.sort(key=lambda item: _safe_int(item.get("quantizedStep")))
+        cluster: list[dict[str, Any]] = []
+
+        def flush() -> None:
+            nonlocal removed
+            if not cluster:
+                return
+            winner = max(cluster, key=_event_quality)
+            kept.append(winner)
+            removed += len(cluster) - 1
+            cluster.clear()
+
+        for event in note_events:
+            if not cluster:
+                cluster.append(event)
+                continue
+            previous_step = _safe_int(cluster[-1].get("quantizedStep"))
+            step = _safe_int(event.get("quantizedStep"))
+            if step - previous_step <= NEAR_DUPLICATE_STEPS:
+                cluster.append(event)
+            else:
+                flush()
+                cluster.append(event)
+        flush()
+
+    kept.sort(
+        key=lambda item: (
+            _safe_int(item.get("quantizedStep")),
+            _safe_int(item.get("stringIndex")),
+            _safe_int(item.get("fret")),
+        )
+    )
+    return kept, removed
+
+
 def _suppress_weak_transients(events: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
     kept: list[dict[str, Any]] = []
     removed = 0
@@ -77,20 +130,35 @@ def _suppress_weak_transients(events: list[dict[str, Any]]) -> tuple[list[dict[s
     for event in events:
         duration = _safe_float(event.get("duration"))
         confidence = _safe_float(event.get("confidence"))
-        isolated = not any(
+        step = _safe_int(event.get("quantizedStep"))
+        neighboring_attack = any(
             other is not event
-            and abs(_safe_int(other.get("quantizedStep")) - _safe_int(event.get("quantizedStep")))
-            <= ATTACK_CLUSTER_STEPS
+            and abs(_safe_int(other.get("quantizedStep")) - step) <= ATTACK_CLUSTER_STEPS
+            for other in events
+        )
+        same_string_neighbor = any(
+            other is not event
+            and _safe_int(other.get("stringIndex")) == _safe_int(event.get("stringIndex"))
+            and abs(_safe_int(other.get("quantizedStep")) - step) <= 2
             for other in events
         )
 
-        if (
+        low_confidence_transient = (
             duration > 0
             and duration < MIN_DURATION_SECONDS
             and confidence > 0
             and confidence < LOW_CONFIDENCE_THRESHOLD
-            and isolated
-        ):
+            and not neighboring_attack
+        )
+        unscored_micro_transient = (
+            duration > 0
+            and duration < SHORT_EVENT_SECONDS
+            and confidence <= 0
+            and not neighboring_attack
+            and same_string_neighbor
+        )
+
+        if low_confidence_transient or unscored_micro_transient:
             removed += 1
             continue
 
@@ -105,7 +173,13 @@ def _assign_attack_groups(events: list[dict[str, Any]]) -> tuple[list[dict[str, 
     groups: set[int] = set()
     rendered: list[dict[str, Any]] = []
 
-    for event in events:
+    for event in sorted(
+        events,
+        key=lambda item: (
+            _safe_int(item.get("quantizedStep")),
+            _safe_int(item.get("stringIndex")),
+        ),
+    ):
         step = _safe_int(event.get("quantizedStep"))
         if previous_step is None or step - previous_step > ATTACK_CLUSTER_STEPS:
             attack_id += 1
@@ -134,17 +208,21 @@ def clean_render_events(
         )
         prepared.append(item)
 
+    grouped_measures = _group_by_measure(prepared)
     rendered: list[dict[str, Any]] = []
-    duplicate_count = 0
+    exact_duplicate_count = 0
+    nearby_duplicate_count = 0
     transient_count = 0
     attack_group_count = 0
 
-    for measure_number in sorted(_group_by_measure(prepared)):
-        measure_events = _group_by_measure(prepared)[measure_number]
-        deduped, removed_duplicates = _dedupe_same_attack(measure_events)
-        filtered, removed_transients = _suppress_weak_transients(deduped)
+    for measure_number in sorted(grouped_measures):
+        measure_events = grouped_measures[measure_number]
+        deduped, removed_exact = _dedupe_same_attack(measure_events)
+        retrigger_cleaned, removed_nearby = _dedupe_nearby_retriggers(deduped)
+        filtered, removed_transients = _suppress_weak_transients(retrigger_cleaned)
         grouped, groups = _assign_attack_groups(filtered)
-        duplicate_count += removed_duplicates
+        exact_duplicate_count += removed_exact
+        nearby_duplicate_count += removed_nearby
         transient_count += removed_transients
         attack_group_count += groups
         rendered.extend(grouped)
@@ -158,14 +236,13 @@ def clean_render_events(
         )
     )
 
-    source_indices = [
-        _safe_int(item.get("sourceEventIndex"))
-        for item in rendered
-    ]
+    source_indices = [_safe_int(item.get("sourceEventIndex")) for item in rendered]
     diagnostics = {
         "rawEventCount": len(projected_events),
         "renderEventCount": len(rendered),
-        "duplicateEventsRemoved": duplicate_count,
+        "duplicateEventsRemoved": exact_duplicate_count + nearby_duplicate_count,
+        "exactDuplicateEventsRemoved": exact_duplicate_count,
+        "nearbyRetriggerEventsRemoved": nearby_duplicate_count,
         "weakTransientEventsRemoved": transient_count,
         "attackGroupCount": attack_group_count,
         "quantizationStepsPerMeasure": SIXTEENTH_STEPS,
