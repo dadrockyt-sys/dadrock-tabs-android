@@ -7,7 +7,12 @@
         "dev:no-reload": "next dev --hostname 0.0.0.0 --port 3000",
         "dev:webpack": "next dev --hostname 0.0.0.0 --port 3000",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "jimmy:v8:sync": "bash scripts/jimmy-v8.sh sync",
+        "jimmy:v8:test": "bash scripts/jimmy-v8.sh test",
+        "jimmy:v8:build": "bash scripts/jimmy-v8.sh build",
+        "jimmy:v8:preview": "bash scripts/jimmy-v8.sh preview",
+        "jimmy:v8:rerun": "bash scripts/jimmy-v8.sh rerun"
     },
     "dependencies": {
         "@hookform/resolvers": "^5.1.1",
