@@ -18,6 +18,9 @@ try:
     from production_chord_diagnostics import (
         attach_rhythm_chord_diagnostics,
     )
+    from production_lead_technique_diagnostics import (
+        attach_lead_technique_diagnostics,
+    )
 except ImportError:
     from analyzer.modal_analyzer import (
         MAX_AUDIO_SIZE_BYTES,
@@ -28,6 +31,9 @@ except ImportError:
     )
     from analyzer.production_chord_diagnostics import (
         attach_rhythm_chord_diagnostics,
+    )
+    from analyzer.production_lead_technique_diagnostics import (
+        attach_lead_technique_diagnostics,
     )
 
 
@@ -46,6 +52,8 @@ image = (
         "production_chord_diagnostics",
         "chord_sustain",
         "reference_aware_harmony",
+        "production_lead_technique_diagnostics",
+        "lead_technique_diagnostics_v7",
     )
 )
 
@@ -53,7 +61,7 @@ image = (
 def normalize_verified_context(
     payload: dict[str, Any],
 ) -> tuple[list[dict[str, Any]] | None, list[str] | None]:
-    """Accept optional verified context without trusting malformed payload data."""
+    """Accept optional verified harmony context without trusting malformed data."""
 
     raw_chords = payload.get("referenceChords")
     raw_progression = payload.get("expectedProgression")
@@ -115,24 +123,46 @@ def normalize_verified_context(
     return reference_chords, filtered_progression
 
 
+def normalize_lead_technique_context(
+    payload: dict[str, Any],
+) -> tuple[bool, bool]:
+    """Accept explicit lead-technique flags only when they are real booleans."""
+
+    enabled = payload.get("enableReferenceGuidedLeadTechniques") is True
+    bend_evidence = payload.get("bendEvidencePresent") is True
+    return enabled, bend_evidence
+
+
 def analyze_audio_file(
     audio_path: str,
     transcription_type: str,
     reference_chords: list[dict[str, Any]] | None = None,
     expected_progression: list[str] | None = None,
+    *,
+    enable_reference_guided_lead_techniques: bool = False,
+    bend_evidence_present: bool = False,
 ) -> dict[str, Any]:
-    """Run V6 production analysis, then attach read-only V7 diagnostics."""
+    """Run V6 analysis, then attach opt-in read-only V7 diagnostics."""
 
     result = _analyze_audio_file_v6(
         audio_path,
         transcription_type,
     )
 
-    return attach_rhythm_chord_diagnostics(
+    result = attach_rhythm_chord_diagnostics(
         result,
         transcription_type,
         reference_chords=reference_chords,
         expected_progression=expected_progression,
+    )
+
+    return attach_lead_technique_diagnostics(
+        result,
+        transcription_type,
+        enable_reference_guided_techniques=(
+            enable_reference_guided_lead_techniques
+        ),
+        bend_evidence_present=bend_evidence_present,
     )
 
 
@@ -192,6 +222,10 @@ def analyze(payload: dict) -> dict:
     reference_chords, expected_progression = (
         normalize_verified_context(payload)
     )
+    (
+        enable_reference_guided_lead_techniques,
+        bend_evidence_present,
+    ) = normalize_lead_technique_context(payload)
 
     suffix = Path(audio_url).suffix.lower()
 
@@ -274,6 +308,10 @@ def analyze(payload: dict) -> dict:
                 transcription_type,
                 reference_chords=reference_chords,
                 expected_progression=expected_progression,
+                enable_reference_guided_lead_techniques=(
+                    enable_reference_guided_lead_techniques
+                ),
+                bend_evidence_present=bend_evidence_present,
             )
         except ValueError as error:
             raise HTTPException(
