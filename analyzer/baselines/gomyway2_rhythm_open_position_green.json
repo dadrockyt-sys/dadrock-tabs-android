@@ -1,0 +1,18 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "gomyway2-rhythm-open-position-voicing-technique",
+  "engineVersion": "7.2-phase-1-adaptive-three-way-instrument-separation-v3",
+  "requiredMode": "strict-three-way-register-gate",
+  "minimumAfterScore": 95.2,
+  "minimumScoreImprovement": 20.94,
+  "minimumAllowedFretPrecision": 1.0,
+  "minimumRequiredFretCoverage": 1.0,
+  "minimumBestMotifScore": 1.0,
+  "minimumExactCandidateCoverage": 1.0,
+  "minimumReleasePairCount": 1,
+  "maximumSyntheticNoteCount": 0,
+  "requiredFrets": [0, 2, 3],
+  "requiredTechniques": ["bend", "release"],
+  "passed": true,
+  "protectedBaselinesChanged": false
+}
