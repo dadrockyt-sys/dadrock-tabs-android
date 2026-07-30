@@ -27,9 +27,6 @@ sync_branch() {
   after_pull="$(git rev-parse HEAD)"
   git log -1 --oneline
 
-  # A running Bash process keeps the old script body in memory even when
-  # git pull replaces this file. Re-exec the freshly pulled workflow once so
-  # new benchmark stages and summary fields take effect immediately.
   if [[ "$before_pull" != "$after_pull" && "${JIMMY_V8_REEXECUTED:-0}" != "1" ]]; then
     say "Reloading updated Jimmy PAIge workflow"
     export JIMMY_V8_REEXECUTED=1
@@ -44,6 +41,7 @@ run_python_checks() {
     analyzer/song_section_detection_v8.py \
     analyzer/notation_cleanup_v8.py \
     analyzer/intro_motif_stabilization_v8.py \
+    analyzer/intro_pitch_contour_v8.py \
     analyzer/intro_fingering_normalization_v8.py \
     analyzer/professional_intro_accuracy_benchmark_v8.py \
     analyzer/modal_analyzer_v8_section_benchmark.py \
@@ -90,6 +88,7 @@ if notation_path.exists():
     notation = json.loads(notation_path.read_text())
     cleanup = notation.get("cleanupDiagnostics", {})
     motif = notation.get("motifDiagnostics", {})
+    contour = notation.get("pitchContourDiagnostics", {})
     fingering = notation.get("fingeringDiagnostics", {})
     print("Notation benchmark type:", notation.get("benchmarkType"))
     print("Notation pass:", notation.get("passed"))
@@ -97,12 +96,19 @@ if notation_path.exists():
     print("Raw events:", len(notation.get("rhythmEvents", [])))
     print("Cleaned events:", len(notation.get("renderEvents", [])))
     print("Motif events:", len(notation.get("motifStabilizedEvents", [])))
+    print("Pitch-contour events:", len(notation.get("pitchContourReconstructedEvents", [])))
     print("Fingering events:", len(notation.get("fingeringNormalizedEvents", [])))
     print("Nearby retriggers removed:", cleanup.get("nearbyRetriggerEventsRemoved"))
     print("Intro input events:", motif.get("inputIntroEventCount"))
     print("Intro output events:", motif.get("outputIntroEventCount"))
     print("Low-support intro events rejected:", motif.get("rejectedLowSupportIntroEvents"))
     print("Repeated intro retriggers removed:", motif.get("repeatedPairRetriggersRemoved"))
+    print("Accepted pitch contours:", contour.get("acceptedContourSignatureCount"))
+    print("Bend events marked:", contour.get("bendEventsMarked"))
+    print("Bend releases marked:", contour.get("bendReleaseEventsMarked"))
+    print("Pitch excursions removed:", contour.get("pitchExcursionDisplayEventsRemoved"))
+    print("Contour retriggers removed:", contour.get("nearbySustainRetriggersRemoved"))
+    print("Contour support histogram:", contour.get("contourSupportHistogram"))
     print("Intro fingerings normalized:", fingering.get("changedIntroFingerings"))
     print("Fingering pitch preserved:", fingering.get("pitchPreserved"))
 else:
@@ -160,9 +166,6 @@ case "$MODE" in
     run_python_checks
     run_benchmarks
     print_summary
-    # A production build is intentionally skipped here. On small Codespaces it
-    # can be terminated with exit 143 before the dev preview starts. The
-    # dedicated build mode still performs the full production build.
     start_preview
     ;;
   rerun)
