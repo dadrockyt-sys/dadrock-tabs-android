@@ -34,6 +34,30 @@ sync_branch() {
   fi
 }
 
+ensure_ffmpeg() {
+  if command -v ffmpeg >/dev/null 2>&1; then
+    printf 'ffmpeg ready: %s\n' "$(command -v ffmpeg)"
+    return
+  fi
+
+  say "Installing ffmpeg for direct-audio rhythm analysis"
+
+  if ! command -v apt-get >/dev/null 2>&1; then
+    fail "ffmpeg is missing and apt-get is unavailable"
+  fi
+
+  if command -v sudo >/dev/null 2>&1; then
+    sudo apt-get update -qq
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+  else
+    apt-get update -qq
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+  fi
+
+  command -v ffmpeg >/dev/null 2>&1 || fail "ffmpeg installation did not complete"
+  printf 'ffmpeg installed: %s\n' "$(command -v ffmpeg)"
+}
+
 run_python_checks() {
   say "Checking Jimmy PAIge V8 Python files"
 
@@ -53,6 +77,8 @@ run_python_checks() {
 }
 
 run_benchmarks() {
+  ensure_ffmpeg
+
   say "Running V8 direct-audio rhythm candidate benchmark"
   python analyzer/run_v8_rhythm_candidate_benchmark.py
 
