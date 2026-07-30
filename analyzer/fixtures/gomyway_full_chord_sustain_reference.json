@@ -1,0 +1,56 @@
+{
+  "fixtureVersion": 1,
+  "fixtureType": "gomyway-full-song-chord-sustain-reference",
+  "audioPath": "public/gomywayfullaitest.m4a",
+  "transcriptionType": "rhythm",
+  "referenceSection": "chorus",
+  "onsetToleranceSeconds": 0.085,
+  "minimumChordNotes": 3,
+  "minimumSustainSeconds": 0.35,
+  "minimumRepeatedAttacks": 3,
+  "chords": [
+    {
+      "name": "G6",
+      "pitchClasses": [2, 4, 7, 11],
+      "referenceFrets": [0, 3, 4, 5],
+      "minimumPitchClassCoverage": 0.75,
+      "expectsSustain": true
+    },
+    {
+      "name": "A(tp2)",
+      "pitchClasses": [1, 4, 9],
+      "referenceFrets": [0, 2, 2, 2],
+      "minimumPitchClassCoverage": 1.0,
+      "expectsSustain": true
+    },
+    {
+      "name": "E",
+      "pitchClasses": [4, 8, 11],
+      "referenceFrets": [9, 9, 9],
+      "minimumPitchClassCoverage": 1.0,
+      "expectsSustain": true
+    },
+    {
+      "name": "D",
+      "pitchClasses": [2, 6, 9],
+      "referenceFrets": [7, 7, 7],
+      "minimumPitchClassCoverage": 1.0,
+      "expectsSustain": false
+    },
+    {
+      "name": "G",
+      "pitchClasses": [2, 7, 11],
+      "referenceFrets": [12, 12, 12],
+      "minimumPitchClassCoverage": 1.0,
+      "expectsSustain": false
+    }
+  ],
+  "expectedProgression": ["G6", "A(tp2)", "E", "D", "E", "G", "E"],
+  "trainingGoals": {
+    "simultaneousChordNotes": true,
+    "repeatedChordAttacks": true,
+    "sustainTies": true,
+    "preserveFullSongTimeline": true,
+    "noSyntheticNotes": true
+  }
+}
