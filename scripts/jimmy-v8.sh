@@ -111,6 +111,25 @@ if notation_path.exists():
     print("Contour support histogram:", contour.get("contourSupportHistogram"))
     print("Intro fingerings normalized:", fingering.get("changedIntroFingerings"))
     print("Fingering pitch preserved:", fingering.get("pitchPreserved"))
+
+    source_events = notation.get("motifStabilizedEvents", [])
+    intro_events = [
+        event for event in source_events
+        if 1 <= int(event.get("measureNumber", 0) or 0) <= 4
+    ]
+    print()
+    print("Intro contour source events (measures 1-4):")
+    for event in intro_events:
+        print(
+            "M{measure} S{step} string={string} fret={fret} midi={midi} pos={position}".format(
+                measure=event.get("measureNumber"),
+                step=event.get("quantizedStep"),
+                string=event.get("stringIndex"),
+                fret=event.get("fret"),
+                midi=event.get("midiPitch"),
+                position=event.get("positionInMeasure"),
+            )
+        )
 else:
     print("Notation report: missing")
 
