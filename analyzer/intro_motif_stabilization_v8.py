@@ -10,6 +10,9 @@ PAIR_LENGTH = 2
 PAIR_COUNT = 8
 MIN_PAIR_SUPPORT = 3
 MAX_PAIR_PHASE_SHIFT = 4
+RHYTHM_SLOT_SIZE = 2
+
+Signature = tuple[int, int, int, int]
 
 
 def _safe_int(value: Any, fallback: int = 0) -> int:
@@ -34,9 +37,23 @@ def _measure_offset(measure_number: int) -> int:
     return (measure_number - INTRO_START_MEASURE) % PAIR_LENGTH
 
 
-def _signature(event: dict[str, Any]) -> tuple[int, int, int]:
+def _rhythm_slot(event: dict[str, Any]) -> int:
+    """Return a tolerant rhythmic identity for repeated attacks.
+
+    The previous V8 signature used only measure offset, string and fret. That
+    collapsed every repeated attack of the same note inside a measure into one
+    event. A two-step slot keeps separate attacks while still tolerating small
+    onset drift between repeated two-measure pairs.
+    """
+
+    step = max(0, min(15, _safe_int(event.get("quantizedStep"))))
+    return int(round(step / RHYTHM_SLOT_SIZE)) * RHYTHM_SLOT_SIZE
+
+
+def _signature(event: dict[str, Any]) -> Signature:
     return (
         _measure_offset(_safe_int(event.get("measureNumber"), 1)),
+        _rhythm_slot(event),
         _safe_int(event.get("stringIndex")),
         _safe_int(event.get("fret")),
     )
@@ -53,22 +70,25 @@ def _event_quality(event: dict[str, Any], target_step: int) -> tuple[float, floa
 
 def _best_event_per_pair_signature(
     intro_events: list[dict[str, Any]],
-) -> dict[tuple[int, tuple[int, int, int]], dict[str, Any]]:
-    best: dict[tuple[int, tuple[int, int, int]], dict[str, Any]] = {}
+) -> dict[tuple[int, Signature], dict[str, Any]]:
+    best: dict[tuple[int, Signature], dict[str, Any]] = {}
     for event in intro_events:
         pair_id = _pair_index(_safe_int(event.get("measureNumber"), INTRO_START_MEASURE))
         signature = _signature(event)
         key = (pair_id, signature)
         previous = best.get(key)
-        step = _safe_int(event.get("quantizedStep"))
-        if previous is None or _event_quality(event, step) > _event_quality(previous, step):
+        target_step = signature[1]
+        if previous is None or _event_quality(event, target_step) > _event_quality(
+            previous,
+            target_step,
+        ):
             best[key] = event
     return best
 
 
 def _choose_canonical_pair(
-    best_by_pair_signature: dict[tuple[int, tuple[int, int, int]], dict[str, Any]],
-    accepted_signatures: set[tuple[int, int, int]],
+    best_by_pair_signature: dict[tuple[int, Signature], dict[str, Any]],
+    accepted_signatures: set[Signature],
 ) -> int:
     pair_scores: dict[int, tuple[int, float, float]] = {}
     for pair_id in range(PAIR_COUNT):
@@ -86,8 +106,8 @@ def _choose_canonical_pair(
 
 
 def _estimate_pair_phase_offsets(
-    best_by_pair_signature: dict[tuple[int, tuple[int, int, int]], dict[str, Any]],
-    accepted_signatures: set[tuple[int, int, int]],
+    best_by_pair_signature: dict[tuple[int, Signature], dict[str, Any]],
+    accepted_signatures: set[Signature],
     canonical_pair: int,
 ) -> dict[int, int]:
     canonical_steps = {
@@ -119,9 +139,9 @@ def stabilize_intro_motif(
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Stabilize the repeated measures 1-16 intro without synthesizing notes.
 
-    V8 first aligns each repeated two-measure pair to the strongest observed pair,
-    then computes rhythmic consensus. This corrects whole-pair onset drift before
-    median snapping while preserving every retained source note, string and fret.
+    V8 aligns each repeated two-measure pair to the strongest observed pair,
+    computes rhythmic consensus, and preserves separate repeated attacks by
+    including a tolerant rhythmic slot in each motif signature.
     """
 
     intro_events = [
@@ -141,8 +161,8 @@ def stabilize_intro_motif(
         )
     ]
 
-    observations: dict[tuple[int, int, int], list[dict[str, Any]]] = defaultdict(list)
-    pair_presence: dict[tuple[int, int, int], set[int]] = defaultdict(set)
+    observations: dict[Signature, list[dict[str, Any]]] = defaultdict(list)
+    pair_presence: dict[Signature, set[int]] = defaultdict(set)
 
     for event in intro_events:
         signature = _signature(event)
@@ -169,7 +189,7 @@ def stabilize_intro_motif(
         canonical_pair,
     )
 
-    adjusted_steps: dict[tuple[int, tuple[int, int, int]], int] = {}
+    adjusted_steps: dict[tuple[int, Signature], int] = {}
     for (pair_id, signature), event in best_initial.items():
         adjusted_steps[(pair_id, signature)] = max(
             0,
@@ -188,12 +208,12 @@ def stabilize_intro_motif(
         for signature in accepted_signatures
     }
 
-    slot_candidates: dict[tuple[int, int, int], list[tuple[int, int, int]]] = defaultdict(list)
+    slot_candidates: dict[tuple[int, int, int], list[Signature]] = defaultdict(list)
     for signature in accepted_signatures:
-        offset, string_index, _fret = signature
+        offset, _slot, string_index, _fret = signature
         slot_candidates[(offset, median_steps[signature], string_index)].append(signature)
 
-    dominant_signatures: set[tuple[int, int, int]] = set()
+    dominant_signatures: set[Signature] = set()
     conflicting_signatures_removed = 0
     for candidates in slot_candidates.values():
         winner = max(
@@ -201,14 +221,14 @@ def stabilize_intro_motif(
             key=lambda signature: (
                 support_counts[signature],
                 len(observations[signature]),
-                -signature[2],
+                -signature[3],
             ),
         )
         dominant_signatures.add(winner)
         conflicting_signatures_removed += max(0, len(candidates) - 1)
 
     best_by_pair_and_signature: dict[
-        tuple[int, tuple[int, int, int]],
+        tuple[int, Signature],
         dict[str, Any],
     ] = {}
     repeated_retriggers_removed = 0
@@ -240,6 +260,7 @@ def stabilize_intro_motif(
         phase_offset = pair_phase_offsets.get(pair_id, 0)
         item = dict(event)
         item["motifOriginalStep"] = original_step
+        item["motifRhythmSlot"] = signature[1]
         item["motifPairPhaseOffset"] = phase_offset
         item["motifConsensusStep"] = target_step
         item["motifSupportPairs"] = support_counts[signature]
@@ -289,6 +310,7 @@ def stabilize_intro_motif(
         "pairLengthMeasures": PAIR_LENGTH,
         "pairCount": PAIR_COUNT,
         "minimumPairSupport": MIN_PAIR_SUPPORT,
+        "rhythmSlotSize": RHYTHM_SLOT_SIZE,
         "canonicalPairIndex": canonical_pair,
         "pairPhaseOffsets": {str(key): value for key, value in sorted(pair_phase_offsets.items())},
         "maximumPairPhaseShift": MAX_PAIR_PHASE_SHIFT,
