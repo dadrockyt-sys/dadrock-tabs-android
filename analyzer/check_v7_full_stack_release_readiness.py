@@ -30,27 +30,39 @@ def main() -> None:
     checks = report.get("checks") or {}
 
     rhythm = report.get("rhythm") or {}
-    lead = report.get("lead") or {}
-    bass = report.get("bass") or {}
+    lead_analysis = report.get("lead") or {}
+    bass_analysis = report.get("bass") or {}
 
     rhythm_vocabulary = set(
-        rhythm.get("contextualVocabulary")
+        rhythm.get("vocabulary")
         or report.get("rhythmVocabulary")
         or []
     )
-    rhythm_promotions = rhythm.get("promotions") or report.get("rhythmPromotions") or {}
-    lead_analysis = lead.get("analysis") or report.get("leadTechniqueAnalysis") or {}
-    bass_analysis = bass.get("analysis") or report.get("bassTechniqueAnalysis") or {}
+    rhythm_promotions = (
+        rhythm.get("promotions")
+        or report.get("rhythmPromotions")
+        or {}
+    )
 
     required_checks = baseline.get("requiredChecks") or []
-    missing_checks = [name for name in required_checks if checks.get(name) is not True]
+    missing_checks = [
+        name for name in required_checks
+        if checks.get(name) is not True
+    ]
 
-    required_vocabulary = set(baseline.get("requiredRhythmVocabulary") or [])
-    missing_vocabulary = sorted(required_vocabulary - rhythm_vocabulary)
+    required_vocabulary = set(
+        baseline.get("requiredRhythmVocabulary") or []
+    )
+    missing_vocabulary = sorted(
+        required_vocabulary - rhythm_vocabulary
+    )
 
-    required_promotions = baseline.get("requiredRhythmPromotions") or []
+    required_promotions = (
+        baseline.get("requiredRhythmPromotions") or []
+    )
     missing_promotions = [
-        name for name in required_promotions if rhythm_promotions.get(name) is not True
+        name for name in required_promotions
+        if rhythm_promotions.get(name) is not True
     ]
 
     release_pairs = int(
@@ -74,14 +86,25 @@ def main() -> None:
 
     guard_checks = {
         "combinedBenchmarkPassed": report.get("passed") is True,
-        "protectedBaselinesUnchanged": report.get("protectedBaselinesChanged") is False,
+        "protectedBaselinesUnchanged": (
+            report.get("protectedBaselinesChanged") is False
+        ),
         "allRequiredChecksGreen": not missing_checks,
         "rhythmVocabularyLocked": not missing_vocabulary,
         "rhythmPromotionsLocked": not missing_promotions,
-        "leadReleasePairsLocked": release_pairs >= int(baseline.get("minimumLeadReleasePairs") or 1),
-        "leadPalmMuteLocked": palm_muted >= int(baseline.get("minimumLeadPalmMutedEvents") or 1),
-        "bassContourLocked": bass_contour is bool(baseline.get("requiredBassContour", True)),
-        "bassSlideTargetLocked": bass_slide_target == baseline.get("requiredBassSlideTarget"),
+        "leadReleasePairsLocked": release_pairs >= int(
+            baseline.get("minimumLeadReleasePairs") or 1
+        ),
+        "leadPalmMuteLocked": palm_muted >= int(
+            baseline.get("minimumLeadPalmMutedEvents") or 1
+        ),
+        "bassContourLocked": bass_contour is bool(
+            baseline.get("requiredBassContour", True)
+        ),
+        "bassSlideTargetLocked": (
+            bass_slide_target
+            == baseline.get("requiredBassSlideTarget")
+        ),
     }
 
     failed = False
@@ -106,7 +129,10 @@ def main() -> None:
     print("Bass slide target:", bass_slide_target)
 
     if failed:
-        raise SystemExit("\nV7 full-stack release readiness regression detected. Do not advance.")
+        raise SystemExit(
+            "\nV7 full-stack release readiness regression detected. "
+            "Do not advance."
+        )
 
     print("\nV7 FULL-STACK RELEASE BASELINE PRESERVED 💚")
     print("Rhythm, lead, and bass diagnostics remain isolated and read-only.")
