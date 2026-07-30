@@ -1,9 +1,12 @@
 {
-  "fixtureVersion": 1,
+  "fixtureVersion": 2,
   "fixtureType": "gomyway-full-song-chord-sustain-reference",
   "audioPath": "public/gomywayfullaitest.m4a",
   "transcriptionType": "rhythm",
   "referenceSection": "chorus",
+  "tempo": 129,
+  "timeSignature": "4/4",
+  "expectedMeasureCount": 113,
   "onsetToleranceSeconds": 0.085,
   "minimumChordNotes": 3,
   "minimumSustainSeconds": 0.35,
