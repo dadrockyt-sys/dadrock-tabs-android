@@ -28,16 +28,37 @@ async function loadNotationBenchmark() {
   try {
     const raw = await fs.readFile(notationPath, 'utf8');
     const report = JSON.parse(raw);
+    const renderEvents = Array.isArray(report.renderEvents)
+      ? report.renderEvents
+      : [];
+    const rhythmEvents = Array.isArray(report.rhythmEvents)
+      ? report.rhythmEvents
+      : [];
+    const selectedEvents = renderEvents.length > 0
+      ? renderEvents
+      : rhythmEvents;
+    const cleanup = report.cleanupDiagnostics || {};
 
     return {
-      rhythmEvents: Array.isArray(report.rhythmEvents)
-        ? report.rhythmEvents
-        : [],
+      selectedEvents,
+      rawEventCount: rhythmEvents.length,
+      renderEventCount: selectedEvents.length,
+      usedCleanedEvents: renderEvents.length > 0,
       passed: report.passed === true,
+      nearbyRetriggersRemoved: Number(
+        cleanup.nearbyRetriggerEventsRemoved || 0
+      ),
     };
   } catch (error) {
     if (error?.code === 'ENOENT') {
-      return { rhythmEvents: [], passed: false };
+      return {
+        selectedEvents: [],
+        rawEventCount: 0,
+        renderEventCount: 0,
+        usedCleanedEvents: false,
+        passed: false,
+        nearbyRetriggersRemoved: 0,
+      };
     }
     throw error;
   }
@@ -55,7 +76,7 @@ export async function GET() {
       timeSignature: '4/4',
       bpm: 129,
       sections: GOMYWAY_V8_SECTIONS,
-      rhythmEvents: notation.rhythmEvents,
+      rhythmEvents: notation.selectedEvents,
     });
 
     return new Response(Buffer.from(pdfBytes), {
@@ -63,10 +84,19 @@ export async function GET() {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition':
-          'inline; filename="jimmy-paige-v8-notation-pass-1.pdf"',
+          'inline; filename="jimmy-paige-v8-notation-cleanup-pass-2.pdf"',
         'Cache-Control': 'no-store, no-cache, must-revalidate',
-        'X-Jimmy-Paige-Notation-Events': String(
-          notation.rhythmEvents.length
+        'X-Jimmy-Paige-Notation-Raw-Events': String(
+          notation.rawEventCount
+        ),
+        'X-Jimmy-Paige-Notation-Render-Events': String(
+          notation.renderEventCount
+        ),
+        'X-Jimmy-Paige-Notation-Cleaned': String(
+          notation.usedCleanedEvents
+        ),
+        'X-Jimmy-Paige-Retriggers-Removed': String(
+          notation.nearbyRetriggersRemoved
         ),
         'X-Jimmy-Paige-Notation-Passed': String(notation.passed),
       },
