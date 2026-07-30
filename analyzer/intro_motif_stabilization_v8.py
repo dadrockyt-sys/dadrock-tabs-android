@@ -7,7 +7,9 @@ from typing import Any
 INTRO_START_MEASURE = 1
 INTRO_END_MEASURE = 16
 PAIR_LENGTH = 2
+PAIR_COUNT = 8
 MIN_PAIR_SUPPORT = 3
+MAX_PAIR_PHASE_SHIFT = 4
 
 
 def _safe_int(value: Any, fallback: int = 0) -> int:
@@ -49,15 +51,77 @@ def _event_quality(event: dict[str, Any], target_step: int) -> tuple[float, floa
     )
 
 
+def _best_event_per_pair_signature(
+    intro_events: list[dict[str, Any]],
+) -> dict[tuple[int, tuple[int, int, int]], dict[str, Any]]:
+    best: dict[tuple[int, tuple[int, int, int]], dict[str, Any]] = {}
+    for event in intro_events:
+        pair_id = _pair_index(_safe_int(event.get("measureNumber"), INTRO_START_MEASURE))
+        signature = _signature(event)
+        key = (pair_id, signature)
+        previous = best.get(key)
+        step = _safe_int(event.get("quantizedStep"))
+        if previous is None or _event_quality(event, step) > _event_quality(previous, step):
+            best[key] = event
+    return best
+
+
+def _choose_canonical_pair(
+    best_by_pair_signature: dict[tuple[int, tuple[int, int, int]], dict[str, Any]],
+    accepted_signatures: set[tuple[int, int, int]],
+) -> int:
+    pair_scores: dict[int, tuple[int, float, float]] = {}
+    for pair_id in range(PAIR_COUNT):
+        events = [
+            event
+            for (candidate_pair, signature), event in best_by_pair_signature.items()
+            if candidate_pair == pair_id and signature in accepted_signatures
+        ]
+        pair_scores[pair_id] = (
+            len(events),
+            sum(_safe_float(event.get("confidence")) for event in events),
+            sum(_safe_float(event.get("duration")) for event in events),
+        )
+    return max(pair_scores, key=pair_scores.get)
+
+
+def _estimate_pair_phase_offsets(
+    best_by_pair_signature: dict[tuple[int, tuple[int, int, int]], dict[str, Any]],
+    accepted_signatures: set[tuple[int, int, int]],
+    canonical_pair: int,
+) -> dict[int, int]:
+    canonical_steps = {
+        signature: _safe_int(event.get("quantizedStep"))
+        for (pair_id, signature), event in best_by_pair_signature.items()
+        if pair_id == canonical_pair and signature in accepted_signatures
+    }
+
+    offsets: dict[int, int] = {canonical_pair: 0}
+    for pair_id in range(PAIR_COUNT):
+        if pair_id == canonical_pair:
+            continue
+
+        deltas: list[int] = []
+        for (candidate_pair, signature), event in best_by_pair_signature.items():
+            if candidate_pair != pair_id or signature not in canonical_steps:
+                continue
+            delta = canonical_steps[signature] - _safe_int(event.get("quantizedStep"))
+            if abs(delta) <= MAX_PAIR_PHASE_SHIFT:
+                deltas.append(delta)
+
+        offsets[pair_id] = int(round(median(deltas))) if deltas else 0
+
+    return offsets
+
+
 def stabilize_intro_motif(
     render_events: list[dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Stabilize the repeated measures 1-16 intro without synthesizing notes.
 
-    The protected source events remain untouched. Inside the intro, a note identity must
-    occur in at least three two-measure pairs. Each accepted identity receives one median
-    rhythmic slot, one best evidence event per pair, and one dominant fret choice per
-    string/slot. Measures outside the intro pass through unchanged.
+    V8 first aligns each repeated two-measure pair to the strongest observed pair,
+    then computes rhythmic consensus. This corrects whole-pair onset drift before
+    median snapping while preserving every retained source note, string and fret.
     """
 
     intro_events = [
@@ -97,17 +161,33 @@ def stabilize_intro_motif(
         if count >= MIN_PAIR_SUPPORT
     }
 
+    best_initial = _best_event_per_pair_signature(intro_events)
+    canonical_pair = _choose_canonical_pair(best_initial, accepted_signatures)
+    pair_phase_offsets = _estimate_pair_phase_offsets(
+        best_initial,
+        accepted_signatures,
+        canonical_pair,
+    )
+
+    adjusted_steps: dict[tuple[int, tuple[int, int, int]], int] = {}
+    for (pair_id, signature), event in best_initial.items():
+        adjusted_steps[(pair_id, signature)] = max(
+            0,
+            min(
+                15,
+                _safe_int(event.get("quantizedStep")) + pair_phase_offsets.get(pair_id, 0),
+            ),
+        )
+
     median_steps = {
         signature: int(round(median(
-            _safe_int(event.get("quantizedStep"))
-            for event in observations[signature]
+            adjusted_steps[(pair_id, candidate_signature)]
+            for (pair_id, candidate_signature) in adjusted_steps
+            if candidate_signature == signature
         )))
         for signature in accepted_signatures
     }
 
-    # When competing frets land on the same string and consensus slot, retain the
-    # identity supported by the most repeated pairs. This suppresses analyzer drift
-    # without inventing a replacement note.
     slot_candidates: dict[tuple[int, int, int], list[tuple[int, int, int]]] = defaultdict(list)
     for signature in accepted_signatures:
         offset, string_index, _fret = signature
@@ -127,7 +207,6 @@ def stabilize_intro_motif(
         dominant_signatures.add(winner)
         conflicting_signatures_removed += max(0, len(candidates) - 1)
 
-    # Keep at most one evidence event for each accepted identity in each repeated pair.
     best_by_pair_and_signature: dict[
         tuple[int, tuple[int, int, int]],
         dict[str, Any],
@@ -141,7 +220,7 @@ def stabilize_intro_motif(
 
         pair_id = _pair_index(_safe_int(event.get("measureNumber"), INTRO_START_MEASURE))
         key = (pair_id, signature)
-        target_step = median_steps[signature]
+        target_step = median_steps[signature] - pair_phase_offsets.get(pair_id, 0)
         previous = best_by_pair_and_signature.get(key)
 
         if previous is None or _event_quality(event, target_step) > _event_quality(previous, target_step):
@@ -153,22 +232,27 @@ def stabilize_intro_motif(
 
     stabilized_intro: list[dict[str, Any]] = []
     moved_count = 0
+    phase_aligned_count = 0
 
-    for (_pair_id, signature), event in best_by_pair_and_signature.items():
+    for (pair_id, signature), event in best_by_pair_and_signature.items():
         target_step = median_steps[signature]
         original_step = _safe_int(event.get("quantizedStep"))
+        phase_offset = pair_phase_offsets.get(pair_id, 0)
         item = dict(event)
         item["motifOriginalStep"] = original_step
+        item["motifPairPhaseOffset"] = phase_offset
         item["motifConsensusStep"] = target_step
         item["motifSupportPairs"] = support_counts[signature]
+        item["motifCanonicalPair"] = canonical_pair
         item["motifStabilized"] = True
         item["quantizedStep"] = target_step
         item["positionInMeasure"] = round(target_step / 16.0, 6)
+        if phase_offset:
+            phase_aligned_count += 1
         if target_step != original_step:
             moved_count += 1
         stabilized_intro.append(item)
 
-    # Median snapping can place two retained evidence events on the same note slot.
     deduped: dict[tuple[int, int, int, int], dict[str, Any]] = {}
     snap_duplicates_removed = 0
     for event in stabilized_intro:
@@ -203,8 +287,12 @@ def stabilize_intro_motif(
     diagnostics = {
         "introMeasureRange": [INTRO_START_MEASURE, INTRO_END_MEASURE],
         "pairLengthMeasures": PAIR_LENGTH,
-        "pairCount": 8,
+        "pairCount": PAIR_COUNT,
         "minimumPairSupport": MIN_PAIR_SUPPORT,
+        "canonicalPairIndex": canonical_pair,
+        "pairPhaseOffsets": {str(key): value for key, value in sorted(pair_phase_offsets.items())},
+        "maximumPairPhaseShift": MAX_PAIR_PHASE_SHIFT,
+        "phaseAlignedIntroEvents": phase_aligned_count,
         "inputIntroEventCount": len(intro_events),
         "outputIntroEventCount": len(deduped),
         "rejectedLowSupportIntroEvents": sum(
