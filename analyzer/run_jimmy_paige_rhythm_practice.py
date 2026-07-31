@@ -7,11 +7,13 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 REFERENCE_PATH = REPO_ROOT / "public" / "gomyway-professional-rhythm-reference.json"
+PATTERN_LIBRARY_PATH = REPO_ROOT / "public" / "gomyway-professional-rhythm-pattern-library.json"
 REPORT_PATH = REPO_ROOT / "public" / "gomyway-jimmy-paige-rhythm-practice-report.json"
 
 # One-command protected curriculum. Every stage is read-only and must preserve
 # locked V7 events, locked rhythm templates, protected baselines, and renderer.
 CURRICULUM_COMMANDS = [
+    [sys.executable, "analyzer/build_professional_rhythm_pattern_library.py"],
     [sys.executable, "analyzer/run_professional_rhythm_reference_validator.py"],
     [sys.executable, "analyzer/run_v8_rhythm_candidate_benchmark.py"],
     [sys.executable, "analyzer/run_v8_intro_rhythm_template_lock_benchmark.py"],
@@ -63,6 +65,24 @@ def main() -> None:
     protections_passed = all(item["passed"] for item in curriculum_results)
     completed_stage_count = sum(1 for item in curriculum_results if item["passed"])
 
+    pattern_summary: dict[str, object] = {}
+    if PATTERN_LIBRARY_PATH.exists():
+        pattern_library = json.loads(PATTERN_LIBRARY_PATH.read_text())
+        pattern_summary = {
+            "patternCount": pattern_library.get("patternCount", 0),
+            "classifiedMeasureCount": pattern_library.get("classifiedMeasureCount", 0),
+            "measureCount": pattern_library.get("measureCount", 0),
+            "measurePatternCoveragePercent": pattern_library.get(
+                "measurePatternCoveragePercent", 0.0
+            ),
+            "allPatternsEventVerified": pattern_library.get(
+                "allPatternsEventVerified", False
+            ),
+            "nextVerificationTarget": (
+                (pattern_library.get("verificationQueue") or [None])[0]
+            ),
+        }
+
     mode = (
         "protected-scoring-practice"
         if ready_for_scoring
@@ -72,9 +92,10 @@ def main() -> None:
         "Protected curriculum completed. Exact professional-event scoring is enabled."
         if ready_for_scoring and protections_passed
         else (
-            "Protected structural curriculum completed. Jimmy is practicing section, "
-            "repetition, consensus, and boundary detection while exact event scoring "
-            "remains locked until the professional event transcription is verified."
+            "Protected structural curriculum completed. Reusable professional patterns "
+            "are mapped across the full track while Jimmy practices section, repetition, "
+            "consensus, and boundary detection. Exact scoring remains locked until each "
+            "pattern's event transcription is verified."
             if protections_passed
             else "Practice stopped immediately because a protected curriculum stage failed."
         )
@@ -91,6 +112,7 @@ def main() -> None:
         "stoppedEarly": stopped_early,
         "completedStageCount": completed_stage_count,
         "totalStageCount": len(CURRICULUM_COMMANDS),
+        "patternLibrary": pattern_summary,
         "message": message,
         "curriculumResults": curriculum_results,
         "rendererChanged": False,
@@ -107,6 +129,19 @@ def main() -> None:
         f"{completed_stage_count}/{len(CURRICULUM_COMMANDS)}",
     )
     print("Protection checks passed:", protections_passed)
+    if pattern_summary:
+        print(
+            "Reusable patterns mapped:",
+            pattern_summary.get("patternCount"),
+        )
+        print(
+            "Measure pattern coverage:",
+            f"{pattern_summary.get('measurePatternCoveragePercent')}%",
+        )
+        print(
+            "Next event verification target:",
+            pattern_summary.get("nextVerificationTarget"),
+        )
     print("Scoring started:", report["scoringStarted"])
     print("Message:", message)
     print("Output:", REPORT_PATH.relative_to(REPO_ROOT))
