@@ -1,19 +1,37 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 LIBRARY_PATH = REPO_ROOT / "public" / "gomyway-professional-rhythm-pattern-library.json"
 OUTPUT_PATH = REPO_ROOT / "public" / "gomyway-professional-em-riff-event-scaffold.json"
+LIBRARY_BUILDER = REPO_ROOT / "analyzer" / "build_professional_rhythm_pattern_library.py"
+
+
+def ensure_pattern_library() -> None:
+    if LIBRARY_PATH.exists():
+        return
+
+    result = subprocess.run(
+        [sys.executable, str(LIBRARY_BUILDER)],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0 or not LIBRARY_PATH.exists():
+        details = result.stderr.strip() or result.stdout.strip()
+        raise RuntimeError(
+            "Could not build the professional rhythm pattern library automatically."
+            + (f"\n{details}" if details else "")
+        )
 
 
 def main() -> None:
-    if not LIBRARY_PATH.exists():
-        raise FileNotFoundError(
-            "Missing professional rhythm pattern library. Run "
-            "python analyzer/build_professional_rhythm_pattern_library.py first."
-        )
+    ensure_pattern_library()
 
     library = json.loads(LIBRARY_PATH.read_text())
     pattern_ids = {
@@ -43,10 +61,10 @@ def main() -> None:
                     "containsFret2Notes": True,
                     "containsSingleNoteRiff": True,
                     "containsPalmMute": False,
-                    "containsDeadNotes": False,
+                    "containsDeadNotes": False
                 },
                 "events": [],
-                "eventEntryStatus": "pending-quantized-step-string-fret-entry",
+                "eventEntryStatus": "pending-quantized-step-string-fret-entry"
             },
             {
                 "patternId": "em-riff-b",
@@ -60,11 +78,11 @@ def main() -> None:
                     "containsEndingDoubleStop": True,
                     "endingDoubleStopFrets": [3, 3],
                     "containsPalmMute": False,
-                    "containsDeadNotes": False,
+                    "containsDeadNotes": False
                 },
                 "events": [],
-                "eventEntryStatus": "pending-quantized-step-string-fret-entry",
-            },
+                "eventEntryStatus": "pending-quantized-step-string-fret-entry"
+            }
         ],
         "safeguards": {
             "professionalReferenceMayScoreButNotGenerate": True,
@@ -74,12 +92,12 @@ def main() -> None:
             "lockedIntroTemplateProtected": True,
             "lockedVerse1TemplateProtected": True,
             "rendererChanged": False,
-            "protectedBaselinesChanged": False,
+            "protectedBaselinesChanged": False
         },
         "nextStep": (
             "Align the locked direct-audio timing slots with the visible Em riff note identities, "
             "then manually verify string/fret and technique fields before enabling exact scoring."
-        ),
+        )
     }
 
     OUTPUT_PATH.write_text(json.dumps(report, indent=2) + "\n")
