@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "referenceType": "professional-rhythm-tab-benchmark",
+  "song": "Are You Gonna Go My Way",
+  "artist": "Lenny Kravitz",
+  "instrumentPart": "rhythm",
+  "performerCredit": "Craig Ross",
+  "instrumentCredit": "1953 Gibson Les Paul Goldtop",
+  "tempoBpm": 129,
+  "key": "Em",
+  "sourcePageCount": 9,
+  "measureCount": 113,
+  "status": "measure-map-complete-event-transcription-pending",
+  "readyForScoring": false,
+  "measureNumberingMustMatchSource": true,
+  "sectionMap": [
+    {"startMeasure": 1, "endMeasure": 16, "label": "Intro"},
+    {"startMeasure": 17, "endMeasure": 32, "label": "Verse 1"},
+    {"startMeasure": 33, "endMeasure": 38, "label": "Chorus 1"},
+    {"startMeasure": 39, "endMeasure": 46, "label": "Riff"},
+    {"startMeasure": 47, "endMeasure": 62, "label": "Verse 2"},
+    {"startMeasure": 63, "endMeasure": 69, "label": "Chorus 2"},
+    {"startMeasure": 70, "endMeasure": 77, "label": "Bridge"},
+    {"startMeasure": 78, "endMeasure": 94, "label": "Solo rhythm backing / transition"},
+    {"startMeasure": 95, "endMeasure": 102, "label": "Riff"},
+    {"startMeasure": 103, "endMeasure": 113, "label": "Out-Chorus / ending"}
+  ],
+  "timeSignatureChanges": [
+    {"measureNumber": 1, "timeSignature": "4/4"},
+    {"measureNumber": 104, "timeSignature": "2/4"},
+    {"measureNumber": 105, "timeSignature": "4/4"}
+  ],
+  "productionAnnotations": [
+    {
+      "measureNumber": 109,
+      "text": "Use kill switch to add effect to this.",
+      "classification": "production-only",
+      "mustNotBecomeNoteEvent": true
+    }
+  ],
+  "patternDefinitions": {
+    "em-riff-a": "Odd-measure Em riff half: full-step bend from fret 2, release/open-note movement and lower-string support.",
+    "em-riff-b": "Even-measure Em riff half: continuation with optional terminal 3/3 dyad where printed.",
+    "g-position-riff-a": "G-position transposition centered on fret 5 with full-step bend, release to fret 3 and vibrato.",
+    "g-position-riff-b": "Second half of G-position transposition.",
+    "picked-muted-turnaround": "Picked turnaround containing explicit dead-note X attacks and picking-direction marks.",
+    "chorus-g6": "G6 chorus voicing and repeated chord attacks.",
+    "chorus-atp2": "A(tp2) chorus voicing and sustain.",
+    "chorus-e-d-e": "Chorus E to D to E chord movement.",
+    "chorus-g-e": "Chorus G to E chord movement.",
+    "bridge-e-d": "Bridge left-side E to D muted chord figure.",
+    "bridge-a-e": "Bridge right-side A to E movement with sustained/slid voicings.",
+    "solo-backing-e-d": "Solo rhythm backing E to D muted chord figure.",
+    "solo-backing-a-d6-a": "Solo rhythm backing A to D6 to A figure.",
+    "full-measure-rest": "Printed empty/rest measure that must remain present.",
+    "outro-held-atp2": "A(tp2) chord sustained/tied across the barline without invented re-attacks."
+  },
+  "measures": [],
+  "safeguards": {
+    "calibrationOnly": true,
+    "directAudioRemainsSourceOfTruth": true,
+    "professionalReferenceMayScoreButNotGenerate": true,
+    "professionalEventsMayNotFillJimmyOutput": true,
+    "noSyntheticNotes": true,
+    "lockedV7EventsMustRemainUnchanged": true,
+    "lockedIntroTemplateMustRemainUnchanged": true,
+    "lockedVerse1TemplateMustRemainUnchanged": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false,
+    "manualEventVerificationRequiredBeforeScoring": true
+  }
+}
