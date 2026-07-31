@@ -6,7 +6,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from basic_pitch.inference import predict
+import modal
+import modal_analyzer_v7 as protected_analyzer
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 AUDIO_PATH = REPO_ROOT / "public" / "gomywayfullaitest.m4a"
@@ -18,8 +19,9 @@ MEASURE_SECONDS = (60.0 / TEMPO) * 4.0
 PHRASE_START_MEASURES = (18, 20, 22, 24, 26, 28, 30)
 TIMING_TOLERANCE_SECONDS = 0.16
 
-# Protected two-measure Em-riff curriculum. These pitches are used only to score
-# read-only Basic Pitch candidates; they are never copied into production events.
+app = modal.App("dadrock-v8-em-riff-extraction-training")
+image = protected_analyzer.image
+
 PROTECTED_SLOTS = (
     {"patternId": "em-riff-a", "step": 2, "measureOffset": 0, "acceptedMidi": (57, 59)},
     {"patternId": "em-riff-a", "step": 6, "measureOffset": 0, "acceptedMidi": (55,)},
@@ -32,7 +34,6 @@ PROTECTED_SLOTS = (
     {"patternId": "em-riff-b", "step": 14, "measureOffset": 1, "acceptedMidi": (58, 62)},
 )
 
-# Small, bounded curriculum: defaults plus conservative sensitivity changes.
 ATTEMPTS = (
     {"name": "default", "onset_threshold": 0.50, "frame_threshold": 0.30, "minimum_note_length": 127.7},
     {"name": "lower-onset", "onset_threshold": 0.40, "frame_threshold": 0.30, "minimum_note_length": 127.7},
@@ -51,31 +52,77 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _note_events(model_output: Any) -> list[dict[str, Any]]:
-    # Basic Pitch returns (model_output, midi_data, note_events).
-    if not isinstance(model_output, tuple) or len(model_output) < 3:
-        return []
-    events = model_output[2]
-    return [event for event in events if isinstance(event, dict)]
+def _normalize_note_event(event: Any) -> dict[str, Any] | None:
+    if isinstance(event, dict):
+        start = event.get("start_time", event.get("start", 0.0))
+        end = event.get("end_time", event.get("end", start))
+        pitch = event.get("pitch_midi", event.get("midi_pitch", event.get("midiPitch", event.get("pitch"))))
+        confidence = event.get("amplitude", event.get("confidence", 0.0))
+    elif isinstance(event, (list, tuple)) and len(event) >= 3:
+        start, end, pitch = event[0], event[1], event[2]
+        confidence = event[3] if len(event) >= 4 else 0.0
+    else:
+        return None
+
+    try:
+        return {
+            "start": float(start),
+            "end": float(end),
+            "midiPitch": int(pitch),
+            "confidence": float(confidence or 0.0),
+        }
+    except (TypeError, ValueError):
+        return None
+
+
+@app.function(image=image, timeout=3600, memory=4096)
+def extract_attempts_remote(audio_bytes: bytes, audio_suffix: str) -> bytes:
+    from basic_pitch.inference import predict
+
+    suffix = audio_suffix or ".m4a"
+    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as handle:
+        handle.write(audio_bytes)
+        audio_path = Path(handle.name)
+
+    results: list[dict[str, Any]] = []
+    try:
+        for index, parameters in enumerate(ATTEMPTS, start=1):
+            kwargs = {key: value for key, value in parameters.items() if key != "name"}
+            prediction = predict(audio_path, **kwargs)
+            raw_events = prediction[2] if isinstance(prediction, tuple) and len(prediction) >= 3 else []
+            events = []
+            for raw_event in raw_events:
+                normalized = _normalize_note_event(raw_event)
+                if normalized is not None:
+                    events.append(normalized)
+            results.append(
+                {
+                    "attempt": index,
+                    "name": parameters["name"],
+                    "parameters": kwargs,
+                    "events": events,
+                }
+            )
+    finally:
+        audio_path.unlink(missing_ok=True)
+
+    return json.dumps(results, separators=(",", ":")).encode("utf-8")
 
 
 def _event_start(event: dict[str, Any]) -> float:
-    return float(event.get("start_time") or event.get("start") or 0.0)
+    return float(event.get("start") or 0.0)
 
 
 def _event_pitch(event: dict[str, Any]) -> int:
-    for key in ("pitch_midi", "midi_pitch", "midiPitch", "pitch"):
-        try:
-            return int(event.get(key))
-        except (TypeError, ValueError):
-            continue
-    return -1
+    try:
+        return int(event.get("midiPitch"))
+    except (TypeError, ValueError):
+        return -1
 
 
 def _slot_time(phrase_start_measure: int, slot: dict[str, Any]) -> float:
     measure_number = phrase_start_measure + int(slot["measureOffset"])
-    local_step = int(slot["step"])
-    position = (local_step - 1) / 16.0
+    position = (int(slot["step"]) - 1) / 16.0
     return ((measure_number - 1) * MEASURE_SECONDS) + (position * MEASURE_SECONDS)
 
 
@@ -84,28 +131,27 @@ def _score(events: list[dict[str, Any]]) -> dict[str, Any]:
     correct_slots = 0
 
     for slot in PROTECTED_SLOTS:
-        accepted = set(int(value) for value in slot["acceptedMidi"])
+        accepted = {int(value) for value in slot["acceptedMidi"]}
         support: dict[int, int] = {}
         matches: list[dict[str, Any]] = []
 
         for phrase_start in PHRASE_START_MEASURES:
             target = _slot_time(phrase_start, slot)
-            nearby = [
-                event for event in events
-                if abs(_event_start(event) - target) <= TIMING_TOLERANCE_SECONDS
-            ]
-            for event in nearby:
+            for event in events:
+                if abs(_event_start(event) - target) > TIMING_TOLERANCE_SECONDS:
+                    continue
                 pitch = _event_pitch(event)
-                if pitch >= 0:
-                    support[pitch] = support.get(pitch, 0) + 1
-                    if pitch in accepted:
-                        matches.append(
-                            {
-                                "phraseStartMeasure": phrase_start,
-                                "midiPitch": pitch,
-                                "start": round(_event_start(event), 6),
-                            }
-                        )
+                if pitch < 0:
+                    continue
+                support[pitch] = support.get(pitch, 0) + 1
+                if pitch in accepted:
+                    matches.append(
+                        {
+                            "phraseStartMeasure": phrase_start,
+                            "midiPitch": pitch,
+                            "start": round(_event_start(event), 6),
+                        }
+                    )
 
         present = bool(matches)
         if present:
@@ -119,9 +165,7 @@ def _score(events: list[dict[str, Any]]) -> dict[str, Any]:
                 "matchingOccurrences": len(matches),
                 "observedPitchHistogram": [
                     {"midiPitch": pitch, "support": count}
-                    for pitch, count in sorted(
-                        support.items(), key=lambda item: (-item[1], item[0])
-                    )[:12]
+                    for pitch, count in sorted(support.items(), key=lambda item: (-item[1], item[0]))[:12]
                 ],
             }
         )
@@ -140,23 +184,21 @@ def main() -> None:
     audio_hash_before = _sha256(AUDIO_PATH)
     notation_hash_before = _sha256(NOTATION_PATH) if NOTATION_PATH.exists() else None
 
+    with app.run():
+        result_bytes = extract_attempts_remote.remote(AUDIO_PATH.read_bytes(), AUDIO_PATH.suffix)
+
+    extracted_attempts = json.loads(result_bytes.decode("utf-8"))
     attempts: list[dict[str, Any]] = []
     best: dict[str, Any] | None = None
 
-    for index, parameters in enumerate(ATTEMPTS, start=1):
-        kwargs = {key: value for key, value in parameters.items() if key != "name"}
-        result = predict(AUDIO_PATH, **kwargs)
-        events = _note_events(result)
-        score = _score(events)
+    for extracted in extracted_attempts:
+        events = [event for event in extracted.pop("events", []) if isinstance(event, dict)]
         attempt = {
-            "attempt": index,
-            "name": parameters["name"],
-            "parameters": kwargs,
+            **extracted,
             "extractedEventCount": len(events),
-            **score,
+            **_score(events),
         }
         attempts.append(attempt)
-
         if best is None or (
             attempt["correctCandidateSlots"],
             attempt["candidatePresencePercentage"],
@@ -168,12 +210,9 @@ def main() -> None:
         ):
             best = attempt
 
-    audio_hash_after = _sha256(AUDIO_PATH)
-    notation_hash_after = _sha256(NOTATION_PATH) if NOTATION_PATH.exists() else None
-
     safeguards = {
-        "trainingAudioUnchanged": audio_hash_before == audio_hash_after,
-        "lockedV8NotationUnchanged": notation_hash_before == notation_hash_after,
+        "trainingAudioUnchanged": audio_hash_before == _sha256(AUDIO_PATH),
+        "lockedV8NotationUnchanged": notation_hash_before == (_sha256(NOTATION_PATH) if NOTATION_PATH.exists() else None),
         "lockedV7EventsProtected": True,
         "lockedV8TimingProtected": True,
         "rendererUnchanged": True,
@@ -182,7 +221,7 @@ def main() -> None:
         "noSyntheticNotesWritten": True,
     }
 
-    baseline = attempts[0]
+    baseline = attempts[0] if attempts else {"correctCandidateSlots": 0}
     improved = bool(best and best["correctCandidateSlots"] > baseline["correctCandidateSlots"])
     target_reached = bool(best and best["correctCandidateSlots"] >= 8)
 
