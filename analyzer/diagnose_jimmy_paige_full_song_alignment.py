@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import bisect
 import json
 from pathlib import Path
 from typing import Any
@@ -38,13 +39,71 @@ def _event_pitch(event: dict[str, Any]) -> int:
         return -1
 
 
-def _score_alignment(
+def _prepare_events(
+    events: list[dict[str, Any]],
+) -> tuple[list[float], list[int], list[dict[str, Any]]]:
+    prepared = sorted(
+        (
+            (_event_start(event), _event_pitch(event), event)
+            for event in events
+            if _event_pitch(event) >= 0
+        ),
+        key=lambda item: item[0],
+    )
+    return (
+        [item[0] for item in prepared],
+        [item[1] for item in prepared],
+        [item[2] for item in prepared],
+    )
+
+
+def _target_times(tempo: float, offset_seconds: float) -> list[tuple[dict[str, Any], int, float]]:
+    measure_seconds = (60.0 / tempo) * 4.0
+    targets: list[tuple[dict[str, Any], int, float]] = []
+    for slot in PROTECTED_SLOTS:
+        for phrase_start in PHRASE_START_MEASURES:
+            measure_number = phrase_start + int(slot["measureOffset"])
+            position = (int(slot["step"]) - 1) / 16.0
+            target = (
+                offset_seconds
+                + ((measure_number - 1) * measure_seconds)
+                + (position * measure_seconds)
+            )
+            targets.append((slot, phrase_start, target))
+    return targets
+
+
+def _fast_score(
+    starts: list[float],
+    pitches: list[int],
+    tempo: float,
+    offset_seconds: float,
+    tolerance_seconds: float,
+) -> tuple[int, int]:
+    slot_presence: dict[tuple[str, int], bool] = {}
+    total_matches = 0
+
+    for slot, _phrase_start, target in _target_times(tempo, offset_seconds):
+        key = (str(slot["patternId"]), int(slot["step"]))
+        accepted = {int(value) for value in slot["acceptedMidi"]}
+        left = bisect.bisect_left(starts, target - tolerance_seconds)
+        right = bisect.bisect_right(starts, target + tolerance_seconds)
+        for index in range(left, right):
+            if pitches[index] in accepted:
+                slot_presence[key] = True
+                total_matches += 1
+
+    return sum(1 for value in slot_presence.values() if value), total_matches
+
+
+def _detailed_score(
+    starts: list[float],
+    pitches: list[int],
     events: list[dict[str, Any]],
     tempo: float,
     offset_seconds: float,
     tolerance_seconds: float,
 ) -> dict[str, Any]:
-    measure_seconds = (60.0 / tempo) * 4.0
     correct_slots = 0
     total_matches = 0
     slot_reports: list[dict[str, Any]] = []
@@ -55,6 +114,7 @@ def _score_alignment(
         nearby_histogram: dict[int, int] = {}
 
         for phrase_start in PHRASE_START_MEASURES:
+            measure_seconds = (60.0 / tempo) * 4.0
             measure_number = phrase_start + int(slot["measureOffset"])
             position = (int(slot["step"]) - 1) / 16.0
             target = (
@@ -62,21 +122,18 @@ def _score_alignment(
                 + ((measure_number - 1) * measure_seconds)
                 + (position * measure_seconds)
             )
-
-            for event in events:
-                delta = abs(_event_start(event) - target)
-                if delta > tolerance_seconds:
-                    continue
-                pitch = _event_pitch(event)
-                if pitch < 0:
-                    continue
+            left = bisect.bisect_left(starts, target - tolerance_seconds)
+            right = bisect.bisect_right(starts, target + tolerance_seconds)
+            for index in range(left, right):
+                pitch = pitches[index]
                 nearby_histogram[pitch] = nearby_histogram.get(pitch, 0) + 1
                 if pitch in accepted:
+                    delta = abs(starts[index] - target)
                     matches.append(
                         {
                             "phraseStartMeasure": phrase_start,
                             "midiPitch": pitch,
-                            "start": round(_event_start(event), 6),
+                            "start": round(starts[index], 6),
                             "target": round(target, 6),
                             "delta": round(delta, 6),
                         }
@@ -132,19 +189,44 @@ def main() -> None:
     call = modal.FunctionCall.from_id(call_id)
     result_bytes = call.get(timeout=0)
     remote_result = json.loads(result_bytes.decode("utf-8"))
-    events = remote_result.get("events", [])
-    if not events:
+    raw_events = remote_result.get("events", [])
+    if not raw_events:
         raise RuntimeError("Completed Modal result contained no events.")
+
+    starts, pitches, events = _prepare_events(raw_events)
 
     candidates: list[dict[str, Any]] = []
     for tempo_tenths in range(1240, 1341):
         tempo = tempo_tenths / 10.0
         for offset_hundredths in range(-800, 801, 5):
             offset = offset_hundredths / 100.0
-            candidates.append(_score_alignment(events, tempo, offset, 0.18))
+            correct, matches = _fast_score(
+                starts,
+                pitches,
+                tempo,
+                offset,
+                0.18,
+            )
+            candidates.append(
+                {
+                    "tempo": round(tempo, 3),
+                    "offsetSeconds": round(offset, 3),
+                    "toleranceSeconds": 0.18,
+                    "correctCandidateSlots": correct,
+                    "totalMatchingOccurrences": matches,
+                }
+            )
 
     candidates.sort(key=_rank_key, reverse=True)
-    best = candidates[0]
+    best_summary = candidates[0]
+    best = _detailed_score(
+        starts,
+        pitches,
+        events,
+        float(best_summary["tempo"]),
+        float(best_summary["offsetSeconds"]),
+        0.18,
+    )
     top = candidates[:20]
 
     report = {
@@ -160,14 +242,7 @@ def main() -> None:
             "toleranceSeconds": 0.18,
         },
         "best": best,
-        "topCandidates": [
-            {
-                key: value
-                for key, value in candidate.items()
-                if key != "slotReports"
-            }
-            for candidate in top
-        ],
+        "topCandidates": top,
         "productionPromotionAllowed": False,
         "rendererChanged": False,
         "protectedBaselinesChanged": False,
