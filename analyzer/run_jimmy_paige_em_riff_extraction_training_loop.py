@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import tempfile
+import time
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +13,7 @@ import modal_analyzer_v7 as protected_analyzer
 REPO_ROOT = Path(__file__).resolve().parents[1]
 AUDIO_PATH = REPO_ROOT / "public" / "gomywayfullaitest.m4a"
 OUTPUT_PATH = REPO_ROOT / "public" / "gomyway-jimmy-paige-em-riff-extraction-training.json"
+CHECKPOINT_PATH = REPO_ROOT / "public" / "gomyway-jimmy-paige-em-riff-extraction-training-checkpoint.json"
 NOTATION_PATH = REPO_ROOT / "public" / "gomyway-full-song-v8-notation.json"
 
 TEMPO = 129.0
@@ -76,7 +78,12 @@ def _normalize_note_event(event: Any) -> dict[str, Any] | None:
 
 
 @app.function(image=image, timeout=3600, memory=4096)
-def extract_attempts_remote(audio_bytes: bytes, audio_suffix: str) -> bytes:
+def extract_attempt_remote(
+    audio_bytes: bytes,
+    audio_suffix: str,
+    attempt_number: int,
+    parameters: dict[str, Any],
+) -> bytes:
     from basic_pitch.inference import predict
 
     suffix = audio_suffix or ".m4a"
@@ -84,29 +91,24 @@ def extract_attempts_remote(audio_bytes: bytes, audio_suffix: str) -> bytes:
         handle.write(audio_bytes)
         audio_path = Path(handle.name)
 
-    results: list[dict[str, Any]] = []
     try:
-        for index, parameters in enumerate(ATTEMPTS, start=1):
-            kwargs = {key: value for key, value in parameters.items() if key != "name"}
-            prediction = predict(audio_path, **kwargs)
-            raw_events = prediction[2] if isinstance(prediction, tuple) and len(prediction) >= 3 else []
-            events = []
-            for raw_event in raw_events:
-                normalized = _normalize_note_event(raw_event)
-                if normalized is not None:
-                    events.append(normalized)
-            results.append(
-                {
-                    "attempt": index,
-                    "name": parameters["name"],
-                    "parameters": kwargs,
-                    "events": events,
-                }
-            )
+        kwargs = {key: value for key, value in parameters.items() if key != "name"}
+        prediction = predict(audio_path, **kwargs)
+        raw_events = prediction[2] if isinstance(prediction, tuple) and len(prediction) >= 3 else []
+        events = []
+        for raw_event in raw_events:
+            normalized = _normalize_note_event(raw_event)
+            if normalized is not None:
+                events.append(normalized)
+        result = {
+            "attempt": attempt_number,
+            "name": parameters["name"],
+            "parameters": kwargs,
+            "events": events,
+        }
+        return json.dumps(result, separators=(",", ":")).encode("utf-8")
     finally:
         audio_path.unlink(missing_ok=True)
-
-    return json.dumps(results, separators=(",", ":")).encode("utf-8")
 
 
 def _event_start(event: dict[str, Any]) -> float:
@@ -145,30 +147,26 @@ def _score(events: list[dict[str, Any]]) -> dict[str, Any]:
                     continue
                 support[pitch] = support.get(pitch, 0) + 1
                 if pitch in accepted:
-                    matches.append(
-                        {
-                            "phraseStartMeasure": phrase_start,
-                            "midiPitch": pitch,
-                            "start": round(_event_start(event), 6),
-                        }
-                    )
+                    matches.append({
+                        "phraseStartMeasure": phrase_start,
+                        "midiPitch": pitch,
+                        "start": round(_event_start(event), 6),
+                    })
 
         present = bool(matches)
         if present:
             correct_slots += 1
-        slot_reports.append(
-            {
-                "patternId": slot["patternId"],
-                "step": slot["step"],
-                "acceptedMidiPitches": sorted(accepted),
-                "correctCandidatePresent": present,
-                "matchingOccurrences": len(matches),
-                "observedPitchHistogram": [
-                    {"midiPitch": pitch, "support": count}
-                    for pitch, count in sorted(support.items(), key=lambda item: (-item[1], item[0]))[:12]
-                ],
-            }
-        )
+        slot_reports.append({
+            "patternId": slot["patternId"],
+            "step": slot["step"],
+            "acceptedMidiPitches": sorted(accepted),
+            "correctCandidatePresent": present,
+            "matchingOccurrences": len(matches),
+            "observedPitchHistogram": [
+                {"midiPitch": pitch, "support": count}
+                for pitch, count in sorted(support.items(), key=lambda item: (-item[1], item[0]))[:12]
+            ],
+        })
 
     return {
         "correctCandidateSlots": correct_slots,
@@ -177,39 +175,87 @@ def _score(events: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def _best_attempt(attempts: list[dict[str, Any]]) -> dict[str, Any] | None:
+    if not attempts:
+        return None
+    return max(
+        attempts,
+        key=lambda attempt: (
+            attempt["correctCandidateSlots"],
+            attempt["candidatePresencePercentage"],
+            -attempt["extractedEventCount"],
+        ),
+    )
+
+
+def _write_checkpoint(
+    attempts: list[dict[str, Any]],
+    started_at: float,
+    status: str,
+) -> None:
+    best = _best_attempt(attempts)
+    checkpoint = {
+        "benchmarkVersion": 8,
+        "benchmarkType": "jimmy-paige-em-riff-extraction-training-checkpoint",
+        "status": status,
+        "trainingStarted": True,
+        "attemptsPlanned": len(ATTEMPTS),
+        "attemptsCompleted": len(attempts),
+        "elapsedSeconds": round(time.time() - started_at, 3),
+        "bestCorrectCandidateSlots": best["correctCandidateSlots"] if best else 0,
+        "bestAttempt": best,
+        "attempts": attempts,
+        "productionPromotionAllowed": False,
+        "rendererChanged": False,
+        "protectedBaselinesChanged": False,
+    }
+    CHECKPOINT_PATH.write_text(json.dumps(checkpoint, indent=2) + "\n")
+
+
 def main() -> None:
     if not AUDIO_PATH.exists():
         raise FileNotFoundError(f"Missing training audio: {AUDIO_PATH}")
 
+    started_at = time.time()
     audio_hash_before = _sha256(AUDIO_PATH)
     notation_hash_before = _sha256(NOTATION_PATH) if NOTATION_PATH.exists() else None
+    audio_bytes = AUDIO_PATH.read_bytes()
+
+    attempts: list[dict[str, Any]] = []
+    _write_checkpoint(attempts, started_at, "starting")
 
     with app.run():
-        result_bytes = extract_attempts_remote.remote(AUDIO_PATH.read_bytes(), AUDIO_PATH.suffix)
+        for index, parameters in enumerate(ATTEMPTS, start=1):
+            attempt_started = time.time()
+            print(
+                f"[trainer] starting attempt {index}/{len(ATTEMPTS)}: {parameters['name']}",
+                flush=True,
+            )
+            result_bytes = extract_attempt_remote.remote(
+                audio_bytes,
+                AUDIO_PATH.suffix,
+                index,
+                parameters,
+            )
+            extracted = json.loads(result_bytes.decode("utf-8"))
+            events = [event for event in extracted.pop("events", []) if isinstance(event, dict)]
+            attempt = {
+                **extracted,
+                "extractedEventCount": len(events),
+                "attemptElapsedSeconds": round(time.time() - attempt_started, 3),
+                **_score(events),
+            }
+            attempts.append(attempt)
+            _write_checkpoint(attempts, started_at, "running")
+            print(
+                f"[trainer] completed attempt {index}/{len(ATTEMPTS)}: "
+                f"{attempt['name']} | correct={attempt['correctCandidateSlots']}/9 | "
+                f"events={attempt['extractedEventCount']} | "
+                f"elapsed={attempt['attemptElapsedSeconds']}s",
+                flush=True,
+            )
 
-    extracted_attempts = json.loads(result_bytes.decode("utf-8"))
-    attempts: list[dict[str, Any]] = []
-    best: dict[str, Any] | None = None
-
-    for extracted in extracted_attempts:
-        events = [event for event in extracted.pop("events", []) if isinstance(event, dict)]
-        attempt = {
-            **extracted,
-            "extractedEventCount": len(events),
-            **_score(events),
-        }
-        attempts.append(attempt)
-        if best is None or (
-            attempt["correctCandidateSlots"],
-            attempt["candidatePresencePercentage"],
-            -attempt["extractedEventCount"],
-        ) > (
-            best["correctCandidateSlots"],
-            best["candidatePresencePercentage"],
-            -best["extractedEventCount"],
-        ):
-            best = attempt
-
+    best = _best_attempt(attempts)
     safeguards = {
         "trainingAudioUnchanged": audio_hash_before == _sha256(AUDIO_PATH),
         "lockedV8NotationUnchanged": notation_hash_before == (_sha256(NOTATION_PATH) if NOTATION_PATH.exists() else None),
@@ -231,6 +277,7 @@ def main() -> None:
         "passed": all(safeguards.values()) and len(attempts) == len(ATTEMPTS),
         "trainingStarted": True,
         "attemptsCompleted": len(attempts),
+        "elapsedSeconds": round(time.time() - started_at, 3),
         "baselineCorrectCandidateSlots": baseline["correctCandidateSlots"],
         "bestCorrectCandidateSlots": best["correctCandidateSlots"] if best else 0,
         "bestCandidatePresencePercentage": best["candidatePresencePercentage"] if best else 0.0,
@@ -249,6 +296,7 @@ def main() -> None:
     }
 
     OUTPUT_PATH.write_text(json.dumps(report, indent=2) + "\n")
+    _write_checkpoint(attempts, started_at, "complete")
 
     print("Jimmy PAIge Em riff extraction training loop pass:", report["passed"])
     print("Training started: True")
@@ -262,6 +310,7 @@ def main() -> None:
     print("Production promotion allowed: False")
     print("Renderer changed: False")
     print("Protected baselines changed: False")
+    print("Checkpoint:", CHECKPOINT_PATH.relative_to(REPO_ROOT))
     print("Output:", OUTPUT_PATH.relative_to(REPO_ROOT))
 
     if not report["passed"]:
