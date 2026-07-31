@@ -13,9 +13,9 @@ OUTPUT_PATH = REPO_ROOT / "public" / "gomyway-full-song-v8-rhythm-phase-alignmen
 INTRO_MEASURE_COUNT = 16
 INTRO_PAIR_COUNT = 8
 STEPS_PER_MEASURE = 16
-STEPS_PER_PAIR = 32
 MIN_PAIR_SUPPORT = 4
 PHASE_OFFSETS = tuple(range(-8, 9))
+SCORE_TOLERANCE = 1e-6
 
 
 def _safe_float(value: Any, fallback: float = 0.0) -> float:
@@ -79,15 +79,8 @@ def _evaluate_offset(
                 }
             )
 
-    stable_support_total = sum(
-        int(item["pairSupport"])
-        for item in stable_slots
-    )
-    score = (
-        len(stable_slots) * 10.0
-        + stable_support_total
-        + weighted_support
-    )
+    stable_support_total = sum(int(item["pairSupport"]) for item in stable_slots)
+    score = len(stable_slots) * 10.0 + stable_support_total + weighted_support
 
     return {
         "offsetSteps": offset_steps,
@@ -100,6 +93,19 @@ def _evaluate_offset(
         "stableSlots": stable_slots,
         "readOnly": True,
     }
+
+
+def _equivalent_best_offsets(
+    ranked: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    if not ranked:
+        return []
+    best_score = float(ranked[0]["score"])
+    return [
+        item
+        for item in ranked
+        if abs(float(item["score"]) - best_score) <= SCORE_TOLERANCE
+    ]
 
 
 def main() -> None:
@@ -131,11 +137,13 @@ def main() -> None:
         ),
         reverse=True,
     )
-    best = ranked[0] if ranked else None
     zero = next(
         (item for item in evaluations if int(item["offsetSteps"]) == 0),
         None,
     )
+    equivalent_best = _equivalent_best_offsets(ranked)
+    phase_identifiable = len(equivalent_best) == 1
+    best = equivalent_best[0] if phase_identifiable else None
 
     report = {
         "benchmarkVersion": 8,
@@ -144,53 +152,53 @@ def main() -> None:
         "introCandidateCount": len(intro_candidates),
         "minimumPairSupport": MIN_PAIR_SUPPORT,
         "testedOffsets": list(PHASE_OFFSETS),
+        "phaseIdentifiable": phase_identifiable,
+        "equivalentBestOffsetCount": len(equivalent_best),
+        "equivalentBestOffsets": [
+            int(item["offsetSteps"])
+            for item in equivalent_best
+        ],
         "bestAlignment": best,
         "zeroOffsetAlignment": zero,
         "rankedAlignments": ranked,
         "independentOfV7Events": True,
         "rendererChanged": False,
         "protectedBaselinesChanged": False,
-        "passed": bool(best),
+        "passed": bool(evaluations),
         "trainingRule": (
-            "This benchmark may identify a stronger measure-grid phase, but it is "
-            "read-only. No V7 note, measure assignment, technique, or PDF position "
-            "may change until a later professional-reference benchmark improves."
+            "A repeated-pattern score is translationally symmetric and cannot by "
+            "itself identify an absolute rhythmic phase. A phase may be adopted "
+            "only when one offset is uniquely supported by an external anchor, "
+            "such as a professional reference attack map or a verified downbeat."
         ),
     }
     OUTPUT_PATH.write_text(json.dumps(report, indent=2))
 
-    print("V8 rhythm phase alignment pass:", report["passed"])
+    print("V8 rhythm phase alignment diagnostic pass:", report["passed"])
     print("Independent of V7 events:", report["independentOfV7Events"])
     print("Renderer changed:", report["rendererChanged"])
     print("Intro candidates evaluated:", len(intro_candidates))
     print("Tested phase offsets:", list(PHASE_OFFSETS))
     print("Zero-offset score:", zero.get("score") if zero else None)
-    print("Best phase offset steps:", best.get("offsetSteps") if best else None)
+    print("Phase identifiable:", phase_identifiable)
+    print("Equivalent best offset count:", len(equivalent_best))
     print(
-        "Best phase offset measure fraction:",
-        best.get("offsetMeasureFraction") if best else None,
+        "Equivalent best offsets:",
+        [int(item["offsetSteps"]) for item in equivalent_best],
     )
+    print("Best phase offset steps:", best.get("offsetSteps") if best else None)
     print("Best alignment score:", best.get("score") if best else None)
-    print("Best stable slot count:", best.get("stableSlotCount") if best else None)
     print(
-        "Best stable slots (step, support, strength):",
+        "Stable slots remain useful as a relative two-measure rhythm skeleton:",
         [
             (
                 item.get("pairStep"),
                 item.get("pairSupport"),
                 item.get("medianStrength"),
             )
-            for item in (best.get("stableSlots") if best else [])
+            for item in ((zero or {}).get("stableSlots") or [])
         ],
     )
-    print("Top phase candidates (offset, score, stable slots):")
-    for item in ranked[:5]:
-        print(
-            " ",
-            item.get("offsetSteps"),
-            item.get("score"),
-            item.get("stableSlotCount"),
-        )
     print("Output:", OUTPUT_PATH.relative_to(REPO_ROOT))
 
 
