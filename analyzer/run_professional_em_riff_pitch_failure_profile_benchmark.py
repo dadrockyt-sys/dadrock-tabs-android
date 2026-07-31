@@ -17,16 +17,6 @@ def _safe_int(value: Any, fallback: int = -1) -> int:
         return fallback
 
 
-def _walk(value: Any):
-    if isinstance(value, dict):
-        yield value
-        for child in value.values():
-            yield from _walk(child)
-    elif isinstance(value, list):
-        for child in value:
-            yield from _walk(child)
-
-
 def main() -> None:
     if not DIAGNOSIS_PATH.exists():
         raise FileNotFoundError(
@@ -35,64 +25,47 @@ def main() -> None:
         )
 
     diagnosis = json.loads(DIAGNOSIS_PATH.read_text())
+    slot_reports = [
+        item
+        for item in diagnosis.get("slotReports") or []
+        if isinstance(item, dict)
+    ]
 
     observed_counter: Counter[int] = Counter()
-    expected_counter: Counter[int] = Counter()
     slot_profiles: list[dict[str, Any]] = []
 
-    for node in _walk(diagnosis):
-        if not isinstance(node, dict):
-            continue
-
-        observed = (
-            node.get("observedMidiCandidates")
-            or node.get("observedPitchCandidates")
-            or node.get("observed")
-            or []
-        )
-        expected = (
-            node.get("acceptedMidiPitches")
-            or node.get("expectedMidiPitches")
-            or node.get("expected")
-            or []
-        )
-
-        if not observed and not expected:
-            continue
+    for node in slot_reports:
+        observed = node.get("observedMidiCandidates") or []
+        expected = node.get("acceptedMidiPitches") or []
 
         observed_pitches: list[int] = []
         for item in observed:
-            if isinstance(item, dict):
-                pitch = _safe_int(item.get("midiPitch"))
-                support = max(1, _safe_int(item.get("support"), 1))
-                if pitch >= 0:
-                    observed_pitches.append(pitch)
-                    observed_counter[pitch] += support
-            else:
-                pitch = _safe_int(item)
-                if pitch >= 0:
-                    observed_pitches.append(pitch)
-                    observed_counter[pitch] += 1
-
-        expected_pitches: list[int] = []
-        for item in expected:
-            pitch = _safe_int(item)
+            if not isinstance(item, dict):
+                continue
+            pitch = _safe_int(item.get("midiPitch"))
+            support = max(1, _safe_int(item.get("support"), 1))
             if pitch >= 0:
-                expected_pitches.append(pitch)
-                expected_counter[pitch] += 1
+                observed_pitches.append(pitch)
+                observed_counter[pitch] += support
 
-        if not observed_pitches and not expected_pitches:
-            continue
+        expected_pitches = [
+            pitch
+            for pitch in (_safe_int(item) for item in expected)
+            if pitch >= 0
+        ]
 
         leading = observed_pitches[0] if observed_pitches else None
         nearest_distance = None
         if leading is not None and expected_pitches:
-            nearest_distance = min(abs(leading - expected_pitch) for expected_pitch in expected_pitches)
+            nearest_distance = min(
+                abs(leading - expected_pitch)
+                for expected_pitch in expected_pitches
+            )
 
         slot_profiles.append(
             {
                 "patternId": node.get("patternId"),
-                "quantizedStep": node.get("quantizedStep", node.get("step")),
+                "quantizedStep": node.get("quantizedStep"),
                 "leadingObservedMidiPitch": leading,
                 "expectedMidiPitches": expected_pitches,
                 "nearestSemitoneDistance": nearest_distance,
@@ -103,14 +76,22 @@ def main() -> None:
         )
 
     protected_slots = len(slot_profiles)
-    low_e_collapse_slots = sum(1 for item in slot_profiles if item["leadingIsLowE2"])
-    octave_related_slots = sum(1 for item in slot_profiles if item["leadingIsOctaveRelated"])
-    fifth_related_slots = sum(1 for item in slot_profiles if item["leadingIsFifthRelated"])
+    low_e_collapse_slots = sum(
+        1 for item in slot_profiles if item["leadingIsLowE2"]
+    )
+    octave_related_slots = sum(
+        1 for item in slot_profiles if item["leadingIsOctaveRelated"]
+    )
+    fifth_related_slots = sum(
+        1 for item in slot_profiles if item["leadingIsFifthRelated"]
+    )
 
     dominant_observed = observed_counter.most_common(5)
     dominant_pitch = dominant_observed[0][0] if dominant_observed else None
     low_e_collapse_ratio = (
-        round(low_e_collapse_slots / protected_slots, 6) if protected_slots else 0.0
+        round(low_e_collapse_slots / protected_slots, 6)
+        if protected_slots
+        else 0.0
     )
 
     profile = (
@@ -121,6 +102,7 @@ def main() -> None:
 
     checks = {
         "pitchDiagnosisPassed": diagnosis.get("passed") is True,
+        "slotReportsPresent": len(slot_reports) == 9,
         "protectedSlotsPresent": protected_slots == 9,
         "observedPitchEvidencePresent": bool(observed_counter),
         "readOnlyDiagnosis": True,
@@ -150,9 +132,9 @@ def main() -> None:
         "slotProfiles": slot_profiles,
         "checks": checks,
         "trainingRecommendation": (
-            "Train the pitch-selection layer before fretboard assignment. Add a guarded low-register "
-            "collapse penalty when repeated upper-string riff evidence is expected, then rerun this "
-            "benchmark without changing V7/V8 production events."
+            "Train the pitch-selection layer before fretboard assignment. "
+            "Use the repeated Em-riff evidence to penalize unsupported low-register "
+            "fundamentals, but do not alter protected production events."
         ),
         "safeguards": {
             "diagnosticOnly": True,
