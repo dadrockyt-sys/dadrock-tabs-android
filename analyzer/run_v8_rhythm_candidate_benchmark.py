@@ -59,12 +59,27 @@ def main() -> None:
     }
     OUTPUT_PATH.write_text(json.dumps(report, indent=2))
 
+    stable_steps = diagnostics.get("stableIntroPairSteps") or []
+    compact_stable_steps = [
+        (
+            item.get("pairStep"),
+            item.get("pairSupport"),
+            item.get("medianStrength"),
+        )
+        for item in stable_steps
+    ]
+
     print("V8 direct rhythm candidate pass:", report["passed"])
     print("Independent of V7 events:", diagnostics.get("independentOfV7Events"))
     print("Renderer changed:", diagnostics.get("rendererChanged"))
     print("Rhythm candidates:", diagnostics.get("candidateCount"))
     print("Intro rhythm candidates:", diagnostics.get("introCandidateCount"))
     print("Intro onset-step histogram:", diagnostics.get("introStepHistogram"))
+    print("Repeated intro pair count:", diagnostics.get("introPairCount"))
+    print("Minimum pair support:", diagnostics.get("minimumPairSupport"))
+    print("Pair-support histogram:", diagnostics.get("pairSupportHistogram"))
+    print("Stable intro pair-step count:", diagnostics.get("stableIntroPairStepCount"))
+    print("Stable pair steps (step, support, strength):", compact_stable_steps)
     print("Output:", OUTPUT_PATH.relative_to(REPO_ROOT))
 
 
