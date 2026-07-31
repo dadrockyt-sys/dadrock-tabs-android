@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "referenceType": "professional-rhythm-tab-benchmark-contract",
+  "sourceImage": "public/Professionalexample.jpg",
+  "instrumentPart": "rhythm",
+  "status": "scaffold-awaiting-verified-transcription",
+  "readyForScoring": false,
+  "measureNumberingMustMatchSource": true,
+  "timingGrid": {
+    "stepsPerMeasure": 16,
+    "matchToleranceSteps": 1
+  },
+  "allowedBenchmarkUses": [
+    "measure-alignment verification",
+    "note-onset comparison",
+    "pitch comparison",
+    "string-and-fret comparison",
+    "chord-structure comparison",
+    "duration and sustain comparison",
+    "technique comparison",
+    "renderer completeness evaluation"
+  ],
+  "prohibitedTrainingUses": [
+    "copy professional notes into Jimmy output",
+    "synthesize missing attacks from the professional score",
+    "replace direct-audio evidence with reference data",
+    "alter locked V7 events",
+    "alter locked intro or Verse 1 rhythm templates",
+    "change the PDF renderer without a separate guarded integration benchmark"
+  ],
+  "comparisonDimensions": {
+    "measureAlignment": {
+      "weight": 0.15,
+      "required": true
+    },
+    "rhythmOnset": {
+      "weight": 0.2,
+      "required": true
+    },
+    "pitch": {
+      "weight": 0.15,
+      "required": true
+    },
+    "stringAndFret": {
+      "weight": 0.15,
+      "required": true
+    },
+    "chordStructure": {
+      "weight": 0.1,
+      "required": true,
+      "fields": [
+        "root",
+        "quality",
+        "voicing",
+        "simultaneousNotes"
+      ]
+    },
+    "durationAndSustain": {
+      "weight": 0.1,
+      "required": true,
+      "fields": [
+        "durationSteps",
+        "letRing",
+        "tie",
+        "sustainEndStep"
+      ]
+    },
+    "techniques": {
+      "weight": 0.15,
+      "required": true,
+      "fields": [
+        "bend",
+        "bendSemitones",
+        "release",
+        "preBend",
+        "slide",
+        "hammerOn",
+        "pullOff",
+        "palmMute",
+        "deadNote",
+        "accent",
+        "staccato",
+        "vibrato",
+        "harmonic",
+        "pinchHarmonic",
+        "tap"
+      ]
+    }
+  },
+  "scoreTargets": {
+    "measureAlignmentPercent": 100.0,
+    "minimumOverallSimilarityPercent": 90.0,
+    "minimumRhythmOnsetPercent": 92.0,
+    "minimumExactStringFretPercent": 85.0,
+    "minimumTechniquePercent": 80.0
+  },
+  "measureSchema": {
+    "measureNumber": "integer matching the printed professional measure",
+    "timeSignature": "string such as 4/4",
+    "sectionLabel": "optional verified label",
+    "chordSymbols": [
+      {
+        "step": "0-15",
+        "symbol": "verified chord symbol",
+        "root": "pitch class",
+        "quality": "major, minor, dominant7, power5, sus, etc.",
+        "bassNote": "optional slash-bass pitch class"
+      }
+    ],
+    "events": [
+      {
+        "eventId": "stable unique identifier",
+        "step": "0-15 onset position",
+        "durationSteps": "positive number",
+        "notes": [
+          {
+            "stringIndex": "0-5 using project convention",
+            "fret": "0-24 or verified extended range",
+            "midiPitch": "optional derived pitch"
+          }
+        ],
+        "techniques": {
+          "bend": false,
+          "bendSemitones": 0,
+          "release": false,
+          "preBend": false,
+          "slide": null,
+          "hammerOn": false,
+          "pullOff": false,
+          "palmMute": false,
+          "deadNote": false,
+          "accent": false,
+          "staccato": false,
+          "vibrato": false,
+          "harmonic": null,
+          "pinchHarmonic": false,
+          "tap": false,
+          "letRing": false,
+          "tie": false
+        },
+        "verifiedFromSource": true,
+        "confidence": 1.0
+      }
+    ]
+  },
+  "measures": [],
+  "safeguards": {
+    "calibrationOnly": true,
+    "directAudioRemainsSourceOfTruth": true,
+    "professionalReferenceMayScoreButNotGenerate": true,
+    "noSyntheticNotes": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false,
+    "manualVerificationRequiredBeforeScoring": true
+  },
+  "trainingGoal": "Jimmy PAIge must independently infer measure boundaries, note attacks, pitch, string and fret placement, chord structure, durations, sustain, bends, releases, slides, hammer-ons, pull-offs, palm muting, dead notes, accents, vibrato, harmonics and tapping from direct audio. The professional score is a read-only benchmark used only to measure accuracy and renderer completeness."
+}
