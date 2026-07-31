@@ -5,7 +5,7 @@ import subprocess
 import tempfile
 import wave
 from array import array
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 from statistics import median
 from typing import Any
@@ -15,6 +15,11 @@ HOP_SIZE = 512
 MIN_ONSET_GAP_SECONDS = 0.055
 NOISE_FLOOR_MULTIPLIER = 1.8
 LOCAL_PEAK_MULTIPLIER = 1.12
+INTRO_MEASURE_COUNT = 16
+INTRO_PAIR_COUNT = 8
+STEPS_PER_MEASURE = 16
+STEPS_PER_PAIR = 32
+MIN_PAIR_SUPPORT = 4
 
 
 def _safe_float(value: Any, fallback: float = 0.0) -> float:
@@ -142,6 +147,44 @@ def _detect_onsets(energies: list[float], sample_rate: int) -> list[tuple[float,
     ]
 
 
+def _build_intro_pair_consensus(
+    intro_candidates: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[int, int]]:
+    pair_slot_presence: dict[int, set[int]] = defaultdict(set)
+    pair_slot_strengths: dict[int, list[float]] = defaultdict(list)
+
+    for item in intro_candidates:
+        measure_number = int(item["measureNumber"])
+        pair_index = (measure_number - 1) // 2
+        measure_in_pair = (measure_number - 1) % 2
+        pair_step = measure_in_pair * STEPS_PER_MEASURE + int(item["quantizedStep"])
+        pair_slot_presence[pair_step].add(pair_index)
+        pair_slot_strengths[pair_step].append(_safe_float(item.get("strength")))
+        item["introPairIndex"] = pair_index
+        item["quantizedPairStep"] = pair_step
+
+    support_histogram: Counter[int] = Counter()
+    consensus: list[dict[str, Any]] = []
+    for pair_step in sorted(pair_slot_presence):
+        support = len(pair_slot_presence[pair_step])
+        support_histogram[support] += 1
+        strengths = pair_slot_strengths[pair_step]
+        consensus.append(
+            {
+                "pairStep": pair_step,
+                "measureInPair": pair_step // STEPS_PER_MEASURE + 1,
+                "stepInMeasure": pair_step % STEPS_PER_MEASURE,
+                "pairSupport": support,
+                "supportRatio": round(support / INTRO_PAIR_COUNT, 6),
+                "medianStrength": round(median(strengths), 6) if strengths else 0.0,
+                "stable": support >= MIN_PAIR_SUPPORT,
+                "readOnly": True,
+            }
+        )
+
+    return consensus, dict(sorted(support_histogram.items()))
+
+
 def analyze_rhythm_candidates(
     audio_path: str,
     *,
@@ -176,7 +219,10 @@ def analyze_rhythm_candidates(
             continue
         measure_start = (raw_measure - 1) * measure_seconds
         position = max(0.0, min(0.999999, (start - measure_start) / measure_seconds))
-        quantized_step = max(0, min(15, int(round(position * 16.0))))
+        quantized_step = max(
+            0,
+            min(STEPS_PER_MEASURE - 1, int(round(position * STEPS_PER_MEASURE))),
+        )
         candidates.append(
             {
                 "candidateIndex": candidate_index,
@@ -191,9 +237,12 @@ def analyze_rhythm_candidates(
         )
 
     intro_candidates = [
-        item for item in candidates if 1 <= int(item["measureNumber"]) <= 16
+        item for item in candidates if 1 <= int(item["measureNumber"]) <= INTRO_MEASURE_COUNT
     ]
     step_histogram = Counter(int(item["quantizedStep"]) for item in intro_candidates)
+    pair_consensus, pair_support_histogram = _build_intro_pair_consensus(intro_candidates)
+    stable_pair_steps = [item for item in pair_consensus if item["stable"]]
+
     diagnostics = {
         "candidateAnalyzer": "v8-direct-audio-energy-onset",
         "independentOfV7Events": True,
@@ -204,6 +253,12 @@ def analyze_rhythm_candidates(
         "candidateCount": len(candidates),
         "introCandidateCount": len(intro_candidates),
         "introStepHistogram": dict(sorted(step_histogram.items())),
+        "introPairCount": INTRO_PAIR_COUNT,
+        "introPairConsensus": pair_consensus,
+        "stableIntroPairSteps": stable_pair_steps,
+        "stableIntroPairStepCount": len(stable_pair_steps),
+        "pairSupportHistogram": pair_support_histogram,
+        "minimumPairSupport": MIN_PAIR_SUPPORT,
         "minimumOnsetGapSeconds": MIN_ONSET_GAP_SECONDS,
         "readOnly": True,
         "rendererChanged": False,
