@@ -43,13 +43,24 @@ def main() -> None:
     for node in _walk(diagnosis):
         if not isinstance(node, dict):
             continue
-        if "observedPitchCandidates" not in node and "observed" not in node:
+
+        observed = (
+            node.get("observedMidiCandidates")
+            or node.get("observedPitchCandidates")
+            or node.get("observed")
+            or []
+        )
+        expected = (
+            node.get("acceptedMidiPitches")
+            or node.get("expectedMidiPitches")
+            or node.get("expected")
+            or []
+        )
+
+        if not observed and not expected:
             continue
 
-        observed = node.get("observedPitchCandidates", node.get("observed")) or []
-        expected = node.get("expectedMidiPitches", node.get("expected")) or []
-
-        observed_pitches = []
+        observed_pitches: list[int] = []
         for item in observed:
             if isinstance(item, dict):
                 pitch = _safe_int(item.get("midiPitch"))
@@ -63,7 +74,7 @@ def main() -> None:
                     observed_pitches.append(pitch)
                     observed_counter[pitch] += 1
 
-        expected_pitches = []
+        expected_pitches: list[int] = []
         for item in expected:
             pitch = _safe_int(item)
             if pitch >= 0:
@@ -76,7 +87,7 @@ def main() -> None:
         leading = observed_pitches[0] if observed_pitches else None
         nearest_distance = None
         if leading is not None and expected_pitches:
-            nearest_distance = min(abs(leading - expected) for expected in expected_pitches)
+            nearest_distance = min(abs(leading - expected_pitch) for expected_pitch in expected_pitches)
 
         slot_profiles.append(
             {
