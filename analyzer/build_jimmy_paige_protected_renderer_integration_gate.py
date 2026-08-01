@@ -56,7 +56,12 @@ def extract_families(payload: dict) -> set[str]:
         if isinstance(candidate, list):
             return {str(value) for value in candidate}
 
-    for collection_key in ("examples", "results", "primitiveResults"):
+    for collection_key in (
+        "examples",
+        "rows",
+        "results",
+        "primitiveResults",
+    ):
         collection = payload.get(collection_key)
         if isinstance(collection, list):
             families = {
@@ -125,9 +130,6 @@ def main() -> None:
     benchmark_families = extract_families(benchmark)
     preview_families = extract_families(preview)
 
-    # The isolated preview report intentionally stores only its family count.
-    # Its SVG is rendered directly from the already validated dataset examples,
-    # so inherit the dataset family identities only when the preview confirms 9/9.
     preview_family_source = "preview-report"
     if (
         not preview_families
@@ -152,7 +154,7 @@ def main() -> None:
 
     output = {
         "gateName": "Jimmy Page protected renderer integration gate",
-        "gateVersion": 2,
+        "gateVersion": 3,
         "checks": checks,
         "expectedTechniqueFamilies": sorted(EXPECTED_FAMILIES),
         "observedTechniqueFamilies": {
