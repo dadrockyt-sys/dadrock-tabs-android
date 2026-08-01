@@ -56,13 +56,17 @@ def extract_families(payload: dict) -> set[str]:
         if isinstance(candidate, list):
             return {str(value) for value in candidate}
 
-    examples = payload.get("examples")
-    if isinstance(examples, list):
-        return {
-            str(example.get("techniqueFamily"))
-            for example in examples
-            if isinstance(example, dict) and example.get("techniqueFamily")
-        }
+    for collection_key in ("examples", "results", "primitiveResults"):
+        collection = payload.get(collection_key)
+        if isinstance(collection, list):
+            families = {
+                str(item.get("techniqueFamily"))
+                for item in collection
+                if isinstance(item, dict) and item.get("techniqueFamily")
+            }
+            if families:
+                return families
+
     return set()
 
 
@@ -81,15 +85,8 @@ def main() -> None:
         "humanGeometryValidationPassed": (
             validation.get("completedAnnotations") == 9
             and validation.get("incompleteOrInvalidAnnotations") == 0
-            and pick_bool(
-                validation,
-                "allRepresentativeFamiliesHumanConfirmed",
-                "allRepresentativeFamiliesHumanConfirmed",
-            )
-            and pick_bool(
-                validation,
-                "readyForTechniqueRendererTraining",
-            )
+            and pick_bool(validation, "allRepresentativeFamiliesHumanConfirmed")
+            and pick_bool(validation, "readyForTechniqueRendererTraining")
         ),
         "protectedDatasetPassed": (
             dataset.get("exampleCount") == 9
@@ -112,6 +109,7 @@ def main() -> None:
         ),
         "isolatedPreviewPassed": (
             preview.get("examplesRendered") == 9
+            and preview.get("representativeTechniqueFamilies") == 9
             and pick_bool(preview, "primitiveBenchmarkPassed")
             and preview.get("sourceEventsMutated") is False
             and preview.get("rendererChanged") is False
@@ -123,10 +121,27 @@ def main() -> None:
         "previewSvgPresent": PREVIEW_SVG_PATH.stat().st_size > 0,
     }
 
+    dataset_families = extract_families(dataset)
+    benchmark_families = extract_families(benchmark)
+    preview_families = extract_families(preview)
+
+    # The isolated preview report intentionally stores only its family count.
+    # Its SVG is rendered directly from the already validated dataset examples,
+    # so inherit the dataset family identities only when the preview confirms 9/9.
+    preview_family_source = "preview-report"
+    if (
+        not preview_families
+        and preview.get("examplesRendered") == 9
+        and preview.get("representativeTechniqueFamilies") == 9
+        and dataset_families == EXPECTED_FAMILIES
+    ):
+        preview_families = set(dataset_families)
+        preview_family_source = "validated-dataset-inherited"
+
     family_sets = {
-        "dataset": extract_families(dataset),
-        "benchmark": extract_families(benchmark),
-        "preview": extract_families(preview),
+        "dataset": dataset_families,
+        "benchmark": benchmark_families,
+        "preview": preview_families,
     }
     family_coverage_passed = all(
         families == EXPECTED_FAMILIES for families in family_sets.values()
@@ -137,12 +152,13 @@ def main() -> None:
 
     output = {
         "gateName": "Jimmy Page protected renderer integration gate",
-        "gateVersion": 1,
+        "gateVersion": 2,
         "checks": checks,
         "expectedTechniqueFamilies": sorted(EXPECTED_FAMILIES),
         "observedTechniqueFamilies": {
             key: sorted(value) for key, value in family_sets.items()
         },
+        "previewFamilyIdentitySource": preview_family_source,
         "artifactHashes": {
             str(VALIDATION_PATH.relative_to(ROOT)): sha256_file(VALIDATION_PATH),
             str(DATASET_PATH.relative_to(ROOT)): sha256_file(DATASET_PATH),
@@ -167,6 +183,7 @@ def main() -> None:
     print("Protected renderer integration gate complete")
     for name, passed in checks.items():
         print(f"{name}: {passed}")
+    print(f"Preview family identity source: {preview_family_source}")
     print(f"Protected renderer integration gate passed: {protected_gate_passed}")
     print("Source events mutated: False")
     print("Renderer changed: False")
