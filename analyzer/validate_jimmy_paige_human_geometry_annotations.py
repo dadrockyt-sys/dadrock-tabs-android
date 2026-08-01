@@ -7,11 +7,16 @@ OUTPUT_PATH = ROOT / "public/gomyway-jimmy-paige-human-geometry-annotation-valid
 
 
 def is_normalized_number(value):
-    return isinstance(value, (int, float)) and 0.0 <= float(value) <= 1.0
+    return (
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and 0.0 <= float(value) <= 1.0
+    )
 
 
-def get_geometry(row):
-    geometry = row.get("normalizedGeometry") or row.get("geometry") or {}
+def extract_coordinates(geometry):
+    if not isinstance(geometry, dict):
+        return None
 
     x_start = geometry.get("xStart")
     y_start = geometry.get("yStart")
@@ -27,7 +32,22 @@ def get_geometry(row):
     if y_end is None:
         y_end = geometry.get("yEndNormalized")
 
-    return x_start, y_start, x_end, y_end
+    values = (x_start, y_start, x_end, y_end)
+    if all(value is not None for value in values):
+        return values
+
+    return None
+
+
+def get_geometry(row):
+    # The original worksheet may retain an empty normalizedGeometry template.
+    # Prefer the first geometry block that actually contains all four values.
+    for key in ("normalizedGeometry", "geometry"):
+        coordinates = extract_coordinates(row.get(key))
+        if coordinates is not None:
+            return coordinates
+
+    return None, None, None, None
 
 
 def is_human_confirmed(row):
@@ -59,8 +79,8 @@ def main():
         )
         box_order_valid = (
             fields_valid
-            and x_end >= x_start
-            and y_end >= y_start
+            and x_end > x_start
+            and y_end > y_start
         )
         row_complete = human_confirmed and fields_valid and box_order_valid
 
