@@ -116,8 +116,10 @@ def main() -> None:
     validation = json.loads(VALIDATION_PATH.read_text(encoding="utf-8"))
     if int(source.get("eventLocalizationSlots", 0)) != 144:
         raise RuntimeError("V21 does not contain 144 event slots")
-    if int(validation.get("eventSlotsObserved", 0)) != 144:
-        raise RuntimeError("V22 did not validate 144 event slots")
+    if int(validation.get("lockedEventSlotsObserved", 0)) != 144:
+        raise RuntimeError("V22 did not observe all 144 event slots")
+    if not validation.get("all144EventSlotsPresent", False):
+        raise RuntimeError("V22 did not confirm all 144 event slots were present")
 
     rows_output = []
     total_slots = 0
