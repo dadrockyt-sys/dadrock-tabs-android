@@ -11,6 +11,9 @@ OUTPUT_PATH = REPO_ROOT / "public" / "gomyway-jimmy-paige-full-song-winner-test.
 CHECKPOINT_PATH = REPO_ROOT / "public" / "gomyway-jimmy-paige-full-song-winner-test-checkpoint.json"
 EVENT_CACHE_PATH = REPO_ROOT / "public" / "gomyway-jimmy-paige-full-song-winner-events.json"
 
+PITCH_KEYS = {"midiPitch", "pitch_midi", "pitchMidi", "pitch"}
+TIME_KEYS = {"start", "start_time", "startTime", "time"}
+
 
 def load_json(path: Path) -> dict[str, Any]:
     if not path.exists():
@@ -18,12 +21,29 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text())
 
 
+def looks_like_note_event_list(value: Any) -> bool:
+    if not isinstance(value, list) or not value:
+        return False
+    sample = [item for item in value[:50] if isinstance(item, dict)]
+    if not sample:
+        return False
+
+    # A true Basic Pitch event list must contain both pitch and time fields.
+    # Slot reports can contain nearby midiPitch values, but do not have event
+    # start times; requiring both prevents those reports from being mistaken
+    # for the 1,629 extracted note events.
+    pitch_and_time = 0
+    for item in sample:
+        keys = set(item.keys())
+        if keys.intersection(PITCH_KEYS) and keys.intersection(TIME_KEYS):
+            pitch_and_time += 1
+    return pitch_and_time >= max(1, len(sample) // 2)
+
+
 def find_event_list(value: Any) -> list[dict[str, Any]]:
     if isinstance(value, list):
-        if value and all(isinstance(item, dict) for item in value):
-            keys = set().union(*(item.keys() for item in value[:20]))
-            if keys.intersection({"midiPitch", "pitch_midi", "start", "start_time"}):
-                return value
+        if looks_like_note_event_list(value):
+            return [item for item in value if isinstance(item, dict)]
         for item in value:
             found = find_event_list(item)
             if found:
@@ -45,10 +65,17 @@ def main() -> None:
     output = load_json(OUTPUT_PATH)
     checkpoint = load_json(CHECKPOINT_PATH)
 
-    existing_events = find_event_list(output)
-    if existing_events:
-        print(f"Winner report already contains events: {len(existing_events)}")
+    existing_events = find_event_list(output.get("events", []))
+    expected_count = int(output.get("extractedEventCount") or 0)
+    if existing_events and (expected_count == 0 or len(existing_events) == expected_count):
+        print(f"Winner report already contains valid note events: {len(existing_events)}")
         return
+
+    if output.get("events") and not existing_events:
+        print(
+            "Ignoring invalid events payload in winner report; "
+            "it is not a timed Basic Pitch note-event list."
+        )
 
     call_id = output.get("callId") or checkpoint.get("callId")
     if not call_id:
@@ -58,7 +85,7 @@ def main() -> None:
 
     print(f"Retrieving completed Modal result: {call_id}")
     call = modal.FunctionCall.from_id(str(call_id))
-    result_bytes = call.get(timeout=10)
+    result_bytes = call.get(timeout=30)
 
     if isinstance(result_bytes, bytes):
         result = json.loads(result_bytes.decode("utf-8"))
@@ -71,7 +98,7 @@ def main() -> None:
 
     events = find_event_list(result)
     if not events:
-        raise RuntimeError("The completed Modal result did not contain note events.")
+        raise RuntimeError("The completed Modal result did not contain timed note events.")
 
     cache = {
         "schemaVersion": 1,
