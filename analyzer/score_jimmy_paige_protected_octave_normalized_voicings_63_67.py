@@ -38,6 +38,7 @@ def _extract_rows(payload: Any) -> list[dict[str, Any]]:
     if not isinstance(payload, dict):
         return []
     for key in (
+        "diagnosisRows",
         "voicingPlacementMisses",
         "placementMisses",
         "missedAttacks",
