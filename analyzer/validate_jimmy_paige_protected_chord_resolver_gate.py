@@ -28,10 +28,14 @@ def first_number(payload: Any, keys: list[str], default: float = 0.0) -> float:
             if key in payload and isinstance(payload[key], (int, float)):
                 return float(payload[key])
         for value in payload.values():
-            if isinstance(value, dict):
-                found = first_number(value, keys, default=float("nan"))
-                if found == found:
-                    return found
+            found = first_number(value, keys, default=float("nan"))
+            if found == found:
+                return found
+    elif isinstance(payload, list):
+        for value in payload:
+            found = first_number(value, keys, default=float("nan"))
+            if found == found:
+                return found
     return default
 
 
@@ -41,10 +45,14 @@ def first_bool(payload: Any, keys: list[str], default: bool = False) -> bool:
             if key in payload and isinstance(payload[key], bool):
                 return bool(payload[key])
         for value in payload.values():
-            if isinstance(value, dict):
-                found = first_bool(value, keys, default=False)
-                if found:
-                    return True
+            found = first_bool(value, keys, default=False)
+            if found:
+                return True
+    elif isinstance(payload, list):
+        for value in payload:
+            found = first_bool(value, keys, default=False)
+            if found:
+                return True
     return default
 
 
@@ -64,22 +72,41 @@ def main() -> None:
     )
     transfer_guarded = first_number(
         transfer,
-        ["guardedResolvedEquivalentPercentage", "guardedRecallPercentage"],
+        [
+            "guardedResolvedEquivalentRecallPercentage",
+            "guardedResolvedEquivalentPercentage",
+            "guardedRecallPercentage",
+        ],
     )
 
     professional = first_number(
         regression,
-        ["professionalScorePercentage", "professionalScore", "professional"],
+        [
+            "overallRecallPercentage",
+            "professionalScorePercentage",
+            "professionalScore",
+            "professional",
+        ],
     )
     low_register = first_number(
         regression,
-        ["lowRegisterScorePercentage", "lowRegisterScore", "low"],
+        [
+            "lowRegisterRecallPercentage",
+            "lowRegisterScorePercentage",
+            "lowRegisterScore",
+            "low",
+        ],
     )
     midi52 = first_number(regression, ["midi52Matches", "MIDI52", "midi52"])
     midi62 = first_number(regression, ["midi62Matches", "MIDI62", "midi62"])
     combined_pass = first_bool(
         regression,
-        ["combinedPass", "regressionPassed", "protectedRegressionPassed"],
+        [
+            "combinedRegressionPassed",
+            "combinedPass",
+            "regressionPassed",
+            "protectedRegressionPassed",
+        ],
     )
 
     checks = {
@@ -121,6 +148,15 @@ def main() -> None:
     OUTPUT_PATH.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
     print("Protected chord resolver gate complete")
+    print(
+        "Resolved scores | "
+        f"trained={trained_guarded:.2f}% | "
+        f"heldout={heldout_guarded:.2f}% | "
+        f"template={transfer_guarded:.2f}% | "
+        f"professional={professional:.2f}% | "
+        f"low={low_register:.2f}% | "
+        f"MIDI52={midi52:.0f} | MIDI62={midi62:.0f}"
+    )
     for name, passed in checks.items():
         print(f"{name}: {passed}")
     print(f"Gate passed: {gate_passed}")
