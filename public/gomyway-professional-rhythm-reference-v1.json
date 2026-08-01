@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "referenceType": "professional-rhythm-tab",
+  "song": "Are You Gonna Go My Way",
+  "artist": "Lenny Kravitz",
+  "performer": "Craig Ross",
+  "instrument": "rhythm-guitar",
+  "tuning": "standard",
+  "tempoBpm": 129,
+  "measureCount": 113,
+  "sourcePages": 8,
+  "status": "reference-scaffold",
+  "sections": [
+    {"name": "Intro", "startMeasure": 1, "endMeasure": 16},
+    {"name": "Verse 1", "startMeasure": 17, "endMeasure": 32},
+    {"name": "Chorus 1", "startMeasure": 33, "endMeasure": 38},
+    {"name": "Riff", "startMeasure": 39, "endMeasure": 46},
+    {"name": "Verse 2", "startMeasure": 47, "endMeasure": 62},
+    {"name": "Chorus 2", "startMeasure": 63, "endMeasure": 69},
+    {"name": "Bridge", "startMeasure": 70, "endMeasure": 77},
+    {"name": "Solo backing", "startMeasure": 78, "endMeasure": 94},
+    {"name": "Riff return", "startMeasure": 95, "endMeasure": 102},
+    {"name": "Out-Chorus", "startMeasure": 103, "endMeasure": 113}
+  ],
+  "reusablePatterns": [
+    {
+      "patternId": "main-em-riff",
+      "description": "Recurring low-string Em riff with full-step bend, open-string movement, fret-2 notes, and recurring 3/3 double-stop ending on alternating measures.",
+      "assignedMeasureRanges": [[1,16],[17,24],[29,32],[39,46],[47,54],[59,62],[95,102]],
+      "eventEncodingStatus": "pending-detailed-entry"
+    },
+    {
+      "patternId": "g-verse-figure",
+      "description": "G-position 5-3-5 low-string verse figure with full-step bend and muted/percussive variation.",
+      "assignedMeasureRanges": [[25,28],[55,58]],
+      "eventEncodingStatus": "pending-detailed-entry"
+    },
+    {
+      "patternId": "chorus-chord-figure",
+      "description": "G6/A/E/D/G/E chorus progression with repeated chord stabs and sustained shapes.",
+      "assignedMeasureRanges": [[33,38],[63,69],[103,109]],
+      "eventEncodingStatus": "pending-detailed-entry"
+    },
+    {
+      "patternId": "bridge-solo-backing",
+      "description": "E/D/A/E bridge and solo-backing rhythm with muted strums, chord stabs, slides, and D6/A movement.",
+      "assignedMeasureRanges": [[70,94]],
+      "eventEncodingStatus": "pending-detailed-entry"
+    },
+    {
+      "patternId": "ending-sustain",
+      "description": "Long sustained A-shape ending figures and final muted hit.",
+      "assignedMeasureRanges": [[110,113]],
+      "eventEncodingStatus": "pending-detailed-entry"
+    }
+  ],
+  "protectedReference": true,
+  "productionPromotionAllowed": false,
+  "notes": "This file establishes the complete 1-113 measure structure from the uploaded professional pages. Detailed event-by-event transcription is the next step before full-song scoring automation."
+}
