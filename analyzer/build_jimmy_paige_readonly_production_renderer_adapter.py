@@ -47,6 +47,31 @@ def first_bool(payload: Any, keys: list[str]) -> bool:
     return False
 
 
+def extract_frets(row: dict[str, Any]) -> list[int | None] | None:
+    direct = row.get("fretsHighToLow") or row.get("resolvedFretsHighToLow")
+    if isinstance(direct, list):
+        return direct
+
+    cells = row.get("renderCells")
+    if not isinstance(cells, list) or len(cells) != 6:
+        return None
+
+    ordered = sorted(
+        (cell for cell in cells if isinstance(cell, dict)),
+        key=lambda cell: int(cell.get("stringIndex", -1)),
+    )
+    if [cell.get("stringIndex") for cell in ordered] != [0, 1, 2, 3, 4, 5]:
+        return None
+
+    frets: list[int | None] = []
+    for cell in ordered:
+        fret = cell.get("fret")
+        if fret is not None and not isinstance(fret, int):
+            return None
+        frets.append(fret)
+    return frets
+
+
 def main() -> None:
     integration = load(INTEGRATION_PATH)
     sidecar = load(SIDECAR_PATH)
@@ -88,7 +113,7 @@ def main() -> None:
 
         measure_number = row.get("measureNumber")
         attack_number = row.get("attackNumber")
-        frets = row.get("fretsHighToLow") or row.get("resolvedFretsHighToLow")
+        frets = extract_frets(row)
 
         valid = (
             isinstance(measure_number, int)
@@ -103,9 +128,11 @@ def main() -> None:
         adapted_rows.append(
             {
                 "adapterRow": index,
+                "sectionRole": row.get("sectionRole"),
                 "measureNumber": measure_number,
                 "attackNumber": attack_number,
-                "phase": row.get("phase") or row.get("targetPhase"),
+                "phase": row.get("phase") if row.get("phase") is not None else row.get("targetPhase"),
+                "chordLabels": row.get("chordLabels", []),
                 "fretsHighToLow": frets,
                 "resolutionMode": row.get("resolutionMode"),
                 "readOnly": True,
