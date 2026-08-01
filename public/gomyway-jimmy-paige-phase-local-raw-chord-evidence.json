@@ -1,0 +1,2860 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "phase-local-raw-chord-coactivation-diagnosis",
+  "winningParameters": {
+    "onset_threshold": 0.28,
+    "frame_threshold": 0.12,
+    "minimum_note_length": 35.0,
+    "minimum_frequency": 82.0,
+    "maximum_frequency": 1400.0,
+    "multiple_pitch_bends": true
+  },
+  "phaseWindows": [
+    [
+      0.6,
+      1.0
+    ],
+    [
+      0.7,
+      1.0
+    ],
+    [
+      0.75,
+      1.05
+    ],
+    [
+      0.8,
+      1.1
+    ]
+  ],
+  "thresholds": [
+    0.08,
+    0.1,
+    0.12,
+    0.14,
+    0.16
+  ],
+  "secondsPerFrame": 0.011609977324263039,
+  "measureReports": [
+    {
+      "measureNumber": 1,
+      "expectedDoubleStop": false,
+      "measureStartSeconds": 5.045,
+      "measureEndSeconds": 6.811264350897851,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 525,
+          "frameEnd": 586,
+          "sameFrameMinimumMaximum": 0.122804,
+          "sameFrameProductMaximum": 0.019356,
+          "bestCoactivationSeconds": 6.095238,
+          "midi58AtBestFrame": 0.134596,
+          "midi62AtBestFrame": 0.122804,
+          "midi58Maximum": 0.185367,
+          "midi62Maximum": 0.134275,
+          "midi58OnsetMaximum": 0.331675,
+          "midi62OnsetMaximum": 0.310016,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 53,
+              "midi58Count": 53,
+              "midi62Count": 61
+            },
+            "0.12": {
+              "sameFrameCount": 2,
+              "midi58Count": 18,
+              "midi62Count": 10
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 9,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 541,
+          "frameEnd": 586,
+          "sameFrameMinimumMaximum": 0.11064,
+          "sameFrameProductMaximum": 0.019356,
+          "bestCoactivationSeconds": 6.791837,
+          "midi58AtBestFrame": 0.151117,
+          "midi62AtBestFrame": 0.11064,
+          "midi58Maximum": 0.185367,
+          "midi62Maximum": 0.134275,
+          "midi58OnsetMaximum": 0.331675,
+          "midi62OnsetMaximum": 0.310016,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 37,
+              "midi58Count": 37,
+              "midi62Count": 45
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 13,
+              "midi62Count": 8
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 9,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 548,
+          "frameEnd": 594,
+          "sameFrameMinimumMaximum": 0.113317,
+          "sameFrameProductMaximum": 0.019356,
+          "bestCoactivationSeconds": 6.826667,
+          "midi58AtBestFrame": 0.118492,
+          "midi62AtBestFrame": 0.113317,
+          "midi58Maximum": 0.185367,
+          "midi62Maximum": 0.134275,
+          "midi58OnsetMaximum": 0.331675,
+          "midi62OnsetMaximum": 0.310016,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 38,
+              "midi58Count": 38,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 15,
+              "midi62Count": 8
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 9,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 556,
+          "frameEnd": 601,
+          "sameFrameMinimumMaximum": 0.113317,
+          "sameFrameProductMaximum": 0.019356,
+          "bestCoactivationSeconds": 6.826667,
+          "midi58AtBestFrame": 0.118492,
+          "midi62AtBestFrame": 0.113317,
+          "midi58Maximum": 0.185367,
+          "midi62Maximum": 0.134275,
+          "midi58OnsetMaximum": 0.436391,
+          "midi62OnsetMaximum": 0.310016,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 40,
+              "midi58Count": 40,
+              "midi62Count": 45
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 17,
+              "midi62Count": 8
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 9,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "expectedDoubleStop": true,
+      "measureStartSeconds": 6.811264350897851,
+      "measureEndSeconds": 8.577528701795702,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 677,
+          "frameEnd": 738,
+          "sameFrameMinimumMaximum": 0.124159,
+          "sameFrameProductMaximum": 0.057575,
+          "bestCoactivationSeconds": 8.417234,
+          "midi58AtBestFrame": 0.124596,
+          "midi62AtBestFrame": 0.124159,
+          "midi58Maximum": 0.151167,
+          "midi62Maximum": 0.573051,
+          "midi58OnsetMaximum": 0.367544,
+          "midi62OnsetMaximum": 0.46774,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 47,
+              "midi58Count": 47,
+              "midi62Count": 61
+            },
+            "0.12": {
+              "sameFrameCount": 1,
+              "midi58Count": 11,
+              "midi62Count": 43
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 5,
+              "midi62Count": 40
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 38
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 693,
+          "frameEnd": 738,
+          "sameFrameMinimumMaximum": 0.124159,
+          "sameFrameProductMaximum": 0.057575,
+          "bestCoactivationSeconds": 8.417234,
+          "midi58AtBestFrame": 0.124596,
+          "midi62AtBestFrame": 0.124159,
+          "midi58Maximum": 0.151167,
+          "midi62Maximum": 0.573051,
+          "midi58OnsetMaximum": 0.367544,
+          "midi62OnsetMaximum": 0.40831,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 44,
+              "midi58Count": 44,
+              "midi62Count": 45
+            },
+            "0.12": {
+              "sameFrameCount": 1,
+              "midi58Count": 11,
+              "midi62Count": 33
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 5,
+              "midi62Count": 32
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 31
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 700,
+          "frameEnd": 746,
+          "sameFrameMinimumMaximum": 0.124159,
+          "sameFrameProductMaximum": 0.057575,
+          "bestCoactivationSeconds": 8.417234,
+          "midi58AtBestFrame": 0.124596,
+          "midi62AtBestFrame": 0.124159,
+          "midi58Maximum": 0.195549,
+          "midi62Maximum": 0.573051,
+          "midi58OnsetMaximum": 0.450163,
+          "midi62OnsetMaximum": 0.40831,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 39,
+              "midi58Count": 46,
+              "midi62Count": 39
+            },
+            "0.12": {
+              "sameFrameCount": 1,
+              "midi58Count": 18,
+              "midi62Count": 26
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 10,
+              "midi62Count": 25
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 4,
+              "midi62Count": 24
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 708,
+          "frameEnd": 754,
+          "sameFrameMinimumMaximum": 0.124159,
+          "sameFrameProductMaximum": 0.057575,
+          "bestCoactivationSeconds": 8.417234,
+          "midi58AtBestFrame": 0.124596,
+          "midi62AtBestFrame": 0.124159,
+          "midi58Maximum": 0.195549,
+          "midi62Maximum": 0.573051,
+          "midi58OnsetMaximum": 0.450163,
+          "midi62OnsetMaximum": 0.40831,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 31,
+              "midi58Count": 46,
+              "midi62Count": 31
+            },
+            "0.12": {
+              "sameFrameCount": 1,
+              "midi58Count": 24,
+              "midi62Count": 18
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 14,
+              "midi62Count": 17
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 16
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "expectedDoubleStop": false,
+      "measureStartSeconds": 8.577528701795702,
+      "measureEndSeconds": 10.343793052693552,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 830,
+          "frameEnd": 890,
+          "sameFrameMinimumMaximum": 0.120846,
+          "sameFrameProductMaximum": 0.028322,
+          "bestCoactivationSeconds": 10.29805,
+          "midi58AtBestFrame": 0.121712,
+          "midi62AtBestFrame": 0.120846,
+          "midi58Maximum": 0.174119,
+          "midi62Maximum": 0.28154,
+          "midi58OnsetMaximum": 0.54046,
+          "midi62OnsetMaximum": 0.590132,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 60,
+              "midi58Count": 60,
+              "midi62Count": 60
+            },
+            "0.10": {
+              "sameFrameCount": 43,
+              "midi58Count": 58,
+              "midi62Count": 45
+            },
+            "0.12": {
+              "sameFrameCount": 1,
+              "midi58Count": 25,
+              "midi62Count": 21
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 13,
+              "midi62Count": 17
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 13
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 845,
+          "frameEnd": 890,
+          "sameFrameMinimumMaximum": 0.120846,
+          "sameFrameProductMaximum": 0.028322,
+          "bestCoactivationSeconds": 10.29805,
+          "midi58AtBestFrame": 0.121712,
+          "midi62AtBestFrame": 0.120846,
+          "midi58Maximum": 0.174119,
+          "midi62Maximum": 0.28154,
+          "midi58OnsetMaximum": 0.54046,
+          "midi62OnsetMaximum": 0.590132,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 30,
+              "midi58Count": 45,
+              "midi62Count": 30
+            },
+            "0.12": {
+              "sameFrameCount": 1,
+              "midi58Count": 22,
+              "midi62Count": 21
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 12,
+              "midi62Count": 17
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 13
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 852,
+          "frameEnd": 898,
+          "sameFrameMinimumMaximum": 0.120846,
+          "sameFrameProductMaximum": 0.028322,
+          "bestCoactivationSeconds": 10.29805,
+          "midi58AtBestFrame": 0.121712,
+          "midi62AtBestFrame": 0.120846,
+          "midi58Maximum": 0.157266,
+          "midi62Maximum": 0.28154,
+          "midi58OnsetMaximum": 0.415952,
+          "midi62OnsetMaximum": 0.590132,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 36,
+              "midi58Count": 46,
+              "midi62Count": 36
+            },
+            "0.12": {
+              "sameFrameCount": 1,
+              "midi58Count": 19,
+              "midi62Count": 21
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 5,
+              "midi62Count": 17
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 13
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 860,
+          "frameEnd": 906,
+          "sameFrameMinimumMaximum": 0.120846,
+          "sameFrameProductMaximum": 0.028322,
+          "bestCoactivationSeconds": 10.29805,
+          "midi58AtBestFrame": 0.121712,
+          "midi62AtBestFrame": 0.120846,
+          "midi58Maximum": 0.135013,
+          "midi62Maximum": 0.28154,
+          "midi58OnsetMaximum": 0.415952,
+          "midi62OnsetMaximum": 0.590132,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 41,
+              "midi58Count": 46,
+              "midi62Count": 41
+            },
+            "0.12": {
+              "sameFrameCount": 1,
+              "midi58Count": 16,
+              "midi62Count": 21
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 17
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 13
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "expectedDoubleStop": true,
+      "measureStartSeconds": 10.343793052693552,
+      "measureEndSeconds": 12.110057403591405,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 982,
+          "frameEnd": 1043,
+          "sameFrameMinimumMaximum": 0.12589,
+          "sameFrameProductMaximum": 0.059825,
+          "bestCoactivationSeconds": 11.784127,
+          "midi58AtBestFrame": 0.12589,
+          "midi62AtBestFrame": 0.127496,
+          "midi58Maximum": 0.127831,
+          "midi62Maximum": 0.569533,
+          "midi58OnsetMaximum": 0.409675,
+          "midi62OnsetMaximum": 0.596044,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.12": {
+              "sameFrameCount": 5,
+              "midi58Count": 9,
+              "midi62Count": 34
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 30
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 28
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 997,
+          "frameEnd": 1043,
+          "sameFrameMinimumMaximum": 0.12589,
+          "sameFrameProductMaximum": 0.059825,
+          "bestCoactivationSeconds": 11.784127,
+          "midi58AtBestFrame": 0.12589,
+          "midi62AtBestFrame": 0.127496,
+          "midi58Maximum": 0.127831,
+          "midi62Maximum": 0.569533,
+          "midi58OnsetMaximum": 0.409675,
+          "midi62OnsetMaximum": 0.596044,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 5,
+              "midi58Count": 9,
+              "midi62Count": 28
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 26
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 25
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 1005,
+          "frameEnd": 1050,
+          "sameFrameMinimumMaximum": 0.12589,
+          "sameFrameProductMaximum": 0.059825,
+          "bestCoactivationSeconds": 11.784127,
+          "midi58AtBestFrame": 0.12589,
+          "midi62AtBestFrame": 0.127496,
+          "midi58Maximum": 0.127831,
+          "midi62Maximum": 0.569533,
+          "midi58OnsetMaximum": 0.409675,
+          "midi62OnsetMaximum": 0.596044,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.12": {
+              "sameFrameCount": 5,
+              "midi58Count": 9,
+              "midi62Count": 35
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 33
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 32
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 1012,
+          "frameEnd": 1058,
+          "sameFrameMinimumMaximum": 0.12906,
+          "sameFrameProductMaximum": 0.059825,
+          "bestCoactivationSeconds": 12.271746,
+          "midi58AtBestFrame": 0.12906,
+          "midi62AtBestFrame": 0.142526,
+          "midi58Maximum": 0.12906,
+          "midi62Maximum": 0.569533,
+          "midi58OnsetMaximum": 0.371132,
+          "midi62OnsetMaximum": 0.596044,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 7,
+              "midi58Count": 10,
+              "midi62Count": 43
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 41
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 38
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "expectedDoubleStop": false,
+      "measureStartSeconds": 12.110057403591405,
+      "measureEndSeconds": 13.876321754489256,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 1134,
+          "frameEnd": 1195,
+          "sameFrameMinimumMaximum": 0.24147,
+          "sameFrameProductMaximum": 0.084418,
+          "bestCoactivationSeconds": 13.246984,
+          "midi58AtBestFrame": 0.24147,
+          "midi62AtBestFrame": 0.349599,
+          "midi58Maximum": 0.248611,
+          "midi62Maximum": 0.349599,
+          "midi58OnsetMaximum": 0.608845,
+          "midi62OnsetMaximum": 0.590986,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 51,
+              "midi58Count": 51,
+              "midi62Count": 61
+            },
+            "0.12": {
+              "sameFrameCount": 23,
+              "midi58Count": 33,
+              "midi62Count": 28
+            },
+            "0.14": {
+              "sameFrameCount": 15,
+              "midi58Count": 26,
+              "midi62Count": 18
+            },
+            "0.16": {
+              "sameFrameCount": 11,
+              "midi58Count": 21,
+              "midi62Count": 16
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 1149,
+          "frameEnd": 1195,
+          "sameFrameMinimumMaximum": 0.140216,
+          "sameFrameProductMaximum": 0.027918,
+          "bestCoactivationSeconds": 13.781043,
+          "midi58AtBestFrame": 0.154684,
+          "midi62AtBestFrame": 0.140216,
+          "midi58Maximum": 0.248611,
+          "midi62Maximum": 0.167608,
+          "midi58OnsetMaximum": 0.608845,
+          "midi62OnsetMaximum": 0.237143,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 36,
+              "midi58Count": 36,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 8,
+              "midi58Count": 18,
+              "midi62Count": 13
+            },
+            "0.14": {
+              "sameFrameCount": 1,
+              "midi58Count": 12,
+              "midi62Count": 3
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 10,
+              "midi62Count": 1
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 1157,
+          "frameEnd": 1202,
+          "sameFrameMinimumMaximum": 0.140216,
+          "sameFrameProductMaximum": 0.027918,
+          "bestCoactivationSeconds": 13.781043,
+          "midi58AtBestFrame": 0.154684,
+          "midi62AtBestFrame": 0.140216,
+          "midi58Maximum": 0.248611,
+          "midi62Maximum": 0.195865,
+          "midi58OnsetMaximum": 0.608845,
+          "midi62OnsetMaximum": 0.524194,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 35,
+              "midi58Count": 35,
+              "midi62Count": 45
+            },
+            "0.12": {
+              "sameFrameCount": 6,
+              "midi58Count": 16,
+              "midi62Count": 11
+            },
+            "0.14": {
+              "sameFrameCount": 1,
+              "midi58Count": 12,
+              "midi62Count": 3
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 10,
+              "midi62Count": 2
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 1164,
+          "frameEnd": 1210,
+          "sameFrameMinimumMaximum": 0.140216,
+          "sameFrameProductMaximum": 0.039224,
+          "bestCoactivationSeconds": 13.781043,
+          "midi58AtBestFrame": 0.154684,
+          "midi62AtBestFrame": 0.140216,
+          "midi58Maximum": 0.248611,
+          "midi62Maximum": 0.379427,
+          "midi58OnsetMaximum": 0.608845,
+          "midi62OnsetMaximum": 0.581897,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 39,
+              "midi58Count": 39,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 6,
+              "midi58Count": 16,
+              "midi62Count": 19
+            },
+            "0.14": {
+              "sameFrameCount": 1,
+              "midi58Count": 12,
+              "midi62Count": 11
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 10,
+              "midi62Count": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "expectedDoubleStop": true,
+      "measureStartSeconds": 13.876321754489256,
+      "measureEndSeconds": 15.642586105387107,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 1286,
+          "frameEnd": 1347,
+          "sameFrameMinimumMaximum": 0.119788,
+          "sameFrameProductMaximum": 0.021631,
+          "bestCoactivationSeconds": 15.17424,
+          "midi58AtBestFrame": 0.119788,
+          "midi62AtBestFrame": 0.178533,
+          "midi58Maximum": 0.158034,
+          "midi62Maximum": 0.180647,
+          "midi58OnsetMaximum": 0.291457,
+          "midi62OnsetMaximum": 0.399757,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 8,
+              "midi62Count": 13
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 5,
+              "midi62Count": 8
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 6
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 1301,
+          "frameEnd": 1347,
+          "sameFrameMinimumMaximum": 0.119788,
+          "sameFrameProductMaximum": 0.021631,
+          "bestCoactivationSeconds": 15.17424,
+          "midi58AtBestFrame": 0.119788,
+          "midi62AtBestFrame": 0.178533,
+          "midi58Maximum": 0.119788,
+          "midi62Maximum": 0.180647,
+          "midi58OnsetMaximum": 0.291457,
+          "midi62OnsetMaximum": 0.399757,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 13
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 8
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 6
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 1309,
+          "frameEnd": 1354,
+          "sameFrameMinimumMaximum": 0.116086,
+          "sameFrameProductMaximum": 0.018657,
+          "bestCoactivationSeconds": 15.19746,
+          "midi58AtBestFrame": 0.116086,
+          "midi62AtBestFrame": 0.160713,
+          "midi58Maximum": 0.118899,
+          "midi62Maximum": 0.176796,
+          "midi58OnsetMaximum": 0.231746,
+          "midi62OnsetMaximum": 0.25103,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 12
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 5
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 3
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 1316,
+          "frameEnd": 1362,
+          "sameFrameMinimumMaximum": 0.11384,
+          "sameFrameProductMaximum": 0.028568,
+          "bestCoactivationSeconds": 15.61542,
+          "midi58AtBestFrame": 0.11384,
+          "midi62AtBestFrame": 0.117392,
+          "midi58Maximum": 0.118899,
+          "midi62Maximum": 0.278438,
+          "midi58OnsetMaximum": 0.231746,
+          "midi62OnsetMaximum": 0.366592,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 42,
+              "midi58Count": 42,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 15
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 11
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 7,
+      "expectedDoubleStop": false,
+      "measureStartSeconds": 15.642586105387107,
+      "measureEndSeconds": 17.40885045628496,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 1438,
+          "frameEnd": 1499,
+          "sameFrameMinimumMaximum": 0.11056,
+          "sameFrameProductMaximum": 0.029212,
+          "bestCoactivationSeconds": 17.055057,
+          "midi58AtBestFrame": 0.11056,
+          "midi62AtBestFrame": 0.263942,
+          "midi58Maximum": 0.146763,
+          "midi62Maximum": 0.265035,
+          "midi58OnsetMaximum": 0.412657,
+          "midi62OnsetMaximum": 0.453234,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 59,
+              "midi58Count": 61,
+              "midi62Count": 59
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 12,
+              "midi62Count": 19
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 5,
+              "midi62Count": 15
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 13
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 1453,
+          "frameEnd": 1499,
+          "sameFrameMinimumMaximum": 0.11056,
+          "sameFrameProductMaximum": 0.029212,
+          "bestCoactivationSeconds": 17.055057,
+          "midi58AtBestFrame": 0.11056,
+          "midi62AtBestFrame": 0.263942,
+          "midi58Maximum": 0.114269,
+          "midi62Maximum": 0.265035,
+          "midi58OnsetMaximum": 0.243665,
+          "midi62OnsetMaximum": 0.453234,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 45,
+              "midi58Count": 46,
+              "midi62Count": 45
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 19
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 15
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 13
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 1461,
+          "frameEnd": 1507,
+          "sameFrameMinimumMaximum": 0.11056,
+          "sameFrameProductMaximum": 0.029212,
+          "bestCoactivationSeconds": 17.055057,
+          "midi58AtBestFrame": 0.11056,
+          "midi62AtBestFrame": 0.263942,
+          "midi58Maximum": 0.11056,
+          "midi62Maximum": 0.265035,
+          "midi58OnsetMaximum": 0.243665,
+          "midi62OnsetMaximum": 0.453234,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 45,
+              "midi58Count": 46,
+              "midi62Count": 45
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 19
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 15
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 13
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 1469,
+          "frameEnd": 1514,
+          "sameFrameMinimumMaximum": 0.11056,
+          "sameFrameProductMaximum": 0.029181,
+          "bestCoactivationSeconds": 17.055057,
+          "midi58AtBestFrame": 0.11056,
+          "midi62AtBestFrame": 0.263942,
+          "midi58Maximum": 0.11056,
+          "midi62Maximum": 0.263942,
+          "midi58OnsetMaximum": 0.243665,
+          "midi62OnsetMaximum": 0.441103,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 44,
+              "midi58Count": 45,
+              "midi62Count": 44
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 15
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 9
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 7
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "expectedDoubleStop": true,
+      "measureStartSeconds": 17.40885045628496,
+      "measureEndSeconds": 19.17511480718281,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 1590,
+          "frameEnd": 1651,
+          "sameFrameMinimumMaximum": 0.163075,
+          "sameFrameProductMaximum": 0.045135,
+          "bestCoactivationSeconds": 18.959093,
+          "midi58AtBestFrame": 0.163075,
+          "midi62AtBestFrame": 0.276775,
+          "midi58Maximum": 0.26145,
+          "midi62Maximum": 0.281257,
+          "midi58OnsetMaximum": 0.343867,
+          "midi62OnsetMaximum": 0.408868,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 55,
+              "midi58Count": 60,
+              "midi62Count": 56
+            },
+            "0.12": {
+              "sameFrameCount": 10,
+              "midi58Count": 27,
+              "midi62Count": 18
+            },
+            "0.14": {
+              "sameFrameCount": 6,
+              "midi58Count": 18,
+              "midi62Count": 14
+            },
+            "0.16": {
+              "sameFrameCount": 2,
+              "midi58Count": 12,
+              "midi62Count": 12
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 1605,
+          "frameEnd": 1651,
+          "sameFrameMinimumMaximum": 0.163075,
+          "sameFrameProductMaximum": 0.045135,
+          "bestCoactivationSeconds": 18.959093,
+          "midi58AtBestFrame": 0.163075,
+          "midi62AtBestFrame": 0.276775,
+          "midi58Maximum": 0.26145,
+          "midi62Maximum": 0.281257,
+          "midi58OnsetMaximum": 0.343867,
+          "midi62OnsetMaximum": 0.408868,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 10,
+              "midi58Count": 25,
+              "midi62Count": 18
+            },
+            "0.14": {
+              "sameFrameCount": 6,
+              "midi58Count": 18,
+              "midi62Count": 14
+            },
+            "0.16": {
+              "sameFrameCount": 2,
+              "midi58Count": 12,
+              "midi62Count": 12
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 1613,
+          "frameEnd": 1659,
+          "sameFrameMinimumMaximum": 0.163075,
+          "sameFrameProductMaximum": 0.045135,
+          "bestCoactivationSeconds": 18.959093,
+          "midi58AtBestFrame": 0.163075,
+          "midi62AtBestFrame": 0.276775,
+          "midi58Maximum": 0.248117,
+          "midi62Maximum": 0.281257,
+          "midi58OnsetMaximum": 0.236363,
+          "midi62OnsetMaximum": 0.408868,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 10,
+              "midi58Count": 17,
+              "midi62Count": 18
+            },
+            "0.14": {
+              "sameFrameCount": 6,
+              "midi58Count": 11,
+              "midi62Count": 14
+            },
+            "0.16": {
+              "sameFrameCount": 2,
+              "midi58Count": 6,
+              "midi62Count": 12
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 1621,
+          "frameEnd": 1666,
+          "sameFrameMinimumMaximum": 0.163075,
+          "sameFrameProductMaximum": 0.045135,
+          "bestCoactivationSeconds": 18.959093,
+          "midi58AtBestFrame": 0.163075,
+          "midi62AtBestFrame": 0.276775,
+          "midi58Maximum": 0.163075,
+          "midi62Maximum": 0.281257,
+          "midi58OnsetMaximum": 0.236363,
+          "midi62OnsetMaximum": 0.408868,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 42,
+              "midi58Count": 44,
+              "midi62Count": 43
+            },
+            "0.12": {
+              "sameFrameCount": 10,
+              "midi58Count": 10,
+              "midi62Count": 18
+            },
+            "0.14": {
+              "sameFrameCount": 6,
+              "midi58Count": 6,
+              "midi62Count": 14
+            },
+            "0.16": {
+              "sameFrameCount": 2,
+              "midi58Count": 2,
+              "midi62Count": 12
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "expectedDoubleStop": false,
+      "measureStartSeconds": 19.17511480718281,
+      "measureEndSeconds": 20.941379158080657,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 1742,
+          "frameEnd": 1803,
+          "sameFrameMinimumMaximum": 0.104934,
+          "sameFrameProductMaximum": 0.033814,
+          "bestCoactivationSeconds": 20.52644,
+          "midi58AtBestFrame": 0.10588,
+          "midi62AtBestFrame": 0.104934,
+          "midi58Maximum": 0.15569,
+          "midi62Maximum": 0.330011,
+          "midi58OnsetMaximum": 0.47806,
+          "midi62OnsetMaximum": 0.422213,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 45,
+              "midi58Count": 52,
+              "midi62Count": 54
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 11,
+              "midi62Count": 13
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 12
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 11
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 1758,
+          "frameEnd": 1803,
+          "sameFrameMinimumMaximum": 0.104934,
+          "sameFrameProductMaximum": 0.033814,
+          "bestCoactivationSeconds": 20.52644,
+          "midi58AtBestFrame": 0.10588,
+          "midi62AtBestFrame": 0.104934,
+          "midi58Maximum": 0.15569,
+          "midi62Maximum": 0.330011,
+          "midi58OnsetMaximum": 0.47806,
+          "midi62OnsetMaximum": 0.422213,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 35,
+              "midi58Count": 42,
+              "midi62Count": 38
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 11,
+              "midi62Count": 13
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 12
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 11
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 1765,
+          "frameEnd": 1811,
+          "sameFrameMinimumMaximum": 0.104934,
+          "sameFrameProductMaximum": 0.033814,
+          "bestCoactivationSeconds": 20.52644,
+          "midi58AtBestFrame": 0.10588,
+          "midi62AtBestFrame": 0.104934,
+          "midi58Maximum": 0.15569,
+          "midi62Maximum": 0.330011,
+          "midi58OnsetMaximum": 0.47806,
+          "midi62OnsetMaximum": 0.422213,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 36,
+              "midi58Count": 43,
+              "midi62Count": 39
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 11,
+              "midi62Count": 21
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 18
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 16
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 1773,
+          "frameEnd": 1818,
+          "sameFrameMinimumMaximum": 0.104378,
+          "sameFrameProductMaximum": 0.033814,
+          "bestCoactivationSeconds": 21.037279,
+          "midi58AtBestFrame": 0.104378,
+          "midi62AtBestFrame": 0.107183,
+          "midi58Maximum": 0.15569,
+          "midi62Maximum": 0.330011,
+          "midi58OnsetMaximum": 0.47806,
+          "midi62OnsetMaximum": 0.422213,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 35,
+              "midi58Count": 42,
+              "midi62Count": 38
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 9,
+              "midi62Count": 21
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 18
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 16
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "expectedDoubleStop": true,
+      "measureStartSeconds": 20.941379158080657,
+      "measureEndSeconds": 22.707643508978514,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 1895,
+          "frameEnd": 1955,
+          "sameFrameMinimumMaximum": 0.103319,
+          "sameFrameProductMaximum": 0.027626,
+          "bestCoactivationSeconds": 22.442086,
+          "midi58AtBestFrame": 0.105474,
+          "midi62AtBestFrame": 0.103319,
+          "midi58Maximum": 0.279572,
+          "midi62Maximum": 0.134385,
+          "midi58OnsetMaximum": 0.636083,
+          "midi62OnsetMaximum": 0.320313,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 60,
+              "midi58Count": 60,
+              "midi62Count": 60
+            },
+            "0.10": {
+              "sameFrameCount": 34,
+              "midi58Count": 43,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 20,
+              "midi62Count": 7
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 11,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 9,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 1910,
+          "frameEnd": 1955,
+          "sameFrameMinimumMaximum": 0.103319,
+          "sameFrameProductMaximum": 0.027626,
+          "bestCoactivationSeconds": 22.442086,
+          "midi58AtBestFrame": 0.105474,
+          "midi62AtBestFrame": 0.103319,
+          "midi58Maximum": 0.279572,
+          "midi62Maximum": 0.134385,
+          "midi58OnsetMaximum": 0.636083,
+          "midi62OnsetMaximum": 0.320313,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 19,
+              "midi58Count": 28,
+              "midi62Count": 31
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 14,
+              "midi62Count": 7
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 11,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 9,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 1917,
+          "frameEnd": 1963,
+          "sameFrameMinimumMaximum": 0.105714,
+          "sameFrameProductMaximum": 0.035416,
+          "bestCoactivationSeconds": 22.767166,
+          "midi58AtBestFrame": 0.105714,
+          "midi62AtBestFrame": 0.315909,
+          "midi58Maximum": 0.279572,
+          "midi62Maximum": 0.335881,
+          "midi58OnsetMaximum": 0.636083,
+          "midi62OnsetMaximum": 0.502397,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 27,
+              "midi58Count": 35,
+              "midi62Count": 38
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 14,
+              "midi62Count": 15
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 11,
+              "midi62Count": 7
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 9,
+              "midi62Count": 6
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 1925,
+          "frameEnd": 1971,
+          "sameFrameMinimumMaximum": 0.105714,
+          "sameFrameProductMaximum": 0.035722,
+          "bestCoactivationSeconds": 22.767166,
+          "midi58AtBestFrame": 0.105714,
+          "midi62AtBestFrame": 0.315909,
+          "midi58Maximum": 0.279572,
+          "midi62Maximum": 0.339433,
+          "midi58OnsetMaximum": 0.636083,
+          "midi62OnsetMaximum": 0.502397,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 33,
+              "midi58Count": 41,
+              "midi62Count": 38
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 14,
+              "midi62Count": 18
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 11,
+              "midi62Count": 15
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 9,
+              "midi62Count": 14
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 11,
+      "expectedDoubleStop": false,
+      "measureStartSeconds": 22.707643508978514,
+      "measureEndSeconds": 24.473907859876363,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 2047,
+          "frameEnd": 2108,
+          "sameFrameMinimumMaximum": 0.108707,
+          "sameFrameProductMaximum": 0.014089,
+          "bestCoactivationSeconds": 24.253243,
+          "midi58AtBestFrame": 0.108707,
+          "midi62AtBestFrame": 0.109024,
+          "midi58Maximum": 0.140735,
+          "midi62Maximum": 0.112007,
+          "midi58OnsetMaximum": 0.213094,
+          "midi62OnsetMaximum": 0.26001,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 59,
+              "midi58Count": 61,
+              "midi62Count": 59
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 22,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 2,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 2062,
+          "frameEnd": 2108,
+          "sameFrameMinimumMaximum": 0.108707,
+          "sameFrameProductMaximum": 0.013592,
+          "bestCoactivationSeconds": 24.253243,
+          "midi58AtBestFrame": 0.108707,
+          "midi62AtBestFrame": 0.109024,
+          "midi58Maximum": 0.135715,
+          "midi62Maximum": 0.112007,
+          "midi58OnsetMaximum": 0.213094,
+          "midi62OnsetMaximum": 0.26001,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 9,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 2069,
+          "frameEnd": 2115,
+          "sameFrameMinimumMaximum": 0.108707,
+          "sameFrameProductMaximum": 0.013535,
+          "bestCoactivationSeconds": 24.253243,
+          "midi58AtBestFrame": 0.108707,
+          "midi62AtBestFrame": 0.109024,
+          "midi58Maximum": 0.128655,
+          "midi62Maximum": 0.112007,
+          "midi58OnsetMaximum": 0.213094,
+          "midi62OnsetMaximum": 0.26001,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 41,
+              "midi58Count": 41,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 2077,
+          "frameEnd": 2123,
+          "sameFrameMinimumMaximum": 0.116563,
+          "sameFrameProductMaximum": 0.032303,
+          "bestCoactivationSeconds": 24.636372,
+          "midi58AtBestFrame": 0.116563,
+          "midi62AtBestFrame": 0.277128,
+          "midi58Maximum": 0.128655,
+          "midi62Maximum": 0.277128,
+          "midi58OnsetMaximum": 0.213094,
+          "midi62OnsetMaximum": 0.364367,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 38,
+              "midi58Count": 38,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 6
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 5
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "expectedDoubleStop": true,
+      "measureStartSeconds": 24.473907859876363,
+      "measureEndSeconds": 26.24017221077421,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 2199,
+          "frameEnd": 2260,
+          "sameFrameMinimumMaximum": 0.111235,
+          "sameFrameProductMaximum": 0.014089,
+          "bestCoactivationSeconds": 25.6,
+          "midi58AtBestFrame": 0.120623,
+          "midi62AtBestFrame": 0.111235,
+          "midi58Maximum": 0.128805,
+          "midi62Maximum": 0.111235,
+          "midi58OnsetMaximum": 0.213044,
+          "midi62OnsetMaximum": 0.254893,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 39,
+              "midi58Count": 41,
+              "midi62Count": 53
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 7,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 2214,
+          "frameEnd": 2260,
+          "sameFrameMinimumMaximum": 0.107324,
+          "sameFrameProductMaximum": 0.011583,
+          "bestCoactivationSeconds": 25.948299,
+          "midi58AtBestFrame": 0.107924,
+          "midi62AtBestFrame": 0.107324,
+          "midi58Maximum": 0.108554,
+          "midi62Maximum": 0.107324,
+          "midi58OnsetMaximum": 0.166698,
+          "midi62OnsetMaximum": 0.248913,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 24,
+              "midi58Count": 26,
+              "midi62Count": 38
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 2222,
+          "frameEnd": 2267,
+          "sameFrameMinimumMaximum": 0.107324,
+          "sameFrameProductMaximum": 0.011583,
+          "bestCoactivationSeconds": 25.948299,
+          "midi58AtBestFrame": 0.107924,
+          "midi62AtBestFrame": 0.107324,
+          "midi58Maximum": 0.109325,
+          "midi62Maximum": 0.107324,
+          "midi58OnsetMaximum": 0.201197,
+          "midi62OnsetMaximum": 0.248913,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 28,
+              "midi58Count": 28,
+              "midi62Count": 43
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 2229,
+          "frameEnd": 2275,
+          "sameFrameMinimumMaximum": 0.107324,
+          "sameFrameProductMaximum": 0.011583,
+          "bestCoactivationSeconds": 25.948299,
+          "midi58AtBestFrame": 0.107924,
+          "midi62AtBestFrame": 0.107324,
+          "midi58Maximum": 0.109325,
+          "midi62Maximum": 0.107324,
+          "midi58OnsetMaximum": 0.201197,
+          "midi62OnsetMaximum": 0.248913,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 31,
+              "midi58Count": 31,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 13,
+      "expectedDoubleStop": false,
+      "measureStartSeconds": 26.24017221077421,
+      "measureEndSeconds": 28.00643656167206,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 2351,
+          "frameEnd": 2412,
+          "sameFrameMinimumMaximum": 0.114031,
+          "sameFrameProductMaximum": 0.031586,
+          "bestCoactivationSeconds": 27.469206,
+          "midi58AtBestFrame": 0.125055,
+          "midi62AtBestFrame": 0.114031,
+          "midi58Maximum": 0.176308,
+          "midi62Maximum": 0.297986,
+          "midi58OnsetMaximum": 0.367385,
+          "midi62OnsetMaximum": 0.405217,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 58,
+              "midi58Count": 58,
+              "midi62Count": 61
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 20,
+              "midi62Count": 14
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 8,
+              "midi62Count": 12
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 4,
+              "midi62Count": 11
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 2366,
+          "frameEnd": 2412,
+          "sameFrameMinimumMaximum": 0.114031,
+          "sameFrameProductMaximum": 0.018579,
+          "bestCoactivationSeconds": 27.469206,
+          "midi58AtBestFrame": 0.125055,
+          "midi62AtBestFrame": 0.114031,
+          "midi58Maximum": 0.176308,
+          "midi62Maximum": 0.116484,
+          "midi58OnsetMaximum": 0.367385,
+          "midi62OnsetMaximum": 0.405217,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 43,
+              "midi58Count": 43,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 20,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 8,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 4,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 2374,
+          "frameEnd": 2419,
+          "sameFrameMinimumMaximum": 0.102987,
+          "sameFrameProductMaximum": 0.014992,
+          "bestCoactivationSeconds": 27.805896,
+          "midi58AtBestFrame": 0.102987,
+          "midi62AtBestFrame": 0.115857,
+          "midi58Maximum": 0.148316,
+          "midi62Maximum": 0.116484,
+          "midi58OnsetMaximum": 0.32377,
+          "midi62OnsetMaximum": 0.405217,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 42,
+              "midi58Count": 42,
+              "midi62Count": 45
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 12,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 1,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 2381,
+          "frameEnd": 2427,
+          "sameFrameMinimumMaximum": 0.102987,
+          "sameFrameProductMaximum": 0.013169,
+          "bestCoactivationSeconds": 27.805896,
+          "midi58AtBestFrame": 0.102987,
+          "midi62AtBestFrame": 0.115857,
+          "midi58Maximum": 0.130123,
+          "midi62Maximum": 0.116484,
+          "midi58OnsetMaximum": 0.32377,
+          "midi62OnsetMaximum": 0.405217,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 43,
+              "midi58Count": 43,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 5,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "expectedDoubleStop": true,
+      "measureStartSeconds": 28.00643656167206,
+      "measureEndSeconds": 29.772700912569917,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 2503,
+          "frameEnd": 2564,
+          "sameFrameMinimumMaximum": 0.111581,
+          "sameFrameProductMaximum": 0.012837,
+          "bestCoactivationSeconds": 29.373243,
+          "midi58AtBestFrame": 0.113804,
+          "midi62AtBestFrame": 0.111581,
+          "midi58Maximum": 0.127182,
+          "midi62Maximum": 0.111588,
+          "midi58OnsetMaximum": 0.177189,
+          "midi62OnsetMaximum": 0.195931,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 24,
+              "midi58Count": 32,
+              "midi62Count": 53
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 2518,
+          "frameEnd": 2564,
+          "sameFrameMinimumMaximum": 0.111581,
+          "sameFrameProductMaximum": 0.012837,
+          "bestCoactivationSeconds": 29.373243,
+          "midi58AtBestFrame": 0.113804,
+          "midi62AtBestFrame": 0.111581,
+          "midi58Maximum": 0.127182,
+          "midi62Maximum": 0.111588,
+          "midi58OnsetMaximum": 0.177189,
+          "midi62OnsetMaximum": 0.195931,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 20,
+              "midi58Count": 28,
+              "midi62Count": 38
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 2526,
+          "frameEnd": 2572,
+          "sameFrameMinimumMaximum": 0.111581,
+          "sameFrameProductMaximum": 0.012837,
+          "bestCoactivationSeconds": 29.373243,
+          "midi58AtBestFrame": 0.113804,
+          "midi62AtBestFrame": 0.111581,
+          "midi58Maximum": 0.127182,
+          "midi62Maximum": 0.116556,
+          "midi58OnsetMaximum": 0.177189,
+          "midi62OnsetMaximum": 0.424693,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 22,
+              "midi58Count": 30,
+              "midi62Count": 38
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 2533,
+          "frameEnd": 2579,
+          "sameFrameMinimumMaximum": 0.108269,
+          "sameFrameProductMaximum": 0.012726,
+          "bestCoactivationSeconds": 29.408073,
+          "midi58AtBestFrame": 0.116072,
+          "midi62AtBestFrame": 0.108269,
+          "midi58Maximum": 0.127182,
+          "midi62Maximum": 0.118721,
+          "midi58OnsetMaximum": 0.172756,
+          "midi62OnsetMaximum": 0.424693,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 20,
+              "midi58Count": 28,
+              "midi62Count": 38
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 6,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 15,
+      "expectedDoubleStop": false,
+      "measureStartSeconds": 29.772700912569917,
+      "measureEndSeconds": 31.538965263467766,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 2655,
+          "frameEnd": 2716,
+          "sameFrameMinimumMaximum": 0.119876,
+          "sameFrameProductMaximum": 0.022869,
+          "bestCoactivationSeconds": 31.172789,
+          "midi58AtBestFrame": 0.12074,
+          "midi62AtBestFrame": 0.119876,
+          "midi58Maximum": 0.12573,
+          "midi62Maximum": 0.216265,
+          "midi58OnsetMaximum": 0.311073,
+          "midi62OnsetMaximum": 0.416676,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 51,
+              "midi58Count": 51,
+              "midi62Count": 61
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 11,
+              "midi62Count": 30
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 16
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 11
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 2670,
+          "frameEnd": 2716,
+          "sameFrameMinimumMaximum": 0.119876,
+          "sameFrameProductMaximum": 0.022869,
+          "bestCoactivationSeconds": 31.172789,
+          "midi58AtBestFrame": 0.12074,
+          "midi62AtBestFrame": 0.119876,
+          "midi58Maximum": 0.12573,
+          "midi62Maximum": 0.216265,
+          "midi58OnsetMaximum": 0.311073,
+          "midi62OnsetMaximum": 0.36851,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 11,
+              "midi62Count": 15
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 13
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 11
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 2678,
+          "frameEnd": 2724,
+          "sameFrameMinimumMaximum": 0.119876,
+          "sameFrameProductMaximum": 0.022276,
+          "bestCoactivationSeconds": 31.172789,
+          "midi58AtBestFrame": 0.12074,
+          "midi62AtBestFrame": 0.119876,
+          "midi58Maximum": 0.12573,
+          "midi62Maximum": 0.207564,
+          "midi58OnsetMaximum": 0.311073,
+          "midi62OnsetMaximum": 0.188364,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 40,
+              "midi58Count": 40,
+              "midi62Count": 43
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 11,
+              "midi62Count": 7
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 5
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 4
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 2686,
+          "frameEnd": 2731,
+          "sameFrameMinimumMaximum": 0.112899,
+          "sameFrameProductMaximum": 0.013881,
+          "bestCoactivationSeconds": 31.184399,
+          "midi58AtBestFrame": 0.12295,
+          "midi62AtBestFrame": 0.112899,
+          "midi58Maximum": 0.12573,
+          "midi62Maximum": 0.112899,
+          "midi58OnsetMaximum": 0.288348,
+          "midi62OnsetMaximum": 0.178492,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 33,
+              "midi58Count": 33,
+              "midi62Count": 38
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 10,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 0,
+              "midi62Count": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "expectedDoubleStop": true,
+      "measureStartSeconds": 31.538965263467766,
+      "measureEndSeconds": 33.305229614365615,
+      "phaseReports": [
+        {
+          "phaseStart": 0.6,
+          "phaseEnd": 1.0,
+          "frameStart": 2807,
+          "frameEnd": 2868,
+          "sameFrameMinimumMaximum": 0.108866,
+          "sameFrameProductMaximum": 0.022275,
+          "bestCoactivationSeconds": 33.088435,
+          "midi58AtBestFrame": 0.145945,
+          "midi62AtBestFrame": 0.108866,
+          "midi58Maximum": 0.226787,
+          "midi62Maximum": 0.136854,
+          "midi58OnsetMaximum": 0.442196,
+          "midi62OnsetMaximum": 0.488158,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 61,
+              "midi58Count": 61,
+              "midi62Count": 61
+            },
+            "0.10": {
+              "sameFrameCount": 39,
+              "midi58Count": 56,
+              "midi62Count": 44
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 34,
+              "midi62Count": 15
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 30,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 21,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.7,
+          "phaseEnd": 1.0,
+          "frameStart": 2823,
+          "frameEnd": 2868,
+          "sameFrameMinimumMaximum": 0.108866,
+          "sameFrameProductMaximum": 0.022275,
+          "bestCoactivationSeconds": 33.088435,
+          "midi58AtBestFrame": 0.145945,
+          "midi62AtBestFrame": 0.108866,
+          "midi58Maximum": 0.226787,
+          "midi62Maximum": 0.136854,
+          "midi58OnsetMaximum": 0.442196,
+          "midi62OnsetMaximum": 0.488158,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 28,
+              "midi58Count": 45,
+              "midi62Count": 28
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 34,
+              "midi62Count": 7
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 30,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 21,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.75,
+          "phaseEnd": 1.05,
+          "frameStart": 2830,
+          "frameEnd": 2876,
+          "sameFrameMinimumMaximum": 0.108866,
+          "sameFrameProductMaximum": 0.022275,
+          "bestCoactivationSeconds": 33.088435,
+          "midi58AtBestFrame": 0.145945,
+          "midi62AtBestFrame": 0.108866,
+          "midi58Maximum": 0.226787,
+          "midi62Maximum": 0.115345,
+          "midi58OnsetMaximum": 0.442196,
+          "midi62OnsetMaximum": 0.207421,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 46,
+              "midi58Count": 46,
+              "midi62Count": 46
+            },
+            "0.10": {
+              "sameFrameCount": 29,
+              "midi58Count": 46,
+              "midi62Count": 29
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 38,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 31,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 21,
+              "midi62Count": 0
+            }
+          }
+        },
+        {
+          "phaseStart": 0.8,
+          "phaseEnd": 1.1,
+          "frameStart": 2838,
+          "frameEnd": 2883,
+          "sameFrameMinimumMaximum": 0.108866,
+          "sameFrameProductMaximum": 0.022275,
+          "bestCoactivationSeconds": 33.088435,
+          "midi58AtBestFrame": 0.145945,
+          "midi62AtBestFrame": 0.108866,
+          "midi58Maximum": 0.226787,
+          "midi62Maximum": 0.108866,
+          "midi58OnsetMaximum": 0.347904,
+          "midi62OnsetMaximum": 0.231801,
+          "thresholdEvidence": {
+            "0.08": {
+              "sameFrameCount": 45,
+              "midi58Count": 45,
+              "midi62Count": 45
+            },
+            "0.10": {
+              "sameFrameCount": 33,
+              "midi58Count": 45,
+              "midi62Count": 33
+            },
+            "0.12": {
+              "sameFrameCount": 0,
+              "midi58Count": 34,
+              "midi62Count": 0
+            },
+            "0.14": {
+              "sameFrameCount": 0,
+              "midi58Count": 28,
+              "midi62Count": 0
+            },
+            "0.16": {
+              "sameFrameCount": 0,
+              "midi58Count": 19,
+              "midi62Count": 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "protectedPitchCheckpointChanged": false
+}

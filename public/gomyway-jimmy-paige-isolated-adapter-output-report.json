@@ -1,0 +1,25 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "isolated-readonly-adapter-output-report",
+  "checks": {
+    "adapterPassed": true,
+    "flagEnabledReadonlySmokePassed": true,
+    "isolatedRows44": true,
+    "invalidRowsZero": true,
+    "allRowsSixStrings": true,
+    "rendererNotCalled": true,
+    "pdfNotCreated": true,
+    "productionOutputNotCreated": true,
+    "sourceEventShaUnchanged": true,
+    "adapterShaUnchanged": true,
+    "smokeShaUnchanged": true
+  },
+  "isolatedRowCount": 44,
+  "invalidRowCount": 0,
+  "benchmarkPassed": true,
+  "readyForIsolatedAdapterPdfBenchmark": true,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "output": "public/gomyway-jimmy-paige-isolated-adapter-output.json"
+}

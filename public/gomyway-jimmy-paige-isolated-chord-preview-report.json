@@ -1,0 +1,30 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "isolated-protected-chord-pdf-preview",
+  "checks": {
+    "humanInspectionPassed": true,
+    "measureCount11": true,
+    "attackCount44": true,
+    "pdfHeaderValid": true,
+    "pdfEofValid": true,
+    "pdfPageCount2": true,
+    "inspectionShaUnchanged": true,
+    "layoutPreviewShaUnchanged": true,
+    "rendererChangedFalse": true,
+    "productionPromotionAllowedFalse": true
+  },
+  "measureCount": 11,
+  "attackCount": 44,
+  "pdfPageCount": 2,
+  "pdfByteLength": 17727,
+  "pdfSha256": "2e62d3fa7e30b5c37bb53fd7306f48bbb568e7ed84b1ab1afd5009ab7394b5c4",
+  "isolatedPdfPreviewPassed": true,
+  "readyForHumanPdfInspection": true,
+  "professionalPdfRemainsScoringAuthority": true,
+  "protectedPitchCheckpointChanged": false,
+  "sourceEventsMutated": false,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "readyForProduction": false,
+  "pdfOutput": "public/gomyway-jimmy-paige-isolated-chord-preview.pdf"
+}

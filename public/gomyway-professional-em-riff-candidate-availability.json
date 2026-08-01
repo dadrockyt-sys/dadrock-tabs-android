@@ -1,0 +1,186 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "professional-em-riff-candidate-availability",
+  "passed": true,
+  "readyForExactScoring": false,
+  "readyForBoundedTrainingLoop": true,
+  "protectedSlotCount": 9,
+  "slotsWithCorrectPitchCandidate": 1,
+  "slotsWithoutCorrectPitchCandidate": 8,
+  "candidatePresencePercentage": 11.11,
+  "recommendedTrainingLoop": "hybrid-pitch-extraction-and-ranking-training",
+  "slotAvailability": [
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 2,
+      "professionalLabel": "G-string fret 2 full-step bend",
+      "acceptedMidiPitches": [
+        57,
+        59
+      ],
+      "observedMidiPitches": [
+        40
+      ],
+      "correctCandidatePresent": false,
+      "matchingCandidates": [],
+      "trainingPath": "underlying-pitch-extraction-training"
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 6,
+      "professionalLabel": "open G bend-release target",
+      "acceptedMidiPitches": [
+        55
+      ],
+      "observedMidiPitches": [
+        52,
+        40,
+        67
+      ],
+      "correctCandidatePresent": false,
+      "matchingCandidates": [],
+      "trainingPath": "underlying-pitch-extraction-training"
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 10,
+      "professionalLabel": "D-string fret 2",
+      "acceptedMidiPitches": [
+        52
+      ],
+      "observedMidiPitches": [
+        40,
+        43,
+        64
+      ],
+      "correctCandidatePresent": false,
+      "matchingCandidates": [],
+      "trainingPath": "underlying-pitch-extraction-training"
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 14,
+      "professionalLabel": "open A",
+      "acceptedMidiPitches": [
+        45
+      ],
+      "observedMidiPitches": [
+        40,
+        43
+      ],
+      "correctCandidatePresent": false,
+      "matchingCandidates": [],
+      "trainingPath": "underlying-pitch-extraction-training"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 2,
+      "professionalLabel": "G-string fret 2 full-step bend",
+      "acceptedMidiPitches": [
+        57,
+        59
+      ],
+      "observedMidiPitches": [
+        40,
+        43,
+        42
+      ],
+      "correctCandidatePresent": false,
+      "matchingCandidates": [],
+      "trainingPath": "underlying-pitch-extraction-training"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 4,
+      "professionalLabel": "open G bend-release target",
+      "acceptedMidiPitches": [
+        55
+      ],
+      "observedMidiPitches": [
+        52,
+        41,
+        40,
+        64
+      ],
+      "correctCandidatePresent": false,
+      "matchingCandidates": [],
+      "trainingPath": "underlying-pitch-extraction-training"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 6,
+      "professionalLabel": "D-string fret 2",
+      "acceptedMidiPitches": [
+        52
+      ],
+      "observedMidiPitches": [
+        40,
+        52,
+        43
+      ],
+      "correctCandidatePresent": true,
+      "matchingCandidates": [
+        {
+          "midiPitch": 52,
+          "support": 5,
+          "rank": 2
+        }
+      ],
+      "trainingPath": "candidate-ranking-loop"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 10,
+      "professionalLabel": "open A",
+      "acceptedMidiPitches": [
+        45
+      ],
+      "observedMidiPitches": [
+        40,
+        43,
+        41
+      ],
+      "correctCandidatePresent": false,
+      "matchingCandidates": [],
+      "trainingPath": "underlying-pitch-extraction-training"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 14,
+      "professionalLabel": "B/G fret-3 double-stop",
+      "acceptedMidiPitches": [
+        58,
+        62
+      ],
+      "observedMidiPitches": [
+        40,
+        67,
+        78,
+        43
+      ],
+      "correctCandidatePresent": false,
+      "matchingCandidates": [],
+      "trainingPath": "underlying-pitch-extraction-training"
+    }
+  ],
+  "checks": {
+    "pitchDiagnosisPassed": true,
+    "allNineProtectedSlotsPresent": true,
+    "candidateListsPresent": true,
+    "readOnlyBenchmark": true,
+    "lockedV7EventsProtected": true,
+    "lockedV8TimingProtected": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "safeguards": {
+    "diagnosticOnly": true,
+    "doesNotRewriteJimmyEvents": true,
+    "doesNotCopyProfessionalNotesIntoJimmy": true,
+    "doesNotModifyLockedTiming": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false
+  },
+  "nextStep": "Create the first bounded automated loop using the recommended training mode. The loop must operate on read-only candidates, retain only measurable improvements, and stop immediately if any protection benchmark fails."
+}

@@ -1,0 +1,785 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "jimmy-paige-full-song-alignment-diagnosis",
+  "sourceCallId": "fc-01KYX8RM3DSV9BX61RN011X9VF",
+  "eventCount": 1629,
+  "search": {
+    "tempoRangeBpm": [
+      124.0,
+      134.0
+    ],
+    "tempoStepBpm": 0.1,
+    "offsetRangeSeconds": [
+      -8.0,
+      8.0
+    ],
+    "offsetStepSeconds": 0.05,
+    "toleranceSeconds": 0.18
+  },
+  "best": {
+    "tempo": 133.8,
+    "offsetSeconds": 7.1,
+    "toleranceSeconds": 0.18,
+    "correctCandidateSlots": 8,
+    "totalMatchingOccurrences": 19,
+    "slotReports": [
+      {
+        "patternId": "em-riff-a",
+        "step": 2,
+        "acceptedMidiPitches": [
+          57,
+          59
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 1,
+        "matches": [
+          {
+            "phraseStartMeasure": 26,
+            "midiPitch": 59,
+            "start": 51.97642,
+            "target": 52.055157,
+            "delta": 0.078737
+          }
+        ],
+        "nearbyPitchHistogram": [
+          {
+            "midiPitch": 43,
+            "support": 3
+          },
+          {
+            "midiPitch": 47,
+            "support": 1
+          },
+          {
+            "midiPitch": 50,
+            "support": 1
+          },
+          {
+            "midiPitch": 52,
+            "support": 1
+          },
+          {
+            "midiPitch": 59,
+            "support": 1
+          },
+          {
+            "midiPitch": 62,
+            "support": 1
+          },
+          {
+            "midiPitch": 64,
+            "support": 1
+          },
+          {
+            "midiPitch": 65,
+            "support": 1
+          },
+          {
+            "midiPitch": 67,
+            "support": 1
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-a",
+        "step": 6,
+        "acceptedMidiPitches": [
+          55
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 1,
+        "matches": [
+          {
+            "phraseStartMeasure": 24,
+            "midiPitch": 55,
+            "start": 48.885598,
+            "target": 48.916143,
+            "delta": 0.030545
+          }
+        ],
+        "nearbyPitchHistogram": [
+          {
+            "midiPitch": 64,
+            "support": 4
+          },
+          {
+            "midiPitch": 52,
+            "support": 3
+          },
+          {
+            "midiPitch": 43,
+            "support": 1
+          },
+          {
+            "midiPitch": 48,
+            "support": 1
+          },
+          {
+            "midiPitch": 55,
+            "support": 1
+          },
+          {
+            "midiPitch": 58,
+            "support": 1
+          },
+          {
+            "midiPitch": 63,
+            "support": 1
+          },
+          {
+            "midiPitch": 65,
+            "support": 1
+          },
+          {
+            "midiPitch": 67,
+            "support": 1
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-a",
+        "step": 10,
+        "acceptedMidiPitches": [
+          52
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 6,
+        "matches": [
+          {
+            "phraseStartMeasure": 18,
+            "midiPitch": 52,
+            "start": 38.453419,
+            "target": 38.602242,
+            "delta": 0.148823
+          },
+          {
+            "phraseStartMeasure": 22,
+            "midiPitch": 52,
+            "start": 45.81928,
+            "target": 45.77713,
+            "delta": 0.04215
+          },
+          {
+            "phraseStartMeasure": 22,
+            "midiPitch": 52,
+            "start": 45.90055,
+            "target": 45.77713,
+            "delta": 0.12342
+          },
+          {
+            "phraseStartMeasure": 28,
+            "midiPitch": 52,
+            "start": 56.367559,
+            "target": 56.539462,
+            "delta": 0.171903
+          },
+          {
+            "phraseStartMeasure": 28,
+            "midiPitch": 52,
+            "start": 56.611369,
+            "target": 56.539462,
+            "delta": 0.071907
+          },
+          {
+            "phraseStartMeasure": 30,
+            "midiPitch": 52,
+            "start": 60.03888,
+            "target": 60.126906,
+            "delta": 0.088026
+          }
+        ],
+        "nearbyPitchHistogram": [
+          {
+            "midiPitch": 52,
+            "support": 6
+          },
+          {
+            "midiPitch": 43,
+            "support": 3
+          },
+          {
+            "midiPitch": 48,
+            "support": 2
+          },
+          {
+            "midiPitch": 59,
+            "support": 2
+          },
+          {
+            "midiPitch": 67,
+            "support": 2
+          },
+          {
+            "midiPitch": 55,
+            "support": 1
+          },
+          {
+            "midiPitch": 57,
+            "support": 1
+          },
+          {
+            "midiPitch": 64,
+            "support": 1
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-a",
+        "step": 14,
+        "acceptedMidiPitches": [
+          45
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 1,
+        "matches": [
+          {
+            "phraseStartMeasure": 30,
+            "midiPitch": 45,
+            "start": 60.561329,
+            "target": 60.575336,
+            "delta": 0.014008
+          }
+        ],
+        "nearbyPitchHistogram": [
+          {
+            "midiPitch": 52,
+            "support": 5
+          },
+          {
+            "midiPitch": 67,
+            "support": 4
+          },
+          {
+            "midiPitch": 43,
+            "support": 3
+          },
+          {
+            "midiPitch": 50,
+            "support": 2
+          },
+          {
+            "midiPitch": 58,
+            "support": 2
+          },
+          {
+            "midiPitch": 60,
+            "support": 2
+          },
+          {
+            "midiPitch": 65,
+            "support": 2
+          },
+          {
+            "midiPitch": 45,
+            "support": 1
+          },
+          {
+            "midiPitch": 46,
+            "support": 1
+          },
+          {
+            "midiPitch": 55,
+            "support": 1
+          },
+          {
+            "midiPitch": 62,
+            "support": 1
+          },
+          {
+            "midiPitch": 64,
+            "support": 1
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-b",
+        "step": 2,
+        "acceptedMidiPitches": [
+          57,
+          59
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 1,
+        "matches": [
+          {
+            "phraseStartMeasure": 30,
+            "midiPitch": 59,
+            "start": 61.199878,
+            "target": 61.023767,
+            "delta": 0.176111
+          }
+        ],
+        "nearbyPitchHistogram": [
+          {
+            "midiPitch": 43,
+            "support": 7
+          },
+          {
+            "midiPitch": 67,
+            "support": 6
+          },
+          {
+            "midiPitch": 48,
+            "support": 3
+          },
+          {
+            "midiPitch": 52,
+            "support": 2
+          },
+          {
+            "midiPitch": 64,
+            "support": 2
+          },
+          {
+            "midiPitch": 46,
+            "support": 1
+          },
+          {
+            "midiPitch": 50,
+            "support": 1
+          },
+          {
+            "midiPitch": 55,
+            "support": 1
+          },
+          {
+            "midiPitch": 59,
+            "support": 1
+          },
+          {
+            "midiPitch": 66,
+            "support": 1
+          },
+          {
+            "midiPitch": 68,
+            "support": 1
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-b",
+        "step": 4,
+        "acceptedMidiPitches": [
+          55
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 2,
+        "matches": [
+          {
+            "phraseStartMeasure": 22,
+            "midiPitch": 55,
+            "start": 47.061548,
+            "target": 46.898206,
+            "delta": 0.163342
+          },
+          {
+            "phraseStartMeasure": 28,
+            "midiPitch": 55,
+            "start": 57.516947,
+            "target": 57.660538,
+            "delta": 0.143591
+          }
+        ],
+        "nearbyPitchHistogram": [
+          {
+            "midiPitch": 43,
+            "support": 6
+          },
+          {
+            "midiPitch": 52,
+            "support": 3
+          },
+          {
+            "midiPitch": 64,
+            "support": 3
+          },
+          {
+            "midiPitch": 67,
+            "support": 3
+          },
+          {
+            "midiPitch": 48,
+            "support": 2
+          },
+          {
+            "midiPitch": 55,
+            "support": 2
+          },
+          {
+            "midiPitch": 46,
+            "support": 1
+          },
+          {
+            "midiPitch": 49,
+            "support": 1
+          },
+          {
+            "midiPitch": 59,
+            "support": 1
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-b",
+        "step": 6,
+        "acceptedMidiPitches": [
+          52
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 4,
+        "matches": [
+          {
+            "phraseStartMeasure": 20,
+            "midiPitch": 52,
+            "start": 43.378617,
+            "target": 43.534978,
+            "delta": 0.15636
+          },
+          {
+            "phraseStartMeasure": 20,
+            "midiPitch": 52,
+            "start": 43.599207,
+            "target": 43.534978,
+            "delta": 0.064229
+          },
+          {
+            "phraseStartMeasure": 30,
+            "midiPitch": 52,
+            "start": 61.455297,
+            "target": 61.472197,
+            "delta": 0.0169
+          },
+          {
+            "phraseStartMeasure": 30,
+            "midiPitch": 52,
+            "start": 61.619121,
+            "target": 61.472197,
+            "delta": 0.146923
+          }
+        ],
+        "nearbyPitchHistogram": [
+          {
+            "midiPitch": 43,
+            "support": 4
+          },
+          {
+            "midiPitch": 52,
+            "support": 4
+          },
+          {
+            "midiPitch": 67,
+            "support": 3
+          },
+          {
+            "midiPitch": 48,
+            "support": 1
+          },
+          {
+            "midiPitch": 49,
+            "support": 1
+          },
+          {
+            "midiPitch": 55,
+            "support": 1
+          },
+          {
+            "midiPitch": 64,
+            "support": 1
+          },
+          {
+            "midiPitch": 66,
+            "support": 1
+          },
+          {
+            "midiPitch": 71,
+            "support": 1
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-b",
+        "step": 10,
+        "acceptedMidiPitches": [
+          45
+        ],
+        "correctCandidatePresent": false,
+        "matchingOccurrences": 0,
+        "matches": [],
+        "nearbyPitchHistogram": [
+          {
+            "midiPitch": 43,
+            "support": 7
+          },
+          {
+            "midiPitch": 52,
+            "support": 5
+          },
+          {
+            "midiPitch": 50,
+            "support": 2
+          },
+          {
+            "midiPitch": 64,
+            "support": 2
+          },
+          {
+            "midiPitch": 67,
+            "support": 2
+          },
+          {
+            "midiPitch": 48,
+            "support": 1
+          },
+          {
+            "midiPitch": 54,
+            "support": 1
+          },
+          {
+            "midiPitch": 55,
+            "support": 1
+          },
+          {
+            "midiPitch": 57,
+            "support": 1
+          },
+          {
+            "midiPitch": 59,
+            "support": 1
+          },
+          {
+            "midiPitch": 66,
+            "support": 1
+          },
+          {
+            "midiPitch": 68,
+            "support": 1
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-b",
+        "step": 14,
+        "acceptedMidiPitches": [
+          58,
+          62
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 3,
+        "matches": [
+          {
+            "phraseStartMeasure": 18,
+            "midiPitch": 62,
+            "start": 40.788308,
+            "target": 40.844395,
+            "delta": 0.056086
+          },
+          {
+            "phraseStartMeasure": 22,
+            "midiPitch": 62,
+            "start": 47.86392,
+            "target": 48.019283,
+            "delta": 0.155362
+          },
+          {
+            "phraseStartMeasure": 22,
+            "midiPitch": 58,
+            "start": 48.10773,
+            "target": 48.019283,
+            "delta": 0.088447
+          }
+        ],
+        "nearbyPitchHistogram": [
+          {
+            "midiPitch": 43,
+            "support": 4
+          },
+          {
+            "midiPitch": 52,
+            "support": 3
+          },
+          {
+            "midiPitch": 48,
+            "support": 2
+          },
+          {
+            "midiPitch": 50,
+            "support": 2
+          },
+          {
+            "midiPitch": 62,
+            "support": 2
+          },
+          {
+            "midiPitch": 44,
+            "support": 1
+          },
+          {
+            "midiPitch": 54,
+            "support": 1
+          },
+          {
+            "midiPitch": 57,
+            "support": 1
+          },
+          {
+            "midiPitch": 58,
+            "support": 1
+          },
+          {
+            "midiPitch": 60,
+            "support": 1
+          },
+          {
+            "midiPitch": 64,
+            "support": 1
+          }
+        ]
+      }
+    ]
+  },
+  "topCandidates": [
+    {
+      "tempo": 133.8,
+      "offsetSeconds": 7.1,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 19
+    },
+    {
+      "tempo": 132.9,
+      "offsetSeconds": 6.75,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 18
+    },
+    {
+      "tempo": 133.0,
+      "offsetSeconds": 6.8,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 18
+    },
+    {
+      "tempo": 133.1,
+      "offsetSeconds": 6.9,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 18
+    },
+    {
+      "tempo": 133.3,
+      "offsetSeconds": 6.9,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 18
+    },
+    {
+      "tempo": 133.4,
+      "offsetSeconds": 6.95,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 18
+    },
+    {
+      "tempo": 133.5,
+      "offsetSeconds": 7.0,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 18
+    },
+    {
+      "tempo": 133.6,
+      "offsetSeconds": 6.95,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 18
+    },
+    {
+      "tempo": 133.6,
+      "offsetSeconds": 7.05,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 18
+    },
+    {
+      "tempo": 133.9,
+      "offsetSeconds": 7.15,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 18
+    },
+    {
+      "tempo": 130.8,
+      "offsetSeconds": 8.0,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 17
+    },
+    {
+      "tempo": 132.1,
+      "offsetSeconds": 6.45,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 17
+    },
+    {
+      "tempo": 132.3,
+      "offsetSeconds": 6.5,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 17
+    },
+    {
+      "tempo": 132.4,
+      "offsetSeconds": 6.6,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 17
+    },
+    {
+      "tempo": 132.5,
+      "offsetSeconds": 6.7,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 17
+    },
+    {
+      "tempo": 132.6,
+      "offsetSeconds": 6.65,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 17
+    },
+    {
+      "tempo": 132.6,
+      "offsetSeconds": 6.75,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 17
+    },
+    {
+      "tempo": 132.7,
+      "offsetSeconds": 6.65,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 17
+    },
+    {
+      "tempo": 132.7,
+      "offsetSeconds": 6.7,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 17
+    },
+    {
+      "tempo": 132.8,
+      "offsetSeconds": 6.7,
+      "toleranceSeconds": 0.18,
+      "correctCandidateSlots": 8,
+      "totalMatchingOccurrences": 17
+    }
+  ],
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false
+}

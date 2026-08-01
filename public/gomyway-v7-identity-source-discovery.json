@@ -1,0 +1,177 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "read-only-v7-identity-source-discovery",
+  "passed": true,
+  "candidateSourceCount": 4,
+  "candidateSources": [
+    {
+      "file": "public/gomyway-full-song-v8-intro-signature-evidence.json",
+      "identityEventCount": 6,
+      "measureRange": [
+        5,
+        13
+      ],
+      "sampleEvents": [
+        {
+          "jsonPath": "$.evaluations[0].pairResults[2].targets[1].events[0]",
+          "measureNumber": 5,
+          "quantizedStep": null,
+          "start": null,
+          "stringIndex": 0,
+          "fret": 0
+        },
+        {
+          "jsonPath": "$.evaluations[0].pairResults[3].targets[1].events[0]",
+          "measureNumber": 7,
+          "quantizedStep": null,
+          "start": null,
+          "stringIndex": 0,
+          "fret": 0
+        },
+        {
+          "jsonPath": "$.evaluations[0].pairResults[6].targets[1].events[0]",
+          "measureNumber": 13,
+          "quantizedStep": null,
+          "start": null,
+          "stringIndex": 0,
+          "fret": 0
+        },
+        {
+          "jsonPath": "$.evaluations[1].pairResults[2].targets[0].events[0]",
+          "measureNumber": 5,
+          "quantizedStep": null,
+          "start": null,
+          "stringIndex": 0,
+          "fret": 0
+        },
+        {
+          "jsonPath": "$.evaluations[1].pairResults[3].targets[0].events[0]",
+          "measureNumber": 7,
+          "quantizedStep": null,
+          "start": null,
+          "stringIndex": 0,
+          "fret": 0
+        }
+      ]
+    },
+    {
+      "file": "public/gomyway-full-song-v8-notation.json",
+      "identityEventCount": 2619,
+      "measureRange": [
+        1,
+        112
+      ],
+      "sampleEvents": [
+        {
+          "jsonPath": "$.rhythmEvents[0]",
+          "measureNumber": 1,
+          "quantizedStep": null,
+          "start": 1.231,
+          "stringIndex": 3,
+          "fret": 2
+        },
+        {
+          "jsonPath": "$.rhythmEvents[1]",
+          "measureNumber": 1,
+          "quantizedStep": null,
+          "start": 1.451,
+          "stringIndex": 5,
+          "fret": 0
+        },
+        {
+          "jsonPath": "$.rhythmEvents[2]",
+          "measureNumber": 2,
+          "quantizedStep": null,
+          "start": 1.962,
+          "stringIndex": 3,
+          "fret": 2
+        },
+        {
+          "jsonPath": "$.rhythmEvents[3]",
+          "measureNumber": 2,
+          "quantizedStep": null,
+          "start": 2.161,
+          "stringIndex": 3,
+          "fret": 2
+        },
+        {
+          "jsonPath": "$.rhythmEvents[4]",
+          "measureNumber": 2,
+          "quantizedStep": null,
+          "start": 2.393,
+          "stringIndex": 5,
+          "fret": 0
+        }
+      ]
+    },
+    {
+      "file": "public/gomyway-full-song-v8-professional-intro-score.json",
+      "identityEventCount": 178,
+      "measureRange": [
+        1,
+        16
+      ],
+      "sampleEvents": [
+        {
+          "jsonPath": "$.score.comparisons[0]",
+          "measureNumber": null,
+          "quantizedStep": null,
+          "start": null,
+          "stringIndex": 2,
+          "fret": 2
+        },
+        {
+          "jsonPath": "$.score.comparisons[1]",
+          "measureNumber": null,
+          "quantizedStep": null,
+          "start": null,
+          "stringIndex": 2,
+          "fret": 0
+        },
+        {
+          "jsonPath": "$.score.comparisons[2]",
+          "measureNumber": null,
+          "quantizedStep": null,
+          "start": null,
+          "stringIndex": 3,
+          "fret": 2
+        },
+        {
+          "jsonPath": "$.score.comparisons[2].detected",
+          "measureNumber": 1,
+          "quantizedStep": 5,
+          "start": 1.231,
+          "stringIndex": 3,
+          "fret": 2
+        },
+        {
+          "jsonPath": "$.score.comparisons[2].detected.fingeringCandidates[0]",
+          "measureNumber": null,
+          "quantizedStep": null,
+          "start": null,
+          "stringIndex": 3,
+          "fret": 2
+        }
+      ]
+    },
+    {
+      "file": "public/gomyway-professional-rhythm-reference-contract.json",
+      "identityEventCount": 1,
+      "measureRange": null,
+      "sampleEvents": [
+        {
+          "jsonPath": "$.measureSchema.events[0].notes[0]",
+          "measureNumber": null,
+          "quantizedStep": null,
+          "start": null,
+          "stringIndex": "0-5 using project convention",
+          "fret": "0-24 or verified extended range"
+        }
+      ]
+    }
+  ],
+  "explanation": "The V8 rhythm-candidate file contains onset timing only and intentionally has no string/fret identity. This discovery locates existing protected JSON sources that contain stringIndex and fret fields so a later benchmark can join V8 timing to V7 identity without altering either source.",
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "noSyntheticNotes": true
+}

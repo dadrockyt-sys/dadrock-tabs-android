@@ -1,0 +1,34 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-read-only-intro-orientation-lock",
+  "passed": true,
+  "orientationLocked": true,
+  "selectedLayer": "renderEvents",
+  "selectedOffsetSteps": 12,
+  "selectedScore": 2.0,
+  "runnerUpScore": 1.0,
+  "scoreMargin": 1.0,
+  "firstMeasureExactMidi": [
+    40
+  ],
+  "secondMeasureExactMidi": [
+    62
+  ],
+  "secondMeasureCoverage": 0.5,
+  "checks": {
+    "correctedSignaturePassed": true,
+    "protectedBaselinesUnchanged": true,
+    "rendererUnchanged": true,
+    "uniqueOrientationReported": true,
+    "selectedLayerIsRenderEvents": true,
+    "selectedOffsetIsInteger": true,
+    "openLowESignaturePresent": true,
+    "professionalDoubleStopEvidencePresent": true,
+    "minimumDoubleStopCoverageMet": true,
+    "minimumScoreMarginMet": true
+  },
+  "usesV7PitchEvidenceReadOnly": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "nextTrainingStage": "Use the locked two-measure orientation only as a read-only alignment anchor for intro consensus evaluation. Do not synthesize notes, replace V7 pitch events, or change the PDF renderer."
+}

@@ -1,0 +1,18 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "jimmy-paige-modal-worker-smoke-test",
+  "passed": true,
+  "status": "complete",
+  "callId": "fc-01KYWYXDSTV2RCFYMW6Z7NJHXD",
+  "totalElapsedSeconds": 16.845,
+  "workerStarted": true,
+  "hostname": "modal",
+  "pid": 2,
+  "queueDelaySeconds": 4.457,
+  "remoteRuntimeSeconds": 2.0,
+  "remoteFinishedAtEpoch": 1785530862.0541239,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "lockedV7EventsProtected": true,
+  "lockedV8TimingProtected": true
+}

@@ -1,0 +1,17 @@
+2026-08-01 11:17:50 UTC | Attempt 1/5 submitted | name=protected-93-06-baseline | retry=1/3 | callId=fc-01KYYGPV9K0P79AZ4EFPBVJM5Y
+2026-08-01 11:17:55 UTC | [worker-start heartbeat] attempt=1/5 | name=protected-93-06-baseline | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01 11:18:11 UTC | Attempt 1/5 complete | name=protected-93-06-baseline | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=5/8 | chordFP=1/8 | chordRecall=62.5% | chordF1=71.43%
+2026-08-01 11:18:11 UTC | Attempt 2/5 submitted | name=chord-frame-010 | retry=1/3 | callId=fc-01KYYGQGB3TTF1WB1PJY9FV1D9
+2026-08-01 11:18:16 UTC | [worker-start heartbeat] attempt=2/5 | name=chord-frame-010 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01 11:18:31 UTC | Attempt 2/5 complete | name=chord-frame-010 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=2/8 | chordRecall=37.5% | chordF1=46.15%
+2026-08-01 11:18:32 UTC | Attempt 3/5 submitted | name=chord-frame-008 | retry=1/3 | callId=fc-01KYYGR4GKGX2KAN2HZYGEFBZG
+2026-08-01 11:18:37 UTC | [worker-start heartbeat] attempt=3/5 | name=chord-frame-008 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01 11:18:53 UTC | Attempt 3/5 complete | name=chord-frame-008 | professional=94.44% | low=87.5% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=4/8 | chordFP=2/8 | chordRecall=50.0% | chordF1=57.14%
+2026-08-01 11:18:54 UTC | Attempt 4/5 submitted | name=chord-sensitive-026-010-25 | retry=1/3 | callId=fc-01KYYGRSVMFE44F0YX2J5NFE8G
+2026-08-01 11:18:57 UTC | [worker-start heartbeat] attempt=4/5 | name=chord-sensitive-026-010-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01 11:19:13 UTC | Attempt 4/5 complete | name=chord-sensitive-026-010-25 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=2/8 | chordFP=3/8 | chordRecall=25.0% | chordF1=30.77%
+2026-08-01 11:19:14 UTC | Attempt 5/5 submitted | name=chord-sensitive-024-008-25 | retry=1/3 | callId=fc-01KYYGSD40RGYH6J86K0CD1QJG
+2026-08-01 11:19:17 UTC | [worker-start heartbeat] attempt=5/5 | name=chord-sensitive-024-008-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01 11:19:32 UTC | Attempt 5/5 complete | name=chord-sensitive-024-008-25 | professional=96.53% | low=92.19% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=3/8 | chordRecall=37.5% | chordF1=42.86%
+2026-08-01 11:19:32 UTC | Chord recovery sweep complete | best=protected-93-06-baseline | professional=93.06% | TP=5/8 | FP=1/8 | recall=62.5% | F1=71.43%
+2026-08-01 11:19:32 UTC | Output: public/gomyway-jimmy-paige-chord-recovery-extraction-sweep.json

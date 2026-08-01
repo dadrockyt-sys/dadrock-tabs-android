@@ -1,0 +1,84 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "jimmy-paige-deployed-worker-training",
+  "source": "public/DadRock TABS - gomyway2test.m4a",
+  "attemptsRequested": 6,
+  "attemptsCompleted": 6,
+  "bestCorrectCandidateSlots": 0,
+  "bestCandidatePresencePercentage": 0.0,
+  "bestAttempt": null,
+  "attempts": [
+    {
+      "attemptNumber": 1,
+      "name": "default",
+      "functionName": "default",
+      "callId": "fc-01KYX7XRFPTS56M2NZVPAEKR2M",
+      "remoteElapsedSeconds": 22.3,
+      "totalElapsedSeconds": 34.591,
+      "extractedEventCount": 115,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0
+    },
+    {
+      "attemptNumber": 2,
+      "name": "lower-onset",
+      "functionName": "lower_onset",
+      "callId": "fc-01KYX7YTNJ91FH26KF80FWWZ4A",
+      "remoteElapsedSeconds": 23.951,
+      "totalElapsedSeconds": 48.795,
+      "extractedEventCount": 141,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0
+    },
+    {
+      "attemptNumber": 3,
+      "name": "lower-frame",
+      "functionName": "lower_frame",
+      "callId": "fc-01KYX80B0987E36WCFSG2WNFTW",
+      "remoteElapsedSeconds": 22.103,
+      "totalElapsedSeconds": 47.97,
+      "extractedEventCount": 182,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0
+    },
+    {
+      "attemptNumber": 4,
+      "name": "sensitive-balanced",
+      "functionName": "sensitive_balanced",
+      "callId": "fc-01KYX81TEZZY0VPYW6TFPYTHK1",
+      "remoteElapsedSeconds": 22.175,
+      "totalElapsedSeconds": 46.697,
+      "extractedEventCount": 269,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0
+    },
+    {
+      "attemptNumber": 5,
+      "name": "short-note-recovery",
+      "functionName": "short_note_recovery",
+      "callId": "fc-01KYX838K5TWBCZSPGKRV6VEPJ",
+      "remoteElapsedSeconds": 23.521,
+      "totalElapsedSeconds": 47.811,
+      "extractedEventCount": 278,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0
+    },
+    {
+      "attemptNumber": 6,
+      "name": "upper-string-recovery",
+      "functionName": "upper_string_recovery",
+      "callId": "fc-01KYX84QTZYF74XJBWCNRFH09X",
+      "remoteElapsedSeconds": 24.513,
+      "totalElapsedSeconds": 48.675,
+      "extractedEventCount": 306,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0
+    }
+  ],
+  "status": "complete",
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "trainingComplete": true,
+  "totalElapsedSeconds": 278.122
+}

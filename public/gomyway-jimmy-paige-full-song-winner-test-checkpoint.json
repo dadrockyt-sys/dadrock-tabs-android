@@ -1,0 +1,404 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "jimmy-paige-full-song-deployed-winner-test",
+  "source": "public/gomywayfullaitest.m4a",
+  "functionName": "upper_string_recovery",
+  "parameters": {
+    "onset_threshold": 0.35,
+    "frame_threshold": 0.2,
+    "minimum_note_length": 75.0,
+    "minimum_frequency": 100.0,
+    "maximum_frequency": 1400.0
+  },
+  "status": "complete",
+  "payloadMiB": 8.893,
+  "professionalReferenceScope": "protected Em-riff slots derived from the professional rhythm tab",
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "retry": 1,
+  "callId": "fc-01KYX8RM3DSV9BX61RN011X9VF",
+  "trainingComplete": true,
+  "remoteElapsedSeconds": 4.255,
+  "totalElapsedSeconds": 36.015,
+  "attemptElapsedSeconds": 34.41,
+  "extractedEventCount": 1629,
+  "correctCandidateSlots": 3,
+  "candidatePresencePercentage": 0.333333,
+  "slotReports": [
+    {
+      "patternId": "em-riff-a",
+      "step": 2,
+      "acceptedMidiPitches": [
+        57,
+        59
+      ],
+      "correctCandidatePresent": false,
+      "matchingOccurrences": 0,
+      "observedPitchHistogram": [
+        {
+          "midiPitch": 67,
+          "support": 5
+        },
+        {
+          "midiPitch": 43,
+          "support": 4
+        },
+        {
+          "midiPitch": 64,
+          "support": 3
+        },
+        {
+          "midiPitch": 65,
+          "support": 2
+        },
+        {
+          "midiPitch": 52,
+          "support": 1
+        },
+        {
+          "midiPitch": 68,
+          "support": 1
+        }
+      ]
+    },
+    {
+      "patternId": "em-riff-a",
+      "step": 6,
+      "acceptedMidiPitches": [
+        55
+      ],
+      "correctCandidatePresent": true,
+      "matchingOccurrences": 1,
+      "observedPitchHistogram": [
+        {
+          "midiPitch": 52,
+          "support": 6
+        },
+        {
+          "midiPitch": 67,
+          "support": 6
+        },
+        {
+          "midiPitch": 48,
+          "support": 4
+        },
+        {
+          "midiPitch": 43,
+          "support": 3
+        },
+        {
+          "midiPitch": 62,
+          "support": 2
+        },
+        {
+          "midiPitch": 49,
+          "support": 1
+        },
+        {
+          "midiPitch": 55,
+          "support": 1
+        },
+        {
+          "midiPitch": 64,
+          "support": 1
+        },
+        {
+          "midiPitch": 66,
+          "support": 1
+        }
+      ]
+    },
+    {
+      "patternId": "em-riff-a",
+      "step": 10,
+      "acceptedMidiPitches": [
+        52
+      ],
+      "correctCandidatePresent": false,
+      "matchingOccurrences": 0,
+      "observedPitchHistogram": [
+        {
+          "midiPitch": 64,
+          "support": 2
+        },
+        {
+          "midiPitch": 43,
+          "support": 1
+        },
+        {
+          "midiPitch": 48,
+          "support": 1
+        },
+        {
+          "midiPitch": 59,
+          "support": 1
+        },
+        {
+          "midiPitch": 68,
+          "support": 1
+        }
+      ]
+    },
+    {
+      "patternId": "em-riff-a",
+      "step": 14,
+      "acceptedMidiPitches": [
+        45
+      ],
+      "correctCandidatePresent": false,
+      "matchingOccurrences": 0,
+      "observedPitchHistogram": [
+        {
+          "midiPitch": 43,
+          "support": 3
+        },
+        {
+          "midiPitch": 57,
+          "support": 2
+        },
+        {
+          "midiPitch": 62,
+          "support": 2
+        },
+        {
+          "midiPitch": 48,
+          "support": 1
+        },
+        {
+          "midiPitch": 58,
+          "support": 1
+        },
+        {
+          "midiPitch": 60,
+          "support": 1
+        },
+        {
+          "midiPitch": 75,
+          "support": 1
+        }
+      ]
+    },
+    {
+      "patternId": "em-riff-b",
+      "step": 2,
+      "acceptedMidiPitches": [
+        57,
+        59
+      ],
+      "correctCandidatePresent": false,
+      "matchingOccurrences": 0,
+      "observedPitchHistogram": [
+        {
+          "midiPitch": 64,
+          "support": 4
+        },
+        {
+          "midiPitch": 43,
+          "support": 2
+        },
+        {
+          "midiPitch": 48,
+          "support": 1
+        },
+        {
+          "midiPitch": 52,
+          "support": 1
+        },
+        {
+          "midiPitch": 58,
+          "support": 1
+        },
+        {
+          "midiPitch": 67,
+          "support": 1
+        }
+      ]
+    },
+    {
+      "patternId": "em-riff-b",
+      "step": 4,
+      "acceptedMidiPitches": [
+        55
+      ],
+      "correctCandidatePresent": false,
+      "matchingOccurrences": 0,
+      "observedPitchHistogram": [
+        {
+          "midiPitch": 43,
+          "support": 2
+        },
+        {
+          "midiPitch": 52,
+          "support": 2
+        },
+        {
+          "midiPitch": 50,
+          "support": 1
+        },
+        {
+          "midiPitch": 58,
+          "support": 1
+        },
+        {
+          "midiPitch": 62,
+          "support": 1
+        },
+        {
+          "midiPitch": 63,
+          "support": 1
+        },
+        {
+          "midiPitch": 64,
+          "support": 1
+        },
+        {
+          "midiPitch": 74,
+          "support": 1
+        }
+      ]
+    },
+    {
+      "patternId": "em-riff-b",
+      "step": 6,
+      "acceptedMidiPitches": [
+        52
+      ],
+      "correctCandidatePresent": true,
+      "matchingOccurrences": 6,
+      "observedPitchHistogram": [
+        {
+          "midiPitch": 52,
+          "support": 6
+        },
+        {
+          "midiPitch": 74,
+          "support": 2
+        },
+        {
+          "midiPitch": 43,
+          "support": 1
+        },
+        {
+          "midiPitch": 48,
+          "support": 1
+        },
+        {
+          "midiPitch": 55,
+          "support": 1
+        },
+        {
+          "midiPitch": 57,
+          "support": 1
+        },
+        {
+          "midiPitch": 59,
+          "support": 1
+        },
+        {
+          "midiPitch": 61,
+          "support": 1
+        },
+        {
+          "midiPitch": 62,
+          "support": 1
+        },
+        {
+          "midiPitch": 63,
+          "support": 1
+        },
+        {
+          "midiPitch": 64,
+          "support": 1
+        },
+        {
+          "midiPitch": 65,
+          "support": 1
+        }
+      ]
+    },
+    {
+      "patternId": "em-riff-b",
+      "step": 10,
+      "acceptedMidiPitches": [
+        45
+      ],
+      "correctCandidatePresent": false,
+      "matchingOccurrences": 0,
+      "observedPitchHistogram": [
+        {
+          "midiPitch": 52,
+          "support": 3
+        },
+        {
+          "midiPitch": 43,
+          "support": 2
+        },
+        {
+          "midiPitch": 48,
+          "support": 1
+        },
+        {
+          "midiPitch": 67,
+          "support": 1
+        }
+      ]
+    },
+    {
+      "patternId": "em-riff-b",
+      "step": 14,
+      "acceptedMidiPitches": [
+        58,
+        62
+      ],
+      "correctCandidatePresent": true,
+      "matchingOccurrences": 3,
+      "observedPitchHistogram": [
+        {
+          "midiPitch": 67,
+          "support": 3
+        },
+        {
+          "midiPitch": 43,
+          "support": 2
+        },
+        {
+          "midiPitch": 58,
+          "support": 2
+        },
+        {
+          "midiPitch": 60,
+          "support": 2
+        },
+        {
+          "midiPitch": 78,
+          "support": 2
+        },
+        {
+          "midiPitch": 55,
+          "support": 1
+        },
+        {
+          "midiPitch": 57,
+          "support": 1
+        },
+        {
+          "midiPitch": 62,
+          "support": 1
+        },
+        {
+          "midiPitch": 64,
+          "support": 1
+        },
+        {
+          "midiPitch": 66,
+          "support": 1
+        },
+        {
+          "midiPitch": 70,
+          "support": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+2026-07-31 21:57:06 UTC | Submitting proven V7 training snippet on the minimal Basic Pitch image (1.30 MiB WAV payload).
+2026-07-31 21:57:08 UTC | Detached V7-snippet call submitted: fc-01KYX2WQ4PGD6N1ARX248ZMEZS
+2026-07-31 21:57:08 UTC | [V7 snippet heartbeat] elapsed=2.2s | status=submitted | callId=fc-01KYX2WQ4PGD6N1ARX248ZMEZS
+2026-07-31 21:57:23 UTC | [V7 snippet heartbeat] elapsed=17.2s | status=submitted | callId=fc-01KYX2WQ4PGD6N1ARX248ZMEZS
+2026-07-31 21:57:38 UTC | [V7 snippet heartbeat] elapsed=32.3s | status=submitted | callId=fc-01KYX2WQ4PGD6N1ARX248ZMEZS
+2026-07-31 21:57:53 UTC | V7-snippet minimal-image test completed | remote=23.873s | total=47.487s | events=115
+2026-07-31 21:57:53 UTC | Output: public/gomyway-jimmy-paige-v7-snippet-minimal-test.json

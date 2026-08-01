@@ -1,0 +1,365 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-read-only-intro-signature-evidence",
+  "selectedEventLayer": "fingeringNormalizedEvents",
+  "candidateOffsets": [
+    12,
+    28
+  ],
+  "targetStepsBeforeRotation": [
+    14,
+    30
+  ],
+  "windowRadiusSteps": 3,
+  "evaluations": [
+    {
+      "offsetSteps": 12,
+      "rotatedTargetSteps": [
+        26,
+        10
+      ],
+      "windowRadiusSteps": 3,
+      "targetSummaries": [
+        {
+          "targetStep": 26,
+          "midiHistogram": {},
+          "pairStepHistogram": {},
+          "mostCommonMidi": [],
+          "mostCommonPairSteps": []
+        },
+        {
+          "targetStep": 10,
+          "midiHistogram": {
+            "64": 3
+          },
+          "pairStepHistogram": {
+            "12": 3
+          },
+          "mostCommonMidi": [
+            [
+              64,
+              3
+            ]
+          ],
+          "mostCommonPairSteps": [
+            [
+              12,
+              3
+            ]
+          ]
+        }
+      ],
+      "pairResults": [
+        {
+          "pairIndex": 0,
+          "targets": [
+            {
+              "targetStep": 26,
+              "events": []
+            },
+            {
+              "targetStep": 10,
+              "events": []
+            }
+          ]
+        },
+        {
+          "pairIndex": 1,
+          "targets": [
+            {
+              "targetStep": 26,
+              "events": []
+            },
+            {
+              "targetStep": 10,
+              "events": []
+            }
+          ]
+        },
+        {
+          "pairIndex": 2,
+          "targets": [
+            {
+              "targetStep": 26,
+              "events": []
+            },
+            {
+              "targetStep": 10,
+              "events": [
+                {
+                  "pairStep": 12,
+                  "measureNumber": 5,
+                  "positionInMeasure": 0.75,
+                  "midi": 64,
+                  "stringIndex": 0,
+                  "fret": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "pairIndex": 3,
+          "targets": [
+            {
+              "targetStep": 26,
+              "events": []
+            },
+            {
+              "targetStep": 10,
+              "events": [
+                {
+                  "pairStep": 12,
+                  "measureNumber": 7,
+                  "positionInMeasure": 0.75,
+                  "midi": 64,
+                  "stringIndex": 0,
+                  "fret": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "pairIndex": 4,
+          "targets": [
+            {
+              "targetStep": 26,
+              "events": []
+            },
+            {
+              "targetStep": 10,
+              "events": []
+            }
+          ]
+        },
+        {
+          "pairIndex": 5,
+          "targets": [
+            {
+              "targetStep": 26,
+              "events": []
+            },
+            {
+              "targetStep": 10,
+              "events": []
+            }
+          ]
+        },
+        {
+          "pairIndex": 6,
+          "targets": [
+            {
+              "targetStep": 26,
+              "events": []
+            },
+            {
+              "targetStep": 10,
+              "events": [
+                {
+                  "pairStep": 12,
+                  "measureNumber": 13,
+                  "positionInMeasure": 0.75,
+                  "midi": 64,
+                  "stringIndex": 0,
+                  "fret": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "pairIndex": 7,
+          "targets": [
+            {
+              "targetStep": 26,
+              "events": []
+            },
+            {
+              "targetStep": 10,
+              "events": []
+            }
+          ]
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 28,
+      "rotatedTargetSteps": [
+        10,
+        26
+      ],
+      "windowRadiusSteps": 3,
+      "targetSummaries": [
+        {
+          "targetStep": 10,
+          "midiHistogram": {
+            "64": 3
+          },
+          "pairStepHistogram": {
+            "12": 3
+          },
+          "mostCommonMidi": [
+            [
+              64,
+              3
+            ]
+          ],
+          "mostCommonPairSteps": [
+            [
+              12,
+              3
+            ]
+          ]
+        },
+        {
+          "targetStep": 26,
+          "midiHistogram": {},
+          "pairStepHistogram": {},
+          "mostCommonMidi": [],
+          "mostCommonPairSteps": []
+        }
+      ],
+      "pairResults": [
+        {
+          "pairIndex": 0,
+          "targets": [
+            {
+              "targetStep": 10,
+              "events": []
+            },
+            {
+              "targetStep": 26,
+              "events": []
+            }
+          ]
+        },
+        {
+          "pairIndex": 1,
+          "targets": [
+            {
+              "targetStep": 10,
+              "events": []
+            },
+            {
+              "targetStep": 26,
+              "events": []
+            }
+          ]
+        },
+        {
+          "pairIndex": 2,
+          "targets": [
+            {
+              "targetStep": 10,
+              "events": [
+                {
+                  "pairStep": 12,
+                  "measureNumber": 5,
+                  "positionInMeasure": 0.75,
+                  "midi": 64,
+                  "stringIndex": 0,
+                  "fret": 0
+                }
+              ]
+            },
+            {
+              "targetStep": 26,
+              "events": []
+            }
+          ]
+        },
+        {
+          "pairIndex": 3,
+          "targets": [
+            {
+              "targetStep": 10,
+              "events": [
+                {
+                  "pairStep": 12,
+                  "measureNumber": 7,
+                  "positionInMeasure": 0.75,
+                  "midi": 64,
+                  "stringIndex": 0,
+                  "fret": 0
+                }
+              ]
+            },
+            {
+              "targetStep": 26,
+              "events": []
+            }
+          ]
+        },
+        {
+          "pairIndex": 4,
+          "targets": [
+            {
+              "targetStep": 10,
+              "events": []
+            },
+            {
+              "targetStep": 26,
+              "events": []
+            }
+          ]
+        },
+        {
+          "pairIndex": 5,
+          "targets": [
+            {
+              "targetStep": 10,
+              "events": []
+            },
+            {
+              "targetStep": 26,
+              "events": []
+            }
+          ]
+        },
+        {
+          "pairIndex": 6,
+          "targets": [
+            {
+              "targetStep": 10,
+              "events": [
+                {
+                  "pairStep": 12,
+                  "measureNumber": 13,
+                  "positionInMeasure": 0.75,
+                  "midi": 64,
+                  "stringIndex": 0,
+                  "fret": 0
+                }
+              ]
+            },
+            {
+              "targetStep": 26,
+              "events": []
+            }
+          ]
+        },
+        {
+          "pairIndex": 7,
+          "targets": [
+            {
+              "targetStep": 10,
+              "events": []
+            },
+            {
+              "targetStep": 26,
+              "events": []
+            }
+          ]
+        }
+      ],
+      "readOnly": true
+    }
+  ],
+  "usesV7PitchEvidenceReadOnly": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "passed": true,
+  "trainingRule": "Inspect the actual pitch and timing evidence near both possible measure endings. Do not synthesize notes, choose an orientation, alter V7 output, or change the renderer."
+}

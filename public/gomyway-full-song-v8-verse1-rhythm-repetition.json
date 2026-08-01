@@ -1,0 +1,408 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-read-only-verse1-rhythm-repetition-discovery",
+  "passed": true,
+  "sectionLabel": "Verse 1",
+  "startMeasure": 18,
+  "endMeasure": 32,
+  "measureCount": 15,
+  "directAudioEventCount": 82,
+  "pairCount": 7,
+  "pairReports": [
+    {
+      "pairIndex": 0,
+      "startMeasure": 18,
+      "endMeasure": 19,
+      "eventCount": 14,
+      "signatureSteps": [
+        2,
+        4,
+        6,
+        7,
+        9,
+        10,
+        11,
+        15,
+        19,
+        20,
+        23,
+        25,
+        29,
+        31
+      ],
+      "medianStrength": 0.241619,
+      "readOnly": true
+    },
+    {
+      "pairIndex": 1,
+      "startMeasure": 20,
+      "endMeasure": 21,
+      "eventCount": 13,
+      "signatureSteps": [
+        3,
+        6,
+        7,
+        9,
+        11,
+        14,
+        15,
+        18,
+        20,
+        22,
+        23,
+        26,
+        30
+      ],
+      "medianStrength": 0.300267,
+      "readOnly": true
+    },
+    {
+      "pairIndex": 2,
+      "startMeasure": 22,
+      "endMeasure": 23,
+      "eventCount": 9,
+      "signatureSteps": [
+        2,
+        6,
+        8,
+        10,
+        14,
+        18,
+        22,
+        25,
+        31
+      ],
+      "medianStrength": 0.404788,
+      "readOnly": true
+    },
+    {
+      "pairIndex": 3,
+      "startMeasure": 24,
+      "endMeasure": 25,
+      "eventCount": 10,
+      "signatureSteps": [
+        2,
+        7,
+        11,
+        15,
+        18,
+        19,
+        22,
+        23,
+        26,
+        30
+      ],
+      "medianStrength": 0.452349,
+      "readOnly": true
+    },
+    {
+      "pairIndex": 4,
+      "startMeasure": 26,
+      "endMeasure": 27,
+      "eventCount": 10,
+      "signatureSteps": [
+        2,
+        10,
+        14,
+        18,
+        20,
+        21,
+        23,
+        26,
+        27,
+        30
+      ],
+      "medianStrength": 0.265748,
+      "readOnly": true
+    },
+    {
+      "pairIndex": 5,
+      "startMeasure": 28,
+      "endMeasure": 29,
+      "eventCount": 11,
+      "signatureSteps": [
+        2,
+        3,
+        6,
+        7,
+        11,
+        14,
+        17,
+        20,
+        23,
+        26,
+        30
+      ],
+      "medianStrength": 0.362384,
+      "readOnly": true
+    },
+    {
+      "pairIndex": 6,
+      "startMeasure": 30,
+      "endMeasure": 31,
+      "eventCount": 10,
+      "signatureSteps": [
+        2,
+        4,
+        6,
+        10,
+        14,
+        18,
+        20,
+        25,
+        26,
+        30
+      ],
+      "medianStrength": 0.371986,
+      "readOnly": true
+    }
+  ],
+  "pairComparisons": [
+    {
+      "leftStartMeasure": 18,
+      "rightStartMeasure": 20,
+      "similarity": 0.814815,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 18,
+      "rightStartMeasure": 22,
+      "similarity": 0.782609,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 18,
+      "rightStartMeasure": 24,
+      "similarity": 0.666667,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 18,
+      "rightStartMeasure": 26,
+      "similarity": 0.666667,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 18,
+      "rightStartMeasure": 28,
+      "similarity": 0.8,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 18,
+      "rightStartMeasure": 30,
+      "similarity": 0.75,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 20,
+      "rightStartMeasure": 22,
+      "similarity": 0.818182,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 20,
+      "rightStartMeasure": 24,
+      "similarity": 0.869565,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 20,
+      "rightStartMeasure": 26,
+      "similarity": 0.782609,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 20,
+      "rightStartMeasure": 28,
+      "similarity": 0.833333,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 20,
+      "rightStartMeasure": 30,
+      "similarity": 0.695652,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 22,
+      "rightStartMeasure": 24,
+      "similarity": 0.842105,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 22,
+      "rightStartMeasure": 26,
+      "similarity": 0.736842,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 22,
+      "rightStartMeasure": 28,
+      "similarity": 0.9,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 22,
+      "rightStartMeasure": 30,
+      "similarity": 0.736842,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 24,
+      "rightStartMeasure": 26,
+      "similarity": 0.9,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 24,
+      "rightStartMeasure": 28,
+      "similarity": 0.857143,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 24,
+      "rightStartMeasure": 30,
+      "similarity": 0.8,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 26,
+      "rightStartMeasure": 28,
+      "similarity": 0.761905,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 26,
+      "rightStartMeasure": 30,
+      "similarity": 0.7,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 28,
+      "rightStartMeasure": 30,
+      "similarity": 0.857143,
+      "repeated": true,
+      "readOnly": true
+    }
+  ],
+  "bestPairComparisons": [
+    {
+      "leftStartMeasure": 22,
+      "rightStartMeasure": 28,
+      "similarity": 0.9,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 24,
+      "rightStartMeasure": 26,
+      "similarity": 0.9,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 20,
+      "rightStartMeasure": 24,
+      "similarity": 0.869565,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 24,
+      "rightStartMeasure": 28,
+      "similarity": 0.857143,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 28,
+      "rightStartMeasure": 30,
+      "similarity": 0.857143,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 22,
+      "rightStartMeasure": 24,
+      "similarity": 0.842105,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 20,
+      "rightStartMeasure": 28,
+      "similarity": 0.833333,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 20,
+      "rightStartMeasure": 22,
+      "similarity": 0.818182,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 18,
+      "rightStartMeasure": 20,
+      "similarity": 0.814815,
+      "repeated": true,
+      "readOnly": true
+    },
+    {
+      "leftStartMeasure": 18,
+      "rightStartMeasure": 28,
+      "similarity": 0.8,
+      "repeated": true,
+      "readOnly": true
+    }
+  ],
+  "repeatedPairStartMeasures": [
+    18,
+    20,
+    22,
+    24,
+    26,
+    28,
+    30
+  ],
+  "repeatedPairCount": 7,
+  "pairSupportHistogram": {
+    "6": 7
+  },
+  "checks": {
+    "directAudioCandidateReportPassed": true,
+    "introRhythmTemplateLocked": true,
+    "verseBoundsPresent": true,
+    "verseEventsPresent": true,
+    "multipleVersePairsPresent": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "usesDirectAudioEvidence": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "trainingRule": "This stage discovers repeated Verse 1 rhythm shapes from direct-audio onset evidence only. It may compare timing signatures within a one-step tolerance, but it must not copy professional notes, synthesize attacks, alter V7 events, or change the PDF renderer. A later benchmark must validate any proposed Verse 1 template before adoption."
+}

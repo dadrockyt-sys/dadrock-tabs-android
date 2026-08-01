@@ -1,0 +1,617 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "jimmy-paige-93-06-combined-regression-validation",
+  "status": "complete",
+  "modalApp": "dadrock-jimmy-paige-professional-worker",
+  "modalFunction": "extract_parameterized",
+  "parameters": {
+    "name": "professional-93-06-winner",
+    "minimum_frequency": 82.0,
+    "maximum_frequency": 1400.0,
+    "onset_threshold": 0.28,
+    "frame_threshold": 0.12,
+    "minimum_note_length": 35.0,
+    "multiple_pitch_bends": true
+  },
+  "protectedMinimums": {
+    "professionalOverallRecallPercentage": 93.06,
+    "professionalLowRegisterRecallPercentage": 84.38,
+    "midi52Matches": 32,
+    "midi62Matches": 16,
+    "nineSlotCorrectMinimum": 8
+  },
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "syntheticNotesAllowed": false,
+  "readOnlySourceEvents": true,
+  "retries": [
+    {
+      "retry": 1,
+      "status": "complete",
+      "elapsedSeconds": 61.663,
+      "callId": "fc-01KYYAJV2N6B9N3356JESV90K8"
+    }
+  ],
+  "remoteElapsedSeconds": 44.956,
+  "totalElapsedSeconds": 63.54,
+  "extractedEventCount": 10268,
+  "professionalScore": {
+    "matchedTargets": 134,
+    "professionalTargets": 144,
+    "overallRecallPercentage": 93.06,
+    "lowRegisterRecallPercentage": 84.38,
+    "protectedRecallPercentage": 100.0,
+    "protectedPitchGuardPassed": true,
+    "weightedScore": 87.678,
+    "expectedByPitch": {
+      "40": 16,
+      "45": 16,
+      "50": 16,
+      "52": 32,
+      "55": 16,
+      "57": 16,
+      "58": 16,
+      "62": 16
+    },
+    "matchedByPitch": {
+      "40": 16,
+      "45": 13,
+      "50": 15,
+      "52": 32,
+      "55": 16,
+      "57": 16,
+      "58": 10,
+      "62": 16
+    }
+  },
+  "midi52Matches": 32,
+  "midi62Matches": 16,
+  "professionalCheckpointPassed": true,
+  "nineSlotScore": {
+    "correctCandidateSlots": 8,
+    "candidatePresencePercentage": 0.888889,
+    "slotReports": [
+      {
+        "patternId": "em-riff-a",
+        "step": 2,
+        "acceptedMidiPitches": [
+          57,
+          59
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 4,
+        "observedPitchHistogram": [
+          {
+            "midiPitch": 40,
+            "support": 18
+          },
+          {
+            "midiPitch": 43,
+            "support": 9
+          },
+          {
+            "midiPitch": 48,
+            "support": 7
+          },
+          {
+            "midiPitch": 67,
+            "support": 7
+          },
+          {
+            "midiPitch": 52,
+            "support": 5
+          },
+          {
+            "midiPitch": 64,
+            "support": 5
+          },
+          {
+            "midiPitch": 59,
+            "support": 4
+          },
+          {
+            "midiPitch": 76,
+            "support": 4
+          },
+          {
+            "midiPitch": 77,
+            "support": 4
+          },
+          {
+            "midiPitch": 41,
+            "support": 3
+          },
+          {
+            "midiPitch": 49,
+            "support": 3
+          },
+          {
+            "midiPitch": 50,
+            "support": 3
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-a",
+        "step": 6,
+        "acceptedMidiPitches": [
+          55
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 9,
+        "observedPitchHistogram": [
+          {
+            "midiPitch": 40,
+            "support": 21
+          },
+          {
+            "midiPitch": 52,
+            "support": 11
+          },
+          {
+            "midiPitch": 67,
+            "support": 11
+          },
+          {
+            "midiPitch": 43,
+            "support": 10
+          },
+          {
+            "midiPitch": 48,
+            "support": 10
+          },
+          {
+            "midiPitch": 55,
+            "support": 9
+          },
+          {
+            "midiPitch": 49,
+            "support": 7
+          },
+          {
+            "midiPitch": 62,
+            "support": 5
+          },
+          {
+            "midiPitch": 64,
+            "support": 5
+          },
+          {
+            "midiPitch": 42,
+            "support": 4
+          },
+          {
+            "midiPitch": 44,
+            "support": 4
+          },
+          {
+            "midiPitch": 47,
+            "support": 4
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-a",
+        "step": 10,
+        "acceptedMidiPitches": [
+          52
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 3,
+        "observedPitchHistogram": [
+          {
+            "midiPitch": 40,
+            "support": 14
+          },
+          {
+            "midiPitch": 41,
+            "support": 10
+          },
+          {
+            "midiPitch": 48,
+            "support": 9
+          },
+          {
+            "midiPitch": 50,
+            "support": 7
+          },
+          {
+            "midiPitch": 43,
+            "support": 6
+          },
+          {
+            "midiPitch": 59,
+            "support": 6
+          },
+          {
+            "midiPitch": 64,
+            "support": 5
+          },
+          {
+            "midiPitch": 68,
+            "support": 4
+          },
+          {
+            "midiPitch": 76,
+            "support": 4
+          },
+          {
+            "midiPitch": 52,
+            "support": 3
+          },
+          {
+            "midiPitch": 56,
+            "support": 3
+          },
+          {
+            "midiPitch": 77,
+            "support": 3
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-a",
+        "step": 14,
+        "acceptedMidiPitches": [
+          45
+        ],
+        "correctCandidatePresent": false,
+        "matchingOccurrences": 0,
+        "observedPitchHistogram": [
+          {
+            "midiPitch": 40,
+            "support": 18
+          },
+          {
+            "midiPitch": 57,
+            "support": 7
+          },
+          {
+            "midiPitch": 41,
+            "support": 5
+          },
+          {
+            "midiPitch": 43,
+            "support": 5
+          },
+          {
+            "midiPitch": 42,
+            "support": 4
+          },
+          {
+            "midiPitch": 50,
+            "support": 4
+          },
+          {
+            "midiPitch": 52,
+            "support": 4
+          },
+          {
+            "midiPitch": 55,
+            "support": 4
+          },
+          {
+            "midiPitch": 61,
+            "support": 4
+          },
+          {
+            "midiPitch": 62,
+            "support": 4
+          },
+          {
+            "midiPitch": 44,
+            "support": 3
+          },
+          {
+            "midiPitch": 47,
+            "support": 3
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-b",
+        "step": 2,
+        "acceptedMidiPitches": [
+          57,
+          59
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 4,
+        "observedPitchHistogram": [
+          {
+            "midiPitch": 40,
+            "support": 18
+          },
+          {
+            "midiPitch": 64,
+            "support": 8
+          },
+          {
+            "midiPitch": 43,
+            "support": 6
+          },
+          {
+            "midiPitch": 48,
+            "support": 5
+          },
+          {
+            "midiPitch": 52,
+            "support": 5
+          },
+          {
+            "midiPitch": 68,
+            "support": 4
+          },
+          {
+            "midiPitch": 46,
+            "support": 3
+          },
+          {
+            "midiPitch": 49,
+            "support": 3
+          },
+          {
+            "midiPitch": 59,
+            "support": 3
+          },
+          {
+            "midiPitch": 42,
+            "support": 2
+          },
+          {
+            "midiPitch": 47,
+            "support": 2
+          },
+          {
+            "midiPitch": 56,
+            "support": 2
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-b",
+        "step": 4,
+        "acceptedMidiPitches": [
+          55
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 3,
+        "observedPitchHistogram": [
+          {
+            "midiPitch": 40,
+            "support": 20
+          },
+          {
+            "midiPitch": 43,
+            "support": 12
+          },
+          {
+            "midiPitch": 49,
+            "support": 9
+          },
+          {
+            "midiPitch": 51,
+            "support": 9
+          },
+          {
+            "midiPitch": 52,
+            "support": 9
+          },
+          {
+            "midiPitch": 48,
+            "support": 8
+          },
+          {
+            "midiPitch": 42,
+            "support": 6
+          },
+          {
+            "midiPitch": 46,
+            "support": 6
+          },
+          {
+            "midiPitch": 56,
+            "support": 6
+          },
+          {
+            "midiPitch": 50,
+            "support": 5
+          },
+          {
+            "midiPitch": 59,
+            "support": 5
+          },
+          {
+            "midiPitch": 44,
+            "support": 4
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-b",
+        "step": 6,
+        "acceptedMidiPitches": [
+          52
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 12,
+        "observedPitchHistogram": [
+          {
+            "midiPitch": 40,
+            "support": 14
+          },
+          {
+            "midiPitch": 52,
+            "support": 12
+          },
+          {
+            "midiPitch": 48,
+            "support": 11
+          },
+          {
+            "midiPitch": 64,
+            "support": 10
+          },
+          {
+            "midiPitch": 43,
+            "support": 8
+          },
+          {
+            "midiPitch": 49,
+            "support": 8
+          },
+          {
+            "midiPitch": 42,
+            "support": 7
+          },
+          {
+            "midiPitch": 44,
+            "support": 6
+          },
+          {
+            "midiPitch": 56,
+            "support": 6
+          },
+          {
+            "midiPitch": 41,
+            "support": 4
+          },
+          {
+            "midiPitch": 61,
+            "support": 4
+          },
+          {
+            "midiPitch": 62,
+            "support": 4
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-b",
+        "step": 10,
+        "acceptedMidiPitches": [
+          45
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 1,
+        "observedPitchHistogram": [
+          {
+            "midiPitch": 40,
+            "support": 20
+          },
+          {
+            "midiPitch": 52,
+            "support": 8
+          },
+          {
+            "midiPitch": 48,
+            "support": 7
+          },
+          {
+            "midiPitch": 43,
+            "support": 5
+          },
+          {
+            "midiPitch": 50,
+            "support": 5
+          },
+          {
+            "midiPitch": 59,
+            "support": 4
+          },
+          {
+            "midiPitch": 68,
+            "support": 4
+          },
+          {
+            "midiPitch": 41,
+            "support": 3
+          },
+          {
+            "midiPitch": 44,
+            "support": 3
+          },
+          {
+            "midiPitch": 49,
+            "support": 2
+          },
+          {
+            "midiPitch": 64,
+            "support": 2
+          },
+          {
+            "midiPitch": 67,
+            "support": 2
+          }
+        ]
+      },
+      {
+        "patternId": "em-riff-b",
+        "step": 14,
+        "acceptedMidiPitches": [
+          58,
+          62
+        ],
+        "correctCandidatePresent": true,
+        "matchingOccurrences": 4,
+        "observedPitchHistogram": [
+          {
+            "midiPitch": 40,
+            "support": 13
+          },
+          {
+            "midiPitch": 67,
+            "support": 5
+          },
+          {
+            "midiPitch": 55,
+            "support": 4
+          },
+          {
+            "midiPitch": 57,
+            "support": 4
+          },
+          {
+            "midiPitch": 42,
+            "support": 3
+          },
+          {
+            "midiPitch": 47,
+            "support": 3
+          },
+          {
+            "midiPitch": 50,
+            "support": 3
+          },
+          {
+            "midiPitch": 58,
+            "support": 3
+          },
+          {
+            "midiPitch": 76,
+            "support": 3
+          },
+          {
+            "midiPitch": 78,
+            "support": 3
+          },
+          {
+            "midiPitch": 41,
+            "support": 2
+          },
+          {
+            "midiPitch": 43,
+            "support": 2
+          }
+        ]
+      }
+    ]
+  },
+  "nineSlotCorrect": 8,
+  "nineSlotRegressionPassed": true,
+  "combinedRegressionPassed": true,
+  "readyForProductionPromotion": true,
+  "eventCache": "public/gomyway-jimmy-paige-93-06-events.json"
+}

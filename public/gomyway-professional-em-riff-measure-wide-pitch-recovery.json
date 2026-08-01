@@ -1,0 +1,256 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "professional-em-riff-measure-wide-pitch-recovery",
+  "passed": true,
+  "eventsInspected": 422,
+  "protectedSlotCount": 9,
+  "slotsContainingCorrectPitchAnywhere": 2,
+  "slotsContainingCorrectPitchWithinFourSteps": 1,
+  "measureWideCandidatePresencePercentage": 22.22,
+  "recommendedNextTrainingLoop": "hybrid-pitch-extraction-and-ranking-training",
+  "readyForBoundedExtractionTrainingLoop": true,
+  "slotReports": [
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 2,
+      "acceptedMidiPitches": [
+        57,
+        59
+      ],
+      "correctPitchPresentAnywhereInMatchingMeasures": false,
+      "correctPitchPresentWithinFourSteps": false,
+      "nearestObservedStepDistance": null,
+      "matchingEventCount": 0,
+      "sampleMatches": []
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 6,
+      "acceptedMidiPitches": [
+        55
+      ],
+      "correctPitchPresentAnywhereInMatchingMeasures": false,
+      "correctPitchPresentWithinFourSteps": false,
+      "nearestObservedStepDistance": null,
+      "matchingEventCount": 0,
+      "sampleMatches": []
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 10,
+      "acceptedMidiPitches": [
+        52
+      ],
+      "correctPitchPresentAnywhereInMatchingMeasures": true,
+      "correctPitchPresentWithinFourSteps": false,
+      "nearestObservedStepDistance": 5,
+      "matchingEventCount": 10,
+      "sampleMatches": [
+        {
+          "measureNumber": 20,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 22,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 20,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 22,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 20,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 22,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 20,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 22,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 20,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 22,
+          "step": 5,
+          "midiPitch": 52
+        }
+      ]
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 14,
+      "acceptedMidiPitches": [
+        45
+      ],
+      "correctPitchPresentAnywhereInMatchingMeasures": false,
+      "correctPitchPresentWithinFourSteps": false,
+      "nearestObservedStepDistance": null,
+      "matchingEventCount": 0,
+      "sampleMatches": []
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 2,
+      "acceptedMidiPitches": [
+        57,
+        59
+      ],
+      "correctPitchPresentAnywhereInMatchingMeasures": false,
+      "correctPitchPresentWithinFourSteps": false,
+      "nearestObservedStepDistance": null,
+      "matchingEventCount": 0,
+      "sampleMatches": []
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 4,
+      "acceptedMidiPitches": [
+        55
+      ],
+      "correctPitchPresentAnywhereInMatchingMeasures": false,
+      "correctPitchPresentWithinFourSteps": false,
+      "nearestObservedStepDistance": null,
+      "matchingEventCount": 0,
+      "sampleMatches": []
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 6,
+      "acceptedMidiPitches": [
+        52
+      ],
+      "correctPitchPresentAnywhereInMatchingMeasures": true,
+      "correctPitchPresentWithinFourSteps": true,
+      "nearestObservedStepDistance": 1,
+      "matchingEventCount": 15,
+      "sampleMatches": [
+        {
+          "measureNumber": 21,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 21,
+          "step": 7,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 23,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 21,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 21,
+          "step": 7,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 23,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 21,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 21,
+          "step": 7,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 23,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 21,
+          "step": 5,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 21,
+          "step": 7,
+          "midiPitch": 52
+        },
+        {
+          "measureNumber": 23,
+          "step": 5,
+          "midiPitch": 52
+        }
+      ]
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 10,
+      "acceptedMidiPitches": [
+        45
+      ],
+      "correctPitchPresentAnywhereInMatchingMeasures": false,
+      "correctPitchPresentWithinFourSteps": false,
+      "nearestObservedStepDistance": null,
+      "matchingEventCount": 0,
+      "sampleMatches": []
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 14,
+      "acceptedMidiPitches": [
+        62,
+        58
+      ],
+      "correctPitchPresentAnywhereInMatchingMeasures": false,
+      "correctPitchPresentWithinFourSteps": false,
+      "nearestObservedStepDistance": null,
+      "matchingEventCount": 0,
+      "sampleMatches": []
+    }
+  ],
+  "checks": {
+    "timingBenchmarkPassed": true,
+    "allNineSlotsInspected": true,
+    "notationEventsPresent": true,
+    "readOnlyBenchmark": true,
+    "lockedV7EventsProtected": true,
+    "lockedV8TimingProtected": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "safeguards": {
+    "doesNotModifyV7OrV8Events": true,
+    "doesNotCopyProfessionalNotesIntoJimmy": true,
+    "doesNotModifyLockedTiming": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false,
+    "productionPromotionAllowed": false
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-read-only-verse1-rhythm-template-lock",
+  "passed": true,
+  "rhythmTemplateLocked": true,
+  "sectionLabel": "Verse 1",
+  "startMeasure": 18,
+  "endMeasure": 32,
+  "alignedPairCount": 7,
+  "lockedSlotCount": 9,
+  "variationSlotCount": 2,
+  "lockedRhythmTemplate": [
+    {
+      "consensusStep": 2,
+      "measureInPair": 0,
+      "stepInMeasure": 2,
+      "pairSupport": 7,
+      "pairCoverage": 1.0,
+      "medianDistanceSteps": 0.0,
+      "medianStrength": 0.574749,
+      "source": "verse1-direct-audio-repetition-consensus",
+      "readOnly": true
+    },
+    {
+      "consensusStep": 6,
+      "measureInPair": 0,
+      "stepInMeasure": 6,
+      "pairSupport": 6,
+      "pairCoverage": 0.857143,
+      "medianDistanceSteps": 0.0,
+      "medianStrength": 0.293813,
+      "source": "verse1-direct-audio-repetition-consensus",
+      "readOnly": true
+    },
+    {
+      "consensusStep": 10,
+      "measureInPair": 0,
+      "stepInMeasure": 10,
+      "pairSupport": 7,
+      "pairCoverage": 1.0,
+      "medianDistanceSteps": 0.0,
+      "medianStrength": 0.313668,
+      "source": "verse1-direct-audio-repetition-consensus",
+      "readOnly": true
+    },
+    {
+      "consensusStep": 14,
+      "measureInPair": 0,
+      "stepInMeasure": 14,
+      "pairSupport": 7,
+      "pairCoverage": 1.0,
+      "medianDistanceSteps": 0.0,
+      "medianStrength": 0.424054,
+      "source": "verse1-direct-audio-repetition-consensus",
+      "readOnly": true
+    },
+    {
+      "consensusStep": 18,
+      "measureInPair": 1,
+      "stepInMeasure": 2,
+      "pairSupport": 7,
+      "pairCoverage": 1.0,
+      "medianDistanceSteps": 0.0,
+      "medianStrength": 0.518724,
+      "source": "verse1-direct-audio-repetition-consensus",
+      "readOnly": true
+    },
+    {
+      "consensusStep": 20,
+      "measureInPair": 1,
+      "stepInMeasure": 4,
+      "pairSupport": 5,
+      "pairCoverage": 0.714286,
+      "medianDistanceSteps": 0.0,
+      "medianStrength": 0.237588,
+      "source": "verse1-direct-audio-repetition-consensus",
+      "readOnly": true
+    },
+    {
+      "consensusStep": 22,
+      "measureInPair": 1,
+      "stepInMeasure": 6,
+      "pairSupport": 6,
+      "pairCoverage": 0.857143,
+      "medianDistanceSteps": 0.5,
+      "medianStrength": 0.306271,
+      "source": "verse1-direct-audio-repetition-consensus",
+      "readOnly": true
+    },
+    {
+      "consensusStep": 26,
+      "measureInPair": 1,
+      "stepInMeasure": 10,
+      "pairSupport": 7,
+      "pairCoverage": 1.0,
+      "medianDistanceSteps": 0.0,
+      "medianStrength": 0.238239,
+      "source": "verse1-direct-audio-repetition-consensus",
+      "readOnly": true
+    },
+    {
+      "consensusStep": 30,
+      "measureInPair": 1,
+      "stepInMeasure": 14,
+      "pairSupport": 7,
+      "pairCoverage": 1.0,
+      "medianDistanceSteps": 0.0,
+      "medianStrength": 0.40145,
+      "source": "verse1-direct-audio-repetition-consensus",
+      "readOnly": true
+    }
+  ],
+  "documentedOptionalVariations": [
+    {
+      "consensusStep": 4,
+      "measureInPair": 0,
+      "stepInMeasure": 4,
+      "pairSupport": 2,
+      "pairCoverage": 0.285714,
+      "medianDistanceSteps": 0.0,
+      "medianStrength": 0.363204,
+      "classification": "documented-optional-variation",
+      "readOnly": true
+    },
+    {
+      "consensusStep": 9,
+      "measureInPair": 0,
+      "stepInMeasure": 9,
+      "pairSupport": 3,
+      "pairCoverage": 0.428571,
+      "medianDistanceSteps": 0.0,
+      "medianStrength": 0.281257,
+      "classification": "documented-optional-variation",
+      "readOnly": true
+    }
+  ],
+  "checks": {
+    "consensusBenchmarkPassed": true,
+    "introRhythmTemplateLocked": true,
+    "verseMeasureRangeUnchanged": true,
+    "allSevenRepeatedPairsRetained": true,
+    "expectedLockedSlotCount": true,
+    "expectedLockedSteps": true,
+    "optionalVariationsPreserved": true,
+    "minimumPairSupportMet": true,
+    "medianSpreadWithinTolerance": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "usesDirectAudioEvidence": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "trainingRule": "This gate locks only the nine Verse 1 rhythm attacks independently supported by at least five of the seven repeated two-measure phrases. Lower-support steps remain documented optional variations and must not be promoted into the core template. The lock is read-only: it must not synthesize notes, change pitches, frets, techniques, durations, locked V7 events, the intro rhythm template, or the PDF renderer."
+}

@@ -1,0 +1,14 @@
+Jimmy PAIge full-song alignment diagnosis
+Events inspected: 1629
+Best alignment: tempo=133.8 BPM | offset=7.1s | score=8/9 | matches=19
+Slot findings:
+- em-riff-a step 2: PASS | matches=1 | accepted=[57, 59] | nearby=[{'midiPitch': 43, 'support': 3}, {'midiPitch': 47, 'support': 1}, {'midiPitch': 50, 'support': 1}, {'midiPitch': 52, 'support': 1}, {'midiPitch': 59, 'support': 1}]
+- em-riff-a step 6: PASS | matches=1 | accepted=[55] | nearby=[{'midiPitch': 64, 'support': 4}, {'midiPitch': 52, 'support': 3}, {'midiPitch': 43, 'support': 1}, {'midiPitch': 48, 'support': 1}, {'midiPitch': 55, 'support': 1}]
+- em-riff-a step 10: PASS | matches=6 | accepted=[52] | nearby=[{'midiPitch': 52, 'support': 6}, {'midiPitch': 43, 'support': 3}, {'midiPitch': 48, 'support': 2}, {'midiPitch': 59, 'support': 2}, {'midiPitch': 67, 'support': 2}]
+- em-riff-a step 14: PASS | matches=1 | accepted=[45] | nearby=[{'midiPitch': 52, 'support': 5}, {'midiPitch': 67, 'support': 4}, {'midiPitch': 43, 'support': 3}, {'midiPitch': 50, 'support': 2}, {'midiPitch': 58, 'support': 2}]
+- em-riff-b step 2: PASS | matches=1 | accepted=[57, 59] | nearby=[{'midiPitch': 43, 'support': 7}, {'midiPitch': 67, 'support': 6}, {'midiPitch': 48, 'support': 3}, {'midiPitch': 52, 'support': 2}, {'midiPitch': 64, 'support': 2}]
+- em-riff-b step 4: PASS | matches=2 | accepted=[55] | nearby=[{'midiPitch': 43, 'support': 6}, {'midiPitch': 52, 'support': 3}, {'midiPitch': 64, 'support': 3}, {'midiPitch': 67, 'support': 3}, {'midiPitch': 48, 'support': 2}]
+- em-riff-b step 6: PASS | matches=4 | accepted=[52] | nearby=[{'midiPitch': 43, 'support': 4}, {'midiPitch': 52, 'support': 4}, {'midiPitch': 67, 'support': 3}, {'midiPitch': 48, 'support': 1}, {'midiPitch': 49, 'support': 1}]
+- em-riff-b step 10: MISS | matches=0 | accepted=[45] | nearby=[{'midiPitch': 43, 'support': 7}, {'midiPitch': 52, 'support': 5}, {'midiPitch': 50, 'support': 2}, {'midiPitch': 64, 'support': 2}, {'midiPitch': 67, 'support': 2}]
+- em-riff-b step 14: PASS | matches=3 | accepted=[58, 62] | nearby=[{'midiPitch': 43, 'support': 4}, {'midiPitch': 52, 'support': 3}, {'midiPitch': 48, 'support': 2}, {'midiPitch': 50, 'support': 2}, {'midiPitch': 62, 'support': 2}]
+Output: public/gomyway-jimmy-paige-full-song-alignment-diagnosis.json

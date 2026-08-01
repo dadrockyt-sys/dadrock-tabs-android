@@ -1,0 +1,95 @@
+{
+  "validationName": "Jimmy Page human geometry annotation gate",
+  "sourceQueue": "public/gomyway-jimmy-paige-human-geometry-annotation-queue.json",
+  "annotationQueueRows": 9,
+  "completedAnnotations": 9,
+  "incompleteOrInvalidAnnotations": 0,
+  "allRepresentativeFamiliesHumanConfirmed": true,
+  "syntheticCoordinatesAccepted": false,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "readyForTechniqueRendererTraining": true,
+  "rows": [
+    {
+      "techniqueFamily": "full-bend-release",
+      "page": 1,
+      "measure": 1,
+      "humanConfirmed": true,
+      "normalizedGeometryValid": true,
+      "boxOrderValid": true,
+      "annotationComplete": true
+    },
+    {
+      "techniqueFamily": "vibrato",
+      "page": 2,
+      "measure": 25,
+      "humanConfirmed": true,
+      "normalizedGeometryValid": true,
+      "boxOrderValid": true,
+      "annotationComplete": true
+    },
+    {
+      "techniqueFamily": "muted-note",
+      "page": 3,
+      "measure": 28,
+      "humanConfirmed": true,
+      "normalizedGeometryValid": true,
+      "boxOrderValid": true,
+      "annotationComplete": true
+    },
+    {
+      "techniqueFamily": "pick-direction",
+      "page": 3,
+      "measure": 28,
+      "humanConfirmed": true,
+      "normalizedGeometryValid": true,
+      "boxOrderValid": true,
+      "annotationComplete": true
+    },
+    {
+      "techniqueFamily": "chord-sustain-tie",
+      "page": 3,
+      "measure": 33,
+      "humanConfirmed": true,
+      "normalizedGeometryValid": true,
+      "boxOrderValid": true,
+      "annotationComplete": true
+    },
+    {
+      "techniqueFamily": "chord-slide",
+      "page": 6,
+      "measure": 79,
+      "humanConfirmed": true,
+      "normalizedGeometryValid": true,
+      "boxOrderValid": true,
+      "annotationComplete": true
+    },
+    {
+      "techniqueFamily": "time-signature-change",
+      "page": 8,
+      "measure": 104,
+      "humanConfirmed": true,
+      "normalizedGeometryValid": true,
+      "boxOrderValid": true,
+      "annotationComplete": true
+    },
+    {
+      "techniqueFamily": "section-label",
+      "page": 2,
+      "measure": 17,
+      "humanConfirmed": true,
+      "normalizedGeometryValid": true,
+      "boxOrderValid": true,
+      "annotationComplete": true
+    },
+    {
+      "techniqueFamily": "final-barline",
+      "page": 8,
+      "measure": 113,
+      "humanConfirmed": true,
+      "normalizedGeometryValid": true,
+      "boxOrderValid": true,
+      "annotationComplete": true
+    }
+  ]
+}

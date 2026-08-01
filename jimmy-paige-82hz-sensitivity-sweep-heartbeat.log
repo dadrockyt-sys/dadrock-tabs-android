@@ -1,0 +1,31 @@
+2026-08-01 06:58:03 UTC | Attempt 1/9 submitted | name=82hz-proven-baseline | retry=1/3 | callId=fc-01KYY1V64QB93X81K5BTNTEEVK
+2026-08-01 06:58:06 UTC | [worker-start heartbeat] attempt=1/9 | name=82hz-proven-baseline | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1V64QB93X81K5BTNTEEVK
+2026-08-01 06:58:21 UTC | [worker-start heartbeat] attempt=1/9 | name=82hz-proven-baseline | retry=1/3 | elapsed=17.3s | taskId=- | callId=fc-01KYY1V64QB93X81K5BTNTEEVK
+2026-08-01 06:58:36 UTC | [worker-start heartbeat] attempt=1/9 | name=82hz-proven-baseline | retry=1/3 | elapsed=32.5s | taskId=- | callId=fc-01KYY1V64QB93X81K5BTNTEEVK
+2026-08-01 06:58:51 UTC | Attempt 1/9 complete | name=82hz-proven-baseline | low=39.06% | overall=64.58% | MIDI52=32/32 | MIDI62=12/16 | protected=91.67% | guard=False | weighted=49.425
+2026-08-01 06:58:53 UTC | Attempt 2/9 submitted | name=82hz-onset-032 | retry=1/3 | callId=fc-01KYY1WP8791ZBFAX5TYT036JY
+2026-08-01 06:58:57 UTC | [worker-start heartbeat] attempt=2/9 | name=82hz-onset-032 | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1WP8791ZBFAX5TYT036JY
+2026-08-01 06:59:12 UTC | Attempt 2/9 complete | name=82hz-onset-032 | low=40.62% | overall=65.28% | MIDI52=32/32 | MIDI62=12/16 | protected=91.67% | guard=False | weighted=50.657
+2026-08-01 06:59:13 UTC | Attempt 3/9 submitted | name=82hz-onset-030 | retry=1/3 | callId=fc-01KYY1XA15PG03JAYAC31VKM57
+2026-08-01 06:59:16 UTC | [worker-start heartbeat] attempt=3/9 | name=82hz-onset-030 | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1XA15PG03JAYAC31VKM57
+2026-08-01 06:59:31 UTC | Attempt 3/9 complete | name=82hz-onset-030 | low=40.62% | overall=65.28% | MIDI52=32/32 | MIDI62=12/16 | protected=91.67% | guard=False | weighted=50.657
+2026-08-01 06:59:32 UTC | Attempt 4/9 submitted | name=82hz-frame-018 | retry=1/3 | callId=fc-01KYY1XWNXR2NKSNZBZ4JJG6ZW
+2026-08-01 06:59:37 UTC | [worker-start heartbeat] attempt=4/9 | name=82hz-frame-018 | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1XWNXR2NKSNZBZ4JJG6ZW
+2026-08-01 06:59:52 UTC | Attempt 4/9 complete | name=82hz-frame-018 | low=50.0% | overall=72.22% | MIDI52=32/32 | MIDI62=14/16 | protected=95.83% | guard=False | weighted=59.027
+2026-08-01 06:59:53 UTC | Attempt 5/9 submitted | name=82hz-frame-015 | retry=1/3 | callId=fc-01KYY1YHE2J8VTX95FH87ZWVKE
+2026-08-01 06:59:55 UTC | [worker-start heartbeat] attempt=5/9 | name=82hz-frame-015 | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1YHE2J8VTX95FH87ZWVKE
+2026-08-01 07:00:11 UTC | Attempt 5/9 complete | name=82hz-frame-015 | low=59.38% | overall=79.17% | MIDI52=32/32 | MIDI62=14/16 | protected=95.83% | guard=False | weighted=66.983
+2026-08-01 07:00:12 UTC | Attempt 6/9 submitted | name=82hz-length-60 | retry=1/3 | callId=fc-01KYY1Z3HCWWYD8YHEKFP2C2BE
+2026-08-01 07:00:17 UTC | [worker-start heartbeat] attempt=6/9 | name=82hz-length-60 | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1Z3HCWWYD8YHEKFP2C2BE
+2026-08-01 07:00:32 UTC | Attempt 6/9 complete | name=82hz-length-60 | low=43.75% | overall=68.06% | MIDI52=32/32 | MIDI62=12/16 | protected=91.67% | guard=False | weighted=53.404
+2026-08-01 07:00:33 UTC | Attempt 7/9 submitted | name=82hz-length-45 | retry=1/3 | callId=fc-01KYY1ZRKZ945D3YH5475YFA0D
+2026-08-01 07:00:38 UTC | [worker-start heartbeat] attempt=7/9 | name=82hz-length-45 | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1ZRKZ945D3YH5475YFA0D
+2026-08-01 07:00:53 UTC | Attempt 7/9 complete | name=82hz-length-45 | low=51.56% | overall=71.53% | MIDI52=32/32 | MIDI62=12/16 | protected=91.67% | guard=False | weighted=59.565
+2026-08-01 07:00:54 UTC | Attempt 8/9 submitted | name=82hz-balanced-sensitive | retry=1/3 | callId=fc-01KYY20CN10PE3DRHHA6SJB9SH
+2026-08-01 07:00:56 UTC | [worker-start heartbeat] attempt=8/9 | name=82hz-balanced-sensitive | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY20CN10PE3DRHHA6SJB9SH
+2026-08-01 07:01:11 UTC | Attempt 8/9 complete | name=82hz-balanced-sensitive | low=54.69% | overall=75.0% | MIDI52=32/32 | MIDI62=14/16 | protected=95.83% | guard=False | weighted=62.866
+2026-08-01 07:01:12 UTC | Attempt 9/9 submitted | name=82hz-most-sensitive | retry=1/3 | callId=fc-01KYY20YMMSJC4XTC512KFNXSG
+2026-08-01 07:01:17 UTC | [worker-start heartbeat] attempt=9/9 | name=82hz-most-sensitive | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY20YMMSJC4XTC512KFNXSG
+2026-08-01 07:01:32 UTC | Attempt 9/9 complete | name=82hz-most-sensitive | low=70.31% | overall=84.72% | MIDI52=32/32 | MIDI62=14/16 | protected=95.83% | guard=False | weighted=75.744
+2026-08-01 07:01:32 UTC | Sweep complete | no sensitivity configuration restored the MIDI 52/62 guard
+2026-08-01 07:01:32 UTC | Output: public/gomyway-jimmy-paige-82hz-sensitivity-sweep.json

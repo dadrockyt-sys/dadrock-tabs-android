@@ -1,0 +1,2098 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "professional-rhythm-filter-policy-comparison",
+  "sourceEvents": "public/gomyway-jimmy-paige-full-song-winner-events.json",
+  "professionalReference": "public/gomyway-professional-rhythm-reference-v2.json",
+  "timingSource": "public/gomyway-professional-measures-1-16-timing-calibration.json",
+  "tempoBpm": 135.88,
+  "firstMeasureOffsetSeconds": 5.045,
+  "professionalTargetCount": 144,
+  "unfilteredPitchAvailabilityBaseline": {
+    "matched": 43,
+    "total": 144,
+    "score": 0.2986111111111111
+  },
+  "professionalPitchSet": [
+    40,
+    45,
+    50,
+    52,
+    55,
+    57,
+    58,
+    59,
+    62
+  ],
+  "policies": [
+    {
+      "policy": "professional-pitch-set",
+      "filteredEventCount": 753,
+      "midiInventory": [
+        [
+          45,
+          73
+        ],
+        [
+          50,
+          87
+        ],
+        [
+          52,
+          298
+        ],
+        [
+          55,
+          84
+        ],
+        [
+          57,
+          71
+        ],
+        [
+          58,
+          12
+        ],
+        [
+          59,
+          48
+        ],
+        [
+          62,
+          80
+        ]
+      ],
+      "matched": 71,
+      "total": 144,
+      "score": 0.4930555555555556,
+      "measureReports": [
+        {
+          "measureNumber": 1,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 14,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 2,
+          "matched": 7,
+          "total": 11,
+          "score": 0.6363636363636364,
+          "filteredEventCount": 16,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 18,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 4,
+          "matched": 6,
+          "total": 11,
+          "score": 0.5454545454545454,
+          "filteredEventCount": 17,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "matched": 6,
+          "total": 7,
+          "score": 0.8571428571428571,
+          "filteredEventCount": 17,
+          "missing": [
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 6,
+          "matched": 5,
+          "total": 11,
+          "score": 0.45454545454545453,
+          "filteredEventCount": 15,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "matched": 5,
+          "total": 7,
+          "score": 0.7142857142857143,
+          "filteredEventCount": 10,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 8,
+          "matched": 5,
+          "total": 11,
+          "score": 0.45454545454545453,
+          "filteredEventCount": 7,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 6,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 5,
+              "acceptedPitches": [
+                52
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 10,
+          "matched": 5,
+          "total": 11,
+          "score": 0.45454545454545453,
+          "filteredEventCount": 7,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 6,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 12,
+          "matched": 4,
+          "total": 11,
+          "score": 0.36363636363636365,
+          "filteredEventCount": 5,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "matched": 5,
+          "total": 7,
+          "score": 0.7142857142857143,
+          "filteredEventCount": 11,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 14,
+          "matched": 3,
+          "total": 11,
+          "score": 0.2727272727272727,
+          "filteredEventCount": 3,
+          "missing": [
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 7,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "matched": 3,
+          "total": 7,
+          "score": 0.42857142857142855,
+          "filteredEventCount": 5,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 16,
+          "matched": 1,
+          "total": 11,
+          "score": 0.09090909090909091,
+          "filteredEventCount": 1,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 5,
+              "acceptedPitches": [
+                52
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 7,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "policy": "expanded-guitar-40-76",
+      "filteredEventCount": 1609,
+      "midiInventory": [
+        [
+          43,
+          178
+        ],
+        [
+          44,
+          15
+        ],
+        [
+          45,
+          73
+        ],
+        [
+          46,
+          8
+        ],
+        [
+          47,
+          46
+        ],
+        [
+          48,
+          36
+        ],
+        [
+          49,
+          43
+        ],
+        [
+          50,
+          87
+        ],
+        [
+          51,
+          14
+        ],
+        [
+          52,
+          298
+        ],
+        [
+          53,
+          1
+        ],
+        [
+          54,
+          23
+        ],
+        [
+          55,
+          84
+        ],
+        [
+          56,
+          11
+        ],
+        [
+          57,
+          71
+        ],
+        [
+          58,
+          12
+        ],
+        [
+          59,
+          48
+        ],
+        [
+          60,
+          9
+        ],
+        [
+          61,
+          19
+        ],
+        [
+          62,
+          80
+        ],
+        [
+          63,
+          12
+        ],
+        [
+          64,
+          209
+        ],
+        [
+          65,
+          11
+        ],
+        [
+          66,
+          30
+        ],
+        [
+          67,
+          89
+        ],
+        [
+          68,
+          19
+        ],
+        [
+          69,
+          18
+        ],
+        [
+          70,
+          2
+        ],
+        [
+          71,
+          31
+        ],
+        [
+          72,
+          3
+        ],
+        [
+          73,
+          2
+        ],
+        [
+          74,
+          12
+        ],
+        [
+          75,
+          1
+        ],
+        [
+          76,
+          14
+        ]
+      ],
+      "matched": 71,
+      "total": 144,
+      "score": 0.4930555555555556,
+      "measureReports": [
+        {
+          "measureNumber": 1,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 21,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 2,
+          "matched": 7,
+          "total": 11,
+          "score": 0.6363636363636364,
+          "filteredEventCount": 24,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 24,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 4,
+          "matched": 6,
+          "total": 11,
+          "score": 0.5454545454545454,
+          "filteredEventCount": 32,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "matched": 6,
+          "total": 7,
+          "score": 0.8571428571428571,
+          "filteredEventCount": 30,
+          "missing": [
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 6,
+          "matched": 5,
+          "total": 11,
+          "score": 0.45454545454545453,
+          "filteredEventCount": 22,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "matched": 5,
+          "total": 7,
+          "score": 0.7142857142857143,
+          "filteredEventCount": 15,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 8,
+          "matched": 5,
+          "total": 11,
+          "score": 0.45454545454545453,
+          "filteredEventCount": 11,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 13,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 5,
+              "acceptedPitches": [
+                52
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 10,
+          "matched": 5,
+          "total": 11,
+          "score": 0.45454545454545453,
+          "filteredEventCount": 11,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 12,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 12,
+          "matched": 4,
+          "total": 11,
+          "score": 0.36363636363636365,
+          "filteredEventCount": 8,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "matched": 5,
+          "total": 7,
+          "score": 0.7142857142857143,
+          "filteredEventCount": 18,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 14,
+          "matched": 3,
+          "total": 11,
+          "score": 0.2727272727272727,
+          "filteredEventCount": 6,
+          "missing": [
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 7,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "matched": 3,
+          "total": 7,
+          "score": 0.42857142857142855,
+          "filteredEventCount": 10,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 16,
+          "matched": 1,
+          "total": 11,
+          "score": 0.09090909090909091,
+          "filteredEventCount": 5,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 5,
+              "acceptedPitches": [
+                52
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 7,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "policy": "v7-strict-rhythm-52-63",
+      "filteredEventCount": 668,
+      "midiInventory": [
+        [
+          52,
+          298
+        ],
+        [
+          53,
+          1
+        ],
+        [
+          54,
+          23
+        ],
+        [
+          55,
+          84
+        ],
+        [
+          56,
+          11
+        ],
+        [
+          57,
+          71
+        ],
+        [
+          58,
+          12
+        ],
+        [
+          59,
+          48
+        ],
+        [
+          60,
+          9
+        ],
+        [
+          61,
+          19
+        ],
+        [
+          62,
+          80
+        ],
+        [
+          63,
+          12
+        ]
+      ],
+      "matched": 62,
+      "total": 144,
+      "score": 0.4305555555555556,
+      "measureReports": [
+        {
+          "measureNumber": 1,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 16,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 2,
+          "matched": 6,
+          "total": 11,
+          "score": 0.5454545454545454,
+          "filteredEventCount": 17,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 18,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 4,
+          "matched": 6,
+          "total": 11,
+          "score": 0.5454545454545454,
+          "filteredEventCount": 18,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 16,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 6,
+          "matched": 5,
+          "total": 11,
+          "score": 0.45454545454545453,
+          "filteredEventCount": 15,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 8,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 8,
+          "matched": 4,
+          "total": 11,
+          "score": 0.36363636363636365,
+          "filteredEventCount": 5,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "matched": 3,
+          "total": 7,
+          "score": 0.42857142857142855,
+          "filteredEventCount": 5,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 5,
+              "acceptedPitches": [
+                52
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 10,
+          "matched": 5,
+          "total": 11,
+          "score": 0.45454545454545453,
+          "filteredEventCount": 7,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 6,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 12,
+          "matched": 3,
+          "total": 11,
+          "score": 0.2727272727272727,
+          "filteredEventCount": 4,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "matched": 4,
+          "total": 7,
+          "score": 0.5714285714285714,
+          "filteredEventCount": 9,
+          "missing": [
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 14,
+          "matched": 3,
+          "total": 11,
+          "score": 0.2727272727272727,
+          "filteredEventCount": 3,
+          "missing": [
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 7,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "matched": 2,
+          "total": 7,
+          "score": 0.2857142857142857,
+          "filteredEventCount": 4,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            }
+          ]
+        },
+        {
+          "measureNumber": 16,
+          "matched": 1,
+          "total": 11,
+          "score": 0.09090909090909091,
+          "filteredEventCount": 1,
+          "missing": [
+            {
+              "eventIndex": 0,
+              "acceptedPitches": [
+                57,
+                59
+              ]
+            },
+            {
+              "eventIndex": 1,
+              "acceptedPitches": [
+                55
+              ]
+            },
+            {
+              "eventIndex": 3,
+              "acceptedPitches": [
+                45
+              ]
+            },
+            {
+              "eventIndex": 4,
+              "acceptedPitches": [
+                50
+              ]
+            },
+            {
+              "eventIndex": 5,
+              "acceptedPitches": [
+                52
+              ]
+            },
+            {
+              "eventIndex": 6,
+              "acceptedPitches": [
+                40
+              ]
+            },
+            {
+              "eventIndex": 7,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 8,
+              "acceptedPitches": [
+                58
+              ]
+            },
+            {
+              "eventIndex": 9,
+              "acceptedPitches": [
+                62
+              ]
+            },
+            {
+              "eventIndex": 10,
+              "acceptedPitches": [
+                58
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "winner": "professional-pitch-set",
+  "winnerScore": 0.4930555555555556,
+  "runnerUp": "expanded-guitar-40-76",
+  "improvementOverUnfilteredBaseline": 0.19444444444444448,
+  "readyForFilteredTimingCalibration": false,
+  "readyForGuardedAutomatedTraining": false,
+  "productionPromotionAllowed": false,
+  "protectedBaselinesChanged": false,
+  "notes": "This is a measure-wide pitch-availability comparison. It does not claim exact timing, string/fret, chord, or technique accuracy. The winning policy must pass exact timing calibration before training."
+}

@@ -1,0 +1,19 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "jimmy-paige-v7-snippet-bounded-training-loop",
+  "source": "public/DadRock TABS - gomyway2test.m4a",
+  "audioPayloadBytes": 1363150,
+  "attemptsRequested": 6,
+  "attemptsCompleted": 0,
+  "bestCorrectCandidateSlots": 0,
+  "bestCandidatePresencePercentage": 0.0,
+  "bestAttempt": null,
+  "attempts": [],
+  "trainingComplete": true,
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "lockedV7EventsProtected": true,
+  "lockedV8TimingProtected": true,
+  "totalElapsedSeconds": 1995.271
+}

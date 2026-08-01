@@ -1,0 +1,46 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "jimmy-paige-v7-snippet-retry-training-loop",
+  "source": "public/DadRock TABS - gomyway2test.m4a",
+  "audioPayloadBytes": 1363150,
+  "attemptsRequested": 6,
+  "attemptsCompleted": 0,
+  "bestCorrectCandidateSlots": 0,
+  "bestCandidatePresencePercentage": 0.0,
+  "bestAttempt": null,
+  "attempts": [],
+  "status": "stopped-after-retries",
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "lockedV7EventsProtected": true,
+  "lockedV8TimingProtected": true,
+  "currentAttempt": 1,
+  "currentAttemptName": "default",
+  "currentRetry": 3,
+  "currentCallId": "fc-01KYX6AZJM8Q7Q3WR9ZNDYCFAG",
+  "currentStatus": "waiting-for-worker",
+  "failedAttempt": 1,
+  "failedAttemptName": "default",
+  "failedAttemptRetries": [
+    {
+      "retry": 1,
+      "callId": "fc-01KYX64ZF4V8MC7V18GFY1YXKX",
+      "reason": "worker-start-timeout",
+      "waitedSeconds": 98.381
+    },
+    {
+      "retry": 2,
+      "callId": "fc-01KYX681DV2373SR7WJRRE9XB3",
+      "reason": "worker-start-timeout",
+      "waitedSeconds": 99.109
+    },
+    {
+      "retry": 3,
+      "callId": "fc-01KYX6AZJM8Q7Q3WR9ZNDYCFAG",
+      "reason": "worker-start-timeout",
+      "waitedSeconds": 96.965
+    }
+  ],
+  "totalElapsedSeconds": 294.458
+}

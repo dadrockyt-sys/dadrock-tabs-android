@@ -1,0 +1,794 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "guarded-raw-chord-evidence-rule-score",
+  "source": "public/gomyway-jimmy-paige-phase-local-raw-chord-evidence.json",
+  "rulesTested": 7560,
+  "bestFullDatasetRule": {
+    "phaseStart": 0.75,
+    "phaseEnd": 1.05,
+    "frameThreshold": "0.08",
+    "coactivationMinimum": 0.105,
+    "sameFrameCountMinimum": 0,
+    "onsetMinimum": 0.15
+  },
+  "bestFullDatasetMetrics": {
+    "truePositive": 8,
+    "falsePositive": 6,
+    "falseNegative": 0,
+    "trueNegative": 2,
+    "precisionPercentage": 57.14,
+    "recallPercentage": 100.0,
+    "f1Percentage": 72.73,
+    "accuracyPercentage": 62.5,
+    "truePositiveMeasures": [
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16
+    ],
+    "falsePositiveMeasures": [
+      1,
+      3,
+      5,
+      7,
+      11,
+      15
+    ],
+    "missedProfessionalMeasures": [],
+    "trueNegativeMeasures": [
+      9,
+      13
+    ]
+  },
+  "leaveOneMeasureOut": [
+    {
+      "heldOutMeasure": 1,
+      "expectedDoubleStop": false,
+      "predictedDoubleStop": true,
+      "correct": false,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 8,
+        "falsePositive": 5,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 61.54,
+        "recallPercentage": 100.0,
+        "f1Percentage": 76.19,
+        "accuracyPercentage": 66.67,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          3,
+          5,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 2,
+      "expectedDoubleStop": true,
+      "predictedDoubleStop": true,
+      "correct": true,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 7,
+        "falsePositive": 6,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 53.85,
+        "recallPercentage": 100.0,
+        "f1Percentage": 70.0,
+        "accuracyPercentage": 60.0,
+        "truePositiveMeasures": [
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 3,
+      "expectedDoubleStop": false,
+      "predictedDoubleStop": true,
+      "correct": false,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 8,
+        "falsePositive": 5,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 61.54,
+        "recallPercentage": 100.0,
+        "f1Percentage": 76.19,
+        "accuracyPercentage": 66.67,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          5,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 4,
+      "expectedDoubleStop": true,
+      "predictedDoubleStop": true,
+      "correct": true,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 7,
+        "falsePositive": 6,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 53.85,
+        "recallPercentage": 100.0,
+        "f1Percentage": 70.0,
+        "accuracyPercentage": 60.0,
+        "truePositiveMeasures": [
+          2,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 5,
+      "expectedDoubleStop": false,
+      "predictedDoubleStop": true,
+      "correct": false,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 8,
+        "falsePositive": 5,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 61.54,
+        "recallPercentage": 100.0,
+        "f1Percentage": 76.19,
+        "accuracyPercentage": 66.67,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 6,
+      "expectedDoubleStop": true,
+      "predictedDoubleStop": true,
+      "correct": true,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 7,
+        "falsePositive": 6,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 53.85,
+        "recallPercentage": 100.0,
+        "f1Percentage": 70.0,
+        "accuracyPercentage": 60.0,
+        "truePositiveMeasures": [
+          2,
+          4,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 7,
+      "expectedDoubleStop": false,
+      "predictedDoubleStop": true,
+      "correct": false,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 8,
+        "falsePositive": 5,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 61.54,
+        "recallPercentage": 100.0,
+        "f1Percentage": 76.19,
+        "accuracyPercentage": 66.67,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 8,
+      "expectedDoubleStop": true,
+      "predictedDoubleStop": true,
+      "correct": true,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 7,
+        "falsePositive": 6,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 53.85,
+        "recallPercentage": 100.0,
+        "f1Percentage": 70.0,
+        "accuracyPercentage": 60.0,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 9,
+      "expectedDoubleStop": false,
+      "predictedDoubleStop": false,
+      "correct": true,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 8,
+        "falsePositive": 6,
+        "falseNegative": 0,
+        "trueNegative": 1,
+        "precisionPercentage": 57.14,
+        "recallPercentage": 100.0,
+        "f1Percentage": 72.73,
+        "accuracyPercentage": 60.0,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 10,
+      "expectedDoubleStop": true,
+      "predictedDoubleStop": true,
+      "correct": true,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 7,
+        "falsePositive": 6,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 53.85,
+        "recallPercentage": 100.0,
+        "f1Percentage": 70.0,
+        "accuracyPercentage": 60.0,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 11,
+      "expectedDoubleStop": false,
+      "predictedDoubleStop": true,
+      "correct": false,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 8,
+        "falsePositive": 5,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 61.54,
+        "recallPercentage": 100.0,
+        "f1Percentage": 76.19,
+        "accuracyPercentage": 66.67,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 12,
+      "expectedDoubleStop": true,
+      "predictedDoubleStop": true,
+      "correct": true,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 7,
+        "falsePositive": 6,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 53.85,
+        "recallPercentage": 100.0,
+        "f1Percentage": 70.0,
+        "accuracyPercentage": 60.0,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 13,
+      "expectedDoubleStop": false,
+      "predictedDoubleStop": false,
+      "correct": true,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 8,
+        "falsePositive": 6,
+        "falseNegative": 0,
+        "trueNegative": 1,
+        "precisionPercentage": 57.14,
+        "recallPercentage": 100.0,
+        "f1Percentage": 72.73,
+        "accuracyPercentage": 60.0,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 14,
+      "expectedDoubleStop": true,
+      "predictedDoubleStop": false,
+      "correct": false,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.2
+      },
+      "trainingMetrics": {
+        "truePositive": 7,
+        "falsePositive": 5,
+        "falseNegative": 0,
+        "trueNegative": 3,
+        "precisionPercentage": 58.33,
+        "recallPercentage": 100.0,
+        "f1Percentage": 73.68,
+        "accuracyPercentage": 66.67,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          11
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13,
+          15
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 15,
+      "expectedDoubleStop": false,
+      "predictedDoubleStop": true,
+      "correct": false,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 8,
+        "falsePositive": 5,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 61.54,
+        "recallPercentage": 100.0,
+        "f1Percentage": 76.19,
+        "accuracyPercentage": 66.67,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          11
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "heldOutMeasure": 16,
+      "expectedDoubleStop": true,
+      "predictedDoubleStop": true,
+      "correct": true,
+      "trainingRule": {
+        "phaseStart": 0.75,
+        "phaseEnd": 1.05,
+        "frameThreshold": "0.08",
+        "coactivationMinimum": 0.105,
+        "sameFrameCountMinimum": 0,
+        "onsetMinimum": 0.15
+      },
+      "trainingMetrics": {
+        "truePositive": 7,
+        "falsePositive": 6,
+        "falseNegative": 0,
+        "trueNegative": 2,
+        "precisionPercentage": 53.85,
+        "recallPercentage": 100.0,
+        "f1Percentage": 70.0,
+        "accuracyPercentage": 60.0,
+        "truePositiveMeasures": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14
+        ],
+        "falsePositiveMeasures": [
+          1,
+          3,
+          5,
+          7,
+          11,
+          15
+        ],
+        "missedProfessionalMeasures": [],
+        "trueNegativeMeasures": [
+          9,
+          13
+        ]
+      }
+    }
+  ],
+  "leaveOneMeasureOutCorrect": 9,
+  "leaveOneMeasureOutTotal": 16,
+  "leaveOneMeasureOutAccuracyPercentage": 56.25,
+  "readyForProductionPromotion": false,
+  "reasonProductionBlocked": "Single-song raw-evidence rules require cross-song validation.",
+  "professionalPdfRemainsScoringAuthority": true,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedPitchCheckpointChanged": false
+}

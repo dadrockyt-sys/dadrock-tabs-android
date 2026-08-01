@@ -1,0 +1,316 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "parameterized-professional-frequency-floor-sweep",
+  "modalApp": "dadrock-jimmy-paige-professional-worker",
+  "modalFunction": "extract_parameterized",
+  "professionalReference": "public/gomyway-professional-rhythm-reference-v2.json",
+  "attemptsRequested": 6,
+  "attemptsCompleted": 6,
+  "attemptsFailed": 0,
+  "attempts": [
+    {
+      "attemptNumber": 1,
+      "name": "proven-winner-100hz",
+      "parameters": {
+        "name": "proven-winner-100hz",
+        "onset_threshold": 0.35,
+        "frame_threshold": 0.2,
+        "minimum_note_length": 75.0,
+        "minimum_frequency": 100.0,
+        "maximum_frequency": 1400.0,
+        "multiple_pitch_bends": false
+      },
+      "status": "complete",
+      "retries": [
+        {
+          "retry": 1,
+          "status": "complete",
+          "elapsedSeconds": 17.231,
+          "callId": "fc-01KYY1EWGZYF76Y0RMHN541V0A"
+        }
+      ],
+      "extractedEventCount": 1629,
+      "remoteElapsedSeconds": 7.45,
+      "matchedTargets": 77,
+      "professionalTargets": 144,
+      "overallRecallPercentage": 53.47,
+      "lowRegisterRecallPercentage": 14.06,
+      "protectedRecallPercentage": 91.67,
+      "protectedPitchGuardPassed": false,
+      "weightedScore": 29.703,
+      "expectedByPitch": {
+        "40": 16,
+        "45": 16,
+        "50": 16,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 16,
+        "62": 16
+      },
+      "matchedByPitch": {
+        "45": 1,
+        "50": 8,
+        "52": 32,
+        "55": 12,
+        "57": 12,
+        "62": 12
+      }
+    },
+    {
+      "attemptNumber": 2,
+      "name": "proven-winner-90hz",
+      "parameters": {
+        "name": "proven-winner-90hz",
+        "onset_threshold": 0.35,
+        "frame_threshold": 0.2,
+        "minimum_note_length": 75.0,
+        "minimum_frequency": 90.0,
+        "maximum_frequency": 1400.0,
+        "multiple_pitch_bends": false
+      },
+      "status": "complete",
+      "retries": [
+        {
+          "retry": 1,
+          "status": "complete",
+          "elapsedSeconds": 18.186,
+          "callId": "fc-01KYY1FEDWRFEV7R068VE2EW2F"
+        }
+      ],
+      "extractedEventCount": 1699,
+      "remoteElapsedSeconds": 6.974,
+      "matchedTargets": 77,
+      "professionalTargets": 144,
+      "overallRecallPercentage": 53.47,
+      "lowRegisterRecallPercentage": 14.06,
+      "protectedRecallPercentage": 91.67,
+      "protectedPitchGuardPassed": false,
+      "weightedScore": 29.703,
+      "expectedByPitch": {
+        "40": 16,
+        "45": 16,
+        "50": 16,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 16,
+        "62": 16
+      },
+      "matchedByPitch": {
+        "45": 1,
+        "50": 8,
+        "52": 32,
+        "55": 12,
+        "57": 12,
+        "62": 12
+      }
+    },
+    {
+      "attemptNumber": 3,
+      "name": "proven-winner-82hz",
+      "parameters": {
+        "name": "proven-winner-82hz",
+        "onset_threshold": 0.35,
+        "frame_threshold": 0.2,
+        "minimum_note_length": 75.0,
+        "minimum_frequency": 82.0,
+        "maximum_frequency": 1400.0,
+        "multiple_pitch_bends": false
+      },
+      "status": "complete",
+      "retries": [
+        {
+          "retry": 1,
+          "status": "complete",
+          "elapsedSeconds": 18.16,
+          "callId": "fc-01KYY1G1JE4DXN74V6CJWTPB25"
+        }
+      ],
+      "extractedEventCount": 2392,
+      "remoteElapsedSeconds": 8.997,
+      "matchedTargets": 93,
+      "professionalTargets": 144,
+      "overallRecallPercentage": 64.58,
+      "lowRegisterRecallPercentage": 39.06,
+      "protectedRecallPercentage": 91.67,
+      "protectedPitchGuardPassed": false,
+      "weightedScore": 49.425,
+      "expectedByPitch": {
+        "40": 16,
+        "45": 16,
+        "50": 16,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 16,
+        "62": 16
+      },
+      "matchedByPitch": {
+        "40": 16,
+        "45": 1,
+        "50": 8,
+        "52": 32,
+        "55": 12,
+        "57": 12,
+        "62": 12
+      }
+    },
+    {
+      "attemptNumber": 4,
+      "name": "proven-winner-80hz",
+      "parameters": {
+        "name": "proven-winner-80hz",
+        "onset_threshold": 0.35,
+        "frame_threshold": 0.2,
+        "minimum_note_length": 75.0,
+        "minimum_frequency": 80.0,
+        "maximum_frequency": 1400.0,
+        "multiple_pitch_bends": false
+      },
+      "status": "complete",
+      "retries": [
+        {
+          "retry": 1,
+          "status": "complete",
+          "elapsedSeconds": 18.135,
+          "callId": "fc-01KYY1GMAZTK94FJC8V6B5G3PK"
+        }
+      ],
+      "extractedEventCount": 2420,
+      "remoteElapsedSeconds": 6.976,
+      "matchedTargets": 93,
+      "professionalTargets": 144,
+      "overallRecallPercentage": 64.58,
+      "lowRegisterRecallPercentage": 39.06,
+      "protectedRecallPercentage": 91.67,
+      "protectedPitchGuardPassed": false,
+      "weightedScore": 49.425,
+      "expectedByPitch": {
+        "40": 16,
+        "45": 16,
+        "50": 16,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 16,
+        "62": 16
+      },
+      "matchedByPitch": {
+        "40": 16,
+        "45": 1,
+        "50": 8,
+        "52": 32,
+        "55": 12,
+        "57": 12,
+        "62": 12
+      }
+    },
+    {
+      "attemptNumber": 5,
+      "name": "proven-winner-75hz",
+      "parameters": {
+        "name": "proven-winner-75hz",
+        "onset_threshold": 0.35,
+        "frame_threshold": 0.2,
+        "minimum_note_length": 75.0,
+        "minimum_frequency": 75.0,
+        "maximum_frequency": 1400.0,
+        "multiple_pitch_bends": false
+      },
+      "status": "complete",
+      "retries": [
+        {
+          "retry": 1,
+          "status": "complete",
+          "elapsedSeconds": 20.357,
+          "callId": "fc-01KYY1H74ZQC6A5XQE00J05SZW"
+        }
+      ],
+      "extractedEventCount": 2639,
+      "remoteElapsedSeconds": 7.633,
+      "matchedTargets": 93,
+      "professionalTargets": 144,
+      "overallRecallPercentage": 64.58,
+      "lowRegisterRecallPercentage": 39.06,
+      "protectedRecallPercentage": 91.67,
+      "protectedPitchGuardPassed": false,
+      "weightedScore": 49.425,
+      "expectedByPitch": {
+        "40": 16,
+        "45": 16,
+        "50": 16,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 16,
+        "62": 16
+      },
+      "matchedByPitch": {
+        "40": 16,
+        "45": 1,
+        "50": 8,
+        "52": 32,
+        "55": 12,
+        "57": 12,
+        "62": 12
+      }
+    },
+    {
+      "attemptNumber": 6,
+      "name": "proven-winner-70hz",
+      "parameters": {
+        "name": "proven-winner-70hz",
+        "onset_threshold": 0.35,
+        "frame_threshold": 0.2,
+        "minimum_note_length": 75.0,
+        "minimum_frequency": 70.0,
+        "maximum_frequency": 1400.0,
+        "multiple_pitch_bends": false
+      },
+      "status": "complete",
+      "retries": [
+        {
+          "retry": 1,
+          "status": "complete",
+          "elapsedSeconds": 17.211,
+          "callId": "fc-01KYY1HWCZ8PKD32DV54WHSF8Q"
+        }
+      ],
+      "extractedEventCount": 2665,
+      "remoteElapsedSeconds": 6.931,
+      "matchedTargets": 93,
+      "professionalTargets": 144,
+      "overallRecallPercentage": 64.58,
+      "lowRegisterRecallPercentage": 39.06,
+      "protectedRecallPercentage": 91.67,
+      "protectedPitchGuardPassed": false,
+      "weightedScore": 49.425,
+      "expectedByPitch": {
+        "40": 16,
+        "45": 16,
+        "50": 16,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 16,
+        "62": 16
+      },
+      "matchedByPitch": {
+        "40": 16,
+        "45": 1,
+        "50": 8,
+        "52": 32,
+        "55": 12,
+        "57": 12,
+        "62": 12
+      }
+    }
+  ],
+  "bestAttempt": null,
+  "productionPromotionAllowed": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "trainingComplete": true,
+  "totalElapsedSeconds": 117.328,
+  "readyForNextValidationStage": false
+}

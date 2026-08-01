@@ -1,0 +1,1343 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-read-only-aligned-intro-rhythm-consensus",
+  "passed": true,
+  "orientationOffsetSteps": 12,
+  "alignedPairCount": 8,
+  "introCandidateCount": 75,
+  "deduplicatedPairSlotEventCount": 73,
+  "minimumSupport": 4,
+  "highConfidenceSupport": 6,
+  "maximumTimingSpreadSteps": 1.25,
+  "consensusRhythmSlots": [
+    {
+      "alignedPairStep": 0,
+      "measureInPair": 1,
+      "stepInMeasure": 0,
+      "pairSupport": 4,
+      "supportRatio": 0.5,
+      "medianStrength": 0.472177,
+      "timingSpreadSteps": 0.203952,
+      "stable": true,
+      "highConfidence": false,
+      "sourcePairs": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "events": [
+        {
+          "pairIndex": 2,
+          "sourceMeasure": 6,
+          "rawPairStep": 20,
+          "alignedPairStep": 0,
+          "timingDeltaSteps": 0.070176,
+          "strength": 0.225189,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "sourceMeasure": 10,
+          "rawPairStep": 20,
+          "alignedPairStep": 0,
+          "timingDeltaSteps": -0.427904,
+          "strength": 0.341769,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "sourceMeasure": 12,
+          "rawPairStep": 20,
+          "alignedPairStep": 0,
+          "timingDeltaSteps": -0.077856,
+          "strength": 0.602586,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "sourceMeasure": 14,
+          "rawPairStep": 20,
+          "alignedPairStep": 0,
+          "timingDeltaSteps": 0.072496,
+          "strength": 0.700966,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 6,
+      "measureInPair": 1,
+      "stepInMeasure": 6,
+      "pairSupport": 5,
+      "supportRatio": 0.625,
+      "medianStrength": 0.443945,
+      "timingSpreadSteps": 0.287066,
+      "stable": true,
+      "highConfidence": false,
+      "sourcePairs": [
+        0,
+        4,
+        5,
+        6,
+        7
+      ],
+      "events": [
+        {
+          "pairIndex": 0,
+          "sourceMeasure": 2,
+          "rawPairStep": 26,
+          "alignedPairStep": 6,
+          "timingDeltaSteps": 0.359296,
+          "strength": 0.360455,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "sourceMeasure": 10,
+          "rawPairStep": 26,
+          "alignedPairStep": 6,
+          "timingDeltaSteps": -0.237456,
+          "strength": 0.25427,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "sourceMeasure": 12,
+          "rawPairStep": 26,
+          "alignedPairStep": 6,
+          "timingDeltaSteps": -0.087104,
+          "strength": 0.443945,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "sourceMeasure": 14,
+          "rawPairStep": 26,
+          "alignedPairStep": 6,
+          "timingDeltaSteps": 0.462624,
+          "strength": 0.460411,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "sourceMeasure": 16,
+          "rawPairStep": 26,
+          "alignedPairStep": 6,
+          "timingDeltaSteps": 0.41328,
+          "strength": 0.527836,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 14,
+      "measureInPair": 1,
+      "stepInMeasure": 14,
+      "pairSupport": 4,
+      "supportRatio": 0.5,
+      "medianStrength": 0.451612,
+      "timingSpreadSteps": 0.279207,
+      "stable": true,
+      "highConfidence": false,
+      "sourcePairs": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "events": [
+        {
+          "pairIndex": 4,
+          "sourceMeasure": 9,
+          "rawPairStep": 2,
+          "alignedPairStep": 14,
+          "timingDeltaSteps": 0.198928,
+          "strength": 0.197343,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "sourceMeasure": 11,
+          "rawPairStep": 2,
+          "alignedPairStep": 14,
+          "timingDeltaSteps": -0.449488,
+          "strength": 0.639604,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "sourceMeasure": 13,
+          "rawPairStep": 2,
+          "alignedPairStep": 14,
+          "timingDeltaSteps": -0.09944,
+          "strength": 0.353679,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "sourceMeasure": 15,
+          "rawPairStep": 2,
+          "alignedPairStep": 14,
+          "timingDeltaSteps": 0.250592,
+          "strength": 0.549544,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 22,
+      "measureInPair": 2,
+      "stepInMeasure": 6,
+      "pairSupport": 4,
+      "supportRatio": 0.5,
+      "medianStrength": 0.227485,
+      "timingSpreadSteps": 0.329048,
+      "stable": true,
+      "highConfidence": false,
+      "sourcePairs": [
+        0,
+        5,
+        6,
+        7
+      ],
+      "events": [
+        {
+          "pairIndex": 0,
+          "sourceMeasure": 1,
+          "rawPairStep": 10,
+          "alignedPairStep": 22,
+          "timingDeltaSteps": -0.215104,
+          "strength": 0.23585,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "sourceMeasure": 11,
+          "rawPairStep": 10,
+          "alignedPairStep": 22,
+          "timingDeltaSteps": -0.461824,
+          "strength": 0.212636,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "sourceMeasure": 13,
+          "rawPairStep": 10,
+          "alignedPairStep": 22,
+          "timingDeltaSteps": -0.111776,
+          "strength": 0.21912,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "sourceMeasure": 15,
+          "rawPairStep": 10,
+          "alignedPairStep": 22,
+          "timingDeltaSteps": 0.437952,
+          "strength": 0.646864,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 26,
+      "measureInPair": 2,
+      "stepInMeasure": 10,
+      "pairSupport": 4,
+      "supportRatio": 0.5,
+      "medianStrength": 0.525364,
+      "timingSpreadSteps": 0.280139,
+      "stable": true,
+      "highConfidence": false,
+      "sourcePairs": [
+        0,
+        5,
+        6,
+        7
+      ],
+      "events": [
+        {
+          "pairIndex": 0,
+          "sourceMeasure": 1,
+          "rawPairStep": 14,
+          "alignedPairStep": 26,
+          "timingDeltaSteps": -0.22128,
+          "strength": 0.25782,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "sourceMeasure": 11,
+          "rawPairStep": 14,
+          "alignedPairStep": 26,
+          "timingDeltaSteps": -0.268288,
+          "strength": 0.61133,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "sourceMeasure": 13,
+          "rawPairStep": 14,
+          "alignedPairStep": 26,
+          "timingDeltaSteps": 0.081744,
+          "strength": 0.620042,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "sourceMeasure": 15,
+          "rawPairStep": 14,
+          "alignedPairStep": 26,
+          "timingDeltaSteps": 0.431776,
+          "strength": 0.439398,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 30,
+      "measureInPair": 2,
+      "stepInMeasure": 14,
+      "pairSupport": 4,
+      "supportRatio": 0.5,
+      "medianStrength": 0.410139,
+      "timingSpreadSteps": 0.270781,
+      "stable": true,
+      "highConfidence": false,
+      "sourcePairs": [
+        0,
+        5,
+        6,
+        7
+      ],
+      "events": [
+        {
+          "pairIndex": 0,
+          "sourceMeasure": 2,
+          "rawPairStep": 18,
+          "alignedPairStep": 30,
+          "timingDeltaSteps": -0.02776,
+          "strength": 0.309634,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "sourceMeasure": 12,
+          "rawPairStep": 18,
+          "alignedPairStep": 30,
+          "timingDeltaSteps": -0.274464,
+          "strength": 0.473854,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "sourceMeasure": 14,
+          "rawPairStep": 18,
+          "alignedPairStep": 30,
+          "timingDeltaSteps": 0.275264,
+          "strength": 0.492396,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "sourceMeasure": 16,
+          "rawPairStep": 18,
+          "alignedPairStep": 30,
+          "timingDeltaSteps": 0.425616,
+          "strength": 0.346424,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    }
+  ],
+  "consensusRhythmSlotCount": 6,
+  "highConfidenceConsensusEvents": [],
+  "highConfidenceConsensusEventCount": 0,
+  "rejectedLowSupportEvents": [
+    {
+      "alignedPairStep": 1,
+      "measureInPair": 1,
+      "stepInMeasure": 1,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.271667,
+      "timingSpreadSteps": 0.00116,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        3,
+        7
+      ],
+      "events": [
+        {
+          "pairIndex": 3,
+          "sourceMeasure": 8,
+          "rawPairStep": 21,
+          "alignedPairStep": 1,
+          "timingDeltaSteps": -0.180416,
+          "strength": 0.255799,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "sourceMeasure": 16,
+          "rawPairStep": 21,
+          "alignedPairStep": 1,
+          "timingDeltaSteps": -0.178096,
+          "strength": 0.287535,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 2,
+      "measureInPair": 1,
+      "stepInMeasure": 2,
+      "pairSupport": 1,
+      "supportRatio": 0.125,
+      "medianStrength": 0.250135,
+      "timingSpreadSteps": 0.0,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        0
+      ],
+      "events": [
+        {
+          "pairIndex": 0,
+          "sourceMeasure": 2,
+          "rawPairStep": 22,
+          "alignedPairStep": 2,
+          "timingDeltaSteps": 0.165776,
+          "strength": 0.250135,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 3,
+      "measureInPair": 1,
+      "stepInMeasure": 3,
+      "pairSupport": 1,
+      "supportRatio": 0.125,
+      "medianStrength": 0.377301,
+      "timingSpreadSteps": 0.0,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        1
+      ],
+      "events": [
+        {
+          "pairIndex": 1,
+          "sourceMeasure": 4,
+          "rawPairStep": 23,
+          "alignedPairStep": 3,
+          "timingDeltaSteps": 0.11488,
+          "strength": 0.377301,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 4,
+      "measureInPair": 1,
+      "stepInMeasure": 4,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.297498,
+      "timingSpreadSteps": 0.049344,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        2,
+        4
+      ],
+      "events": [
+        {
+          "pairIndex": 2,
+          "sourceMeasure": 6,
+          "rawPairStep": 24,
+          "alignedPairStep": 4,
+          "timingDeltaSteps": 0.064,
+          "strength": 0.339173,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "sourceMeasure": 10,
+          "rawPairStep": 24,
+          "alignedPairStep": 4,
+          "timingDeltaSteps": -0.034688,
+          "strength": 0.255824,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 5,
+      "measureInPair": 1,
+      "stepInMeasure": 5,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.216487,
+      "timingSpreadSteps": 0.24904,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        3,
+        5
+      ],
+      "events": [
+        {
+          "pairIndex": 3,
+          "sourceMeasure": 8,
+          "rawPairStep": 25,
+          "alignedPairStep": 5,
+          "timingDeltaSteps": 0.01312,
+          "strength": 0.263851,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "sourceMeasure": 12,
+          "rawPairStep": 25,
+          "alignedPairStep": 5,
+          "timingDeltaSteps": -0.48496,
+          "strength": 0.169124,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 7,
+      "measureInPair": 1,
+      "stepInMeasure": 7,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.303851,
+      "timingSpreadSteps": 0.24788,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        1,
+        7
+      ],
+      "events": [
+        {
+          "pairIndex": 1,
+          "sourceMeasure": 4,
+          "rawPairStep": 27,
+          "alignedPairStep": 7,
+          "timingDeltaSteps": 0.308416,
+          "strength": 0.240619,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "sourceMeasure": 16,
+          "rawPairStep": 27,
+          "alignedPairStep": 7,
+          "timingDeltaSteps": -0.187344,
+          "strength": 0.367084,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 8,
+      "measureInPair": 1,
+      "stepInMeasure": 8,
+      "pairSupport": 1,
+      "supportRatio": 0.125,
+      "medianStrength": 0.281322,
+      "timingSpreadSteps": 0.0,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        2
+      ],
+      "events": [
+        {
+          "pairIndex": 2,
+          "sourceMeasure": 6,
+          "rawPairStep": 28,
+          "alignedPairStep": 8,
+          "timingDeltaSteps": 0.057824,
+          "strength": 0.281322,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 9,
+      "measureInPair": 1,
+      "stepInMeasure": 9,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.233928,
+      "timingSpreadSteps": 0.150352,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        3,
+        5
+      ],
+      "events": [
+        {
+          "pairIndex": 3,
+          "sourceMeasure": 8,
+          "rawPairStep": 29,
+          "alignedPairStep": 9,
+          "timingDeltaSteps": 0.006944,
+          "strength": 0.28273,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "sourceMeasure": 12,
+          "rawPairStep": 29,
+          "alignedPairStep": 9,
+          "timingDeltaSteps": 0.307648,
+          "strength": 0.185126,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 10,
+      "measureInPair": 1,
+      "stepInMeasure": 10,
+      "pairSupport": 3,
+      "supportRatio": 0.375,
+      "medianStrength": 0.464032,
+      "timingSpreadSteps": 0.393539,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        4,
+        5,
+        6
+      ],
+      "events": [
+        {
+          "pairIndex": 4,
+          "sourceMeasure": 10,
+          "rawPairStep": 30,
+          "alignedPairStep": 10,
+          "timingDeltaSteps": -0.443328,
+          "strength": 0.464032,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "sourceMeasure": 12,
+          "rawPairStep": 30,
+          "alignedPairStep": 10,
+          "timingDeltaSteps": 0.306112,
+          "strength": 0.259735,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "sourceMeasure": 14,
+          "rawPairStep": 30,
+          "alignedPairStep": 10,
+          "timingDeltaSteps": 0.456448,
+          "strength": 0.544445,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 11,
+      "measureInPair": 1,
+      "stepInMeasure": 11,
+      "pairSupport": 3,
+      "supportRatio": 0.375,
+      "medianStrength": 0.366236,
+      "timingSpreadSteps": 0.34127,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        0,
+        1,
+        7
+      ],
+      "events": [
+        {
+          "pairIndex": 0,
+          "sourceMeasure": 2,
+          "rawPairStep": 31,
+          "alignedPairStep": 11,
+          "timingDeltaSteps": -0.447184,
+          "strength": 0.313017,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "sourceMeasure": 4,
+          "rawPairStep": 31,
+          "alignedPairStep": 11,
+          "timingDeltaSteps": 0.30224,
+          "strength": 0.366236,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "sourceMeasure": 16,
+          "rawPairStep": 31,
+          "alignedPairStep": 11,
+          "timingDeltaSteps": -0.3932,
+          "strength": 0.588494,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 12,
+      "measureInPair": 1,
+      "stepInMeasure": 12,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.273589,
+      "timingSpreadSteps": 0.024672,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        3,
+        4
+      ],
+      "events": [
+        {
+          "pairIndex": 3,
+          "sourceMeasure": 7,
+          "rawPairStep": 0,
+          "alignedPairStep": 12,
+          "timingDeltaSteps": 0.25136,
+          "strength": 0.271462,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "sourceMeasure": 9,
+          "rawPairStep": 0,
+          "alignedPairStep": 12,
+          "timingDeltaSteps": 0.202016,
+          "strength": 0.275716,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 13,
+      "measureInPair": 1,
+      "stepInMeasure": 13,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.418841,
+      "timingSpreadSteps": 0.049336,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        2,
+        4
+      ],
+      "events": [
+        {
+          "pairIndex": 2,
+          "sourceMeasure": 5,
+          "rawPairStep": 1,
+          "alignedPairStep": 13,
+          "timingDeltaSteps": 0.099456,
+          "strength": 0.50678,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "sourceMeasure": 9,
+          "rawPairStep": 1,
+          "alignedPairStep": 13,
+          "timingDeltaSteps": 0.000784,
+          "strength": 0.330903,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 15,
+      "measureInPair": 1,
+      "stepInMeasure": 15,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.243337,
+      "timingSpreadSteps": 0.47456,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        1,
+        2
+      ],
+      "events": [
+        {
+          "pairIndex": 1,
+          "sourceMeasure": 3,
+          "rawPairStep": 3,
+          "alignedPairStep": 15,
+          "timingDeltaSteps": -0.45336,
+          "strength": 0.228163,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "sourceMeasure": 5,
+          "rawPairStep": 3,
+          "alignedPairStep": 15,
+          "timingDeltaSteps": 0.49576,
+          "strength": 0.258511,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 16,
+      "measureInPair": 2,
+      "stepInMeasure": 0,
+      "pairSupport": 3,
+      "supportRatio": 0.375,
+      "medianStrength": 0.304708,
+      "timingSpreadSteps": 0.392456,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        3,
+        5,
+        6
+      ],
+      "events": [
+        {
+          "pairIndex": 3,
+          "sourceMeasure": 7,
+          "rawPairStep": 4,
+          "alignedPairStep": 16,
+          "timingDeltaSteps": 0.44488,
+          "strength": 0.179553,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "sourceMeasure": 11,
+          "rawPairStep": 4,
+          "alignedPairStep": 16,
+          "timingDeltaSteps": -0.452576,
+          "strength": 0.413226,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "sourceMeasure": 13,
+          "rawPairStep": 4,
+          "alignedPairStep": 16,
+          "timingDeltaSteps": -0.302224,
+          "strength": 0.304708,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 17,
+      "measureInPair": 2,
+      "stepInMeasure": 1,
+      "pairSupport": 3,
+      "supportRatio": 0.375,
+      "medianStrength": 0.349795,
+      "timingSpreadSteps": 0.163369,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        0,
+        4,
+        7
+      ],
+      "events": [
+        {
+          "pairIndex": 0,
+          "sourceMeasure": 1,
+          "rawPairStep": 5,
+          "alignedPairStep": 17,
+          "timingDeltaSteps": -0.007712,
+          "strength": 0.273565,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "sourceMeasure": 9,
+          "rawPairStep": 5,
+          "alignedPairStep": 17,
+          "timingDeltaSteps": -0.005392,
+          "strength": 0.37796,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "sourceMeasure": 15,
+          "rawPairStep": 5,
+          "alignedPairStep": 17,
+          "timingDeltaSteps": -0.353104,
+          "strength": 0.349795,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 18,
+      "measureInPair": 2,
+      "stepInMeasure": 2,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.26029,
+      "timingSpreadSteps": 0.351208,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        0,
+        6
+      ],
+      "events": [
+        {
+          "pairIndex": 0,
+          "sourceMeasure": 1,
+          "rawPairStep": 6,
+          "alignedPairStep": 18,
+          "timingDeltaSteps": -0.40864,
+          "strength": 0.344482,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "sourceMeasure": 13,
+          "rawPairStep": 6,
+          "alignedPairStep": 18,
+          "timingDeltaSteps": 0.293776,
+          "strength": 0.176098,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 19,
+      "measureInPair": 2,
+      "stepInMeasure": 3,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.265728,
+      "timingSpreadSteps": 0.374712,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        1,
+        2
+      ],
+      "events": [
+        {
+          "pairIndex": 1,
+          "sourceMeasure": 3,
+          "rawPairStep": 7,
+          "alignedPairStep": 19,
+          "timingDeltaSteps": -0.259824,
+          "strength": 0.290478,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "sourceMeasure": 5,
+          "rawPairStep": 7,
+          "alignedPairStep": 19,
+          "timingDeltaSteps": 0.4896,
+          "strength": 0.240978,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 20,
+      "measureInPair": 2,
+      "stepInMeasure": 4,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.303326,
+      "timingSpreadSteps": 0.074008,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        3,
+        6
+      ],
+      "events": [
+        {
+          "pairIndex": 3,
+          "sourceMeasure": 7,
+          "rawPairStep": 8,
+          "alignedPairStep": 20,
+          "timingDeltaSteps": 0.438704,
+          "strength": 0.26227,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "sourceMeasure": 13,
+          "rawPairStep": 8,
+          "alignedPairStep": 20,
+          "timingDeltaSteps": 0.290688,
+          "strength": 0.344382,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 21,
+      "measureInPair": 2,
+      "stepInMeasure": 5,
+      "pairSupport": 1,
+      "supportRatio": 0.125,
+      "medianStrength": 0.477297,
+      "timingSpreadSteps": 0.0,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        4
+      ],
+      "events": [
+        {
+          "pairIndex": 4,
+          "sourceMeasure": 9,
+          "rawPairStep": 9,
+          "alignedPairStep": 21,
+          "timingDeltaSteps": 0.188144,
+          "strength": 0.477297,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 23,
+      "measureInPair": 2,
+      "stepInMeasure": 7,
+      "pairSupport": 1,
+      "supportRatio": 0.125,
+      "medianStrength": 0.325093,
+      "timingSpreadSteps": 0.0,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        1
+      ],
+      "events": [
+        {
+          "pairIndex": 1,
+          "sourceMeasure": 3,
+          "rawPairStep": 11,
+          "alignedPairStep": 23,
+          "timingDeltaSteps": -0.266,
+          "strength": 0.325093,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 24,
+      "measureInPair": 2,
+      "stepInMeasure": 8,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.253034,
+      "timingSpreadSteps": 0.374712,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        2,
+        3
+      ],
+      "events": [
+        {
+          "pairIndex": 2,
+          "sourceMeasure": 5,
+          "rawPairStep": 12,
+          "alignedPairStep": 24,
+          "timingDeltaSteps": -0.31688,
+          "strength": 0.255282,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "sourceMeasure": 7,
+          "rawPairStep": 12,
+          "alignedPairStep": 24,
+          "timingDeltaSteps": 0.432544,
+          "strength": 0.250785,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 25,
+      "measureInPair": 2,
+      "stepInMeasure": 9,
+      "pairSupport": 1,
+      "supportRatio": 0.125,
+      "medianStrength": 0.449391,
+      "timingSpreadSteps": 0.0,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        4
+      ],
+      "events": [
+        {
+          "pairIndex": 4,
+          "sourceMeasure": 9,
+          "rawPairStep": 13,
+          "alignedPairStep": 25,
+          "timingDeltaSteps": 0.381664,
+          "strength": 0.449391,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 27,
+      "measureInPair": 2,
+      "stepInMeasure": 11,
+      "pairSupport": 2,
+      "supportRatio": 0.25,
+      "medianStrength": 0.239935,
+      "timingSpreadSteps": 0.47456,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        1,
+        2
+      ],
+      "events": [
+        {
+          "pairIndex": 1,
+          "sourceMeasure": 3,
+          "rawPairStep": 15,
+          "alignedPairStep": 27,
+          "timingDeltaSteps": -0.27216,
+          "strength": 0.268103,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "sourceMeasure": 5,
+          "rawPairStep": 15,
+          "alignedPairStep": 27,
+          "timingDeltaSteps": 0.67696,
+          "strength": 0.211768,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 29,
+      "measureInPair": 2,
+      "stepInMeasure": 13,
+      "pairSupport": 3,
+      "supportRatio": 0.375,
+      "medianStrength": 0.222226,
+      "timingSpreadSteps": 0.238929,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        3,
+        4,
+        5
+      ],
+      "events": [
+        {
+          "pairIndex": 3,
+          "sourceMeasure": 8,
+          "rawPairStep": 17,
+          "alignedPairStep": 29,
+          "timingDeltaSteps": -0.373936,
+          "strength": 0.350959,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "sourceMeasure": 10,
+          "rawPairStep": 17,
+          "alignedPairStep": 29,
+          "timingDeltaSteps": 0.175808,
+          "strength": 0.222226,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "sourceMeasure": 12,
+          "rawPairStep": 17,
+          "alignedPairStep": 29,
+          "timingDeltaSteps": -0.272928,
+          "strength": 0.216994,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "alignedPairStep": 31,
+      "measureInPair": 2,
+      "stepInMeasure": 15,
+      "pairSupport": 1,
+      "supportRatio": 0.125,
+      "medianStrength": 0.299183,
+      "timingSpreadSteps": 0.0,
+      "stable": false,
+      "highConfidence": false,
+      "sourcePairs": [
+        1
+      ],
+      "events": [
+        {
+          "pairIndex": 1,
+          "sourceMeasure": 4,
+          "rawPairStep": 19,
+          "alignedPairStep": 31,
+          "timingDeltaSteps": -0.07864,
+          "strength": 0.299183,
+          "source": "direct-audio-energy-onset",
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    }
+  ],
+  "rejectedLowSupportEventCount": 25,
+  "supportHistogram": {
+    "1": 7,
+    "2": 13,
+    "3": 5,
+    "4": 5,
+    "5": 1
+  },
+  "checks": {
+    "candidateReportPassed": true,
+    "orientationLockPassed": true,
+    "orientationLocked": true,
+    "selectedOffsetMatchesLock": true,
+    "allEightPairsRepresented": true,
+    "consensusSlotsPresent": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "usesDirectAudioEvidence": true,
+  "usesLockedOrientation": true,
+  "usesV7PitchEvidence": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "trainingRule": "This stage learns only the repeated intro rhythm skeleton from direct audio. It must not synthesize notes, replace V7 pitch events, or change the PDF. The same guarded consensus method can later expand section-by-section through the complete rhythm part before separate bass and lead models are trained."
+}

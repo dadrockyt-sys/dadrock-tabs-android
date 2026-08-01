@@ -1,0 +1,59 @@
+{
+  "benchmarkVersion": 8,
+  "diagnosisType": "jimmy-paige-em-riff-b-step-10-timing-correction",
+  "source": "public/gomyway-jimmy-paige-em-riff-b-step-10-diagnosis.json",
+  "expectedMidiPitch": 45,
+  "occurrencesInspected": 6,
+  "occurrencesWithMidi45": 2,
+  "medianDeltaSeconds": 0.20866,
+  "medianAbsoluteDeviationSeconds": 0.170169,
+  "timingPatternConsistent": false,
+  "recommendedNextAction": "retain-8-of-9-and-investigate-occurrence-variation",
+  "occurrences": [
+    {
+      "occurrence": 1,
+      "target": 40.395964,
+      "midiPitch": 45,
+      "candidateCount": 0
+    },
+    {
+      "occurrence": 2,
+      "target": 69.095516,
+      "midiPitch": 45,
+      "candidateCount": 0
+    },
+    {
+      "occurrence": 3,
+      "target": 97.795067,
+      "midiPitch": 45,
+      "candidateCount": 0
+    },
+    {
+      "occurrence": 4,
+      "target": 126.494619,
+      "midiPitch": 45,
+      "start": 126.873448,
+      "deltaSeconds": 0.378829,
+      "confidence": 0.19541937112808228,
+      "candidateCount": 2
+    },
+    {
+      "occurrence": 5,
+      "target": 155.19417,
+      "midiPitch": 45,
+      "start": 155.232661,
+      "deltaSeconds": 0.038491,
+      "confidence": 0.1840633749961853,
+      "candidateCount": 3
+    },
+    {
+      "occurrence": 6,
+      "target": 183.893722,
+      "midiPitch": 45,
+      "candidateCount": 0
+    }
+  ],
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false
+}

@@ -1,0 +1,5151 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-pitch-aware-professional-rhythm-anchor",
+  "candidateInput": "gomyway-full-song-v8-rhythm-candidates.json",
+  "notationInput": "gomyway-full-song-v8-notation.json",
+  "referenceInput": "analyzer/fixtures/gomyway_professional_intro_reference_v1.json",
+  "selectedEventLayer": "fingeringNormalizedEvents",
+  "stableCandidateSteps": [
+    2,
+    10,
+    14,
+    18,
+    20,
+    26
+  ],
+  "referencePitchSteps": {
+    "2": [
+      57
+    ],
+    "4": [
+      55
+    ],
+    "6": [
+      52
+    ],
+    "9": [
+      45
+    ],
+    "11": [
+      52
+    ],
+    "14": [
+      40
+    ],
+    "18": [
+      57
+    ],
+    "20": [
+      55
+    ],
+    "22": [
+      52
+    ],
+    "25": [
+      45
+    ],
+    "27": [
+      52
+    ],
+    "30": [
+      58,
+      62
+    ]
+  },
+  "eventCount": 474,
+  "uniquePitchAwareAnchorFound": false,
+  "equivalentBestOffsetCount": 2,
+  "equivalentBestOffsets": [
+    12,
+    28
+  ],
+  "bestCandidate": {
+    "offsetSteps": 12,
+    "matchedAnchorSlots": [
+      6,
+      14,
+      22,
+      30
+    ],
+    "matchedAnchorSlotCount": 4,
+    "timingOpportunities": 32,
+    "timingHits": 29,
+    "timingRecall": 0.90625,
+    "pitchOpportunities": 29,
+    "pitchHits": 22,
+    "pitchPrecision": 0.758621,
+    "exactPitchHits": 22,
+    "exactPitchRate": 0.758621,
+    "anchorSlotRecall": 0.333333,
+    "pitchAwareScore": 0.745618,
+    "evidence": [
+      {
+        "pairIndex": 0,
+        "anchoredPairStep": 6,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 0,
+        "anchoredPairStep": 14,
+        "expectedMidi": [
+          40
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [
+          40
+        ],
+        "nearestDistanceSteps": 0
+      },
+      {
+        "pairIndex": 0,
+        "anchoredPairStep": 22,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 0,
+        "anchoredPairStep": 30,
+        "expectedMidi": [
+          58,
+          62
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 1,
+        "anchoredPairStep": 6,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52,
+          62,
+          67
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 0
+      },
+      {
+        "pairIndex": 1,
+        "anchoredPairStep": 14,
+        "expectedMidi": [
+          40
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [
+          40
+        ],
+        "nearestDistanceSteps": 0
+      },
+      {
+        "pairIndex": 1,
+        "anchoredPairStep": 22,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 1,
+        "anchoredPairStep": 30,
+        "expectedMidi": [
+          58,
+          62
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 2,
+        "anchoredPairStep": 6,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52,
+          62,
+          67
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 0
+      },
+      {
+        "pairIndex": 2,
+        "anchoredPairStep": 22,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 2,
+        "anchoredPairStep": 30,
+        "expectedMidi": [
+          58,
+          62
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 3,
+        "anchoredPairStep": 6,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52,
+          62,
+          67
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 0
+      },
+      {
+        "pairIndex": 3,
+        "anchoredPairStep": 14,
+        "expectedMidi": [
+          40
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [
+          40
+        ],
+        "nearestDistanceSteps": 0
+      },
+      {
+        "pairIndex": 3,
+        "anchoredPairStep": 22,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 4,
+        "anchoredPairStep": 6,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52,
+          62
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 0
+      },
+      {
+        "pairIndex": 4,
+        "anchoredPairStep": 14,
+        "expectedMidi": [
+          40
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [
+          40
+        ],
+        "nearestDistanceSteps": 0
+      },
+      {
+        "pairIndex": 4,
+        "anchoredPairStep": 30,
+        "expectedMidi": [
+          58,
+          62
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 5,
+        "anchoredPairStep": 6,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 5,
+        "anchoredPairStep": 14,
+        "expectedMidi": [
+          40
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [
+          40
+        ],
+        "nearestDistanceSteps": 0
+      },
+      {
+        "pairIndex": 5,
+        "anchoredPairStep": 22,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 5,
+        "anchoredPairStep": 30,
+        "expectedMidi": [
+          58,
+          62
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 6,
+        "anchoredPairStep": 6,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 6,
+        "anchoredPairStep": 14,
+        "expectedMidi": [
+          40
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [
+          40
+        ],
+        "nearestDistanceSteps": 0
+      },
+      {
+        "pairIndex": 6,
+        "anchoredPairStep": 22,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 6,
+        "anchoredPairStep": 30,
+        "expectedMidi": [
+          58,
+          62
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 7,
+        "anchoredPairStep": 6,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 7,
+        "anchoredPairStep": 14,
+        "expectedMidi": [
+          40
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [
+          40
+        ],
+        "nearestDistanceSteps": 0
+      },
+      {
+        "pairIndex": 7,
+        "anchoredPairStep": 22,
+        "expectedMidi": [
+          52
+        ],
+        "observedMidi": [
+          52
+        ],
+        "matchedMidi": [
+          52
+        ],
+        "nearestDistanceSteps": 1
+      },
+      {
+        "pairIndex": 7,
+        "anchoredPairStep": 30,
+        "expectedMidi": [
+          58,
+          62
+        ],
+        "observedMidi": [
+          40
+        ],
+        "matchedMidi": [],
+        "nearestDistanceSteps": 1
+      }
+    ],
+    "readOnly": true
+  },
+  "adoptedAnchor": null,
+  "rankedCandidates": [
+    {
+      "offsetSteps": 12,
+      "matchedAnchorSlots": [
+        6,
+        14,
+        22,
+        30
+      ],
+      "matchedAnchorSlotCount": 4,
+      "timingOpportunities": 32,
+      "timingHits": 29,
+      "timingRecall": 0.90625,
+      "pitchOpportunities": 29,
+      "pitchHits": 22,
+      "pitchPrecision": 0.758621,
+      "exactPitchHits": 22,
+      "exactPitchRate": 0.758621,
+      "anchorSlotRecall": 0.333333,
+      "pitchAwareScore": 0.745618,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 28,
+      "matchedAnchorSlots": [
+        6,
+        14,
+        22,
+        30
+      ],
+      "matchedAnchorSlotCount": 4,
+      "timingOpportunities": 32,
+      "timingHits": 29,
+      "timingRecall": 0.90625,
+      "pitchOpportunities": 29,
+      "pitchHits": 22,
+      "pitchPrecision": 0.758621,
+      "exactPitchHits": 22,
+      "exactPitchRate": 0.758621,
+      "anchorSlotRecall": 0.333333,
+      "pitchAwareScore": 0.745618,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 4,
+      "matchedAnchorSlots": [
+        6,
+        14,
+        18,
+        22,
+        30
+      ],
+      "matchedAnchorSlotCount": 5,
+      "timingOpportunities": 40,
+      "timingHits": 29,
+      "timingRecall": 0.725,
+      "pitchOpportunities": 29,
+      "pitchHits": 22,
+      "pitchPrecision": 0.758621,
+      "exactPitchHits": 22,
+      "exactPitchRate": 0.758621,
+      "anchorSlotRecall": 0.416667,
+      "pitchAwareScore": 0.717701,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 20,
+      "matchedAnchorSlots": [
+        2,
+        6,
+        14,
+        22,
+        30
+      ],
+      "matchedAnchorSlotCount": 5,
+      "timingOpportunities": 40,
+      "timingHits": 32,
+      "timingRecall": 0.8,
+      "pitchOpportunities": 32,
+      "pitchHits": 22,
+      "pitchPrecision": 0.6875,
+      "exactPitchHits": 22,
+      "exactPitchRate": 0.6875,
+      "anchorSlotRecall": 0.416667,
+      "pitchAwareScore": 0.682917,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 24,
+      "matchedAnchorSlots": [
+        2,
+        6,
+        18
+      ],
+      "matchedAnchorSlotCount": 3,
+      "timingOpportunities": 24,
+      "timingHits": 11,
+      "timingRecall": 0.458333,
+      "pitchOpportunities": 11,
+      "pitchHits": 8,
+      "pitchPrecision": 0.727273,
+      "exactPitchHits": 8,
+      "exactPitchRate": 0.727273,
+      "anchorSlotRecall": 0.25,
+      "pitchAwareScore": 0.625758,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 8,
+      "matchedAnchorSlots": [
+        2,
+        18,
+        22
+      ],
+      "matchedAnchorSlotCount": 3,
+      "timingOpportunities": 24,
+      "timingHits": 10,
+      "timingRecall": 0.416667,
+      "pitchOpportunities": 10,
+      "pitchHits": 7,
+      "pitchPrecision": 0.7,
+      "exactPitchHits": 7,
+      "exactPitchRate": 0.7,
+      "anchorSlotRecall": 0.25,
+      "pitchAwareScore": 0.598333,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 18,
+      "matchedAnchorSlots": [
+        4,
+        6,
+        20
+      ],
+      "matchedAnchorSlotCount": 3,
+      "timingOpportunities": 24,
+      "timingHits": 23,
+      "timingRecall": 0.958333,
+      "pitchOpportunities": 23,
+      "pitchHits": 8,
+      "pitchPrecision": 0.347826,
+      "exactPitchHits": 8,
+      "exactPitchRate": 0.347826,
+      "anchorSlotRecall": 0.25,
+      "pitchAwareScore": 0.460145,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62,
+            67
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52,
+            62
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 6,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 2,
+      "matchedAnchorSlots": [
+        4,
+        20,
+        22
+      ],
+      "matchedAnchorSlotCount": 3,
+      "timingOpportunities": 24,
+      "timingHits": 22,
+      "timingRecall": 0.916667,
+      "pitchOpportunities": 22,
+      "pitchHits": 7,
+      "pitchPrecision": 0.318182,
+      "exactPitchHits": 7,
+      "exactPitchRate": 0.318182,
+      "anchorSlotRecall": 0.25,
+      "pitchAwareScore": 0.431061,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 22,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [
+            52
+          ],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 26,
+      "matchedAnchorSlots": [
+        4,
+        14,
+        20
+      ],
+      "matchedAnchorSlotCount": 3,
+      "timingOpportunities": 24,
+      "timingHits": 22,
+      "timingRecall": 0.916667,
+      "pitchOpportunities": 22,
+      "pitchHits": 7,
+      "pitchPrecision": 0.318182,
+      "exactPitchHits": 7,
+      "exactPitchRate": 0.318182,
+      "anchorSlotRecall": 0.25,
+      "pitchAwareScore": 0.431061,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 0,
+      "matchedAnchorSlots": [
+        2,
+        14,
+        18,
+        20
+      ],
+      "matchedAnchorSlotCount": 4,
+      "timingOpportunities": 32,
+      "timingHits": 17,
+      "timingRecall": 0.53125,
+      "pitchOpportunities": 17,
+      "pitchHits": 7,
+      "pitchPrecision": 0.411765,
+      "exactPitchHits": 7,
+      "exactPitchRate": 0.411765,
+      "anchorSlotRecall": 0.333333,
+      "pitchAwareScore": 0.427819,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 14,
+          "expectedMidi": [
+            40
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [
+            40
+          ],
+          "nearestDistanceSteps": 0
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 10,
+      "matchedAnchorSlots": [
+        4,
+        20,
+        30
+      ],
+      "matchedAnchorSlotCount": 3,
+      "timingOpportunities": 24,
+      "timingHits": 22,
+      "timingRecall": 0.916667,
+      "pitchOpportunities": 22,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.25,
+      "pitchAwareScore": 0.208333,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 22,
+      "matchedAnchorSlots": [
+        4
+      ],
+      "matchedAnchorSlotCount": 1,
+      "timingOpportunities": 8,
+      "timingHits": 8,
+      "timingRecall": 1.0,
+      "pitchOpportunities": 8,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.083333,
+      "pitchAwareScore": 0.208333,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 6,
+      "matchedAnchorSlots": [
+        20
+      ],
+      "matchedAnchorSlotCount": 1,
+      "timingOpportunities": 8,
+      "timingHits": 7,
+      "timingRecall": 0.875,
+      "pitchOpportunities": 7,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.083333,
+      "pitchAwareScore": 0.183333,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 20,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 16,
+      "matchedAnchorSlots": [
+        2,
+        4,
+        18,
+        30
+      ],
+      "matchedAnchorSlotCount": 4,
+      "timingOpportunities": 32,
+      "timingHits": 18,
+      "timingRecall": 0.5625,
+      "pitchOpportunities": 18,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.333333,
+      "pitchAwareScore": 0.145833,
+      "evidence": [
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 0,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 1,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52,
+            67
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 4,
+          "expectedMidi": [
+            55
+          ],
+          "observedMidi": [
+            50,
+            52
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 30,
+          "expectedMidi": [
+            58,
+            62
+          ],
+          "observedMidi": [
+            40
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 14,
+      "matchedAnchorSlots": [
+        2
+      ],
+      "matchedAnchorSlotCount": 1,
+      "timingOpportunities": 8,
+      "timingHits": 3,
+      "timingRecall": 0.375,
+      "pitchOpportunities": 3,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.083333,
+      "pitchAwareScore": 0.083333,
+      "evidence": [
+        {
+          "pairIndex": 4,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 5,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 7,
+          "anchoredPairStep": 2,
+          "expectedMidi": [
+            57
+          ],
+          "observedMidi": [
+            50
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 29,
+      "matchedAnchorSlots": [
+        11
+      ],
+      "matchedAnchorSlotCount": 1,
+      "timingOpportunities": 8,
+      "timingHits": 3,
+      "timingRecall": 0.375,
+      "pitchOpportunities": 3,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.083333,
+      "pitchAwareScore": 0.083333,
+      "evidence": [
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 1,
+      "matchedAnchorSlots": [
+        11,
+        27
+      ],
+      "matchedAnchorSlotCount": 2,
+      "timingOpportunities": 16,
+      "timingHits": 3,
+      "timingRecall": 0.1875,
+      "pitchOpportunities": 3,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.166667,
+      "pitchAwareScore": 0.054167,
+      "evidence": [
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 9,
+      "matchedAnchorSlots": [
+        11,
+        27
+      ],
+      "matchedAnchorSlotCount": 2,
+      "timingOpportunities": 16,
+      "timingHits": 3,
+      "timingRecall": 0.1875,
+      "pitchOpportunities": 3,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.166667,
+      "pitchAwareScore": 0.054167,
+      "evidence": [
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 17,
+      "matchedAnchorSlots": [
+        11,
+        27
+      ],
+      "matchedAnchorSlotCount": 2,
+      "timingOpportunities": 16,
+      "timingHits": 3,
+      "timingRecall": 0.1875,
+      "pitchOpportunities": 3,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.166667,
+      "pitchAwareScore": 0.054167,
+      "evidence": [
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 25,
+      "matchedAnchorSlots": [
+        11,
+        27
+      ],
+      "matchedAnchorSlotCount": 2,
+      "timingOpportunities": 16,
+      "timingHits": 3,
+      "timingRecall": 0.1875,
+      "pitchOpportunities": 3,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.166667,
+      "pitchAwareScore": 0.054167,
+      "evidence": [
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 23,
+      "matchedAnchorSlots": [
+        9,
+        11,
+        25
+      ],
+      "matchedAnchorSlotCount": 3,
+      "timingOpportunities": 24,
+      "timingHits": 3,
+      "timingRecall": 0.125,
+      "pitchOpportunities": 3,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.25,
+      "pitchAwareScore": 0.05,
+      "evidence": [
+        {
+          "pairIndex": 2,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 3,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        },
+        {
+          "pairIndex": 6,
+          "anchoredPairStep": 11,
+          "expectedMidi": [
+            52
+          ],
+          "observedMidi": [
+            64
+          ],
+          "matchedMidi": [],
+          "nearestDistanceSteps": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 7,
+      "matchedAnchorSlots": [
+        9,
+        25,
+        27
+      ],
+      "matchedAnchorSlotCount": 3,
+      "timingOpportunities": 24,
+      "timingHits": 0,
+      "timingRecall": 0.0,
+      "pitchOpportunities": 0,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.25,
+      "pitchAwareScore": 0.025,
+      "evidence": [],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 15,
+      "matchedAnchorSlots": [
+        9,
+        25
+      ],
+      "matchedAnchorSlotCount": 2,
+      "timingOpportunities": 16,
+      "timingHits": 0,
+      "timingRecall": 0.0,
+      "pitchOpportunities": 0,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.166667,
+      "pitchAwareScore": 0.016667,
+      "evidence": [],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 31,
+      "matchedAnchorSlots": [
+        9,
+        25
+      ],
+      "matchedAnchorSlotCount": 2,
+      "timingOpportunities": 16,
+      "timingHits": 0,
+      "timingRecall": 0.0,
+      "pitchOpportunities": 0,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.166667,
+      "pitchAwareScore": 0.016667,
+      "evidence": [],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 5,
+      "matchedAnchorSlots": [
+        25
+      ],
+      "matchedAnchorSlotCount": 1,
+      "timingOpportunities": 8,
+      "timingHits": 0,
+      "timingRecall": 0.0,
+      "pitchOpportunities": 0,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.083333,
+      "pitchAwareScore": 0.008333,
+      "evidence": [],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 11,
+      "matchedAnchorSlots": [
+        25
+      ],
+      "matchedAnchorSlotCount": 1,
+      "timingOpportunities": 8,
+      "timingHits": 0,
+      "timingRecall": 0.0,
+      "pitchOpportunities": 0,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.083333,
+      "pitchAwareScore": 0.008333,
+      "evidence": [],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 13,
+      "matchedAnchorSlots": [
+        27
+      ],
+      "matchedAnchorSlotCount": 1,
+      "timingOpportunities": 8,
+      "timingHits": 0,
+      "timingRecall": 0.0,
+      "pitchOpportunities": 0,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.083333,
+      "pitchAwareScore": 0.008333,
+      "evidence": [],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 21,
+      "matchedAnchorSlots": [
+        9
+      ],
+      "matchedAnchorSlotCount": 1,
+      "timingOpportunities": 8,
+      "timingHits": 0,
+      "timingRecall": 0.0,
+      "pitchOpportunities": 0,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.083333,
+      "pitchAwareScore": 0.008333,
+      "evidence": [],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 27,
+      "matchedAnchorSlots": [
+        9
+      ],
+      "matchedAnchorSlotCount": 1,
+      "timingOpportunities": 8,
+      "timingHits": 0,
+      "timingRecall": 0.0,
+      "pitchOpportunities": 0,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.083333,
+      "pitchAwareScore": 0.008333,
+      "evidence": [],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 30,
+      "matchedAnchorSlots": [
+        18
+      ],
+      "matchedAnchorSlotCount": 1,
+      "timingOpportunities": 8,
+      "timingHits": 0,
+      "timingRecall": 0.0,
+      "pitchOpportunities": 0,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.083333,
+      "pitchAwareScore": 0.008333,
+      "evidence": [],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 3,
+      "matchedAnchorSlots": [],
+      "matchedAnchorSlotCount": 0,
+      "timingOpportunities": 0,
+      "timingHits": 0,
+      "timingRecall": 0.0,
+      "pitchOpportunities": 0,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.0,
+      "pitchAwareScore": 0.0,
+      "evidence": [],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 19,
+      "matchedAnchorSlots": [],
+      "matchedAnchorSlotCount": 0,
+      "timingOpportunities": 0,
+      "timingHits": 0,
+      "timingRecall": 0.0,
+      "pitchOpportunities": 0,
+      "pitchHits": 0,
+      "pitchPrecision": 0.0,
+      "exactPitchHits": 0,
+      "exactPitchRate": 0.0,
+      "anchorSlotRecall": 0.0,
+      "pitchAwareScore": 0.0,
+      "evidence": [],
+      "readOnly": true
+    }
+  ],
+  "independentDirectRhythmEvidence": true,
+  "usesV7PitchEvidenceReadOnly": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "passed": true,
+  "trainingRule": "Direct-audio rhythm evidence may be phase-anchored with locked V7 pitch evidence only when one offset is uniquely strongest against the professional reference. This diagnostic must not synthesize notes or alter V7 output or the renderer."
+}

@@ -1,0 +1,934 @@
+===== CURRENT COMMIT =====
+5976505 Re-exec updated Jimmy PAIge workflow after git pull
+
+===== FILE: analyzer/modal_analyzer_v8_notation_benchmark.py =====
+from __future__ import annotations
+
+import json
+import tempfile
+from pathlib import Path
+from typing import Any
+
+import modal
+import intro_fingering_normalization_v8 as fingering_normalizer
+import intro_motif_stabilization_v8 as motif_stabilizer
+import modal_analyzer_v7 as analyzer
+import notation_cleanup_v8 as notation_cleanup
+import song_section_detection_v8 as section_detector
+
+app = modal.App("dadrock-v8-notation-benchmark")
+image = analyzer.image.add_local_python_source(
+    "modal_analyzer_v7",
+    "modal_analyzer",
+    "production_chord_diagnostics",
+    "chord_sustain",
+    "reference_aware_harmony",
+    "production_lead_technique_diagnostics",
+    "lead_technique_diagnostics_v7",
+    "production_bass_technique_diagnostics",
+    "bass_technique_diagnostics_v7",
+    "song_section_detection_v8",
+    "notation_cleanup_v8",
+    "intro_motif_stabilization_v8",
+    "intro_fingering_normalization_v8",
+)
+
+STANDARD_GUITAR_OPEN_MIDI = (64, 59, 55, 50, 45, 40)
+
+
+def _event_start(event: dict[str, Any]) -> float:
+    return float(event.get("start") or event.get("start_time") or 0.0)
+
+
+def _event_end(event: dict[str, Any]) -> float:
+    start = _event_start(event)
+    return max(start, float(event.get("end") or event.get("end_time") or start))
+
+
+def _event_pitch(event: dict[str, Any]) -> int:
+    for key in ("midi", "midiPitch", "pitch"):
+        value = event.get(key)
+        try:
+            resolved = int(value)
+        except (TypeError, ValueError):
+            continue
+        if resolved > 0:
+            return resolved
+
+    try:
+        string_index = int(
+            event.get("stringIndex")
+            if event.get("stringIndex") is not None
+            else event.get("string_index")
+        )
+        fret = int(event.get("fret") or 0)
+    except (TypeError, ValueError):
+        return 0
+
+    if 0 <= string_index < len(STANDARD_GUITAR_OPEN_MIDI) and fret >= 0:
+        return STANDARD_GUITAR_OPEN_MIDI[string_index] + fret
+    return 0
+
+
+def _beats_per_measure(time_signature: str) -> int:
+    try:
+        numerator = int(str(time_signature or "4/4").split("/", 1)[0])
+    except (TypeError, ValueError):
+        return 4
+    return max(1, min(numerator, 12))
+
+
+def _project_event(
+    event: dict[str, Any],
+    event_index: int,
+    measure_seconds: float,
+    total_measures: int,
+) -> dict[str, Any]:
+    start = _event_start(event)
+    end = _event_end(event)
+    raw_measure = int(start // measure_seconds) + 1 if measure_seconds > 0 else 1
+    measure_number = max(1, min(total_measures, raw_measure))
+    measure_start = (measure_number - 1) * measure_seconds
+    position = (start - measure_start) / measure_seconds if measure_seconds > 0 else 0.0
+
+    try:
+        string_index = int(
+            event.get("stringIndex")
+            if event.get("stringIndex") is not None
+            else event.get("string_index")
+        )
+    except (TypeError, ValueError):
+        string_index = 0
+
+    try:
+        fret = int(event.get("fret") or 0)
+    except (TypeError, ValueError):
+        fret = 0
+
+    return {
+        "eventIndex": event_index,
+        "start": round(start, 6),
+        "end": round(end, 6),
+        "duration": round(max(0.0, end - start), 6),
+        "measureNumber": measure_number,
+        "positionInMeasure": round(max(0.0, min(0.999, position)), 6),
+        "stringIndex": max(0, min(5, string_index)),
+        "fret": max(0, fret),
+        "midiPitch": _event_pitch(event),
+        "confidence": round(
+            float(
+                event.get("confidence")
+                or event.get("noteConfidence")
+                or event.get("probability")
+                or event.get("amplitude")
+                or event.get("velocity")
+                or 0.0
+            ),
+            6,
+        ),
+        "readOnly": True,
+    }
+
+
+@app.function(image=image, timeout=2400, memory=4096)
+def run_benchmark(
+    audio_bytes: bytes,
+    audio_name: str,
+    fixture: dict[str, Any],
+) -> bytes:
+    chords = [item for item in fixture.get("chords", []) if isinstance(item, dict)]
+    progression = [str(item) for item in fixture.get("expectedProgression", [])]
+    tempo = float(fixture.get("tempo") or 120.0)
+    time_signature = str(fixture.get("timeSignature") or "4/4")
+    total_measures = max(1, int(fixture.get("expectedMeasureCount") or 1))
+
+    suffix = Path(audio_name).suffix or ".m4a"
+    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as handle:
+        handle.write(audio_bytes)
+        audio_path = handle.name
+
+    try:
+        rhythm_generic = analyzer.analyze_audio_file(audio_path, "rhythm")
+        rhythm = analyzer.analyze_audio_file(
+            audio_path,
+            "rhythm",
+            reference_chords=chords,
+            expected_progression=progression,
+        )
+    finally:
+        Path(audio_path).unlink(missing_ok=True)
+
+    rhythm_events = sorted(
+        [event for event in (rhythm.get("events") or []) if isinstance(event, dict)],
+        key=_event_start,
+    )
+    rhythm_analysis = rhythm.get("chordAnalysis") or {}
+    harmony_ranges = [
+        {
+            "chord": item.get("matchedChord"),
+            "start": round(float(item.get("start") or 0.0), 4),
+            "end": round(float(item.get("end") or 0.0), 4),
+            "duration": round(float(item.get("duration") or 0.0), 4),
+        }
+        for item in (rhythm_analysis.get("chords") or [])
+        if isinstance(item, dict) and item.get("matchedChord")
+    ]
+
+    measure_seconds = 60.0 / tempo * _beats_per_measure(time_signature)
+    projected_events = [
+        _project_event(event, index, measure_seconds, total_measures)
+        for index, event in enumerate(rhythm_events)
+    ]
+    render_events, cleanup = notation_cleanup.clean_render_events(projected_events)
+    motif_events, motif_diagnostics = motif_stabilizer.stabilize_intro_motif(render_events)
+    fingering_events, fingering_diagnostics = (
+        fingering_normalizer.normalize_intro_fingering(motif_events)
+    )
+
+    fingerprints = section_detector.build_measure_fingerprints(
+        rhythm_events,
+        tempo=tempo,
+        beats_per_measure=_beats_per_measure(time_signature),
+        chord_ranges=harmony_ranges,
+    )
+    sections = section_detector.detect_song_sections(fingerprints)
+
+    production_unchanged = (
+        rhythm_generic.get("generatedTab") == rhythm.get("generatedTab")
+        and rhythm_generic.get("events") == rhythm.get("events")
+        and len(rhythm_generic.get("events") or []) == len(rhythm.get("events") or [])
+    )
+
+    projected_by_index = {
+        int(event["eventIndex"]): event
+        for event in projected_events
+    }
+    render_traceable = all(
+        int(event.get("sourceEventIndex", -1)) in projected_by_index
+        for event in render_events
+    )
+    motif_traceable = all(
+        int(event.get("sourceEventIndex", -1)) in projected_by_index
+        for event in motif_events
+    )
+    fingering_traceable = all(
+        int(event.get("sourceEventIndex", -1)) in projected_by_index
+        for event in fingering_events
+    )
+    source_values_preserved = all(
+        int(event.get("stringIndex", -1))
+        == int(projected_by_index[int(event["sourceEventIndex"])]["stringIndex"])
+        and int(event.get("fret", -1))
+        == int(projected_by_index[int(event["sourceEventIndex"])]["fret"])
+        and int(event.get("midiPitch", -1))
+        == int(projected_by_index[int(event["sourceEventIndex"])]["midiPitch"])
+        for event in motif_events
+    )
+    fingering_pitch_preserved = all(
+        int(event.get("midiPitch", -1))
+        == STANDARD_GUITAR_OPEN_MIDI[int(event.get("stringIndex", 0))]
+        + int(event.get("fret", 0))
+        for event in fingering_events
+        if 1 <= int(event.get("measureNumber", 0)) <= 16
+        and 0 <= int(event.get("stringIndex", -1)) < 6
+    )
+
+    checks = {
+        "rhythmProductionUnchanged": production_unchanged,
+        "rhythmEventsPresent": bool(projected_events),
+        "renderEventsPresent": bool(render_events),
+        "motifEventsPresent": bool(motif_events),
+        "fingeringEventsPresent": bool(fingering_events),
+        "eventsWithinMeasureGrid": all(
+            1 <= int(event["measureNumber"]) <= total_measures
+            and 0.0 <= float(event["positionInMeasure"]) < 1.0
+            for event in projected_events
+        ),
+        "motifEventsWithinMeasureGrid": all(
+            1 <= int(event["measureNumber"]) <= total_measures
+            and 0.0 <= float(event["positionInMeasure"]) < 1.0
+            for event in motif_events
+        ),
+        "fingeringEventsWithinMeasureGrid": all(
+            1 <= int(event["measureNumber"]) <= total_measures
+            and 0.0 <= float(event["positionInMeasure"]) < 1.0
+            for event in fingering_events
+        ),
+        "validStringAndFret": all(
+            0 <= int(event["stringIndex"]) <= 5 and int(event["fret"]) >= 0
+            for event in fingering_events
+        ),
+        "renderEventsTraceable": render_traceable,
+        "motifEventsTraceable": motif_traceable,
+        "fingeringEventsTraceable": fingering_traceable,
+        "sourcePitchStringAndFretPreserved": source_values_preserved,
+        "fingeringPitchPreserved": fingering_pitch_preserved,
+        "motifCountDoesNotExceedCleaned": len(motif_events) <= len(render_events),
+        "fingeringCountMatchesMotif": len(fingering_events) == len(motif_events),
+        "sectionsPresent": bool(sections),
+        "noSyntheticNotes": rhythm_analysis.get("noSyntheticNotes") is True,
+    }
+
+    report = {
+        "benchmarkVersion": 8,
+        "benchmarkType": "v8-read-only-rhythm-intro-fingering-normalization",
+        "audioName": audio_name,
+        "tempo": tempo,
+        "timeSignature": time_signature,
+        "measureSeconds": round(measure_seconds, 6),
+        "totalMeasures": total_measures,
+        "sections": sections,
+        "rhythmEvents": projected_events,
+        "renderEvents": render_events,
+        "motifStabilizedEvents": motif_events,
+        "fingeringNormalizedEvents": fingering_events,
+        "cleanupDiagnostics": cleanup,
+        "motifDiagnostics": motif_diagnostics,
+        "fingeringDiagnostics": fingering_diagnostics,
+        "harmonyRanges": harmony_ranges,
+        "checks": checks,
+        "passed": all(checks.values()),
+        "protectedBaselinesChanged": False,
+        "trainingRule": (
+            "V8 display events are traceable read-only derivatives of locked V7 rhythm events. "
+            "The fingering layer may choose an equivalent string/fret location for the same MIDI "
+            "pitch, but must preserve source pitch, timing evidence, measure, event traceability, "
+            "generated tab, protected analyzer output, and source event count."
+        ),
+    }
+    return json.dumps(report, separators=(",", ":")).encode("utf-8")
+
+===== FILE: analyzer/intro_motif_stabilization_v8.py =====
+from __future__ import annotations
+
+from collections import Counter, defaultdict
+from statistics import median
+from typing import Any
+
+INTRO_START_MEASURE = 1
+INTRO_END_MEASURE = 16
+PAIR_LENGTH = 2
+PAIR_COUNT = 8
+MIN_PAIR_SUPPORT = 3
+MAX_PAIR_PHASE_SHIFT = 4
+
+
+def _safe_int(value: Any, fallback: int = 0) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return fallback
+
+
+def _safe_float(value: Any, fallback: float = 0.0) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return fallback
+
+
+def _pair_index(measure_number: int) -> int:
+    return max(0, (measure_number - INTRO_START_MEASURE) // PAIR_LENGTH)
+
+
+def _measure_offset(measure_number: int) -> int:
+    return (measure_number - INTRO_START_MEASURE) % PAIR_LENGTH
+
+
+def _signature(event: dict[str, Any]) -> tuple[int, int, int]:
+    return (
+        _measure_offset(_safe_int(event.get("measureNumber"), 1)),
+        _safe_int(event.get("stringIndex")),
+        _safe_int(event.get("fret")),
+    )
+
+
+def _event_quality(event: dict[str, Any], target_step: int) -> tuple[float, float, float, int]:
+    return (
+        -abs(_safe_int(event.get("quantizedStep")) - target_step),
+        _safe_float(event.get("confidence")),
+        _safe_float(event.get("duration")),
+        -_safe_int(event.get("sourceEventIndex")),
+    )
+
+
+def _best_event_per_pair_signature(
+    intro_events: list[dict[str, Any]],
+) -> dict[tuple[int, tuple[int, int, int]], dict[str, Any]]:
+    best: dict[tuple[int, tuple[int, int, int]], dict[str, Any]] = {}
+    for event in intro_events:
+        pair_id = _pair_index(_safe_int(event.get("measureNumber"), INTRO_START_MEASURE))
+        signature = _signature(event)
+        key = (pair_id, signature)
+        previous = best.get(key)
+        step = _safe_int(event.get("quantizedStep"))
+        if previous is None or _event_quality(event, step) > _event_quality(previous, step):
+            best[key] = event
+    return best
+
+
+def _choose_canonical_pair(
+    best_by_pair_signature: dict[tuple[int, tuple[int, int, int]], dict[str, Any]],
+    accepted_signatures: set[tuple[int, int, int]],
+) -> int:
+    pair_scores: dict[int, tuple[int, float, float]] = {}
+    for pair_id in range(PAIR_COUNT):
+        events = [
+            event
+            for (candidate_pair, signature), event in best_by_pair_signature.items()
+            if candidate_pair == pair_id and signature in accepted_signatures
+        ]
+        pair_scores[pair_id] = (
+            len(events),
+            sum(_safe_float(event.get("confidence")) for event in events),
+            sum(_safe_float(event.get("duration")) for event in events),
+        )
+    return max(pair_scores, key=pair_scores.get)
+
+
+def _estimate_pair_phase_offsets(
+    best_by_pair_signature: dict[tuple[int, tuple[int, int, int]], dict[str, Any]],
+    accepted_signatures: set[tuple[int, int, int]],
+    canonical_pair: int,
+) -> dict[int, int]:
+    canonical_steps = {
+        signature: _safe_int(event.get("quantizedStep"))
+        for (pair_id, signature), event in best_by_pair_signature.items()
+        if pair_id == canonical_pair and signature in accepted_signatures
+    }
+
+    offsets: dict[int, int] = {canonical_pair: 0}
+    for pair_id in range(PAIR_COUNT):
+        if pair_id == canonical_pair:
+            continue
+
+        deltas: list[int] = []
+        for (candidate_pair, signature), event in best_by_pair_signature.items():
+            if candidate_pair != pair_id or signature not in canonical_steps:
+                continue
+            delta = canonical_steps[signature] - _safe_int(event.get("quantizedStep"))
+            if abs(delta) <= MAX_PAIR_PHASE_SHIFT:
+                deltas.append(delta)
+
+        offsets[pair_id] = int(round(median(deltas))) if deltas else 0
+
+    return offsets
+
+
+def stabilize_intro_motif(
+    render_events: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Stabilize the repeated measures 1-16 intro without synthesizing notes.
+
+    V8 first aligns each repeated two-measure pair to the strongest observed pair,
+    then computes rhythmic consensus. This corrects whole-pair onset drift before
+    median snapping while preserving every retained source note, string and fret.
+    """
+
+    intro_events = [
+        dict(event)
+        for event in render_events
+        if INTRO_START_MEASURE
+        <= _safe_int(event.get("measureNumber"), 0)
+        <= INTRO_END_MEASURE
+    ]
+    outside_events = [
+        dict(event)
+        for event in render_events
+        if not (
+            INTRO_START_MEASURE
+            <= _safe_int(event.get("measureNumber"), 0)
+            <= INTRO_END_MEASURE
+        )
+    ]
+
+    observations: dict[tuple[int, int, int], list[dict[str, Any]]] = defaultdict(list)
+    pair_presence: dict[tuple[int, int, int], set[int]] = defaultdict(set)
+
+    for event in intro_events:
+        signature = _signature(event)
+        observations[signature].append(event)
+        pair_presence[signature].add(
+            _pair_index(_safe_int(event.get("measureNumber"), INTRO_START_MEASURE))
+        )
+
+    support_counts = {
+        signature: len(pair_ids)
+        for signature, pair_ids in pair_presence.items()
+    }
+    accepted_signatures = {
+        signature
+        for signature, count in support_counts.items()
+        if count >= MIN_PAIR_SUPPORT
+    }
+
+    best_initial = _best_event_per_pair_signature(intro_events)
+    canonical_pair = _choose_canonical_pair(best_initial, accepted_signatures)
+    pair_phase_offsets = _estimate_pair_phase_offsets(
+        best_initial,
+        accepted_signatures,
+        canonical_pair,
+    )
+
+    adjusted_steps: dict[tuple[int, tuple[int, int, int]], int] = {}
+    for (pair_id, signature), event in best_initial.items():
+        adjusted_steps[(pair_id, signature)] = max(
+            0,
+            min(
+                15,
+                _safe_int(event.get("quantizedStep")) + pair_phase_offsets.get(pair_id, 0),
+            ),
+        )
+
+    median_steps = {
+        signature: int(round(median(
+            adjusted_steps[(pair_id, candidate_signature)]
+            for (pair_id, candidate_signature) in adjusted_steps
+            if candidate_signature == signature
+        )))
+        for signature in accepted_signatures
+    }
+
+    slot_candidates: dict[tuple[int, int, int], list[tuple[int, int, int]]] = defaultdict(list)
+    for signature in accepted_signatures:
+        offset, string_index, _fret = signature
+        slot_candidates[(offset, median_steps[signature], string_index)].append(signature)
+
+    dominant_signatures: set[tuple[int, int, int]] = set()
+    conflicting_signatures_removed = 0
+    for candidates in slot_candidates.values():
+        winner = max(
+            candidates,
+            key=lambda signature: (
+                support_counts[signature],
+                len(observations[signature]),
+                -signature[2],
+            ),
+        )
+        dominant_signatures.add(winner)
+        conflicting_signatures_removed += max(0, len(candidates) - 1)
+
+    best_by_pair_and_signature: dict[
+        tuple[int, tuple[int, int, int]],
+        dict[str, Any],
+    ] = {}
+    repeated_retriggers_removed = 0
+
+    for event in intro_events:
+        signature = _signature(event)
+        if signature not in dominant_signatures:
+            continue
+
+        pair_id = _pair_index(_safe_int(event.get("measureNumber"), INTRO_START_MEASURE))
+        key = (pair_id, signature)
+        target_step = median_steps[signature] - pair_phase_offsets.get(pair_id, 0)
+        previous = best_by_pair_and_signature.get(key)
+
+        if previous is None or _event_quality(event, target_step) > _event_quality(previous, target_step):
+            if previous is not None:
+                repeated_retriggers_removed += 1
+            best_by_pair_and_signature[key] = event
+        else:
+            repeated_retriggers_removed += 1
+
+    stabilized_intro: list[dict[str, Any]] = []
+    moved_count = 0
+    phase_aligned_count = 0
+
+    for (pair_id, signature), event in best_by_pair_and_signature.items():
+        target_step = median_steps[signature]
+        original_step = _safe_int(event.get("quantizedStep"))
+        phase_offset = pair_phase_offsets.get(pair_id, 0)
+        item = dict(event)
+        item["motifOriginalStep"] = original_step
+        item["motifPairPhaseOffset"] = phase_offset
+        item["motifConsensusStep"] = target_step
+        item["motifSupportPairs"] = support_counts[signature]
+        item["motifCanonicalPair"] = canonical_pair
+        item["motifStabilized"] = True
+        item["quantizedStep"] = target_step
+        item["positionInMeasure"] = round(target_step / 16.0, 6)
+        if phase_offset:
+            phase_aligned_count += 1
+        if target_step != original_step:
+            moved_count += 1
+        stabilized_intro.append(item)
+
+    deduped: dict[tuple[int, int, int, int], dict[str, Any]] = {}
+    snap_duplicates_removed = 0
+    for event in stabilized_intro:
+        key = (
+            _safe_int(event.get("measureNumber")),
+            _safe_int(event.get("quantizedStep")),
+            _safe_int(event.get("stringIndex")),
+            _safe_int(event.get("fret")),
+        )
+        previous = deduped.get(key)
+        if previous is None:
+            deduped[key] = event
+            continue
+
+        snap_duplicates_removed += 1
+        if _event_quality(event, _safe_int(event.get("quantizedStep"))) > _event_quality(
+            previous,
+            _safe_int(previous.get("quantizedStep")),
+        ):
+            deduped[key] = event
+
+    motif_events = list(deduped.values()) + outside_events
+    motif_events.sort(
+        key=lambda event: (
+            _safe_int(event.get("measureNumber")),
+            _safe_int(event.get("quantizedStep")),
+            _safe_int(event.get("stringIndex")),
+            _safe_int(event.get("fret")),
+        )
+    )
+
+    diagnostics = {
+        "introMeasureRange": [INTRO_START_MEASURE, INTRO_END_MEASURE],
+        "pairLengthMeasures": PAIR_LENGTH,
+        "pairCount": PAIR_COUNT,
+        "minimumPairSupport": MIN_PAIR_SUPPORT,
+        "canonicalPairIndex": canonical_pair,
+        "pairPhaseOffsets": {str(key): value for key, value in sorted(pair_phase_offsets.items())},
+        "maximumPairPhaseShift": MAX_PAIR_PHASE_SHIFT,
+        "phaseAlignedIntroEvents": phase_aligned_count,
+        "inputIntroEventCount": len(intro_events),
+        "outputIntroEventCount": len(deduped),
+        "rejectedLowSupportIntroEvents": sum(
+            1 for event in intro_events if _signature(event) not in accepted_signatures
+        ),
+        "conflictingMotifSignaturesRemoved": conflicting_signatures_removed,
+        "repeatedPairRetriggersRemoved": repeated_retriggers_removed,
+        "medianSnapDuplicatesRemoved": snap_duplicates_removed,
+        "medianSnappedIntroEvents": moved_count,
+        "acceptedMotifSignatureCount": len(dominant_signatures),
+        "motifEventCount": len(motif_events),
+        "supportHistogram": dict(sorted(Counter(support_counts.values()).items())),
+        "readOnly": True,
+    }
+    return motif_events, diagnostics
+
+===== FILE: analyzer/intro_fingering_normalization_v8.py =====
+from __future__ import annotations
+
+from collections import Counter
+from typing import Any
+
+INTRO_START_MEASURE = 1
+INTRO_END_MEASURE = 16
+STANDARD_GUITAR_OPEN_MIDI = (64, 59, 55, 50, 45, 40)
+MAX_OPEN_POSITION_FRET = 5
+MAX_ALLOWED_FRET = 12
+
+
+def _safe_int(value: Any, fallback: int = 0) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return fallback
+
+
+def _candidate_positions(midi_pitch: int) -> list[tuple[int, int]]:
+    positions: list[tuple[int, int]] = []
+    for string_index, open_pitch in enumerate(STANDARD_GUITAR_OPEN_MIDI):
+        fret = midi_pitch - open_pitch
+        if 0 <= fret <= MAX_ALLOWED_FRET:
+            positions.append((string_index, fret))
+    return positions
+
+
+def _position_score(
+    position: tuple[int, int],
+    original: tuple[int, int],
+    previous: tuple[int, int] | None,
+) -> tuple[int, int, int, int, int]:
+    string_index, fret = position
+    original_string, original_fret = original
+
+    # The professional rhythm part is predominantly played in open position.
+    # This is a generic guitar-playability preference, not benchmark-note copying.
+    open_position_penalty = 0 if fret <= MAX_OPEN_POSITION_FRET else fret - MAX_OPEN_POSITION_FRET
+    fret_penalty = fret
+    source_change_penalty = abs(string_index - original_string) + abs(fret - original_fret)
+
+    if previous is None:
+        movement_penalty = 0
+    else:
+        previous_string, previous_fret = previous
+        movement_penalty = abs(string_index - previous_string) * 2 + abs(fret - previous_fret)
+
+    # Prefer the lowest practical fret, then smooth phrase motion. On an equal
+    # fret, prefer the thicker/lower-pitched string (larger string index).
+    return (
+        open_position_penalty,
+        fret_penalty,
+        movement_penalty,
+        source_change_penalty,
+        -string_index,
+    )
+
+
+def normalize_intro_fingering(
+    motif_events: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Choose playable open-position string/fret locations without changing pitch.
+
+    Every normalized event remains traceable to a locked V7 source event and keeps
+    its MIDI pitch, measure and rhythmic position. Only the derived display
+    fingering may change when the same pitch has a lower, smoother guitar position.
+    """
+
+    ordered = sorted(
+        (dict(event) for event in motif_events),
+        key=lambda event: (
+            _safe_int(event.get("measureNumber")),
+            _safe_int(event.get("quantizedStep")),
+            _safe_int(event.get("stringIndex")),
+            _safe_int(event.get("fret")),
+        ),
+    )
+
+    normalized: list[dict[str, Any]] = []
+    previous_position: tuple[int, int] | None = None
+    changed_count = 0
+    unchanged_count = 0
+    unavailable_pitch_count = 0
+    change_reasons: Counter[str] = Counter()
+
+    for event in ordered:
+        measure = _safe_int(event.get("measureNumber"))
+        if not (INTRO_START_MEASURE <= measure <= INTRO_END_MEASURE):
+            normalized.append(event)
+            continue
+
+        midi_pitch = _safe_int(event.get("midiPitch"))
+        original = (
+            _safe_int(event.get("stringIndex")),
+            _safe_int(event.get("fret")),
+        )
+        candidates = _candidate_positions(midi_pitch)
+
+        if not candidates:
+            unavailable_pitch_count += 1
+            event["fingeringNormalized"] = False
+            event["fingeringNormalizationReason"] = "no-playable-position"
+            normalized.append(event)
+            previous_position = original
+            continue
+
+        chosen = min(
+            candidates,
+            key=lambda position: _position_score(position, original, previous_position),
+        )
+
+        event["sourceStringIndex"] = original[0]
+        event["sourceFret"] = original[1]
+        event["fingeringCandidates"] = [
+            {"stringIndex": string_index, "fret": fret}
+            for string_index, fret in candidates
+        ]
+        event["stringIndex"] = chosen[0]
+        event["fret"] = chosen[1]
+        event["fingeringNormalized"] = chosen != original
+
+        if chosen != original:
+            changed_count += 1
+            if chosen[1] < original[1]:
+                reason = "lower-fret"
+            elif chosen[1] <= MAX_OPEN_POSITION_FRET < original[1]:
+                reason = "open-position"
+            else:
+                reason = "smoother-path"
+            event["fingeringNormalizationReason"] = reason
+            change_reasons[reason] += 1
+        else:
+            unchanged_count += 1
+            event["fingeringNormalizationReason"] = "source-already-preferred"
+
+        normalized.append(event)
+        previous_position = chosen
+
+    diagnostics = {
+        "introMeasureRange": [INTRO_START_MEASURE, INTRO_END_MEASURE],
+        "inputEventCount": len(motif_events),
+        "outputEventCount": len(normalized),
+        "changedIntroFingerings": changed_count,
+        "unchangedIntroFingerings": unchanged_count,
+        "unavailablePitchCount": unavailable_pitch_count,
+        "maximumAllowedFret": MAX_ALLOWED_FRET,
+        "preferredOpenPositionMaximumFret": MAX_OPEN_POSITION_FRET,
+        "changeReasons": dict(sorted(change_reasons.items())),
+        "pitchPreserved": all(
+            _safe_int(event.get("midiPitch"))
+            == STANDARD_GUITAR_OPEN_MIDI[_safe_int(event.get("stringIndex"))]
+            + _safe_int(event.get("fret"))
+            for event in normalized
+            if INTRO_START_MEASURE
+            <= _safe_int(event.get("measureNumber"))
+            <= INTRO_END_MEASURE
+            and 0 <= _safe_int(event.get("stringIndex")) < 6
+        ),
+        "readOnlySourceEvents": True,
+    }
+    return normalized, diagnostics
+
+===== FILE: analyzer/run_v8_notation_benchmark.py =====
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+ANALYZER_DIR = ROOT / "analyzer"
+if str(ANALYZER_DIR) not in sys.path:
+    sys.path.insert(0, str(ANALYZER_DIR))
+
+from intro_fingering_normalization_v8 import normalize_intro_fingering
+from modal_analyzer_v8_notation_benchmark import app, run_benchmark
+
+AUDIO_PATH = ROOT / "public" / "gomywayfullaitest.m4a"
+FIXTURE_PATH = ROOT / "analyzer" / "fixtures" / "gomyway_full_chord_sustain_reference.json"
+OUTPUT_PATH = ROOT / "public" / "gomyway-full-song-v8-notation.json"
+
+
+def main() -> None:
+    audio_bytes = AUDIO_PATH.read_bytes()
+    fixture = json.loads(FIXTURE_PATH.read_text())
+
+    with app.run():
+        result_bytes = run_benchmark.remote(
+            audio_bytes,
+            AUDIO_PATH.name,
+            fixture,
+        )
+
+    report = json.loads(result_bytes.decode("utf-8"))
+    motif_events = (
+        report.get("motifStabilizedEvents")
+        or report.get("renderEvents")
+        or report.get("rhythmEvents")
+        or []
+    )
+    normalized_events, fingering_diagnostics = normalize_intro_fingering(motif_events)
+    report["fingeringNormalizedEvents"] = normalized_events
+    report["fingeringDiagnostics"] = fingering_diagnostics
+
+    checks = dict(report.get("checks") or {})
+    checks["fingeringEventsPresent"] = bool(normalized_events)
+    checks["fingeringCountUnchanged"] = len(normalized_events) == len(motif_events)
+    checks["normalizedPitchPreserved"] = fingering_diagnostics.get("pitchPreserved") is True
+    report["checks"] = checks
+    report["passed"] = all(checks.values())
+
+    OUTPUT_PATH.write_text(json.dumps(report, indent=2))
+
+    print(f"Wrote: {OUTPUT_PATH}")
+    print(f"Passed: {report.get('passed')}")
+    print(f"Protected V7 unchanged: {report.get('protectedBaselinesChanged') is False}")
+    print(f"Rhythm events: {len(report.get('rhythmEvents', []))}")
+    print(f"Measures: {report.get('totalMeasures')}")
+    print(
+        "Intro fingerings normalized:",
+        fingering_diagnostics.get("changedIntroFingerings"),
+    )
+    print(
+        "Normalized pitch preserved:",
+        fingering_diagnostics.get("pitchPreserved"),
+    )
+
+
+if __name__ == "__main__":
+    main()
+
+===== FILE: analyzer/professional_intro_accuracy_benchmark.py =====
+MISSING
+
+===== FILE: scripts/jimmy-v8-workflow.sh =====
+MISSING
+
+===== FILE: package.json =====
+{
+    "name": "nextjs-mongo-template",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "NODE_OPTIONS='--max-old-space-size=512' next dev --hostname 0.0.0.0 --port 3000",
+        "dev:no-reload": "next dev --hostname 0.0.0.0 --port 3000",
+        "dev:webpack": "next dev --hostname 0.0.0.0 --port 3000",
+        "build": "next build",
+        "start": "next start",
+        "jimmy:v8:sync": "bash scripts/jimmy-v8.sh sync",
+        "jimmy:v8:test": "bash scripts/jimmy-v8.sh test",
+        "jimmy:v8:build": "bash scripts/jimmy-v8.sh build",
+        "jimmy:v8:preview": "bash scripts/jimmy-v8.sh preview",
+        "jimmy:v8:rerun": "bash scripts/jimmy-v8.sh rerun"
+    },
+    "dependencies": {
+        "@hookform/resolvers": "^5.1.1",
+        "@radix-ui/react-accordion": "^1.2.11",
+        "@radix-ui/react-alert-dialog": "^1.1.14",
+        "@radix-ui/react-aspect-ratio": "^1.1.7",
+        "@radix-ui/react-avatar": "^1.1.10",
+        "@radix-ui/react-checkbox": "^1.3.2",
+        "@radix-ui/react-collapsible": "^1.1.11",
+        "@radix-ui/react-context-menu": "^2.2.15",
+        "@radix-ui/react-dialog": "^1.1.14",
+        "@radix-ui/react-dropdown-menu": "^2.1.15",
+        "@radix-ui/react-hover-card": "^1.1.14",
+        "@radix-ui/react-label": "^2.1.7",
+        "@radix-ui/react-menubar": "^1.1.15",
+        "@radix-ui/react-navigation-menu": "^1.2.13",
+        "@radix-ui/react-popover": "^1.1.14",
+        "@radix-ui/react-progress": "^1.1.7",
+        "@radix-ui/react-radio-group": "^1.3.7",
+        "@radix-ui/react-scroll-area": "^1.2.9",
+        "@radix-ui/react-select": "^2.2.5",
+        "@radix-ui/react-separator": "^1.1.7",
+        "@radix-ui/react-slider": "^1.3.5",
+        "@radix-ui/react-slot": "^1.2.3",
+        "@radix-ui/react-switch": "^1.2.5",
+        "@radix-ui/react-tabs": "^1.1.12",
+        "@radix-ui/react-toast": "^1.2.14",
+        "@radix-ui/react-toggle": "^1.1.9",
+        "@radix-ui/react-toggle-group": "^1.1.10",
+        "@radix-ui/react-tooltip": "^1.2.7",
+        "@tanstack/react-table": "^8.21.3",
+        "@vercel/blob": "^2.6.1",
+        "axios": "^1.10.0",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "cmdk": "^1.1.1",
+        "date-fns": "^4.1.0",
+        "embla-carousel-react": "^8.6.0",
+        "input-otp": "^1.4.2",
+        "lucide-react": "^0.516.0",
+        "mongodb": "^6.6.0",
+        "next": "^16.1.6",
+        "next-themes": "^0.4.6",
+        "openai": "^6.33.0",
+        "pdf-lib": "^1.17.1",
+        "react": "^18",
+        "react-day-picker": "^9.7.0",
+        "react-dom": "^18",
+        "react-hook-form": "^7.58.1",
+        "react-resizable-panels": "^3.0.3",
+        "recharts": "^2.15.3",
+        "resend": "^6.18.0",
+        "sonner": "^2.0.5",
+        "tailwind-merge": "^3.3.1",
+        "tailwindcss-animate": "^1.0.7",
+        "uuid": "^9.0.1",
+        "vaul": "^1.1.2",
+        "zod": "^3.25.67"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.19",
+        "globals": "^16.2.0",
+        "postcss": "^8",
+        "tailwindcss": "^3.4.1"
+    },
+    "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

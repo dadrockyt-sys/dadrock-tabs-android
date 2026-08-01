@@ -1,0 +1,1354 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "professional-measure-local-double-stop-score",
+  "sourceEvents": "public/gomyway-jimmy-paige-93-06-events.json",
+  "targetPitches": [
+    58,
+    62
+  ],
+  "endingZoneFraction": [
+    0.7,
+    1.05
+  ],
+  "pairWindowsMilliseconds": [
+    180,
+    225,
+    275,
+    350,
+    450
+  ],
+  "results": [
+    {
+      "pairWindowMilliseconds": 180,
+      "truePositive": 2,
+      "falseNegative": 6,
+      "falsePositive": 1,
+      "trueNegative": 7,
+      "precisionPercentage": 66.67,
+      "recallPercentage": 25.0,
+      "f1Percentage": 36.36,
+      "positiveMeasureReports": [
+        {
+          "measureNumber": 2,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 8.047649,
+          "zoneEndSeconds": 8.665842,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 8.375929,
+            "pitch62Start": 8.20178,
+            "onsetSeparationSeconds": 0.17415,
+            "sustainOverlapSeconds": 0.01161,
+            "pairCenterSeconds": 8.288854
+          }
+        },
+        {
+          "measureNumber": 4,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 11.580178,
+          "zoneEndSeconds": 12.198371,
+          "midi58Count": 3,
+          "midi62Count": 4,
+          "qualifyingPairCount": 5,
+          "bestPair": {
+            "pitch58Start": 11.720887,
+            "pitch62Start": 11.744107,
+            "onsetSeparationSeconds": 0.02322,
+            "sustainOverlapSeconds": 0.05805,
+            "pairCenterSeconds": 11.732497
+          }
+        },
+        {
+          "measureNumber": 6,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 15.112707,
+          "zoneEndSeconds": 15.730899,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 8,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 18.645236,
+          "zoneEndSeconds": 19.263428,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 10,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 22.177764,
+          "zoneEndSeconds": 22.795957,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 12,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 25.710293,
+          "zoneEndSeconds": 26.328485,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 14,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 29.242822,
+          "zoneEndSeconds": 29.861014,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 16,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 32.77535,
+          "zoneEndSeconds": 33.393543,
+          "midi58Count": 1,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        }
+      ],
+      "negativeMeasureReports": [
+        {
+          "measureNumber": 1,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 6.281385,
+          "zoneEndSeconds": 6.899578,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 3,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 9.813914,
+          "zoneEndSeconds": 10.432106,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 5,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 13.346442,
+          "zoneEndSeconds": 13.964635,
+          "midi58Count": 2,
+          "midi62Count": 2,
+          "qualifyingPairCount": 2,
+          "bestPair": {
+            "pitch58Start": 13.637817,
+            "pitch62Start": 13.684257,
+            "onsetSeparationSeconds": 0.04644,
+            "sustainOverlapSeconds": 0.06966,
+            "pairCenterSeconds": 13.661037
+          }
+        },
+        {
+          "measureNumber": 7,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 16.878971,
+          "zoneEndSeconds": 17.497164,
+          "midi58Count": 0,
+          "midi62Count": 3,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 9,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 20.4115,
+          "zoneEndSeconds": 21.029692,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 11,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 23.944029,
+          "zoneEndSeconds": 24.562221,
+          "midi58Count": 1,
+          "midi62Count": 2,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 13,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 27.476557,
+          "zoneEndSeconds": 28.09475,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 15,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 31.009086,
+          "zoneEndSeconds": 31.627278,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        }
+      ]
+    },
+    {
+      "pairWindowMilliseconds": 225,
+      "truePositive": 3,
+      "falseNegative": 5,
+      "falsePositive": 2,
+      "trueNegative": 6,
+      "precisionPercentage": 60.0,
+      "recallPercentage": 37.5,
+      "f1Percentage": 46.15,
+      "positiveMeasureReports": [
+        {
+          "measureNumber": 2,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 8.047649,
+          "zoneEndSeconds": 8.665842,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 8.375929,
+            "pitch62Start": 8.20178,
+            "onsetSeparationSeconds": 0.17415,
+            "sustainOverlapSeconds": 0.01161,
+            "pairCenterSeconds": 8.288854
+          }
+        },
+        {
+          "measureNumber": 4,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 11.580178,
+          "zoneEndSeconds": 12.198371,
+          "midi58Count": 3,
+          "midi62Count": 4,
+          "qualifyingPairCount": 6,
+          "bestPair": {
+            "pitch58Start": 11.720887,
+            "pitch62Start": 11.744107,
+            "onsetSeparationSeconds": 0.02322,
+            "sustainOverlapSeconds": 0.05805,
+            "pairCenterSeconds": 11.732497
+          }
+        },
+        {
+          "measureNumber": 6,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 15.112707,
+          "zoneEndSeconds": 15.730899,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 8,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 18.645236,
+          "zoneEndSeconds": 19.263428,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 10,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 22.177764,
+          "zoneEndSeconds": 22.795957,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 22.398159,
+            "pitch62Start": 22.618749,
+            "onsetSeparationSeconds": 0.22059,
+            "sustainOverlapSeconds": 0.0,
+            "pairCenterSeconds": 22.508454
+          }
+        },
+        {
+          "measureNumber": 12,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 25.710293,
+          "zoneEndSeconds": 26.328485,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 14,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 29.242822,
+          "zoneEndSeconds": 29.861014,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 16,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 32.77535,
+          "zoneEndSeconds": 33.393543,
+          "midi58Count": 1,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        }
+      ],
+      "negativeMeasureReports": [
+        {
+          "measureNumber": 1,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 6.281385,
+          "zoneEndSeconds": 6.899578,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 3,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 9.813914,
+          "zoneEndSeconds": 10.432106,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 5,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 13.346442,
+          "zoneEndSeconds": 13.964635,
+          "midi58Count": 2,
+          "midi62Count": 2,
+          "qualifyingPairCount": 2,
+          "bestPair": {
+            "pitch58Start": 13.637817,
+            "pitch62Start": 13.684257,
+            "onsetSeparationSeconds": 0.04644,
+            "sustainOverlapSeconds": 0.06966,
+            "pairCenterSeconds": 13.661037
+          }
+        },
+        {
+          "measureNumber": 7,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 16.878971,
+          "zoneEndSeconds": 17.497164,
+          "midi58Count": 0,
+          "midi62Count": 3,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 9,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 20.4115,
+          "zoneEndSeconds": 21.029692,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 20.492839,
+            "pitch62Start": 20.713429,
+            "onsetSeparationSeconds": 0.22059,
+            "sustainOverlapSeconds": 0.0,
+            "pairCenterSeconds": 20.603134
+          }
+        },
+        {
+          "measureNumber": 11,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 23.944029,
+          "zoneEndSeconds": 24.562221,
+          "midi58Count": 1,
+          "midi62Count": 2,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 13,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 27.476557,
+          "zoneEndSeconds": 28.09475,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 15,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 31.009086,
+          "zoneEndSeconds": 31.627278,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        }
+      ]
+    },
+    {
+      "pairWindowMilliseconds": 275,
+      "truePositive": 3,
+      "falseNegative": 5,
+      "falsePositive": 2,
+      "trueNegative": 6,
+      "precisionPercentage": 60.0,
+      "recallPercentage": 37.5,
+      "f1Percentage": 46.15,
+      "positiveMeasureReports": [
+        {
+          "measureNumber": 2,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 8.047649,
+          "zoneEndSeconds": 8.665842,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 8.375929,
+            "pitch62Start": 8.20178,
+            "onsetSeparationSeconds": 0.17415,
+            "sustainOverlapSeconds": 0.01161,
+            "pairCenterSeconds": 8.288854
+          }
+        },
+        {
+          "measureNumber": 4,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 11.580178,
+          "zoneEndSeconds": 12.198371,
+          "midi58Count": 3,
+          "midi62Count": 4,
+          "qualifyingPairCount": 7,
+          "bestPair": {
+            "pitch58Start": 11.720887,
+            "pitch62Start": 11.744107,
+            "onsetSeparationSeconds": 0.02322,
+            "sustainOverlapSeconds": 0.05805,
+            "pairCenterSeconds": 11.732497
+          }
+        },
+        {
+          "measureNumber": 6,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 15.112707,
+          "zoneEndSeconds": 15.730899,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 8,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 18.645236,
+          "zoneEndSeconds": 19.263428,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 10,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 22.177764,
+          "zoneEndSeconds": 22.795957,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 22.398159,
+            "pitch62Start": 22.618749,
+            "onsetSeparationSeconds": 0.22059,
+            "sustainOverlapSeconds": 0.0,
+            "pairCenterSeconds": 22.508454
+          }
+        },
+        {
+          "measureNumber": 12,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 25.710293,
+          "zoneEndSeconds": 26.328485,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 14,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 29.242822,
+          "zoneEndSeconds": 29.861014,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 16,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 32.77535,
+          "zoneEndSeconds": 33.393543,
+          "midi58Count": 1,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        }
+      ],
+      "negativeMeasureReports": [
+        {
+          "measureNumber": 1,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 6.281385,
+          "zoneEndSeconds": 6.899578,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 3,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 9.813914,
+          "zoneEndSeconds": 10.432106,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 5,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 13.346442,
+          "zoneEndSeconds": 13.964635,
+          "midi58Count": 2,
+          "midi62Count": 2,
+          "qualifyingPairCount": 3,
+          "bestPair": {
+            "pitch58Start": 13.637817,
+            "pitch62Start": 13.684257,
+            "onsetSeparationSeconds": 0.04644,
+            "sustainOverlapSeconds": 0.06966,
+            "pairCenterSeconds": 13.661037
+          }
+        },
+        {
+          "measureNumber": 7,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 16.878971,
+          "zoneEndSeconds": 17.497164,
+          "midi58Count": 0,
+          "midi62Count": 3,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 9,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 20.4115,
+          "zoneEndSeconds": 21.029692,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 20.492839,
+            "pitch62Start": 20.713429,
+            "onsetSeparationSeconds": 0.22059,
+            "sustainOverlapSeconds": 0.0,
+            "pairCenterSeconds": 20.603134
+          }
+        },
+        {
+          "measureNumber": 11,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 23.944029,
+          "zoneEndSeconds": 24.562221,
+          "midi58Count": 1,
+          "midi62Count": 2,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 13,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 27.476557,
+          "zoneEndSeconds": 28.09475,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 15,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 31.009086,
+          "zoneEndSeconds": 31.627278,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        }
+      ]
+    },
+    {
+      "pairWindowMilliseconds": 350,
+      "truePositive": 3,
+      "falseNegative": 5,
+      "falsePositive": 3,
+      "trueNegative": 5,
+      "precisionPercentage": 50.0,
+      "recallPercentage": 37.5,
+      "f1Percentage": 42.86,
+      "positiveMeasureReports": [
+        {
+          "measureNumber": 2,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 8.047649,
+          "zoneEndSeconds": 8.665842,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 8.375929,
+            "pitch62Start": 8.20178,
+            "onsetSeparationSeconds": 0.17415,
+            "sustainOverlapSeconds": 0.01161,
+            "pairCenterSeconds": 8.288854
+          }
+        },
+        {
+          "measureNumber": 4,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 11.580178,
+          "zoneEndSeconds": 12.198371,
+          "midi58Count": 3,
+          "midi62Count": 4,
+          "qualifyingPairCount": 9,
+          "bestPair": {
+            "pitch58Start": 11.720887,
+            "pitch62Start": 11.744107,
+            "onsetSeparationSeconds": 0.02322,
+            "sustainOverlapSeconds": 0.05805,
+            "pairCenterSeconds": 11.732497
+          }
+        },
+        {
+          "measureNumber": 6,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 15.112707,
+          "zoneEndSeconds": 15.730899,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 8,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 18.645236,
+          "zoneEndSeconds": 19.263428,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 10,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 22.177764,
+          "zoneEndSeconds": 22.795957,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 22.398159,
+            "pitch62Start": 22.618749,
+            "onsetSeparationSeconds": 0.22059,
+            "sustainOverlapSeconds": 0.0,
+            "pairCenterSeconds": 22.508454
+          }
+        },
+        {
+          "measureNumber": 12,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 25.710293,
+          "zoneEndSeconds": 26.328485,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 14,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 29.242822,
+          "zoneEndSeconds": 29.861014,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 16,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 32.77535,
+          "zoneEndSeconds": 33.393543,
+          "midi58Count": 1,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        }
+      ],
+      "negativeMeasureReports": [
+        {
+          "measureNumber": 1,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 6.281385,
+          "zoneEndSeconds": 6.899578,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 3,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 9.813914,
+          "zoneEndSeconds": 10.432106,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 5,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 13.346442,
+          "zoneEndSeconds": 13.964635,
+          "midi58Count": 2,
+          "midi62Count": 2,
+          "qualifyingPairCount": 4,
+          "bestPair": {
+            "pitch58Start": 13.637817,
+            "pitch62Start": 13.684257,
+            "onsetSeparationSeconds": 0.04644,
+            "sustainOverlapSeconds": 0.06966,
+            "pairCenterSeconds": 13.661037
+          }
+        },
+        {
+          "measureNumber": 7,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 16.878971,
+          "zoneEndSeconds": 17.497164,
+          "midi58Count": 0,
+          "midi62Count": 3,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 9,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 20.4115,
+          "zoneEndSeconds": 21.029692,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 20.492839,
+            "pitch62Start": 20.713429,
+            "onsetSeparationSeconds": 0.22059,
+            "sustainOverlapSeconds": 0.0,
+            "pairCenterSeconds": 20.603134
+          }
+        },
+        {
+          "measureNumber": 11,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 23.944029,
+          "zoneEndSeconds": 24.562221,
+          "midi58Count": 1,
+          "midi62Count": 2,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 24.16416,
+            "pitch62Start": 24.477629,
+            "onsetSeparationSeconds": 0.313469,
+            "sustainOverlapSeconds": 0.0,
+            "pairCenterSeconds": 24.320894
+          }
+        },
+        {
+          "measureNumber": 13,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 27.476557,
+          "zoneEndSeconds": 28.09475,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 15,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 31.009086,
+          "zoneEndSeconds": 31.627278,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        }
+      ]
+    },
+    {
+      "pairWindowMilliseconds": 450,
+      "truePositive": 3,
+      "falseNegative": 5,
+      "falsePositive": 3,
+      "trueNegative": 5,
+      "precisionPercentage": 50.0,
+      "recallPercentage": 37.5,
+      "f1Percentage": 42.86,
+      "positiveMeasureReports": [
+        {
+          "measureNumber": 2,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 8.047649,
+          "zoneEndSeconds": 8.665842,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 8.375929,
+            "pitch62Start": 8.20178,
+            "onsetSeparationSeconds": 0.17415,
+            "sustainOverlapSeconds": 0.01161,
+            "pairCenterSeconds": 8.288854
+          }
+        },
+        {
+          "measureNumber": 4,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 11.580178,
+          "zoneEndSeconds": 12.198371,
+          "midi58Count": 3,
+          "midi62Count": 4,
+          "qualifyingPairCount": 11,
+          "bestPair": {
+            "pitch58Start": 11.720887,
+            "pitch62Start": 11.744107,
+            "onsetSeparationSeconds": 0.02322,
+            "sustainOverlapSeconds": 0.05805,
+            "pairCenterSeconds": 11.732497
+          }
+        },
+        {
+          "measureNumber": 6,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 15.112707,
+          "zoneEndSeconds": 15.730899,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 8,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 18.645236,
+          "zoneEndSeconds": 19.263428,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 10,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 22.177764,
+          "zoneEndSeconds": 22.795957,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 22.398159,
+            "pitch62Start": 22.618749,
+            "onsetSeparationSeconds": 0.22059,
+            "sustainOverlapSeconds": 0.0,
+            "pairCenterSeconds": 22.508454
+          }
+        },
+        {
+          "measureNumber": 12,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 25.710293,
+          "zoneEndSeconds": 26.328485,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 14,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 29.242822,
+          "zoneEndSeconds": 29.861014,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 16,
+          "expectedDoubleStopEnding": true,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 32.77535,
+          "zoneEndSeconds": 33.393543,
+          "midi58Count": 1,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        }
+      ],
+      "negativeMeasureReports": [
+        {
+          "measureNumber": 1,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 6.281385,
+          "zoneEndSeconds": 6.899578,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 3,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 9.813914,
+          "zoneEndSeconds": 10.432106,
+          "midi58Count": 0,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 5,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 13.346442,
+          "zoneEndSeconds": 13.964635,
+          "midi58Count": 2,
+          "midi62Count": 2,
+          "qualifyingPairCount": 4,
+          "bestPair": {
+            "pitch58Start": 13.637817,
+            "pitch62Start": 13.684257,
+            "onsetSeparationSeconds": 0.04644,
+            "sustainOverlapSeconds": 0.06966,
+            "pairCenterSeconds": 13.661037
+          }
+        },
+        {
+          "measureNumber": 7,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 16.878971,
+          "zoneEndSeconds": 17.497164,
+          "midi58Count": 0,
+          "midi62Count": 3,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 9,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 20.4115,
+          "zoneEndSeconds": 21.029692,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 1,
+          "bestPair": {
+            "pitch58Start": 20.492839,
+            "pitch62Start": 20.713429,
+            "onsetSeparationSeconds": 0.22059,
+            "sustainOverlapSeconds": 0.0,
+            "pairCenterSeconds": 20.603134
+          }
+        },
+        {
+          "measureNumber": 11,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": true,
+          "zoneStartSeconds": 23.944029,
+          "zoneEndSeconds": 24.562221,
+          "midi58Count": 1,
+          "midi62Count": 2,
+          "qualifyingPairCount": 2,
+          "bestPair": {
+            "pitch58Start": 24.16416,
+            "pitch62Start": 24.477629,
+            "onsetSeparationSeconds": 0.313469,
+            "sustainOverlapSeconds": 0.0,
+            "pairCenterSeconds": 24.320894
+          }
+        },
+        {
+          "measureNumber": 13,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 27.476557,
+          "zoneEndSeconds": 28.09475,
+          "midi58Count": 0,
+          "midi62Count": 0,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        },
+        {
+          "measureNumber": 15,
+          "expectedDoubleStopEnding": false,
+          "predictedDoubleStopEnding": false,
+          "zoneStartSeconds": 31.009086,
+          "zoneEndSeconds": 31.627278,
+          "midi58Count": 1,
+          "midi62Count": 1,
+          "qualifyingPairCount": 0,
+          "bestPair": null
+        }
+      ]
+    }
+  ],
+  "bestWindow": {
+    "pairWindowMilliseconds": 225,
+    "truePositive": 3,
+    "falseNegative": 5,
+    "falsePositive": 2,
+    "trueNegative": 6,
+    "precisionPercentage": 60.0,
+    "recallPercentage": 37.5,
+    "f1Percentage": 46.15,
+    "positiveMeasureReports": [
+      {
+        "measureNumber": 2,
+        "expectedDoubleStopEnding": true,
+        "predictedDoubleStopEnding": true,
+        "zoneStartSeconds": 8.047649,
+        "zoneEndSeconds": 8.665842,
+        "midi58Count": 1,
+        "midi62Count": 1,
+        "qualifyingPairCount": 1,
+        "bestPair": {
+          "pitch58Start": 8.375929,
+          "pitch62Start": 8.20178,
+          "onsetSeparationSeconds": 0.17415,
+          "sustainOverlapSeconds": 0.01161,
+          "pairCenterSeconds": 8.288854
+        }
+      },
+      {
+        "measureNumber": 4,
+        "expectedDoubleStopEnding": true,
+        "predictedDoubleStopEnding": true,
+        "zoneStartSeconds": 11.580178,
+        "zoneEndSeconds": 12.198371,
+        "midi58Count": 3,
+        "midi62Count": 4,
+        "qualifyingPairCount": 6,
+        "bestPair": {
+          "pitch58Start": 11.720887,
+          "pitch62Start": 11.744107,
+          "onsetSeparationSeconds": 0.02322,
+          "sustainOverlapSeconds": 0.05805,
+          "pairCenterSeconds": 11.732497
+        }
+      },
+      {
+        "measureNumber": 6,
+        "expectedDoubleStopEnding": true,
+        "predictedDoubleStopEnding": false,
+        "zoneStartSeconds": 15.112707,
+        "zoneEndSeconds": 15.730899,
+        "midi58Count": 0,
+        "midi62Count": 1,
+        "qualifyingPairCount": 0,
+        "bestPair": null
+      },
+      {
+        "measureNumber": 8,
+        "expectedDoubleStopEnding": true,
+        "predictedDoubleStopEnding": false,
+        "zoneStartSeconds": 18.645236,
+        "zoneEndSeconds": 19.263428,
+        "midi58Count": 0,
+        "midi62Count": 1,
+        "qualifyingPairCount": 0,
+        "bestPair": null
+      },
+      {
+        "measureNumber": 10,
+        "expectedDoubleStopEnding": true,
+        "predictedDoubleStopEnding": true,
+        "zoneStartSeconds": 22.177764,
+        "zoneEndSeconds": 22.795957,
+        "midi58Count": 1,
+        "midi62Count": 1,
+        "qualifyingPairCount": 1,
+        "bestPair": {
+          "pitch58Start": 22.398159,
+          "pitch62Start": 22.618749,
+          "onsetSeparationSeconds": 0.22059,
+          "sustainOverlapSeconds": 0.0,
+          "pairCenterSeconds": 22.508454
+        }
+      },
+      {
+        "measureNumber": 12,
+        "expectedDoubleStopEnding": true,
+        "predictedDoubleStopEnding": false,
+        "zoneStartSeconds": 25.710293,
+        "zoneEndSeconds": 26.328485,
+        "midi58Count": 0,
+        "midi62Count": 0,
+        "qualifyingPairCount": 0,
+        "bestPair": null
+      },
+      {
+        "measureNumber": 14,
+        "expectedDoubleStopEnding": true,
+        "predictedDoubleStopEnding": false,
+        "zoneStartSeconds": 29.242822,
+        "zoneEndSeconds": 29.861014,
+        "midi58Count": 0,
+        "midi62Count": 0,
+        "qualifyingPairCount": 0,
+        "bestPair": null
+      },
+      {
+        "measureNumber": 16,
+        "expectedDoubleStopEnding": true,
+        "predictedDoubleStopEnding": false,
+        "zoneStartSeconds": 32.77535,
+        "zoneEndSeconds": 33.393543,
+        "midi58Count": 1,
+        "midi62Count": 0,
+        "qualifyingPairCount": 0,
+        "bestPair": null
+      }
+    ],
+    "negativeMeasureReports": [
+      {
+        "measureNumber": 1,
+        "expectedDoubleStopEnding": false,
+        "predictedDoubleStopEnding": false,
+        "zoneStartSeconds": 6.281385,
+        "zoneEndSeconds": 6.899578,
+        "midi58Count": 0,
+        "midi62Count": 1,
+        "qualifyingPairCount": 0,
+        "bestPair": null
+      },
+      {
+        "measureNumber": 3,
+        "expectedDoubleStopEnding": false,
+        "predictedDoubleStopEnding": false,
+        "zoneStartSeconds": 9.813914,
+        "zoneEndSeconds": 10.432106,
+        "midi58Count": 0,
+        "midi62Count": 1,
+        "qualifyingPairCount": 0,
+        "bestPair": null
+      },
+      {
+        "measureNumber": 5,
+        "expectedDoubleStopEnding": false,
+        "predictedDoubleStopEnding": true,
+        "zoneStartSeconds": 13.346442,
+        "zoneEndSeconds": 13.964635,
+        "midi58Count": 2,
+        "midi62Count": 2,
+        "qualifyingPairCount": 2,
+        "bestPair": {
+          "pitch58Start": 13.637817,
+          "pitch62Start": 13.684257,
+          "onsetSeparationSeconds": 0.04644,
+          "sustainOverlapSeconds": 0.06966,
+          "pairCenterSeconds": 13.661037
+        }
+      },
+      {
+        "measureNumber": 7,
+        "expectedDoubleStopEnding": false,
+        "predictedDoubleStopEnding": false,
+        "zoneStartSeconds": 16.878971,
+        "zoneEndSeconds": 17.497164,
+        "midi58Count": 0,
+        "midi62Count": 3,
+        "qualifyingPairCount": 0,
+        "bestPair": null
+      },
+      {
+        "measureNumber": 9,
+        "expectedDoubleStopEnding": false,
+        "predictedDoubleStopEnding": true,
+        "zoneStartSeconds": 20.4115,
+        "zoneEndSeconds": 21.029692,
+        "midi58Count": 1,
+        "midi62Count": 1,
+        "qualifyingPairCount": 1,
+        "bestPair": {
+          "pitch58Start": 20.492839,
+          "pitch62Start": 20.713429,
+          "onsetSeparationSeconds": 0.22059,
+          "sustainOverlapSeconds": 0.0,
+          "pairCenterSeconds": 20.603134
+        }
+      },
+      {
+        "measureNumber": 11,
+        "expectedDoubleStopEnding": false,
+        "predictedDoubleStopEnding": false,
+        "zoneStartSeconds": 23.944029,
+        "zoneEndSeconds": 24.562221,
+        "midi58Count": 1,
+        "midi62Count": 2,
+        "qualifyingPairCount": 0,
+        "bestPair": null
+      },
+      {
+        "measureNumber": 13,
+        "expectedDoubleStopEnding": false,
+        "predictedDoubleStopEnding": false,
+        "zoneStartSeconds": 27.476557,
+        "zoneEndSeconds": 28.09475,
+        "midi58Count": 0,
+        "midi62Count": 0,
+        "qualifyingPairCount": 0,
+        "bestPair": null
+      },
+      {
+        "measureNumber": 15,
+        "expectedDoubleStopEnding": false,
+        "predictedDoubleStopEnding": false,
+        "zoneStartSeconds": 31.009086,
+        "zoneEndSeconds": 31.627278,
+        "midi58Count": 1,
+        "midi62Count": 1,
+        "qualifyingPairCount": 0,
+        "bestPair": null
+      }
+    ]
+  },
+  "protectedPitchCheckpoint": {
+    "overallRecallPercentage": 93.06,
+    "lowRegisterRecallPercentage": 84.38,
+    "midi52Matches": 32,
+    "midi62Matches": 16,
+    "combinedRegressionPassed": true
+  },
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedPitchCheckpointChanged": false
+}

@@ -1,0 +1,105 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "professional-em-riff-direct-audio-identity-evidence",
+  "passed": true,
+  "readyForExactScoring": false,
+  "verseMeasuresInspected": [
+    18,
+    32
+  ],
+  "directAudioEventCount": 82,
+  "matchedProtectedEventCount": 0,
+  "protectedSlotCount": 9,
+  "slotsWithIdentityEvidence": 0,
+  "patternEvidence": {
+    "em-riff-a": [
+      {
+        "quantizedStep": 2,
+        "directAudioIdentityCandidates": [],
+        "leadingIdentity": null,
+        "status": "identity-evidence-missing",
+        "professionalManualVerificationRequired": true
+      },
+      {
+        "quantizedStep": 6,
+        "directAudioIdentityCandidates": [],
+        "leadingIdentity": null,
+        "status": "identity-evidence-missing",
+        "professionalManualVerificationRequired": true
+      },
+      {
+        "quantizedStep": 10,
+        "directAudioIdentityCandidates": [],
+        "leadingIdentity": null,
+        "status": "identity-evidence-missing",
+        "professionalManualVerificationRequired": true
+      },
+      {
+        "quantizedStep": 14,
+        "directAudioIdentityCandidates": [],
+        "leadingIdentity": null,
+        "status": "identity-evidence-missing",
+        "professionalManualVerificationRequired": true
+      }
+    ],
+    "em-riff-b": [
+      {
+        "quantizedStep": 2,
+        "directAudioIdentityCandidates": [],
+        "leadingIdentity": null,
+        "status": "identity-evidence-missing",
+        "professionalManualVerificationRequired": true
+      },
+      {
+        "quantizedStep": 4,
+        "directAudioIdentityCandidates": [],
+        "leadingIdentity": null,
+        "status": "identity-evidence-missing",
+        "professionalManualVerificationRequired": true
+      },
+      {
+        "quantizedStep": 6,
+        "directAudioIdentityCandidates": [],
+        "leadingIdentity": null,
+        "status": "identity-evidence-missing",
+        "professionalManualVerificationRequired": true
+      },
+      {
+        "quantizedStep": 10,
+        "directAudioIdentityCandidates": [],
+        "leadingIdentity": null,
+        "status": "identity-evidence-missing",
+        "professionalManualVerificationRequired": true
+      },
+      {
+        "quantizedStep": 14,
+        "directAudioIdentityCandidates": [],
+        "leadingIdentity": null,
+        "status": "identity-evidence-missing",
+        "professionalManualVerificationRequired": true
+      }
+    ]
+  },
+  "checks": {
+    "candidateReportPassed": true,
+    "timingAlignmentPassed": true,
+    "scaffoldContainsEmRiffA": true,
+    "scaffoldContainsEmRiffB": true,
+    "directAudioEventsPresent": true,
+    "protectedTimingPresent": true,
+    "professionalReferenceMayScoreButNotGenerate": true,
+    "lockedV7EventsProtected": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "safeguards": {
+    "evidenceIsReadOnly": true,
+    "doesNotCopyProfessionalNotesIntoJimmy": true,
+    "doesNotPromoteIdentityWithoutManualVerification": true,
+    "doesNotModifyLockedTiming": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false
+  },
+  "nextStep": "Review the leading direct-audio string/fret identity for each protected onset against the professional score. Only manually verified identities may enter exact scoring."
+}

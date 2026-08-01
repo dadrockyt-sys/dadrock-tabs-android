@@ -1,0 +1,18 @@
+2026-08-01 07:11:01 UTC | Attempt 1/5 submitted | name=protected-84-72-baseline | retry=1/3 | callId=fc-01KYY2JXW4EE048A7RMCWZJ9AT
+2026-08-01 07:11:04 UTC | [worker-start heartbeat] attempt=1/5 | name=protected-84-72-baseline | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY2JXW4EE048A7RMCWZJ9AT
+2026-08-01 07:11:19 UTC | [worker-start heartbeat] attempt=1/5 | name=protected-84-72-baseline | retry=1/3 | elapsed=17.3s | taskId=- | callId=fc-01KYY2JXW4EE048A7RMCWZJ9AT
+2026-08-01 07:11:34 UTC | Attempt 1/5 complete | name=protected-84-72-baseline | low=70.31% | overall=84.72% | MIDI52=32/32 | MIDI62=14/16 | m16-neighbors={'61': 1, '62': 0, '63': 0} | checkpoint=True | fullGuard=False
+2026-08-01 07:11:35 UTC | Attempt 2/5 submitted | name=bend-aware-baseline | retry=1/3 | callId=fc-01KYY2KYPQXHPY2K90Y3VPMAQQ
+2026-08-01 07:11:38 UTC | [worker-start heartbeat] attempt=2/5 | name=bend-aware-baseline | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY2KYPQXHPY2K90Y3VPMAQQ
+2026-08-01 07:11:54 UTC | Attempt 2/5 complete | name=bend-aware-baseline | low=70.31% | overall=84.72% | MIDI52=32/32 | MIDI62=14/16 | m16-neighbors={'61': 1, '62': 0, '63': 0} | checkpoint=True | fullGuard=False
+2026-08-01 07:11:55 UTC | Attempt 3/5 submitted | name=bend-aware-onset-028 | retry=1/3 | callId=fc-01KYY2MHXHE50QVS5STQ84JB9H
+2026-08-01 07:11:58 UTC | [worker-start heartbeat] attempt=3/5 | name=bend-aware-onset-028 | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY2MHXHE50QVS5STQ84JB9H
+2026-08-01 07:12:13 UTC | Attempt 3/5 complete | name=bend-aware-onset-028 | low=70.31% | overall=84.72% | MIDI52=32/32 | MIDI62=14/16 | m16-neighbors={'61': 1, '62': 0, '63': 0} | checkpoint=True | fullGuard=False
+2026-08-01 07:12:14 UTC | Attempt 4/5 submitted | name=bend-aware-frame-012 | retry=1/3 | callId=fc-01KYY2N4ZP3DX60E7QDVW7CXTQ
+2026-08-01 07:12:18 UTC | [worker-start heartbeat] attempt=4/5 | name=bend-aware-frame-012 | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY2N4ZP3DX60E7QDVW7CXTQ
+2026-08-01 07:12:34 UTC | Attempt 4/5 complete | name=bend-aware-frame-012 | low=81.25% | overall=91.67% | MIDI52=32/32 | MIDI62=16/16 | m16-neighbors={'61': 0, '62': 2, '63': 0} | checkpoint=True | fullGuard=True
+2026-08-01 07:12:35 UTC | Attempt 5/5 submitted | name=bend-aware-neighbor-sensitive | retry=1/3 | callId=fc-01KYY2NSFDDWVVBTRAA0TA5CSA
+2026-08-01 07:12:38 UTC | [worker-start heartbeat] attempt=5/5 | name=bend-aware-neighbor-sensitive | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY2NSFDDWVVBTRAA0TA5CSA
+2026-08-01 07:12:54 UTC | Attempt 5/5 complete | name=bend-aware-neighbor-sensitive | low=84.38% | overall=93.06% | MIDI52=32/32 | MIDI62=16/16 | m16-neighbors={'61': 1, '62': 1, '63': 1} | checkpoint=True | fullGuard=True
+2026-08-01 07:12:54 UTC | MIDI62 recovery complete | best=bend-aware-neighbor-sensitive | overall=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16
+2026-08-01 07:12:54 UTC | Output: public/gomyway-jimmy-paige-midi62-neighbor-recovery-sweep.json

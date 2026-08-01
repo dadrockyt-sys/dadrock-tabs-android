@@ -1,0 +1,3275 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-read-only-professional-intro-reference-slot-support",
+  "passed": true,
+  "matchRadiusSteps": 2,
+  "minimumSupportedPairs": 4,
+  "strongSupportedPairs": 6,
+  "referenceSteps": [
+    2,
+    4,
+    6,
+    9,
+    11,
+    14,
+    18,
+    20,
+    22,
+    25,
+    27,
+    30
+  ],
+  "referenceSlotCount": 12,
+  "supportedReferenceSlots": [
+    {
+      "referenceStep": 2,
+      "measureInPair": 1,
+      "stepInMeasure": 2,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 1.0,
+      "medianStepDistance": 1.5,
+      "medianStrength": 0.340471,
+      "timingSpreadSteps": 0.186572,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 2,
+          "observedStep": 2,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.165776,
+          "strength": 0.250135,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 2,
+          "observedStep": 3,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.11488,
+          "strength": 0.377301,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 2,
+          "observedStep": 4,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.064,
+          "strength": 0.339173,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 2,
+          "observedStep": 1,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.180416,
+          "strength": 0.255799,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 2,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.427904,
+          "strength": 0.341769,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 2,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.077856,
+          "strength": 0.602586,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 2,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.072496,
+          "strength": 0.700966,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 2,
+          "observedStep": 1,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.178096,
+          "strength": 0.287535,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 4,
+      "measureInPair": 1,
+      "stepInMeasure": 4,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 5.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.349814,
+      "timingSpreadSteps": 0.288274,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 4,
+          "observedStep": 6,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.359296,
+          "strength": 0.360455,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 4,
+          "observedStep": 3,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.11488,
+          "strength": 0.377301,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 4,
+          "observedStep": 4,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.064,
+          "strength": 0.339173,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 4,
+          "observedStep": 5,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.01312,
+          "strength": 0.263851,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 4,
+          "observedStep": 4,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.034688,
+          "strength": 0.255824,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 4,
+          "observedStep": 5,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.48496,
+          "strength": 0.169124,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 4,
+          "observedStep": 6,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.462624,
+          "strength": 0.460411,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 4,
+          "observedStep": 6,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.41328,
+          "strength": 0.527836,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 6,
+      "measureInPair": 1,
+      "stepInMeasure": 6,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 6.0,
+      "medianStepDistance": 0.0,
+      "medianStrength": 0.349814,
+      "timingSpreadSteps": 0.241678,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.359296,
+          "strength": 0.360455,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 6,
+          "observedStep": 7,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.308416,
+          "strength": 0.240619,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 6,
+          "observedStep": 4,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.064,
+          "strength": 0.339173,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 6,
+          "observedStep": 5,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.01312,
+          "strength": 0.263851,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.237456,
+          "strength": 0.25427,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.087104,
+          "strength": 0.443945,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.462624,
+          "strength": 0.460411,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.41328,
+          "strength": 0.527836,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 9,
+      "measureInPair": 1,
+      "stepInMeasure": 9,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 10.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.339626,
+      "timingSpreadSteps": 0.343864,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 9,
+          "observedStep": 11,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.447184,
+          "strength": 0.313017,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 9,
+          "observedStep": 11,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.30224,
+          "strength": 0.366236,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 9,
+          "observedStep": 8,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.057824,
+          "strength": 0.281322,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 9,
+          "observedStep": 9,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.006944,
+          "strength": 0.28273,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 9,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.443328,
+          "strength": 0.464032,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 9,
+          "observedStep": 9,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.307648,
+          "strength": 0.185126,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 9,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.456448,
+          "strength": 0.544445,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 9,
+          "observedStep": 11,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.3932,
+          "strength": 0.588494,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 11,
+      "measureInPair": 1,
+      "stepInMeasure": 11,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 11.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.415134,
+      "timingSpreadSteps": 0.356268,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 11,
+          "observedStep": 11,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.447184,
+          "strength": 0.313017,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 11,
+          "observedStep": 11,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.30224,
+          "strength": 0.366236,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 11,
+          "observedStep": 13,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.099456,
+          "strength": 0.50678,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 11,
+          "observedStep": 12,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.25136,
+          "strength": 0.271462,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 11,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.443328,
+          "strength": 0.464032,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 11,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.306112,
+          "strength": 0.259735,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 11,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.456448,
+          "strength": 0.544445,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 11,
+          "observedStep": 11,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.3932,
+          "strength": 0.588494,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 14,
+      "measureInPair": 1,
+      "stepInMeasure": 14,
+      "pairSupport": 7,
+      "supportRatio": 0.875,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 14,
+      "medianStepDistance": 0,
+      "medianStrength": 0.353679,
+      "timingSpreadSteps": 0.2896,
+      "matches": [
+        {
+          "pairIndex": 1,
+          "targetStep": 14,
+          "observedStep": 15,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.45336,
+          "strength": 0.228163,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 14,
+          "observedStep": 13,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.099456,
+          "strength": 0.50678,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 14,
+          "observedStep": 12,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.25136,
+          "strength": 0.271462,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.198928,
+          "strength": 0.197343,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.449488,
+          "strength": 0.639604,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.09944,
+          "strength": 0.353679,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.250592,
+          "strength": 0.549544,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 18,
+      "measureInPair": 2,
+      "stepInMeasure": 2,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 18.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.31748,
+      "timingSpreadSteps": 0.366439,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 18,
+          "observedStep": 18,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.40864,
+          "strength": 0.344482,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 18,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.259824,
+          "strength": 0.290478,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 18,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.4896,
+          "strength": 0.240978,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 18,
+          "observedStep": 20,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.438704,
+          "strength": 0.26227,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 18,
+          "observedStep": 17,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.005392,
+          "strength": 0.37796,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 18,
+          "observedStep": 16,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.452576,
+          "strength": 0.413226,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 18,
+          "observedStep": 18,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.293776,
+          "strength": 0.176098,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 18,
+          "observedStep": 17,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.353104,
+          "strength": 0.349795,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 20,
+      "measureInPair": 2,
+      "stepInMeasure": 4,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 20.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.31743,
+      "timingSpreadSteps": 0.375463,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 20,
+          "observedStep": 18,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.40864,
+          "strength": 0.344482,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 20,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.259824,
+          "strength": 0.290478,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 20,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.4896,
+          "strength": 0.240978,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 20,
+          "observedStep": 20,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.438704,
+          "strength": 0.26227,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 20,
+          "observedStep": 21,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.188144,
+          "strength": 0.477297,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 20,
+          "observedStep": 22,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.461824,
+          "strength": 0.212636,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 20,
+          "observedStep": 20,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.290688,
+          "strength": 0.344382,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 20,
+          "observedStep": 22,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.437952,
+          "strength": 0.646864,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 22,
+      "measureInPair": 2,
+      "stepInMeasure": 6,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 22.0,
+      "medianStepDistance": 0.5,
+      "medianStrength": 0.258776,
+      "timingSpreadSteps": 0.326173,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.215104,
+          "strength": 0.23585,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 22,
+          "observedStep": 23,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.266,
+          "strength": 0.325093,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 22,
+          "observedStep": 24,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.31688,
+          "strength": 0.255282,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 22,
+          "observedStep": 20,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.438704,
+          "strength": 0.26227,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 22,
+          "observedStep": 21,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.188144,
+          "strength": 0.477297,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.461824,
+          "strength": 0.212636,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.111776,
+          "strength": 0.21912,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.437952,
+          "strength": 0.646864,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 25,
+      "measureInPair": 2,
+      "stepInMeasure": 9,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 25.5,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.382246,
+      "timingSpreadSteps": 0.318167,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.22128,
+          "strength": 0.25782,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 25,
+          "observedStep": 23,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.266,
+          "strength": 0.325093,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 25,
+          "observedStep": 24,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.31688,
+          "strength": 0.255282,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 25,
+          "observedStep": 24,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.432544,
+          "strength": 0.250785,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 25,
+          "observedStep": 25,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.381664,
+          "strength": 0.449391,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.268288,
+          "strength": 0.61133,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.081744,
+          "strength": 0.620042,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.431776,
+          "strength": 0.439398,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 27,
+      "measureInPair": 2,
+      "stepInMeasure": 11,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 26.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.395178,
+      "timingSpreadSteps": 0.37217,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.22128,
+          "strength": 0.25782,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 27,
+          "observedStep": 27,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.27216,
+          "strength": 0.268103,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 27,
+          "observedStep": 27,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.67696,
+          "strength": 0.211768,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 27,
+          "observedStep": 29,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.373936,
+          "strength": 0.350959,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 27,
+          "observedStep": 25,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.381664,
+          "strength": 0.449391,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.268288,
+          "strength": 0.61133,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.081744,
+          "strength": 0.620042,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.431776,
+          "strength": 0.439398,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 30,
+      "measureInPair": 2,
+      "stepInMeasure": 14,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 30.0,
+      "medianStepDistance": 0.5,
+      "medianStrength": 0.328029,
+      "timingSpreadSteps": 0.252551,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.02776,
+          "strength": 0.309634,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 30,
+          "observedStep": 31,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.07864,
+          "strength": 0.299183,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 30,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.070176,
+          "strength": 0.225189,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 30,
+          "observedStep": 29,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.373936,
+          "strength": 0.350959,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 30,
+          "observedStep": 29,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.175808,
+          "strength": 0.222226,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.274464,
+          "strength": 0.473854,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.275264,
+          "strength": 0.492396,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.425616,
+          "strength": 0.346424,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    }
+  ],
+  "supportedReferenceSlotCount": 12,
+  "strongReferenceSlots": [
+    {
+      "referenceStep": 2,
+      "measureInPair": 1,
+      "stepInMeasure": 2,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 1.0,
+      "medianStepDistance": 1.5,
+      "medianStrength": 0.340471,
+      "timingSpreadSteps": 0.186572,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 2,
+          "observedStep": 2,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.165776,
+          "strength": 0.250135,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 2,
+          "observedStep": 3,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.11488,
+          "strength": 0.377301,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 2,
+          "observedStep": 4,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.064,
+          "strength": 0.339173,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 2,
+          "observedStep": 1,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.180416,
+          "strength": 0.255799,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 2,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.427904,
+          "strength": 0.341769,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 2,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.077856,
+          "strength": 0.602586,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 2,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.072496,
+          "strength": 0.700966,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 2,
+          "observedStep": 1,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.178096,
+          "strength": 0.287535,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 4,
+      "measureInPair": 1,
+      "stepInMeasure": 4,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 5.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.349814,
+      "timingSpreadSteps": 0.288274,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 4,
+          "observedStep": 6,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.359296,
+          "strength": 0.360455,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 4,
+          "observedStep": 3,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.11488,
+          "strength": 0.377301,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 4,
+          "observedStep": 4,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.064,
+          "strength": 0.339173,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 4,
+          "observedStep": 5,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.01312,
+          "strength": 0.263851,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 4,
+          "observedStep": 4,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.034688,
+          "strength": 0.255824,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 4,
+          "observedStep": 5,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.48496,
+          "strength": 0.169124,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 4,
+          "observedStep": 6,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.462624,
+          "strength": 0.460411,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 4,
+          "observedStep": 6,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.41328,
+          "strength": 0.527836,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 6,
+      "measureInPair": 1,
+      "stepInMeasure": 6,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 6.0,
+      "medianStepDistance": 0.0,
+      "medianStrength": 0.349814,
+      "timingSpreadSteps": 0.241678,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.359296,
+          "strength": 0.360455,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 6,
+          "observedStep": 7,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.308416,
+          "strength": 0.240619,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 6,
+          "observedStep": 4,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.064,
+          "strength": 0.339173,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 6,
+          "observedStep": 5,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.01312,
+          "strength": 0.263851,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.237456,
+          "strength": 0.25427,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.087104,
+          "strength": 0.443945,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.462624,
+          "strength": 0.460411,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.41328,
+          "strength": 0.527836,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 9,
+      "measureInPair": 1,
+      "stepInMeasure": 9,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 10.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.339626,
+      "timingSpreadSteps": 0.343864,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 9,
+          "observedStep": 11,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.447184,
+          "strength": 0.313017,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 9,
+          "observedStep": 11,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.30224,
+          "strength": 0.366236,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 9,
+          "observedStep": 8,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.057824,
+          "strength": 0.281322,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 9,
+          "observedStep": 9,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.006944,
+          "strength": 0.28273,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 9,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.443328,
+          "strength": 0.464032,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 9,
+          "observedStep": 9,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.307648,
+          "strength": 0.185126,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 9,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.456448,
+          "strength": 0.544445,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 9,
+          "observedStep": 11,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.3932,
+          "strength": 0.588494,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 11,
+      "measureInPair": 1,
+      "stepInMeasure": 11,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 11.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.415134,
+      "timingSpreadSteps": 0.356268,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 11,
+          "observedStep": 11,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.447184,
+          "strength": 0.313017,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 11,
+          "observedStep": 11,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.30224,
+          "strength": 0.366236,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 11,
+          "observedStep": 13,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.099456,
+          "strength": 0.50678,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 11,
+          "observedStep": 12,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.25136,
+          "strength": 0.271462,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 11,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.443328,
+          "strength": 0.464032,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 11,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.306112,
+          "strength": 0.259735,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 11,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.456448,
+          "strength": 0.544445,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 11,
+          "observedStep": 11,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.3932,
+          "strength": 0.588494,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 14,
+      "measureInPair": 1,
+      "stepInMeasure": 14,
+      "pairSupport": 7,
+      "supportRatio": 0.875,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 14,
+      "medianStepDistance": 0,
+      "medianStrength": 0.353679,
+      "timingSpreadSteps": 0.2896,
+      "matches": [
+        {
+          "pairIndex": 1,
+          "targetStep": 14,
+          "observedStep": 15,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.45336,
+          "strength": 0.228163,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 14,
+          "observedStep": 13,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.099456,
+          "strength": 0.50678,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 14,
+          "observedStep": 12,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.25136,
+          "strength": 0.271462,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.198928,
+          "strength": 0.197343,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.449488,
+          "strength": 0.639604,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.09944,
+          "strength": 0.353679,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.250592,
+          "strength": 0.549544,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 18,
+      "measureInPair": 2,
+      "stepInMeasure": 2,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 18.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.31748,
+      "timingSpreadSteps": 0.366439,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 18,
+          "observedStep": 18,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.40864,
+          "strength": 0.344482,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 18,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.259824,
+          "strength": 0.290478,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 18,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.4896,
+          "strength": 0.240978,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 18,
+          "observedStep": 20,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.438704,
+          "strength": 0.26227,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 18,
+          "observedStep": 17,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.005392,
+          "strength": 0.37796,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 18,
+          "observedStep": 16,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.452576,
+          "strength": 0.413226,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 18,
+          "observedStep": 18,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.293776,
+          "strength": 0.176098,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 18,
+          "observedStep": 17,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.353104,
+          "strength": 0.349795,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 20,
+      "measureInPair": 2,
+      "stepInMeasure": 4,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 20.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.31743,
+      "timingSpreadSteps": 0.375463,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 20,
+          "observedStep": 18,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.40864,
+          "strength": 0.344482,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 20,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.259824,
+          "strength": 0.290478,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 20,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.4896,
+          "strength": 0.240978,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 20,
+          "observedStep": 20,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.438704,
+          "strength": 0.26227,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 20,
+          "observedStep": 21,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.188144,
+          "strength": 0.477297,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 20,
+          "observedStep": 22,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.461824,
+          "strength": 0.212636,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 20,
+          "observedStep": 20,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.290688,
+          "strength": 0.344382,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 20,
+          "observedStep": 22,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.437952,
+          "strength": 0.646864,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 22,
+      "measureInPair": 2,
+      "stepInMeasure": 6,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 22.0,
+      "medianStepDistance": 0.5,
+      "medianStrength": 0.258776,
+      "timingSpreadSteps": 0.326173,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.215104,
+          "strength": 0.23585,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 22,
+          "observedStep": 23,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.266,
+          "strength": 0.325093,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 22,
+          "observedStep": 24,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.31688,
+          "strength": 0.255282,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 22,
+          "observedStep": 20,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.438704,
+          "strength": 0.26227,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 22,
+          "observedStep": 21,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.188144,
+          "strength": 0.477297,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.461824,
+          "strength": 0.212636,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.111776,
+          "strength": 0.21912,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.437952,
+          "strength": 0.646864,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 25,
+      "measureInPair": 2,
+      "stepInMeasure": 9,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 25.5,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.382246,
+      "timingSpreadSteps": 0.318167,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.22128,
+          "strength": 0.25782,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 25,
+          "observedStep": 23,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.266,
+          "strength": 0.325093,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 25,
+          "observedStep": 24,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.31688,
+          "strength": 0.255282,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 25,
+          "observedStep": 24,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.432544,
+          "strength": 0.250785,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 25,
+          "observedStep": 25,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.381664,
+          "strength": 0.449391,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.268288,
+          "strength": 0.61133,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.081744,
+          "strength": 0.620042,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.431776,
+          "strength": 0.439398,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 27,
+      "measureInPair": 2,
+      "stepInMeasure": 11,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 26.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.395178,
+      "timingSpreadSteps": 0.37217,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.22128,
+          "strength": 0.25782,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 27,
+          "observedStep": 27,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.27216,
+          "strength": 0.268103,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 27,
+          "observedStep": 27,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.67696,
+          "strength": 0.211768,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 27,
+          "observedStep": 29,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.373936,
+          "strength": 0.350959,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 27,
+          "observedStep": 25,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.381664,
+          "strength": 0.449391,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.268288,
+          "strength": 0.61133,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.081744,
+          "strength": 0.620042,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.431776,
+          "strength": 0.439398,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 30,
+      "measureInPair": 2,
+      "stepInMeasure": 14,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 30.0,
+      "medianStepDistance": 0.5,
+      "medianStrength": 0.328029,
+      "timingSpreadSteps": 0.252551,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.02776,
+          "strength": 0.309634,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 30,
+          "observedStep": 31,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.07864,
+          "strength": 0.299183,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 30,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.070176,
+          "strength": 0.225189,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 30,
+          "observedStep": 29,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.373936,
+          "strength": 0.350959,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 30,
+          "observedStep": 29,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.175808,
+          "strength": 0.222226,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.274464,
+          "strength": 0.473854,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.275264,
+          "strength": 0.492396,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.425616,
+          "strength": 0.346424,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    }
+  ],
+  "strongReferenceSlotCount": 12,
+  "referenceCoverage": 1.0,
+  "slotReports": [
+    {
+      "referenceStep": 2,
+      "measureInPair": 1,
+      "stepInMeasure": 2,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 1.0,
+      "medianStepDistance": 1.5,
+      "medianStrength": 0.340471,
+      "timingSpreadSteps": 0.186572,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 2,
+          "observedStep": 2,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.165776,
+          "strength": 0.250135,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 2,
+          "observedStep": 3,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.11488,
+          "strength": 0.377301,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 2,
+          "observedStep": 4,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.064,
+          "strength": 0.339173,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 2,
+          "observedStep": 1,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.180416,
+          "strength": 0.255799,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 2,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.427904,
+          "strength": 0.341769,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 2,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.077856,
+          "strength": 0.602586,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 2,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.072496,
+          "strength": 0.700966,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 2,
+          "observedStep": 1,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.178096,
+          "strength": 0.287535,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 4,
+      "measureInPair": 1,
+      "stepInMeasure": 4,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 5.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.349814,
+      "timingSpreadSteps": 0.288274,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 4,
+          "observedStep": 6,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.359296,
+          "strength": 0.360455,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 4,
+          "observedStep": 3,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.11488,
+          "strength": 0.377301,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 4,
+          "observedStep": 4,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.064,
+          "strength": 0.339173,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 4,
+          "observedStep": 5,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.01312,
+          "strength": 0.263851,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 4,
+          "observedStep": 4,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.034688,
+          "strength": 0.255824,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 4,
+          "observedStep": 5,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.48496,
+          "strength": 0.169124,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 4,
+          "observedStep": 6,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.462624,
+          "strength": 0.460411,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 4,
+          "observedStep": 6,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.41328,
+          "strength": 0.527836,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 6,
+      "measureInPair": 1,
+      "stepInMeasure": 6,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 6.0,
+      "medianStepDistance": 0.0,
+      "medianStrength": 0.349814,
+      "timingSpreadSteps": 0.241678,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.359296,
+          "strength": 0.360455,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 6,
+          "observedStep": 7,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.308416,
+          "strength": 0.240619,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 6,
+          "observedStep": 4,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.064,
+          "strength": 0.339173,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 6,
+          "observedStep": 5,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.01312,
+          "strength": 0.263851,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.237456,
+          "strength": 0.25427,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.087104,
+          "strength": 0.443945,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.462624,
+          "strength": 0.460411,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 6,
+          "observedStep": 6,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.41328,
+          "strength": 0.527836,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 9,
+      "measureInPair": 1,
+      "stepInMeasure": 9,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 10.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.339626,
+      "timingSpreadSteps": 0.343864,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 9,
+          "observedStep": 11,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.447184,
+          "strength": 0.313017,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 9,
+          "observedStep": 11,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.30224,
+          "strength": 0.366236,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 9,
+          "observedStep": 8,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.057824,
+          "strength": 0.281322,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 9,
+          "observedStep": 9,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.006944,
+          "strength": 0.28273,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 9,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.443328,
+          "strength": 0.464032,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 9,
+          "observedStep": 9,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.307648,
+          "strength": 0.185126,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 9,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.456448,
+          "strength": 0.544445,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 9,
+          "observedStep": 11,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.3932,
+          "strength": 0.588494,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 11,
+      "measureInPair": 1,
+      "stepInMeasure": 11,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 11.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.415134,
+      "timingSpreadSteps": 0.356268,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 11,
+          "observedStep": 11,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.447184,
+          "strength": 0.313017,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 11,
+          "observedStep": 11,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.30224,
+          "strength": 0.366236,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 11,
+          "observedStep": 13,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.099456,
+          "strength": 0.50678,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 11,
+          "observedStep": 12,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.25136,
+          "strength": 0.271462,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 11,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.443328,
+          "strength": 0.464032,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 11,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.306112,
+          "strength": 0.259735,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 11,
+          "observedStep": 10,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.456448,
+          "strength": 0.544445,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 11,
+          "observedStep": 11,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.3932,
+          "strength": 0.588494,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 14,
+      "measureInPair": 1,
+      "stepInMeasure": 14,
+      "pairSupport": 7,
+      "supportRatio": 0.875,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 14,
+      "medianStepDistance": 0,
+      "medianStrength": 0.353679,
+      "timingSpreadSteps": 0.2896,
+      "matches": [
+        {
+          "pairIndex": 1,
+          "targetStep": 14,
+          "observedStep": 15,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.45336,
+          "strength": 0.228163,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 14,
+          "observedStep": 13,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.099456,
+          "strength": 0.50678,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 14,
+          "observedStep": 12,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.25136,
+          "strength": 0.271462,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.198928,
+          "strength": 0.197343,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.449488,
+          "strength": 0.639604,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.09944,
+          "strength": 0.353679,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 14,
+          "observedStep": 14,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.250592,
+          "strength": 0.549544,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 18,
+      "measureInPair": 2,
+      "stepInMeasure": 2,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 18.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.31748,
+      "timingSpreadSteps": 0.366439,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 18,
+          "observedStep": 18,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.40864,
+          "strength": 0.344482,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 18,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.259824,
+          "strength": 0.290478,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 18,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.4896,
+          "strength": 0.240978,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 18,
+          "observedStep": 20,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.438704,
+          "strength": 0.26227,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 18,
+          "observedStep": 17,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.005392,
+          "strength": 0.37796,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 18,
+          "observedStep": 16,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.452576,
+          "strength": 0.413226,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 18,
+          "observedStep": 18,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.293776,
+          "strength": 0.176098,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 18,
+          "observedStep": 17,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.353104,
+          "strength": 0.349795,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 20,
+      "measureInPair": 2,
+      "stepInMeasure": 4,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 20.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.31743,
+      "timingSpreadSteps": 0.375463,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 20,
+          "observedStep": 18,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.40864,
+          "strength": 0.344482,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 20,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.259824,
+          "strength": 0.290478,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 20,
+          "observedStep": 19,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.4896,
+          "strength": 0.240978,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 20,
+          "observedStep": 20,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.438704,
+          "strength": 0.26227,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 20,
+          "observedStep": 21,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.188144,
+          "strength": 0.477297,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 20,
+          "observedStep": 22,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.461824,
+          "strength": 0.212636,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 20,
+          "observedStep": 20,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.290688,
+          "strength": 0.344382,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 20,
+          "observedStep": 22,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.437952,
+          "strength": 0.646864,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 22,
+      "measureInPair": 2,
+      "stepInMeasure": 6,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 22.0,
+      "medianStepDistance": 0.5,
+      "medianStrength": 0.258776,
+      "timingSpreadSteps": 0.326173,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.215104,
+          "strength": 0.23585,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 22,
+          "observedStep": 23,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.266,
+          "strength": 0.325093,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 22,
+          "observedStep": 24,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.31688,
+          "strength": 0.255282,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 22,
+          "observedStep": 20,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.438704,
+          "strength": 0.26227,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 22,
+          "observedStep": 21,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.188144,
+          "strength": 0.477297,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.461824,
+          "strength": 0.212636,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.111776,
+          "strength": 0.21912,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 22,
+          "observedStep": 22,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.437952,
+          "strength": 0.646864,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 25,
+      "measureInPair": 2,
+      "stepInMeasure": 9,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 25.5,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.382246,
+      "timingSpreadSteps": 0.318167,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.22128,
+          "strength": 0.25782,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 25,
+          "observedStep": 23,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.266,
+          "strength": 0.325093,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 25,
+          "observedStep": 24,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.31688,
+          "strength": 0.255282,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 25,
+          "observedStep": 24,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.432544,
+          "strength": 0.250785,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 25,
+          "observedStep": 25,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.381664,
+          "strength": 0.449391,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.268288,
+          "strength": 0.61133,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.081744,
+          "strength": 0.620042,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 25,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.431776,
+          "strength": 0.439398,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 27,
+      "measureInPair": 2,
+      "stepInMeasure": 11,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 26.0,
+      "medianStepDistance": 1.0,
+      "medianStrength": 0.395178,
+      "timingSpreadSteps": 0.37217,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.22128,
+          "strength": 0.25782,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 27,
+          "observedStep": 27,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.27216,
+          "strength": 0.268103,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 27,
+          "observedStep": 27,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.67696,
+          "strength": 0.211768,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 27,
+          "observedStep": 29,
+          "stepDistance": 2,
+          "timingDeltaSteps": -0.373936,
+          "strength": 0.350959,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 27,
+          "observedStep": 25,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.381664,
+          "strength": 0.449391,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.268288,
+          "strength": 0.61133,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.081744,
+          "strength": 0.620042,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 27,
+          "observedStep": 26,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.431776,
+          "strength": 0.439398,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "referenceStep": 30,
+      "measureInPair": 2,
+      "stepInMeasure": 14,
+      "pairSupport": 8,
+      "supportRatio": 1.0,
+      "supported": true,
+      "strongSupport": true,
+      "medianObservedStep": 30.0,
+      "medianStepDistance": 0.5,
+      "medianStrength": 0.328029,
+      "timingSpreadSteps": 0.252551,
+      "matches": [
+        {
+          "pairIndex": 0,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.02776,
+          "strength": 0.309634,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 1,
+          "targetStep": 30,
+          "observedStep": 31,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.07864,
+          "strength": 0.299183,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 2,
+          "targetStep": 30,
+          "observedStep": 0,
+          "stepDistance": 2,
+          "timingDeltaSteps": 0.070176,
+          "strength": 0.225189,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 3,
+          "targetStep": 30,
+          "observedStep": 29,
+          "stepDistance": 1,
+          "timingDeltaSteps": -0.373936,
+          "strength": 0.350959,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 4,
+          "targetStep": 30,
+          "observedStep": 29,
+          "stepDistance": 1,
+          "timingDeltaSteps": 0.175808,
+          "strength": 0.222226,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 5,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": -0.274464,
+          "strength": 0.473854,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 6,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.275264,
+          "strength": 0.492396,
+          "readOnly": true
+        },
+        {
+          "pairIndex": 7,
+          "targetStep": 30,
+          "observedStep": 30,
+          "stepDistance": 0,
+          "timingDeltaSteps": 0.425616,
+          "strength": 0.346424,
+          "readOnly": true
+        }
+      ],
+      "readOnly": true
+    }
+  ],
+  "supportHistogram": {
+    "7": 1,
+    "8": 11
+  },
+  "unmatchedDirectAudioEvents": [
+    {
+      "pairIndex": 2,
+      "sourceMeasure": 5,
+      "rawPairStep": 3,
+      "alignedPairStep": 15,
+      "timingDeltaSteps": 0.49576,
+      "strength": 0.258511,
+      "source": "direct-audio-energy-onset",
+      "readOnly": true
+    },
+    {
+      "pairIndex": 4,
+      "sourceMeasure": 9,
+      "rawPairStep": 0,
+      "alignedPairStep": 12,
+      "timingDeltaSteps": 0.202016,
+      "strength": 0.275716,
+      "source": "direct-audio-energy-onset",
+      "readOnly": true
+    },
+    {
+      "pairIndex": 4,
+      "sourceMeasure": 9,
+      "rawPairStep": 1,
+      "alignedPairStep": 13,
+      "timingDeltaSteps": 0.000784,
+      "strength": 0.330903,
+      "source": "direct-audio-energy-onset",
+      "readOnly": true
+    },
+    {
+      "pairIndex": 5,
+      "sourceMeasure": 12,
+      "rawPairStep": 17,
+      "alignedPairStep": 29,
+      "timingDeltaSteps": -0.272928,
+      "strength": 0.216994,
+      "source": "direct-audio-energy-onset",
+      "readOnly": true
+    },
+    {
+      "pairIndex": 6,
+      "sourceMeasure": 13,
+      "rawPairStep": 4,
+      "alignedPairStep": 16,
+      "timingDeltaSteps": -0.302224,
+      "strength": 0.304708,
+      "source": "direct-audio-energy-onset",
+      "readOnly": true
+    },
+    {
+      "pairIndex": 0,
+      "sourceMeasure": 1,
+      "rawPairStep": 5,
+      "alignedPairStep": 17,
+      "timingDeltaSteps": -0.007712,
+      "strength": 0.273565,
+      "source": "direct-audio-energy-onset",
+      "readOnly": true
+    },
+    {
+      "pairIndex": 7,
+      "sourceMeasure": 16,
+      "rawPairStep": 27,
+      "alignedPairStep": 7,
+      "timingDeltaSteps": -0.187344,
+      "strength": 0.367084,
+      "source": "direct-audio-energy-onset",
+      "readOnly": true
+    },
+    {
+      "pairIndex": 3,
+      "sourceMeasure": 7,
+      "rawPairStep": 4,
+      "alignedPairStep": 16,
+      "timingDeltaSteps": 0.44488,
+      "strength": 0.179553,
+      "source": "direct-audio-energy-onset",
+      "readOnly": true
+    }
+  ],
+  "unmatchedDirectAudioEventCount": 8,
+  "checks": {
+    "alignedConsensusPassed": true,
+    "orientationOffsetIsLockedTwelve": true,
+    "allEightPairsRepresented": true,
+    "referenceSlotsPresent": true,
+    "supportedReferenceSlotsPresent": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "usesProfessionalReferenceAsBenchmarkOnly": true,
+  "usesDirectAudioEvidence": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "trainingRule": "The professional reference defines expected rhythm attack locations only. A slot is supported solely when direct-audio onset evidence appears near it in at least four of the eight aligned repetitions. This diagnostic must not create notes, copy the reference into production, or change the renderer."
+}

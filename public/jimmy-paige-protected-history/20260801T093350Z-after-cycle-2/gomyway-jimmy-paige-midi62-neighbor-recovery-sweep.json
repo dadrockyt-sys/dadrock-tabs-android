@@ -1,0 +1,395 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "midi62-neighbor-recovery-sweep",
+  "modalApp": "dadrock-jimmy-paige-professional-worker",
+  "modalFunction": "extract_parameterized",
+  "professionalReference": "public/gomyway-professional-rhythm-reference-v2.json",
+  "fixedParameters": {
+    "minimum_frequency": 82.0,
+    "maximum_frequency": 1400.0
+  },
+  "protectedCheckpoint": {
+    "overallRecallPercentage": 84.72,
+    "lowRegisterRecallPercentage": 70.31,
+    "midi52Matches": 32,
+    "midi62Matches": 14
+  },
+  "diagnosedMissingMeasures": [
+    16,
+    16
+  ],
+  "diagnosedClassification": "neighbor-semitone-detection",
+  "attemptsRequested": 5,
+  "attemptsCompleted": 5,
+  "attemptsFailed": 0,
+  "attempts": [
+    {
+      "attemptNumber": 1,
+      "name": "protected-84-72-baseline",
+      "parameters": {
+        "name": "protected-84-72-baseline",
+        "onset_threshold": 0.3,
+        "frame_threshold": 0.15,
+        "minimum_note_length": 45.0,
+        "multiple_pitch_bends": false,
+        "minimum_frequency": 82.0,
+        "maximum_frequency": 1400.0
+      },
+      "status": "complete",
+      "retries": [
+        {
+          "retry": 1,
+          "status": "complete",
+          "elapsedSeconds": 32.414,
+          "callId": "fc-01KYY2JXW4EE048A7RMCWZJ9AT"
+        }
+      ],
+      "extractedEventCount": 5617,
+      "remoteElapsedSeconds": 20.739,
+      "midi52Matches": 32,
+      "midi62Matches": 14,
+      "measure16NeighborCounts": {
+        "61": 1,
+        "62": 0,
+        "63": 0
+      },
+      "protected84_72CheckpointPreserved": true,
+      "fullMidi52_62GuardPassed": false,
+      "matchedTargets": 122,
+      "professionalTargets": 144,
+      "overallRecallPercentage": 84.72,
+      "lowRegisterRecallPercentage": 70.31,
+      "protectedRecallPercentage": 95.83,
+      "protectedPitchGuardPassed": false,
+      "weightedScore": 75.744,
+      "expectedByPitch": {
+        "40": 16,
+        "45": 16,
+        "50": 16,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 16,
+        "62": 16
+      },
+      "matchedByPitch": {
+        "40": 16,
+        "45": 4,
+        "50": 13,
+        "52": 32,
+        "55": 15,
+        "57": 16,
+        "58": 12,
+        "62": 14
+      }
+    },
+    {
+      "attemptNumber": 2,
+      "name": "bend-aware-baseline",
+      "parameters": {
+        "name": "bend-aware-baseline",
+        "onset_threshold": 0.3,
+        "frame_threshold": 0.15,
+        "minimum_note_length": 45.0,
+        "multiple_pitch_bends": true,
+        "minimum_frequency": 82.0,
+        "maximum_frequency": 1400.0
+      },
+      "status": "complete",
+      "retries": [
+        {
+          "retry": 1,
+          "status": "complete",
+          "elapsedSeconds": 18.2,
+          "callId": "fc-01KYY2KYPQXHPY2K90Y3VPMAQQ"
+        }
+      ],
+      "extractedEventCount": 5617,
+      "remoteElapsedSeconds": 4.673,
+      "midi52Matches": 32,
+      "midi62Matches": 14,
+      "measure16NeighborCounts": {
+        "61": 1,
+        "62": 0,
+        "63": 0
+      },
+      "protected84_72CheckpointPreserved": true,
+      "fullMidi52_62GuardPassed": false,
+      "matchedTargets": 122,
+      "professionalTargets": 144,
+      "overallRecallPercentage": 84.72,
+      "lowRegisterRecallPercentage": 70.31,
+      "protectedRecallPercentage": 95.83,
+      "protectedPitchGuardPassed": false,
+      "weightedScore": 75.744,
+      "expectedByPitch": {
+        "40": 16,
+        "45": 16,
+        "50": 16,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 16,
+        "62": 16
+      },
+      "matchedByPitch": {
+        "40": 16,
+        "45": 4,
+        "50": 13,
+        "52": 32,
+        "55": 15,
+        "57": 16,
+        "58": 12,
+        "62": 14
+      }
+    },
+    {
+      "attemptNumber": 3,
+      "name": "bend-aware-onset-028",
+      "parameters": {
+        "name": "bend-aware-onset-028",
+        "onset_threshold": 0.28,
+        "frame_threshold": 0.15,
+        "minimum_note_length": 45.0,
+        "multiple_pitch_bends": true,
+        "minimum_frequency": 82.0,
+        "maximum_frequency": 1400.0
+      },
+      "status": "complete",
+      "retries": [
+        {
+          "retry": 1,
+          "status": "complete",
+          "elapsedSeconds": 18.184,
+          "callId": "fc-01KYY2MHXHE50QVS5STQ84JB9H"
+        }
+      ],
+      "extractedEventCount": 5956,
+      "remoteElapsedSeconds": 4.721,
+      "midi52Matches": 32,
+      "midi62Matches": 14,
+      "measure16NeighborCounts": {
+        "61": 1,
+        "62": 0,
+        "63": 0
+      },
+      "protected84_72CheckpointPreserved": true,
+      "fullMidi52_62GuardPassed": false,
+      "matchedTargets": 122,
+      "professionalTargets": 144,
+      "overallRecallPercentage": 84.72,
+      "lowRegisterRecallPercentage": 70.31,
+      "protectedRecallPercentage": 95.83,
+      "protectedPitchGuardPassed": false,
+      "weightedScore": 75.744,
+      "expectedByPitch": {
+        "40": 16,
+        "45": 16,
+        "50": 16,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 16,
+        "62": 16
+      },
+      "matchedByPitch": {
+        "40": 16,
+        "45": 4,
+        "50": 13,
+        "52": 32,
+        "55": 15,
+        "57": 16,
+        "58": 12,
+        "62": 14
+      }
+    },
+    {
+      "attemptNumber": 4,
+      "name": "bend-aware-frame-012",
+      "parameters": {
+        "name": "bend-aware-frame-012",
+        "onset_threshold": 0.3,
+        "frame_threshold": 0.12,
+        "minimum_note_length": 45.0,
+        "multiple_pitch_bends": true,
+        "minimum_frequency": 82.0,
+        "maximum_frequency": 1400.0
+      },
+      "status": "complete",
+      "retries": [
+        {
+          "retry": 1,
+          "status": "complete",
+          "elapsedSeconds": 19.299,
+          "callId": "fc-01KYY2N4ZP3DX60E7QDVW7CXTQ"
+        }
+      ],
+      "extractedEventCount": 8711,
+      "remoteElapsedSeconds": 5.79,
+      "midi52Matches": 32,
+      "midi62Matches": 16,
+      "measure16NeighborCounts": {
+        "61": 0,
+        "62": 2,
+        "63": 0
+      },
+      "protected84_72CheckpointPreserved": true,
+      "fullMidi52_62GuardPassed": true,
+      "matchedTargets": 132,
+      "professionalTargets": 144,
+      "overallRecallPercentage": 91.67,
+      "lowRegisterRecallPercentage": 81.25,
+      "protectedRecallPercentage": 100.0,
+      "protectedPitchGuardPassed": true,
+      "weightedScore": 85.209,
+      "expectedByPitch": {
+        "40": 16,
+        "45": 16,
+        "50": 16,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 16,
+        "62": 16
+      },
+      "matchedByPitch": {
+        "40": 16,
+        "45": 12,
+        "50": 14,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 10,
+        "62": 16
+      }
+    },
+    {
+      "attemptNumber": 5,
+      "name": "bend-aware-neighbor-sensitive",
+      "parameters": {
+        "name": "bend-aware-neighbor-sensitive",
+        "onset_threshold": 0.28,
+        "frame_threshold": 0.12,
+        "minimum_note_length": 35.0,
+        "multiple_pitch_bends": true,
+        "minimum_frequency": 82.0,
+        "maximum_frequency": 1400.0
+      },
+      "status": "complete",
+      "retries": [
+        {
+          "retry": 1,
+          "status": "complete",
+          "elapsedSeconds": 18.294,
+          "callId": "fc-01KYY2NSFDDWVVBTRAA0TA5CSA"
+        }
+      ],
+      "extractedEventCount": 10268,
+      "remoteElapsedSeconds": 5.437,
+      "midi52Matches": 32,
+      "midi62Matches": 16,
+      "measure16NeighborCounts": {
+        "61": 1,
+        "62": 1,
+        "63": 1
+      },
+      "protected84_72CheckpointPreserved": true,
+      "fullMidi52_62GuardPassed": true,
+      "matchedTargets": 134,
+      "professionalTargets": 144,
+      "overallRecallPercentage": 93.06,
+      "lowRegisterRecallPercentage": 84.38,
+      "protectedRecallPercentage": 100.0,
+      "protectedPitchGuardPassed": true,
+      "weightedScore": 87.678,
+      "expectedByPitch": {
+        "40": 16,
+        "45": 16,
+        "50": 16,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 16,
+        "62": 16
+      },
+      "matchedByPitch": {
+        "40": 16,
+        "45": 13,
+        "50": 15,
+        "52": 32,
+        "55": 16,
+        "57": 16,
+        "58": 10,
+        "62": 16
+      }
+    }
+  ],
+  "bestAttempt": {
+    "attemptNumber": 5,
+    "name": "bend-aware-neighbor-sensitive",
+    "parameters": {
+      "name": "bend-aware-neighbor-sensitive",
+      "onset_threshold": 0.28,
+      "frame_threshold": 0.12,
+      "minimum_note_length": 35.0,
+      "multiple_pitch_bends": true,
+      "minimum_frequency": 82.0,
+      "maximum_frequency": 1400.0
+    },
+    "status": "complete",
+    "retries": [
+      {
+        "retry": 1,
+        "status": "complete",
+        "elapsedSeconds": 18.294,
+        "callId": "fc-01KYY2NSFDDWVVBTRAA0TA5CSA"
+      }
+    ],
+    "extractedEventCount": 10268,
+    "remoteElapsedSeconds": 5.437,
+    "midi52Matches": 32,
+    "midi62Matches": 16,
+    "measure16NeighborCounts": {
+      "61": 1,
+      "62": 1,
+      "63": 1
+    },
+    "protected84_72CheckpointPreserved": true,
+    "fullMidi52_62GuardPassed": true,
+    "matchedTargets": 134,
+    "professionalTargets": 144,
+    "overallRecallPercentage": 93.06,
+    "lowRegisterRecallPercentage": 84.38,
+    "protectedRecallPercentage": 100.0,
+    "protectedPitchGuardPassed": true,
+    "weightedScore": 87.678,
+    "expectedByPitch": {
+      "40": 16,
+      "45": 16,
+      "50": 16,
+      "52": 32,
+      "55": 16,
+      "57": 16,
+      "58": 16,
+      "62": 16
+    },
+    "matchedByPitch": {
+      "40": 16,
+      "45": 13,
+      "50": 15,
+      "52": 32,
+      "55": 16,
+      "57": 16,
+      "58": 10,
+      "62": 16
+    }
+  },
+  "productionPromotionAllowed": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "trainingComplete": true,
+  "totalElapsedSeconds": 113.98,
+  "readyForNextValidationStage": true
+}

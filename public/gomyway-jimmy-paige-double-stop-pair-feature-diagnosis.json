@@ -1,0 +1,1031 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "double-stop-pair-feature-diagnosis",
+  "sourceEvents": "public/gomyway-jimmy-paige-93-06-events.json",
+  "sourcePhaseScore": "public/gomyway-jimmy-paige-phase-aware-double-stop-score.json",
+  "bestPhasePolicy": {
+    "phaseStart": 0.7,
+    "phaseEnd": 1.0,
+    "pairWindowMilliseconds": 450
+  },
+  "truePositiveFeatureSummary": {
+    "count": 5,
+    "centerPhase": {
+      "minimum": 0.736341,
+      "median": 0.836562,
+      "maximum": 0.954621
+    },
+    "distanceFromExpectedEndingPhase": {
+      "minimum": 0.012226,
+      "median": 0.079621,
+      "maximum": 0.138659
+    },
+    "onsetSeparationSeconds": {
+      "minimum": 0.02322,
+      "median": 0.22059,
+      "maximum": 0.417959
+    },
+    "sustainOverlapSeconds": {
+      "minimum": 0.0,
+      "median": 0.0,
+      "maximum": 0.05805
+    },
+    "minimumDurationSeconds": {
+      "minimum": 0.04644,
+      "median": 0.10449,
+      "maximum": 0.1161
+    },
+    "maximumDurationSeconds": {
+      "minimum": 0.10449,
+      "median": 0.17415,
+      "maximum": 0.18576
+    },
+    "nearbyNonTargetAttackSupport": {
+      "minimum": 6.0,
+      "median": 16.0,
+      "maximum": 25.0
+    },
+    "minimumConfidence": {
+      "minimum": 0.122015,
+      "median": 0.140147,
+      "maximum": 0.210064
+    },
+    "meanConfidence": {
+      "minimum": 0.148824,
+      "median": 0.204621,
+      "maximum": 0.260227
+    }
+  },
+  "falsePositiveFeatureSummary": {
+    "count": 4,
+    "centerPhase": {
+      "minimum": 0.808497,
+      "median": 0.895741,
+      "maximum": 0.958017
+    },
+    "distanceFromExpectedEndingPhase": {
+      "minimum": 0.003113,
+      "median": 0.052436,
+      "maximum": 0.083017
+    },
+    "onsetSeparationSeconds": {
+      "minimum": 0.04644,
+      "median": 0.26703,
+      "maximum": 0.441179
+    },
+    "sustainOverlapSeconds": {
+      "minimum": 0.0,
+      "median": 0.0,
+      "maximum": 0.06966
+    },
+    "minimumDurationSeconds": {
+      "minimum": 0.04644,
+      "median": 0.075465,
+      "maximum": 0.1161
+    },
+    "maximumDurationSeconds": {
+      "minimum": 0.05805,
+      "median": 0.203175,
+      "maximum": 0.20898
+    },
+    "nearbyNonTargetAttackSupport": {
+      "minimum": 9.0,
+      "median": 14.0,
+      "maximum": 21.0
+    },
+    "minimumConfidence": {
+      "minimum": 0.125857,
+      "median": 0.134977,
+      "maximum": 0.145674
+    },
+    "meanConfidence": {
+      "minimum": 0.161477,
+      "median": 0.1751,
+      "maximum": 0.196991
+    }
+  },
+  "measureReports": [
+    {
+      "measureNumber": 1,
+      "classification": "true-negative",
+      "expectedDoubleStopEnding": false,
+      "predictedDoubleStopEnding": false,
+      "selectedPairFeatures": null,
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 5.95977,
+          "pitch62Start": 6.458999,
+          "centerSeconds": 6.209385,
+          "centerPhase": 0.659236,
+          "distanceFromExpectedEndingPhase": 0.215764,
+          "onsetSeparationSeconds": 0.499229,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.16254,
+          "pitch62DurationSeconds": 0.09288,
+          "minimumDurationSeconds": 0.09288,
+          "maximumDurationSeconds": 0.16254,
+          "nearbyNonTargetAttackSupport": 9,
+          "minimumConfidence": 0.129019,
+          "meanConfidence": 0.138376
+        },
+        {
+          "pitch58Start": 5.923656,
+          "pitch62Start": 6.458999,
+          "centerSeconds": 6.191328,
+          "centerPhase": 0.649013,
+          "distanceFromExpectedEndingPhase": 0.225987,
+          "onsetSeparationSeconds": 0.535343,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.036114,
+          "pitch62DurationSeconds": 0.09288,
+          "minimumDurationSeconds": 0.036114,
+          "maximumDurationSeconds": 0.09288,
+          "nearbyNonTargetAttackSupport": 10,
+          "minimumConfidence": 0.129019,
+          "meanConfidence": 0.145346
+        },
+        {
+          "pitch58Start": 5.95977,
+          "pitch62Start": 6.02943,
+          "centerSeconds": 5.9946,
+          "centerPhase": 0.537632,
+          "distanceFromExpectedEndingPhase": 0.337368,
+          "onsetSeparationSeconds": 0.06966,
+          "sustainOverlapSeconds": 0.04644,
+          "pitch58DurationSeconds": 0.16254,
+          "pitch62DurationSeconds": 0.04644,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.16254,
+          "nearbyNonTargetAttackSupport": 14,
+          "minimumConfidence": 0.123472,
+          "meanConfidence": 0.135602
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "classification": "true-positive",
+      "expectedDoubleStopEnding": true,
+      "predictedDoubleStopEnding": true,
+      "selectedPairFeatures": {
+        "pitch58Start": 8.375929,
+        "pitch62Start": 8.20178,
+        "centerSeconds": 8.288854,
+        "centerPhase": 0.836562,
+        "distanceFromExpectedEndingPhase": 0.038438,
+        "onsetSeparationSeconds": 0.17415,
+        "sustainOverlapSeconds": 0.01161,
+        "pitch58DurationSeconds": 0.10449,
+        "pitch62DurationSeconds": 0.18576,
+        "minimumDurationSeconds": 0.10449,
+        "maximumDurationSeconds": 0.18576,
+        "nearbyNonTargetAttackSupport": 6,
+        "minimumConfidence": 0.140147,
+        "meanConfidence": 0.260227
+      },
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 8.375929,
+          "pitch62Start": 8.20178,
+          "centerSeconds": 8.288854,
+          "centerPhase": 0.836562,
+          "distanceFromExpectedEndingPhase": 0.038438,
+          "onsetSeparationSeconds": 0.17415,
+          "sustainOverlapSeconds": 0.01161,
+          "pitch58DurationSeconds": 0.10449,
+          "pitch62DurationSeconds": 0.18576,
+          "minimumDurationSeconds": 0.10449,
+          "maximumDurationSeconds": 0.18576,
+          "nearbyNonTargetAttackSupport": 6,
+          "minimumConfidence": 0.140147,
+          "meanConfidence": 0.260227
+        },
+        {
+          "pitch58Start": 8.375929,
+          "pitch62Start": 7.98119,
+          "centerSeconds": 8.17856,
+          "centerPhase": 0.774117,
+          "distanceFromExpectedEndingPhase": 0.100883,
+          "onsetSeparationSeconds": 0.394739,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.10449,
+          "pitch62DurationSeconds": 0.22059,
+          "minimumDurationSeconds": 0.10449,
+          "maximumDurationSeconds": 0.22059,
+          "nearbyNonTargetAttackSupport": 5,
+          "minimumConfidence": 0.140147,
+          "meanConfidence": 0.297486
+        },
+        {
+          "pitch58Start": 8.375929,
+          "pitch62Start": 7.921856,
+          "centerSeconds": 8.148893,
+          "centerPhase": 0.757321,
+          "distanceFromExpectedEndingPhase": 0.117679,
+          "onsetSeparationSeconds": 0.454073,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.10449,
+          "pitch62DurationSeconds": 0.059334,
+          "minimumDurationSeconds": 0.059334,
+          "maximumDurationSeconds": 0.10449,
+          "nearbyNonTargetAttackSupport": 5,
+          "minimumConfidence": 0.140147,
+          "meanConfidence": 0.181908
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "classification": "false-positive",
+      "expectedDoubleStopEnding": false,
+      "predictedDoubleStopEnding": true,
+      "selectedPairFeatures": {
+        "pitch58Start": 10.490229,
+        "pitch62Start": 10.04905,
+        "centerSeconds": 10.269639,
+        "centerPhase": 0.958017,
+        "distanceFromExpectedEndingPhase": 0.083017,
+        "onsetSeparationSeconds": 0.441179,
+        "sustainOverlapSeconds": 0.0,
+        "pitch58DurationSeconds": 0.05805,
+        "pitch62DurationSeconds": 0.20898,
+        "minimumDurationSeconds": 0.05805,
+        "maximumDurationSeconds": 0.20898,
+        "nearbyNonTargetAttackSupport": 21,
+        "minimumConfidence": 0.145674,
+        "meanConfidence": 0.17423
+      },
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 10.490229,
+          "pitch62Start": 10.04905,
+          "centerSeconds": 10.269639,
+          "centerPhase": 0.958017,
+          "distanceFromExpectedEndingPhase": 0.083017,
+          "onsetSeparationSeconds": 0.441179,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.05805,
+          "pitch62DurationSeconds": 0.20898,
+          "minimumDurationSeconds": 0.05805,
+          "maximumDurationSeconds": 0.20898,
+          "nearbyNonTargetAttackSupport": 21,
+          "minimumConfidence": 0.145674,
+          "meanConfidence": 0.17423
+        },
+        {
+          "pitch58Start": 10.490229,
+          "pitch62Start": 9.432437,
+          "centerSeconds": 9.961333,
+          "centerPhase": 0.783464,
+          "distanceFromExpectedEndingPhase": 0.091536,
+          "onsetSeparationSeconds": 1.057792,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.05805,
+          "pitch62DurationSeconds": 0.08127,
+          "minimumDurationSeconds": 0.05805,
+          "maximumDurationSeconds": 0.08127,
+          "nearbyNonTargetAttackSupport": 12,
+          "minimumConfidence": 0.145674,
+          "meanConfidence": 0.149983
+        },
+        {
+          "pitch58Start": 10.490229,
+          "pitch62Start": 9.339557,
+          "centerSeconds": 9.914893,
+          "centerPhase": 0.757171,
+          "distanceFromExpectedEndingPhase": 0.117829,
+          "onsetSeparationSeconds": 1.150672,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.05805,
+          "pitch62DurationSeconds": 0.09288,
+          "minimumDurationSeconds": 0.05805,
+          "maximumDurationSeconds": 0.09288,
+          "nearbyNonTargetAttackSupport": 13,
+          "minimumConfidence": 0.145674,
+          "meanConfidence": 0.172938
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "classification": "true-positive",
+      "expectedDoubleStopEnding": true,
+      "predictedDoubleStopEnding": true,
+      "selectedPairFeatures": {
+        "pitch58Start": 11.720887,
+        "pitch62Start": 11.744107,
+        "centerSeconds": 11.732497,
+        "centerPhase": 0.786238,
+        "distanceFromExpectedEndingPhase": 0.088762,
+        "onsetSeparationSeconds": 0.02322,
+        "sustainOverlapSeconds": 0.05805,
+        "pitch58DurationSeconds": 0.10449,
+        "pitch62DurationSeconds": 0.05805,
+        "minimumDurationSeconds": 0.05805,
+        "maximumDurationSeconds": 0.10449,
+        "nearbyNonTargetAttackSupport": 25,
+        "minimumConfidence": 0.122015,
+        "meanConfidence": 0.148885
+      },
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 11.720887,
+          "pitch62Start": 12.07047,
+          "centerSeconds": 11.895678,
+          "centerPhase": 0.878626,
+          "distanceFromExpectedEndingPhase": 0.003626,
+          "onsetSeparationSeconds": 0.349583,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.10449,
+          "pitch62DurationSeconds": 0.290249,
+          "minimumDurationSeconds": 0.10449,
+          "maximumDurationSeconds": 0.290249,
+          "nearbyNonTargetAttackSupport": 19,
+          "minimumConfidence": 0.122015,
+          "meanConfidence": 0.182645
+        },
+        {
+          "pitch58Start": 11.674447,
+          "pitch62Start": 12.07047,
+          "centerSeconds": 11.872458,
+          "centerPhase": 0.865479,
+          "distanceFromExpectedEndingPhase": 0.009521,
+          "onsetSeparationSeconds": 0.396023,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.04644,
+          "pitch62DurationSeconds": 0.290249,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.290249,
+          "nearbyNonTargetAttackSupport": 19,
+          "minimumConfidence": 0.123535,
+          "meanConfidence": 0.183405
+        },
+        {
+          "pitch58Start": 11.720887,
+          "pitch62Start": 11.97759,
+          "centerSeconds": 11.849238,
+          "centerPhase": 0.852333,
+          "distanceFromExpectedEndingPhase": 0.022667,
+          "onsetSeparationSeconds": 0.256703,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.10449,
+          "pitch62DurationSeconds": 0.09288,
+          "minimumDurationSeconds": 0.09288,
+          "maximumDurationSeconds": 0.10449,
+          "nearbyNonTargetAttackSupport": 22,
+          "minimumConfidence": 0.122015,
+          "meanConfidence": 0.333285
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "classification": "false-positive",
+      "expectedDoubleStopEnding": false,
+      "predictedDoubleStopEnding": true,
+      "selectedPairFeatures": {
+        "pitch58Start": 13.637817,
+        "pitch62Start": 13.684257,
+        "centerSeconds": 13.661037,
+        "centerPhase": 0.878113,
+        "distanceFromExpectedEndingPhase": 0.003113,
+        "onsetSeparationSeconds": 0.04644,
+        "sustainOverlapSeconds": 0.06966,
+        "pitch58DurationSeconds": 0.1161,
+        "pitch62DurationSeconds": 0.19737,
+        "minimumDurationSeconds": 0.1161,
+        "maximumDurationSeconds": 0.19737,
+        "nearbyNonTargetAttackSupport": 17,
+        "minimumConfidence": 0.125857,
+        "meanConfidence": 0.161477
+      },
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 13.637817,
+          "pitch62Start": 13.684257,
+          "centerSeconds": 13.661037,
+          "centerPhase": 0.878113,
+          "distanceFromExpectedEndingPhase": 0.003113,
+          "onsetSeparationSeconds": 0.04644,
+          "sustainOverlapSeconds": 0.06966,
+          "pitch58DurationSeconds": 0.1161,
+          "pitch62DurationSeconds": 0.19737,
+          "minimumDurationSeconds": 0.1161,
+          "maximumDurationSeconds": 0.19737,
+          "nearbyNonTargetAttackSupport": 17,
+          "minimumConfidence": 0.125857,
+          "meanConfidence": 0.161477
+        },
+        {
+          "pitch58Start": 13.568157,
+          "pitch62Start": 13.684257,
+          "centerSeconds": 13.626207,
+          "centerPhase": 0.858393,
+          "distanceFromExpectedEndingPhase": 0.016607,
+          "onsetSeparationSeconds": 0.1161,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.05805,
+          "pitch62DurationSeconds": 0.19737,
+          "minimumDurationSeconds": 0.05805,
+          "maximumDurationSeconds": 0.19737,
+          "nearbyNonTargetAttackSupport": 17,
+          "minimumConfidence": 0.125857,
+          "meanConfidence": 0.143291
+        },
+        {
+          "pitch58Start": 13.568157,
+          "pitch62Start": 13.893236,
+          "centerSeconds": 13.730697,
+          "centerPhase": 0.917552,
+          "distanceFromExpectedEndingPhase": 0.042552,
+          "onsetSeparationSeconds": 0.325079,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.05805,
+          "pitch62DurationSeconds": 0.221873,
+          "minimumDurationSeconds": 0.05805,
+          "maximumDurationSeconds": 0.221873,
+          "nearbyNonTargetAttackSupport": 17,
+          "minimumConfidence": 0.160726,
+          "meanConfidence": 0.202351
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "classification": "false-negative",
+      "expectedDoubleStopEnding": true,
+      "predictedDoubleStopEnding": false,
+      "selectedPairFeatures": null,
+      "topThreeCandidatePairs": []
+    },
+    {
+      "measureNumber": 7,
+      "classification": "true-negative",
+      "expectedDoubleStopEnding": false,
+      "predictedDoubleStopEnding": false,
+      "selectedPairFeatures": null,
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 16.635759,
+          "pitch62Start": 17.436847,
+          "centerSeconds": 17.036303,
+          "centerPhase": 0.789076,
+          "distanceFromExpectedEndingPhase": 0.085924,
+          "onsetSeparationSeconds": 0.801088,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.08127,
+          "pitch62DurationSeconds": 0.09288,
+          "minimumDurationSeconds": 0.08127,
+          "maximumDurationSeconds": 0.09288,
+          "nearbyNonTargetAttackSupport": 11,
+          "minimumConfidence": 0.126664,
+          "meanConfidence": 0.133328
+        },
+        {
+          "pitch58Start": 16.635759,
+          "pitch62Start": 16.937618,
+          "centerSeconds": 16.786688,
+          "centerPhase": 0.647753,
+          "distanceFromExpectedEndingPhase": 0.227247,
+          "onsetSeparationSeconds": 0.301859,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.08127,
+          "pitch62DurationSeconds": 0.16254,
+          "minimumDurationSeconds": 0.08127,
+          "maximumDurationSeconds": 0.16254,
+          "nearbyNonTargetAttackSupport": 6,
+          "minimumConfidence": 0.139991,
+          "meanConfidence": 0.173491
+        },
+        {
+          "pitch58Start": 16.635759,
+          "pitch62Start": 16.879568,
+          "centerSeconds": 16.757663,
+          "centerPhase": 0.63132,
+          "distanceFromExpectedEndingPhase": 0.24368,
+          "onsetSeparationSeconds": 0.24381,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.08127,
+          "pitch62DurationSeconds": 0.04644,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.08127,
+          "nearbyNonTargetAttackSupport": 6,
+          "minimumConfidence": 0.139991,
+          "meanConfidence": 0.146632
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "classification": "true-positive",
+      "expectedDoubleStopEnding": true,
+      "predictedDoubleStopEnding": true,
+      "selectedPairFeatures": {
+        "pitch58Start": 18.599129,
+        "pitch62Start": 18.819718,
+        "centerSeconds": 18.709424,
+        "centerPhase": 0.736341,
+        "distanceFromExpectedEndingPhase": 0.138659,
+        "onsetSeparationSeconds": 0.22059,
+        "sustainOverlapSeconds": 0.0,
+        "pitch58DurationSeconds": 0.1161,
+        "pitch62DurationSeconds": 0.17415,
+        "minimumDurationSeconds": 0.1161,
+        "maximumDurationSeconds": 0.17415,
+        "nearbyNonTargetAttackSupport": 16,
+        "minimumConfidence": 0.202887,
+        "meanConfidence": 0.204621
+      },
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 18.599129,
+          "pitch62Start": 19.307337,
+          "centerSeconds": 18.953233,
+          "centerPhase": 0.874378,
+          "distanceFromExpectedEndingPhase": 0.000622,
+          "onsetSeparationSeconds": 0.708209,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.1161,
+          "pitch62DurationSeconds": 0.25542,
+          "minimumDurationSeconds": 0.1161,
+          "maximumDurationSeconds": 0.25542,
+          "nearbyNonTargetAttackSupport": 13,
+          "minimumConfidence": 0.167983,
+          "meanConfidence": 0.185435
+        },
+        {
+          "pitch58Start": 18.552689,
+          "pitch62Start": 19.307337,
+          "centerSeconds": 18.930013,
+          "centerPhase": 0.861232,
+          "distanceFromExpectedEndingPhase": 0.013768,
+          "onsetSeparationSeconds": 0.754649,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.04644,
+          "pitch62DurationSeconds": 0.25542,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.25542,
+          "nearbyNonTargetAttackSupport": 12,
+          "minimumConfidence": 0.167983,
+          "meanConfidence": 0.176994
+        },
+        {
+          "pitch58Start": 18.599129,
+          "pitch62Start": 18.819718,
+          "centerSeconds": 18.709424,
+          "centerPhase": 0.736341,
+          "distanceFromExpectedEndingPhase": 0.138659,
+          "onsetSeparationSeconds": 0.22059,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.1161,
+          "pitch62DurationSeconds": 0.17415,
+          "minimumDurationSeconds": 0.1161,
+          "maximumDurationSeconds": 0.17415,
+          "nearbyNonTargetAttackSupport": 16,
+          "minimumConfidence": 0.202887,
+          "meanConfidence": 0.204621
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "classification": "false-positive",
+      "expectedDoubleStopEnding": false,
+      "predictedDoubleStopEnding": true,
+      "selectedPairFeatures": {
+        "pitch58Start": 20.492839,
+        "pitch62Start": 20.713429,
+        "centerSeconds": 20.603134,
+        "centerPhase": 0.808497,
+        "distanceFromExpectedEndingPhase": 0.066503,
+        "onsetSeparationSeconds": 0.22059,
+        "sustainOverlapSeconds": 0.0,
+        "pitch58DurationSeconds": 0.09288,
+        "pitch62DurationSeconds": 0.20898,
+        "minimumDurationSeconds": 0.09288,
+        "maximumDurationSeconds": 0.20898,
+        "nearbyNonTargetAttackSupport": 11,
+        "minimumConfidence": 0.143391,
+        "meanConfidence": 0.196991
+      },
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 20.492839,
+          "pitch62Start": 20.713429,
+          "centerSeconds": 20.603134,
+          "centerPhase": 0.808497,
+          "distanceFromExpectedEndingPhase": 0.066503,
+          "onsetSeparationSeconds": 0.22059,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.09288,
+          "pitch62DurationSeconds": 0.20898,
+          "minimumDurationSeconds": 0.09288,
+          "maximumDurationSeconds": 0.20898,
+          "nearbyNonTargetAttackSupport": 11,
+          "minimumConfidence": 0.143391,
+          "meanConfidence": 0.196991
+        },
+        {
+          "pitch58Start": 20.492839,
+          "pitch62Start": 19.562757,
+          "centerSeconds": 20.027798,
+          "centerPhase": 0.482761,
+          "distanceFromExpectedEndingPhase": 0.392239,
+          "onsetSeparationSeconds": 0.930082,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.09288,
+          "pitch62DurationSeconds": 0.2322,
+          "minimumDurationSeconds": 0.09288,
+          "maximumDurationSeconds": 0.2322,
+          "nearbyNonTargetAttackSupport": 11,
+          "minimumConfidence": 0.143391,
+          "meanConfidence": 0.239708
+        },
+        {
+          "pitch58Start": 20.492839,
+          "pitch62Start": 19.307337,
+          "centerSeconds": 19.900088,
+          "centerPhase": 0.410456,
+          "distanceFromExpectedEndingPhase": 0.464544,
+          "onsetSeparationSeconds": 1.185502,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.09288,
+          "pitch62DurationSeconds": 0.25542,
+          "minimumDurationSeconds": 0.09288,
+          "maximumDurationSeconds": 0.25542,
+          "nearbyNonTargetAttackSupport": 9,
+          "minimumConfidence": 0.143391,
+          "meanConfidence": 0.155687
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "classification": "true-positive",
+      "expectedDoubleStopEnding": true,
+      "predictedDoubleStopEnding": true,
+      "selectedPairFeatures": {
+        "pitch58Start": 22.398159,
+        "pitch62Start": 22.618749,
+        "centerSeconds": 22.508454,
+        "centerPhase": 0.887226,
+        "distanceFromExpectedEndingPhase": 0.012226,
+        "onsetSeparationSeconds": 0.22059,
+        "sustainOverlapSeconds": 0.0,
+        "pitch58DurationSeconds": 0.1161,
+        "pitch62DurationSeconds": 0.18576,
+        "minimumDurationSeconds": 0.1161,
+        "maximumDurationSeconds": 0.18576,
+        "nearbyNonTargetAttackSupport": 17,
+        "minimumConfidence": 0.210064,
+        "meanConfidence": 0.226383
+      },
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 22.398159,
+          "pitch62Start": 22.618749,
+          "centerSeconds": 22.508454,
+          "centerPhase": 0.887226,
+          "distanceFromExpectedEndingPhase": 0.012226,
+          "onsetSeparationSeconds": 0.22059,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.1161,
+          "pitch62DurationSeconds": 0.18576,
+          "minimumDurationSeconds": 0.1161,
+          "maximumDurationSeconds": 0.18576,
+          "nearbyNonTargetAttackSupport": 17,
+          "minimumConfidence": 0.210064,
+          "meanConfidence": 0.226383
+        },
+        {
+          "pitch58Start": 22.398159,
+          "pitch62Start": 22.14274,
+          "centerSeconds": 22.270449,
+          "centerPhase": 0.752475,
+          "distanceFromExpectedEndingPhase": 0.122525,
+          "onsetSeparationSeconds": 0.25542,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.1161,
+          "pitch62DurationSeconds": 0.1161,
+          "minimumDurationSeconds": 0.1161,
+          "maximumDurationSeconds": 0.1161,
+          "nearbyNonTargetAttackSupport": 6,
+          "minimumConfidence": 0.123931,
+          "meanConfidence": 0.166997
+        },
+        {
+          "pitch58Start": 21.769937,
+          "pitch62Start": 22.618749,
+          "centerSeconds": 22.194343,
+          "centerPhase": 0.709386,
+          "distanceFromExpectedEndingPhase": 0.165614,
+          "onsetSeparationSeconds": 0.848812,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.140604,
+          "pitch62DurationSeconds": 0.18576,
+          "minimumDurationSeconds": 0.140604,
+          "maximumDurationSeconds": 0.18576,
+          "nearbyNonTargetAttackSupport": 8,
+          "minimumConfidence": 0.13647,
+          "meanConfidence": 0.189586
+        }
+      ]
+    },
+    {
+      "measureNumber": 11,
+      "classification": "false-positive",
+      "expectedDoubleStopEnding": false,
+      "predictedDoubleStopEnding": true,
+      "selectedPairFeatures": {
+        "pitch58Start": 24.16416,
+        "pitch62Start": 24.477629,
+        "centerSeconds": 24.320894,
+        "centerPhase": 0.913369,
+        "distanceFromExpectedEndingPhase": 0.038369,
+        "onsetSeparationSeconds": 0.313469,
+        "sustainOverlapSeconds": 0.0,
+        "pitch58DurationSeconds": 0.05805,
+        "pitch62DurationSeconds": 0.04644,
+        "minimumDurationSeconds": 0.04644,
+        "maximumDurationSeconds": 0.05805,
+        "nearbyNonTargetAttackSupport": 9,
+        "minimumConfidence": 0.126563,
+        "meanConfidence": 0.175971
+      },
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 24.16416,
+          "pitch62Start": 24.477629,
+          "centerSeconds": 24.320894,
+          "centerPhase": 0.913369,
+          "distanceFromExpectedEndingPhase": 0.038369,
+          "onsetSeparationSeconds": 0.313469,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.05805,
+          "pitch62DurationSeconds": 0.04644,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.05805,
+          "nearbyNonTargetAttackSupport": 9,
+          "minimumConfidence": 0.126563,
+          "meanConfidence": 0.175971
+        },
+        {
+          "pitch58Start": 24.16416,
+          "pitch62Start": 24.524069,
+          "centerSeconds": 24.344114,
+          "centerPhase": 0.926515,
+          "distanceFromExpectedEndingPhase": 0.051515,
+          "onsetSeparationSeconds": 0.359909,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.05805,
+          "pitch62DurationSeconds": 0.13932,
+          "minimumDurationSeconds": 0.05805,
+          "maximumDurationSeconds": 0.13932,
+          "nearbyNonTargetAttackSupport": 9,
+          "minimumConfidence": 0.126563,
+          "meanConfidence": 0.17955
+        },
+        {
+          "pitch58Start": 24.16416,
+          "pitch62Start": 23.083148,
+          "centerSeconds": 23.623654,
+          "centerPhase": 0.518614,
+          "distanceFromExpectedEndingPhase": 0.356386,
+          "onsetSeparationSeconds": 1.081012,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.05805,
+          "pitch62DurationSeconds": 0.487619,
+          "minimumDurationSeconds": 0.05805,
+          "maximumDurationSeconds": 0.487619,
+          "nearbyNonTargetAttackSupport": 12,
+          "minimumConfidence": 0.126563,
+          "meanConfidence": 0.172412
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "classification": "false-negative",
+      "expectedDoubleStopEnding": true,
+      "predictedDoubleStopEnding": false,
+      "selectedPairFeatures": null,
+      "topThreeCandidatePairs": []
+    },
+    {
+      "measureNumber": 13,
+      "classification": "true-negative",
+      "expectedDoubleStopEnding": false,
+      "predictedDoubleStopEnding": false,
+      "selectedPairFeatures": null,
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 26.615149,
+          "pitch62Start": 26.870568,
+          "centerSeconds": 26.742859,
+          "centerPhase": 0.284604,
+          "distanceFromExpectedEndingPhase": 0.590396,
+          "onsetSeparationSeconds": 0.25542,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.04644,
+          "pitch62DurationSeconds": 0.452789,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.452789,
+          "nearbyNonTargetAttackSupport": 10,
+          "minimumConfidence": 0.125138,
+          "meanConfidence": 0.165429
+        },
+        {
+          "pitch58Start": 26.615149,
+          "pitch62Start": 26.348119,
+          "centerSeconds": 26.481634,
+          "centerPhase": 0.136708,
+          "distanceFromExpectedEndingPhase": 0.738292,
+          "onsetSeparationSeconds": 0.267029,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.04644,
+          "pitch62DurationSeconds": 0.22059,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.22059,
+          "nearbyNonTargetAttackSupport": 11,
+          "minimumConfidence": 0.125138,
+          "meanConfidence": 0.164776
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "classification": "false-negative",
+      "expectedDoubleStopEnding": true,
+      "predictedDoubleStopEnding": false,
+      "selectedPairFeatures": null,
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 29.94978,
+          "pitch62Start": 28.729449,
+          "centerSeconds": 29.339614,
+          "centerPhase": 0.754801,
+          "distanceFromExpectedEndingPhase": 0.120199,
+          "onsetSeparationSeconds": 1.220332,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.04644,
+          "pitch62DurationSeconds": 0.05805,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.05805,
+          "nearbyNonTargetAttackSupport": 4,
+          "minimumConfidence": 0.122461,
+          "meanConfidence": 0.131505
+        },
+        {
+          "pitch58Start": 29.94978,
+          "pitch62Start": 28.253439,
+          "centerSeconds": 29.10161,
+          "centerPhase": 0.620051,
+          "distanceFromExpectedEndingPhase": 0.254949,
+          "onsetSeparationSeconds": 1.696341,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.04644,
+          "pitch62DurationSeconds": 0.18576,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.18576,
+          "nearbyNonTargetAttackSupport": 4,
+          "minimumConfidence": 0.140549,
+          "meanConfidence": 0.15309
+        }
+      ]
+    },
+    {
+      "measureNumber": 15,
+      "classification": "true-negative",
+      "expectedDoubleStopEnding": false,
+      "predictedDoubleStopEnding": false,
+      "selectedPairFeatures": null,
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 31.017898,
+          "pitch62Start": 31.563567,
+          "centerSeconds": 31.290732,
+          "centerPhase": 0.859459,
+          "distanceFromExpectedEndingPhase": 0.015541,
+          "onsetSeparationSeconds": 0.545669,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.2322,
+          "pitch62DurationSeconds": 0.04644,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.2322,
+          "nearbyNonTargetAttackSupport": 4,
+          "minimumConfidence": 0.118057,
+          "meanConfidence": 0.121131
+        },
+        {
+          "pitch58Start": 30.332909,
+          "pitch62Start": 31.563567,
+          "centerSeconds": 30.948238,
+          "centerPhase": 0.66555,
+          "distanceFromExpectedEndingPhase": 0.20945,
+          "onsetSeparationSeconds": 1.230658,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.08127,
+          "pitch62DurationSeconds": 0.04644,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.08127,
+          "nearbyNonTargetAttackSupport": 12,
+          "minimumConfidence": 0.124204,
+          "meanConfidence": 0.12552
+        },
+        {
+          "pitch58Start": 31.017898,
+          "pitch62Start": 30.832138,
+          "centerSeconds": 30.925018,
+          "centerPhase": 0.652404,
+          "distanceFromExpectedEndingPhase": 0.222596,
+          "onsetSeparationSeconds": 0.18576,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.2322,
+          "pitch62DurationSeconds": 0.18576,
+          "minimumDurationSeconds": 0.18576,
+          "maximumDurationSeconds": 0.2322,
+          "nearbyNonTargetAttackSupport": 13,
+          "minimumConfidence": 0.118057,
+          "meanConfidence": 0.148502
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "classification": "true-positive",
+      "expectedDoubleStopEnding": true,
+      "predictedDoubleStopEnding": true,
+      "selectedPairFeatures": {
+        "pitch58Start": 33.016098,
+        "pitch62Start": 33.434057,
+        "centerSeconds": 33.225078,
+        "centerPhase": 0.954621,
+        "distanceFromExpectedEndingPhase": 0.079621,
+        "onsetSeparationSeconds": 0.417959,
+        "sustainOverlapSeconds": 0.0,
+        "pitch58DurationSeconds": 0.15093,
+        "pitch62DurationSeconds": 0.04644,
+        "minimumDurationSeconds": 0.04644,
+        "maximumDurationSeconds": 0.15093,
+        "nearbyNonTargetAttackSupport": 9,
+        "minimumConfidence": 0.12357,
+        "meanConfidence": 0.148824
+      },
+      "topThreeCandidatePairs": [
+        {
+          "pitch58Start": 32.772288,
+          "pitch62Start": 33.434057,
+          "centerSeconds": 33.103173,
+          "centerPhase": 0.885602,
+          "distanceFromExpectedEndingPhase": 0.010602,
+          "onsetSeparationSeconds": 0.661769,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.13932,
+          "pitch62DurationSeconds": 0.04644,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.13932,
+          "nearbyNonTargetAttackSupport": 6,
+          "minimumConfidence": 0.12357,
+          "meanConfidence": 0.150572
+        },
+        {
+          "pitch58Start": 33.016098,
+          "pitch62Start": 33.434057,
+          "centerSeconds": 33.225078,
+          "centerPhase": 0.954621,
+          "distanceFromExpectedEndingPhase": 0.079621,
+          "onsetSeparationSeconds": 0.417959,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.15093,
+          "pitch62DurationSeconds": 0.04644,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.15093,
+          "nearbyNonTargetAttackSupport": 9,
+          "minimumConfidence": 0.12357,
+          "meanConfidence": 0.148824
+        },
+        {
+          "pitch58Start": 33.016098,
+          "pitch62Start": 31.563567,
+          "centerSeconds": 32.289832,
+          "centerPhase": 0.425116,
+          "distanceFromExpectedEndingPhase": 0.449884,
+          "onsetSeparationSeconds": 1.452531,
+          "sustainOverlapSeconds": 0.0,
+          "pitch58DurationSeconds": 0.15093,
+          "pitch62DurationSeconds": 0.04644,
+          "minimumDurationSeconds": 0.04644,
+          "maximumDurationSeconds": 0.15093,
+          "nearbyNonTargetAttackSupport": 11,
+          "minimumConfidence": 0.124204,
+          "meanConfidence": 0.149141
+        }
+      ]
+    }
+  ],
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedPitchCheckpointChanged": false
+}

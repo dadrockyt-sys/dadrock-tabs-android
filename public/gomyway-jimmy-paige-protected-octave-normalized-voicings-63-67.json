@@ -1,0 +1,374 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "protected-octave-normalized-voicing-recovery",
+  "sourceDiagnosis": "public/gomyway-jimmy-paige-heldout-chord-voicing-placement-diagnosis-63-67.json",
+  "sourceValidation": "public/gomyway-jimmy-paige-chord-pitch-class-validation-63-67.json",
+  "exactVoicingMatchedAttacks": 13,
+  "pitchClassMatchedAttacks": 21,
+  "targetAttacks": 21,
+  "placementMissesInspected": 8,
+  "fullyRecoveredPlacementMisses": 4,
+  "unresolvedPlacementMisses": 4,
+  "guardedExactEquivalentAttacks": 17,
+  "guardedExactEquivalentRecallPercentage": 80.95,
+  "octaveOffsetCounts": {
+    "0": 7,
+    "-12": 8,
+    "12": 1,
+    "-24": 4
+  },
+  "recoveredRows": [
+    {
+      "measureNumber": 66,
+      "attackNumber": 1,
+      "expectedPitches": [
+        59,
+        64,
+        68
+      ],
+      "candidatePitches": [
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        48,
+        49,
+        50,
+        52,
+        55,
+        57,
+        61,
+        69,
+        71
+      ],
+      "octaveNormalizedMatches": [
+        {
+          "expectedPitch": 59,
+          "candidatePitch": 71,
+          "octaveOffsetSemitones": 12
+        },
+        {
+          "expectedPitch": 64,
+          "candidatePitch": 52,
+          "octaveOffsetSemitones": -12
+        },
+        {
+          "expectedPitch": 68,
+          "candidatePitch": 44,
+          "octaveOffsetSemitones": -24
+        }
+      ],
+      "octaveNormalizedRecall": 1.0,
+      "fullyRecovered": true
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 2,
+      "expectedPitches": [
+        59,
+        64,
+        68
+      ],
+      "candidatePitches": [
+        40,
+        41,
+        42,
+        44,
+        45,
+        47,
+        49,
+        50,
+        51,
+        52,
+        55,
+        57,
+        64,
+        66,
+        69
+      ],
+      "octaveNormalizedMatches": [
+        {
+          "expectedPitch": 59,
+          "candidatePitch": 47,
+          "octaveOffsetSemitones": -12
+        },
+        {
+          "expectedPitch": 64,
+          "candidatePitch": 64,
+          "octaveOffsetSemitones": 0
+        },
+        {
+          "expectedPitch": 68,
+          "candidatePitch": 44,
+          "octaveOffsetSemitones": -24
+        }
+      ],
+      "octaveNormalizedRecall": 1.0,
+      "fullyRecovered": true
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 3,
+      "expectedPitches": [
+        59,
+        64,
+        68
+      ],
+      "candidatePitches": [
+        40,
+        41,
+        42,
+        44,
+        45,
+        47,
+        49,
+        50,
+        51,
+        52,
+        55,
+        57,
+        64,
+        66,
+        69
+      ],
+      "octaveNormalizedMatches": [
+        {
+          "expectedPitch": 59,
+          "candidatePitch": 47,
+          "octaveOffsetSemitones": -12
+        },
+        {
+          "expectedPitch": 64,
+          "candidatePitch": 64,
+          "octaveOffsetSemitones": 0
+        },
+        {
+          "expectedPitch": 68,
+          "candidatePitch": 44,
+          "octaveOffsetSemitones": -24
+        }
+      ],
+      "octaveNormalizedRecall": 1.0,
+      "fullyRecovered": true
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 4,
+      "expectedPitches": [
+        59,
+        64,
+        68
+      ],
+      "candidatePitches": [
+        40,
+        41,
+        42,
+        44,
+        45,
+        47,
+        49,
+        50,
+        51,
+        52,
+        55,
+        57,
+        64,
+        66,
+        69
+      ],
+      "octaveNormalizedMatches": [
+        {
+          "expectedPitch": 59,
+          "candidatePitch": 47,
+          "octaveOffsetSemitones": -12
+        },
+        {
+          "expectedPitch": 64,
+          "candidatePitch": 64,
+          "octaveOffsetSemitones": 0
+        },
+        {
+          "expectedPitch": 68,
+          "candidatePitch": 44,
+          "octaveOffsetSemitones": -24
+        }
+      ],
+      "octaveNormalizedRecall": 1.0,
+      "fullyRecovered": true
+    }
+  ],
+  "unresolvedRows": [
+    {
+      "measureNumber": 64,
+      "attackNumber": 1,
+      "expectedPitches": [
+        45,
+        52,
+        57,
+        61,
+        66
+      ],
+      "candidatePitches": [
+        40,
+        43,
+        44,
+        46,
+        48,
+        49,
+        50,
+        52,
+        56,
+        58,
+        59,
+        64
+      ],
+      "octaveNormalizedMatches": [
+        {
+          "expectedPitch": 52,
+          "candidatePitch": 52,
+          "octaveOffsetSemitones": 0
+        },
+        {
+          "expectedPitch": 61,
+          "candidatePitch": 49,
+          "octaveOffsetSemitones": -12
+        }
+      ],
+      "octaveNormalizedRecall": 0.4,
+      "fullyRecovered": false
+    },
+    {
+      "measureNumber": 64,
+      "attackNumber": 2,
+      "expectedPitches": [
+        45,
+        52,
+        57,
+        61,
+        66
+      ],
+      "candidatePitches": [
+        40,
+        43,
+        44,
+        46,
+        48,
+        49,
+        50,
+        52,
+        56,
+        58,
+        59,
+        64
+      ],
+      "octaveNormalizedMatches": [
+        {
+          "expectedPitch": 52,
+          "candidatePitch": 52,
+          "octaveOffsetSemitones": 0
+        },
+        {
+          "expectedPitch": 61,
+          "candidatePitch": 49,
+          "octaveOffsetSemitones": -12
+        }
+      ],
+      "octaveNormalizedRecall": 0.4,
+      "fullyRecovered": false
+    },
+    {
+      "measureNumber": 64,
+      "attackNumber": 3,
+      "expectedPitches": [
+        45,
+        52,
+        57,
+        61,
+        66
+      ],
+      "candidatePitches": [
+        40,
+        42,
+        43,
+        52,
+        54,
+        56,
+        62,
+        63,
+        64,
+        70,
+        71
+      ],
+      "octaveNormalizedMatches": [
+        {
+          "expectedPitch": 52,
+          "candidatePitch": 52,
+          "octaveOffsetSemitones": 0
+        },
+        {
+          "expectedPitch": 66,
+          "candidatePitch": 54,
+          "octaveOffsetSemitones": -12
+        }
+      ],
+      "octaveNormalizedRecall": 0.4,
+      "fullyRecovered": false
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 5,
+      "expectedPitches": [
+        62,
+        67,
+        71
+      ],
+      "candidatePitches": [
+        43,
+        45,
+        49,
+        55,
+        57,
+        58,
+        62,
+        63
+      ],
+      "octaveNormalizedMatches": [
+        {
+          "expectedPitch": 62,
+          "candidatePitch": 62,
+          "octaveOffsetSemitones": 0
+        },
+        {
+          "expectedPitch": 67,
+          "candidatePitch": 55,
+          "octaveOffsetSemitones": -12
+        }
+      ],
+      "octaveNormalizedRecall": 0.6667,
+      "fullyRecovered": false
+    }
+  ],
+  "policy": {
+    "allowedOctaveOffsetsSemitones": [
+      -24,
+      -12,
+      0,
+      12,
+      24
+    ],
+    "pitchClassMustMatch": true,
+    "oneCandidateNoteCanMatchOnlyOneExpectedNote": true,
+    "exactVoicingRemainsPreferred": true,
+    "octaveNormalizationIsEvaluationOnly": true,
+    "stringAndFretAssignmentNotChanged": true
+  },
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedPitchCheckpointChanged": false,
+  "readyForCanonicalVoicingResolverTraining": false,
+  "readyForAutomatedTraining": false
+}

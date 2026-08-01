@@ -1,0 +1,58 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "multi-section-canonical-chord-resolver-shadow-validation",
+  "sections": [
+    {
+      "name": "professional-chorus-training-section",
+      "measures": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38
+      ],
+      "matchedAttacks": 23,
+      "targetAttacks": 23
+    },
+    {
+      "name": "held-out-repeated-chorus",
+      "measures": [
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "matchedAttacks": 21,
+      "targetAttacks": 21
+    }
+  ],
+  "combinedMatchedAttacks": 44,
+  "combinedTargetAttacks": 44,
+  "combinedRecallPercentage": 100.0,
+  "shadowResolvedAttacks": 21,
+  "invalidShadowRows": [],
+  "sourceEventCache": "public/gomyway-jimmy-paige-full-song-winner-events.json",
+  "sourceEventShaBefore": "c63e3813ea84ce074f56907b0795f2238dd9963222e0c1181458bc49c21cf55a",
+  "sourceEventShaAfter": "c63e3813ea84ce074f56907b0795f2238dd9963222e0c1181458bc49c21cf55a",
+  "checks": {
+    "trainedSection23of23": true,
+    "heldoutSection21of21": true,
+    "combined44of44": true,
+    "shadowResolved21of21": true,
+    "allShadowRowsGuarded": true,
+    "sourceEventShaUnchanged": true,
+    "protectedGatePassed": true,
+    "singleSectionShadowPassed": true
+  },
+  "multiSectionShadowPassed": true,
+  "professionalPdfRemainsScoringAuthority": true,
+  "protectedPitchCheckpointChanged": false,
+  "sourceEventsMutated": false,
+  "rendererChanged": false,
+  "syntheticNotesCreated": false,
+  "productionPromotionAllowed": false,
+  "readyForRendererSidecarBenchmark": true,
+  "readyForProduction": false
+}

@@ -1,0 +1,869 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "professional-rhythm-chord-voicing-miss-diagnosis",
+  "sourceBaseline": "public/gomyway-jimmy-paige-professional-chords-33-38-baseline.json",
+  "missedAttackCount": 5,
+  "missingPitchCounts": {
+    "66:F#4": 3,
+    "52:E3": 2,
+    "57:A3": 2,
+    "64:E4": 2,
+    "68:G#4": 2,
+    "45:A2": 1,
+    "59:B3": 1,
+    "61:C#4": 1,
+    "62:D4": 1
+  },
+  "neighborSubstitutionCounts": {
+    "66:F#4->64:E4": 2,
+    "45:A2->46:A#2": 1,
+    "52:E3->50:D3": 1,
+    "52:E3->54:F#3": 1,
+    "57:A3->55:G3": 1,
+    "57:A3->56:G#3": 1,
+    "61:C#4->62:D4": 1,
+    "62:D4->64:E4": 1,
+    "64:E4->62:D4": 1,
+    "64:E4->63:D#4": 1,
+    "68:G#4->66:F#4": 1
+  },
+  "missReports": [
+    {
+      "measureNumber": 34,
+      "attackNumber": 2,
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "targetPhase": 0.2,
+      "timingDeltaSeconds": 0.121536,
+      "voicingRecall": 0.2,
+      "expectedPitches": [
+        {
+          "pitch": 45,
+          "note": "A2"
+        },
+        {
+          "pitch": 52,
+          "note": "E3"
+        },
+        {
+          "pitch": 57,
+          "note": "A3"
+        },
+        {
+          "pitch": 61,
+          "note": "C#4"
+        },
+        {
+          "pitch": 66,
+          "note": "F#4"
+        }
+      ],
+      "candidatePitches": [
+        {
+          "pitch": 42,
+          "note": "F#2"
+        },
+        {
+          "pitch": 43,
+          "note": "G2"
+        },
+        {
+          "pitch": 46,
+          "note": "A#2"
+        },
+        {
+          "pitch": 47,
+          "note": "B2"
+        },
+        {
+          "pitch": 49,
+          "note": "C#3"
+        },
+        {
+          "pitch": 54,
+          "note": "F#3"
+        },
+        {
+          "pitch": 56,
+          "note": "G#3"
+        },
+        {
+          "pitch": 59,
+          "note": "B3"
+        },
+        {
+          "pitch": 61,
+          "note": "C#4"
+        },
+        {
+          "pitch": 62,
+          "note": "D4"
+        },
+        {
+          "pitch": 64,
+          "note": "E4"
+        },
+        {
+          "pitch": 68,
+          "note": "G#4"
+        },
+        {
+          "pitch": 71,
+          "note": "B4"
+        },
+        {
+          "pitch": 72,
+          "note": "C5"
+        },
+        {
+          "pitch": 76,
+          "note": "E5"
+        }
+      ],
+      "exactMatchedPitches": [
+        {
+          "pitch": 61,
+          "note": "C#4"
+        }
+      ],
+      "missingPitches": [
+        {
+          "pitch": 45,
+          "note": "A2",
+          "nearestCandidate": {
+            "pitch": 46,
+            "note": "A#2",
+            "semitoneDelta": 1,
+            "absoluteSemitoneDelta": 1
+          },
+          "samePitchClassPresent": false,
+          "octaveEquivalentCandidates": []
+        },
+        {
+          "pitch": 52,
+          "note": "E3",
+          "nearestCandidate": {
+            "pitch": 54,
+            "note": "F#3",
+            "semitoneDelta": 2,
+            "absoluteSemitoneDelta": 2
+          },
+          "samePitchClassPresent": true,
+          "octaveEquivalentCandidates": [
+            {
+              "pitch": 64,
+              "note": "E4",
+              "octaveDelta": 1
+            },
+            {
+              "pitch": 76,
+              "note": "E5",
+              "octaveDelta": 2
+            }
+          ]
+        },
+        {
+          "pitch": 57,
+          "note": "A3",
+          "nearestCandidate": {
+            "pitch": 56,
+            "note": "G#3",
+            "semitoneDelta": -1,
+            "absoluteSemitoneDelta": 1
+          },
+          "samePitchClassPresent": false,
+          "octaveEquivalentCandidates": []
+        },
+        {
+          "pitch": 66,
+          "note": "F#4",
+          "nearestCandidate": {
+            "pitch": 64,
+            "note": "E4",
+            "semitoneDelta": -2,
+            "absoluteSemitoneDelta": 2
+          },
+          "samePitchClassPresent": true,
+          "octaveEquivalentCandidates": [
+            {
+              "pitch": 42,
+              "note": "F#2",
+              "octaveDelta": -2
+            },
+            {
+              "pitch": 54,
+              "note": "F#3",
+              "octaveDelta": -1
+            }
+          ]
+        }
+      ],
+      "extraCandidatePitches": [
+        {
+          "pitch": 42,
+          "note": "F#2"
+        },
+        {
+          "pitch": 43,
+          "note": "G2"
+        },
+        {
+          "pitch": 46,
+          "note": "A#2"
+        },
+        {
+          "pitch": 47,
+          "note": "B2"
+        },
+        {
+          "pitch": 49,
+          "note": "C#3"
+        },
+        {
+          "pitch": 54,
+          "note": "F#3"
+        },
+        {
+          "pitch": 56,
+          "note": "G#3"
+        },
+        {
+          "pitch": 59,
+          "note": "B3"
+        },
+        {
+          "pitch": 62,
+          "note": "D4"
+        },
+        {
+          "pitch": 64,
+          "note": "E4"
+        },
+        {
+          "pitch": 68,
+          "note": "G#4"
+        },
+        {
+          "pitch": 71,
+          "note": "B4"
+        },
+        {
+          "pitch": 72,
+          "note": "C5"
+        },
+        {
+          "pitch": 76,
+          "note": "E5"
+        }
+      ],
+      "classification": "octave-placement-problem"
+    },
+    {
+      "measureNumber": 35,
+      "attackNumber": 3,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "targetPhase": 0.34,
+      "timingDeltaSeconds": 0.01912,
+      "voicingRecall": 0.25,
+      "expectedPitches": [
+        {
+          "pitch": 54,
+          "note": "F#3"
+        },
+        {
+          "pitch": 59,
+          "note": "B3"
+        },
+        {
+          "pitch": 64,
+          "note": "E4"
+        },
+        {
+          "pitch": 68,
+          "note": "G#4"
+        }
+      ],
+      "candidatePitches": [
+        {
+          "pitch": 40,
+          "note": "E2"
+        },
+        {
+          "pitch": 50,
+          "note": "D3"
+        },
+        {
+          "pitch": 54,
+          "note": "F#3"
+        },
+        {
+          "pitch": 62,
+          "note": "D4"
+        },
+        {
+          "pitch": 63,
+          "note": "D#4"
+        },
+        {
+          "pitch": 66,
+          "note": "F#4"
+        }
+      ],
+      "exactMatchedPitches": [
+        {
+          "pitch": 54,
+          "note": "F#3"
+        }
+      ],
+      "missingPitches": [
+        {
+          "pitch": 59,
+          "note": "B3",
+          "nearestCandidate": {
+            "pitch": 62,
+            "note": "D4",
+            "semitoneDelta": 3,
+            "absoluteSemitoneDelta": 3
+          },
+          "samePitchClassPresent": false,
+          "octaveEquivalentCandidates": []
+        },
+        {
+          "pitch": 64,
+          "note": "E4",
+          "nearestCandidate": {
+            "pitch": 63,
+            "note": "D#4",
+            "semitoneDelta": -1,
+            "absoluteSemitoneDelta": 1
+          },
+          "samePitchClassPresent": true,
+          "octaveEquivalentCandidates": [
+            {
+              "pitch": 40,
+              "note": "E2",
+              "octaveDelta": -2
+            }
+          ]
+        },
+        {
+          "pitch": 68,
+          "note": "G#4",
+          "nearestCandidate": {
+            "pitch": 66,
+            "note": "F#4",
+            "semitoneDelta": -2,
+            "absoluteSemitoneDelta": 2
+          },
+          "samePitchClassPresent": false,
+          "octaveEquivalentCandidates": []
+        }
+      ],
+      "extraCandidatePitches": [
+        {
+          "pitch": 40,
+          "note": "E2"
+        },
+        {
+          "pitch": 50,
+          "note": "D3"
+        },
+        {
+          "pitch": 62,
+          "note": "D4"
+        },
+        {
+          "pitch": 63,
+          "note": "D#4"
+        },
+        {
+          "pitch": 66,
+          "note": "F#4"
+        }
+      ],
+      "classification": "octave-placement-problem"
+    },
+    {
+      "measureNumber": 35,
+      "attackNumber": 5,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "targetPhase": 0.66,
+      "timingDeltaSeconds": 0.075049,
+      "voicingRecall": 0.25,
+      "expectedPitches": [
+        {
+          "pitch": 52,
+          "note": "E3"
+        },
+        {
+          "pitch": 57,
+          "note": "A3"
+        },
+        {
+          "pitch": 62,
+          "note": "D4"
+        },
+        {
+          "pitch": 66,
+          "note": "F#4"
+        }
+      ],
+      "candidatePitches": [
+        {
+          "pitch": 40,
+          "note": "E2"
+        },
+        {
+          "pitch": 42,
+          "note": "F#2"
+        },
+        {
+          "pitch": 45,
+          "note": "A2"
+        },
+        {
+          "pitch": 47,
+          "note": "B2"
+        },
+        {
+          "pitch": 48,
+          "note": "C3"
+        },
+        {
+          "pitch": 49,
+          "note": "C#3"
+        },
+        {
+          "pitch": 50,
+          "note": "D3"
+        },
+        {
+          "pitch": 52,
+          "note": "E3"
+        },
+        {
+          "pitch": 55,
+          "note": "G3"
+        },
+        {
+          "pitch": 64,
+          "note": "E4"
+        }
+      ],
+      "exactMatchedPitches": [
+        {
+          "pitch": 52,
+          "note": "E3"
+        }
+      ],
+      "missingPitches": [
+        {
+          "pitch": 57,
+          "note": "A3",
+          "nearestCandidate": {
+            "pitch": 55,
+            "note": "G3",
+            "semitoneDelta": -2,
+            "absoluteSemitoneDelta": 2
+          },
+          "samePitchClassPresent": true,
+          "octaveEquivalentCandidates": [
+            {
+              "pitch": 45,
+              "note": "A2",
+              "octaveDelta": -1
+            }
+          ]
+        },
+        {
+          "pitch": 62,
+          "note": "D4",
+          "nearestCandidate": {
+            "pitch": 64,
+            "note": "E4",
+            "semitoneDelta": 2,
+            "absoluteSemitoneDelta": 2
+          },
+          "samePitchClassPresent": true,
+          "octaveEquivalentCandidates": [
+            {
+              "pitch": 50,
+              "note": "D3",
+              "octaveDelta": -1
+            }
+          ]
+        },
+        {
+          "pitch": 66,
+          "note": "F#4",
+          "nearestCandidate": {
+            "pitch": 64,
+            "note": "E4",
+            "semitoneDelta": -2,
+            "absoluteSemitoneDelta": 2
+          },
+          "samePitchClassPresent": true,
+          "octaveEquivalentCandidates": [
+            {
+              "pitch": 42,
+              "note": "F#2",
+              "octaveDelta": -2
+            }
+          ]
+        }
+      ],
+      "extraCandidatePitches": [
+        {
+          "pitch": 40,
+          "note": "E2"
+        },
+        {
+          "pitch": 42,
+          "note": "F#2"
+        },
+        {
+          "pitch": 45,
+          "note": "A2"
+        },
+        {
+          "pitch": 47,
+          "note": "B2"
+        },
+        {
+          "pitch": 48,
+          "note": "C3"
+        },
+        {
+          "pitch": 49,
+          "note": "C#3"
+        },
+        {
+          "pitch": 50,
+          "note": "D3"
+        },
+        {
+          "pitch": 55,
+          "note": "G3"
+        },
+        {
+          "pitch": 64,
+          "note": "E4"
+        }
+      ],
+      "classification": "octave-placement-problem"
+    },
+    {
+      "measureNumber": 36,
+      "attackNumber": 3,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "targetPhase": 0.27,
+      "timingDeltaSeconds": 0.107665,
+      "voicingRecall": 0.3333,
+      "expectedPitches": [
+        {
+          "pitch": 59,
+          "note": "B3"
+        },
+        {
+          "pitch": 64,
+          "note": "E4"
+        },
+        {
+          "pitch": 68,
+          "note": "G#4"
+        }
+      ],
+      "candidatePitches": [
+        {
+          "pitch": 40,
+          "note": "E2"
+        },
+        {
+          "pitch": 44,
+          "note": "G#2"
+        },
+        {
+          "pitch": 58,
+          "note": "A#3"
+        },
+        {
+          "pitch": 59,
+          "note": "B3"
+        },
+        {
+          "pitch": 61,
+          "note": "C#4"
+        },
+        {
+          "pitch": 62,
+          "note": "D4"
+        },
+        {
+          "pitch": 71,
+          "note": "B4"
+        }
+      ],
+      "exactMatchedPitches": [
+        {
+          "pitch": 59,
+          "note": "B3"
+        }
+      ],
+      "missingPitches": [
+        {
+          "pitch": 64,
+          "note": "E4",
+          "nearestCandidate": {
+            "pitch": 62,
+            "note": "D4",
+            "semitoneDelta": -2,
+            "absoluteSemitoneDelta": 2
+          },
+          "samePitchClassPresent": true,
+          "octaveEquivalentCandidates": [
+            {
+              "pitch": 40,
+              "note": "E2",
+              "octaveDelta": -2
+            }
+          ]
+        },
+        {
+          "pitch": 68,
+          "note": "G#4",
+          "nearestCandidate": {
+            "pitch": 71,
+            "note": "B4",
+            "semitoneDelta": 3,
+            "absoluteSemitoneDelta": 3
+          },
+          "samePitchClassPresent": true,
+          "octaveEquivalentCandidates": [
+            {
+              "pitch": 44,
+              "note": "G#2",
+              "octaveDelta": -2
+            }
+          ]
+        }
+      ],
+      "extraCandidatePitches": [
+        {
+          "pitch": 40,
+          "note": "E2"
+        },
+        {
+          "pitch": 44,
+          "note": "G#2"
+        },
+        {
+          "pitch": 58,
+          "note": "A#3"
+        },
+        {
+          "pitch": 61,
+          "note": "C#4"
+        },
+        {
+          "pitch": 62,
+          "note": "D4"
+        },
+        {
+          "pitch": 71,
+          "note": "B4"
+        }
+      ],
+      "classification": "octave-placement-problem"
+    },
+    {
+      "measureNumber": 38,
+      "attackNumber": 1,
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "targetPhase": 0.0,
+      "timingDeltaSeconds": -0.06613,
+      "voicingRecall": 0.4,
+      "expectedPitches": [
+        {
+          "pitch": 45,
+          "note": "A2"
+        },
+        {
+          "pitch": 52,
+          "note": "E3"
+        },
+        {
+          "pitch": 57,
+          "note": "A3"
+        },
+        {
+          "pitch": 61,
+          "note": "C#4"
+        },
+        {
+          "pitch": 66,
+          "note": "F#4"
+        }
+      ],
+      "candidatePitches": [
+        {
+          "pitch": 42,
+          "note": "F#2"
+        },
+        {
+          "pitch": 43,
+          "note": "G2"
+        },
+        {
+          "pitch": 44,
+          "note": "G#2"
+        },
+        {
+          "pitch": 45,
+          "note": "A2"
+        },
+        {
+          "pitch": 47,
+          "note": "B2"
+        },
+        {
+          "pitch": 50,
+          "note": "D3"
+        },
+        {
+          "pitch": 55,
+          "note": "G3"
+        },
+        {
+          "pitch": 57,
+          "note": "A3"
+        },
+        {
+          "pitch": 62,
+          "note": "D4"
+        },
+        {
+          "pitch": 63,
+          "note": "D#4"
+        },
+        {
+          "pitch": 74,
+          "note": "D5"
+        }
+      ],
+      "exactMatchedPitches": [
+        {
+          "pitch": 45,
+          "note": "A2"
+        },
+        {
+          "pitch": 57,
+          "note": "A3"
+        }
+      ],
+      "missingPitches": [
+        {
+          "pitch": 52,
+          "note": "E3",
+          "nearestCandidate": {
+            "pitch": 50,
+            "note": "D3",
+            "semitoneDelta": -2,
+            "absoluteSemitoneDelta": 2
+          },
+          "samePitchClassPresent": false,
+          "octaveEquivalentCandidates": []
+        },
+        {
+          "pitch": 61,
+          "note": "C#4",
+          "nearestCandidate": {
+            "pitch": 62,
+            "note": "D4",
+            "semitoneDelta": 1,
+            "absoluteSemitoneDelta": 1
+          },
+          "samePitchClassPresent": false,
+          "octaveEquivalentCandidates": []
+        },
+        {
+          "pitch": 66,
+          "note": "F#4",
+          "nearestCandidate": {
+            "pitch": 63,
+            "note": "D#4",
+            "semitoneDelta": -3,
+            "absoluteSemitoneDelta": 3
+          },
+          "samePitchClassPresent": true,
+          "octaveEquivalentCandidates": [
+            {
+              "pitch": 42,
+              "note": "F#2",
+              "octaveDelta": -2
+            }
+          ]
+        }
+      ],
+      "extraCandidatePitches": [
+        {
+          "pitch": 42,
+          "note": "F#2"
+        },
+        {
+          "pitch": 43,
+          "note": "G2"
+        },
+        {
+          "pitch": 44,
+          "note": "G#2"
+        },
+        {
+          "pitch": 47,
+          "note": "B2"
+        },
+        {
+          "pitch": 50,
+          "note": "D3"
+        },
+        {
+          "pitch": 55,
+          "note": "G3"
+        },
+        {
+          "pitch": 62,
+          "note": "D4"
+        },
+        {
+          "pitch": 63,
+          "note": "D#4"
+        },
+        {
+          "pitch": 74,
+          "note": "D5"
+        }
+      ],
+      "classification": "octave-placement-problem"
+    }
+  ],
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedPitchCheckpointChanged": false,
+  "readyForTargetedChordRecoverySweep": true,
+  "readyForAutomatedTraining": false
+}

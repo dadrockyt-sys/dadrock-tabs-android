@@ -1,0 +1,74 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "jimmy-paige-rhythm-protected-curriculum",
+  "mode": "protected-structural-practice",
+  "readyForScoring": false,
+  "trainingStarted": true,
+  "scoringStarted": false,
+  "protectionsPassed": true,
+  "stoppedEarly": false,
+  "completedStageCount": 8,
+  "totalStageCount": 8,
+  "message": "Protected structural curriculum completed. Jimmy is practicing section, repetition, consensus, and boundary detection while exact event scoring remains locked until the professional event transcription is verified.",
+  "curriculumResults": [
+    {
+      "command": "/home/codespace/.python/current/bin/python analyzer/run_professional_rhythm_reference_validator.py",
+      "passed": true,
+      "returnCode": 0,
+      "stdout": "Professional rhythm reference structural pass: True\nMeasures present: 113\nMeasure range: 1-113\nSection count: 10\nMeasure 104 time signature: 2/4\nMeasure 105 time signature: 4/4\nAll event transcriptions verified: False\nReady for scoring flag: False\nScoring gate pass: False\nChecks: {'referenceTypeCorrect': True, 'instrumentPartIsRhythm': True, 'measureCountDeclared113': True, 'all113MeasuresPresent': True, 'measureNumbersConsecutive': True, 'sectionMapMatchesVerifiedPages': True, 'measure104IsTwoFour': True, 'measure105ReturnsToFourFour': True, 'measure113Present': True, 'allMeasureIdentitiesVerified': True, 'professionalReferenceCannotGenerate': True, 'directAudioRemainsSourceOfTruth': True, 'lockedV7EventsProtected': True, 'lockedIntroTemplateProtected': True, 'lockedVerse1TemplateProtected': True, 'rendererUnchanged': True, 'protectedBaselinesUnchanged': True, 'noSyntheticNotes': True}\nRenderer changed: False\nProtected baselines changed: False\n",
+      "stderr": ""
+    },
+    {
+      "command": "/home/codespace/.python/current/bin/python analyzer/run_v8_rhythm_candidate_benchmark.py",
+      "passed": true,
+      "returnCode": 0,
+      "stdout": "V8 direct rhythm candidate pass: True\nIndependent of V7 events: True\nRenderer changed: False\nRhythm candidates: 572\nIntro rhythm candidates: 75\nIntro onset-step histogram: {0: 2, 1: 5, 2: 8, 3: 3, 4: 7, 5: 5, 6: 3, 7: 3, 8: 4, 9: 3, 10: 10, 11: 3, 12: 3, 13: 3, 14: 8, 15: 5}\nRepeated intro pair count: 8\nMinimum pair support: 4\nPair-support histogram: {1: 7, 2: 13, 3: 5, 4: 5, 5: 1}\nStable intro pair-step count: 6\nStable pair steps (step, support, strength): [(2, 4, 0.451612), (10, 4, 0.21912), (14, 4, 0.525364), (18, 4, 0.410139), (20, 4, 0.472177), (26, 5, 0.443945)]\nOutput: public/gomyway-full-song-v8-rhythm-candidates.json\n",
+      "stderr": ""
+    },
+    {
+      "command": "/home/codespace/.python/current/bin/python analyzer/run_v8_intro_rhythm_template_lock_benchmark.py",
+      "passed": true,
+      "returnCode": 0,
+      "stdout": "Intro rhythm template lock pass: True\nRhythm template locked: True\nReference slot count: 12\nLocked slot count: 12\nMinimum pair support: 7\nMaximum median distance steps: 1.5\nUnmatched direct-audio event count: 8\nLocked slots (reference, observed, correction, support, strength): [(2, 1.0, 1.0, 8, 0.340471), (4, 5.0, -1.0, 8, 0.349814), (6, 6.0, 0.0, 8, 0.349814), (9, 10.0, -1.0, 8, 0.339626), (11, 11.0, 0.0, 8, 0.415134), (14, 14.0, 0.0, 7, 0.353679), (18, 18.0, 0.0, 8, 0.31748), (20, 20.0, 0.0, 8, 0.31743), (22, 22.0, 0.0, 8, 0.258776), (25, 25.5, -0.5, 8, 0.382246), (27, 26.0, 1.0, 8, 0.395178), (30, 30.0, 0.0, 8, 0.328029)]\nChecks: {'supportBenchmarkPassed': True, 'allReferenceSlotsPresent': True, 'allReferenceSlotsSupported': True, 'allReferenceSlotsStrong': True, 'fullReferenceCoverage': True, 'allEightPairsContributed': True, 'timingDistanceWithinTolerance': True, 'unmatchedEventsWithinTolerance': True, 'lockedSlotCountMatchesReference': True, 'rendererUnchanged': True, 'protectedBaselinesUnchanged': True, 'noSyntheticNotes': True}\nRenderer changed: False\nProtected baselines changed: False\nOutput: public/gomyway-full-song-v8-intro-rhythm-template-lock.json\n",
+      "stderr": ""
+    },
+    {
+      "command": "/home/codespace/.python/current/bin/python analyzer/run_v8_verse1_rhythm_repetition_benchmark.py",
+      "passed": true,
+      "returnCode": 0,
+      "stdout": "Verse 1 rhythm repetition pass: True\nVerse 1 measures: 18-32\nDirect-audio event count: 82\nTwo-measure pair count: 7\nPairs (start, end, events, signature): [(18, 19, 14, [2, 4, 6, 7, 9, 10, 11, 15, 19, 20, 23, 25, 29, 31]), (20, 21, 13, [3, 6, 7, 9, 11, 14, 15, 18, 20, 22, 23, 26, 30]), (22, 23, 9, [2, 6, 8, 10, 14, 18, 22, 25, 31]), (24, 25, 10, [2, 7, 11, 15, 18, 19, 22, 23, 26, 30]), (26, 27, 10, [2, 10, 14, 18, 20, 21, 23, 26, 27, 30]), (28, 29, 11, [2, 3, 6, 7, 11, 14, 17, 20, 23, 26, 30]), (30, 31, 10, [2, 4, 6, 10, 14, 18, 20, 25, 26, 30])]\nBest pair comparisons (left, right, similarity): [(22, 28, 0.9), (24, 26, 0.9), (20, 24, 0.869565), (24, 28, 0.857143), (28, 30, 0.857143), (22, 24, 0.842105), (20, 28, 0.833333), (20, 22, 0.818182), (18, 20, 0.814815), (18, 28, 0.8)]\nRepeated pair start measures: [18, 20, 22, 24, 26, 28, 30]\nRepeated pair count: 7\nPair-support histogram: {6: 7}\nChecks: {'directAudioCandidateReportPassed': True, 'introRhythmTemplateLocked': True, 'verseBoundsPresent': True, 'verseEventsPresent': True, 'multipleVersePairsPresent': True, 'rendererUnchanged': True, 'protectedBaselinesUnchanged': True, 'noSyntheticNotes': True}\nRenderer changed: False\nProtected baselines changed: False\nOutput: public/gomyway-full-song-v8-verse1-rhythm-repetition.json\n",
+      "stderr": ""
+    },
+    {
+      "command": "/home/codespace/.python/current/bin/python analyzer/run_v8_verse1_rhythm_consensus_benchmark.py",
+      "passed": true,
+      "returnCode": 0,
+      "stdout": "Verse 1 rhythm consensus pass: True\nVerse 1 measures: 18-32\nAligned pair count: 7\nDirect-audio event count: 82\nConsensus rhythm slot count: 11\nConsensus slots (step, support, coverage, spread, strength): [(2, 7, 1.0, 0, 0.574749), (4, 2, 0.285714, 0.0, 0.363204), (6, 6, 0.857143, 0.0, 0.293813), (9, 3, 0.428571, 0, 0.281257), (10, 7, 1.0, 0, 0.313668), (14, 7, 1.0, 0, 0.424054), (18, 7, 1.0, 0, 0.518724), (20, 5, 0.714286, 0, 0.237588), (22, 6, 0.857143, 0.5, 0.306271), (26, 7, 1.0, 0, 0.238239), (30, 7, 1.0, 0, 0.40145)]\nHigh-confidence rhythm slot count: 9\nHigh-confidence slots (step, support, coverage, spread): [(2, 7, 1.0, 0), (6, 6, 0.857143, 0.0), (10, 7, 1.0, 0), (14, 7, 1.0, 0), (18, 7, 1.0, 0), (20, 5, 0.714286, 0), (22, 6, 0.857143, 0.5), (26, 7, 1.0, 0), (30, 7, 1.0, 0)]\nSupport histogram: {2: 1, 3: 1, 5: 1, 6: 2, 7: 6}\nUnmatched direct-audio event count: 14\nChecks: {'candidateReportPassed': True, 'repetitionReportPassed': True, 'introRhythmTemplateLocked': True, 'allRepeatedPairsRepresented': True, 'consensusSlotsPresent': True, 'highConfidenceSlotsPresent': True, 'minimumPairSupportMet': True, 'medianSpreadWithinTolerance': True, 'rendererUnchanged': True, 'protectedBaselinesUnchanged': True, 'noSyntheticNotes': True}\nRenderer changed: False\nProtected baselines changed: False\nOutput: public/gomyway-full-song-v8-verse1-rhythm-consensus.json\n",
+      "stderr": ""
+    },
+    {
+      "command": "/home/codespace/.python/current/bin/python analyzer/run_v8_verse1_rhythm_template_lock_benchmark.py",
+      "passed": true,
+      "returnCode": 0,
+      "stdout": "Verse 1 rhythm template lock pass: True\nRhythm template locked: True\nVerse 1 measures: 18-32\nAligned pair count: 7\nLocked rhythm slot count: 9\nLocked slots (step, support, coverage, spread): [(2, 7, 1.0, 0.0), (6, 6, 0.857143, 0.0), (10, 7, 1.0, 0.0), (14, 7, 1.0, 0.0), (18, 7, 1.0, 0.0), (20, 5, 0.714286, 0.0), (22, 6, 0.857143, 0.5), (26, 7, 1.0, 0.0), (30, 7, 1.0, 0.0)]\nOptional variation slot count: 2\nOptional variations (step, support, coverage): [(4, 2, 0.285714), (9, 3, 0.428571)]\nChecks: {'consensusBenchmarkPassed': True, 'introRhythmTemplateLocked': True, 'verseMeasureRangeUnchanged': True, 'allSevenRepeatedPairsRetained': True, 'expectedLockedSlotCount': True, 'expectedLockedSteps': True, 'optionalVariationsPreserved': True, 'minimumPairSupportMet': True, 'medianSpreadWithinTolerance': True, 'rendererUnchanged': True, 'protectedBaselinesUnchanged': True, 'noSyntheticNotes': True}\nRenderer changed: False\nProtected baselines changed: False\nOutput: public/gomyway-full-song-v8-verse1-rhythm-template-lock.json\n",
+      "stderr": ""
+    },
+    {
+      "command": "/home/codespace/.python/current/bin/python analyzer/run_v8_post_verse1_rhythm_boundary_scan_benchmark.py",
+      "passed": true,
+      "returnCode": 0,
+      "stdout": "Post-Verse 1 rhythm boundary scan pass: True\nScan measures: 33-56\nVerse 1 locked template steps: [2, 6, 10, 14, 18, 20, 22, 26, 30]\nPairs (start, events, template coverage, event match, boundary score): [(33, 11, 0.777778, 0.818182, 0.20202), (35, 12, 0.777778, 0.777778, 0.222222), (37, 10, 0.666667, 0.777778, 0.277778), (39, 7, 0.888889, 1.0, 0.055556), (41, 8, 1.0, 1.0, 0.0), (43, 12, 1.0, 1.0, 0.0), (45, 9, 0.888889, 0.777778, 0.166667), (47, 10, 1.0, 0.9, 0.05), (49, 14, 1.0, 0.714286, 0.142857), (51, 11, 1.0, 0.8, 0.1), (53, 13, 0.888889, 0.692308, 0.209402), (55, 10, 0.888889, 0.8, 0.155556)]\nStrongest boundary candidate: {'pairStartMeasure': 37, 'pairEndMeasure': 38, 'directAudioEventCount': 10, 'observedSteps': [2, 4, 9, 10, 14, 18, 20, 22, 24], 'matchedObservedSteps': [2, 9, 10, 14, 18, 20, 22], 'unmatchedObservedSteps': [4, 24], 'supportedVerse1TemplateSteps': [2, 10, 14, 18, 20, 22], 'verse1TemplateCoverage': 0.666667, 'eventMatchRatio': 0.777778, 'boundaryScore': 0.277778, 'readOnly': True}\nChecks: {'candidateReportPassed': True, 'verse1RhythmTemplateLocked': True, 'introRhythmTemplateLocked': True, 'verse1TemplatePresent': True, 'postVerse1PairsPresent': True, 'scanStartsAfterVerse1': True, 'rendererUnchanged': True, 'protectedBaselinesUnchanged': True, 'noSyntheticNotes': True}\nRenderer changed: False\nProtected baselines changed: False\nOutput: public/gomyway-full-song-v8-post-verse1-rhythm-boundary-scan.json\n",
+      "stderr": ""
+    },
+    {
+      "command": "/home/codespace/.python/current/bin/python analyzer/run_v8_post_verse1_rhythm_boundary_confirmation_benchmark.py",
+      "passed": true,
+      "returnCode": 0,
+      "stdout": "Post-Verse 1 rhythm boundary confirmation pass: True\nBoundary confirmed: True\nConfirmed boundary measures: 37-38\nCandidate boundary score: 0.277778\nPrevious pair boundary score: 0.222222\nNext pair boundary score: 0.055556\nLocal prominence: 0.055556\nPre-boundary maximum score: 0.222222\nCandidate direct-audio event count: 10\nCandidate observed steps: [2, 4, 9, 10, 14, 18, 20, 22, 24]\nCandidate unmatched observed steps: [4, 24]\nChecks: {'boundaryScanPassed': True, 'verse1RhythmTemplateLocked': True, 'introRhythmTemplateLocked': True, 'expectedBoundaryPairSelected': True, 'boundaryScoreMeetsThreshold': True, 'boundaryHasDirectAudioEvidence': True, 'boundaryBeatsImmediateNeighbors': True, 'preBoundaryPairsRemainMoreVerseLike': True, 'rendererUnchanged': True, 'protectedBaselinesUnchanged': True, 'noSyntheticNotes': True}\nRenderer changed: False\nProtected baselines changed: False\nOutput: public/gomyway-full-song-v8-post-verse1-rhythm-boundary-confirmation.json\n",
+      "stderr": ""
+    }
+  ],
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "noSyntheticNotes": true
+}

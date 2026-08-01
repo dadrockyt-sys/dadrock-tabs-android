@@ -1,0 +1,33 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "feature-flagged-no-output-renderer-adapter-smoke-test",
+  "featureFlagName": "JIMMY_CHORD_RENDERER_ADAPTER_ENABLED",
+  "featureFlagEnabled": false,
+  "featureFlagDefault": false,
+  "adaptedRowsAvailable": 44,
+  "rowsReadBehindFlag": 0,
+  "rowsEmitted": 0,
+  "rendererCalled": false,
+  "outputPdfCreated": false,
+  "checks": {
+    "adapterPassed": true,
+    "adaptedRows44": true,
+    "featureFlagDefaultFalse": true,
+    "rendererNotCalled": true,
+    "noRowsEmitted": true,
+    "noPdfCreated": true,
+    "sourceEventShaUnchanged": true,
+    "rendererSidecarShaUnchanged": true,
+    "adapterShaUnchanged": true,
+    "productionConsumptionStillDisabled": true,
+    "rendererConsumptionStillDisabled": true
+  },
+  "smokeTestPassed": true,
+  "professionalPdfRemainsScoringAuthority": true,
+  "protectedPitchCheckpointChanged": false,
+  "sourceEventsMutated": false,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "readyForFlagEnabledReadOnlySmokeTest": true,
+  "readyForProduction": false
+}

@@ -1,0 +1,11 @@
+{
+  "benchmarkVersion": 8,
+  "status": "complete",
+  "callId": "fc-01KYX2WQ4PGD6N1ARX248ZMEZS",
+  "startedAtEpoch": 1785535026.2891314,
+  "sourceAudio": "public/DadRock TABS - gomyway2test.m4a",
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "outputPath": "public/gomyway-jimmy-paige-v7-snippet-minimal-test.json"
+}

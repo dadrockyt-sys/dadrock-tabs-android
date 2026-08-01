@@ -1,0 +1,1837 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "protected-84-72-midi62-miss-diagnosis",
+  "sourceCallId": "fc-01KYY2AG5NTJWBNDYJRTDC4E5B",
+  "parameters": {
+    "name": "82hz-most-sensitive-protected",
+    "onset_threshold": 0.3,
+    "frame_threshold": 0.15,
+    "minimum_note_length": 45.0,
+    "minimum_frequency": 82.0,
+    "maximum_frequency": 1400.0,
+    "multiple_pitch_bends": false
+  },
+  "protectedCheckpoint": "public/gomyway-jimmy-paige-professional-best-84-72-checkpoint.json",
+  "professionalReference": "public/gomyway-professional-rhythm-reference-v2.json",
+  "score": {
+    "matchedTargets": 122,
+    "professionalTargets": 144,
+    "overallRecallPercentage": 84.72,
+    "lowRegisterRecallPercentage": 70.31,
+    "protectedRecallPercentage": 95.83,
+    "protectedPitchGuardPassed": false,
+    "weightedScore": 75.744,
+    "expectedByPitch": {
+      "40": 16,
+      "45": 16,
+      "50": 16,
+      "52": 32,
+      "55": 16,
+      "57": 16,
+      "58": 16,
+      "62": 16
+    },
+    "matchedByPitch": {
+      "40": 16,
+      "45": 4,
+      "50": 13,
+      "52": 32,
+      "55": 15,
+      "57": 16,
+      "58": 12,
+      "62": 14
+    }
+  },
+  "midi62Targets": 16,
+  "midi62Matched": 14,
+  "midi62Missed": 2,
+  "missingMeasures": [
+    16,
+    16
+  ],
+  "missClassificationCounts": {
+    "neighbor-semitone-detection": 2
+  },
+  "measureFindings": [
+    {
+      "measureNumber": 2,
+      "measureStart": 6.811264,
+      "measureEnd": 8.577529,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 8.201779591836734,
+          "end": 8.364319274376417,
+          "midiPitch": 62,
+          "confidence": 0.4155097007751465
+        },
+        {
+          "start": 7.981190022675737,
+          "end": 8.201779591836734,
+          "midiPitch": 62,
+          "confidence": 0.4548237919807434
+        },
+        {
+          "start": 7.921856235827665,
+          "end": 7.981190022675737,
+          "midiPitch": 62,
+          "confidence": 0.2236681431531906
+        },
+        {
+          "start": 7.469067120181406,
+          "end": 7.538726984126984,
+          "midiPitch": 62,
+          "confidence": 0.15477131307125092
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 8.863548299319728,
+          "end": 8.933208163265306,
+          "midiPitch": 64,
+          "confidence": 0.2382466346025467
+        },
+        {
+          "start": 8.851938321995464,
+          "end": 8.933208163265306,
+          "midiPitch": 61,
+          "confidence": 0.15421028435230255
+        },
+        {
+          "start": 8.480419047619048,
+          "end": 8.631348752834466,
+          "midiPitch": 59,
+          "confidence": 0.38542288541793823
+        },
+        {
+          "start": 8.201779591836734,
+          "end": 8.364319274376417,
+          "midiPitch": 62,
+          "confidence": 0.4155097007751465
+        },
+        {
+          "start": 7.981190022675737,
+          "end": 8.201779591836734,
+          "midiPitch": 62,
+          "confidence": 0.4548237919807434
+        },
+        {
+          "start": 7.921856235827665,
+          "end": 7.981190022675737,
+          "midiPitch": 62,
+          "confidence": 0.2236681431531906
+        },
+        {
+          "start": 7.643216780045352,
+          "end": 7.840586394557823,
+          "midiPitch": 64,
+          "confidence": 0.14679190516471863
+        },
+        {
+          "start": 7.469067120181406,
+          "end": 7.538726984126984,
+          "midiPitch": 62,
+          "confidence": 0.15477131307125092
+        },
+        {
+          "start": 7.318137414965986,
+          "end": 7.376187301587302,
+          "midiPitch": 64,
+          "confidence": 0.176723450422287
+        },
+        {
+          "start": 7.236867573696145,
+          "end": 7.364577324263038,
+          "midiPitch": 59,
+          "confidence": 0.22346971929073334
+        },
+        {
+          "start": 7.167207709750567,
+          "end": 7.236867573696145,
+          "midiPitch": 59,
+          "confidence": 0.17421060800552368
+        },
+        {
+          "start": 7.039497959183674,
+          "end": 7.318137414965986,
+          "midiPitch": 64,
+          "confidence": 0.20187842845916748
+        },
+        {
+          "start": 6.9582281179138326,
+          "end": 7.039497959183674,
+          "midiPitch": 64,
+          "confidence": 0.15428675711154938
+        },
+        {
+          "start": 6.586708843537415,
+          "end": 6.714418594104308,
+          "midiPitch": 59,
+          "confidence": 0.27265074849128723
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": []
+    },
+    {
+      "measureNumber": 2,
+      "measureStart": 6.811264,
+      "measureEnd": 8.577529,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 8.201779591836734,
+          "end": 8.364319274376417,
+          "midiPitch": 62,
+          "confidence": 0.4155097007751465
+        },
+        {
+          "start": 7.981190022675737,
+          "end": 8.201779591836734,
+          "midiPitch": 62,
+          "confidence": 0.4548237919807434
+        },
+        {
+          "start": 7.921856235827665,
+          "end": 7.981190022675737,
+          "midiPitch": 62,
+          "confidence": 0.2236681431531906
+        },
+        {
+          "start": 7.469067120181406,
+          "end": 7.538726984126984,
+          "midiPitch": 62,
+          "confidence": 0.15477131307125092
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 8.863548299319728,
+          "end": 8.933208163265306,
+          "midiPitch": 64,
+          "confidence": 0.2382466346025467
+        },
+        {
+          "start": 8.851938321995464,
+          "end": 8.933208163265306,
+          "midiPitch": 61,
+          "confidence": 0.15421028435230255
+        },
+        {
+          "start": 8.480419047619048,
+          "end": 8.631348752834466,
+          "midiPitch": 59,
+          "confidence": 0.38542288541793823
+        },
+        {
+          "start": 8.201779591836734,
+          "end": 8.364319274376417,
+          "midiPitch": 62,
+          "confidence": 0.4155097007751465
+        },
+        {
+          "start": 7.981190022675737,
+          "end": 8.201779591836734,
+          "midiPitch": 62,
+          "confidence": 0.4548237919807434
+        },
+        {
+          "start": 7.921856235827665,
+          "end": 7.981190022675737,
+          "midiPitch": 62,
+          "confidence": 0.2236681431531906
+        },
+        {
+          "start": 7.643216780045352,
+          "end": 7.840586394557823,
+          "midiPitch": 64,
+          "confidence": 0.14679190516471863
+        },
+        {
+          "start": 7.469067120181406,
+          "end": 7.538726984126984,
+          "midiPitch": 62,
+          "confidence": 0.15477131307125092
+        },
+        {
+          "start": 7.318137414965986,
+          "end": 7.376187301587302,
+          "midiPitch": 64,
+          "confidence": 0.176723450422287
+        },
+        {
+          "start": 7.236867573696145,
+          "end": 7.364577324263038,
+          "midiPitch": 59,
+          "confidence": 0.22346971929073334
+        },
+        {
+          "start": 7.167207709750567,
+          "end": 7.236867573696145,
+          "midiPitch": 59,
+          "confidence": 0.17421060800552368
+        },
+        {
+          "start": 7.039497959183674,
+          "end": 7.318137414965986,
+          "midiPitch": 64,
+          "confidence": 0.20187842845916748
+        },
+        {
+          "start": 6.9582281179138326,
+          "end": 7.039497959183674,
+          "midiPitch": 64,
+          "confidence": 0.15428675711154938
+        },
+        {
+          "start": 6.586708843537415,
+          "end": 6.714418594104308,
+          "midiPitch": 59,
+          "confidence": 0.27265074849128723
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": []
+    },
+    {
+      "measureNumber": 4,
+      "measureStart": 10.343793,
+      "measureEnd": 12.110057,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 12.070469841269842,
+          "end": 12.325889342403629,
+          "midiPitch": 62,
+          "confidence": 0.25817444920539856
+        },
+        {
+          "start": 11.977590022675738,
+          "end": 12.070469841269842,
+          "midiPitch": 62,
+          "confidence": 0.5445549488067627
+        },
+        {
+          "start": 11.802156462585035,
+          "end": 11.977590022675738,
+          "midiPitch": 62,
+          "confidence": 0.37316083908081055
+        },
+        {
+          "start": 11.74410657596372,
+          "end": 11.802156462585035,
+          "midiPitch": 62,
+          "confidence": 0.17575515806674957
+        },
+        {
+          "start": 11.233267573696146,
+          "end": 11.395807256235829,
+          "midiPitch": 62,
+          "confidence": 0.29868751764297485
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 12.37232925170068,
+          "end": 12.465209070294785,
+          "midiPitch": 59,
+          "confidence": 0.33301109075546265
+        },
+        {
+          "start": 12.302669387755103,
+          "end": 12.37232925170068,
+          "midiPitch": 59,
+          "confidence": 0.3789151906967163
+        },
+        {
+          "start": 12.070469841269842,
+          "end": 12.325889342403629,
+          "midiPitch": 62,
+          "confidence": 0.25817444920539856
+        },
+        {
+          "start": 11.977590022675738,
+          "end": 12.070469841269842,
+          "midiPitch": 62,
+          "confidence": 0.5445549488067627
+        },
+        {
+          "start": 11.965980045351474,
+          "end": 12.093689795918367,
+          "midiPitch": 59,
+          "confidence": 0.22363081574440002
+        },
+        {
+          "start": 11.906646258503402,
+          "end": 12.000809977324263,
+          "midiPitch": 64,
+          "confidence": 0.2768372595310211
+        },
+        {
+          "start": 11.836986394557824,
+          "end": 11.906646258503402,
+          "midiPitch": 65,
+          "confidence": 0.4050180912017822
+        },
+        {
+          "start": 11.802156462585035,
+          "end": 11.977590022675738,
+          "midiPitch": 62,
+          "confidence": 0.37316083908081055
+        },
+        {
+          "start": 11.778936507936509,
+          "end": 11.836986394557824,
+          "midiPitch": 64,
+          "confidence": 0.2563799321651459
+        },
+        {
+          "start": 11.74410657596372,
+          "end": 11.802156462585035,
+          "midiPitch": 62,
+          "confidence": 0.17575515806674957
+        },
+        {
+          "start": 11.662836734693878,
+          "end": 11.720886621315193,
+          "midiPitch": 65,
+          "confidence": 0.19297073781490326
+        },
+        {
+          "start": 11.604786848072564,
+          "end": 11.778936507936509,
+          "midiPitch": 64,
+          "confidence": 0.2057892382144928
+        },
+        {
+          "start": 11.488687074829933,
+          "end": 11.604786848072564,
+          "midiPitch": 64,
+          "confidence": 0.5129281282424927
+        },
+        {
+          "start": 11.337757369614513,
+          "end": 11.488687074829933,
+          "midiPitch": 64,
+          "confidence": 0.28701430559158325
+        },
+        {
+          "start": 11.233267573696146,
+          "end": 11.395807256235829,
+          "midiPitch": 62,
+          "confidence": 0.29868751764297485
+        },
+        {
+          "start": 11.12877777777778,
+          "end": 11.198437641723357,
+          "midiPitch": 59,
+          "confidence": 0.2106783390045166
+        },
+        {
+          "start": 11.0591179138322,
+          "end": 11.140387755102042,
+          "midiPitch": 64,
+          "confidence": 0.18194715678691864
+        },
+        {
+          "start": 11.0591179138322,
+          "end": 11.12877777777778,
+          "midiPitch": 59,
+          "confidence": 0.3148568272590637
+        },
+        {
+          "start": 10.954628117913833,
+          "end": 11.0591179138322,
+          "midiPitch": 59,
+          "confidence": 0.22256022691726685
+        },
+        {
+          "start": 10.82691836734694,
+          "end": 11.0591179138322,
+          "midiPitch": 64,
+          "confidence": 0.26916390657424927
+        },
+        {
+          "start": 10.722428571428573,
+          "end": 10.82691836734694,
+          "midiPitch": 64,
+          "confidence": 0.24933525919914246
+        },
+        {
+          "start": 10.478619047619048,
+          "end": 10.55988888888889,
+          "midiPitch": 59,
+          "confidence": 0.2662770450115204
+        },
+        {
+          "start": 10.397349206349206,
+          "end": 10.478619047619048,
+          "midiPitch": 59,
+          "confidence": 0.2964183986186981
+        },
+        {
+          "start": 10.339299319727893,
+          "end": 10.397349206349206,
+          "midiPitch": 59,
+          "confidence": 0.17890086770057678
+        },
+        {
+          "start": 10.188369614512473,
+          "end": 10.269639455782313,
+          "midiPitch": 64,
+          "confidence": 0.18652930855751038
+        },
+        {
+          "start": 10.17675963718821,
+          "end": 10.269639455782313,
+          "midiPitch": 59,
+          "confidence": 0.18094602227210999
+        },
+        {
+          "start": 10.049049886621315,
+          "end": 10.188369614512473,
+          "midiPitch": 64,
+          "confidence": 0.1776244044303894
+        },
+        {
+          "start": 10.049049886621315,
+          "end": 10.199979591836735,
+          "midiPitch": 62,
+          "confidence": 0.2293151319026947
+        },
+        {
+          "start": 10.095489795918368,
+          "end": 10.165149659863946,
+          "midiPitch": 59,
+          "confidence": 0.16913743317127228
+        }
+      ],
+      "midi62BeforeBoundary": [
+        {
+          "start": 10.049049886621315,
+          "end": 10.199979591836735,
+          "midiPitch": 62,
+          "confidence": 0.2293151319026947
+        }
+      ],
+      "midi62AfterBoundary": []
+    },
+    {
+      "measureNumber": 4,
+      "measureStart": 10.343793,
+      "measureEnd": 12.110057,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 12.070469841269842,
+          "end": 12.325889342403629,
+          "midiPitch": 62,
+          "confidence": 0.25817444920539856
+        },
+        {
+          "start": 11.977590022675738,
+          "end": 12.070469841269842,
+          "midiPitch": 62,
+          "confidence": 0.5445549488067627
+        },
+        {
+          "start": 11.802156462585035,
+          "end": 11.977590022675738,
+          "midiPitch": 62,
+          "confidence": 0.37316083908081055
+        },
+        {
+          "start": 11.74410657596372,
+          "end": 11.802156462585035,
+          "midiPitch": 62,
+          "confidence": 0.17575515806674957
+        },
+        {
+          "start": 11.233267573696146,
+          "end": 11.395807256235829,
+          "midiPitch": 62,
+          "confidence": 0.29868751764297485
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 12.37232925170068,
+          "end": 12.465209070294785,
+          "midiPitch": 59,
+          "confidence": 0.33301109075546265
+        },
+        {
+          "start": 12.302669387755103,
+          "end": 12.37232925170068,
+          "midiPitch": 59,
+          "confidence": 0.3789151906967163
+        },
+        {
+          "start": 12.070469841269842,
+          "end": 12.325889342403629,
+          "midiPitch": 62,
+          "confidence": 0.25817444920539856
+        },
+        {
+          "start": 11.977590022675738,
+          "end": 12.070469841269842,
+          "midiPitch": 62,
+          "confidence": 0.5445549488067627
+        },
+        {
+          "start": 11.965980045351474,
+          "end": 12.093689795918367,
+          "midiPitch": 59,
+          "confidence": 0.22363081574440002
+        },
+        {
+          "start": 11.906646258503402,
+          "end": 12.000809977324263,
+          "midiPitch": 64,
+          "confidence": 0.2768372595310211
+        },
+        {
+          "start": 11.836986394557824,
+          "end": 11.906646258503402,
+          "midiPitch": 65,
+          "confidence": 0.4050180912017822
+        },
+        {
+          "start": 11.802156462585035,
+          "end": 11.977590022675738,
+          "midiPitch": 62,
+          "confidence": 0.37316083908081055
+        },
+        {
+          "start": 11.778936507936509,
+          "end": 11.836986394557824,
+          "midiPitch": 64,
+          "confidence": 0.2563799321651459
+        },
+        {
+          "start": 11.74410657596372,
+          "end": 11.802156462585035,
+          "midiPitch": 62,
+          "confidence": 0.17575515806674957
+        },
+        {
+          "start": 11.662836734693878,
+          "end": 11.720886621315193,
+          "midiPitch": 65,
+          "confidence": 0.19297073781490326
+        },
+        {
+          "start": 11.604786848072564,
+          "end": 11.778936507936509,
+          "midiPitch": 64,
+          "confidence": 0.2057892382144928
+        },
+        {
+          "start": 11.488687074829933,
+          "end": 11.604786848072564,
+          "midiPitch": 64,
+          "confidence": 0.5129281282424927
+        },
+        {
+          "start": 11.337757369614513,
+          "end": 11.488687074829933,
+          "midiPitch": 64,
+          "confidence": 0.28701430559158325
+        },
+        {
+          "start": 11.233267573696146,
+          "end": 11.395807256235829,
+          "midiPitch": 62,
+          "confidence": 0.29868751764297485
+        },
+        {
+          "start": 11.12877777777778,
+          "end": 11.198437641723357,
+          "midiPitch": 59,
+          "confidence": 0.2106783390045166
+        },
+        {
+          "start": 11.0591179138322,
+          "end": 11.140387755102042,
+          "midiPitch": 64,
+          "confidence": 0.18194715678691864
+        },
+        {
+          "start": 11.0591179138322,
+          "end": 11.12877777777778,
+          "midiPitch": 59,
+          "confidence": 0.3148568272590637
+        },
+        {
+          "start": 10.954628117913833,
+          "end": 11.0591179138322,
+          "midiPitch": 59,
+          "confidence": 0.22256022691726685
+        },
+        {
+          "start": 10.82691836734694,
+          "end": 11.0591179138322,
+          "midiPitch": 64,
+          "confidence": 0.26916390657424927
+        },
+        {
+          "start": 10.722428571428573,
+          "end": 10.82691836734694,
+          "midiPitch": 64,
+          "confidence": 0.24933525919914246
+        },
+        {
+          "start": 10.478619047619048,
+          "end": 10.55988888888889,
+          "midiPitch": 59,
+          "confidence": 0.2662770450115204
+        },
+        {
+          "start": 10.397349206349206,
+          "end": 10.478619047619048,
+          "midiPitch": 59,
+          "confidence": 0.2964183986186981
+        },
+        {
+          "start": 10.339299319727893,
+          "end": 10.397349206349206,
+          "midiPitch": 59,
+          "confidence": 0.17890086770057678
+        },
+        {
+          "start": 10.188369614512473,
+          "end": 10.269639455782313,
+          "midiPitch": 64,
+          "confidence": 0.18652930855751038
+        },
+        {
+          "start": 10.17675963718821,
+          "end": 10.269639455782313,
+          "midiPitch": 59,
+          "confidence": 0.18094602227210999
+        },
+        {
+          "start": 10.049049886621315,
+          "end": 10.188369614512473,
+          "midiPitch": 64,
+          "confidence": 0.1776244044303894
+        },
+        {
+          "start": 10.049049886621315,
+          "end": 10.199979591836735,
+          "midiPitch": 62,
+          "confidence": 0.2293151319026947
+        },
+        {
+          "start": 10.095489795918368,
+          "end": 10.165149659863946,
+          "midiPitch": 59,
+          "confidence": 0.16913743317127228
+        }
+      ],
+      "midi62BeforeBoundary": [
+        {
+          "start": 10.049049886621315,
+          "end": 10.199979591836735,
+          "midiPitch": 62,
+          "confidence": 0.2293151319026947
+        }
+      ],
+      "midi62AfterBoundary": []
+    },
+    {
+      "measureNumber": 6,
+      "measureStart": 13.876322,
+      "measureEnd": 15.642586,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 15.067127891156462,
+          "end": 15.136787755102041,
+          "midiPitch": 62,
+          "confidence": 0.17242948710918427
+        },
+        {
+          "start": 13.893236281179139,
+          "end": 14.045449886621315,
+          "midiPitch": 62,
+          "confidence": 0.2895241379737854
+        },
+        {
+          "start": 15.624406802721088,
+          "end": 15.74050657596372,
+          "midiPitch": 62,
+          "confidence": 0.20421163737773895
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 15.752116553287982,
+          "end": 15.985599999999998,
+          "midiPitch": 62,
+          "confidence": 0.3607567250728607
+        },
+        {
+          "start": 15.612796825396826,
+          "end": 15.74050657596372,
+          "midiPitch": 64,
+          "confidence": 0.2364886850118637
+        },
+        {
+          "start": 15.543136961451246,
+          "end": 15.612796825396826,
+          "midiPitch": 64,
+          "confidence": 0.2098412960767746
+        },
+        {
+          "start": 15.067127891156462,
+          "end": 15.136787755102041,
+          "midiPitch": 62,
+          "confidence": 0.17242948710918427
+        },
+        {
+          "start": 14.834928344671201,
+          "end": 14.974248072562357,
+          "midiPitch": 59,
+          "confidence": 0.21989090740680695
+        },
+        {
+          "start": 14.683998639455782,
+          "end": 14.892978231292517,
+          "midiPitch": 64,
+          "confidence": 0.21318292617797852
+        },
+        {
+          "start": 14.602728798185941,
+          "end": 14.683998639455782,
+          "midiPitch": 64,
+          "confidence": 0.2714679539203644
+        },
+        {
+          "start": 14.579508843537415,
+          "end": 14.67238866213152,
+          "midiPitch": 61,
+          "confidence": 0.16855400800704956
+        },
+        {
+          "start": 14.25442947845805,
+          "end": 14.37052925170068,
+          "midiPitch": 59,
+          "confidence": 0.26355403661727905
+        },
+        {
+          "start": 14.010619954648526,
+          "end": 14.080279818594104,
+          "midiPitch": 64,
+          "confidence": 0.19599886238574982
+        },
+        {
+          "start": 14.010619954648526,
+          "end": 14.091889795918368,
+          "midiPitch": 59,
+          "confidence": 0.19348391890525818
+        },
+        {
+          "start": 13.917740136054421,
+          "end": 14.010619954648526,
+          "midiPitch": 59,
+          "confidence": 0.21495530009269714
+        },
+        {
+          "start": 13.893236281179139,
+          "end": 14.045449886621315,
+          "midiPitch": 62,
+          "confidence": 0.2895241379737854
+        },
+        {
+          "start": 13.811966439909297,
+          "end": 14.010619954648526,
+          "midiPitch": 64,
+          "confidence": 0.30838561058044434
+        },
+        {
+          "start": 13.742306575963719,
+          "end": 13.811966439909297,
+          "midiPitch": 65,
+          "confidence": 0.5074600577354431
+        },
+        {
+          "start": 13.637816780045352,
+          "end": 13.742306575963719,
+          "midiPitch": 64,
+          "confidence": 0.22840997576713562
+        },
+        {
+          "start": 15.624406802721088,
+          "end": 15.74050657596372,
+          "midiPitch": 62,
+          "confidence": 0.20421163737773895
+        },
+        {
+          "start": 15.241277551020408,
+          "end": 15.310937414965986,
+          "midiPitch": 64,
+          "confidence": 0.16793100535869598
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": [
+        {
+          "start": 15.752116553287982,
+          "end": 15.985599999999998,
+          "midiPitch": 62,
+          "confidence": 0.3607567250728607
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "measureStart": 13.876322,
+      "measureEnd": 15.642586,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 15.067127891156462,
+          "end": 15.136787755102041,
+          "midiPitch": 62,
+          "confidence": 0.17242948710918427
+        },
+        {
+          "start": 13.893236281179139,
+          "end": 14.045449886621315,
+          "midiPitch": 62,
+          "confidence": 0.2895241379737854
+        },
+        {
+          "start": 15.624406802721088,
+          "end": 15.74050657596372,
+          "midiPitch": 62,
+          "confidence": 0.20421163737773895
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 15.752116553287982,
+          "end": 15.985599999999998,
+          "midiPitch": 62,
+          "confidence": 0.3607567250728607
+        },
+        {
+          "start": 15.612796825396826,
+          "end": 15.74050657596372,
+          "midiPitch": 64,
+          "confidence": 0.2364886850118637
+        },
+        {
+          "start": 15.543136961451246,
+          "end": 15.612796825396826,
+          "midiPitch": 64,
+          "confidence": 0.2098412960767746
+        },
+        {
+          "start": 15.067127891156462,
+          "end": 15.136787755102041,
+          "midiPitch": 62,
+          "confidence": 0.17242948710918427
+        },
+        {
+          "start": 14.834928344671201,
+          "end": 14.974248072562357,
+          "midiPitch": 59,
+          "confidence": 0.21989090740680695
+        },
+        {
+          "start": 14.683998639455782,
+          "end": 14.892978231292517,
+          "midiPitch": 64,
+          "confidence": 0.21318292617797852
+        },
+        {
+          "start": 14.602728798185941,
+          "end": 14.683998639455782,
+          "midiPitch": 64,
+          "confidence": 0.2714679539203644
+        },
+        {
+          "start": 14.579508843537415,
+          "end": 14.67238866213152,
+          "midiPitch": 61,
+          "confidence": 0.16855400800704956
+        },
+        {
+          "start": 14.25442947845805,
+          "end": 14.37052925170068,
+          "midiPitch": 59,
+          "confidence": 0.26355403661727905
+        },
+        {
+          "start": 14.010619954648526,
+          "end": 14.080279818594104,
+          "midiPitch": 64,
+          "confidence": 0.19599886238574982
+        },
+        {
+          "start": 14.010619954648526,
+          "end": 14.091889795918368,
+          "midiPitch": 59,
+          "confidence": 0.19348391890525818
+        },
+        {
+          "start": 13.917740136054421,
+          "end": 14.010619954648526,
+          "midiPitch": 59,
+          "confidence": 0.21495530009269714
+        },
+        {
+          "start": 13.893236281179139,
+          "end": 14.045449886621315,
+          "midiPitch": 62,
+          "confidence": 0.2895241379737854
+        },
+        {
+          "start": 13.811966439909297,
+          "end": 14.010619954648526,
+          "midiPitch": 64,
+          "confidence": 0.30838561058044434
+        },
+        {
+          "start": 13.742306575963719,
+          "end": 13.811966439909297,
+          "midiPitch": 65,
+          "confidence": 0.5074600577354431
+        },
+        {
+          "start": 13.637816780045352,
+          "end": 13.742306575963719,
+          "midiPitch": 64,
+          "confidence": 0.22840997576713562
+        },
+        {
+          "start": 15.624406802721088,
+          "end": 15.74050657596372,
+          "midiPitch": 62,
+          "confidence": 0.20421163737773895
+        },
+        {
+          "start": 15.241277551020408,
+          "end": 15.310937414965986,
+          "midiPitch": 64,
+          "confidence": 0.16793100535869598
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": [
+        {
+          "start": 15.752116553287982,
+          "end": 15.985599999999998,
+          "midiPitch": 62,
+          "confidence": 0.3607567250728607
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "measureStart": 17.40885,
+      "measureEnd": 19.175115,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 18.819718367346937,
+          "end": 18.94742811791383,
+          "midiPitch": 62,
+          "confidence": 0.23343850672245026
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 19.33055736961451,
+          "end": 19.585976870748297,
+          "midiPitch": 64,
+          "confidence": 0.2404715120792389
+        },
+        {
+          "start": 19.307337414965986,
+          "end": 19.562756916099772,
+          "midiPitch": 62,
+          "confidence": 0.16798348724842072
+        },
+        {
+          "start": 19.24928752834467,
+          "end": 19.33055736961451,
+          "midiPitch": 64,
+          "confidence": 0.2203790247440338
+        },
+        {
+          "start": 19.191237641723355,
+          "end": 19.24928752834467,
+          "midiPitch": 64,
+          "confidence": 0.27308914065361023
+        },
+        {
+          "start": 19.0519179138322,
+          "end": 19.191237641723355,
+          "midiPitch": 64,
+          "confidence": 0.17930364608764648
+        },
+        {
+          "start": 18.819718367346937,
+          "end": 18.94742811791383,
+          "midiPitch": 62,
+          "confidence": 0.23343850672245026
+        },
+        {
+          "start": 18.36692925170068,
+          "end": 18.56429886621315,
+          "midiPitch": 64,
+          "confidence": 0.21401402354240417
+        },
+        {
+          "start": 17.610996825396825,
+          "end": 17.66904671201814,
+          "midiPitch": 64,
+          "confidence": 0.17964917421340942
+        },
+        {
+          "start": 17.55294693877551,
+          "end": 17.610996825396825,
+          "midiPitch": 65,
+          "confidence": 0.18296171724796295
+        },
+        {
+          "start": 17.460067120181407,
+          "end": 17.55294693877551,
+          "midiPitch": 64,
+          "confidence": 0.2469365894794464
+        },
+        {
+          "start": 17.274307482993198,
+          "end": 17.460067120181407,
+          "midiPitch": 64,
+          "confidence": 0.24221166968345642
+        },
+        {
+          "start": 17.158207709750567,
+          "end": 17.274307482993198,
+          "midiPitch": 64,
+          "confidence": 0.25975272059440613
+        },
+        {
+          "start": 19.06352789115646,
+          "end": 19.121577777777777,
+          "midiPitch": 59,
+          "confidence": 0.16599172353744507
+        },
+        {
+          "start": 17.78514648526077,
+          "end": 17.85480634920635,
+          "midiPitch": 59,
+          "confidence": 0.15935324132442474
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": [
+        {
+          "start": 19.307337414965986,
+          "end": 19.562756916099772,
+          "midiPitch": 62,
+          "confidence": 0.16798348724842072
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "measureStart": 17.40885,
+      "measureEnd": 19.175115,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 18.819718367346937,
+          "end": 18.94742811791383,
+          "midiPitch": 62,
+          "confidence": 0.23343850672245026
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 19.33055736961451,
+          "end": 19.585976870748297,
+          "midiPitch": 64,
+          "confidence": 0.2404715120792389
+        },
+        {
+          "start": 19.307337414965986,
+          "end": 19.562756916099772,
+          "midiPitch": 62,
+          "confidence": 0.16798348724842072
+        },
+        {
+          "start": 19.24928752834467,
+          "end": 19.33055736961451,
+          "midiPitch": 64,
+          "confidence": 0.2203790247440338
+        },
+        {
+          "start": 19.191237641723355,
+          "end": 19.24928752834467,
+          "midiPitch": 64,
+          "confidence": 0.27308914065361023
+        },
+        {
+          "start": 19.0519179138322,
+          "end": 19.191237641723355,
+          "midiPitch": 64,
+          "confidence": 0.17930364608764648
+        },
+        {
+          "start": 18.819718367346937,
+          "end": 18.94742811791383,
+          "midiPitch": 62,
+          "confidence": 0.23343850672245026
+        },
+        {
+          "start": 18.36692925170068,
+          "end": 18.56429886621315,
+          "midiPitch": 64,
+          "confidence": 0.21401402354240417
+        },
+        {
+          "start": 17.610996825396825,
+          "end": 17.66904671201814,
+          "midiPitch": 64,
+          "confidence": 0.17964917421340942
+        },
+        {
+          "start": 17.55294693877551,
+          "end": 17.610996825396825,
+          "midiPitch": 65,
+          "confidence": 0.18296171724796295
+        },
+        {
+          "start": 17.460067120181407,
+          "end": 17.55294693877551,
+          "midiPitch": 64,
+          "confidence": 0.2469365894794464
+        },
+        {
+          "start": 17.274307482993198,
+          "end": 17.460067120181407,
+          "midiPitch": 64,
+          "confidence": 0.24221166968345642
+        },
+        {
+          "start": 17.158207709750567,
+          "end": 17.274307482993198,
+          "midiPitch": 64,
+          "confidence": 0.25975272059440613
+        },
+        {
+          "start": 19.06352789115646,
+          "end": 19.121577777777777,
+          "midiPitch": 59,
+          "confidence": 0.16599172353744507
+        },
+        {
+          "start": 17.78514648526077,
+          "end": 17.85480634920635,
+          "midiPitch": 59,
+          "confidence": 0.15935324132442474
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": [
+        {
+          "start": 19.307337414965986,
+          "end": 19.562756916099772,
+          "midiPitch": 62,
+          "confidence": 0.16798348724842072
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "measureStart": 20.941379,
+      "measureEnd": 22.707644,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 22.618748752834467,
+          "end": 22.78128843537415,
+          "midiPitch": 62,
+          "confidence": 0.25868263840675354
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 23.013487981859413,
+          "end": 23.08314784580499,
+          "midiPitch": 64,
+          "confidence": 0.18305163085460663
+        },
+        {
+          "start": 22.85094829931973,
+          "end": 23.013487981859413,
+          "midiPitch": 64,
+          "confidence": 0.1782969981431961
+        },
+        {
+          "start": 22.618748752834467,
+          "end": 22.78128843537415,
+          "midiPitch": 62,
+          "confidence": 0.25868263840675354
+        },
+        {
+          "start": 21.247487528344674,
+          "end": 21.526126984126986,
+          "midiPitch": 64,
+          "confidence": 0.23348784446716309
+        },
+        {
+          "start": 21.096557823129253,
+          "end": 21.247487528344674,
+          "midiPitch": 64,
+          "confidence": 0.2182181179523468
+        },
+        {
+          "start": 21.026897959183675,
+          "end": 21.096557823129253,
+          "midiPitch": 65,
+          "confidence": 0.1630975753068924
+        },
+        {
+          "start": 20.713428571428572,
+          "end": 20.89918820861678,
+          "midiPitch": 62,
+          "confidence": 0.26537835597991943
+        },
+        {
+          "start": 22.17756961451247,
+          "end": 22.293669387755102,
+          "midiPitch": 64,
+          "confidence": 0.20936532318592072
+        }
+      ],
+      "midi62BeforeBoundary": [
+        {
+          "start": 20.713428571428572,
+          "end": 20.89918820861678,
+          "midiPitch": 62,
+          "confidence": 0.26537835597991943
+        }
+      ],
+      "midi62AfterBoundary": []
+    },
+    {
+      "measureNumber": 10,
+      "measureStart": 20.941379,
+      "measureEnd": 22.707644,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 22.618748752834467,
+          "end": 22.78128843537415,
+          "midiPitch": 62,
+          "confidence": 0.25868263840675354
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 23.013487981859413,
+          "end": 23.08314784580499,
+          "midiPitch": 64,
+          "confidence": 0.18305163085460663
+        },
+        {
+          "start": 22.85094829931973,
+          "end": 23.013487981859413,
+          "midiPitch": 64,
+          "confidence": 0.1782969981431961
+        },
+        {
+          "start": 22.618748752834467,
+          "end": 22.78128843537415,
+          "midiPitch": 62,
+          "confidence": 0.25868263840675354
+        },
+        {
+          "start": 21.247487528344674,
+          "end": 21.526126984126986,
+          "midiPitch": 64,
+          "confidence": 0.23348784446716309
+        },
+        {
+          "start": 21.096557823129253,
+          "end": 21.247487528344674,
+          "midiPitch": 64,
+          "confidence": 0.2182181179523468
+        },
+        {
+          "start": 21.026897959183675,
+          "end": 21.096557823129253,
+          "midiPitch": 65,
+          "confidence": 0.1630975753068924
+        },
+        {
+          "start": 20.713428571428572,
+          "end": 20.89918820861678,
+          "midiPitch": 62,
+          "confidence": 0.26537835597991943
+        },
+        {
+          "start": 22.17756961451247,
+          "end": 22.293669387755102,
+          "midiPitch": 64,
+          "confidence": 0.20936532318592072
+        }
+      ],
+      "midi62BeforeBoundary": [
+        {
+          "start": 20.713428571428572,
+          "end": 20.89918820861678,
+          "midiPitch": 62,
+          "confidence": 0.26537835597991943
+        }
+      ],
+      "midi62AfterBoundary": []
+    },
+    {
+      "measureNumber": 12,
+      "measureStart": 24.473908,
+      "measureEnd": 26.240172,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 24.524068934240365,
+          "end": 24.640168707482992,
+          "midiPitch": 62,
+          "confidence": 0.2518414258956909
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 26.34811927437642,
+          "end": 26.54548888888889,
+          "midiPitch": 62,
+          "confidence": 0.2128121703863144
+        },
+        {
+          "start": 25.930160090702948,
+          "end": 26.04625986394558,
+          "midiPitch": 64,
+          "confidence": 0.15377715229988098
+        },
+        {
+          "start": 25.000078004535148,
+          "end": 25.267107482993197,
+          "midiPitch": 64,
+          "confidence": 0.2378116250038147
+        },
+        {
+          "start": 24.837538321995467,
+          "end": 25.000078004535148,
+          "midiPitch": 64,
+          "confidence": 0.1680966168642044
+        },
+        {
+          "start": 24.7330485260771,
+          "end": 24.837538321995467,
+          "midiPitch": 64,
+          "confidence": 0.15652820467948914
+        },
+        {
+          "start": 24.524068934240365,
+          "end": 24.640168707482992,
+          "midiPitch": 62,
+          "confidence": 0.2518414258956909
+        },
+        {
+          "start": 24.257039455782312,
+          "end": 24.419579138321996,
+          "midiPitch": 59,
+          "confidence": 0.17001184821128845
+        },
+        {
+          "start": 25.49930702947846,
+          "end": 25.603796825396827,
+          "midiPitch": 59,
+          "confidence": 0.16350103914737701
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": [
+        {
+          "start": 26.34811927437642,
+          "end": 26.54548888888889,
+          "midiPitch": 62,
+          "confidence": 0.2128121703863144
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "measureStart": 24.473908,
+      "measureEnd": 26.240172,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 24.524068934240365,
+          "end": 24.640168707482992,
+          "midiPitch": 62,
+          "confidence": 0.2518414258956909
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 26.34811927437642,
+          "end": 26.54548888888889,
+          "midiPitch": 62,
+          "confidence": 0.2128121703863144
+        },
+        {
+          "start": 25.930160090702948,
+          "end": 26.04625986394558,
+          "midiPitch": 64,
+          "confidence": 0.15377715229988098
+        },
+        {
+          "start": 25.000078004535148,
+          "end": 25.267107482993197,
+          "midiPitch": 64,
+          "confidence": 0.2378116250038147
+        },
+        {
+          "start": 24.837538321995467,
+          "end": 25.000078004535148,
+          "midiPitch": 64,
+          "confidence": 0.1680966168642044
+        },
+        {
+          "start": 24.7330485260771,
+          "end": 24.837538321995467,
+          "midiPitch": 64,
+          "confidence": 0.15652820467948914
+        },
+        {
+          "start": 24.524068934240365,
+          "end": 24.640168707482992,
+          "midiPitch": 62,
+          "confidence": 0.2518414258956909
+        },
+        {
+          "start": 24.257039455782312,
+          "end": 24.419579138321996,
+          "midiPitch": 59,
+          "confidence": 0.17001184821128845
+        },
+        {
+          "start": 25.49930702947846,
+          "end": 25.603796825396827,
+          "midiPitch": 59,
+          "confidence": 0.16350103914737701
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": [
+        {
+          "start": 26.34811927437642,
+          "end": 26.54548888888889,
+          "midiPitch": 62,
+          "confidence": 0.2128121703863144
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "measureStart": 28.006437,
+      "measureEnd": 29.772701,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 28.253439455782313,
+          "end": 28.40436916099773,
+          "midiPitch": 62,
+          "confidence": 0.17245040833950043
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 30.112319727891155,
+          "end": 30.216809523809523,
+          "midiPitch": 62,
+          "confidence": 0.1927514672279358
+        },
+        {
+          "start": 29.669856689342403,
+          "end": 29.810460317460315,
+          "midiPitch": 64,
+          "confidence": 0.20166835188865662
+        },
+        {
+          "start": 28.926818140589567,
+          "end": 28.984868027210883,
+          "midiPitch": 65,
+          "confidence": 0.1577603667974472
+        },
+        {
+          "start": 28.799108390022674,
+          "end": 29.031307936507936,
+          "midiPitch": 64,
+          "confidence": 0.1764688640832901
+        },
+        {
+          "start": 28.67139863945578,
+          "end": 28.799108390022674,
+          "midiPitch": 64,
+          "confidence": 0.1829020380973816
+        },
+        {
+          "start": 28.497248979591838,
+          "end": 28.67139863945578,
+          "midiPitch": 64,
+          "confidence": 0.15555238723754883
+        },
+        {
+          "start": 28.253439455782313,
+          "end": 28.40436916099773,
+          "midiPitch": 62,
+          "confidence": 0.17245040833950043
+        },
+        {
+          "start": 27.82387029478458,
+          "end": 27.881920181405896,
+          "midiPitch": 64,
+          "confidence": 0.16931554675102234
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": [
+        {
+          "start": 30.112319727891155,
+          "end": 30.216809523809523,
+          "midiPitch": 62,
+          "confidence": 0.1927514672279358
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "measureStart": 28.006437,
+      "measureEnd": 29.772701,
+      "matched": true,
+      "classification": "exact-match",
+      "exactMidi62Events": [
+        {
+          "start": 28.253439455782313,
+          "end": 28.40436916099773,
+          "midiPitch": 62,
+          "confidence": 0.17245040833950043
+        }
+      ],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 30.112319727891155,
+          "end": 30.216809523809523,
+          "midiPitch": 62,
+          "confidence": 0.1927514672279358
+        },
+        {
+          "start": 29.669856689342403,
+          "end": 29.810460317460315,
+          "midiPitch": 64,
+          "confidence": 0.20166835188865662
+        },
+        {
+          "start": 28.926818140589567,
+          "end": 28.984868027210883,
+          "midiPitch": 65,
+          "confidence": 0.1577603667974472
+        },
+        {
+          "start": 28.799108390022674,
+          "end": 29.031307936507936,
+          "midiPitch": 64,
+          "confidence": 0.1764688640832901
+        },
+        {
+          "start": 28.67139863945578,
+          "end": 28.799108390022674,
+          "midiPitch": 64,
+          "confidence": 0.1829020380973816
+        },
+        {
+          "start": 28.497248979591838,
+          "end": 28.67139863945578,
+          "midiPitch": 64,
+          "confidence": 0.15555238723754883
+        },
+        {
+          "start": 28.253439455782313,
+          "end": 28.40436916099773,
+          "midiPitch": 62,
+          "confidence": 0.17245040833950043
+        },
+        {
+          "start": 27.82387029478458,
+          "end": 27.881920181405896,
+          "midiPitch": 64,
+          "confidence": 0.16931554675102234
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": [
+        {
+          "start": 30.112319727891155,
+          "end": 30.216809523809523,
+          "midiPitch": 62,
+          "confidence": 0.1927514672279358
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "measureStart": 31.538965,
+      "measureEnd": 33.30523,
+      "matched": false,
+      "classification": "neighbor-semitone-detection",
+      "exactMidi62Events": [],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 33.64303673469388,
+          "end": 33.724306575963716,
+          "midiPitch": 63,
+          "confidence": 0.17245684564113617
+        },
+        {
+          "start": 33.61981678004535,
+          "end": 33.77203038548753,
+          "midiPitch": 64,
+          "confidence": 0.23561689257621765
+        },
+        {
+          "start": 33.37600725623582,
+          "end": 33.61981678004535,
+          "midiPitch": 64,
+          "confidence": 0.21376103162765503
+        },
+        {
+          "start": 32.65618866213152,
+          "end": 32.725848526077094,
+          "midiPitch": 61,
+          "confidence": 0.17034582793712616
+        },
+        {
+          "start": 32.55169886621315,
+          "end": 32.621358730158725,
+          "midiPitch": 64,
+          "confidence": 0.18466168642044067
+        },
+        {
+          "start": 31.760936507936506,
+          "end": 31.924760090702947,
+          "midiPitch": 64,
+          "confidence": 0.23445211350917816
+        },
+        {
+          "start": 31.65644671201814,
+          "end": 31.760936507936506,
+          "midiPitch": 64,
+          "confidence": 0.247427836060524
+        },
+        {
+          "start": 31.528736961451248,
+          "end": 31.65644671201814,
+          "midiPitch": 64,
+          "confidence": 0.351935476064682
+        },
+        {
+          "start": 31.843490249433103,
+          "end": 32.01763990929705,
+          "midiPitch": 59,
+          "confidence": 0.15783730149269104
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": []
+    },
+    {
+      "measureNumber": 16,
+      "measureStart": 31.538965,
+      "measureEnd": 33.30523,
+      "matched": false,
+      "classification": "neighbor-semitone-detection",
+      "exactMidi62Events": [],
+      "nearbyPitchEventsExpandedWindow": [
+        {
+          "start": 33.64303673469388,
+          "end": 33.724306575963716,
+          "midiPitch": 63,
+          "confidence": 0.17245684564113617
+        },
+        {
+          "start": 33.61981678004535,
+          "end": 33.77203038548753,
+          "midiPitch": 64,
+          "confidence": 0.23561689257621765
+        },
+        {
+          "start": 33.37600725623582,
+          "end": 33.61981678004535,
+          "midiPitch": 64,
+          "confidence": 0.21376103162765503
+        },
+        {
+          "start": 32.65618866213152,
+          "end": 32.725848526077094,
+          "midiPitch": 61,
+          "confidence": 0.17034582793712616
+        },
+        {
+          "start": 32.55169886621315,
+          "end": 32.621358730158725,
+          "midiPitch": 64,
+          "confidence": 0.18466168642044067
+        },
+        {
+          "start": 31.760936507936506,
+          "end": 31.924760090702947,
+          "midiPitch": 64,
+          "confidence": 0.23445211350917816
+        },
+        {
+          "start": 31.65644671201814,
+          "end": 31.760936507936506,
+          "midiPitch": 64,
+          "confidence": 0.247427836060524
+        },
+        {
+          "start": 31.528736961451248,
+          "end": 31.65644671201814,
+          "midiPitch": 64,
+          "confidence": 0.351935476064682
+        },
+        {
+          "start": 31.843490249433103,
+          "end": 32.01763990929705,
+          "midiPitch": 59,
+          "confidence": 0.15783730149269104
+        }
+      ],
+      "midi62BeforeBoundary": [],
+      "midi62AfterBoundary": []
+    }
+  ],
+  "productionPromotionAllowed": false,
+  "nextAction": "Use the two miss classifications to build a narrow recovery test; do not weaken the protected 84.72 percent checkpoint."
+}

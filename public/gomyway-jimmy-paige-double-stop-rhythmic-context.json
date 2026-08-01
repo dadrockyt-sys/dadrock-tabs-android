@@ -1,0 +1,1259 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "double-stop-rhythmic-context-diagnosis",
+  "sourceEvents": "public/gomyway-jimmy-paige-93-06-events.json",
+  "sourcePairFeatures": "public/gomyway-jimmy-paige-double-stop-pair-feature-diagnosis.json",
+  "contextBeforeSeconds": 0.75,
+  "contextAfterSeconds": 0.35,
+  "reports": [
+    {
+      "classification": "true-positive",
+      "measureNumber": 2,
+      "pairCenterPhase": 0.836562,
+      "onsetSeparationSeconds": 0.17415,
+      "sustainOverlapSeconds": 0.01161,
+      "minimumPairDurationSeconds": 0.10449,
+      "nearbySupportCount": 6,
+      "centerSeconds": 8.288854,
+      "beforeEventCount": 40,
+      "afterEventCount": 16,
+      "beforePitchCounts": {
+        "40": 4,
+        "42": 2,
+        "43": 1,
+        "44": 3,
+        "45": 1,
+        "47": 2,
+        "49": 3,
+        "51": 1,
+        "52": 2,
+        "53": 1,
+        "55": 5,
+        "56": 1,
+        "57": 1,
+        "59": 1,
+        "61": 1,
+        "62": 3,
+        "64": 1,
+        "67": 3,
+        "71": 2,
+        "72": 1,
+        "74": 1
+      },
+      "afterPitchCounts": {
+        "45": 1,
+        "47": 1,
+        "52": 2,
+        "54": 2,
+        "57": 1,
+        "58": 1,
+        "59": 1,
+        "69": 1,
+        "70": 1,
+        "71": 2,
+        "76": 1,
+        "78": 1,
+        "81": 1
+      },
+      "precedingPitchSequence": [
+        {
+          "pitch": 55,
+          "deltaSeconds": -0.319274,
+          "durationSeconds": 0.1161,
+          "confidence": 0.2924113869667053
+        },
+        {
+          "pitch": 62,
+          "deltaSeconds": -0.307664,
+          "durationSeconds": 0.22059,
+          "confidence": 0.4548237919807434
+        },
+        {
+          "pitch": 74,
+          "deltaSeconds": -0.226394,
+          "durationSeconds": 0.15093,
+          "confidence": 0.14614784717559814
+        },
+        {
+          "pitch": 67,
+          "deltaSeconds": -0.214784,
+          "durationSeconds": 0.313469,
+          "confidence": 0.25667044520378113
+        },
+        {
+          "pitch": 55,
+          "deltaSeconds": -0.203174,
+          "durationSeconds": 0.17415,
+          "confidence": 0.19228486716747284
+        },
+        {
+          "pitch": 43,
+          "deltaSeconds": -0.156734,
+          "durationSeconds": 0.16254,
+          "confidence": 0.27989262342453003
+        },
+        {
+          "pitch": 62,
+          "deltaSeconds": -0.087074,
+          "durationSeconds": 0.18576,
+          "confidence": 0.38030582666397095
+        },
+        {
+          "pitch": 55,
+          "deltaSeconds": -0.029025,
+          "durationSeconds": 0.06966,
+          "confidence": 0.14584694802761078
+        }
+      ],
+      "followingPitchSequence": [
+        {
+          "pitch": 52,
+          "deltaSeconds": 0.029025,
+          "durationSeconds": 0.04644,
+          "confidence": 0.1257018744945526
+        },
+        {
+          "pitch": 71,
+          "deltaSeconds": 0.075465,
+          "durationSeconds": 0.12771,
+          "confidence": 0.1347598284482956
+        },
+        {
+          "pitch": 52,
+          "deltaSeconds": 0.075465,
+          "durationSeconds": 0.24381,
+          "confidence": 0.13145050406455994
+        },
+        {
+          "pitch": 47,
+          "deltaSeconds": 0.075465,
+          "durationSeconds": 0.16254,
+          "confidence": 0.1238226667046547
+        },
+        {
+          "pitch": 58,
+          "deltaSeconds": 0.087075,
+          "durationSeconds": 0.10449,
+          "confidence": 0.14014728367328644
+        }
+      ],
+      "precedingTargetToneCount": 3,
+      "precedingLowRegisterCount": 27,
+      "precedingUpperRegisterCount": 13,
+      "precedingAttackDensityPerSecond": 53.333,
+      "followingAttackDensityPerSecond": 45.714
+    },
+    {
+      "classification": "false-positive",
+      "measureNumber": 3,
+      "pairCenterPhase": 0.958017,
+      "onsetSeparationSeconds": 0.441179,
+      "sustainOverlapSeconds": 0.0,
+      "minimumPairDurationSeconds": 0.05805,
+      "nearbySupportCount": 21,
+      "centerSeconds": 10.269639,
+      "beforeEventCount": 46,
+      "afterEventCount": 25,
+      "beforePitchCounts": {
+        "40": 7,
+        "43": 1,
+        "46": 1,
+        "47": 1,
+        "49": 1,
+        "50": 1,
+        "52": 5,
+        "53": 1,
+        "54": 1,
+        "55": 1,
+        "56": 1,
+        "57": 3,
+        "59": 4,
+        "62": 1,
+        "64": 7,
+        "65": 2,
+        "68": 1,
+        "71": 2,
+        "72": 1,
+        "77": 2,
+        "80": 1,
+        "82": 1
+      },
+      "afterPitchCounts": {
+        "40": 2,
+        "43": 1,
+        "44": 1,
+        "51": 1,
+        "52": 1,
+        "55": 1,
+        "56": 1,
+        "57": 1,
+        "58": 1,
+        "59": 3,
+        "63": 1,
+        "67": 1,
+        "69": 1,
+        "70": 2,
+        "71": 2,
+        "72": 1,
+        "76": 2,
+        "81": 1,
+        "83": 1
+      },
+      "precedingPitchSequence": [
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.139319,
+          "durationSeconds": 0.06966,
+          "confidence": 0.2821182906627655
+        },
+        {
+          "pitch": 59,
+          "deltaSeconds": -0.092879,
+          "durationSeconds": 0.08127,
+          "confidence": 0.18513575196266174
+        },
+        {
+          "pitch": 64,
+          "deltaSeconds": -0.081269,
+          "durationSeconds": 0.1161,
+          "confidence": 0.17112970352172852
+        },
+        {
+          "pitch": 46,
+          "deltaSeconds": -0.069659,
+          "durationSeconds": 0.09288,
+          "confidence": 0.12176339328289032
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.069659,
+          "durationSeconds": 0.15093,
+          "confidence": 0.17502783238887787
+        },
+        {
+          "pitch": 54,
+          "deltaSeconds": -0.058049,
+          "durationSeconds": 0.05805,
+          "confidence": 0.22695115208625793
+        },
+        {
+          "pitch": 56,
+          "deltaSeconds": -0.046439,
+          "durationSeconds": 0.04644,
+          "confidence": 0.12163225561380386
+        },
+        {
+          "pitch": 59,
+          "deltaSeconds": -0.01161,
+          "durationSeconds": 0.08127,
+          "confidence": 0.1387760490179062
+        }
+      ],
+      "followingPitchSequence": [
+        {
+          "pitch": 55,
+          "deltaSeconds": 0.0,
+          "durationSeconds": 0.359909,
+          "confidence": 0.1766311079263687
+        },
+        {
+          "pitch": 52,
+          "deltaSeconds": 0.0,
+          "durationSeconds": 0.22059,
+          "confidence": 0.18362094461917877
+        },
+        {
+          "pitch": 76,
+          "deltaSeconds": 0.02322,
+          "durationSeconds": 0.08127,
+          "confidence": 0.13636745512485504
+        },
+        {
+          "pitch": 72,
+          "deltaSeconds": 0.02322,
+          "durationSeconds": 0.06966,
+          "confidence": 0.12263166904449463
+        },
+        {
+          "pitch": 70,
+          "deltaSeconds": 0.02322,
+          "durationSeconds": 0.09288,
+          "confidence": 0.14183516800403595
+        }
+      ],
+      "precedingTargetToneCount": 1,
+      "precedingLowRegisterCount": 24,
+      "precedingUpperRegisterCount": 18,
+      "precedingAttackDensityPerSecond": 61.333,
+      "followingAttackDensityPerSecond": 71.429
+    },
+    {
+      "classification": "true-positive",
+      "measureNumber": 4,
+      "pairCenterPhase": 0.786238,
+      "onsetSeparationSeconds": 0.02322,
+      "sustainOverlapSeconds": 0.05805,
+      "minimumPairDurationSeconds": 0.05805,
+      "nearbySupportCount": 25,
+      "centerSeconds": 11.732497,
+      "beforeEventCount": 67,
+      "afterEventCount": 27,
+      "beforePitchCounts": {
+        "40": 10,
+        "42": 1,
+        "43": 1,
+        "44": 3,
+        "47": 1,
+        "49": 1,
+        "51": 2,
+        "52": 6,
+        "53": 2,
+        "54": 2,
+        "55": 1,
+        "56": 2,
+        "57": 1,
+        "58": 3,
+        "59": 3,
+        "62": 3,
+        "64": 7,
+        "65": 1,
+        "68": 1,
+        "70": 2,
+        "71": 2,
+        "72": 2,
+        "74": 1,
+        "76": 2,
+        "78": 3,
+        "81": 1,
+        "83": 1,
+        "84": 1,
+        "85": 1
+      },
+      "afterPitchCounts": {
+        "40": 1,
+        "43": 3,
+        "45": 1,
+        "50": 1,
+        "52": 2,
+        "53": 1,
+        "55": 2,
+        "59": 1,
+        "62": 4,
+        "64": 2,
+        "65": 1,
+        "67": 5,
+        "71": 1,
+        "74": 1,
+        "81": 1
+      },
+      "precedingPitchSequence": [
+        {
+          "pitch": 58,
+          "deltaSeconds": -0.01161,
+          "durationSeconds": 0.10449,
+          "confidence": 0.12201493233442307
+        },
+        {
+          "pitch": 57,
+          "deltaSeconds": -0.01161,
+          "durationSeconds": 0.1161,
+          "confidence": 0.1522073894739151
+        },
+        {
+          "pitch": 52,
+          "deltaSeconds": -0.01161,
+          "durationSeconds": 0.05805,
+          "confidence": 0.19875198602676392
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.01161,
+          "durationSeconds": 0.06966,
+          "confidence": 0.133699432015419
+        },
+        {
+          "pitch": 72,
+          "deltaSeconds": -0.0,
+          "durationSeconds": 0.12771,
+          "confidence": 0.1692156344652176
+        },
+        {
+          "pitch": 64,
+          "deltaSeconds": -0.0,
+          "durationSeconds": 0.04644,
+          "confidence": 0.21315675973892212
+        },
+        {
+          "pitch": 44,
+          "deltaSeconds": -0.0,
+          "durationSeconds": 0.12771,
+          "confidence": 0.12729160487651825
+        },
+        {
+          "pitch": 70,
+          "deltaSeconds": -0.0,
+          "durationSeconds": 0.08127,
+          "confidence": 0.136925607919693
+        }
+      ],
+      "followingPitchSequence": [
+        {
+          "pitch": 67,
+          "deltaSeconds": 0.01161,
+          "durationSeconds": 0.08127,
+          "confidence": 0.17695260047912598
+        },
+        {
+          "pitch": 62,
+          "deltaSeconds": 0.01161,
+          "durationSeconds": 0.05805,
+          "confidence": 0.17575515806674957
+        },
+        {
+          "pitch": 55,
+          "deltaSeconds": 0.01161,
+          "durationSeconds": 0.175434,
+          "confidence": 0.1758766770362854
+        },
+        {
+          "pitch": 64,
+          "deltaSeconds": 0.04644,
+          "durationSeconds": 0.05805,
+          "confidence": 0.2563799321651459
+        },
+        {
+          "pitch": 52,
+          "deltaSeconds": 0.04644,
+          "durationSeconds": 0.12771,
+          "confidence": 0.16380815207958221
+        }
+      ],
+      "precedingTargetToneCount": 6,
+      "precedingLowRegisterCount": 33,
+      "precedingUpperRegisterCount": 27,
+      "precedingAttackDensityPerSecond": 89.333,
+      "followingAttackDensityPerSecond": 77.143
+    },
+    {
+      "classification": "false-positive",
+      "measureNumber": 5,
+      "pairCenterPhase": 0.878113,
+      "onsetSeparationSeconds": 0.04644,
+      "sustainOverlapSeconds": 0.06966,
+      "minimumPairDurationSeconds": 0.1161,
+      "nearbySupportCount": 17,
+      "centerSeconds": 13.661037,
+      "beforeEventCount": 71,
+      "afterEventCount": 18,
+      "beforePitchCounts": {
+        "40": 7,
+        "43": 1,
+        "44": 1,
+        "45": 3,
+        "47": 2,
+        "49": 1,
+        "50": 3,
+        "52": 9,
+        "53": 2,
+        "54": 2,
+        "55": 3,
+        "58": 5,
+        "59": 2,
+        "62": 2,
+        "64": 6,
+        "65": 2,
+        "66": 3,
+        "67": 2,
+        "68": 2,
+        "70": 2,
+        "71": 6,
+        "72": 1,
+        "76": 1,
+        "78": 1,
+        "80": 1,
+        "83": 1
+      },
+      "afterPitchCounts": {
+        "40": 4,
+        "52": 4,
+        "59": 2,
+        "62": 2,
+        "64": 2,
+        "65": 1,
+        "68": 1,
+        "77": 1,
+        "80": 1
+      },
+      "precedingPitchSequence": [
+        {
+          "pitch": 66,
+          "deltaSeconds": -0.02322,
+          "durationSeconds": 0.09288,
+          "confidence": 0.12411922961473465
+        },
+        {
+          "pitch": 64,
+          "deltaSeconds": -0.02322,
+          "durationSeconds": 0.10449,
+          "confidence": 0.22840997576713562
+        },
+        {
+          "pitch": 58,
+          "deltaSeconds": -0.02322,
+          "durationSeconds": 0.1161,
+          "confidence": 0.19709771871566772
+        },
+        {
+          "pitch": 52,
+          "deltaSeconds": -0.02322,
+          "durationSeconds": 0.06966,
+          "confidence": 0.4958195984363556
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.02322,
+          "durationSeconds": 0.10449,
+          "confidence": 0.12473033368587494
+        },
+        {
+          "pitch": 72,
+          "deltaSeconds": -0.01161,
+          "durationSeconds": 0.04644,
+          "confidence": 0.1248166412115097
+        },
+        {
+          "pitch": 67,
+          "deltaSeconds": -0.01161,
+          "durationSeconds": 0.04644,
+          "confidence": 0.1289704442024231
+        },
+        {
+          "pitch": 54,
+          "deltaSeconds": -0.01161,
+          "durationSeconds": 0.279923,
+          "confidence": 0.16207166016101837
+        }
+      ],
+      "followingPitchSequence": [
+        {
+          "pitch": 62,
+          "deltaSeconds": 0.02322,
+          "durationSeconds": 0.19737,
+          "confidence": 0.12585684657096863
+        },
+        {
+          "pitch": 52,
+          "deltaSeconds": 0.04644,
+          "durationSeconds": 0.10449,
+          "confidence": 0.6316481828689575
+        },
+        {
+          "pitch": 65,
+          "deltaSeconds": 0.08127,
+          "durationSeconds": 0.06966,
+          "confidence": 0.5074600577354431
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": 0.08127,
+          "durationSeconds": 0.05805,
+          "confidence": 0.1572767198085785
+        },
+        {
+          "pitch": 77,
+          "deltaSeconds": 0.10449,
+          "durationSeconds": 0.08127,
+          "confidence": 0.1488407403230667
+        }
+      ],
+      "precedingTargetToneCount": 7,
+      "precedingLowRegisterCount": 34,
+      "precedingUpperRegisterCount": 34,
+      "precedingAttackDensityPerSecond": 94.667,
+      "followingAttackDensityPerSecond": 51.429
+    },
+    {
+      "classification": "true-positive",
+      "measureNumber": 8,
+      "pairCenterPhase": 0.736341,
+      "onsetSeparationSeconds": 0.22059,
+      "sustainOverlapSeconds": 0.0,
+      "minimumPairDurationSeconds": 0.1161,
+      "nearbySupportCount": 16,
+      "centerSeconds": 18.709424,
+      "beforeEventCount": 26,
+      "afterEventCount": 28,
+      "beforePitchCounts": {
+        "40": 6,
+        "42": 2,
+        "52": 3,
+        "55": 3,
+        "57": 1,
+        "58": 2,
+        "64": 2,
+        "67": 1,
+        "68": 1,
+        "69": 1,
+        "71": 1,
+        "74": 1,
+        "78": 1,
+        "80": 1
+      },
+      "afterPitchCounts": {
+        "40": 2,
+        "41": 2,
+        "43": 3,
+        "45": 2,
+        "47": 2,
+        "48": 1,
+        "50": 4,
+        "52": 3,
+        "55": 1,
+        "56": 1,
+        "57": 1,
+        "59": 2,
+        "62": 1,
+        "64": 1,
+        "66": 1,
+        "76": 1
+      },
+      "precedingPitchSequence": [
+        {
+          "pitch": 64,
+          "deltaSeconds": -0.284445,
+          "durationSeconds": 0.17415,
+          "confidence": 0.21327391266822815
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.261225,
+          "durationSeconds": 0.10449,
+          "confidence": 0.5935499668121338
+        },
+        {
+          "pitch": 80,
+          "deltaSeconds": -0.261225,
+          "durationSeconds": 0.06966,
+          "confidence": 0.12517531216144562
+        },
+        {
+          "pitch": 58,
+          "deltaSeconds": -0.156735,
+          "durationSeconds": 0.04644,
+          "confidence": 0.18600507080554962
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.156735,
+          "durationSeconds": 0.09288,
+          "confidence": 0.6587083339691162
+        },
+        {
+          "pitch": 58,
+          "deltaSeconds": -0.110295,
+          "durationSeconds": 0.1161,
+          "confidence": 0.20288734138011932
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.063855,
+          "durationSeconds": 0.1161,
+          "confidence": 0.6059328317642212
+        },
+        {
+          "pitch": 68,
+          "deltaSeconds": -0.029025,
+          "durationSeconds": 0.08127,
+          "confidence": 0.1251082420349121
+        }
+      ],
+      "followingPitchSequence": [
+        {
+          "pitch": 59,
+          "deltaSeconds": 0.005805,
+          "durationSeconds": 0.05805,
+          "confidence": 0.13186903297901154
+        },
+        {
+          "pitch": 47,
+          "deltaSeconds": 0.029025,
+          "durationSeconds": 0.06966,
+          "confidence": 0.12870529294013977
+        },
+        {
+          "pitch": 52,
+          "deltaSeconds": 0.040635,
+          "durationSeconds": 0.09288,
+          "confidence": 0.1798541247844696
+        },
+        {
+          "pitch": 43,
+          "deltaSeconds": 0.040635,
+          "durationSeconds": 0.04644,
+          "confidence": 0.14072738587856293
+        },
+        {
+          "pitch": 50,
+          "deltaSeconds": 0.052244,
+          "durationSeconds": 0.05805,
+          "confidence": 0.139667347073555
+        }
+      ],
+      "precedingTargetToneCount": 2,
+      "precedingLowRegisterCount": 15,
+      "precedingUpperRegisterCount": 9,
+      "precedingAttackDensityPerSecond": 34.667,
+      "followingAttackDensityPerSecond": 80.0
+    },
+    {
+      "classification": "false-positive",
+      "measureNumber": 9,
+      "pairCenterPhase": 0.808497,
+      "onsetSeparationSeconds": 0.22059,
+      "sustainOverlapSeconds": 0.0,
+      "minimumPairDurationSeconds": 0.09288,
+      "nearbySupportCount": 11,
+      "centerSeconds": 20.603134,
+      "beforeEventCount": 27,
+      "afterEventCount": 18,
+      "beforePitchCounts": {
+        "40": 8,
+        "42": 1,
+        "47": 2,
+        "52": 2,
+        "55": 2,
+        "57": 2,
+        "58": 1,
+        "59": 1,
+        "64": 1,
+        "67": 1,
+        "68": 1,
+        "69": 1,
+        "71": 3,
+        "74": 1
+      },
+      "afterPitchCounts": {
+        "40": 3,
+        "42": 1,
+        "43": 2,
+        "46": 1,
+        "47": 2,
+        "48": 2,
+        "50": 2,
+        "52": 1,
+        "56": 2,
+        "62": 1,
+        "64": 1
+      },
+      "precedingPitchSequence": [
+        {
+          "pitch": 64,
+          "deltaSeconds": -0.307665,
+          "durationSeconds": 0.325079,
+          "confidence": 0.1328718662261963
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.261225,
+          "durationSeconds": 0.10449,
+          "confidence": 0.5880455374717712
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.156735,
+          "durationSeconds": 0.05805,
+          "confidence": 0.5352236032485962
+        },
+        {
+          "pitch": 58,
+          "deltaSeconds": -0.110295,
+          "durationSeconds": 0.09288,
+          "confidence": 0.14339134097099304
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.098685,
+          "durationSeconds": 0.05805,
+          "confidence": 0.597981333732605
+        },
+        {
+          "pitch": 68,
+          "deltaSeconds": -0.063855,
+          "durationSeconds": 0.09288,
+          "confidence": 0.12232705950737
+        },
+        {
+          "pitch": 47,
+          "deltaSeconds": -0.052245,
+          "durationSeconds": 0.04644,
+          "confidence": 0.13864511251449585
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.040635,
+          "durationSeconds": 0.16254,
+          "confidence": 0.3580569624900818
+        }
+      ],
+      "followingPitchSequence": [
+        {
+          "pitch": 47,
+          "deltaSeconds": 0.005805,
+          "durationSeconds": 0.08127,
+          "confidence": 0.1430419236421585
+        },
+        {
+          "pitch": 42,
+          "deltaSeconds": 0.029025,
+          "durationSeconds": 0.04644,
+          "confidence": 0.12224002182483673
+        },
+        {
+          "pitch": 52,
+          "deltaSeconds": 0.087075,
+          "durationSeconds": 0.267029,
+          "confidence": 0.15076027810573578
+        },
+        {
+          "pitch": 48,
+          "deltaSeconds": 0.087075,
+          "durationSeconds": 0.06966,
+          "confidence": 0.12019825726747513
+        },
+        {
+          "pitch": 47,
+          "deltaSeconds": 0.087075,
+          "durationSeconds": 0.13932,
+          "confidence": 0.11673322319984436
+        }
+      ],
+      "precedingTargetToneCount": 1,
+      "precedingLowRegisterCount": 17,
+      "precedingUpperRegisterCount": 10,
+      "precedingAttackDensityPerSecond": 36.0,
+      "followingAttackDensityPerSecond": 51.429
+    },
+    {
+      "classification": "true-positive",
+      "measureNumber": 10,
+      "pairCenterPhase": 0.887226,
+      "onsetSeparationSeconds": 0.22059,
+      "sustainOverlapSeconds": 0.0,
+      "minimumPairDurationSeconds": 0.1161,
+      "nearbySupportCount": 17,
+      "centerSeconds": 22.508454,
+      "beforeEventCount": 28,
+      "afterEventCount": 27,
+      "beforePitchCounts": {
+        "40": 6,
+        "41": 1,
+        "42": 1,
+        "43": 1,
+        "44": 1,
+        "48": 1,
+        "52": 2,
+        "55": 2,
+        "57": 1,
+        "58": 2,
+        "59": 1,
+        "62": 1,
+        "64": 1,
+        "67": 2,
+        "68": 1,
+        "69": 1,
+        "70": 2,
+        "71": 1
+      },
+      "afterPitchCounts": {
+        "40": 4,
+        "42": 1,
+        "43": 1,
+        "44": 2,
+        "47": 1,
+        "48": 3,
+        "49": 1,
+        "50": 2,
+        "52": 3,
+        "55": 1,
+        "56": 2,
+        "59": 1,
+        "62": 1,
+        "64": 1,
+        "74": 1,
+        "78": 1,
+        "80": 1
+      },
+      "precedingPitchSequence": [
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.296054,
+          "durationSeconds": 0.15093,
+          "confidence": 0.6298171281814575
+        },
+        {
+          "pitch": 41,
+          "deltaSeconds": -0.145125,
+          "durationSeconds": 0.04644,
+          "confidence": 0.12446034699678421
+        },
+        {
+          "pitch": 58,
+          "deltaSeconds": -0.110295,
+          "durationSeconds": 0.1161,
+          "confidence": 0.21006400883197784
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.098685,
+          "durationSeconds": 0.04644,
+          "confidence": 0.6988582611083984
+        },
+        {
+          "pitch": 68,
+          "deltaSeconds": -0.087075,
+          "durationSeconds": 0.08127,
+          "confidence": 0.1258445382118225
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.052245,
+          "durationSeconds": 0.06966,
+          "confidence": 0.5748978853225708
+        },
+        {
+          "pitch": 43,
+          "deltaSeconds": -0.017415,
+          "durationSeconds": 0.08127,
+          "confidence": 0.1312541663646698
+        },
+        {
+          "pitch": 48,
+          "deltaSeconds": -0.017415,
+          "durationSeconds": 0.05805,
+          "confidence": 0.1576559841632843
+        }
+      ],
+      "followingPitchSequence": [
+        {
+          "pitch": 40,
+          "deltaSeconds": 0.017415,
+          "durationSeconds": 0.09288,
+          "confidence": 0.2527257800102234
+        },
+        {
+          "pitch": 59,
+          "deltaSeconds": 0.017415,
+          "durationSeconds": 0.05805,
+          "confidence": 0.150003582239151
+        },
+        {
+          "pitch": 55,
+          "deltaSeconds": 0.029025,
+          "durationSeconds": 0.04644,
+          "confidence": 0.13846716284751892
+        },
+        {
+          "pitch": 52,
+          "deltaSeconds": 0.052245,
+          "durationSeconds": 0.04644,
+          "confidence": 0.16264331340789795
+        },
+        {
+          "pitch": 48,
+          "deltaSeconds": 0.052245,
+          "durationSeconds": 0.05805,
+          "confidence": 0.18274924159049988
+        }
+      ],
+      "precedingTargetToneCount": 3,
+      "precedingLowRegisterCount": 16,
+      "precedingUpperRegisterCount": 12,
+      "precedingAttackDensityPerSecond": 37.333,
+      "followingAttackDensityPerSecond": 77.143
+    },
+    {
+      "classification": "false-positive",
+      "measureNumber": 11,
+      "pairCenterPhase": 0.913369,
+      "onsetSeparationSeconds": 0.313469,
+      "sustainOverlapSeconds": 0.0,
+      "minimumPairDurationSeconds": 0.04644,
+      "nearbySupportCount": 9,
+      "centerSeconds": 24.320894,
+      "beforeEventCount": 31,
+      "afterEventCount": 14,
+      "beforePitchCounts": {
+        "40": 8,
+        "42": 2,
+        "47": 1,
+        "52": 3,
+        "55": 2,
+        "56": 1,
+        "57": 1,
+        "58": 1,
+        "59": 2,
+        "60": 1,
+        "61": 1,
+        "64": 2,
+        "67": 1,
+        "69": 1,
+        "70": 1,
+        "71": 2,
+        "74": 1
+      },
+      "afterPitchCounts": {
+        "40": 2,
+        "43": 1,
+        "48": 2,
+        "50": 2,
+        "52": 2,
+        "55": 1,
+        "56": 1,
+        "62": 2,
+        "66": 1
+      },
+      "precedingPitchSequence": [
+        {
+          "pitch": 52,
+          "deltaSeconds": -0.214784,
+          "durationSeconds": 0.267029,
+          "confidence": 0.22287717461585999
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.168344,
+          "durationSeconds": 0.08127,
+          "confidence": 0.6281639337539673
+        },
+        {
+          "pitch": 58,
+          "deltaSeconds": -0.156734,
+          "durationSeconds": 0.05805,
+          "confidence": 0.1265632063150406
+        },
+        {
+          "pitch": 60,
+          "deltaSeconds": -0.110294,
+          "durationSeconds": 0.04644,
+          "confidence": 0.13606572151184082
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.087074,
+          "durationSeconds": 0.08127,
+          "confidence": 0.5627244114875793
+        },
+        {
+          "pitch": 59,
+          "deltaSeconds": -0.063855,
+          "durationSeconds": 0.325079,
+          "confidence": 0.15170134603977203
+        },
+        {
+          "pitch": 47,
+          "deltaSeconds": -0.063855,
+          "durationSeconds": 0.08127,
+          "confidence": 0.12744566798210144
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.005805,
+          "durationSeconds": 0.09288,
+          "confidence": 0.5031384229660034
+        }
+      ],
+      "followingPitchSequence": [
+        {
+          "pitch": 52,
+          "deltaSeconds": 0.052245,
+          "durationSeconds": 0.09288,
+          "confidence": 0.16216400265693665
+        },
+        {
+          "pitch": 56,
+          "deltaSeconds": 0.087075,
+          "durationSeconds": 0.05805,
+          "confidence": 0.1259070634841919
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": 0.087075,
+          "durationSeconds": 0.10449,
+          "confidence": 0.2718476951122284
+        },
+        {
+          "pitch": 48,
+          "deltaSeconds": 0.087075,
+          "durationSeconds": 0.04644,
+          "confidence": 0.130015566945076
+        },
+        {
+          "pitch": 43,
+          "deltaSeconds": 0.133515,
+          "durationSeconds": 0.25542,
+          "confidence": 0.12623631954193115
+        }
+      ],
+      "precedingTargetToneCount": 1,
+      "precedingLowRegisterCount": 18,
+      "precedingUpperRegisterCount": 13,
+      "precedingAttackDensityPerSecond": 41.333,
+      "followingAttackDensityPerSecond": 40.0
+    },
+    {
+      "classification": "true-positive",
+      "measureNumber": 16,
+      "pairCenterPhase": 0.954621,
+      "onsetSeparationSeconds": 0.417959,
+      "sustainOverlapSeconds": 0.0,
+      "minimumPairDurationSeconds": 0.04644,
+      "nearbySupportCount": 9,
+      "centerSeconds": 33.225078,
+      "beforeEventCount": 34,
+      "afterEventCount": 16,
+      "beforePitchCounts": {
+        "40": 6,
+        "42": 1,
+        "48": 1,
+        "49": 2,
+        "51": 1,
+        "52": 2,
+        "56": 1,
+        "57": 2,
+        "58": 2,
+        "59": 2,
+        "61": 1,
+        "63": 1,
+        "64": 1,
+        "66": 1,
+        "69": 1,
+        "70": 2,
+        "72": 1,
+        "74": 1,
+        "76": 1,
+        "77": 1,
+        "78": 1,
+        "83": 1,
+        "85": 1
+      },
+      "afterPitchCounts": {
+        "40": 4,
+        "42": 1,
+        "52": 2,
+        "55": 1,
+        "57": 1,
+        "62": 1,
+        "64": 1,
+        "67": 1,
+        "70": 1,
+        "76": 1,
+        "83": 1,
+        "88": 1
+      },
+      "precedingPitchSequence": [
+        {
+          "pitch": 58,
+          "deltaSeconds": -0.20898,
+          "durationSeconds": 0.15093,
+          "confidence": 0.17407730221748352
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.15093,
+          "durationSeconds": 0.13932,
+          "confidence": 0.3534803092479706
+        },
+        {
+          "pitch": 57,
+          "deltaSeconds": -0.05805,
+          "durationSeconds": 0.20898,
+          "confidence": 0.14932313561439514
+        },
+        {
+          "pitch": 76,
+          "deltaSeconds": -0.05805,
+          "durationSeconds": 0.19737,
+          "confidence": 0.12045996636152267
+        },
+        {
+          "pitch": 69,
+          "deltaSeconds": -0.05805,
+          "durationSeconds": 0.08127,
+          "confidence": 0.13514749705791473
+        },
+        {
+          "pitch": 52,
+          "deltaSeconds": -0.01161,
+          "durationSeconds": 0.15093,
+          "confidence": 0.1216193437576294
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": -0.01161,
+          "durationSeconds": 0.05805,
+          "confidence": 0.22007903456687927
+        },
+        {
+          "pitch": 49,
+          "deltaSeconds": -0.0,
+          "durationSeconds": 0.1161,
+          "confidence": 0.13482341170310974
+        }
+      ],
+      "followingPitchSequence": [
+        {
+          "pitch": 67,
+          "deltaSeconds": 0.02322,
+          "durationSeconds": 0.1161,
+          "confidence": 0.218673437833786
+        },
+        {
+          "pitch": 55,
+          "deltaSeconds": 0.02322,
+          "durationSeconds": 0.1161,
+          "confidence": 0.17576509714126587
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": 0.046439,
+          "durationSeconds": 0.08127,
+          "confidence": 0.25203248858451843
+        },
+        {
+          "pitch": 40,
+          "deltaSeconds": 0.127709,
+          "durationSeconds": 0.09288,
+          "confidence": 0.39040523767471313
+        },
+        {
+          "pitch": 52,
+          "deltaSeconds": 0.139319,
+          "durationSeconds": 0.04644,
+          "confidence": 0.306979775428772
+        }
+      ],
+      "precedingTargetToneCount": 2,
+      "precedingLowRegisterCount": 16,
+      "precedingUpperRegisterCount": 14,
+      "precedingAttackDensityPerSecond": 45.333,
+      "followingAttackDensityPerSecond": 45.714
+    }
+  ],
+  "summary": {
+    "truePositiveCount": 5,
+    "falsePositiveCount": 4,
+    "truePositiveMeanPrecedingDensity": 51.9998,
+    "falsePositiveMeanPrecedingDensity": 58.33325,
+    "truePositiveMeanFollowingDensity": 65.1428,
+    "falsePositiveMeanFollowingDensity": 53.57175,
+    "truePositiveMeanPrecedingLowRegisterCount": 21.4,
+    "falsePositiveMeanPrecedingLowRegisterCount": 23.25,
+    "truePositiveMeanPrecedingTargetToneCount": 3.2,
+    "falsePositiveMeanPrecedingTargetToneCount": 2.5
+  },
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedPitchCheckpointChanged": false
+}

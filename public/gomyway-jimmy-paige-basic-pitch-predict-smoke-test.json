@@ -1,0 +1,12 @@
+{
+  "benchmarkType": "jimmy-paige-basic-pitch-predict-smoke-test",
+  "passed": true,
+  "callId": "fc-01KYX2HD62EX110KAH80RNT5C0",
+  "remoteElapsedSeconds": 17.106,
+  "totalElapsedSeconds": 32.121,
+  "eventCount": 1,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "lockedV7EventsProtected": true,
+  "lockedV8TimingProtected": true
+}

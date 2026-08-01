@@ -1,0 +1,862 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "protected-professional-chord-pitch-class-recovery",
+  "sourceBaseline": "public/gomyway-jimmy-paige-professional-chords-33-38-baseline.json",
+  "sourceVoicingDiagnosis": "public/gomyway-jimmy-paige-professional-chords-33-38-voicing-miss-diagnosis.json",
+  "exactMatchedAttacks": 18,
+  "pitchClassRecoveredAttacks": 5,
+  "guardedMatchedAttacks": 23,
+  "targetAttacks": 23,
+  "guardedAttackRecallPercentage": 100.0,
+  "unrecoveredAttacks": [],
+  "measureReports": [
+    {
+      "measureNumber": 33,
+      "matchedAttacks": 3,
+      "targetAttacks": 3,
+      "pitchClassRecoveredAttacks": 0,
+      "attackRecallPercentage": 100.0,
+      "attacks": [
+        {
+          "measureNumber": 33,
+          "attackNumber": 1,
+          "chordLabels": [
+            "G6"
+          ],
+          "expectedPitches": [
+            55,
+            59,
+            62,
+            64
+          ],
+          "candidatePitches": [
+            40,
+            42,
+            43,
+            45,
+            46,
+            47,
+            48,
+            50,
+            52,
+            56,
+            57,
+            59,
+            62,
+            64,
+            78
+          ],
+          "exactVoicingRecall": 0.75,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.082226,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 33,
+          "attackNumber": 2,
+          "chordLabels": [
+            "G6"
+          ],
+          "expectedPitches": [
+            55,
+            59,
+            62,
+            64
+          ],
+          "candidatePitches": [
+            42,
+            43,
+            47,
+            50,
+            52,
+            55,
+            59,
+            62,
+            64,
+            66,
+            71,
+            78,
+            83
+          ],
+          "exactVoicingRecall": 1.0,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.092775,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 33,
+          "attackNumber": 3,
+          "chordLabels": [
+            "G6"
+          ],
+          "expectedPitches": [
+            55,
+            59,
+            62,
+            64
+          ],
+          "candidatePitches": [
+            40,
+            42,
+            43,
+            44,
+            47,
+            48,
+            49,
+            50,
+            51,
+            53,
+            56,
+            59,
+            61,
+            62,
+            64,
+            71
+          ],
+          "exactVoicingRecall": 0.75,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.094618,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        }
+      ]
+    },
+    {
+      "measureNumber": 34,
+      "matchedAttacks": 3,
+      "targetAttacks": 3,
+      "pitchClassRecoveredAttacks": 1,
+      "attackRecallPercentage": 100.0,
+      "attacks": [
+        {
+          "measureNumber": 34,
+          "attackNumber": 1,
+          "chordLabels": [
+            "A(tp2)"
+          ],
+          "expectedPitches": [
+            45,
+            52,
+            57,
+            61,
+            66
+          ],
+          "candidatePitches": [
+            40,
+            42,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            55,
+            57,
+            61,
+            64,
+            69,
+            70
+          ],
+          "exactVoicingRecall": 0.8,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.155515,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 34,
+          "attackNumber": 2,
+          "chordLabels": [
+            "A(tp2)"
+          ],
+          "expectedPitches": [
+            45,
+            52,
+            57,
+            61,
+            66
+          ],
+          "candidatePitches": [
+            42,
+            43,
+            46,
+            47,
+            49,
+            54,
+            56,
+            59,
+            61,
+            62,
+            64,
+            68,
+            71,
+            72,
+            76
+          ],
+          "exactVoicingRecall": 0.2,
+          "pitchClassRecall": 0.75,
+          "absoluteTimingDeltaSeconds": 0.121536,
+          "exactPass": false,
+          "pitchClassRecovered": true,
+          "guardedPass": true,
+          "classification": "octave-displaced-chord-evidence"
+        },
+        {
+          "measureNumber": 34,
+          "attackNumber": 3,
+          "chordLabels": [
+            "A(tp2)"
+          ],
+          "expectedPitches": [
+            45,
+            52,
+            57,
+            61,
+            66
+          ],
+          "candidatePitches": [
+            42,
+            45,
+            46,
+            49,
+            52,
+            58,
+            61,
+            64,
+            70
+          ],
+          "exactVoicingRecall": 0.6,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.146599,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        }
+      ]
+    },
+    {
+      "measureNumber": 35,
+      "matchedAttacks": 6,
+      "targetAttacks": 6,
+      "pitchClassRecoveredAttacks": 2,
+      "attackRecallPercentage": 100.0,
+      "attacks": [
+        {
+          "measureNumber": 35,
+          "attackNumber": 1,
+          "chordLabels": [
+            "E",
+            "D",
+            "E"
+          ],
+          "expectedPitches": [
+            54,
+            59,
+            64,
+            68
+          ],
+          "candidatePitches": [
+            40,
+            44,
+            49,
+            52,
+            56,
+            59,
+            64,
+            68,
+            71
+          ],
+          "exactVoicingRecall": 0.75,
+          "pitchClassRecall": 0.75,
+          "absoluteTimingDeltaSeconds": 0.166861,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 35,
+          "attackNumber": 2,
+          "chordLabels": [
+            "E",
+            "D",
+            "E"
+          ],
+          "expectedPitches": [
+            54,
+            59,
+            64,
+            68
+          ],
+          "candidatePitches": [
+            40,
+            44,
+            49,
+            52,
+            56,
+            59,
+            64,
+            68,
+            71
+          ],
+          "exactVoicingRecall": 0.75,
+          "pitchClassRecall": 0.75,
+          "absoluteTimingDeltaSeconds": 0.151067,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 35,
+          "attackNumber": 3,
+          "chordLabels": [
+            "E",
+            "D",
+            "E"
+          ],
+          "expectedPitches": [
+            54,
+            59,
+            64,
+            68
+          ],
+          "candidatePitches": [
+            40,
+            50,
+            54,
+            62,
+            63,
+            66
+          ],
+          "exactVoicingRecall": 0.25,
+          "pitchClassRecall": 0.5,
+          "absoluteTimingDeltaSeconds": 0.01912,
+          "exactPass": false,
+          "pitchClassRecovered": true,
+          "guardedPass": true,
+          "classification": "octave-displaced-chord-evidence"
+        },
+        {
+          "measureNumber": 35,
+          "attackNumber": 4,
+          "chordLabels": [
+            "E",
+            "D",
+            "E"
+          ],
+          "expectedPitches": [
+            54,
+            59,
+            64,
+            68
+          ],
+          "candidatePitches": [
+            40,
+            44,
+            46,
+            49,
+            52,
+            56,
+            64,
+            68,
+            77
+          ],
+          "exactVoicingRecall": 0.5,
+          "pitchClassRecall": 0.5,
+          "absoluteTimingDeltaSeconds": 0.079012,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 35,
+          "attackNumber": 5,
+          "chordLabels": [
+            "E",
+            "D",
+            "E"
+          ],
+          "expectedPitches": [
+            52,
+            57,
+            62,
+            66
+          ],
+          "candidatePitches": [
+            40,
+            42,
+            45,
+            47,
+            48,
+            49,
+            50,
+            52,
+            55,
+            64
+          ],
+          "exactVoicingRecall": 0.25,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.075049,
+          "exactPass": false,
+          "pitchClassRecovered": true,
+          "guardedPass": true,
+          "classification": "octave-displaced-chord-evidence"
+        },
+        {
+          "measureNumber": 35,
+          "attackNumber": 6,
+          "chordLabels": [
+            "E",
+            "D",
+            "E"
+          ],
+          "expectedPitches": [
+            54,
+            59,
+            64,
+            68
+          ],
+          "candidatePitches": [
+            40,
+            44,
+            45,
+            50,
+            55,
+            57,
+            61,
+            63,
+            64,
+            65,
+            68,
+            73,
+            82
+          ],
+          "exactVoicingRecall": 0.5,
+          "pitchClassRecall": 0.5,
+          "absoluteTimingDeltaSeconds": 0.136721,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        }
+      ]
+    },
+    {
+      "measureNumber": 36,
+      "matchedAttacks": 6,
+      "targetAttacks": 6,
+      "pitchClassRecoveredAttacks": 1,
+      "attackRecallPercentage": 100.0,
+      "attacks": [
+        {
+          "measureNumber": 36,
+          "attackNumber": 1,
+          "chordLabels": [
+            "G",
+            "E"
+          ],
+          "expectedPitches": [
+            59,
+            64,
+            68
+          ],
+          "candidatePitches": [
+            40,
+            44,
+            45,
+            50,
+            55,
+            57,
+            63,
+            64,
+            65,
+            68,
+            73,
+            76,
+            82,
+            83
+          ],
+          "exactVoicingRecall": 0.6667,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.129457,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 36,
+          "attackNumber": 2,
+          "chordLabels": [
+            "G",
+            "E"
+          ],
+          "expectedPitches": [
+            59,
+            64,
+            68
+          ],
+          "candidatePitches": [
+            40,
+            41,
+            43,
+            48,
+            52,
+            56,
+            59,
+            64,
+            68,
+            71,
+            76,
+            82
+          ],
+          "exactVoicingRecall": 1.0,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.016825,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 36,
+          "attackNumber": 3,
+          "chordLabels": [
+            "G",
+            "E"
+          ],
+          "expectedPitches": [
+            59,
+            64,
+            68
+          ],
+          "candidatePitches": [
+            40,
+            44,
+            58,
+            59,
+            61,
+            62,
+            71
+          ],
+          "exactVoicingRecall": 0.3333,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.107665,
+          "exactPass": false,
+          "pitchClassRecovered": true,
+          "guardedPass": true,
+          "classification": "octave-displaced-chord-evidence"
+        },
+        {
+          "measureNumber": 36,
+          "attackNumber": 4,
+          "chordLabels": [
+            "G",
+            "E"
+          ],
+          "expectedPitches": [
+            59,
+            64,
+            68
+          ],
+          "candidatePitches": [
+            40,
+            43,
+            52,
+            54,
+            62,
+            64,
+            68,
+            71
+          ],
+          "exactVoicingRecall": 0.6667,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.08703,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 36,
+          "attackNumber": 5,
+          "chordLabels": [
+            "G",
+            "E"
+          ],
+          "expectedPitches": [
+            62,
+            67,
+            71
+          ],
+          "candidatePitches": [
+            40,
+            43,
+            52,
+            54,
+            62,
+            64,
+            68,
+            71
+          ],
+          "exactVoicingRecall": 0.6667,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.142584,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 36,
+          "attackNumber": 6,
+          "chordLabels": [
+            "G",
+            "E"
+          ],
+          "expectedPitches": [
+            59,
+            64,
+            68
+          ],
+          "candidatePitches": [
+            40,
+            44,
+            48,
+            49,
+            50,
+            52,
+            56,
+            59,
+            64
+          ],
+          "exactVoicingRecall": 0.6667,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.018342,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        }
+      ]
+    },
+    {
+      "measureNumber": 37,
+      "matchedAttacks": 3,
+      "targetAttacks": 3,
+      "pitchClassRecoveredAttacks": 0,
+      "attackRecallPercentage": 100.0,
+      "attacks": [
+        {
+          "measureNumber": 37,
+          "attackNumber": 1,
+          "chordLabels": [
+            "G6"
+          ],
+          "expectedPitches": [
+            55,
+            59,
+            62,
+            64
+          ],
+          "candidatePitches": [
+            40,
+            41,
+            42,
+            49,
+            50,
+            52,
+            55,
+            56,
+            57,
+            58,
+            61,
+            62,
+            63,
+            66,
+            72,
+            78
+          ],
+          "exactVoicingRecall": 0.5,
+          "pitchClassRecall": 0.75,
+          "absoluteTimingDeltaSeconds": 0.158746,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 37,
+          "attackNumber": 2,
+          "chordLabels": [
+            "G6"
+          ],
+          "expectedPitches": [
+            55,
+            59,
+            62,
+            64
+          ],
+          "candidatePitches": [
+            40,
+            43,
+            47,
+            50,
+            52,
+            59,
+            62,
+            66,
+            71
+          ],
+          "exactVoicingRecall": 0.5,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.0685,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        },
+        {
+          "measureNumber": 37,
+          "attackNumber": 3,
+          "chordLabels": [
+            "G6"
+          ],
+          "expectedPitches": [
+            55,
+            59,
+            62,
+            64
+          ],
+          "candidatePitches": [
+            42,
+            43,
+            44,
+            47,
+            48,
+            49,
+            51,
+            56,
+            59,
+            62,
+            64,
+            67,
+            70,
+            71,
+            74
+          ],
+          "exactVoicingRecall": 0.75,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.174832,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        }
+      ]
+    },
+    {
+      "measureNumber": 38,
+      "matchedAttacks": 2,
+      "targetAttacks": 2,
+      "pitchClassRecoveredAttacks": 1,
+      "attackRecallPercentage": 100.0,
+      "attacks": [
+        {
+          "measureNumber": 38,
+          "attackNumber": 1,
+          "chordLabels": [
+            "A(tp2)"
+          ],
+          "expectedPitches": [
+            45,
+            52,
+            57,
+            61,
+            66
+          ],
+          "candidatePitches": [
+            42,
+            43,
+            44,
+            45,
+            47,
+            50,
+            55,
+            57,
+            62,
+            63,
+            74
+          ],
+          "exactVoicingRecall": 0.4,
+          "pitchClassRecall": 0.5,
+          "absoluteTimingDeltaSeconds": 0.06613,
+          "exactPass": false,
+          "pitchClassRecovered": true,
+          "guardedPass": true,
+          "classification": "octave-displaced-chord-evidence"
+        },
+        {
+          "measureNumber": 38,
+          "attackNumber": 2,
+          "chordLabels": [
+            "A(tp2)"
+          ],
+          "expectedPitches": [
+            45,
+            52,
+            57,
+            61,
+            66
+          ],
+          "candidatePitches": [
+            42,
+            45,
+            49,
+            52,
+            57,
+            58,
+            69,
+            71
+          ],
+          "exactVoicingRecall": 0.6,
+          "pitchClassRecall": 1.0,
+          "absoluteTimingDeltaSeconds": 0.090713,
+          "exactPass": true,
+          "pitchClassRecovered": false,
+          "guardedPass": true,
+          "classification": "exact-voicing-match"
+        }
+      ]
+    }
+  ],
+  "policy": {
+    "maximumTimingDeltaSeconds": 0.3,
+    "minimumPitchClassRecall": 0.5,
+    "exactVoicingStillPreferred": true,
+    "octaveDisplacementIsEvidenceOnly": true,
+    "stringAndFretAssignmentNotChanged": true
+  },
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedPitchCheckpointChanged": false,
+  "readyForCrossSectionValidation": true,
+  "readyForAutomatedTraining": false
+}

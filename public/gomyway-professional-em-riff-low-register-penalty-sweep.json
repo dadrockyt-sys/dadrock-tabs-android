@@ -1,0 +1,765 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "professional-em-riff-low-register-penalty-sweep",
+  "passed": true,
+  "readyForExactScoring": false,
+  "baselineAccuracyPercentage": 0.0,
+  "bestReadOnlyExperiment": {
+    "lowE2SupportMultiplier": 1.0,
+    "correctSlots": 0,
+    "totalSlots": 9,
+    "accuracyPercentage": 0.0,
+    "selections": [
+      {
+        "patternId": "em-riff-a",
+        "quantizedStep": 2,
+        "selectedMidiPitch": 40,
+        "acceptedMidiPitches": [
+          57,
+          59
+        ],
+        "correct": false
+      },
+      {
+        "patternId": "em-riff-a",
+        "quantizedStep": 6,
+        "selectedMidiPitch": 52,
+        "acceptedMidiPitches": [
+          55
+        ],
+        "correct": false
+      },
+      {
+        "patternId": "em-riff-a",
+        "quantizedStep": 10,
+        "selectedMidiPitch": 40,
+        "acceptedMidiPitches": [
+          52
+        ],
+        "correct": false
+      },
+      {
+        "patternId": "em-riff-a",
+        "quantizedStep": 14,
+        "selectedMidiPitch": 40,
+        "acceptedMidiPitches": [
+          45
+        ],
+        "correct": false
+      },
+      {
+        "patternId": "em-riff-b",
+        "quantizedStep": 2,
+        "selectedMidiPitch": 40,
+        "acceptedMidiPitches": [
+          57,
+          59
+        ],
+        "correct": false
+      },
+      {
+        "patternId": "em-riff-b",
+        "quantizedStep": 4,
+        "selectedMidiPitch": 41,
+        "acceptedMidiPitches": [
+          55
+        ],
+        "correct": false
+      },
+      {
+        "patternId": "em-riff-b",
+        "quantizedStep": 6,
+        "selectedMidiPitch": 40,
+        "acceptedMidiPitches": [
+          52
+        ],
+        "correct": false
+      },
+      {
+        "patternId": "em-riff-b",
+        "quantizedStep": 10,
+        "selectedMidiPitch": 40,
+        "acceptedMidiPitches": [
+          45
+        ],
+        "correct": false
+      },
+      {
+        "patternId": "em-riff-b",
+        "quantizedStep": 14,
+        "selectedMidiPitch": 40,
+        "acceptedMidiPitches": [
+          58,
+          62
+        ],
+        "correct": false
+      }
+    ]
+  },
+  "sweep": [
+    {
+      "lowE2SupportMultiplier": 1.0,
+      "correctSlots": 0,
+      "totalSlots": 9,
+      "accuracyPercentage": 0.0,
+      "selections": [
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 52,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 4,
+          "selectedMidiPitch": 41,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correct": false
+        }
+      ]
+    },
+    {
+      "lowE2SupportMultiplier": 0.85,
+      "correctSlots": 0,
+      "totalSlots": 9,
+      "accuracyPercentage": 0.0,
+      "selections": [
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 52,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 4,
+          "selectedMidiPitch": 41,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correct": false
+        }
+      ]
+    },
+    {
+      "lowE2SupportMultiplier": 0.7,
+      "correctSlots": 0,
+      "totalSlots": 9,
+      "accuracyPercentage": 0.0,
+      "selections": [
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 52,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 4,
+          "selectedMidiPitch": 41,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correct": false
+        }
+      ]
+    },
+    {
+      "lowE2SupportMultiplier": 0.55,
+      "correctSlots": 0,
+      "totalSlots": 9,
+      "accuracyPercentage": 0.0,
+      "selections": [
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 52,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 4,
+          "selectedMidiPitch": 41,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 67,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correct": false
+        }
+      ]
+    },
+    {
+      "lowE2SupportMultiplier": 0.4,
+      "correctSlots": 0,
+      "totalSlots": 9,
+      "accuracyPercentage": 0.0,
+      "selections": [
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 52,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 4,
+          "selectedMidiPitch": 41,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 67,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correct": false
+        }
+      ]
+    },
+    {
+      "lowE2SupportMultiplier": 0.25,
+      "correctSlots": 0,
+      "totalSlots": 9,
+      "accuracyPercentage": 0.0,
+      "selections": [
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 52,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 43,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 4,
+          "selectedMidiPitch": 41,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 43,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 67,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correct": false
+        }
+      ]
+    },
+    {
+      "lowE2SupportMultiplier": 0.1,
+      "correctSlots": 0,
+      "totalSlots": 9,
+      "accuracyPercentage": 0.0,
+      "selections": [
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 40,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 52,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 43,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 43,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 2,
+          "selectedMidiPitch": 42,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 4,
+          "selectedMidiPitch": 41,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 6,
+          "selectedMidiPitch": 43,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 10,
+          "selectedMidiPitch": 41,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correct": false
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 14,
+          "selectedMidiPitch": 67,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correct": false
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "pitchDiagnosisPassed": true,
+    "failureProfilePassed": true,
+    "nineProtectedSlotsPresent": true,
+    "lowRegisterCollapseConfirmed": true,
+    "diagnosticOnly": true,
+    "doesNotModifyV7OrV8Events": true,
+    "doesNotCopyProfessionalNotesIntoJimmy": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "safeguards": {
+    "readOnlyParameterExperiment": true,
+    "doesNotPromotePenalty": true,
+    "requiresIndependentValidationBeforeAdoption": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false
+  },
+  "nextStep": "Use the best multiplier only as a candidate for an independent audio-based validation. Do not apply it to production or rewrite Jimmy's events from this benchmark alone."
+}

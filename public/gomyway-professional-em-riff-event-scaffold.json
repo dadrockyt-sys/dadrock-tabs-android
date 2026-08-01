@@ -1,0 +1,73 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "professional-em-riff-event-scaffold",
+  "status": "source-identity-verified-timing-entry-pending",
+  "readyForExactScoring": false,
+  "patterns": [
+    {
+      "patternId": "em-riff-a",
+      "sourcePages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9
+      ],
+      "verifiedVisibleFeatures": {
+        "tonalCenter": "Em",
+        "containsFullStepBend": true,
+        "containsBendRelease": true,
+        "containsOpenStrings": true,
+        "containsFret2Notes": true,
+        "containsSingleNoteRiff": true,
+        "containsPalmMute": false,
+        "containsDeadNotes": false
+      },
+      "events": [],
+      "eventEntryStatus": "pending-quantized-step-string-fret-entry"
+    },
+    {
+      "patternId": "em-riff-b",
+      "sourcePages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9
+      ],
+      "verifiedVisibleFeatures": {
+        "tonalCenter": "Em",
+        "containsFullStepBend": true,
+        "containsBendRelease": true,
+        "containsOpenStrings": true,
+        "containsFret2Notes": true,
+        "containsEndingDoubleStop": true,
+        "endingDoubleStopFrets": [
+          3,
+          3
+        ],
+        "containsPalmMute": false,
+        "containsDeadNotes": false
+      },
+      "events": [],
+      "eventEntryStatus": "pending-quantized-step-string-fret-entry"
+    }
+  ],
+  "safeguards": {
+    "professionalReferenceMayScoreButNotGenerate": true,
+    "directAudioRemainsSourceOfTruth": true,
+    "noSyntheticNotes": true,
+    "lockedV7EventsProtected": true,
+    "lockedIntroTemplateProtected": true,
+    "lockedVerse1TemplateProtected": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false
+  },
+  "nextStep": "Align the locked direct-audio timing slots with the visible Em riff note identities, then manually verify string/fret and technique fields before enabling exact scoring."
+}

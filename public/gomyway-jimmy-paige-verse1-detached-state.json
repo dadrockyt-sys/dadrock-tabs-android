@@ -1,0 +1,23 @@
+{
+  "benchmarkVersion": 8,
+  "status": "cancelled",
+  "callId": "fc-01KYWWRFC2M2QVV4285MA78XZX",
+  "startedAtEpoch": 1785528593.1188664,
+  "startedAt": "2026-07-31 20:09:57 UTC",
+  "clipStartSeconds": 30.627906976744185,
+  "clipDurationSeconds": 29.906976744186046,
+  "clipFormat": "wav-pcm-s16le-mono-22050",
+  "measureRange": [
+    18,
+    32
+  ],
+  "name": "default",
+  "parameters": {
+    "onset_threshold": 0.5,
+    "frame_threshold": 0.3,
+    "minimum_note_length": 127.7
+  },
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false
+}

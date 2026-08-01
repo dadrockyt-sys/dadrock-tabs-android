@@ -1,0 +1,1869 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-professional-reference-rhythm-phase-anchor",
+  "candidateInput": "gomyway-full-song-v8-rhythm-candidates.json",
+  "referenceInput": "analyzer/fixtures/gomyway_professional_intro_reference_v1.json",
+  "professionalAnchorPass": true,
+  "referenceAttackCount": 12,
+  "referencePairSteps": [
+    2,
+    4,
+    6,
+    9,
+    11,
+    14,
+    18,
+    20,
+    22,
+    25,
+    27,
+    30
+  ],
+  "stableCandidateCount": 6,
+  "stableCandidateSteps": [
+    2,
+    10,
+    14,
+    18,
+    20,
+    26
+  ],
+  "uniqueAnchorFound": false,
+  "equivalentBestOffsetCount": 2,
+  "equivalentBestOffsets": [
+    4,
+    20
+  ],
+  "bestCandidate": {
+    "offsetSteps": 4,
+    "offsetMeasureFraction": 0.25,
+    "candidateAttackCount": 6,
+    "referenceAttackCount": 12,
+    "anchorMatchCount": 5,
+    "anchorPrecision": 0.833333,
+    "anchorRecall": 0.416667,
+    "anchorF1": 0.555556,
+    "matchedStrength": 2.05018,
+    "strengthCoverage": 0.812803,
+    "matchedReferenceSteps": [
+      6,
+      14,
+      18,
+      22,
+      30
+    ],
+    "anchoredSlots": [
+      {
+        "pairStep": 2,
+        "pairSupport": 4,
+        "medianStrength": 0.451612,
+        "anchoredPairStep": 6
+      },
+      {
+        "pairStep": 10,
+        "pairSupport": 4,
+        "medianStrength": 0.21912,
+        "anchoredPairStep": 14
+      },
+      {
+        "pairStep": 14,
+        "pairSupport": 4,
+        "medianStrength": 0.525364,
+        "anchoredPairStep": 18
+      },
+      {
+        "pairStep": 18,
+        "pairSupport": 4,
+        "medianStrength": 0.410139,
+        "anchoredPairStep": 22
+      },
+      {
+        "pairStep": 20,
+        "pairSupport": 4,
+        "medianStrength": 0.472177,
+        "anchoredPairStep": 24
+      },
+      {
+        "pairStep": 26,
+        "pairSupport": 5,
+        "medianStrength": 0.443945,
+        "anchoredPairStep": 30
+      }
+    ],
+    "readOnly": true
+  },
+  "adoptedAnchor": null,
+  "rankedAnchors": [
+    {
+      "offsetSteps": 4,
+      "offsetMeasureFraction": 0.25,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 5,
+      "anchorPrecision": 0.833333,
+      "anchorRecall": 0.416667,
+      "anchorF1": 0.555556,
+      "matchedStrength": 2.05018,
+      "strengthCoverage": 0.812803,
+      "matchedReferenceSteps": [
+        6,
+        14,
+        18,
+        22,
+        30
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 6
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 14
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 18
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 22
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 24
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 30
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 20,
+      "offsetMeasureFraction": 1.25,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 5,
+      "anchorPrecision": 0.833333,
+      "anchorRecall": 0.416667,
+      "anchorF1": 0.555556,
+      "matchedStrength": 2.05018,
+      "strengthCoverage": 0.812803,
+      "matchedReferenceSteps": [
+        2,
+        6,
+        14,
+        22,
+        30
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 22
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 30
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 2
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 6
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 8
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 14
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 0,
+      "offsetMeasureFraction": 0.0,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 4,
+      "anchorPrecision": 0.666667,
+      "anchorRecall": 0.333333,
+      "anchorF1": 0.444444,
+      "matchedStrength": 1.859292,
+      "strengthCoverage": 0.737125,
+      "matchedReferenceSteps": [
+        2,
+        14,
+        18,
+        20
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 2
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 10
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 14
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 18
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 20
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 26
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 16,
+      "offsetMeasureFraction": 1.0,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 4,
+      "anchorPrecision": 0.666667,
+      "anchorRecall": 0.333333,
+      "anchorF1": 0.444444,
+      "matchedStrength": 1.859292,
+      "strengthCoverage": 0.737125,
+      "matchedReferenceSteps": [
+        2,
+        4,
+        18,
+        30
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 18
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 26
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 30
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 2
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 4
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 10
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 12,
+      "offsetMeasureFraction": 0.75,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 4,
+      "anchorPrecision": 0.666667,
+      "anchorRecall": 0.333333,
+      "anchorF1": 0.444444,
+      "matchedStrength": 1.524816,
+      "strengthCoverage": 0.60452,
+      "matchedReferenceSteps": [
+        6,
+        14,
+        22,
+        30
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 14
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 22
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 26
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 30
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 0
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 6
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 28,
+      "offsetMeasureFraction": 1.75,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 4,
+      "anchorPrecision": 0.666667,
+      "anchorRecall": 0.333333,
+      "anchorF1": 0.444444,
+      "matchedStrength": 1.524816,
+      "strengthCoverage": 0.60452,
+      "matchedReferenceSteps": [
+        6,
+        14,
+        22,
+        30
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 30
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 6
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 10
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 14
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 16
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 22
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 2,
+      "offsetMeasureFraction": 0.125,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 3,
+      "anchorPrecision": 0.5,
+      "anchorRecall": 0.25,
+      "anchorF1": 0.333333,
+      "matchedStrength": 1.333928,
+      "strengthCoverage": 0.528842,
+      "matchedReferenceSteps": [
+        4,
+        20,
+        22
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 4
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 12
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 16
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 20
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 22
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 28
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 7,
+      "offsetMeasureFraction": 0.4375,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 3,
+      "anchorPrecision": 0.5,
+      "anchorRecall": 0.25,
+      "anchorF1": 0.333333,
+      "matchedStrength": 1.333928,
+      "strengthCoverage": 0.528842,
+      "matchedReferenceSteps": [
+        9,
+        25,
+        27
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 9
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 17
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 21
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 25
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 27
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 1
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 18,
+      "offsetMeasureFraction": 1.125,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 3,
+      "anchorPrecision": 0.5,
+      "anchorRecall": 0.25,
+      "anchorF1": 0.333333,
+      "matchedStrength": 1.333928,
+      "strengthCoverage": 0.528842,
+      "matchedReferenceSteps": [
+        4,
+        6,
+        20
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 20
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 28
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 0
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 4
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 6
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 12
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 23,
+      "offsetMeasureFraction": 1.4375,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 3,
+      "anchorPrecision": 0.5,
+      "anchorRecall": 0.25,
+      "anchorF1": 0.333333,
+      "matchedStrength": 1.333928,
+      "strengthCoverage": 0.528842,
+      "matchedReferenceSteps": [
+        9,
+        11,
+        25
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 25
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 1
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 5
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 9
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 11
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 17
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 8,
+      "offsetMeasureFraction": 0.5,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 3,
+      "anchorPrecision": 0.5,
+      "anchorRecall": 0.25,
+      "anchorF1": 0.333333,
+      "matchedStrength": 1.188429,
+      "strengthCoverage": 0.471158,
+      "matchedReferenceSteps": [
+        2,
+        18,
+        22
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 10
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 18
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 22
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 26
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 28
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 2
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 24,
+      "offsetMeasureFraction": 1.5,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 3,
+      "anchorPrecision": 0.5,
+      "anchorRecall": 0.25,
+      "anchorF1": 0.333333,
+      "matchedStrength": 1.188429,
+      "strengthCoverage": 0.471158,
+      "matchedReferenceSteps": [
+        2,
+        6,
+        18
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 26
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 2
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 6
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 10
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 12
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 18
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 10,
+      "offsetMeasureFraction": 0.625,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 3,
+      "anchorPrecision": 0.5,
+      "anchorRecall": 0.25,
+      "anchorF1": 0.333333,
+      "matchedStrength": 1.135242,
+      "strengthCoverage": 0.450072,
+      "matchedReferenceSteps": [
+        4,
+        20,
+        30
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 12
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 20
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 24
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 28
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 30
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 4
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 26,
+      "offsetMeasureFraction": 1.625,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 3,
+      "anchorPrecision": 0.5,
+      "anchorRecall": 0.25,
+      "anchorF1": 0.333333,
+      "matchedStrength": 1.135242,
+      "strengthCoverage": 0.450072,
+      "matchedReferenceSteps": [
+        4,
+        14,
+        20
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 28
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 4
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 8
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 12
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 14
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 20
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 9,
+      "offsetMeasureFraction": 0.5625,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 2,
+      "anchorPrecision": 0.333333,
+      "anchorRecall": 0.166667,
+      "anchorF1": 0.222222,
+      "matchedStrength": 0.861751,
+      "strengthCoverage": 0.341645,
+      "matchedReferenceSteps": [
+        11,
+        27
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 11
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 19
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 23
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 27
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 29
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 3
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 25,
+      "offsetMeasureFraction": 1.5625,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 2,
+      "anchorPrecision": 0.333333,
+      "anchorRecall": 0.166667,
+      "anchorF1": 0.222222,
+      "matchedStrength": 0.861751,
+      "strengthCoverage": 0.341645,
+      "matchedReferenceSteps": [
+        11,
+        27
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 27
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 3
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 7
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 11
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 13
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 19
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 1,
+      "offsetMeasureFraction": 0.0625,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 2,
+      "anchorPrecision": 0.333333,
+      "anchorRecall": 0.166667,
+      "anchorF1": 0.222222,
+      "matchedStrength": 0.663065,
+      "strengthCoverage": 0.262875,
+      "matchedReferenceSteps": [
+        11,
+        27
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 3
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 11
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 15
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 19
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 21
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 27
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 15,
+      "offsetMeasureFraction": 0.9375,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 2,
+      "anchorPrecision": 0.333333,
+      "anchorRecall": 0.166667,
+      "anchorF1": 0.222222,
+      "matchedStrength": 0.663065,
+      "strengthCoverage": 0.262875,
+      "matchedReferenceSteps": [
+        9,
+        25
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 17
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 25
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 29
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 1
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 3
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 9
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 17,
+      "offsetMeasureFraction": 1.0625,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 2,
+      "anchorPrecision": 0.333333,
+      "anchorRecall": 0.166667,
+      "anchorF1": 0.222222,
+      "matchedStrength": 0.663065,
+      "strengthCoverage": 0.262875,
+      "matchedReferenceSteps": [
+        11,
+        27
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 19
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 27
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 31
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 3
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 5
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 11
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 31,
+      "offsetMeasureFraction": 1.9375,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 2,
+      "anchorPrecision": 0.333333,
+      "anchorRecall": 0.166667,
+      "anchorF1": 0.222222,
+      "matchedStrength": 0.663065,
+      "strengthCoverage": 0.262875,
+      "matchedReferenceSteps": [
+        9,
+        25
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 1
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 9
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 13
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 17
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 19
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 25
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 6,
+      "offsetMeasureFraction": 0.375,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 1,
+      "anchorPrecision": 0.166667,
+      "anchorRecall": 0.083333,
+      "anchorF1": 0.111111,
+      "matchedStrength": 0.525364,
+      "strengthCoverage": 0.208283,
+      "matchedReferenceSteps": [
+        20
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 8
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 16
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 20
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 24
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 26
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 0
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 11,
+      "offsetMeasureFraction": 0.6875,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 1,
+      "anchorPrecision": 0.166667,
+      "anchorRecall": 0.083333,
+      "anchorF1": 0.111111,
+      "matchedStrength": 0.525364,
+      "strengthCoverage": 0.208283,
+      "matchedReferenceSteps": [
+        25
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 13
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 21
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 25
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 29
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 31
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 5
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 13,
+      "offsetMeasureFraction": 0.8125,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 1,
+      "anchorPrecision": 0.166667,
+      "anchorRecall": 0.083333,
+      "anchorF1": 0.111111,
+      "matchedStrength": 0.525364,
+      "strengthCoverage": 0.208283,
+      "matchedReferenceSteps": [
+        27
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 15
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 23
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 27
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 31
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 1
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 7
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 22,
+      "offsetMeasureFraction": 1.375,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 1,
+      "anchorPrecision": 0.166667,
+      "anchorRecall": 0.083333,
+      "anchorF1": 0.111111,
+      "matchedStrength": 0.525364,
+      "strengthCoverage": 0.208283,
+      "matchedReferenceSteps": [
+        4
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 24
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 0
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 4
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 8
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 10
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 16
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 27,
+      "offsetMeasureFraction": 1.6875,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 1,
+      "anchorPrecision": 0.166667,
+      "anchorRecall": 0.083333,
+      "anchorF1": 0.111111,
+      "matchedStrength": 0.525364,
+      "strengthCoverage": 0.208283,
+      "matchedReferenceSteps": [
+        9
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 29
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 5
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 9
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 13
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 15
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 21
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 29,
+      "offsetMeasureFraction": 1.8125,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 1,
+      "anchorPrecision": 0.166667,
+      "anchorRecall": 0.083333,
+      "anchorF1": 0.111111,
+      "matchedStrength": 0.525364,
+      "strengthCoverage": 0.208283,
+      "matchedReferenceSteps": [
+        11
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 31
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 7
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 11
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 15
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 17
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 23
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 5,
+      "offsetMeasureFraction": 0.3125,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 1,
+      "anchorPrecision": 0.166667,
+      "anchorRecall": 0.083333,
+      "anchorF1": 0.111111,
+      "matchedStrength": 0.472177,
+      "strengthCoverage": 0.187197,
+      "matchedReferenceSteps": [
+        25
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 7
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 15
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 19
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 23
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 25
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 31
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 14,
+      "offsetMeasureFraction": 0.875,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 1,
+      "anchorPrecision": 0.166667,
+      "anchorRecall": 0.083333,
+      "anchorF1": 0.111111,
+      "matchedStrength": 0.472177,
+      "strengthCoverage": 0.187197,
+      "matchedReferenceSteps": [
+        2
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 16
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 24
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 28
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 0
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 2
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 8
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 21,
+      "offsetMeasureFraction": 1.3125,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 1,
+      "anchorPrecision": 0.166667,
+      "anchorRecall": 0.083333,
+      "anchorF1": 0.111111,
+      "matchedStrength": 0.472177,
+      "strengthCoverage": 0.187197,
+      "matchedReferenceSteps": [
+        9
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 23
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 31
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 3
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 7
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 9
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 15
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 30,
+      "offsetMeasureFraction": 1.875,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 1,
+      "anchorPrecision": 0.166667,
+      "anchorRecall": 0.083333,
+      "anchorF1": 0.111111,
+      "matchedStrength": 0.472177,
+      "strengthCoverage": 0.187197,
+      "matchedReferenceSteps": [
+        18
+      ],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 0
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 8
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 12
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 16
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 18
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 24
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 3,
+      "offsetMeasureFraction": 0.1875,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 0,
+      "anchorPrecision": 0.0,
+      "anchorRecall": 0.0,
+      "anchorF1": 0.0,
+      "matchedStrength": 0,
+      "strengthCoverage": 0.0,
+      "matchedReferenceSteps": [],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 5
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 13
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 17
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 21
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 23
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 29
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 19,
+      "offsetMeasureFraction": 1.1875,
+      "candidateAttackCount": 6,
+      "referenceAttackCount": 12,
+      "anchorMatchCount": 0,
+      "anchorPrecision": 0.0,
+      "anchorRecall": 0.0,
+      "anchorF1": 0.0,
+      "matchedStrength": 0,
+      "strengthCoverage": 0.0,
+      "matchedReferenceSteps": [],
+      "anchoredSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "medianStrength": 0.451612,
+          "anchoredPairStep": 21
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "medianStrength": 0.21912,
+          "anchoredPairStep": 29
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "medianStrength": 0.525364,
+          "anchoredPairStep": 1
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "medianStrength": 0.410139,
+          "anchoredPairStep": 5
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "medianStrength": 0.472177,
+          "anchoredPairStep": 7
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "medianStrength": 0.443945,
+          "anchoredPairStep": 13
+        }
+      ],
+      "readOnly": true
+    }
+  ],
+  "independentOfV7Events": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "passed": true,
+  "trainingRule": "The professional reference may anchor the relative direct-audio rhythm skeleton only when one rotation is uniquely best. An ambiguous result remains diagnostic and must not alter V7 notes, production output, or the PDF renderer."
+}

@@ -1,0 +1,263 @@
+{
+  "benchmarkName": "Jimmy Page protected professional technique primitive benchmark",
+  "benchmarkVersion": 1,
+  "sourceDataset": "public/gomyway-jimmy-paige-protected-technique-training-dataset.json",
+  "sourceDatasetSha256": "ef09629f5f3d995c77dfd14551610200ce6a68a26be08dab601629c89527bd37",
+  "examplesInspected": 9,
+  "eligibleExamples": 9,
+  "representativeTechniqueFamilies": 9,
+  "allPrimitiveContractsPresent": true,
+  "benchmarkPassed": true,
+  "sourceEventsMutated": false,
+  "rendererChanged": false,
+  "productionRendererCalled": false,
+  "productionOutputCreated": false,
+  "productionPromotionAllowed": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "readyForIsolatedPrimitivePreview": true,
+  "readyForRendererIntegration": false,
+  "rows": [
+    {
+      "exampleId": "jimmy-page-professional-01-full-bend-release",
+      "techniqueFamily": "full-bend-release",
+      "page": 1,
+      "measure": 1,
+      "primitiveContract": {
+        "primitive": "bezier-bend-release",
+        "requiredCapabilities": [
+          "curve",
+          "arrowhead",
+          "bend-label",
+          "return-curve"
+        ]
+      },
+      "geometryValid": true,
+      "trainingPermissionsValid": true,
+      "professionalSourceValid": true,
+      "representativeFamilyUnique": true,
+      "eligibleForIsolatedPrimitivePreview": true,
+      "geometry": {
+        "xStart": 0.12453323719113372,
+        "yStart": 0.15039597179337347,
+        "xEnd": 0.23563706508902615,
+        "yEnd": 0.2181677324252856,
+        "width": 0.11110382789789243,
+        "height": 0.06777176063191212
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-02-vibrato",
+      "techniqueFamily": "vibrato",
+      "page": 2,
+      "measure": 25,
+      "primitiveContract": {
+        "primitive": "wavy-vibrato-line",
+        "requiredCapabilities": [
+          "repeating-wave",
+          "sustain-span"
+        ]
+      },
+      "geometryValid": true,
+      "trainingPermissionsValid": true,
+      "professionalSourceValid": true,
+      "representativeFamilyUnique": true,
+      "eligibleForIsolatedPrimitivePreview": true,
+      "geometry": {
+        "xStart": 0.0693307140261628,
+        "yStart": 0.16613650516248,
+        "xEnd": 0.19091603833575582,
+        "yEnd": 0.1914962573156923,
+        "width": 0.12158532430959303,
+        "height": 0.025359752153212317
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-03-muted-note",
+      "techniqueFamily": "muted-note",
+      "page": 3,
+      "measure": 28,
+      "primitiveContract": {
+        "primitive": "muted-note-glyph",
+        "requiredCapabilities": [
+          "x-glyph",
+          "string-alignment"
+        ]
+      },
+      "geometryValid": true,
+      "trainingPermissionsValid": true,
+      "professionalSourceValid": true,
+      "representativeFamilyUnique": true,
+      "eligibleForIsolatedPrimitivePreview": true,
+      "geometry": {
+        "xStart": 0.46972372365552323,
+        "yStart": 0.03627703381361867,
+        "xEnd": 0.5004694880995639,
+        "yEnd": 0.07300497461392244,
+        "width": 0.030745764444040702,
+        "height": 0.03672794080030377
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-04-pick-direction",
+      "techniqueFamily": "pick-direction",
+      "page": 3,
+      "measure": 28,
+      "primitiveContract": {
+        "primitive": "pick-direction-glyph",
+        "requiredCapabilities": [
+          "downstroke",
+          "upstroke",
+          "beat-alignment"
+        ]
+      },
+      "geometryValid": true,
+      "trainingPermissionsValid": true,
+      "professionalSourceValid": true,
+      "representativeFamilyUnique": true,
+      "eligibleForIsolatedPrimitivePreview": true,
+      "geometry": {
+        "xStart": 0.4620373251271802,
+        "yStart": 0.0056704253617487635,
+        "xEnd": 0.6311387172965116,
+        "yEnd": 0.031467424421565776,
+        "width": 0.1691013921693314,
+        "height": 0.025796999059817013
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-05-chord-sustain-tie",
+      "techniqueFamily": "chord-sustain-tie",
+      "page": 3,
+      "measure": 33,
+      "primitiveContract": {
+        "primitive": "multi-string-sustain-ties",
+        "requiredCapabilities": [
+          "parallel-curves",
+          "note-anchor",
+          "cross-beat-span"
+        ]
+      },
+      "geometryValid": true,
+      "trainingPermissionsValid": true,
+      "professionalSourceValid": true,
+      "representativeFamilyUnique": true,
+      "eligibleForIsolatedPrimitivePreview": true,
+      "geometry": {
+        "xStart": 0.1615678370276163,
+        "yStart": 0.4267299239099789,
+        "xEnd": 0.2894420535065407,
+        "yEnd": 0.4774494637432698,
+        "width": 0.12787421647892439,
+        "height": 0.050719539833290916
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-06-chord-slide",
+      "techniqueFamily": "chord-slide",
+      "page": 6,
+      "measure": 79,
+      "primitiveContract": {
+        "primitive": "multi-string-slide-lines",
+        "requiredCapabilities": [
+          "parallel-diagonals",
+          "source-anchor",
+          "target-anchor"
+        ]
+      },
+      "geometryValid": true,
+      "trainingPermissionsValid": true,
+      "professionalSourceValid": true,
+      "representativeFamilyUnique": true,
+      "eligibleForIsolatedPrimitivePreview": true,
+      "geometry": {
+        "xStart": 0.8037340456940407,
+        "yStart": 0.13990227695949142,
+        "xEnd": 0.9253193700036337,
+        "yEnd": 0.19849206571390243,
+        "width": 0.12158532430959301,
+        "height": 0.05858978875441101
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-07-time-signature-change",
+      "techniqueFamily": "time-signature-change",
+      "page": 8,
+      "measure": 104,
+      "primitiveContract": {
+        "primitive": "stacked-time-signature",
+        "requiredCapabilities": [
+          "numerator",
+          "denominator",
+          "staff-centering"
+        ]
+      },
+      "geometryValid": true,
+      "trainingPermissionsValid": true,
+      "professionalSourceValid": true,
+      "representativeFamilyUnique": true,
+      "eligibleForIsolatedPrimitivePreview": true,
+      "geometry": {
+        "xStart": 0.053957860192587206,
+        "yStart": 0.42847889377296455,
+        "xEnd": 0.14339994208757267,
+        "yEnd": 0.4774494815067029,
+        "width": 0.08944208189498547,
+        "height": 0.04897058773373836
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-08-section-label",
+      "techniqueFamily": "section-label",
+      "page": 2,
+      "measure": 17,
+      "primitiveContract": {
+        "primitive": "section-heading-text",
+        "requiredCapabilities": [
+          "italic-text",
+          "measure-anchor",
+          "vertical-clearance"
+        ]
+      },
+      "geometryValid": true,
+      "trainingPermissionsValid": true,
+      "professionalSourceValid": true,
+      "representativeFamilyUnique": true,
+      "eligibleForIsolatedPrimitivePreview": true,
+      "geometry": {
+        "xStart": 0.014826944040697674,
+        "yStart": 0.20461338029890316,
+        "xEnd": 0.16576044126998546,
+        "yEnd": 0.284627805627683,
+        "width": 0.15093349722928778,
+        "height": 0.08001442532877981
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-09-final-barline",
+      "techniqueFamily": "final-barline",
+      "page": 8,
+      "measure": 113,
+      "primitiveContract": {
+        "primitive": "final-double-barline",
+        "requiredCapabilities": [
+          "thin-line",
+          "thick-line",
+          "staff-height-span"
+        ]
+      },
+      "geometryValid": true,
+      "trainingPermissionsValid": true,
+      "professionalSourceValid": true,
+      "representativeFamilyUnique": true,
+      "eligibleForIsolatedPrimitivePreview": true,
+      "geometry": {
+        "xStart": 0.2224349234868022,
+        "yStart": 0.7676493635615989,
+        "xEnd": 0.3073456826388588,
+        "yEnd": 0.8282383888158608,
+        "width": 0.08491075915205662,
+        "height": 0.06058902525426191
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "jimmy-paige-v7-snippet-fixed-function-training",
+  "source": "public/DadRock TABS - gomyway2test.m4a",
+  "audioPayloadBytes": 1363150,
+  "attemptsRequested": 6,
+  "attemptsCompleted": 0,
+  "bestCorrectCandidateSlots": 0,
+  "bestCandidatePresencePercentage": 0.0,
+  "bestAttempt": null,
+  "attempts": [],
+  "status": "stopped-no-worker",
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "lockedV7EventsProtected": true,
+  "lockedV8TimingProtected": true,
+  "failedAttempt": 1,
+  "failedAttemptName": "default",
+  "totalElapsedSeconds": 287.161
+}

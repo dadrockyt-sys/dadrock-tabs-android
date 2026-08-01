@@ -1,0 +1,435 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "professional-rhythm-chord-section-reference",
+  "song": "Are You Gonna Go My Way",
+  "artist": "Lenny Kravitz",
+  "instrument": "rhythm-guitar",
+  "sourceAuthority": "professional-rhythm-tab-pdf",
+  "sourceMeasures": [
+    33,
+    34,
+    35,
+    36,
+    37,
+    38
+  ],
+  "stringOrder": [
+    "high-e",
+    "B",
+    "G",
+    "D",
+    "A",
+    "low-E"
+  ],
+  "measures": [
+    {
+      "measureNumber": 33,
+      "section": "Chorus",
+      "meter": [
+        4,
+        4
+      ],
+      "chordLabels": [
+        "G6"
+      ],
+      "attacks": [
+        {
+          "phase": 0.0,
+          "voicingFretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "attackKind": "four-string-chord",
+          "sustainToPhase": 0.22
+        },
+        {
+          "phase": 0.2,
+          "voicingFretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "attackKind": "four-string-chord",
+          "sustainToPhase": 0.38
+        },
+        {
+          "phase": 0.36,
+          "voicingFretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "attackKind": "four-string-chord",
+          "sustainToPhase": 0.92
+        }
+      ],
+      "restAfterLastAttack": true
+    },
+    {
+      "measureNumber": 34,
+      "section": "Chorus",
+      "meter": [
+        4,
+        4
+      ],
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "attacks": [
+        {
+          "phase": 0.0,
+          "voicingFretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "attackKind": "five-string-chord",
+          "sustainToPhase": 0.22
+        },
+        {
+          "phase": 0.2,
+          "voicingFretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "attackKind": "five-string-chord",
+          "sustainToPhase": 0.38
+        },
+        {
+          "phase": 0.36,
+          "voicingFretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "attackKind": "five-string-chord",
+          "sustainToPhase": 0.92
+        }
+      ],
+      "restAfterLastAttack": false
+    },
+    {
+      "measureNumber": 35,
+      "section": "Chorus",
+      "meter": [
+        4,
+        4
+      ],
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "attacks": [
+        {
+          "phase": 0.0,
+          "voicingFretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "attackKind": "four-string-power-voicing",
+          "sustainToPhase": 0.18
+        },
+        {
+          "phase": 0.18,
+          "voicingFretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "attackKind": "four-string-power-voicing",
+          "sustainToPhase": 0.34
+        },
+        {
+          "phase": 0.34,
+          "voicingFretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "attackKind": "four-string-power-voicing",
+          "sustainToPhase": 0.5
+        },
+        {
+          "phase": 0.5,
+          "voicingFretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "attackKind": "four-string-power-voicing",
+          "sustainToPhase": 0.66
+        },
+        {
+          "phase": 0.66,
+          "voicingFretsHighToLow": [
+            null,
+            7,
+            7,
+            7,
+            7,
+            null
+          ],
+          "attackKind": "four-string-power-voicing",
+          "sustainToPhase": 0.8
+        },
+        {
+          "phase": 0.8,
+          "voicingFretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "attackKind": "four-string-power-voicing",
+          "sustainToPhase": 0.95
+        }
+      ],
+      "restAfterLastAttack": true
+    },
+    {
+      "measureNumber": 36,
+      "section": "Chorus",
+      "meter": [
+        4,
+        4
+      ],
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "attacks": [
+        {
+          "phase": 0.0,
+          "voicingFretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "attackKind": "three-string-power-voicing",
+          "sustainToPhase": 0.14
+        },
+        {
+          "phase": 0.14,
+          "voicingFretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "attackKind": "three-string-power-voicing",
+          "sustainToPhase": 0.27
+        },
+        {
+          "phase": 0.27,
+          "voicingFretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "attackKind": "three-string-power-voicing",
+          "sustainToPhase": 0.4
+        },
+        {
+          "phase": 0.4,
+          "voicingFretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "attackKind": "three-string-power-voicing",
+          "sustainToPhase": 0.53
+        },
+        {
+          "phase": 0.53,
+          "voicingFretsHighToLow": [
+            null,
+            12,
+            12,
+            12,
+            null,
+            null
+          ],
+          "attackKind": "three-string-power-voicing",
+          "sustainToPhase": 0.67
+        },
+        {
+          "phase": 0.67,
+          "voicingFretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "attackKind": "three-string-power-voicing",
+          "sustainToPhase": 0.92
+        }
+      ],
+      "restAfterLastAttack": true
+    },
+    {
+      "measureNumber": 37,
+      "section": "Chorus",
+      "meter": [
+        4,
+        4
+      ],
+      "chordLabels": [
+        "G6"
+      ],
+      "attacks": [
+        {
+          "phase": 0.0,
+          "voicingFretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "attackKind": "four-string-chord",
+          "sustainToPhase": 0.22
+        },
+        {
+          "phase": 0.2,
+          "voicingFretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "attackKind": "four-string-chord",
+          "sustainToPhase": 0.38
+        },
+        {
+          "phase": 0.36,
+          "voicingFretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "attackKind": "four-string-chord",
+          "sustainToPhase": 0.6
+        }
+      ],
+      "restAfterLastAttack": true
+    },
+    {
+      "measureNumber": 38,
+      "section": "Chorus",
+      "meter": [
+        4,
+        4
+      ],
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "attacks": [
+        {
+          "phase": 0.0,
+          "voicingFretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "attackKind": "five-string-chord",
+          "sustainToPhase": 0.24
+        },
+        {
+          "phase": 0.23,
+          "voicingFretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "attackKind": "five-string-chord",
+          "sustainToPhase": 0.92
+        }
+      ],
+      "restAfterLastAttack": false
+    }
+  ],
+  "summary": {
+    "measureCount": 6,
+    "attackTargetCount": 23,
+    "distinctVoicingCount": 6,
+    "containsChordChangesWithinMeasure": true,
+    "containsRestTargets": true,
+    "containsSustainTargets": true
+  },
+  "protectedCheckpointRequirements": {
+    "professionalScoreMinimumPercentage": 93.06,
+    "lowRegisterScoreMinimumPercentage": 84.38,
+    "midi52MinimumMatches": 32,
+    "midi62MinimumMatches": 16,
+    "fullSongBenchmarkMinimumPassedSlots": 8,
+    "fullSongBenchmarkTotalSlots": 9
+  },
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedPitchCheckpointChanged": false,
+  "readyForTimingCalibration": true,
+  "readyForAutomatedTraining": false
+}

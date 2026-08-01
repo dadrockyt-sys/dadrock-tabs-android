@@ -1,0 +1,30 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "isolated-adapter-pdf",
+  "checks": {
+    "isolatedAdapterOutputPassed": true,
+    "measureCount11": true,
+    "attackCount44": true,
+    "invalidRowsZero": true,
+    "allRowsSixStrings": true,
+    "pdfHeaderValid": true,
+    "pdfEofValid": true,
+    "pdfPageCount2": true,
+    "outputJsonShaUnchanged": true,
+    "outputReportShaUnchanged": true,
+    "productionRendererCalledFalse": true,
+    "productionOutputCreatedFalse": true
+  },
+  "measureCount": 11,
+  "attackCount": 44,
+  "invalidRowCount": 0,
+  "pdfPageCount": 2,
+  "pdfByteLength": 17648,
+  "pdfSha256": "1ddbb13af5b80d92b99c843c7bba2150751554f5d5167ab6c77e527053b95dd1",
+  "benchmarkPassed": true,
+  "readyForHumanIsolatedAdapterPdfInspection": true,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "pdfOutput": "public/gomyway-jimmy-paige-isolated-adapter-preview.pdf"
+}

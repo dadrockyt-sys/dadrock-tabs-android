@@ -1,0 +1,428 @@
+nohup: ignoring input
+2026-08-01T09:13:03.639598+00:00 | Protected snapshot created | public/jimmy-paige-protected-history/20260801T091303Z-before-overnight-loop
+2026-08-01T09:13:03.640179+00:00 | Overnight cycle 1/8 started
+2026-08-01T09:13:03.640319+00:00 | Cycle 1 stage started | protected-93-06-regression
+2026-08-01T09:13:55.643050+00:00 | [protected-93-06-regression] 2026-08-01 09:13:06 UTC | 93.06 regression call submitted | retry=1/3 | callId=fc-01KYY9JEMKWEH6F6ZYDGKYJ0MY
+2026-08-01T09:13:55.643364+00:00 | [protected-93-06-regression] 2026-08-01 09:13:09 UTC | [worker-start heartbeat] retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY9JEMKWEH6F6ZYDGKYJ0MY
+2026-08-01T09:13:55.643594+00:00 | [protected-93-06-regression] 2026-08-01 09:13:24 UTC | [worker-start heartbeat] retry=1/3 | elapsed=18.2s | taskId=- | callId=fc-01KYY9JEMKWEH6F6ZYDGKYJ0MY
+2026-08-01T09:13:55.643838+00:00 | [protected-93-06-regression] 2026-08-01 09:13:40 UTC | [worker-start heartbeat] retry=1/3 | elapsed=33.4s | taskId=- | callId=fc-01KYY9JEMKWEH6F6ZYDGKYJ0MY
+2026-08-01T09:13:55.644052+00:00 | [protected-93-06-regression] 2026-08-01 09:13:55 UTC | 93.06 regression validation complete | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | nineSlots=8/9 | combinedPass=True
+2026-08-01T09:13:55.644298+00:00 | [protected-93-06-regression] 2026-08-01 09:13:55 UTC | Output: public/gomyway-jimmy-paige-93-06-regression-validation.json
+2026-08-01T09:13:55.644475+00:00 | Cycle 1 stage complete | protected-93-06-regression | passed=True | elapsed=52.004s
+2026-08-01T09:13:55.644901+00:00 | Cycle 1 stage started | professional-chord-recovery-sweep
+2026-08-01T09:15:39.887422+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:13:58 UTC | Attempt 1/5 submitted | name=protected-93-06-baseline | retry=1/3 | callId=fc-01KYY9M1PNX7NYV2EAXZGWP91Q
+2026-08-01T09:15:39.887812+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:14:04 UTC | [worker-start heartbeat] attempt=1/5 | name=protected-93-06-baseline | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:15:39.888025+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:14:19 UTC | Attempt 1/5 complete | name=protected-93-06-baseline | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=5/8 | chordFP=1/8 | chordRecall=62.5% | chordF1=71.43%
+2026-08-01T09:15:39.888379+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:14:20 UTC | Attempt 2/5 submitted | name=chord-frame-010 | retry=1/3 | callId=fc-01KYY9MPX85ESGC5ZG16K3V9RT
+2026-08-01T09:15:39.888577+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:14:23 UTC | [worker-start heartbeat] attempt=2/5 | name=chord-frame-010 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:15:39.888781+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:14:38 UTC | Attempt 2/5 complete | name=chord-frame-010 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=2/8 | chordRecall=37.5% | chordF1=46.15%
+2026-08-01T09:15:39.888981+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:14:39 UTC | Attempt 3/5 submitted | name=chord-frame-008 | retry=1/3 | callId=fc-01KYY9N9R0TYD109R14GM444WR
+2026-08-01T09:15:39.889259+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:14:44 UTC | [worker-start heartbeat] attempt=3/5 | name=chord-frame-008 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:15:39.889389+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:14:59 UTC | Attempt 3/5 complete | name=chord-frame-008 | professional=94.44% | low=87.5% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=4/8 | chordFP=2/8 | chordRecall=50.0% | chordF1=57.14%
+2026-08-01T09:15:39.889504+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:15:00 UTC | Attempt 4/5 submitted | name=chord-sensitive-026-010-25 | retry=1/3 | callId=fc-01KYY9NY207Z5PCE6Z9VC3FTR1
+2026-08-01T09:15:39.889623+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:15:04 UTC | [worker-start heartbeat] attempt=4/5 | name=chord-sensitive-026-010-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:15:39.889755+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:15:20 UTC | Attempt 4/5 complete | name=chord-sensitive-026-010-25 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=2/8 | chordFP=3/8 | chordRecall=25.0% | chordF1=30.77%
+2026-08-01T09:15:39.889860+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:15:21 UTC | Attempt 5/5 submitted | name=chord-sensitive-024-008-25 | retry=1/3 | callId=fc-01KYY9PJ6FAPDE16FZ3K602J0F
+2026-08-01T09:15:39.889964+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:15:24 UTC | [worker-start heartbeat] attempt=5/5 | name=chord-sensitive-024-008-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:15:39.890062+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:15:39 UTC | Attempt 5/5 complete | name=chord-sensitive-024-008-25 | professional=96.53% | low=92.19% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=3/8 | chordRecall=37.5% | chordF1=42.86%
+2026-08-01T09:15:39.890200+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:15:39 UTC | Chord recovery sweep complete | best=protected-93-06-baseline | professional=93.06% | TP=5/8 | FP=1/8 | recall=62.5% | F1=71.43%
+2026-08-01T09:15:39.890305+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:15:39 UTC | Output: public/gomyway-jimmy-paige-chord-recovery-extraction-sweep.json
+2026-08-01T09:15:39.890422+00:00 | Cycle 1 stage complete | professional-chord-recovery-sweep | passed=True | elapsed=104.246s
+2026-08-01T09:15:39.890544+00:00 | Cycle 1 stage started | raw-chord-rule-score
+2026-08-01T09:15:44.524795+00:00 | [raw-chord-rule-score] Raw chord evidence rule scoring complete
+2026-08-01T09:15:44.525087+00:00 | [raw-chord-rule-score] Rules tested: 7560
+2026-08-01T09:15:44.525293+00:00 | [raw-chord-rule-score] Best rule: {'phaseStart': 0.75, 'phaseEnd': 1.05, 'frameThreshold': '0.08', 'coactivationMinimum': 0.105, 'sameFrameCountMinimum': 0, 'onsetMinimum': 0.15}
+2026-08-01T09:15:44.525475+00:00 | [raw-chord-rule-score] Full dataset | TP=8/8 | FP=6/8 | precision=57.14% | recall=100.0% | F1=72.73%
+2026-08-01T09:15:44.525637+00:00 | [raw-chord-rule-score] Leave-one-measure-out validation | correct=9/16 | accuracy=56.25%
+2026-08-01T09:15:44.525823+00:00 | [raw-chord-rule-score] Held-out errors: [1, 3, 5, 7, 11, 14, 15]
+2026-08-01T09:15:44.525978+00:00 | [raw-chord-rule-score] Output: public/gomyway-jimmy-paige-raw-chord-evidence-rule-score.json
+2026-08-01T09:15:44.526219+00:00 | Cycle 1 stage complete | raw-chord-rule-score | passed=True | elapsed=4.636s
+2026-08-01T09:15:44.533178+00:00 | Protected snapshot created | public/jimmy-paige-protected-history/20260801T091544Z-after-cycle-1
+2026-08-01T09:15:44.533811+00:00 | Cycle 1 protected; sleeping 900s before next cycle
+2026-08-01T09:15:44.533972+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=899s
+2026-08-01T09:16:44.534254+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=839s
+2026-08-01T09:17:44.534593+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=779s
+2026-08-01T09:18:44.534919+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=719s
+2026-08-01T09:19:44.535395+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=659s
+2026-08-01T09:20:44.535799+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=599s
+2026-08-01T09:21:44.536947+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=539s
+2026-08-01T09:22:44.537351+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=479s
+2026-08-01T09:23:44.537735+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=419s
+2026-08-01T09:24:44.538257+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=359s
+2026-08-01T09:25:44.538828+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=299s
+2026-08-01T09:26:44.539376+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=239s
+2026-08-01T09:27:44.539932+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=179s
+2026-08-01T09:28:44.540557+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=119s
+2026-08-01T09:29:44.541075+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=59s
+2026-08-01T09:30:43.541541+00:00 | [overnight heartbeat] cycle=1 | nextCycleIn=0s
+2026-08-01T09:30:44.541967+00:00 | Overnight cycle 2/8 started
+2026-08-01T09:30:44.542300+00:00 | Cycle 2 stage started | protected-93-06-regression
+2026-08-01T09:31:50.088008+00:00 | [protected-93-06-regression] 2026-08-01 09:30:47 UTC | 93.06 regression call submitted | retry=1/3 | callId=fc-01KYYAJV2N6B9N3356JESV90K8
+2026-08-01T09:31:50.088304+00:00 | [protected-93-06-regression] 2026-08-01 09:30:48 UTC | [worker-start heartbeat] retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYYAJV2N6B9N3356JESV90K8
+2026-08-01T09:31:50.088429+00:00 | [protected-93-06-regression] 2026-08-01 09:31:04 UTC | [worker-start heartbeat] retry=1/3 | elapsed=16.1s | taskId=- | callId=fc-01KYYAJV2N6B9N3356JESV90K8
+2026-08-01T09:31:50.088547+00:00 | [protected-93-06-regression] 2026-08-01 09:31:19 UTC | [worker-start heartbeat] retry=1/3 | elapsed=31.4s | taskId=- | callId=fc-01KYYAJV2N6B9N3356JESV90K8
+2026-08-01T09:31:50.088658+00:00 | [protected-93-06-regression] 2026-08-01 09:31:34 UTC | [worker-start heartbeat] retry=1/3 | elapsed=46.5s | taskId=- | callId=fc-01KYYAJV2N6B9N3356JESV90K8
+2026-08-01T09:31:50.088768+00:00 | [protected-93-06-regression] 2026-08-01 09:31:49 UTC | 93.06 regression validation complete | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | nineSlots=8/9 | combinedPass=True
+2026-08-01T09:31:50.088887+00:00 | [protected-93-06-regression] 2026-08-01 09:31:49 UTC | Output: public/gomyway-jimmy-paige-93-06-regression-validation.json
+2026-08-01T09:31:50.089020+00:00 | Cycle 2 stage complete | protected-93-06-regression | passed=True | elapsed=65.547s
+2026-08-01T09:31:50.089503+00:00 | Cycle 2 stage started | professional-chord-recovery-sweep
+2026-08-01T09:33:45.527748+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:31:52 UTC | Attempt 1/5 submitted | name=protected-93-06-baseline | retry=1/3 | callId=fc-01KYYAMTE0JT7VGJHB51AKHHD0
+2026-08-01T09:33:45.528126+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:31:54 UTC | [worker-start heartbeat] attempt=1/5 | name=protected-93-06-baseline | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:33:45.528272+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:32:10 UTC | Attempt 1/5 complete | name=protected-93-06-baseline | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=5/8 | chordFP=1/8 | chordRecall=62.5% | chordF1=71.43%
+2026-08-01T09:33:45.528474+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:32:11 UTC | Attempt 2/5 submitted | name=chord-frame-010 | retry=1/3 | callId=fc-01KYYANCEF5RP2B46YF9C3K997
+2026-08-01T09:33:45.528619+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:32:15 UTC | [worker-start heartbeat] attempt=2/5 | name=chord-frame-010 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:33:45.528842+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:32:30 UTC | [worker-start heartbeat] attempt=2/5 | name=chord-frame-010 | retry=1/3 | elapsed=19.2s | taskId=-
+2026-08-01T09:33:45.528974+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:32:45 UTC | Attempt 2/5 complete | name=chord-frame-010 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=2/8 | chordRecall=37.5% | chordF1=46.15%
+2026-08-01T09:33:45.529081+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:32:46 UTC | Attempt 3/5 submitted | name=chord-frame-008 | retry=1/3 | callId=fc-01KYYAPF4QTDT4688WJ6H6G930
+2026-08-01T09:33:45.529351+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:32:49 UTC | [worker-start heartbeat] attempt=3/5 | name=chord-frame-008 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:33:45.529541+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:33:05 UTC | Attempt 3/5 complete | name=chord-frame-008 | professional=94.44% | low=87.5% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=4/8 | chordFP=2/8 | chordRecall=50.0% | chordF1=57.14%
+2026-08-01T09:33:45.529741+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:33:06 UTC | Attempt 4/5 submitted | name=chord-sensitive-026-010-25 | retry=1/3 | callId=fc-01KYYAQ26SHWRA3Y1PH2170WEZ
+2026-08-01T09:33:45.529964+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:33:10 UTC | [worker-start heartbeat] attempt=4/5 | name=chord-sensitive-026-010-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:33:45.530177+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:33:25 UTC | Attempt 4/5 complete | name=chord-sensitive-026-010-25 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=2/8 | chordFP=3/8 | chordRecall=25.0% | chordF1=30.77%
+2026-08-01T09:33:45.530355+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:33:26 UTC | Attempt 5/5 submitted | name=chord-sensitive-024-008-25 | retry=1/3 | callId=fc-01KYYAQPEXVGDM2NR8D0ZN8X44
+2026-08-01T09:33:45.530528+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:33:30 UTC | [worker-start heartbeat] attempt=5/5 | name=chord-sensitive-024-008-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:33:45.530697+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:33:45 UTC | Attempt 5/5 complete | name=chord-sensitive-024-008-25 | professional=96.53% | low=92.19% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=3/8 | chordRecall=37.5% | chordF1=42.86%
+2026-08-01T09:33:45.530881+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:33:45 UTC | Chord recovery sweep complete | best=protected-93-06-baseline | professional=93.06% | TP=5/8 | FP=1/8 | recall=62.5% | F1=71.43%
+2026-08-01T09:33:45.531055+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:33:45 UTC | Output: public/gomyway-jimmy-paige-chord-recovery-extraction-sweep.json
+2026-08-01T09:33:45.531329+00:00 | Cycle 2 stage complete | professional-chord-recovery-sweep | passed=True | elapsed=115.442s
+2026-08-01T09:33:45.531525+00:00 | Cycle 2 stage started | raw-chord-rule-score
+2026-08-01T09:33:50.316385+00:00 | [raw-chord-rule-score] Raw chord evidence rule scoring complete
+2026-08-01T09:33:50.316623+00:00 | [raw-chord-rule-score] Rules tested: 7560
+2026-08-01T09:33:50.316855+00:00 | [raw-chord-rule-score] Best rule: {'phaseStart': 0.75, 'phaseEnd': 1.05, 'frameThreshold': '0.08', 'coactivationMinimum': 0.105, 'sameFrameCountMinimum': 0, 'onsetMinimum': 0.15}
+2026-08-01T09:33:50.317054+00:00 | [raw-chord-rule-score] Full dataset | TP=8/8 | FP=6/8 | precision=57.14% | recall=100.0% | F1=72.73%
+2026-08-01T09:33:50.317289+00:00 | [raw-chord-rule-score] Leave-one-measure-out validation | correct=9/16 | accuracy=56.25%
+2026-08-01T09:33:50.317473+00:00 | [raw-chord-rule-score] Held-out errors: [1, 3, 5, 7, 11, 14, 15]
+2026-08-01T09:33:50.317697+00:00 | [raw-chord-rule-score] Output: public/gomyway-jimmy-paige-raw-chord-evidence-rule-score.json
+2026-08-01T09:33:50.317806+00:00 | Cycle 2 stage complete | raw-chord-rule-score | passed=True | elapsed=4.786s
+2026-08-01T09:33:50.324045+00:00 | Protected snapshot created | public/jimmy-paige-protected-history/20260801T093350Z-after-cycle-2
+2026-08-01T09:33:50.324833+00:00 | Cycle 2 protected; sleeping 900s before next cycle
+2026-08-01T09:33:50.324989+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=899s
+2026-08-01T09:34:50.325302+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=839s
+2026-08-01T09:35:50.325894+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=779s
+2026-08-01T09:36:50.326380+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=719s
+2026-08-01T09:37:50.326759+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=659s
+2026-08-01T09:38:50.327378+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=599s
+2026-08-01T09:39:50.328319+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=539s
+2026-08-01T09:40:50.328766+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=479s
+2026-08-01T09:41:50.329397+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=419s
+2026-08-01T09:42:50.329904+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=359s
+2026-08-01T09:43:50.330466+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=299s
+2026-08-01T09:44:50.330860+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=239s
+2026-08-01T09:45:50.331309+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=179s
+2026-08-01T09:46:50.331778+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=119s
+2026-08-01T09:47:50.332446+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=59s
+2026-08-01T09:48:49.332865+00:00 | [overnight heartbeat] cycle=2 | nextCycleIn=0s
+2026-08-01T09:48:50.333364+00:00 | Overnight cycle 3/8 started
+2026-08-01T09:48:50.333786+00:00 | Cycle 3 stage started | protected-93-06-regression
+2026-08-01T09:49:42.825377+00:00 | [protected-93-06-regression] 2026-08-01 09:48:52 UTC | 93.06 regression call submitted | retry=1/3 | callId=fc-01KYYBKYMFD97FTZEKEFY24F1N
+2026-08-01T09:49:42.825779+00:00 | [protected-93-06-regression] 2026-08-01 09:48:56 UTC | [worker-start heartbeat] retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYYBKYMFD97FTZEKEFY24F1N
+2026-08-01T09:49:42.825905+00:00 | [protected-93-06-regression] 2026-08-01 09:49:12 UTC | [worker-start heartbeat] retry=1/3 | elapsed=19.2s | taskId=- | callId=fc-01KYYBKYMFD97FTZEKEFY24F1N
+2026-08-01T09:49:42.826007+00:00 | [protected-93-06-regression] 2026-08-01 09:49:27 UTC | [worker-start heartbeat] retry=1/3 | elapsed=34.3s | taskId=- | callId=fc-01KYYBKYMFD97FTZEKEFY24F1N
+2026-08-01T09:49:42.826129+00:00 | [protected-93-06-regression] 2026-08-01 09:49:42 UTC | 93.06 regression validation complete | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | nineSlots=8/9 | combinedPass=True
+2026-08-01T09:49:42.826231+00:00 | [protected-93-06-regression] 2026-08-01 09:49:42 UTC | Output: public/gomyway-jimmy-paige-93-06-regression-validation.json
+2026-08-01T09:49:42.826341+00:00 | Cycle 3 stage complete | protected-93-06-regression | passed=True | elapsed=52.493s
+2026-08-01T09:49:42.826713+00:00 | Cycle 3 stage started | professional-chord-recovery-sweep
+2026-08-01T09:51:27.809747+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:49:45 UTC | Attempt 1/5 submitted | name=protected-93-06-baseline | retry=1/3 | callId=fc-01KYYBNJ37706GB1GFY1FTC9K7
+2026-08-01T09:51:27.810158+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:49:50 UTC | [worker-start heartbeat] attempt=1/5 | name=protected-93-06-baseline | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:51:27.810445+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:50:06 UTC | Attempt 1/5 complete | name=protected-93-06-baseline | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=5/8 | chordFP=1/8 | chordRecall=62.5% | chordF1=71.43%
+2026-08-01T09:51:27.810640+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:50:07 UTC | Attempt 2/5 submitted | name=chord-frame-010 | retry=1/3 | callId=fc-01KYYBP7NYMDGNW1DNACMYA725
+2026-08-01T09:51:27.810851+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:50:11 UTC | [worker-start heartbeat] attempt=2/5 | name=chord-frame-010 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:51:27.811082+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:50:27 UTC | Attempt 2/5 complete | name=chord-frame-010 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=2/8 | chordRecall=37.5% | chordF1=46.15%
+2026-08-01T09:51:27.811364+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:50:28 UTC | Attempt 3/5 submitted | name=chord-frame-008 | retry=1/3 | callId=fc-01KYYBPVWZKY1238G4TT2ZA1HT
+2026-08-01T09:51:27.811574+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:50:31 UTC | [worker-start heartbeat] attempt=3/5 | name=chord-frame-008 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:51:27.811752+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:50:46 UTC | Attempt 3/5 complete | name=chord-frame-008 | professional=94.44% | low=87.5% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=4/8 | chordFP=2/8 | chordRecall=50.0% | chordF1=57.14%
+2026-08-01T09:51:27.811946+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:50:47 UTC | Attempt 4/5 submitted | name=chord-sensitive-026-010-25 | retry=1/3 | callId=fc-01KYYBQEV6XF5RG8FMZ1AB3KYG
+2026-08-01T09:51:27.812226+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:50:51 UTC | [worker-start heartbeat] attempt=4/5 | name=chord-sensitive-026-010-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:51:27.812421+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:51:07 UTC | Attempt 4/5 complete | name=chord-sensitive-026-010-25 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=2/8 | chordFP=3/8 | chordRecall=25.0% | chordF1=30.77%
+2026-08-01T09:51:27.812605+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:51:08 UTC | Attempt 5/5 submitted | name=chord-sensitive-024-008-25 | retry=1/3 | callId=fc-01KYYBR2TKSZ9KEMYAZG05ARMQ
+2026-08-01T09:51:27.812782+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:51:12 UTC | [worker-start heartbeat] attempt=5/5 | name=chord-sensitive-024-008-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T09:51:27.812962+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:51:27 UTC | Attempt 5/5 complete | name=chord-sensitive-024-008-25 | professional=96.53% | low=92.19% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=3/8 | chordRecall=37.5% | chordF1=42.86%
+2026-08-01T09:51:27.813223+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:51:27 UTC | Chord recovery sweep complete | best=protected-93-06-baseline | professional=93.06% | TP=5/8 | FP=1/8 | recall=62.5% | F1=71.43%
+2026-08-01T09:51:27.813496+00:00 | [professional-chord-recovery-sweep] 2026-08-01 09:51:27 UTC | Output: public/gomyway-jimmy-paige-chord-recovery-extraction-sweep.json
+2026-08-01T09:51:27.813722+00:00 | Cycle 3 stage complete | professional-chord-recovery-sweep | passed=True | elapsed=104.987s
+2026-08-01T09:51:27.813941+00:00 | Cycle 3 stage started | raw-chord-rule-score
+2026-08-01T09:51:32.798904+00:00 | [raw-chord-rule-score] Raw chord evidence rule scoring complete
+2026-08-01T09:51:32.799173+00:00 | [raw-chord-rule-score] Rules tested: 7560
+2026-08-01T09:51:32.799283+00:00 | [raw-chord-rule-score] Best rule: {'phaseStart': 0.75, 'phaseEnd': 1.05, 'frameThreshold': '0.08', 'coactivationMinimum': 0.105, 'sameFrameCountMinimum': 0, 'onsetMinimum': 0.15}
+2026-08-01T09:51:32.799367+00:00 | [raw-chord-rule-score] Full dataset | TP=8/8 | FP=6/8 | precision=57.14% | recall=100.0% | F1=72.73%
+2026-08-01T09:51:32.799440+00:00 | [raw-chord-rule-score] Leave-one-measure-out validation | correct=9/16 | accuracy=56.25%
+2026-08-01T09:51:32.799542+00:00 | [raw-chord-rule-score] Held-out errors: [1, 3, 5, 7, 11, 14, 15]
+2026-08-01T09:51:32.799635+00:00 | [raw-chord-rule-score] Output: public/gomyway-jimmy-paige-raw-chord-evidence-rule-score.json
+2026-08-01T09:51:32.799744+00:00 | Cycle 3 stage complete | raw-chord-rule-score | passed=True | elapsed=4.986s
+2026-08-01T09:51:32.806352+00:00 | Protected snapshot created | public/jimmy-paige-protected-history/20260801T095132Z-after-cycle-3
+2026-08-01T09:51:32.808529+00:00 | Cycle 3 protected; sleeping 900s before next cycle
+2026-08-01T09:51:32.808642+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=899s
+2026-08-01T09:52:32.808862+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=839s
+2026-08-01T09:53:32.809266+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=779s
+2026-08-01T09:54:32.809653+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=719s
+2026-08-01T09:55:32.810039+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=659s
+2026-08-01T09:56:32.810503+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=599s
+2026-08-01T09:57:32.811020+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=539s
+2026-08-01T09:58:32.811710+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=479s
+2026-08-01T09:59:32.812157+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=419s
+2026-08-01T10:00:32.812555+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=359s
+2026-08-01T10:01:32.813061+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=299s
+2026-08-01T10:02:32.813602+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=239s
+2026-08-01T10:03:32.814035+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=179s
+2026-08-01T10:04:32.814534+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=119s
+2026-08-01T10:05:32.814920+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=59s
+2026-08-01T10:06:31.815420+00:00 | [overnight heartbeat] cycle=3 | nextCycleIn=0s
+2026-08-01T10:06:32.815929+00:00 | Overnight cycle 4/8 started
+2026-08-01T10:06:32.816517+00:00 | Cycle 4 stage started | protected-93-06-regression
+2026-08-01T10:07:24.167251+00:00 | [protected-93-06-regression] 2026-08-01 10:06:35 UTC | 93.06 regression call submitted | retry=1/3 | callId=fc-01KYYCMD0J849509F8DC8YMJGX
+2026-08-01T10:07:24.167544+00:00 | [protected-93-06-regression] 2026-08-01 10:06:38 UTC | [worker-start heartbeat] retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYYCMD0J849509F8DC8YMJGX
+2026-08-01T10:07:24.167712+00:00 | [protected-93-06-regression] 2026-08-01 10:06:53 UTC | [worker-start heartbeat] retry=1/3 | elapsed=17.2s | taskId=- | callId=fc-01KYYCMD0J849509F8DC8YMJGX
+2026-08-01T10:07:24.167822+00:00 | [protected-93-06-regression] 2026-08-01 10:07:08 UTC | [worker-start heartbeat] retry=1/3 | elapsed=32.4s | taskId=- | callId=fc-01KYYCMD0J849509F8DC8YMJGX
+2026-08-01T10:07:24.167924+00:00 | [protected-93-06-regression] 2026-08-01 10:07:24 UTC | 93.06 regression validation complete | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | nineSlots=8/9 | combinedPass=True
+2026-08-01T10:07:24.168017+00:00 | [protected-93-06-regression] 2026-08-01 10:07:24 UTC | Output: public/gomyway-jimmy-paige-93-06-regression-validation.json
+2026-08-01T10:07:24.168153+00:00 | Cycle 4 stage complete | protected-93-06-regression | passed=True | elapsed=51.352s
+2026-08-01T10:07:24.168651+00:00 | Cycle 4 stage started | professional-chord-recovery-sweep
+2026-08-01T10:09:03.700269+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:07:26 UTC | Attempt 1/5 submitted | name=protected-93-06-baseline | retry=1/3 | callId=fc-01KYYCNYJQJXF9WDVAXAF3YH4G
+2026-08-01T10:09:03.700590+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:07:32 UTC | [worker-start heartbeat] attempt=1/5 | name=protected-93-06-baseline | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:09:03.700825+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:07:47 UTC | Attempt 1/5 complete | name=protected-93-06-baseline | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=5/8 | chordFP=1/8 | chordRecall=62.5% | chordF1=71.43%
+2026-08-01T10:09:03.700963+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:07:48 UTC | Attempt 2/5 submitted | name=chord-frame-010 | retry=1/3 | callId=fc-01KYYCPKTH6QP4GTCQR6SMB47M
+2026-08-01T10:09:03.701071+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:07:51 UTC | [worker-start heartbeat] attempt=2/5 | name=chord-frame-010 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:09:03.701207+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:08:07 UTC | Attempt 2/5 complete | name=chord-frame-010 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=2/8 | chordRecall=37.5% | chordF1=46.15%
+2026-08-01T10:09:03.701311+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:08:08 UTC | Attempt 3/5 submitted | name=chord-frame-008 | retry=1/3 | callId=fc-01KYYCQ75DKC5FCK7BKPTPTWM3
+2026-08-01T10:09:03.701409+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:08:09 UTC | [worker-start heartbeat] attempt=3/5 | name=chord-frame-008 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:09:03.701513+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:08:24 UTC | Attempt 3/5 complete | name=chord-frame-008 | professional=94.44% | low=87.5% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=4/8 | chordFP=2/8 | chordRecall=50.0% | chordF1=57.14%
+2026-08-01T10:09:03.701620+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:08:26 UTC | Attempt 4/5 submitted | name=chord-sensitive-026-010-25 | retry=1/3 | callId=fc-01KYYCQRS530NQN719N1A1TACT
+2026-08-01T10:09:03.701732+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:08:28 UTC | [worker-start heartbeat] attempt=4/5 | name=chord-sensitive-026-010-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:09:03.701860+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:08:43 UTC | Attempt 4/5 complete | name=chord-sensitive-026-010-25 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=2/8 | chordFP=3/8 | chordRecall=25.0% | chordF1=30.77%
+2026-08-01T10:09:03.701949+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:08:45 UTC | Attempt 5/5 submitted | name=chord-sensitive-024-008-25 | retry=1/3 | callId=fc-01KYYCRB2NDV8JR32PYB18APYD
+2026-08-01T10:09:03.702047+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:08:48 UTC | [worker-start heartbeat] attempt=5/5 | name=chord-sensitive-024-008-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:09:03.702193+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:09:03 UTC | Attempt 5/5 complete | name=chord-sensitive-024-008-25 | professional=96.53% | low=92.19% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=3/8 | chordRecall=37.5% | chordF1=42.86%
+2026-08-01T10:09:03.702276+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:09:03 UTC | Chord recovery sweep complete | best=protected-93-06-baseline | professional=93.06% | TP=5/8 | FP=1/8 | recall=62.5% | F1=71.43%
+2026-08-01T10:09:03.702375+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:09:03 UTC | Output: public/gomyway-jimmy-paige-chord-recovery-extraction-sweep.json
+2026-08-01T10:09:03.702494+00:00 | Cycle 4 stage complete | professional-chord-recovery-sweep | passed=True | elapsed=99.534s
+2026-08-01T10:09:03.702621+00:00 | Cycle 4 stage started | raw-chord-rule-score
+2026-08-01T10:09:08.334187+00:00 | [raw-chord-rule-score] Raw chord evidence rule scoring complete
+2026-08-01T10:09:08.334663+00:00 | [raw-chord-rule-score] Rules tested: 7560
+2026-08-01T10:09:08.334792+00:00 | [raw-chord-rule-score] Best rule: {'phaseStart': 0.75, 'phaseEnd': 1.05, 'frameThreshold': '0.08', 'coactivationMinimum': 0.105, 'sameFrameCountMinimum': 0, 'onsetMinimum': 0.15}
+2026-08-01T10:09:08.334897+00:00 | [raw-chord-rule-score] Full dataset | TP=8/8 | FP=6/8 | precision=57.14% | recall=100.0% | F1=72.73%
+2026-08-01T10:09:08.335001+00:00 | [raw-chord-rule-score] Leave-one-measure-out validation | correct=9/16 | accuracy=56.25%
+2026-08-01T10:09:08.335125+00:00 | [raw-chord-rule-score] Held-out errors: [1, 3, 5, 7, 11, 14, 15]
+2026-08-01T10:09:08.335210+00:00 | [raw-chord-rule-score] Output: public/gomyway-jimmy-paige-raw-chord-evidence-rule-score.json
+2026-08-01T10:09:08.335297+00:00 | Cycle 4 stage complete | raw-chord-rule-score | passed=True | elapsed=4.633s
+2026-08-01T10:09:08.341989+00:00 | Protected snapshot created | public/jimmy-paige-protected-history/20260801T100908Z-after-cycle-4
+2026-08-01T10:09:08.343166+00:00 | Cycle 4 protected; sleeping 900s before next cycle
+2026-08-01T10:09:08.343283+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=899s
+2026-08-01T10:10:08.343475+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=839s
+2026-08-01T10:11:08.343971+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=779s
+2026-08-01T10:12:08.344382+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=719s
+2026-08-01T10:13:08.344767+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=659s
+2026-08-01T10:14:08.345320+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=599s
+2026-08-01T10:15:08.345800+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=539s
+2026-08-01T10:16:08.346276+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=479s
+2026-08-01T10:17:08.346735+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=419s
+2026-08-01T10:18:08.347282+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=359s
+2026-08-01T10:19:08.347657+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=299s
+2026-08-01T10:20:08.348057+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=239s
+2026-08-01T10:21:08.348714+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=179s
+2026-08-01T10:22:08.349301+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=119s
+2026-08-01T10:23:08.349842+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=59s
+2026-08-01T10:24:07.350401+00:00 | [overnight heartbeat] cycle=4 | nextCycleIn=0s
+2026-08-01T10:24:08.350904+00:00 | Overnight cycle 5/8 started
+2026-08-01T10:24:08.351290+00:00 | Cycle 5 stage started | protected-93-06-regression
+2026-08-01T10:25:17.574979+00:00 | [protected-93-06-regression] 2026-08-01 10:24:11 UTC | 93.06 regression call submitted | retry=1/3 | callId=fc-01KYYDMKE6F23F2MS7RHHQE341
+2026-08-01T10:25:17.575431+00:00 | [protected-93-06-regression] 2026-08-01 10:24:16 UTC | [worker-start heartbeat] retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYYDMKE6F23F2MS7RHHQE341
+2026-08-01T10:25:17.575638+00:00 | [protected-93-06-regression] 2026-08-01 10:24:31 UTC | [worker-start heartbeat] retry=1/3 | elapsed=20.2s | taskId=- | callId=fc-01KYYDMKE6F23F2MS7RHHQE341
+2026-08-01T10:25:17.575904+00:00 | [protected-93-06-regression] 2026-08-01 10:24:46 UTC | [worker-start heartbeat] retry=1/3 | elapsed=35.4s | taskId=- | callId=fc-01KYYDMKE6F23F2MS7RHHQE341
+2026-08-01T10:25:17.576213+00:00 | [protected-93-06-regression] 2026-08-01 10:25:01 UTC | [worker-start heartbeat] retry=1/3 | elapsed=50.6s | taskId=- | callId=fc-01KYYDMKE6F23F2MS7RHHQE341
+2026-08-01T10:25:17.576449+00:00 | [protected-93-06-regression] 2026-08-01 10:25:17 UTC | 93.06 regression validation complete | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | nineSlots=8/9 | combinedPass=True
+2026-08-01T10:25:17.576668+00:00 | [protected-93-06-regression] 2026-08-01 10:25:17 UTC | Output: public/gomyway-jimmy-paige-93-06-regression-validation.json
+2026-08-01T10:25:17.576955+00:00 | Cycle 5 stage complete | protected-93-06-regression | passed=True | elapsed=69.226s
+2026-08-01T10:25:17.577543+00:00 | Cycle 5 stage started | professional-chord-recovery-sweep
+2026-08-01T10:27:02.460844+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:25:20 UTC | Attempt 1/5 submitted | name=protected-93-06-baseline | retry=1/3 | callId=fc-01KYYDPPS55KEY0Y1CP3K10PGP
+2026-08-01T10:27:02.461160+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:25:24 UTC | [worker-start heartbeat] attempt=1/5 | name=protected-93-06-baseline | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:27:02.461329+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:25:39 UTC | Attempt 1/5 complete | name=protected-93-06-baseline | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=5/8 | chordFP=1/8 | chordRecall=62.5% | chordF1=71.43%
+2026-08-01T10:27:02.461485+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:25:40 UTC | Attempt 2/5 submitted | name=chord-frame-010 | retry=1/3 | callId=fc-01KYYDQAS6E2QQF0D0185E4TXY
+2026-08-01T10:27:02.461632+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:25:45 UTC | [worker-start heartbeat] attempt=2/5 | name=chord-frame-010 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:27:02.461791+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:26:01 UTC | Attempt 2/5 complete | name=chord-frame-010 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=2/8 | chordRecall=37.5% | chordF1=46.15%
+2026-08-01T10:27:02.461953+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:26:01 UTC | Attempt 3/5 submitted | name=chord-frame-008 | retry=1/3 | callId=fc-01KYYDQZKF3A882R2WER2NEM57
+2026-08-01T10:27:02.462134+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:26:06 UTC | [worker-start heartbeat] attempt=3/5 | name=chord-frame-008 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:27:02.462289+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:26:21 UTC | Attempt 3/5 complete | name=chord-frame-008 | professional=94.44% | low=87.5% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=4/8 | chordFP=2/8 | chordRecall=50.0% | chordF1=57.14%
+2026-08-01T10:27:02.462451+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:26:22 UTC | Attempt 4/5 submitted | name=chord-sensitive-026-010-25 | retry=1/3 | callId=fc-01KYYDRKQ4J3WHPAFSHWGZTFWV
+2026-08-01T10:27:02.462633+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:26:26 UTC | [worker-start heartbeat] attempt=4/5 | name=chord-sensitive-026-010-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:27:02.462770+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:26:42 UTC | Attempt 4/5 complete | name=chord-sensitive-026-010-25 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=2/8 | chordFP=3/8 | chordRecall=25.0% | chordF1=30.77%
+2026-08-01T10:27:02.463176+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:26:42 UTC | Attempt 5/5 submitted | name=chord-sensitive-024-008-25 | retry=1/3 | callId=fc-01KYYDS7H9ZC9CMEBCHZ29KG7X
+2026-08-01T10:27:02.463455+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:26:46 UTC | [worker-start heartbeat] attempt=5/5 | name=chord-sensitive-024-008-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:27:02.463732+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:27:02 UTC | Attempt 5/5 complete | name=chord-sensitive-024-008-25 | professional=96.53% | low=92.19% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=3/8 | chordRecall=37.5% | chordF1=42.86%
+2026-08-01T10:27:02.463964+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:27:02 UTC | Chord recovery sweep complete | best=protected-93-06-baseline | professional=93.06% | TP=5/8 | FP=1/8 | recall=62.5% | F1=71.43%
+2026-08-01T10:27:02.464064+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:27:02 UTC | Output: public/gomyway-jimmy-paige-chord-recovery-extraction-sweep.json
+2026-08-01T10:27:02.464233+00:00 | Cycle 5 stage complete | professional-chord-recovery-sweep | passed=True | elapsed=104.887s
+2026-08-01T10:27:02.464358+00:00 | Cycle 5 stage started | raw-chord-rule-score
+2026-08-01T10:27:07.195887+00:00 | [raw-chord-rule-score] Raw chord evidence rule scoring complete
+2026-08-01T10:27:07.196253+00:00 | [raw-chord-rule-score] Rules tested: 7560
+2026-08-01T10:27:07.196363+00:00 | [raw-chord-rule-score] Best rule: {'phaseStart': 0.75, 'phaseEnd': 1.05, 'frameThreshold': '0.08', 'coactivationMinimum': 0.105, 'sameFrameCountMinimum': 0, 'onsetMinimum': 0.15}
+2026-08-01T10:27:07.196604+00:00 | [raw-chord-rule-score] Full dataset | TP=8/8 | FP=6/8 | precision=57.14% | recall=100.0% | F1=72.73%
+2026-08-01T10:27:07.196815+00:00 | [raw-chord-rule-score] Leave-one-measure-out validation | correct=9/16 | accuracy=56.25%
+2026-08-01T10:27:07.197047+00:00 | [raw-chord-rule-score] Held-out errors: [1, 3, 5, 7, 11, 14, 15]
+2026-08-01T10:27:07.197203+00:00 | [raw-chord-rule-score] Output: public/gomyway-jimmy-paige-raw-chord-evidence-rule-score.json
+2026-08-01T10:27:07.197310+00:00 | Cycle 5 stage complete | raw-chord-rule-score | passed=True | elapsed=4.733s
+2026-08-01T10:27:07.205082+00:00 | Protected snapshot created | public/jimmy-paige-protected-history/20260801T102707Z-after-cycle-5
+2026-08-01T10:27:07.206956+00:00 | Cycle 5 protected; sleeping 900s before next cycle
+2026-08-01T10:27:07.207109+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=899s
+2026-08-01T10:28:07.207387+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=839s
+2026-08-01T10:29:07.207907+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=779s
+2026-08-01T10:30:07.208308+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=719s
+2026-08-01T10:31:07.208660+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=659s
+2026-08-01T10:32:07.209067+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=599s
+2026-08-01T10:33:07.209610+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=539s
+2026-08-01T10:34:07.210129+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=479s
+2026-08-01T10:35:07.210551+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=419s
+2026-08-01T10:36:07.210920+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=359s
+2026-08-01T10:37:07.211299+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=299s
+2026-08-01T10:38:07.211693+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=239s
+2026-08-01T10:39:07.212323+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=179s
+2026-08-01T10:40:07.212734+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=119s
+2026-08-01T10:41:07.213134+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=59s
+2026-08-01T10:42:06.213713+00:00 | [overnight heartbeat] cycle=5 | nextCycleIn=0s
+2026-08-01T10:42:07.217907+00:00 | Overnight cycle 6/8 started
+2026-08-01T10:42:07.218198+00:00 | Cycle 6 stage started | protected-93-06-regression
+2026-08-01T10:42:44.970671+00:00 | [protected-93-06-regression] 2026-08-01 10:42:09 UTC | 93.06 regression call submitted | retry=1/3 | callId=fc-01KYYENH1E5JBG7D11YAYVD86G
+2026-08-01T10:42:44.971354+00:00 | [protected-93-06-regression] 2026-08-01 10:42:14 UTC | [worker-start heartbeat] retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYYENH1E5JBG7D11YAYVD86G
+2026-08-01T10:42:44.971707+00:00 | [protected-93-06-regression] 2026-08-01 10:42:29 UTC | [worker-start heartbeat] retry=1/3 | elapsed=19.3s | taskId=- | callId=fc-01KYYENH1E5JBG7D11YAYVD86G
+2026-08-01T10:42:44.972146+00:00 | [protected-93-06-regression] 2026-08-01 10:42:44 UTC | 93.06 regression validation complete | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | nineSlots=8/9 | combinedPass=True
+2026-08-01T10:42:44.972488+00:00 | [protected-93-06-regression] 2026-08-01 10:42:44 UTC | Output: public/gomyway-jimmy-paige-93-06-regression-validation.json
+2026-08-01T10:42:44.972895+00:00 | Cycle 6 stage complete | protected-93-06-regression | passed=True | elapsed=37.755s
+2026-08-01T10:42:44.973621+00:00 | Cycle 6 stage started | professional-chord-recovery-sweep
+2026-08-01T10:44:28.245225+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:42:48 UTC | Attempt 1/5 submitted | name=protected-93-06-baseline | retry=1/3 | callId=fc-01KYYEPPGTV8QGWBSJ4FYWAP2S
+2026-08-01T10:44:28.245417+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:42:53 UTC | [worker-start heartbeat] attempt=1/5 | name=protected-93-06-baseline | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:44:28.245497+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:43:09 UTC | Attempt 1/5 complete | name=protected-93-06-baseline | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=5/8 | chordFP=1/8 | chordRecall=62.5% | chordF1=71.43%
+2026-08-01T10:44:28.245584+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:43:10 UTC | Attempt 2/5 submitted | name=chord-frame-010 | retry=1/3 | callId=fc-01KYYEQBR55XN18BAP3BEB7J50
+2026-08-01T10:44:28.245707+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:43:14 UTC | [worker-start heartbeat] attempt=2/5 | name=chord-frame-010 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:44:28.245811+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:43:30 UTC | Attempt 2/5 complete | name=chord-frame-010 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=2/8 | chordRecall=37.5% | chordF1=46.15%
+2026-08-01T10:44:28.245931+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:43:30 UTC | Attempt 3/5 submitted | name=chord-frame-008 | retry=1/3 | callId=fc-01KYYER02MBY6G7KJ6M64JZ25W
+2026-08-01T10:44:28.246039+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:43:34 UTC | [worker-start heartbeat] attempt=3/5 | name=chord-frame-008 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:44:28.246163+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:43:50 UTC | Attempt 3/5 complete | name=chord-frame-008 | professional=94.44% | low=87.5% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=4/8 | chordFP=2/8 | chordRecall=50.0% | chordF1=57.14%
+2026-08-01T10:44:28.246279+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:43:50 UTC | Attempt 4/5 submitted | name=chord-sensitive-026-010-25 | retry=1/3 | callId=fc-01KYYERKJ63NRT166W6YV4RYDQ
+2026-08-01T10:44:28.246389+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:43:53 UTC | [worker-start heartbeat] attempt=4/5 | name=chord-sensitive-026-010-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:44:28.246536+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:44:08 UTC | Attempt 4/5 complete | name=chord-sensitive-026-010-25 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=2/8 | chordFP=3/8 | chordRecall=25.0% | chordF1=30.77%
+2026-08-01T10:44:28.246642+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:44:09 UTC | Attempt 5/5 submitted | name=chord-sensitive-024-008-25 | retry=1/3 | callId=fc-01KYYES5VG1V5WVJT3TK0M7P1S
+2026-08-01T10:44:28.246745+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:44:12 UTC | [worker-start heartbeat] attempt=5/5 | name=chord-sensitive-024-008-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T10:44:28.246837+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:44:28 UTC | Attempt 5/5 complete | name=chord-sensitive-024-008-25 | professional=96.53% | low=92.19% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=3/8 | chordRecall=37.5% | chordF1=42.86%
+2026-08-01T10:44:28.246922+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:44:28 UTC | Chord recovery sweep complete | best=protected-93-06-baseline | professional=93.06% | TP=5/8 | FP=1/8 | recall=62.5% | F1=71.43%
+2026-08-01T10:44:28.247013+00:00 | [professional-chord-recovery-sweep] 2026-08-01 10:44:28 UTC | Output: public/gomyway-jimmy-paige-chord-recovery-extraction-sweep.json
+2026-08-01T10:44:28.247304+00:00 | Cycle 6 stage complete | professional-chord-recovery-sweep | passed=True | elapsed=103.274s
+2026-08-01T10:44:28.247449+00:00 | Cycle 6 stage started | raw-chord-rule-score
+2026-08-01T10:44:33.019198+00:00 | [raw-chord-rule-score] Raw chord evidence rule scoring complete
+2026-08-01T10:44:33.019527+00:00 | [raw-chord-rule-score] Rules tested: 7560
+2026-08-01T10:44:33.019735+00:00 | [raw-chord-rule-score] Best rule: {'phaseStart': 0.75, 'phaseEnd': 1.05, 'frameThreshold': '0.08', 'coactivationMinimum': 0.105, 'sameFrameCountMinimum': 0, 'onsetMinimum': 0.15}
+2026-08-01T10:44:33.019910+00:00 | [raw-chord-rule-score] Full dataset | TP=8/8 | FP=6/8 | precision=57.14% | recall=100.0% | F1=72.73%
+2026-08-01T10:44:33.020079+00:00 | [raw-chord-rule-score] Leave-one-measure-out validation | correct=9/16 | accuracy=56.25%
+2026-08-01T10:44:33.020309+00:00 | [raw-chord-rule-score] Held-out errors: [1, 3, 5, 7, 11, 14, 15]
+2026-08-01T10:44:33.020480+00:00 | [raw-chord-rule-score] Output: public/gomyway-jimmy-paige-raw-chord-evidence-rule-score.json
+2026-08-01T10:44:33.020677+00:00 | Cycle 6 stage complete | raw-chord-rule-score | passed=True | elapsed=4.773s
+2026-08-01T10:44:33.028913+00:00 | Protected snapshot created | public/jimmy-paige-protected-history/20260801T104433Z-after-cycle-6
+2026-08-01T10:44:33.030325+00:00 | Cycle 6 protected; sleeping 900s before next cycle
+2026-08-01T10:44:33.030548+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=899s
+2026-08-01T10:45:33.030906+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=839s
+2026-08-01T10:46:33.031420+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=779s
+2026-08-01T10:47:33.031773+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=719s
+2026-08-01T10:48:33.032169+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=659s
+2026-08-01T10:49:33.032575+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=599s
+2026-08-01T10:50:33.032960+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=539s
+2026-08-01T10:51:33.033455+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=479s
+2026-08-01T10:52:33.034019+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=419s
+2026-08-01T10:53:33.034632+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=359s
+2026-08-01T10:54:33.035269+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=299s
+2026-08-01T10:55:33.035721+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=239s
+2026-08-01T10:56:33.036384+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=179s
+2026-08-01T10:57:33.037840+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=119s
+2026-08-01T10:58:33.039090+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=59s
+2026-08-01T10:59:32.039581+00:00 | [overnight heartbeat] cycle=6 | nextCycleIn=0s
+2026-08-01T10:59:33.039938+00:00 | Overnight cycle 7/8 started
+2026-08-01T10:59:33.040199+00:00 | Cycle 7 stage started | protected-93-06-regression
+2026-08-01T11:00:11.225318+00:00 | [protected-93-06-regression] 2026-08-01 10:59:36 UTC | 93.06 regression call submitted | retry=1/3 | callId=fc-01KYYFNESTY0SYZSQVQB34HX0F
+2026-08-01T11:00:11.225541+00:00 | [protected-93-06-regression] 2026-08-01 10:59:40 UTC | [worker-start heartbeat] retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYYFNESTY0SYZSQVQB34HX0F
+2026-08-01T11:00:11.225650+00:00 | [protected-93-06-regression] 2026-08-01 10:59:55 UTC | [worker-start heartbeat] retry=1/3 | elapsed=19.2s | taskId=- | callId=fc-01KYYFNESTY0SYZSQVQB34HX0F
+2026-08-01T11:00:11.225756+00:00 | [protected-93-06-regression] 2026-08-01 11:00:11 UTC | 93.06 regression validation complete | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | nineSlots=8/9 | combinedPass=True
+2026-08-01T11:00:11.225858+00:00 | [protected-93-06-regression] 2026-08-01 11:00:11 UTC | Output: public/gomyway-jimmy-paige-93-06-regression-validation.json
+2026-08-01T11:00:11.225981+00:00 | Cycle 7 stage complete | protected-93-06-regression | passed=True | elapsed=38.186s
+2026-08-01T11:00:11.226409+00:00 | Cycle 7 stage started | professional-chord-recovery-sweep
+2026-08-01T11:01:50.964661+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:00:13 UTC | Attempt 1/5 submitted | name=protected-93-06-baseline | retry=1/3 | callId=fc-01KYYFPKEGM97D87TC8KWC50RG
+2026-08-01T11:01:50.965366+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:00:15 UTC | [worker-start heartbeat] attempt=1/5 | name=protected-93-06-baseline | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T11:01:50.965705+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:00:30 UTC | Attempt 1/5 complete | name=protected-93-06-baseline | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=5/8 | chordFP=1/8 | chordRecall=62.5% | chordF1=71.43%
+2026-08-01T11:01:50.966153+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:00:31 UTC | Attempt 2/5 submitted | name=chord-frame-010 | retry=1/3 | callId=fc-01KYYFQ4HAE2SRGWM2NTRCQX37
+2026-08-01T11:01:50.967571+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:00:35 UTC | [worker-start heartbeat] attempt=2/5 | name=chord-frame-010 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T11:01:50.967765+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:00:50 UTC | Attempt 2/5 complete | name=chord-frame-010 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=2/8 | chordRecall=37.5% | chordF1=46.15%
+2026-08-01T11:01:50.967930+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:00:51 UTC | Attempt 3/5 submitted | name=chord-frame-008 | retry=1/3 | callId=fc-01KYYFQRNJR3DEKGY59VV1CMR0
+2026-08-01T11:01:50.968288+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:00:55 UTC | [worker-start heartbeat] attempt=3/5 | name=chord-frame-008 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T11:01:50.968412+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:01:10 UTC | Attempt 3/5 complete | name=chord-frame-008 | professional=94.44% | low=87.5% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=4/8 | chordFP=2/8 | chordRecall=50.0% | chordF1=57.14%
+2026-08-01T11:01:50.968514+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:01:11 UTC | Attempt 4/5 submitted | name=chord-sensitive-026-010-25 | retry=1/3 | callId=fc-01KYYFRBS139F8MMZY9QDH8Z53
+2026-08-01T11:01:50.968605+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:01:13 UTC | [worker-start heartbeat] attempt=4/5 | name=chord-sensitive-026-010-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T11:01:50.968823+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:01:29 UTC | Attempt 4/5 complete | name=chord-sensitive-026-010-25 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=2/8 | chordFP=3/8 | chordRecall=25.0% | chordF1=30.77%
+2026-08-01T11:01:50.968947+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:01:30 UTC | Attempt 5/5 submitted | name=chord-sensitive-024-008-25 | retry=1/3 | callId=fc-01KYYFRY18KWGRPQECZJAJV6FB
+2026-08-01T11:01:50.969028+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:01:35 UTC | [worker-start heartbeat] attempt=5/5 | name=chord-sensitive-024-008-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T11:01:50.969127+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:01:50 UTC | Attempt 5/5 complete | name=chord-sensitive-024-008-25 | professional=96.53% | low=92.19% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=3/8 | chordRecall=37.5% | chordF1=42.86%
+2026-08-01T11:01:50.969419+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:01:50 UTC | Chord recovery sweep complete | best=protected-93-06-baseline | professional=93.06% | TP=5/8 | FP=1/8 | recall=62.5% | F1=71.43%
+2026-08-01T11:01:50.969534+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:01:50 UTC | Output: public/gomyway-jimmy-paige-chord-recovery-extraction-sweep.json
+2026-08-01T11:01:50.969650+00:00 | Cycle 7 stage complete | professional-chord-recovery-sweep | passed=True | elapsed=99.743s
+2026-08-01T11:01:50.969769+00:00 | Cycle 7 stage started | raw-chord-rule-score
+2026-08-01T11:01:55.542184+00:00 | [raw-chord-rule-score] Raw chord evidence rule scoring complete
+2026-08-01T11:01:55.542391+00:00 | [raw-chord-rule-score] Rules tested: 7560
+2026-08-01T11:01:55.542479+00:00 | [raw-chord-rule-score] Best rule: {'phaseStart': 0.75, 'phaseEnd': 1.05, 'frameThreshold': '0.08', 'coactivationMinimum': 0.105, 'sameFrameCountMinimum': 0, 'onsetMinimum': 0.15}
+2026-08-01T11:01:55.542561+00:00 | [raw-chord-rule-score] Full dataset | TP=8/8 | FP=6/8 | precision=57.14% | recall=100.0% | F1=72.73%
+2026-08-01T11:01:55.542653+00:00 | [raw-chord-rule-score] Leave-one-measure-out validation | correct=9/16 | accuracy=56.25%
+2026-08-01T11:01:55.542747+00:00 | [raw-chord-rule-score] Held-out errors: [1, 3, 5, 7, 11, 14, 15]
+2026-08-01T11:01:55.542835+00:00 | [raw-chord-rule-score] Output: public/gomyway-jimmy-paige-raw-chord-evidence-rule-score.json
+2026-08-01T11:01:55.542947+00:00 | Cycle 7 stage complete | raw-chord-rule-score | passed=True | elapsed=4.573s
+2026-08-01T11:01:55.549999+00:00 | Protected snapshot created | public/jimmy-paige-protected-history/20260801T110155Z-after-cycle-7
+2026-08-01T11:01:55.551417+00:00 | Cycle 7 protected; sleeping 900s before next cycle
+2026-08-01T11:01:55.551540+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=899s
+2026-08-01T11:02:55.551766+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=839s
+2026-08-01T11:03:55.552203+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=779s
+2026-08-01T11:04:55.552624+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=719s
+2026-08-01T11:05:55.553025+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=659s
+2026-08-01T11:06:55.553456+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=599s
+2026-08-01T11:07:55.553937+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=539s
+2026-08-01T11:08:55.554343+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=479s
+2026-08-01T11:09:55.554761+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=419s
+2026-08-01T11:10:55.555176+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=359s
+2026-08-01T11:11:55.555587+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=299s
+2026-08-01T11:12:55.556011+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=239s
+2026-08-01T11:13:55.556448+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=179s
+2026-08-01T11:14:55.556930+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=119s
+2026-08-01T11:15:55.557475+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=59s
+2026-08-01T11:16:54.557843+00:00 | [overnight heartbeat] cycle=7 | nextCycleIn=0s
+2026-08-01T11:16:55.562459+00:00 | Overnight cycle 8/8 started
+2026-08-01T11:16:55.562737+00:00 | Cycle 8 stage started | protected-93-06-regression
+2026-08-01T11:17:47.706700+00:00 | [protected-93-06-regression] 2026-08-01 11:16:58 UTC | 93.06 regression call submitted | retry=1/3 | callId=fc-01KYYGN8NEGXBNKPDSBBKTQ5PR
+2026-08-01T11:17:47.707061+00:00 | [protected-93-06-regression] 2026-08-01 11:17:01 UTC | [worker-start heartbeat] retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYYGN8NEGXBNKPDSBBKTQ5PR
+2026-08-01T11:17:47.707334+00:00 | [protected-93-06-regression] 2026-08-01 11:17:16 UTC | [worker-start heartbeat] retry=1/3 | elapsed=18.3s | taskId=- | callId=fc-01KYYGN8NEGXBNKPDSBBKTQ5PR
+2026-08-01T11:17:47.707438+00:00 | [protected-93-06-regression] 2026-08-01 11:17:32 UTC | [worker-start heartbeat] retry=1/3 | elapsed=33.5s | taskId=- | callId=fc-01KYYGN8NEGXBNKPDSBBKTQ5PR
+2026-08-01T11:17:47.707541+00:00 | [protected-93-06-regression] 2026-08-01 11:17:47 UTC | 93.06 regression validation complete | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | nineSlots=8/9 | combinedPass=True
+2026-08-01T11:17:47.707652+00:00 | [protected-93-06-regression] 2026-08-01 11:17:47 UTC | Output: public/gomyway-jimmy-paige-93-06-regression-validation.json
+2026-08-01T11:17:47.707770+00:00 | Cycle 8 stage complete | protected-93-06-regression | passed=True | elapsed=52.145s
+2026-08-01T11:17:47.708209+00:00 | Cycle 8 stage started | professional-chord-recovery-sweep
+2026-08-01T11:19:32.956544+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:17:50 UTC | Attempt 1/5 submitted | name=protected-93-06-baseline | retry=1/3 | callId=fc-01KYYGPV9K0P79AZ4EFPBVJM5Y
+2026-08-01T11:19:32.956757+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:17:55 UTC | [worker-start heartbeat] attempt=1/5 | name=protected-93-06-baseline | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T11:19:32.956835+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:18:11 UTC | Attempt 1/5 complete | name=protected-93-06-baseline | professional=93.06% | low=84.38% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=5/8 | chordFP=1/8 | chordRecall=62.5% | chordF1=71.43%
+2026-08-01T11:19:32.956911+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:18:11 UTC | Attempt 2/5 submitted | name=chord-frame-010 | retry=1/3 | callId=fc-01KYYGQGB3TTF1WB1PJY9FV1D9
+2026-08-01T11:19:32.957004+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:18:16 UTC | [worker-start heartbeat] attempt=2/5 | name=chord-frame-010 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T11:19:32.957092+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:18:31 UTC | Attempt 2/5 complete | name=chord-frame-010 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=2/8 | chordRecall=37.5% | chordF1=46.15%
+2026-08-01T11:19:32.957232+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:18:32 UTC | Attempt 3/5 submitted | name=chord-frame-008 | retry=1/3 | callId=fc-01KYYGR4GKGX2KAN2HZYGEFBZG
+2026-08-01T11:19:32.957350+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:18:37 UTC | [worker-start heartbeat] attempt=3/5 | name=chord-frame-008 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T11:19:32.957448+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:18:53 UTC | Attempt 3/5 complete | name=chord-frame-008 | professional=94.44% | low=87.5% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=4/8 | chordFP=2/8 | chordRecall=50.0% | chordF1=57.14%
+2026-08-01T11:19:32.957560+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:18:54 UTC | Attempt 4/5 submitted | name=chord-sensitive-026-010-25 | retry=1/3 | callId=fc-01KYYGRSVMFE44F0YX2J5NFE8G
+2026-08-01T11:19:32.959181+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:18:57 UTC | [worker-start heartbeat] attempt=4/5 | name=chord-sensitive-026-010-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T11:19:32.959528+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:19:13 UTC | Attempt 4/5 complete | name=chord-sensitive-026-010-25 | professional=95.14% | low=89.06% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=2/8 | chordFP=3/8 | chordRecall=25.0% | chordF1=30.77%
+2026-08-01T11:19:32.960743+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:19:14 UTC | Attempt 5/5 submitted | name=chord-sensitive-024-008-25 | retry=1/3 | callId=fc-01KYYGSD40RGYH6J86K0CD1QJG
+2026-08-01T11:19:32.961192+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:19:17 UTC | [worker-start heartbeat] attempt=5/5 | name=chord-sensitive-024-008-25 | retry=1/3 | elapsed=0.0s | taskId=-
+2026-08-01T11:19:32.961413+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:19:32 UTC | Attempt 5/5 complete | name=chord-sensitive-024-008-25 | professional=96.53% | low=92.19% | MIDI52=32/32 | MIDI62=16/16 | pitchGuard=True | chordTP=3/8 | chordFP=3/8 | chordRecall=37.5% | chordF1=42.86%
+2026-08-01T11:19:32.961616+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:19:32 UTC | Chord recovery sweep complete | best=protected-93-06-baseline | professional=93.06% | TP=5/8 | FP=1/8 | recall=62.5% | F1=71.43%
+2026-08-01T11:19:32.961881+00:00 | [professional-chord-recovery-sweep] 2026-08-01 11:19:32 UTC | Output: public/gomyway-jimmy-paige-chord-recovery-extraction-sweep.json
+2026-08-01T11:19:32.962070+00:00 | Cycle 8 stage complete | professional-chord-recovery-sweep | passed=True | elapsed=105.254s
+2026-08-01T11:19:32.962315+00:00 | Cycle 8 stage started | raw-chord-rule-score
+2026-08-01T11:19:37.683474+00:00 | [raw-chord-rule-score] Raw chord evidence rule scoring complete
+2026-08-01T11:19:37.684024+00:00 | [raw-chord-rule-score] Rules tested: 7560
+2026-08-01T11:19:37.684385+00:00 | [raw-chord-rule-score] Best rule: {'phaseStart': 0.75, 'phaseEnd': 1.05, 'frameThreshold': '0.08', 'coactivationMinimum': 0.105, 'sameFrameCountMinimum': 0, 'onsetMinimum': 0.15}
+2026-08-01T11:19:37.684651+00:00 | [raw-chord-rule-score] Full dataset | TP=8/8 | FP=6/8 | precision=57.14% | recall=100.0% | F1=72.73%
+2026-08-01T11:19:37.684810+00:00 | [raw-chord-rule-score] Leave-one-measure-out validation | correct=9/16 | accuracy=56.25%
+2026-08-01T11:19:37.684964+00:00 | [raw-chord-rule-score] Held-out errors: [1, 3, 5, 7, 11, 14, 15]
+2026-08-01T11:19:37.685141+00:00 | [raw-chord-rule-score] Output: public/gomyway-jimmy-paige-raw-chord-evidence-rule-score.json
+2026-08-01T11:19:37.685336+00:00 | Cycle 8 stage complete | raw-chord-rule-score | passed=True | elapsed=4.723s
+2026-08-01T11:19:37.694581+00:00 | Protected snapshot created | public/jimmy-paige-protected-history/20260801T111937Z-after-cycle-8
+2026-08-01T11:19:37.702991+00:00 | Protected snapshot created | public/jimmy-paige-protected-history/20260801T111937Z-after-overnight-loop
+2026-08-01T11:19:37.706688+00:00 | Overnight loop finished | cycles=8 | stopReason=time-limit-reached | protectedRegression=True

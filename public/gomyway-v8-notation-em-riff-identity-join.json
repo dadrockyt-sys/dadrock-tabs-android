@@ -1,0 +1,272 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-notation-em-riff-read-only-identity-join",
+  "passed": true,
+  "readyForExactScoring": false,
+  "verseMeasuresInspected": [
+    18,
+    32
+  ],
+  "notationIdentityEventCount": 422,
+  "matchedProtectedEventCount": 322,
+  "protectedSlotCount": 9,
+  "slotsWithIdentityEvidence": 9,
+  "patternEvidence": {
+    "em-riff-a": [
+      {
+        "quantizedStep": 2,
+        "identityCandidates": [
+          {
+            "stringIndex": 5,
+            "fret": 0,
+            "support": 45
+          }
+        ],
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 45
+        },
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 6,
+        "identityCandidates": [
+          {
+            "stringIndex": 3,
+            "fret": 2,
+            "support": 10
+          },
+          {
+            "stringIndex": 5,
+            "fret": 0,
+            "support": 6
+          },
+          {
+            "stringIndex": 0,
+            "fret": 3,
+            "support": 5
+          }
+        ],
+        "leadingIdentity": {
+          "stringIndex": 3,
+          "fret": 2,
+          "support": 10
+        },
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 10,
+        "identityCandidates": [
+          {
+            "stringIndex": 5,
+            "fret": 0,
+            "support": 26
+          },
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 10
+          },
+          {
+            "stringIndex": 0,
+            "fret": 0,
+            "support": 5
+          }
+        ],
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 26
+        },
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 14,
+        "identityCandidates": [
+          {
+            "stringIndex": 5,
+            "fret": 0,
+            "support": 30
+          },
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 5
+          }
+        ],
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 30
+        },
+        "manualProfessionalVerificationRequired": true
+      }
+    ],
+    "em-riff-b": [
+      {
+        "quantizedStep": 2,
+        "identityCandidates": [
+          {
+            "stringIndex": 5,
+            "fret": 0,
+            "support": 30
+          },
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 5
+          },
+          {
+            "stringIndex": 5,
+            "fret": 2,
+            "support": 5
+          }
+        ],
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 30
+        },
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 4,
+        "identityCandidates": [
+          {
+            "stringIndex": 3,
+            "fret": 2,
+            "support": 10
+          },
+          {
+            "stringIndex": 5,
+            "fret": 1,
+            "support": 10
+          },
+          {
+            "stringIndex": 5,
+            "fret": 0,
+            "support": 7
+          },
+          {
+            "stringIndex": 0,
+            "fret": 0,
+            "support": 5
+          }
+        ],
+        "leadingIdentity": {
+          "stringIndex": 3,
+          "fret": 2,
+          "support": 10
+        },
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 6,
+        "identityCandidates": [
+          {
+            "stringIndex": 5,
+            "fret": 0,
+            "support": 16
+          },
+          {
+            "stringIndex": 3,
+            "fret": 2,
+            "support": 5
+          },
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 5
+          }
+        ],
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 16
+        },
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 10,
+        "identityCandidates": [
+          {
+            "stringIndex": 5,
+            "fret": 0,
+            "support": 21
+          },
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 5
+          },
+          {
+            "stringIndex": 5,
+            "fret": 1,
+            "support": 5
+          }
+        ],
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 21
+        },
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 14,
+        "identityCandidates": [
+          {
+            "stringIndex": 5,
+            "fret": 0,
+            "support": 25
+          },
+          {
+            "stringIndex": 0,
+            "fret": 3,
+            "support": 16
+          },
+          {
+            "stringIndex": 0,
+            "fret": 14,
+            "support": 5
+          },
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 5
+          }
+        ],
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 25
+        },
+        "manualProfessionalVerificationRequired": true
+      }
+    ]
+  },
+  "checks": {
+    "timingAlignmentPassed": true,
+    "notationIdentityEventsPresent": true,
+    "protectedTimingCorrect": true,
+    "identityEvidenceFound": true,
+    "readOnlyJoin": true,
+    "lockedV7EventsProtected": true,
+    "lockedIntroTemplateProtected": true,
+    "lockedVerse1TemplateProtected": true,
+    "professionalReferenceMayScoreButNotGenerate": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "safeguards": {
+    "notationSourceReadOnly": true,
+    "doesNotModifyV8Notation": true,
+    "doesNotCopyProfessionalNotesIntoJimmy": true,
+    "doesNotPromoteWithoutManualVerification": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false
+  },
+  "nextStep": "Compare each leading V8 notation identity against the visible professional Em riff. Only confirmed string/fret identities and techniques may enter the scoring reference."
+}

@@ -1,0 +1,56 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-read-only-post-verse1-rhythm-boundary-confirmation",
+  "passed": true,
+  "boundaryConfirmed": true,
+  "confirmedBoundaryStartMeasure": 37,
+  "confirmedBoundaryEndMeasure": 38,
+  "candidateBoundaryScore": 0.277778,
+  "previousPairBoundaryScore": 0.222222,
+  "nextPairBoundaryScore": 0.055556,
+  "localProminence": 0.055556,
+  "preBoundaryMaximumScore": 0.222222,
+  "candidateDirectAudioEventCount": 10,
+  "candidateObservedSteps": [
+    2,
+    4,
+    9,
+    10,
+    14,
+    18,
+    20,
+    22,
+    24
+  ],
+  "candidateMatchedObservedSteps": [
+    2,
+    9,
+    10,
+    14,
+    18,
+    20,
+    22
+  ],
+  "candidateUnmatchedObservedSteps": [
+    4,
+    24
+  ],
+  "checks": {
+    "boundaryScanPassed": true,
+    "verse1RhythmTemplateLocked": true,
+    "introRhythmTemplateLocked": true,
+    "expectedBoundaryPairSelected": true,
+    "boundaryScoreMeetsThreshold": true,
+    "boundaryHasDirectAudioEvidence": true,
+    "boundaryBeatsImmediateNeighbors": true,
+    "preBoundaryPairsRemainMoreVerseLike": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "usesDirectAudioEvidence": true,
+  "readOnly": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "trainingRule": "This gate confirms only whether measures 37-38 are the strongest local rhythm change immediately after Verse 1. It does not name or lock the following section, copy professional notes, synthesize attacks, alter pitches, frets, techniques, durations, locked V7 events, locked intro or Verse 1 rhythm templates, or the PDF renderer. A later read-only benchmark must analyze repetition after the confirmed boundary before any new section template can be proposed."
+}

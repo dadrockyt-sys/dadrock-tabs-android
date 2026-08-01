@@ -1,0 +1,26 @@
+2026-07-31 22:54:03 UTC | Starting retrying Jimmy PAIge training loop | payload=1.30 MiB | attempts=6 | workerStartTimeout=90s | maxRetries=3
+2026-07-31 22:54:04 UTC | Attempt 1/6 submitted | name=default | retry=1/3 | callId=fc-01KYX64ZF4V8MC7V18GFY1YXKX
+2026-07-31 22:54:10 UTC | [worker-start heartbeat] attempt=1/6 | retry=1/3 | elapsed=7.2s | callId=fc-01KYX64ZF4V8MC7V18GFY1YXKX
+2026-07-31 22:54:25 UTC | [worker-start heartbeat] attempt=1/6 | retry=1/3 | elapsed=22.3s | callId=fc-01KYX64ZF4V8MC7V18GFY1YXKX
+2026-07-31 22:54:40 UTC | [worker-start heartbeat] attempt=1/6 | retry=1/3 | elapsed=37.6s | callId=fc-01KYX64ZF4V8MC7V18GFY1YXKX
+2026-07-31 22:54:56 UTC | [worker-start heartbeat] attempt=1/6 | retry=1/3 | elapsed=53.0s | callId=fc-01KYX64ZF4V8MC7V18GFY1YXKX
+2026-07-31 22:55:11 UTC | [worker-start heartbeat] attempt=1/6 | retry=1/3 | elapsed=68.2s | callId=fc-01KYX64ZF4V8MC7V18GFY1YXKX
+2026-07-31 22:55:26 UTC | [worker-start heartbeat] attempt=1/6 | retry=1/3 | elapsed=83.4s | callId=fc-01KYX64ZF4V8MC7V18GFY1YXKX
+2026-07-31 22:55:41 UTC | Attempt 1/6 cancelled after worker-start timeout | retry=1/3 | callId=fc-01KYX64ZF4V8MC7V18GFY1YXKX
+2026-07-31 22:55:45 UTC | Attempt 1/6 submitted | name=default | retry=2/3 | callId=fc-01KYX681DV2373SR7WJRRE9XB3
+2026-07-31 22:55:49 UTC | [worker-start heartbeat] attempt=1/6 | retry=2/3 | elapsed=8.0s | callId=fc-01KYX681DV2373SR7WJRRE9XB3
+2026-07-31 22:56:04 UTC | [worker-start heartbeat] attempt=1/6 | retry=2/3 | elapsed=23.4s | callId=fc-01KYX681DV2373SR7WJRRE9XB3
+2026-07-31 22:56:19 UTC | [worker-start heartbeat] attempt=1/6 | retry=2/3 | elapsed=38.5s | callId=fc-01KYX681DV2373SR7WJRRE9XB3
+2026-07-31 22:56:35 UTC | [worker-start heartbeat] attempt=1/6 | retry=2/3 | elapsed=53.7s | callId=fc-01KYX681DV2373SR7WJRRE9XB3
+2026-07-31 22:56:50 UTC | [worker-start heartbeat] attempt=1/6 | retry=2/3 | elapsed=68.9s | callId=fc-01KYX681DV2373SR7WJRRE9XB3
+2026-07-31 22:57:05 UTC | [worker-start heartbeat] attempt=1/6 | retry=2/3 | elapsed=84.1s | callId=fc-01KYX681DV2373SR7WJRRE9XB3
+2026-07-31 22:57:20 UTC | Attempt 1/6 cancelled after worker-start timeout | retry=2/3 | callId=fc-01KYX681DV2373SR7WJRRE9XB3
+2026-07-31 22:57:21 UTC | Attempt 1/6 submitted | name=default | retry=3/3 | callId=fc-01KYX6AZJM8Q7Q3WR9ZNDYCFAG
+2026-07-31 22:57:26 UTC | [worker-start heartbeat] attempt=1/6 | retry=3/3 | elapsed=6.1s | callId=fc-01KYX6AZJM8Q7Q3WR9ZNDYCFAG
+2026-07-31 22:57:41 UTC | [worker-start heartbeat] attempt=1/6 | retry=3/3 | elapsed=21.3s | callId=fc-01KYX6AZJM8Q7Q3WR9ZNDYCFAG
+2026-07-31 22:57:57 UTC | [worker-start heartbeat] attempt=1/6 | retry=3/3 | elapsed=36.5s | callId=fc-01KYX6AZJM8Q7Q3WR9ZNDYCFAG
+2026-07-31 22:58:12 UTC | [worker-start heartbeat] attempt=1/6 | retry=3/3 | elapsed=51.6s | callId=fc-01KYX6AZJM8Q7Q3WR9ZNDYCFAG
+2026-07-31 22:58:27 UTC | [worker-start heartbeat] attempt=1/6 | retry=3/3 | elapsed=66.8s | callId=fc-01KYX6AZJM8Q7Q3WR9ZNDYCFAG
+2026-07-31 22:58:42 UTC | [worker-start heartbeat] attempt=1/6 | retry=3/3 | elapsed=81.9s | callId=fc-01KYX6AZJM8Q7Q3WR9ZNDYCFAG
+2026-07-31 22:58:57 UTC | Attempt 1/6 cancelled after worker-start timeout | retry=3/3 | callId=fc-01KYX6AZJM8Q7Q3WR9ZNDYCFAG
+2026-07-31 22:58:57 UTC | Training stopped: attempt 1/6 could not obtain a worker after 3 retries.

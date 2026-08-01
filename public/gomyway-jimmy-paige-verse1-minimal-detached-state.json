@@ -1,0 +1,22 @@
+{
+  "benchmarkVersion": 8,
+  "status": "submitted",
+  "callId": "fc-01KYX0BMSJ4YCDQ4PJYDKH2JDK",
+  "startedAtEpoch": 1785532369.5383565,
+  "startedAt": "2026-07-31 21:12:51 UTC",
+  "measureRange": [
+    18,
+    32
+  ],
+  "clipStartSeconds": 30.627906976744185,
+  "clipDurationSeconds": 29.906976744186046,
+  "parameters": {
+    "name": "default",
+    "onset_threshold": 0.5,
+    "frame_threshold": 0.3,
+    "minimum_note_length": 127.7
+  },
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false
+}

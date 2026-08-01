@@ -1,0 +1,10 @@
+2026-08-01 07:06:23 UTC | Protected professional checkpoint | overall=84.72% | low=70.31% | MIDI52=32/32 | MIDI62=14/16
+2026-08-01 07:06:25 UTC | Submitted protected 82 Hz most-sensitive extraction | callId=fc-01KYY2AG5NTJWBNDYJRTDC4E5B
+2026-08-01 07:06:27 UTC | [worker-start heartbeat] elapsed=0.0s | taskId=- | callId=fc-01KYY2AG5NTJWBNDYJRTDC4E5B
+2026-08-01 07:06:42 UTC | [worker-start heartbeat] elapsed=17.1s | taskId=- | callId=fc-01KYY2AG5NTJWBNDYJRTDC4E5B
+2026-08-01 07:06:58 UTC | [worker-start heartbeat] elapsed=32.4s | taskId=- | callId=fc-01KYY2AG5NTJWBNDYJRTDC4E5B
+2026-08-01 07:07:13 UTC | MIDI62 diagnosis complete | matched=14/16 | missingMeasures=[16, 16]
+2026-08-01 07:07:13 UTC | MIDI62 MISS | measure=16 | classification=neighbor-semitone-detection
+2026-08-01 07:07:13 UTC | MIDI62 MISS | measure=16 | classification=neighbor-semitone-detection
+2026-08-01 07:07:13 UTC | Protected checkpoint: public/gomyway-jimmy-paige-professional-best-84-72-checkpoint.json
+2026-08-01 07:07:13 UTC | Output: public/gomyway-jimmy-paige-midi62-miss-diagnosis.json

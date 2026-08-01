@@ -1,0 +1,64 @@
+{
+  "benchmarkVersion": 3,
+  "benchmarkType": "jimmy-paige-professional-winner-frequency-sweep",
+  "professionalReference": "public/gomyway-professional-rhythm-reference-v2.json",
+  "comparisonScope": "professional rhythm tab measures 1-16",
+  "protectedBaseline": "successful full-song upper_string_recovery parameters",
+  "controlledVariable": "minimum_frequency",
+  "attemptsRequested": 1,
+  "attemptsCompleted": 0,
+  "attemptsFailed": 1,
+  "attempts": [
+    {
+      "attemptNumber": 1,
+      "name": "proven-full-song-winner-100hz",
+      "parameters": {
+        "name": "proven-full-song-winner-100hz",
+        "onset_threshold": 0.35,
+        "frame_threshold": 0.2,
+        "minimum_note_length": 75.0,
+        "minimum_frequency": 100.0,
+        "maximum_frequency": 1400.0,
+        "multiple_pitch_bends": false
+      },
+      "status": "failed-after-retries",
+      "retries": [
+        {
+          "retry": 1,
+          "callId": "fc-01KYXZ9X5JQVFFS8DCNM71NBS0",
+          "elapsedSeconds": 301.729,
+          "timedOut": true,
+          "completed": false,
+          "error": null
+        },
+        {
+          "retry": 2,
+          "callId": "fc-01KYXZK3KEJMMVHR1QK7S6KVKR",
+          "elapsedSeconds": 301.461,
+          "timedOut": true,
+          "completed": false,
+          "error": null
+        },
+        {
+          "retry": 3,
+          "callId": "fc-01KYXZW9ZJJ9NSHMHS34FQN5XK",
+          "elapsedSeconds": 301.508,
+          "timedOut": true,
+          "completed": false,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "bestAttempt": null,
+  "trainingComplete": true,
+  "maxRetriesPerConfiguration": 3,
+  "attemptTimeoutSeconds": 300,
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "readOnlySourceEvents": true,
+  "noSyntheticNotes": true,
+  "totalElapsedSeconds": 905.343,
+  "readyForNextValidationStage": false
+}

@@ -1,0 +1,2247 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "context-guarded-professional-double-stop-score",
+  "sourceContext": "public/gomyway-jimmy-paige-double-stop-rhythmic-context.json",
+  "rulesTested": 1008,
+  "bestRule": {
+    "minimumPrecedingTargetToneCount": 2,
+    "minimumFollowingAttackDensity": 0.0,
+    "maximumPrecedingAttackDensity": 100.0,
+    "maximumPrecedingLowRegisterCount": 35,
+    "truePositive": 5,
+    "falsePositive": 1,
+    "trueNegative": 3,
+    "falseNegative": 0,
+    "precisionPercentage": 83.33,
+    "recallPercentage": 100.0,
+    "f1Percentage": 90.91,
+    "accuracyPercentage": 88.89,
+    "measureReports": [
+      {
+        "measureNumber": 2,
+        "classification": "true-positive",
+        "expected": true,
+        "predicted": true,
+        "precedingTargetToneCount": 3,
+        "followingAttackDensityPerSecond": 45.714,
+        "precedingAttackDensityPerSecond": 53.333,
+        "precedingLowRegisterCount": 27
+      },
+      {
+        "measureNumber": 3,
+        "classification": "false-positive",
+        "expected": false,
+        "predicted": false,
+        "precedingTargetToneCount": 1,
+        "followingAttackDensityPerSecond": 71.429,
+        "precedingAttackDensityPerSecond": 61.333,
+        "precedingLowRegisterCount": 24
+      },
+      {
+        "measureNumber": 4,
+        "classification": "true-positive",
+        "expected": true,
+        "predicted": true,
+        "precedingTargetToneCount": 6,
+        "followingAttackDensityPerSecond": 77.143,
+        "precedingAttackDensityPerSecond": 89.333,
+        "precedingLowRegisterCount": 33
+      },
+      {
+        "measureNumber": 5,
+        "classification": "false-positive",
+        "expected": false,
+        "predicted": true,
+        "precedingTargetToneCount": 7,
+        "followingAttackDensityPerSecond": 51.429,
+        "precedingAttackDensityPerSecond": 94.667,
+        "precedingLowRegisterCount": 34
+      },
+      {
+        "measureNumber": 8,
+        "classification": "true-positive",
+        "expected": true,
+        "predicted": true,
+        "precedingTargetToneCount": 2,
+        "followingAttackDensityPerSecond": 80.0,
+        "precedingAttackDensityPerSecond": 34.667,
+        "precedingLowRegisterCount": 15
+      },
+      {
+        "measureNumber": 9,
+        "classification": "false-positive",
+        "expected": false,
+        "predicted": false,
+        "precedingTargetToneCount": 1,
+        "followingAttackDensityPerSecond": 51.429,
+        "precedingAttackDensityPerSecond": 36.0,
+        "precedingLowRegisterCount": 17
+      },
+      {
+        "measureNumber": 10,
+        "classification": "true-positive",
+        "expected": true,
+        "predicted": true,
+        "precedingTargetToneCount": 3,
+        "followingAttackDensityPerSecond": 77.143,
+        "precedingAttackDensityPerSecond": 37.333,
+        "precedingLowRegisterCount": 16
+      },
+      {
+        "measureNumber": 11,
+        "classification": "false-positive",
+        "expected": false,
+        "predicted": false,
+        "precedingTargetToneCount": 1,
+        "followingAttackDensityPerSecond": 40.0,
+        "precedingAttackDensityPerSecond": 41.333,
+        "precedingLowRegisterCount": 18
+      },
+      {
+        "measureNumber": 16,
+        "classification": "true-positive",
+        "expected": true,
+        "predicted": true,
+        "precedingTargetToneCount": 2,
+        "followingAttackDensityPerSecond": 45.714,
+        "precedingAttackDensityPerSecond": 45.333,
+        "precedingLowRegisterCount": 16
+      }
+    ]
+  },
+  "topRules": [
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 0.0,
+      "maximumPrecedingAttackDensity": 100.0,
+      "maximumPrecedingLowRegisterCount": 35,
+      "truePositive": 5,
+      "falsePositive": 1,
+      "trueNegative": 3,
+      "falseNegative": 0,
+      "precisionPercentage": 83.33,
+      "recallPercentage": 100.0,
+      "f1Percentage": 90.91,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": true,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 45.0,
+      "maximumPrecedingAttackDensity": 100.0,
+      "maximumPrecedingLowRegisterCount": 35,
+      "truePositive": 5,
+      "falsePositive": 1,
+      "trueNegative": 3,
+      "falseNegative": 0,
+      "precisionPercentage": 83.33,
+      "recallPercentage": 100.0,
+      "f1Percentage": 90.91,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": true,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 0.0,
+      "maximumPrecedingAttackDensity": 60.0,
+      "maximumPrecedingLowRegisterCount": 28,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 0.0,
+      "maximumPrecedingAttackDensity": 60.0,
+      "maximumPrecedingLowRegisterCount": 35,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 0.0,
+      "maximumPrecedingAttackDensity": 70.0,
+      "maximumPrecedingLowRegisterCount": 28,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 0.0,
+      "maximumPrecedingAttackDensity": 70.0,
+      "maximumPrecedingLowRegisterCount": 35,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 0.0,
+      "maximumPrecedingAttackDensity": 80.0,
+      "maximumPrecedingLowRegisterCount": 28,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 0.0,
+      "maximumPrecedingAttackDensity": 80.0,
+      "maximumPrecedingLowRegisterCount": 35,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 0.0,
+      "maximumPrecedingAttackDensity": 100.0,
+      "maximumPrecedingLowRegisterCount": 28,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 45.0,
+      "maximumPrecedingAttackDensity": 60.0,
+      "maximumPrecedingLowRegisterCount": 28,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 45.0,
+      "maximumPrecedingAttackDensity": 60.0,
+      "maximumPrecedingLowRegisterCount": 35,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 45.0,
+      "maximumPrecedingAttackDensity": 70.0,
+      "maximumPrecedingLowRegisterCount": 28,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 45.0,
+      "maximumPrecedingAttackDensity": 70.0,
+      "maximumPrecedingLowRegisterCount": 35,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 45.0,
+      "maximumPrecedingAttackDensity": 80.0,
+      "maximumPrecedingLowRegisterCount": 28,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 45.0,
+      "maximumPrecedingAttackDensity": 80.0,
+      "maximumPrecedingLowRegisterCount": 35,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 2,
+      "minimumFollowingAttackDensity": 45.0,
+      "maximumPrecedingAttackDensity": 100.0,
+      "maximumPrecedingLowRegisterCount": 28,
+      "truePositive": 4,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 1,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 88.89,
+      "accuracyPercentage": 88.89,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 1,
+      "minimumFollowingAttackDensity": 45.0,
+      "maximumPrecedingAttackDensity": 60.0,
+      "maximumPrecedingLowRegisterCount": 28,
+      "truePositive": 4,
+      "falsePositive": 1,
+      "trueNegative": 3,
+      "falseNegative": 1,
+      "precisionPercentage": 80.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 80.0,
+      "accuracyPercentage": 77.78,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": true,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 1,
+      "minimumFollowingAttackDensity": 45.0,
+      "maximumPrecedingAttackDensity": 60.0,
+      "maximumPrecedingLowRegisterCount": 35,
+      "truePositive": 4,
+      "falsePositive": 1,
+      "trueNegative": 3,
+      "falseNegative": 1,
+      "precisionPercentage": 80.0,
+      "recallPercentage": 80.0,
+      "f1Percentage": 80.0,
+      "accuracyPercentage": 77.78,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": true,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 1,
+      "minimumFollowingAttackDensity": 45.0,
+      "maximumPrecedingAttackDensity": 100.0,
+      "maximumPrecedingLowRegisterCount": 35,
+      "truePositive": 5,
+      "falsePositive": 3,
+      "trueNegative": 1,
+      "falseNegative": 0,
+      "precisionPercentage": 62.5,
+      "recallPercentage": 100.0,
+      "f1Percentage": 76.92,
+      "accuracyPercentage": 66.67,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": true,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": true,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": true,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    },
+    {
+      "minimumPrecedingTargetToneCount": 1,
+      "minimumFollowingAttackDensity": 0.0,
+      "maximumPrecedingAttackDensity": 50.0,
+      "maximumPrecedingLowRegisterCount": 16,
+      "truePositive": 3,
+      "falsePositive": 0,
+      "trueNegative": 4,
+      "falseNegative": 2,
+      "precisionPercentage": 100.0,
+      "recallPercentage": 60.0,
+      "f1Percentage": 75.0,
+      "accuracyPercentage": 77.78,
+      "measureReports": [
+        {
+          "measureNumber": 2,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 53.333,
+          "precedingLowRegisterCount": 27
+        },
+        {
+          "measureNumber": 3,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 71.429,
+          "precedingAttackDensityPerSecond": 61.333,
+          "precedingLowRegisterCount": 24
+        },
+        {
+          "measureNumber": 4,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": false,
+          "precedingTargetToneCount": 6,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 89.333,
+          "precedingLowRegisterCount": 33
+        },
+        {
+          "measureNumber": 5,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 7,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 94.667,
+          "precedingLowRegisterCount": 34
+        },
+        {
+          "measureNumber": 8,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 80.0,
+          "precedingAttackDensityPerSecond": 34.667,
+          "precedingLowRegisterCount": 15
+        },
+        {
+          "measureNumber": 9,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 51.429,
+          "precedingAttackDensityPerSecond": 36.0,
+          "precedingLowRegisterCount": 17
+        },
+        {
+          "measureNumber": 10,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 3,
+          "followingAttackDensityPerSecond": 77.143,
+          "precedingAttackDensityPerSecond": 37.333,
+          "precedingLowRegisterCount": 16
+        },
+        {
+          "measureNumber": 11,
+          "classification": "false-positive",
+          "expected": false,
+          "predicted": false,
+          "precedingTargetToneCount": 1,
+          "followingAttackDensityPerSecond": 40.0,
+          "precedingAttackDensityPerSecond": 41.333,
+          "precedingLowRegisterCount": 18
+        },
+        {
+          "measureNumber": 16,
+          "classification": "true-positive",
+          "expected": true,
+          "predicted": true,
+          "precedingTargetToneCount": 2,
+          "followingAttackDensityPerSecond": 45.714,
+          "precedingAttackDensityPerSecond": 45.333,
+          "precedingLowRegisterCount": 16
+        }
+      ]
+    }
+  ],
+  "smallSampleWarning": "This rule is trained on nine labeled examples and must not be promoted without a second professional reference song.",
+  "protectedPitchCheckpoint": {
+    "overallRecallPercentage": 93.06,
+    "lowRegisterRecallPercentage": 84.38,
+    "midi52Matches": 32,
+    "midi62Matches": 16,
+    "combinedRegressionPassed": true
+  },
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedPitchCheckpointChanged": false
+}

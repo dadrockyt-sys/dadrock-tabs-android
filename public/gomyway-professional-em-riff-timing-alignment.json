@@ -1,0 +1,68 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "professional-em-riff-protected-timing-alignment",
+  "passed": true,
+  "readyForExactScoring": false,
+  "twoMeasureLockedSteps": [
+    2,
+    6,
+    10,
+    14,
+    18,
+    20,
+    22,
+    26,
+    30
+  ],
+  "patternTiming": {
+    "em-riff-a": {
+      "measureRole": "first measure of two-measure Em phrase",
+      "quantizedOnsetSteps": [
+        2,
+        6,
+        10,
+        14
+      ],
+      "onsetCount": 4,
+      "timingSource": "locked direct-audio Verse 1 consensus",
+      "noteIdentityStatus": "professional-source feature scaffold only",
+      "stringFretStatus": "pending manual verification"
+    },
+    "em-riff-b": {
+      "measureRole": "second measure of two-measure Em phrase",
+      "quantizedOnsetSteps": [
+        2,
+        4,
+        6,
+        10,
+        14
+      ],
+      "onsetCount": 5,
+      "timingSource": "locked direct-audio Verse 1 consensus",
+      "noteIdentityStatus": "professional-source feature scaffold only",
+      "stringFretStatus": "pending manual verification"
+    }
+  },
+  "checks": {
+    "scaffoldContainsEmRiffA": true,
+    "scaffoldContainsEmRiffB": true,
+    "verse1TemplateLocked": true,
+    "lockedStepsMatchProtectedConsensus": true,
+    "firstMeasureHasFourProtectedOnsets": true,
+    "secondMeasureHasFiveProtectedOnsets": true,
+    "professionalReferenceMayScoreButNotGenerate": true,
+    "directAudioRemainsSourceOfTruth": true,
+    "lockedV7EventsProtected": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "safeguards": {
+    "doesNotCopyProfessionalNotesIntoJimmy": true,
+    "doesNotCreateNewJimmyEvents": true,
+    "doesNotModifyLockedTiming": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false
+  },
+  "nextStep": "Manually verify the visible string/fret identities and technique ownership for each protected onset before exact note scoring is enabled."
+}

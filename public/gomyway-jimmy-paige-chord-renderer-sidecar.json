@@ -1,0 +1,2251 @@
+{
+  "sidecarVersion": 1,
+  "sidecarType": "protected-chord-renderer-input",
+  "mode": "benchmark-only",
+  "trainingSectionAttackRows": 23,
+  "heldoutSectionAttackRows": 21,
+  "combinedAttackRows": 44,
+  "rows": [
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 33,
+      "attackNumber": 1,
+      "targetPhase": 0.0,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 33,
+      "attackNumber": 2,
+      "targetPhase": 0.2,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 33,
+      "attackNumber": 3,
+      "targetPhase": 0.36,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 34,
+      "attackNumber": 1,
+      "targetPhase": 0.0,
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 34,
+      "attackNumber": 2,
+      "targetPhase": 0.2,
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 34,
+      "attackNumber": 3,
+      "targetPhase": 0.36,
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 35,
+      "attackNumber": 1,
+      "targetPhase": 0.0,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 35,
+      "attackNumber": 2,
+      "targetPhase": 0.18,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 35,
+      "attackNumber": 3,
+      "targetPhase": 0.34,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 35,
+      "attackNumber": 4,
+      "targetPhase": 0.5,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 35,
+      "attackNumber": 5,
+      "targetPhase": 0.66,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 7,
+          "display": "7"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 7,
+          "display": "7"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 7,
+          "display": "7"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 7,
+          "display": "7"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 35,
+      "attackNumber": 6,
+      "targetPhase": 0.8,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 36,
+      "attackNumber": 1,
+      "targetPhase": 0.0,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 36,
+      "attackNumber": 2,
+      "targetPhase": 0.14,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 36,
+      "attackNumber": 3,
+      "targetPhase": 0.27,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 36,
+      "attackNumber": 4,
+      "targetPhase": 0.4,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 36,
+      "attackNumber": 5,
+      "targetPhase": 0.53,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 12,
+          "display": "12"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 12,
+          "display": "12"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 12,
+          "display": "12"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 36,
+      "attackNumber": 6,
+      "targetPhase": 0.67,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 37,
+      "attackNumber": 1,
+      "targetPhase": 0.0,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 37,
+      "attackNumber": 2,
+      "targetPhase": 0.2,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 37,
+      "attackNumber": 3,
+      "targetPhase": 0.36,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 38,
+      "attackNumber": 1,
+      "targetPhase": 0.0,
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "training-professional-reference",
+      "measureNumber": 38,
+      "attackNumber": 2,
+      "targetPhase": 0.23,
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "resolutionMode": "professional-reference",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 63,
+      "attackNumber": 1,
+      "targetPhase": 0.0,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 63,
+      "attackNumber": 2,
+      "targetPhase": 0.2,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 63,
+      "attackNumber": 3,
+      "targetPhase": 0.36,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 64,
+      "attackNumber": 1,
+      "targetPhase": 0.0,
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 64,
+      "attackNumber": 2,
+      "targetPhase": 0.2,
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 64,
+      "attackNumber": 3,
+      "targetPhase": 0.36,
+      "chordLabels": [
+        "A(tp2)"
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 2,
+          "display": "2"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 65,
+      "attackNumber": 1,
+      "targetPhase": 0.0,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 65,
+      "attackNumber": 2,
+      "targetPhase": 0.18,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 65,
+      "attackNumber": 3,
+      "targetPhase": 0.34,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 65,
+      "attackNumber": 4,
+      "targetPhase": 0.5,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 65,
+      "attackNumber": 5,
+      "targetPhase": 0.66,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 7,
+          "display": "7"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 7,
+          "display": "7"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 7,
+          "display": "7"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 7,
+          "display": "7"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 65,
+      "attackNumber": 6,
+      "targetPhase": 0.8,
+      "chordLabels": [
+        "E",
+        "D",
+        "E"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 66,
+      "attackNumber": 1,
+      "targetPhase": 0.0,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 66,
+      "attackNumber": 2,
+      "targetPhase": 0.14,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 66,
+      "attackNumber": 3,
+      "targetPhase": 0.27,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 66,
+      "attackNumber": 4,
+      "targetPhase": 0.4,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 66,
+      "attackNumber": 5,
+      "targetPhase": 0.53,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 12,
+          "display": "12"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 12,
+          "display": "12"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 12,
+          "display": "12"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 66,
+      "attackNumber": 6,
+      "targetPhase": 0.67,
+      "chordLabels": [
+        "G",
+        "E"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 9,
+          "display": "9"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 67,
+      "attackNumber": 1,
+      "targetPhase": 0.0,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 67,
+      "attackNumber": 2,
+      "targetPhase": 0.2,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    },
+    {
+      "sectionRole": "heldout-shadow-resolved",
+      "measureNumber": 67,
+      "attackNumber": 3,
+      "targetPhase": 0.36,
+      "chordLabels": [
+        "G6"
+      ],
+      "resolutionMode": "observed-exact",
+      "renderCells": [
+        {
+          "stringIndex": 0,
+          "stringName": "e",
+          "fret": 0,
+          "display": "0"
+        },
+        {
+          "stringIndex": 1,
+          "stringName": "B",
+          "fret": 3,
+          "display": "3"
+        },
+        {
+          "stringIndex": 2,
+          "stringName": "G",
+          "fret": 4,
+          "display": "4"
+        },
+        {
+          "stringIndex": 3,
+          "stringName": "D",
+          "fret": 5,
+          "display": "5"
+        },
+        {
+          "stringIndex": 4,
+          "stringName": "A",
+          "fret": null,
+          "display": "-"
+        },
+        {
+          "stringIndex": 5,
+          "stringName": "E",
+          "fret": null,
+          "display": "-"
+        }
+      ],
+      "rendererMayConsume": false,
+      "productionMayConsume": false
+    }
+  ],
+  "rendererMayConsume": false,
+  "productionMayConsume": false,
+  "sourceEventsMutated": false,
+  "syntheticAttacksCreated": false,
+  "professionalPdfRemainsScoringAuthority": true
+}

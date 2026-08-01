@@ -1,0 +1,69 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "deployed-winner-professional-measures-1-16-score",
+  "modalApp": "dadrock-jimmy-paige-training-worker",
+  "modalFunction": "upper_string_recovery",
+  "recordedProvenParameters": {
+    "onset_threshold": 0.35,
+    "frame_threshold": 0.2,
+    "minimum_note_length": 75.0,
+    "minimum_frequency": 100.0,
+    "maximum_frequency": 1400.0
+  },
+  "professionalReference": "public/gomyway-professional-rhythm-reference-v2.json",
+  "targetMeasures": [
+    1,
+    16
+  ],
+  "status": "complete",
+  "retriesRequested": 3,
+  "retryReports": [
+    {
+      "retry": 1,
+      "callId": "fc-01KYY0EY54APDBYHGWSSED95KC",
+      "status": "complete",
+      "elapsedSeconds": 32.342,
+      "taskId": "",
+      "extractedEventCount": 1629
+    }
+  ],
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "activeRetry": 1,
+  "activeCallId": "fc-01KYY0EY54APDBYHGWSSED95KC",
+  "trainingComplete": true,
+  "successfulRetry": 1,
+  "callId": "fc-01KYY0EY54APDBYHGWSSED95KC",
+  "remoteElapsedSeconds": 21.017,
+  "totalElapsedSeconds": 34.131,
+  "extractedEventCount": 1629,
+  "matchedTargets": 77,
+  "professionalTargets": 144,
+  "overallRecallPercentage": 53.47,
+  "lowRegisterRecallPercentage": 14.06,
+  "protectedRecallPercentage": 91.67,
+  "protectedPitchGuardPassed": false,
+  "weightedScore": 29.703,
+  "expectedByPitch": {
+    "40": 16,
+    "45": 16,
+    "50": 16,
+    "52": 32,
+    "55": 16,
+    "57": 16,
+    "58": 16,
+    "62": 16
+  },
+  "matchedByPitch": {
+    "45": 1,
+    "50": 8,
+    "52": 32,
+    "55": 12,
+    "57": 12,
+    "62": 12
+  },
+  "eventCache": "public/gomyway-jimmy-paige-deployed-winner-professional-events.json",
+  "readyForFrequencyFloorSweep": false
+}

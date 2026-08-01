@@ -1,0 +1,168 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "professional-em-riff-pitch-failure-profile",
+  "passed": true,
+  "readyForExactScoring": false,
+  "protectedSlotCount": 9,
+  "failureProfile": "low-register-collapse-dominant",
+  "dominantObservedMidiPitch": 40,
+  "dominantObservedPitchHistogram": [
+    {
+      "midiPitch": 40,
+      "support": 206
+    },
+    {
+      "midiPitch": 43,
+      "support": 35
+    },
+    {
+      "midiPitch": 52,
+      "support": 25
+    },
+    {
+      "midiPitch": 67,
+      "support": 21
+    },
+    {
+      "midiPitch": 41,
+      "support": 15
+    }
+  ],
+  "lowE2CollapseSlots": 7,
+  "lowE2CollapseRatio": 0.777778,
+  "octaveRelatedErrorSlots": 2,
+  "fifthRelatedErrorSlots": 0,
+  "slotProfiles": [
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 2,
+      "leadingObservedMidiPitch": 40,
+      "expectedMidiPitches": [
+        57,
+        59
+      ],
+      "nearestSemitoneDistance": 17,
+      "leadingIsLowE2": true,
+      "leadingIsOctaveRelated": false,
+      "leadingIsFifthRelated": false
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 6,
+      "leadingObservedMidiPitch": 52,
+      "expectedMidiPitches": [
+        55
+      ],
+      "nearestSemitoneDistance": 3,
+      "leadingIsLowE2": false,
+      "leadingIsOctaveRelated": false,
+      "leadingIsFifthRelated": false
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 10,
+      "leadingObservedMidiPitch": 40,
+      "expectedMidiPitches": [
+        52
+      ],
+      "nearestSemitoneDistance": 12,
+      "leadingIsLowE2": true,
+      "leadingIsOctaveRelated": true,
+      "leadingIsFifthRelated": false
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 14,
+      "leadingObservedMidiPitch": 40,
+      "expectedMidiPitches": [
+        45
+      ],
+      "nearestSemitoneDistance": 5,
+      "leadingIsLowE2": true,
+      "leadingIsOctaveRelated": false,
+      "leadingIsFifthRelated": false
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 2,
+      "leadingObservedMidiPitch": 40,
+      "expectedMidiPitches": [
+        57,
+        59
+      ],
+      "nearestSemitoneDistance": 17,
+      "leadingIsLowE2": true,
+      "leadingIsOctaveRelated": false,
+      "leadingIsFifthRelated": false
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 4,
+      "leadingObservedMidiPitch": 52,
+      "expectedMidiPitches": [
+        55
+      ],
+      "nearestSemitoneDistance": 3,
+      "leadingIsLowE2": false,
+      "leadingIsOctaveRelated": false,
+      "leadingIsFifthRelated": false
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 6,
+      "leadingObservedMidiPitch": 40,
+      "expectedMidiPitches": [
+        52
+      ],
+      "nearestSemitoneDistance": 12,
+      "leadingIsLowE2": true,
+      "leadingIsOctaveRelated": true,
+      "leadingIsFifthRelated": false
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 10,
+      "leadingObservedMidiPitch": 40,
+      "expectedMidiPitches": [
+        45
+      ],
+      "nearestSemitoneDistance": 5,
+      "leadingIsLowE2": true,
+      "leadingIsOctaveRelated": false,
+      "leadingIsFifthRelated": false
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 14,
+      "leadingObservedMidiPitch": 40,
+      "expectedMidiPitches": [
+        62,
+        58
+      ],
+      "nearestSemitoneDistance": 18,
+      "leadingIsLowE2": true,
+      "leadingIsOctaveRelated": false,
+      "leadingIsFifthRelated": false
+    }
+  ],
+  "checks": {
+    "pitchDiagnosisPassed": true,
+    "slotReportsPresent": true,
+    "protectedSlotsPresent": true,
+    "observedPitchEvidencePresent": true,
+    "readOnlyDiagnosis": true,
+    "lockedV7EventsProtected": true,
+    "lockedV8TimingProtected": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "trainingRecommendation": "Train the pitch-selection layer before fretboard assignment. Use the repeated Em-riff evidence to penalize unsupported low-register fundamentals, but do not alter protected production events.",
+  "safeguards": {
+    "diagnosticOnly": true,
+    "doesNotRewriteJimmyEvents": true,
+    "doesNotCopyProfessionalNotesIntoJimmy": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false
+  }
+}

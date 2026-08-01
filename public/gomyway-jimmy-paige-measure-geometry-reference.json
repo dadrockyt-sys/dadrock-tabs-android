@@ -1,0 +1,1699 @@
+{
+  "schemaVersion": 1,
+  "professionalPdf": "public/gomyway-professional-reference.pdf",
+  "professionalPdfSha256": "b8e55778a40ffb3da5959c0efc6ac323271e742ca334ce6f2215fa9694e68842",
+  "professionalPdfAuthorityConfirmed": true,
+  "verifiedTechniqueSeedPassed": true,
+  "pageMeasureRanges": [
+    {
+      "page": 1,
+      "measureStart": 1,
+      "measureEnd": 14
+    },
+    {
+      "page": 2,
+      "measureStart": 13,
+      "measureEnd": 26
+    },
+    {
+      "page": 3,
+      "measureStart": 27,
+      "measureEnd": 42
+    },
+    {
+      "page": 4,
+      "measureStart": 43,
+      "measureEnd": 56
+    },
+    {
+      "page": 5,
+      "measureStart": 57,
+      "measureEnd": 75
+    },
+    {
+      "page": 6,
+      "measureStart": 74,
+      "measureEnd": 89
+    },
+    {
+      "page": 7,
+      "measureStart": 90,
+      "measureEnd": 108
+    },
+    {
+      "page": 8,
+      "measureStart": 97,
+      "measureEnd": 113
+    }
+  ],
+  "geometryTechniqueFamilies": 9,
+  "geometryWorksheetRows": 79,
+  "rows": [
+    {
+      "measure": 1,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 2,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 3,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 4,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 5,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 6,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 7,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 8,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 9,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 10,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 11,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 12,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 13,
+      "pageCandidates": [
+        1,
+        2
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 14,
+      "pageCandidates": [
+        1,
+        2
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 15,
+      "pageCandidates": [
+        2
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 16,
+      "pageCandidates": [
+        2
+      ],
+      "technique": "full-bend-release",
+      "drawingPrimitives": [
+        "upward-curve",
+        "arrow-head",
+        "release-curve",
+        "amount-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 25,
+      "pageCandidates": [
+        2
+      ],
+      "technique": "vibrato",
+      "drawingPrimitives": [
+        "wavy-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 26,
+      "pageCandidates": [
+        2
+      ],
+      "technique": "vibrato",
+      "drawingPrimitives": [
+        "wavy-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 27,
+      "pageCandidates": [
+        3
+      ],
+      "technique": "vibrato",
+      "drawingPrimitives": [
+        "wavy-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 55,
+      "pageCandidates": [
+        4
+      ],
+      "technique": "vibrato",
+      "drawingPrimitives": [
+        "wavy-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 56,
+      "pageCandidates": [
+        4
+      ],
+      "technique": "vibrato",
+      "drawingPrimitives": [
+        "wavy-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 57,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "vibrato",
+      "drawingPrimitives": [
+        "wavy-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 28,
+      "pageCandidates": [
+        3
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 58,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 70,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 72,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 74,
+      "pageCandidates": [
+        5,
+        6
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 76,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 78,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 80,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 82,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 84,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 86,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 88,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 90,
+      "pageCandidates": [
+        7
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 92,
+      "pageCandidates": [
+        7
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 94,
+      "pageCandidates": [
+        7
+      ],
+      "technique": "muted-note",
+      "drawingPrimitives": [
+        "x-notehead"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 28,
+      "pageCandidates": [
+        3
+      ],
+      "technique": "pick-direction",
+      "drawingPrimitives": [
+        "downstroke-symbol",
+        "upstroke-symbol"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 58,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "pick-direction",
+      "drawingPrimitives": [
+        "downstroke-symbol",
+        "upstroke-symbol"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 33,
+      "pageCandidates": [
+        3
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 34,
+      "pageCandidates": [
+        3
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 35,
+      "pageCandidates": [
+        3
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 36,
+      "pageCandidates": [
+        3
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 38,
+      "pageCandidates": [
+        3
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 63,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 64,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 65,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 66,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 93,
+      "pageCandidates": [
+        7
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 94,
+      "pageCandidates": [
+        7
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 106,
+      "pageCandidates": [
+        7,
+        8
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 110,
+      "pageCandidates": [
+        8
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 111,
+      "pageCandidates": [
+        8
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 112,
+      "pageCandidates": [
+        8
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 113,
+      "pageCandidates": [
+        8
+      ],
+      "technique": "chord-sustain-tie",
+      "drawingPrimitives": [
+        "multi-string-tie"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 71,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "chord-slide",
+      "drawingPrimitives": [
+        "diagonal-slide-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 73,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "chord-slide",
+      "drawingPrimitives": [
+        "diagonal-slide-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 75,
+      "pageCandidates": [
+        5,
+        6
+      ],
+      "technique": "chord-slide",
+      "drawingPrimitives": [
+        "diagonal-slide-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 77,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "chord-slide",
+      "drawingPrimitives": [
+        "diagonal-slide-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 79,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "chord-slide",
+      "drawingPrimitives": [
+        "diagonal-slide-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 81,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "chord-slide",
+      "drawingPrimitives": [
+        "diagonal-slide-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 83,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "chord-slide",
+      "drawingPrimitives": [
+        "diagonal-slide-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 85,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "chord-slide",
+      "drawingPrimitives": [
+        "diagonal-slide-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 87,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "chord-slide",
+      "drawingPrimitives": [
+        "diagonal-slide-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 89,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "chord-slide",
+      "drawingPrimitives": [
+        "diagonal-slide-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 91,
+      "pageCandidates": [
+        7
+      ],
+      "technique": "chord-slide",
+      "drawingPrimitives": [
+        "diagonal-slide-line"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 1,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "time-signature",
+      "drawingPrimitives": [
+        "stacked-numerals"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 104,
+      "pageCandidates": [
+        7,
+        8
+      ],
+      "technique": "time-signature",
+      "drawingPrimitives": [
+        "stacked-numerals"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 105,
+      "pageCandidates": [
+        7,
+        8
+      ],
+      "technique": "time-signature",
+      "drawingPrimitives": [
+        "stacked-numerals"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 1,
+      "pageCandidates": [
+        1
+      ],
+      "technique": "section-label",
+      "drawingPrimitives": [
+        "italic-text-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 17,
+      "pageCandidates": [
+        2
+      ],
+      "technique": "section-label",
+      "drawingPrimitives": [
+        "italic-text-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 33,
+      "pageCandidates": [
+        3
+      ],
+      "technique": "section-label",
+      "drawingPrimitives": [
+        "italic-text-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 39,
+      "pageCandidates": [
+        3
+      ],
+      "technique": "section-label",
+      "drawingPrimitives": [
+        "italic-text-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 47,
+      "pageCandidates": [
+        4
+      ],
+      "technique": "section-label",
+      "drawingPrimitives": [
+        "italic-text-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 63,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "section-label",
+      "drawingPrimitives": [
+        "italic-text-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 70,
+      "pageCandidates": [
+        5
+      ],
+      "technique": "section-label",
+      "drawingPrimitives": [
+        "italic-text-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 78,
+      "pageCandidates": [
+        6
+      ],
+      "technique": "section-label",
+      "drawingPrimitives": [
+        "italic-text-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 103,
+      "pageCandidates": [
+        7,
+        8
+      ],
+      "technique": "section-label",
+      "drawingPrimitives": [
+        "italic-text-label"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    },
+    {
+      "measure": 113,
+      "pageCandidates": [
+        8
+      ],
+      "technique": "final-barline",
+      "drawingPrimitives": [
+        "double-barline"
+      ],
+      "normalizedGeometry": {
+        "xStart": null,
+        "xEnd": null,
+        "yTop": null,
+        "yBottom": null,
+        "anchorString": null,
+        "anchorFret": null
+      },
+      "status": "verified-location-awaiting-geometry",
+      "synthetic": false
+    }
+  ],
+  "syntheticAnnotationsCreated": false,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "readyForHumanGeometryAnnotation": true,
+  "readyForTechniqueRendererTraining": false,
+  "professionalPdfShaUnchanged": true,
+  "worksheetPassed": true
+}

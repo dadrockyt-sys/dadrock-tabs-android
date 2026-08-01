@@ -1,0 +1,200 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "professional-em-riff-identity-contrast",
+  "passed": true,
+  "readyForExactScoring": false,
+  "protectedSlotCount": 9,
+  "exactLeadingIdentityMatches": 0,
+  "exactLeadingIdentityPercentage": 0.0,
+  "correctionRequiredSlotCount": 9,
+  "comparisons": [
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 2,
+      "professionalExpectedEvents": [
+        {
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend"
+        }
+      ],
+      "jimmyLeadingIdentity": {
+        "stringIndex": 5,
+        "fret": 0
+      },
+      "leadingIdentityMatchesProfessional": false,
+      "anyRankedCandidateMatchesProfessional": false,
+      "status": "training-correction-required"
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 6,
+      "professionalExpectedEvents": [
+        {
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "bend-release-target"
+        }
+      ],
+      "jimmyLeadingIdentity": {
+        "stringIndex": 3,
+        "fret": 2
+      },
+      "leadingIdentityMatchesProfessional": false,
+      "anyRankedCandidateMatchesProfessional": false,
+      "status": "training-correction-required"
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 10,
+      "professionalExpectedEvents": [
+        {
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        }
+      ],
+      "jimmyLeadingIdentity": {
+        "stringIndex": 5,
+        "fret": 0
+      },
+      "leadingIdentityMatchesProfessional": false,
+      "anyRankedCandidateMatchesProfessional": false,
+      "status": "training-correction-required"
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 14,
+      "professionalExpectedEvents": [
+        {
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "open-string-note"
+        }
+      ],
+      "jimmyLeadingIdentity": {
+        "stringIndex": 5,
+        "fret": 0
+      },
+      "leadingIdentityMatchesProfessional": false,
+      "anyRankedCandidateMatchesProfessional": false,
+      "status": "training-correction-required"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 2,
+      "professionalExpectedEvents": [
+        {
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend"
+        }
+      ],
+      "jimmyLeadingIdentity": {
+        "stringIndex": 5,
+        "fret": 0
+      },
+      "leadingIdentityMatchesProfessional": false,
+      "anyRankedCandidateMatchesProfessional": false,
+      "status": "training-correction-required"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 4,
+      "professionalExpectedEvents": [
+        {
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "bend-release-target"
+        }
+      ],
+      "jimmyLeadingIdentity": {
+        "stringIndex": 3,
+        "fret": 2
+      },
+      "leadingIdentityMatchesProfessional": false,
+      "anyRankedCandidateMatchesProfessional": false,
+      "status": "training-correction-required"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 6,
+      "professionalExpectedEvents": [
+        {
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        }
+      ],
+      "jimmyLeadingIdentity": {
+        "stringIndex": 5,
+        "fret": 0
+      },
+      "leadingIdentityMatchesProfessional": false,
+      "anyRankedCandidateMatchesProfessional": true,
+      "status": "training-correction-required"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 10,
+      "professionalExpectedEvents": [
+        {
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "open-string-note"
+        }
+      ],
+      "jimmyLeadingIdentity": {
+        "stringIndex": 5,
+        "fret": 0
+      },
+      "leadingIdentityMatchesProfessional": false,
+      "anyRankedCandidateMatchesProfessional": false,
+      "status": "training-correction-required"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 14,
+      "professionalExpectedEvents": [
+        {
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "ending-double-stop"
+        },
+        {
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "ending-double-stop"
+        }
+      ],
+      "jimmyLeadingIdentity": {
+        "stringIndex": 5,
+        "fret": 0
+      },
+      "leadingIdentityMatchesProfessional": false,
+      "anyRankedCandidateMatchesProfessional": false,
+      "status": "training-correction-required"
+    }
+  ],
+  "checks": {
+    "identityJoinPassed": true,
+    "allNineProtectedSlotsCompared": true,
+    "professionalEventsAreScoringOnly": true,
+    "professionalEventsDoNotGenerateJimmyNotes": true,
+    "v8NotationReadOnly": true,
+    "lockedV7EventsProtected": true,
+    "lockedIntroTemplateProtected": true,
+    "lockedVerse1TemplateProtected": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "safeguards": {
+    "comparisonIsReadOnly": true,
+    "doesNotModifyV8Notation": true,
+    "doesNotModifyLockedTiming": true,
+    "doesNotModifyRenderer": true,
+    "doesNotModifyProtectedBaselines": true
+  },
+  "nextStep": "Train a separate candidate-scoring layer to prefer direct-audio pitch and repeated-riff support that agree with the verified Em-riff identities. Do not rewrite protected V7/V8 events until a later adoption benchmark proves improvement."
+}

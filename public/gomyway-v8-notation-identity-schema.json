@@ -1,0 +1,624 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-notation-identity-schema-inspection",
+  "passed": true,
+  "source": "public/gomyway-full-song-v8-notation.json",
+  "identityNodeCount": 2619,
+  "measureRange": [
+    1,
+    112
+  ],
+  "nodesWithDirectMeasureNumber": 2521,
+  "commonIdentityNodeKeys": [
+    [
+      "stringIndex",
+      2619
+    ],
+    [
+      "fret",
+      2619
+    ],
+    [
+      "eventIndex",
+      2521
+    ],
+    [
+      "start",
+      2521
+    ],
+    [
+      "end",
+      2521
+    ],
+    [
+      "duration",
+      2521
+    ],
+    [
+      "measureNumber",
+      2521
+    ],
+    [
+      "positionInMeasure",
+      2521
+    ],
+    [
+      "midiPitch",
+      2521
+    ],
+    [
+      "confidence",
+      2521
+    ],
+    [
+      "readOnly",
+      2521
+    ],
+    [
+      "sourceEventIndex",
+      1949
+    ],
+    [
+      "quantizedStep",
+      1949
+    ],
+    [
+      "attackGroup",
+      1949
+    ],
+    [
+      "renderOnly",
+      1949
+    ],
+    [
+      "motifOriginalStep",
+      126
+    ],
+    [
+      "motifPairPhaseOffset",
+      126
+    ],
+    [
+      "motifConsensusStep",
+      126
+    ],
+    [
+      "motifSupportPairs",
+      126
+    ],
+    [
+      "motifCanonicalPair",
+      126
+    ],
+    [
+      "motifStabilized",
+      126
+    ],
+    [
+      "sourceStringIndex",
+      42
+    ],
+    [
+      "sourceFret",
+      42
+    ],
+    [
+      "fingeringCandidates",
+      42
+    ],
+    [
+      "fingeringNormalized",
+      42
+    ],
+    [
+      "fingeringNormalizationReason",
+      42
+    ]
+  ],
+  "sampleIdentityNodes": [
+    {
+      "path": "$.rhythmEvents[0]",
+      "stringIndex": 3,
+      "fret": 2,
+      "measureNumber": 1,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 1.231,
+        "positionInMeasure": 0.661663,
+        "duration": 0.174,
+        "end": 1.405
+      }
+    },
+    {
+      "path": "$.rhythmEvents[1]",
+      "stringIndex": 5,
+      "fret": 0,
+      "measureNumber": 1,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 1.451,
+        "positionInMeasure": 0.779913,
+        "duration": 0.14,
+        "end": 1.591
+      }
+    },
+    {
+      "path": "$.rhythmEvents[2]",
+      "stringIndex": 3,
+      "fret": 2,
+      "measureNumber": 2,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 1.962,
+        "positionInMeasure": 0.054575,
+        "duration": 0.199,
+        "end": 2.161
+      }
+    },
+    {
+      "path": "$.rhythmEvents[3]",
+      "stringIndex": 3,
+      "fret": 2,
+      "measureNumber": 2,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 2.161,
+        "positionInMeasure": 0.161538,
+        "duration": 0.348,
+        "end": 2.509
+      }
+    },
+    {
+      "path": "$.rhythmEvents[4]",
+      "stringIndex": 5,
+      "fret": 0,
+      "measureNumber": 2,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 2.393,
+        "positionInMeasure": 0.286237,
+        "duration": 0.174,
+        "end": 2.567
+      }
+    },
+    {
+      "path": "$.rhythmEvents[5]",
+      "stringIndex": 2,
+      "fret": 0,
+      "measureNumber": 2,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 3.043,
+        "positionInMeasure": 0.635613,
+        "duration": 0.151,
+        "end": 3.194
+      }
+    },
+    {
+      "path": "$.rhythmEvents[6]",
+      "stringIndex": 3,
+      "fret": 2,
+      "measureNumber": 2,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 3.182,
+        "positionInMeasure": 0.710325,
+        "duration": 0.186,
+        "end": 3.368
+      }
+    },
+    {
+      "path": "$.rhythmEvents[7]",
+      "stringIndex": 2,
+      "fret": 4,
+      "measureNumber": 2,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 3.345,
+        "positionInMeasure": 0.797938,
+        "duration": 0.139,
+        "end": 3.484
+      }
+    },
+    {
+      "path": "$.rhythmEvents[8]",
+      "stringIndex": 5,
+      "fret": 0,
+      "measureNumber": 2,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 3.368,
+        "positionInMeasure": 0.8103,
+        "duration": 0.174,
+        "end": 3.542
+      }
+    },
+    {
+      "path": "$.rhythmEvents[9]",
+      "stringIndex": 3,
+      "fret": 2,
+      "measureNumber": 3,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 3.833,
+        "positionInMeasure": 0.060238,
+        "duration": 0.187,
+        "end": 4.02
+      }
+    },
+    {
+      "path": "$.rhythmEvents[10]",
+      "stringIndex": 1,
+      "fret": 3,
+      "measureNumber": 3,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 4.112,
+        "positionInMeasure": 0.2102,
+        "duration": 0.36,
+        "end": 4.472
+      }
+    },
+    {
+      "path": "$.rhythmEvents[11]",
+      "stringIndex": 0,
+      "fret": 3,
+      "measureNumber": 3,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 4.182,
+        "positionInMeasure": 0.247825,
+        "duration": 0.29,
+        "end": 4.472
+      }
+    },
+    {
+      "path": "$.rhythmEvents[12]",
+      "stringIndex": 5,
+      "fret": 3,
+      "measureNumber": 3,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 4.194,
+        "positionInMeasure": 0.254275,
+        "duration": 0.186,
+        "end": 4.38
+      }
+    },
+    {
+      "path": "$.rhythmEvents[13]",
+      "stringIndex": 2,
+      "fret": 2,
+      "measureNumber": 3,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 4.763,
+        "positionInMeasure": 0.560113,
+        "duration": 0.151,
+        "end": 4.914
+      }
+    },
+    {
+      "path": "$.rhythmEvents[14]",
+      "stringIndex": 2,
+      "fret": 0,
+      "measureNumber": 3,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 4.925,
+        "positionInMeasure": 0.647187,
+        "duration": 0.163,
+        "end": 5.088
+      }
+    },
+    {
+      "path": "$.rhythmEvents[15]",
+      "stringIndex": 3,
+      "fret": 2,
+      "measureNumber": 3,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 5.006,
+        "positionInMeasure": 0.690725,
+        "duration": 0.244,
+        "end": 5.25
+      }
+    },
+    {
+      "path": "$.rhythmEvents[16]",
+      "stringIndex": 5,
+      "fret": 0,
+      "measureNumber": 3,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 5.273,
+        "positionInMeasure": 0.834237,
+        "duration": 0.14,
+        "end": 5.413
+      }
+    },
+    {
+      "path": "$.rhythmEvents[17]",
+      "stringIndex": 3,
+      "fret": 2,
+      "measureNumber": 4,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 5.831,
+        "positionInMeasure": 0.134163,
+        "duration": 0.245,
+        "end": 6.076
+      }
+    },
+    {
+      "path": "$.rhythmEvents[18]",
+      "stringIndex": 1,
+      "fret": 5,
+      "measureNumber": 4,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 6.018,
+        "positionInMeasure": 0.234675,
+        "duration": 0.162,
+        "end": 6.18
+      }
+    },
+    {
+      "path": "$.rhythmEvents[19]",
+      "stringIndex": 3,
+      "fret": 2,
+      "measureNumber": 4,
+      "availableKeys": [
+        "confidence",
+        "duration",
+        "end",
+        "eventIndex",
+        "fret",
+        "measureNumber",
+        "midiPitch",
+        "positionInMeasure",
+        "readOnly",
+        "start",
+        "stringIndex"
+      ],
+      "timingFields": {
+        "start": 6.076,
+        "positionInMeasure": 0.26585,
+        "duration": 0.139,
+        "end": 6.215
+      }
+    }
+  ],
+  "readOnly": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "nextStep": "Use the discovered timing and measure fields to join protected V8 rhythm onsets with protected notation string/fret identities without modifying either source."
+}

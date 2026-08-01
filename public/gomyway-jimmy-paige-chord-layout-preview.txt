@@ -1,0 +1,116 @@
+JIMMY PAIGE CHORD LAYOUT PREVIEW
+NON-RENDERING / BENCHMARK ONLY
+Professional PDF remains scoring authority
+
+[training-professional-reference]
+Measure 33 | G6
+phase  0.00  0.20  0.36
+ e |  0   0   0
+ B |  3   3   3
+ G |  4   4   4
+ D |  5   5   5
+ A |  -   -   -
+ E |  -   -   -
+mode   professional-reference  professional-reference  professional-reference
+
+Measure 34 | A(tp2)
+phase  0.00  0.20  0.36
+ e |  2   2   2
+ B |  2   2   2
+ G |  2   2   2
+ D |  2   2   2
+ A |  0   0   0
+ E |  -   -   -
+mode   professional-reference  professional-reference  professional-reference
+
+Measure 35 | E / D
+phase  0.00  0.18  0.34  0.50  0.66  0.80
+ e |  -   -   -   -   -   -
+ B |  9   9   9   9   7   9
+ G |  9   9   9   9   7   9
+ D |  9   9   9   9   7   9
+ A |  9   9   9   9   7   9
+ E |  -   -   -   -   -   -
+mode   professional-reference  professional-reference  professional-reference  professional-reference  professional-reference  professional-reference
+
+Measure 36 | G / E
+phase  0.00  0.14  0.27  0.40  0.53  0.67
+ e |  -   -   -   -   -   -
+ B |  9   9   9   9  12   9
+ G |  9   9   9   9  12   9
+ D |  9   9   9   9  12   9
+ A |  -   -   -   -   -   -
+ E |  -   -   -   -   -   -
+mode   professional-reference  professional-reference  professional-reference  professional-reference  professional-reference  professional-reference
+
+Measure 37 | G6
+phase  0.00  0.20  0.36
+ e |  0   0   0
+ B |  3   3   3
+ G |  4   4   4
+ D |  5   5   5
+ A |  -   -   -
+ E |  -   -   -
+mode   professional-reference  professional-reference  professional-reference
+
+Measure 38 | A(tp2)
+phase  0.00  0.23
+ e |  2   2
+ B |  2   2
+ G |  2   2
+ D |  2   2
+ A |  0   0
+ E |  -   -
+mode   professional-reference  professional-reference
+
+[heldout-shadow-resolved]
+Measure 63 | G6
+phase  0.00  0.20  0.36
+ e |  0   0   0
+ B |  3   3   3
+ G |  4   4   4
+ D |  5   5   5
+ A |  -   -   -
+ E |  -   -   -
+mode   observed-exact  observed-exact  observed-exact
+
+Measure 64 | A(tp2)
+phase  0.00  0.20  0.36
+ e |  2   2   2
+ B |  2   2   2
+ G |  2   2   2
+ D |  2   2   2
+ A |  0   0   0
+ E |  -   -   -
+mode   guarded-template-transfer  guarded-template-transfer  guarded-template-transfer
+
+Measure 65 | E / D
+phase  0.00  0.18  0.34  0.50  0.66  0.80
+ e |  -   -   -   -   -   -
+ B |  9   9   9   9   7   9
+ G |  9   9   9   9   7   9
+ D |  9   9   9   9   7   9
+ A |  9   9   9   9   7   9
+ E |  -   -   -   -   -   -
+mode   observed-exact  observed-exact  observed-exact  observed-exact  observed-exact  observed-exact
+
+Measure 66 | G / E
+phase  0.00  0.14  0.27  0.40  0.53  0.67
+ e |  -   -   -   -   -   -
+ B |  9   9   9   9  12   9
+ G |  9   9   9   9  12   9
+ D |  9   9   9   9  12   9
+ A |  -   -   -   -   -   -
+ E |  -   -   -   -   -   -
+mode   guarded-template-transfer  guarded-template-transfer  guarded-template-transfer  guarded-template-transfer  guarded-template-transfer  observed-exact
+
+Measure 67 | G6
+phase  0.00  0.20  0.36
+ e |  0   0   0
+ B |  3   3   3
+ G |  4   4   4
+ D |  5   5   5
+ A |  -   -   -
+ E |  -   -   -
+mode   observed-exact  observed-exact  observed-exact
+

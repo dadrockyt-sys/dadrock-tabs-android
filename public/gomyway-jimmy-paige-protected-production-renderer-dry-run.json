@@ -1,0 +1,753 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "protected-production-renderer-dry-run",
+  "mode": "in-memory-contract-only",
+  "checks": {
+    "humanInspectionPassed": true,
+    "adapterOutputBenchmarkPassed": true,
+    "measureSequenceExact": true,
+    "measureCount11": true,
+    "attackCount44": true,
+    "invalidRowsZero": true,
+    "duplicateAttackKeysZero": true,
+    "allRowsSixStrings": true,
+    "productionRendererInvocationSuppressed": true,
+    "pdfWriteSuppressed": true,
+    "productionWriteSuppressed": true,
+    "sourceEventShaUnchanged": true,
+    "inspectionShaUnchanged": true,
+    "adapterOutputShaUnchanged": true,
+    "adapterReportShaUnchanged": true
+  },
+  "measureCount": 11,
+  "attackCount": 44,
+  "invalidRowCount": 0,
+  "duplicateAttackKeyCount": 0,
+  "measures": [
+    {
+      "measureNumber": 33,
+      "attackCount": 3,
+      "rows": [
+        {
+          "measureNumber": 33,
+          "attackNumber": 1,
+          "phase": 0.0,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 33,
+          "attackNumber": 2,
+          "phase": 0.2,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 33,
+          "attackNumber": 3,
+          "phase": 0.36,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        }
+      ],
+      "productionRendererInvocation": "suppressed",
+      "pdfWrite": "suppressed",
+      "productionWrite": "suppressed"
+    },
+    {
+      "measureNumber": 34,
+      "attackCount": 3,
+      "rows": [
+        {
+          "measureNumber": 34,
+          "attackNumber": 1,
+          "phase": 0.0,
+          "fretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 34,
+          "attackNumber": 2,
+          "phase": 0.2,
+          "fretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 34,
+          "attackNumber": 3,
+          "phase": 0.36,
+          "fretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        }
+      ],
+      "productionRendererInvocation": "suppressed",
+      "pdfWrite": "suppressed",
+      "productionWrite": "suppressed"
+    },
+    {
+      "measureNumber": 35,
+      "attackCount": 6,
+      "rows": [
+        {
+          "measureNumber": 35,
+          "attackNumber": 1,
+          "phase": 0.0,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 35,
+          "attackNumber": 2,
+          "phase": 0.18,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 35,
+          "attackNumber": 3,
+          "phase": 0.34,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 35,
+          "attackNumber": 4,
+          "phase": 0.5,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 35,
+          "attackNumber": 5,
+          "phase": 0.66,
+          "fretsHighToLow": [
+            null,
+            7,
+            7,
+            7,
+            7,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 35,
+          "attackNumber": 6,
+          "phase": 0.8,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        }
+      ],
+      "productionRendererInvocation": "suppressed",
+      "pdfWrite": "suppressed",
+      "productionWrite": "suppressed"
+    },
+    {
+      "measureNumber": 36,
+      "attackCount": 6,
+      "rows": [
+        {
+          "measureNumber": 36,
+          "attackNumber": 1,
+          "phase": 0.0,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 36,
+          "attackNumber": 2,
+          "phase": 0.14,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 36,
+          "attackNumber": 3,
+          "phase": 0.27,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 36,
+          "attackNumber": 4,
+          "phase": 0.4,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 36,
+          "attackNumber": 5,
+          "phase": 0.53,
+          "fretsHighToLow": [
+            null,
+            12,
+            12,
+            12,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 36,
+          "attackNumber": 6,
+          "phase": 0.67,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        }
+      ],
+      "productionRendererInvocation": "suppressed",
+      "pdfWrite": "suppressed",
+      "productionWrite": "suppressed"
+    },
+    {
+      "measureNumber": 37,
+      "attackCount": 3,
+      "rows": [
+        {
+          "measureNumber": 37,
+          "attackNumber": 1,
+          "phase": 0.0,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 37,
+          "attackNumber": 2,
+          "phase": 0.2,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 37,
+          "attackNumber": 3,
+          "phase": 0.36,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        }
+      ],
+      "productionRendererInvocation": "suppressed",
+      "pdfWrite": "suppressed",
+      "productionWrite": "suppressed"
+    },
+    {
+      "measureNumber": 38,
+      "attackCount": 2,
+      "rows": [
+        {
+          "measureNumber": 38,
+          "attackNumber": 1,
+          "phase": 0.0,
+          "fretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        },
+        {
+          "measureNumber": 38,
+          "attackNumber": 2,
+          "phase": 0.23,
+          "fretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "resolutionMode": "professional-reference"
+        }
+      ],
+      "productionRendererInvocation": "suppressed",
+      "pdfWrite": "suppressed",
+      "productionWrite": "suppressed"
+    },
+    {
+      "measureNumber": 63,
+      "attackCount": 3,
+      "rows": [
+        {
+          "measureNumber": 63,
+          "attackNumber": 1,
+          "phase": 0.0,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        },
+        {
+          "measureNumber": 63,
+          "attackNumber": 2,
+          "phase": 0.2,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        },
+        {
+          "measureNumber": 63,
+          "attackNumber": 3,
+          "phase": 0.36,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        }
+      ],
+      "productionRendererInvocation": "suppressed",
+      "pdfWrite": "suppressed",
+      "productionWrite": "suppressed"
+    },
+    {
+      "measureNumber": 64,
+      "attackCount": 3,
+      "rows": [
+        {
+          "measureNumber": 64,
+          "attackNumber": 1,
+          "phase": 0.0,
+          "fretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "resolutionMode": "guarded-template-transfer"
+        },
+        {
+          "measureNumber": 64,
+          "attackNumber": 2,
+          "phase": 0.2,
+          "fretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "resolutionMode": "guarded-template-transfer"
+        },
+        {
+          "measureNumber": 64,
+          "attackNumber": 3,
+          "phase": 0.36,
+          "fretsHighToLow": [
+            2,
+            2,
+            2,
+            2,
+            0,
+            null
+          ],
+          "resolutionMode": "guarded-template-transfer"
+        }
+      ],
+      "productionRendererInvocation": "suppressed",
+      "pdfWrite": "suppressed",
+      "productionWrite": "suppressed"
+    },
+    {
+      "measureNumber": 65,
+      "attackCount": 6,
+      "rows": [
+        {
+          "measureNumber": 65,
+          "attackNumber": 1,
+          "phase": 0.0,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        },
+        {
+          "measureNumber": 65,
+          "attackNumber": 2,
+          "phase": 0.18,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        },
+        {
+          "measureNumber": 65,
+          "attackNumber": 3,
+          "phase": 0.34,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        },
+        {
+          "measureNumber": 65,
+          "attackNumber": 4,
+          "phase": 0.5,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        },
+        {
+          "measureNumber": 65,
+          "attackNumber": 5,
+          "phase": 0.66,
+          "fretsHighToLow": [
+            null,
+            7,
+            7,
+            7,
+            7,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        },
+        {
+          "measureNumber": 65,
+          "attackNumber": 6,
+          "phase": 0.8,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            9,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        }
+      ],
+      "productionRendererInvocation": "suppressed",
+      "pdfWrite": "suppressed",
+      "productionWrite": "suppressed"
+    },
+    {
+      "measureNumber": 66,
+      "attackCount": 6,
+      "rows": [
+        {
+          "measureNumber": 66,
+          "attackNumber": 1,
+          "phase": 0.0,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "resolutionMode": "guarded-template-transfer"
+        },
+        {
+          "measureNumber": 66,
+          "attackNumber": 2,
+          "phase": 0.14,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "resolutionMode": "guarded-template-transfer"
+        },
+        {
+          "measureNumber": 66,
+          "attackNumber": 3,
+          "phase": 0.27,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "resolutionMode": "guarded-template-transfer"
+        },
+        {
+          "measureNumber": 66,
+          "attackNumber": 4,
+          "phase": 0.4,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "resolutionMode": "guarded-template-transfer"
+        },
+        {
+          "measureNumber": 66,
+          "attackNumber": 5,
+          "phase": 0.53,
+          "fretsHighToLow": [
+            null,
+            12,
+            12,
+            12,
+            null,
+            null
+          ],
+          "resolutionMode": "guarded-template-transfer"
+        },
+        {
+          "measureNumber": 66,
+          "attackNumber": 6,
+          "phase": 0.67,
+          "fretsHighToLow": [
+            null,
+            9,
+            9,
+            9,
+            null,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        }
+      ],
+      "productionRendererInvocation": "suppressed",
+      "pdfWrite": "suppressed",
+      "productionWrite": "suppressed"
+    },
+    {
+      "measureNumber": 67,
+      "attackCount": 3,
+      "rows": [
+        {
+          "measureNumber": 67,
+          "attackNumber": 1,
+          "phase": 0.0,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        },
+        {
+          "measureNumber": 67,
+          "attackNumber": 2,
+          "phase": 0.2,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        },
+        {
+          "measureNumber": 67,
+          "attackNumber": 3,
+          "phase": 0.36,
+          "fretsHighToLow": [
+            0,
+            3,
+            4,
+            5,
+            null,
+            null
+          ],
+          "resolutionMode": "observed-exact"
+        }
+      ],
+      "productionRendererInvocation": "suppressed",
+      "pdfWrite": "suppressed",
+      "productionWrite": "suppressed"
+    }
+  ],
+  "dryRunPassed": true,
+  "readyForProductionRendererShadowInvocation": true,
+  "productionRendererCalled": false,
+  "pdfCreated": false,
+  "productionOutputCreated": false,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "protectedPitchCheckpointChanged": false,
+  "sourceEventsMutated": false
+}

@@ -1,0 +1,60 @@
+{
+  "createdAt": "2026-08-01T10:27:07.204623+00:00",
+  "label": "after-cycle-5",
+  "professionalPdfRemainsMeasurementAuthority": true,
+  "protectedCheckpointsAreReadOnly": true,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "files": [
+    {
+      "filename": "gomyway-professional-rhythm-reference-v2.json",
+      "exists": true,
+      "sha256": "ed778cb409e9f53acd2bc569b4255de28daa8279cf6c7619c987d7e38fdb2e35",
+      "bytes": 43799,
+      "archivePath": "public/jimmy-paige-protected-history/20260801T102707Z-after-cycle-5/gomyway-professional-rhythm-reference-v2.json"
+    },
+    {
+      "filename": "gomyway-professional-timing-map-v2.json",
+      "exists": true,
+      "sha256": "da23f280ad4cac7945e59745f13a897396a831ab072072ea7ba7d5b2bc95f2c3",
+      "bytes": 25861,
+      "archivePath": "public/jimmy-paige-protected-history/20260801T102707Z-after-cycle-5/gomyway-professional-timing-map-v2.json"
+    },
+    {
+      "filename": "gomyway-jimmy-paige-93-06-regression-validation.json",
+      "exists": true,
+      "sha256": "cd329ba5bcd5a34ebb4dff2e6f8a67ec1c35fb194a362338544460b60a12c829",
+      "bytes": 12995,
+      "archivePath": "public/jimmy-paige-protected-history/20260801T102707Z-after-cycle-5/gomyway-jimmy-paige-93-06-regression-validation.json"
+    },
+    {
+      "filename": "gomyway-jimmy-paige-93-06-protected-checkpoint.json",
+      "exists": true,
+      "sha256": "cd329ba5bcd5a34ebb4dff2e6f8a67ec1c35fb194a362338544460b60a12c829",
+      "bytes": 12995,
+      "archivePath": "public/jimmy-paige-protected-history/20260801T102707Z-after-cycle-5/gomyway-jimmy-paige-93-06-protected-checkpoint.json"
+    },
+    {
+      "filename": "gomyway-jimmy-paige-93-06-events.json",
+      "exists": true,
+      "sha256": "cef6ff41d4360059fd53932457e53cad407eea08a8a32619ab3acb601ccacf31",
+      "bytes": 1339875,
+      "archivePath": "public/jimmy-paige-protected-history/20260801T102707Z-after-cycle-5/gomyway-jimmy-paige-93-06-events.json"
+    },
+    {
+      "filename": "gomyway-jimmy-paige-midi62-neighbor-recovery-sweep.json",
+      "exists": true,
+      "sha256": "47de25b3d6a03e6a538090940d76ddbe5a5a9648f4e1d863e9085c00323896ae",
+      "bytes": 9975,
+      "archivePath": "public/jimmy-paige-protected-history/20260801T102707Z-after-cycle-5/gomyway-jimmy-paige-midi62-neighbor-recovery-sweep.json"
+    },
+    {
+      "filename": "gomyway-jimmy-paige-full-song-8-of-9-checkpoint.json",
+      "exists": true,
+      "sha256": "50ef36c477ad6fbd38357d00d7b9ef1dfde68d9f1420427e2a010ad0cd4389a6",
+      "bytes": 879,
+      "archivePath": "public/jimmy-paige-protected-history/20260801T102707Z-after-cycle-5/gomyway-jimmy-paige-full-song-8-of-9-checkpoint.json"
+    }
+  ]
+}

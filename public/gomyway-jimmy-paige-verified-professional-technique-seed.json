@@ -1,0 +1,417 @@
+{
+  "schemaVersion": 1,
+  "source": "human-verified professional PDF visual inventory",
+  "professionalPdf": "public/gomyway-professional-reference.pdf",
+  "professionalPdfSha256": "b8e55778a40ffb3da5959c0efc6ac323271e742ca334ce6f2215fa9694e68842",
+  "pageCount": 8,
+  "measureRange": [
+    1,
+    113
+  ],
+  "pageMap": [
+    {
+      "page": 1,
+      "measures": [
+        1,
+        14
+      ],
+      "notes": "Intro; repeated full bend-and-release riff."
+    },
+    {
+      "page": 2,
+      "measures": [
+        13,
+        26
+      ],
+      "notes": "Intro into Verse 1; bend/release and vibrato examples."
+    },
+    {
+      "page": 3,
+      "measures": [
+        27,
+        42
+      ],
+      "notes": "Muted-note rhythm, Chorus chord sustains, Riff."
+    },
+    {
+      "page": 4,
+      "measures": [
+        43,
+        56
+      ],
+      "notes": "Riff into Verse 2; bend/release and vibrato examples."
+    },
+    {
+      "page": 5,
+      "measures": [
+        57,
+        75
+      ],
+      "notes": "Verse 2, Chorus, Bridge; muted strums and tied chords."
+    },
+    {
+      "page": 6,
+      "measures": [
+        74,
+        89
+      ],
+      "notes": "Bridge and Solo rhythm; muted chord attacks and chord slides."
+    },
+    {
+      "page": 7,
+      "measures": [
+        90,
+        108
+      ],
+      "notes": "Solo rhythm, return riff, Out-Chorus, time-signature changes."
+    },
+    {
+      "page": 8,
+      "measures": [
+        97,
+        113
+      ],
+      "notes": "Out-Chorus and ending; long chord ties and final muted ending."
+    }
+  ],
+  "verifiedOccurrences": [
+    {
+      "technique": "full-bend-release",
+      "measures": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        29,
+        30,
+        31,
+        32,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8
+      ],
+      "evidence": "Visible curved bend arrow labelled 'full' followed by a release curve to the destination fret.",
+      "confidence": "human-verified-visible",
+      "geometryExtracted": false,
+      "timingAnchorsExtracted": false,
+      "rendererTrainingAllowed": false
+    },
+    {
+      "technique": "vibrato",
+      "measures": [
+        25,
+        26,
+        27,
+        55,
+        56,
+        57
+      ],
+      "pages": [
+        2,
+        4,
+        5
+      ],
+      "evidence": "Visible wavy vibrato line above sustained notes.",
+      "confidence": "human-verified-visible",
+      "geometryExtracted": false,
+      "timingAnchorsExtracted": false,
+      "rendererTrainingAllowed": false
+    },
+    {
+      "technique": "muted-note",
+      "measures": [
+        28,
+        58,
+        70,
+        72,
+        74,
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        90,
+        92,
+        94,
+        105,
+        109,
+        113
+      ],
+      "pages": [
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "evidence": "Visible X noteheads within rhythmic chord or single-note patterns.",
+      "confidence": "human-verified-visible",
+      "geometryExtracted": false,
+      "timingAnchorsExtracted": false,
+      "rendererTrainingAllowed": false
+    },
+    {
+      "technique": "pick-direction",
+      "measures": [
+        28,
+        58
+      ],
+      "pages": [
+        3,
+        5
+      ],
+      "evidence": "Visible alternating downstroke/upstroke symbols above the rhythmic figure.",
+      "confidence": "human-verified-visible",
+      "geometryExtracted": false,
+      "timingAnchorsExtracted": false,
+      "rendererTrainingAllowed": false
+    },
+    {
+      "technique": "chord-sustain-tie",
+      "measures": [
+        33,
+        34,
+        35,
+        36,
+        38,
+        63,
+        64,
+        65,
+        66,
+        71,
+        73,
+        75,
+        77,
+        79,
+        81,
+        83,
+        85,
+        87,
+        89,
+        91,
+        93,
+        94,
+        106,
+        110,
+        111,
+        112,
+        113
+      ],
+      "pages": [
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "evidence": "Visible curved ties connecting stacked chord tones across attacks or measures.",
+      "confidence": "human-verified-visible",
+      "geometryExtracted": false,
+      "timingAnchorsExtracted": false,
+      "rendererTrainingAllowed": false
+    },
+    {
+      "technique": "chord-slide",
+      "measures": [
+        71,
+        73,
+        75,
+        77,
+        79,
+        81,
+        83,
+        85,
+        87,
+        89,
+        91,
+        106
+      ],
+      "pages": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "evidence": "Visible diagonal slide strokes attached to stacked chord tones.",
+      "confidence": "human-verified-visible",
+      "geometryExtracted": false,
+      "timingAnchorsExtracted": false,
+      "rendererTrainingAllowed": false
+    },
+    {
+      "technique": "rhythmic-rest",
+      "measures": [
+        35,
+        36,
+        37,
+        65,
+        66,
+        67,
+        70,
+        71,
+        72,
+        73,
+        105,
+        107,
+        108,
+        109,
+        113
+      ],
+      "pages": [
+        3,
+        5,
+        7,
+        8
+      ],
+      "evidence": "Visible rest glyphs preserving attack spacing between chord events.",
+      "confidence": "human-verified-visible",
+      "geometryExtracted": false,
+      "timingAnchorsExtracted": false,
+      "rendererTrainingAllowed": false
+    },
+    {
+      "technique": "time-signature-change",
+      "measures": [
+        104,
+        105
+      ],
+      "pages": [
+        7,
+        8
+      ],
+      "evidence": "Visible 2/4 followed by 4/4 time-signature markings.",
+      "confidence": "human-verified-visible",
+      "geometryExtracted": false,
+      "timingAnchorsExtracted": false,
+      "rendererTrainingAllowed": false
+    },
+    {
+      "technique": "section-label",
+      "measures": [
+        1,
+        17,
+        33,
+        39,
+        47,
+        63,
+        70,
+        78,
+        103
+      ],
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "evidence": "Visible section headings: Intro, Verse 1, Chorus, Riff, Verse 2, Bridge, Solo, and Out-Chorus.",
+      "confidence": "human-verified-visible",
+      "geometryExtracted": false,
+      "timingAnchorsExtracted": false,
+      "rendererTrainingAllowed": false
+    },
+    {
+      "technique": "final-barline",
+      "measures": [
+        113
+      ],
+      "pages": [
+        8
+      ],
+      "evidence": "Visible final double barline at the end of the professional reference.",
+      "confidence": "human-verified-visible",
+      "geometryExtracted": false,
+      "timingAnchorsExtracted": false,
+      "rendererTrainingAllowed": false
+    }
+  ],
+  "verifiedTechniqueFamilyCount": 10,
+  "geometryAnnotations": [],
+  "timingAnchors": [],
+  "syntheticAnnotationsCreated": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "protectedPitchCheckpointChanged": false,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "checks": {
+    "professionalPdfAuthorityConfirmed": true,
+    "professionalPdfShaUnchanged": true,
+    "authorityReportShaUnchanged": true,
+    "pageCount8": true,
+    "finalMeasure113": true,
+    "verifiedTechniqueFamiliesAtLeast10": true,
+    "syntheticAnnotationsCreatedFalse": true,
+    "rendererChangedFalse": true,
+    "productionPromotionAllowedFalse": true
+  },
+  "seedPassed": true,
+  "readyForMeasureLevelGeometryExtraction": true,
+  "readyForTechniqueRendererTraining": false
+}

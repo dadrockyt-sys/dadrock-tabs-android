@@ -1,0 +1,20 @@
+2026-08-01 06:51:20 UTC | Attempt 1/6 submitted | name=proven-winner-100hz | retry=1/3 | callId=fc-01KYY1EWGZYF76Y0RMHN541V0A
+2026-08-01 06:51:22 UTC | [worker-start heartbeat] attempt=1/6 | name=proven-winner-100hz | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1EWGZYF76Y0RMHN541V0A
+2026-08-01 06:51:38 UTC | Attempt 1/6 complete | name=proven-winner-100hz | low=14.06% | overall=53.47% | protected=91.67% | guard=False | weighted=29.703
+2026-08-01 06:51:39 UTC | Attempt 2/6 submitted | name=proven-winner-90hz | retry=1/3 | callId=fc-01KYY1FEDWRFEV7R068VE2EW2F
+2026-08-01 06:51:42 UTC | [worker-start heartbeat] attempt=2/6 | name=proven-winner-90hz | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1FEDWRFEV7R068VE2EW2F
+2026-08-01 06:51:57 UTC | Attempt 2/6 complete | name=proven-winner-90hz | low=14.06% | overall=53.47% | protected=91.67% | guard=False | weighted=29.703
+2026-08-01 06:51:58 UTC | Attempt 3/6 submitted | name=proven-winner-82hz | retry=1/3 | callId=fc-01KYY1G1JE4DXN74V6CJWTPB25
+2026-08-01 06:52:01 UTC | [worker-start heartbeat] attempt=3/6 | name=proven-winner-82hz | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1G1JE4DXN74V6CJWTPB25
+2026-08-01 06:52:17 UTC | Attempt 3/6 complete | name=proven-winner-82hz | low=39.06% | overall=64.58% | protected=91.67% | guard=False | weighted=49.425
+2026-08-01 06:52:17 UTC | Attempt 4/6 submitted | name=proven-winner-80hz | retry=1/3 | callId=fc-01KYY1GMAZTK94FJC8V6B5G3PK
+2026-08-01 06:52:21 UTC | [worker-start heartbeat] attempt=4/6 | name=proven-winner-80hz | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1GMAZTK94FJC8V6B5G3PK
+2026-08-01 06:52:36 UTC | Attempt 4/6 complete | name=proven-winner-80hz | low=39.06% | overall=64.58% | protected=91.67% | guard=False | weighted=49.425
+2026-08-01 06:52:37 UTC | Attempt 5/6 submitted | name=proven-winner-75hz | retry=1/3 | callId=fc-01KYY1H74ZQC6A5XQE00J05SZW
+2026-08-01 06:52:42 UTC | [worker-start heartbeat] attempt=5/6 | name=proven-winner-75hz | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1H74ZQC6A5XQE00J05SZW
+2026-08-01 06:52:57 UTC | Attempt 5/6 complete | name=proven-winner-75hz | low=39.06% | overall=64.58% | protected=91.67% | guard=False | weighted=49.425
+2026-08-01 06:52:58 UTC | Attempt 6/6 submitted | name=proven-winner-70hz | retry=1/3 | callId=fc-01KYY1HWCZ8PKD32DV54WHSF8Q
+2026-08-01 06:53:01 UTC | [worker-start heartbeat] attempt=6/6 | name=proven-winner-70hz | retry=1/3 | elapsed=0.0s | taskId=- | callId=fc-01KYY1HWCZ8PKD32DV54WHSF8Q
+2026-08-01 06:53:16 UTC | Attempt 6/6 complete | name=proven-winner-70hz | low=39.06% | overall=64.58% | protected=91.67% | guard=False | weighted=49.425
+2026-08-01 06:53:16 UTC | Sweep complete | no configuration passed the MIDI 52/62 guard
+2026-08-01 06:53:16 UTC | Output: public/gomyway-jimmy-paige-parameterized-professional-sweep.json

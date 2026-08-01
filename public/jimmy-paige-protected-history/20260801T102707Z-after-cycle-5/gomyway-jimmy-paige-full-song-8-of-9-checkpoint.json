@@ -1,0 +1,31 @@
+{
+  "benchmarkVersion": 8,
+  "checkpointType": "jimmy-paige-full-song-professional-reference-8-of-9",
+  "status": "protected-training-checkpoint",
+  "sourceAudio": "public/gomywayfullaitest.m4a",
+  "sourceCallId": "fc-01KYX8RM3DSV9BX61RN011X9VF",
+  "eventCount": 1629,
+  "winningFunction": "upper_string_recovery",
+  "winningParameters": {
+    "onset_threshold": 0.35,
+    "frame_threshold": 0.2,
+    "minimum_note_length": 75.0,
+    "minimum_frequency": 100.0,
+    "maximum_frequency": 1400.0
+  },
+  "professionalReferenceScore": "8/9",
+  "bestAlignment": {
+    "tempoBpm": 133.8,
+    "offsetSeconds": 7.1,
+    "toleranceSeconds": 0.18,
+    "matchingOccurrences": 19
+  },
+  "remainingMiss": {
+    "patternId": "em-riff-b",
+    "step": 10,
+    "expectedMidiPitch": 45
+  },
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false
+}

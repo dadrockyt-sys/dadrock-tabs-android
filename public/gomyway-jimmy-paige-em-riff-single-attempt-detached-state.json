@@ -1,0 +1,17 @@
+{
+  "benchmarkVersion": 8,
+  "status": "cancelled",
+  "callId": "fc-01KYWBNST0FEC3TC85SSVR929D",
+  "startedAtEpoch": 1785510683.0923123,
+  "startedAt": "2026-07-31 15:11:24 UTC",
+  "attempt": 1,
+  "name": "default",
+  "parameters": {
+    "onset_threshold": 0.5,
+    "frame_threshold": 0.3,
+    "minimum_note_length": 127.7
+  },
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false
+}

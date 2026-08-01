@@ -1,0 +1,247 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "professional-em-riff-read-only-pitch-diagnosis",
+  "passed": true,
+  "readyForExactScoring": false,
+  "eventsInspected": 422,
+  "matchedProtectedEvents": 322,
+  "protectedSlotCount": 9,
+  "slotsWithCorrectPitchEvidence": 1,
+  "pitchEvidencePercentage": 11.11,
+  "slotReports": [
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 2,
+      "professionalLabel": "G-string fret 2 full-step bend",
+      "acceptedMidiPitches": [
+        57,
+        59
+      ],
+      "observedMidiCandidates": [
+        {
+          "midiPitch": 40,
+          "support": 45
+        }
+      ],
+      "acceptedPitchSupport": 0,
+      "pitchEvidencePresent": false,
+      "diagnosis": "pitch-detection-and-string-assignment-both-need-training"
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 6,
+      "professionalLabel": "open G bend-release target",
+      "acceptedMidiPitches": [
+        55
+      ],
+      "observedMidiCandidates": [
+        {
+          "midiPitch": 52,
+          "support": 10
+        },
+        {
+          "midiPitch": 40,
+          "support": 6
+        },
+        {
+          "midiPitch": 67,
+          "support": 5
+        }
+      ],
+      "acceptedPitchSupport": 0,
+      "pitchEvidencePresent": false,
+      "diagnosis": "pitch-detection-and-string-assignment-both-need-training"
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 10,
+      "professionalLabel": "D-string fret 2",
+      "acceptedMidiPitches": [
+        52
+      ],
+      "observedMidiCandidates": [
+        {
+          "midiPitch": 40,
+          "support": 26
+        },
+        {
+          "midiPitch": 43,
+          "support": 10
+        },
+        {
+          "midiPitch": 64,
+          "support": 5
+        }
+      ],
+      "acceptedPitchSupport": 0,
+      "pitchEvidencePresent": false,
+      "diagnosis": "pitch-detection-and-string-assignment-both-need-training"
+    },
+    {
+      "patternId": "em-riff-a",
+      "quantizedStep": 14,
+      "professionalLabel": "open A",
+      "acceptedMidiPitches": [
+        45
+      ],
+      "observedMidiCandidates": [
+        {
+          "midiPitch": 40,
+          "support": 30
+        },
+        {
+          "midiPitch": 43,
+          "support": 5
+        }
+      ],
+      "acceptedPitchSupport": 0,
+      "pitchEvidencePresent": false,
+      "diagnosis": "pitch-detection-and-string-assignment-both-need-training"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 2,
+      "professionalLabel": "G-string fret 2 full-step bend",
+      "acceptedMidiPitches": [
+        57,
+        59
+      ],
+      "observedMidiCandidates": [
+        {
+          "midiPitch": 40,
+          "support": 30
+        },
+        {
+          "midiPitch": 43,
+          "support": 5
+        },
+        {
+          "midiPitch": 42,
+          "support": 5
+        }
+      ],
+      "acceptedPitchSupport": 0,
+      "pitchEvidencePresent": false,
+      "diagnosis": "pitch-detection-and-string-assignment-both-need-training"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 4,
+      "professionalLabel": "open G bend-release target",
+      "acceptedMidiPitches": [
+        55
+      ],
+      "observedMidiCandidates": [
+        {
+          "midiPitch": 52,
+          "support": 10
+        },
+        {
+          "midiPitch": 41,
+          "support": 10
+        },
+        {
+          "midiPitch": 40,
+          "support": 7
+        },
+        {
+          "midiPitch": 64,
+          "support": 5
+        }
+      ],
+      "acceptedPitchSupport": 0,
+      "pitchEvidencePresent": false,
+      "diagnosis": "pitch-detection-and-string-assignment-both-need-training"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 6,
+      "professionalLabel": "D-string fret 2",
+      "acceptedMidiPitches": [
+        52
+      ],
+      "observedMidiCandidates": [
+        {
+          "midiPitch": 40,
+          "support": 16
+        },
+        {
+          "midiPitch": 52,
+          "support": 5
+        },
+        {
+          "midiPitch": 43,
+          "support": 5
+        }
+      ],
+      "acceptedPitchSupport": 5,
+      "pitchEvidencePresent": true,
+      "diagnosis": "string-fret-assignment-error-likely"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 10,
+      "professionalLabel": "open A",
+      "acceptedMidiPitches": [
+        45
+      ],
+      "observedMidiCandidates": [
+        {
+          "midiPitch": 40,
+          "support": 21
+        },
+        {
+          "midiPitch": 43,
+          "support": 5
+        },
+        {
+          "midiPitch": 41,
+          "support": 5
+        }
+      ],
+      "acceptedPitchSupport": 0,
+      "pitchEvidencePresent": false,
+      "diagnosis": "pitch-detection-and-string-assignment-both-need-training"
+    },
+    {
+      "patternId": "em-riff-b",
+      "quantizedStep": 14,
+      "professionalLabel": "B/G fret-3 double-stop",
+      "acceptedMidiPitches": [
+        62,
+        58
+      ],
+      "observedMidiCandidates": [
+        {
+          "midiPitch": 40,
+          "support": 25
+        },
+        {
+          "midiPitch": 67,
+          "support": 16
+        },
+        {
+          "midiPitch": 78,
+          "support": 5
+        },
+        {
+          "midiPitch": 43,
+          "support": 5
+        }
+      ],
+      "acceptedPitchSupport": 0,
+      "pitchEvidencePresent": false,
+      "diagnosis": "pitch-detection-and-string-assignment-both-need-training"
+    }
+  ],
+  "safeguards": {
+    "readOnlyDiagnosis": true,
+    "doesNotModifyV7OrV8Events": true,
+    "doesNotCopyProfessionalNotesIntoJimmy": true,
+    "doesNotModifyLockedTiming": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false,
+    "noSyntheticNotes": true
+  },
+  "nextStep": "Use this diagnosis to determine whether the next training loop should focus on pitch detection or on string/fret assignment. Do not promote any event yet."
+}

@@ -1,0 +1,35 @@
+{
+  "checkpointVersion": 1,
+  "checkpointName": "Jimmy PAIge professional best 84.72 percent",
+  "parameters": {
+    "name": "82hz-most-sensitive-protected",
+    "onset_threshold": 0.3,
+    "frame_threshold": 0.15,
+    "minimum_note_length": 45.0,
+    "minimum_frequency": 82.0,
+    "maximum_frequency": 1400.0,
+    "multiple_pitch_bends": false
+  },
+  "protectedBaseline": {
+    "overallRecallPercentage": 84.72,
+    "lowRegisterRecallPercentage": 70.31,
+    "midi52Matches": 32,
+    "midi52Expected": 32,
+    "midi62Matches": 14,
+    "midi62Expected": 16,
+    "protectedRecallPercentage": 95.83,
+    "weightedScore": 75.744,
+    "productionPromotionAllowed": false
+  },
+  "professionalReference": "public/gomyway-professional-rhythm-reference-v2.json",
+  "status": "protected-not-promoted",
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "requiredFutureGuards": {
+    "overallRecallMinimum": 84.72,
+    "lowRegisterRecallMinimum": 70.31,
+    "midi52Required": "32/32",
+    "midi62Required": "16/16"
+  }
+}

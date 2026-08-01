@@ -1,0 +1,36 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "protected-chord-resolver-regression-gate",
+  "inputs": {
+    "trained_pitch_class": "public/gomyway-jimmy-paige-professional-chords-33-38-pitch-class-recovery.json",
+    "heldout_pitch_class": "public/gomyway-jimmy-paige-chord-pitch-class-validation-63-67.json",
+    "template_transfer": "public/gomyway-jimmy-paige-cross-chorus-voicing-template-transfer-63-67.json",
+    "regression": "public/gomyway-jimmy-paige-93-06-regression-validation.json"
+  },
+  "scores": {
+    "trainedChordRecognitionPercentage": 100.0,
+    "heldoutChordRecognitionPercentage": 100.0,
+    "heldoutTemplateTransferPercentage": 100.0,
+    "professionalScorePercentage": 93.06,
+    "lowRegisterScorePercentage": 84.38,
+    "midi52Matches": 32.0,
+    "midi62Matches": 16.0
+  },
+  "checks": {
+    "trainedChordRecognition100": true,
+    "heldoutChordRecognition100": true,
+    "templateTransfer100": true,
+    "professionalScoreProtected": true,
+    "lowRegisterProtected": true,
+    "midi52Protected": true,
+    "midi62Protected": true,
+    "combinedRegressionPassed": true
+  },
+  "gatePassed": true,
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedPitchCheckpointChanged": false,
+  "readyForCanonicalResolverImplementation": true
+}

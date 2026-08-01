@@ -1,0 +1,1020 @@
+{
+  "trainingVersion": 8,
+  "trainingType": "bounded-em-riff-candidate-recovery-loop",
+  "passed": true,
+  "trainingStarted": true,
+  "productionPromotionAllowed": false,
+  "baselineCorrectCandidateSlots": 1,
+  "bestCorrectCandidateSlots": 1,
+  "improved": false,
+  "bestMatchRadiusSteps": 1,
+  "recommendedNextLoop": "hybrid-pitch-extraction-and-ranking-training",
+  "attemptCount": 4,
+  "attempts": [
+    {
+      "attempt": 1,
+      "matchRadiusSteps": 1,
+      "slotsWithCorrectCandidate": 1,
+      "candidatePresencePercentage": 11.11,
+      "correctLeadingSlots": 0,
+      "leadingAccuracyPercentage": 0.0,
+      "slotReports": [
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 2,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 45
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 6,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 52,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 52,
+              "support": 10
+            },
+            {
+              "midiPitch": 40,
+              "support": 6
+            },
+            {
+              "midiPitch": 67,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 10,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 26
+            },
+            {
+              "midiPitch": 43,
+              "support": 10
+            },
+            {
+              "midiPitch": 64,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 14,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 30
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 2,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 30
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            },
+            {
+              "midiPitch": 42,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 4,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 52,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 52,
+              "support": 10
+            },
+            {
+              "midiPitch": 41,
+              "support": 10
+            },
+            {
+              "midiPitch": 40,
+              "support": 7
+            },
+            {
+              "midiPitch": 64,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 6,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correctCandidatePresent": true,
+          "correctCandidateMatches": [
+            {
+              "midiPitch": 52,
+              "support": 5,
+              "rank": 2
+            }
+          ],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 16
+            },
+            {
+              "midiPitch": 52,
+              "support": 5
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 10,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 21
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            },
+            {
+              "midiPitch": 41,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 14,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 25
+            },
+            {
+              "midiPitch": 67,
+              "support": 16
+            },
+            {
+              "midiPitch": 78,
+              "support": 5
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "matchRadiusSteps": 2,
+      "slotsWithCorrectCandidate": 1,
+      "candidatePresencePercentage": 11.11,
+      "correctLeadingSlots": 0,
+      "leadingAccuracyPercentage": 0.0,
+      "slotReports": [
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 2,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 50
+            },
+            {
+              "midiPitch": 67,
+              "support": 15
+            },
+            {
+              "midiPitch": 62,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 6,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 21
+            },
+            {
+              "midiPitch": 52,
+              "support": 10
+            },
+            {
+              "midiPitch": 67,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 10,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 36
+            },
+            {
+              "midiPitch": 43,
+              "support": 10
+            },
+            {
+              "midiPitch": 64,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 14,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 30
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 2,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 35
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            },
+            {
+              "midiPitch": 42,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 4,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 52,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 52,
+              "support": 10
+            },
+            {
+              "midiPitch": 41,
+              "support": 10
+            },
+            {
+              "midiPitch": 40,
+              "support": 7
+            },
+            {
+              "midiPitch": 64,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 6,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correctCandidatePresent": true,
+          "correctCandidateMatches": [
+            {
+              "midiPitch": 52,
+              "support": 5,
+              "rank": 2
+            }
+          ],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 36
+            },
+            {
+              "midiPitch": 52,
+              "support": 5
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 10,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 41
+            },
+            {
+              "midiPitch": 43,
+              "support": 10
+            },
+            {
+              "midiPitch": 41,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 14,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 25
+            },
+            {
+              "midiPitch": 67,
+              "support": 16
+            },
+            {
+              "midiPitch": 78,
+              "support": 5
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "attempt": 3,
+      "matchRadiusSteps": 3,
+      "slotsWithCorrectCandidate": 1,
+      "candidatePresencePercentage": 11.11,
+      "correctLeadingSlots": 0,
+      "leadingAccuracyPercentage": 0.0,
+      "slotReports": [
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 2,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 50
+            },
+            {
+              "midiPitch": 67,
+              "support": 15
+            },
+            {
+              "midiPitch": 62,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 6,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 21
+            },
+            {
+              "midiPitch": 52,
+              "support": 10
+            },
+            {
+              "midiPitch": 67,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 10,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 36
+            },
+            {
+              "midiPitch": 43,
+              "support": 10
+            },
+            {
+              "midiPitch": 64,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 14,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 30
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 2,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 35
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            },
+            {
+              "midiPitch": 42,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 4,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 52,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 52,
+              "support": 10
+            },
+            {
+              "midiPitch": 41,
+              "support": 10
+            },
+            {
+              "midiPitch": 40,
+              "support": 7
+            },
+            {
+              "midiPitch": 64,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 6,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correctCandidatePresent": true,
+          "correctCandidateMatches": [
+            {
+              "midiPitch": 52,
+              "support": 5,
+              "rank": 2
+            }
+          ],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 36
+            },
+            {
+              "midiPitch": 52,
+              "support": 5
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 10,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 41
+            },
+            {
+              "midiPitch": 43,
+              "support": 10
+            },
+            {
+              "midiPitch": 41,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 14,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 25
+            },
+            {
+              "midiPitch": 67,
+              "support": 16
+            },
+            {
+              "midiPitch": 78,
+              "support": 5
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "attempt": 4,
+      "matchRadiusSteps": 4,
+      "slotsWithCorrectCandidate": 1,
+      "candidatePresencePercentage": 11.11,
+      "correctLeadingSlots": 0,
+      "leadingAccuracyPercentage": 0.0,
+      "slotReports": [
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 2,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 50
+            },
+            {
+              "midiPitch": 67,
+              "support": 15
+            },
+            {
+              "midiPitch": 62,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 6,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 21
+            },
+            {
+              "midiPitch": 52,
+              "support": 10
+            },
+            {
+              "midiPitch": 67,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 10,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 36
+            },
+            {
+              "midiPitch": 43,
+              "support": 10
+            },
+            {
+              "midiPitch": 64,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "quantizedStep": 14,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 30
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 2,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 35
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            },
+            {
+              "midiPitch": 42,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 4,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 52,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 52,
+              "support": 10
+            },
+            {
+              "midiPitch": 41,
+              "support": 10
+            },
+            {
+              "midiPitch": 40,
+              "support": 7
+            },
+            {
+              "midiPitch": 64,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 6,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correctCandidatePresent": true,
+          "correctCandidateMatches": [
+            {
+              "midiPitch": 52,
+              "support": 5,
+              "rank": 2
+            }
+          ],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 36
+            },
+            {
+              "midiPitch": 52,
+              "support": 5
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 10,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 41
+            },
+            {
+              "midiPitch": 43,
+              "support": 10
+            },
+            {
+              "midiPitch": 41,
+              "support": 5
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "quantizedStep": 14,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correctCandidatePresent": false,
+          "correctCandidateMatches": [],
+          "leadingMidiPitch": 40,
+          "leadingCorrect": false,
+          "topCandidates": [
+            {
+              "midiPitch": 40,
+              "support": 25
+            },
+            {
+              "midiPitch": 67,
+              "support": 16
+            },
+            {
+              "midiPitch": 78,
+              "support": 5
+            },
+            {
+              "midiPitch": 43,
+              "support": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "timingAlignmentPassed": true,
+    "allNineProtectedSlotsPresent": true,
+    "notationEventsPresent": true,
+    "boundedAttemptsOnly": true,
+    "readOnlyTraining": true,
+    "lockedV7EventsProtected": true,
+    "lockedV8EventsProtected": true,
+    "lockedTimingProtected": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "safeguards": {
+    "doesNotRewriteJimmyEvents": true,
+    "doesNotCopyProfessionalNotesIntoJimmy": true,
+    "doesNotModifyTimingTemplates": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false
+  },
+  "nextStep": "If candidate recovery reaches 9/9, start bounded ranking optimization. Otherwise, add a guarded extractor parameter hook for the missing slots."
+}

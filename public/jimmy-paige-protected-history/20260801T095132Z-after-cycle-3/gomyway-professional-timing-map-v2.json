@@ -1,0 +1,1190 @@
+{
+  "schemaVersion": 2,
+  "timingMapType": "professional-rhythm-tab-to-audio",
+  "song": "Are You Gonna Go My Way",
+  "artist": "Lenny Kravitz",
+  "audioSource": "public/gomywayfullaitest.m4a",
+  "baseTempoBpm": 129,
+  "measureCount": 113,
+  "alignmentSource": "public/gomyway-jimmy-paige-full-song-alignment-diagnosis.json",
+  "status": "resolved-measure-boundary-map",
+  "meterRegions": [
+    {
+      "startMeasure": 1,
+      "endMeasure": 103,
+      "numerator": 4,
+      "denominator": 4
+    },
+    {
+      "startMeasure": 104,
+      "endMeasure": 104,
+      "numerator": 2,
+      "denominator": 4
+    },
+    {
+      "startMeasure": 105,
+      "endMeasure": 113,
+      "numerator": 4,
+      "denominator": 4
+    }
+  ],
+  "alignment": {
+    "method": "professional-reference grid search against full-song extracted events",
+    "tempoSearchRangeBpm": [
+      124.0,
+      134.0
+    ],
+    "offsetSearchRangeSeconds": [
+      -8.0,
+      8.0
+    ],
+    "resolvedTempoBpm": 133.8,
+    "resolvedFirstMeasureOffsetSeconds": 7.1,
+    "resolvedFromDiagnosisAtRuntime": false
+  },
+  "measureBoundaryGeneration": {
+    "method": "tempo-and-meter-regions",
+    "performanceDriftCorrection": "pending",
+    "manualAnchorMeasures": []
+  },
+  "protectedReference": true,
+  "productionPromotionAllowed": false,
+  "notes": "The scorer must load the resolved tempo and offset from the preserved alignment diagnosis, then generate measure boundaries while honoring the 2/4 bar at measure 104. Additional anchors may be added if performance drift is detected.",
+  "measureBoundaries": [
+    {
+      "measureNumber": 1,
+      "startSeconds": 7.1,
+      "endSeconds": 8.893722,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 2,
+      "startSeconds": 8.893722,
+      "endSeconds": 10.687444,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 3,
+      "startSeconds": 10.687444,
+      "endSeconds": 12.481166,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 4,
+      "startSeconds": 12.481166,
+      "endSeconds": 14.274888,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 5,
+      "startSeconds": 14.274888,
+      "endSeconds": 16.06861,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 6,
+      "startSeconds": 16.06861,
+      "endSeconds": 17.862332,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 7,
+      "startSeconds": 17.862332,
+      "endSeconds": 19.656054,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 8,
+      "startSeconds": 19.656054,
+      "endSeconds": 21.449776,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 9,
+      "startSeconds": 21.449776,
+      "endSeconds": 23.243498,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 10,
+      "startSeconds": 23.243498,
+      "endSeconds": 25.03722,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 11,
+      "startSeconds": 25.03722,
+      "endSeconds": 26.830942,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 12,
+      "startSeconds": 26.830942,
+      "endSeconds": 28.624664,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 13,
+      "startSeconds": 28.624664,
+      "endSeconds": 30.418386,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 14,
+      "startSeconds": 30.418386,
+      "endSeconds": 32.212108,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 15,
+      "startSeconds": 32.212108,
+      "endSeconds": 34.00583,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 16,
+      "startSeconds": 34.00583,
+      "endSeconds": 35.799552,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 17,
+      "startSeconds": 35.799552,
+      "endSeconds": 37.593274,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 18,
+      "startSeconds": 37.593274,
+      "endSeconds": 39.386996,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 19,
+      "startSeconds": 39.386996,
+      "endSeconds": 41.180717,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 20,
+      "startSeconds": 41.180717,
+      "endSeconds": 42.974439,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 21,
+      "startSeconds": 42.974439,
+      "endSeconds": 44.768161,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 22,
+      "startSeconds": 44.768161,
+      "endSeconds": 46.561883,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 23,
+      "startSeconds": 46.561883,
+      "endSeconds": 48.355605,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 24,
+      "startSeconds": 48.355605,
+      "endSeconds": 50.149327,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 25,
+      "startSeconds": 50.149327,
+      "endSeconds": 51.943049,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 26,
+      "startSeconds": 51.943049,
+      "endSeconds": 53.736771,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 27,
+      "startSeconds": 53.736771,
+      "endSeconds": 55.530493,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 28,
+      "startSeconds": 55.530493,
+      "endSeconds": 57.324215,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 29,
+      "startSeconds": 57.324215,
+      "endSeconds": 59.117937,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 30,
+      "startSeconds": 59.117937,
+      "endSeconds": 60.911659,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 31,
+      "startSeconds": 60.911659,
+      "endSeconds": 62.705381,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 32,
+      "startSeconds": 62.705381,
+      "endSeconds": 64.499103,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 33,
+      "startSeconds": 64.499103,
+      "endSeconds": 66.292825,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 34,
+      "startSeconds": 66.292825,
+      "endSeconds": 68.086547,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 35,
+      "startSeconds": 68.086547,
+      "endSeconds": 69.880269,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 36,
+      "startSeconds": 69.880269,
+      "endSeconds": 71.673991,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 37,
+      "startSeconds": 71.673991,
+      "endSeconds": 73.467713,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 38,
+      "startSeconds": 73.467713,
+      "endSeconds": 75.261435,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 39,
+      "startSeconds": 75.261435,
+      "endSeconds": 77.055157,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 40,
+      "startSeconds": 77.055157,
+      "endSeconds": 78.848879,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 41,
+      "startSeconds": 78.848879,
+      "endSeconds": 80.642601,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 42,
+      "startSeconds": 80.642601,
+      "endSeconds": 82.436323,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 43,
+      "startSeconds": 82.436323,
+      "endSeconds": 84.230045,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 44,
+      "startSeconds": 84.230045,
+      "endSeconds": 86.023767,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 45,
+      "startSeconds": 86.023767,
+      "endSeconds": 87.817489,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 46,
+      "startSeconds": 87.817489,
+      "endSeconds": 89.611211,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 47,
+      "startSeconds": 89.611211,
+      "endSeconds": 91.404933,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 48,
+      "startSeconds": 91.404933,
+      "endSeconds": 93.198655,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 49,
+      "startSeconds": 93.198655,
+      "endSeconds": 94.992377,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 50,
+      "startSeconds": 94.992377,
+      "endSeconds": 96.786099,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 51,
+      "startSeconds": 96.786099,
+      "endSeconds": 98.579821,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 52,
+      "startSeconds": 98.579821,
+      "endSeconds": 100.373543,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 53,
+      "startSeconds": 100.373543,
+      "endSeconds": 102.167265,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 54,
+      "startSeconds": 102.167265,
+      "endSeconds": 103.960987,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 55,
+      "startSeconds": 103.960987,
+      "endSeconds": 105.754709,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 56,
+      "startSeconds": 105.754709,
+      "endSeconds": 107.54843,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 57,
+      "startSeconds": 107.54843,
+      "endSeconds": 109.342152,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 58,
+      "startSeconds": 109.342152,
+      "endSeconds": 111.135874,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 59,
+      "startSeconds": 111.135874,
+      "endSeconds": 112.929596,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 60,
+      "startSeconds": 112.929596,
+      "endSeconds": 114.723318,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 61,
+      "startSeconds": 114.723318,
+      "endSeconds": 116.51704,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 62,
+      "startSeconds": 116.51704,
+      "endSeconds": 118.310762,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 63,
+      "startSeconds": 118.310762,
+      "endSeconds": 120.104484,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 64,
+      "startSeconds": 120.104484,
+      "endSeconds": 121.898206,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 65,
+      "startSeconds": 121.898206,
+      "endSeconds": 123.691928,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 66,
+      "startSeconds": 123.691928,
+      "endSeconds": 125.48565,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 67,
+      "startSeconds": 125.48565,
+      "endSeconds": 127.279372,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 68,
+      "startSeconds": 127.279372,
+      "endSeconds": 129.073094,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 69,
+      "startSeconds": 129.073094,
+      "endSeconds": 130.866816,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 70,
+      "startSeconds": 130.866816,
+      "endSeconds": 132.660538,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 71,
+      "startSeconds": 132.660538,
+      "endSeconds": 134.45426,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 72,
+      "startSeconds": 134.45426,
+      "endSeconds": 136.247982,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 73,
+      "startSeconds": 136.247982,
+      "endSeconds": 138.041704,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 74,
+      "startSeconds": 138.041704,
+      "endSeconds": 139.835426,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 75,
+      "startSeconds": 139.835426,
+      "endSeconds": 141.629148,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 76,
+      "startSeconds": 141.629148,
+      "endSeconds": 143.42287,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 77,
+      "startSeconds": 143.42287,
+      "endSeconds": 145.216592,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 78,
+      "startSeconds": 145.216592,
+      "endSeconds": 147.010314,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 79,
+      "startSeconds": 147.010314,
+      "endSeconds": 148.804036,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 80,
+      "startSeconds": 148.804036,
+      "endSeconds": 150.597758,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 81,
+      "startSeconds": 150.597758,
+      "endSeconds": 152.39148,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 82,
+      "startSeconds": 152.39148,
+      "endSeconds": 154.185202,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 83,
+      "startSeconds": 154.185202,
+      "endSeconds": 155.978924,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 84,
+      "startSeconds": 155.978924,
+      "endSeconds": 157.772646,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 85,
+      "startSeconds": 157.772646,
+      "endSeconds": 159.566368,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 86,
+      "startSeconds": 159.566368,
+      "endSeconds": 161.36009,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 87,
+      "startSeconds": 161.36009,
+      "endSeconds": 163.153812,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 88,
+      "startSeconds": 163.153812,
+      "endSeconds": 164.947534,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 89,
+      "startSeconds": 164.947534,
+      "endSeconds": 166.741256,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 90,
+      "startSeconds": 166.741256,
+      "endSeconds": 168.534978,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 91,
+      "startSeconds": 168.534978,
+      "endSeconds": 170.3287,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 92,
+      "startSeconds": 170.3287,
+      "endSeconds": 172.122422,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 93,
+      "startSeconds": 172.122422,
+      "endSeconds": 173.916143,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 94,
+      "startSeconds": 173.916143,
+      "endSeconds": 175.709865,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 95,
+      "startSeconds": 175.709865,
+      "endSeconds": 177.503587,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 96,
+      "startSeconds": 177.503587,
+      "endSeconds": 179.297309,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 97,
+      "startSeconds": 179.297309,
+      "endSeconds": 181.091031,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 98,
+      "startSeconds": 181.091031,
+      "endSeconds": 182.884753,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 99,
+      "startSeconds": 182.884753,
+      "endSeconds": 184.678475,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 100,
+      "startSeconds": 184.678475,
+      "endSeconds": 186.472197,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 101,
+      "startSeconds": 186.472197,
+      "endSeconds": 188.265919,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 102,
+      "startSeconds": 188.265919,
+      "endSeconds": 190.059641,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 103,
+      "startSeconds": 190.059641,
+      "endSeconds": 191.853363,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 104,
+      "startSeconds": 191.853363,
+      "endSeconds": 192.750224,
+      "durationSeconds": 0.896861,
+      "meter": {
+        "numerator": 2,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 105,
+      "startSeconds": 192.750224,
+      "endSeconds": 194.543946,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 106,
+      "startSeconds": 194.543946,
+      "endSeconds": 196.337668,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 107,
+      "startSeconds": 196.337668,
+      "endSeconds": 198.13139,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 108,
+      "startSeconds": 198.13139,
+      "endSeconds": 199.925112,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 109,
+      "startSeconds": 199.925112,
+      "endSeconds": 201.718834,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 110,
+      "startSeconds": 201.718834,
+      "endSeconds": 203.512556,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 111,
+      "startSeconds": 203.512556,
+      "endSeconds": 205.306278,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 112,
+      "startSeconds": 205.306278,
+      "endSeconds": 207.1,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    },
+    {
+      "measureNumber": 113,
+      "startSeconds": 207.1,
+      "endSeconds": 208.893722,
+      "durationSeconds": 1.793722,
+      "meter": {
+        "numerator": 4,
+        "denominator": 4
+      }
+    }
+  ],
+  "validation": {
+    "measureCount": 113,
+    "meterChangeAt104Honored": true,
+    "readyForProfessionalEventScoring": true
+  }
+}

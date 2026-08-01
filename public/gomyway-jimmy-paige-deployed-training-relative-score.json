@@ -1,0 +1,1955 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "jimmy-paige-deployed-training-relative-timeline-rescore",
+  "sourceReport": "public/gomyway-jimmy-paige-deployed-training.json",
+  "reason": "The V7 snippet starts at local time zero, while the original scorer used full-song absolute measure timestamps. This report estimates the snippet timeline offset and rescores the already-completed Modal results.",
+  "attemptsRescored": 6,
+  "bestCorrectCandidateSlots": 8,
+  "bestAttempt": {
+    "attemptNumber": 6,
+    "name": "upper-string-recovery",
+    "functionName": "upper_string_recovery",
+    "callId": "fc-01KYX84QTZYF74XJBWCNRFH09X",
+    "remoteElapsedSeconds": 24.513,
+    "totalElapsedSeconds": 48.675,
+    "extractedEventCount": 306,
+    "correctCandidateSlots": 0,
+    "candidatePresencePercentage": 0.0,
+    "relativeTimelineScore": {
+      "timelineOffsetSeconds": 32.61,
+      "correctCandidateSlots": 8,
+      "candidatePresencePercentage": 0.888889,
+      "totalMatchingOccurrences": 35,
+      "slotReports": [
+        {
+          "patternId": "em-riff-a",
+          "step": 2,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correctCandidatePresent": true,
+          "matchingOccurrences": 6,
+          "matches": [
+            {
+              "phraseStartMeasure": 20,
+              "midiPitch": 57,
+              "eventStart": 2.950218,
+              "relativeTarget": 2.855116,
+              "deltaSeconds": 0.095102
+            },
+            {
+              "phraseStartMeasure": 20,
+              "midiPitch": 59,
+              "eventStart": 2.845728,
+              "relativeTarget": 2.855116,
+              "deltaSeconds": 0.009388
+            },
+            {
+              "phraseStartMeasure": 20,
+              "midiPitch": 57,
+              "eventStart": 2.706409,
+              "relativeTarget": 2.855116,
+              "deltaSeconds": 0.148708
+            },
+            {
+              "phraseStartMeasure": 22,
+              "midiPitch": 59,
+              "eventStart": 6.667979,
+              "relativeTarget": 6.576047,
+              "deltaSeconds": 0.091932
+            },
+            {
+              "phraseStartMeasure": 22,
+              "midiPitch": 59,
+              "eventStart": 6.528659,
+              "relativeTarget": 6.576047,
+              "deltaSeconds": 0.047388
+            },
+            {
+              "phraseStartMeasure": 26,
+              "midiPitch": 59,
+              "eventStart": 14.03384,
+              "relativeTarget": 14.017907,
+              "deltaSeconds": 0.015933
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "step": 6,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correctCandidatePresent": true,
+          "matchingOccurrences": 6,
+          "matches": [
+            {
+              "phraseStartMeasure": 20,
+              "midiPitch": 55,
+              "eventStart": 3.194028,
+              "relativeTarget": 3.320233,
+              "deltaSeconds": 0.126205
+            },
+            {
+              "phraseStartMeasure": 22,
+              "midiPitch": 55,
+              "eventStart": 6.888568,
+              "relativeTarget": 7.041163,
+              "deltaSeconds": 0.152595
+            },
+            {
+              "phraseStartMeasure": 24,
+              "midiPitch": 55,
+              "eventStart": 10.826918,
+              "relativeTarget": 10.762093,
+              "deltaSeconds": 0.064825
+            },
+            {
+              "phraseStartMeasure": 24,
+              "midiPitch": 55,
+              "eventStart": 10.710819,
+              "relativeTarget": 10.762093,
+              "deltaSeconds": 0.051274
+            },
+            {
+              "phraseStartMeasure": 26,
+              "midiPitch": 55,
+              "eventStart": 14.591119,
+              "relativeTarget": 14.483023,
+              "deltaSeconds": 0.108096
+            },
+            {
+              "phraseStartMeasure": 28,
+              "midiPitch": 55,
+              "eventStart": 18.320489,
+              "relativeTarget": 18.203953,
+              "deltaSeconds": 0.116536
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "step": 10,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correctCandidatePresent": true,
+          "matchingOccurrences": 3,
+          "matches": [
+            {
+              "phraseStartMeasure": 22,
+              "midiPitch": 52,
+              "eventStart": 7.643217,
+              "relativeTarget": 7.506279,
+              "deltaSeconds": 0.136938
+            },
+            {
+              "phraseStartMeasure": 22,
+              "midiPitch": 52,
+              "eventStart": 7.469067,
+              "relativeTarget": 7.506279,
+              "deltaSeconds": 0.037212
+            },
+            {
+              "phraseStartMeasure": 30,
+              "midiPitch": 52,
+              "eventStart": 22.258839,
+              "relativeTarget": 22.39,
+              "deltaSeconds": 0.131161
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-a",
+          "step": 14,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correctCandidatePresent": false,
+          "matchingOccurrences": 0,
+          "matches": []
+        },
+        {
+          "patternId": "em-riff-b",
+          "step": 2,
+          "acceptedMidiPitches": [
+            57,
+            59
+          ],
+          "correctCandidatePresent": true,
+          "matchingOccurrences": 6,
+          "matches": [
+            {
+              "phraseStartMeasure": 18,
+              "midiPitch": 57,
+              "eventStart": 1.010068,
+              "relativeTarget": 0.994651,
+              "deltaSeconds": 0.015417
+            },
+            {
+              "phraseStartMeasure": 18,
+              "midiPitch": 59,
+              "eventStart": 0.893968,
+              "relativeTarget": 0.994651,
+              "deltaSeconds": 0.100683
+            },
+            {
+              "phraseStartMeasure": 20,
+              "midiPitch": 57,
+              "eventStart": 4.832318,
+              "relativeTarget": 4.715581,
+              "deltaSeconds": 0.116737
+            },
+            {
+              "phraseStartMeasure": 20,
+              "midiPitch": 59,
+              "eventStart": 4.704609,
+              "relativeTarget": 4.715581,
+              "deltaSeconds": 0.010973
+            },
+            {
+              "phraseStartMeasure": 22,
+              "midiPitch": 59,
+              "eventStart": 8.561689,
+              "relativeTarget": 8.436512,
+              "deltaSeconds": 0.125177
+            },
+            {
+              "phraseStartMeasure": 24,
+              "midiPitch": 59,
+              "eventStart": 12.04725,
+              "relativeTarget": 12.157442,
+              "deltaSeconds": 0.110192
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "step": 4,
+          "acceptedMidiPitches": [
+            55
+          ],
+          "correctCandidatePresent": true,
+          "matchingOccurrences": 5,
+          "matches": [
+            {
+              "phraseStartMeasure": 18,
+              "midiPitch": 55,
+              "eventStart": 1.114558,
+              "relativeTarget": 1.227209,
+              "deltaSeconds": 0.112651
+            },
+            {
+              "phraseStartMeasure": 20,
+              "midiPitch": 55,
+              "eventStart": 5.087738,
+              "relativeTarget": 4.94814,
+              "deltaSeconds": 0.139598
+            },
+            {
+              "phraseStartMeasure": 20,
+              "midiPitch": 55,
+              "eventStart": 4.994858,
+              "relativeTarget": 4.94814,
+              "deltaSeconds": 0.046719
+            },
+            {
+              "phraseStartMeasure": 22,
+              "midiPitch": 55,
+              "eventStart": 8.805498,
+              "relativeTarget": 8.66907,
+              "deltaSeconds": 0.136429
+            },
+            {
+              "phraseStartMeasure": 24,
+              "midiPitch": 55,
+              "eventStart": 12.267839,
+              "relativeTarget": 12.39,
+              "deltaSeconds": 0.122161
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "step": 6,
+          "acceptedMidiPitches": [
+            52
+          ],
+          "correctCandidatePresent": true,
+          "matchingOccurrences": 6,
+          "matches": [
+            {
+              "phraseStartMeasure": 18,
+              "midiPitch": 52,
+              "eventStart": 1.486077,
+              "relativeTarget": 1.459767,
+              "deltaSeconds": 0.02631
+            },
+            {
+              "phraseStartMeasure": 18,
+              "midiPitch": 52,
+              "eventStart": 1.358367,
+              "relativeTarget": 1.459767,
+              "deltaSeconds": 0.1014
+            },
+            {
+              "phraseStartMeasure": 20,
+              "midiPitch": 52,
+              "eventStart": 5.180618,
+              "relativeTarget": 5.180698,
+              "deltaSeconds": 8e-05
+            },
+            {
+              "phraseStartMeasure": 20,
+              "midiPitch": 52,
+              "eventStart": 5.087738,
+              "relativeTarget": 5.180698,
+              "deltaSeconds": 0.09296
+            },
+            {
+              "phraseStartMeasure": 22,
+              "midiPitch": 52,
+              "eventStart": 9.049308,
+              "relativeTarget": 8.901628,
+              "deltaSeconds": 0.14768
+            },
+            {
+              "phraseStartMeasure": 22,
+              "midiPitch": 52,
+              "eventStart": 8.944818,
+              "relativeTarget": 8.901628,
+              "deltaSeconds": 0.04319
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "step": 10,
+          "acceptedMidiPitches": [
+            45
+          ],
+          "correctCandidatePresent": true,
+          "matchingOccurrences": 2,
+          "matches": [
+            {
+              "phraseStartMeasure": 24,
+              "midiPitch": 45,
+              "eventStart": 13.057318,
+              "relativeTarget": 13.087674,
+              "deltaSeconds": 0.030357
+            },
+            {
+              "phraseStartMeasure": 24,
+              "midiPitch": 45,
+              "eventStart": 12.929608,
+              "relativeTarget": 13.087674,
+              "deltaSeconds": 0.158066
+            }
+          ]
+        },
+        {
+          "patternId": "em-riff-b",
+          "step": 14,
+          "acceptedMidiPitches": [
+            58,
+            62
+          ],
+          "correctCandidatePresent": true,
+          "matchingOccurrences": 1,
+          "matches": [
+            {
+              "phraseStartMeasure": 30,
+              "midiPitch": 62,
+              "eventStart": 24.558899,
+              "relativeTarget": 24.715581,
+              "deltaSeconds": 0.156683
+            }
+          ]
+        }
+      ],
+      "candidateOffsetsTested": 2348
+    }
+  },
+  "attempts": [
+    {
+      "attemptNumber": 1,
+      "name": "default",
+      "functionName": "default",
+      "callId": "fc-01KYX7XRFPTS56M2NZVPAEKR2M",
+      "remoteElapsedSeconds": 22.3,
+      "totalElapsedSeconds": 34.591,
+      "extractedEventCount": 115,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0,
+      "relativeTimelineScore": {
+        "timelineOffsetSeconds": 29.875,
+        "correctCandidateSlots": 5,
+        "candidatePresencePercentage": 0.555556,
+        "totalMatchingOccurrences": 10,
+        "slotReports": [
+          {
+            "patternId": "em-riff-a",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 2,
+            "matches": [
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 59,
+                "eventStart": 9.165408,
+                "relativeTarget": 9.311047,
+                "deltaSeconds": 0.145639
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 59,
+                "eventStart": 12.976048,
+                "relativeTarget": 13.031977,
+                "deltaSeconds": 0.055929
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 6,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 10,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 52,
+                "eventStart": 13.94096,
+                "relativeTarget": 13.962209,
+                "deltaSeconds": 0.021249
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 14,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 59,
+                "eventStart": 11.035898,
+                "relativeTarget": 11.171512,
+                "deltaSeconds": 0.135614
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 4,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 55,
+                "eventStart": 4.1125,
+                "relativeTarget": 3.962209,
+                "deltaSeconds": 0.15029
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 6,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 5,
+            "matches": [
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 52,
+                "eventStart": 7.794146,
+                "relativeTarget": 7.915698,
+                "deltaSeconds": 0.121551
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 11.558347,
+                "relativeTarget": 11.636628,
+                "deltaSeconds": 0.078281
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 52,
+                "eventStart": 15.357377,
+                "relativeTarget": 15.357558,
+                "deltaSeconds": 0.000181
+              },
+              {
+                "phraseStartMeasure": 26,
+                "midiPitch": 52,
+                "eventStart": 19.133188,
+                "relativeTarget": 19.078488,
+                "deltaSeconds": 0.054699
+              },
+              {
+                "phraseStartMeasure": 28,
+                "midiPitch": 52,
+                "eventStart": 22.932218,
+                "relativeTarget": 22.799419,
+                "deltaSeconds": 0.1328
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 10,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 14,
+            "acceptedMidiPitches": [
+              58,
+              62
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          }
+        ],
+        "candidateOffsetsTested": 490
+      }
+    },
+    {
+      "attemptNumber": 2,
+      "name": "lower-onset",
+      "functionName": "lower_onset",
+      "callId": "fc-01KYX7YTNJ91FH26KF80FWWZ4A",
+      "remoteElapsedSeconds": 23.951,
+      "totalElapsedSeconds": 48.795,
+      "extractedEventCount": 141,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0,
+      "relativeTimelineScore": {
+        "timelineOffsetSeconds": 30.097,
+        "correctCandidateSlots": 6,
+        "candidatePresencePercentage": 0.666667,
+        "totalMatchingOccurrences": 15,
+        "slotReports": [
+          {
+            "patternId": "em-riff-a",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 59,
+                "eventStart": 9.165408,
+                "relativeTarget": 9.089047,
+                "deltaSeconds": 0.076361
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 6,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 10,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 5,
+            "matches": [
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 9.95617,
+                "relativeTarget": 10.019279,
+                "deltaSeconds": 0.063109
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 52,
+                "eventStart": 13.788746,
+                "relativeTarget": 13.740209,
+                "deltaSeconds": 0.048537
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 52,
+                "eventStart": 13.591377,
+                "relativeTarget": 13.740209,
+                "deltaSeconds": 0.148832
+              },
+              {
+                "phraseStartMeasure": 28,
+                "midiPitch": 52,
+                "eventStart": 21.038508,
+                "relativeTarget": 21.18207,
+                "deltaSeconds": 0.143562
+              },
+              {
+                "phraseStartMeasure": 30,
+                "midiPitch": 52,
+                "eventStart": 24.837538,
+                "relativeTarget": 24.903,
+                "deltaSeconds": 0.065462
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 14,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 2,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 59,
+                "eventStart": 3.414617,
+                "relativeTarget": 3.507651,
+                "deltaSeconds": 0.093034
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 59,
+                "eventStart": 11.035898,
+                "relativeTarget": 10.949512,
+                "deltaSeconds": 0.086386
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 4,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 55,
+                "eventStart": 7.434237,
+                "relativeTarget": 7.46114,
+                "deltaSeconds": 0.026902
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 6,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 5,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 52,
+                "eventStart": 3.97318,
+                "relativeTarget": 3.972767,
+                "deltaSeconds": 0.000413
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 52,
+                "eventStart": 7.794146,
+                "relativeTarget": 7.693698,
+                "deltaSeconds": 0.100449
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 11.558347,
+                "relativeTarget": 11.414628,
+                "deltaSeconds": 0.143719
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 11.407417,
+                "relativeTarget": 11.414628,
+                "deltaSeconds": 0.007211
+              },
+              {
+                "phraseStartMeasure": 26,
+                "midiPitch": 52,
+                "eventStart": 18.831328,
+                "relativeTarget": 18.856488,
+                "deltaSeconds": 0.02516
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 10,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 14,
+            "acceptedMidiPitches": [
+              58,
+              62
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 26,
+                "midiPitch": 62,
+                "eventStart": 19.644027,
+                "relativeTarget": 19.786721,
+                "deltaSeconds": 0.142694
+              }
+            ]
+          }
+        ],
+        "candidateOffsetsTested": 662
+      }
+    },
+    {
+      "attemptNumber": 3,
+      "name": "lower-frame",
+      "functionName": "lower_frame",
+      "callId": "fc-01KYX80B0987E36WCFSG2WNFTW",
+      "remoteElapsedSeconds": 22.103,
+      "totalElapsedSeconds": 47.97,
+      "extractedEventCount": 182,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0,
+      "relativeTimelineScore": {
+        "timelineOffsetSeconds": 30.156,
+        "correctCandidateSlots": 7,
+        "candidatePresencePercentage": 0.777778,
+        "totalMatchingOccurrences": 21,
+        "slotReports": [
+          {
+            "patternId": "em-riff-a",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 59,
+                "eventStart": 9.165408,
+                "relativeTarget": 9.030047,
+                "deltaSeconds": 0.135361
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 6,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 55,
+                "eventStart": 9.362777,
+                "relativeTarget": 9.495163,
+                "deltaSeconds": 0.132385
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 10,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 8,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 52,
+                "eventStart": 2.474209,
+                "relativeTarget": 2.518419,
+                "deltaSeconds": 0.04421
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 52,
+                "eventStart": 6.15714,
+                "relativeTarget": 6.239349,
+                "deltaSeconds": 0.082209
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 9.908446,
+                "relativeTarget": 9.960279,
+                "deltaSeconds": 0.051833
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 52,
+                "eventStart": 13.788746,
+                "relativeTarget": 13.681209,
+                "deltaSeconds": 0.107537
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 52,
+                "eventStart": 13.591377,
+                "relativeTarget": 13.681209,
+                "deltaSeconds": 0.089832
+              },
+              {
+                "phraseStartMeasure": 26,
+                "midiPitch": 52,
+                "eventStart": 17.262698,
+                "relativeTarget": 17.40214,
+                "deltaSeconds": 0.139442
+              },
+              {
+                "phraseStartMeasure": 28,
+                "midiPitch": 52,
+                "eventStart": 21.038508,
+                "relativeTarget": 21.12307,
+                "deltaSeconds": 0.084562
+              },
+              {
+                "phraseStartMeasure": 30,
+                "midiPitch": 52,
+                "eventStart": 24.837538,
+                "relativeTarget": 24.844,
+                "deltaSeconds": 0.006462
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 14,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 3,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 57,
+                "eventStart": 3.600377,
+                "relativeTarget": 3.448651,
+                "deltaSeconds": 0.151726
+              },
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 59,
+                "eventStart": 3.414617,
+                "relativeTarget": 3.448651,
+                "deltaSeconds": 0.034034
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 59,
+                "eventStart": 11.035898,
+                "relativeTarget": 10.890512,
+                "deltaSeconds": 0.145386
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 4,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 2,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 55,
+                "eventStart": 3.670037,
+                "relativeTarget": 3.681209,
+                "deltaSeconds": 0.011173
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 55,
+                "eventStart": 7.480677,
+                "relativeTarget": 7.40214,
+                "deltaSeconds": 0.078538
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 6,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 3,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 52,
+                "eventStart": 3.913846,
+                "relativeTarget": 3.913767,
+                "deltaSeconds": 7.9e-05
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 52,
+                "eventStart": 7.794146,
+                "relativeTarget": 7.634698,
+                "deltaSeconds": 0.159449
+              },
+              {
+                "phraseStartMeasure": 26,
+                "midiPitch": 52,
+                "eventStart": 18.900988,
+                "relativeTarget": 18.797488,
+                "deltaSeconds": 0.1035
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 10,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 14,
+            "acceptedMidiPitches": [
+              58,
+              62
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 3,
+            "matches": [
+              {
+                "phraseStartMeasure": 26,
+                "midiPitch": 62,
+                "eventStart": 19.632417,
+                "relativeTarget": 19.727721,
+                "deltaSeconds": 0.095304
+              },
+              {
+                "phraseStartMeasure": 28,
+                "midiPitch": 62,
+                "eventStart": 23.443057,
+                "relativeTarget": 23.448651,
+                "deltaSeconds": 0.005594
+              },
+              {
+                "phraseStartMeasure": 30,
+                "midiPitch": 62,
+                "eventStart": 27.102768,
+                "relativeTarget": 27.169581,
+                "deltaSeconds": 0.066814
+              }
+            ]
+          }
+        ],
+        "candidateOffsetsTested": 955
+      }
+    },
+    {
+      "attemptNumber": 4,
+      "name": "sensitive-balanced",
+      "functionName": "sensitive_balanced",
+      "callId": "fc-01KYX81TEZZY0VPYW6TFPYTHK1",
+      "remoteElapsedSeconds": 22.175,
+      "totalElapsedSeconds": 46.697,
+      "extractedEventCount": 269,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0,
+      "relativeTimelineScore": {
+        "timelineOffsetSeconds": 32.661,
+        "correctCandidateSlots": 8,
+        "candidatePresencePercentage": 0.888889,
+        "totalMatchingOccurrences": 16,
+        "slotReports": [
+          {
+            "patternId": "em-riff-a",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 57,
+                "eventStart": 2.950218,
+                "relativeTarget": 2.804116,
+                "deltaSeconds": 0.146102
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 6,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 5,
+            "matches": [
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 55,
+                "eventStart": 3.170808,
+                "relativeTarget": 3.269233,
+                "deltaSeconds": 0.098425
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 55,
+                "eventStart": 6.888568,
+                "relativeTarget": 6.990163,
+                "deltaSeconds": 0.101595
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 55,
+                "eventStart": 10.826918,
+                "relativeTarget": 10.711093,
+                "deltaSeconds": 0.115825
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 55,
+                "eventStart": 10.710819,
+                "relativeTarget": 10.711093,
+                "deltaSeconds": 0.000274
+              },
+              {
+                "phraseStartMeasure": 26,
+                "midiPitch": 55,
+                "eventStart": 14.591119,
+                "relativeTarget": 14.432023,
+                "deltaSeconds": 0.159096
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 10,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 2,
+            "matches": [
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 7.329747,
+                "relativeTarget": 7.455279,
+                "deltaSeconds": 0.125532
+              },
+              {
+                "phraseStartMeasure": 28,
+                "midiPitch": 52,
+                "eventStart": 18.494639,
+                "relativeTarget": 18.61807,
+                "deltaSeconds": 0.123431
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 14,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 2,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 57,
+                "eventStart": 1.010068,
+                "relativeTarget": 0.943651,
+                "deltaSeconds": 0.066417
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 59,
+                "eventStart": 4.704609,
+                "relativeTarget": 4.664581,
+                "deltaSeconds": 0.040027
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 4,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 2,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 55,
+                "eventStart": 1.114558,
+                "relativeTarget": 1.176209,
+                "deltaSeconds": 0.061651
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 55,
+                "eventStart": 4.960028,
+                "relativeTarget": 4.89714,
+                "deltaSeconds": 0.062889
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 6,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 2,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 52,
+                "eventStart": 1.358367,
+                "relativeTarget": 1.408767,
+                "deltaSeconds": 0.0504
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 52,
+                "eventStart": 5.180618,
+                "relativeTarget": 5.129698,
+                "deltaSeconds": 0.05092
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 10,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 45,
+                "eventStart": 12.999268,
+                "relativeTarget": 13.036674,
+                "deltaSeconds": 0.037406
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 14,
+            "acceptedMidiPitches": [
+              58,
+              62
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 28,
+                "midiPitch": 62,
+                "eventStart": 20.794698,
+                "relativeTarget": 20.943651,
+                "deltaSeconds": 0.148953
+              }
+            ]
+          }
+        ],
+        "candidateOffsetsTested": 1321
+      }
+    },
+    {
+      "attemptNumber": 5,
+      "name": "short-note-recovery",
+      "functionName": "short_note_recovery",
+      "callId": "fc-01KYX838K5TWBCZSPGKRV6VEPJ",
+      "remoteElapsedSeconds": 23.521,
+      "totalElapsedSeconds": 47.811,
+      "extractedEventCount": 278,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0,
+      "relativeTimelineScore": {
+        "timelineOffsetSeconds": 32.621,
+        "correctCandidateSlots": 8,
+        "candidatePresencePercentage": 0.888889,
+        "totalMatchingOccurrences": 25,
+        "slotReports": [
+          {
+            "patternId": "em-riff-a",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 2,
+            "matches": [
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 57,
+                "eventStart": 2.950218,
+                "relativeTarget": 2.844116,
+                "deltaSeconds": 0.106102
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 59,
+                "eventStart": 6.667979,
+                "relativeTarget": 6.565047,
+                "deltaSeconds": 0.102932
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 6,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 6,
+            "matches": [
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 55,
+                "eventStart": 3.194028,
+                "relativeTarget": 3.309233,
+                "deltaSeconds": 0.115205
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 55,
+                "eventStart": 6.888568,
+                "relativeTarget": 7.030163,
+                "deltaSeconds": 0.141595
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 55,
+                "eventStart": 10.826918,
+                "relativeTarget": 10.751093,
+                "deltaSeconds": 0.075825
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 55,
+                "eventStart": 10.710819,
+                "relativeTarget": 10.751093,
+                "deltaSeconds": 0.040274
+              },
+              {
+                "phraseStartMeasure": 26,
+                "midiPitch": 55,
+                "eventStart": 14.533069,
+                "relativeTarget": 14.472023,
+                "deltaSeconds": 0.061046
+              },
+              {
+                "phraseStartMeasure": 28,
+                "midiPitch": 55,
+                "eventStart": 18.320489,
+                "relativeTarget": 18.192953,
+                "deltaSeconds": 0.127536
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 10,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 52,
+                "eventStart": 3.913846,
+                "relativeTarget": 3.774349,
+                "deltaSeconds": 0.139497
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 14,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 4,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 57,
+                "eventStart": 1.010068,
+                "relativeTarget": 0.983651,
+                "deltaSeconds": 0.026417
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 57,
+                "eventStart": 4.832318,
+                "relativeTarget": 4.704581,
+                "deltaSeconds": 0.127737
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 59,
+                "eventStart": 4.704609,
+                "relativeTarget": 4.704581,
+                "deltaSeconds": 2.7e-05
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 59,
+                "eventStart": 8.561689,
+                "relativeTarget": 8.425512,
+                "deltaSeconds": 0.136177
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 4,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 5,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 55,
+                "eventStart": 1.114558,
+                "relativeTarget": 1.216209,
+                "deltaSeconds": 0.101651
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 55,
+                "eventStart": 5.087738,
+                "relativeTarget": 4.93714,
+                "deltaSeconds": 0.150598
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 55,
+                "eventStart": 4.994858,
+                "relativeTarget": 4.93714,
+                "deltaSeconds": 0.057719
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 55,
+                "eventStart": 8.805498,
+                "relativeTarget": 8.65807,
+                "deltaSeconds": 0.147429
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 55,
+                "eventStart": 12.267839,
+                "relativeTarget": 12.379,
+                "deltaSeconds": 0.111161
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 6,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 5,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 52,
+                "eventStart": 1.358367,
+                "relativeTarget": 1.448767,
+                "deltaSeconds": 0.0904
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 52,
+                "eventStart": 5.180618,
+                "relativeTarget": 5.169698,
+                "deltaSeconds": 0.01092
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 52,
+                "eventStart": 5.087738,
+                "relativeTarget": 5.169698,
+                "deltaSeconds": 0.08196
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 9.049308,
+                "relativeTarget": 8.890628,
+                "deltaSeconds": 0.15868
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 8.944818,
+                "relativeTarget": 8.890628,
+                "deltaSeconds": 0.05419
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 10,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 45,
+                "eventStart": 12.999268,
+                "relativeTarget": 13.076674,
+                "deltaSeconds": 0.077406
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 14,
+            "acceptedMidiPitches": [
+              58,
+              62
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 28,
+                "midiPitch": 62,
+                "eventStart": 20.829528,
+                "relativeTarget": 20.983651,
+                "deltaSeconds": 0.154123
+              }
+            ]
+          }
+        ],
+        "candidateOffsetsTested": 1409
+      }
+    },
+    {
+      "attemptNumber": 6,
+      "name": "upper-string-recovery",
+      "functionName": "upper_string_recovery",
+      "callId": "fc-01KYX84QTZYF74XJBWCNRFH09X",
+      "remoteElapsedSeconds": 24.513,
+      "totalElapsedSeconds": 48.675,
+      "extractedEventCount": 306,
+      "correctCandidateSlots": 0,
+      "candidatePresencePercentage": 0.0,
+      "relativeTimelineScore": {
+        "timelineOffsetSeconds": 32.61,
+        "correctCandidateSlots": 8,
+        "candidatePresencePercentage": 0.888889,
+        "totalMatchingOccurrences": 35,
+        "slotReports": [
+          {
+            "patternId": "em-riff-a",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 6,
+            "matches": [
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 57,
+                "eventStart": 2.950218,
+                "relativeTarget": 2.855116,
+                "deltaSeconds": 0.095102
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 59,
+                "eventStart": 2.845728,
+                "relativeTarget": 2.855116,
+                "deltaSeconds": 0.009388
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 57,
+                "eventStart": 2.706409,
+                "relativeTarget": 2.855116,
+                "deltaSeconds": 0.148708
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 59,
+                "eventStart": 6.667979,
+                "relativeTarget": 6.576047,
+                "deltaSeconds": 0.091932
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 59,
+                "eventStart": 6.528659,
+                "relativeTarget": 6.576047,
+                "deltaSeconds": 0.047388
+              },
+              {
+                "phraseStartMeasure": 26,
+                "midiPitch": 59,
+                "eventStart": 14.03384,
+                "relativeTarget": 14.017907,
+                "deltaSeconds": 0.015933
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 6,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 6,
+            "matches": [
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 55,
+                "eventStart": 3.194028,
+                "relativeTarget": 3.320233,
+                "deltaSeconds": 0.126205
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 55,
+                "eventStart": 6.888568,
+                "relativeTarget": 7.041163,
+                "deltaSeconds": 0.152595
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 55,
+                "eventStart": 10.826918,
+                "relativeTarget": 10.762093,
+                "deltaSeconds": 0.064825
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 55,
+                "eventStart": 10.710819,
+                "relativeTarget": 10.762093,
+                "deltaSeconds": 0.051274
+              },
+              {
+                "phraseStartMeasure": 26,
+                "midiPitch": 55,
+                "eventStart": 14.591119,
+                "relativeTarget": 14.483023,
+                "deltaSeconds": 0.108096
+              },
+              {
+                "phraseStartMeasure": 28,
+                "midiPitch": 55,
+                "eventStart": 18.320489,
+                "relativeTarget": 18.203953,
+                "deltaSeconds": 0.116536
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 10,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 3,
+            "matches": [
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 7.643217,
+                "relativeTarget": 7.506279,
+                "deltaSeconds": 0.136938
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 7.469067,
+                "relativeTarget": 7.506279,
+                "deltaSeconds": 0.037212
+              },
+              {
+                "phraseStartMeasure": 30,
+                "midiPitch": 52,
+                "eventStart": 22.258839,
+                "relativeTarget": 22.39,
+                "deltaSeconds": 0.131161
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-a",
+            "step": 14,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": false,
+            "matchingOccurrences": 0,
+            "matches": []
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 2,
+            "acceptedMidiPitches": [
+              57,
+              59
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 6,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 57,
+                "eventStart": 1.010068,
+                "relativeTarget": 0.994651,
+                "deltaSeconds": 0.015417
+              },
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 59,
+                "eventStart": 0.893968,
+                "relativeTarget": 0.994651,
+                "deltaSeconds": 0.100683
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 57,
+                "eventStart": 4.832318,
+                "relativeTarget": 4.715581,
+                "deltaSeconds": 0.116737
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 59,
+                "eventStart": 4.704609,
+                "relativeTarget": 4.715581,
+                "deltaSeconds": 0.010973
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 59,
+                "eventStart": 8.561689,
+                "relativeTarget": 8.436512,
+                "deltaSeconds": 0.125177
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 59,
+                "eventStart": 12.04725,
+                "relativeTarget": 12.157442,
+                "deltaSeconds": 0.110192
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 4,
+            "acceptedMidiPitches": [
+              55
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 5,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 55,
+                "eventStart": 1.114558,
+                "relativeTarget": 1.227209,
+                "deltaSeconds": 0.112651
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 55,
+                "eventStart": 5.087738,
+                "relativeTarget": 4.94814,
+                "deltaSeconds": 0.139598
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 55,
+                "eventStart": 4.994858,
+                "relativeTarget": 4.94814,
+                "deltaSeconds": 0.046719
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 55,
+                "eventStart": 8.805498,
+                "relativeTarget": 8.66907,
+                "deltaSeconds": 0.136429
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 55,
+                "eventStart": 12.267839,
+                "relativeTarget": 12.39,
+                "deltaSeconds": 0.122161
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 6,
+            "acceptedMidiPitches": [
+              52
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 6,
+            "matches": [
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 52,
+                "eventStart": 1.486077,
+                "relativeTarget": 1.459767,
+                "deltaSeconds": 0.02631
+              },
+              {
+                "phraseStartMeasure": 18,
+                "midiPitch": 52,
+                "eventStart": 1.358367,
+                "relativeTarget": 1.459767,
+                "deltaSeconds": 0.1014
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 52,
+                "eventStart": 5.180618,
+                "relativeTarget": 5.180698,
+                "deltaSeconds": 8e-05
+              },
+              {
+                "phraseStartMeasure": 20,
+                "midiPitch": 52,
+                "eventStart": 5.087738,
+                "relativeTarget": 5.180698,
+                "deltaSeconds": 0.09296
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 9.049308,
+                "relativeTarget": 8.901628,
+                "deltaSeconds": 0.14768
+              },
+              {
+                "phraseStartMeasure": 22,
+                "midiPitch": 52,
+                "eventStart": 8.944818,
+                "relativeTarget": 8.901628,
+                "deltaSeconds": 0.04319
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 10,
+            "acceptedMidiPitches": [
+              45
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 2,
+            "matches": [
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 45,
+                "eventStart": 13.057318,
+                "relativeTarget": 13.087674,
+                "deltaSeconds": 0.030357
+              },
+              {
+                "phraseStartMeasure": 24,
+                "midiPitch": 45,
+                "eventStart": 12.929608,
+                "relativeTarget": 13.087674,
+                "deltaSeconds": 0.158066
+              }
+            ]
+          },
+          {
+            "patternId": "em-riff-b",
+            "step": 14,
+            "acceptedMidiPitches": [
+              58,
+              62
+            ],
+            "correctCandidatePresent": true,
+            "matchingOccurrences": 1,
+            "matches": [
+              {
+                "phraseStartMeasure": 30,
+                "midiPitch": 62,
+                "eventStart": 24.558899,
+                "relativeTarget": 24.715581,
+                "deltaSeconds": 0.156683
+              }
+            ]
+          }
+        ],
+        "candidateOffsetsTested": 2348
+      }
+    }
+  ],
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "lockedV7EventsProtected": true,
+  "lockedV8TimingProtected": true
+}

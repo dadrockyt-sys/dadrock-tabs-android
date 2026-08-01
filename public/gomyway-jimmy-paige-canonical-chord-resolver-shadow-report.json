@@ -1,0 +1,20 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "canonical-chord-resolver-shadow-pipeline",
+  "sourceEventCache": "public/gomyway-jimmy-paige-full-song-winner-events.json",
+  "sourceEventShaBefore": "c63e3813ea84ce074f56907b0795f2238dd9963222e0c1181458bc49c21cf55a",
+  "sourceEventShaAfter": "c63e3813ea84ce074f56907b0795f2238dd9963222e0c1181458bc49c21cf55a",
+  "sourceEventShaUnchanged": true,
+  "shadowResolvedAttacks": 21,
+  "expectedResolvedAttacks": 21,
+  "invalidGuardRows": 0,
+  "shadowPipelinePassed": true,
+  "professionalPdfRemainsScoringAuthority": true,
+  "protectedPitchCheckpointChanged": false,
+  "sourceEventsMutated": false,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "readyForMultiSectionShadowValidation": true,
+  "readyForProduction": false,
+  "shadowOutput": "public/gomyway-jimmy-paige-canonical-chord-resolver-shadow-output.json"
+}

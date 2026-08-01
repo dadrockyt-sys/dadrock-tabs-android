@@ -1,0 +1,3858 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "professional-rhythm-double-stop-window-score",
+  "sourceEvents": "public/gomyway-jimmy-paige-93-06-events.json",
+  "professionalReference": "public/gomyway-professional-rhythm-reference-v2.json",
+  "targetPitches": [
+    58,
+    62
+  ],
+  "targetDescription": "B-string fret 3 plus G-string fret 3 endings in even measures 1-16",
+  "professionalTargetGroups": 2,
+  "results": [
+    {
+      "windowMilliseconds": 20,
+      "targetCount": 16,
+      "negativeControlCount": 16,
+      "truePositive": 0,
+      "falseNegative": 16,
+      "falsePositive": 0,
+      "trueNegative": 16,
+      "recallPercentage": 0.0,
+      "precisionPercentage": 0.0,
+      "f1Percentage": 0.0,
+      "targetReports": [
+        {
+          "measureNumber": 2,
+          "step": 14,
+          "targetSeconds": 8.356746,
+          "matched": false,
+          "detectedPitches": [
+            47,
+            52,
+            54,
+            58,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 2,
+          "step": 15,
+          "targetSeconds": 8.467137,
+          "matched": false,
+          "detectedPitches": [
+            59,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 4,
+          "step": 14,
+          "targetSeconds": 11.889274,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            52,
+            64
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 3
+        },
+        {
+          "measureNumber": 4,
+          "step": 15,
+          "targetSeconds": 11.999666,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            50
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 6,
+          "step": 14,
+          "targetSeconds": 15.421803,
+          "matched": false,
+          "detectedPitches": [],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 0
+        },
+        {
+          "measureNumber": 6,
+          "step": 15,
+          "targetSeconds": 15.532195,
+          "matched": false,
+          "detectedPitches": [
+            52,
+            55,
+            57,
+            61,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 8,
+          "step": 14,
+          "targetSeconds": 18.954332,
+          "matched": false,
+          "detectedPitches": [
+            41,
+            50,
+            56
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 3
+        },
+        {
+          "measureNumber": 8,
+          "step": 15,
+          "targetSeconds": 19.064723,
+          "matched": false,
+          "detectedPitches": [
+            42,
+            49,
+            52,
+            64,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 10,
+          "step": 14,
+          "targetSeconds": 22.48686,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            48
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 10,
+          "step": 15,
+          "targetSeconds": 22.597252,
+          "matched": false,
+          "detectedPitches": [
+            50,
+            52,
+            56
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 3
+        },
+        {
+          "measureNumber": 12,
+          "step": 14,
+          "targetSeconds": 26.019389,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            64
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 12,
+          "step": 15,
+          "targetSeconds": 26.129781,
+          "matched": false,
+          "detectedPitches": [
+            40
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 1
+        },
+        {
+          "measureNumber": 14,
+          "step": 14,
+          "targetSeconds": 29.551918,
+          "matched": false,
+          "detectedPitches": [],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 0
+        },
+        {
+          "measureNumber": 14,
+          "step": 15,
+          "targetSeconds": 29.662309,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            52,
+            55,
+            56,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 16,
+          "step": 14,
+          "targetSeconds": 33.084447,
+          "matched": false,
+          "detectedPitches": [
+            40
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 1
+        },
+        {
+          "measureNumber": 16,
+          "step": 15,
+          "targetSeconds": 33.194838,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            52
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        }
+      ],
+      "negativeControlReports": [
+        {
+          "measureNumber": 1,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            59,
+            71
+          ]
+        },
+        {
+          "measureNumber": 1,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            69
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            56
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            54,
+            58,
+            64,
+            66,
+            67,
+            70,
+            72,
+            83
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            77
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            52
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            83
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            46,
+            50,
+            56,
+            62
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            50
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            47,
+            59
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            52
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            55,
+            57,
+            61,
+            66,
+            72
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": []
+        },
+        {
+          "measureNumber": 15,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": []
+        },
+        {
+          "measureNumber": 15,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            55,
+            67
+          ]
+        }
+      ]
+    },
+    {
+      "windowMilliseconds": 30,
+      "targetCount": 16,
+      "negativeControlCount": 16,
+      "truePositive": 0,
+      "falseNegative": 16,
+      "falsePositive": 1,
+      "trueNegative": 15,
+      "recallPercentage": 0.0,
+      "precisionPercentage": 0.0,
+      "f1Percentage": 0.0,
+      "targetReports": [
+        {
+          "measureNumber": 2,
+          "step": 14,
+          "targetSeconds": 8.356746,
+          "matched": false,
+          "detectedPitches": [
+            47,
+            52,
+            54,
+            58,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 2,
+          "step": 15,
+          "targetSeconds": 8.467137,
+          "matched": false,
+          "detectedPitches": [
+            59,
+            70,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 3
+        },
+        {
+          "measureNumber": 4,
+          "step": 14,
+          "targetSeconds": 11.889274,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            45,
+            52,
+            64
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 4
+        },
+        {
+          "measureNumber": 4,
+          "step": 15,
+          "targetSeconds": 11.999666,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            50,
+            62,
+            67
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 4
+        },
+        {
+          "measureNumber": 6,
+          "step": 14,
+          "targetSeconds": 15.421803,
+          "matched": false,
+          "detectedPitches": [
+            52
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 6,
+          "step": 15,
+          "targetSeconds": 15.532195,
+          "matched": false,
+          "detectedPitches": [
+            52,
+            55,
+            57,
+            61,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 8,
+          "step": 14,
+          "targetSeconds": 18.954332,
+          "matched": false,
+          "detectedPitches": [
+            41,
+            50,
+            56
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 3
+        },
+        {
+          "measureNumber": 8,
+          "step": 15,
+          "targetSeconds": 19.064723,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            42,
+            49,
+            52,
+            59,
+            64,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 7
+        },
+        {
+          "measureNumber": 10,
+          "step": 14,
+          "targetSeconds": 22.48686,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            48
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 10,
+          "step": 15,
+          "targetSeconds": 22.597252,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            50,
+            52,
+            56,
+            62,
+            74
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 8
+        },
+        {
+          "measureNumber": 12,
+          "step": 14,
+          "targetSeconds": 26.019389,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            64
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 12,
+          "step": 15,
+          "targetSeconds": 26.129781,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            57
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 14,
+          "step": 14,
+          "targetSeconds": 29.551918,
+          "matched": false,
+          "detectedPitches": [
+            67
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 1
+        },
+        {
+          "measureNumber": 14,
+          "step": 15,
+          "targetSeconds": 29.662309,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            52,
+            55,
+            56,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 16,
+          "step": 14,
+          "targetSeconds": 33.084447,
+          "matched": false,
+          "detectedPitches": [
+            40
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 1
+        },
+        {
+          "measureNumber": 16,
+          "step": 15,
+          "targetSeconds": 33.194838,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            52,
+            57,
+            69,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        }
+      ],
+      "negativeControlReports": [
+        {
+          "measureNumber": 1,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            59,
+            71
+          ]
+        },
+        {
+          "measureNumber": 1,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            57,
+            69,
+            76
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            50,
+            59
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            54,
+            56,
+            59
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 14,
+          "predictedDoubleStop": true,
+          "detectedPitches": [
+            40,
+            52,
+            54,
+            58,
+            62,
+            64,
+            66,
+            67,
+            70,
+            71,
+            72,
+            83
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            65,
+            77
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            52,
+            64
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            64,
+            83
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            46,
+            50,
+            56,
+            62
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            50
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            47,
+            59
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            52
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            55,
+            57,
+            61,
+            66,
+            70,
+            72
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": []
+        },
+        {
+          "measureNumber": 15,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            55,
+            67
+          ]
+        }
+      ]
+    },
+    {
+      "windowMilliseconds": 40,
+      "targetCount": 16,
+      "negativeControlCount": 16,
+      "truePositive": 0,
+      "falseNegative": 16,
+      "falsePositive": 1,
+      "trueNegative": 15,
+      "recallPercentage": 0.0,
+      "precisionPercentage": 0.0,
+      "f1Percentage": 0.0,
+      "targetReports": [
+        {
+          "measureNumber": 2,
+          "step": 14,
+          "targetSeconds": 8.356746,
+          "matched": false,
+          "detectedPitches": [
+            47,
+            52,
+            54,
+            58,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 2,
+          "step": 15,
+          "targetSeconds": 8.467137,
+          "matched": false,
+          "detectedPitches": [
+            59,
+            70,
+            71,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 4
+        },
+        {
+          "measureNumber": 4,
+          "step": 14,
+          "targetSeconds": 11.889274,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            45,
+            52,
+            64
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 4
+        },
+        {
+          "measureNumber": 4,
+          "step": 15,
+          "targetSeconds": 11.999666,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            50,
+            55,
+            59,
+            62,
+            67
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 7
+        },
+        {
+          "measureNumber": 6,
+          "step": 14,
+          "targetSeconds": 15.421803,
+          "matched": false,
+          "detectedPitches": [
+            52
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 6,
+          "step": 15,
+          "targetSeconds": 15.532195,
+          "matched": false,
+          "detectedPitches": [
+            52,
+            55,
+            57,
+            61,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 8,
+          "step": 14,
+          "targetSeconds": 18.954332,
+          "matched": false,
+          "detectedPitches": [
+            41,
+            50,
+            56
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 3
+        },
+        {
+          "measureNumber": 8,
+          "step": 15,
+          "targetSeconds": 19.064723,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            42,
+            43,
+            49,
+            52,
+            59,
+            64,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 8
+        },
+        {
+          "measureNumber": 10,
+          "step": 14,
+          "targetSeconds": 22.48686,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            59
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 10,
+          "step": 15,
+          "targetSeconds": 22.597252,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            50,
+            52,
+            56,
+            62,
+            74,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 11
+        },
+        {
+          "measureNumber": 12,
+          "step": 14,
+          "targetSeconds": 26.019389,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            64
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 3
+        },
+        {
+          "measureNumber": 12,
+          "step": 15,
+          "targetSeconds": 26.129781,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            57
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 14,
+          "step": 14,
+          "targetSeconds": 29.551918,
+          "matched": false,
+          "detectedPitches": [
+            67
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 1
+        },
+        {
+          "measureNumber": 14,
+          "step": 15,
+          "targetSeconds": 29.662309,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            52,
+            55,
+            56,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 7
+        },
+        {
+          "measureNumber": 16,
+          "step": 14,
+          "targetSeconds": 33.084447,
+          "matched": false,
+          "detectedPitches": [
+            40
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 1
+        },
+        {
+          "measureNumber": 16,
+          "step": 15,
+          "targetSeconds": 33.194838,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            49,
+            52,
+            57,
+            69,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        }
+      ],
+      "negativeControlReports": [
+        {
+          "measureNumber": 1,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            59,
+            71
+          ]
+        },
+        {
+          "measureNumber": 1,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            57,
+            69,
+            76
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            50,
+            59
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            46,
+            52,
+            54,
+            55,
+            56,
+            59
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 14,
+          "predictedDoubleStop": true,
+          "detectedPitches": [
+            40,
+            52,
+            54,
+            58,
+            62,
+            64,
+            66,
+            67,
+            70,
+            71,
+            72,
+            83
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            65,
+            77
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            52,
+            64
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            64,
+            83
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            46,
+            47,
+            48,
+            50,
+            52,
+            56,
+            62
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            50
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            47,
+            59
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            52
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            55,
+            57,
+            61,
+            64,
+            66,
+            70,
+            72
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            57
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            55,
+            67
+          ]
+        }
+      ]
+    },
+    {
+      "windowMilliseconds": 50,
+      "targetCount": 16,
+      "negativeControlCount": 16,
+      "truePositive": 0,
+      "falseNegative": 16,
+      "falsePositive": 1,
+      "trueNegative": 15,
+      "recallPercentage": 0.0,
+      "precisionPercentage": 0.0,
+      "f1Percentage": 0.0,
+      "targetReports": [
+        {
+          "measureNumber": 2,
+          "step": 14,
+          "targetSeconds": 8.356746,
+          "matched": false,
+          "detectedPitches": [
+            47,
+            52,
+            54,
+            58,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 2,
+          "step": 15,
+          "targetSeconds": 8.467137,
+          "matched": false,
+          "detectedPitches": [
+            54,
+            59,
+            70,
+            71,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 4,
+          "step": 14,
+          "targetSeconds": 11.889274,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            45,
+            52,
+            64,
+            67
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 4,
+          "step": 15,
+          "targetSeconds": 11.999666,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            50,
+            55,
+            59,
+            62,
+            67
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 7
+        },
+        {
+          "measureNumber": 6,
+          "step": 14,
+          "targetSeconds": 15.421803,
+          "matched": false,
+          "detectedPitches": [
+            52
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 6,
+          "step": 15,
+          "targetSeconds": 15.532195,
+          "matched": false,
+          "detectedPitches": [
+            52,
+            55,
+            57,
+            61,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 8,
+          "step": 14,
+          "targetSeconds": 18.954332,
+          "matched": false,
+          "detectedPitches": [
+            41,
+            47,
+            50,
+            56
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 4
+        },
+        {
+          "measureNumber": 8,
+          "step": 15,
+          "targetSeconds": 19.064723,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            42,
+            43,
+            49,
+            52,
+            59,
+            64,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 9
+        },
+        {
+          "measureNumber": 10,
+          "step": 14,
+          "targetSeconds": 22.48686,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            59
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 10,
+          "step": 15,
+          "targetSeconds": 22.597252,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            50,
+            52,
+            56,
+            62,
+            74,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 11
+        },
+        {
+          "measureNumber": 12,
+          "step": 14,
+          "targetSeconds": 26.019389,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            64
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 3
+        },
+        {
+          "measureNumber": 12,
+          "step": 15,
+          "targetSeconds": 26.129781,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            57
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 14,
+          "step": 14,
+          "targetSeconds": 29.551918,
+          "matched": false,
+          "detectedPitches": [
+            67
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 1
+        },
+        {
+          "measureNumber": 14,
+          "step": 15,
+          "targetSeconds": 29.662309,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            52,
+            55,
+            56,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 7
+        },
+        {
+          "measureNumber": 16,
+          "step": 14,
+          "targetSeconds": 33.084447,
+          "matched": false,
+          "detectedPitches": [
+            40
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 1
+        },
+        {
+          "measureNumber": 16,
+          "step": 15,
+          "targetSeconds": 33.194838,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            49,
+            52,
+            57,
+            69,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        }
+      ],
+      "negativeControlReports": [
+        {
+          "measureNumber": 1,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            59,
+            71
+          ]
+        },
+        {
+          "measureNumber": 1,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            57,
+            69,
+            76
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            50,
+            59
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            46,
+            52,
+            54,
+            55,
+            56,
+            59,
+            64
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 14,
+          "predictedDoubleStop": true,
+          "detectedPitches": [
+            40,
+            52,
+            54,
+            58,
+            62,
+            64,
+            66,
+            67,
+            70,
+            71,
+            72,
+            83
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            64,
+            65,
+            77
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            52,
+            64
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            64,
+            83
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            46,
+            47,
+            48,
+            50,
+            52,
+            56,
+            62
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            50
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            47,
+            59,
+            60
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            48,
+            52,
+            56
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            54,
+            55,
+            57,
+            61,
+            64,
+            66,
+            70,
+            72
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            57
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            55,
+            67
+          ]
+        }
+      ]
+    },
+    {
+      "windowMilliseconds": 65,
+      "targetCount": 16,
+      "negativeControlCount": 16,
+      "truePositive": 0,
+      "falseNegative": 16,
+      "falsePositive": 1,
+      "trueNegative": 15,
+      "recallPercentage": 0.0,
+      "precisionPercentage": 0.0,
+      "f1Percentage": 0.0,
+      "targetReports": [
+        {
+          "measureNumber": 2,
+          "step": 14,
+          "targetSeconds": 8.356746,
+          "matched": false,
+          "detectedPitches": [
+            47,
+            52,
+            54,
+            58,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 2,
+          "step": 15,
+          "targetSeconds": 8.467137,
+          "matched": false,
+          "detectedPitches": [
+            54,
+            59,
+            70,
+            71,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 4,
+          "step": 14,
+          "targetSeconds": 11.889274,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            45,
+            52,
+            53,
+            64,
+            65,
+            67,
+            71,
+            74
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 10
+        },
+        {
+          "measureNumber": 4,
+          "step": 15,
+          "targetSeconds": 11.999666,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            50,
+            55,
+            59,
+            62,
+            67,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 9
+        },
+        {
+          "measureNumber": 6,
+          "step": 14,
+          "targetSeconds": 15.421803,
+          "matched": false,
+          "detectedPitches": [
+            52
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 6,
+          "step": 15,
+          "targetSeconds": 15.532195,
+          "matched": false,
+          "detectedPitches": [
+            52,
+            55,
+            57,
+            61,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 8,
+          "step": 14,
+          "targetSeconds": 18.954332,
+          "matched": false,
+          "detectedPitches": [
+            41,
+            47,
+            50,
+            56
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 8,
+          "step": 15,
+          "targetSeconds": 19.064723,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            42,
+            43,
+            49,
+            52,
+            59,
+            64,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 9
+        },
+        {
+          "measureNumber": 10,
+          "step": 14,
+          "targetSeconds": 22.48686,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            55,
+            59
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 10,
+          "step": 15,
+          "targetSeconds": 22.597252,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            50,
+            52,
+            55,
+            56,
+            62,
+            74,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 12
+        },
+        {
+          "measureNumber": 12,
+          "step": 14,
+          "targetSeconds": 26.019389,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            64
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 4
+        },
+        {
+          "measureNumber": 12,
+          "step": 15,
+          "targetSeconds": 26.129781,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            57
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 3
+        },
+        {
+          "measureNumber": 14,
+          "step": 14,
+          "targetSeconds": 29.551918,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            67
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 14,
+          "step": 15,
+          "targetSeconds": 29.662309,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            52,
+            55,
+            56,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 8
+        },
+        {
+          "measureNumber": 16,
+          "step": 14,
+          "targetSeconds": 33.084447,
+          "matched": false,
+          "detectedPitches": [
+            40
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 1
+        },
+        {
+          "measureNumber": 16,
+          "step": 15,
+          "targetSeconds": 33.194838,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            49,
+            52,
+            55,
+            57,
+            67,
+            69,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 8
+        }
+      ],
+      "negativeControlReports": [
+        {
+          "measureNumber": 1,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            59,
+            70,
+            71
+          ]
+        },
+        {
+          "measureNumber": 1,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            57,
+            69,
+            76
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            50,
+            52,
+            59,
+            68
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            44,
+            46,
+            51,
+            52,
+            54,
+            55,
+            56,
+            59,
+            64,
+            70,
+            72,
+            76
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 14,
+          "predictedDoubleStop": true,
+          "detectedPitches": [
+            40,
+            52,
+            54,
+            58,
+            62,
+            64,
+            66,
+            67,
+            70,
+            71,
+            72,
+            83
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            64,
+            65,
+            77
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            52,
+            64
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            64,
+            83
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            46,
+            47,
+            48,
+            50,
+            52,
+            56,
+            62
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            50
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            47,
+            59,
+            60
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            48,
+            52,
+            56
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            54,
+            55,
+            57,
+            61,
+            64,
+            66,
+            70,
+            72
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            57
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            55,
+            67
+          ]
+        }
+      ]
+    },
+    {
+      "windowMilliseconds": 80,
+      "targetCount": 16,
+      "negativeControlCount": 16,
+      "truePositive": 0,
+      "falseNegative": 16,
+      "falsePositive": 1,
+      "trueNegative": 15,
+      "recallPercentage": 0.0,
+      "precisionPercentage": 0.0,
+      "f1Percentage": 0.0,
+      "targetReports": [
+        {
+          "measureNumber": 2,
+          "step": 14,
+          "targetSeconds": 8.356746,
+          "matched": false,
+          "detectedPitches": [
+            47,
+            52,
+            54,
+            58,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 7
+        },
+        {
+          "measureNumber": 2,
+          "step": 15,
+          "targetSeconds": 8.467137,
+          "matched": false,
+          "detectedPitches": [
+            54,
+            59,
+            70,
+            71,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 4,
+          "step": 14,
+          "targetSeconds": 11.889274,
+          "matched": false,
+          "detectedPitches": [
+            43,
+            45,
+            52,
+            53,
+            55,
+            59,
+            64,
+            65,
+            67,
+            71,
+            74
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 13
+        },
+        {
+          "measureNumber": 4,
+          "step": 15,
+          "targetSeconds": 11.999666,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            50,
+            55,
+            59,
+            62,
+            67,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 12
+        },
+        {
+          "measureNumber": 6,
+          "step": 14,
+          "targetSeconds": 15.421803,
+          "matched": false,
+          "detectedPitches": [
+            52
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 6,
+          "step": 15,
+          "targetSeconds": 15.532195,
+          "matched": false,
+          "detectedPitches": [
+            52,
+            55,
+            57,
+            61,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 8,
+          "step": 14,
+          "targetSeconds": 18.954332,
+          "matched": false,
+          "detectedPitches": [
+            41,
+            43,
+            47,
+            50,
+            56
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 8,
+          "step": 15,
+          "targetSeconds": 19.064723,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            42,
+            43,
+            46,
+            49,
+            52,
+            59,
+            64,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 10
+        },
+        {
+          "measureNumber": 10,
+          "step": 14,
+          "targetSeconds": 22.48686,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            52,
+            55,
+            59,
+            68
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 10
+        },
+        {
+          "measureNumber": 10,
+          "step": 15,
+          "targetSeconds": 22.597252,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            47,
+            48,
+            50,
+            52,
+            55,
+            56,
+            59,
+            62,
+            74,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 15
+        },
+        {
+          "measureNumber": 12,
+          "step": 14,
+          "targetSeconds": 26.019389,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            52,
+            64
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 12,
+          "step": 15,
+          "targetSeconds": 26.129781,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            57,
+            59,
+            68
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 14,
+          "step": 14,
+          "targetSeconds": 29.551918,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            67
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 3
+        },
+        {
+          "measureNumber": 14,
+          "step": 15,
+          "targetSeconds": 29.662309,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            52,
+            55,
+            56,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 9
+        },
+        {
+          "measureNumber": 16,
+          "step": 14,
+          "targetSeconds": 33.084447,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            58
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 2
+        },
+        {
+          "measureNumber": 16,
+          "step": 15,
+          "targetSeconds": 33.194838,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            49,
+            52,
+            55,
+            57,
+            67,
+            69,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 9
+        }
+      ],
+      "negativeControlReports": [
+        {
+          "measureNumber": 1,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            59,
+            70,
+            71
+          ]
+        },
+        {
+          "measureNumber": 1,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            57,
+            69,
+            76
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            46,
+            50,
+            52,
+            59,
+            62,
+            64,
+            68
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            44,
+            46,
+            51,
+            52,
+            54,
+            55,
+            56,
+            59,
+            64,
+            70,
+            72,
+            76
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 14,
+          "predictedDoubleStop": true,
+          "detectedPitches": [
+            40,
+            52,
+            54,
+            55,
+            58,
+            62,
+            64,
+            65,
+            66,
+            67,
+            70,
+            71,
+            72,
+            83
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            64,
+            65,
+            77
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            52,
+            64
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            64,
+            83
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            46,
+            47,
+            48,
+            50,
+            52,
+            56,
+            62
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            50
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            47,
+            59,
+            60
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            48,
+            52,
+            56
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            54,
+            55,
+            57,
+            61,
+            64,
+            66,
+            70,
+            72
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            64
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            57
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            55,
+            57,
+            67,
+            80
+          ]
+        }
+      ]
+    },
+    {
+      "windowMilliseconds": 100,
+      "targetCount": 16,
+      "negativeControlCount": 16,
+      "truePositive": 0,
+      "falseNegative": 16,
+      "falsePositive": 1,
+      "trueNegative": 15,
+      "recallPercentage": 0.0,
+      "precisionPercentage": 0.0,
+      "f1Percentage": 0.0,
+      "targetReports": [
+        {
+          "measureNumber": 2,
+          "step": 14,
+          "targetSeconds": 8.356746,
+          "matched": false,
+          "detectedPitches": [
+            47,
+            52,
+            54,
+            55,
+            58,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 8
+        },
+        {
+          "measureNumber": 2,
+          "step": 15,
+          "targetSeconds": 8.467137,
+          "matched": false,
+          "detectedPitches": [
+            54,
+            58,
+            59,
+            70,
+            71,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 7
+        },
+        {
+          "measureNumber": 4,
+          "step": 14,
+          "targetSeconds": 11.889274,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            45,
+            50,
+            52,
+            53,
+            55,
+            59,
+            62,
+            64,
+            65,
+            67,
+            71,
+            74,
+            81
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 19
+        },
+        {
+          "measureNumber": 4,
+          "step": 15,
+          "targetSeconds": 11.999666,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            50,
+            52,
+            55,
+            59,
+            62,
+            64,
+            67,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 14
+        },
+        {
+          "measureNumber": 6,
+          "step": 14,
+          "targetSeconds": 15.421803,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            52,
+            57
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 6,
+          "step": 15,
+          "targetSeconds": 15.532195,
+          "matched": false,
+          "detectedPitches": [
+            52,
+            55,
+            57,
+            61,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 9
+        },
+        {
+          "measureNumber": 8,
+          "step": 14,
+          "targetSeconds": 18.954332,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            41,
+            43,
+            47,
+            50,
+            52,
+            56,
+            59,
+            64,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 11
+        },
+        {
+          "measureNumber": 8,
+          "step": 15,
+          "targetSeconds": 19.064723,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            41,
+            42,
+            43,
+            46,
+            49,
+            52,
+            59,
+            64,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 11
+        },
+        {
+          "measureNumber": 10,
+          "step": 14,
+          "targetSeconds": 22.48686,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            52,
+            55,
+            58,
+            59,
+            68
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 12
+        },
+        {
+          "measureNumber": 10,
+          "step": 15,
+          "targetSeconds": 22.597252,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            47,
+            48,
+            50,
+            52,
+            55,
+            56,
+            59,
+            62,
+            74,
+            78
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 15
+        },
+        {
+          "measureNumber": 12,
+          "step": 14,
+          "targetSeconds": 26.019389,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            52,
+            57,
+            64
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 8
+        },
+        {
+          "measureNumber": 12,
+          "step": 15,
+          "targetSeconds": 26.129781,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            57,
+            59,
+            68
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 7
+        },
+        {
+          "measureNumber": 14,
+          "step": 14,
+          "targetSeconds": 29.551918,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            67,
+            69
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 6
+        },
+        {
+          "measureNumber": 14,
+          "step": 15,
+          "targetSeconds": 29.662309,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            43,
+            52,
+            55,
+            56,
+            64,
+            71
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 9
+        },
+        {
+          "measureNumber": 16,
+          "step": 14,
+          "targetSeconds": 33.084447,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            57,
+            58,
+            69,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 5
+        },
+        {
+          "measureNumber": 16,
+          "step": 15,
+          "targetSeconds": 33.194838,
+          "matched": false,
+          "detectedPitches": [
+            40,
+            49,
+            52,
+            55,
+            57,
+            67,
+            69,
+            76
+          ],
+          "targetPitches": [
+            58,
+            62
+          ],
+          "eventCount": 9
+        }
+      ],
+      "negativeControlReports": [
+        {
+          "measureNumber": 1,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            59,
+            70,
+            71
+          ]
+        },
+        {
+          "measureNumber": 1,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            57,
+            67,
+            69,
+            76
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            46,
+            50,
+            52,
+            54,
+            59,
+            62,
+            64,
+            68,
+            82
+          ]
+        },
+        {
+          "measureNumber": 3,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            44,
+            46,
+            51,
+            52,
+            54,
+            55,
+            56,
+            59,
+            63,
+            64,
+            70,
+            72,
+            76,
+            83
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 14,
+          "predictedDoubleStop": true,
+          "detectedPitches": [
+            40,
+            52,
+            54,
+            55,
+            58,
+            62,
+            64,
+            65,
+            66,
+            67,
+            70,
+            71,
+            72,
+            83
+          ]
+        },
+        {
+          "measureNumber": 5,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            62,
+            64,
+            65,
+            77
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            52,
+            64,
+            83
+          ]
+        },
+        {
+          "measureNumber": 7,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            64,
+            83
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            42,
+            43,
+            46,
+            47,
+            48,
+            50,
+            52,
+            56,
+            62
+          ]
+        },
+        {
+          "measureNumber": 9,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            50
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            47,
+            58,
+            59,
+            60
+          ]
+        },
+        {
+          "measureNumber": 11,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            43,
+            48,
+            52,
+            56
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            54,
+            55,
+            57,
+            61,
+            64,
+            66,
+            70,
+            72
+          ]
+        },
+        {
+          "measureNumber": 13,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            55,
+            64,
+            70,
+            72
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "step": 14,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            44,
+            57
+          ]
+        },
+        {
+          "measureNumber": 15,
+          "step": 15,
+          "predictedDoubleStop": false,
+          "detectedPitches": [
+            40,
+            52,
+            55,
+            57,
+            67,
+            80
+          ]
+        }
+      ]
+    }
+  ],
+  "bestWindow": {
+    "windowMilliseconds": 20,
+    "targetCount": 16,
+    "negativeControlCount": 16,
+    "truePositive": 0,
+    "falseNegative": 16,
+    "falsePositive": 0,
+    "trueNegative": 16,
+    "recallPercentage": 0.0,
+    "precisionPercentage": 0.0,
+    "f1Percentage": 0.0,
+    "targetReports": [
+      {
+        "measureNumber": 2,
+        "step": 14,
+        "targetSeconds": 8.356746,
+        "matched": false,
+        "detectedPitches": [
+          47,
+          52,
+          54,
+          58,
+          71
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 5
+      },
+      {
+        "measureNumber": 2,
+        "step": 15,
+        "targetSeconds": 8.467137,
+        "matched": false,
+        "detectedPitches": [
+          59,
+          78
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 2
+      },
+      {
+        "measureNumber": 4,
+        "step": 14,
+        "targetSeconds": 11.889274,
+        "matched": false,
+        "detectedPitches": [
+          43,
+          52,
+          64
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 3
+      },
+      {
+        "measureNumber": 4,
+        "step": 15,
+        "targetSeconds": 11.999666,
+        "matched": false,
+        "detectedPitches": [
+          40,
+          50
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 2
+      },
+      {
+        "measureNumber": 6,
+        "step": 14,
+        "targetSeconds": 15.421803,
+        "matched": false,
+        "detectedPitches": [],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 0
+      },
+      {
+        "measureNumber": 6,
+        "step": 15,
+        "targetSeconds": 15.532195,
+        "matched": false,
+        "detectedPitches": [
+          52,
+          55,
+          57,
+          61,
+          64,
+          71
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 6
+      },
+      {
+        "measureNumber": 8,
+        "step": 14,
+        "targetSeconds": 18.954332,
+        "matched": false,
+        "detectedPitches": [
+          41,
+          50,
+          56
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 3
+      },
+      {
+        "measureNumber": 8,
+        "step": 15,
+        "targetSeconds": 19.064723,
+        "matched": false,
+        "detectedPitches": [
+          42,
+          49,
+          52,
+          64,
+          76
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 5
+      },
+      {
+        "measureNumber": 10,
+        "step": 14,
+        "targetSeconds": 22.48686,
+        "matched": false,
+        "detectedPitches": [
+          43,
+          48
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 2
+      },
+      {
+        "measureNumber": 10,
+        "step": 15,
+        "targetSeconds": 22.597252,
+        "matched": false,
+        "detectedPitches": [
+          50,
+          52,
+          56
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 3
+      },
+      {
+        "measureNumber": 12,
+        "step": 14,
+        "targetSeconds": 26.019389,
+        "matched": false,
+        "detectedPitches": [
+          43,
+          64
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 2
+      },
+      {
+        "measureNumber": 12,
+        "step": 15,
+        "targetSeconds": 26.129781,
+        "matched": false,
+        "detectedPitches": [
+          40
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 1
+      },
+      {
+        "measureNumber": 14,
+        "step": 14,
+        "targetSeconds": 29.551918,
+        "matched": false,
+        "detectedPitches": [],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 0
+      },
+      {
+        "measureNumber": 14,
+        "step": 15,
+        "targetSeconds": 29.662309,
+        "matched": false,
+        "detectedPitches": [
+          43,
+          52,
+          55,
+          56,
+          64,
+          71
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 6
+      },
+      {
+        "measureNumber": 16,
+        "step": 14,
+        "targetSeconds": 33.084447,
+        "matched": false,
+        "detectedPitches": [
+          40
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 1
+      },
+      {
+        "measureNumber": 16,
+        "step": 15,
+        "targetSeconds": 33.194838,
+        "matched": false,
+        "detectedPitches": [
+          40,
+          52
+        ],
+        "targetPitches": [
+          58,
+          62
+        ],
+        "eventCount": 2
+      }
+    ],
+    "negativeControlReports": [
+      {
+        "measureNumber": 1,
+        "step": 14,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          59,
+          71
+        ]
+      },
+      {
+        "measureNumber": 1,
+        "step": 15,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          69
+        ]
+      },
+      {
+        "measureNumber": 3,
+        "step": 14,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          40,
+          43
+        ]
+      },
+      {
+        "measureNumber": 3,
+        "step": 15,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          56
+        ]
+      },
+      {
+        "measureNumber": 5,
+        "step": 14,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          40,
+          52,
+          54,
+          58,
+          64,
+          66,
+          67,
+          70,
+          72,
+          83
+        ]
+      },
+      {
+        "measureNumber": 5,
+        "step": 15,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          77
+        ]
+      },
+      {
+        "measureNumber": 7,
+        "step": 14,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          40,
+          43,
+          48,
+          52
+        ]
+      },
+      {
+        "measureNumber": 7,
+        "step": 15,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          83
+        ]
+      },
+      {
+        "measureNumber": 9,
+        "step": 14,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          40,
+          46,
+          50,
+          56,
+          62
+        ]
+      },
+      {
+        "measureNumber": 9,
+        "step": 15,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          40,
+          50
+        ]
+      },
+      {
+        "measureNumber": 11,
+        "step": 14,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          40,
+          47,
+          59
+        ]
+      },
+      {
+        "measureNumber": 11,
+        "step": 15,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          52
+        ]
+      },
+      {
+        "measureNumber": 13,
+        "step": 14,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          40,
+          52,
+          55,
+          57,
+          61,
+          66,
+          72
+        ]
+      },
+      {
+        "measureNumber": 13,
+        "step": 15,
+        "predictedDoubleStop": false,
+        "detectedPitches": []
+      },
+      {
+        "measureNumber": 15,
+        "step": 14,
+        "predictedDoubleStop": false,
+        "detectedPitches": []
+      },
+      {
+        "measureNumber": 15,
+        "step": 15,
+        "predictedDoubleStop": false,
+        "detectedPitches": [
+          55,
+          67
+        ]
+      }
+    ]
+  },
+  "protectedPitchCheckpoint": {
+    "overallRecallPercentage": 93.06,
+    "lowRegisterRecallPercentage": 84.38,
+    "midi52Matches": 32,
+    "midi62Matches": 16,
+    "combinedRegressionPassed": true
+  },
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "professionalPdfRemainsScoringAuthority": true
+}

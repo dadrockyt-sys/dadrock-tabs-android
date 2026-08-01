@@ -1,0 +1,292 @@
+{
+  "datasetName": "Jimmy Page protected professional technique renderer training dataset",
+  "datasetVersion": 1,
+  "professionalPdf": "public/gomyway-professional-reference.pdf",
+  "professionalPdfSha256": "b8e55778a40ffb3da5959c0efc6ac323271e742ca334ce6f2215fa9694e68842",
+  "annotationQueueSha256": "29779f4c96248decc56df9b02348a3a59c23e3afa1c6c57399920cf8f48eaf4c",
+  "validationSha256": "0935ff92e1b5844908270fd2245687bbb17ab196f83e54a0400f2bac5ffc9e4e",
+  "exampleCount": 9,
+  "representativeTechniqueFamilies": [
+    "chord-slide",
+    "chord-sustain-tie",
+    "final-barline",
+    "full-bend-release",
+    "muted-note",
+    "pick-direction",
+    "section-label",
+    "time-signature-change",
+    "vibrato"
+  ],
+  "allExamplesHumanConfirmed": true,
+  "syntheticAnnotationsCreated": false,
+  "sourceEventsMutated": false,
+  "rendererChanged": false,
+  "productionOutputCreated": false,
+  "productionPromotionAllowed": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "readyForProtectedPrimitiveBenchmark": true,
+  "readyForProductionRendererTraining": false,
+  "examples": [
+    {
+      "exampleId": "jimmy-page-professional-01-full-bend-release",
+      "techniqueFamily": "full-bend-release",
+      "page": 1,
+      "measure": 1,
+      "label": "full-bend-release",
+      "geometry": {
+        "xStart": 0.12453323719113372,
+        "yStart": 0.15039597179337347,
+        "xEnd": 0.23563706508902615,
+        "yEnd": 0.2181677324252856,
+        "width": 0.11110382789789243,
+        "height": 0.06777176063191212
+      },
+      "source": {
+        "type": "human-confirmed-professional-pdf-region",
+        "professionalPdf": "public/gomyway-professional-reference.pdf",
+        "synthetic": false,
+        "sourceEventsMutated": false
+      },
+      "trainingPermissions": {
+        "mayTrainDrawingPrimitive": true,
+        "mayChangePitch": false,
+        "mayChangeTiming": false,
+        "mayCreateNotes": false,
+        "mayAlterMeasures": false,
+        "mayWriteProductionOutput": false
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-02-vibrato",
+      "techniqueFamily": "vibrato",
+      "page": 2,
+      "measure": 25,
+      "label": "vibrato",
+      "geometry": {
+        "xStart": 0.0693307140261628,
+        "yStart": 0.16613650516248,
+        "xEnd": 0.19091603833575582,
+        "yEnd": 0.1914962573156923,
+        "width": 0.12158532430959303,
+        "height": 0.025359752153212317
+      },
+      "source": {
+        "type": "human-confirmed-professional-pdf-region",
+        "professionalPdf": "public/gomyway-professional-reference.pdf",
+        "synthetic": false,
+        "sourceEventsMutated": false
+      },
+      "trainingPermissions": {
+        "mayTrainDrawingPrimitive": true,
+        "mayChangePitch": false,
+        "mayChangeTiming": false,
+        "mayCreateNotes": false,
+        "mayAlterMeasures": false,
+        "mayWriteProductionOutput": false
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-03-muted-note",
+      "techniqueFamily": "muted-note",
+      "page": 3,
+      "measure": 28,
+      "label": "muted-note",
+      "geometry": {
+        "xStart": 0.46972372365552323,
+        "yStart": 0.03627703381361867,
+        "xEnd": 0.5004694880995639,
+        "yEnd": 0.07300497461392244,
+        "width": 0.030745764444040702,
+        "height": 0.03672794080030377
+      },
+      "source": {
+        "type": "human-confirmed-professional-pdf-region",
+        "professionalPdf": "public/gomyway-professional-reference.pdf",
+        "synthetic": false,
+        "sourceEventsMutated": false
+      },
+      "trainingPermissions": {
+        "mayTrainDrawingPrimitive": true,
+        "mayChangePitch": false,
+        "mayChangeTiming": false,
+        "mayCreateNotes": false,
+        "mayAlterMeasures": false,
+        "mayWriteProductionOutput": false
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-04-pick-direction",
+      "techniqueFamily": "pick-direction",
+      "page": 3,
+      "measure": 28,
+      "label": "pick-direction",
+      "geometry": {
+        "xStart": 0.4620373251271802,
+        "yStart": 0.0056704253617487635,
+        "xEnd": 0.6311387172965116,
+        "yEnd": 0.031467424421565776,
+        "width": 0.1691013921693314,
+        "height": 0.025796999059817013
+      },
+      "source": {
+        "type": "human-confirmed-professional-pdf-region",
+        "professionalPdf": "public/gomyway-professional-reference.pdf",
+        "synthetic": false,
+        "sourceEventsMutated": false
+      },
+      "trainingPermissions": {
+        "mayTrainDrawingPrimitive": true,
+        "mayChangePitch": false,
+        "mayChangeTiming": false,
+        "mayCreateNotes": false,
+        "mayAlterMeasures": false,
+        "mayWriteProductionOutput": false
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-05-chord-sustain-tie",
+      "techniqueFamily": "chord-sustain-tie",
+      "page": 3,
+      "measure": 33,
+      "label": "chord-sustain-tie",
+      "geometry": {
+        "xStart": 0.1615678370276163,
+        "yStart": 0.4267299239099789,
+        "xEnd": 0.2894420535065407,
+        "yEnd": 0.4774494637432698,
+        "width": 0.12787421647892439,
+        "height": 0.050719539833290916
+      },
+      "source": {
+        "type": "human-confirmed-professional-pdf-region",
+        "professionalPdf": "public/gomyway-professional-reference.pdf",
+        "synthetic": false,
+        "sourceEventsMutated": false
+      },
+      "trainingPermissions": {
+        "mayTrainDrawingPrimitive": true,
+        "mayChangePitch": false,
+        "mayChangeTiming": false,
+        "mayCreateNotes": false,
+        "mayAlterMeasures": false,
+        "mayWriteProductionOutput": false
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-06-chord-slide",
+      "techniqueFamily": "chord-slide",
+      "page": 6,
+      "measure": 79,
+      "label": "chord-slide",
+      "geometry": {
+        "xStart": 0.8037340456940407,
+        "yStart": 0.13990227695949142,
+        "xEnd": 0.9253193700036337,
+        "yEnd": 0.19849206571390243,
+        "width": 0.12158532430959301,
+        "height": 0.05858978875441101
+      },
+      "source": {
+        "type": "human-confirmed-professional-pdf-region",
+        "professionalPdf": "public/gomyway-professional-reference.pdf",
+        "synthetic": false,
+        "sourceEventsMutated": false
+      },
+      "trainingPermissions": {
+        "mayTrainDrawingPrimitive": true,
+        "mayChangePitch": false,
+        "mayChangeTiming": false,
+        "mayCreateNotes": false,
+        "mayAlterMeasures": false,
+        "mayWriteProductionOutput": false
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-07-time-signature-change",
+      "techniqueFamily": "time-signature-change",
+      "page": 8,
+      "measure": 104,
+      "label": "time-signature-change",
+      "geometry": {
+        "xStart": 0.053957860192587206,
+        "yStart": 0.42847889377296455,
+        "xEnd": 0.14339994208757267,
+        "yEnd": 0.4774494815067029,
+        "width": 0.08944208189498547,
+        "height": 0.04897058773373836
+      },
+      "source": {
+        "type": "human-confirmed-professional-pdf-region",
+        "professionalPdf": "public/gomyway-professional-reference.pdf",
+        "synthetic": false,
+        "sourceEventsMutated": false
+      },
+      "trainingPermissions": {
+        "mayTrainDrawingPrimitive": true,
+        "mayChangePitch": false,
+        "mayChangeTiming": false,
+        "mayCreateNotes": false,
+        "mayAlterMeasures": false,
+        "mayWriteProductionOutput": false
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-08-section-label",
+      "techniqueFamily": "section-label",
+      "page": 2,
+      "measure": 17,
+      "label": "section-label",
+      "geometry": {
+        "xStart": 0.014826944040697674,
+        "yStart": 0.20461338029890316,
+        "xEnd": 0.16576044126998546,
+        "yEnd": 0.284627805627683,
+        "width": 0.15093349722928778,
+        "height": 0.08001442532877981
+      },
+      "source": {
+        "type": "human-confirmed-professional-pdf-region",
+        "professionalPdf": "public/gomyway-professional-reference.pdf",
+        "synthetic": false,
+        "sourceEventsMutated": false
+      },
+      "trainingPermissions": {
+        "mayTrainDrawingPrimitive": true,
+        "mayChangePitch": false,
+        "mayChangeTiming": false,
+        "mayCreateNotes": false,
+        "mayAlterMeasures": false,
+        "mayWriteProductionOutput": false
+      }
+    },
+    {
+      "exampleId": "jimmy-page-professional-09-final-barline",
+      "techniqueFamily": "final-barline",
+      "page": 8,
+      "measure": 113,
+      "label": "final-barline",
+      "geometry": {
+        "xStart": 0.2224349234868022,
+        "yStart": 0.7676493635615989,
+        "xEnd": 0.3073456826388588,
+        "yEnd": 0.8282383888158608,
+        "width": 0.08491075915205662,
+        "height": 0.06058902525426191
+      },
+      "source": {
+        "type": "human-confirmed-professional-pdf-region",
+        "professionalPdf": "public/gomyway-professional-reference.pdf",
+        "synthetic": false,
+        "sourceEventsMutated": false
+      },
+      "trainingPermissions": {
+        "mayTrainDrawingPrimitive": true,
+        "mayChangePitch": false,
+        "mayChangeTiming": false,
+        "mayCreateNotes": false,
+        "mayAlterMeasures": false,
+        "mayWriteProductionOutput": false
+      }
+    }
+  ]
+}

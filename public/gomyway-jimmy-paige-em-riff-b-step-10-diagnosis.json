@@ -1,0 +1,490 @@
+{
+  "benchmarkVersion": 8,
+  "diagnosisType": "jimmy-paige-em-riff-b-step-10-final-miss",
+  "protectedCheckpoint": "public/gomyway-jimmy-paige-full-song-8-of-9-checkpoint.json",
+  "patternId": "em-riff-b",
+  "step": 10,
+  "expectedMidiPitch": 45,
+  "targetOccurrencesInspected": 6,
+  "expectedPitchOccurrencesWithinPlusMinus075Seconds": 5,
+  "classification": "ranking-or-timing-problem",
+  "windows": [
+    {
+      "target": 40.395964,
+      "windowSeconds": 0.75,
+      "events": [
+        {
+          "midiPitch": 59,
+          "start": 40.416789,
+          "deltaSeconds": 0.020825,
+          "confidence": 0.25834277272224426
+        },
+        {
+          "midiPitch": 57,
+          "start": 40.544499,
+          "deltaSeconds": 0.148535,
+          "confidence": 0.24158349633216858
+        },
+        {
+          "midiPitch": 62,
+          "start": 40.788308,
+          "deltaSeconds": 0.392344,
+          "confidence": 0.178918719291687
+        },
+        {
+          "midiPitch": 52,
+          "start": 40.799918,
+          "deltaSeconds": 0.403954,
+          "confidence": 0.26410266757011414
+        },
+        {
+          "midiPitch": 64,
+          "start": 40.823138,
+          "deltaSeconds": 0.427174,
+          "confidence": 0.23981864750385284
+        },
+        {
+          "midiPitch": 64,
+          "start": 39.8479,
+          "deltaSeconds": -0.548064,
+          "confidence": 0.17712973058223724
+        },
+        {
+          "midiPitch": 52,
+          "start": 39.672467,
+          "deltaSeconds": -0.723497,
+          "confidence": 0.40381041169166565
+        }
+      ],
+      "containsExpectedMidi45": false
+    },
+    {
+      "target": 69.095516,
+      "windowSeconds": 0.75,
+      "events": [
+        {
+          "midiPitch": 43,
+          "start": 69.123018,
+          "deltaSeconds": 0.027502,
+          "confidence": 0.2403857260942459
+        },
+        {
+          "midiPitch": 50,
+          "start": 69.134628,
+          "deltaSeconds": 0.039112,
+          "confidence": 0.1948111355304718
+        },
+        {
+          "midiPitch": 59,
+          "start": 69.146238,
+          "deltaSeconds": 0.050722,
+          "confidence": 0.3792564570903778
+        },
+        {
+          "midiPitch": 43,
+          "start": 68.960478,
+          "deltaSeconds": -0.135038,
+          "confidence": 0.29468467831611633
+        },
+        {
+          "midiPitch": 43,
+          "start": 68.879208,
+          "deltaSeconds": -0.216308,
+          "confidence": 0.3331436812877655
+        },
+        {
+          "midiPitch": 47,
+          "start": 68.879208,
+          "deltaSeconds": -0.216308,
+          "confidence": 0.2734634280204773
+        },
+        {
+          "midiPitch": 56,
+          "start": 68.879208,
+          "deltaSeconds": -0.216308,
+          "confidence": 0.20461037755012512
+        },
+        {
+          "midiPitch": 50,
+          "start": 69.366827,
+          "deltaSeconds": 0.271312,
+          "confidence": 0.21047912538051605
+        },
+        {
+          "midiPitch": 43,
+          "start": 69.390047,
+          "deltaSeconds": 0.294531,
+          "confidence": 0.4825392961502075
+        },
+        {
+          "midiPitch": 47,
+          "start": 69.401657,
+          "deltaSeconds": 0.306141,
+          "confidence": 0.4158481955528259
+        },
+        {
+          "midiPitch": 62,
+          "start": 69.401657,
+          "deltaSeconds": 0.306141,
+          "confidence": 0.21264338493347168
+        },
+        {
+          "midiPitch": 43,
+          "start": 68.739888,
+          "deltaSeconds": -0.355627,
+          "confidence": 0.38961562514305115
+        },
+        {
+          "midiPitch": 47,
+          "start": 69.482927,
+          "deltaSeconds": 0.387411,
+          "confidence": 0.33595010638237
+        },
+        {
+          "midiPitch": 62,
+          "start": 68.670229,
+          "deltaSeconds": -0.425287,
+          "confidence": 0.2640053331851959
+        },
+        {
+          "midiPitch": 50,
+          "start": 68.635399,
+          "deltaSeconds": -0.460117,
+          "confidence": 0.2241254448890686
+        },
+        {
+          "midiPitch": 44,
+          "start": 69.646751,
+          "deltaSeconds": 0.551235,
+          "confidence": 0.20903007686138153
+        },
+        {
+          "midiPitch": 43,
+          "start": 68.507689,
+          "deltaSeconds": -0.587827,
+          "confidence": 0.26085352897644043
+        },
+        {
+          "midiPitch": 43,
+          "start": 68.391589,
+          "deltaSeconds": -0.703927,
+          "confidence": 0.3565593361854553
+        },
+        {
+          "midiPitch": 50,
+          "start": 68.379979,
+          "deltaSeconds": -0.715537,
+          "confidence": 0.2265317291021347
+        },
+        {
+          "midiPitch": 49,
+          "start": 69.8209,
+          "deltaSeconds": 0.725385,
+          "confidence": 0.2368692308664322
+        }
+      ],
+      "containsExpectedMidi45": false
+    },
+    {
+      "target": 97.795067,
+      "windowSeconds": 0.75,
+      "events": [
+        {
+          "midiPitch": 52,
+          "start": 97.90019,
+          "deltaSeconds": 0.105123,
+          "confidence": 0.2832932472229004
+        },
+        {
+          "midiPitch": 60,
+          "start": 97.66799,
+          "deltaSeconds": -0.127077,
+          "confidence": 0.2977365255355835
+        },
+        {
+          "midiPitch": 52,
+          "start": 97.435791,
+          "deltaSeconds": -0.359276,
+          "confidence": 0.29907506704330444
+        },
+        {
+          "midiPitch": 52,
+          "start": 98.16722,
+          "deltaSeconds": 0.372152,
+          "confidence": 0.24582386016845703
+        },
+        {
+          "midiPitch": 56,
+          "start": 97.389351,
+          "deltaSeconds": -0.405716,
+          "confidence": 0.24146953225135803
+        },
+        {
+          "midiPitch": 67,
+          "start": 98.364589,
+          "deltaSeconds": 0.569522,
+          "confidence": 0.25888878107070923
+        }
+      ],
+      "containsExpectedMidi45": false
+    },
+    {
+      "target": 126.494619,
+      "windowSeconds": 0.75,
+      "events": [
+        {
+          "midiPitch": 52,
+          "start": 126.490319,
+          "deltaSeconds": -0.0043,
+          "confidence": 0.45468005537986755
+        },
+        {
+          "midiPitch": 63,
+          "start": 126.432269,
+          "deltaSeconds": -0.06235,
+          "confidence": 0.3462234437465668
+        },
+        {
+          "midiPitch": 64,
+          "start": 126.559979,
+          "deltaSeconds": 0.06536,
+          "confidence": 0.38037556409835815
+        },
+        {
+          "midiPitch": 64,
+          "start": 126.409049,
+          "deltaSeconds": -0.08557,
+          "confidence": 0.26997071504592896
+        },
+        {
+          "midiPitch": 63,
+          "start": 126.304559,
+          "deltaSeconds": -0.19006,
+          "confidence": 0.42058390378952026
+        },
+        {
+          "midiPitch": 64,
+          "start": 126.734128,
+          "deltaSeconds": 0.23951,
+          "confidence": 0.2638215124607086
+        },
+        {
+          "midiPitch": 52,
+          "start": 126.745738,
+          "deltaSeconds": 0.251119,
+          "confidence": 0.49013546109199524
+        },
+        {
+          "midiPitch": 57,
+          "start": 126.200069,
+          "deltaSeconds": -0.294549,
+          "confidence": 0.2094753086566925
+        },
+        {
+          "midiPitch": 52,
+          "start": 126.827008,
+          "deltaSeconds": 0.332389,
+          "confidence": 0.5277341604232788
+        },
+        {
+          "midiPitch": 67,
+          "start": 126.13041,
+          "deltaSeconds": -0.364209,
+          "confidence": 0.31817537546157837
+        },
+        {
+          "midiPitch": 45,
+          "start": 126.873448,
+          "deltaSeconds": 0.378829,
+          "confidence": 0.19541937112808228
+        },
+        {
+          "midiPitch": 52,
+          "start": 126.10719,
+          "deltaSeconds": -0.387429,
+          "confidence": 0.23637086153030396
+        },
+        {
+          "midiPitch": 52,
+          "start": 126.908278,
+          "deltaSeconds": 0.413659,
+          "confidence": 0.4730933606624603
+        },
+        {
+          "midiPitch": 64,
+          "start": 126.908278,
+          "deltaSeconds": 0.413659,
+          "confidence": 0.347383052110672
+        },
+        {
+          "midiPitch": 64,
+          "start": 127.047598,
+          "deltaSeconds": 0.552979,
+          "confidence": 0.2902716100215912
+        },
+        {
+          "midiPitch": 52,
+          "start": 127.059208,
+          "deltaSeconds": 0.564589,
+          "confidence": 0.5561386942863464
+        },
+        {
+          "midiPitch": 64,
+          "start": 125.90982,
+          "deltaSeconds": -0.584799,
+          "confidence": 0.223399817943573
+        },
+        {
+          "midiPitch": 57,
+          "start": 125.89821,
+          "deltaSeconds": -0.596409,
+          "confidence": 0.24750231206417084
+        },
+        {
+          "midiPitch": 83,
+          "start": 127.164981,
+          "deltaSeconds": 0.670363,
+          "confidence": 0.18325386941432953
+        },
+        {
+          "midiPitch": 52,
+          "start": 127.211421,
+          "deltaSeconds": 0.716802,
+          "confidence": 0.6121463775634766
+        },
+        {
+          "midiPitch": 64,
+          "start": 127.211421,
+          "deltaSeconds": 0.716802,
+          "confidence": 0.3394055664539337
+        },
+        {
+          "midiPitch": 45,
+          "start": 127.223031,
+          "deltaSeconds": 0.728412,
+          "confidence": 0.26128241419792175
+        }
+      ],
+      "containsExpectedMidi45": true
+    },
+    {
+      "target": 155.19417,
+      "windowSeconds": 0.75,
+      "events": [
+        {
+          "midiPitch": 45,
+          "start": 155.232661,
+          "deltaSeconds": 0.038491,
+          "confidence": 0.1840633749961853
+        },
+        {
+          "midiPitch": 76,
+          "start": 155.128171,
+          "deltaSeconds": -0.065999,
+          "confidence": 0.2520703971385956
+        },
+        {
+          "midiPitch": 45,
+          "start": 155.116561,
+          "deltaSeconds": -0.077609,
+          "confidence": 0.21564047038555145
+        },
+        {
+          "midiPitch": 64,
+          "start": 155.279101,
+          "deltaSeconds": 0.084931,
+          "confidence": 0.18438111245632172
+        },
+        {
+          "midiPitch": 49,
+          "start": 155.325541,
+          "deltaSeconds": 0.131371,
+          "confidence": 0.2583303451538086
+        },
+        {
+          "midiPitch": 66,
+          "start": 155.035292,
+          "deltaSeconds": -0.158879,
+          "confidence": 0.2137589156627655
+        },
+        {
+          "midiPitch": 45,
+          "start": 154.965632,
+          "deltaSeconds": -0.228539,
+          "confidence": 0.22828041017055511
+        },
+        {
+          "midiPitch": 52,
+          "start": 154.894688,
+          "deltaSeconds": -0.299482,
+          "confidence": 0.24738866090774536
+        },
+        {
+          "midiPitch": 50,
+          "start": 155.511301,
+          "deltaSeconds": 0.31713,
+          "confidence": 0.1861087530851364
+        },
+        {
+          "midiPitch": 64,
+          "start": 154.848248,
+          "deltaSeconds": -0.345922,
+          "confidence": 0.2398783266544342
+        },
+        {
+          "midiPitch": 61,
+          "start": 154.836638,
+          "deltaSeconds": -0.357532,
+          "confidence": 0.20955519378185272
+        },
+        {
+          "midiPitch": 52,
+          "start": 155.78994,
+          "deltaSeconds": 0.59577,
+          "confidence": 0.2783152759075165
+        },
+        {
+          "midiPitch": 64,
+          "start": 154.592829,
+          "deltaSeconds": -0.601342,
+          "confidence": 0.19364188611507416
+        },
+        {
+          "midiPitch": 66,
+          "start": 154.453509,
+          "deltaSeconds": -0.740662,
+          "confidence": 0.30005377531051636
+        }
+      ],
+      "containsExpectedMidi45": true
+    },
+    {
+      "target": 183.893722,
+      "windowSeconds": 0.75,
+      "events": [
+        {
+          "midiPitch": 71,
+          "start": 183.509321,
+          "deltaSeconds": -0.384401,
+          "confidence": 0.17514771223068237
+        },
+        {
+          "midiPitch": 50,
+          "start": 184.461339,
+          "deltaSeconds": 0.567617,
+          "confidence": 0.3335166871547699
+        },
+        {
+          "midiPitch": 50,
+          "start": 184.542609,
+          "deltaSeconds": 0.648887,
+          "confidence": 0.3506205081939697
+        }
+      ],
+      "containsExpectedMidi45": false
+    }
+  ],
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false
+}

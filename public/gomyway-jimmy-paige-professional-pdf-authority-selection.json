@@ -1,0 +1,99 @@
+{
+  "gateVersion": 1,
+  "minimumProfessionalBytes": 100000,
+  "candidateCount": 6,
+  "candidates": [
+    {
+      "path": "public/gomyway-full-song-v7-measure-grid-proof.pdf",
+      "name": "gomyway-full-song-v7-measure-grid-proof.pdf",
+      "bytes": 18215,
+      "sha256": "d1960a66b7c147ba10735dfbc53fd58a7b099bf5df3de1d4625f53e3629a7de8",
+      "rejectedTokens": [
+        "proof"
+      ],
+      "largeEnoughForProfessionalAuthority": false,
+      "filenameLooksLikeBenchmarkArtifact": true,
+      "eligibleBySafetyRules": false
+    },
+    {
+      "path": "public/gomyway-full-song-v7-notation-proof-v2.pdf",
+      "name": "gomyway-full-song-v7-notation-proof-v2.pdf",
+      "bytes": 12341,
+      "sha256": "a1d8e949a5dcd51721f742fe2f4151c0b17b2cdd03393c9bfac7e988ef497a34",
+      "rejectedTokens": [
+        "proof"
+      ],
+      "largeEnoughForProfessionalAuthority": false,
+      "filenameLooksLikeBenchmarkArtifact": true,
+      "eligibleBySafetyRules": false
+    },
+    {
+      "path": "public/gomyway-full-song-v7-notation-proof.pdf",
+      "name": "gomyway-full-song-v7-notation-proof.pdf",
+      "bytes": 12341,
+      "sha256": "a1d8e949a5dcd51721f742fe2f4151c0b17b2cdd03393c9bfac7e988ef497a34",
+      "rejectedTokens": [
+        "proof"
+      ],
+      "largeEnoughForProfessionalAuthority": false,
+      "filenameLooksLikeBenchmarkArtifact": true,
+      "eligibleBySafetyRules": false
+    },
+    {
+      "path": "public/gomyway-jimmy-paige-isolated-adapter-preview.pdf",
+      "name": "gomyway-jimmy-paige-isolated-adapter-preview.pdf",
+      "bytes": 17648,
+      "sha256": "1ddbb13af5b80d92b99c843c7bba2150751554f5d5167ab6c77e527053b95dd1",
+      "rejectedTokens": [
+        "isolated",
+        "preview",
+        "adapter"
+      ],
+      "largeEnoughForProfessionalAuthority": false,
+      "filenameLooksLikeBenchmarkArtifact": true,
+      "eligibleBySafetyRules": false
+    },
+    {
+      "path": "public/gomyway-jimmy-paige-isolated-chord-preview.pdf",
+      "name": "gomyway-jimmy-paige-isolated-chord-preview.pdf",
+      "bytes": 17727,
+      "sha256": "2e62d3fa7e30b5c37bb53fd7306f48bbb568e7ed84b1ab1afd5009ab7394b5c4",
+      "rejectedTokens": [
+        "isolated",
+        "preview"
+      ],
+      "largeEnoughForProfessionalAuthority": false,
+      "filenameLooksLikeBenchmarkArtifact": true,
+      "eligibleBySafetyRules": false
+    },
+    {
+      "path": "public/gomyway-professional-reference.pdf",
+      "name": "gomyway-professional-reference.pdf",
+      "bytes": 1292376,
+      "sha256": "b8e55778a40ffb3da5959c0efc6ac323271e742ca334ce6f2215fa9694e68842",
+      "rejectedTokens": [],
+      "largeEnoughForProfessionalAuthority": true,
+      "filenameLooksLikeBenchmarkArtifact": false,
+      "eligibleBySafetyRules": true
+    }
+  ],
+  "selectionMode": "explicit-environment-variable",
+  "selectedAuthority": {
+    "path": "public/gomyway-professional-reference.pdf",
+    "name": "gomyway-professional-reference.pdf",
+    "bytes": 1292376,
+    "sha256": "b8e55778a40ffb3da5959c0efc6ac323271e742ca334ce6f2215fa9694e68842",
+    "rejectedTokens": [],
+    "largeEnoughForProfessionalAuthority": true,
+    "filenameLooksLikeBenchmarkArtifact": false,
+    "eligibleBySafetyRules": true
+  },
+  "selectionError": null,
+  "professionalPdfAuthorityConfirmed": true,
+  "readyForManualTechniqueExtraction": true,
+  "readyForTechniqueRendererTraining": false,
+  "syntheticAnnotationsCreated": false,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "protectedPitchCheckpointChanged": false
+}

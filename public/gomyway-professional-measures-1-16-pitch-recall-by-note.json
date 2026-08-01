@@ -1,0 +1,2876 @@
+{
+  "diagnostic": "professional-pitch-recall-by-note",
+  "measureRange": [
+    1,
+    16
+  ],
+  "measurePaddingSeconds": 0.12,
+  "professionalTargets": 144,
+  "matchedTargets": 81,
+  "overallRecallPercent": 56.25,
+  "pitchSummary": [
+    {
+      "midiPitch": 40,
+      "expected": 16,
+      "matched": 0,
+      "recallPercent": 0.0,
+      "measureHits": [],
+      "measureMisses": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          43,
+          11
+        ]
+      ]
+    },
+    {
+      "midiPitch": 45,
+      "expected": 16,
+      "matched": 1,
+      "recallPercent": 6.25,
+      "measureHits": [
+        4
+      ],
+      "measureMisses": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          43,
+          11
+        ],
+        [
+          44,
+          2
+        ],
+        [
+          47,
+          5
+        ],
+        [
+          48,
+          5
+        ]
+      ]
+    },
+    {
+      "midiPitch": 50,
+      "expected": 16,
+      "matched": 8,
+      "recallPercent": 50.0,
+      "measureHits": [
+        1,
+        4,
+        5,
+        7,
+        8,
+        10,
+        11,
+        13
+      ],
+      "measureMisses": [
+        2,
+        3,
+        6,
+        9,
+        12,
+        14,
+        15,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          47,
+          2
+        ],
+        [
+          48,
+          4
+        ],
+        [
+          52,
+          31
+        ]
+      ]
+    },
+    {
+      "midiPitch": 52,
+      "expected": 32,
+      "matched": 32,
+      "recallPercent": 100.0,
+      "measureHits": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "measureMisses": [],
+      "nearbyObservedPitches": []
+    },
+    {
+      "midiPitch": 55,
+      "expected": 16,
+      "matched": 11,
+      "recallPercent": 68.75,
+      "measureHits": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12
+      ],
+      "measureMisses": [
+        8,
+        13,
+        14,
+        15,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          52,
+          15
+        ],
+        [
+          57,
+          2
+        ]
+      ]
+    },
+    {
+      "midiPitch": 57,
+      "expected": 16,
+      "matched": 11,
+      "recallPercent": 68.75,
+      "measureHits": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        12,
+        13
+      ],
+      "measureMisses": [
+        7,
+        11,
+        14,
+        15,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          55,
+          3
+        ]
+      ]
+    },
+    {
+      "midiPitch": 58,
+      "expected": 16,
+      "matched": 2,
+      "recallPercent": 12.5,
+      "measureHits": [
+        2
+      ],
+      "measureMisses": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          55,
+          12
+        ],
+        [
+          57,
+          10
+        ],
+        [
+          59,
+          14
+        ],
+        [
+          61,
+          2
+        ]
+      ]
+    },
+    {
+      "midiPitch": 62,
+      "expected": 16,
+      "matched": 16,
+      "recallPercent": 100.0,
+      "measureHits": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16
+      ],
+      "measureMisses": [],
+      "nearbyObservedPitches": []
+    }
+  ],
+  "weakestPitches": [
+    {
+      "midiPitch": 40,
+      "expected": 16,
+      "matched": 0,
+      "recallPercent": 0.0,
+      "measureHits": [],
+      "measureMisses": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          43,
+          11
+        ]
+      ]
+    },
+    {
+      "midiPitch": 45,
+      "expected": 16,
+      "matched": 1,
+      "recallPercent": 6.25,
+      "measureHits": [
+        4
+      ],
+      "measureMisses": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          43,
+          11
+        ],
+        [
+          44,
+          2
+        ],
+        [
+          47,
+          5
+        ],
+        [
+          48,
+          5
+        ]
+      ]
+    },
+    {
+      "midiPitch": 58,
+      "expected": 16,
+      "matched": 2,
+      "recallPercent": 12.5,
+      "measureHits": [
+        2
+      ],
+      "measureMisses": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          55,
+          12
+        ],
+        [
+          57,
+          10
+        ],
+        [
+          59,
+          14
+        ],
+        [
+          61,
+          2
+        ]
+      ]
+    },
+    {
+      "midiPitch": 50,
+      "expected": 16,
+      "matched": 8,
+      "recallPercent": 50.0,
+      "measureHits": [
+        1,
+        4,
+        5,
+        7,
+        8,
+        10,
+        11,
+        13
+      ],
+      "measureMisses": [
+        2,
+        3,
+        6,
+        9,
+        12,
+        14,
+        15,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          47,
+          2
+        ],
+        [
+          48,
+          4
+        ],
+        [
+          52,
+          31
+        ]
+      ]
+    },
+    {
+      "midiPitch": 55,
+      "expected": 16,
+      "matched": 11,
+      "recallPercent": 68.75,
+      "measureHits": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12
+      ],
+      "measureMisses": [
+        8,
+        13,
+        14,
+        15,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          52,
+          15
+        ],
+        [
+          57,
+          2
+        ]
+      ]
+    },
+    {
+      "midiPitch": 57,
+      "expected": 16,
+      "matched": 11,
+      "recallPercent": 68.75,
+      "measureHits": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        12,
+        13
+      ],
+      "measureMisses": [
+        7,
+        11,
+        14,
+        15,
+        16
+      ],
+      "nearbyObservedPitches": [
+        [
+          55,
+          3
+        ]
+      ]
+    },
+    {
+      "midiPitch": 52,
+      "expected": 32,
+      "matched": 32,
+      "recallPercent": 100.0,
+      "measureHits": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "measureMisses": [],
+      "nearbyObservedPitches": []
+    },
+    {
+      "midiPitch": 62,
+      "expected": 16,
+      "matched": 16,
+      "recallPercent": 100.0,
+      "measureHits": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16
+      ],
+      "measureMisses": [],
+      "nearbyObservedPitches": []
+    }
+  ],
+  "measures": [
+    {
+      "measureNumber": 1,
+      "expected": 7,
+      "matched": 5,
+      "scorePercent": 71.43,
+      "observedPitchInventory": [
+        [
+          43,
+          2
+        ],
+        [
+          48,
+          1
+        ],
+        [
+          50,
+          1
+        ],
+        [
+          52,
+          7
+        ],
+        [
+          54,
+          1
+        ],
+        [
+          55,
+          5
+        ],
+        [
+          57,
+          3
+        ],
+        [
+          59,
+          2
+        ],
+        [
+          62,
+          2
+        ],
+        [
+          64,
+          2
+        ],
+        [
+          67,
+          2
+        ],
+        [
+          70,
+          1
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": true,
+          "matchedMidi": 57,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": true,
+          "matchedMidi": 55,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": true,
+          "matchedMidi": 50,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "expected": 11,
+      "matched": 8,
+      "scorePercent": 72.73,
+      "observedPitchInventory": [
+        [
+          52,
+          7
+        ],
+        [
+          55,
+          5
+        ],
+        [
+          57,
+          3
+        ],
+        [
+          58,
+          1
+        ],
+        [
+          59,
+          2
+        ],
+        [
+          62,
+          2
+        ],
+        [
+          64,
+          5
+        ],
+        [
+          65,
+          1
+        ],
+        [
+          67,
+          1
+        ],
+        [
+          71,
+          1
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": true,
+          "matchedMidi": 57,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": true,
+          "matchedMidi": 55,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": true,
+          "matchedMidi": 58,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": true,
+          "matchedMidi": 58,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "expected": 7,
+      "matched": 4,
+      "scorePercent": 57.14,
+      "observedPitchInventory": [
+        [
+          43,
+          1
+        ],
+        [
+          52,
+          5
+        ],
+        [
+          55,
+          6
+        ],
+        [
+          56,
+          1
+        ],
+        [
+          57,
+          1
+        ],
+        [
+          59,
+          4
+        ],
+        [
+          62,
+          4
+        ],
+        [
+          64,
+          6
+        ],
+        [
+          67,
+          6
+        ],
+        [
+          68,
+          1
+        ],
+        [
+          69,
+          1
+        ],
+        [
+          71,
+          2
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": true,
+          "matchedMidi": 57,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": true,
+          "matchedMidi": 55,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "expected": 11,
+      "matched": 8,
+      "scorePercent": 72.73,
+      "observedPitchInventory": [
+        [
+          45,
+          2
+        ],
+        [
+          50,
+          1
+        ],
+        [
+          52,
+          6
+        ],
+        [
+          54,
+          2
+        ],
+        [
+          55,
+          3
+        ],
+        [
+          57,
+          2
+        ],
+        [
+          59,
+          5
+        ],
+        [
+          62,
+          2
+        ],
+        [
+          64,
+          7
+        ],
+        [
+          67,
+          1
+        ],
+        [
+          69,
+          2
+        ],
+        [
+          71,
+          1
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": true,
+          "matchedMidi": 57,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": true,
+          "matchedMidi": 55,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": true,
+          "matchedMidi": 45,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": true,
+          "matchedMidi": 50,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "expected": 7,
+      "matched": 5,
+      "scorePercent": 71.43,
+      "observedPitchInventory": [
+        [
+          44,
+          1
+        ],
+        [
+          50,
+          2
+        ],
+        [
+          52,
+          6
+        ],
+        [
+          55,
+          2
+        ],
+        [
+          57,
+          2
+        ],
+        [
+          59,
+          3
+        ],
+        [
+          62,
+          1
+        ],
+        [
+          64,
+          3
+        ],
+        [
+          67,
+          1
+        ],
+        [
+          69,
+          1
+        ],
+        [
+          71,
+          2
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": true,
+          "matchedMidi": 57,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": true,
+          "matchedMidi": 55,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": true,
+          "matchedMidi": 50,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "expected": 11,
+      "matched": 6,
+      "scorePercent": 54.55,
+      "observedPitchInventory": [
+        [
+          52,
+          4
+        ],
+        [
+          55,
+          1
+        ],
+        [
+          59,
+          1
+        ],
+        [
+          62,
+          1
+        ],
+        [
+          64,
+          4
+        ],
+        [
+          67,
+          1
+        ],
+        [
+          71,
+          1
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": true,
+          "matchedMidi": 59,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": true,
+          "matchedMidi": 55,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 7,
+      "expected": 7,
+      "matched": 4,
+      "scorePercent": 57.14,
+      "observedPitchInventory": [
+        [
+          43,
+          1
+        ],
+        [
+          47,
+          1
+        ],
+        [
+          50,
+          2
+        ],
+        [
+          52,
+          3
+        ],
+        [
+          55,
+          2
+        ],
+        [
+          62,
+          2
+        ],
+        [
+          64,
+          4
+        ],
+        [
+          67,
+          2
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": true,
+          "matchedMidi": 55,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": true,
+          "matchedMidi": 50,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "expected": 11,
+      "matched": 6,
+      "scorePercent": 54.55,
+      "observedPitchInventory": [
+        [
+          43,
+          1
+        ],
+        [
+          47,
+          1
+        ],
+        [
+          50,
+          1
+        ],
+        [
+          52,
+          3
+        ],
+        [
+          57,
+          1
+        ],
+        [
+          62,
+          2
+        ],
+        [
+          64,
+          2
+        ],
+        [
+          67,
+          2
+        ],
+        [
+          71,
+          1
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": true,
+          "matchedMidi": 57,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": true,
+          "matchedMidi": 50,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "expected": 7,
+      "matched": 4,
+      "scorePercent": 57.14,
+      "observedPitchInventory": [
+        [
+          44,
+          1
+        ],
+        [
+          47,
+          1
+        ],
+        [
+          52,
+          3
+        ],
+        [
+          55,
+          1
+        ],
+        [
+          57,
+          1
+        ],
+        [
+          62,
+          2
+        ],
+        [
+          64,
+          2
+        ],
+        [
+          67,
+          1
+        ],
+        [
+          71,
+          1
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": true,
+          "matchedMidi": 57,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": true,
+          "matchedMidi": 55,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "expected": 11,
+      "matched": 7,
+      "scorePercent": 63.64,
+      "observedPitchInventory": [
+        [
+          43,
+          1
+        ],
+        [
+          47,
+          1
+        ],
+        [
+          50,
+          1
+        ],
+        [
+          52,
+          3
+        ],
+        [
+          55,
+          1
+        ],
+        [
+          57,
+          1
+        ],
+        [
+          62,
+          2
+        ],
+        [
+          64,
+          3
+        ],
+        [
+          67,
+          1
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": true,
+          "matchedMidi": 57,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": true,
+          "matchedMidi": 55,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": true,
+          "matchedMidi": 50,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 11,
+      "expected": 7,
+      "matched": 4,
+      "scorePercent": 57.14,
+      "observedPitchInventory": [
+        [
+          50,
+          2
+        ],
+        [
+          52,
+          5
+        ],
+        [
+          55,
+          1
+        ],
+        [
+          62,
+          1
+        ],
+        [
+          64,
+          4
+        ],
+        [
+          67,
+          1
+        ],
+        [
+          71,
+          1
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": true,
+          "matchedMidi": 55,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": true,
+          "matchedMidi": 50,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "expected": 11,
+      "matched": 6,
+      "scorePercent": 54.55,
+      "observedPitchInventory": [
+        [
+          43,
+          1
+        ],
+        [
+          47,
+          1
+        ],
+        [
+          48,
+          1
+        ],
+        [
+          52,
+          3
+        ],
+        [
+          55,
+          1
+        ],
+        [
+          57,
+          1
+        ],
+        [
+          59,
+          1
+        ],
+        [
+          62,
+          1
+        ],
+        [
+          64,
+          2
+        ],
+        [
+          67,
+          2
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": true,
+          "matchedMidi": 57,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": true,
+          "matchedMidi": 55,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 13,
+      "expected": 7,
+      "matched": 4,
+      "scorePercent": 57.14,
+      "observedPitchInventory": [
+        [
+          43,
+          1
+        ],
+        [
+          50,
+          1
+        ],
+        [
+          52,
+          3
+        ],
+        [
+          57,
+          1
+        ],
+        [
+          64,
+          1
+        ],
+        [
+          67,
+          1
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": true,
+          "matchedMidi": 57,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": true,
+          "matchedMidi": 50,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "expected": 11,
+      "matched": 4,
+      "scorePercent": 36.36,
+      "observedPitchInventory": [
+        [
+          43,
+          2
+        ],
+        [
+          48,
+          1
+        ],
+        [
+          52,
+          3
+        ],
+        [
+          62,
+          1
+        ],
+        [
+          64,
+          3
+        ],
+        [
+          67,
+          2
+        ],
+        [
+          77,
+          1
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 15,
+      "expected": 7,
+      "matched": 2,
+      "scorePercent": 28.57,
+      "observedPitchInventory": [
+        [
+          43,
+          1
+        ],
+        [
+          48,
+          1
+        ],
+        [
+          52,
+          3
+        ],
+        [
+          61,
+          1
+        ],
+        [
+          62,
+          1
+        ],
+        [
+          64,
+          2
+        ],
+        [
+          74,
+          2
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "expected": 11,
+      "matched": 4,
+      "scorePercent": 36.36,
+      "observedPitchInventory": [
+        [
+          48,
+          1
+        ],
+        [
+          52,
+          3
+        ],
+        [
+          61,
+          1
+        ],
+        [
+          62,
+          2
+        ],
+        [
+          67,
+          1
+        ],
+        [
+          74,
+          2
+        ],
+        [
+          78,
+          2
+        ]
+      ],
+      "professionalEvents": [
+        {
+          "writtenMidi": 57,
+          "acceptedMidis": [
+            57,
+            59
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "writtenMidi": 55,
+          "acceptedMidis": [
+            55
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 45,
+          "acceptedMidis": [
+            45
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 50,
+          "acceptedMidis": [
+            50
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 52,
+          "acceptedMidis": [
+            52
+          ],
+          "matched": true,
+          "matchedMidi": 52,
+          "stringIndex": 3,
+          "fret": 2,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 40,
+          "acceptedMidis": [
+            40
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 62,
+          "acceptedMidis": [
+            62
+          ],
+          "matched": true,
+          "matchedMidi": 62,
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "writtenMidi": 58,
+          "acceptedMidis": [
+            58
+          ],
+          "matched": false,
+          "matchedMidi": null,
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    }
+  ],
+  "readyForAutomatedTraining": false
+}

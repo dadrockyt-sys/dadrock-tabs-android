@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "professional-measures-1-16-timing-calibration",
+  "professionalReference": "public/gomyway-professional-rhythm-reference-v2.json",
+  "extractionSource": "public/gomyway-jimmy-paige-full-song-winner-test.json",
+  "timingWindowSeconds": 0.22,
+  "professionalTargetCount": 144,
+  "extractedEventCount": 1629,
+  "candidatesTested": 44122,
+  "coarseBest": {
+    "tempoBpm": 135.9,
+    "firstMeasureOffsetSeconds": 5.05,
+    "matched": 30,
+    "total": 144,
+    "score": 0.20833333333333334,
+    "meanAbsoluteTimingErrorSeconds": 0.11388858534434956
+  },
+  "best": {
+    "tempoBpm": 135.88,
+    "firstMeasureOffsetSeconds": 5.045,
+    "matched": 30,
+    "total": 144,
+    "score": 0.20833333333333334,
+    "meanAbsoluteTimingErrorSeconds": 0.11174021978398653
+  },
+  "documentedTempoBpm": 129.0,
+  "priorNineSlotTempoBpm": 133.8,
+  "readyToReplaceTimingMap": false,
+  "readyForAutomatedTraining": false,
+  "notes": "This calibration separates timing-map quality from extraction quality. A low score after calibration indicates that the professional event encoding or extracted pitch candidates require inspection before parameter training."
+}

@@ -1,0 +1,205 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-em-riff-identity-candidate-summary",
+  "passed": true,
+  "readyForExactScoring": false,
+  "patterns": {
+    "em-riff-a": [
+      {
+        "quantizedStep": 2,
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 45
+        },
+        "alternatives": [],
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 6,
+        "leadingIdentity": {
+          "stringIndex": 3,
+          "fret": 2,
+          "support": 10
+        },
+        "alternatives": [
+          {
+            "stringIndex": 5,
+            "fret": 0,
+            "support": 6
+          },
+          {
+            "stringIndex": 0,
+            "fret": 3,
+            "support": 5
+          }
+        ],
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 10,
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 26
+        },
+        "alternatives": [
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 10
+          },
+          {
+            "stringIndex": 0,
+            "fret": 0,
+            "support": 5
+          }
+        ],
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 14,
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 30
+        },
+        "alternatives": [
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 5
+          }
+        ],
+        "manualProfessionalVerificationRequired": true
+      }
+    ],
+    "em-riff-b": [
+      {
+        "quantizedStep": 2,
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 30
+        },
+        "alternatives": [
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 5
+          },
+          {
+            "stringIndex": 5,
+            "fret": 2,
+            "support": 5
+          }
+        ],
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 4,
+        "leadingIdentity": {
+          "stringIndex": 3,
+          "fret": 2,
+          "support": 10
+        },
+        "alternatives": [
+          {
+            "stringIndex": 5,
+            "fret": 1,
+            "support": 10
+          },
+          {
+            "stringIndex": 5,
+            "fret": 0,
+            "support": 7
+          },
+          {
+            "stringIndex": 0,
+            "fret": 0,
+            "support": 5
+          }
+        ],
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 6,
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 16
+        },
+        "alternatives": [
+          {
+            "stringIndex": 3,
+            "fret": 2,
+            "support": 5
+          },
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 5
+          }
+        ],
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 10,
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 21
+        },
+        "alternatives": [
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 5
+          },
+          {
+            "stringIndex": 5,
+            "fret": 1,
+            "support": 5
+          }
+        ],
+        "manualProfessionalVerificationRequired": true
+      },
+      {
+        "quantizedStep": 14,
+        "leadingIdentity": {
+          "stringIndex": 5,
+          "fret": 0,
+          "support": 25
+        },
+        "alternatives": [
+          {
+            "stringIndex": 0,
+            "fret": 3,
+            "support": 16
+          },
+          {
+            "stringIndex": 0,
+            "fret": 14,
+            "support": 5
+          },
+          {
+            "stringIndex": 5,
+            "fret": 3,
+            "support": 5
+          }
+        ],
+        "manualProfessionalVerificationRequired": true
+      }
+    ]
+  },
+  "safeguards": {
+    "sourceJoinReadOnly": true,
+    "doesNotModifyV8Notation": true,
+    "doesNotPromoteCandidates": true,
+    "professionalManualVerificationRequired": true,
+    "rendererChanged": false,
+    "protectedBaselinesChanged": false,
+    "noSyntheticNotes": true
+  },
+  "nextStep": "Compare the nine printed leading identities against the visible professional score. Do not promote any identity until it is manually confirmed."
+}

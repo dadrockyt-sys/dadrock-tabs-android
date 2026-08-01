@@ -1,0 +1,1058 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "professional-measures-1-16-pitch-availability",
+  "tempoBpm": 135.88,
+  "firstMeasureOffsetSeconds": 5.045,
+  "professionalTargets": 144,
+  "pitchAvailableMatches": 77,
+  "pitchAvailabilityScore": 0.5347222222222222,
+  "classification": "mixed-timing-and-pitch-extraction-problem",
+  "recommendedNextAction": "inspect-professional-pitch-encoding-and-basic-pitch-candidates",
+  "measureReports": [
+    {
+      "measureNumber": 1,
+      "patternId": "main-em-riff-open-ending",
+      "windowStartSeconds": 5.045,
+      "windowEndSeconds": 6.8113,
+      "professionalTargets": 7,
+      "observedEvents": 29,
+      "pitchAvailableMatches": 4,
+      "pitchAvailabilityScore": 0.5714285714285714,
+      "observedPitchCounts": {
+        "52": 9,
+        "54": 2,
+        "55": 5,
+        "56": 1,
+        "57": 3,
+        "59": 4,
+        "64": 3,
+        "67": 1,
+        "71": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 4,
+          "step": 8,
+          "acceptedPitches": [
+            50
+          ],
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "patternId": "main-em-riff-with-double-stop",
+      "windowStartSeconds": 6.8113,
+      "windowEndSeconds": 8.5775,
+      "professionalTargets": 11,
+      "observedEvents": 29,
+      "pitchAvailableMatches": 7,
+      "pitchAvailabilityScore": 0.6363636363636364,
+      "observedPitchCounts": {
+        "43": 2,
+        "48": 1,
+        "50": 1,
+        "52": 5,
+        "54": 1,
+        "55": 5,
+        "56": 1,
+        "57": 4,
+        "59": 2,
+        "62": 2,
+        "64": 1,
+        "67": 3,
+        "70": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 8,
+          "step": 14,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 10,
+          "step": 15,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "patternId": "main-em-riff-open-ending",
+      "windowStartSeconds": 8.5775,
+      "windowEndSeconds": 10.3438,
+      "professionalTargets": 7,
+      "observedEvents": 28,
+      "pitchAvailableMatches": 4,
+      "pitchAvailabilityScore": 0.5714285714285714,
+      "observedPitchCounts": {
+        "52": 7,
+        "55": 4,
+        "57": 3,
+        "58": 1,
+        "59": 3,
+        "62": 2,
+        "64": 4,
+        "65": 1,
+        "67": 1,
+        "70": 1,
+        "71": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 4,
+          "step": 8,
+          "acceptedPitches": [
+            50
+          ],
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "patternId": "main-em-riff-with-double-stop",
+      "windowStartSeconds": 10.3438,
+      "windowEndSeconds": 12.1101,
+      "professionalTargets": 11,
+      "observedEvents": 37,
+      "pitchAvailableMatches": 6,
+      "pitchAvailabilityScore": 0.5454545454545454,
+      "observedPitchCounts": {
+        "43": 1,
+        "52": 6,
+        "55": 6,
+        "56": 1,
+        "57": 1,
+        "59": 4,
+        "62": 4,
+        "64": 6,
+        "67": 5,
+        "68": 1,
+        "71": 2
+      },
+      "misses": [
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 4,
+          "step": 8,
+          "acceptedPitches": [
+            50
+          ],
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 8,
+          "step": 14,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 10,
+          "step": 15,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "patternId": "main-em-riff-open-ending",
+      "windowStartSeconds": 12.1101,
+      "windowEndSeconds": 13.8763,
+      "professionalTargets": 7,
+      "observedEvents": 38,
+      "pitchAvailableMatches": 6,
+      "pitchAvailabilityScore": 0.8571428571428571,
+      "observedPitchCounts": {
+        "43": 1,
+        "45": 2,
+        "50": 1,
+        "52": 7,
+        "54": 2,
+        "55": 3,
+        "57": 1,
+        "59": 5,
+        "62": 4,
+        "64": 7,
+        "67": 2,
+        "69": 1,
+        "71": 2
+      },
+      "misses": [
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "patternId": "main-em-riff-with-double-stop",
+      "windowStartSeconds": 13.8763,
+      "windowEndSeconds": 15.6426,
+      "professionalTargets": 11,
+      "observedEvents": 26,
+      "pitchAvailableMatches": 7,
+      "pitchAvailabilityScore": 0.6363636363636364,
+      "observedPitchCounts": {
+        "44": 1,
+        "50": 1,
+        "52": 7,
+        "55": 3,
+        "57": 2,
+        "59": 3,
+        "62": 2,
+        "64": 4,
+        "67": 1,
+        "69": 1,
+        "71": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 8,
+          "step": 14,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 10,
+          "step": 15,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 7,
+      "patternId": "main-em-riff-open-ending",
+      "windowStartSeconds": 15.6426,
+      "windowEndSeconds": 17.4089,
+      "professionalTargets": 7,
+      "observedEvents": 19,
+      "pitchAvailableMatches": 5,
+      "pitchAvailabilityScore": 0.7142857142857143,
+      "observedPitchCounts": {
+        "50": 2,
+        "52": 6,
+        "55": 1,
+        "59": 1,
+        "62": 2,
+        "64": 5,
+        "67": 1,
+        "71": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "patternId": "main-em-riff-with-double-stop",
+      "windowStartSeconds": 17.4089,
+      "windowEndSeconds": 19.1751,
+      "professionalTargets": 11,
+      "observedEvents": 14,
+      "pitchAvailableMatches": 5,
+      "pitchAvailabilityScore": 0.45454545454545453,
+      "observedPitchCounts": {
+        "50": 2,
+        "52": 3,
+        "55": 2,
+        "62": 1,
+        "64": 5,
+        "67": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 0,
+          "step": 0,
+          "acceptedPitches": [
+            57,
+            59
+          ],
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 8,
+          "step": 14,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 9,
+          "step": 15,
+          "acceptedPitches": [
+            62
+          ],
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 10,
+          "step": 15,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "patternId": "main-em-riff-open-ending",
+      "windowStartSeconds": 19.1751,
+      "windowEndSeconds": 20.9414,
+      "professionalTargets": 7,
+      "observedEvents": 17,
+      "pitchAvailableMatches": 5,
+      "pitchAvailabilityScore": 0.7142857142857143,
+      "observedPitchCounts": {
+        "43": 1,
+        "47": 1,
+        "50": 1,
+        "52": 3,
+        "55": 1,
+        "57": 1,
+        "62": 2,
+        "64": 4,
+        "67": 2,
+        "71": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "patternId": "main-em-riff-with-double-stop",
+      "windowStartSeconds": 20.9414,
+      "windowEndSeconds": 22.7076,
+      "professionalTargets": 11,
+      "observedEvents": 13,
+      "pitchAvailableMatches": 5,
+      "pitchAvailabilityScore": 0.45454545454545453,
+      "observedPitchCounts": {
+        "44": 1,
+        "52": 5,
+        "55": 1,
+        "57": 1,
+        "62": 1,
+        "64": 2,
+        "67": 1,
+        "71": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 4,
+          "step": 8,
+          "acceptedPitches": [
+            50
+          ],
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 8,
+          "step": 14,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 9,
+          "step": 15,
+          "acceptedPitches": [
+            62
+          ],
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 10,
+          "step": 15,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 11,
+      "patternId": "main-em-riff-open-ending",
+      "windowStartSeconds": 22.7076,
+      "windowEndSeconds": 24.4739,
+      "professionalTargets": 7,
+      "observedEvents": 15,
+      "pitchAvailableMatches": 5,
+      "pitchAvailabilityScore": 0.7142857142857143,
+      "observedPitchCounts": {
+        "43": 1,
+        "44": 1,
+        "47": 1,
+        "50": 1,
+        "52": 3,
+        "55": 1,
+        "57": 1,
+        "62": 3,
+        "64": 2,
+        "67": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "patternId": "main-em-riff-with-double-stop",
+      "windowStartSeconds": 24.4739,
+      "windowEndSeconds": 26.2402,
+      "professionalTargets": 11,
+      "observedEvents": 11,
+      "pitchAvailableMatches": 5,
+      "pitchAvailabilityScore": 0.45454545454545453,
+      "observedPitchCounts": {
+        "50": 2,
+        "52": 4,
+        "62": 2,
+        "64": 1,
+        "67": 1,
+        "71": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 0,
+          "step": 0,
+          "acceptedPitches": [
+            57,
+            59
+          ],
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "eventIndex": 1,
+          "step": 2,
+          "acceptedPitches": [
+            55
+          ],
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 8,
+          "step": 14,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 10,
+          "step": 15,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 13,
+      "patternId": "main-em-riff-open-ending",
+      "windowStartSeconds": 26.2402,
+      "windowEndSeconds": 28.0064,
+      "professionalTargets": 7,
+      "observedEvents": 18,
+      "pitchAvailableMatches": 5,
+      "pitchAvailabilityScore": 0.7142857142857143,
+      "observedPitchCounts": {
+        "43": 1,
+        "47": 1,
+        "50": 2,
+        "52": 4,
+        "55": 1,
+        "57": 1,
+        "59": 1,
+        "62": 2,
+        "64": 3,
+        "67": 2
+      },
+      "misses": [
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "patternId": "main-em-riff-with-double-stop",
+      "windowStartSeconds": 28.0064,
+      "windowEndSeconds": 29.7727,
+      "professionalTargets": 11,
+      "observedEvents": 6,
+      "pitchAvailableMatches": 3,
+      "pitchAvailabilityScore": 0.2727272727272727,
+      "observedPitchCounts": {
+        "48": 1,
+        "52": 2,
+        "57": 1,
+        "64": 1,
+        "67": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 1,
+          "step": 2,
+          "acceptedPitches": [
+            55
+          ],
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 4,
+          "step": 8,
+          "acceptedPitches": [
+            50
+          ],
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 7,
+          "step": 14,
+          "acceptedPitches": [
+            62
+          ],
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 8,
+          "step": 14,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 9,
+          "step": 15,
+          "acceptedPitches": [
+            62
+          ],
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 10,
+          "step": 15,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 15,
+      "patternId": "main-em-riff-open-ending",
+      "windowStartSeconds": 29.7727,
+      "windowEndSeconds": 31.539,
+      "professionalTargets": 7,
+      "observedEvents": 13,
+      "pitchAvailableMatches": 3,
+      "pitchAvailabilityScore": 0.42857142857142855,
+      "observedPitchCounts": {
+        "43": 2,
+        "50": 1,
+        "52": 4,
+        "62": 1,
+        "64": 3,
+        "67": 1,
+        "77": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 0,
+          "step": 0,
+          "acceptedPitches": [
+            57,
+            59
+          ],
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "eventIndex": 1,
+          "step": 2,
+          "acceptedPitches": [
+            55
+          ],
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "patternId": "main-em-riff-with-double-stop",
+      "windowStartSeconds": 31.539,
+      "windowEndSeconds": 33.3052,
+      "professionalTargets": 11,
+      "observedEvents": 10,
+      "pitchAvailableMatches": 2,
+      "pitchAvailabilityScore": 0.18181818181818182,
+      "observedPitchCounts": {
+        "43": 1,
+        "48": 1,
+        "52": 3,
+        "64": 3,
+        "67": 1,
+        "77": 1
+      },
+      "misses": [
+        {
+          "eventIndex": 0,
+          "step": 0,
+          "acceptedPitches": [
+            57,
+            59
+          ],
+          "stringIndex": 2,
+          "fret": 2,
+          "technique": "full-step-bend-release"
+        },
+        {
+          "eventIndex": 1,
+          "step": 2,
+          "acceptedPitches": [
+            55
+          ],
+          "stringIndex": 2,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 3,
+          "step": 6,
+          "acceptedPitches": [
+            45
+          ],
+          "stringIndex": 4,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 4,
+          "step": 8,
+          "acceptedPitches": [
+            50
+          ],
+          "stringIndex": 3,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 6,
+          "step": 12,
+          "acceptedPitches": [
+            40
+          ],
+          "stringIndex": 5,
+          "fret": 0,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 7,
+          "step": 14,
+          "acceptedPitches": [
+            62
+          ],
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 8,
+          "step": 14,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 9,
+          "step": 15,
+          "acceptedPitches": [
+            62
+          ],
+          "stringIndex": 1,
+          "fret": 3,
+          "technique": "picked-note"
+        },
+        {
+          "eventIndex": 10,
+          "step": 15,
+          "acceptedPitches": [
+            58
+          ],
+          "stringIndex": 2,
+          "fret": 3,
+          "technique": "picked-note"
+        }
+      ]
+    }
+  ],
+  "protectedBaselinesChanged": false,
+  "productionPromotionAllowed": false,
+  "notes": "This diagnostic ignores exact within-measure timing and asks whether the expected professional pitches exist anywhere inside each calibrated measure window."
+}

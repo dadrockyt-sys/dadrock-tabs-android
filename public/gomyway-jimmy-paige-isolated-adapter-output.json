@@ -1,0 +1,851 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "isolated-readonly-adapter-output",
+  "mode": "isolated-json-only",
+  "rows": [
+    {
+      "measureNumber": 33,
+      "attackNumber": 1,
+      "phase": 0.0,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 33,
+      "attackNumber": 2,
+      "phase": 0.2,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 33,
+      "attackNumber": 3,
+      "phase": 0.36,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 34,
+      "attackNumber": 1,
+      "phase": 0.0,
+      "fretsHighToLow": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 34,
+      "attackNumber": 2,
+      "phase": 0.2,
+      "fretsHighToLow": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 34,
+      "attackNumber": 3,
+      "phase": 0.36,
+      "fretsHighToLow": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 35,
+      "attackNumber": 1,
+      "phase": 0.0,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 35,
+      "attackNumber": 2,
+      "phase": 0.18,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 35,
+      "attackNumber": 3,
+      "phase": 0.34,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 35,
+      "attackNumber": 4,
+      "phase": 0.5,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 35,
+      "attackNumber": 5,
+      "phase": 0.66,
+      "fretsHighToLow": [
+        null,
+        7,
+        7,
+        7,
+        7,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 35,
+      "attackNumber": 6,
+      "phase": 0.8,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 36,
+      "attackNumber": 1,
+      "phase": 0.0,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 36,
+      "attackNumber": 2,
+      "phase": 0.14,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 36,
+      "attackNumber": 3,
+      "phase": 0.27,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 36,
+      "attackNumber": 4,
+      "phase": 0.4,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 36,
+      "attackNumber": 5,
+      "phase": 0.53,
+      "fretsHighToLow": [
+        null,
+        12,
+        12,
+        12,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 36,
+      "attackNumber": 6,
+      "phase": 0.67,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 37,
+      "attackNumber": 1,
+      "phase": 0.0,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 37,
+      "attackNumber": 2,
+      "phase": 0.2,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 37,
+      "attackNumber": 3,
+      "phase": 0.36,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 38,
+      "attackNumber": 1,
+      "phase": 0.0,
+      "fretsHighToLow": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 38,
+      "attackNumber": 2,
+      "phase": 0.23,
+      "fretsHighToLow": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        null
+      ],
+      "resolutionMode": "professional-reference",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 63,
+      "attackNumber": 1,
+      "phase": 0.0,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 63,
+      "attackNumber": 2,
+      "phase": 0.2,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 63,
+      "attackNumber": 3,
+      "phase": 0.36,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 64,
+      "attackNumber": 1,
+      "phase": 0.0,
+      "fretsHighToLow": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        null
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 64,
+      "attackNumber": 2,
+      "phase": 0.2,
+      "fretsHighToLow": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        null
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 64,
+      "attackNumber": 3,
+      "phase": 0.36,
+      "fretsHighToLow": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        null
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 65,
+      "attackNumber": 1,
+      "phase": 0.0,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 65,
+      "attackNumber": 2,
+      "phase": 0.18,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 65,
+      "attackNumber": 3,
+      "phase": 0.34,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 65,
+      "attackNumber": 4,
+      "phase": 0.5,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 65,
+      "attackNumber": 5,
+      "phase": 0.66,
+      "fretsHighToLow": [
+        null,
+        7,
+        7,
+        7,
+        7,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 65,
+      "attackNumber": 6,
+      "phase": 0.8,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 1,
+      "phase": 0.0,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 2,
+      "phase": 0.14,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 3,
+      "phase": 0.27,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 4,
+      "phase": 0.4,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 5,
+      "phase": 0.53,
+      "fretsHighToLow": [
+        null,
+        12,
+        12,
+        12,
+        null,
+        null
+      ],
+      "resolutionMode": "guarded-template-transfer",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 6,
+      "phase": 0.67,
+      "fretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 67,
+      "attackNumber": 1,
+      "phase": 0.0,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 67,
+      "attackNumber": 2,
+      "phase": 0.2,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    },
+    {
+      "measureNumber": 67,
+      "attackNumber": 3,
+      "phase": 0.36,
+      "fretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolutionMode": "observed-exact",
+      "boundaryMode": "isolated-adapter-output",
+      "rendererCalled": false,
+      "pdfCreated": false,
+      "productionOutputCreated": false,
+      "sourceMutationAllowed": false
+    }
+  ],
+  "rowCount": 44,
+  "invalidRowCount": 0,
+  "rendererCalled": false,
+  "pdfCreated": false,
+  "productionOutputCreated": false,
+  "rendererChanged": false,
+  "sourceEventsMutated": false,
+  "professionalPdfRemainsScoringAuthority": true
+}

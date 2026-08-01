@@ -1,0 +1,600 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "held-out-exact-chord-voicing-placement-diagnosis",
+  "sourceValidation": "public/gomyway-jimmy-paige-chord-pitch-class-validation-63-67.json",
+  "attackRowsInspected": 21,
+  "exactPassCount": 13,
+  "pitchClassPassCount": 21,
+  "voicingPlacementMissCount": 8,
+  "affectedMeasures": [
+    64,
+    66
+  ],
+  "diagnosisRows": [
+    {
+      "measureNumber": 64,
+      "attackNumber": 1,
+      "expectedPitches": [
+        45,
+        52,
+        57,
+        61,
+        66
+      ],
+      "candidatePitches": [
+        40,
+        43,
+        44,
+        46,
+        48,
+        49,
+        50,
+        52,
+        56,
+        58,
+        59,
+        64
+      ],
+      "pitchClassRows": [
+        {
+          "pitchClass": 1,
+          "expectedPitches": [
+            61
+          ],
+          "candidatePitches": [
+            49
+          ],
+          "nearestOffsetsSemitones": [
+            -12
+          ]
+        },
+        {
+          "pitchClass": 4,
+          "expectedPitches": [
+            52
+          ],
+          "candidatePitches": [
+            40,
+            52,
+            64
+          ],
+          "nearestOffsetsSemitones": [
+            0
+          ]
+        },
+        {
+          "pitchClass": 6,
+          "expectedPitches": [
+            66
+          ],
+          "candidatePitches": [],
+          "nearestOffsetsSemitones": []
+        },
+        {
+          "pitchClass": 9,
+          "expectedPitches": [
+            45,
+            57
+          ],
+          "candidatePitches": [],
+          "nearestOffsetsSemitones": []
+        }
+      ],
+      "octaveOffsetsSemitones": [
+        -12,
+        0
+      ],
+      "allOffsetsAreOctaves": true,
+      "classification": "octave-or-string-placement-error"
+    },
+    {
+      "measureNumber": 64,
+      "attackNumber": 2,
+      "expectedPitches": [
+        45,
+        52,
+        57,
+        61,
+        66
+      ],
+      "candidatePitches": [
+        40,
+        43,
+        44,
+        46,
+        48,
+        49,
+        50,
+        52,
+        56,
+        58,
+        59,
+        64
+      ],
+      "pitchClassRows": [
+        {
+          "pitchClass": 1,
+          "expectedPitches": [
+            61
+          ],
+          "candidatePitches": [
+            49
+          ],
+          "nearestOffsetsSemitones": [
+            -12
+          ]
+        },
+        {
+          "pitchClass": 4,
+          "expectedPitches": [
+            52
+          ],
+          "candidatePitches": [
+            40,
+            52,
+            64
+          ],
+          "nearestOffsetsSemitones": [
+            0
+          ]
+        },
+        {
+          "pitchClass": 6,
+          "expectedPitches": [
+            66
+          ],
+          "candidatePitches": [],
+          "nearestOffsetsSemitones": []
+        },
+        {
+          "pitchClass": 9,
+          "expectedPitches": [
+            45,
+            57
+          ],
+          "candidatePitches": [],
+          "nearestOffsetsSemitones": []
+        }
+      ],
+      "octaveOffsetsSemitones": [
+        -12,
+        0
+      ],
+      "allOffsetsAreOctaves": true,
+      "classification": "octave-or-string-placement-error"
+    },
+    {
+      "measureNumber": 64,
+      "attackNumber": 3,
+      "expectedPitches": [
+        45,
+        52,
+        57,
+        61,
+        66
+      ],
+      "candidatePitches": [
+        40,
+        42,
+        43,
+        52,
+        54,
+        56,
+        62,
+        63,
+        64,
+        70,
+        71
+      ],
+      "pitchClassRows": [
+        {
+          "pitchClass": 1,
+          "expectedPitches": [
+            61
+          ],
+          "candidatePitches": [],
+          "nearestOffsetsSemitones": []
+        },
+        {
+          "pitchClass": 4,
+          "expectedPitches": [
+            52
+          ],
+          "candidatePitches": [
+            40,
+            52,
+            64
+          ],
+          "nearestOffsetsSemitones": [
+            0
+          ]
+        },
+        {
+          "pitchClass": 6,
+          "expectedPitches": [
+            66
+          ],
+          "candidatePitches": [
+            42,
+            54
+          ],
+          "nearestOffsetsSemitones": [
+            -12
+          ]
+        },
+        {
+          "pitchClass": 9,
+          "expectedPitches": [
+            45,
+            57
+          ],
+          "candidatePitches": [],
+          "nearestOffsetsSemitones": []
+        }
+      ],
+      "octaveOffsetsSemitones": [
+        0,
+        -12
+      ],
+      "allOffsetsAreOctaves": true,
+      "classification": "octave-or-string-placement-error"
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 1,
+      "expectedPitches": [
+        59,
+        64,
+        68
+      ],
+      "candidatePitches": [
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        48,
+        49,
+        50,
+        52,
+        55,
+        57,
+        61,
+        69,
+        71
+      ],
+      "pitchClassRows": [
+        {
+          "pitchClass": 4,
+          "expectedPitches": [
+            64
+          ],
+          "candidatePitches": [
+            40,
+            52
+          ],
+          "nearestOffsetsSemitones": [
+            -12
+          ]
+        },
+        {
+          "pitchClass": 8,
+          "expectedPitches": [
+            68
+          ],
+          "candidatePitches": [
+            44
+          ],
+          "nearestOffsetsSemitones": [
+            -24
+          ]
+        },
+        {
+          "pitchClass": 11,
+          "expectedPitches": [
+            59
+          ],
+          "candidatePitches": [
+            71
+          ],
+          "nearestOffsetsSemitones": [
+            12
+          ]
+        }
+      ],
+      "octaveOffsetsSemitones": [
+        -12,
+        -24,
+        12
+      ],
+      "allOffsetsAreOctaves": true,
+      "classification": "octave-or-string-placement-error"
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 2,
+      "expectedPitches": [
+        59,
+        64,
+        68
+      ],
+      "candidatePitches": [
+        40,
+        41,
+        42,
+        44,
+        45,
+        47,
+        49,
+        50,
+        51,
+        52,
+        55,
+        57,
+        64,
+        66,
+        69
+      ],
+      "pitchClassRows": [
+        {
+          "pitchClass": 4,
+          "expectedPitches": [
+            64
+          ],
+          "candidatePitches": [
+            40,
+            52,
+            64
+          ],
+          "nearestOffsetsSemitones": [
+            0
+          ]
+        },
+        {
+          "pitchClass": 8,
+          "expectedPitches": [
+            68
+          ],
+          "candidatePitches": [
+            44
+          ],
+          "nearestOffsetsSemitones": [
+            -24
+          ]
+        },
+        {
+          "pitchClass": 11,
+          "expectedPitches": [
+            59
+          ],
+          "candidatePitches": [
+            47
+          ],
+          "nearestOffsetsSemitones": [
+            -12
+          ]
+        }
+      ],
+      "octaveOffsetsSemitones": [
+        0,
+        -24,
+        -12
+      ],
+      "allOffsetsAreOctaves": true,
+      "classification": "octave-or-string-placement-error"
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 3,
+      "expectedPitches": [
+        59,
+        64,
+        68
+      ],
+      "candidatePitches": [
+        40,
+        41,
+        42,
+        44,
+        45,
+        47,
+        49,
+        50,
+        51,
+        52,
+        55,
+        57,
+        64,
+        66,
+        69
+      ],
+      "pitchClassRows": [
+        {
+          "pitchClass": 4,
+          "expectedPitches": [
+            64
+          ],
+          "candidatePitches": [
+            40,
+            52,
+            64
+          ],
+          "nearestOffsetsSemitones": [
+            0
+          ]
+        },
+        {
+          "pitchClass": 8,
+          "expectedPitches": [
+            68
+          ],
+          "candidatePitches": [
+            44
+          ],
+          "nearestOffsetsSemitones": [
+            -24
+          ]
+        },
+        {
+          "pitchClass": 11,
+          "expectedPitches": [
+            59
+          ],
+          "candidatePitches": [
+            47
+          ],
+          "nearestOffsetsSemitones": [
+            -12
+          ]
+        }
+      ],
+      "octaveOffsetsSemitones": [
+        0,
+        -24,
+        -12
+      ],
+      "allOffsetsAreOctaves": true,
+      "classification": "octave-or-string-placement-error"
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 4,
+      "expectedPitches": [
+        59,
+        64,
+        68
+      ],
+      "candidatePitches": [
+        40,
+        41,
+        42,
+        44,
+        45,
+        47,
+        49,
+        50,
+        51,
+        52,
+        55,
+        57,
+        64,
+        66,
+        69
+      ],
+      "pitchClassRows": [
+        {
+          "pitchClass": 4,
+          "expectedPitches": [
+            64
+          ],
+          "candidatePitches": [
+            40,
+            52,
+            64
+          ],
+          "nearestOffsetsSemitones": [
+            0
+          ]
+        },
+        {
+          "pitchClass": 8,
+          "expectedPitches": [
+            68
+          ],
+          "candidatePitches": [
+            44
+          ],
+          "nearestOffsetsSemitones": [
+            -24
+          ]
+        },
+        {
+          "pitchClass": 11,
+          "expectedPitches": [
+            59
+          ],
+          "candidatePitches": [
+            47
+          ],
+          "nearestOffsetsSemitones": [
+            -12
+          ]
+        }
+      ],
+      "octaveOffsetsSemitones": [
+        0,
+        -24,
+        -12
+      ],
+      "allOffsetsAreOctaves": true,
+      "classification": "octave-or-string-placement-error"
+    },
+    {
+      "measureNumber": 66,
+      "attackNumber": 5,
+      "expectedPitches": [
+        62,
+        67,
+        71
+      ],
+      "candidatePitches": [
+        43,
+        45,
+        49,
+        55,
+        57,
+        58,
+        62,
+        63
+      ],
+      "pitchClassRows": [
+        {
+          "pitchClass": 2,
+          "expectedPitches": [
+            62
+          ],
+          "candidatePitches": [
+            62
+          ],
+          "nearestOffsetsSemitones": [
+            0
+          ]
+        },
+        {
+          "pitchClass": 7,
+          "expectedPitches": [
+            67
+          ],
+          "candidatePitches": [
+            43,
+            55
+          ],
+          "nearestOffsetsSemitones": [
+            -12
+          ]
+        },
+        {
+          "pitchClass": 11,
+          "expectedPitches": [
+            71
+          ],
+          "candidatePitches": [],
+          "nearestOffsetsSemitones": []
+        }
+      ],
+      "octaveOffsetsSemitones": [
+        0,
+        -12
+      ],
+      "allOffsetsAreOctaves": true,
+      "classification": "octave-or-string-placement-error"
+    }
+  ],
+  "professionalPdfRemainsScoringAuthority": true,
+  "productionPromotionAllowed": false,
+  "syntheticNotesAllowed": false,
+  "rendererChanged": false,
+  "protectedPitchCheckpointChanged": false,
+  "readyForProtectedVoicingPlacementSweep": true
+}

@@ -1,0 +1,4564 @@
+{
+  "schemaVersion": 1,
+  "benchmarkType": "professional-rhythm-tab-partial-event-score",
+  "measureRange": [
+    1,
+    16
+  ],
+  "professionalEventCount": 144,
+  "matchedProfessionalEvents": 17,
+  "pitchTimingCandidateScore": 0.118056,
+  "pitchTimingCandidatePercentage": 11.81,
+  "targetPercentage": 90.0,
+  "targetReached": false,
+  "timingToleranceSeconds": 0.22,
+  "sourceCallId": "fc-01KYX8RM3DSV9BX61RN011X9VF",
+  "extractedFullSongEventCount": 1629,
+  "scoringRules": {
+    "pitch": "Exact MIDI match; bent notes accept written and sounding pitch.",
+    "timing": "Nearest unused extracted event within the configured tolerance.",
+    "stringAndFret": "Preserved from professional reference but not independently scored yet.",
+    "technique": "Grouped diagnostically; technique recognition is not yet scored.",
+    "doubleStops": "Each professional note is scored independently using one-to-one extracted-event matching."
+  },
+  "sectionScores": [
+    {
+      "section": "Intro",
+      "matched": 17,
+      "total": 144,
+      "score": 0.118056
+    }
+  ],
+  "techniqueCandidateScores": [
+    {
+      "technique": "full-step-bend-release",
+      "matched": 11,
+      "total": 16,
+      "pitchTimingCandidateScore": 0.6875,
+      "note": "This confirms a pitch candidate near the professional event; it does not yet prove technique recognition."
+    },
+    {
+      "technique": "picked-note",
+      "matched": 6,
+      "total": 128,
+      "pitchTimingCandidateScore": 0.046875,
+      "note": "This confirms a pitch candidate near the professional event; it does not yet prove technique recognition."
+    }
+  ],
+  "eventReports": [
+    {
+      "measureNumber": 1,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 0,
+      "targetSeconds": 7.1,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": true,
+      "matchedMidiPitch": 52,
+      "matchedStartSeconds": 7.016278,
+      "absoluteDeltaSeconds": 0.083722,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 56,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 1,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 2,
+      "targetSeconds": 7.324215,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": true,
+      "matchedMidiPitch": 50,
+      "matchedStartSeconds": 7.503897,
+      "absoluteDeltaSeconds": 0.179682,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        },
+        {
+          "midiPitch": 50,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 1,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 4,
+      "targetSeconds": 7.54843,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 3
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        },
+        {
+          "midiPitch": 50,
+          "count": 1
+        },
+        {
+          "midiPitch": 48,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 1,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 6,
+      "targetSeconds": 7.772646,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 55,
+          "count": 2
+        },
+        {
+          "midiPitch": 48,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 1,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 8,
+      "targetSeconds": 7.996861,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 55,
+          "count": 2
+        },
+        {
+          "midiPitch": 62,
+          "count": 2
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 1,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 10,
+      "targetSeconds": 8.221076,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 54,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 1,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 12,
+      "targetSeconds": 8.445291,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 54,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 70,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 0,
+      "targetSeconds": 8.893722,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": true,
+      "matchedMidiPitch": 52,
+      "matchedStartSeconds": 8.863548,
+      "absoluteDeltaSeconds": 0.030174,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 3
+        },
+        {
+          "midiPitch": 55,
+          "count": 2
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 2,
+      "targetSeconds": 9.117937,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 58,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 4,
+      "targetSeconds": 9.342153,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 58,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 6,
+      "targetSeconds": 9.566368,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 8,
+      "targetSeconds": 9.790583,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 3
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 65,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 10,
+      "targetSeconds": 10.014798,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 65,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 12,
+      "targetSeconds": 10.239014,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 10.463229,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 55,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 10.463229,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 55,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 10.575336,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 55,
+          "count": 2
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 10.575336,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 55,
+          "count": 2
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 0,
+      "targetSeconds": 10.687444,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": true,
+      "matchedMidiPitch": 52,
+      "matchedStartSeconds": 10.861748,
+      "absoluteDeltaSeconds": 0.174304,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 55,
+          "count": 2
+        },
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 2,
+      "targetSeconds": 10.911659,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 59,
+          "count": 2
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 68,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 4,
+      "targetSeconds": 11.135874,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 59,
+          "count": 2
+        },
+        {
+          "midiPitch": 68,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 56,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 6,
+      "targetSeconds": 11.36009,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 56,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 8,
+      "targetSeconds": 11.584305,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 3
+        },
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 10,
+      "targetSeconds": 11.80852,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 3
+        },
+        {
+          "midiPitch": 67,
+          "count": 3
+        },
+        {
+          "midiPitch": 62,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 12,
+      "targetSeconds": 12.032735,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 3
+        },
+        {
+          "midiPitch": 62,
+          "count": 2
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 0,
+      "targetSeconds": 12.481166,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": true,
+      "matchedMidiPitch": 54,
+      "matchedStartSeconds": 12.685799,
+      "absoluteDeltaSeconds": 0.204633,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 69,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 54,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 2,
+      "targetSeconds": 12.705381,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 3
+        },
+        {
+          "midiPitch": 59,
+          "count": 2
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 54,
+          "count": 1
+        },
+        {
+          "midiPitch": 45,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 4,
+      "targetSeconds": 12.929597,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 59,
+          "count": 2
+        },
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 45,
+          "count": 2
+        },
+        {
+          "midiPitch": 50,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 6,
+      "targetSeconds": 13.153812,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 45,
+          "count": 1
+        },
+        {
+          "midiPitch": 50,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 8,
+      "targetSeconds": 13.378027,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 3
+        },
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 10,
+      "targetSeconds": 13.602242,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 3
+        },
+        {
+          "midiPitch": 64,
+          "count": 3
+        },
+        {
+          "midiPitch": 54,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 12,
+      "targetSeconds": 13.826458,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 3
+        },
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 54,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 14.050673,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": true,
+      "matchedMidiPitch": 62,
+      "matchedStartSeconds": 13.893236,
+      "absoluteDeltaSeconds": 0.157436,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 59,
+          "count": 2
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 14.050673,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 59,
+          "count": 2
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 14.16278,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 59,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 69,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 14.16278,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 59,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 69,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 0,
+      "targetSeconds": 14.274888,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 69,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 2,
+      "targetSeconds": 14.499103,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 57,
+          "count": 2
+        },
+        {
+          "midiPitch": 55,
+          "count": 2
+        },
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 69,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 4,
+      "targetSeconds": 14.723319,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 6,
+      "targetSeconds": 14.947534,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 44,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 8,
+      "targetSeconds": 15.171749,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 44,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 10,
+      "targetSeconds": 15.395964,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 4
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 12,
+      "targetSeconds": 15.62018,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 50,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 0,
+      "targetSeconds": 16.06861,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": true,
+      "matchedMidiPitch": 52,
+      "matchedStartSeconds": 16.06687,
+      "absoluteDeltaSeconds": 0.00174,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 2,
+      "targetSeconds": 16.292825,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 4,
+      "targetSeconds": 16.517041,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 6,
+      "targetSeconds": 16.741256,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 8,
+      "targetSeconds": 16.965471,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 10,
+      "targetSeconds": 17.189686,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 12,
+      "targetSeconds": 17.413902,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 17.638117,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 17.638117,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 17.750224,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": []
+    },
+    {
+      "measureNumber": 6,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 17.750224,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": []
+    },
+    {
+      "measureNumber": 7,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 0,
+      "targetSeconds": 17.862332,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": []
+    },
+    {
+      "measureNumber": 7,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 2,
+      "targetSeconds": 18.086547,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 7,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 4,
+      "targetSeconds": 18.310762,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 7,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 6,
+      "targetSeconds": 18.534978,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 7,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 8,
+      "targetSeconds": 18.759193,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": true,
+      "matchedMidiPitch": 50,
+      "matchedStartSeconds": 18.819718,
+      "absoluteDeltaSeconds": 0.060525,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 50,
+          "count": 2
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 7,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 10,
+      "targetSeconds": 18.983408,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 50,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 7,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 12,
+      "targetSeconds": 19.207623,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 3
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 0,
+      "targetSeconds": 19.656054,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 47,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 2,
+      "targetSeconds": 19.880269,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 43,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 4,
+      "targetSeconds": 20.104485,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 6,
+      "targetSeconds": 20.3287,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 8,
+      "targetSeconds": 20.552915,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": true,
+      "matchedMidiPitch": 50,
+      "matchedStartSeconds": 20.725039,
+      "absoluteDeltaSeconds": 0.172124,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 50,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 10,
+      "targetSeconds": 20.77713,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 50,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 12,
+      "targetSeconds": 21.001345,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 21.225561,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 21.225561,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 21.337668,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 21.337668,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 0,
+      "targetSeconds": 21.449776,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": true,
+      "matchedMidiPitch": 52,
+      "matchedStartSeconds": 21.235878,
+      "absoluteDeltaSeconds": 0.213898,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 2,
+      "targetSeconds": 21.673991,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 4,
+      "targetSeconds": 21.898207,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 6,
+      "targetSeconds": 22.122422,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 8,
+      "targetSeconds": 22.346637,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 10,
+      "targetSeconds": 22.570852,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 44,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 12,
+      "targetSeconds": 22.795068,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 44,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 0,
+      "targetSeconds": 23.243498,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 47,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 2,
+      "targetSeconds": 23.467713,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 47,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 4,
+      "targetSeconds": 23.691928,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 6,
+      "targetSeconds": 23.916144,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 8,
+      "targetSeconds": 24.140359,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 10,
+      "targetSeconds": 24.364574,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 50,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 12,
+      "targetSeconds": 24.588789,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 50,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 24.813005,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 24.813005,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 24.925112,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 24.925112,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 11,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 0,
+      "targetSeconds": 25.03722,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 11,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 2,
+      "targetSeconds": 25.261435,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": []
+    },
+    {
+      "measureNumber": 11,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 4,
+      "targetSeconds": 25.485651,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 11,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 6,
+      "targetSeconds": 25.709866,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 71,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 11,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 8,
+      "targetSeconds": 25.934081,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 11,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 10,
+      "targetSeconds": 26.158296,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 50,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 11,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 12,
+      "targetSeconds": 26.382511,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 50,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 0,
+      "targetSeconds": 26.830942,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": true,
+      "matchedMidiPitch": 52,
+      "matchedStartSeconds": 26.731249,
+      "absoluteDeltaSeconds": 0.099693,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 2
+        },
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 2,
+      "targetSeconds": 27.055157,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 55,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 47,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 4,
+      "targetSeconds": 27.279373,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": true,
+      "matchedMidiPitch": 47,
+      "matchedStartSeconds": 27.125988,
+      "absoluteDeltaSeconds": 0.153385,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 47,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 6,
+      "targetSeconds": 27.503588,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 59,
+          "count": 1
+        },
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 8,
+      "targetSeconds": 27.727803,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 10,
+      "targetSeconds": 27.952018,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": []
+    },
+    {
+      "measureNumber": 12,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 12,
+      "targetSeconds": 28.176234,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": []
+    },
+    {
+      "measureNumber": 12,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 28.400449,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 48,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 28.400449,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 48,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 28.512556,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 48,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 28.512556,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 48,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 13,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 0,
+      "targetSeconds": 28.624664,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": true,
+      "matchedMidiPitch": 52,
+      "matchedStartSeconds": 28.485639,
+      "absoluteDeltaSeconds": 0.139025,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 48,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 13,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 2,
+      "targetSeconds": 28.848879,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": []
+    },
+    {
+      "measureNumber": 13,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 4,
+      "targetSeconds": 29.073094,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": []
+    },
+    {
+      "measureNumber": 13,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 6,
+      "targetSeconds": 29.29731,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 57,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 13,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 8,
+      "targetSeconds": 29.521525,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 57,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 13,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 10,
+      "targetSeconds": 29.74574,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 13,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 12,
+      "targetSeconds": 29.969955,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 43,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 50,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 0,
+      "targetSeconds": 30.418386,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": true,
+      "matchedMidiPitch": 52,
+      "matchedStartSeconds": 30.379349,
+      "absoluteDeltaSeconds": 0.039037,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 2,
+      "targetSeconds": 30.642601,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 4,
+      "targetSeconds": 30.866817,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 6,
+      "targetSeconds": 31.091032,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 43,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 8,
+      "targetSeconds": 31.315247,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 10,
+      "targetSeconds": 31.539462,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 77,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 12,
+      "targetSeconds": 31.763678,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 77,
+          "count": 1
+        },
+        {
+          "midiPitch": 64,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 31.987893,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        },
+        {
+          "midiPitch": 48,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 31.987893,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        },
+        {
+          "midiPitch": 48,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 32.1,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        },
+        {
+          "midiPitch": 48,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 32.1,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        },
+        {
+          "midiPitch": 48,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 15,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 0,
+      "targetSeconds": 32.212108,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": true,
+      "matchedMidiPitch": 52,
+      "matchedStartSeconds": 32.261449,
+      "absoluteDeltaSeconds": 0.049341,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 43,
+          "count": 1
+        },
+        {
+          "midiPitch": 48,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 15,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 2,
+      "targetSeconds": 32.436323,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 15,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 4,
+      "targetSeconds": 32.660539,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": []
+    },
+    {
+      "measureNumber": 15,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 6,
+      "targetSeconds": 32.884754,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": []
+    },
+    {
+      "measureNumber": 15,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 8,
+      "targetSeconds": 33.108969,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": []
+    },
+    {
+      "measureNumber": 15,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 10,
+      "targetSeconds": 33.333184,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 15,
+      "section": "Intro",
+      "patternId": "main-em-riff-open-ending",
+      "step": 12,
+      "targetSeconds": 33.5574,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 64,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 0,
+      "targetSeconds": 34.00583,
+      "stringIndex": 3,
+      "fret": 2,
+      "expectedMidiPitches": [
+        52,
+        54
+      ],
+      "technique": "full-step-bend-release",
+      "matched": true,
+      "matchedMidiPitch": 52,
+      "matchedStartSeconds": 34.09711,
+      "absoluteDeltaSeconds": 0.09128,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 74,
+          "count": 2
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 61,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 2,
+      "targetSeconds": 34.230045,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 74,
+          "count": 1
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 61,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 4,
+      "targetSeconds": 34.454261,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 6,
+      "targetSeconds": 34.678476,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 8,
+      "targetSeconds": 34.902691,
+      "stringIndex": 3,
+      "fret": 0,
+      "expectedMidiPitches": [
+        50
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 78,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 10,
+      "targetSeconds": 35.126906,
+      "stringIndex": 4,
+      "fret": 2,
+      "expectedMidiPitches": [
+        47
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 78,
+          "count": 2
+        },
+        {
+          "midiPitch": 52,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 12,
+      "targetSeconds": 35.351122,
+      "stringIndex": 5,
+      "fret": 0,
+      "expectedMidiPitches": [
+        40
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 52,
+          "count": 1
+        },
+        {
+          "midiPitch": 67,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 35.575337,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 14,
+      "targetSeconds": 35.575337,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 35.687444,
+      "stringIndex": 1,
+      "fret": 3,
+      "expectedMidiPitches": [
+        62
+      ],
+      "technique": "picked-note",
+      "matched": true,
+      "matchedMidiPitch": 62,
+      "matchedStartSeconds": 35.80506,
+      "absoluteDeltaSeconds": 0.117616,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 48,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "section": "Intro",
+      "patternId": "main-em-riff-with-double-stop",
+      "step": 15,
+      "targetSeconds": 35.687444,
+      "stringIndex": 2,
+      "fret": 3,
+      "expectedMidiPitches": [
+        58
+      ],
+      "technique": "picked-note",
+      "matched": false,
+      "matchedMidiPitch": null,
+      "matchedStartSeconds": null,
+      "absoluteDeltaSeconds": null,
+      "nearbyPitchCounts": [
+        {
+          "midiPitch": 67,
+          "count": 1
+        },
+        {
+          "midiPitch": 62,
+          "count": 1
+        },
+        {
+          "midiPitch": 48,
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "readyForAutomatedTrainingOnMeasures1To16": true,
+  "readyForFullSongAutomatedTraining": false,
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false
+}

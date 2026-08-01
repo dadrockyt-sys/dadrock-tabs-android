@@ -1,0 +1,13 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "jimmy-paige-minimal-basic-pitch-image-smoke-test",
+  "passed": true,
+  "timedOut": false,
+  "callId": "fc-01KYX04KR2HT79AT6BHB0J3T23",
+  "queueImageAndImportElapsedSeconds": 20.057,
+  "remoteImportElapsedSeconds": 7.475,
+  "diagnosis": "minimal-basic-pitch-image-healthy",
+  "productionPromotionAllowed": false,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false
+}

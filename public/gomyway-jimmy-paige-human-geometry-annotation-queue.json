@@ -1,0 +1,284 @@
+{
+  "schemaVersion": 1,
+  "professionalPdf": "public/gomyway-professional-reference.pdf",
+  "professionalPdfSha256": "b8e55778a40ffb3da5959c0efc6ac323271e742ca334ce6f2215fa9694e68842",
+  "geometryReference": "public/gomyway-jimmy-paige-measure-geometry-reference.json",
+  "sourceGeometryRows": 79,
+  "queueRows": 9,
+  "techniqueFamilies": [
+    "chord-slide",
+    "chord-sustain-tie",
+    "final-barline",
+    "full-bend-release",
+    "muted-note",
+    "pick-direction",
+    "section-label",
+    "time-signature-change",
+    "vibrato"
+  ],
+  "queue": [
+    {
+      "techniqueFamily": "full-bend-release",
+      "measure": 1,
+      "page": 1,
+      "priority": 1,
+      "status": "human-confirmed",
+      "normalizedGeometry": {
+        "xStart": null,
+        "yStart": null,
+        "xEnd": null,
+        "yEnd": null,
+        "controlPoints": [],
+        "labelBox": null,
+        "staffBox": null
+      },
+      "verification": {
+        "confirmedAgainstProfessionalPdf": true,
+        "reviewer": "Stephen McNally",
+        "notes": null
+      },
+      "geometry": {
+        "xStartNormalized": 0.12453323719113372,
+        "yStartNormalized": 0.15039597179337347,
+        "xEndNormalized": 0.23563706508902615,
+        "yEndNormalized": 0.2181677324252856
+      },
+      "humanConfirmed": true
+    },
+    {
+      "techniqueFamily": "vibrato",
+      "measure": 25,
+      "page": 2,
+      "priority": 2,
+      "status": "human-confirmed",
+      "normalizedGeometry": {
+        "xStart": null,
+        "yStart": null,
+        "xEnd": null,
+        "yEnd": null,
+        "controlPoints": [],
+        "labelBox": null,
+        "staffBox": null
+      },
+      "verification": {
+        "confirmedAgainstProfessionalPdf": true,
+        "reviewer": "Stephen McNally",
+        "notes": null
+      },
+      "geometry": {
+        "xStartNormalized": 0.0693307140261628,
+        "yStartNormalized": 0.16613650516248,
+        "xEndNormalized": 0.19091603833575582,
+        "yEndNormalized": 0.1914962573156923
+      },
+      "humanConfirmed": true
+    },
+    {
+      "techniqueFamily": "muted-note",
+      "measure": 28,
+      "page": 3,
+      "priority": 3,
+      "status": "human-confirmed",
+      "normalizedGeometry": {
+        "xStart": null,
+        "yStart": null,
+        "xEnd": null,
+        "yEnd": null,
+        "controlPoints": [],
+        "labelBox": null,
+        "staffBox": null
+      },
+      "verification": {
+        "confirmedAgainstProfessionalPdf": true,
+        "reviewer": "Stephen McNally",
+        "notes": null
+      },
+      "geometry": {
+        "xStartNormalized": 0.46972372365552323,
+        "yStartNormalized": 0.03627703381361867,
+        "xEndNormalized": 0.5004694880995639,
+        "yEndNormalized": 0.07300497461392244
+      },
+      "humanConfirmed": true
+    },
+    {
+      "techniqueFamily": "pick-direction",
+      "measure": 28,
+      "page": 3,
+      "priority": 4,
+      "status": "human-confirmed",
+      "normalizedGeometry": {
+        "xStart": null,
+        "yStart": null,
+        "xEnd": null,
+        "yEnd": null,
+        "controlPoints": [],
+        "labelBox": null,
+        "staffBox": null
+      },
+      "verification": {
+        "confirmedAgainstProfessionalPdf": true,
+        "reviewer": "Stephen McNally",
+        "notes": null
+      },
+      "geometry": {
+        "xStartNormalized": 0.4620373251271802,
+        "yStartNormalized": 0.0056704253617487635,
+        "xEndNormalized": 0.6311387172965116,
+        "yEndNormalized": 0.031467424421565776
+      },
+      "humanConfirmed": true
+    },
+    {
+      "techniqueFamily": "chord-sustain-tie",
+      "measure": 33,
+      "page": 3,
+      "priority": 5,
+      "status": "human-confirmed",
+      "normalizedGeometry": {
+        "xStart": null,
+        "yStart": null,
+        "xEnd": null,
+        "yEnd": null,
+        "controlPoints": [],
+        "labelBox": null,
+        "staffBox": null
+      },
+      "verification": {
+        "confirmedAgainstProfessionalPdf": true,
+        "reviewer": "Stephen McNally",
+        "notes": null
+      },
+      "geometry": {
+        "xStartNormalized": 0.1615678370276163,
+        "yStartNormalized": 0.4267299239099789,
+        "xEndNormalized": 0.2894420535065407,
+        "yEndNormalized": 0.4774494637432698
+      },
+      "humanConfirmed": true
+    },
+    {
+      "techniqueFamily": "chord-slide",
+      "measure": 79,
+      "page": 6,
+      "priority": 6,
+      "status": "human-confirmed",
+      "normalizedGeometry": {
+        "xStart": null,
+        "yStart": null,
+        "xEnd": null,
+        "yEnd": null,
+        "controlPoints": [],
+        "labelBox": null,
+        "staffBox": null
+      },
+      "verification": {
+        "confirmedAgainstProfessionalPdf": true,
+        "reviewer": "Stephen McNally",
+        "notes": null
+      },
+      "geometry": {
+        "xStartNormalized": 0.8037340456940407,
+        "yStartNormalized": 0.13990227695949142,
+        "xEndNormalized": 0.9253193700036337,
+        "yEndNormalized": 0.19849206571390243
+      },
+      "humanConfirmed": true
+    },
+    {
+      "techniqueFamily": "time-signature-change",
+      "measure": 104,
+      "page": 8,
+      "priority": 7,
+      "status": "human-confirmed",
+      "normalizedGeometry": {
+        "xStart": null,
+        "yStart": null,
+        "xEnd": null,
+        "yEnd": null,
+        "controlPoints": [],
+        "labelBox": null,
+        "staffBox": null
+      },
+      "verification": {
+        "confirmedAgainstProfessionalPdf": true,
+        "reviewer": "Stephen McNally",
+        "notes": null
+      },
+      "geometry": {
+        "xStartNormalized": 0.053957860192587206,
+        "yStartNormalized": 0.42847889377296455,
+        "xEndNormalized": 0.14339994208757267,
+        "yEndNormalized": 0.4774494815067029
+      },
+      "humanConfirmed": true
+    },
+    {
+      "techniqueFamily": "section-label",
+      "measure": 17,
+      "page": 2,
+      "priority": 8,
+      "status": "human-confirmed",
+      "normalizedGeometry": {
+        "xStart": null,
+        "yStart": null,
+        "xEnd": null,
+        "yEnd": null,
+        "controlPoints": [],
+        "labelBox": null,
+        "staffBox": null
+      },
+      "verification": {
+        "confirmedAgainstProfessionalPdf": true,
+        "reviewer": "Stephen McNally",
+        "notes": null
+      },
+      "geometry": {
+        "xStartNormalized": 0.014826944040697674,
+        "yStartNormalized": 0.20461338029890316,
+        "xEndNormalized": 0.16576044126998546,
+        "yEndNormalized": 0.284627805627683
+      },
+      "humanConfirmed": true
+    },
+    {
+      "techniqueFamily": "final-barline",
+      "measure": 113,
+      "page": 8,
+      "priority": 9,
+      "status": "human-confirmed",
+      "normalizedGeometry": {
+        "xStart": null,
+        "yStart": null,
+        "xEnd": null,
+        "yEnd": null,
+        "controlPoints": [],
+        "labelBox": null,
+        "staffBox": null
+      },
+      "verification": {
+        "confirmedAgainstProfessionalPdf": true,
+        "reviewer": "Stephen McNally",
+        "notes": null
+      },
+      "geometry": {
+        "xStartNormalized": 0.2224349234868022,
+        "yStartNormalized": 0.7676493635615989,
+        "xEndNormalized": 0.3073456826388588,
+        "yEndNormalized": 0.8282383888158608
+      },
+      "humanConfirmed": true
+    }
+  ],
+  "checks": {
+    "professionalPdfPresent": true,
+    "geometryReferencePresent": true,
+    "representativeTechniqueFamiliesCovered": true,
+    "syntheticCoordinatesCreated": false,
+    "rendererChanged": false,
+    "productionPromotionAllowed": false,
+    "queuePassed": true,
+    "readyForHumanGeometryAnnotation": true,
+    "readyForTechniqueRendererTraining": false
+  }
+}

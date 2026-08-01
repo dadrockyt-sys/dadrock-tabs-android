@@ -1,0 +1,614 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-read-only-post-verse1-rhythm-boundary-scan",
+  "passed": true,
+  "scanStartMeasure": 33,
+  "scanEndMeasure": 56,
+  "verse1TemplateSteps": [
+    2,
+    6,
+    10,
+    14,
+    18,
+    20,
+    22,
+    26,
+    30
+  ],
+  "pairReports": [
+    {
+      "pairStartMeasure": 33,
+      "pairEndMeasure": 34,
+      "directAudioEventCount": 11,
+      "observedSteps": [
+        2,
+        4,
+        10,
+        14,
+        15,
+        18,
+        22,
+        26,
+        28,
+        30,
+        31
+      ],
+      "matchedObservedSteps": [
+        2,
+        10,
+        14,
+        15,
+        18,
+        22,
+        26,
+        30,
+        31
+      ],
+      "unmatchedObservedSteps": [
+        4,
+        28
+      ],
+      "supportedVerse1TemplateSteps": [
+        2,
+        10,
+        14,
+        18,
+        22,
+        26,
+        30
+      ],
+      "verse1TemplateCoverage": 0.777778,
+      "eventMatchRatio": 0.818182,
+      "boundaryScore": 0.20202,
+      "readOnly": true
+    },
+    {
+      "pairStartMeasure": 35,
+      "pairEndMeasure": 36,
+      "directAudioEventCount": 12,
+      "observedSteps": [
+        2,
+        4,
+        6,
+        10,
+        14,
+        18,
+        24,
+        26,
+        30
+      ],
+      "matchedObservedSteps": [
+        2,
+        6,
+        10,
+        14,
+        18,
+        26,
+        30
+      ],
+      "unmatchedObservedSteps": [
+        4,
+        24
+      ],
+      "supportedVerse1TemplateSteps": [
+        2,
+        6,
+        10,
+        14,
+        18,
+        26,
+        30
+      ],
+      "verse1TemplateCoverage": 0.777778,
+      "eventMatchRatio": 0.777778,
+      "boundaryScore": 0.222222,
+      "readOnly": true
+    },
+    {
+      "pairStartMeasure": 37,
+      "pairEndMeasure": 38,
+      "directAudioEventCount": 10,
+      "observedSteps": [
+        2,
+        4,
+        9,
+        10,
+        14,
+        18,
+        20,
+        22,
+        24
+      ],
+      "matchedObservedSteps": [
+        2,
+        9,
+        10,
+        14,
+        18,
+        20,
+        22
+      ],
+      "unmatchedObservedSteps": [
+        4,
+        24
+      ],
+      "supportedVerse1TemplateSteps": [
+        2,
+        10,
+        14,
+        18,
+        20,
+        22
+      ],
+      "verse1TemplateCoverage": 0.666667,
+      "eventMatchRatio": 0.777778,
+      "boundaryScore": 0.277778,
+      "readOnly": true
+    },
+    {
+      "pairStartMeasure": 39,
+      "pairEndMeasure": 40,
+      "directAudioEventCount": 7,
+      "observedSteps": [
+        7,
+        11,
+        15,
+        19,
+        23,
+        27,
+        31
+      ],
+      "matchedObservedSteps": [
+        7,
+        11,
+        15,
+        19,
+        23,
+        27,
+        31
+      ],
+      "unmatchedObservedSteps": [],
+      "supportedVerse1TemplateSteps": [
+        6,
+        10,
+        14,
+        18,
+        20,
+        22,
+        26,
+        30
+      ],
+      "verse1TemplateCoverage": 0.888889,
+      "eventMatchRatio": 1.0,
+      "boundaryScore": 0.055556,
+      "readOnly": true
+    },
+    {
+      "pairStartMeasure": 41,
+      "pairEndMeasure": 42,
+      "directAudioEventCount": 8,
+      "observedSteps": [
+        3,
+        7,
+        11,
+        15,
+        19,
+        23,
+        27,
+        31
+      ],
+      "matchedObservedSteps": [
+        3,
+        7,
+        11,
+        15,
+        19,
+        23,
+        27,
+        31
+      ],
+      "unmatchedObservedSteps": [],
+      "supportedVerse1TemplateSteps": [
+        2,
+        6,
+        10,
+        14,
+        18,
+        20,
+        22,
+        26,
+        30
+      ],
+      "verse1TemplateCoverage": 1.0,
+      "eventMatchRatio": 1.0,
+      "boundaryScore": 0.0,
+      "readOnly": true
+    },
+    {
+      "pairStartMeasure": 43,
+      "pairEndMeasure": 44,
+      "directAudioEventCount": 12,
+      "observedSteps": [
+        2,
+        3,
+        5,
+        7,
+        11,
+        15,
+        19,
+        21,
+        27,
+        31
+      ],
+      "matchedObservedSteps": [
+        2,
+        3,
+        5,
+        7,
+        11,
+        15,
+        19,
+        21,
+        27,
+        31
+      ],
+      "unmatchedObservedSteps": [],
+      "supportedVerse1TemplateSteps": [
+        2,
+        6,
+        10,
+        14,
+        18,
+        20,
+        22,
+        26,
+        30
+      ],
+      "verse1TemplateCoverage": 1.0,
+      "eventMatchRatio": 1.0,
+      "boundaryScore": 0.0,
+      "readOnly": true
+    },
+    {
+      "pairStartMeasure": 45,
+      "pairEndMeasure": 46,
+      "directAudioEventCount": 9,
+      "observedSteps": [
+        3,
+        5,
+        12,
+        15,
+        19,
+        22,
+        27,
+        28,
+        31
+      ],
+      "matchedObservedSteps": [
+        3,
+        5,
+        15,
+        19,
+        22,
+        27,
+        31
+      ],
+      "unmatchedObservedSteps": [
+        12,
+        28
+      ],
+      "supportedVerse1TemplateSteps": [
+        2,
+        6,
+        14,
+        18,
+        20,
+        22,
+        26,
+        30
+      ],
+      "verse1TemplateCoverage": 0.888889,
+      "eventMatchRatio": 0.777778,
+      "boundaryScore": 0.166667,
+      "readOnly": true
+    },
+    {
+      "pairStartMeasure": 47,
+      "pairEndMeasure": 48,
+      "directAudioEventCount": 10,
+      "observedSteps": [
+        3,
+        6,
+        11,
+        13,
+        15,
+        19,
+        22,
+        27,
+        28,
+        31
+      ],
+      "matchedObservedSteps": [
+        3,
+        6,
+        11,
+        13,
+        15,
+        19,
+        22,
+        27,
+        31
+      ],
+      "unmatchedObservedSteps": [
+        28
+      ],
+      "supportedVerse1TemplateSteps": [
+        2,
+        6,
+        10,
+        14,
+        18,
+        20,
+        22,
+        26,
+        30
+      ],
+      "verse1TemplateCoverage": 1.0,
+      "eventMatchRatio": 0.9,
+      "boundaryScore": 0.05,
+      "readOnly": true
+    },
+    {
+      "pairStartMeasure": 49,
+      "pairEndMeasure": 50,
+      "directAudioEventCount": 14,
+      "observedSteps": [
+        3,
+        5,
+        8,
+        10,
+        11,
+        12,
+        15,
+        19,
+        22,
+        23,
+        24,
+        27,
+        28,
+        31
+      ],
+      "matchedObservedSteps": [
+        3,
+        5,
+        10,
+        11,
+        15,
+        19,
+        22,
+        23,
+        27,
+        31
+      ],
+      "unmatchedObservedSteps": [
+        8,
+        12,
+        24,
+        28
+      ],
+      "supportedVerse1TemplateSteps": [
+        2,
+        6,
+        10,
+        14,
+        18,
+        20,
+        22,
+        26,
+        30
+      ],
+      "verse1TemplateCoverage": 1.0,
+      "eventMatchRatio": 0.714286,
+      "boundaryScore": 0.142857,
+      "readOnly": true
+    },
+    {
+      "pairStartMeasure": 51,
+      "pairEndMeasure": 52,
+      "directAudioEventCount": 11,
+      "observedSteps": [
+        2,
+        4,
+        5,
+        8,
+        10,
+        15,
+        19,
+        22,
+        27,
+        31
+      ],
+      "matchedObservedSteps": [
+        2,
+        5,
+        10,
+        15,
+        19,
+        22,
+        27,
+        31
+      ],
+      "unmatchedObservedSteps": [
+        4,
+        8
+      ],
+      "supportedVerse1TemplateSteps": [
+        2,
+        6,
+        10,
+        14,
+        18,
+        20,
+        22,
+        26,
+        30
+      ],
+      "verse1TemplateCoverage": 1.0,
+      "eventMatchRatio": 0.8,
+      "boundaryScore": 0.1,
+      "readOnly": true
+    },
+    {
+      "pairStartMeasure": 53,
+      "pairEndMeasure": 54,
+      "directAudioEventCount": 13,
+      "observedSteps": [
+        4,
+        5,
+        6,
+        8,
+        11,
+        12,
+        15,
+        19,
+        21,
+        23,
+        27,
+        28,
+        31
+      ],
+      "matchedObservedSteps": [
+        5,
+        6,
+        11,
+        15,
+        19,
+        21,
+        23,
+        27,
+        31
+      ],
+      "unmatchedObservedSteps": [
+        4,
+        8,
+        12,
+        28
+      ],
+      "supportedVerse1TemplateSteps": [
+        6,
+        10,
+        14,
+        18,
+        20,
+        22,
+        26,
+        30
+      ],
+      "verse1TemplateCoverage": 0.888889,
+      "eventMatchRatio": 0.692308,
+      "boundaryScore": 0.209402,
+      "readOnly": true
+    },
+    {
+      "pairStartMeasure": 55,
+      "pairEndMeasure": 56,
+      "directAudioEventCount": 10,
+      "observedSteps": [
+        3,
+        4,
+        5,
+        7,
+        11,
+        12,
+        15,
+        19,
+        21,
+        31
+      ],
+      "matchedObservedSteps": [
+        3,
+        5,
+        7,
+        11,
+        15,
+        19,
+        21,
+        31
+      ],
+      "unmatchedObservedSteps": [
+        4,
+        12
+      ],
+      "supportedVerse1TemplateSteps": [
+        2,
+        6,
+        10,
+        14,
+        18,
+        20,
+        22,
+        30
+      ],
+      "verse1TemplateCoverage": 0.888889,
+      "eventMatchRatio": 0.8,
+      "boundaryScore": 0.155556,
+      "readOnly": true
+    }
+  ],
+  "strongestBoundaryCandidate": {
+    "pairStartMeasure": 37,
+    "pairEndMeasure": 38,
+    "directAudioEventCount": 10,
+    "observedSteps": [
+      2,
+      4,
+      9,
+      10,
+      14,
+      18,
+      20,
+      22,
+      24
+    ],
+    "matchedObservedSteps": [
+      2,
+      9,
+      10,
+      14,
+      18,
+      20,
+      22
+    ],
+    "unmatchedObservedSteps": [
+      4,
+      24
+    ],
+    "supportedVerse1TemplateSteps": [
+      2,
+      10,
+      14,
+      18,
+      20,
+      22
+    ],
+    "verse1TemplateCoverage": 0.666667,
+    "eventMatchRatio": 0.777778,
+    "boundaryScore": 0.277778,
+    "readOnly": true
+  },
+  "checks": {
+    "candidateReportPassed": true,
+    "verse1RhythmTemplateLocked": true,
+    "introRhythmTemplateLocked": true,
+    "verse1TemplatePresent": true,
+    "postVerse1PairsPresent": true,
+    "scanStartsAfterVerse1": true,
+    "rendererUnchanged": true,
+    "protectedBaselinesUnchanged": true,
+    "noSyntheticNotes": true
+  },
+  "usesDirectAudioEvidence": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "trainingRule": "This diagnostic scans two-measure windows after Verse 1 and compares direct-audio rhythm attacks with the locked Verse 1 rhythm template. It may identify candidate section boundaries only. It must not label a section permanently, synthesize notes, change pitches, frets, techniques, durations, locked V7 events, locked rhythm templates, or the PDF renderer."
+}

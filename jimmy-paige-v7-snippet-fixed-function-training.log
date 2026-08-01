@@ -1,0 +1,29 @@
+2026-07-31 23:12:55 UTC | Starting fixed-function training with audio-only payload | payload=1.30 MiB | attempts=6
+2026-07-31 23:12:57 UTC | Attempt 1/6 submitted | name=default | retry=1/3 | callId=fc-01KYX77HHRGQW7S58BFP4FCSPN
+2026-07-31 23:13:02 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=1/3 | elapsed=0.8s | callId=fc-01KYX77HHRGQW7S58BFP4FCSPN
+2026-07-31 23:13:17 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=1/3 | elapsed=21.0s | callId=fc-01KYX77HHRGQW7S58BFP4FCSPN
+2026-07-31 23:13:33 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=1/3 | elapsed=36.2s | callId=fc-01KYX77HHRGQW7S58BFP4FCSPN
+2026-07-31 23:13:48 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=1/3 | elapsed=51.5s | callId=fc-01KYX77HHRGQW7S58BFP4FCSPN
+2026-07-31 23:14:03 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=1/3 | elapsed=66.6s | callId=fc-01KYX77HHRGQW7S58BFP4FCSPN
+2026-07-31 23:14:18 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=1/3 | elapsed=81.8s | callId=fc-01KYX77HHRGQW7S58BFP4FCSPN
+2026-07-31 23:14:33 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=1/3 | elapsed=97.0s | callId=fc-01KYX77HHRGQW7S58BFP4FCSPN
+2026-07-31 23:14:33 UTC | Attempt 1/6 cancelled after worker-start timeout | retry=1/3
+2026-07-31 23:14:34 UTC | Attempt 1/6 submitted | name=default | retry=2/3 | callId=fc-01KYX7AG6ZZ02KQWHZH6DP8G3G
+2026-07-31 23:14:37 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=2/3 | elapsed=0.7s | callId=fc-01KYX7AG6ZZ02KQWHZH6DP8G3G
+2026-07-31 23:14:52 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=2/3 | elapsed=18.9s | callId=fc-01KYX7AG6ZZ02KQWHZH6DP8G3G
+2026-07-31 23:15:07 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=2/3 | elapsed=34.1s | callId=fc-01KYX7AG6ZZ02KQWHZH6DP8G3G
+2026-07-31 23:15:23 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=2/3 | elapsed=49.4s | callId=fc-01KYX7AG6ZZ02KQWHZH6DP8G3G
+2026-07-31 23:15:38 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=2/3 | elapsed=64.7s | callId=fc-01KYX7AG6ZZ02KQWHZH6DP8G3G
+2026-07-31 23:15:53 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=2/3 | elapsed=79.8s | callId=fc-01KYX7AG6ZZ02KQWHZH6DP8G3G
+2026-07-31 23:16:08 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=2/3 | elapsed=95.0s | callId=fc-01KYX7AG6ZZ02KQWHZH6DP8G3G
+2026-07-31 23:16:08 UTC | Attempt 1/6 cancelled after worker-start timeout | retry=2/3
+2026-07-31 23:16:09 UTC | Attempt 1/6 submitted | name=default | retry=3/3 | callId=fc-01KYX7DD04AYXE4DMGC18X4S9E
+2026-07-31 23:16:11 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=3/3 | elapsed=0.5s | callId=fc-01KYX7DD04AYXE4DMGC18X4S9E
+2026-07-31 23:16:26 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=3/3 | elapsed=17.7s | callId=fc-01KYX7DD04AYXE4DMGC18X4S9E
+2026-07-31 23:16:41 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=3/3 | elapsed=32.9s | callId=fc-01KYX7DD04AYXE4DMGC18X4S9E
+2026-07-31 23:16:56 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=3/3 | elapsed=48.0s | callId=fc-01KYX7DD04AYXE4DMGC18X4S9E
+2026-07-31 23:17:11 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=3/3 | elapsed=63.1s | callId=fc-01KYX7DD04AYXE4DMGC18X4S9E
+2026-07-31 23:17:27 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=3/3 | elapsed=78.2s | callId=fc-01KYX7DD04AYXE4DMGC18X4S9E
+2026-07-31 23:17:42 UTC | [worker-start heartbeat] attempt=1/6 | name=default | retry=3/3 | elapsed=93.4s | callId=fc-01KYX7DD04AYXE4DMGC18X4S9E
+2026-07-31 23:17:42 UTC | Attempt 1/6 cancelled after worker-start timeout | retry=3/3
+2026-07-31 23:17:42 UTC | Training stopped: attempt 1/6 could not obtain a worker after 3 retries.

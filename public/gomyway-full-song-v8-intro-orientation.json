@@ -1,0 +1,359 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-read-only-intro-measure-orientation",
+  "anchorInput": "gomyway-full-song-v8-pitch-aware-rhythm-anchor.json",
+  "notationInput": "gomyway-full-song-v8-notation.json",
+  "selectedEventLayer": "fingeringNormalizedEvents",
+  "candidateOffsets": [
+    12,
+    28
+  ],
+  "professionalFirstMeasureEndingMidi": [
+    40
+  ],
+  "professionalSecondMeasureEndingMidi": [
+    58,
+    62
+  ],
+  "uniqueOrientationFound": false,
+  "equivalentBestOffsetCount": 2,
+  "equivalentBestOffsets": [
+    12,
+    28
+  ],
+  "bestCandidate": {
+    "offsetSteps": 12,
+    "firstMeasureTargetStep": 26,
+    "secondMeasureTargetStep": 10,
+    "orientationScore": 0.0,
+    "exactFirstMeasureSignatureCount": 0,
+    "exactSecondMeasureSignatureCount": 0,
+    "reversedFirstMeasureSignatureCount": 0,
+    "reversedSecondMeasureSignatureCount": 0,
+    "pairResults": [
+      {
+        "pairIndex": 0,
+        "firstMeasureTargetStep": 26,
+        "secondMeasureTargetStep": 10,
+        "firstMeasureObservedMidi": [],
+        "secondMeasureObservedMidi": [],
+        "firstMeasureExact": false,
+        "secondMeasureExact": false,
+        "firstMeasureReversed": false,
+        "secondMeasureReversed": false,
+        "pairOrientationScore": 0.0
+      },
+      {
+        "pairIndex": 1,
+        "firstMeasureTargetStep": 26,
+        "secondMeasureTargetStep": 10,
+        "firstMeasureObservedMidi": [],
+        "secondMeasureObservedMidi": [],
+        "firstMeasureExact": false,
+        "secondMeasureExact": false,
+        "firstMeasureReversed": false,
+        "secondMeasureReversed": false,
+        "pairOrientationScore": 0.0
+      },
+      {
+        "pairIndex": 2,
+        "firstMeasureTargetStep": 26,
+        "secondMeasureTargetStep": 10,
+        "firstMeasureObservedMidi": [],
+        "secondMeasureObservedMidi": [],
+        "firstMeasureExact": false,
+        "secondMeasureExact": false,
+        "firstMeasureReversed": false,
+        "secondMeasureReversed": false,
+        "pairOrientationScore": 0.0
+      },
+      {
+        "pairIndex": 3,
+        "firstMeasureTargetStep": 26,
+        "secondMeasureTargetStep": 10,
+        "firstMeasureObservedMidi": [],
+        "secondMeasureObservedMidi": [],
+        "firstMeasureExact": false,
+        "secondMeasureExact": false,
+        "firstMeasureReversed": false,
+        "secondMeasureReversed": false,
+        "pairOrientationScore": 0.0
+      },
+      {
+        "pairIndex": 4,
+        "firstMeasureTargetStep": 26,
+        "secondMeasureTargetStep": 10,
+        "firstMeasureObservedMidi": [],
+        "secondMeasureObservedMidi": [],
+        "firstMeasureExact": false,
+        "secondMeasureExact": false,
+        "firstMeasureReversed": false,
+        "secondMeasureReversed": false,
+        "pairOrientationScore": 0.0
+      },
+      {
+        "pairIndex": 5,
+        "firstMeasureTargetStep": 26,
+        "secondMeasureTargetStep": 10,
+        "firstMeasureObservedMidi": [],
+        "secondMeasureObservedMidi": [],
+        "firstMeasureExact": false,
+        "secondMeasureExact": false,
+        "firstMeasureReversed": false,
+        "secondMeasureReversed": false,
+        "pairOrientationScore": 0.0
+      },
+      {
+        "pairIndex": 6,
+        "firstMeasureTargetStep": 26,
+        "secondMeasureTargetStep": 10,
+        "firstMeasureObservedMidi": [],
+        "secondMeasureObservedMidi": [],
+        "firstMeasureExact": false,
+        "secondMeasureExact": false,
+        "firstMeasureReversed": false,
+        "secondMeasureReversed": false,
+        "pairOrientationScore": 0.0
+      },
+      {
+        "pairIndex": 7,
+        "firstMeasureTargetStep": 26,
+        "secondMeasureTargetStep": 10,
+        "firstMeasureObservedMidi": [],
+        "secondMeasureObservedMidi": [],
+        "firstMeasureExact": false,
+        "secondMeasureExact": false,
+        "firstMeasureReversed": false,
+        "secondMeasureReversed": false,
+        "pairOrientationScore": 0.0
+      }
+    ],
+    "readOnly": true
+  },
+  "adoptedOrientation": null,
+  "rankedCandidates": [
+    {
+      "offsetSteps": 12,
+      "firstMeasureTargetStep": 26,
+      "secondMeasureTargetStep": 10,
+      "orientationScore": 0.0,
+      "exactFirstMeasureSignatureCount": 0,
+      "exactSecondMeasureSignatureCount": 0,
+      "reversedFirstMeasureSignatureCount": 0,
+      "reversedSecondMeasureSignatureCount": 0,
+      "pairResults": [
+        {
+          "pairIndex": 0,
+          "firstMeasureTargetStep": 26,
+          "secondMeasureTargetStep": 10,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 1,
+          "firstMeasureTargetStep": 26,
+          "secondMeasureTargetStep": 10,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 2,
+          "firstMeasureTargetStep": 26,
+          "secondMeasureTargetStep": 10,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 3,
+          "firstMeasureTargetStep": 26,
+          "secondMeasureTargetStep": 10,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 4,
+          "firstMeasureTargetStep": 26,
+          "secondMeasureTargetStep": 10,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 5,
+          "firstMeasureTargetStep": 26,
+          "secondMeasureTargetStep": 10,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 6,
+          "firstMeasureTargetStep": 26,
+          "secondMeasureTargetStep": 10,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 7,
+          "firstMeasureTargetStep": 26,
+          "secondMeasureTargetStep": 10,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 28,
+      "firstMeasureTargetStep": 10,
+      "secondMeasureTargetStep": 26,
+      "orientationScore": 0.0,
+      "exactFirstMeasureSignatureCount": 0,
+      "exactSecondMeasureSignatureCount": 0,
+      "reversedFirstMeasureSignatureCount": 0,
+      "reversedSecondMeasureSignatureCount": 0,
+      "pairResults": [
+        {
+          "pairIndex": 0,
+          "firstMeasureTargetStep": 10,
+          "secondMeasureTargetStep": 26,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 1,
+          "firstMeasureTargetStep": 10,
+          "secondMeasureTargetStep": 26,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 2,
+          "firstMeasureTargetStep": 10,
+          "secondMeasureTargetStep": 26,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 3,
+          "firstMeasureTargetStep": 10,
+          "secondMeasureTargetStep": 26,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 4,
+          "firstMeasureTargetStep": 10,
+          "secondMeasureTargetStep": 26,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 5,
+          "firstMeasureTargetStep": 10,
+          "secondMeasureTargetStep": 26,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 6,
+          "firstMeasureTargetStep": 10,
+          "secondMeasureTargetStep": 26,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        },
+        {
+          "pairIndex": 7,
+          "firstMeasureTargetStep": 10,
+          "secondMeasureTargetStep": 26,
+          "firstMeasureObservedMidi": [],
+          "secondMeasureObservedMidi": [],
+          "firstMeasureExact": false,
+          "secondMeasureExact": false,
+          "firstMeasureReversed": false,
+          "secondMeasureReversed": false,
+          "pairOrientationScore": 0.0
+        }
+      ],
+      "readOnly": true
+    }
+  ],
+  "usesV7PitchEvidenceReadOnly": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "passed": true,
+  "trainingRule": "Resolve a one-measure anchor ambiguity only when the professional measure-ending pitch signatures identify one orientation uniquely. Never synthesize notes or alter V7 output or the renderer."
+}

@@ -1,0 +1,24 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "non-rendering-protected-chord-layout-preview",
+  "checks": {
+    "measureCount11": true,
+    "attackCount44": true,
+    "invalidRowsZero": true,
+    "sidecarShaUnchanged": true,
+    "sidecarReportShaUnchanged": true,
+    "rendererMayConsumeFalse": true,
+    "productionMayConsumeFalse": true
+  },
+  "measureCount": 11,
+  "attackCount": 44,
+  "invalidRows": [],
+  "layoutPreviewPassed": true,
+  "readyForHumanLayoutInspection": true,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "protectedPitchCheckpointChanged": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "jsonPreview": "public/gomyway-jimmy-paige-chord-layout-preview.json",
+  "textPreview": "public/gomyway-jimmy-paige-chord-layout-preview.txt"
+}

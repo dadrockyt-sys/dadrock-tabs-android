@@ -1,0 +1,1021 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-direct-audio-intro-phase-alignment",
+  "input": "gomyway-full-song-v8-rhythm-candidates.json",
+  "introCandidateCount": 75,
+  "minimumPairSupport": 4,
+  "testedOffsets": [
+    -8,
+    -7,
+    -6,
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "phaseIdentifiable": false,
+  "equivalentBestOffsetCount": 14,
+  "equivalentBestOffsets": [
+    0,
+    -1,
+    1,
+    -2,
+    2,
+    -3,
+    3,
+    -4,
+    4,
+    -5,
+    5,
+    -6,
+    -7,
+    -8
+  ],
+  "bestAlignment": null,
+  "zeroOffsetAlignment": {
+    "offsetSteps": 0,
+    "offsetMeasureFraction": 0.0,
+    "stableSlotCount": 6,
+    "stableSupportTotal": 25,
+    "weightedSupport": 10.533373,
+    "score": 95.533373,
+    "supportHistogram": {
+      "1": 9,
+      "2": 12,
+      "3": 5,
+      "4": 5,
+      "5": 1
+    },
+    "stableSlots": [
+      {
+        "pairStep": 2,
+        "pairSupport": 4,
+        "supportRatio": 0.5,
+        "medianStrength": 0.451612
+      },
+      {
+        "pairStep": 10,
+        "pairSupport": 4,
+        "supportRatio": 0.5,
+        "medianStrength": 0.21912
+      },
+      {
+        "pairStep": 14,
+        "pairSupport": 4,
+        "supportRatio": 0.5,
+        "medianStrength": 0.525364
+      },
+      {
+        "pairStep": 18,
+        "pairSupport": 4,
+        "supportRatio": 0.5,
+        "medianStrength": 0.410139
+      },
+      {
+        "pairStep": 20,
+        "pairSupport": 4,
+        "supportRatio": 0.5,
+        "medianStrength": 0.472177
+      },
+      {
+        "pairStep": 26,
+        "pairSupport": 5,
+        "supportRatio": 0.625,
+        "medianStrength": 0.443945
+      }
+    ],
+    "readOnly": true
+  },
+  "rankedAlignments": [
+    {
+      "offsetSteps": 0,
+      "offsetMeasureFraction": 0.0,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 9,
+        "2": 12,
+        "3": 5,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": -1,
+      "offsetMeasureFraction": -0.0625,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 9,
+        "2": 12,
+        "3": 5,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 1,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        },
+        {
+          "pairStep": 9,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 13,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 17,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 19,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 25,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 1,
+      "offsetMeasureFraction": 0.0625,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 9,
+        "2": 13,
+        "3": 4,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 3,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        },
+        {
+          "pairStep": 11,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 15,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 19,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 21,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 27,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": -2,
+      "offsetMeasureFraction": -0.125,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 9,
+        "2": 12,
+        "3": 5,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 0,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        },
+        {
+          "pairStep": 8,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 12,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 16,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 24,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 2,
+      "offsetMeasureFraction": 0.125,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 9,
+        "2": 13,
+        "3": 4,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 4,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        },
+        {
+          "pairStep": 12,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 16,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 22,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 28,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": -3,
+      "offsetMeasureFraction": -0.1875,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 9,
+        "2": 12,
+        "3": 5,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 7,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 11,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 15,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 17,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 23,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        },
+        {
+          "pairStep": 31,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 3,
+      "offsetMeasureFraction": 0.1875,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 9,
+        "2": 13,
+        "3": 4,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 5,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        },
+        {
+          "pairStep": 13,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 17,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 21,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 23,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 29,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": -4,
+      "offsetMeasureFraction": -0.25,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 9,
+        "2": 12,
+        "3": 5,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 6,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 16,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 22,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        },
+        {
+          "pairStep": 30,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 4,
+      "offsetMeasureFraction": 0.25,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 9,
+        "2": 13,
+        "3": 4,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 6,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 22,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 24,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 30,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": -5,
+      "offsetMeasureFraction": -0.3125,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 9,
+        "2": 12,
+        "3": 5,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 5,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 9,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 13,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 15,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 21,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        },
+        {
+          "pairStep": 29,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 5,
+      "offsetMeasureFraction": 0.3125,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 10,
+        "2": 12,
+        "3": 4,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 7,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        },
+        {
+          "pairStep": 15,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 19,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 23,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 25,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 31,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": -6,
+      "offsetMeasureFraction": -0.375,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 9,
+        "2": 13,
+        "3": 4,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 4,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 8,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 12,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 14,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        },
+        {
+          "pairStep": 28,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": -7,
+      "offsetMeasureFraction": -0.4375,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 10,
+        "2": 12,
+        "3": 4,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 3,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 7,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 11,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 13,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 19,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        },
+        {
+          "pairStep": 27,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": -8,
+      "offsetMeasureFraction": -0.5,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 25,
+      "weightedSupport": 10.533373,
+      "score": 95.533373,
+      "supportHistogram": {
+        "1": 10,
+        "2": 12,
+        "3": 4,
+        "4": 5,
+        "5": 1
+      },
+      "stableSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 6,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 12,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 5,
+          "supportRatio": 0.625,
+          "medianStrength": 0.443945
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 6,
+      "offsetMeasureFraction": 0.375,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 24,
+      "weightedSupport": 9.922448,
+      "score": 93.922448,
+      "supportHistogram": {
+        "1": 10,
+        "2": 12,
+        "3": 4,
+        "4": 6
+      },
+      "stableSlots": [
+        {
+          "pairStep": 0,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.4022
+        },
+        {
+          "pairStep": 8,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        },
+        {
+          "pairStep": 16,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 20,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 24,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 7,
+      "offsetMeasureFraction": 0.4375,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 24,
+      "weightedSupport": 9.922448,
+      "score": 93.922448,
+      "supportHistogram": {
+        "1": 10,
+        "2": 12,
+        "3": 4,
+        "4": 6
+      },
+      "stableSlots": [
+        {
+          "pairStep": 1,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.4022
+        },
+        {
+          "pairStep": 9,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        },
+        {
+          "pairStep": 17,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 21,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 25,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 27,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        }
+      ],
+      "readOnly": true
+    },
+    {
+      "offsetSteps": 8,
+      "offsetMeasureFraction": 0.5,
+      "stableSlotCount": 6,
+      "stableSupportTotal": 24,
+      "weightedSupport": 9.922448,
+      "score": 93.922448,
+      "supportHistogram": {
+        "1": 10,
+        "2": 12,
+        "3": 4,
+        "4": 6
+      },
+      "stableSlots": [
+        {
+          "pairStep": 2,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.4022
+        },
+        {
+          "pairStep": 10,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.451612
+        },
+        {
+          "pairStep": 18,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.21912
+        },
+        {
+          "pairStep": 22,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.525364
+        },
+        {
+          "pairStep": 26,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.410139
+        },
+        {
+          "pairStep": 28,
+          "pairSupport": 4,
+          "supportRatio": 0.5,
+          "medianStrength": 0.472177
+        }
+      ],
+      "readOnly": true
+    }
+  ],
+  "independentOfV7Events": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "passed": true,
+  "trainingRule": "A repeated-pattern score is translationally symmetric and cannot by itself identify an absolute rhythmic phase. A phase may be adopted only when one offset is uniquely supported by an external anchor, such as a professional reference attack map or a verified downbeat."
+}

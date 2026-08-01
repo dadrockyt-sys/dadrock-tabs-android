@@ -1,0 +1,967 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "canonical-chord-resolver-readonly-integration",
+  "status": "complete",
+  "sourcePrototype": "public/gomyway-jimmy-paige-canonical-chord-resolver-prototype.json",
+  "sourceGate": "public/gomyway-jimmy-paige-protected-chord-resolver-gate.json",
+  "sourceEvents": "public/gomyway-jimmy-paige-93-06-events.json",
+  "sourceEventSha256Before": "31f8b97db8a7afcbc6345ed34a9096509fca957e8b49f1db778fc8a8a89bc92b",
+  "sourceEventSha256After": "31f8b97db8a7afcbc6345ed34a9096509fca957e8b49f1db778fc8a8a89bc92b",
+  "sourceEventCount": 10268,
+  "exactObservedAttacks": 13,
+  "guardedTemplateTransferredAttacks": 8,
+  "resolvedAttacks": 21,
+  "targetAttacks": 21,
+  "invalidResolutionRows": [],
+  "checks": {
+    "protectedGatePassed": true,
+    "prototypeResolvedAllTargets": true,
+    "allResolutionGuardsPassed": true,
+    "sourceEventsUnchanged": true,
+    "syntheticAttacksCreated": false,
+    "rendererChanged": false,
+    "professionalPdfRemainsScoringAuthority": true
+  },
+  "integrationPassed": true,
+  "attackRows": [
+    {
+      "heldOutMeasureNumber": 63,
+      "attackNumber": 1,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        64,
+        62,
+        59,
+        55
+      ],
+      "observedMidiPitches": [
+        40,
+        43,
+        47,
+        48,
+        49,
+        52,
+        55,
+        56,
+        57,
+        59,
+        62,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        71
+      ],
+      "absoluteTimingDeltaSeconds": 0.16723,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 63,
+      "attackNumber": 2,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        64,
+        62,
+        59,
+        55
+      ],
+      "observedMidiPitches": [
+        40,
+        43,
+        47,
+        48,
+        49,
+        52,
+        55,
+        56,
+        57,
+        59,
+        62,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        71
+      ],
+      "absoluteTimingDeltaSeconds": 0.186023,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 63,
+      "attackNumber": 3,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        64,
+        62,
+        59,
+        55
+      ],
+      "observedMidiPitches": [
+        40,
+        42,
+        43,
+        44,
+        47,
+        50,
+        52,
+        55,
+        56,
+        62,
+        64,
+        66,
+        72
+      ],
+      "absoluteTimingDeltaSeconds": 0.155156,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 64,
+      "attackNumber": 1,
+      "resolutionMode": "guarded-template-transfer",
+      "resolvedFretsHighToLow": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        null
+      ],
+      "resolvedMidiPitches": [
+        66,
+        61,
+        57,
+        52,
+        45
+      ],
+      "observedMidiPitches": [
+        40,
+        43,
+        44,
+        46,
+        48,
+        49,
+        50,
+        52,
+        56,
+        58,
+        59,
+        64
+      ],
+      "absoluteTimingDeltaSeconds": 0.236626,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 64,
+      "attackNumber": 2,
+      "resolutionMode": "guarded-template-transfer",
+      "resolvedFretsHighToLow": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        null
+      ],
+      "resolvedMidiPitches": [
+        66,
+        61,
+        57,
+        52,
+        45
+      ],
+      "observedMidiPitches": [
+        40,
+        43,
+        44,
+        46,
+        48,
+        49,
+        50,
+        52,
+        56,
+        58,
+        59,
+        64
+      ],
+      "absoluteTimingDeltaSeconds": 0.116627,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 64,
+      "attackNumber": 3,
+      "resolutionMode": "guarded-template-transfer",
+      "resolvedFretsHighToLow": [
+        2,
+        2,
+        2,
+        2,
+        0,
+        null
+      ],
+      "resolvedMidiPitches": [
+        66,
+        61,
+        57,
+        52,
+        45
+      ],
+      "observedMidiPitches": [
+        40,
+        42,
+        43,
+        52,
+        54,
+        56,
+        62,
+        63,
+        64,
+        70,
+        71
+      ],
+      "absoluteTimingDeltaSeconds": 0.05093,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 65,
+      "attackNumber": 1,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolvedMidiPitches": [
+        68,
+        64,
+        59,
+        54
+      ],
+      "observedMidiPitches": [
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        50,
+        52,
+        55,
+        56,
+        59,
+        62,
+        64,
+        66,
+        70,
+        71,
+        72,
+        73,
+        78
+      ],
+      "absoluteTimingDeltaSeconds": 0.107416,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 65,
+      "attackNumber": 2,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolvedMidiPitches": [
+        68,
+        64,
+        59,
+        54
+      ],
+      "observedMidiPitches": [
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        52,
+        56,
+        59,
+        62,
+        64,
+        66,
+        70,
+        71,
+        75,
+        78
+      ],
+      "absoluteTimingDeltaSeconds": 0.08737,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 65,
+      "attackNumber": 3,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolvedMidiPitches": [
+        68,
+        64,
+        59,
+        54
+      ],
+      "observedMidiPitches": [
+        40,
+        41,
+        43,
+        44,
+        45,
+        46,
+        47,
+        50,
+        51,
+        52,
+        55,
+        56,
+        59,
+        64,
+        77
+      ],
+      "absoluteTimingDeltaSeconds": 0.108748,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 65,
+      "attackNumber": 4,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolvedMidiPitches": [
+        68,
+        64,
+        59,
+        54
+      ],
+      "observedMidiPitches": [
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        51,
+        52,
+        56,
+        57,
+        59,
+        64,
+        70,
+        73,
+        83
+      ],
+      "absoluteTimingDeltaSeconds": 0.270418,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 65,
+      "attackNumber": 5,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        null,
+        7,
+        7,
+        7,
+        7,
+        null
+      ],
+      "resolvedMidiPitches": [
+        66,
+        62,
+        57,
+        52
+      ],
+      "observedMidiPitches": [
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        51,
+        52,
+        56,
+        57,
+        59,
+        64,
+        70,
+        73,
+        83
+      ],
+      "absoluteTimingDeltaSeconds": 0.012184,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 65,
+      "attackNumber": 6,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        9,
+        null
+      ],
+      "resolvedMidiPitches": [
+        68,
+        64,
+        59,
+        54
+      ],
+      "observedMidiPitches": [
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        51,
+        52,
+        56,
+        57,
+        59,
+        64,
+        70,
+        73,
+        83
+      ],
+      "absoluteTimingDeltaSeconds": 0.259461,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 66,
+      "attackNumber": 1,
+      "resolutionMode": "guarded-template-transfer",
+      "resolvedFretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        68,
+        64,
+        59
+      ],
+      "observedMidiPitches": [
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        48,
+        49,
+        50,
+        52,
+        55,
+        57,
+        61,
+        69,
+        71
+      ],
+      "absoluteTimingDeltaSeconds": 0.189658,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 66,
+      "attackNumber": 2,
+      "resolutionMode": "guarded-template-transfer",
+      "resolvedFretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        68,
+        64,
+        59
+      ],
+      "observedMidiPitches": [
+        40,
+        41,
+        42,
+        44,
+        45,
+        47,
+        49,
+        50,
+        51,
+        52,
+        55,
+        57,
+        64,
+        66,
+        69
+      ],
+      "absoluteTimingDeltaSeconds": 0.232631,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 66,
+      "attackNumber": 3,
+      "resolutionMode": "guarded-template-transfer",
+      "resolvedFretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        68,
+        64,
+        59
+      ],
+      "observedMidiPitches": [
+        40,
+        41,
+        42,
+        44,
+        45,
+        47,
+        49,
+        50,
+        51,
+        52,
+        55,
+        57,
+        64,
+        66,
+        69
+      ],
+      "absoluteTimingDeltaSeconds": 0.003017,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 66,
+      "attackNumber": 4,
+      "resolutionMode": "guarded-template-transfer",
+      "resolvedFretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        68,
+        64,
+        59
+      ],
+      "observedMidiPitches": [
+        40,
+        41,
+        42,
+        44,
+        45,
+        47,
+        49,
+        50,
+        51,
+        52,
+        55,
+        57,
+        64,
+        66,
+        69
+      ],
+      "absoluteTimingDeltaSeconds": 0.226598,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 66,
+      "attackNumber": 5,
+      "resolutionMode": "guarded-template-transfer",
+      "resolvedFretsHighToLow": [
+        null,
+        12,
+        12,
+        12,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        71,
+        67,
+        62
+      ],
+      "observedMidiPitches": [
+        43,
+        45,
+        49,
+        55,
+        57,
+        58,
+        62,
+        63
+      ],
+      "absoluteTimingDeltaSeconds": 0.165963,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 66,
+      "attackNumber": 6,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        null,
+        9,
+        9,
+        9,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        68,
+        64,
+        59
+      ],
+      "observedMidiPitches": [
+        40,
+        41,
+        42,
+        44,
+        46,
+        48,
+        49,
+        52,
+        56,
+        63,
+        64,
+        68
+      ],
+      "absoluteTimingDeltaSeconds": 0.027939,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 67,
+      "attackNumber": 1,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        64,
+        62,
+        59,
+        55
+      ],
+      "observedMidiPitches": [
+        41,
+        52,
+        55,
+        57,
+        62,
+        63,
+        64,
+        66
+      ],
+      "absoluteTimingDeltaSeconds": 0.084724,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 67,
+      "attackNumber": 2,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        64,
+        62,
+        59,
+        55
+      ],
+      "observedMidiPitches": [
+        40,
+        47,
+        50,
+        52,
+        56,
+        59,
+        62,
+        63,
+        64,
+        68,
+        71
+      ],
+      "absoluteTimingDeltaSeconds": 0.124507,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    },
+    {
+      "heldOutMeasureNumber": 67,
+      "attackNumber": 3,
+      "resolutionMode": "observed-exact",
+      "resolvedFretsHighToLow": [
+        0,
+        3,
+        4,
+        5,
+        null,
+        null
+      ],
+      "resolvedMidiPitches": [
+        64,
+        62,
+        59,
+        55
+      ],
+      "observedMidiPitches": [
+        40,
+        41,
+        42,
+        43,
+        46,
+        48,
+        49,
+        52,
+        55,
+        56,
+        64,
+        65,
+        67,
+        76,
+        83
+      ],
+      "absoluteTimingDeltaSeconds": 0.109771,
+      "guardRequirements": {
+        "repeatedSectionMappingPresent": true,
+        "observedChordAttackPresent": true,
+        "pitchClassRecognitionPassed": true,
+        "timingWithin300ms": true,
+        "protectedResolverGatePassed": true
+      },
+      "validReadOnlyResolution": true
+    }
+  ],
+  "productionPromotionAllowed": false,
+  "protectedPitchCheckpointChanged": false,
+  "readyForShadowPipelineIntegration": true,
+  "readyForProduction": false
+}

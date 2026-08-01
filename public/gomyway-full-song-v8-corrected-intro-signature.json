@@ -1,0 +1,945 @@
+{
+  "benchmarkVersion": 8,
+  "benchmarkType": "v8-read-only-corrected-intro-signature",
+  "candidateOffsets": [
+    12,
+    28
+  ],
+  "windowRadiusSteps": 3,
+  "firstMeasureExpectedMidi": [
+    40
+  ],
+  "secondMeasureExpectedMidi": [
+    62,
+    67
+  ],
+  "layerResults": [
+    {
+      "layer": "fingeringNormalizedEvents",
+      "eventCount": 474,
+      "introEventCount": 42,
+      "offsetResults": [
+        {
+          "offsetSteps": 12,
+          "rotatedTargetSteps": [
+            26,
+            10
+          ],
+          "firstMeasure": {
+            "targetStep": 26,
+            "expectedMidis": [
+              40
+            ],
+            "nearbyEventCount": 0,
+            "mostCommonMidi": [],
+            "mostCommonPairSteps": [],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "secondMeasure": {
+            "targetStep": 10,
+            "expectedMidis": [
+              62,
+              67
+            ],
+            "nearbyEventCount": 3,
+            "mostCommonMidi": [
+              [
+                64,
+                3
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                12,
+                3
+              ]
+            ],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "orientationScore": 0.0
+        },
+        {
+          "offsetSteps": 28,
+          "rotatedTargetSteps": [
+            10,
+            26
+          ],
+          "firstMeasure": {
+            "targetStep": 10,
+            "expectedMidis": [
+              40
+            ],
+            "nearbyEventCount": 3,
+            "mostCommonMidi": [
+              [
+                64,
+                3
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                12,
+                3
+              ]
+            ],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "secondMeasure": {
+            "targetStep": 26,
+            "expectedMidis": [
+              62,
+              67
+            ],
+            "nearbyEventCount": 0,
+            "mostCommonMidi": [],
+            "mostCommonPairSteps": [],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "orientationScore": 0.0
+        }
+      ],
+      "bestScore": 0.0,
+      "equivalentBestOffsets": [
+        12,
+        28
+      ],
+      "uniqueOrientationFound": false,
+      "bestOffset": 12
+    },
+    {
+      "layer": "pitchContourReconstructedEvents",
+      "eventCount": 474,
+      "introEventCount": 42,
+      "offsetResults": [
+        {
+          "offsetSteps": 12,
+          "rotatedTargetSteps": [
+            26,
+            10
+          ],
+          "firstMeasure": {
+            "targetStep": 26,
+            "expectedMidis": [
+              40
+            ],
+            "nearbyEventCount": 0,
+            "mostCommonMidi": [],
+            "mostCommonPairSteps": [],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "secondMeasure": {
+            "targetStep": 10,
+            "expectedMidis": [
+              62,
+              67
+            ],
+            "nearbyEventCount": 3,
+            "mostCommonMidi": [
+              [
+                64,
+                3
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                12,
+                3
+              ]
+            ],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "orientationScore": 0.0
+        },
+        {
+          "offsetSteps": 28,
+          "rotatedTargetSteps": [
+            10,
+            26
+          ],
+          "firstMeasure": {
+            "targetStep": 10,
+            "expectedMidis": [
+              40
+            ],
+            "nearbyEventCount": 3,
+            "mostCommonMidi": [
+              [
+                64,
+                3
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                12,
+                3
+              ]
+            ],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "secondMeasure": {
+            "targetStep": 26,
+            "expectedMidis": [
+              62,
+              67
+            ],
+            "nearbyEventCount": 0,
+            "mostCommonMidi": [],
+            "mostCommonPairSteps": [],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "orientationScore": 0.0
+        }
+      ],
+      "bestScore": 0.0,
+      "equivalentBestOffsets": [
+        12,
+        28
+      ],
+      "uniqueOrientationFound": false,
+      "bestOffset": 12
+    },
+    {
+      "layer": "motifStabilizedEvents",
+      "eventCount": 474,
+      "introEventCount": 42,
+      "offsetResults": [
+        {
+          "offsetSteps": 12,
+          "rotatedTargetSteps": [
+            26,
+            10
+          ],
+          "firstMeasure": {
+            "targetStep": 26,
+            "expectedMidis": [
+              40
+            ],
+            "nearbyEventCount": 0,
+            "mostCommonMidi": [],
+            "mostCommonPairSteps": [],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "secondMeasure": {
+            "targetStep": 10,
+            "expectedMidis": [
+              62,
+              67
+            ],
+            "nearbyEventCount": 3,
+            "mostCommonMidi": [
+              [
+                64,
+                3
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                12,
+                3
+              ]
+            ],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "orientationScore": 0.0
+        },
+        {
+          "offsetSteps": 28,
+          "rotatedTargetSteps": [
+            10,
+            26
+          ],
+          "firstMeasure": {
+            "targetStep": 10,
+            "expectedMidis": [
+              40
+            ],
+            "nearbyEventCount": 3,
+            "mostCommonMidi": [
+              [
+                64,
+                3
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                12,
+                3
+              ]
+            ],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "secondMeasure": {
+            "targetStep": 26,
+            "expectedMidis": [
+              62,
+              67
+            ],
+            "nearbyEventCount": 0,
+            "mostCommonMidi": [],
+            "mostCommonPairSteps": [],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "orientationScore": 0.0
+        }
+      ],
+      "bestScore": 0.0,
+      "equivalentBestOffsets": [
+        12,
+        28
+      ],
+      "uniqueOrientationFound": false,
+      "bestOffset": 12
+    },
+    {
+      "layer": "renderEvents",
+      "eventCount": 527,
+      "introEventCount": 95,
+      "offsetResults": [
+        {
+          "offsetSteps": 12,
+          "rotatedTargetSteps": [
+            26,
+            10
+          ],
+          "firstMeasure": {
+            "targetStep": 26,
+            "expectedMidis": [
+              40
+            ],
+            "nearbyEventCount": 15,
+            "mostCommonMidi": [
+              [
+                40,
+                9
+              ],
+              [
+                55,
+                2
+              ],
+              [
+                52,
+                2
+              ],
+              [
+                59,
+                1
+              ],
+              [
+                57,
+                1
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                27,
+                5
+              ],
+              [
+                29,
+                3
+              ],
+              [
+                26,
+                2
+              ],
+              [
+                28,
+                2
+              ],
+              [
+                23,
+                1
+              ],
+              [
+                24,
+                1
+              ],
+              [
+                25,
+                1
+              ]
+            ],
+            "exactMidiHits": 9,
+            "exactDistinctMidis": [
+              40
+            ],
+            "expectedCoverage": 1.0
+          },
+          "secondMeasure": {
+            "targetStep": 10,
+            "expectedMidis": [
+              62,
+              67
+            ],
+            "nearbyEventCount": 20,
+            "mostCommonMidi": [
+              [
+                40,
+                7
+              ],
+              [
+                64,
+                4
+              ],
+              [
+                52,
+                3
+              ],
+              [
+                62,
+                2
+              ],
+              [
+                57,
+                1
+              ],
+              [
+                55,
+                1
+              ],
+              [
+                71,
+                1
+              ],
+              [
+                50,
+                1
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                10,
+                5
+              ],
+              [
+                12,
+                4
+              ],
+              [
+                13,
+                3
+              ],
+              [
+                7,
+                3
+              ],
+              [
+                11,
+                2
+              ],
+              [
+                8,
+                2
+              ],
+              [
+                9,
+                1
+              ]
+            ],
+            "exactMidiHits": 2,
+            "exactDistinctMidis": [
+              62
+            ],
+            "expectedCoverage": 0.5
+          },
+          "orientationScore": 2.0
+        },
+        {
+          "offsetSteps": 28,
+          "rotatedTargetSteps": [
+            10,
+            26
+          ],
+          "firstMeasure": {
+            "targetStep": 10,
+            "expectedMidis": [
+              40
+            ],
+            "nearbyEventCount": 20,
+            "mostCommonMidi": [
+              [
+                40,
+                7
+              ],
+              [
+                64,
+                4
+              ],
+              [
+                52,
+                3
+              ],
+              [
+                62,
+                2
+              ],
+              [
+                57,
+                1
+              ],
+              [
+                55,
+                1
+              ],
+              [
+                71,
+                1
+              ],
+              [
+                50,
+                1
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                10,
+                5
+              ],
+              [
+                12,
+                4
+              ],
+              [
+                13,
+                3
+              ],
+              [
+                7,
+                3
+              ],
+              [
+                11,
+                2
+              ],
+              [
+                8,
+                2
+              ],
+              [
+                9,
+                1
+              ]
+            ],
+            "exactMidiHits": 7,
+            "exactDistinctMidis": [
+              40
+            ],
+            "expectedCoverage": 1.0
+          },
+          "secondMeasure": {
+            "targetStep": 26,
+            "expectedMidis": [
+              62,
+              67
+            ],
+            "nearbyEventCount": 15,
+            "mostCommonMidi": [
+              [
+                40,
+                9
+              ],
+              [
+                55,
+                2
+              ],
+              [
+                52,
+                2
+              ],
+              [
+                59,
+                1
+              ],
+              [
+                57,
+                1
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                27,
+                5
+              ],
+              [
+                29,
+                3
+              ],
+              [
+                26,
+                2
+              ],
+              [
+                28,
+                2
+              ],
+              [
+                23,
+                1
+              ],
+              [
+                24,
+                1
+              ],
+              [
+                25,
+                1
+              ]
+            ],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "orientationScore": 1.0
+        }
+      ],
+      "bestScore": 2.0,
+      "equivalentBestOffsets": [
+        12
+      ],
+      "uniqueOrientationFound": true,
+      "bestOffset": 12
+    },
+    {
+      "layer": "rhythmEvents",
+      "eventCount": 572,
+      "introEventCount": 101,
+      "offsetResults": [
+        {
+          "offsetSteps": 12,
+          "rotatedTargetSteps": [
+            26,
+            10
+          ],
+          "firstMeasure": {
+            "targetStep": 26,
+            "expectedMidis": [
+              40
+            ],
+            "nearbyEventCount": 16,
+            "mostCommonMidi": [
+              [
+                40,
+                10
+              ],
+              [
+                55,
+                2
+              ],
+              [
+                52,
+                2
+              ],
+              [
+                59,
+                1
+              ],
+              [
+                57,
+                1
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                27,
+                5
+              ],
+              [
+                26,
+                3
+              ],
+              [
+                29,
+                3
+              ],
+              [
+                28,
+                2
+              ],
+              [
+                23,
+                1
+              ],
+              [
+                24,
+                1
+              ],
+              [
+                25,
+                1
+              ]
+            ],
+            "exactMidiHits": 10,
+            "exactDistinctMidis": [
+              40
+            ],
+            "expectedCoverage": 1.0
+          },
+          "secondMeasure": {
+            "targetStep": 10,
+            "expectedMidis": [
+              62,
+              67
+            ],
+            "nearbyEventCount": 20,
+            "mostCommonMidi": [
+              [
+                40,
+                7
+              ],
+              [
+                64,
+                4
+              ],
+              [
+                52,
+                3
+              ],
+              [
+                62,
+                2
+              ],
+              [
+                57,
+                1
+              ],
+              [
+                55,
+                1
+              ],
+              [
+                71,
+                1
+              ],
+              [
+                50,
+                1
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                10,
+                5
+              ],
+              [
+                12,
+                4
+              ],
+              [
+                13,
+                3
+              ],
+              [
+                7,
+                3
+              ],
+              [
+                11,
+                2
+              ],
+              [
+                8,
+                2
+              ],
+              [
+                9,
+                1
+              ]
+            ],
+            "exactMidiHits": 2,
+            "exactDistinctMidis": [
+              62
+            ],
+            "expectedCoverage": 0.5
+          },
+          "orientationScore": 2.0
+        },
+        {
+          "offsetSteps": 28,
+          "rotatedTargetSteps": [
+            10,
+            26
+          ],
+          "firstMeasure": {
+            "targetStep": 10,
+            "expectedMidis": [
+              40
+            ],
+            "nearbyEventCount": 20,
+            "mostCommonMidi": [
+              [
+                40,
+                7
+              ],
+              [
+                64,
+                4
+              ],
+              [
+                52,
+                3
+              ],
+              [
+                62,
+                2
+              ],
+              [
+                57,
+                1
+              ],
+              [
+                55,
+                1
+              ],
+              [
+                71,
+                1
+              ],
+              [
+                50,
+                1
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                10,
+                5
+              ],
+              [
+                12,
+                4
+              ],
+              [
+                13,
+                3
+              ],
+              [
+                7,
+                3
+              ],
+              [
+                11,
+                2
+              ],
+              [
+                8,
+                2
+              ],
+              [
+                9,
+                1
+              ]
+            ],
+            "exactMidiHits": 7,
+            "exactDistinctMidis": [
+              40
+            ],
+            "expectedCoverage": 1.0
+          },
+          "secondMeasure": {
+            "targetStep": 26,
+            "expectedMidis": [
+              62,
+              67
+            ],
+            "nearbyEventCount": 16,
+            "mostCommonMidi": [
+              [
+                40,
+                10
+              ],
+              [
+                55,
+                2
+              ],
+              [
+                52,
+                2
+              ],
+              [
+                59,
+                1
+              ],
+              [
+                57,
+                1
+              ]
+            ],
+            "mostCommonPairSteps": [
+              [
+                27,
+                5
+              ],
+              [
+                26,
+                3
+              ],
+              [
+                29,
+                3
+              ],
+              [
+                28,
+                2
+              ],
+              [
+                23,
+                1
+              ],
+              [
+                24,
+                1
+              ],
+              [
+                25,
+                1
+              ]
+            ],
+            "exactMidiHits": 0,
+            "exactDistinctMidis": [],
+            "expectedCoverage": 0.0
+          },
+          "orientationScore": 1.0
+        }
+      ],
+      "bestScore": 2.0,
+      "equivalentBestOffsets": [
+        12
+      ],
+      "uniqueOrientationFound": true,
+      "bestOffset": 12
+    }
+  ],
+  "uniqueOrientationFound": true,
+  "selectedLayer": "renderEvents",
+  "selectedOffset": 12,
+  "selectedScore": 2.0,
+  "usesV7PitchEvidenceReadOnly": true,
+  "rendererChanged": false,
+  "protectedBaselinesChanged": false,
+  "passed": true,
+  "trainingRule": "Use the corrected professional double-stop pitches (MIDI 62 and 67), inspect every available V8/V7-derived event layer read-only, and choose an orientation only when one candidate offset is uniquely supported. Do not synthesize notes or alter the renderer."
+}

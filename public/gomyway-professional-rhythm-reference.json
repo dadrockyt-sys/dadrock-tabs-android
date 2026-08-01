@@ -14,21 +14,70 @@
   "readyForScoring": false,
   "measureNumberingMustMatchSource": true,
   "sectionMap": [
-    {"startMeasure": 1, "endMeasure": 16, "label": "Intro"},
-    {"startMeasure": 17, "endMeasure": 32, "label": "Verse 1"},
-    {"startMeasure": 33, "endMeasure": 38, "label": "Chorus 1"},
-    {"startMeasure": 39, "endMeasure": 46, "label": "Riff"},
-    {"startMeasure": 47, "endMeasure": 62, "label": "Verse 2"},
-    {"startMeasure": 63, "endMeasure": 69, "label": "Chorus 2"},
-    {"startMeasure": 70, "endMeasure": 77, "label": "Bridge"},
-    {"startMeasure": 78, "endMeasure": 94, "label": "Solo rhythm backing / transition"},
-    {"startMeasure": 95, "endMeasure": 102, "label": "Riff"},
-    {"startMeasure": 103, "endMeasure": 113, "label": "Out-Chorus / ending"}
+    {
+      "startMeasure": 1,
+      "endMeasure": 16,
+      "label": "Intro"
+    },
+    {
+      "startMeasure": 17,
+      "endMeasure": 32,
+      "label": "Verse 1"
+    },
+    {
+      "startMeasure": 33,
+      "endMeasure": 38,
+      "label": "Chorus 1"
+    },
+    {
+      "startMeasure": 39,
+      "endMeasure": 46,
+      "label": "Riff"
+    },
+    {
+      "startMeasure": 47,
+      "endMeasure": 62,
+      "label": "Verse 2"
+    },
+    {
+      "startMeasure": 63,
+      "endMeasure": 69,
+      "label": "Chorus 2"
+    },
+    {
+      "startMeasure": 70,
+      "endMeasure": 77,
+      "label": "Bridge"
+    },
+    {
+      "startMeasure": 78,
+      "endMeasure": 94,
+      "label": "Solo rhythm backing / transition"
+    },
+    {
+      "startMeasure": 95,
+      "endMeasure": 102,
+      "label": "Riff"
+    },
+    {
+      "startMeasure": 103,
+      "endMeasure": 113,
+      "label": "Out-Chorus / ending"
+    }
   ],
   "timeSignatureChanges": [
-    {"measureNumber": 1, "timeSignature": "4/4"},
-    {"measureNumber": 104, "timeSignature": "2/4"},
-    {"measureNumber": 105, "timeSignature": "4/4"}
+    {
+      "measureNumber": 1,
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 104,
+      "timeSignature": "2/4"
+    },
+    {
+      "measureNumber": 105,
+      "timeSignature": "4/4"
+    }
   ],
   "productionAnnotations": [
     {
@@ -55,7 +104,2337 @@
     "full-measure-rest": "Printed empty/rest measure that must remain present.",
     "outro-held-atp2": "A(tp2) chord sustained/tied across the barline without invented re-attacks."
   },
-  "measures": [],
+  "measures": [
+    {
+      "measureNumber": 1,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 2,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 3,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 4,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 5,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 6,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 7,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 8,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 9,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 10,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 11,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 12,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 13,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1,
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 14,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        1,
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 15,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 16,
+      "timeSignature": "4/4",
+      "sectionLabel": "Intro",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 17,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 18,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 19,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 20,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 21,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 22,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 23,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 24,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 25,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "G",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "g-position-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 26,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "G",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "g-position-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 27,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "G",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "g-position-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        2,
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 28,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "G",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "picked-muted-turnaround",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 29,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 30,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 31,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 32,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 1",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 33,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 1",
+      "chordSymbols": [
+        {
+          "symbol": "G6",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-g6",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 34,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 1",
+      "chordSymbols": [
+        {
+          "symbol": "A(tp2)",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-atp2",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 35,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 1",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-e-d-e",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 36,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 1",
+      "chordSymbols": [
+        {
+          "symbol": "G",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-g-e",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 37,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 1",
+      "chordSymbols": [
+        {
+          "symbol": "G6",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-g6",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 38,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 1",
+      "chordSymbols": [
+        {
+          "symbol": "A(tp2)",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-atp2",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 39,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 40,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 41,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 42,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 43,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        3,
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 44,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 45,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 46,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 47,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 48,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 49,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 50,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 51,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 52,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 53,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 54,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 55,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "G",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "g-position-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 56,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "G",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "g-position-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 57,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "G",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "g-position-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        4,
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 58,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "G",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "picked-muted-turnaround",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 59,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 60,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 61,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 62,
+      "timeSignature": "4/4",
+      "sectionLabel": "Verse 2",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 63,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 2",
+      "chordSymbols": [
+        {
+          "symbol": "G6",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-g6",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 64,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 2",
+      "chordSymbols": [
+        {
+          "symbol": "A(tp2)",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-atp2",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 65,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 2",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-e-d-e",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 66,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 2",
+      "chordSymbols": [
+        {
+          "symbol": "G",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-g-e",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 67,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 2",
+      "chordSymbols": [
+        {
+          "symbol": "G6",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-g6",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 68,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 2",
+      "chordSymbols": [],
+      "patternId": "full-measure-rest",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 69,
+      "timeSignature": "4/4",
+      "sectionLabel": "Chorus 2",
+      "chordSymbols": [],
+      "patternId": "full-measure-rest",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 70,
+      "timeSignature": "4/4",
+      "sectionLabel": "Bridge",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "bridge-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 71,
+      "timeSignature": "4/4",
+      "sectionLabel": "Bridge",
+      "chordSymbols": [
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "bridge-a-e",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 72,
+      "timeSignature": "4/4",
+      "sectionLabel": "Bridge",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "bridge-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 73,
+      "timeSignature": "4/4",
+      "sectionLabel": "Bridge",
+      "chordSymbols": [
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "bridge-a-e",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 74,
+      "timeSignature": "4/4",
+      "sectionLabel": "Bridge",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "bridge-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5,
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 75,
+      "timeSignature": "4/4",
+      "sectionLabel": "Bridge",
+      "chordSymbols": [
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "bridge-a-e",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        5,
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 76,
+      "timeSignature": "4/4",
+      "sectionLabel": "Bridge",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "bridge-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 77,
+      "timeSignature": "4/4",
+      "sectionLabel": "Bridge",
+      "chordSymbols": [
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "bridge-a-e",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 78,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 79,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D6",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-a-d6-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 80,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 81,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D6",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-a-d6-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 82,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 83,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D6",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-a-d6-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 84,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 85,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D6",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-a-d6-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 86,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 87,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D6",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-a-d6-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 88,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 89,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D6",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-a-d6-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 90,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        6,
+        7
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 91,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D6",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "A",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-backing-a-d6-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 92,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-transition-e-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 93,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "solo-transition-held-d",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 94,
+      "timeSignature": "4/4",
+      "sectionLabel": "Solo rhythm backing / transition",
+      "chordSymbols": [],
+      "patternId": "solo-transition-pickup-4-5-6",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 95,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 96,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 97,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 98,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 99,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 100,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 101,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-a",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 102,
+      "timeSignature": "4/4",
+      "sectionLabel": "Riff",
+      "chordSymbols": [
+        {
+          "symbol": "Em",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "em-riff-b",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 103,
+      "timeSignature": "4/4",
+      "sectionLabel": "Out-Chorus / ending",
+      "chordSymbols": [
+        {
+          "symbol": "G6",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-g6",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 104,
+      "timeSignature": "2/4",
+      "sectionLabel": "Out-Chorus / ending",
+      "chordSymbols": [
+        {
+          "symbol": "A(tp2)",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-atp2",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 105,
+      "timeSignature": "4/4",
+      "sectionLabel": "Out-Chorus / ending",
+      "chordSymbols": [
+        {
+          "symbol": "G6",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-g6",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 106,
+      "timeSignature": "4/4",
+      "sectionLabel": "Out-Chorus / ending",
+      "chordSymbols": [
+        {
+          "symbol": "A(tp2)",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-atp2",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 107,
+      "timeSignature": "4/4",
+      "sectionLabel": "Out-Chorus / ending",
+      "chordSymbols": [
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "D",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-e-d-e",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 108,
+      "timeSignature": "4/4",
+      "sectionLabel": "Out-Chorus / ending",
+      "chordSymbols": [
+        {
+          "symbol": "G",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "E",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "chorus-g-e",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        7,
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 109,
+      "timeSignature": "4/4",
+      "sectionLabel": "Out-Chorus / ending",
+      "chordSymbols": [
+        {
+          "symbol": "G(tp2)",
+          "verifiedFromSource": true
+        },
+        {
+          "symbol": "A(tp2)",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "outro-g-atp2",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 110,
+      "timeSignature": "4/4",
+      "sectionLabel": "Out-Chorus / ending",
+      "chordSymbols": [
+        {
+          "symbol": "A(tp2)",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "outro-held-atp2",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 111,
+      "timeSignature": "4/4",
+      "sectionLabel": "Out-Chorus / ending",
+      "chordSymbols": [
+        {
+          "symbol": "A(tp2)",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "outro-held-atp2",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 112,
+      "timeSignature": "4/4",
+      "sectionLabel": "Out-Chorus / ending",
+      "chordSymbols": [
+        {
+          "symbol": "A(tp2)",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "outro-held-atp2",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    },
+    {
+      "measureNumber": 113,
+      "timeSignature": "4/4",
+      "sectionLabel": "Out-Chorus / ending",
+      "chordSymbols": [
+        {
+          "symbol": "A(tp2)",
+          "verifiedFromSource": true
+        }
+      ],
+      "patternId": "outro-final-held-atp2-dead-note-rest",
+      "events": [],
+      "eventTranscriptionStatus": "pending-manual-event-entry",
+      "sourcePages": [
+        8,
+        9
+      ],
+      "measureIdentityVerified": true,
+      "confidence": 1.0
+    }
+  ],
   "safeguards": {
     "calibrationOnly": true,
     "directAudioRemainsSourceOfTruth": true,

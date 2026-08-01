@@ -1,0 +1,1237 @@
+{
+  "diagnosticVersion": 1,
+  "diagnosticType": "locally-aligned-professional-measure-score",
+  "globalTempoBpm": 129.0,
+  "globalFirstMeasureOffsetSeconds": 0.0,
+  "measureDurationSeconds": 1.860465,
+  "searchRadiusSeconds": 0.9,
+  "matchWindowSeconds": 0.22,
+  "professionalTargets": 144,
+  "matchedTargets": 73,
+  "locallyAlignedScorePercent": 50.69,
+  "maximumAbsoluteLocalShiftSeconds": 0.9,
+  "averageAbsoluteLocalShiftSeconds": 0.51625,
+  "measures": [
+    {
+      "measureNumber": 1,
+      "expectedStart": 0.0,
+      "bestStart": 0.6,
+      "localShiftSeconds": 0.6,
+      "matched": 4,
+      "total": 7,
+      "scorePercent": 57.14,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 59,
+          "targetTime": 0.6,
+          "observedTime": 0.812698,
+          "absoluteDelta": 0.212698
+        },
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 0.832558,
+          "observedTime": 0.696599,
+          "absoluteDelta": 0.13596
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 1.065116,
+          "observedTime": 1.184218,
+          "absoluteDelta": 0.119101
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 1.762791,
+          "observedTime": 1.695057,
+          "absoluteDelta": 0.067734
+        }
+      ],
+      "misses": [
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 1.297674
+        },
+        {
+          "step": 8,
+          "allowedMidis": [
+            50
+          ],
+          "targetTime": 1.530233
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 1.995349
+        }
+      ]
+    },
+    {
+      "measureNumber": 2,
+      "expectedStart": 1.902326,
+      "bestStart": 2.572326,
+      "localShiftSeconds": 0.67,
+      "matched": 6,
+      "total": 11,
+      "scorePercent": 54.55,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 57,
+          "targetTime": 2.572326,
+          "observedTime": 2.625139,
+          "absoluteDelta": 0.052813
+        },
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 2.804884,
+          "observedTime": 2.961828,
+          "absoluteDelta": 0.156944
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 3.037442,
+          "observedTime": 3.182418,
+          "absoluteDelta": 0.144976
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 3.735116,
+          "observedTime": 3.797746,
+          "absoluteDelta": 0.06263
+        },
+        {
+          "step": 14,
+          "midi": 62,
+          "targetTime": 4.200233,
+          "observedTime": 4.1125,
+          "absoluteDelta": 0.087733
+        },
+        {
+          "step": 15,
+          "midi": 58,
+          "targetTime": 4.316512,
+          "observedTime": 4.530459,
+          "absoluteDelta": 0.213947
+        }
+      ],
+      "misses": [
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 3.27
+        },
+        {
+          "step": 8,
+          "allowedMidis": [
+            50
+          ],
+          "targetTime": 3.502558
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 3.967674
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 4.200233
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            62
+          ],
+          "targetTime": 4.316512
+        }
+      ]
+    },
+    {
+      "measureNumber": 3,
+      "expectedStart": 3.874651,
+      "bestStart": 3.654651,
+      "localShiftSeconds": -0.22,
+      "matched": 4,
+      "total": 7,
+      "scorePercent": 57.14,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 57,
+          "targetTime": 3.654651,
+          "observedTime": 3.577157,
+          "absoluteDelta": 0.077494
+        },
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 3.887209,
+          "observedTime": 4.03123,
+          "absoluteDelta": 0.144021
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 4.119767,
+          "observedTime": 3.902236,
+          "absoluteDelta": 0.217531
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 4.817442,
+          "observedTime": 5.006468,
+          "absoluteDelta": 0.189026
+        }
+      ],
+      "misses": [
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 4.352326
+        },
+        {
+          "step": 8,
+          "allowedMidis": [
+            50
+          ],
+          "targetTime": 4.584884
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 5.05
+        }
+      ]
+    },
+    {
+      "measureNumber": 4,
+      "expectedStart": 5.581395,
+      "bestStart": 6.361395,
+      "localShiftSeconds": 0.78,
+      "matched": 7,
+      "total": 11,
+      "scorePercent": 63.64,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 59,
+          "targetTime": 6.361395,
+          "observedTime": 6.447389,
+          "absoluteDelta": 0.085994
+        },
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 6.593953,
+          "observedTime": 6.447389,
+          "absoluteDelta": 0.146564
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 6.826512,
+          "observedTime": 7.016278,
+          "absoluteDelta": 0.189766
+        },
+        {
+          "step": 8,
+          "midi": 50,
+          "targetTime": 7.291628,
+          "observedTime": 7.503897,
+          "absoluteDelta": 0.212269
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 7.524186,
+          "observedTime": 7.561947,
+          "absoluteDelta": 0.037761
+        },
+        {
+          "step": 14,
+          "midi": 62,
+          "targetTime": 7.989302,
+          "observedTime": 7.98119,
+          "absoluteDelta": 0.008112
+        },
+        {
+          "step": 15,
+          "midi": 62,
+          "targetTime": 8.105581,
+          "observedTime": 8.20178,
+          "absoluteDelta": 0.096198
+        }
+      ],
+      "misses": [
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 7.05907
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 7.756744
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 7.989302
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 8.105581
+        }
+      ]
+    },
+    {
+      "measureNumber": 5,
+      "expectedStart": 7.663721,
+      "bestStart": 6.763721,
+      "localShiftSeconds": -0.9,
+      "matched": 5,
+      "total": 7,
+      "scorePercent": 71.43,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 57,
+          "targetTime": 6.763721,
+          "observedTime": 6.726029,
+          "absoluteDelta": 0.037692
+        },
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 6.996279,
+          "observedTime": 6.818908,
+          "absoluteDelta": 0.177371
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 7.228837,
+          "observedTime": 7.248478,
+          "absoluteDelta": 0.01964
+        },
+        {
+          "step": 8,
+          "midi": 50,
+          "targetTime": 7.693953,
+          "observedTime": 7.503897,
+          "absoluteDelta": 0.190056
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 7.926512,
+          "observedTime": 7.712877,
+          "absoluteDelta": 0.213635
+        }
+      ],
+      "misses": [
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 7.461395
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 8.15907
+        }
+      ]
+    },
+    {
+      "measureNumber": 6,
+      "expectedStart": 9.302326,
+      "bestStart": 10.182326,
+      "localShiftSeconds": 0.88,
+      "matched": 6,
+      "total": 11,
+      "scorePercent": 54.55,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 59,
+          "targetTime": 10.182326,
+          "observedTime": 10.397349,
+          "absoluteDelta": 0.215024
+        },
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 10.414884,
+          "observedTime": 10.269639,
+          "absoluteDelta": 0.145244
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 10.647442,
+          "observedTime": 10.861748,
+          "absoluteDelta": 0.214306
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 11.345116,
+          "observedTime": 11.326147,
+          "absoluteDelta": 0.018969
+        },
+        {
+          "step": 14,
+          "midi": 62,
+          "targetTime": 11.810233,
+          "observedTime": 11.802156,
+          "absoluteDelta": 0.008076
+        },
+        {
+          "step": 15,
+          "midi": 62,
+          "targetTime": 11.926512,
+          "observedTime": 11.97759,
+          "absoluteDelta": 0.051078
+        }
+      ],
+      "misses": [
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 10.88
+        },
+        {
+          "step": 8,
+          "allowedMidis": [
+            50
+          ],
+          "targetTime": 11.112558
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 11.577674
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 11.810233
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 11.926512
+        }
+      ]
+    },
+    {
+      "measureNumber": 7,
+      "expectedStart": 11.484651,
+      "bestStart": 11.934651,
+      "localShiftSeconds": 0.45,
+      "matched": 5,
+      "total": 7,
+      "scorePercent": 71.43,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 59,
+          "targetTime": 11.934651,
+          "observedTime": 11.96598,
+          "absoluteDelta": 0.031329
+        },
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 12.167209,
+          "observedTime": 12.18657,
+          "absoluteDelta": 0.01936
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 12.399767,
+          "observedTime": 12.18657,
+          "absoluteDelta": 0.213198
+        },
+        {
+          "step": 6,
+          "midi": 45,
+          "targetTime": 12.632326,
+          "observedTime": 12.848338,
+          "absoluteDelta": 0.216013
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 13.097442,
+          "observedTime": 13.254688,
+          "absoluteDelta": 0.157246
+        }
+      ],
+      "misses": [
+        {
+          "step": 8,
+          "allowedMidis": [
+            50
+          ],
+          "targetTime": 12.864884
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 13.33
+        }
+      ]
+    },
+    {
+      "measureNumber": 8,
+      "expectedStart": 13.236977,
+      "bestStart": 12.426977,
+      "localShiftSeconds": -0.81,
+      "matched": 6,
+      "total": 11,
+      "scorePercent": 54.55,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 57,
+          "targetTime": 12.426977,
+          "observedTime": 12.453599,
+          "absoluteDelta": 0.026622
+        },
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 12.659535,
+          "observedTime": 12.546479,
+          "absoluteDelta": 0.113056
+        },
+        {
+          "step": 6,
+          "midi": 45,
+          "targetTime": 13.124651,
+          "observedTime": 12.987658,
+          "absoluteDelta": 0.136993
+        },
+        {
+          "step": 8,
+          "midi": 50,
+          "targetTime": 13.357209,
+          "observedTime": 13.138588,
+          "absoluteDelta": 0.218622
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 13.589767,
+          "observedTime": 13.510107,
+          "absoluteDelta": 0.07966
+        },
+        {
+          "step": 14,
+          "midi": 62,
+          "targetTime": 14.054884,
+          "observedTime": 13.893236,
+          "absoluteDelta": 0.161647
+        }
+      ],
+      "misses": [
+        {
+          "step": 4,
+          "allowedMidis": [
+            52
+          ],
+          "targetTime": 12.892093
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 13.822326
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 14.054884
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            62
+          ],
+          "targetTime": 14.171163
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 14.171163
+        }
+      ]
+    },
+    {
+      "measureNumber": 9,
+      "expectedStart": 14.883721,
+      "bestStart": 14.883721,
+      "localShiftSeconds": 0.0,
+      "matched": 4,
+      "total": 7,
+      "scorePercent": 57.14,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 59,
+          "targetTime": 14.883721,
+          "observedTime": 14.834928,
+          "absoluteDelta": 0.048793
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 15.348837,
+          "observedTime": 15.392207,
+          "absoluteDelta": 0.04337
+        },
+        {
+          "step": 8,
+          "midi": 50,
+          "targetTime": 15.813953,
+          "observedTime": 15.844996,
+          "absoluteDelta": 0.031043
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 16.046512,
+          "observedTime": 16.06687,
+          "absoluteDelta": 0.020358
+        }
+      ],
+      "misses": [
+        {
+          "step": 2,
+          "allowedMidis": [
+            55
+          ],
+          "targetTime": 15.116279
+        },
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 15.581395
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 16.27907
+        }
+      ]
+    },
+    {
+      "measureNumber": 10,
+      "expectedStart": 16.744186,
+      "bestStart": 16.244186,
+      "localShiftSeconds": -0.5,
+      "matched": 4,
+      "total": 11,
+      "scorePercent": 36.36,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 59,
+          "targetTime": 16.244186,
+          "observedTime": 16.1017,
+          "absoluteDelta": 0.142486
+        },
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 16.476744,
+          "observedTime": 16.333899,
+          "absoluteDelta": 0.142845
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 16.709302,
+          "observedTime": 16.902788,
+          "absoluteDelta": 0.193486
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 17.406977,
+          "observedTime": 17.193038,
+          "absoluteDelta": 0.213939
+        }
+      ],
+      "misses": [
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 16.94186
+        },
+        {
+          "step": 8,
+          "allowedMidis": [
+            50
+          ],
+          "targetTime": 17.174419
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 17.639535
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            62
+          ],
+          "targetTime": 17.872093
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 17.872093
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            62
+          ],
+          "targetTime": 17.988372
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 17.988372
+        }
+      ]
+    },
+    {
+      "measureNumber": 11,
+      "expectedStart": 18.604651,
+      "bestStart": 18.104651,
+      "localShiftSeconds": -0.5,
+      "matched": 4,
+      "total": 7,
+      "scorePercent": 57.14,
+      "matches": [
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 18.337209,
+          "observedTime": 18.23922,
+          "absoluteDelta": 0.09799
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 18.569767,
+          "observedTime": 18.413369,
+          "absoluteDelta": 0.156398
+        },
+        {
+          "step": 8,
+          "midi": 50,
+          "targetTime": 19.034884,
+          "observedTime": 18.900988,
+          "absoluteDelta": 0.133896
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 19.267442,
+          "observedTime": 19.051918,
+          "absoluteDelta": 0.215524
+        }
+      ],
+      "misses": [
+        {
+          "step": 0,
+          "allowedMidis": [
+            57,
+            59
+          ],
+          "targetTime": 18.104651
+        },
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 18.802326
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 19.5
+        }
+      ]
+    },
+    {
+      "measureNumber": 12,
+      "expectedStart": 20.465116,
+      "bestStart": 20.005116,
+      "localShiftSeconds": -0.46,
+      "matched": 4,
+      "total": 11,
+      "scorePercent": 36.36,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 57,
+          "targetTime": 20.005116,
+          "observedTime": 20.04005,
+          "absoluteDelta": 0.034934
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 20.470233,
+          "observedTime": 20.260639,
+          "absoluteDelta": 0.209593
+        },
+        {
+          "step": 8,
+          "midi": 50,
+          "targetTime": 20.935349,
+          "observedTime": 20.725039,
+          "absoluteDelta": 0.21031
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 21.167907,
+          "observedTime": 21.235878,
+          "absoluteDelta": 0.067971
+        }
+      ],
+      "misses": [
+        {
+          "step": 2,
+          "allowedMidis": [
+            55
+          ],
+          "targetTime": 20.237674
+        },
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 20.702791
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 21.400465
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            62
+          ],
+          "targetTime": 21.633023
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 21.633023
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            62
+          ],
+          "targetTime": 21.749302
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 21.749302
+        }
+      ]
+    },
+    {
+      "measureNumber": 13,
+      "expectedStart": 22.325581,
+      "bestStart": 21.905581,
+      "localShiftSeconds": -0.42,
+      "matched": 4,
+      "total": 7,
+      "scorePercent": 57.14,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 57,
+          "targetTime": 21.905581,
+          "observedTime": 21.91054,
+          "absoluteDelta": 0.004959
+        },
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 22.13814,
+          "observedTime": 22.02664,
+          "absoluteDelta": 0.1115
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 22.370698,
+          "observedTime": 22.22401,
+          "absoluteDelta": 0.146688
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 23.068372,
+          "observedTime": 22.850948,
+          "absoluteDelta": 0.217424
+        }
+      ],
+      "misses": [
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 22.603256
+        },
+        {
+          "step": 8,
+          "allowedMidis": [
+            50
+          ],
+          "targetTime": 22.835814
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 23.30093
+        }
+      ]
+    },
+    {
+      "measureNumber": 14,
+      "expectedStart": 24.186047,
+      "bestStart": 23.806047,
+      "localShiftSeconds": -0.38,
+      "matched": 5,
+      "total": 11,
+      "scorePercent": 45.45,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 57,
+          "targetTime": 23.806047,
+          "observedTime": 23.802966,
+          "absoluteDelta": 0.00308
+        },
+        {
+          "step": 2,
+          "midi": 55,
+          "targetTime": 24.038605,
+          "observedTime": 23.92035,
+          "absoluteDelta": 0.118255
+        },
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 24.271163,
+          "observedTime": 24.10611,
+          "absoluteDelta": 0.165053
+        },
+        {
+          "step": 8,
+          "midi": 50,
+          "targetTime": 24.736279,
+          "observedTime": 24.535679,
+          "absoluteDelta": 0.2006
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 24.968837,
+          "observedTime": 24.756268,
+          "absoluteDelta": 0.212569
+        }
+      ],
+      "misses": [
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 24.503721
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 25.201395
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            62
+          ],
+          "targetTime": 25.433953
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 25.433953
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            62
+          ],
+          "targetTime": 25.550233
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 25.550233
+        }
+      ]
+    },
+    {
+      "measureNumber": 15,
+      "expectedStart": 26.046512,
+      "bestStart": 25.726512,
+      "localShiftSeconds": -0.32,
+      "matched": 3,
+      "total": 7,
+      "scorePercent": 42.86,
+      "matches": [
+        {
+          "step": 4,
+          "midi": 52,
+          "targetTime": 26.191628,
+          "observedTime": 26.301679,
+          "absoluteDelta": 0.110051
+        },
+        {
+          "step": 8,
+          "midi": 50,
+          "targetTime": 26.656744,
+          "observedTime": 26.440999,
+          "absoluteDelta": 0.215745
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 26.889302,
+          "observedTime": 26.731249,
+          "absoluteDelta": 0.158054
+        }
+      ],
+      "misses": [
+        {
+          "step": 0,
+          "allowedMidis": [
+            57,
+            59
+          ],
+          "targetTime": 25.726512
+        },
+        {
+          "step": 2,
+          "allowedMidis": [
+            55
+          ],
+          "targetTime": 25.95907
+        },
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 26.424186
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 27.12186
+        }
+      ]
+    },
+    {
+      "measureNumber": 16,
+      "expectedStart": 27.906977,
+      "bestStart": 27.536977,
+      "localShiftSeconds": -0.37,
+      "matched": 2,
+      "total": 11,
+      "scorePercent": 18.18,
+      "matches": [
+        {
+          "step": 0,
+          "midi": 57,
+          "targetTime": 27.536977,
+          "observedTime": 27.543947,
+          "absoluteDelta": 0.00697
+        },
+        {
+          "step": 10,
+          "midi": 52,
+          "targetTime": 28.699767,
+          "observedTime": 28.485639,
+          "absoluteDelta": 0.214128
+        }
+      ],
+      "misses": [
+        {
+          "step": 2,
+          "allowedMidis": [
+            55
+          ],
+          "targetTime": 27.769535
+        },
+        {
+          "step": 4,
+          "allowedMidis": [
+            52
+          ],
+          "targetTime": 28.002093
+        },
+        {
+          "step": 6,
+          "allowedMidis": [
+            45
+          ],
+          "targetTime": 28.234651
+        },
+        {
+          "step": 8,
+          "allowedMidis": [
+            50
+          ],
+          "targetTime": 28.467209
+        },
+        {
+          "step": 12,
+          "allowedMidis": [
+            40
+          ],
+          "targetTime": 28.932326
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            62
+          ],
+          "targetTime": 29.164884
+        },
+        {
+          "step": 14,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 29.164884
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            62
+          ],
+          "targetTime": 29.281163
+        },
+        {
+          "step": 15,
+          "allowedMidis": [
+            58
+          ],
+          "targetTime": 29.281163
+        }
+      ]
+    }
+  ],
+  "classification": "pitch-extraction-or-reference-detail-problem",
+  "readyForAutomatedTraining": false,
+  "protectedBaselinesChanged": false
+}

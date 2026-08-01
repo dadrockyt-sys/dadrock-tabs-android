@@ -1,0 +1,25 @@
+{
+  "benchmarkVersion": 1,
+  "benchmarkType": "protected-chord-renderer-sidecar",
+  "checks": {
+    "trainingSection23of23": true,
+    "heldoutSection21of21": true,
+    "combined44of44": true,
+    "allRowsHaveSixStrings": true,
+    "sourceEventShaUnchanged": true,
+    "professionalReferenceShaUnchanged": true,
+    "shadowOutputShaUnchanged": true,
+    "multiSectionShadowPassed": true
+  },
+  "trainingSectionAttackRows": 23,
+  "heldoutSectionAttackRows": 21,
+  "combinedAttackRows": 44,
+  "invalidRows": [],
+  "rendererSidecarBenchmarkPassed": true,
+  "readyForNonRenderingLayoutPreview": true,
+  "rendererChanged": false,
+  "productionPromotionAllowed": false,
+  "protectedPitchCheckpointChanged": false,
+  "professionalPdfRemainsScoringAuthority": true,
+  "sidecarOutput": "public/gomyway-jimmy-paige-chord-renderer-sidecar.json"
+}
