@@ -52,7 +52,7 @@ def _log(message: str) -> None:
         handle.write(line + "\n")
 
 
-@app.function(image=image, timeout=1200, memory=4096)
+@app.function(image=image, timeout=3600, memory=4096)
 def inspect_raw_activations(
     audio_bytes: bytes,
     measure_bounds: dict[str, list[float]],
@@ -181,7 +181,7 @@ def inspect_raw_activations(
 @app.local_entrypoint()
 def main() -> None:
     heartbeat = max(5, int(os.getenv("JIMMY_HEARTBEAT_SECONDS", "15")))
-    total_timeout = max(60, int(os.getenv("JIMMY_TOTAL_TIMEOUT_SECONDS", "1200")))
+    total_timeout = max(60, int(os.getenv("JIMMY_TOTAL_TIMEOUT_SECONDS", "3600")))
 
     LOG_PATH.write_text("", encoding="utf-8")
     calibration = _load_json(CALIBRATION_PATH)
