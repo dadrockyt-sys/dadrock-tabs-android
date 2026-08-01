@@ -10,6 +10,17 @@ PROFESSIONAL_PDF_PATH = PUBLIC / "gomyway-professional-reference.pdf"
 OUTPUT_PATH = PUBLIC / "gomyway-jimmy-paige-protected-full-song-rhythm-regression-preflight.json"
 
 EXPECTED_MEASURES = 113
+EXPECTED_APPROVED_FAMILIES = {
+    "full-bend-release",
+    "vibrato",
+    "muted-note",
+    "pick-direction",
+    "chord-sustain-tie",
+    "chord-slide",
+    "time-signature-change",
+    "section-label",
+    "final-barline",
+}
 
 
 def load_json(path: Path) -> dict:
@@ -51,9 +62,13 @@ def main() -> None:
             f"Missing required artifact: {PROFESSIONAL_PDF_PATH.relative_to(ROOT)}"
         )
 
+    approved_families = set(approval.get("approvedTechniqueFamilies") or [])
+    family_approval_passed = approved_families == EXPECTED_APPROVED_FAMILIES
+
     approval_passed = (
         approval.get("humanApproved") is True
-        and approval.get("visualContractsApproved") == 9
+        and approval.get("visualResult") == "approved"
+        and family_approval_passed
         and approval.get("automatedChecksPassed") is True
         and approval.get("sourceEventsMutated") is False
         and approval.get("rendererChanged") is False
@@ -100,9 +115,11 @@ def main() -> None:
 
     output = {
         "preflightName": "Jimmy Page protected 113-measure rhythm regression preflight",
-        "preflightVersion": 1,
+        "preflightVersion": 2,
         "expectedMeasureCount": EXPECTED_MEASURES,
         "rendererIntegrationHumanApprovalPassed": approval_passed,
+        "approvedTechniqueFamilyCoveragePassed": family_approval_passed,
+        "approvedTechniqueFamilies": sorted(approved_families),
         "professionalPdfPresent": True,
         "professionalPdfSha256": sha256_file(PROFESSIONAL_PDF_PATH),
         "approvalArtifactSha256": sha256_file(APPROVAL_PATH),
@@ -124,6 +141,7 @@ def main() -> None:
 
     print("Protected full-song rhythm regression preflight complete")
     print(f"Expected measures: {EXPECTED_MEASURES}")
+    print(f"Approved technique family coverage passed: {family_approval_passed}")
     print(f"Renderer integration human approval passed: {approval_passed}")
     print(f"Candidate artifacts discovered: {len(discovered)}")
     print(f"Section map candidates: {len(required_candidate_groups['sectionMap'])}")
