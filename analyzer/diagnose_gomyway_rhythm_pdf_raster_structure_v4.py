@@ -38,6 +38,15 @@ def six_string_groups(rows):
     return groups
 
 
+def normalized_hough_lines(lines, np):
+    if lines is None:
+        return []
+    array = np.asarray(lines)
+    if array.size == 0:
+        return []
+    return array.reshape(-1, 4)
+
+
 def main():
     try:
         import fitz
@@ -70,11 +79,10 @@ def main():
             maxLineGap=18,
         )
         horizontal_rows = []
-        if h_lines is not None:
-            for line in h_lines[:, 0]:
-                x1, y1, x2, y2 = map(int, line)
-                if abs(y2 - y1) <= 3 and abs(x2 - x1) >= pix.width * 0.22:
-                    horizontal_rows.append(round((y1 + y2) / 2))
+        for line in normalized_hough_lines(h_lines, np):
+            x1, y1, x2, y2 = map(int, line.tolist())
+            if abs(y2 - y1) <= 3 and abs(x2 - x1) >= pix.width * 0.22:
+                horizontal_rows.append(round((y1 + y2) / 2))
         horizontal_rows = cluster(horizontal_rows, 4)
         staves = six_string_groups(horizontal_rows)
 
@@ -95,11 +103,10 @@ def main():
                 maxLineGap=5,
             )
             xs = []
-            if v_lines is not None:
-                for line in v_lines[:, 0]:
-                    x1, y1, x2, y2 = map(int, line)
-                    if abs(x2 - x1) <= 3 and abs(y2 - y1) >= (bottom - top) * 0.72:
-                        xs.append(round((x1 + x2) / 2))
+            for line in normalized_hough_lines(v_lines, np):
+                x1, y1, x2, y2 = map(int, line.tolist())
+                if abs(x2 - x1) <= 3 and abs(y2 - y1) >= (bottom - top) * 0.72:
+                    xs.append(round((x1 + x2) / 2))
             xs = cluster(xs, 5)
             xs = [x for x in xs if pix.width * 0.04 <= x <= pix.width * 0.97]
 
