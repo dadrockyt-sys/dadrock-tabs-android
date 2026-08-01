@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "timingMapType": "professional-rhythm-tab-to-audio",
+  "song": "Are You Gonna Go My Way",
+  "artist": "Lenny Kravitz",
+  "audioSource": "public/gomywayfullaitest.m4a",
+  "baseTempoBpm": 129,
+  "measureCount": 113,
+  "alignmentSource": "public/gomyway-jimmy-paige-full-song-alignment-diagnosis.json",
+  "status": "timing-map-scaffold",
+  "meterRegions": [
+    {"startMeasure": 1, "endMeasure": 103, "numerator": 4, "denominator": 4},
+    {"startMeasure": 104, "endMeasure": 104, "numerator": 2, "denominator": 4},
+    {"startMeasure": 105, "endMeasure": 113, "numerator": 4, "denominator": 4}
+  ],
+  "alignment": {
+    "method": "professional-reference grid search against full-song extracted events",
+    "tempoSearchRangeBpm": [124.0, 134.0],
+    "offsetSearchRangeSeconds": [-8.0, 8.0],
+    "resolvedTempoBpm": null,
+    "resolvedFirstMeasureOffsetSeconds": null,
+    "resolvedFromDiagnosisAtRuntime": true
+  },
+  "measureBoundaryGeneration": {
+    "method": "tempo-and-meter-regions",
+    "performanceDriftCorrection": "pending",
+    "manualAnchorMeasures": []
+  },
+  "protectedReference": true,
+  "productionPromotionAllowed": false,
+  "notes": "The scorer must load the resolved tempo and offset from the preserved alignment diagnosis, then generate measure boundaries while honoring the 2/4 bar at measure 104. Additional anchors may be added if performance drift is detected."
+}
