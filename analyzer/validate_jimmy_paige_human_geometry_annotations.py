@@ -1,43 +1,66 @@
 import json
 from pathlib import Path
 
-QUEUE_PATH = Path("public/gomyway-jimmy-paige-human-geometry-annotation-queue.json")
-OUTPUT_PATH = Path("public/gomyway-jimmy-paige-human-geometry-annotation-validation.json")
-
-REQUIRED_GEOMETRY_FIELDS = (
-    "xStartNormalized",
-    "yStartNormalized",
-    "xEndNormalized",
-    "yEndNormalized",
-)
+ROOT = Path(__file__).resolve().parents[1]
+QUEUE_PATH = ROOT / "public/gomyway-jimmy-paige-human-geometry-annotation-queue.json"
+OUTPUT_PATH = ROOT / "public/gomyway-jimmy-paige-human-geometry-annotation-validation.json"
 
 
 def is_normalized_number(value):
     return isinstance(value, (int, float)) and 0.0 <= float(value) <= 1.0
 
 
+def get_geometry(row):
+    geometry = row.get("normalizedGeometry") or row.get("geometry") or {}
+
+    x_start = geometry.get("xStart")
+    y_start = geometry.get("yStart")
+    x_end = geometry.get("xEnd")
+    y_end = geometry.get("yEnd")
+
+    if x_start is None:
+        x_start = geometry.get("xStartNormalized")
+    if y_start is None:
+        y_start = geometry.get("yStartNormalized")
+    if x_end is None:
+        x_end = geometry.get("xEndNormalized")
+    if y_end is None:
+        y_end = geometry.get("yEndNormalized")
+
+    return x_start, y_start, x_end, y_end
+
+
+def is_human_confirmed(row):
+    if row.get("humanConfirmed") is True:
+        return True
+
+    verification = row.get("verification") or {}
+    return verification.get("confirmedAgainstProfessionalPdf") is True
+
+
 def main():
     if not QUEUE_PATH.exists():
         raise FileNotFoundError(f"Missing annotation queue: {QUEUE_PATH}")
 
-    queue_payload = json.loads(QUEUE_PATH.read_text())
-    rows = queue_payload.get("annotationQueue", [])
+    queue_payload = json.loads(QUEUE_PATH.read_text(encoding="utf-8"))
+    rows = queue_payload.get("queue") or queue_payload.get("annotationQueue") or []
 
     validated_rows = []
     complete_count = 0
     invalid_count = 0
 
     for row in rows:
-        geometry = row.get("geometry", {})
-        human_confirmed = row.get("humanConfirmed") is True
+        x_start, y_start, x_end, y_end = get_geometry(row)
+        human_confirmed = is_human_confirmed(row)
+
         fields_valid = all(
-            is_normalized_number(geometry.get(field))
-            for field in REQUIRED_GEOMETRY_FIELDS
+            is_normalized_number(value)
+            for value in (x_start, y_start, x_end, y_end)
         )
         box_order_valid = (
             fields_valid
-            and geometry["xEndNormalized"] >= geometry["xStartNormalized"]
-            and geometry["yEndNormalized"] >= geometry["yStartNormalized"]
+            and x_end >= x_start
+            and y_end >= y_start
         )
         row_complete = human_confirmed and fields_valid and box_order_valid
 
@@ -63,7 +86,7 @@ def main():
 
     output = {
         "validationName": "Jimmy Page human geometry annotation gate",
-        "sourceQueue": str(QUEUE_PATH),
+        "sourceQueue": str(QUEUE_PATH.relative_to(ROOT)),
         "annotationQueueRows": queue_count,
         "completedAnnotations": complete_count,
         "incompleteOrInvalidAnnotations": invalid_count,
@@ -75,7 +98,7 @@ def main():
         "rows": validated_rows,
     }
 
-    OUTPUT_PATH.write_text(json.dumps(output, indent=2) + "\n")
+    OUTPUT_PATH.write_text(json.dumps(output, indent=2) + "\n", encoding="utf-8")
 
     print("Human geometry annotation validation complete")
     print(f"Annotation queue rows: {queue_count}")
@@ -86,7 +109,7 @@ def main():
     print(f"Ready for technique renderer training: {all_complete}")
     print("Renderer changed: False")
     print("Production promotion allowed: False")
-    print(f"Output: {OUTPUT_PATH}")
+    print(f"Output: {OUTPUT_PATH.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
