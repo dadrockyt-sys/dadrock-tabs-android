@@ -109,8 +109,8 @@ def main() -> None:
     plan = load_json(PLAN_PATH)
 
     plan_ready = plan.get("completionPlanReady") is True
-    verified_count = plan.get("verifiedProfessionalValueMeasureCount")
-    missing_count = plan.get("missingProfessionalValueMeasureCount")
+    verified_count = plan.get("verifiedProfessionalValueCount")
+    missing_count = plan.get("missingProfessionalValueCount")
     structure_coverage = plan.get("fullSongStructureCoverage")
     timing_coverage = plan.get("fullSongTimingCoverage")
 
@@ -197,10 +197,7 @@ def main() -> None:
     print(f"Queued professional measures: {len(MISSING_MEASURES)}")
     print(f"Annotation batches: {len(batches)}")
     print(f"Tablet review pages: {output['tabletPageCount']}")
-    print(
-        "Professional PDF present: "
-        f"{professional_pdf is not None}"
-    )
+    print("Professional PDF present: " f"{professional_pdf is not None}")
     if professional_pdf is not None:
         print(f"Professional PDF: {professional_pdf.relative_to(ROOT)}")
     print(f"Candidate source artifacts: {len(candidate_jsons)}")
