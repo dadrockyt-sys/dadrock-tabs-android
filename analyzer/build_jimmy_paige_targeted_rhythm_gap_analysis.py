@@ -145,8 +145,12 @@ def main() -> None:
     regression_passed = regression.get(
         "protected113MeasureRhythmRegressionPassed"
     ) is True
+    covered_measure_count = regression.get("coveredMeasureCount")
+    if covered_measure_count is None:
+        covered_measure_count = len(regression.get("coveredMeasures") or [])
+
     full_coverage = (
-        regression.get("measuresCovered") == EXPECTED_MEASURES
+        covered_measure_count == EXPECTED_MEASURES
         and regression.get("missingMeasures") == []
         and regression.get("fullMeasureCoveragePassed") is True
     )
@@ -189,8 +193,9 @@ def main() -> None:
 
     output = {
         "analysisName": "Jimmy Page targeted 113-measure rhythm gap analysis",
-        "analysisVersion": 1,
+        "analysisVersion": 2,
         "expectedMeasureCount": EXPECTED_MEASURES,
+        "coveredMeasureCount": covered_measure_count,
         "regressionPassed": regression_passed,
         "fullMeasureCoveragePassed": full_coverage,
         "structuralCoveragePassed": structural_coverage,
@@ -231,6 +236,7 @@ def main() -> None:
 
     print("Targeted Jimmy Page rhythm gap analysis complete")
     print(f"Regression passed: {regression_passed}")
+    print(f"Covered measures: {covered_measure_count}/{EXPECTED_MEASURES}")
     print(f"Full measure coverage passed: {full_coverage}")
     print(f"Structural coverage passed: {structural_coverage}")
     print(f"Section plan complete: {section_plan_complete}")
