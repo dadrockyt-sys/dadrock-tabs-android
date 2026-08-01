@@ -2,33 +2,18 @@ import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PDFDocument } from 'pdf-lib';
 import { createJimmyPaigeV8Pdf } from '../lib/tabRenderer/pdfV8.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
 
-const ADAPTER_PATH = path.join(
-  ROOT,
-  'public',
-  'gomyway-jimmy-paige-readonly-production-renderer-adapter.json'
-);
-const DRY_RUN_PATH = path.join(
-  ROOT,
-  'public',
-  'gomyway-jimmy-paige-protected-production-renderer-dry-run.json'
-);
-const REPORT_PATH = path.join(
-  ROOT,
-  'public',
-  'gomyway-jimmy-paige-production-renderer-shadow-invocation.json'
-);
+const ADAPTER_PATH = path.join(ROOT, 'public', 'gomyway-jimmy-paige-readonly-production-renderer-adapter.json');
+const DRY_RUN_PATH = path.join(ROOT, 'public', 'gomyway-jimmy-paige-protected-production-renderer-dry-run.json');
+const REPORT_PATH = path.join(ROOT, 'public', 'gomyway-jimmy-paige-production-renderer-shadow-invocation.json');
 
 function sha256(bytes) {
   return crypto.createHash('sha256').update(bytes).digest('hex');
-}
-
-async function readJson(filePath) {
-  return JSON.parse(await fs.readFile(filePath, 'utf8'));
 }
 
 function assertion(condition, message) {
@@ -37,27 +22,18 @@ function assertion(condition, message) {
 
 const adapterBytesBefore = await fs.readFile(ADAPTER_PATH);
 const dryRunBytesBefore = await fs.readFile(DRY_RUN_PATH);
-const rendererBytesBefore = await fs.readFile(
-  path.join(ROOT, 'lib', 'tabRenderer', 'pdfV8.js')
-);
+const rendererPath = path.join(ROOT, 'lib', 'tabRenderer', 'pdfV8.js');
+const rendererBytesBefore = await fs.readFile(rendererPath);
 
 const adapter = JSON.parse(adapterBytesBefore.toString('utf8'));
 const dryRun = JSON.parse(dryRunBytesBefore.toString('utf8'));
 
 assertion(adapter.adapterPassed === true, 'Read-only adapter is not passing');
-assertion(
-  adapter.readyForFeatureFlaggedNoOutputSmokeTest === true,
-  'Read-only adapter is not ready'
-);
+assertion(adapter.readyForFeatureFlaggedNoOutputSmokeTest === true, 'Read-only adapter is not ready');
 assertion(dryRun.dryRunPassed === true, 'Protected production dry run is not passing');
-assertion(
-  dryRun.readyForProductionRendererShadowInvocation === true,
-  'Dry run is not ready for renderer shadow invocation'
-);
+assertion(dryRun.readyForProductionRendererShadowInvocation === true, 'Dry run is not ready for renderer shadow invocation');
 
-const adaptedRows = Array.isArray(adapter.adaptedRows)
-  ? adapter.adaptedRows
-  : [];
+const adaptedRows = Array.isArray(adapter.adaptedRows) ? adapter.adaptedRows : [];
 assertion(adaptedRows.length === 44, 'Expected exactly 44 adapted rows');
 
 const rhythmEvents = [];
@@ -70,13 +46,7 @@ for (const row of adaptedRows) {
   const positionInMeasure = Number(row?.phase ?? 0);
   const frets = row?.fretsHighToLow;
 
-  if (
-    !Number.isInteger(measureNumber) ||
-    !Number.isInteger(attackNumber) ||
-    !Number.isFinite(positionInMeasure) ||
-    !Array.isArray(frets) ||
-    frets.length !== 6
-  ) {
+  if (!Number.isInteger(measureNumber) || !Number.isInteger(attackNumber) || !Number.isFinite(positionInMeasure) || !Array.isArray(frets) || frets.length !== 6) {
     invalidRows += 1;
     continue;
   }
@@ -84,9 +54,7 @@ for (const row of adaptedRows) {
   measureNumbers.add(measureNumber);
 
   frets.forEach((fret, stringIndex) => {
-    if (fret === null || fret === undefined || fret === '' || fret === -1) {
-      return;
-    }
+    if (fret === null || fret === undefined || fret === '' || fret === -1) return;
 
     const numericFret = Number(fret);
     if (!Number.isFinite(numericFret) || numericFret < 0) {
@@ -131,13 +99,12 @@ const pdfBytes = await createJimmyPaigeV8Pdf({
 const pdfBuffer = Buffer.from(pdfBytes);
 const pdfHeaderValid = pdfBuffer.subarray(0, 8).toString('latin1').startsWith('%PDF-');
 const pdfEofValid = pdfBuffer.toString('latin1').trimEnd().endsWith('%%EOF');
-const pageCount = (pdfBuffer.toString('latin1').match(/\/Type \/Page\b/g) || []).length;
+const parsedPdf = await PDFDocument.load(pdfBuffer);
+const pageCount = parsedPdf.getPageCount();
 
 const adapterBytesAfter = await fs.readFile(ADAPTER_PATH);
 const dryRunBytesAfter = await fs.readFile(DRY_RUN_PATH);
-const rendererBytesAfter = await fs.readFile(
-  path.join(ROOT, 'lib', 'tabRenderer', 'pdfV8.js')
-);
+const rendererBytesAfter = await fs.readFile(rendererPath);
 
 const checks = {
   adapterPassed: adapter.adapterPassed === true,
@@ -151,8 +118,7 @@ const checks = {
   pdfHasPages: pageCount > 0,
   adapterShaUnchanged: sha256(adapterBytesBefore) === sha256(adapterBytesAfter),
   dryRunShaUnchanged: sha256(dryRunBytesBefore) === sha256(dryRunBytesAfter),
-  rendererSourceShaUnchanged:
-    sha256(rendererBytesBefore) === sha256(rendererBytesAfter),
+  rendererSourceShaUnchanged: sha256(rendererBytesBefore) === sha256(rendererBytesAfter),
   outputPdfWrittenFalse: true,
   productionOutputCreatedFalse: true,
 };
@@ -160,7 +126,7 @@ const checks = {
 const passed = Object.values(checks).every(Boolean);
 
 const report = {
-  benchmarkVersion: 1,
+  benchmarkVersion: 2,
   benchmarkType: 'production-renderer-shadow-invocation',
   rendererEntryPoint: 'lib/tabRenderer/pdfV8.js#createJimmyPaigeV8Pdf',
   checks,
