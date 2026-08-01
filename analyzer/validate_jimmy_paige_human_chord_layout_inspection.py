@@ -39,6 +39,15 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def attack_count(row: dict[str, Any]) -> int:
+    for key in ("rows", "attacks", "attackRows"):
+        value = row.get(key)
+        if isinstance(value, list):
+            return len(value)
+    value = row.get("attackCount", 0)
+    return int(value) if isinstance(value, (int, float)) else 0
+
+
 def main() -> None:
     preview = load(PREVIEW_JSON_PATH)
     report = load(PREVIEW_REPORT_PATH)
@@ -81,8 +90,7 @@ def main() -> None:
     measured_counts: dict[int, int] = {}
     for number in INSPECTED_MEASURES:
         row = by_measure.get(number, {})
-        attacks = row.get("attacks", row.get("attackRows", []))
-        count = len(attacks) if isinstance(attacks, list) else int(row.get("attackCount", 0))
+        count = attack_count(row)
         measured_counts[number] = count
         checks[f"measure{number}AttackCount"] = count == EXPECTED_ATTACK_COUNTS[number]
 
