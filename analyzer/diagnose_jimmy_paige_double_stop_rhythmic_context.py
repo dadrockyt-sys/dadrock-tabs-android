@@ -32,19 +32,18 @@ def _duration(event: dict[str, Any]) -> float:
 
 
 def _pair_center(item: dict[str, Any]) -> float:
-    pair = item.get("bestPair") or item.get("pair") or item
+    pair = item.get("selectedPairFeatures") or item.get("bestPair") or item.get("pair") or item
     if pair.get("pairCenterSeconds") is not None:
         return float(pair["pairCenterSeconds"])
+    if pair.get("centerSeconds") is not None:
+        return float(pair["centerSeconds"])
     return (
         float(pair.get("pitch58Start", 0.0))
         + float(pair.get("pitch62Start", 0.0))
     ) / 2.0
 
 
-def _context_report(
-    events: list[dict[str, Any]],
-    center: float,
-) -> dict[str, Any]:
+def _context_report(events: list[dict[str, Any]], center: float) -> dict[str, Any]:
     before = [
         event
         for event in events
@@ -94,32 +93,41 @@ def _context_report(
             }
             for event in first_after
         ],
-        "precedingTargetToneCount": sum(
-            1 for pitch in before_pitches if pitch in TARGET_PITCHES
-        ),
-        "precedingLowRegisterCount": sum(
-            1 for pitch in before_pitches if 40 <= pitch <= 57
-        ),
-        "precedingUpperRegisterCount": sum(
-            1 for pitch in before_pitches if 58 <= pitch <= 76
-        ),
-        "precedingAttackDensityPerSecond": round(
-            len(before) / CONTEXT_BEFORE_SECONDS,
-            3,
-        ),
-        "followingAttackDensityPerSecond": round(
-            len(after) / CONTEXT_AFTER_SECONDS,
-            3,
-        ),
+        "precedingTargetToneCount": sum(1 for pitch in before_pitches if pitch in TARGET_PITCHES),
+        "precedingLowRegisterCount": sum(1 for pitch in before_pitches if 40 <= pitch <= 57),
+        "precedingUpperRegisterCount": sum(1 for pitch in before_pitches if 58 <= pitch <= 76),
+        "precedingAttackDensityPerSecond": round(len(before) / CONTEXT_BEFORE_SECONDS, 3),
+        "followingAttackDensityPerSecond": round(len(after) / CONTEXT_AFTER_SECONDS, 3),
     }
 
 
 def _extract_feature_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    measure_reports = payload.get("measureReports")
+    if isinstance(measure_reports, list):
+        rows: list[dict[str, Any]] = []
+        for report in measure_reports:
+            classification = str(report.get("classification", ""))
+            selected = report.get("selectedPairFeatures")
+            if classification not in {"true-positive", "false-positive"}:
+                continue
+            if not isinstance(selected, dict):
+                continue
+            rows.append(
+                {
+                    "classification": classification,
+                    "measureNumber": report.get("measureNumber"),
+                    "selectedPairFeatures": selected,
+                }
+            )
+        if rows:
+            return rows
+
     for key in ("pairFeatures", "pairs", "reports", "featureRows", "items"):
         value = payload.get(key)
         if isinstance(value, list):
             return value
-    rows: list[dict[str, Any]] = []
+
+    rows = []
     for key in ("truePositivePairs", "falsePositivePairs"):
         value = payload.get(key)
         if isinstance(value, list):
@@ -144,45 +152,25 @@ def main() -> None:
 
     reports: list[dict[str, Any]] = []
     for item in rows:
-        classification = str(
-            item.get("classification")
-            or item.get("label")
-            or item.get("type")
-            or "unknown"
-        )
+        classification = str(item.get("classification") or item.get("label") or item.get("type") or "unknown")
         measure = int(item.get("measureNumber", item.get("measure", -1)))
+        features = item.get("selectedPairFeatures") or item
         center = _pair_center(item)
         reports.append(
             {
                 "classification": classification,
                 "measureNumber": measure,
-                "pairCenterPhase": item.get("pairCenterPhase", item.get("phase")),
-                "onsetSeparationSeconds": item.get(
-                    "onsetSeparationSeconds",
-                    item.get("separationSeconds", item.get("sep")),
-                ),
-                "sustainOverlapSeconds": item.get(
-                    "sustainOverlapSeconds",
-                    item.get("overlapSeconds", item.get("overlap")),
-                ),
-                "minimumPairDurationSeconds": item.get(
-                    "minimumPairDurationSeconds",
-                    item.get("minDurationSeconds", item.get("minDuration")),
-                ),
-                "nearbySupportCount": item.get(
-                    "nearbySupportCount",
-                    item.get("supportCount", item.get("support")),
-                ),
+                "pairCenterPhase": features.get("centerPhase", features.get("pairCenterPhase", features.get("phase"))),
+                "onsetSeparationSeconds": features.get("onsetSeparationSeconds", features.get("separationSeconds", features.get("sep"))),
+                "sustainOverlapSeconds": features.get("sustainOverlapSeconds", features.get("overlapSeconds", features.get("overlap"))),
+                "minimumPairDurationSeconds": features.get("minimumDurationSeconds", features.get("minimumPairDurationSeconds", features.get("minDurationSeconds", features.get("minDuration")))),
+                "nearbySupportCount": features.get("nearbyNonTargetAttackSupport", features.get("nearbySupportCount", features.get("supportCount", features.get("support")))),
                 **_context_report(events, center),
             }
         )
 
-    true_rows = [
-        item for item in reports if "true" in item["classification"].lower()
-    ]
-    false_rows = [
-        item for item in reports if "false" in item["classification"].lower()
-    ]
+    true_rows = [item for item in reports if "true" in item["classification"].lower()]
+    false_rows = [item for item in reports if "false" in item["classification"].lower()]
 
     def _mean(rows: list[dict[str, Any]], key: str) -> float | None:
         values = [float(item[key]) for item in rows if item.get(key) is not None]
@@ -191,30 +179,14 @@ def main() -> None:
     summary = {
         "truePositiveCount": len(true_rows),
         "falsePositiveCount": len(false_rows),
-        "truePositiveMeanPrecedingDensity": _mean(
-            true_rows, "precedingAttackDensityPerSecond"
-        ),
-        "falsePositiveMeanPrecedingDensity": _mean(
-            false_rows, "precedingAttackDensityPerSecond"
-        ),
-        "truePositiveMeanFollowingDensity": _mean(
-            true_rows, "followingAttackDensityPerSecond"
-        ),
-        "falsePositiveMeanFollowingDensity": _mean(
-            false_rows, "followingAttackDensityPerSecond"
-        ),
-        "truePositiveMeanPrecedingLowRegisterCount": _mean(
-            true_rows, "precedingLowRegisterCount"
-        ),
-        "falsePositiveMeanPrecedingLowRegisterCount": _mean(
-            false_rows, "precedingLowRegisterCount"
-        ),
-        "truePositiveMeanPrecedingTargetToneCount": _mean(
-            true_rows, "precedingTargetToneCount"
-        ),
-        "falsePositiveMeanPrecedingTargetToneCount": _mean(
-            false_rows, "precedingTargetToneCount"
-        ),
+        "truePositiveMeanPrecedingDensity": _mean(true_rows, "precedingAttackDensityPerSecond"),
+        "falsePositiveMeanPrecedingDensity": _mean(false_rows, "precedingAttackDensityPerSecond"),
+        "truePositiveMeanFollowingDensity": _mean(true_rows, "followingAttackDensityPerSecond"),
+        "falsePositiveMeanFollowingDensity": _mean(false_rows, "followingAttackDensityPerSecond"),
+        "truePositiveMeanPrecedingLowRegisterCount": _mean(true_rows, "precedingLowRegisterCount"),
+        "falsePositiveMeanPrecedingLowRegisterCount": _mean(false_rows, "precedingLowRegisterCount"),
+        "truePositiveMeanPrecedingTargetToneCount": _mean(true_rows, "precedingTargetToneCount"),
+        "falsePositiveMeanPrecedingTargetToneCount": _mean(false_rows, "precedingTargetToneCount"),
     }
 
     report = {
