@@ -49,15 +49,16 @@ def event(
 
 
 def main_em_riff_events(include_double_stop: bool) -> list[dict[str, Any]]:
-    # Page 1 professional rhythm tab, measures 1-16.
-    # Sixteenth-note positions are encoded as a stable scoring grid.
+    # Professional rhythm tab measures 1-16, strings indexed high-to-low:
+    # 0=e, 1=B, 2=G, 3=D, 4=A, 5=low E.
+    # The core figure is G2 bend/release, G0, D2, A0, D0, D2, low-E0.
     events = [
-        event(0, 3, 2, duration_steps=2, technique="full-step-bend-release", bend_semitones=2),
-        event(2, 3, 0, duration_steps=2),
-        event(4, 4, 2, duration_steps=2),
-        event(6, 5, 0, duration_steps=2),
+        event(0, 2, 2, duration_steps=2, technique="full-step-bend-release", bend_semitones=2),
+        event(2, 2, 0, duration_steps=2),
+        event(4, 3, 2, duration_steps=2),
+        event(6, 4, 0, duration_steps=2),
         event(8, 3, 0),
-        event(10, 4, 2, duration_steps=2),
+        event(10, 3, 2, duration_steps=2),
         event(12, 5, 0),
     ]
     if include_double_stop:
@@ -162,7 +163,7 @@ def main() -> None:
             "readyForFullSongTraining": False,
         },
         "notes": (
-            "Measures 1-16 are now encoded event by event from the professional rhythm tab. "
+            "Measures 1-16 are encoded event by event from the professional rhythm tab. "
             "Measures 17-113 remain scaffolded and must be expanded before full-song >=90% automation."
         ),
     }
