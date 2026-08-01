@@ -9,13 +9,16 @@ from typing import Any
 
 import modal
 
-from run_jimmy_paige_full_song_deployed_winner_test import _build_audio_only_wav
-from run_jimmy_paige_low_register_recovery_training_loop import (
-    CALIBRATION_PATH,
-    REPO_ROOT,
-    _load_json,
-    _measure_bounds,
+# Keep repository-only helper imports out of module scope. Modal imports this
+# file inside the remote container, where the other analyzer scripts are not
+# packaged. The local entrypoint imports those helpers only on the Codespace.
+REPO_ROOT = Path(__file__).resolve().parents[1]
+OUTPUT_PATH = (
+    REPO_ROOT
+    / "public"
+    / "gomyway-jimmy-paige-raw-chord-activation-diagnosis.json"
 )
+LOG_PATH = REPO_ROOT / "jimmy-paige-raw-chord-activation-heartbeat.log"
 
 app = modal.App("dadrock-jimmy-paige-raw-chord-activation-diagnosis")
 
@@ -24,13 +27,6 @@ image = (
     .apt_install("ffmpeg")
     .pip_install("basic-pitch")
 )
-
-OUTPUT_PATH = (
-    REPO_ROOT
-    / "public"
-    / "gomyway-jimmy-paige-raw-chord-activation-diagnosis.json"
-)
-LOG_PATH = REPO_ROOT / "jimmy-paige-raw-chord-activation-heartbeat.log"
 
 WINNING_PARAMETERS = {
     "onset_threshold": 0.28,
@@ -180,6 +176,17 @@ def inspect_raw_activations(
 
 @app.local_entrypoint()
 def main() -> None:
+    # These modules are present in the Codespace but intentionally not needed
+    # by the remote Modal container.
+    from run_jimmy_paige_full_song_deployed_winner_test import (
+        _build_audio_only_wav,
+    )
+    from run_jimmy_paige_low_register_recovery_training_loop import (
+        CALIBRATION_PATH,
+        _load_json,
+        _measure_bounds,
+    )
+
     heartbeat = max(5, int(os.getenv("JIMMY_HEARTBEAT_SECONDS", "15")))
     total_timeout = max(60, int(os.getenv("JIMMY_TOTAL_TIMEOUT_SECONDS", "3600")))
 
