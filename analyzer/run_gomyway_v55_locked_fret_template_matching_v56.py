@@ -41,7 +41,16 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def resolve_crop(job: dict[str, Any]) -> Path:
-    for key in ("sourceCrop", "cropPath", "rowCrop", "imagePath", "previewPath"):
+    # V49/V51 store the canonical row image under `crop`. Keep the broader
+    # fallbacks for compatibility with later diagnostic schemas.
+    for key in (
+        "crop",
+        "sourceCrop",
+        "cropPath",
+        "rowCrop",
+        "imagePath",
+        "previewPath",
+    ):
         value = job.get(key)
         if isinstance(value, str) and value:
             path = ROOT / value
@@ -88,7 +97,6 @@ def score_patch(cv2: Any, patch: Any, templates: dict[str, list[dict[str, Any]]]
             scores.append((score, str(entry.get("templateId", ""))))
         scores.sort(reverse=True)
         top = scores[: min(5, len(scores))]
-        # Median-like robust average of the strongest locked examples.
         per_fret[fret] = sum(score for score, _ in top) / len(top)
         best_template_by_fret[fret] = top[0][1]
 
@@ -150,7 +158,6 @@ def main() -> None:
         if len(rows) != 6:
             raise RuntimeError("V55 canonical row count changed")
 
-        # Dark glyph foreground on white background.
         binary = cv2.adaptiveThreshold(
             gray,
             255,
@@ -160,7 +167,6 @@ def main() -> None:
             8,
         )
 
-        # Remove only a narrow horizontal band centered on each trusted string row.
         cleaned = binary.copy()
         for row_y in rows:
             y = max(0, min(cleaned.shape[0] - 1, int(round(row_y))))
