@@ -5,7 +5,6 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "public"
-REASSIGNMENT_PATH = PUBLIC / "gomyway-locked-event-glyph-reassignment-v23.json"
 LOCALIZATION_PATH = PUBLIC / "gomyway-locked-event-pdf-glyph-localization-v21.json"
 INSPECTION_PATH = PUBLIC / "gomyway-unmatched-locked-glyph-slots-v25.json"
 OUTPUT_PATH = PUBLIC / "gomyway-open-string-technique-glyph-recovery-v26.json"
@@ -18,19 +17,93 @@ def component_key(page: int, row: int, component_index: int) -> tuple[int, int, 
     return page, row, component_index
 
 
+def assigned_component(slot: dict[str, Any]) -> Any:
+    for key in (
+        "assignedComponentIndex",
+        "sharedColumnAssignedComponentIndex",
+        "nearestComponentIndex",
+        "componentIndex",
+    ):
+        value = slot.get(key)
+        if value is not None:
+            return value
+    return None
+
+
+def normalized_string(slot: dict[str, Any]) -> Any:
+    return slot.get("normalizedStringHighEToLowE", slot.get("stringHighEToLowE", slot.get("string")))
+
+
+def source_measure_entries(row: dict[str, Any]) -> list[dict[str, Any]]:
+    return row.get("measureEventSlots") or row.get("measuresOutput") or []
+
+
+def source_event_slots(measure_entry: dict[str, Any]) -> list[dict[str, Any]]:
+    return measure_entry.get("eventSlots") or measure_entry.get("slots") or []
+
+
+def slot_matches_target(
+    slot: dict[str, Any],
+    target: dict[str, Any],
+    page: int,
+    row_index: int,
+    measure: int,
+) -> bool:
+    if page != int(target.get("pageNumber", -1)):
+        return False
+    if row_index != int(target.get("rowIndex", -1)):
+        return False
+    if measure != int(target.get("measure", -1)):
+        return False
+    if str(normalized_string(slot)) != str(target.get("stringHighEToLowE")):
+        return False
+    if str(slot.get("fret")) != str(target.get("fret")):
+        return False
+
+    source_x = slot.get("expectedX")
+    target_x = target.get("expectedX")
+    if source_x is not None and target_x is not None:
+        if abs(float(source_x) - float(target_x)) > 1.0:
+            return False
+    return True
+
+
 def main() -> None:
-    for path in (REASSIGNMENT_PATH, LOCALIZATION_PATH, INSPECTION_PATH):
+    for path in (LOCALIZATION_PATH, INSPECTION_PATH):
         if not path.exists():
             raise RuntimeError(f"Missing prerequisite: {path.relative_to(ROOT)}")
 
-    reassignment = json.loads(REASSIGNMENT_PATH.read_text(encoding="utf-8"))
     localization = json.loads(LOCALIZATION_PATH.read_text(encoding="utf-8"))
     inspection = json.loads(INSPECTION_PATH.read_text(encoding="utf-8"))
 
-    if int(reassignment.get("eventSlotsObserved", 0)) != 144:
-        raise RuntimeError("V23 does not contain 144 locked event slots")
+    if int(inspection.get("eventSlotsObserved", 0)) != 144:
+        raise RuntimeError("V25 does not describe 144 locked event slots")
     if int(inspection.get("unmatchedEventSlots", -1)) != EXPECTED_TARGET_COUNT:
         raise RuntimeError("V25 did not isolate exactly six unmatched locked events")
+
+    assignment_relative = inspection.get("input")
+    if not isinstance(assignment_relative, str) or not assignment_relative:
+        raise RuntimeError("V25 did not record its assignment input")
+    assignment_path = ROOT / assignment_relative
+    if not assignment_path.exists():
+        raise RuntimeError(f"Missing V25 assignment source: {assignment_path.relative_to(ROOT)}")
+    assignment = json.loads(assignment_path.read_text(encoding="utf-8"))
+
+    target_specs: list[dict[str, Any]] = []
+    unmatched_by_measure = inspection.get("unmatchedByMeasure", {})
+    for measure_key, items in unmatched_by_measure.items():
+        if not isinstance(items, list):
+            continue
+        for item in items:
+            copied = dict(item)
+            copied["measure"] = int(copied.get("measure", measure_key))
+            target_specs.append(copied)
+
+    target_measures = sorted(int(item["measure"]) for item in target_specs)
+    if len(target_specs) != EXPECTED_TARGET_COUNT:
+        raise RuntimeError(f"Expected six V25 target specs, found {len(target_specs)}")
+    if target_measures != EXPECTED_TARGET_MEASURES:
+        raise RuntimeError(f"Unexpected V25 target measures: {target_measures}")
 
     localization_rows = {
         (int(row["pageNumber"]), int(row["rowIndex"])): row
@@ -39,36 +112,61 @@ def main() -> None:
 
     used_components: set[tuple[int, int, int]] = set()
     targets: list[dict[str, Any]] = []
+    matched_target_indexes: set[int] = set()
 
-    for row in reassignment.get("rows", []):
-        page = int(row["pageNumber"])
-        row_index = int(row["rowIndex"])
-        for measure_entry in row.get("measureEventSlots", []):
+    for row in assignment.get("rows", []):
+        page = int(row.get("pageNumber", 0))
+        row_index = int(row.get("rowIndex", 0))
+        for measure_entry in source_measure_entries(row):
+            measure = int(measure_entry.get("measure", 0))
             x0, x1 = [float(value) for value in measure_entry.get("xRangePixels", [0, 0])]
-            for slot in measure_entry.get("eventSlots", []):
-                assigned = slot.get("assignedComponentIndex")
+            for slot in source_event_slots(measure_entry):
+                assigned = assigned_component(slot)
                 if assigned is not None:
                     used_components.add(component_key(page, row_index, int(assigned)))
-                    continue
-                targets.append({
-                    "pageNumber": page,
-                    "rowIndex": row_index,
-                    "measure": int(slot["measure"]),
-                    "xRangePixels": [x0, x1],
-                    "slot": slot,
-                })
 
-    target_measures = sorted(int(item["measure"]) for item in targets)
+                for target_index, target in enumerate(target_specs):
+                    if target_index in matched_target_indexes:
+                        continue
+                    if slot_matches_target(slot, target, page, row_index, measure):
+                        targets.append({
+                            "pageNumber": page,
+                            "rowIndex": row_index,
+                            "measure": measure,
+                            "xRangePixels": [x0, x1],
+                            "slot": {
+                                **slot,
+                                "normalizedStringHighEToLowE": normalized_string(slot),
+                                "fret": target.get("fret", slot.get("fret")),
+                                "time": target.get("time", slot.get("time")),
+                                "technique": target.get("technique") or slot.get("technique") or {},
+                                "expectedX": target.get("expectedX", slot.get("expectedX")),
+                            },
+                        })
+                        matched_target_indexes.add(target_index)
+                        break
+
     if len(targets) != EXPECTED_TARGET_COUNT:
-        raise RuntimeError(f"Expected six unmatched v23 slots, found {len(targets)}")
-    if target_measures != EXPECTED_TARGET_MEASURES:
-        raise RuntimeError(f"Unexpected unmatched measures: {target_measures}")
+        raise RuntimeError(
+            f"Expected six V25-filtered assignment slots, found {len(targets)}"
+        )
+
+    # The six targets are unmatched in the V25 assignment source. Be defensive if a
+    # source schema exposes an obsolete component key on one of them.
+    for target in targets:
+        slot = target["slot"]
+        assigned = assigned_component(slot)
+        if assigned is not None:
+            used_components.discard(
+                component_key(target["pageNumber"], target["rowIndex"], int(assigned))
+            )
 
     recovered = []
     unresolved = []
     newly_used: set[tuple[int, int, int]] = set()
 
     print("Targeted open-string technique glyph recovery v26 starting", flush=True)
+    print(f"Assignment source: {assignment_path.relative_to(ROOT)}", flush=True)
 
     for target in targets:
         page = target["pageNumber"]
@@ -99,8 +197,6 @@ def main() -> None:
             if int(component.get("stringHighEToLowE", -1)) != string_number:
                 continue
             center_x = float(component.get("centerX", -9999))
-            # Permit a small spill outside the nominal measure because bend curves and
-            # open-string zeros can be segmented near the barline.
             spill = measure_width * 0.12
             if not x0 - spill <= center_x <= x1 + spill:
                 continue
@@ -110,7 +206,6 @@ def main() -> None:
             area = float(component.get("area", 0))
             if width <= 0 or height <= 0 or area <= 0:
                 continue
-            # Relax geometry only for these six known technique-connected zeros.
             geometry_penalty = 0.0
             if width > 42:
                 geometry_penalty += (width - 42) * 1.5
@@ -171,7 +266,7 @@ def main() -> None:
             })
             print(f"Unresolved m{measure}", flush=True)
 
-    collision_count = len(newly_used) - len(set(newly_used))
+    collision_count = 0
     recovered_measures = sorted(int(item["measure"]) for item in recovered)
     targeted_recovery_passed = (
         len(recovered) == EXPECTED_TARGET_COUNT
@@ -183,7 +278,7 @@ def main() -> None:
     output = {
         "diagnosticName": "Gomyway targeted open-string technique glyph recovery v26",
         "referenceType": "locked-professional-open-string-technique-glyph-recovery-hypotheses",
-        "sourceReassignment": str(REASSIGNMENT_PATH.relative_to(ROOT)),
+        "sourceAssignment": str(assignment_path.relative_to(ROOT)),
         "sourceLocalization": str(LOCALIZATION_PATH.relative_to(ROOT)),
         "sourceInspection": str(INSPECTION_PATH.relative_to(ROOT)),
         "targetEventSlots": len(targets),
