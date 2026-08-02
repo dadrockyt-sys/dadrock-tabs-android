@@ -26,22 +26,41 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def find_rows(value: Any) -> list[dict[str, Any]]:
+def collect_rows(value: Any, inherited_page: int = 0) -> list[dict[str, Any]]:
+    """Collect every localized row, preserving its enclosing page number.
+
+    V10 stores rows separately under each entry in ``pages``. The original v48
+    helper returned only the first page's rows, which meant measures 17-113 were
+    never reached. This collector deliberately flattens all page groups.
+    """
+    collected: list[dict[str, Any]] = []
+
     if isinstance(value, dict):
+        page_number = inherited_page
+        try:
+            page_number = int(value.get("pageNumber", inherited_page))
+        except (TypeError, ValueError):
+            page_number = inherited_page
+
         rows = value.get("rows")
-        if isinstance(rows, list) and rows and all(isinstance(row, dict) for row in rows):
-            if any("measures" in row for row in rows):
-                return rows
-        for child in value.values():
-            found = find_rows(child)
-            if found:
-                return found
+        if isinstance(rows, list):
+            for row in rows:
+                if not isinstance(row, dict) or "measures" not in row:
+                    continue
+                normalized = dict(row)
+                normalized.setdefault("pageNumber", page_number)
+                collected.append(normalized)
+
+        for key, child in value.items():
+            if key == "rows":
+                continue
+            collected.extend(collect_rows(child, page_number))
+
     elif isinstance(value, list):
         for child in value:
-            found = find_rows(child)
-            if found:
-                return found
-    return []
+            collected.extend(collect_rows(child, inherited_page))
+
+    return collected
 
 
 def normalize_measures(row: dict[str, Any]) -> list[int]:
@@ -69,8 +88,10 @@ def main() -> None:
         raise RuntimeError("V47 did not approve all locked geometry rows")
     if validation.get("lockedMeasures1To16Modified") is not False:
         raise RuntimeError("V47 locked-measure safeguard is not intact")
+    if localization.get("completeLocalizationScaffoldPassed") is not True:
+        raise RuntimeError("V10 canonical localization scaffold did not pass")
 
-    localized_rows = find_rows(localization)
+    localized_rows = collect_rows(localization)
     if not localized_rows:
         raise RuntimeError("Could not find canonical localized rows in v10")
 
@@ -99,6 +120,8 @@ def main() -> None:
                 "pageNumber": page_number,
                 "rowIndex": row_index,
                 "measures": measures,
+                "pixelBounds": row.get("pixelBounds", {}),
+                "crop": row.get("crop"),
                 "stringRowsPixels": string_rows,
                 "approvedStringGeometryApplied": True,
                 "candidateGlyphRecognitionPerformed": False,
@@ -156,6 +179,9 @@ def main() -> None:
     print("Production promotion allowed: False")
     print(f"Next required stage: {output['nextRequiredStage']}")
     print(f"Output: {OUTPUT.relative_to(ROOT)}")
+
+    if not complete:
+        raise RuntimeError("V48 failed complete measures 17-113 coverage")
 
 
 if __name__ == "__main__":
