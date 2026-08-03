@@ -59,7 +59,7 @@ def git_checkpoint(attempt: int, profile: dict[str, Any]) -> None:
     subprocess.run(["git", "config", "user.name", "github-actions[bot]"], cwd=ROOT, check=True)
     subprocess.run(["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"], cwd=ROOT, check=True)
     subprocess.run(["git", "commit", "-m", f"Checkpoint Gomyway adaptive rhythm attempt {attempt}"], cwd=ROOT, check=True)
-    subprocess.run(["git", "pull", "--rebase", "origin", "jimmy-paige-v8-section-detection"], cwd=ROOT, check=True)
+    subprocess.run(["git", "pull", "--rebase", "--autostash", "origin", "jimmy-paige-v8-section-detection"], cwd=ROOT, check=True)
     subprocess.run(["git", "push", "origin", "HEAD:jimmy-paige-v8-section-detection"], cwd=ROOT, check=True)
 
 
