@@ -1,0 +1,77 @@
+name: Gomyway Rhythm Reference Training
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_attempts:
+        description: Maximum attempts for this run
+        required: true
+        default: "250"
+      max_hours:
+        description: Maximum training hours
+        required: true
+        default: "10"
+
+permissions:
+  contents: write
+
+env:
+  TRAINING_BRANCH: jimmy-paige-v8-section-detection
+  SAVE_TRAINING_CHECKPOINTS_TO_GIT: "true"
+  PYTHONUNBUFFERED: "1"
+
+concurrency:
+  group: gomyway-rhythm-reference-training
+  cancel-in-progress: false
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 720
+
+    steps:
+      - name: Check out training branch
+        uses: actions/checkout@v4
+        with:
+          ref: jimmy-paige-v8-section-detection
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install analyzer dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f analyzer/requirements.txt ]; then
+            pip install -r analyzer/requirements.txt
+          fi
+
+      - name: Run resumable training loop
+        run: |
+          python analyzer/run_reference_training_loop.py \
+            --profile analyzer/training_profiles/rhythm-guitar-reference.json \
+            --max-attempts "${{ inputs.max_attempts }}" \
+            --max-hours "${{ inputs.max_hours }}"
+
+      - name: Upload current training state
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-rhythm-training-${{ github.run_id }}
+          path: |
+            public/training/gomyway-rhythm-17-113/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Print final status
+        if: always()
+        run: |
+          if [ -f public/training/gomyway-rhythm-17-113/morning-summary.json ]; then
+            cat public/training/gomyway-rhythm-17-113/morning-summary.json
+          else
+            echo "No morning summary was created."
+          fi
