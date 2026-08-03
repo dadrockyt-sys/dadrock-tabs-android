@@ -1,21 +1,25 @@
 {
   "status": "attempt-or-time-limit-reached",
   "startedAt": "2026-08-03T03:44:56.456190+00:00",
-  "lastHeartbeatAt": "2026-08-03T03:45:50.842566+00:00",
-  "resumeFromCompletedAttempts": 0,
-  "currentAttempt": 42,
+  "finishedAt": "2026-08-03T03:45:50.842549+00:00",
+  "completedAttempts": 42,
   "bestCompositePercent": 34.667032,
   "targetCompositePercent": 90.0,
+  "targetReached": false,
+  "bestAttempt": 1,
+  "bestCategoryScoresPercent": {
+    "onsetTiming": 52.148395,
+    "durationRhythm": 31.451613,
+    "noteFret": 0.0,
+    "stringChoice": 20.46707,
+    "technique": 56.854839,
+    "sectionMeasure": 100.0
+  },
   "protectedRules": {
     "lockedMeasures1To16Modified": false,
     "v7EventsModified": false,
     "rendererModified": false,
     "professionalReferenceModified": false,
     "candidateAudioModified": false
-  },
-  "attemptStartedAt": "2026-08-03T03:45:49.697250+00:00",
-  "completedAttempts": 42,
-  "lastAttemptCompositePercent": 13.234753,
-  "lastAttemptCompletedAt": "2026-08-03T03:45:49.773440+00:00",
-  "finishedAt": "2026-08-03T03:45:50.842549+00:00"
+  }
 }
