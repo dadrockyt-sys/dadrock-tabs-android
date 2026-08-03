@@ -1,0 +1,20 @@
+{
+  "status": "running",
+  "startedAt": "2026-08-03T03:44:56.456190+00:00",
+  "lastHeartbeatAt": "2026-08-03T03:44:56.580818+00:00",
+  "resumeFromCompletedAttempts": 0,
+  "currentAttempt": 1,
+  "bestCompositePercent": 34.667032,
+  "targetCompositePercent": 90.0,
+  "protectedRules": {
+    "lockedMeasures1To16Modified": false,
+    "v7EventsModified": false,
+    "rendererModified": false,
+    "professionalReferenceModified": false,
+    "candidateAudioModified": false
+  },
+  "attemptStartedAt": "2026-08-03T03:44:56.456559+00:00",
+  "completedAttempts": 1,
+  "lastAttemptCompositePercent": 34.667032,
+  "lastAttemptCompletedAt": "2026-08-03T03:44:56.579534+00:00"
+}
