@@ -1,0 +1,38 @@
+{
+  "status": "generation-limit-reached",
+  "generation": 1,
+  "startedAt": "2026-08-03T04:11:07.713384+00:00",
+  "finishedAt": "2026-08-03T04:17:14.111995+00:00",
+  "completedAttempts": 192,
+  "generationImprovementPercent": 0.807709,
+  "consecutiveStalledGenerations": 0,
+  "bestCompositePercent": 38.231126,
+  "targetCompositePercent": 90.0,
+  "targetReached": false,
+  "continueRequested": true,
+  "bestAttempt": 94,
+  "bestParameters": {
+    "tempoBpm": 127.390049,
+    "audioOriginSeconds": -0.45,
+    "octaveShift": 0,
+    "stringStrategy": "lowest-fret",
+    "minimumConfidence": 0.16,
+    "searchRadiusSeconds": 0.151579,
+    "adaptiveSeedComposite": 37.64475
+  },
+  "bestCategoryScoresPercent": {
+    "onsetTiming": 52.676953,
+    "durationRhythm": 30.846774,
+    "noteFret": 14.665659,
+    "stringChoice": 18.978495,
+    "technique": 57.459677,
+    "sectionMeasure": 98.969072
+  },
+  "protectedRules": {
+    "lockedMeasures1To16Modified": false,
+    "v7EventsModified": false,
+    "rendererModified": false,
+    "professionalReferenceModified": false,
+    "candidateAudioModified": false
+  }
+}
