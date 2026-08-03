@@ -36,11 +36,33 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Verify required inputs
+      - name: Build and verify scored-training inputs
         run: |
-          test -f public/gomyway-full-song-v8-rhythm-candidates.json
+          set -euo pipefail
+          echo "Verifying approved professional reference..."
           test -f public/gomyway-final-unique-source-resolution-audit.json
           python analyzer/build_gomyway_final_professional_reference_17_113.py
+
+          echo "Verifying tracked winner-event source..."
+          test -f public/gomyway-jimmy-paige-full-song-winner-events.json
+
+          echo "Building measure/step rhythm candidates at 129 BPM from audio origin 0.0s..."
+          python analyzer/build_gomyway_rhythm_candidates_from_winner_events.py
+          test -f public/gomyway-full-song-v8-rhythm-candidates.json
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path("public/gomyway-full-song-v8-rhythm-candidates.json")
+          data = json.loads(path.read_text())
+          assert data.get("readyForScoredTraining") is True
+          assert int(data.get("eventCount", 0)) > 0
+          assert int(data.get("measureCoverageCount", 0)) > 0
+          print("PREFLIGHT PASSED")
+          print("Candidate events:", data["eventCount"])
+          print("Measures covered:", data["measureCoverageCount"])
+          print("First/last:", data["measuresCovered"][0], data["measuresCovered"][-1])
+          PY
 
       - name: Run resumable scored training
         env:
@@ -60,14 +82,21 @@ jobs:
           path: |
             public/training/gomyway-rhythm-17-113/
             public/gomyway-professional-rhythm-reference-17-113.json
+            public/gomyway-full-song-v8-rhythm-candidates.json
+            public/gomyway-full-song-v8-rhythm-candidates-audit.json
 
       - name: Final checkpoint commit
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/training/gomyway-rhythm-17-113 public/gomyway-professional-rhythm-reference-17-113.json || true
+          git add \
+            public/training/gomyway-rhythm-17-113 \
+            public/gomyway-professional-rhythm-reference-17-113.json \
+            public/gomyway-full-song-v8-rhythm-candidates.json \
+            public/gomyway-full-song-v8-rhythm-candidates-audit.json || true
           if ! git diff --cached --quiet; then
             git commit -m "Save final Gomyway overnight training state"
+            git pull --rebase origin jimmy-paige-v8-section-detection
             git push origin HEAD:jimmy-paige-v8-section-detection
           fi
