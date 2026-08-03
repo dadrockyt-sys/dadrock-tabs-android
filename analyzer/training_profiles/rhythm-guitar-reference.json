@@ -1,0 +1,51 @@
+{
+  "profileVersion": 1,
+  "profileName": "DadRock rhythm guitar professional-reference training",
+  "instrument": "rhythm-guitar",
+  "stringCount": 6,
+  "measureStart": 17,
+  "measureEnd": 113,
+  "targetCompositePercent": 90.0,
+  "weights": {
+    "noteFret": 0.35,
+    "timingDuration": 0.25,
+    "stringChoice": 0.15,
+    "technique": 0.15,
+    "chordPhraseConsistency": 0.10
+  },
+  "minimumCategoryPercent": {
+    "noteFret": 88.0,
+    "timingDuration": 88.0,
+    "stringChoice": 82.0,
+    "technique": 80.0,
+    "chordPhraseConsistency": 85.0
+  },
+  "heartbeatSeconds": 60,
+  "checkpointDirectory": "public/training/gomyway-rhythm-17-113/checkpoints",
+  "bestCheckpointPath": "public/training/gomyway-rhythm-17-113/best.json",
+  "statusPath": "public/training/gomyway-rhythm-17-113/status.json",
+  "summaryPath": "public/training/gomyway-rhythm-17-113/morning-summary.json",
+  "attemptResultPath": "public/training/gomyway-rhythm-17-113/current-attempt-result.json",
+  "attemptCommand": "python analyzer/run_gomyway_rhythm_training_attempt_17_113.py",
+  "protectedInputs": [
+    "public/gomyway-full-song-v8-intro-rhythm-template-lock.json",
+    "public/gomyway-full-song-v8-verse1-rhythm-consensus.json"
+  ],
+  "protectedRules": {
+    "lockedMeasures1To16Modified": false,
+    "v7EventsModified": false,
+    "rendererModified": false,
+    "professionalReferenceModified": false,
+    "candidateAudioModified": false
+  },
+  "portableInstrumentProfiles": {
+    "bass": {
+      "stringCount": 4,
+      "profilePath": "analyzer/training_profiles/bass-4-string-reference.json"
+    },
+    "lead": {
+      "stringCount": 6,
+      "profilePath": "analyzer/training_profiles/lead-guitar-reference.json"
+    }
+  }
+}
