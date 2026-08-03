@@ -1,24 +1,30 @@
 {
-  "profileVersion": 1,
+  "profileVersion": 2,
   "profileName": "DadRock rhythm guitar professional-reference training",
   "instrument": "rhythm-guitar",
   "stringCount": 6,
   "measureStart": 17,
   "measureEnd": 113,
+  "gridSubdivision": "sixteenth-note",
+  "stepsPerQuarter": 4,
+  "defaultStepsPerMeasure": 16,
+  "timingToleranceSteps": 1,
   "targetCompositePercent": 90.0,
   "weights": {
-    "noteFret": 0.35,
-    "timingDuration": 0.25,
-    "stringChoice": 0.15,
-    "technique": 0.15,
-    "chordPhraseConsistency": 0.10
+    "onsetTiming": 0.30,
+    "durationRhythm": 0.20,
+    "noteFret": 0.25,
+    "stringChoice": 0.10,
+    "technique": 0.10,
+    "sectionMeasure": 0.05
   },
   "minimumCategoryPercent": {
+    "onsetTiming": 88.0,
+    "durationRhythm": 85.0,
     "noteFret": 88.0,
-    "timingDuration": 88.0,
     "stringChoice": 82.0,
     "technique": 80.0,
-    "chordPhraseConsistency": 85.0
+    "sectionMeasure": 95.0
   },
   "heartbeatSeconds": 60,
   "checkpointDirectory": "public/training/gomyway-rhythm-17-113/checkpoints",
@@ -27,6 +33,9 @@
   "summaryPath": "public/training/gomyway-rhythm-17-113/morning-summary.json",
   "attemptResultPath": "public/training/gomyway-rhythm-17-113/current-attempt-result.json",
   "attemptCommand": "python analyzer/run_gomyway_rhythm_training_attempt_17_113.py",
+  "candidateEventsPath": "public/gomyway-full-song-v8-rhythm-candidates.json",
+  "professionalReferencePath": "public/gomyway-professional-rhythm-reference-17-113.json",
+  "bestEventsPath": "public/training/gomyway-rhythm-17-113/best-renderer-events.json",
   "protectedInputs": [
     "public/gomyway-full-song-v8-intro-rhythm-template-lock.json",
     "public/gomyway-full-song-v8-verse1-rhythm-consensus.json"
