@@ -47,23 +47,23 @@ def heartbeat(stop: threading.Event, status_path: Path, seconds: int) -> None:
         print(f"HEARTBEAT {status['lastHeartbeatAt']} attempt={status.get('currentAttempt')} best={status.get('bestCompositePercent')}", flush=True)
 
 
-def git_checkpoint(attempt: int) -> None:
+def git_checkpoint(attempt: int, profile: dict[str, Any]) -> None:
     if not (ROOT / ".git").exists() or not bool(int(__import__("os").environ.get("GOMYWAY_PUSH_CHECKPOINTS", "0"))):
         return
-    paths = ["public/training/gomyway-rhythm-17-113"]
-    subprocess.run(["git", "add", *paths], cwd=ROOT, check=True)
+    checkpoint_root = str(Path(profile["checkpointDirectory"]).parent)
+    subprocess.run(["git", "add", checkpoint_root], cwd=ROOT, check=True)
     changed = subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT).returncode != 0
     if not changed:
         return
     subprocess.run(["git", "config", "user.name", "github-actions[bot]"], cwd=ROOT, check=True)
     subprocess.run(["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"], cwd=ROOT, check=True)
-    subprocess.run(["git", "commit", "-m", f"Checkpoint Gomyway rhythm training attempt {attempt}"], cwd=ROOT, check=True)
+    subprocess.run(["git", "commit", "-m", f"Checkpoint Gomyway active rhythm training attempt {attempt}"], cwd=ROOT, check=True)
     subprocess.run(["git", "push", "origin", "HEAD"], cwd=ROOT, check=True)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--max-attempts", type=int, default=42)
+    parser.add_argument("--max-attempts", type=int, default=84)
     parser.add_argument("--max-hours", type=float, default=5.7)
     args = parser.parse_args()
 
@@ -84,6 +84,7 @@ def main() -> None:
 
     status = {
         "status": "running",
+        "generation": 2,
         "startedAt": now(),
         "lastHeartbeatAt": now(),
         "resumeFromCompletedAttempts": completed,
@@ -104,7 +105,7 @@ def main() -> None:
             write(status_path, status)
             print(f"ATTEMPT {attempt}/{args.max_attempts} START {status['attemptStartedAt']}", flush=True)
 
-            subprocess.run([sys.executable, "analyzer/run_gomyway_rhythm_training_attempt_17_113.py"], cwd=ROOT, check=True)
+            subprocess.run([sys.executable, "analyzer/run_gomyway_rhythm_training_attempt_v2.py"], cwd=ROOT, check=True)
             result = load(current_path)
             result["compositePercent"] = composite(result, profile)
             result["minimumCategoriesPassed"] = categories_pass(result, profile)
@@ -128,7 +129,7 @@ def main() -> None:
                 "lastHeartbeatAt": now(),
             })
             write(status_path, status)
-            git_checkpoint(attempt)
+            git_checkpoint(attempt, profile)
             print(f"ATTEMPT {attempt} SAVED composite={result['compositePercent']:.3f}% target={result['targetReached']}", flush=True)
 
             if result["targetReached"]:
@@ -145,6 +146,7 @@ def main() -> None:
     write(status_path, status)
     summary = {
         "status": status["status"],
+        "generation": 2,
         "startedAt": status["startedAt"],
         "finishedAt": status["finishedAt"],
         "completedAttempts": completed,
@@ -152,11 +154,12 @@ def main() -> None:
         "targetCompositePercent": target,
         "targetReached": bool(best and best.get("targetReached")),
         "bestAttempt": best.get("attempt") if best else None,
+        "bestParameters": best.get("parameters") if best else None,
         "bestCategoryScoresPercent": best.get("categoryScoresPercent") if best else None,
         "protectedRules": profile["protectedRules"],
     }
     write(summary_path, summary)
-    print("OVERNIGHT TRAINING COMPLETE", flush=True)
+    print("ACTIVE REGENERATION OVERNIGHT TRAINING COMPLETE", flush=True)
     print(json.dumps(summary, indent=2), flush=True)
 
 
