@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       max_attempts:
-        description: Maximum scored attempts
+        description: Maximum active-regeneration attempts
         required: true
-        default: "42"
+        default: "84"
       max_hours:
-        description: Maximum runner hours (keep below GitHub-hosted limit)
+        description: Maximum runner hours
         required: true
         default: "5.7"
 
@@ -35,39 +35,28 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Verify committed scored-training inputs
+      - name: Verify active-regeneration inputs
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
           from pathlib import Path
-
           reference_path = Path("public/gomyway-professional-rhythm-reference-17-113.json")
-          candidate_path = Path("public/gomyway-full-song-v8-rhythm-candidates.json")
-
-          for path in (reference_path, candidate_path):
+          source_path = Path("public/gomyway-jimmy-paige-full-song-winner-events.json")
+          for path in (reference_path, source_path):
               if not path.exists():
                   raise SystemExit(f"MISSING COMMITTED INPUT: {path}")
-
           reference = json.loads(reference_path.read_text())
-          candidates = json.loads(candidate_path.read_text())
-
+          source = json.loads(source_path.read_text())
           assert reference.get("readyForTraining") is True
           assert int(reference.get("humanApprovedMeasureCount", 0)) == 97
-          assert candidates.get("readyForScoredTraining") is True
-          assert int(candidates.get("eventCount", 0)) > 0
-          assert int(candidates.get("measureCoverageCount", 0)) == 97
-          assert candidates.get("measuresCovered", [None])[0] == 17
-          assert candidates.get("measuresCovered", [None])[-1] == 113
-
-          print("PREFLIGHT PASSED")
+          assert len(source.get("events", [])) == 1629
+          print("ACTIVE REGENERATION PREFLIGHT PASSED")
           print("Approved reference measures:", reference["humanApprovedMeasureCount"])
-          print("Candidate events:", candidates["eventCount"])
-          print("Measures covered:", candidates["measureCoverageCount"])
-          print("First/last:", candidates["measuresCovered"][0], candidates["measuresCovered"][-1])
+          print("Raw winner events:", len(source["events"]))
           PY
 
-      - name: Run resumable scored training
+      - name: Run active-regeneration scored training
         env:
           GOMYWAY_PUSH_CHECKPOINTS: "1"
         run: |
@@ -79,23 +68,22 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gomyway-rhythm-training-${{ github.run_id }}
+          name: gomyway-rhythm-training-v2-${{ github.run_id }}
           if-no-files-found: warn
           retention-days: 30
           path: |
-            public/training/gomyway-rhythm-17-113/
+            public/training/gomyway-rhythm-17-113-v2/
             public/gomyway-professional-rhythm-reference-17-113.json
-            public/gomyway-full-song-v8-rhythm-candidates.json
-            public/gomyway-full-song-v8-rhythm-candidates-audit.json
+            public/gomyway-jimmy-paige-full-song-winner-events.json
 
       - name: Final checkpoint commit
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/training/gomyway-rhythm-17-113 || true
+          git add public/training/gomyway-rhythm-17-113-v2 || true
           if ! git diff --cached --quiet; then
-            git commit -m "Save final Gomyway overnight training state"
+            git commit -m "Save final Gomyway active-regeneration training state"
             git pull --rebase origin jimmy-paige-v8-section-detection
             git push origin HEAD:jimmy-paige-v8-section-detection
           fi
