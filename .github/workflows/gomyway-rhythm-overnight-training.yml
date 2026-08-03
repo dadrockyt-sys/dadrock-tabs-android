@@ -1,0 +1,72 @@
+name: Gomyway Rhythm Overnight Training
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_attempts:
+        description: Maximum scored attempts
+        required: true
+        default: "42"
+      max_hours:
+        description: Maximum runner hours (keep below GitHub-hosted limit)
+        required: true
+        default: "5.7"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gomyway-rhythm-overnight-training
+  cancel-in-progress: false
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - name: Check out training branch
+        uses: actions/checkout@v4
+        with:
+          ref: jimmy-paige-v8-section-detection
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Verify required inputs
+        run: |
+          test -f public/gomyway-full-song-v8-rhythm-candidates.json
+          test -f public/gomyway-final-unique-source-resolution-audit.json
+          python analyzer/build_gomyway_final_professional_reference_17_113.py
+
+      - name: Run resumable scored training
+        env:
+          GOMYWAY_PUSH_CHECKPOINTS: "1"
+        run: |
+          python analyzer/run_gomyway_rhythm_overnight_training.py \
+            --max-attempts "${{ inputs.max_attempts }}" \
+            --max-hours "${{ inputs.max_hours }}"
+
+      - name: Upload checkpoints and morning report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gomyway-rhythm-training-${{ github.run_id }}
+          if-no-files-found: warn
+          retention-days: 30
+          path: |
+            public/training/gomyway-rhythm-17-113/
+            public/gomyway-professional-rhythm-reference-17-113.json
+
+      - name: Final checkpoint commit
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/training/gomyway-rhythm-17-113 public/gomyway-professional-rhythm-reference-17-113.json || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Save final Gomyway overnight training state"
+            git push origin HEAD:jimmy-paige-v8-section-detection
+          fi
