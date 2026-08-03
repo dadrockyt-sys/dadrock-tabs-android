@@ -1,0 +1,33 @@
+{
+  "status": "attempt-or-time-limit-reached",
+  "generation": 2,
+  "startedAt": "2026-08-03T03:57:13.178512+00:00",
+  "finishedAt": "2026-08-03T03:59:05.310948+00:00",
+  "completedAttempts": 84,
+  "bestCompositePercent": 37.423417,
+  "targetCompositePercent": 90.0,
+  "targetReached": false,
+  "bestAttempt": 5,
+  "bestParameters": {
+    "tempoBpm": 129.5,
+    "audioOriginSeconds": -0.18,
+    "octaveShift": 0,
+    "stringStrategy": "rhythm-heavy",
+    "minimumConfidence": 0.14
+  },
+  "bestCategoryScoresPercent": {
+    "onsetTiming": 53.338752,
+    "durationRhythm": 32.66129,
+    "noteFret": 10.277218,
+    "stringChoice": 16.549059,
+    "technique": 56.653226,
+    "sectionMeasure": 100.0
+  },
+  "protectedRules": {
+    "lockedMeasures1To16Modified": false,
+    "v7EventsModified": false,
+    "rendererModified": false,
+    "professionalReferenceModified": false,
+    "candidateAudioModified": false
+  }
+}
