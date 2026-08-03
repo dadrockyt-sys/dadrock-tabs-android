@@ -1,9 +1,9 @@
 {
   "status": "running",
   "startedAt": "2026-08-03T03:44:56.456190+00:00",
-  "lastHeartbeatAt": "2026-08-03T03:45:31.288506+00:00",
+  "lastHeartbeatAt": "2026-08-03T03:45:32.632043+00:00",
   "resumeFromCompletedAttempts": 0,
-  "currentAttempt": 27,
+  "currentAttempt": 28,
   "bestCompositePercent": 34.667032,
   "targetCompositePercent": 90.0,
   "protectedRules": {
@@ -13,8 +13,8 @@
     "professionalReferenceModified": false,
     "candidateAudioModified": false
   },
-  "attemptStartedAt": "2026-08-03T03:45:31.190084+00:00",
-  "completedAttempts": 27,
-  "lastAttemptCompositePercent": 24.339044,
-  "lastAttemptCompletedAt": "2026-08-03T03:45:31.287532+00:00"
+  "attemptStartedAt": "2026-08-03T03:45:32.555390+00:00",
+  "completedAttempts": 28,
+  "lastAttemptCompositePercent": 14.335838,
+  "lastAttemptCompletedAt": "2026-08-03T03:45:32.630781+00:00"
 }
