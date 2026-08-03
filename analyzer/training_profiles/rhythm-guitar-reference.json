@@ -1,5 +1,5 @@
 {
-  "profileVersion": 2,
+  "profileVersion": 3,
   "profileName": "DadRock rhythm guitar professional-reference training",
   "instrument": "rhythm-guitar",
   "stringCount": 6,
@@ -33,9 +33,13 @@
   "summaryPath": "public/training/gomyway-rhythm-17-113/morning-summary.json",
   "attemptResultPath": "public/training/gomyway-rhythm-17-113/current-attempt-result.json",
   "attemptCommand": "python analyzer/run_gomyway_rhythm_training_attempt_17_113.py",
+  "candidateBuildCommand": "python analyzer/build_gomyway_rhythm_candidates_from_winner_events.py",
+  "candidateSourceEventsPath": "public/gomyway-jimmy-paige-full-song-winner-events.json",
   "candidateEventsPath": "public/gomyway-full-song-v8-rhythm-candidates.json",
   "professionalReferencePath": "public/gomyway-professional-rhythm-reference-17-113.json",
   "bestEventsPath": "public/training/gomyway-rhythm-17-113/best-renderer-events.json",
+  "audioOriginSeconds": 0.0,
+  "tempoBpm": 129.0,
   "protectedInputs": [
     "public/gomyway-full-song-v8-intro-rhythm-template-lock.json",
     "public/gomyway-full-song-v8-verse1-rhythm-consensus.json"
