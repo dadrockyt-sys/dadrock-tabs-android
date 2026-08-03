@@ -1,7 +1,7 @@
 {
-  "sourceAttempt": 94,
-  "generation": 1,
-  "compositePercent": 38.231126,
+  "sourceAttempt": 382,
+  "generation": 2,
+  "compositePercent": 38.268999,
   "candidateEvents": [
     {
       "measureNumber": 17,
@@ -1075,29 +1075,18 @@
       "durationSteps": 2,
       "notes": [
         {
+          "string": 4,
+          "fret": 2,
+          "midi": 52
+        },
+        {
           "string": 1,
           "fret": 0,
           "midi": 64
         }
       ],
       "techniques": [],
-      "confidence": 0.2833358943462372,
-      "section": "Verse 1",
-      "timeSignature": "4/4"
-    },
-    {
-      "measureNumber": 25,
-      "quantizedStep": 5,
-      "durationSteps": 1,
-      "notes": [
-        {
-          "string": 4,
-          "fret": 2,
-          "midi": 52
-        }
-      ],
-      "techniques": [],
-      "confidence": 0.37251827120780945,
+      "confidence": 0.3279270827770233,
       "section": "Verse 1",
       "timeSignature": "4/4"
     },
@@ -2052,6 +2041,22 @@
     },
     {
       "measureNumber": 29,
+      "quantizedStep": 13,
+      "durationSteps": 1,
+      "notes": [
+        {
+          "string": 1,
+          "fret": 0,
+          "midi": 64
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.1423266977071762,
+      "section": "Verse 1",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 29,
       "quantizedStep": 14,
       "durationSteps": 1,
       "notes": [
@@ -2413,6 +2418,22 @@
       ],
       "techniques": [],
       "confidence": 0.20639034608999887,
+      "section": "Verse 1",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 32,
+      "quantizedStep": 3,
+      "durationSteps": 1,
+      "notes": [
+        {
+          "string": 1,
+          "fret": 0,
+          "midi": 64
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.14205533266067505,
       "section": "Verse 1",
       "timeSignature": "4/4"
     },
@@ -3121,10 +3142,15 @@
           "string": 6,
           "fret": 3,
           "midi": 43
+        },
+        {
+          "string": 1,
+          "fret": 7,
+          "midi": 71
         }
       ],
       "techniques": [],
-      "confidence": 0.20706228911876678,
+      "confidence": 0.17806079238653183,
       "section": "Chorus 1",
       "timeSignature": "4/4"
     },
@@ -4079,14 +4105,25 @@
     },
     {
       "measureNumber": 41,
-      "quantizedStep": 8,
+      "quantizedStep": 7,
       "durationSteps": 1,
       "notes": [
         {
           "string": 4,
           "fret": 4,
           "midi": 54
-        },
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.23123124241828918,
+      "section": "Riff",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 41,
+      "quantizedStep": 8,
+      "durationSteps": 1,
+      "notes": [
         {
           "string": 2,
           "fret": 0,
@@ -4099,7 +4136,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.23631255328655243,
+      "confidence": 0.23885320872068405,
       "section": "Riff",
       "timeSignature": "4/4"
     },
@@ -5175,17 +5212,22 @@
           "string": 4,
           "fret": 2,
           "midi": 52
+        },
+        {
+          "string": 1,
+          "fret": 3,
+          "midi": 67
         }
       ],
       "techniques": [],
-      "confidence": 0.21580344438552856,
+      "confidence": 0.255836288134257,
       "section": "Verse 2",
       "timeSignature": "4/4"
     },
     {
       "measureNumber": 47,
       "quantizedStep": 15,
-      "durationSteps": 1,
+      "durationSteps": 2,
       "notes": [
         {
           "string": 1,
@@ -5194,7 +5236,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.33590197563171387,
+      "confidence": 0.28325366973876953,
       "section": "Verse 2",
       "timeSignature": "4/4"
     },
@@ -5567,10 +5609,15 @@
           "string": 2,
           "fret": 3,
           "midi": 62
+        },
+        {
+          "string": 2,
+          "fret": 4,
+          "midi": 63
         }
       ],
       "techniques": [],
-      "confidence": 0.2825896292924881,
+      "confidence": 0.2789074778556824,
       "section": "Verse 2",
       "timeSignature": "4/4"
     },
@@ -5583,15 +5630,10 @@
           "string": 4,
           "fret": 2,
           "midi": 52
-        },
-        {
-          "string": 2,
-          "fret": 4,
-          "midi": 63
         }
       ],
       "techniques": [],
-      "confidence": 0.23048639297485352,
+      "confidence": 0.1894296109676361,
       "section": "Verse 2",
       "timeSignature": "4/4"
     },
@@ -6316,6 +6358,22 @@
     },
     {
       "measureNumber": 56,
+      "quantizedStep": 10,
+      "durationSteps": 1,
+      "notes": [
+        {
+          "string": 4,
+          "fret": 0,
+          "midi": 50
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.2437703013420105,
+      "section": "Verse 2",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 56,
       "quantizedStep": 11,
       "durationSteps": 1,
       "notes": [
@@ -6325,18 +6383,13 @@
           "midi": 43
         },
         {
-          "string": 4,
-          "fret": 0,
-          "midi": 50
-        },
-        {
           "string": 2,
           "fret": 3,
           "midi": 62
         }
       ],
       "techniques": [],
-      "confidence": 0.2729298770427704,
+      "confidence": 0.28750966489315033,
       "section": "Verse 2",
       "timeSignature": "4/4"
     },
@@ -6654,29 +6707,18 @@
       "durationSteps": 1,
       "notes": [
         {
+          "string": 6,
+          "fret": 3,
+          "midi": 43
+        },
+        {
           "string": 4,
           "fret": 2,
           "midi": 52
         }
       ],
       "techniques": [],
-      "confidence": 0.2585675120353699,
-      "section": "Verse 2",
-      "timeSignature": "4/4"
-    },
-    {
-      "measureNumber": 58,
-      "quantizedStep": 8,
-      "durationSteps": 1,
-      "notes": [
-        {
-          "string": 6,
-          "fret": 3,
-          "midi": 43
-        }
-      ],
-      "techniques": [],
-      "confidence": 0.3091138005256653,
+      "confidence": 0.2838406562805176,
       "section": "Verse 2",
       "timeSignature": "4/4"
     },
@@ -6788,6 +6830,22 @@
       ],
       "techniques": [],
       "confidence": 0.191250279545784,
+      "section": "Verse 2",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 59,
+      "quantizedStep": 2,
+      "durationSteps": 1,
+      "notes": [
+        {
+          "string": 4,
+          "fret": 2,
+          "midi": 52
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.15905724465847015,
       "section": "Verse 2",
       "timeSignature": "4/4"
     },
@@ -8139,22 +8197,6 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.2734192907810211,
-      "section": "Chorus 2",
-      "timeSignature": "4/4"
-    },
-    {
-      "measureNumber": 67,
-      "quantizedStep": 12,
-      "durationSteps": 1,
-      "notes": [
-        {
-          "string": 2,
-          "fret": 3,
-          "midi": 62
-        }
-      ],
-      "techniques": [],
       "confidence": 0.3522729277610779,
       "section": "Chorus 2",
       "timeSignature": "4/4"
@@ -8665,7 +8707,7 @@
     },
     {
       "measureNumber": 69,
-      "quantizedStep": 9,
+      "quantizedStep": 8,
       "durationSteps": 5,
       "notes": [
         {
@@ -8673,6 +8715,22 @@
           "fret": 2,
           "midi": 52
         },
+        {
+          "string": 1,
+          "fret": 0,
+          "midi": 64
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.6795575618743896,
+      "section": "Bridge",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 69,
+      "quantizedStep": 9,
+      "durationSteps": 2,
+      "notes": [
         {
           "string": 1,
           "fret": 0,
@@ -8685,7 +8743,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.5285694152116776,
+      "confidence": 0.4092549905180931,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -8801,13 +8859,18 @@
       "durationSteps": 1,
       "notes": [
         {
+          "string": 5,
+          "fret": 3,
+          "midi": 48
+        },
+        {
           "string": 2,
           "fret": 0,
           "midi": 59
         }
       ],
       "techniques": [],
-      "confidence": 0.33924293518066406,
+      "confidence": 0.270733505487442,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -8820,15 +8883,10 @@
           "string": 6,
           "fret": 3,
           "midi": 43
-        },
-        {
-          "string": 5,
-          "fret": 3,
-          "midi": 48
         }
       ],
       "techniques": [],
-      "confidence": 0.21211811900138855,
+      "confidence": 0.22201216220855713,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -8907,6 +8965,22 @@
     },
     {
       "measureNumber": 70,
+      "quantizedStep": 7,
+      "durationSteps": 1,
+      "notes": [
+        {
+          "string": 2,
+          "fret": 3,
+          "midi": 62
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.5367424488067627,
+      "section": "Bridge",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 70,
       "quantizedStep": 8,
       "durationSteps": 2,
       "notes": [
@@ -8922,7 +8996,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.4819251298904419,
+      "confidence": 0.41551218926906586,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -8945,8 +9019,13 @@
     {
       "measureNumber": 70,
       "quantizedStep": 15,
-      "durationSteps": 1,
+      "durationSteps": 2,
       "notes": [
+        {
+          "string": 2,
+          "fret": 3,
+          "midi": 62
+        },
         {
           "string": 1,
           "fret": 2,
@@ -8954,7 +9033,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.4567185342311859,
+      "confidence": 0.4589426517486572,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -8963,11 +9042,6 @@
       "quantizedStep": 0,
       "durationSteps": 2,
       "notes": [
-        {
-          "string": 2,
-          "fret": 3,
-          "midi": 62
-        },
         {
           "string": 1,
           "fret": 2,
@@ -8980,7 +9054,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.3189156800508499,
+      "confidence": 0.2477901354432106,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -9174,7 +9248,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.2523624897003174,
+      "confidence": 0.40281546115875244,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -9184,18 +9258,13 @@
       "durationSteps": 2,
       "notes": [
         {
-          "string": 2,
-          "fret": 2,
-          "midi": 61
-        },
-        {
           "string": 1,
           "fret": 0,
           "midi": 64
         }
       ],
       "techniques": [],
-      "confidence": 0.3353101462125778,
+      "confidence": 0.2678048312664032,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -9597,6 +9666,11 @@
           "midi": 43
         },
         {
+          "string": 5,
+          "fret": 2,
+          "midi": 47
+        },
+        {
           "string": 4,
           "fret": 0,
           "midi": 50
@@ -9613,7 +9687,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.2831600271165371,
+      "confidence": 0.2739113837480545,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -9622,11 +9696,6 @@
       "quantizedStep": 12,
       "durationSteps": 1,
       "notes": [
-        {
-          "string": 5,
-          "fret": 2,
-          "midi": 47
-        },
         {
           "string": 3,
           "fret": 2,
@@ -9639,7 +9708,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.23708688219388327,
+      "confidence": 0.23717191815376282,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -9939,7 +10008,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.25779247283935547,
+      "confidence": 0.294609010219574,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -9952,15 +10021,10 @@
           "string": 5,
           "fret": 2,
           "midi": 47
-        },
-        {
-          "string": 1,
-          "fret": 0,
-          "midi": 64
         }
       ],
       "techniques": [],
-      "confidence": 0.2535983920097351,
+      "confidence": 0.1706428825855255,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -10038,29 +10102,18 @@
       "durationSteps": 2,
       "notes": [
         {
+          "string": 3,
+          "fret": 1,
+          "midi": 56
+        },
+        {
           "string": 1,
           "fret": 0,
           "midi": 64
         }
       ],
       "techniques": [],
-      "confidence": 0.2840590476989746,
-      "section": "Bridge",
-      "timeSignature": "4/4"
-    },
-    {
-      "measureNumber": 76,
-      "quantizedStep": 1,
-      "durationSteps": 1,
-      "notes": [
-        {
-          "string": 3,
-          "fret": 1,
-          "midi": 56
-        }
-      ],
-      "techniques": [],
-      "confidence": 0.46004271507263184,
+      "confidence": 0.3720508813858032,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -10133,29 +10186,18 @@
       "durationSteps": 1,
       "notes": [
         {
+          "string": 4,
+          "fret": 4,
+          "midi": 54
+        },
+        {
           "string": 1,
           "fret": 10,
           "midi": 74
         }
       ],
       "techniques": [],
-      "confidence": 0.2963497042655945,
-      "section": "Bridge",
-      "timeSignature": "4/4"
-    },
-    {
-      "measureNumber": 76,
-      "quantizedStep": 7,
-      "durationSteps": 1,
-      "notes": [
-        {
-          "string": 4,
-          "fret": 4,
-          "midi": 54
-        }
-      ],
-      "techniques": [],
-      "confidence": 0.431693971157074,
+      "confidence": 0.36402183771133423,
       "section": "Bridge",
       "timeSignature": "4/4"
     },
@@ -10664,14 +10706,25 @@
     },
     {
       "measureNumber": 79,
-      "quantizedStep": 4,
+      "quantizedStep": 3,
       "durationSteps": 1,
       "notes": [
         {
           "string": 6,
           "fret": 3,
           "midi": 43
-        },
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.3011035919189453,
+      "section": "Solo",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 79,
+      "quantizedStep": 4,
+      "durationSteps": 1,
+      "notes": [
         {
           "string": 6,
           "fret": 4,
@@ -10679,7 +10732,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.44484904408454895,
+      "confidence": 0.5885944962501526,
       "section": "Solo",
       "timeSignature": "4/4"
     },
@@ -10797,14 +10850,25 @@
     },
     {
       "measureNumber": 80,
-      "quantizedStep": 2,
+      "quantizedStep": 1,
       "durationSteps": 1,
       "notes": [
         {
           "string": 5,
           "fret": 2,
           "midi": 47
-        },
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.23851941525936127,
+      "section": "Solo",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 80,
+      "quantizedStep": 2,
+      "durationSteps": 1,
+      "notes": [
         {
           "string": 1,
           "fret": 0,
@@ -10812,7 +10876,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.38928958028554916,
+      "confidence": 0.5400597453117371,
       "section": "Solo",
       "timeSignature": "4/4"
     },
@@ -11358,7 +11422,7 @@
     },
     {
       "measureNumber": 83,
-      "quantizedStep": 13,
+      "quantizedStep": 12,
       "durationSteps": 1,
       "notes": [
         {
@@ -11406,7 +11470,7 @@
     },
     {
       "measureNumber": 84,
-      "quantizedStep": 4,
+      "quantizedStep": 3,
       "durationSteps": 2,
       "notes": [
         {
@@ -12143,7 +12207,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.21795355528593063,
+      "confidence": 0.2607811540365219,
       "section": "Solo",
       "timeSignature": "4/4"
     },
@@ -12153,18 +12217,13 @@
       "durationSteps": 1,
       "notes": [
         {
-          "string": 5,
-          "fret": 2,
-          "midi": 47
-        },
-        {
           "string": 4,
           "fret": 2,
           "midi": 52
         }
       ],
       "techniques": [],
-      "confidence": 0.3196573704481125,
+      "confidence": 0.37697431445121765,
       "section": "Solo",
       "timeSignature": "4/4"
     },
@@ -12238,7 +12297,7 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.21962769329547882,
+      "confidence": 0.33120954036712646,
       "section": "Solo",
       "timeSignature": "4/4"
     },
@@ -12248,18 +12307,13 @@
       "durationSteps": 2,
       "notes": [
         {
-          "string": 4,
-          "fret": 2,
-          "midi": 52
-        },
-        {
           "string": 1,
           "fret": 7,
           "midi": 71
         }
       ],
       "techniques": [],
-      "confidence": 0.2827832102775574,
+      "confidence": 0.23435688018798828,
       "section": "Solo",
       "timeSignature": "4/4"
     },
@@ -12323,7 +12377,7 @@
     },
     {
       "measureNumber": 90,
-      "quantizedStep": 6,
+      "quantizedStep": 5,
       "durationSteps": 1,
       "notes": [
         {
@@ -12834,6 +12888,22 @@
     },
     {
       "measureNumber": 92,
+      "quantizedStep": 8,
+      "durationSteps": 1,
+      "notes": [
+        {
+          "string": 1,
+          "fret": 5,
+          "midi": 69
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.15162304043769836,
+      "section": "Solo",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 92,
       "quantizedStep": 10,
       "durationSteps": 1,
       "notes": [
@@ -12955,6 +13025,22 @@
     },
     {
       "measureNumber": 93,
+      "quantizedStep": 1,
+      "durationSteps": 1,
+      "notes": [
+        {
+          "string": 1,
+          "fret": 3,
+          "midi": 67
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.5913110971450806,
+      "section": "Solo",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 93,
       "quantizedStep": 2,
       "durationSteps": 9,
       "notes": [
@@ -12970,17 +13056,12 @@
         },
         {
           "string": 1,
-          "fret": 3,
-          "midi": 67
-        },
-        {
-          "string": 1,
           "fret": 4,
           "midi": 68
         }
       ],
       "techniques": [],
-      "confidence": 0.4267588257789612,
+      "confidence": 0.3719080686569214,
       "section": "Solo",
       "timeSignature": "4/4"
     },
@@ -14239,22 +14320,6 @@
     {
       "measureNumber": 102,
       "quantizedStep": 11,
-      "durationSteps": 1,
-      "notes": [
-        {
-          "string": 6,
-          "fret": 3,
-          "midi": 43
-        }
-      ],
-      "techniques": [],
-      "confidence": 0.3813862204551697,
-      "section": "Post-Solo",
-      "timeSignature": "4/4"
-    },
-    {
-      "measureNumber": 102,
-      "quantizedStep": 12,
       "durationSteps": 2,
       "notes": [
         {
@@ -14269,7 +14334,23 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.23071877658367157,
+      "confidence": 0.3195411264896393,
+      "section": "Post-Solo",
+      "timeSignature": "4/4"
+    },
+    {
+      "measureNumber": 102,
+      "quantizedStep": 12,
+      "durationSteps": 1,
+      "notes": [
+        {
+          "string": 6,
+          "fret": 3,
+          "midi": 43
+        }
+      ],
+      "techniques": [],
+      "confidence": 0.20374152064323425,
       "section": "Post-Solo",
       "timeSignature": "4/4"
     },
@@ -14541,10 +14622,15 @@
           "string": 4,
           "fret": 2,
           "midi": 52
+        },
+        {
+          "string": 2,
+          "fret": 0,
+          "midi": 59
         }
       ],
       "techniques": [],
-      "confidence": 0.18230174481868744,
+      "confidence": 0.19970929622650146,
       "section": "Out-Chorus",
       "timeSignature": "4/4"
     },
@@ -14567,15 +14653,10 @@
           "string": 4,
           "fret": 2,
           "midi": 52
-        },
-        {
-          "string": 2,
-          "fret": 0,
-          "midi": 59
         }
       ],
       "techniques": [],
-      "confidence": 0.2511940933763981,
+      "confidence": 0.2625531752904256,
       "section": "Out-Chorus",
       "timeSignature": "4/4"
     },
@@ -14688,22 +14769,6 @@
     {
       "measureNumber": 104,
       "quantizedStep": 9,
-      "durationSteps": 1,
-      "notes": [
-        {
-          "string": 6,
-          "fret": 3,
-          "midi": 43
-        }
-      ],
-      "techniques": [],
-      "confidence": 0.3073684573173523,
-      "section": "Out-Chorus",
-      "timeSignature": "4/4"
-    },
-    {
-      "measureNumber": 104,
-      "quantizedStep": 10,
       "durationSteps": 1,
       "notes": [
         {
@@ -14953,8 +15018,13 @@
     {
       "measureNumber": 106,
       "quantizedStep": 6,
-      "durationSteps": 1,
+      "durationSteps": 2,
       "notes": [
+        {
+          "string": 1,
+          "fret": 0,
+          "midi": 64
+        },
         {
           "string": 1,
           "fret": 4,
@@ -14962,28 +15032,23 @@
         }
       ],
       "techniques": [],
-      "confidence": 0.3269968628883362,
+      "confidence": 0.2681253030896187,
       "section": "Out-Chorus",
       "timeSignature": "4/4"
     },
     {
       "measureNumber": 106,
       "quantizedStep": 7,
-      "durationSteps": 2,
+      "durationSteps": 1,
       "notes": [
         {
           "string": 4,
           "fret": 2,
           "midi": 52
-        },
-        {
-          "string": 1,
-          "fret": 0,
-          "midi": 64
         }
       ],
       "techniques": [],
-      "confidence": 0.2417607381939888,
+      "confidence": 0.2742677330970764,
       "section": "Out-Chorus",
       "timeSignature": "4/4"
     },
