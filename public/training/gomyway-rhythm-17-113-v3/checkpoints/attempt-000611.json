@@ -11637,5 +11637,10 @@
   "professionalReferenceUsedForScoringOnly": true,
   "professionalReferenceCopiedIntoCandidate": false,
   "rendererEventsPromoted": false,
-  "humanReviewRequiredBeforeRendererPromotion": true
+  "humanReviewRequiredBeforeRendererPromotion": true,
+  "compositePercent": 31.051052,
+  "minimumCategoriesPassed": false,
+  "targetReached": false,
+  "completedAt": "2026-08-03T04:30:03.865671+00:00",
+  "generation": 4
 }
