@@ -1,8 +1,8 @@
 {
-  "status": "running",
+  "status": "generation-limit-reached",
   "generation": 2,
   "startedAt": "2026-08-03T04:17:37.021887+00:00",
-  "lastHeartbeatAt": "2026-08-03T04:22:18.501010+00:00",
+  "lastHeartbeatAt": "2026-08-03T04:22:19.660199+00:00",
   "resumeFromCompletedAttempts": 192,
   "generationStopAfterAttempt": 384,
   "currentAttempt": 384,
@@ -18,5 +18,7 @@
   "attemptStartedAt": "2026-08-03T04:22:18.301085+00:00",
   "completedAttempts": 384,
   "lastAttemptCompositePercent": 33.333227,
-  "lastAttemptCompletedAt": "2026-08-03T04:22:18.487882+00:00"
+  "lastAttemptCompletedAt": "2026-08-03T04:22:18.487882+00:00",
+  "finishedAt": "2026-08-03T04:22:19.660192+00:00",
+  "stalled": false
 }
