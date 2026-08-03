@@ -1,46 +1,41 @@
-name: Gomyway Rhythm Overnight Training
+name: Gomyway Rhythm Cost-Controlled Training
 
 on:
   workflow_dispatch:
     inputs:
       max_attempts:
-        description: Additional adaptive attempts per generation
+        description: Adaptive attempts for this single manual run
         required: true
-        default: "192"
+        default: "24"
       max_hours:
-        description: Maximum runner hours per generation
+        description: Maximum runner hours for this single manual run
         required: true
-        default: "5.5"
-      max_generations:
-        description: Maximum automatically chained generations
-        required: true
-        default: "12"
+        default: "0.5"
 
 permissions:
-  contents: write
-  actions: write
+  contents: read
 
 concurrency:
-  group: gomyway-rhythm-autonomous-training
-  cancel-in-progress: false
+  group: gomyway-rhythm-cost-controlled-training
+  cancel-in-progress: true
 
 jobs:
   train:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 35
     steps:
       - name: Check out training branch
         uses: actions/checkout@v4
         with:
           ref: jimmy-paige-v8-section-detection
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Verify autonomous adaptive inputs
+      - name: Verify adaptive inputs
         run: |
           set -euo pipefail
           python analyzer/prepare_gomyway_generation3_state.py
@@ -52,14 +47,12 @@ jobs:
           assert reference.get("readyForTraining") is True
           assert int(reference.get("humanApprovedMeasureCount", 0)) == 97
           assert len(source.get("events", [])) == 1629
-          print("AUTONOMOUS GENERATION 3 PREFLIGHT PASSED")
-          print("Approved reference measures:", reference["humanApprovedMeasureCount"])
-          print("Raw winner events:", len(source["events"]))
+          print("COST-CONTROLLED PREFLIGHT PASSED")
           PY
 
-      - name: Run autonomous adaptive scored training
+      - name: Run one cost-controlled adaptive batch
         env:
-          GOMYWAY_PUSH_CHECKPOINTS: "1"
+          GOMYWAY_PUSH_CHECKPOINTS: "0"
         run: |
           python analyzer/run_gomyway_rhythm_overnight_training.py \
             --max-attempts "${{ inputs.max_attempts }}" \
@@ -67,62 +60,20 @@ jobs:
             --stall-generations 3 \
             --minimum-generation-improvement 0.05
 
-      - name: Upload checkpoints and reports
+      - name: Upload results without committing or deploying
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gomyway-rhythm-training-v3-${{ github.run_id }}
+          name: gomyway-rhythm-cost-controlled-${{ github.run_id }}
           if-no-files-found: warn
-          retention-days: 30
+          retention-days: 7
           path: |
             public/training/gomyway-rhythm-17-113-v3/
             public/gomyway-professional-rhythm-reference-17-113.json
-            public/gomyway-jimmy-paige-full-song-winner-events.json
 
-      - name: Final Generation 3 checkpoint commit
+      - name: Cost-control summary
         if: always()
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/training/gomyway-rhythm-17-113-v3 || true
-          if ! git diff --cached --quiet; then
-            git commit -m "Save Gomyway autonomous Generation 3 state"
-            git pull --rebase origin jimmy-paige-v8-section-detection
-            git push origin HEAD:jimmy-paige-v8-section-detection
-          fi
-
-      - name: Continue next generation when required
-        if: success()
-        env:
-          GH_TOKEN: ${{ github.token }}
-          MAX_GENERATIONS: ${{ inputs.max_generations }}
-          MAX_ATTEMPTS: ${{ inputs.max_attempts }}
-          MAX_HOURS: ${{ inputs.max_hours }}
-        run: |
-          git pull --rebase origin jimmy-paige-v8-section-detection
-          python - <<'PY' > /tmp/continuation.env
-          import json, os
-          from pathlib import Path
-          state = json.loads(Path("public/training/gomyway-rhythm-17-113-v3/generation-state.json").read_text())
-          next_generation = int(state.get("generation", 1))
-          maximum = int(os.environ["MAX_GENERATIONS"])
-          should_continue = bool(state.get("continueRequested")) and next_generation <= maximum
-          print(f"CONTINUE={'true' if should_continue else 'false'}")
-          print(f"NEXT_GENERATION={next_generation}")
-          print(f"BEST={float(state.get('lastBestCompositePercent', 0.0))}")
-          print(f"TARGET={bool(state.get('targetReached'))}")
-          print(f"STALLED={bool(state.get('stalled'))}")
-          PY
-          cat /tmp/continuation.env
-          source /tmp/continuation.env
-          if [ "$CONTINUE" = "true" ]; then
-            echo "Dispatching autonomous generation $NEXT_GENERATION"
-            gh workflow run gomyway-rhythm-overnight-training.yml \
-              --repo "${{ github.repository }}" \
-              --ref main \
-              -f max_attempts="$MAX_ATTEMPTS" \
-              -f max_hours="$MAX_HOURS" \
-              -f max_generations="$MAX_GENERATIONS"
-          else
-            echo "Autonomous chain stopped: target=$TARGET stalled=$STALLED generation=$NEXT_GENERATION best=$BEST"
-          fi
+          echo "No checkpoint commits were pushed."
+          echo "No automatic continuation was dispatched."
+          echo "No Vercel deployment should be triggered by this training run."
