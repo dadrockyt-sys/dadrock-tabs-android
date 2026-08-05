@@ -35,7 +35,16 @@ def normalize_notes(value: Any) -> tuple[tuple[int, int], ...]:
 
 
 def signature(item: dict[str, Any]) -> tuple[Any, ...] | None:
-    payload = item.get("payload") if isinstance(item.get("payload"), dict) else item
+    # Cross-artifact audit stores the compact musical event under "data".
+    # Keep "payload" support for backward compatibility with any older audit output.
+    payload = (
+        item.get("data")
+        if isinstance(item.get("data"), dict)
+        else item.get("payload")
+        if isinstance(item.get("payload"), dict)
+        else item
+    )
+
     notes = normalize_notes(payload.get("notes"))
     if not notes:
         string = payload.get("string", payload.get("stringIndex"))
@@ -44,17 +53,29 @@ def signature(item: dict[str, Any]) -> tuple[Any, ...] | None:
             notes = ((int(string), int(fret)),)
     if not notes:
         return None
+
     step = payload.get("quantizedStep", payload.get("step"))
     duration = payload.get("durationSteps", payload.get("duration"))
     techniques = payload.get("techniques")
     if not isinstance(techniques, list):
         techniques = []
+
     return (
         int(step) if isinstance(step, (int, float)) else None,
         int(duration) if isinstance(duration, (int, float)) else None,
         notes,
         tuple(sorted(str(value) for value in techniques)),
     )
+
+
+def source_family(file_path: str) -> str:
+    """Collapse checkpoint attempts into a stable source family for honest consensus."""
+    path = Path(file_path)
+    parts = list(path.parts)
+    if "checkpoints" in parts:
+        index = parts.index("checkpoints")
+        return str(Path(*parts[:index]))
+    return file_path
 
 
 def main() -> None:
@@ -73,6 +94,7 @@ def main() -> None:
 
         signatures: Counter[tuple[Any, ...]] = Counter()
         sources: defaultdict[tuple[Any, ...], list[str]] = defaultdict(list)
+        families: defaultdict[tuple[Any, ...], list[str]] = defaultdict(list)
         examples: dict[tuple[Any, ...], dict[str, Any]] = {}
 
         for row in rows:
@@ -84,12 +106,26 @@ def main() -> None:
             source = str(row.get("file") or row.get("source") or "unknown")
             signatures[sig] += 1
             sources[sig].append(source)
+            families[sig].append(source_family(source))
             examples.setdefault(sig, row)
 
-        ranked = sorted(signatures, key=lambda sig: (signatures[sig], len(set(sources[sig]))), reverse=True)
+        ranked = sorted(
+            signatures,
+            key=lambda sig: (
+                len(set(families[sig])),
+                signatures[sig],
+                len(set(sources[sig])),
+            ),
+            reverse=True,
+        )
         selected = ranked[0] if ranked else None
         support = signatures[selected] if selected else 0
         distinct_sources = len(set(sources[selected])) if selected else 0
+        distinct_families = len(set(families[selected])) if selected else 0
+
+        # Require repeated agreement plus at least one stable artifact family.
+        # Multiple checkpoint attempts from one family are recorded honestly and
+        # are not misrepresented as independent model families.
         ready = bool(selected and support >= 2 and distinct_sources >= 2)
         all_ready = all_ready and ready
 
@@ -107,7 +143,9 @@ def main() -> None:
             } if selected else None,
             "supportCount": support,
             "distinctSourceCount": distinct_sources,
+            "distinctSourceFamilyCount": distinct_families,
             "sources": sorted(set(sources[selected])) if selected else [],
+            "sourceFamilies": sorted(set(families[selected])) if selected else [],
             "readyForReadOnlyOverlay": ready,
             "topCandidates": [
                 {
@@ -117,13 +155,14 @@ def main() -> None:
                     "techniques": list(sig[3]),
                     "supportCount": signatures[sig],
                     "distinctSourceCount": len(set(sources[sig])),
+                    "distinctSourceFamilyCount": len(set(families[sig])),
                 }
                 for sig in ranked[:10]
             ],
         }
 
     report = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "auditType": "missing-render-measure-consensus-selection",
         "targets": list(TARGETS),
         "measures": report_measures,
@@ -147,6 +186,7 @@ def main() -> None:
         print("Selected signature:", item["selectedSignature"])
         print("Support count:", item["supportCount"])
         print("Distinct source count:", item["distinctSourceCount"])
+        print("Distinct source-family count:", item["distinctSourceFamilyCount"])
         print("Ready for read-only overlay:", item["readyForReadOnlyOverlay"])
     print()
     print("Ready for read-only overlay projection:", report["readyForReadOnlyOverlayProjection"])
