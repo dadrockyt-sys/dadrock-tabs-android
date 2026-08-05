@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "standardId": "dadrock-professional-tablature-notation-v1",
+  "status": "locked",
+  "acceptedProof": "public/gomyway-v8-professional-intro-notation-proof-v7.pdf",
+  "acceptedRenderer": "analyzer/build_gomyway_v8_professional_intro_notation_proof_v7.cjs",
+  "scope": [
+    "rhythm-guitar",
+    "bass-guitar",
+    "lead-guitar",
+    "preview-pdf",
+    "full-pdf"
+  ],
+  "requirements": {
+    "timeSignature": {
+      "required": true,
+      "placement": "start-of-first-measure-and-on-meter-change",
+      "default": "4/4"
+    },
+    "stringLabels": {
+      "required": true,
+      "guitar": ["e", "B", "G", "D", "A", "E"],
+      "bass": ["G", "D", "A", "E"]
+    },
+    "bend": {
+      "label": "full",
+      "labelPlacement": "directly-above-bend-apex",
+      "shape": "curved-rise-with-release-curve",
+      "arrowheads": "filled-and-directional"
+    },
+    "betweenNoteVibrato": {
+      "shape": "wavy-line",
+      "placement": "directly-on-the-tablature-string-between-source-and-target-fret-numbers"
+    },
+    "rhythmNotation": {
+      "placeholderStemsAllowed": false,
+      "standardRhythmGlyphsRequiredWhenDisplayed": true,
+      "omitWhenNot-supported": true
+    },
+    "measureLayout": {
+      "barlinesRequired": true,
+      "measureNumbersRequired": true,
+      "sectionLabelsRequired": true,
+      "fretNumbersCenteredOnStrings": true
+    },
+    "repeatConsistency": {
+      "required": true,
+      "properties": [
+        "attack-positions",
+        "attack-multiplicity",
+        "note-or-chord-signature",
+        "techniques",
+        "duration-and-sustain-shape"
+      ]
+    }
+  },
+  "protectedConstraints": {
+    "professionalReferenceModified": false,
+    "v7EventsModified": false,
+    "sourceEventsModified": false,
+    "automaticProductionPromotionAllowed": false
+  }
+}
