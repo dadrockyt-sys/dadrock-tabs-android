@@ -105,6 +105,11 @@ def event_signature(event: dict[str, Any]) -> tuple[Any, ...]:
     )
 
 
+def duplicate_count(events: list[dict[str, Any]]) -> int:
+    signatures = [event_signature(event) for event in events]
+    return len(signatures) - len(set(signatures))
+
+
 def main() -> None:
     source = load_json(SOURCE_PATH)
     consensus = load_json(CONSENSUS_PATH)
@@ -114,6 +119,9 @@ def main() -> None:
         raise TypeError("Source rhythmEvents is missing or not a list")
     if len(source_events) != 572:
         raise ValueError(f"Expected 572 source rhythmEvents, found {len(source_events)}")
+
+    source_event_objects = [event for event in source_events if isinstance(event, dict)]
+    source_duplicate_count = duplicate_count(source_event_objects)
 
     measures = consensus.get("measures")
     if not isinstance(measures, dict):
@@ -140,7 +148,7 @@ def main() -> None:
             "sources": item.get("sources", []),
         }
 
-    output_events = [copy.deepcopy(event) for event in source_events if isinstance(event, dict)]
+    output_events = [copy.deepcopy(event) for event in source_event_objects]
     output_events.extend(overlays)
     output_events.sort(
         key=lambda event: (
@@ -150,8 +158,15 @@ def main() -> None:
         )
     )
 
-    signatures = [event_signature(event) for event in output_events]
-    duplicate_count = len(signatures) - len(set(signatures))
+    output_duplicate_count = duplicate_count(output_events)
+    added_duplicate_count = output_duplicate_count - source_duplicate_count
+    overlay_signatures = [event_signature(event) for event in overlays]
+    overlays_unique = len(overlay_signatures) == len(set(overlay_signatures))
+    overlays_absent_from_source = all(
+        signature not in {event_signature(event) for event in source_event_objects}
+        for signature in overlay_signatures
+    )
+
     covered_measures = sorted({measure for event in output_events for measure in [get_measure(event)] if measure is not None})
     missing_measures = sorted(set(range(1, 114)) - set(covered_measures))
 
@@ -167,7 +182,11 @@ def main() -> None:
         "overlaySupport": overlay_support,
         "coveredMeasures": covered_measures,
         "missingMeasures": missing_measures,
-        "duplicateEventSignatures": duplicate_count,
+        "sourceDuplicateEventSignatures": source_duplicate_count,
+        "outputDuplicateEventSignatures": output_duplicate_count,
+        "addedDuplicateEventSignatures": added_duplicate_count,
+        "overlaysUnique": overlays_unique,
+        "overlaysAbsentFromSource": overlays_absent_from_source,
         "renderEvents": output_events,
         "passed": (
             len(source_events) == 572
@@ -175,7 +194,9 @@ def main() -> None:
             and len(output_events) == 574
             and covered_measures == list(range(1, 114))
             and missing_measures == []
-            and duplicate_count == 0
+            and added_duplicate_count == 0
+            and overlays_unique
+            and overlays_absent_from_source
         ),
         "automaticPromotionAllowed": False,
         "candidateEventsModified": False,
@@ -195,7 +216,11 @@ def main() -> None:
     print("Render events:", report["renderEventCount"])
     print("Covered measures:", len(report["coveredMeasures"]))
     print("Missing measures:", report["missingMeasures"])
-    print("Duplicate event signatures:", report["duplicateEventSignatures"])
+    print("Source duplicate event signatures:", report["sourceDuplicateEventSignatures"])
+    print("Output duplicate event signatures:", report["outputDuplicateEventSignatures"])
+    print("Added duplicate event signatures:", report["addedDuplicateEventSignatures"])
+    print("Overlays unique:", report["overlaysUnique"])
+    print("Overlays absent from source:", report["overlaysAbsentFromSource"])
     print("Overlay measures:", report["overlayMeasures"])
     print("Ready for genuine tablature renderer:", report["passed"])
     print()
