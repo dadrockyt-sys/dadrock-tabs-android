@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "adjudicationType": "final-ending-pending-measure-listening-review",
+  "sourceListeningPack": "public/training/gomyway-final-ending-listening-window-pack-v1/manifest.json",
+  "reviewedMeasures": [111, 112],
+  "protectedApprovedMeasure": 113,
+  "reviewer": "user-and-assistant",
+  "reviewMethod": "Direct listening comparison of synchronized full-mix and separated other-stem windows.",
+  "judgments": [
+    {
+      "measureNumber": 111,
+      "judgment": "full-measure-sustain-rhythm-guitar-chord",
+      "isRhythmGuitar": true,
+      "isFullMeasureSustain": true,
+      "tieForwardSupported": true,
+      "humanValidated": true,
+      "notes": "Direct listening confirmed a sustained rhythm-guitar chord lasting the full measure."
+    },
+    {
+      "measureNumber": 112,
+      "judgment": "full-measure-sustain-rhythm-guitar-chord",
+      "isRhythmGuitar": true,
+      "isFullMeasureSustain": true,
+      "tieForwardSupported": true,
+      "humanValidated": true,
+      "notes": "Direct listening confirmed a sustained rhythm-guitar chord lasting the full measure."
+    }
+  ],
+  "summary": {
+    "reviewedMeasureCount": 2,
+    "validatedFullMeasureSustains": 2,
+    "rejectedMeasures": 0,
+    "uncertainMeasures": 0,
+    "pendingMeasuresResolved": true
+  },
+  "automaticPromotionAllowed": false,
+  "candidateEventsModified": false,
+  "professionalReferenceModified": false,
+  "v7EventsModified": false,
+  "rendererModified": false,
+  "productionPromotionAllowed": false,
+  "protectedBaselinesChanged": false
+}
