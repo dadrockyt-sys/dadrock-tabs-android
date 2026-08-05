@@ -27,6 +27,7 @@ SUPPORTED_TYPES = {
     "slide",
     "muted-attack",
     "rest",
+    "pattern-reference",
 }
 
 
@@ -90,7 +91,7 @@ def timing_bounds(payload: dict[str, Any]) -> dict[int, tuple[float, float]]:
 
 def event_lists(measure: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
     found: list[tuple[str, dict[str, Any]]] = []
-    ignored = {"sixteenthSlots", "slots", "grid", "warnings", "notes"}
+    ignored = {"sixteenthSlots", "slots", "grid", "warnings", "notes", "chordSymbols", "sourcePages"}
     for key, value in measure.items():
         if key in ignored or not isinstance(value, list):
             continue
@@ -137,7 +138,7 @@ def technique_names(event: dict[str, Any]) -> list[str]:
 
 
 def chord_label(event: dict[str, Any]) -> str | None:
-    for key in ("chordLabel", "chord", "label", "voicingLabel"):
+    for key in ("chordLabel", "chord", "label", "voicingLabel", "symbol"):
         value = event.get(key)
         if isinstance(value, str) and value.strip():
             return value.strip()
@@ -152,7 +153,52 @@ def chord_label(event: dict[str, Any]) -> str | None:
     return None
 
 
-def marker_rows(measure: dict[str, Any], bounds: tuple[float, float]) -> list[dict[str, Any]]:
+def structural_markers(measure: dict[str, Any], bounds: tuple[float, float]) -> list[dict[str, Any]]:
+    measure_no = measure_number(measure)
+    start, end = bounds
+    markers: list[dict[str, Any]] = []
+
+    chord_symbols = measure.get("chordSymbols")
+    if isinstance(chord_symbols, list):
+        for item in chord_symbols:
+            if not isinstance(item, dict):
+                continue
+            label = chord_label(item)
+            if not label:
+                continue
+            markers.append({
+                "type": "chord-label",
+                "instrument": "rhythm",
+                "label": label,
+                "start": round(start, 6),
+                "end": round(end, 6),
+                "measureNumber": measure_no,
+                "sourceList": "chordSymbols",
+                "verifiedFromSource": item.get("verifiedFromSource"),
+                "readOnly": True,
+            })
+
+    pattern_id = measure.get("patternId")
+    if isinstance(pattern_id, str) and pattern_id.strip():
+        marker_type = "rest" if pattern_id == "full-measure-rest" else "pattern-reference"
+        marker = {
+            "type": marker_type,
+            "instrument": "rhythm",
+            "start": round(start, 6),
+            "end": round(end, 6),
+            "measureNumber": measure_no,
+            "sourceList": "patternId",
+            "patternId": pattern_id,
+            "readOnly": True,
+        }
+        if marker_type == "pattern-reference":
+            marker["label"] = pattern_id
+        markers.append(marker)
+
+    return markers
+
+
+def event_markers(measure: dict[str, Any], bounds: tuple[float, float]) -> list[dict[str, Any]]:
     markers: list[dict[str, Any]] = []
     measure_no = measure_number(measure)
     for source_list, event in event_lists(measure):
@@ -202,6 +248,10 @@ def marker_rows(measure: dict[str, Any], bounds: tuple[float, float]) -> list[di
     return markers
 
 
+def marker_rows(measure: dict[str, Any], bounds: tuple[float, float]) -> list[dict[str, Any]]:
+    return structural_markers(measure, bounds) + event_markers(measure, bounds)
+
+
 def main() -> None:
     reference_path = first_existing(REFERENCE_CANDIDATES)
     timing_path = first_existing(TIMING_CANDIDATES)
@@ -232,6 +282,8 @@ def main() -> None:
     all_markers.sort(key=lambda item: (float(item["start"]), str(item["type"]), int(item.get("measureNumber") or 0)))
     unsupported = sorted({str(item.get("type")) for item in all_markers if item.get("type") not in SUPPORTED_TYPES})
     song_duration = max((end for _, end in bounds.values()), default=0.0)
+    measures_with_markers = sorted({int(item["measureNumber"]) for item in all_markers if item.get("measureNumber") is not None})
+    missing_marker_measures = [measure for measure in range(1, 114) if measure not in measures_with_markers]
 
     checks = {
         "fullSongReviewEvidenceGreen": merge.get("passed") is True,
@@ -239,6 +291,7 @@ def main() -> None:
         "all113ReferenceMeasuresPresent": not missing_measures,
         "all113TimingMeasuresPresent": not missing_timing,
         "notationMarkersCreated": len(all_markers) > 0,
+        "everyMeasureHasStructuralOrEventMarker": not missing_marker_measures,
         "allMarkerTypesSupported": not unsupported,
         "allMarkersReadOnly": all(item.get("readOnly") is True for item in all_markers),
         "professionalReferenceUntouched": True,
@@ -257,6 +310,7 @@ def main() -> None:
         "measureRange": [1, 113],
         "missingReferenceMeasures": missing_measures,
         "missingTimingMeasures": missing_timing,
+        "missingMarkerMeasures": missing_marker_measures,
         "notationMetadata": {
             "allMarkers": all_markers,
             "markerCount": len(all_markers),
@@ -281,6 +335,7 @@ def main() -> None:
     print("Measures:", projection["measureRange"])
     print("Missing reference measures:", missing_measures)
     print("Missing timing measures:", missing_timing)
+    print("Missing marker measures:", missing_marker_measures)
     print("Notation markers:", len(all_markers))
     print("Marker types:", projection["notationMetadata"]["markerTypes"])
     print("Ready for V8 layout binding:", projection["passed"])
