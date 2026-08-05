@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "adjudicationType": "out-chorus-listening-review",
+  "section": "Out-Chorus",
+  "measureRange": [103, 110],
+  "reviewedBy": "user-and-assistant",
+  "reviewMethod": "Manual listening of synchronized full-mix and separated other-stem windows",
+  "sourcePack": "public/training/gomyway-out-chorus-listening-window-pack-v1/manifest.json",
+  "items": [
+    {
+      "measureNumber": 103,
+      "candidateStep": 2,
+      "judgment": "real-rhythm-articulation",
+      "humanValidated": true,
+      "notes": "Audible rhythm guitar is present in the review window."
+    },
+    {
+      "measureNumber": 103,
+      "candidateStep": 3,
+      "judgment": "real-rhythm-articulation",
+      "humanValidated": true,
+      "notes": "Audible rhythm guitar is present in the review window despite weaker diagnostic score."
+    },
+    {
+      "measureNumber": 104,
+      "candidateStep": 9,
+      "judgment": "real-rhythm-articulation",
+      "humanValidated": true,
+      "notes": "Audible rhythm guitar is present in the review window."
+    },
+    {
+      "measureNumber": 105,
+      "candidateStep": 15,
+      "judgment": "real-rhythm-articulation",
+      "humanValidated": true,
+      "notes": "Audible rhythm guitar is present in the review window."
+    },
+    {
+      "measureNumber": 109,
+      "candidateStep": 15,
+      "judgment": "real-rhythm-articulation",
+      "humanValidated": true,
+      "notes": "Audible rhythm guitar is present in the review window."
+    }
+  ],
+  "summary": {
+    "reviewedCandidateCount": 5,
+    "realRhythmArticulationCount": 5,
+    "rejectedCandidateCount": 0,
+    "uncertainCandidateCount": 0,
+    "allUnresolvedCandidatesValidated": true
+  },
+  "automaticPromotionAllowed": false,
+  "candidateEventsModified": false,
+  "professionalReferenceModified": false,
+  "productionPromotionAllowed": false,
+  "protectedBaselinesChanged": false
+}
