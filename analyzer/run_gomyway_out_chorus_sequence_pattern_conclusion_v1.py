@@ -18,7 +18,12 @@ OUTPUT_PATH = (
 
 def main() -> None:
     data = json.loads(INPUT_PATH.read_text(encoding="utf-8"))
-    holdouts = data.get("holdoutReports") or data.get("holdouts") or []
+    holdouts = (
+        data.get("leaveOneSequenceOutReports")
+        or data.get("holdoutReports")
+        or data.get("holdouts")
+        or []
+    )
 
     correct_count = sum(
         1
@@ -31,11 +36,8 @@ def main() -> None:
         "schemaVersion": 1,
         "conclusionType": "out-chorus-sequence-pattern-diagnostic",
         "source": str(INPUT_PATH.relative_to(REPO_ROOT)),
-        "measureCount": data.get("measureCount") or data.get("measures"),
-        "adjacentSequenceCount": (
-            data.get("adjacentSequenceCount")
-            or data.get("adjacentSequences")
-        ),
+        "measureCount": len(data.get("measurePatterns") or []),
+        "adjacentSequenceCount": len(data.get("adjacentSequences") or []),
         "holdoutCount": holdout_count,
         "correctHoldoutCount": correct_count,
         "holdoutAccuracy": data.get("holdoutAccuracy"),
@@ -66,6 +68,8 @@ def main() -> None:
     )
 
     print("Out-Chorus sequence-pattern conclusion V1 complete")
+    print("Measures:", report["measureCount"])
+    print("Adjacent sequences:", report["adjacentSequenceCount"])
     print("Holdouts:", report["holdoutCount"])
     print("Correct holdouts:", report["correctHoldoutCount"])
     print("Holdout accuracy:", report["holdoutAccuracy"])
