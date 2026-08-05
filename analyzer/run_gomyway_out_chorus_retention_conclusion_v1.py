@@ -22,8 +22,8 @@ def main() -> None:
         "professionallyCoveredCandidateCount": data.get("professionallyCoveredCandidateCount"),
         "humanValidatedRhythmCandidateCount": data.get("humanValidatedRhythmCandidateCount"),
         "retainedCandidateCount": data.get("retainedCandidateCount"),
-        "retainedFraction": data.get("retainedFraction"),
-        "exactUnresolvedKeyMatch": data.get("exactUnresolvedKeyMatch"),
+        "retainedFraction": data.get("retainedCandidateFraction"),
+        "exactUnresolvedKeyMatch": data.get("exactKeyMatch"),
         "allUnresolvedCandidatesHumanValidated": data.get("allUnresolvedCandidatesHumanValidated"),
         "completeOutChorusRetentionSupported": data.get("completeOutChorusRetentionSupported"),
         "decision": (
@@ -45,6 +45,7 @@ def main() -> None:
     print("Passed:", report["passed"])
     print("Retained candidates:", report["retainedCandidateCount"])
     print("Retained fraction:", report["retainedFraction"])
+    print("Exact unresolved-key match:", report["exactUnresolvedKeyMatch"])
     print("Complete Out-Chorus retention supported:", report["completeOutChorusRetentionSupported"])
     print("Automatic event mutation allowed: False")
     print("Candidate events modified: False")
