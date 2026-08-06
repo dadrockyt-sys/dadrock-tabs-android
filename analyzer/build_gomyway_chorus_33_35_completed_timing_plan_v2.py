@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "public"
 
 SOURCE_PATH = PUBLIC / "gomyway-full-song-v8-rhythm-candidates-1-113-intro-recovered-v2.json"
-PLAN_V1_PATH = PUBLIC / "gomyway-chorus-33-35-completed-timing-plan-v1.json"
+CANDIDATE_PATH = PUBLIC / "gomyway-chorus-33-35-identity-separated-onset-candidate-v1.json"
 SEMANTICS_PATH = PUBLIC / "gomyway-chorus-33-35-nonstandard-quantized-step-semantics-v1.json"
 OUTPUT_PATH = PUBLIC / "gomyway-chorus-33-35-completed-timing-plan-v2.json"
 MANIFEST_PATH = PUBLIC / "gomyway-chorus-33-35-completed-timing-plan-v2-manifest.json"
@@ -63,13 +63,15 @@ def rounded(value: float | None) -> float | None:
 def main() -> None:
     source_hash_before = sha256(SOURCE_PATH)
     source = load(SOURCE_PATH)
-    plan_v1 = load(PLAN_V1_PATH)
+    candidate = load(CANDIDATE_PATH)
     semantics = load(SEMANTICS_PATH)
 
     if len(source_rows(source)) != 949:
         raise RuntimeError("Protected source must contain exactly 949 events.")
-    if int(plan_v1.get("chorusEventCount", -1)) != 30:
-        raise RuntimeError("Completed timing plan V1 must contain 30 chorus events.")
+    if candidate.get("passed") is not True:
+        raise RuntimeError("Identity-separated onset candidate is not green.")
+    if int(candidate.get("chorusEventCount", -1)) != 30:
+        raise RuntimeError("Identity-separated onset candidate must contain 30 chorus events.")
     if semantics.get("passed") is not True:
         raise RuntimeError("Quantized-step semantics diagnostic is not green.")
     if semantics.get("recommendedNextAction") != "rebuild-completed-timing-plan-with-16-step-ordering":
@@ -78,7 +80,7 @@ def main() -> None:
         raise RuntimeError("Within-measure timing conflicts remain unresolved.")
 
     rows: list[dict[str, Any]] = []
-    for source_row in plan_v1.get("rows", []):
+    for source_row in candidate.get("rows", []):
         if not isinstance(source_row, dict):
             continue
         row = dict(source_row)
@@ -90,10 +92,11 @@ def main() -> None:
             raise RuntimeError(
                 f"Invalid 16-step position at measure {measure}, step {step}."
             )
-        row["absoluteStepV1"] = row.get("absoluteStep")
+        row["absoluteStepBeforeV2"] = row.get("absoluteStep")
         row["absoluteStep"] = absolute_step(measure, step)
         row["stepsPerMeasure"] = STEPS_PER_MEASURE
         row["orderingCorrection"] = "recomputed-from-16-step-measure-grid"
+        row["timingCandidateSource"] = str(CANDIDATE_PATH.relative_to(ROOT))
         row["readOnly"] = True
         rows.append(row)
 
@@ -156,6 +159,7 @@ def main() -> None:
         "planType": "read-only-completed-chorus-audio-technique-timing-16-step-ordering",
         "passed": ready,
         "stepsPerMeasure": STEPS_PER_MEASURE,
+        "timingCandidateSource": str(CANDIDATE_PATH.relative_to(ROOT)),
         "chorusEventCount": len(rows),
         "duplicateAbsolutePositionCount": duplicate_positions,
         "resolvedTimingCount": resolved_count,
@@ -184,6 +188,7 @@ def main() -> None:
         "schemaVersion": 2,
         "passed": ready,
         "stepsPerMeasure": STEPS_PER_MEASURE,
+        "timingCandidateSource": str(CANDIDATE_PATH.relative_to(ROOT)),
         "chorusEventCount": len(rows),
         "duplicateAbsolutePositionCount": duplicate_positions,
         "resolvedTimingCount": resolved_count,
@@ -204,6 +209,7 @@ def main() -> None:
     print("GOMYWAY CHORUS 33-35 COMPLETED TIMING PLAN V2 COMPLETE")
     print("Passed:", ready)
     print("Steps per measure:", STEPS_PER_MEASURE)
+    print("Timing candidate source:", CANDIDATE_PATH.relative_to(ROOT))
     print("Chorus events:", len(rows))
     print("Duplicate absolute positions:", duplicate_positions)
     print("Resolved timings:", resolved_count)
