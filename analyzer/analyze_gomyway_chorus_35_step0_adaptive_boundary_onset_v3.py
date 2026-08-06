@@ -13,7 +13,7 @@ MANIFEST_PATH = PUBLIC / "gomyway-chorus-35-step0-adaptive-boundary-onset-v3-man
 
 # The V2 extractor uses 256-sample hops at 22,050 Hz. Two hops provide a
 # conservative resolution-aware separation gate without forcing the earlier
-# fixed 40 ms clearance that rejected the only chronologically valid peak.
+# fixed 35 ms clearance that rejected the only chronologically valid peak.
 SAMPLE_RATE = 22050
 HOP_SIZE = 256
 MIN_CLEARANCE_HOPS = 2
@@ -44,8 +44,9 @@ def main() -> None:
     if v2.get("qualityGate") is not False:
         raise RuntimeError("Adaptive arbitration is only for a blocked V2 result.")
 
-    left = number(v2.get("leftBoundaryStartSeconds"))
-    following = number(v2.get("followingBoundaryStartSeconds"))
+    # V2 writes these fields as *TimeSeconds*, not *StartSeconds*.
+    left = number(v2.get("leftBoundaryTimeSeconds"))
+    following = number(v2.get("followingBoundaryTimeSeconds"))
     if left is None or following is None or not left < following:
         raise RuntimeError("Invalid chronological boundary anchors.")
 
