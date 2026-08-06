@@ -55,7 +55,18 @@ def number(value: Any) -> float | None:
     return result if result >= 0.0 else None
 
 
-def rows_from(value: Any) -> list[dict[str, Any]]:
+def source_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    # The protected source contains more than one list-valued representation.
+    # Select exactly one canonical event collection instead of flattening every
+    # list, which would double-count the protected 949 events.
+    for key in ("events", "candidates", "rhythmEvents", "renderEvents"):
+        rows = payload.get(key)
+        if isinstance(rows, list):
+            return [row for row in rows if isinstance(row, dict)]
+    return []
+
+
+def evidence_rows(value: Any) -> list[dict[str, Any]]:
     found: list[dict[str, Any]] = []
     if isinstance(value, list):
         found.extend(item for item in value if isinstance(item, dict))
@@ -113,9 +124,11 @@ def main() -> None:
     if int(inventory.get("usableMeasureStepTimingSourceCount", 0)) < 1:
         raise RuntimeError("No usable measure/step timing source was found.")
 
-    source_rows = rows_from(source_payload)
-    if len(source_rows) != 949:
-        raise RuntimeError(f"Expected 949 protected source events, found {len(source_rows)}.")
+    protected_rows = source_rows(source_payload)
+    if len(protected_rows) != 949:
+        raise RuntimeError(
+            f"Expected 949 protected source events, found {len(protected_rows)}."
+        )
 
     usable_paths = [
         ROOT / str(candidate["path"])
@@ -133,7 +146,7 @@ def main() -> None:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
-        for row_index, row in enumerate(rows_from(payload)):
+        for row_index, row in enumerate(evidence_rows(payload)):
             measure = measure_of(row)
             step = step_of(row)
             if measure not in CHORUS_MEASURES or step is None:
@@ -230,7 +243,7 @@ def main() -> None:
         "audioTechniqueSupportClaimed": False,
         "professionalReferenceUsedAsTrainingLabelOnly": True,
         "professionalNotesCopiedIntoProtectedSource": False,
-        "protectedSourceEventCount": len(source_rows),
+        "protectedSourceEventCount": len(protected_rows),
         "protectedSourceHashBefore": source_hash_before,
         "protectedSourceHashAfter": source_hash_after,
         "protectedSourceHashUnchanged": source_unchanged,
@@ -271,7 +284,7 @@ def main() -> None:
     print("Events without timing:", len(bridge_rows) - timed_count)
     print("Events without timing consensus:", len(bridge_rows) - consensus_count)
     print("Audio technique support claimed: False")
-    print("Protected source event count:", len(source_rows))
+    print("Protected source event count:", len(protected_rows))
     print("Protected source hash unchanged:", source_unchanged)
     print("V7 events modified: False")
     print("Renderer modified: False")
