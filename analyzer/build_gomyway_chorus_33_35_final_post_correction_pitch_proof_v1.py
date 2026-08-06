@@ -53,16 +53,19 @@ def main() -> None:
     failed_rows: list[dict[str, Any]] = []
     changed_rows: list[dict[str, Any]] = []
     for row in rows:
-        final_gate = row.get("correctedPitchQualityGate") is True
+        final_gate = row.get("correctedPitchContourQualityGate") is True
         if not final_gate:
             failed_rows.append(row)
-        if row.get("qualityGateChanged") is True:
+        previous_gate = row.get("previousCorrectedPitchContourQualityGate") is True
+        if previous_gate != final_gate:
             changed_rows.append(row)
 
     source_hash_after = sha256(SOURCE_PATH)
     source_unchanged = source_hash_before == source_hash_after
     count_matches = len(rows) == expected_count
-    all_pass = bool(rows and count_matches and not failed_rows)
+    expected_changes = int(candidate.get("qualityGateChanges", -1))
+    changes_match = len(changed_rows) == expected_changes
+    all_pass = bool(rows and count_matches and changes_match and not failed_rows)
     ready = bool(source_unchanged and all_pass)
 
     proof_rows = [
@@ -70,16 +73,19 @@ def main() -> None:
             "measureNumber": row.get("measureNumber"),
             "quantizedStep": row.get("quantizedStep"),
             "sourceEventIndex": row.get("sourceEventIndex"),
-            "oldQualityGate": row.get("oldCorrectedPitchQualityGate"),
-            "newQualityGate": row.get("correctedPitchQualityGate"),
-            "qualityGateChanged": row.get("qualityGateChanged") is True,
-            "featureQualityGate": row.get("featureQualityGate"),
-            "frameCountGate": row.get("frameCountGate"),
-            "correctedRangePlausibilityGate": row.get("correctedRangePlausibilityGate"),
-            "correctedMedianJumpPlausibilityGate": row.get("correctedMedianJumpPlausibilityGate"),
-            "correctedRobustPitchRangeCents": row.get("correctedRobustPitchRangeCents"),
-            "correctedMedianContiguousJumpCents": row.get("correctedMedianContiguousJumpCents"),
-            "finalPostCorrectionPitchProofGate": row.get("correctedPitchQualityGate") is True,
+            "oldQualityGate": row.get("previousCorrectedPitchContourQualityGate") is True,
+            "newQualityGate": row.get("correctedPitchContourQualityGate") is True,
+            "qualityGateChanged": (
+                (row.get("previousCorrectedPitchContourQualityGate") is True)
+                != (row.get("correctedPitchContourQualityGate") is True)
+            ),
+            "featureQualityGate": row.get("featureQualityGate") is True,
+            "frameCountGate": row.get("recomputedFrameCountGate") is True,
+            "correctedRangePlausibilityGate": row.get("recomputedRangePlausibilityGate") is True,
+            "correctedMedianJumpPlausibilityGate": row.get("recomputedMedianJumpPlausibilityGate") is True,
+            "correctedRobustPitchRangeCents": row.get("recomputedRobustRangeCents"),
+            "correctedMedianContiguousJumpCents": row.get("recomputedMedianContiguousJumpCents"),
+            "finalPostCorrectionPitchProofGate": row.get("correctedPitchContourQualityGate") is True,
             "bendSupportClaimed": False,
             "vibratoSupportClaimed": False,
             "audioTechniqueSupportClaimed": False,
@@ -96,6 +102,8 @@ def main() -> None:
         "expectedSingleNoteCandidateCount": expected_count,
         "candidateCountMatches": count_matches,
         "qualityGateChangeCount": len(changed_rows),
+        "expectedQualityGateChangeCount": expected_changes,
+        "qualityGateChangesMatch": changes_match,
         "finalPitchQualityGatePassedCount": len(rows) - len(failed_rows),
         "finalPitchQualityGateFailedCount": len(failed_rows),
         "allCorrectedPitchQualityGatesPassed": all_pass,
@@ -125,6 +133,7 @@ def main() -> None:
         "passed": ready,
         "singleNoteCandidateCount": len(rows),
         "qualityGateChangeCount": len(changed_rows),
+        "qualityGateChangesMatch": changes_match,
         "finalPitchQualityGatePassedCount": len(rows) - len(failed_rows),
         "finalPitchQualityGateFailedCount": len(failed_rows),
         "allCorrectedPitchQualityGatesPassed": all_pass,
@@ -145,6 +154,7 @@ def main() -> None:
     print("Single-note candidates:", len(rows))
     print("Candidate count matches:", count_matches)
     print("Quality gate changes preserved:", len(changed_rows))
+    print("Quality gate changes match candidate:", changes_match)
     print("Final pitch quality gates passed:", len(rows) - len(failed_rows))
     print("Final pitch quality gates failed:", len(failed_rows))
     print("All corrected pitch quality gates passed:", all_pass)
