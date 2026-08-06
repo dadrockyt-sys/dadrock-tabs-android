@@ -95,7 +95,7 @@ def main() -> None:
 
     if proof.get("passed") is not True:
         raise RuntimeError("Focused chorus proof is not green.")
-    if proof.get("readyForBendsAndVibratoWork") is not True:
+    if proof.get("readyForTechniqueCorrectionWork") is not True:
         raise RuntimeError("Focused chorus proof is not ready for bends/vibrato work.")
 
     events = source_rows(source)
@@ -131,8 +131,6 @@ def main() -> None:
     source_hash_after = canonical_hash(SOURCE_PATH)
     source_unchanged = source_hash_before == source_hash_after
 
-    # This stage inventories existing metadata only. It deliberately does not
-    # claim audio support, infer missing techniques, or promote any correction.
     output = {
         "schemaVersion": 1,
         "inventoryType": "read-only-chorus-bend-vibrato-metadata-inventory",
