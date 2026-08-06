@@ -59,9 +59,14 @@ def main() -> None:
     ):
         raise RuntimeError("Unexpected support-proof recommendation.")
 
-    rows = [row for row in proof.get("rows", []) if isinstance(row, dict)]
-    expected_count = int(proof.get("singleNoteCandidateCount", -1))
-    candidate_count_matches = len(rows) == expected_count == 17
+    # The support proof intentionally stores only the three supported rows in
+    # `supportedRows`; `singleNoteCandidateCount` remains the full classifier
+    # population of 17. Do not expect the handoff subset to contain 17 rows.
+    rows = [
+        row for row in proof.get("supportedRows", []) if isinstance(row, dict)
+    ]
+    expected_total_count = int(proof.get("singleNoteCandidateCount", -1))
+    candidate_count_matches = expected_total_count == 17
 
     bend_rows = [
         row for row in rows
@@ -135,7 +140,7 @@ def main() -> None:
         "schemaVersion": 1,
         "planType": "read-only-chorus-technique-evidence-handoff-plan",
         "passed": passed,
-        "singleNoteCandidateCount": len(rows),
+        "singleNoteCandidateCount": expected_total_count,
         "candidateCountMatches": candidate_count_matches,
         "handoffCandidateCount": len(handoff_rows),
         "bendHandoffCandidateCount": len(bend_rows),
@@ -184,7 +189,7 @@ def main() -> None:
 
     print("GOMYWAY CHORUS 33-35 READ-ONLY CHORUS TECHNIQUE HANDOFF PLAN V1 COMPLETE")
     print("Passed:", passed)
-    print("Single-note candidates:", len(rows))
+    print("Single-note candidates:", expected_total_count)
     print("Candidate count matches:", candidate_count_matches)
     print("Handoff candidates:", len(handoff_rows))
     print("Bend handoff candidates:", len(bend_rows))
