@@ -44,23 +44,31 @@ def observation_rows(endpoint: dict[str, Any]) -> list[dict[str, Any]]:
     return []
 
 
+def provenance_rows(provenance: dict[str, Any]) -> list[dict[str, Any]]:
+    # The provenance diagnostic currently writes endpoint records under
+    # top-level "rows". Keep compatibility with earlier candidate names.
+    for key in ("rows", "endpoints", "conflictEndpoints"):
+        rows = provenance.get(key)
+        if isinstance(rows, list):
+            selected = [row for row in rows if isinstance(row, dict)]
+            if selected:
+                return selected
+    return []
+
+
 def main() -> None:
     provenance = load(PROVENANCE_PATH)
     if provenance.get("passed") is not True:
         raise RuntimeError("Observed timing provenance diagnostic is not green.")
 
-    endpoints = [
-        row for row in provenance.get("endpoints", [])
-        if isinstance(row, dict)
-    ]
-    if not endpoints:
-        # Compatibility with diagnostics that use a different top-level name.
-        endpoints = [
-            row for row in provenance.get("conflictEndpoints", [])
-            if isinstance(row, dict)
-        ]
+    endpoints = provenance_rows(provenance)
+    expected_count = integer(provenance.get("conflictEndpointCount"))
     if not endpoints:
         raise RuntimeError("No conflict endpoints were found in provenance output.")
+    if expected_count is not None and len(endpoints) != expected_count:
+        raise RuntimeError(
+            f"Expected {expected_count} provenance endpoints, found {len(endpoints)}."
+        )
 
     rows: list[dict[str, Any]] = []
     duplicate_observation_count = 0
@@ -160,7 +168,7 @@ def main() -> None:
     output = {
         "schemaVersion": 1,
         "diagnosticType": "read-only-observed-timing-source-duplication",
-        "passed": True,
+        "passed": len(rows) == len(endpoints) and len(rows) > 0,
         "conflictEndpointCount": len(rows),
         "duplicateObservationCount": duplicate_observation_count,
         "pathImbalancedEndpointCount": path_imbalanced_count,
@@ -179,7 +187,7 @@ def main() -> None:
 
     manifest = {
         "schemaVersion": 1,
-        "passed": True,
+        "passed": output["passed"],
         "conflictEndpointCount": len(rows),
         "duplicateObservationCount": duplicate_observation_count,
         "pathImbalancedEndpointCount": path_imbalanced_count,
@@ -195,7 +203,7 @@ def main() -> None:
     MANIFEST_PATH.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
     print("GOMYWAY CHORUS 33-35 OBSERVED TIMING SOURCE DUPLICATION V1 COMPLETE")
-    print("Passed: True")
+    print("Passed:", output["passed"])
     print("Conflict endpoints:", len(rows))
     print("Duplicate observations:", duplicate_observation_count)
     print("Path-imbalanced endpoints:", path_imbalanced_count)
@@ -225,6 +233,9 @@ def main() -> None:
     print("Production promotion allowed: False")
     print("Output:", OUTPUT_PATH.relative_to(ROOT))
     print("Manifest:", MANIFEST_PATH.relative_to(ROOT))
+
+    if not output["passed"]:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
