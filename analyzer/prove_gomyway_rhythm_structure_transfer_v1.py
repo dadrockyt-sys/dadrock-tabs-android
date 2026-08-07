@@ -67,6 +67,16 @@ def number(row: dict[str, Any], key: str) -> float:
         raise RuntimeError(f"Missing/invalid {key}: {value!r}") from exc
 
 
+def subset_candidate_measures(review: dict[str, Any], key: str) -> list[int]:
+    subset = review.get(key)
+    if not isinstance(subset, dict):
+        raise RuntimeError(f"Review subset {key} missing or not an object.")
+    measures = subset.get("candidateMeasures")
+    if not isinstance(measures, list):
+        raise RuntimeError(f"Review subset {key}.candidateMeasures missing.")
+    return [int(value) for value in measures]
+
+
 def main() -> None:
     source_hash_before = sha256(SOURCE_PATH)
     source = load(SOURCE_PATH)
@@ -91,8 +101,8 @@ def main() -> None:
     if review.get("protectedSourceHashUnchanged") is not True:
         raise RuntimeError("Review did not preserve protected source hash.")
 
-    rhythm_subset = review.get("rhythmStructureSubset")
-    chord_subset = review.get("chordShapeSubset")
+    rhythm_subset = subset_candidate_measures(review, "rhythmStructureSubset")
+    chord_subset = subset_candidate_measures(review, "chordShapeSubset")
     held_out = review.get("heldOutMeasures")
     if rhythm_subset != EXPECTED_RHYTHM_SUBSET:
         raise RuntimeError(f"Expected rhythm subset {EXPECTED_RHYTHM_SUBSET}, found {rhythm_subset}.")
