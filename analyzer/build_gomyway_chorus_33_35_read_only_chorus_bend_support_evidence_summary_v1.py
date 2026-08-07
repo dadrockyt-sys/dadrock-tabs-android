@@ -93,11 +93,11 @@ def main() -> None:
         if not source_index_valid:
             source_index_failures += 1
 
+        # The overlay proof intentionally collapses all individual apply flags
+        # into a single proven noApply gate. Preserve that proof boundary here
+        # instead of requiring fields that are not emitted by proof rows.
         no_mutation = bool(
-            row.get("applyToProtectedSource") is False
-            and row.get("applyToV7") is False
-            and row.get("applyToRenderer") is False
-            and row.get("productionEligible") is False
+            row.get("noApply") is True
             and row.get("readOnly") is True
         )
         if not no_mutation:
