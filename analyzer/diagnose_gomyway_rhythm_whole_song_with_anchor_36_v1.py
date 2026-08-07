@@ -138,16 +138,31 @@ def main() -> None:
         raise RuntimeError("Anchor 36 registration V1 is not green.")
     if registration.get("anchor36RegisteredReadOnly") is not True:
         raise RuntimeError("Anchor 36 is not registered read-only.")
-    if registration.get("registrationScope") != "rhythm-structure-only":
+
+    anchor_registration = registration.get("anchorRegistration")
+    if not isinstance(anchor_registration, dict):
+        raise RuntimeError("Anchor 36 nested registration object is missing.")
+    if anchor_registration.get("measureNumber") != NEW_ANCHOR:
+        raise RuntimeError("Anchor 36 registration measure changed unexpectedly.")
+    if anchor_registration.get("registrationScope") != "rhythm-structure-only":
         raise RuntimeError("Anchor 36 registration scope changed unexpectedly.")
-    if registration.get("occupiedSteps") != EXPECTED_OCCUPIED_STEPS:
+    if anchor_registration.get("occupiedSteps") != EXPECTED_OCCUPIED_STEPS:
         raise RuntimeError("Anchor 36 occupied-step pattern changed unexpectedly.")
-    if registration.get("eligibleAsSimilarityAnchor") is not True:
+    if anchor_registration.get("eligibleAsSimilarityAnchor") is not True:
         raise RuntimeError("Anchor 36 is not eligible as a similarity anchor.")
-    if any(registration.get(key) is not False for key in (
-        "chordKnowledgeRegistered", "timingKnowledgeRegistered", "techniqueKnowledgeRegistered"
-    )):
+    learned_domains = anchor_registration.get("learnedDomains")
+    if not isinstance(learned_domains, dict):
+        raise RuntimeError("Anchor 36 learned-domain registration is missing.")
+    if learned_domains.get("rhythmStructure") is not True:
+        raise RuntimeError("Anchor 36 rhythm-structure knowledge is not registered.")
+    if any(learned_domains.get(key) is not False for key in ("chordShape", "timing", "technique")):
         raise RuntimeError("Anchor 36 unexpectedly contains non-rhythm knowledge.")
+    if anchor_registration.get("eligibleForChordTransfer") is not False:
+        raise RuntimeError("Anchor 36 unexpectedly allows chord transfer.")
+    if anchor_registration.get("eligibleForTimingTransfer") is not False:
+        raise RuntimeError("Anchor 36 unexpectedly allows timing transfer.")
+    if anchor_registration.get("eligibleForTechniqueTransfer") is not False:
+        raise RuntimeError("Anchor 36 unexpectedly allows technique transfer.")
     if registration.get("automaticApplyAllowed") is not False:
         raise RuntimeError("Anchor 36 registration unexpectedly allows automatic application.")
     if registration.get("protectedSourceHashUnchanged") is not True:
@@ -183,8 +198,6 @@ def main() -> None:
         anchor36 = compare_rhythm(profiles[measure], profiles[NEW_ANCHOR])
         anchor36_score = float(anchor36["rhythmStructuralSimilarityScore"])
 
-        # Anchor 36 is rhythm-only, so it may replace the old winner only on
-        # rhythm-structural evidence. We never infer chord/timing/technique here.
         wins = anchor36_score > old_score
         best_anchor = NEW_ANCHOR if wins else old_anchor
         best_score = anchor36_score if wins else old_score
