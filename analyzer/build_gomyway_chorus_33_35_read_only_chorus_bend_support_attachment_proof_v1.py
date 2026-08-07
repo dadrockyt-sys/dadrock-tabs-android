@@ -14,7 +14,7 @@ OUTPUT_PATH = PUBLIC / "gomyway-chorus-33-35-read-only-chorus-bend-support-attac
 MANIFEST_PATH = PUBLIC / "gomyway-chorus-33-35-read-only-chorus-bend-support-attachment-proof-v1-manifest.json"
 
 EXPECTED_KEYS = {
-    (33, 12, 237),
+    (33, 9, 237),
     (34, 5, 247),
     (34, 13, 254),
 }
