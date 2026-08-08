@@ -33,7 +33,7 @@ image = (
         f"git clone --depth 1 https://github.com/gudgud96/MR-MT3.git {MRMT3_REPO}",
         "python -m pip install --upgrade 'pip<25' 'setuptools<81' wheel",
         "python -m pip install numpy==1.23.5 protobuf==3.20.3 torch==2.0.1 torchaudio==2.0.2",
-        "python -m pip install transformers==4.18.0 librosa==0.9.1 t5==0.9.3 note-seq==0.0.3 pretty-midi==0.2.9 einops==0.4.1 hydra-core==1.2.0 pytorch-lightning==1.9.5 huggingface-hub",
+        "python -m pip install transformers==4.18.0 librosa==0.9.1 t5==0.9.3 note-seq==0.0.3 pretty-midi==0.2.9 einops==0.4.1 hydra-core==1.2.0 pytorch-lightning==1.9.5 huggingface-hub mir_eval==0.7",
         "python -m pip install tensorflow==2.12.0 tensorflow-text==2.12.0 tensorflow-probability==0.20.0",
         "python -m pip install tensorflow-datasets==4.9.2",
         "python -m pip install --force-reinstall --no-deps tensorflow-metadata==1.13.1",
@@ -46,6 +46,7 @@ image = (
         "python -c \"import tensorflow_metadata as tfmd; print('TFMETA smoke OK', tfmd.__version__ if hasattr(tfmd, '__version__') else '1.13.1')\"",
         "python -c \"import tensorflow_datasets as tfds; print('TFDS smoke OK', tfds.__version__, hasattr(tfds, 'core'))\"",
         "python -c \"import seqio; print('SEQIO smoke OK')\"",
+        f"cd {MRMT3_REPO} && python -c \"import mir_eval; from tasks.mt3_net_segmem_v2_with_prev import MT3NetSegMemV2WithPrev; print('MR-MT3 TASK smoke OK', mir_eval.__version__)\"",
     )
 )
 
