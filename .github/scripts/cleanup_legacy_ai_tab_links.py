@@ -1,6 +1,7 @@
 from pathlib import Path
 import re
 
+# One-use cleanup for the retired per-song AI Tab launcher.
 ROOT = Path(__file__).resolve().parents[2]
 
 FILES = [
