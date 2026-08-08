@@ -210,21 +210,24 @@ export async function POST(request) {
       else updatedCount++;
     }
 
-    // Remove songs not in top 100 anymore
+    // Preserve previously published song pages even when they fall out of the current
+    // top 100. These URLs may already be indexed, bookmarked, or internally linked.
+    // Ranking changes must never turn a valid permanent song URL into a 404.
     const top100VideoIds = top100.map(v => v.id);
-    const removeResult = await db.collection('song_pages').deleteMany({
+    const preservedCount = await db.collection('song_pages').countDocuments({
       videoId: { $nin: top100VideoIds }
     });
 
     return NextResponse.json({
       success: true,
-      message: `Synced top ${top100.length} songs. Added ${addedCount} new, updated ${updatedCount}. Removed ${removeResult.deletedCount} old entries.`,
+      message: `Synced top ${top100.length} songs. Added ${addedCount} new, updated ${updatedCount}. Preserved ${preservedCount} existing song pages outside the current top 100.`,
       total_scanned: allVideos.length,
       shorts_filtered: allVideos.length - regularVideos.length,
       songs_synced: top100.length,
       added: addedCount,
       updated: updatedCount,
-      removed: removeResult.deletedCount
+      removed: 0,
+      preserved: preservedCount
     });
 
   } catch (err) {
