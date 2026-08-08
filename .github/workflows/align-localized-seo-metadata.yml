@@ -1,0 +1,52 @@
+name: Align localized SEO metadata
+
+on:
+  push:
+    branches:
+      - seo-align-localized-canonicals-hreflang
+    paths:
+      - '.github/scripts/align_localized_seo_metadata.py'
+      - '.github/workflows/align-localized-seo-metadata.yml'
+      - 'lib/seo.js'
+
+permissions:
+  contents: write
+
+jobs:
+  align:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: seo-align-localized-canonicals-hreflang
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Apply localized SEO metadata patch
+        run: python .github/scripts/align_localized_seo_metadata.py
+
+      - name: Verify diff
+        run: git diff --check
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production site
+        run: npm run build
+
+      - name: Commit localized SEO changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/[lang]/page.js app/[lang]/songs/[slug]/page.js app/[lang]/artist/[slug]/page.js app/[lang]/coming-soon/page.js app/[lang]/quickies/page.js app/learn/[slug]/page.js
+          git commit -m "Align localized canonical and hreflang metadata"
+          git push origin seo-align-localized-canonicals-hreflang
