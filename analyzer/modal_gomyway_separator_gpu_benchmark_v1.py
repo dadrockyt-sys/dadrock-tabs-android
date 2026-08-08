@@ -192,18 +192,15 @@ def separate(
 def generate_gpu_hq_winner_stem(
     audio_bytes: bytes,
     audio_name: str,
-) -> dict[str, Any]:y
+) -> dict[str, Any]:
     suffix = (
         Path(audio_name).suffix
         or ".m4a"
     )
 
-    with tempfile.T
     with tempfile.TemporaryDirectory(
         prefix="jimmy-gpu-separator-v1-"
     ) as temporary_directory:
-        temp_root = Path(
-            temporary_directory
         )
 
         input_audio = (
