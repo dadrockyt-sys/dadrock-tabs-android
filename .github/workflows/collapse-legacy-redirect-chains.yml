@@ -1,0 +1,51 @@
+name: Collapse legacy redirect chains
+
+on:
+  push:
+    branches:
+      - seo-collapse-legacy-redirect-chains
+    paths:
+      - '.github/scripts/collapse_legacy_redirect_chains.py'
+      - '.github/workflows/collapse-legacy-redirect-chains.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  collapse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: seo-collapse-legacy-redirect-chains
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Apply redirect-chain cleanup
+        run: python .github/scripts/collapse_legacy_redirect_chains.py
+
+      - name: Verify diff
+        run: git diff --check
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production site
+        run: npm run build
+
+      - name: Commit redirect cleanup
+        run: |
+          if git diff --quiet; then
+            echo "No changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add middleware.js
+          git commit -m "Collapse legacy SEO redirect chains"
+          git push origin seo-collapse-legacy-redirect-chains
