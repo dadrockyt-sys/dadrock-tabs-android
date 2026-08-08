@@ -263,6 +263,19 @@ export function middleware(request) {
     return NextResponse.redirect(new URL('/sitemap.xml', request.url), 301);
   }
 
+  // ─── 8a. Collapse unsupported localized collection routes to English canonicals ───
+  // Genre, era, and playlist pages currently exist only in English. Old indexed URLs
+  // such as /ru/genre/heavy-metal should resolve permanently instead of returning 404.
+  const englishOnlyCollectionMatch = pathname.match(
+    /^\/(?:es|pt|pt-br|de|fr|it|ja|ko|zh|ru|hi|sv|fi)\/(genre|era|playlist)\/(.+)$/
+  );
+  if (englishOnlyCollectionMatch) {
+    const [, collectionType, slug] = englishOnlyCollectionMatch;
+    const canonicalUrl = new URL(`/${collectionType}/${slug}`, request.url);
+    canonicalUrl.search = request.nextUrl.search;
+    return NextResponse.redirect(canonicalUrl, 301);
+  }
+
   // ─── 8. Locale handling (i18n URL rewriting) ───
   let matchedLocale = null;
   let restPath = null;
