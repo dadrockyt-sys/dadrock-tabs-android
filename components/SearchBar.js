@@ -4,8 +4,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, X, Music, User, Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import AiTabButton from '@/components/AiTabButton';
-
 export default function SearchBar({ variant = 'full', placeholder = 'Search artists & songs...', currentLang = 'en' }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState({ artists: [], songs: [] });
@@ -188,11 +186,7 @@ export default function SearchBar({ variant = 'full', placeholder = 'Search arti
                     </div>
                     <Music className="w-4 h-4 text-zinc-600 flex-shrink-0 ml-auto" />
                   </button>
-<AiTabButton
-  song={song.title}
-  artist={song.artist}
-  lang={currentLang}
-/>
+
 </div>
                 );
               })}

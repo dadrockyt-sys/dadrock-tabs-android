@@ -6,8 +6,6 @@ import { ArrowLeft, Play, Youtube, Music, Home, Zap, ShoppingBag } from 'lucide-
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
-import AiTabButton from '@/components/AiTabButton';
-
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const YOUTUBE_CHANNEL = "https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ";
 const QUICKIES_PLAYLIST_URL = "https://www.youtube.com/playlist?list=PLEneI6e1FjBVRrw6FfSBK32RiT8N43v0H";
@@ -292,11 +290,7 @@ const lang = urlLang && ['es', 'pt', 'pt-br', 'de', 'fr', 'it', 'ja', 'ko', 'zh'
                 {video.artist && video.artist !== 'DadRock Tabs' && (
                   <p className="text-sm text-zinc-400 mt-1">{video.artist}</p>
                 )}
-<AiTabButton
-  song={video.song || video.title}
-  artist={video.artist}
-  lang={lang}
-/>
+
               </div>
             </div>
           ))}
