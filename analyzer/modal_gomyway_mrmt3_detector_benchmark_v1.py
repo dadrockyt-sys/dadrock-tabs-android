@@ -26,6 +26,9 @@ MRMT3_CHECKPOINT = "scratch/exp_segmemV2_prev_context=64_prevaug_frame=3.ckpt"
 
 app = modal.App("jimmy-paige-mrmt3-detector-v1")
 
+# Keep this environment deliberately close to MR-MT3's published requirements.
+# In particular, ddsp 3.3.4 and numpy 1.22.x avoid the dependency-resolution
+# conflict produced by newer ddsp/numpy releases with TensorFlow 2.11.
 image = (
     modal.Image.debian_slim(python_version="3.10")
     .apt_install("ffmpeg", "git", "libsndfile1")
@@ -33,7 +36,7 @@ image = (
         f"git clone --depth 1 https://github.com/gudgud96/MR-MT3.git {MRMT3_REPO}"
     )
     .pip_install(
-        "numpy==1.23.5",
+        "numpy==1.22.4",
         "protobuf==3.20.3",
         "transformers==4.18.0",
         "torch==2.0.1",
@@ -43,13 +46,13 @@ image = (
         "note-seq==0.0.3",
         "pretty-midi==0.2.9",
         "einops==0.4.1",
-        "ddsp",
+        "ddsp==3.3.4",
         "tensorflow==2.11.0",
         "tensorflow-text==2.11.0",
-        "tensorflow-probability==0.19.0",
         "hydra-core==1.2.0",
         "pytorch-lightning==1.9.5",
         "huggingface-hub",
+        "typing-extensions",
     )
 )
 
