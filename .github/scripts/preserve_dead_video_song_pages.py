@@ -1,5 +1,6 @@
 from pathlib import Path
 
+# One-use housekeeping patch: dead source videos must not delete permanent DadRock URLs.
 ROOT = Path(__file__).resolve().parents[2]
 
 # 1) Legacy YouTube cleanup: mark matching song pages unavailable instead of deleting them.
