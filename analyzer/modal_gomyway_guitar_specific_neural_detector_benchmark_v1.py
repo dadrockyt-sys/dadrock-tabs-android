@@ -66,6 +66,7 @@ def transcribe_guitar_model(audio_b64: str):
     import tempfile
 
     import pretty_midi
+    import torch
     from hf_midi_transcription import MidiTranscriptionModel
 
     audio_bytes = base64.b64decode(audio_b64.encode("ascii"))
@@ -76,11 +77,10 @@ def transcribe_guitar_model(audio_b64: str):
         midi_path = temp_root / "guitar.mid"
         audio_path.write_bytes(audio_bytes)
 
-        model = MidiTranscriptionModel.from_pretrained(
-            "xavriley/midi-transcription-models",
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        model = MidiTranscriptionModel(
+            device=device,
             instrument="guitar",
-            proxies=None,
-            resume_download=False,
         )
         model.transcribe(str(audio_path), str(midi_path))
 
