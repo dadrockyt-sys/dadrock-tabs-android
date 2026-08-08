@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 2,
+  "passed": true,
+  "winner": "bsroformer-then-demucs6s",
+  "winnerPitchF1": 6.12,
+  "winnerImprovementVsControlPoints": 1.39,
+  "winnerBeatsControl": true,
+  "productionSeparatorChanged": false,
+  "productionPromotionAllowed": false,
+  "output": "public/gomyway-separator-benchmark-stem-grade-v2.json"
+}

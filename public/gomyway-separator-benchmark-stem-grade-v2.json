@@ -1,0 +1,1784 @@
+{
+  "schemaVersion": 2,
+  "passed": true,
+  "comparisonType": "identical-basic-pitch-analyzer-on-separator-benchmark-stems",
+  "detectorSettings": {
+    "onsetThreshold": 0.5,
+    "frameThreshold": 0.3,
+    "minimumNoteLengthMs": 58.0,
+    "snapToleranceSeconds": 0.085
+  },
+  "timingGrid": {
+    "tempoBpm": 129.0,
+    "stepSeconds": 0.11627907,
+    "measureSeconds": 1.860465116,
+    "globalMeasure1Start": -0.013937331,
+    "measuresWithDirectTimingEvidence": 113,
+    "medianAbsoluteMeasureStartResidualSeconds": 0.013761778
+  },
+  "professionalReferenceRole": "downstream-grading-only",
+  "professionalReferenceUsedDuringDetection": false,
+  "control": {
+    "pitchF1": 4.73,
+    "priorityBatch": {
+      "matched": 0,
+      "missing": 51,
+      "extra": 187
+    }
+  },
+  "results": [
+    {
+      "name": "demucs6s-direct",
+      "audioPath": "public/separator-benchmark-v2/gomyway-demucs6s-direct-guitar.wav",
+      "basicPitchRawNoteCount": 1815,
+      "snappedPredictionCount": 1530,
+      "discardedOutsideGrid": 285,
+      "medianSnapDistanceSeconds": 0.026822,
+      "pitchF1": 6.01,
+      "matchedPitchTokens": 72,
+      "missingProfessionalPitchTokens": 795,
+      "extraCandidatePitchTokens": 1458,
+      "priorityBatch": {
+        "matched": 3,
+        "missing": 48,
+        "extra": 182
+      },
+      "strongestMeasures": [
+        {
+          "measureNumber": 107,
+          "pitchF1": 23.53,
+          "matched": 4,
+          "missing": 17,
+          "extra": 9
+        },
+        {
+          "measureNumber": 24,
+          "pitchF1": 21.05,
+          "matched": 2,
+          "missing": 5,
+          "extra": 10
+        },
+        {
+          "measureNumber": 66,
+          "pitchF1": 20.0,
+          "matched": 4,
+          "missing": 20,
+          "extra": 12
+        },
+        {
+          "measureNumber": 35,
+          "pitchF1": 17.78,
+          "matched": 4,
+          "missing": 20,
+          "extra": 17
+        },
+        {
+          "measureNumber": 93,
+          "pitchF1": 16.0,
+          "matched": 2,
+          "missing": 2,
+          "extra": 19
+        },
+        {
+          "measureNumber": 64,
+          "pitchF1": 15.79,
+          "matched": 3,
+          "missing": 12,
+          "extra": 20
+        },
+        {
+          "measureNumber": 65,
+          "pitchF1": 15.79,
+          "matched": 3,
+          "missing": 21,
+          "extra": 11
+        },
+        {
+          "measureNumber": 38,
+          "pitchF1": 15.38,
+          "matched": 3,
+          "missing": 12,
+          "extra": 21
+        },
+        {
+          "measureNumber": 79,
+          "pitchF1": 15.38,
+          "matched": 2,
+          "missing": 8,
+          "extra": 14
+        },
+        {
+          "measureNumber": 83,
+          "pitchF1": 14.81,
+          "matched": 2,
+          "missing": 8,
+          "extra": 15
+        },
+        {
+          "measureNumber": 22,
+          "pitchF1": 13.33,
+          "matched": 1,
+          "missing": 6,
+          "extra": 7
+        },
+        {
+          "measureNumber": 33,
+          "pitchF1": 12.9,
+          "matched": 2,
+          "missing": 16,
+          "extra": 11
+        }
+      ],
+      "weakestMeasures": [
+        {
+          "measureNumber": 90,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 27
+        },
+        {
+          "measureNumber": 91,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 24
+        },
+        {
+          "measureNumber": 104,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 24
+        },
+        {
+          "measureNumber": 88,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 23
+        },
+        {
+          "measureNumber": 42,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 22
+        },
+        {
+          "measureNumber": 44,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 21
+        },
+        {
+          "measureNumber": 85,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 21
+        },
+        {
+          "measureNumber": 89,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 10,
+          "extra": 21
+        },
+        {
+          "measureNumber": 45,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 20
+        },
+        {
+          "measureNumber": 56,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 20
+        },
+        {
+          "measureNumber": 58,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 20
+        },
+        {
+          "measureNumber": 96,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 20
+        }
+      ],
+      "measureScores": [
+        {
+          "measureNumber": 17,
+          "pitchF1": 8.0,
+          "matched": 1,
+          "missing": 6,
+          "extra": 17
+        },
+        {
+          "measureNumber": 18,
+          "pitchF1": 8.7,
+          "matched": 1,
+          "missing": 6,
+          "extra": 15
+        },
+        {
+          "measureNumber": 19,
+          "pitchF1": 8.0,
+          "matched": 1,
+          "missing": 6,
+          "extra": 17
+        },
+        {
+          "measureNumber": 20,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 17
+        },
+        {
+          "measureNumber": 21,
+          "pitchF1": 11.11,
+          "matched": 1,
+          "missing": 6,
+          "extra": 10
+        },
+        {
+          "measureNumber": 22,
+          "pitchF1": 13.33,
+          "matched": 1,
+          "missing": 6,
+          "extra": 7
+        },
+        {
+          "measureNumber": 23,
+          "pitchF1": 12.5,
+          "matched": 1,
+          "missing": 6,
+          "extra": 8
+        },
+        {
+          "measureNumber": 24,
+          "pitchF1": 21.05,
+          "matched": 2,
+          "missing": 5,
+          "extra": 10
+        },
+        {
+          "measureNumber": 25,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 13
+        },
+        {
+          "measureNumber": 26,
+          "pitchF1": 8.7,
+          "matched": 1,
+          "missing": 6,
+          "extra": 15
+        },
+        {
+          "measureNumber": 27,
+          "pitchF1": 9.09,
+          "matched": 1,
+          "missing": 6,
+          "extra": 14
+        },
+        {
+          "measureNumber": 28,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 18
+        },
+        {
+          "measureNumber": 29,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 10
+        },
+        {
+          "measureNumber": 30,
+          "pitchF1": 9.52,
+          "matched": 1,
+          "missing": 6,
+          "extra": 13
+        },
+        {
+          "measureNumber": 31,
+          "pitchF1": 11.11,
+          "matched": 1,
+          "missing": 6,
+          "extra": 10
+        },
+        {
+          "measureNumber": 32,
+          "pitchF1": 8.33,
+          "matched": 1,
+          "missing": 6,
+          "extra": 16
+        },
+        {
+          "measureNumber": 33,
+          "pitchF1": 12.9,
+          "matched": 2,
+          "missing": 16,
+          "extra": 11
+        },
+        {
+          "measureNumber": 34,
+          "pitchF1": 12.12,
+          "matched": 2,
+          "missing": 13,
+          "extra": 16
+        },
+        {
+          "measureNumber": 35,
+          "pitchF1": 17.78,
+          "matched": 4,
+          "missing": 20,
+          "extra": 17
+        },
+        {
+          "measureNumber": 36,
+          "pitchF1": 5.71,
+          "matched": 1,
+          "missing": 23,
+          "extra": 10
+        },
+        {
+          "measureNumber": 37,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 8
+        },
+        {
+          "measureNumber": 38,
+          "pitchF1": 15.38,
+          "matched": 3,
+          "missing": 12,
+          "extra": 21
+        },
+        {
+          "measureNumber": 39,
+          "pitchF1": 12.5,
+          "matched": 1,
+          "missing": 6,
+          "extra": 8
+        },
+        {
+          "measureNumber": 40,
+          "pitchF1": 7.41,
+          "matched": 1,
+          "missing": 7,
+          "extra": 18
+        },
+        {
+          "measureNumber": 41,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 19
+        },
+        {
+          "measureNumber": 42,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 22
+        },
+        {
+          "measureNumber": 43,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 18
+        },
+        {
+          "measureNumber": 44,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 21
+        },
+        {
+          "measureNumber": 45,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 20
+        },
+        {
+          "measureNumber": 46,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 19
+        },
+        {
+          "measureNumber": 47,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 16
+        },
+        {
+          "measureNumber": 48,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 14
+        },
+        {
+          "measureNumber": 49,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 8
+        },
+        {
+          "measureNumber": 50,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 11
+        },
+        {
+          "measureNumber": 51,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 15
+        },
+        {
+          "measureNumber": 52,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 19
+        },
+        {
+          "measureNumber": 53,
+          "pitchF1": 9.09,
+          "matched": 1,
+          "missing": 6,
+          "extra": 14
+        },
+        {
+          "measureNumber": 54,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 14
+        },
+        {
+          "measureNumber": 55,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 14
+        },
+        {
+          "measureNumber": 56,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 20
+        },
+        {
+          "measureNumber": 57,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 17
+        },
+        {
+          "measureNumber": 58,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 20
+        },
+        {
+          "measureNumber": 59,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 17
+        },
+        {
+          "measureNumber": 60,
+          "pitchF1": 8.7,
+          "matched": 1,
+          "missing": 6,
+          "extra": 15
+        },
+        {
+          "measureNumber": 61,
+          "pitchF1": 8.33,
+          "matched": 1,
+          "missing": 6,
+          "extra": 16
+        },
+        {
+          "measureNumber": 62,
+          "pitchF1": 10.53,
+          "matched": 1,
+          "missing": 6,
+          "extra": 11
+        },
+        {
+          "measureNumber": 63,
+          "pitchF1": 5.71,
+          "matched": 1,
+          "missing": 17,
+          "extra": 16
+        },
+        {
+          "measureNumber": 64,
+          "pitchF1": 15.79,
+          "matched": 3,
+          "missing": 12,
+          "extra": 20
+        },
+        {
+          "measureNumber": 65,
+          "pitchF1": 15.79,
+          "matched": 3,
+          "missing": 21,
+          "extra": 11
+        },
+        {
+          "measureNumber": 66,
+          "pitchF1": 20.0,
+          "matched": 4,
+          "missing": 20,
+          "extra": 12
+        },
+        {
+          "measureNumber": 67,
+          "pitchF1": 8.33,
+          "matched": 1,
+          "missing": 11,
+          "extra": 11
+        },
+        {
+          "measureNumber": 68,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 0,
+          "extra": 14
+        },
+        {
+          "measureNumber": 69,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 16,
+          "extra": 4
+        },
+        {
+          "measureNumber": 70,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 8
+        },
+        {
+          "measureNumber": 71,
+          "pitchF1": 12.5,
+          "matched": 1,
+          "missing": 9,
+          "extra": 5
+        },
+        {
+          "measureNumber": 72,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 4,
+          "extra": 15
+        },
+        {
+          "measureNumber": 73,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 16,
+          "extra": 6
+        },
+        {
+          "measureNumber": 74,
+          "pitchF1": 8.7,
+          "matched": 1,
+          "missing": 7,
+          "extra": 14
+        },
+        {
+          "measureNumber": 75,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 10,
+          "extra": 5
+        },
+        {
+          "measureNumber": 76,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 4,
+          "extra": 16
+        },
+        {
+          "measureNumber": 77,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 16,
+          "extra": 9
+        },
+        {
+          "measureNumber": 78,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 12
+        },
+        {
+          "measureNumber": 79,
+          "pitchF1": 15.38,
+          "matched": 2,
+          "missing": 8,
+          "extra": 14
+        },
+        {
+          "measureNumber": 80,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 4,
+          "extra": 18
+        },
+        {
+          "measureNumber": 81,
+          "pitchF1": 8.33,
+          "matched": 1,
+          "missing": 7,
+          "extra": 15
+        },
+        {
+          "measureNumber": 82,
+          "pitchF1": 6.25,
+          "matched": 1,
+          "missing": 11,
+          "extra": 19
+        },
+        {
+          "measureNumber": 83,
+          "pitchF1": 14.81,
+          "matched": 2,
+          "missing": 8,
+          "extra": 15
+        },
+        {
+          "measureNumber": 84,
+          "pitchF1": 12.12,
+          "matched": 2,
+          "missing": 6,
+          "extra": 23
+        },
+        {
+          "measureNumber": 85,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 21
+        },
+        {
+          "measureNumber": 86,
+          "pitchF1": 12.12,
+          "matched": 2,
+          "missing": 8,
+          "extra": 21
+        },
+        {
+          "measureNumber": 87,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 15
+        },
+        {
+          "measureNumber": 88,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 23
+        },
+        {
+          "measureNumber": 89,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 10,
+          "extra": 21
+        },
+        {
+          "measureNumber": 90,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 27
+        },
+        {
+          "measureNumber": 91,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 24
+        },
+        {
+          "measureNumber": 92,
+          "pitchF1": 10.53,
+          "matched": 2,
+          "missing": 6,
+          "extra": 28
+        },
+        {
+          "measureNumber": 93,
+          "pitchF1": 16.0,
+          "matched": 2,
+          "missing": 2,
+          "extra": 19
+        },
+        {
+          "measureNumber": 94,
+          "pitchF1": 8.0,
+          "matched": 1,
+          "missing": 6,
+          "extra": 17
+        },
+        {
+          "measureNumber": 95,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 15
+        },
+        {
+          "measureNumber": 96,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 20
+        },
+        {
+          "measureNumber": 97,
+          "pitchF1": 8.33,
+          "matched": 1,
+          "missing": 6,
+          "extra": 16
+        },
+        {
+          "measureNumber": 98,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 18
+        },
+        {
+          "measureNumber": 99,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 18
+        },
+        {
+          "measureNumber": 100,
+          "pitchF1": 8.0,
+          "matched": 1,
+          "missing": 6,
+          "extra": 17
+        },
+        {
+          "measureNumber": 101,
+          "pitchF1": 7.14,
+          "matched": 1,
+          "missing": 6,
+          "extra": 20
+        },
+        {
+          "measureNumber": 102,
+          "pitchF1": 8.7,
+          "matched": 1,
+          "missing": 6,
+          "extra": 15
+        },
+        {
+          "measureNumber": 103,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 20
+        },
+        {
+          "measureNumber": 104,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 24
+        },
+        {
+          "measureNumber": 105,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 14
+        },
+        {
+          "measureNumber": 106,
+          "pitchF1": 7.69,
+          "matched": 1,
+          "missing": 4,
+          "extra": 20
+        },
+        {
+          "measureNumber": 107,
+          "pitchF1": 23.53,
+          "matched": 4,
+          "missing": 17,
+          "extra": 9
+        },
+        {
+          "measureNumber": 108,
+          "pitchF1": 12.12,
+          "matched": 2,
+          "missing": 19,
+          "extra": 10
+        },
+        {
+          "measureNumber": 109,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 10
+        },
+        {
+          "measureNumber": 110,
+          "pitchF1": 10.53,
+          "matched": 1,
+          "missing": 4,
+          "extra": 13
+        },
+        {
+          "measureNumber": 111,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 15
+        },
+        {
+          "measureNumber": 112,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 3
+        },
+        {
+          "measureNumber": 113,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 4
+        }
+      ]
+    },
+    {
+      "name": "bsroformer-then-demucs6s",
+      "audioPath": "public/separator-benchmark-v2/gomyway-bsroformer-demucs6s-guitar.wav",
+      "basicPitchRawNoteCount": 1798,
+      "snappedPredictionCount": 1519,
+      "discardedOutsideGrid": 279,
+      "medianSnapDistanceSeconds": 0.02727,
+      "pitchF1": 6.12,
+      "matchedPitchTokens": 73,
+      "missingProfessionalPitchTokens": 794,
+      "extraCandidatePitchTokens": 1446,
+      "priorityBatch": {
+        "matched": 3,
+        "missing": 48,
+        "extra": 175
+      },
+      "strongestMeasures": [
+        {
+          "measureNumber": 107,
+          "pitchF1": 23.53,
+          "matched": 4,
+          "missing": 17,
+          "extra": 9
+        },
+        {
+          "measureNumber": 36,
+          "pitchF1": 19.51,
+          "matched": 4,
+          "missing": 20,
+          "extra": 13
+        },
+        {
+          "measureNumber": 38,
+          "pitchF1": 19.35,
+          "matched": 3,
+          "missing": 12,
+          "extra": 13
+        },
+        {
+          "measureNumber": 35,
+          "pitchF1": 17.39,
+          "matched": 4,
+          "missing": 20,
+          "extra": 18
+        },
+        {
+          "measureNumber": 93,
+          "pitchF1": 17.39,
+          "matched": 2,
+          "missing": 2,
+          "extra": 17
+        },
+        {
+          "measureNumber": 86,
+          "pitchF1": 17.14,
+          "matched": 3,
+          "missing": 7,
+          "extra": 22
+        },
+        {
+          "measureNumber": 83,
+          "pitchF1": 16.0,
+          "matched": 2,
+          "missing": 8,
+          "extra": 13
+        },
+        {
+          "measureNumber": 66,
+          "pitchF1": 15.79,
+          "matched": 3,
+          "missing": 21,
+          "extra": 11
+        },
+        {
+          "measureNumber": 79,
+          "pitchF1": 14.81,
+          "matched": 2,
+          "missing": 8,
+          "extra": 15
+        },
+        {
+          "measureNumber": 33,
+          "pitchF1": 12.9,
+          "matched": 2,
+          "missing": 16,
+          "extra": 11
+        },
+        {
+          "measureNumber": 24,
+          "pitchF1": 12.5,
+          "matched": 1,
+          "missing": 6,
+          "extra": 8
+        },
+        {
+          "measureNumber": 39,
+          "pitchF1": 12.5,
+          "matched": 1,
+          "missing": 6,
+          "extra": 8
+        }
+      ],
+      "weakestMeasures": [
+        {
+          "measureNumber": 90,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 27
+        },
+        {
+          "measureNumber": 88,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 25
+        },
+        {
+          "measureNumber": 58,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 23
+        },
+        {
+          "measureNumber": 85,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 23
+        },
+        {
+          "measureNumber": 91,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 23
+        },
+        {
+          "measureNumber": 104,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 23
+        },
+        {
+          "measureNumber": 42,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 22
+        },
+        {
+          "measureNumber": 43,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 22
+        },
+        {
+          "measureNumber": 103,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 22
+        },
+        {
+          "measureNumber": 26,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 21
+        },
+        {
+          "measureNumber": 89,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 10,
+          "extra": 20
+        },
+        {
+          "measureNumber": 28,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 19
+        }
+      ],
+      "measureScores": [
+        {
+          "measureNumber": 17,
+          "pitchF1": 8.0,
+          "matched": 1,
+          "missing": 6,
+          "extra": 17
+        },
+        {
+          "measureNumber": 18,
+          "pitchF1": 9.09,
+          "matched": 1,
+          "missing": 6,
+          "extra": 14
+        },
+        {
+          "measureNumber": 19,
+          "pitchF1": 10.0,
+          "matched": 1,
+          "missing": 6,
+          "extra": 12
+        },
+        {
+          "measureNumber": 20,
+          "pitchF1": 11.11,
+          "matched": 1,
+          "missing": 6,
+          "extra": 10
+        },
+        {
+          "measureNumber": 21,
+          "pitchF1": 8.7,
+          "matched": 1,
+          "missing": 6,
+          "extra": 15
+        },
+        {
+          "measureNumber": 22,
+          "pitchF1": 11.76,
+          "matched": 1,
+          "missing": 6,
+          "extra": 9
+        },
+        {
+          "measureNumber": 23,
+          "pitchF1": 10.0,
+          "matched": 1,
+          "missing": 6,
+          "extra": 12
+        },
+        {
+          "measureNumber": 24,
+          "pitchF1": 12.5,
+          "matched": 1,
+          "missing": 6,
+          "extra": 8
+        },
+        {
+          "measureNumber": 25,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 11
+        },
+        {
+          "measureNumber": 26,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 21
+        },
+        {
+          "measureNumber": 27,
+          "pitchF1": 10.0,
+          "matched": 1,
+          "missing": 6,
+          "extra": 12
+        },
+        {
+          "measureNumber": 28,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 19
+        },
+        {
+          "measureNumber": 29,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 11
+        },
+        {
+          "measureNumber": 30,
+          "pitchF1": 10.0,
+          "matched": 1,
+          "missing": 6,
+          "extra": 12
+        },
+        {
+          "measureNumber": 31,
+          "pitchF1": 9.52,
+          "matched": 1,
+          "missing": 6,
+          "extra": 13
+        },
+        {
+          "measureNumber": 32,
+          "pitchF1": 7.14,
+          "matched": 1,
+          "missing": 6,
+          "extra": 20
+        },
+        {
+          "measureNumber": 33,
+          "pitchF1": 12.9,
+          "matched": 2,
+          "missing": 16,
+          "extra": 11
+        },
+        {
+          "measureNumber": 34,
+          "pitchF1": 6.45,
+          "matched": 1,
+          "missing": 14,
+          "extra": 15
+        },
+        {
+          "measureNumber": 35,
+          "pitchF1": 17.39,
+          "matched": 4,
+          "missing": 20,
+          "extra": 18
+        },
+        {
+          "measureNumber": 36,
+          "pitchF1": 19.51,
+          "matched": 4,
+          "missing": 20,
+          "extra": 13
+        },
+        {
+          "measureNumber": 37,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 8
+        },
+        {
+          "measureNumber": 38,
+          "pitchF1": 19.35,
+          "matched": 3,
+          "missing": 12,
+          "extra": 13
+        },
+        {
+          "measureNumber": 39,
+          "pitchF1": 12.5,
+          "matched": 1,
+          "missing": 6,
+          "extra": 8
+        },
+        {
+          "measureNumber": 40,
+          "pitchF1": 7.69,
+          "matched": 1,
+          "missing": 7,
+          "extra": 17
+        },
+        {
+          "measureNumber": 41,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 18
+        },
+        {
+          "measureNumber": 42,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 22
+        },
+        {
+          "measureNumber": 43,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 22
+        },
+        {
+          "measureNumber": 44,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 19
+        },
+        {
+          "measureNumber": 45,
+          "pitchF1": 7.41,
+          "matched": 1,
+          "missing": 6,
+          "extra": 19
+        },
+        {
+          "measureNumber": 46,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 18
+        },
+        {
+          "measureNumber": 47,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 18
+        },
+        {
+          "measureNumber": 48,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 16
+        },
+        {
+          "measureNumber": 49,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 6
+        },
+        {
+          "measureNumber": 50,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 12
+        },
+        {
+          "measureNumber": 51,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 12
+        },
+        {
+          "measureNumber": 52,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 13
+        },
+        {
+          "measureNumber": 53,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 15
+        },
+        {
+          "measureNumber": 54,
+          "pitchF1": 10.53,
+          "matched": 1,
+          "missing": 6,
+          "extra": 11
+        },
+        {
+          "measureNumber": 55,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 15
+        },
+        {
+          "measureNumber": 56,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 17
+        },
+        {
+          "measureNumber": 57,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 14
+        },
+        {
+          "measureNumber": 58,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 23
+        },
+        {
+          "measureNumber": 59,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 17
+        },
+        {
+          "measureNumber": 60,
+          "pitchF1": 8.7,
+          "matched": 1,
+          "missing": 6,
+          "extra": 15
+        },
+        {
+          "measureNumber": 61,
+          "pitchF1": 8.7,
+          "matched": 1,
+          "missing": 6,
+          "extra": 15
+        },
+        {
+          "measureNumber": 62,
+          "pitchF1": 9.52,
+          "matched": 1,
+          "missing": 6,
+          "extra": 13
+        },
+        {
+          "measureNumber": 63,
+          "pitchF1": 11.43,
+          "matched": 2,
+          "missing": 16,
+          "extra": 15
+        },
+        {
+          "measureNumber": 64,
+          "pitchF1": 11.43,
+          "matched": 2,
+          "missing": 13,
+          "extra": 18
+        },
+        {
+          "measureNumber": 65,
+          "pitchF1": 9.52,
+          "matched": 2,
+          "missing": 22,
+          "extra": 16
+        },
+        {
+          "measureNumber": 66,
+          "pitchF1": 15.79,
+          "matched": 3,
+          "missing": 21,
+          "extra": 11
+        },
+        {
+          "measureNumber": 67,
+          "pitchF1": 9.09,
+          "matched": 1,
+          "missing": 11,
+          "extra": 9
+        },
+        {
+          "measureNumber": 68,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 0,
+          "extra": 17
+        },
+        {
+          "measureNumber": 69,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 16,
+          "extra": 5
+        },
+        {
+          "measureNumber": 70,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 6
+        },
+        {
+          "measureNumber": 71,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 10,
+          "extra": 5
+        },
+        {
+          "measureNumber": 72,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 4,
+          "extra": 17
+        },
+        {
+          "measureNumber": 73,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 16,
+          "extra": 6
+        },
+        {
+          "measureNumber": 74,
+          "pitchF1": 8.33,
+          "matched": 1,
+          "missing": 7,
+          "extra": 15
+        },
+        {
+          "measureNumber": 75,
+          "pitchF1": 12.5,
+          "matched": 1,
+          "missing": 9,
+          "extra": 5
+        },
+        {
+          "measureNumber": 76,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 4,
+          "extra": 13
+        },
+        {
+          "measureNumber": 77,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 16,
+          "extra": 6
+        },
+        {
+          "measureNumber": 78,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 12
+        },
+        {
+          "measureNumber": 79,
+          "pitchF1": 14.81,
+          "matched": 2,
+          "missing": 8,
+          "extra": 15
+        },
+        {
+          "measureNumber": 80,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 4,
+          "extra": 19
+        },
+        {
+          "measureNumber": 81,
+          "pitchF1": 8.33,
+          "matched": 1,
+          "missing": 7,
+          "extra": 15
+        },
+        {
+          "measureNumber": 82,
+          "pitchF1": 5.56,
+          "matched": 1,
+          "missing": 11,
+          "extra": 23
+        },
+        {
+          "measureNumber": 83,
+          "pitchF1": 16.0,
+          "matched": 2,
+          "missing": 8,
+          "extra": 13
+        },
+        {
+          "measureNumber": 84,
+          "pitchF1": 12.12,
+          "matched": 2,
+          "missing": 6,
+          "extra": 23
+        },
+        {
+          "measureNumber": 85,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 23
+        },
+        {
+          "measureNumber": 86,
+          "pitchF1": 17.14,
+          "matched": 3,
+          "missing": 7,
+          "extra": 22
+        },
+        {
+          "measureNumber": 87,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 15
+        },
+        {
+          "measureNumber": 88,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 25
+        },
+        {
+          "measureNumber": 89,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 10,
+          "extra": 20
+        },
+        {
+          "measureNumber": 90,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 8,
+          "extra": 27
+        },
+        {
+          "measureNumber": 91,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 12,
+          "extra": 23
+        },
+        {
+          "measureNumber": 92,
+          "pitchF1": 10.81,
+          "matched": 2,
+          "missing": 6,
+          "extra": 27
+        },
+        {
+          "measureNumber": 93,
+          "pitchF1": 17.39,
+          "matched": 2,
+          "missing": 2,
+          "extra": 17
+        },
+        {
+          "measureNumber": 94,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 16
+        },
+        {
+          "measureNumber": 95,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 16
+        },
+        {
+          "measureNumber": 96,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 19
+        },
+        {
+          "measureNumber": 97,
+          "pitchF1": 7.69,
+          "matched": 1,
+          "missing": 6,
+          "extra": 18
+        },
+        {
+          "measureNumber": 98,
+          "pitchF1": 7.14,
+          "matched": 1,
+          "missing": 6,
+          "extra": 20
+        },
+        {
+          "measureNumber": 99,
+          "pitchF1": 7.41,
+          "matched": 1,
+          "missing": 6,
+          "extra": 19
+        },
+        {
+          "measureNumber": 100,
+          "pitchF1": 7.41,
+          "matched": 1,
+          "missing": 6,
+          "extra": 19
+        },
+        {
+          "measureNumber": 101,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 7,
+          "extra": 16
+        },
+        {
+          "measureNumber": 102,
+          "pitchF1": 8.33,
+          "matched": 1,
+          "missing": 6,
+          "extra": 16
+        },
+        {
+          "measureNumber": 103,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 22
+        },
+        {
+          "measureNumber": 104,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 23
+        },
+        {
+          "measureNumber": 105,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 9
+        },
+        {
+          "measureNumber": 106,
+          "pitchF1": 7.69,
+          "matched": 1,
+          "missing": 4,
+          "extra": 20
+        },
+        {
+          "measureNumber": 107,
+          "pitchF1": 23.53,
+          "matched": 4,
+          "missing": 17,
+          "extra": 9
+        },
+        {
+          "measureNumber": 108,
+          "pitchF1": 11.76,
+          "matched": 2,
+          "missing": 19,
+          "extra": 11
+        },
+        {
+          "measureNumber": 109,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 7
+        },
+        {
+          "measureNumber": 110,
+          "pitchF1": 10.53,
+          "matched": 1,
+          "missing": 4,
+          "extra": 13
+        },
+        {
+          "measureNumber": 111,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 14
+        },
+        {
+          "measureNumber": 112,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 3
+        },
+        {
+          "measureNumber": 113,
+          "pitchF1": 0.0,
+          "matched": 0,
+          "missing": 5,
+          "extra": 4
+        }
+      ]
+    }
+  ],
+  "winner": "bsroformer-then-demucs6s",
+  "winnerPitchF1": 6.12,
+  "winnerImprovementVsControlPoints": 1.39,
+  "winnerBeatsControl": true,
+  "protected949CandidateHashUnchanged": true,
+  "candidateEventsModified": false,
+  "v7EventsModified": false,
+  "rendererModified": false,
+  "protectedBaselinesChanged": false,
+  "productionSeparatorChanged": false,
+  "productionPromotionAllowed": false,
+  "readyForSeparatorDecisionReview": true,
+  "recommendedNextAction": "review-gomyway-separator-analyzer-comparison-v2"
+}
