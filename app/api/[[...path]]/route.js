@@ -459,10 +459,20 @@ export async function POST(request, context) {
           }
         }
 
-        // Also remove from song_pages if any dead videos exist there
+        // Preserve permanent DadRock song URLs even if the source YouTube video dies.
+        // Mark the source as unavailable rather than turning an indexed song page into a 404.
         if (deadYtIds.length > 0) {
           for (const deadId of deadYtIds) {
-            await db.collection('song_pages').deleteMany({ videoId: deadId });
+            await db.collection('song_pages').updateMany(
+              { videoId: deadId },
+              {
+                $set: {
+                  videoUnavailable: true,
+                  videoUnavailableAt: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                }
+              }
+            );
           }
         }
 

@@ -379,10 +379,8 @@ export async function POST(request) {
         if (result.deletedCount > 0) removedCount++;
       }
 
-      // Also clean up from song_pages
-      for (const vid of video_ids) {
-        await db.collection('song_pages').deleteMany({ videoId: vid });
-      }
+      // Keep song_pages permanent. Removing a dead source video must not turn an
+      // already-indexed DadRock song URL into a 404.
 
       return NextResponse.json({
         success: true,
