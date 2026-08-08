@@ -1,3 +1,4 @@
+import base64
 import hashlib
 import json
 from collections import Counter
@@ -61,12 +62,14 @@ def integer(value: Any) -> int | None:
     timeout=3600,
     memory=16384,
 )
-def transcribe_neural(audio_bytes: bytes):
+def transcribe_neural(audio_b64: str):
     import tempfile
 
     import librosa
     import torch
     from piano_transcription_inference import PianoTranscription, sample_rate
+
+    audio_bytes = base64.b64decode(audio_b64.encode("ascii"))
 
     with tempfile.TemporaryDirectory(prefix="jimmy-neural-detector-v1-") as temp_dir:
         audio_path = Path(temp_dir) / "guitar.wav"
@@ -137,7 +140,8 @@ def main() -> None:
     print("Input stem:", STEM_PATH.relative_to(ROOT))
     print("Tuned Basic Pitch F1 to beat:", TUNED_BASIC_PITCH_F1)
 
-    raw_notes = transcribe_neural.remote(STEM_PATH.read_bytes())
+    stem_b64 = base64.b64encode(STEM_PATH.read_bytes()).decode("ascii")
+    raw_notes = transcribe_neural.remote(stem_b64)
 
     predicted: Counter[tuple[int, int, int]] = Counter()
     discarded = 0
