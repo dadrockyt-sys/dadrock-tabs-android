@@ -1,5 +1,6 @@
 from pathlib import Path
 
+# One-use SEO housekeeping patch: explicit admin deletions retain exact redirect history.
 ROOT = Path(__file__).resolve().parents[2]
 
 # --- Admin manual delete route ---
