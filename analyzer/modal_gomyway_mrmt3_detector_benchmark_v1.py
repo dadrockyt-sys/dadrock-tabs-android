@@ -37,8 +37,10 @@ image = (
         "python -m pip install tensorflow==2.12.0 tensorflow-text==2.12.0 tensorflow-probability==0.20.0",
         "python -m pip install crepe==0.0.14",
         "python -m pip install ddsp==3.3.4 --no-deps",
+        "python -m pip install --force-reinstall protobuf==3.20.3",
         "python -c \"import numpy, tensorflow as tf; print('MR-MT3 smoke OK', numpy.__version__, tf.__version__)\"",
         "python -c \"import crepe, ddsp; print('DDSP smoke OK')\"",
+        "python -c \"import google.protobuf, note_seq; print('NOTESEQ smoke OK', google.protobuf.__version__)\"",
     )
 )
 
