@@ -113,6 +113,7 @@ def transcribe_neural(audio_b64: str):
         return normalized
 
 
+@app.local_entrypoint()
 def main() -> None:
     import analyze_and_grade_gomyway_separator_benchmark_stems_v2 as v2
     import analyze_and_grade_gomyway_separator_benchmark_stems_v3 as v3
@@ -247,7 +248,3 @@ def main() -> None:
     print("Recommended next action:", output["recommendedNextAction"])
     print("Output:", OUTPUT_PATH.relative_to(ROOT))
     print("Manifest:", MANIFEST_PATH.relative_to(ROOT))
-
-
-if __name__ == "__main__":
-    main()
