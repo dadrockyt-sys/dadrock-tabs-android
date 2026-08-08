@@ -5,23 +5,31 @@ import { generateAlternates } from '@/lib/seo';
 export const dynamic = 'force-dynamic';
 
 // SEO Metadata
-export const metadata = {
-  title: 'Upcoming Guitar Lessons & Bass Tabs Schedule | DadRock Tabs',
-  description: 'Check out the upcoming guitar and bass tab video lessons schedule at DadRock Tabs. See what classic rock, heavy metal, and hair metal songs are coming soon. Free video tutorials for Van Halen, Metallica, AC/DC, Led Zeppelin, and more legendary artists. Never miss a new lesson - view our complete release schedule!',
-  keywords: 'upcoming guitar lessons, bass tabs schedule, new guitar tutorials, classic rock tabs, heavy metal lessons, hair metal guitar, free guitar tabs, DadRock Tabs schedule',
-  openGraph: {
-    title: 'Upcoming Guitar Lessons Schedule | DadRock Tabs',
-    description: 'See what classic rock and metal guitar lessons are coming soon to DadRock Tabs. Free video tutorials for legendary artists.',
-    type: 'website',
-    url: 'https://dadrocktabs.com/coming-soon',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Upcoming Guitar Lessons Schedule | DadRock Tabs',
-    description: 'See what classic rock and metal guitar lessons are coming soon to DadRock Tabs.',
-  },
-  alternates: generateAlternates('/coming-soon'),
-};
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams?.lang || 'en';
+  const pageUrl = lang === 'en'
+    ? 'https://dadrocktabs.com/coming-soon'
+    : `https://dadrocktabs.com/${lang}/coming-soon`;
+
+  return {
+    title: 'Upcoming Guitar Lessons & Bass Tabs Schedule | DadRock Tabs',
+    description: 'Check out the upcoming guitar and bass tab video lessons schedule at DadRock Tabs. See what classic rock, heavy metal, and hair metal songs are coming soon. Free video tutorials for Van Halen, Metallica, AC/DC, Led Zeppelin, and more legendary artists. Never miss a new lesson - view our complete release schedule!',
+    keywords: 'upcoming guitar lessons, bass tabs schedule, new guitar tutorials, classic rock tabs, heavy metal lessons, hair metal guitar, free guitar tabs, DadRock Tabs schedule',
+    openGraph: {
+      title: 'Upcoming Guitar Lessons Schedule | DadRock Tabs',
+      description: 'See what classic rock and metal guitar lessons are coming soon to DadRock Tabs. Free video tutorials for legendary artists.',
+      type: 'website',
+      url: pageUrl,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Upcoming Guitar Lessons Schedule | DadRock Tabs',
+      description: 'See what classic rock and metal guitar lessons are coming soon to DadRock Tabs.',
+    },
+    alternates: generateAlternates('/coming-soon', lang),
+  };
+}
 
 // JSON-LD Schema for SEO
 function generateSchema(upcomingCount) {

@@ -4,6 +4,7 @@ import { slugToArtistPattern, artistToSlug } from '@/lib/slugify';
 import ArtistPageClient from './ArtistPageClient';
 import { locales } from '@/lib/i18n';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
+import { generateAlternates } from '@/lib/seo';
 
 // Find artist name from slug by checking the database
 // This handles cases where slugToArtistPattern can't reverse the slug correctly
@@ -106,9 +107,7 @@ if (!locales.includes(lang)) {
       description,
       images: [dynamicOgImage],
     },
-    alternates: {
-  canonical: `https://dadrocktabs.com/${lang}/artist/${slug}`,
-},
+    alternates: generateAlternates(`/artist/${slug}`, lang),
   };
 }
 

@@ -31,7 +31,7 @@ export async function generateMetadata({ params }) {
         title: `${song.title} Guitar Lesson - ${cleanArtist}`,
         description,
         type: 'video.other',
-        url: `https://dadrocktabs.com/songs/${slug}`,
+        url: `https://dadrocktabs.com/${lang}/songs/${slug}`,
         siteName: 'DadRock Tabs',
         images: [{ url: ogImage, width: 1200, height: 630, alt: `${song.title} by ${cleanArtist} - Guitar Tab` }],
       },
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }) {
         description,
         images: [ogImage],
       },
-      alternates: generateAlternates(`/songs/${slug}`),
+      alternates: generateAlternates(`/songs/${slug}`, lang),
     };
   } catch {
     return { title: 'Song | DadRock Tabs' };

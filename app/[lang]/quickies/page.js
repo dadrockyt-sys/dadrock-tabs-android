@@ -1,7 +1,30 @@
 import { getDb } from '@/lib/mongodb';
 import QuickiesClient from '../../quickies/QuickiesClient';
+import { generateAlternates } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams?.lang || 'en';
+  const pageUrl = lang === 'en'
+    ? 'https://dadrocktabs.com/quickies'
+    : `https://dadrocktabs.com/${lang}/quickies`;
+
+  return {
+    title: 'DadRock Tabs Quickies - Quick Guitar & Bass Lessons | DadRock Tabs',
+    description: 'Quick guitar and bass tab lessons from DadRock Tabs. Short, focused tutorials that get you playing classic rock and heavy metal riffs fast.',
+    openGraph: {
+      title: 'DadRock Tabs Quickies - Quick Guitar & Bass Lessons',
+      description: 'Quick guitar and bass tab lessons — short, sweet, and straight to the riff!',
+      type: 'website',
+      url: pageUrl,
+      siteName: 'DadRock Tabs',
+    },
+    alternates: generateAlternates('/quickies', lang),
+  };
+}
+
 
 export default async function QuickiesPage({ params }) {
   const resolvedParams = await params;
