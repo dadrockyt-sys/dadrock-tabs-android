@@ -1,5 +1,6 @@
 from pathlib import Path
 
+# One-use SEO housekeeping patch: English-prefixed routes collapse to default canonicals.
 ROOT = Path(__file__).resolve().parents[2]
 path = ROOT / "middleware.js"
 text = path.read_text(encoding="utf-8")
