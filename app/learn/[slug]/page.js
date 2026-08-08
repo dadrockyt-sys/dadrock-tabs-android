@@ -7,6 +7,7 @@ import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import LearnHeader from '@/components/LearnHeader';
+import { generateAlternates } from '@/lib/seo';
 
 function getLocalizedValue(value, lang) {
   if (value && typeof value === 'object') {
@@ -68,9 +69,7 @@ export async function generateMetadata({ params }) {
     title: `${guideTitle} | DadRock Tabs`,
     description: guideDescription,
     keywords: guide.keywords,
-    alternates: {
-      canonical: pageUrl
-    },
+    alternates: generateAlternates(`/learn/${slug}`, lang),
     openGraph: {
       title: guideTitle,
       description: guideDescription,

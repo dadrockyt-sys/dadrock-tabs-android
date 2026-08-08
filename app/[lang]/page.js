@@ -70,6 +70,9 @@ export async function generateMetadata({ params }) {
   locales.forEach(l => {
     languages[l] = l === 'en' ? baseUrl : `${baseUrl}/${l}`;
   });
+  languages['x-default'] = baseUrl;
+
+  const currentUrl = lang === 'en' ? baseUrl : `${baseUrl}/${lang}`;
 
   // JSON-LD Structured Data for SEO
   const structuredData = {
@@ -103,8 +106,8 @@ export async function generateMetadata({ params }) {
       },
       {
         '@type': 'WebPage',
-        '@id': `${baseUrl}/#webpage`,
-        'url': baseUrl,
+        '@id': `${currentUrl}/#webpage`,
+        'url': currentUrl,
         'name': titles[lang] || titles.en,
         'description': descriptions[lang] || descriptions.en,
         'isPartOf': { '@id': `${baseUrl}/#website` },
@@ -175,9 +178,7 @@ export async function generateMetadata({ params }) {
     description: descriptions[lang] || descriptions.en,
     keywords: keywords[lang] || keywords.en,
     alternates: {
-      // ALL locale pages point canonical to the English homepage
-      // This tells Google the English version is the primary page
-      canonical: baseUrl,
+      canonical: currentUrl,
       languages: languages,
     },
     openGraph: {
@@ -186,7 +187,7 @@ export async function generateMetadata({ params }) {
       type: 'website',
       locale: lang,
       alternateLocale: locales.filter(l => l !== lang),
-      url: baseUrl,
+      url: currentUrl,
       siteName: 'DadRock Tabs',
       images: [
         {
