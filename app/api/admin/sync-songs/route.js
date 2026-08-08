@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { v4 as uuidv4 } from 'uuid';
+import { artistToSlug } from '@/lib/slugify';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const YOUTUBE_CLIENT_ID = process.env.YOUTUBE_CLIENT_ID;
@@ -373,13 +374,48 @@ export async function DELETE(request) {
     }
 
     const db = await getDb();
-    const result = await db.collection('song_pages').deleteOne({ videoId });
+    const song = await db.collection('song_pages').findOne(
+      { videoId },
+      { projection: { slug: 1, artist: 1, title: 1 } }
+    );
 
-    if (result.deletedCount === 0) {
+    if (!song) {
       return NextResponse.json({ error: 'Song page not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, message: 'Song page deleted' });
+    const cleanArtist = song.artist?.replace(/\s*-\s*$/, '').trim() || '';
+    const artistSlug = artistToSlug(cleanArtist);
+    const redirectTarget = artistSlug ? `/artist/${artistSlug}` : '/';
+
+    if (song.slug) {
+      await db.collection('song_redirects').updateOne(
+        { slug: song.slug },
+        {
+          $set: {
+            target: redirectTarget,
+            reason: 'admin_delete',
+            sourceVideoId: videoId,
+            songTitle: song.title || '',
+            artist: cleanArtist,
+            updated_at: new Date().toISOString(),
+          },
+          $setOnInsert: { created_at: new Date().toISOString() },
+        },
+        { upsert: true }
+      );
+    }
+
+    const result = await db.collection('song_pages').deleteOne({ videoId });
+
+    if (result.deletedCount === 0) {
+      return NextResponse.json({ error: 'Song page could not be deleted' }, { status: 409 });
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Song page deleted and permanent redirect preserved',
+      redirect: song.slug ? { slug: song.slug, target: redirectTarget } : null,
+    });
 
   } catch (err) {
     console.error('Delete song page error:', err);

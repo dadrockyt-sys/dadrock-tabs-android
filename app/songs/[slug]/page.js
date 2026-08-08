@@ -73,7 +73,16 @@ export default async function SongPage({ params }) {
   const song = await db.collection('song_pages').findOne({ slug });
   
   if (!song) {
-    // Song not found — return proper 404 so Google de-indexes this URL
+    const savedRedirect = await db.collection('song_redirects').findOne(
+      { slug },
+      { projection: { target: 1 } }
+    );
+
+    if (savedRedirect?.target?.startsWith('/')) {
+      permanentRedirect(savedRedirect.target);
+    }
+
+    // Unknown missing URLs should remain real 404s.
     notFound();
   }
 
