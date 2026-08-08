@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import hashlib
 import json
 from collections import Counter
@@ -63,7 +61,7 @@ def integer(value: Any) -> int | None:
     timeout=3600,
     memory=16384,
 )
-def transcribe_neural(audio_bytes: bytes) -> list[dict[str, Any]]:
+def transcribe_neural(audio_bytes: bytes):
     import tempfile
 
     import librosa
@@ -81,7 +79,7 @@ def transcribe_neural(audio_bytes: bytes) -> list[dict[str, Any]]:
         result = transcriptor.transcribe(audio, str(midi_path))
 
         rows = result.get("est_note_events", [])
-        normalized: list[dict[str, Any]] = []
+        normalized = []
         for row in rows:
             if not isinstance(row, dict):
                 continue
