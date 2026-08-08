@@ -24,9 +24,9 @@ app = modal.App("jimmy-paige-guitar-specific-neural-detector-v1")
 
 image = (
     modal.Image.debian_slim(python_version="3.11")
-    .apt_install("ffmpeg")
+    .apt_install("ffmpeg", "git")
     .pip_install(
-        "hf-midi-transcription",
+        "git+https://github.com/xavriley/hf_midi_transcription.git",
         "pretty_midi",
         "librosa",
         "soundfile",
