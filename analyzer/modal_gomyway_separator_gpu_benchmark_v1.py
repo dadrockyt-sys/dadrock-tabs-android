@@ -201,7 +201,7 @@ def generate_gpu_hq_winner_stem(
     with tempfile.TemporaryDirectory(
         prefix="jimmy-gpu-separator-v1-"
     ) as temporary_directory:
-                temp_root = Path(
+       temp_root = Path(
             temporary_directory
                 )
 
