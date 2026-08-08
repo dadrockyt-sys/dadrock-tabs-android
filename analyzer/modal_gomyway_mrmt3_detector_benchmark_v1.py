@@ -35,12 +35,15 @@ image = (
         "python -m pip install numpy==1.23.5 protobuf==3.20.3 torch==2.0.1 torchaudio==2.0.2",
         "python -m pip install transformers==4.18.0 librosa==0.9.1 t5==0.9.3 note-seq==0.0.3 pretty-midi==0.2.9 einops==0.4.1 hydra-core==1.2.0 pytorch-lightning==1.9.5 huggingface-hub",
         "python -m pip install tensorflow==2.12.0 tensorflow-text==2.12.0 tensorflow-probability==0.20.0",
+        "python -m pip install tensorflow-datasets==4.9.2",
         "python -m pip install crepe==0.0.14",
         "python -m pip install ddsp==3.3.4 --no-deps",
         "python -m pip install --force-reinstall protobuf==3.20.3",
         "python -c \"import numpy, tensorflow as tf; print('MR-MT3 smoke OK', numpy.__version__, tf.__version__)\"",
         "python -c \"import crepe, ddsp; print('DDSP smoke OK')\"",
         "python -c \"import google.protobuf, note_seq; print('NOTESEQ smoke OK', google.protobuf.__version__)\"",
+        "python -c \"import tensorflow_datasets as tfds; print('TFDS smoke OK', tfds.__version__, hasattr(tfds, 'core'))\"",
+        "python -c \"import seqio; print('SEQIO smoke OK')\"",
     )
 )
 
