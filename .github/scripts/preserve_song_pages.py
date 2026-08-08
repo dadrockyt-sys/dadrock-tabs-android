@@ -1,5 +1,6 @@
 from pathlib import Path
 
+# One-use housekeeping patch: keep indexed song URLs permanent across ranking changes.
 ROOT = Path(__file__).resolve().parents[2]
 path = ROOT / "app/api/admin/sync-songs/route.js"
 text = path.read_text(encoding="utf-8")
