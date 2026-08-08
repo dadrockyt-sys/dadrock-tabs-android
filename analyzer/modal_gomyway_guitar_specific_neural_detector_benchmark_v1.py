@@ -79,6 +79,8 @@ def transcribe_guitar_model(audio_b64: str):
         model = MidiTranscriptionModel.from_pretrained(
             "xavriley/midi-transcription-models",
             instrument="guitar",
+            proxies=None,
+            resume_download=False,
         )
         model.transcribe(str(audio_path), str(midi_path))
 
