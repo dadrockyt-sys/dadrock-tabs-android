@@ -3,8 +3,6 @@ import { notFound } from 'next/navigation';
 import { getDb } from '@/lib/mongodb';
 import { artistToSlug } from '@/lib/slugify';
 import Link from 'next/link';
-import AiTabButton from '@/components/AiTabButton';
-
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const playlist = PLAYLISTS[slug];
@@ -221,11 +219,7 @@ export default async function PlaylistPage({ params }) {
     )}
   </Link>
 
-  <AiTabButton
-    song={song.title}
-    artist={song.artist}
-    lang="en"
-  />
+
 </div>
                 );
               })}

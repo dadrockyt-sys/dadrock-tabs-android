@@ -11,8 +11,6 @@ import SearchBar from '@/components/SearchBar';
 import ProgressTracker from '@/components/ProgressTracker';
 import Comments from '@/components/Comments';
 import ShareCard from '@/components/ShareCard';
-import AiTabButton from '@/components/AiTabButton';
-
 const LOGO_URL = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
 
@@ -383,11 +381,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
         </div>
 
 <div className="mt-6">
-  <AiTabButton
-    song={song.title}
-    artist={song.artist}
-    lang={lang}
-  />
+
 </div>
 
         {/* Additional AI Content (below video) */}

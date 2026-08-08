@@ -6,8 +6,6 @@ import { Trophy, Eye, ThumbsUp, Play, Youtube, Home, Facebook, Twitter, Mail, Ex
 import LanguageSelector, { useLanguage } from '@/components/LanguageSelector';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
-import AiTabButton from '@/components/AiTabButton';
-
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 const YOUTUBE_CHANNEL = 'https://youtube.com/@dadrockytofficial?si=AM8uj6DTefJcP8oZ';
 
@@ -423,11 +421,7 @@ const t = getSubPageTranslation(lang);
                       </div>
                     </div>
 
-<AiTabButton
-  song={video.song || video.title}
-  artist={video.artist || cleanArtist}
-  lang={lang}
-/>
+
 
                     {/* Stats */}
                     <div className="mt-4 flex items-center gap-6 flex-wrap">

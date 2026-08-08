@@ -8,8 +8,6 @@ import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { getSeoMeta, updateDocumentMeta } from '@/lib/seoTranslations';
 import { artistToSlug } from '@/lib/slugify';
 import SearchBar from '@/components/SearchBar';
-import AiTabButton from '@/components/AiTabButton';
-
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png";
 
 // Related artists mapping for internal linking (SEO boost)
@@ -472,11 +470,7 @@ if (youtubeUrl) {
                   <p className="text-sm text-zinc-500">{artistName}</p>
                 </div>
 
-                  <AiTabButton
-  song={video.song || video.title}
-  artist={video.artist || artistName}
-  lang={lang}
-/>
+
               </div>
             </div>
           ))}

@@ -144,6 +144,19 @@ export function middleware(request) {
     return NextResponse.redirect(url, 301);
   }
 
+  // ─── 1b. Retire legacy song-prefilled AI Tab URLs ───
+  // Old per-song buttons linked to /ai-tab?song=...&artist=.... The product now
+  // has one canonical entry point at /ai-tab, so permanently collapse those URLs.
+  if (pathname === '/ai-tab' && (
+    request.nextUrl.searchParams.has('song') ||
+    request.nextUrl.searchParams.has('artist')
+  )) {
+    const cleanUrl = request.nextUrl.clone();
+    cleanUrl.searchParams.delete('song');
+    cleanUrl.searchParams.delete('artist');
+    return NextResponse.redirect(cleanUrl, 301);
+  }
+
   // ─── 2. Block known vulnerability scanners ───
   if (isBlockedBot(userAgent)) {
     return new NextResponse('Forbidden', { status: 403 });
