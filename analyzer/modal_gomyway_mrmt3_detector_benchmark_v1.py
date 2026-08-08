@@ -27,29 +27,15 @@ MRMT3_CHECKPOINT = "scratch/exp_segmemV2_prev_context=64_prevaug_frame=3.ckpt"
 app = modal.App("jimmy-paige-mrmt3-detector-v1")
 
 image = (
-    modal.Image.debian_slim(python_version="3.8")
+    modal.Image.debian_slim(python_version="3.10")
     .apt_install("ffmpeg", "git", "libsndfile1")
     .run_commands(
-        f"git clone --depth 1 https://github.com/gudgud96/MR-MT3.git {MRMT3_REPO}"
-    )
-    .pip_install(
-        "numpy==1.22.4",
-        "protobuf==3.20.3",
-        "transformers==4.18.0",
-        "torch==2.0.1",
-        "torchaudio==2.0.2",
-        "librosa==0.9.1",
-        "t5==0.9.3",
-        "note-seq==0.0.3",
-        "pretty-midi==0.2.9",
-        "einops==0.4.1",
-        "ddsp==3.3.4",
-        "tensorflow==2.11.0",
-        "tensorflow-text==2.11.0",
-        "tensorflow-probability==0.19.0",
-        "hydra-core==1.2.0",
-        "pytorch-lightning==1.9.5",
-        "huggingface-hub",
+        f"git clone --depth 1 https://github.com/gudgud96/MR-MT3.git {MRMT3_REPO}",
+        "python -m pip install --upgrade 'pip<25' 'setuptools<81' wheel",
+        "python -m pip install numpy==1.23.5 protobuf==3.20.3 torch==2.0.1 torchaudio==2.0.2",
+        "python -m pip install transformers==4.18.0 librosa==0.9.1 t5==0.9.3 note-seq==0.0.3 pretty-midi==0.2.9 einops==0.4.1 hydra-core==1.2.0 pytorch-lightning==1.9.5 huggingface-hub",
+        "python -m pip install tensorflow==2.11.0 tensorflow-text==2.11.0 tensorflow-probability==0.19.0",
+        "python -m pip install ddsp==3.3.4 --no-deps",
     )
 )
 
