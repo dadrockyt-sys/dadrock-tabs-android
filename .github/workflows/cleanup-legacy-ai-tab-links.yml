@@ -1,0 +1,51 @@
+name: Cleanup legacy AI Tab links
+
+on:
+  push:
+    branches:
+      - seo-housekeeping-ai-tab-links
+    paths:
+      - '.github/scripts/cleanup_legacy_ai_tab_links.py'
+      - '.github/workflows/cleanup-legacy-ai-tab-links.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: seo-housekeeping-ai-tab-links
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Apply housekeeping codemod
+        run: python .github/scripts/cleanup_legacy_ai_tab_links.py
+
+      - name: Verify patch formatting
+        run: git diff --check
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production site
+        run: npm run build
+
+      - name: Commit housekeeping changes
+        run: |
+          if git diff --quiet; then
+            echo "No housekeeping changes were needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app components middleware.js
+          git commit -m "Remove legacy per-song AI Tab button plumbing"
+          git push origin seo-housekeeping-ai-tab-links
