@@ -237,6 +237,16 @@ export function middleware(request) {
     return NextResponse.redirect(new URL('/', request.url), 301);
   }
 
+  // ─── 5b. Canonicalize all English-prefixed routes ───
+  // English is the default locale, so /en/... is always a duplicate of /....
+  // Redirect in one hop and preserve the query string.
+  if (pathname.startsWith('/en/')) {
+    const canonicalPath = pathname.slice(3) || '/';
+    const canonicalUrl = new URL(canonicalPath, request.url);
+    canonicalUrl.search = request.nextUrl.search;
+    return NextResponse.redirect(canonicalUrl, 301);
+  }
+
   // ─── 6. Handle /zn → redirect to /zh (common typo) ───
   if (pathname === '/zn') {
     return NextResponse.redirect(new URL('/zh', request.url), 301);
