@@ -125,8 +125,9 @@ export function middleware(request) {
       // locale roots like /fr/ keep trailing slash — served directly after redirect
     }
 
-    // Handle /en → /
+    // Handle default English locale in the same www canonicalization hop.
     if (cleanPath === '/en') cleanPath = '/';
+    else if (cleanPath.startsWith('/en/')) cleanPath = cleanPath.slice(3) || '/';
     // Handle /zn → /zh
     if (cleanPath === '/zn') cleanPath = '/zh';
     else if (cleanPath.startsWith('/zn/')) cleanPath = '/zh' + cleanPath.slice(3);
@@ -201,15 +202,15 @@ export function middleware(request) {
   }
 
   // ─── 4b. Strip trailing dashes from artist/song slugs ───
-  // GSC indexes URLs like /artist/rush- or /de/artist/rush- 
-  // Always redirect to English canonical (strip locale + trailing dash in one hop)
-  const trailingDashMatch = pathname.match(/^\/((?:[a-z]{2}(?:-[a-z]{2})?\/)?(?:artist|songs))\/(.+)-$/);
+  // Preserve supported translated routes such as /de/artist/rush-, while default
+  // English /en/... collapses directly to the unprefixed canonical.
+  const trailingDashMatch = pathname.match(
+    /^\/(?:(es|pt|pt-br|de|fr|it|ja|ko|zh|ru|hi|sv|fi|en)\/)?(artist|songs)\/(.+)-$/
+  );
   if (trailingDashMatch) {
-    const prefix = trailingDashMatch[1];
-    const cleanSlug = trailingDashMatch[2];
-    // Strip locale prefix if present to avoid redirect chain
-    const cleanPrefix = prefix.replace(/^[a-z]{2}(?:-[a-z]{2})?\//,'');
-    const cleanUrl = new URL(`/${cleanPrefix}/${cleanSlug}`, request.url);
+    const [, locale, routeType, cleanSlug] = trailingDashMatch;
+    const localePrefix = locale && locale !== 'en' ? `/${locale}` : '';
+    const cleanUrl = new URL(`${localePrefix}/${routeType}/${cleanSlug}`, request.url);
     cleanUrl.search = request.nextUrl.search;
     return NextResponse.redirect(cleanUrl, 301);
   }
@@ -225,9 +226,12 @@ export function middleware(request) {
     const songSlug = songSlugMatch[1];
     const artistSlug = missingSongRedirects[songSlug];
     if (artistSlug) {
-      // Extract locale prefix if present
-      const localePrefix = pathname.match(/^(\/[a-z]{2}(?:-[a-z]{2})?)\/songs\//);
-      const prefix = localePrefix ? localePrefix[1] : '';
+      // Preserve translated locales, but collapse default /en directly to English canonical.
+      const localePrefix = pathname.match(
+        /^\/(es|pt|pt-br|de|fr|it|ja|ko|zh|ru|hi|sv|fi|en)\/songs\//
+      );
+      const locale = localePrefix?.[1];
+      const prefix = locale && locale !== 'en' ? `/${locale}` : '';
       return NextResponse.redirect(new URL(`${prefix}/artist/${artistSlug}`, request.url), 301);
     }
   }
