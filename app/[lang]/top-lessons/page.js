@@ -1,3 +1,1 @@
-import TopLessonsPage from '../../top-lessons/page';
-
-export default TopLessonsPage;
+export { default, generateMetadata } from '../../top-lessons/page';

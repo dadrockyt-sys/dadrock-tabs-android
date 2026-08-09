@@ -1,1 +1,1 @@
-export { default } from '../../../difficulty/[level]/page';
+export { default, generateMetadata } from '../../../difficulty/[level]/page';
