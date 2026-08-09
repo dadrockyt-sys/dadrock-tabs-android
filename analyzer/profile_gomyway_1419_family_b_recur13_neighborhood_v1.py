@@ -93,7 +93,7 @@ def main() -> None:
         print(
             f"  {label(row, reference)} token={tok} "
             f"recur={int(row['recurrence'])} "
-            f"rms={float(row['minRmsRise']):.6f} "
+            f"rms={float(row['minRmsLog2Rise']):.6f} "
             f"flux={float(row['minPositiveFlux']):.6f} "
             f"ratio={float(row['minTargetVsSubharmonicRatio']):.6f} "
             f"template={float(row['minTemplateRatio']):.6f}"
