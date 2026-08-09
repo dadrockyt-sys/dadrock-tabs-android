@@ -133,10 +133,10 @@ def main() -> None:
     rows: list[dict[str, Any]] = []
 
     for tok, count in champion2568.items():
-        midi = int(tok[1])
-        center = float(v2.token_time(grid, tok))
-        wf = period.periodicity_features(winner_audio, winner_sr, center, midi)
-        af = period.periodicity_features(alt_audio, alt_sr, center, midi)
+        measure, step, pitch = tok
+        center = float(grid[(measure, step)])
+        wf = period.periodicity_features(winner_audio, winner_sr, center, pitch)
+        af = period.periodicity_features(alt_audio, alt_sr, center, pitch)
         signatures = sorted(period.signatures_for(wf, af))
         truth_count = min(int(count), int(reference.get(tok, 0)))
         false_count = int(count) - truth_count
