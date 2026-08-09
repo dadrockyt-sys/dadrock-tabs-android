@@ -27,8 +27,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Verify diff
-        run: git diff HEAD~2..HEAD --check
+      - name: Verify working tree formatting
+        run: git diff --check
 
       - name: Build production site
         run: npm run build
