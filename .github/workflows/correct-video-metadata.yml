@@ -1,0 +1,52 @@
+name: Correct video metadata
+
+on:
+  push:
+    branches:
+      - seo-correct-video-metadata-urls
+    paths:
+      - '.github/scripts/correct_video_structured_data.py'
+      - '.github/workflows/correct-video-metadata.yml'
+      - 'app/video-sitemap.xml/route.js'
+
+permissions:
+  contents: write
+
+jobs:
+  video-seo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: seo-correct-video-metadata-urls
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Apply structured data patch
+        run: python .github/scripts/correct_video_structured_data.py
+
+      - name: Verify diff
+        run: git diff --check
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production site
+        run: npm run build
+
+      - name: Commit video structured data fixes
+        run: |
+          if git diff --quiet; then
+            echo "No structured-data changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/songs/[slug]/page.js app/[lang]/songs/[slug]/page.js app/[lang]/artist/[slug]/page.js
+          git commit -m "Correct video structured data URLs"
+          git push origin seo-correct-video-metadata-urls
