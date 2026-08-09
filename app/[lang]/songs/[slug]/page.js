@@ -133,6 +133,9 @@ if (aiDoc?.content) {
 
   // JSON-LD Schema — MusicRecording + VideoObject + BreadcrumbList + HowTo
   const durationMinutes = song.duration ? Math.floor(song.duration / 60) : 5;
+  const localizedHomeUrl = `https://dadrocktabs.com/${lang}`;
+  const localizedArtistUrl = `https://dadrocktabs.com/${lang}/artist/${artistToSlug(cleanArtist)}`;
+  const localizedSongUrl = `https://dadrocktabs.com/${lang}/songs/${slug}`;
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -143,19 +146,19 @@ if (aiDoc?.content) {
             '@type': 'ListItem',
             'position': 1,
             'name': 'Home',
-            'item': 'https://dadrocktabs.com'
+            'item': localizedHomeUrl
           },
           {
             '@type': 'ListItem',
             'position': 2,
             'name': `${cleanArtist} Tabs`,
-            'item': `https://dadrocktabs.com/artist/${artistToSlug(cleanArtist)}`
+            'item': localizedArtistUrl
           },
           {
             '@type': 'ListItem',
             'position': 3,
             'name': song.title,
-            'item': `https://dadrocktabs.com/songs/${slug}`
+            'item': localizedSongUrl
           }
         ]
       },
@@ -165,10 +168,10 @@ if (aiDoc?.content) {
         'byArtist': {
           '@type': 'MusicGroup',
           'name': cleanArtist,
-          'url': `https://dadrocktabs.com/artist/${artistToSlug(cleanArtist)}`
+          'url': localizedArtistUrl
         },
         'genre': 'Rock',
-        'url': `https://dadrocktabs.com/songs/${slug}`,
+        'url': localizedSongUrl,
         'description': `Learn to play ${song.title} by ${cleanArtist} with free guitar and bass tablature.`
       },
       {
@@ -208,7 +211,7 @@ if (aiDoc?.content) {
             'position': 1,
             'name': 'Watch the Full Lesson',
             'text': `Start by watching the complete tab tutorial video for "${song.title}" by ${cleanArtist} to get familiar with the song structure, riffs, and overall feel.`,
-            'url': `https://dadrocktabs.com/songs/${slug}`,
+            'url': localizedSongUrl,
             'image': song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`,
           },
           {
@@ -216,32 +219,32 @@ if (aiDoc?.content) {
             'position': 2,
             'name': 'Learn the Main Riff',
             'text': `Focus on the main guitar riff of "${song.title}". Follow the on-screen tablature notation, playing each note slowly. Pay attention to the picking pattern and timing.`,
-            'url': `https://dadrocktabs.com/songs/${slug}`,
+            'url': localizedSongUrl,
           },
           {
             '@type': 'HowToStep',
             'position': 3,
             'name': 'Practice at Slow Tempo',
             'text': `Use YouTube's playback speed controls to slow the video to 0.5x or 0.75x speed. Practice each section until you can play it cleanly without mistakes.`,
-            'url': `https://dadrocktabs.com/songs/${slug}`,
+            'url': localizedSongUrl,
           },
           {
             '@type': 'HowToStep',
             'position': 4,
             'name': 'Build Up to Full Speed',
             'text': `Gradually increase the playback speed as you get comfortable. Work through the verse, chorus, and bridge sections until you can play the full song at normal tempo.`,
-            'url': `https://dadrocktabs.com/songs/${slug}`,
+            'url': localizedSongUrl,
           },
           {
             '@type': 'HowToStep',
             'position': 5,
             'name': 'Play Along with the Recording',
             'text': `Once you've mastered the tab, play along with the original ${cleanArtist} recording to test your timing and feel. Congratulations — you've learned "${song.title}"!`,
-            'url': `https://dadrocktabs.com/songs/${slug}`,
+            'url': localizedSongUrl,
           }
         ],
         'image': song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`,
-        'url': `https://dadrocktabs.com/songs/${slug}`,
+        'url': localizedSongUrl,
       }
     ]
   };

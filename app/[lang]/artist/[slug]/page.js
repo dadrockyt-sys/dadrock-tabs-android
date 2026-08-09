@@ -97,7 +97,7 @@ if (!locales.includes(lang)) {
       title: `${artistPattern} - Free Guitar & Bass Tab Lessons`,
       description,
       type: 'website',
-      url: `https://dadrocktabs.com/${lang}/artist/${slug}`,
+      url: localizedArtistUrl,
       siteName: 'DadRock Tabs',
       images: [{ url: dynamicOgImage, width: 1200, height: 630, alt: `${artistPattern} Guitar Tabs` }],
     },
@@ -181,6 +181,8 @@ try {
   }));
   
   // JSON-LD structured data for SEO — MusicGroup + BreadcrumbList + CollectionPage
+  const localizedHomeUrl = `https://dadrocktabs.com/${lang}`;
+  const localizedArtistUrl = localizedArtistUrl;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -191,19 +193,19 @@ try {
             '@type': 'ListItem',
             'position': 1,
             'name': 'Home',
-            'item': `https://dadrocktabs.com`
+            'item': localizedHomeUrl
           },
           {
             '@type': 'ListItem',
             'position': 2,
             'name': 'Artists',
-            'item': `https://dadrocktabs.com`
+            'item': localizedHomeUrl
           },
           {
             '@type': 'ListItem',
             'position': 3,
             'name': `${displayArtistName} Tabs`,
-            'item': `https://dadrocktabs.com/${lang}/artist/${slug}`
+            'item': localizedArtistUrl
           }
         ]
       },
@@ -213,13 +215,13 @@ try {
         'name': displayArtistName,
         'genre': 'Rock',
         'description': `Learn how to play songs by ${displayArtistName} with free guitar and bass tablature video lessons.`,
-        'url': `https://dadrocktabs.com/${lang}/artist/${slug}`,
+        'url': localizedArtistUrl,
       },
       {
         '@type': 'CollectionPage',
         'name': `${displayArtistName} Guitar & Bass Tabs`,
         'description': `Learn how to play songs by ${displayArtistName} with step-by-step guitar and bass tutorials.`,
-        'url': `https://dadrocktabs.com/${lang}/artist/${slug}`,
+        'url': localizedArtistUrl,
         'isPartOf': { '@id': 'https://dadrocktabs.com/#website' },
         'about': { '@id': `https://dadrocktabs.com/${lang}/artist/${slug}#artist` },
         'publisher': { '@id': 'https://dadrocktabs.com/#organization' },

@@ -32,13 +32,17 @@ export async function generateMetadata({ params }) {
 }
 
 // JSON-LD Schema for SEO
-function generateSchema(upcomingCount) {
+function generateSchema(upcomingCount, lang = 'en') {
+  const pageUrl = lang === 'en'
+    ? 'https://dadrocktabs.com/coming-soon'
+    : `https://dadrocktabs.com/${lang}/coming-soon`;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Upcoming Guitar Lessons Schedule',
     description: 'Schedule of upcoming guitar and bass tab video lessons at DadRock Tabs',
-    url: 'https://dadrocktabs.com/coming-soon',
+    url: pageUrl,
     isPartOf: {
       '@type': 'WebSite',
       name: 'DadRock Tabs',
@@ -53,6 +57,9 @@ function generateSchema(upcomingCount) {
 }
 
 export default async function ComingSoonPage({ params }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams?.lang || 'en';
+
   // Fetch upcoming videos on the server for SEO
   let upcomingVideos = [];
   let total = 0;
@@ -77,10 +84,10 @@ export default async function ComingSoonPage({ params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateSchema(total)),
+          __html: JSON.stringify(generateSchema(total, lang)),
         }}
       />
-      <ComingSoonClient initialVideos={upcomingVideos} initialTotal={total} currentLang={params?.lang || 'en'} />
+      <ComingSoonClient initialVideos={upcomingVideos} initialTotal={total} currentLang={lang} />
     </>
   );
 }
