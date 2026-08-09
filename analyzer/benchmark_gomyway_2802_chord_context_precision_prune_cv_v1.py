@@ -23,7 +23,7 @@ MANIFEST_PATH = PUBLIC / "gomyway-2802-chord-context-precision-prune-cv-v1-manif
 EXPECTED = (183, 684, 256)
 EXPECTED_F1 = 28.02
 EXPECTED_ZERO_SIGNATURES = 1
-EXPECTED_SIGNATURE = "repeatVoicingCross::m_0|rn2_3|nn13p"
+EXPECTED_SIGNATURE = "repeatVoicingCross::m_0_3|rn2_3|nn13p"
 FOLD_COUNT = 5
 
 
