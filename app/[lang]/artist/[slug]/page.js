@@ -237,8 +237,10 @@ try {
               'name': video.song || video.title,
               'description': `Guitar and bass tab tutorial for ${video.song || video.title} by ${displayArtistName}`,
               'thumbnailUrl': video.thumbnail,
-              'uploadDate': video.created_at,
-              'contentUrl': video.youtube_url,
+              'uploadDate': video.created_at || undefined,
+              'embedUrl': /^[a-zA-Z0-9_-]{11}$/.test(video.video_id || '')
+                ? `https://www.youtube.com/embed/${video.video_id}`
+                : undefined,
               'publisher': { '@id': 'https://dadrocktabs.com/#organization' }
             }
           }))
