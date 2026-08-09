@@ -26,9 +26,12 @@ export const metadata = {
   },
   alternates: {
   canonical: baseUrl,
-  languages: Object.fromEntries(
-    locales.map(lang => [lang, lang === 'en' ? baseUrl : `${baseUrl}/${lang}`])
-  ),
+  languages: {
+    ...Object.fromEntries(
+      locales.map(lang => [lang, lang === 'en' ? baseUrl : `${baseUrl}/${lang}`])
+    ),
+    'x-default': baseUrl,
+  },
   types: {
     'application/rss+xml': '/api/rss',
   },

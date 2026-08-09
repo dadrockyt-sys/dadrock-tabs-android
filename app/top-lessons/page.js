@@ -1,36 +1,43 @@
 import TopLessonsClient from './TopLessonsClient';
-import { generateAlternates } from '@/lib/seo';
+import { generateAlternates, generateCanonical } from '@/lib/seo';
 
 // Force dynamic rendering - this page fetches real-time data
 export const dynamic = 'force-dynamic';
 
 // SEO Metadata
-export const metadata = {
-  title: 'Top 10 Most Viewed Guitar Lessons | DadRock Tabs',
-  description: 'Discover the most popular guitar and bass tab video lessons at DadRock Tabs. Our top 10 most-watched tutorials feature classic rock, heavy metal, and hair metal songs from legendary artists like Van Halen, Metallica, AC/DC, Led Zeppelin, and more. Start learning the songs everyone loves!',
-  keywords: 'most viewed guitar lessons, popular bass tabs, top guitar tutorials, best rock lessons, classic rock tabs, heavy metal guitar, free guitar lessons, DadRock Tabs',
-  openGraph: {
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams?.lang || 'en';
+  const pageUrl = generateCanonical('/top-lessons', lang);
+
+  return {
     title: 'Top 10 Most Viewed Guitar Lessons | DadRock Tabs',
-    description: 'Discover the most popular guitar lessons at DadRock Tabs. Learn the songs everyone loves!',
-    type: 'website',
-    url: 'https://dadrocktabs.com/top-lessons',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Top 10 Most Viewed Guitar Lessons | DadRock Tabs',
-    description: 'Discover the most popular guitar lessons at DadRock Tabs.',
-  },
-  alternates: generateAlternates('/top-lessons'),
-};
+    description: 'Discover the most popular guitar and bass tab video lessons at DadRock Tabs. Our top 10 most-watched tutorials feature classic rock, heavy metal, and hair metal songs from legendary artists.',
+    keywords: 'most viewed guitar lessons, popular bass tabs, top guitar tutorials, best rock lessons, classic rock tabs, heavy metal guitar, free guitar lessons, DadRock Tabs',
+    alternates: generateAlternates('/top-lessons', lang),
+    openGraph: {
+      title: 'Top 10 Most Viewed Guitar Lessons | DadRock Tabs',
+      description: 'Discover the most popular guitar lessons at DadRock Tabs. Learn the songs everyone loves!',
+      type: 'website',
+      url: pageUrl,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Top 10 Most Viewed Guitar Lessons | DadRock Tabs',
+      description: 'Discover the most popular guitar lessons at DadRock Tabs.',
+    },
+  };
+}
 
 // JSON-LD Schema for SEO
-function generateSchema() {
+function generateSchema(lang = 'en') {
+  const pageUrl = generateCanonical('/top-lessons', lang);
   return {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Top 10 Most Viewed Guitar Lessons',
     description: 'The most popular guitar and bass tab video lessons at DadRock Tabs',
-    url: 'https://dadrocktabs.com/top-lessons',
+    url: pageUrl,
     isPartOf: {
       '@type': 'WebSite',
       name: 'DadRock Tabs',
@@ -43,7 +50,10 @@ function generateSchema() {
   };
 }
 
-export default async function TopLessonsPage() {
+export default async function TopLessonsPage({ params } = {}) {
+  const resolvedParams = params ? await params : {};
+  const lang = resolvedParams?.lang || 'en';
+
   // Fetch top videos on the server for SEO
   let topVideos = [];
   let adSettings = null;
@@ -84,7 +94,7 @@ export default async function TopLessonsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateSchema()),
+          __html: JSON.stringify(generateSchema(lang)),
         }}
       />
       <TopLessonsClient initialVideos={topVideos} adSettings={adSettings} />

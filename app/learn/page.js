@@ -1,27 +1,36 @@
 import { getAllGuides } from '@/lib/guidesData';
 import Link from 'next/link';
 import LearnHeader from '@/components/LearnHeader';
+import { generateAlternates, generateCanonical } from '@/lib/seo';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 function getLocalizedPath(path, lang) {
   return lang === 'en' ? path : `/${lang}${path}`;
 }
 
-export const metadata = {
-  title: 'Learn Guitar - Free Guides, Tips & Techniques | DadRock Tabs',
-  description: 'Free guitar learning guides covering techniques, theory, and practice tips. Learn palm muting, read tabs, build speed, and master your favorite rock songs.',
-  keywords: 'learn guitar, guitar techniques, guitar tips, how to play guitar, rock guitar guide, guitar lessons, guitar tutorial, free guitar guides',
-  openGraph: {
-    title: 'Learn Guitar - Free Guides & Techniques',
-    description: 'Free guitar learning guides covering techniques, tips, and practice methods for rock and metal guitarists.',
-    type: 'website',
-    url: 'https://dadrocktabs.com/learn',
-    siteName: 'DadRock Tabs',
-  },
-};
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams?.lang || 'en';
+  const pageUrl = generateCanonical('/learn', lang);
+
+  return {
+    title: 'Learn Guitar - Free Guides, Tips & Techniques | DadRock Tabs',
+    description: 'Free guitar learning guides covering techniques, theory, and practice tips. Learn palm muting, read tabs, build speed, and master your favorite rock songs.',
+    keywords: 'learn guitar, guitar techniques, guitar tips, how to play guitar, rock guitar guide, guitar lessons, guitar tutorial, free guitar guides',
+    alternates: generateAlternates('/learn', lang),
+    openGraph: {
+      title: 'Learn Guitar - Free Guides & Techniques',
+      description: 'Free guitar learning guides covering techniques, tips, and practice methods for rock and metal guitarists.',
+      type: 'website',
+      url: pageUrl,
+      siteName: 'DadRock Tabs',
+    },
+  };
+}
 
 export default async function LearnPage({ params }) {
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
+  const pageUrl = generateCanonical('/learn', lang);
   const t = getSubPageTranslation(lang);
   const guides = getAllGuides();
   const categories = [
@@ -39,7 +48,7 @@ export default async function LearnPage({ params }) {
     '@type': 'CollectionPage',
     'name': 'Learn Guitar - Free Guides & Techniques',
     'description': 'Free guitar learning hub with guides on techniques, theory, and practice tips for rock and metal guitarists.',
-    'url': 'https://dadrocktabs.com/learn',
+    'url': pageUrl,
     'isPartOf': { '@id': 'https://dadrocktabs.com/#website' },
     'mainEntity': {
       '@type': 'ItemList',
@@ -53,7 +62,7 @@ export default async function LearnPage({ params }) {
   typeof guide.title === 'object'
     ? guide.title[lang] || guide.title.en
     : guide.title,
-          'url': `https://dadrocktabs.com/learn/${guide.slug}`,
+          'url': `https://dadrocktabs.com${getLocalizedPath(`/learn/${guide.slug}`, lang)}`,
           'description':
   typeof guide.description === 'object'
     ? guide.description[lang] || guide.description.en

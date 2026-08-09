@@ -5,6 +5,7 @@ import { artistToSlug } from '@/lib/slugify';
 import Link from 'next/link';
 import DifficultyHeader from './DifficultyHeader';
 import { headers } from 'next/headers';
+import { generateAlternates, generateCanonical } from '@/lib/seo';
 function getLocalizedPath(path, lang) {
   if (!lang || lang === 'en') return path;
   return path === '/' ? `/${lang}` : `/${lang}${path}`;
@@ -599,21 +600,32 @@ const difficultyT = {
 
 export async function generateMetadata({ params }) {
   const { level, lang } = await params;
-const difficulty = DIFFICULTY_LEVELS[level];
-  const t = difficultyT[lang] || difficultyT.en;
+  const difficulty = DIFFICULTY_LEVELS[level];
 
-  const title = `${difficulty.name} Guitar Tabs - Easy ${difficulty.name} Songs to Learn | DadRock Tabs`;
-  const description = `${t.levels[level].longDescription.slice(0, 155)}...`;
+  if (!difficulty) {
+    return { title: 'Difficulty Not Found | DadRock Tabs' };
+  }
+
+  const currentLang = lang || 'en';
+  const t = difficultyT[currentLang] || difficultyT.en;
+  const localizedLevel = t.levels?.[level] || {};
+  const title = `${localizedLevel.title || `${difficulty.name} Guitar Tabs`} | DadRock Tabs`;
+  const longDescription = localizedLevel.longDescription || difficulty.longDescription || '';
+  const description = longDescription.length > 155
+    ? `${longDescription.slice(0, 155)}...`
+    : longDescription;
+  const pageUrl = generateCanonical(`/difficulty/${level}`, currentLang);
 
   return {
     title,
     description,
-    keywords: `${difficulty.name.toLowerCase()} guitar tabs, easy guitar songs, ${difficulty.name.toLowerCase()} rock songs, learn guitar ${difficulty.name.toLowerCase()}, free tabs for ${difficulty.name.toLowerCase()}s`,
+    keywords: `${difficulty.name.toLowerCase()} guitar tabs, easy guitar songs, ${difficulty.name.toLowerCase()} rock songs, learn guitar ${difficulty.name.toLowerCase()}, free guitar tabs`,
+    alternates: generateAlternates(`/difficulty/${level}`, currentLang),
     openGraph: {
-      title: `${difficulty.name} Guitar & Bass Tabs`,
+      title: localizedLevel.title || `${difficulty.name} Guitar & Bass Tabs`,
       description,
       type: 'website',
-      url: `https://dadrocktabs.com/difficulty/${level}`,
+      url: pageUrl,
       siteName: 'DadRock Tabs',
     },
   };
@@ -632,6 +644,8 @@ const difficulty = DIFFICULTY_LEVELS[level];
   if (!difficulty) {
     notFound();
   }
+
+  const pageUrl = generateCanonical(`/difficulty/${level}`, currentLang);
 
   const artistSlugs = getArtistsByDifficulty(level);
   const db = await getDb();
@@ -667,9 +681,9 @@ const difficulty = DIFFICULTY_LEVELS[level];
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    'name': `${difficulty.name} Guitar Tabs`,
-    'description': difficulty.longDescription,
-    'url': `https://dadrocktabs.com/difficulty/${level}`,
+    'name': t.levels?.[level]?.title || `${difficulty.name} Guitar Tabs`,
+    'description': t.levels?.[level]?.longDescription || difficulty.longDescription,
+    'url': pageUrl,
     'isPartOf': { '@id': 'https://dadrocktabs.com/#website' },
     'mainEntity': {
       '@type': 'ItemList',
