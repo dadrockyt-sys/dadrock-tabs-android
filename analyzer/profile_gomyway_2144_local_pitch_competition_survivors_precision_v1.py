@@ -13,6 +13,7 @@ recur = b2134.recur
 recall = b2134.recall
 v2 = b2134.v2
 v3 = b2134.v3
+harmonic = comp.harmonic
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "public"
@@ -48,6 +49,37 @@ def precision_rows(groups: dict[str, Counter[str]]) -> list[dict[str, Any]]:
     return sorted(out, key=lambda r: (-int(r["total"]), -float(r["precision"]), str(r["signature"])))
 
 
+def current_competition_row(
+    tok: tuple[int, int, int],
+    count: int,
+    grid: Any,
+    winner_audio: Any,
+    winner_sr: int,
+    alt_audio: Any,
+    alt_sr: int,
+) -> dict[str, Any]:
+    measure, step, pitch_midi = tok
+    center = float(grid[(measure, step)])
+    wf = comp.stem_competition(winner_audio, winner_sr, center, pitch_midi)
+    af = comp.stem_competition(alt_audio, alt_sr, center, pitch_midi)
+
+    min_ratio = min(float(wf["ratio"]), float(af["ratio"]))
+    max_ratio = max(float(wf["ratio"]), float(af["ratio"]))
+    min_margin = min(float(wf["margin"]), float(af["margin"]))
+    wins = int(wf["targetWins"]) + int(af["targetWins"])
+
+    return {
+        "token": list(tok),
+        "count": int(count),
+        "winner": wf,
+        "alternate": af,
+        "minTargetVsCompetitorRatio": min_ratio,
+        "maxTargetVsCompetitorRatio": max_ratio,
+        "minTargetCompetitionMargin": min_margin,
+        "targetWinsAcrossStems": wins,
+    }
+
+
 def main() -> None:
     before = sha256(recall.CANDIDATE_PATH)
 
@@ -71,19 +103,35 @@ def main() -> None:
     if TARGET_SIGNATURE not in zero_signatures:
         raise RuntimeError(f"Expected validated zero-precision signature missing: {TARGET_SIGNATURE}")
 
-    rows = list(profile.get("rows", []))
-    if not rows:
-        raise RuntimeError("21.34 local-pitch-competition profile has no rows")
-    row_by_token = {token(row): row for row in rows}
-
     champion_2134 = comp.reconstruct_2134(grid)
+    baseline = recur.grade(champion_2134, reference)
+    baseline_actual = (
+        int(baseline["matched"]),
+        int(baseline["missing"]),
+        int(baseline["extra"]),
+    )
+    if baseline_actual != (183, 684, 665) or abs(float(baseline["pitchF1"]) - 21.34) > 0.01:
+        raise RuntimeError(
+            f"Expected frozen 21.34 base champion (183, 684, 665)/21.34, "
+            f"got {baseline_actual}/{baseline['pitchF1']}"
+        )
+
+    winner_audio, winner_sr = harmonic.load_mono(harmonic.legacy.WINNER_STEM)
+    alt_audio, alt_sr = harmonic.load_mono(harmonic.legacy.ALT_STEM)
+
     pruned: Counter[tuple[int, int, int]] = Counter()
     survivor_rows: list[dict[str, Any]] = []
 
     for tok, count in champion_2134.items():
-        row = row_by_token.get(tok)
-        if row is None:
-            continue
+        row = current_competition_row(
+            tok,
+            int(count),
+            grid,
+            winner_audio,
+            winner_sr,
+            alt_audio,
+            alt_sr,
+        )
         if TARGET_SIGNATURE in b2134.row_signatures(row):
             pruned[tok] = count
         else:
@@ -94,6 +142,9 @@ def main() -> None:
     actual = (int(score["matched"]), int(score["missing"]), int(score["extra"]))
     if actual != EXPECTED or abs(float(score["pitchF1"]) - EXPECTED_F1) > 0.01:
         raise RuntimeError(f"Expected frozen 21.44 champion {EXPECTED}/{EXPECTED_F1}, got {actual}/{score['pitchF1']}")
+
+    if int(sum(pruned.values())) != 5:
+        raise RuntimeError(f"Expected validated 21.44 prune count 5, got {sum(pruned.values())}")
 
     groups: dict[str, Counter[str]] = defaultdict(Counter)
     details: list[dict[str, Any]] = []
