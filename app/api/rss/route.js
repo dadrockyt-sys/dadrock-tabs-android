@@ -13,15 +13,17 @@ export async function GET() {
   const now = new Date().toUTCString();
 
   const items = songs.map(song => {
-    const pubDate = song.created_at ? new Date(song.created_at).toUTCString() : now;
+    const parsedDate = song.created_at ? new Date(song.created_at) : null;
+    const pubDate = parsedDate && !Number.isNaN(parsedDate.getTime())
+      ? parsedDate.toUTCString()
+      : null;
     return `
     <item>
       <title>${escapeXml(song.title)} - ${escapeXml(song.artist)}</title>
       <link>${baseUrl}/songs/${song.slug}</link>
       <guid isPermaLink="true">${baseUrl}/songs/${song.slug}</guid>
       <description>Learn to play ${escapeXml(song.title)} by ${escapeXml(song.artist)} with guitar tabs and video tutorial on DadRock Tabs.</description>
-      <pubDate>${pubDate}</pubDate>
-      <category>${song.difficulty || 'Intermediate'}</category>
+${pubDate ? `      <pubDate>${pubDate}</pubDate>\n` : ''}      <category>${escapeXml(song.difficulty || 'Intermediate')}</category>
     </item>`;
   }).join('');
 
@@ -35,7 +37,7 @@ export async function GET() {
     <lastBuildDate>${now}</lastBuildDate>
     <atom:link href="${baseUrl}/api/rss" rel="self" type="application/rss+xml"/>
     <image>
-      <url>${baseUrl}/logo.png</url>
+      <url>${baseUrl}/DadRock-Tabs-Logo.png</url>
       <title>DadRock Tabs</title>
       <link>${baseUrl}</link>
     </image>${items}

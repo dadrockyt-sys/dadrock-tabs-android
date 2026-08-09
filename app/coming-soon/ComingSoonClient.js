@@ -84,7 +84,9 @@ export default function ComingSoonClient({ initialVideos, initialTotal, currentL
   }, []);
 
   // Share URLs
-  const shareUrl = 'https://dadrocktabs.com/coming-soon';
+  const shareUrl = lang === 'en'
+    ? 'https://dadrocktabs.com/coming-soon'
+    : `https://dadrocktabs.com/${lang}/coming-soon`;
   const shareText = 'Check out the upcoming guitar lessons at DadRock Tabs! 🎸';
   
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
@@ -246,7 +248,7 @@ export default function ComingSoonClient({ initialVideos, initialTotal, currentL
                           <span className="text-lg text-zinc-400">{cleanArtist}</span>
                           {artistSlug && (
                             <Link
-                              href={`/artist/${artistSlug}`}
+                              href={lang === 'en' ? `/artist/${artistSlug}` : `/${lang}/artist/${artistSlug}`}
                               className="inline-flex items-center gap-1 text-sm text-amber-500 hover:text-amber-400 transition-colors"
                             >
                               <ExternalLink className="w-4 h-4" />
@@ -330,7 +332,7 @@ export default function ComingSoonClient({ initialVideos, initialTotal, currentL
       <footer className="mt-16 py-8 border-t border-zinc-800">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <Link href="/" className="text-zinc-400 hover:text-white transition-colors">
+            <Link href={lang === 'en' ? '/' : `/${lang}`} className="text-zinc-400 hover:text-white transition-colors">
               ← {t.backToHome}
             </Link>
             <p className="text-zinc-500 text-sm">
