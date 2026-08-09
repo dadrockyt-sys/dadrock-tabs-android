@@ -10,10 +10,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://dadrocktabs.com';
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
-  title: {
-    default: 'DadRock Tabs - Guitar & Bass Tabs for Classic Rock',
-    template: '%s | DadRock Tabs',
-  },
+  title: 'DadRock Tabs - Guitar & Bass Tabs for Classic Rock',
   description: 'Learn classic rock and metal guitar with synchronized video lessons, artist guides, practice tips, and guitar & bass tablature resources.',
   keywords: 'guitar tabs, bass tabs, classic rock, dad rock, guitar lessons, Led Zeppelin, AC/DC, Van Halen, Metallica, rock music tutorials',
   authors: [{ name: 'DadRock Tabs' }],
@@ -77,15 +74,7 @@ const websiteJsonLd = {
       'name': 'DadRock Tabs',
       'description': 'Free guitar and bass tabs for classic rock hits. Learn to play Led Zeppelin, AC/DC, Van Halen, Metallica and more.',
       'publisher': { '@id': 'https://dadrocktabs.com/#organization' },
-      'inLanguage': 'en',
-      'potentialAction': {
-        '@type': 'SearchAction',
-        'target': {
-          '@type': 'EntryPoint',
-          'urlTemplate': 'https://dadrocktabs.com/search?q={search_term_string}'
-        },
-        'query-input': 'required name=search_term_string'
-      }
+      'inLanguage': 'en'
     },
     {
       '@type': 'Organization',
@@ -116,7 +105,7 @@ export default function RootLayout({ children }) {
           to avoid duplicate/conflicting tags that cause GSC errors.
         */}
         
-        {/* WebSite + Organization structured data for rich results & sitelinks search box */}
+        {/* WebSite + Organization structured data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
