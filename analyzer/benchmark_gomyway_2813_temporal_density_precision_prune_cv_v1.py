@@ -7,13 +7,13 @@ from pathlib import Path
 from typing import Any, Callable
 
 import profile_gomyway_2813_temporal_density_crowding_v1 as density
+import profile_gomyway_2813_chord_context_survivors_precision_v1 as survivor
 
 recur = density.recur
 recall = density.recall
 v2 = density.v2
 v3 = density.v3
 harmonic = density.harmonic
-survivor = density.survivor
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "public"
