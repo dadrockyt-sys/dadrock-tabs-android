@@ -11,8 +11,6 @@ export default function robots() {
         disallow: [
           '/api/',
           '/admin',
-          '/search',
-          '/embed/',
           '/*?search=',
           '/*?utm_',
           '/*?q=',
