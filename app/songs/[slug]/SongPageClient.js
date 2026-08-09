@@ -54,7 +54,9 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
   const embedUrl = `https://www.youtube.com/embed/${song.videoId}?autoplay=1`;
   const artistSlug = artistToSlug(song.artist);
 
-  const shareUrl = `https://dadrocktabs.com/songs/${song.slug}`;
+  const shareUrl = lang === 'en'
+    ? `https://dadrocktabs.com/songs/${song.slug}`
+    : `https://dadrocktabs.com/${lang}/songs/${song.slug}`;
   const shareText = `Learn to play ${song.title} by ${song.artist} with free guitar tabs! 🎸`;
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
   const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
@@ -160,7 +162,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
             </Link>
             {/* Search Bar in Header */}
             <div className="hidden md:block flex-1 max-w-sm mx-4">
-              <SearchBar variant="compact" placeholder={t.searchPlaceholder || 'Search artists & songs...'} />
+              <SearchBar variant="compact" placeholder={t.searchPlaceholder || 'Search artists & songs...'} currentLang={lang} />
             </div>
             <div className="flex items-center gap-3">
               <LanguageSelector
@@ -248,7 +250,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
             <span className="text-xl text-zinc-300">{song.artist}</span>
             {artistSlug && (
               <Link
-                href={`/artist/${artistSlug}`}
+                href={lang === 'en' ? `/artist/${artistSlug}` : `/${lang}/artist/${artistSlug}`}
                 className="inline-flex items-center gap-1 text-sm text-amber-500 hover:text-amber-400 transition-colors"
               >
                 <ExternalLink className="w-4 h-4" />
@@ -448,7 +450,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
               {moreSongs.map((s) => (
                 <Link
                   key={s.slug}
-                  href={`/songs/${s.slug}`}
+                  href={lang === 'en' ? `/songs/${s.slug}` : `/${lang}/songs/${s.slug}`}
                   className="group bg-zinc-900/80 rounded-xl border border-zinc-800 overflow-hidden hover:border-amber-500/50 transition-all"
                 >
                   <div className="relative aspect-video overflow-hidden">
@@ -475,7 +477,7 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
             </div>
             <div className="mt-4 text-center">
               <Link
-                href={`/artist/${artistSlug}`}
+                href={lang === 'en' ? `/artist/${artistSlug}` : `/${lang}/artist/${artistSlug}`}
                 className="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 transition-colors font-medium"
               >
                 {t.viewAllTabs.replace('{artist}', song.artist)} →
@@ -504,15 +506,15 @@ export default function SongPageClient({ song, seoContent, adSettings, initialAi
 
         {/* Browse More Links */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/top-lessons" className="text-amber-400 hover:text-amber-300 transition-colors font-medium">
+          <Link href={lang === 'en' ? '/top-lessons' : `/${lang}/top-lessons`} className="text-amber-400 hover:text-amber-300 transition-colors font-medium">
             🏆 {t.topLessonsTitle}
           </Link>
           <span className="text-zinc-700 hidden sm:inline">|</span>
-          <Link href="/coming-soon" className="text-purple-400 hover:text-purple-300 transition-colors font-medium">
+          <Link href={lang === 'en' ? '/coming-soon' : `/${lang}/coming-soon`} className="text-purple-400 hover:text-purple-300 transition-colors font-medium">
             📅 {t.comingSoon}
           </Link>
           <span className="text-zinc-700 hidden sm:inline">|</span>
-          <Link href="/" className="text-zinc-400 hover:text-white transition-colors font-medium">
+          <Link href={lang === 'en' ? '/' : `/${lang}`} className="text-zinc-400 hover:text-white transition-colors font-medium">
             ← {t.backToHome}
           </Link>
         </div>

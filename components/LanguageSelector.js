@@ -7,6 +7,19 @@ import { locales, localeNames, localeFlags } from '@/lib/i18n';
 
 const LANG_STORAGE_KEY = 'dadrock_language';
 
+const LOCALIZED_ROUTE_ROOTS = new Set([
+  'artist',
+  'songs',
+  'coming-soon',
+  'difficulty',
+  'learn',
+  'partners',
+  'quickies',
+  'tools',
+  'top-lessons',
+  'whats-new',
+]);
+
 // Hook to use language across any component
 export function useLanguage() {
   const [lang, setLang] = useState('en');
@@ -59,7 +72,23 @@ export default function LanguageSelector({ onLanguageChange }) {
 
   if (onLanguageChange) {
     onLanguageChange(newLang);
+    return;
   }
+
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  if (parts[0] && locales.includes(parts[0])) {
+    parts.shift();
+  }
+
+  const routeRoot = parts[0] || '';
+  if (routeRoot && !LOCALIZED_ROUTE_ROOTS.has(routeRoot)) {
+    return;
+  }
+
+  const basePath = parts.length ? `/${parts.join('/')}` : '/';
+  window.location.href = newLang === 'en'
+    ? basePath
+    : `/${newLang}${basePath === '/' ? '' : basePath}`;
 };
 
   // Modal content to be portaled to body
