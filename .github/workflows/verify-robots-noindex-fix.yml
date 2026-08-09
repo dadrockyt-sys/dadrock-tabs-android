@@ -1,0 +1,34 @@
+name: Verify robots and embed noindex fix
+
+on:
+  push:
+    branches:
+      - seo-fix-robots-noindex-conflicts
+    paths:
+      - 'app/robots.js'
+      - 'app/embed/[slug]/layout.js'
+      - '.github/workflows/verify-robots-noindex-fix.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: seo-fix-robots-noindex-conflicts
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify diff
+        run: git diff HEAD~2..HEAD --check
+
+      - name: Build production site
+        run: npm run build
