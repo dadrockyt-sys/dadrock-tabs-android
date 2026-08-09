@@ -79,32 +79,85 @@ def precision_row(true_count: int, false_count: int) -> dict[str, Any]:
     }
 
 
+def note_pitch(note: Any) -> int | None:
+    if isinstance(note, bool):
+        return None
+    if isinstance(note, (int, float, str)):
+        try:
+            return int(float(note))
+        except (TypeError, ValueError):
+            return None
+    if not isinstance(note, dict):
+        return None
+    for key in ("midi", "midiPitch", "pitch", "note", "noteNumber"):
+        value = note.get(key)
+        if value is None or isinstance(value, bool):
+            continue
+        try:
+            return int(float(value))
+        except (TypeError, ValueError):
+            continue
+    return None
+
+
+def event_pitches(event: dict[str, Any]) -> list[int]:
+    notes = event.get("notes")
+    pitches: list[int] = []
+    if isinstance(notes, list):
+        for note in notes:
+            pitch = note_pitch(note)
+            if pitch is not None:
+                pitches.append(pitch)
+    elif notes is not None:
+        pitch = note_pitch(notes)
+        if pitch is not None:
+            pitches.append(pitch)
+
+    if not pitches:
+        for key in ("midi", "midiPitch", "pitch", "noteNumber"):
+            pitch = note_pitch(event.get(key))
+            if pitch is not None:
+                pitches.append(pitch)
+                break
+    return sorted(set(pitches))
+
+
 def source_token_features(events: list[dict[str, Any]]) -> dict[tuple[int, int, int], dict[str, Any]]:
-    # Map each protected source event through the same timing-grid projection used by
-    # the grader. If more than one source event lands on one token, keep the strongest
-    # detector-native evidence only; no professional-reference information is used.
+    # Build the full timing grid once so its validity is checked exactly as in the
+    # grading pipeline. Source events already carry the protected measure/step
+    # projection, so feature rows can then be mapped directly without calling
+    # build_timing_grid() on isolated single events.
+    v2.build_timing_grid(events)
+
     features: dict[tuple[int, int, int], dict[str, Any]] = {}
     for event in events:
         if not isinstance(event, dict):
             continue
+        measure = v2.measure_of(event)
+        step = v2.step_of(event)
+        if measure is None or step is None:
+            continue
+        if not 1 <= measure <= v2.MEASURE_END or not 0 <= step < v2.STEPS_PER_MEASURE:
+            continue
+
         confidence = as_float(event.get("confidence"), 0.0)
         duration_steps = as_int(event.get("durationSteps"), 0)
-        event_grid, _ = v2.build_timing_grid([event])
-        for raw_token in event_grid:
-            token = tuple(int(v) for v in raw_token)
-            candidate = {
-                "confidence": confidence,
-                "durationSteps": duration_steps,
-                "confidenceBucket": conf_bucket(confidence),
-                "durationBucket": duration_bucket(duration_steps),
-            }
+        candidate = {
+            "confidence": confidence,
+            "durationSteps": duration_steps,
+            "confidenceBucket": conf_bucket(confidence),
+            "durationBucket": duration_bucket(duration_steps),
+        }
+
+        for pitch in event_pitches(event):
+            token = (int(measure), int(step), int(pitch))
             previous = features.get(token)
             if previous is None or (
                 candidate["confidence"], candidate["durationSteps"]
             ) > (
                 previous["confidence"], previous["durationSteps"]
             ):
-                features[token] = candidate
+                features[token] = dict(candidate)
     return features
 
 
@@ -138,6 +191,9 @@ def main() -> None:
         )
 
     token_features = source_token_features(events)
+    if not token_features:
+        raise RuntimeError("No source confidence/duration tokens could be projected from protected events.")
+
     champion_tokens = set(champion_1419.keys())
     residual = {
         token: feature
