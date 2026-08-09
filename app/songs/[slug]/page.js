@@ -162,8 +162,7 @@ if (aiDoc?.content) {
         'name': `${song.title} - ${cleanArtist} Guitar & Bass Tab Tutorial`,
         'description': `Learn to play ${song.title} by ${cleanArtist} with this step-by-step guitar and bass tablature video lesson. Free tutorial from DadRock Tabs.`,
         'thumbnailUrl': song.thumbnail,
-        'uploadDate': song.publishedAt || new Date().toISOString(),
-        'contentUrl': `https://www.youtube.com/watch?v=${song.videoId}`,
+        'uploadDate': song.publishedAt || undefined,
         'embedUrl': `https://www.youtube.com/embed/${song.videoId}`,
         'duration': song.duration ? `PT${Math.floor(song.duration / 60)}M${song.duration % 60}S` : undefined,
         'interactionStatistic': {
