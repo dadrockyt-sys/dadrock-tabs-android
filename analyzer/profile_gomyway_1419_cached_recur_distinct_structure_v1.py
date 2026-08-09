@@ -79,7 +79,7 @@ def main() -> None:
                 "span": span,
                 "sections16": sections,
                 "rms": float(row["minRmsLog2Rise"]),
-                "flux": float(row["minOnsetFlux"]),
+                "flux": float(row["minPositiveFlux"]),
                 "ratio": float(row["minTargetVsSubharmonicRatio"]),
                 "template": float(row["minTemplateRatio"]),
             })
