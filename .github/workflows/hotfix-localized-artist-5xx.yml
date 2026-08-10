@@ -1,0 +1,39 @@
+name: Hotfix localized artist 5xx
+on:
+  push:
+    branches: [hotfix-localized-artist-5xx]
+    paths: ['.github/workflows/hotfix-localized-artist-5xx.yml']
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: hotfix-localized-artist-5xx
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Fix localized artist URL runtime errors
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('app/[lang]/artist/[slug]/page.js')
+          s=p.read_text()
+          s=s.replace("  const dynamicOgImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(artistPattern)}&type=artist&thumb=${encodeURIComponent(ogImage)}`;", "  const localizedArtistUrl = `https://dadrocktabs.com/${lang}/artist/${slug}`;\n  const dynamicOgImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(artistPattern)}&type=artist&thumb=${encodeURIComponent(ogImage)}`;", 1)
+          s=s.replace("  const localizedArtistUrl = localizedArtistUrl;", "  const localizedArtistUrl = `https://dadrocktabs.com/${lang}/artist/${slug}`;", 1)
+          p.write_text(s)
+          PY
+          git diff --check
+          grep -n "localizedArtistUrl" 'app/[lang]/artist/[slug]/page.js'
+      - run: npm ci
+      - run: npm run build
+      - name: Commit fix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add 'app/[lang]/artist/[slug]/page.js'
+          git commit -m 'Fix localized artist page 5xx errors'
+          git push origin hotfix-localized-artist-5xx
