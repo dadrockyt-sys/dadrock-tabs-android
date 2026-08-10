@@ -6,6 +6,8 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
+import profile_gomyway_3161_protected_source_recall_recovery_v1 as sourceprof
+
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "public"
 PATTERN_PATH = PUBLIC / "gomyway-3161-wide-recall-contextual-pattern-recovery-v1.json"
@@ -13,7 +15,7 @@ CONSENSUS_PATH = PUBLIC / "gomyway-3161-wide-recall-contextual-consensus-recover
 PROFILE_PATH = PUBLIC / "gomyway-3676-second-wave-contextual-recovery-v1.json"
 OUTPUT_PATH = PUBLIC / "gomyway-3676-second-wave-contextual-recovery-cv-v1.json"
 MANIFEST_PATH = PUBLIC / "gomyway-3676-second-wave-contextual-recovery-cv-v1-manifest.json"
-CANDIDATE_PATH = PUBLIC / "gomyway-949-event-candidate.json"
+CANDIDATE_PATH = sourceprof.recall.CANDIDATE_PATH
 EXPECTED = (272, 595, 341)
 EXPECTED_F1 = 36.76
 FIRST_WAVE_WEIGHT = 0.80
@@ -50,7 +52,6 @@ def signature_stats(rows: list[dict[str, Any]]) -> dict[str, dict[str, float]]:
 
 
 def select_residual(stats: dict[str, dict[str, float]], train_fraction: float) -> dict[str, dict[str, float]]:
-    # Same second-wave family as the profiler, scaled to the amount of training data.
     min10 = max(4, int(round(10 * train_fraction)))
     min20 = max(8, int(round(20 * train_fraction)))
     selected: dict[str, dict[str, float]] = {}
