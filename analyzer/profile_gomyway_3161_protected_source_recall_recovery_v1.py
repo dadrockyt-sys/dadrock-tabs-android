@@ -56,20 +56,59 @@ def first_int(row: dict[str, Any], keys: tuple[str, ...]) -> int | None:
     return None
 
 
-def source_token(row: dict[str, Any]) -> tuple[int, int, int] | None:
+def note_pitch(note: Any) -> int | None:
+    if isinstance(note, (int, float)):
+        return int(round(float(note)))
+    if isinstance(note, str):
+        try:
+            return int(round(float(note)))
+        except ValueError:
+            return None
+    if not isinstance(note, dict):
+        return None
+    return first_int(note, (
+        "pitch", "midi", "midiPitch", "midi_pitch", "midiNote", "midi_note",
+        "noteNumber", "note_number", "note", "pitchMidi", "pitch_midi",
+    ))
+
+
+def source_tokens(row: dict[str, Any]) -> list[tuple[int, int, int]]:
     token = row.get("token")
     if isinstance(token, (list, tuple)) and len(token) >= 3:
         try:
-            return (int(token[0]), int(token[1]), int(token[2]))
+            return [(int(token[0]), int(token[1]), int(token[2]))]
         except (TypeError, ValueError):
             pass
 
-    measure = first_int(row, ("measure", "measureIndex", "measure_index", "bar", "barIndex"))
-    step = first_int(row, ("step", "stepIndex", "step_index", "slot", "slotIndex"))
-    pitch = first_int(row, ("pitch", "midi", "midiPitch", "midi_pitch", "note"))
-    if measure is None or step is None or pitch is None:
-        return None
-    return (measure, step, pitch)
+    measure = first_int(row, (
+        "measureNumber", "measure", "measureIndex", "measure_index", "bar", "barIndex"
+    ))
+    step = first_int(row, (
+        "quantizedStep", "step", "stepIndex", "step_index", "slot", "slotIndex"
+    ))
+    if measure is None or step is None:
+        return []
+
+    pitches: list[int] = []
+    notes = row.get("notes")
+    if isinstance(notes, list):
+        for note in notes:
+            pitch = note_pitch(note)
+            if pitch is not None:
+                pitches.append(pitch)
+    elif notes is not None:
+        pitch = note_pitch(notes)
+        if pitch is not None:
+            pitches.append(pitch)
+
+    if not pitches:
+        pitch = first_int(row, (
+            "pitch", "midi", "midiPitch", "midi_pitch", "midiNote", "noteNumber", "note"
+        ))
+        if pitch is not None:
+            pitches.append(pitch)
+
+    return [(measure, step, pitch) for pitch in pitches]
 
 
 def bucket_float(value: float, cuts: list[float], labels: list[str]) -> str:
@@ -84,6 +123,7 @@ def source_metadata_signatures(row: dict[str, Any]) -> set[str]:
     numeric_keys = (
         "score", "confidence", "probability", "prob", "amplitude", "velocity",
         "magnitude", "salience", "energy", "duration", "durationMs", "duration_ms",
+        "durationSteps",
     )
     for key in numeric_keys:
         if key not in row or row.get(key) is None:
@@ -142,7 +182,6 @@ def combined_signatures(
     }
     out = set().union(reg, mic, meta, structural)
 
-    # Cross only broad families; avoid token-identity signatures.
     for r in reg:
         if "measurePitchRecurrence" in r or "neighborPitchRecurrence" in r or "measurePitchRank" in r:
             for m in mic:
@@ -181,12 +220,15 @@ def main() -> None:
 
     source_rows: dict[tuple[int, int, int], list[dict[str, Any]]] = defaultdict(list)
     unparsed = 0
+    parsed_events = 0
     for row in events:
-        tok = source_token(row)
-        if tok is None:
+        tokens = source_tokens(row)
+        if not tokens:
             unparsed += 1
             continue
-        source_rows[tok].append(row)
+        parsed_events += 1
+        for tok in tokens:
+            source_rows[tok].append(row)
     if not source_rows:
         sample = events[0] if events else {}
         raise RuntimeError(f"Could not parse any protected source tokens; sample keys={sorted(sample.keys())}")
@@ -200,7 +242,6 @@ def main() -> None:
     recoverable_true = 0
     recovery_false = 0
 
-    # Detection-side features are computed first. Reference is consulted only below to attach labels.
     for tok, count in filtered.items():
         if (tok[0], tok[1]) not in grid:
             continue
@@ -227,14 +268,8 @@ def main() -> None:
         })
 
     ranked = precision_rows(groups)
-    high_precision = [
-        r for r in ranked
-        if int(r["true"]) >= 5 and float(r["precision"]) >= 80.0
-    ]
-    perfect = [
-        r for r in ranked
-        if int(r["true"]) >= 3 and int(r["false"]) == 0
-    ]
+    high_precision = [r for r in ranked if int(r["true"]) >= 5 and float(r["precision"]) >= 80.0]
+    perfect = [r for r in ranked if int(r["true"]) >= 3 and int(r["false"]) == 0]
     high_precision.sort(key=lambda r: (-float(r["precision"]), -int(r["true"]), int(r["false"]), str(r["signature"])))
     perfect.sort(key=lambda r: (-int(r["true"]), str(r["signature"])))
 
@@ -249,6 +284,7 @@ def main() -> None:
         "champion3161Score": score,
         "reconstruction": reconstruction,
         "protectedSourceEventCount": len(events),
+        "parsedSourceEventCount": parsed_events,
         "parsedSourceTokenCount": len(source_rows),
         "unparsedSourceEventCount": unparsed,
         "filteredSourceCount": int(sum(filtered.values())),
@@ -291,6 +327,7 @@ def main() -> None:
     print("Champion pitch F1:", score["pitchF1"])
     print("Champion matched/missing/extra:", score["matched"], "/", score["missing"], "/", score["extra"])
     print("Protected source events:", len(events))
+    print("Parsed source events:", parsed_events)
     print("Parsed source tokens:", len(source_rows))
     print("Unparsed source events:", unparsed)
     print("Filtered source count available for recovery:", int(sum(filtered.values())))
