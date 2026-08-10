@@ -145,6 +145,16 @@ export function middleware(request) {
     return NextResponse.redirect(url, 301);
   }
 
+  // ─── 1a. Collapse localized AI Tab URLs to the single canonical tool ───
+  // AI Tab is intentionally a single global entry point, not a localized route.
+  // Old links like /pt-br/ai-tab?song=...&artist=... should never 404.
+  const localizedAiTabMatch = pathname.match(
+    /^\/(?:es|pt|pt-br|de|fr|it|ja|ko|zh|ru|hi|sv|fi|en)\/ai-tab$/
+  );
+  if (localizedAiTabMatch) {
+    return NextResponse.redirect(new URL('/ai-tab', request.url), 301);
+  }
+
   // ─── 1b. Retire legacy song-prefilled AI Tab URLs ───
   // Old per-song buttons linked to /ai-tab?song=...&artist=.... The product now
   // has one canonical entry point at /ai-tab, so permanently collapse those URLs.
