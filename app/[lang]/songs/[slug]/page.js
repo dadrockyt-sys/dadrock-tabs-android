@@ -86,7 +86,16 @@ export default async function SongPage({ params }) {
       permanentRedirect(localizedTarget);
     }
 
-    // Unknown missing URLs should remain real 404s.
+    // Historical song pages may predate the redirect registry. Recover only
+    // when the slug prefix matches a real current artist, preserving locale.
+    const artistSlug = await findArtistFromSongSlug(db, slug);
+    if (artistSlug) {
+      const target = lang && lang !== 'en'
+        ? `/${lang}/artist/${artistSlug}`
+        : `/artist/${artistSlug}`;
+      permanentRedirect(target);
+    }
+
     notFound();
   }
 

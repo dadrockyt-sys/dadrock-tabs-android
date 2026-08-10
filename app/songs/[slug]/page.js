@@ -82,7 +82,14 @@ export default async function SongPage({ params }) {
       permanentRedirect(savedRedirect.target);
     }
 
-    // Unknown missing URLs should remain real 404s.
+    // Historical song pages may predate the redirect registry. If the old slug
+    // begins with a real current artist slug, preserve user/Google value by
+    // redirecting to that artist page. Truly unknown garbage remains a 404.
+    const artistSlug = await findArtistFromSongSlug(db, slug);
+    if (artistSlug) {
+      permanentRedirect(`/artist/${artistSlug}`);
+    }
+
     notFound();
   }
 
