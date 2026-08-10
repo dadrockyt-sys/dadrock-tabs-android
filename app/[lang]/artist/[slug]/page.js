@@ -87,6 +87,7 @@ if (!locales.includes(lang)) {
     description = `Learn ${videoCount} songs by ${artistPattern} with free guitar and bass tab video lessons. Step-by-step tutorials perfect for beginner and intermediate players. Start playing ${artistPattern} riffs today!`;
   }
   
+  const localizedArtistUrl = `https://dadrocktabs.com/${lang}/artist/${slug}`;
   const dynamicOgImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(artistPattern)}&type=artist&thumb=${encodeURIComponent(ogImage)}`;
 
   return {
@@ -182,7 +183,7 @@ try {
   
   // JSON-LD structured data for SEO — MusicGroup + BreadcrumbList + CollectionPage
   const localizedHomeUrl = `https://dadrocktabs.com/${lang}`;
-  const localizedArtistUrl = localizedArtistUrl;
+  const localizedArtistUrl = `https://dadrocktabs.com/${lang}/artist/${slug}`;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
