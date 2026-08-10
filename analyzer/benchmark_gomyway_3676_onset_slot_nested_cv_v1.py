@@ -162,9 +162,9 @@ def evaluate_scheme(rows: list[dict[str, Any]], name: str, fold_fn: Callable[[in
 def main() -> None:
     before = sha256(prof.prof.recall.CANDIDATE_PATH)
     payload = json.loads(PROFILE_PATH.read_text(encoding="utf-8"))
-    rows = list(payload.get("candidateRows") or [])
+    rows = list(payload.get("candidateSlots") or [])
     if not rows:
-        raise RuntimeError("Onset-slot profile candidate rows are missing; run profile_gomyway_3676_onset_slot_stability_v1.py first")
+        raise RuntimeError("Onset-slot profile candidate slots are missing; run profile_gomyway_3676_onset_slot_stability_v1.py first")
     if tuple(payload.get("frozenChampionMatchedMissingExtra") or []) != EXPECTED:
         raise RuntimeError("Onset-slot profile is not anchored to frozen 36.76 champion")
 
