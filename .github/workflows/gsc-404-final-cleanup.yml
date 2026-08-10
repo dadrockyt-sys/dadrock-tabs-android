@@ -1,0 +1,43 @@
+name: GSC 404 final cleanup
+
+on:
+  push:
+    branches:
+      - seo-gsc-404-final-cleanup
+    paths:
+      - '.github/scripts/gsc_404_final_cleanup.py'
+      - '.github/workflows/gsc-404-final-cleanup.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: seo-gsc-404-final-cleanup
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Apply cleanup
+        run: python .github/scripts/gsc_404_final_cleanup.py
+      - name: Verify diff
+        run: git diff --check
+      - name: Install dependencies
+        run: npm ci
+      - name: Build production site
+        run: npm run build
+      - name: Commit cleanup
+        run: |
+          if git diff --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add middleware.js app/songs/[slug]/page.js app/[lang]/songs/[slug]/page.js
+          git commit -m "Recover historical song URLs and localized AI Tab links"
+          git push origin seo-gsc-404-final-cleanup
