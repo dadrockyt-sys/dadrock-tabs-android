@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 59,
+  "profileType": "v58-changed-outcome-branch-summary",
+  "source": "public/gomyway-3676-patch-rhythm24-v57-confirmation-failure-map-v58.json",
+  "outcomesByBranch": {
+    "anchor": {
+      "bothPass": 56,
+      "bothFail": 9
+    },
+    "tight": {
+      "bothFail": 8,
+      "bothPass": 30,
+      "rescue": 1,
+      "regression": 3
+    },
+    "broad": {
+      "bothPass": 46,
+      "rescue": 2,
+      "regression": 2,
+      "bothFail": 3
+    }
+  },
+  "outcomesByReason": {
+    "anchor": {
+      "bothPass": 56,
+      "bothFail": 9
+    },
+    "unanimous-tight-nonworse-plus-lift": {
+      "bothFail": 8,
+      "bothPass": 30,
+      "rescue": 1,
+      "regression": 3
+    },
+    "v46-strict-broad-support": {
+      "bothPass": 46,
+      "rescue": 2,
+      "regression": 2,
+      "bothFail": 3
+    }
+  },
+  "bottleneckPhases": [
+    {
+      "phase": 0.265625,
+      "passes": 3,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 1,
+      "qBranchCounts": {
+        "anchor": 2,
+        "broad": 3
+      },
+      "reasonCounts": {
+        "anchor": 2,
+        "v46-strict-broad-support": 3
+      }
+    },
+    {
+      "phase": 0.328125,
+      "passes": 3,
+      "v28Passes": 3,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "broad": 2,
+        "anchor": 1,
+        "tight": 2
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 2,
+        "anchor": 1,
+        "unanimous-tight-nonworse-plus-lift": 2
+      }
+    },
+    {
+      "phase": 0.703125,
+      "passes": 3,
+      "v28Passes": 3,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 1,
+        "anchor": 3,
+        "broad": 1
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "anchor": 3,
+        "v46-strict-broad-support": 1
+      }
+    },
+    {
+      "phase": 0.953125,
+      "passes": 3,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 1,
+      "qBranchCounts": {
+        "anchor": 2,
+        "broad": 2,
+        "tight": 1
+      },
+      "reasonCounts": {
+        "anchor": 2,
+        "v46-strict-broad-support": 2,
+        "unanimous-tight-nonworse-plus-lift": 1
+      }
+    },
+    {
+      "phase": 0.984375,
+      "passes": 3,
+      "v28Passes": 3,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "anchor": 3,
+        "broad": 1,
+        "tight": 1
+      },
+      "reasonCounts": {
+        "anchor": 3,
+        "v46-strict-broad-support": 1,
+        "unanimous-tight-nonworse-plus-lift": 1
+      }
+    }
+  ],
+  "changedOutcomeCount": 0,
+  "branchChangedSummary": {},
+  "reasonChangedSummary": {},
+  "phaseChangedSummary": {},
+  "strictSupportChangedSummary": {},
+  "unanimousEscapeChangedSummary": {},
+  "changedOutcomes": [],
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "productionPromotionAllowed": false
+}
