@@ -1,0 +1,1137 @@
+{
+  "schemaVersion": 58,
+  "profileType": "v57-confirmation-failure-map",
+  "sourceConfirmationSuccess": false,
+  "sourceValidatedNewChampion": false,
+  "sourceFoldsPassed": 135,
+  "sourceFoldsTotal": 160,
+  "sourceV28ComparisonPasses": 137,
+  "minimumPhasePasses": 3,
+  "outcomesByBranch": {
+    "anchor": {
+      "bothPass": 56,
+      "bothFail": 9
+    },
+    "tight": {
+      "bothFail": 8,
+      "bothPass": 30,
+      "rescue": 1,
+      "regression": 3
+    },
+    "broad": {
+      "bothPass": 46,
+      "rescue": 2,
+      "regression": 2,
+      "bothFail": 3
+    }
+  },
+  "outcomesByReason": {
+    "anchor": {
+      "bothPass": 56,
+      "bothFail": 9
+    },
+    "unanimous-tight-nonworse-plus-lift": {
+      "bothFail": 8,
+      "bothPass": 30,
+      "rescue": 1,
+      "regression": 3
+    },
+    "v46-strict-broad-support": {
+      "bothPass": 46,
+      "rescue": 2,
+      "regression": 2,
+      "bothFail": 3
+    }
+  },
+  "bottleneckPhases": [
+    {
+      "phase": 0.265625,
+      "passes": 3,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 1,
+      "qBranchCounts": {
+        "anchor": 2,
+        "broad": 3
+      },
+      "reasonCounts": {
+        "anchor": 2,
+        "v46-strict-broad-support": 3
+      }
+    },
+    {
+      "phase": 0.328125,
+      "passes": 3,
+      "v28Passes": 3,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "broad": 2,
+        "anchor": 1,
+        "tight": 2
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 2,
+        "anchor": 1,
+        "unanimous-tight-nonworse-plus-lift": 2
+      }
+    },
+    {
+      "phase": 0.703125,
+      "passes": 3,
+      "v28Passes": 3,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 1,
+        "anchor": 3,
+        "broad": 1
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "anchor": 3,
+        "v46-strict-broad-support": 1
+      }
+    },
+    {
+      "phase": 0.953125,
+      "passes": 3,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 1,
+      "qBranchCounts": {
+        "anchor": 2,
+        "broad": 2,
+        "tight": 1
+      },
+      "reasonCounts": {
+        "anchor": 2,
+        "v46-strict-broad-support": 2,
+        "unanimous-tight-nonworse-plus-lift": 1
+      }
+    },
+    {
+      "phase": 0.984375,
+      "passes": 3,
+      "v28Passes": 3,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "anchor": 3,
+        "broad": 1,
+        "tight": 1
+      },
+      "reasonCounts": {
+        "anchor": 3,
+        "v46-strict-broad-support": 1,
+        "unanimous-tight-nonworse-plus-lift": 1
+      }
+    }
+  ],
+  "changedOutcomeRows": [
+    {
+      "phase": 0.046875,
+      "fold": 3,
+      "status": "rescue",
+      "branch": "broad",
+      "outerQ": 0.225,
+      "reason": "v46-strict-broad-support",
+      "heldoutPrecisionLift": 6.31,
+      "v28HeldoutPrecisionLift": 4.88,
+      "selector": {
+        "architecture": "v46-plus-unanimous-training-tight-lift-escape",
+        "strictBroadSupportCount": 1,
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": false,
+        "unanimousTightEscape": false,
+        "selectionReason": "v46-strict-broad-support",
+        "chosenQ": 0.225,
+        "outerHeldoutLabelsUsed": false,
+        "v55DiagnosticInformedArchitecture": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 10.4025,
+            "meanAnchorLift": 9.864999999999998,
+            "meanBroadLift": 8.9225,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 15.177500000000002,
+            "meanAnchorLift": 15.105,
+            "meanBroadLift": 14.33,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 3,
+            "anchorPasses": 3,
+            "broadPasses": 4,
+            "meanTightLift": 10.3375,
+            "meanAnchorLift": 11.3,
+            "meanBroadLift": 10.110000000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": false,
+            "strictBroadSupport": true
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.109375,
+      "fold": 3,
+      "status": "rescue",
+      "branch": "tight",
+      "outerQ": 0.175,
+      "reason": "unanimous-tight-nonworse-plus-lift",
+      "heldoutPrecisionLift": 7.11,
+      "v28HeldoutPrecisionLift": 4.88,
+      "selector": {
+        "architecture": "v46-plus-unanimous-training-tight-lift-escape",
+        "strictBroadSupportCount": 0,
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": true,
+        "unanimousTightEscape": true,
+        "selectionReason": "unanimous-tight-nonworse-plus-lift",
+        "chosenQ": 0.175,
+        "outerHeldoutLabelsUsed": false,
+        "v55DiagnosticInformedArchitecture": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 9.5175,
+            "meanAnchorLift": 8.732499999999998,
+            "meanBroadLift": 9.3975,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 14.4975,
+            "meanAnchorLift": 12.01,
+            "meanBroadLift": 10.3725,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 10.007500000000002,
+            "meanAnchorLift": 9.492500000000001,
+            "meanBroadLift": 9.287500000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.171875,
+      "fold": 3,
+      "status": "regression",
+      "branch": "broad",
+      "outerQ": 0.225,
+      "reason": "v46-strict-broad-support",
+      "heldoutPrecisionLift": 3.44,
+      "v28HeldoutPrecisionLift": 5.0,
+      "selector": {
+        "architecture": "v46-plus-unanimous-training-tight-lift-escape",
+        "strictBroadSupportCount": 1,
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": false,
+        "unanimousTightEscape": false,
+        "selectionReason": "v46-strict-broad-support",
+        "chosenQ": 0.225,
+        "outerHeldoutLabelsUsed": false,
+        "v55DiagnosticInformedArchitecture": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 3,
+            "anchorPasses": 3,
+            "broadPasses": 3,
+            "meanTightLift": 10.017499999999998,
+            "meanAnchorLift": 10.315,
+            "meanBroadLift": 9.717500000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": false,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 14.875,
+            "meanAnchorLift": 15.867500000000001,
+            "meanBroadLift": 13.6875,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": false,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 3,
+            "anchorPasses": 3,
+            "broadPasses": 4,
+            "meanTightLift": 12.485000000000001,
+            "meanAnchorLift": 11.275000000000002,
+            "meanBroadLift": 11.725000000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": true
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.265625,
+      "fold": 3,
+      "status": "regression",
+      "branch": "broad",
+      "outerQ": 0.225,
+      "reason": "v46-strict-broad-support",
+      "heldoutPrecisionLift": 4.36,
+      "v28HeldoutPrecisionLift": 5.87,
+      "selector": {
+        "architecture": "v46-plus-unanimous-training-tight-lift-escape",
+        "strictBroadSupportCount": 1,
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": false,
+        "unanimousTightEscape": false,
+        "selectionReason": "v46-strict-broad-support",
+        "chosenQ": 0.225,
+        "outerHeldoutLabelsUsed": false,
+        "v55DiagnosticInformedArchitecture": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 2,
+            "anchorPasses": 2,
+            "broadPasses": 3,
+            "meanTightLift": 6.955,
+            "meanAnchorLift": 5.64,
+            "meanBroadLift": 6.554999999999999,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": true
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 16.1875,
+            "meanAnchorLift": 14.1625,
+            "meanBroadLift": 14.190000000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 12.802500000000002,
+            "meanAnchorLift": 13.822500000000002,
+            "meanBroadLift": 11.787500000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": false,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.296875,
+      "fold": 3,
+      "status": "rescue",
+      "branch": "broad",
+      "outerQ": 0.225,
+      "reason": "v46-strict-broad-support",
+      "heldoutPrecisionLift": 5.02,
+      "v28HeldoutPrecisionLift": 4.89,
+      "selector": {
+        "architecture": "v46-plus-unanimous-training-tight-lift-escape",
+        "strictBroadSupportCount": 1,
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": false,
+        "unanimousTightEscape": false,
+        "selectionReason": "v46-strict-broad-support",
+        "chosenQ": 0.225,
+        "outerHeldoutLabelsUsed": false,
+        "v55DiagnosticInformedArchitecture": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 3,
+            "anchorPasses": 3,
+            "broadPasses": 4,
+            "meanTightLift": 8.0825,
+            "meanAnchorLift": 7.4399999999999995,
+            "meanBroadLift": 8.265,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": true
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 14.8325,
+            "meanAnchorLift": 16.3375,
+            "meanBroadLift": 15.205000000000002,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": false,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 12.9725,
+            "meanAnchorLift": 12.7,
+            "meanBroadLift": 12.729999999999999,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.796875,
+      "fold": 2,
+      "status": "regression",
+      "branch": "tight",
+      "outerQ": 0.175,
+      "reason": "unanimous-tight-nonworse-plus-lift",
+      "heldoutPrecisionLift": 3.81,
+      "v28HeldoutPrecisionLift": 5.51,
+      "selector": {
+        "architecture": "v46-plus-unanimous-training-tight-lift-escape",
+        "strictBroadSupportCount": 0,
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": true,
+        "unanimousTightEscape": true,
+        "selectionReason": "unanimous-tight-nonworse-plus-lift",
+        "chosenQ": 0.175,
+        "outerHeldoutLabelsUsed": false,
+        "v55DiagnosticInformedArchitecture": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 16.765,
+            "meanAnchorLift": 15.315000000000001,
+            "meanBroadLift": 14.764999999999999,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 18.3075,
+            "meanAnchorLift": 16.9925,
+            "meanBroadLift": 15.635000000000002,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 16.252499999999998,
+            "meanAnchorLift": 15.305,
+            "meanBroadLift": 13.147499999999999,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.828125,
+      "fold": 2,
+      "status": "regression",
+      "branch": "tight",
+      "outerQ": 0.175,
+      "reason": "unanimous-tight-nonworse-plus-lift",
+      "heldoutPrecisionLift": 4.38,
+      "v28HeldoutPrecisionLift": 5.94,
+      "selector": {
+        "architecture": "v46-plus-unanimous-training-tight-lift-escape",
+        "strictBroadSupportCount": 0,
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": true,
+        "unanimousTightEscape": true,
+        "selectionReason": "unanimous-tight-nonworse-plus-lift",
+        "chosenQ": 0.175,
+        "outerHeldoutLabelsUsed": false,
+        "v55DiagnosticInformedArchitecture": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 17.2225,
+            "meanAnchorLift": 15.315000000000001,
+            "meanBroadLift": 13.4,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 18.392500000000002,
+            "meanAnchorLift": 16.057499999999997,
+            "meanBroadLift": 15.6325,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 15.845,
+            "meanAnchorLift": 13.392500000000002,
+            "meanBroadLift": 13.280000000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.953125,
+      "fold": 4,
+      "status": "regression",
+      "branch": "tight",
+      "outerQ": 0.175,
+      "reason": "unanimous-tight-nonworse-plus-lift",
+      "heldoutPrecisionLift": 3.91,
+      "v28HeldoutPrecisionLift": 6.85,
+      "selector": {
+        "architecture": "v46-plus-unanimous-training-tight-lift-escape",
+        "strictBroadSupportCount": 0,
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": true,
+        "unanimousTightEscape": true,
+        "selectionReason": "unanimous-tight-nonworse-plus-lift",
+        "chosenQ": 0.175,
+        "outerHeldoutLabelsUsed": false,
+        "v55DiagnosticInformedArchitecture": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 10.695,
+            "meanAnchorLift": 10.145,
+            "meanBroadLift": 10.265,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 14.14,
+            "meanAnchorLift": 13.5625,
+            "meanBroadLift": 13.3875,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 11.965,
+            "meanAnchorLift": 11.275,
+            "meanBroadLift": 10.309999999999999,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    }
+  ],
+  "phaseSummary": [
+    {
+      "phase": 0.015625,
+      "passes": 4,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "anchor": 2,
+        "tight": 2,
+        "broad": 1
+      },
+      "reasonCounts": {
+        "anchor": 2,
+        "unanimous-tight-nonworse-plus-lift": 2,
+        "v46-strict-broad-support": 1
+      }
+    },
+    {
+      "phase": 0.046875,
+      "passes": 4,
+      "v28Passes": 3,
+      "rescues": 1,
+      "regressions": 0,
+      "qBranchCounts": {
+        "broad": 2,
+        "tight": 2,
+        "anchor": 1
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 2,
+        "unanimous-tight-nonworse-plus-lift": 2,
+        "anchor": 1
+      }
+    },
+    {
+      "phase": 0.078125,
+      "passes": 5,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "broad": 3,
+        "anchor": 2
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 3,
+        "anchor": 2
+      }
+    },
+    {
+      "phase": 0.109375,
+      "passes": 4,
+      "v28Passes": 3,
+      "rescues": 1,
+      "regressions": 0,
+      "qBranchCounts": {
+        "anchor": 3,
+        "tight": 1,
+        "broad": 1
+      },
+      "reasonCounts": {
+        "anchor": 3,
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "v46-strict-broad-support": 1
+      }
+    },
+    {
+      "phase": 0.140625,
+      "passes": 5,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "broad": 2,
+        "anchor": 2,
+        "tight": 1
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 2,
+        "anchor": 2,
+        "unanimous-tight-nonworse-plus-lift": 1
+      }
+    },
+    {
+      "phase": 0.171875,
+      "passes": 4,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 1,
+      "qBranchCounts": {
+        "tight": 1,
+        "broad": 4
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "v46-strict-broad-support": 4
+      }
+    },
+    {
+      "phase": 0.203125,
+      "passes": 4,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 2,
+        "broad": 2,
+        "anchor": 1
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 2,
+        "v46-strict-broad-support": 2,
+        "anchor": 1
+      }
+    },
+    {
+      "phase": 0.234375,
+      "passes": 4,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 1,
+        "broad": 3,
+        "anchor": 1
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "v46-strict-broad-support": 3,
+        "anchor": 1
+      }
+    },
+    {
+      "phase": 0.265625,
+      "passes": 3,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 1,
+      "qBranchCounts": {
+        "anchor": 2,
+        "broad": 3
+      },
+      "reasonCounts": {
+        "anchor": 2,
+        "v46-strict-broad-support": 3
+      }
+    },
+    {
+      "phase": 0.296875,
+      "passes": 5,
+      "v28Passes": 4,
+      "rescues": 1,
+      "regressions": 0,
+      "qBranchCounts": {
+        "anchor": 3,
+        "broad": 2
+      },
+      "reasonCounts": {
+        "anchor": 3,
+        "v46-strict-broad-support": 2
+      }
+    },
+    {
+      "phase": 0.328125,
+      "passes": 3,
+      "v28Passes": 3,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "broad": 2,
+        "anchor": 1,
+        "tight": 2
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 2,
+        "anchor": 1,
+        "unanimous-tight-nonworse-plus-lift": 2
+      }
+    },
+    {
+      "phase": 0.359375,
+      "passes": 4,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "anchor": 2,
+        "tight": 2,
+        "broad": 1
+      },
+      "reasonCounts": {
+        "anchor": 2,
+        "unanimous-tight-nonworse-plus-lift": 2,
+        "v46-strict-broad-support": 1
+      }
+    },
+    {
+      "phase": 0.390625,
+      "passes": 5,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 3,
+        "anchor": 2
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 3,
+        "anchor": 2
+      }
+    },
+    {
+      "phase": 0.421875,
+      "passes": 4,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "anchor": 3,
+        "tight": 1,
+        "broad": 1
+      },
+      "reasonCounts": {
+        "anchor": 3,
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "v46-strict-broad-support": 1
+      }
+    },
+    {
+      "phase": 0.453125,
+      "passes": 4,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 1,
+        "anchor": 4
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "anchor": 4
+      }
+    },
+    {
+      "phase": 0.484375,
+      "passes": 5,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 2,
+        "anchor": 2,
+        "broad": 1
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 2,
+        "anchor": 2,
+        "v46-strict-broad-support": 1
+      }
+    },
+    {
+      "phase": 0.515625,
+      "passes": 5,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "anchor": 2,
+        "tight": 1,
+        "broad": 2
+      },
+      "reasonCounts": {
+        "anchor": 2,
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "v46-strict-broad-support": 2
+      }
+    },
+    {
+      "phase": 0.546875,
+      "passes": 5,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "broad": 3,
+        "anchor": 1,
+        "tight": 1
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 3,
+        "anchor": 1,
+        "unanimous-tight-nonworse-plus-lift": 1
+      }
+    },
+    {
+      "phase": 0.578125,
+      "passes": 5,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 1,
+        "broad": 2,
+        "anchor": 2
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "v46-strict-broad-support": 2,
+        "anchor": 2
+      }
+    },
+    {
+      "phase": 0.609375,
+      "passes": 5,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "broad": 2,
+        "tight": 1,
+        "anchor": 2
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 2,
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "anchor": 2
+      }
+    },
+    {
+      "phase": 0.640625,
+      "passes": 5,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 1,
+        "anchor": 4
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "anchor": 4
+      }
+    },
+    {
+      "phase": 0.671875,
+      "passes": 4,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "broad": 2,
+        "tight": 1,
+        "anchor": 2
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 2,
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "anchor": 2
+      }
+    },
+    {
+      "phase": 0.703125,
+      "passes": 3,
+      "v28Passes": 3,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 1,
+        "anchor": 3,
+        "broad": 1
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "anchor": 3,
+        "v46-strict-broad-support": 1
+      }
+    },
+    {
+      "phase": 0.734375,
+      "passes": 5,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 1,
+        "anchor": 4
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "anchor": 4
+      }
+    },
+    {
+      "phase": 0.765625,
+      "passes": 4,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 1,
+        "broad": 1,
+        "anchor": 3
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 1,
+        "v46-strict-broad-support": 1,
+        "anchor": 3
+      }
+    },
+    {
+      "phase": 0.796875,
+      "passes": 4,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 1,
+      "qBranchCounts": {
+        "anchor": 2,
+        "broad": 2,
+        "tight": 1
+      },
+      "reasonCounts": {
+        "anchor": 2,
+        "v46-strict-broad-support": 2,
+        "unanimous-tight-nonworse-plus-lift": 1
+      }
+    },
+    {
+      "phase": 0.828125,
+      "passes": 4,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 1,
+      "qBranchCounts": {
+        "broad": 4,
+        "tight": 1
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 4,
+        "unanimous-tight-nonworse-plus-lift": 1
+      }
+    },
+    {
+      "phase": 0.859375,
+      "passes": 4,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "anchor": 1,
+        "tight": 3,
+        "broad": 1
+      },
+      "reasonCounts": {
+        "anchor": 1,
+        "unanimous-tight-nonworse-plus-lift": 3,
+        "v46-strict-broad-support": 1
+      }
+    },
+    {
+      "phase": 0.890625,
+      "passes": 4,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "tight": 3,
+        "anchor": 2
+      },
+      "reasonCounts": {
+        "unanimous-tight-nonworse-plus-lift": 3,
+        "anchor": 2
+      }
+    },
+    {
+      "phase": 0.921875,
+      "passes": 5,
+      "v28Passes": 5,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "broad": 2,
+        "tight": 2,
+        "anchor": 1
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 2,
+        "unanimous-tight-nonworse-plus-lift": 2,
+        "anchor": 1
+      }
+    },
+    {
+      "phase": 0.953125,
+      "passes": 3,
+      "v28Passes": 4,
+      "rescues": 0,
+      "regressions": 1,
+      "qBranchCounts": {
+        "anchor": 2,
+        "broad": 2,
+        "tight": 1
+      },
+      "reasonCounts": {
+        "anchor": 2,
+        "v46-strict-broad-support": 2,
+        "unanimous-tight-nonworse-plus-lift": 1
+      }
+    },
+    {
+      "phase": 0.984375,
+      "passes": 3,
+      "v28Passes": 3,
+      "rescues": 0,
+      "regressions": 0,
+      "qBranchCounts": {
+        "anchor": 3,
+        "broad": 1,
+        "tight": 1
+      },
+      "reasonCounts": {
+        "anchor": 3,
+        "v46-strict-broad-support": 1,
+        "unanimous-tight-nonworse-plus-lift": 1
+      }
+    }
+  ],
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "heldoutLabelsDiagnosticOnly": true,
+  "protected949CandidateHashUnchanged": true,
+  "validatedNewChampion": false,
+  "productionPromotionAllowed": false
+}
