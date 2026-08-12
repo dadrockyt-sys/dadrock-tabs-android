@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 46,
+  "foldsPassed": 103,
+  "foldsTotal": 120,
+  "minimumPhasePasses": 3,
+  "v28ComparisonPasses": 101,
+  "rescuesVsV28": 2,
+  "regressionsVsV28": 0,
+  "foldsBroadenedAboveV28Q": 45,
+  "exploratoryPromising": false,
+  "architectureTaintedByV45Diagnostic": true,
+  "requiresFreshUntouchedConfirmation": true,
+  "newReserved1over64OddPhasesReferenced": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
