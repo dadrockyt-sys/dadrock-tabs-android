@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 30,
+  "output": "public/gomyway-3676-patch-rhythm24-oof-percentile-logit-calibration-v30.json",
+  "foldsPassed": 29,
+  "foldsTotal": 40,
+  "minimumPhasePasses": 3,
+  "v28ComparisonPasses": 34,
+  "rescuesVsV28": 1,
+  "regressionsVsV28": 6,
+  "exploratoryPromising": false,
+  "qSearchPerformed": false,
+  "outerHeldoutLabelsUsedToFitCalibration": false,
+  "v29DiagnosticQValuesUsed": false,
+  "requiresUntouchedConfirmationBeforeValidation": true,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
