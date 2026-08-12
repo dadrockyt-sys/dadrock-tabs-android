@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 54,
+  "bottleneckPhase": 0.09375,
+  "outcomesByAggregatePattern": {
+    "T11-A11-B12": {
+      "bothPass": 1,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    },
+    "T10-A12-B9": {
+      "bothPass": 0,
+      "bothFail": 1,
+      "rescue": 0,
+      "regression": 0
+    },
+    "T7-A7-B6": {
+      "bothPass": 1,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    },
+    "T12-A12-B12": {
+      "bothPass": 0,
+      "bothFail": 1,
+      "rescue": 0,
+      "regression": 0
+    },
+    "T10-A10-B10": {
+      "bothPass": 1,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    }
+  },
+  "newTuningPerformed": false,
+  "newReserved1over64OddPhasesReferenced": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

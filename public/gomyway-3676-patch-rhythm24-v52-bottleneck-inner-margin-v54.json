@@ -1,0 +1,317 @@
+{
+  "schemaVersion": 54,
+  "profileType": "v52-bottleneck-inner-margin-diagnostic",
+  "diagnosticScope": "already-exposed-v52-bottleneck-phase-only",
+  "bottleneckPhase": 0.09375,
+  "rows": [
+    {
+      "phase": 0.09375,
+      "fold": 0,
+      "status": "bothPass",
+      "passed": true,
+      "v28Passed": true,
+      "outerQ": 0.225,
+      "selectionReason": "v46-strict-broad-support",
+      "trainingAnchorHoleDetected": false,
+      "strictBroadSupportCount": 1,
+      "aggregateInnerPasses": {
+        "tight": 11,
+        "anchor": 11,
+        "broad": 12
+      },
+      "tightMinusAnchor": 0,
+      "broadMinusAnchor": 1,
+      "bestNeighborMinusAnchor": 1,
+      "pattern": "T11-A11-B12",
+      "heldoutPrecisionLift": 7.21,
+      "v28Lift": 9.74,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "tightPasses": 3,
+          "anchorPasses": 3,
+          "broadPasses": 4,
+          "meanTightLift": 10.175,
+          "meanAnchorLift": 9.057500000000001,
+          "meanBroadLift": 9.39,
+          "strictBroadSupport": true
+        },
+        {
+          "scheme": "section",
+          "tightPasses": 4,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanTightLift": 12.195,
+          "meanAnchorLift": 11.985000000000001,
+          "meanBroadLift": 11.6775,
+          "strictBroadSupport": false
+        },
+        {
+          "scheme": "shiftedWindow",
+          "tightPasses": 4,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanTightLift": 13.0375,
+          "meanAnchorLift": 12.367500000000001,
+          "meanBroadLift": 11.605,
+          "strictBroadSupport": false
+        }
+      ]
+    },
+    {
+      "phase": 0.09375,
+      "fold": 1,
+      "status": "bothFail",
+      "passed": false,
+      "v28Passed": false,
+      "outerQ": 0.2,
+      "selectionReason": "anchor",
+      "trainingAnchorHoleDetected": false,
+      "strictBroadSupportCount": 0,
+      "aggregateInnerPasses": {
+        "tight": 10,
+        "anchor": 12,
+        "broad": 9
+      },
+      "tightMinusAnchor": -2,
+      "broadMinusAnchor": -3,
+      "bestNeighborMinusAnchor": -2,
+      "pattern": "T10-A12-B9",
+      "heldoutPrecisionLift": 4.85,
+      "v28Lift": 4.85,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "tightPasses": 3,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanTightLift": 11.777500000000002,
+          "meanAnchorLift": 11.765,
+          "meanBroadLift": 11.5525,
+          "strictBroadSupport": false
+        },
+        {
+          "scheme": "section",
+          "tightPasses": 3,
+          "anchorPasses": 4,
+          "broadPasses": 2,
+          "meanTightLift": 13.0475,
+          "meanAnchorLift": 12.8675,
+          "meanBroadLift": 10.515,
+          "strictBroadSupport": false
+        },
+        {
+          "scheme": "shiftedWindow",
+          "tightPasses": 4,
+          "anchorPasses": 4,
+          "broadPasses": 3,
+          "meanTightLift": 14.2375,
+          "meanAnchorLift": 13.165,
+          "meanBroadLift": 13.009999999999998,
+          "strictBroadSupport": false
+        }
+      ]
+    },
+    {
+      "phase": 0.09375,
+      "fold": 2,
+      "status": "bothPass",
+      "passed": true,
+      "v28Passed": true,
+      "outerQ": 0.2,
+      "selectionReason": "anchor",
+      "trainingAnchorHoleDetected": false,
+      "strictBroadSupportCount": 0,
+      "aggregateInnerPasses": {
+        "tight": 7,
+        "anchor": 7,
+        "broad": 6
+      },
+      "tightMinusAnchor": 0,
+      "broadMinusAnchor": -1,
+      "bestNeighborMinusAnchor": 0,
+      "pattern": "T7-A7-B6",
+      "heldoutPrecisionLift": 19.38,
+      "v28Lift": 19.38,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "tightPasses": 3,
+          "anchorPasses": 3,
+          "broadPasses": 2,
+          "meanTightLift": 6.8175,
+          "meanAnchorLift": 7.765,
+          "meanBroadLift": 5.8374999999999995,
+          "strictBroadSupport": false
+        },
+        {
+          "scheme": "section",
+          "tightPasses": 2,
+          "anchorPasses": 2,
+          "broadPasses": 2,
+          "meanTightLift": 4.4275,
+          "meanAnchorLift": 3.4324999999999997,
+          "meanBroadLift": 2.1775000000000007,
+          "strictBroadSupport": false
+        },
+        {
+          "scheme": "shiftedWindow",
+          "tightPasses": 2,
+          "anchorPasses": 2,
+          "broadPasses": 2,
+          "meanTightLift": 5.83,
+          "meanAnchorLift": 6.192500000000001,
+          "meanBroadLift": 6.6775,
+          "strictBroadSupport": false
+        }
+      ]
+    },
+    {
+      "phase": 0.09375,
+      "fold": 3,
+      "status": "bothFail",
+      "passed": false,
+      "v28Passed": false,
+      "outerQ": 0.2,
+      "selectionReason": "anchor",
+      "trainingAnchorHoleDetected": false,
+      "strictBroadSupportCount": 0,
+      "aggregateInnerPasses": {
+        "tight": 12,
+        "anchor": 12,
+        "broad": 12
+      },
+      "tightMinusAnchor": 0,
+      "broadMinusAnchor": 0,
+      "bestNeighborMinusAnchor": 0,
+      "pattern": "T12-A12-B12",
+      "heldoutPrecisionLift": 4.88,
+      "v28Lift": 4.88,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "tightPasses": 4,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanTightLift": 9.5175,
+          "meanAnchorLift": 8.732499999999998,
+          "meanBroadLift": 9.3975,
+          "strictBroadSupport": false
+        },
+        {
+          "scheme": "section",
+          "tightPasses": 4,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanTightLift": 14.4975,
+          "meanAnchorLift": 12.01,
+          "meanBroadLift": 10.3725,
+          "strictBroadSupport": false
+        },
+        {
+          "scheme": "shiftedWindow",
+          "tightPasses": 4,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanTightLift": 10.007500000000002,
+          "meanAnchorLift": 9.492500000000001,
+          "meanBroadLift": 9.287500000000001,
+          "strictBroadSupport": false
+        }
+      ]
+    },
+    {
+      "phase": 0.09375,
+      "fold": 4,
+      "status": "bothPass",
+      "passed": true,
+      "v28Passed": true,
+      "outerQ": 0.2,
+      "selectionReason": "anchor",
+      "trainingAnchorHoleDetected": false,
+      "strictBroadSupportCount": 0,
+      "aggregateInnerPasses": {
+        "tight": 10,
+        "anchor": 10,
+        "broad": 10
+      },
+      "tightMinusAnchor": 0,
+      "broadMinusAnchor": 0,
+      "bestNeighborMinusAnchor": 0,
+      "pattern": "T10-A10-B10",
+      "heldoutPrecisionLift": 8.43,
+      "v28Lift": 8.43,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "tightPasses": 4,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanTightLift": 12.625,
+          "meanAnchorLift": 11.427499999999998,
+          "meanBroadLift": 10.0725,
+          "strictBroadSupport": false
+        },
+        {
+          "scheme": "section",
+          "tightPasses": 4,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanTightLift": 8.805,
+          "meanAnchorLift": 10.5725,
+          "meanBroadLift": 10.425,
+          "strictBroadSupport": false
+        },
+        {
+          "scheme": "shiftedWindow",
+          "tightPasses": 2,
+          "anchorPasses": 2,
+          "broadPasses": 2,
+          "meanTightLift": 5.420000000000001,
+          "meanAnchorLift": 5.42,
+          "meanBroadLift": 4.7675,
+          "strictBroadSupport": false
+        }
+      ]
+    }
+  ],
+  "outcomesByAggregatePattern": {
+    "T11-A11-B12": {
+      "bothPass": 1,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    },
+    "T10-A12-B9": {
+      "bothPass": 0,
+      "bothFail": 1,
+      "rescue": 0,
+      "regression": 0
+    },
+    "T7-A7-B6": {
+      "bothPass": 1,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    },
+    "T12-A12-B12": {
+      "bothPass": 0,
+      "bothFail": 1,
+      "rescue": 0,
+      "regression": 0
+    },
+    "T10-A10-B10": {
+      "bothPass": 1,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    }
+  },
+  "heldoutLabelsUsedForDiagnosticComparison": true,
+  "newTuningPerformed": false,
+  "newReserved1over64OddPhasesReferenced": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
