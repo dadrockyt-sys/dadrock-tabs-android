@@ -20,6 +20,7 @@ This is the authoritative handoff for recovering the current rhythm24 calibratio
 8. A benchmark on already-exposed folds/phases may be exploratory only; it cannot validate a new champion.
 9. `validatedNewChampion` must remain false until a genuinely untouched confirmation succeeds.
 10. `productionPromotionAllowed` must remain false throughout this experiment series.
+11. The reserved 1/32-offset phase family listed below remains untouched. V31 is diagnostic only and must not consume it.
 
 ## Frozen exploratory champion — V17
 
@@ -127,7 +128,7 @@ Conclusion: q=0.20 is promising but not universal.
 File:
 `analyzer/profile_gomyway_3676_patch_rhythm24_v28_failure_map_v29.py`
 
-Local Codespace result on 2026-08-12:
+Result:
 - V28 failures: 6
 - operating-point recoverable failures: 6 / 6
 - non-recoverable ranking failures: 0
@@ -141,51 +142,79 @@ Outputs:
 - `public/gomyway-3676-patch-rhythm24-v28-failure-map-v29.json`
 - `public/gomyway-3676-patch-rhythm24-v28-failure-map-v29-manifest.json`
 
-Important leakage rule: the individual q values exposed by V29's held-out diagnostic sweep are tainted diagnostic information. They must NOT be used to choose V30 or any production parameter.
+Important leakage rule: the individual q values exposed by V29's held-out diagnostic sweep are tainted diagnostic information. They must NOT be used to choose a challenger or any production parameter.
 
-Conclusion: preserve V17 ranking/representation. The next challenger must change calibration architecture rather than retune q.
+Conclusion: preserve V17 ranking/representation. Calibration architecture, not ranking, remains the target.
 
-## CURRENT NEXT STEP — V30 — CREATED, NOT YET RUN
-
+### V30 — training-only OOF percentile/logit calibration — COMPLETE AND RETIRED
 File:
 `analyzer/benchmark_gomyway_3676_patch_rhythm24_oof_percentile_logit_calibration_v30.py`
 
-V30 is a separately versioned calibration-only challenger. It does not edit V17 and it does not use the V29 diagnostic q values.
+Architecture frozen before the result:
+- frozen V17 rhythm24 representation
+- existing V5 training-only model-selection path
+- training-only OOF scores from normal, section, shifted-window inner partition families
+- empirical percentile mapping using only inner-subtraining score distributions
+- one-dimensional class-balanced logistic calibrator
+- L2 = 1.0
+- probability cutoff = 0.5
+- 4 inner folds per partition family
+- no q search
+- no V29 diagnostic q values used
+- V28 phases evaluation-only
 
-### V30 architecture frozen before its result
+Result on 2026-08-12:
+- V30 passes: 29 / 40
+- V28 comparison passes: 34 / 40
+- minimum V30 phase passes: 3 / 5
+- rescues vs V28: 1
+- regressions vs V28: 6
+- exploratory promising: False
+- q search performed: False
+- V29 diagnostic q values used: False
+- outer held-out labels used to fit calibration: False
+- validated new champion: False
+- protected 949-event candidate hash unchanged: True
+- production promotion allowed: False
 
-For each outer-training partition:
-1. Use the frozen V17 rhythm24 representation and the existing V5 training-only model-selection path.
-2. Generate training-only out-of-fold ranker scores across three predeclared inner partition families: normal, section, and shifted-window; 4 folds each.
-3. Convert each inner validation score to an empirical percentile using only its corresponding inner-subtraining score distribution.
-4. Fit a one-dimensional class-balanced logistic calibrator to those training-only OOF percentiles.
-5. Fixed architecture constants, not searched on outer labels:
-   - L2 = 1.0
-   - probability cutoff = 0.5
-   - 4 inner folds per partition family
-6. Fit the final frozen-ranking model on the whole outer-training partition, percentile-map held-out scores using the outer-training score distribution, and apply the fixed calibrated probability cutoff.
-7. No q search occurs in V30.
+Outputs committed to GitHub:
+- `public/gomyway-3676-patch-rhythm24-oof-percentile-logit-calibration-v30.json`
+- `public/gomyway-3676-patch-rhythm24-oof-percentile-logit-calibration-v30-manifest.json`
 
-The already-exposed V28 phases are used only as an exploratory stress/evaluation set in V30. Their held-out labels are not used to fit calibration or select V30 parameters. V30 can therefore never set `validatedNewChampion: true`, regardless of its score.
+Conclusion: V30 failed its predeclared exploratory-promising gate and is retired. Do not confirm V30 on untouched phases. Do not change V30 parameters using its held-out outcomes.
 
-Predeclared exploratory-promising gate:
-- V30 total passes must exceed the V28 comparison total,
-- minimum V30 phase passes must be at least 4 / 5,
-- regressions versus V28 must not exceed rescues.
+## CURRENT NEXT STEP — V31 — CREATED, NOT YET RUN
 
-Even if this gate passes, V30 requires untouched confirmation before any validation claim.
+File:
+`analyzer/profile_gomyway_3676_patch_rhythm24_v30_calibration_failure_map_v31.py`
 
-Expected safety fields:
+V31 is diagnostic only. It reads the committed V30 result and characterizes the six V30 regressions, the one rescue, both-pass folds, and both-fail folds on the already-exposed V28 phase family.
+
+V31 does NOT rerun or inspect the reserved untouched 1/32 phase family. It does NOT choose a new q, probability cutoff, logistic regularization value, model, or production parameter.
+
+Primary diagnostic quantities:
+- V30 vs V28 pass status by phase/fold
+- effective percentile cutoff implied by each training-only logistic calibrator (`-intercept/slope` where defined)
+- implied selected top-fraction for each fold
+- V30 selected-count vs V28 selected-count
+- V30 vs V28 lift
+- whether regressions predominantly select more, the same, or fewer candidates than V28
+- spread of effective percentile cutoffs across exposed folds
+
+Required safety fields:
+- `diagnosticScope: already-exposed-V28-phases-only`
+- `reservedUntouchedPhasesConsumed: false`
+- `heldoutLabelsUsedForDiagnosticComparison: true`
+- `newTuningPerformed: false`
 - `qSearchPerformed: false`
+- `calibrationParameterSearchPerformed: false`
 - `v29DiagnosticQValuesUsed: false`
-- `outerHeldoutLabelsUsedToFitCalibration: false`
-- `outerHeldoutLabelsUsedToChooseCalibrationParameters: false`
-- `requiresUntouchedConfirmationBeforeValidation: true`
+- `requiresTrainingOnlyEvidenceForNextChallenger: true`
 - `validatedNewChampion: false`
 - `protected949CandidateHashUnchanged: true`
 - `productionPromotionAllowed: false`
 
-### Run V30 in the existing Codespace
+### Run V31 in the existing Codespace
 
 ```bash
 cd /workspaces/dadrock-tabs-android
@@ -193,26 +222,27 @@ git checkout jimmy-paige-v8-targeted-rhythm-corrections
 git pull origin jimmy-paige-v8-targeted-rhythm-corrections
 source .venv-jimmy311/bin/activate
 
-python -m py_compile analyzer/benchmark_gomyway_3676_patch_rhythm24_oof_percentile_logit_calibration_v30.py
-python analyzer/benchmark_gomyway_3676_patch_rhythm24_oof_percentile_logit_calibration_v30.py
+python -m py_compile analyzer/profile_gomyway_3676_patch_rhythm24_v30_calibration_failure_map_v31.py
+python analyzer/profile_gomyway_3676_patch_rhythm24_v30_calibration_failure_map_v31.py
 ```
 
-V30 writes:
-- `public/gomyway-3676-patch-rhythm24-oof-percentile-logit-calibration-v30.json`
-- `public/gomyway-3676-patch-rhythm24-oof-percentile-logit-calibration-v30-manifest.json`
+V31 writes:
+- `public/gomyway-3676-patch-rhythm24-v30-calibration-failure-map-v31.json`
+- `public/gomyway-3676-patch-rhythm24-v30-calibration-failure-map-v31-manifest.json`
 
-## Reserved untouched confirmation family for a future V31
+Decision after V31:
+- Treat all V31 outcome comparisons as diagnostic/tainted because they use already-exposed held-out outcomes.
+- Do not copy a V31-observed cutoff into a challenger.
+- Use V31 only to identify the failure mechanism to test with training-only evidence in a separately versioned challenger (V32 or later).
+- Do not consume the reserved untouched phase family until a separately frozen challenger first earns an exploratory confirmation attempt under a predeclared gate.
 
-The following 1/32-offset phases are reserved now, before V30 is run, and must NOT be evaluated or inspected during V30:
+## Reserved untouched confirmation family — STILL UNCONSUMED
+
+The following 1/32-offset phases were reserved before V30 and remain genuinely untouched:
 
 `0.03125, 0.09375, 0.15625, 0.21875, 0.28125, 0.34375, 0.40625, 0.46875, 0.53125, 0.59375, 0.65625, 0.71875, 0.78125, 0.84375, 0.90625, 0.96875`
 
-Purpose: preserve a genuinely untouched phase family for confirmation of a frozen challenger architecture.
-
-Decision after V30:
-- If V30 is exploratory-promising, freeze V30 architecture exactly as run, then create V31 to evaluate that frozen architecture on the reserved untouched 1/32 phase family. No V30 parameter may be changed using V30 held-out outcomes before V31.
-- If V30 is not promising, retire V30. Do not consume the reserved V31 phase family. Diagnose the exposed V30 stress behavior only and create a separately versioned challenger using training-only evidence.
-- Never promote to production during either path.
+Do not evaluate, inspect, or use these phases during V31 or while designing the next challenger from V31. They are reserved for later confirmation of a frozen architecture only.
 
 ## Recovery commands
 
