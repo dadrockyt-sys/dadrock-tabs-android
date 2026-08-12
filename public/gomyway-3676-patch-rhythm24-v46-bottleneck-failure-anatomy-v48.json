@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 48,
+  "profileType": "v46-bottleneck-failure-anatomy",
+  "diagnosticScope": "already-exposed-v46-phases-only",
+  "minimumPhasePasses": 3,
+  "bottleneckPhases": [
+    0.09375
+  ],
+  "bottleneckCount": 1,
+  "failureCount": 2,
+  "failureStrictSupportHistogram": {
+    "0": 2
+  },
+  "failureChosenQHistogram": {
+    "0.2": 2
+  },
+  "failureSelectedDeltaVsV28Histogram": {
+    "0": 2
+  },
+  "outcomesByStrictSupport": {
+    "0": {
+      "bothFail": 2,
+      "bothPass": 2
+    },
+    "1": {
+      "bothPass": 1
+    }
+  },
+  "bottleneckOutcomeVsV28": {
+    "bothPass": 3,
+    "bothFail": 2
+  },
+  "bottleneckChosenQCounts": {
+    "0.225": 1,
+    "0.2": 4
+  },
+  "failures": [
+    {
+      "phase": 0.09375,
+      "fold": 1,
+      "strictSupportCount": 0,
+      "outerQ": 0.2,
+      "v46Lift": 4.85,
+      "v28Lift": 4.85,
+      "v28Passed": false,
+      "v46Held": {
+        "selected": 61,
+        "true": 15,
+        "false": 46,
+        "precision": 24.59,
+        "selectedPct": 20.07
+      },
+      "v28Held": {
+        "selected": 61,
+        "true": 15,
+        "false": 46,
+        "precision": 24.59,
+        "selectedPct": 20.07
+      },
+      "selectedDeltaVsV28": 0,
+      "trueDeltaVsV28": 0,
+      "falseDeltaVsV28": 0
+    },
+    {
+      "phase": 0.09375,
+      "fold": 3,
+      "strictSupportCount": 0,
+      "outerQ": 0.2,
+      "v46Lift": 4.88,
+      "v28Lift": 4.88,
+      "v28Passed": false,
+      "v46Held": {
+        "selected": 61,
+        "true": 9,
+        "false": 52,
+        "precision": 14.75,
+        "selectedPct": 20.07
+      },
+      "v28Held": {
+        "selected": 61,
+        "true": 9,
+        "false": 52,
+        "precision": 14.75,
+        "selectedPct": 20.07
+      },
+      "selectedDeltaVsV28": 0,
+      "trueDeltaVsV28": 0,
+      "falseDeltaVsV28": 0
+    }
+  ],
+  "newReserved1over64OddPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "heldoutLabelsUsedForDiagnosticComparison": true,
+  "requiresTrainingOnlyEvidenceForNextChallenger": true,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

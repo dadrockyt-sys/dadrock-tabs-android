@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 48,
+  "output": "public/gomyway-3676-patch-rhythm24-v46-bottleneck-failure-anatomy-v48.json",
+  "minimumPhasePasses": 3,
+  "bottleneckPhases": [
+    0.09375
+  ],
+  "failureCount": 2,
+  "failureStrictSupportHistogram": {
+    "0": 2
+  },
+  "failureChosenQHistogram": {
+    "0.2": 2
+  },
+  "failureSelectedDeltaVsV28Histogram": {
+    "0": 2
+  },
+  "newReserved1over64OddPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
