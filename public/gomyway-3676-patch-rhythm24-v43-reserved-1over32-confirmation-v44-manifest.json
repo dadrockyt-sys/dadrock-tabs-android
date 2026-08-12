@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 44,
+  "output": "public/gomyway-3676-patch-rhythm24-v43-reserved-1over32-confirmation-v44.json",
+  "foldsPassed": 66,
+  "foldsTotal": 80,
+  "minimumPhasePasses": 3,
+  "v28ComparisonPasses": 67,
+  "rescuesVsV28": 1,
+  "regressionsVsV28": 2,
+  "foldsBroadenedAboveV28Q": 39,
+  "reservedUntouchedPhasesConsumed": true,
+  "architectureFrozenBeforeConfirmation": true,
+  "parameterSearchPerformed": false,
+  "confirmationSuccess": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
