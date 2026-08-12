@@ -25,8 +25,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install runtime dependency
-        run: python -m pip install numpy
+      - name: Install analyzer runtime dependencies
+        run: python -m pip install numpy basic-pitch
 
       - name: Compile V29
         run: python -m py_compile analyzer/profile_gomyway_3676_patch_rhythm24_v28_failure_map_v29.py
@@ -53,6 +53,10 @@ jobs:
           fi
           if [ -f public/gomyway-3676-patch-rhythm24-v28-failure-map-v29-manifest.json ]; then
             git add public/gomyway-3676-patch-rhythm24-v28-failure-map-v29-manifest.json
+          fi
+          if git diff --cached --quiet; then
+            echo "No output changes to commit"
+            exit 0
           fi
           git commit -m "Capture V29 rhythm24 diagnostic run"
           git push origin HEAD:jimmy-paige-v8-targeted-rhythm-corrections
