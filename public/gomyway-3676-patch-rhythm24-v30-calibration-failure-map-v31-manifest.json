@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 31,
+  "output": "public/gomyway-3676-patch-rhythm24-v30-calibration-failure-map-v31.json",
+  "foldsTotal": 40,
+  "statusCounts": {
+    "both-pass": 28,
+    "rescue": 1,
+    "regression": 6,
+    "both-fail": 5
+  },
+  "regressionSelectionDirection": {
+    "v30SelectedMoreThanV28": 6,
+    "v30SelectedSameAsV28": 0,
+    "v30SelectedLessThanV28": 0
+  },
+  "effectivePercentileCutoffSpread": 0.05584578,
+  "reservedUntouchedPhasesConsumed": false,
+  "heldoutLabelsUsedForDiagnosticComparison": true,
+  "newTuningPerformed": false,
+  "requiresTrainingOnlyEvidenceForNextChallenger": true,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
