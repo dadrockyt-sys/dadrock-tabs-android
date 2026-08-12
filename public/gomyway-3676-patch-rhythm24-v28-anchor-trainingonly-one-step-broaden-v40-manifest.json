@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 40,
+  "output": "public/gomyway-3676-patch-rhythm24-v28-anchor-trainingonly-one-step-broaden-v40.json",
+  "foldsPassed": 34,
+  "foldsTotal": 40,
+  "minimumPhasePasses": 3,
+  "v28ComparisonPasses": 34,
+  "rescuesVsV28": 0,
+  "regressionsVsV28": 0,
+  "foldsBroadenedAboveV28Q": 0,
+  "exploratoryPromising": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "outerHeldoutQSearchPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
