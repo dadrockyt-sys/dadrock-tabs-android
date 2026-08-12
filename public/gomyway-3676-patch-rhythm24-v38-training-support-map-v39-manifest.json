@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 39,
+  "output": "public/gomyway-3676-patch-rhythm24-v38-training-support-map-v39.json",
+  "supportingSchemeCountHistogram": {
+    "0": 40,
+    "1": 0,
+    "2": 0,
+    "3": 0
+  },
+  "schemeSupportCounts": {
+    "normal": 0,
+    "section": 0,
+    "shiftedWindow": 0
+  },
+  "pairSupportCounts": {
+    "normal+section": 0,
+    "normal+shiftedWindow": 0,
+    "section+shiftedWindow": 0
+  },
+  "allThreeSupportCount": 0,
+  "reservedUntouchedPhasesConsumed": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
