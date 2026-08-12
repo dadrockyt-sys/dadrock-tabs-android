@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 35,
+  "output": "public/gomyway-3676-patch-rhythm24-v34-failure-map-v35.json",
+  "statusCounts": {
+    "regression": 11,
+    "rescue": 1,
+    "bothPass": 23,
+    "bothFail": 5
+  },
+  "regressionSelectionDirectionVsV28": {
+    "more": 11
+  },
+  "v34SelectionDirectionVsV32": {
+    "same": 2,
+    "less": 38
+  },
+  "limitingSchemeCounts": {
+    "shiftedWindow": 16,
+    "section": 15,
+    "normal": 9
+  },
+  "derivedCutoffSpread": 0.36688190863114123,
+  "reservedUntouchedPhasesConsumed": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
