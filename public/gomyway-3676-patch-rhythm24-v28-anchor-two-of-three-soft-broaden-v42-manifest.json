@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 42,
+  "output": "public/gomyway-3676-patch-rhythm24-v28-anchor-two-of-three-soft-broaden-v42.json",
+  "foldsPassed": 35,
+  "foldsTotal": 40,
+  "minimumPhasePasses": 4,
+  "v28ComparisonPasses": 34,
+  "rescuesVsV28": 1,
+  "regressionsVsV28": 0,
+  "foldsBroadenedAboveV28Q": 16,
+  "exploratoryPromising": true,
+  "reservedUntouchedPhasesConsumed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
