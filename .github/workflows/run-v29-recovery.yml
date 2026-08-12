@@ -31,16 +31,29 @@ jobs:
       - name: Compile V29
         run: python -m py_compile analyzer/profile_gomyway_3676_patch_rhythm24_v28_failure_map_v29.py
 
-      - name: Run V29
-        run: python analyzer/profile_gomyway_3676_patch_rhythm24_v28_failure_map_v29.py
+      - name: Run V29 and capture diagnostic output
+        id: v29
+        shell: bash
+        run: |
+          set +e
+          python analyzer/profile_gomyway_3676_patch_rhythm24_v28_failure_map_v29.py > public/v29-recovery-run.log 2>&1
+          code=$?
+          cat public/v29-recovery-run.log
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
 
-      - name: Commit exact V29 outputs and remove temporary runner
+      - name: Commit outputs or failure log and remove temporary runner
+        shell: bash
         run: |
           rm .github/workflows/run-v29-recovery.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/gomyway-3676-patch-rhythm24-v28-failure-map-v29.json \
-                  public/gomyway-3676-patch-rhythm24-v28-failure-map-v29-manifest.json \
-                  .github/workflows/run-v29-recovery.yml
-          git commit -m "Run V29 rhythm24 failure map"
+          git add .github/workflows/run-v29-recovery.yml public/v29-recovery-run.log
+          if [ -f public/gomyway-3676-patch-rhythm24-v28-failure-map-v29.json ]; then
+            git add public/gomyway-3676-patch-rhythm24-v28-failure-map-v29.json
+          fi
+          if [ -f public/gomyway-3676-patch-rhythm24-v28-failure-map-v29-manifest.json ]; then
+            git add public/gomyway-3676-patch-rhythm24-v28-failure-map-v29-manifest.json
+          fi
+          git commit -m "Capture V29 rhythm24 diagnostic run"
           git push origin HEAD:jimmy-paige-v8-targeted-rhythm-corrections
