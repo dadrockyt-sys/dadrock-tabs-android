@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 55,
+  "bottleneckPhase": 0.09375,
+  "rowCount": 5,
+  "newReserved1over64OddPhasesReferenced": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

@@ -1,0 +1,345 @@
+{
+  "schemaVersion": 55,
+  "profileType": "v52-bottleneck-scheme-signature-diagnostic",
+  "diagnosticScope": "already-exposed-v52-bottleneck-phase-only",
+  "bottleneckPhase": 0.09375,
+  "rows": [
+    {
+      "fold": 0,
+      "status": "bothPass",
+      "outerQ": 0.225,
+      "selectionReason": "v46-strict-broad-support",
+      "aggregateInnerPasses": {
+        "tight": 11,
+        "anchor": 11,
+        "broad": 12
+      },
+      "strictBroadSupportCount": 1,
+      "trainingAnchorHoleDetected": false,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "passes": {
+            "tight": 3,
+            "anchor": 3,
+            "broad": 4
+          },
+          "lift": {
+            "tight": 10.175,
+            "anchor": 9.057500000000001,
+            "broad": 9.39
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": 1,
+          "tightMinusAnchorLift": 1.1174999999999997,
+          "broadMinusAnchorLift": 0.3324999999999996
+        },
+        {
+          "scheme": "section",
+          "passes": {
+            "tight": 4,
+            "anchor": 4,
+            "broad": 4
+          },
+          "lift": {
+            "tight": 12.195,
+            "anchor": 11.985000000000001,
+            "broad": 11.6775
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": 0,
+          "tightMinusAnchorLift": 0.20999999999999908,
+          "broadMinusAnchorLift": -0.307500000000001
+        },
+        {
+          "scheme": "shiftedWindow",
+          "passes": {
+            "tight": 4,
+            "anchor": 4,
+            "broad": 4
+          },
+          "lift": {
+            "tight": 13.0375,
+            "anchor": 12.367500000000001,
+            "broad": 11.605
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": 0,
+          "tightMinusAnchorLift": 0.6699999999999982,
+          "broadMinusAnchorLift": -0.7625000000000011
+        }
+      ]
+    },
+    {
+      "fold": 1,
+      "status": "bothFail",
+      "outerQ": 0.2,
+      "selectionReason": "anchor",
+      "aggregateInnerPasses": {
+        "tight": 10,
+        "anchor": 12,
+        "broad": 9
+      },
+      "strictBroadSupportCount": 0,
+      "trainingAnchorHoleDetected": false,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "passes": {
+            "tight": 3,
+            "anchor": 4,
+            "broad": 4
+          },
+          "lift": {
+            "tight": 11.777500000000002,
+            "anchor": 11.765,
+            "broad": 11.5525
+          },
+          "tightMinusAnchorPasses": -1,
+          "broadMinusAnchorPasses": 0,
+          "tightMinusAnchorLift": 0.012500000000001066,
+          "broadMinusAnchorLift": -0.21250000000000036
+        },
+        {
+          "scheme": "section",
+          "passes": {
+            "tight": 3,
+            "anchor": 4,
+            "broad": 2
+          },
+          "lift": {
+            "tight": 13.0475,
+            "anchor": 12.8675,
+            "broad": 10.515
+          },
+          "tightMinusAnchorPasses": -1,
+          "broadMinusAnchorPasses": -2,
+          "tightMinusAnchorLift": 0.17999999999999972,
+          "broadMinusAnchorLift": -2.352499999999999
+        },
+        {
+          "scheme": "shiftedWindow",
+          "passes": {
+            "tight": 4,
+            "anchor": 4,
+            "broad": 3
+          },
+          "lift": {
+            "tight": 14.2375,
+            "anchor": 13.165,
+            "broad": 13.009999999999998
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": -1,
+          "tightMinusAnchorLift": 1.0725000000000016,
+          "broadMinusAnchorLift": -0.15500000000000114
+        }
+      ]
+    },
+    {
+      "fold": 2,
+      "status": "bothPass",
+      "outerQ": 0.2,
+      "selectionReason": "anchor",
+      "aggregateInnerPasses": {
+        "tight": 7,
+        "anchor": 7,
+        "broad": 6
+      },
+      "strictBroadSupportCount": 0,
+      "trainingAnchorHoleDetected": false,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "passes": {
+            "tight": 3,
+            "anchor": 3,
+            "broad": 2
+          },
+          "lift": {
+            "tight": 6.8175,
+            "anchor": 7.765,
+            "broad": 5.8374999999999995
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": -1,
+          "tightMinusAnchorLift": -0.9474999999999998,
+          "broadMinusAnchorLift": -1.9275000000000002
+        },
+        {
+          "scheme": "section",
+          "passes": {
+            "tight": 2,
+            "anchor": 2,
+            "broad": 2
+          },
+          "lift": {
+            "tight": 4.4275,
+            "anchor": 3.4324999999999997,
+            "broad": 2.1775000000000007
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": 0,
+          "tightMinusAnchorLift": 0.9950000000000006,
+          "broadMinusAnchorLift": -1.254999999999999
+        },
+        {
+          "scheme": "shiftedWindow",
+          "passes": {
+            "tight": 2,
+            "anchor": 2,
+            "broad": 2
+          },
+          "lift": {
+            "tight": 5.83,
+            "anchor": 6.192500000000001,
+            "broad": 6.6775
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": 0,
+          "tightMinusAnchorLift": -0.3625000000000007,
+          "broadMinusAnchorLift": 0.48499999999999943
+        }
+      ]
+    },
+    {
+      "fold": 3,
+      "status": "bothFail",
+      "outerQ": 0.2,
+      "selectionReason": "anchor",
+      "aggregateInnerPasses": {
+        "tight": 12,
+        "anchor": 12,
+        "broad": 12
+      },
+      "strictBroadSupportCount": 0,
+      "trainingAnchorHoleDetected": false,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "passes": {
+            "tight": 4,
+            "anchor": 4,
+            "broad": 4
+          },
+          "lift": {
+            "tight": 9.5175,
+            "anchor": 8.732499999999998,
+            "broad": 9.3975
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": 0,
+          "tightMinusAnchorLift": 0.7850000000000019,
+          "broadMinusAnchorLift": 0.6650000000000027
+        },
+        {
+          "scheme": "section",
+          "passes": {
+            "tight": 4,
+            "anchor": 4,
+            "broad": 4
+          },
+          "lift": {
+            "tight": 14.4975,
+            "anchor": 12.01,
+            "broad": 10.3725
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": 0,
+          "tightMinusAnchorLift": 2.4875000000000007,
+          "broadMinusAnchorLift": -1.6374999999999993
+        },
+        {
+          "scheme": "shiftedWindow",
+          "passes": {
+            "tight": 4,
+            "anchor": 4,
+            "broad": 4
+          },
+          "lift": {
+            "tight": 10.007500000000002,
+            "anchor": 9.492500000000001,
+            "broad": 9.287500000000001
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": 0,
+          "tightMinusAnchorLift": 0.5150000000000006,
+          "broadMinusAnchorLift": -0.20500000000000007
+        }
+      ]
+    },
+    {
+      "fold": 4,
+      "status": "bothPass",
+      "outerQ": 0.2,
+      "selectionReason": "anchor",
+      "aggregateInnerPasses": {
+        "tight": 10,
+        "anchor": 10,
+        "broad": 10
+      },
+      "strictBroadSupportCount": 0,
+      "trainingAnchorHoleDetected": false,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "passes": {
+            "tight": 4,
+            "anchor": 4,
+            "broad": 4
+          },
+          "lift": {
+            "tight": 12.625,
+            "anchor": 11.427499999999998,
+            "broad": 10.0725
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": 0,
+          "tightMinusAnchorLift": 1.1975000000000016,
+          "broadMinusAnchorLift": -1.3549999999999986
+        },
+        {
+          "scheme": "section",
+          "passes": {
+            "tight": 4,
+            "anchor": 4,
+            "broad": 4
+          },
+          "lift": {
+            "tight": 8.805,
+            "anchor": 10.5725,
+            "broad": 10.425
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": 0,
+          "tightMinusAnchorLift": -1.7675,
+          "broadMinusAnchorLift": -0.14749999999999908
+        },
+        {
+          "scheme": "shiftedWindow",
+          "passes": {
+            "tight": 2,
+            "anchor": 2,
+            "broad": 2
+          },
+          "lift": {
+            "tight": 5.420000000000001,
+            "anchor": 5.42,
+            "broad": 4.7675
+          },
+          "tightMinusAnchorPasses": 0,
+          "broadMinusAnchorPasses": 0,
+          "tightMinusAnchorLift": 8.881784197001252e-16,
+          "broadMinusAnchorLift": -0.6524999999999999
+        }
+      ]
+    }
+  ],
+  "newReserved1over64OddPhasesReferenced": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "newTuningPerformed": false,
+  "heldoutLabelsUsedForDiagnosticComparison": true,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
