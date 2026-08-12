@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 62,
+  "profileType": "v61-tight-dispersion-gate-counterfactual",
+  "fixedTightLiftDeltaStdGate": 0.5,
+  "gateMeaning": "keep q=0.175 only when cross-scheme std of mean tight-minus-anchor lift is >= 0.50; otherwise revert that fold to frozen q=0.20 anchor",
+  "thresholdChosenFromExposedV61Diagnostic": true,
+  "diagnosticOnly": true,
+  "results": [
+    {
+      "source": "v56_exposed_120",
+      "foldsPassed": 104,
+      "foldsTotal": 120,
+      "v28ComparisonPasses": 101,
+      "minimumPhasePasses": 4,
+      "rescuesVsV28": 3,
+      "regressionsVsV28": 0,
+      "tightKeptByDispersionGate": 10,
+      "tightRevertedToAnchor": 15,
+      "changedOutcomeCountVsSource": 2,
+      "changedOutcomesVsSource": [
+        {
+          "phase": 0.8125,
+          "fold": 2,
+          "oldPass": false,
+          "newPass": true,
+          "v28Pass": true,
+          "tightLiftDeltaStd": 0.21233817367586158,
+          "decision": "revert-tight-to-anchor-low-dispersion"
+        },
+        {
+          "phase": 0.9375,
+          "fold": 4,
+          "oldPass": false,
+          "newPass": true,
+          "v28Pass": true,
+          "tightLiftDeltaStd": 0.060564474368688205,
+          "decision": "revert-tight-to-anchor-low-dispersion"
+        }
+      ],
+      "bottleneckPhases": [
+        {
+          "phase": 0.0625,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.1875,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.3125,
+          "passes": 4,
+          "v28Passes": 3,
+          "changedRows": []
+        },
+        {
+          "phase": 0.4375,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.6875,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.03125,
+          "passes": 4,
+          "v28Passes": 3,
+          "changedRows": []
+        },
+        {
+          "phase": 0.09375,
+          "passes": 4,
+          "v28Passes": 3,
+          "changedRows": []
+        },
+        {
+          "phase": 0.21875,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.34375,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.40625,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.46875,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.71875,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.78125,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.84375,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.90625,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.96875,
+          "passes": 4,
+          "v28Passes": 4,
+          "changedRows": []
+        }
+      ]
+    },
+    {
+      "source": "v57_exposed_160",
+      "foldsPassed": 138,
+      "foldsTotal": 160,
+      "v28ComparisonPasses": 137,
+      "minimumPhasePasses": 3,
+      "rescuesVsV28": 3,
+      "regressionsVsV28": 2,
+      "tightKeptByDispersionGate": 19,
+      "tightRevertedToAnchor": 23,
+      "changedOutcomeCountVsSource": 3,
+      "changedOutcomesVsSource": [
+        {
+          "phase": 0.796875,
+          "fold": 2,
+          "oldPass": false,
+          "newPass": true,
+          "v28Pass": true,
+          "tightLiftDeltaStd": 0.21233817367586158,
+          "decision": "revert-tight-to-anchor-low-dispersion"
+        },
+        {
+          "phase": 0.828125,
+          "fold": 2,
+          "oldPass": false,
+          "newPass": true,
+          "v28Pass": true,
+          "tightLiftDeltaStd": 0.23418594226715644,
+          "decision": "revert-tight-to-anchor-low-dispersion"
+        },
+        {
+          "phase": 0.953125,
+          "fold": 4,
+          "oldPass": false,
+          "newPass": true,
+          "v28Pass": true,
+          "tightLiftDeltaStd": 0.060564474368688205,
+          "decision": "revert-tight-to-anchor-low-dispersion"
+        }
+      ],
+      "bottleneckPhases": [
+        {
+          "phase": 0.265625,
+          "passes": 3,
+          "v28Passes": 4,
+          "changedRows": []
+        },
+        {
+          "phase": 0.328125,
+          "passes": 3,
+          "v28Passes": 3,
+          "changedRows": []
+        },
+        {
+          "phase": 0.703125,
+          "passes": 3,
+          "v28Passes": 3,
+          "changedRows": []
+        },
+        {
+          "phase": 0.984375,
+          "passes": 3,
+          "v28Passes": 3,
+          "changedRows": []
+        }
+      ]
+    }
+  ],
+  "combined": {
+    "foldsPassed": 242,
+    "foldsTotal": 280,
+    "v28ComparisonPasses": 238,
+    "rescuesVsV28": 6,
+    "regressionsVsV28": 2,
+    "minimumPhasePassesAcrossSources": 3,
+    "tightKeptByDispersionGate": 29,
+    "tightRevertedToAnchor": 38
+  },
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
