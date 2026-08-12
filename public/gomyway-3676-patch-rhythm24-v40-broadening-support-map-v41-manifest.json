@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 41,
+  "output": "public/gomyway-3676-patch-rhythm24-v40-broadening-support-map-v41.json",
+  "strictSupportHistogram": {
+    "0": 22,
+    "1": 15,
+    "2": 3,
+    "3": 0
+  },
+  "softSupportHistogram": {
+    "0": 11,
+    "1": 13,
+    "2": 15,
+    "3": 1
+  },
+  "reservedUntouchedPhasesConsumed": false,
+  "newTuningPerformed": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
