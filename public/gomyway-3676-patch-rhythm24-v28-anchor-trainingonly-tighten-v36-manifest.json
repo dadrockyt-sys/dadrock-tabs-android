@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 36,
+  "output": "public/gomyway-3676-patch-rhythm24-v28-anchor-trainingonly-tighten-v36.json",
+  "foldsPassed": 34,
+  "foldsTotal": 40,
+  "minimumPhasePasses": 3,
+  "v28ComparisonPasses": 34,
+  "rescuesVsV28": 3,
+  "regressionsVsV28": 3,
+  "foldsTightenedBeyondV28Floor": 0,
+  "exploratoryPromising": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "qSearchPerformed": false,
+  "v29DiagnosticQValuesUsed": false,
+  "outerHeldoutLabelsUsedToChooseCalibrationParameters": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
