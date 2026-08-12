@@ -42,13 +42,12 @@ jobs:
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit 0
 
-      - name: Commit outputs or failure log and remove temporary runner
+      - name: Commit exact outputs or failure log
         shell: bash
         run: |
-          rm .github/workflows/run-v29-recovery.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/workflows/run-v29-recovery.yml public/v29-recovery-run.log
+          git add public/v29-recovery-run.log
           if [ -f public/gomyway-3676-patch-rhythm24-v28-failure-map-v29.json ]; then
             git add public/gomyway-3676-patch-rhythm24-v28-failure-map-v29.json
           fi
