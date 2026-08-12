@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 51,
+  "diagnosticFoldCount": 2,
+  "passOnBothSidesOfAnchorCount": 2,
+  "anchorIsolatedFailureHoleCount": 2,
+  "v50DiagnosticQValuesRemainTaintedForSelection": true,
+  "newTuningPerformed": false,
+  "newReserved1over64OddPhasesReferenced": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
