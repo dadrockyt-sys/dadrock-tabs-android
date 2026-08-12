@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 60,
+  "changedOutcomeCount": 8,
+  "changedOutcomesByBranchStatus": {
+    "broad": {
+      "rescue": 2,
+      "regression": 2
+    },
+    "tight": {
+      "rescue": 1,
+      "regression": 3
+    }
+  },
+  "changedOutcomesByStrictSupportStatus": {
+    "1": {
+      "rescue": 2,
+      "regression": 2
+    },
+    "0": {
+      "rescue": 1,
+      "regression": 3
+    }
+  },
+  "changedOutcomesByUnanimousEscapeStatus": {
+    "False": {
+      "rescue": 2,
+      "regression": 2
+    },
+    "True": {
+      "rescue": 1,
+      "regression": 3
+    }
+  },
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "protected949CandidateHashUnchanged": true,
+  "validatedNewChampion": false,
+  "productionPromotionAllowed": false
+}

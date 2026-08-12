@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 60,
+  "profileType": "v58-changed-outcome-selector-signature",
+  "changedOutcomeCount": 8,
+  "changedOutcomesByBranchStatus": {
+    "broad": {
+      "rescue": 2,
+      "regression": 2
+    },
+    "tight": {
+      "rescue": 1,
+      "regression": 3
+    }
+  },
+  "changedOutcomesByStrictSupportStatus": {
+    "1": {
+      "rescue": 2,
+      "regression": 2
+    },
+    "0": {
+      "rescue": 1,
+      "regression": 3
+    }
+  },
+  "changedOutcomesByUnanimousEscapeStatus": {
+    "False": {
+      "rescue": 2,
+      "regression": 2
+    },
+    "True": {
+      "rescue": 1,
+      "regression": 3
+    }
+  },
+  "changedOutcomeRows": [
+    {
+      "phase": 0.046875,
+      "fold": 3,
+      "status": "rescue",
+      "branch": "broad",
+      "reason": "v46-strict-broad-support",
+      "strictSupportCount": 1,
+      "unanimousTightEscape": false,
+      "broadPassDeltasByScheme": [
+        0,
+        0,
+        1
+      ],
+      "tightPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "broadLiftDeltasByScheme": [
+        -0.9425,
+        -0.775,
+        -1.19
+      ],
+      "tightLiftDeltasByScheme": [
+        0.5375,
+        0.0725,
+        -0.9625
+      ],
+      "broadMeanLiftDelta": -0.969167,
+      "tightMeanLiftDelta": -0.1175,
+      "heldoutPrecisionLift": 6.31,
+      "v28HeldoutPrecisionLift": 4.88
+    },
+    {
+      "phase": 0.109375,
+      "fold": 3,
+      "status": "rescue",
+      "branch": "tight",
+      "reason": "unanimous-tight-nonworse-plus-lift",
+      "strictSupportCount": 0,
+      "unanimousTightEscape": true,
+      "broadPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "tightPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "broadLiftDeltasByScheme": [
+        0.665,
+        -1.6375,
+        -0.205
+      ],
+      "tightLiftDeltasByScheme": [
+        0.785,
+        2.4875,
+        0.515
+      ],
+      "broadMeanLiftDelta": -0.3925,
+      "tightMeanLiftDelta": 1.2625,
+      "heldoutPrecisionLift": 7.11,
+      "v28HeldoutPrecisionLift": 4.88
+    },
+    {
+      "phase": 0.171875,
+      "fold": 3,
+      "status": "regression",
+      "branch": "broad",
+      "reason": "v46-strict-broad-support",
+      "strictSupportCount": 1,
+      "unanimousTightEscape": false,
+      "broadPassDeltasByScheme": [
+        0,
+        0,
+        1
+      ],
+      "tightPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "broadLiftDeltasByScheme": [
+        -0.5975,
+        -2.18,
+        0.45
+      ],
+      "tightLiftDeltasByScheme": [
+        -0.2975,
+        -0.9925,
+        1.21
+      ],
+      "broadMeanLiftDelta": -0.775833,
+      "tightMeanLiftDelta": -0.026667,
+      "heldoutPrecisionLift": 3.44,
+      "v28HeldoutPrecisionLift": 5.0
+    },
+    {
+      "phase": 0.265625,
+      "fold": 3,
+      "status": "regression",
+      "branch": "broad",
+      "reason": "v46-strict-broad-support",
+      "strictSupportCount": 1,
+      "unanimousTightEscape": false,
+      "broadPassDeltasByScheme": [
+        1,
+        0,
+        0
+      ],
+      "tightPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "broadLiftDeltasByScheme": [
+        0.915,
+        0.0275,
+        -2.035
+      ],
+      "tightLiftDeltasByScheme": [
+        1.315,
+        2.025,
+        -1.02
+      ],
+      "broadMeanLiftDelta": -0.364167,
+      "tightMeanLiftDelta": 0.773333,
+      "heldoutPrecisionLift": 4.36,
+      "v28HeldoutPrecisionLift": 5.87
+    },
+    {
+      "phase": 0.296875,
+      "fold": 3,
+      "status": "rescue",
+      "branch": "broad",
+      "reason": "v46-strict-broad-support",
+      "strictSupportCount": 1,
+      "unanimousTightEscape": false,
+      "broadPassDeltasByScheme": [
+        1,
+        0,
+        0
+      ],
+      "tightPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "broadLiftDeltasByScheme": [
+        0.825,
+        -1.1325,
+        0.03
+      ],
+      "tightLiftDeltasByScheme": [
+        0.6425,
+        -1.505,
+        0.2725
+      ],
+      "broadMeanLiftDelta": -0.0925,
+      "tightMeanLiftDelta": -0.196667,
+      "heldoutPrecisionLift": 5.02,
+      "v28HeldoutPrecisionLift": 4.89
+    },
+    {
+      "phase": 0.796875,
+      "fold": 2,
+      "status": "regression",
+      "branch": "tight",
+      "reason": "unanimous-tight-nonworse-plus-lift",
+      "strictSupportCount": 0,
+      "unanimousTightEscape": true,
+      "broadPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "tightPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "broadLiftDeltasByScheme": [
+        -0.55,
+        -1.3575,
+        -2.1575
+      ],
+      "tightLiftDeltasByScheme": [
+        1.45,
+        1.315,
+        0.9475
+      ],
+      "broadMeanLiftDelta": -1.355,
+      "tightMeanLiftDelta": 1.2375,
+      "heldoutPrecisionLift": 3.81,
+      "v28HeldoutPrecisionLift": 5.51
+    },
+    {
+      "phase": 0.828125,
+      "fold": 2,
+      "status": "regression",
+      "branch": "tight",
+      "reason": "unanimous-tight-nonworse-plus-lift",
+      "strictSupportCount": 0,
+      "unanimousTightEscape": true,
+      "broadPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "tightPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "broadLiftDeltasByScheme": [
+        -1.915,
+        -0.425,
+        -0.1125
+      ],
+      "tightLiftDeltasByScheme": [
+        1.9075,
+        2.335,
+        2.4525
+      ],
+      "broadMeanLiftDelta": -0.8175,
+      "tightMeanLiftDelta": 2.231667,
+      "heldoutPrecisionLift": 4.38,
+      "v28HeldoutPrecisionLift": 5.94
+    },
+    {
+      "phase": 0.953125,
+      "fold": 4,
+      "status": "regression",
+      "branch": "tight",
+      "reason": "unanimous-tight-nonworse-plus-lift",
+      "strictSupportCount": 0,
+      "unanimousTightEscape": true,
+      "broadPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "tightPassDeltasByScheme": [
+        0,
+        0,
+        0
+      ],
+      "broadLiftDeltasByScheme": [
+        0.12,
+        -0.175,
+        -0.965
+      ],
+      "tightLiftDeltasByScheme": [
+        0.55,
+        0.5775,
+        0.69
+      ],
+      "broadMeanLiftDelta": -0.34,
+      "tightMeanLiftDelta": 0.605833,
+      "heldoutPrecisionLift": 3.91,
+      "v28HeldoutPrecisionLift": 6.85
+    }
+  ],
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "heldoutLabelsDiagnosticOnly": true,
+  "protected949CandidateHashUnchanged": true,
+  "validatedNewChampion": false,
+  "productionPromotionAllowed": false
+}
