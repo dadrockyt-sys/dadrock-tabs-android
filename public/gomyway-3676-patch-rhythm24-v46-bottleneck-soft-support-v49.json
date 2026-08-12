@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 49,
+  "profileType": "v46-bottleneck-soft-support-diagnostic",
+  "diagnosticScope": "already-exposed-v46-bottleneck-phase-only",
+  "bottleneckPhase": 0.09375,
+  "softSupportHistogram": {
+    "0": 2,
+    "1": 3,
+    "2": 0,
+    "3": 0
+  },
+  "failureSoftSupportHistogram": {
+    "0": 1,
+    "1": 1,
+    "2": 0,
+    "3": 0
+  },
+  "outcomesBySoftSupport": {
+    "0": {
+      "bothPass": 1,
+      "bothFail": 1,
+      "rescue": 0,
+      "regression": 0
+    },
+    "1": {
+      "bothPass": 2,
+      "bothFail": 1,
+      "rescue": 0,
+      "regression": 0
+    },
+    "2": {
+      "bothPass": 0,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    },
+    "3": {
+      "bothPass": 0,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    }
+  },
+  "trainingLiftDeltaSummaryBySoftSupport": {
+    "0": {
+      "count": 2,
+      "mean": -0.8124999999999997,
+      "min": -0.9066666666666668,
+      "max": -0.7183333333333325
+    },
+    "1": {
+      "count": 3,
+      "mean": -0.5124999999999998,
+      "min": -0.8991666666666666,
+      "max": -0.24583333333333415
+    },
+    "2": {
+      "count": 0,
+      "mean": null,
+      "min": null,
+      "max": null
+    },
+    "3": {
+      "count": 0,
+      "mean": null,
+      "min": null,
+      "max": null
+    }
+  },
+  "rows": [
+    {
+      "phase": 0.09375,
+      "fold": 0,
+      "status": "bothPass",
+      "strictSupportCount": 1,
+      "softSupportCount": 1,
+      "outerQ": 0.225,
+      "passed": true,
+      "v28Passed": true,
+      "heldoutPrecisionLift": 7.21,
+      "v28Lift": 9.74,
+      "meanTrainingLiftDeltaBroadMinusAnchor": -0.24583333333333415,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "strict": true,
+          "tiedLift": false,
+          "softSupportsBroad": true,
+          "anchorPasses": 3,
+          "broadPasses": 4,
+          "meanAnchorLift": 9.057500000000001,
+          "meanBroadLift": 9.39,
+          "meanLiftDelta": 0.3324999999999996
+        },
+        {
+          "scheme": "section",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanAnchorLift": 11.985000000000001,
+          "meanBroadLift": 11.6775,
+          "meanLiftDelta": -0.307500000000001
+        },
+        {
+          "scheme": "shiftedWindow",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanAnchorLift": 12.367500000000001,
+          "meanBroadLift": 11.605,
+          "meanLiftDelta": -0.7625000000000011
+        }
+      ]
+    },
+    {
+      "phase": 0.09375,
+      "fold": 1,
+      "status": "bothFail",
+      "strictSupportCount": 0,
+      "softSupportCount": 0,
+      "outerQ": 0.2,
+      "passed": false,
+      "v28Passed": false,
+      "heldoutPrecisionLift": 4.85,
+      "v28Lift": 4.85,
+      "meanTrainingLiftDeltaBroadMinusAnchor": -0.9066666666666668,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanAnchorLift": 11.765,
+          "meanBroadLift": 11.5525,
+          "meanLiftDelta": -0.21250000000000036
+        },
+        {
+          "scheme": "section",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 4,
+          "broadPasses": 2,
+          "meanAnchorLift": 12.8675,
+          "meanBroadLift": 10.515,
+          "meanLiftDelta": -2.352499999999999
+        },
+        {
+          "scheme": "shiftedWindow",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 4,
+          "broadPasses": 3,
+          "meanAnchorLift": 13.165,
+          "meanBroadLift": 13.009999999999998,
+          "meanLiftDelta": -0.15500000000000114
+        }
+      ]
+    },
+    {
+      "phase": 0.09375,
+      "fold": 2,
+      "status": "bothPass",
+      "strictSupportCount": 0,
+      "softSupportCount": 1,
+      "outerQ": 0.2,
+      "passed": true,
+      "v28Passed": true,
+      "heldoutPrecisionLift": 19.38,
+      "v28Lift": 19.38,
+      "meanTrainingLiftDeltaBroadMinusAnchor": -0.8991666666666666,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 3,
+          "broadPasses": 2,
+          "meanAnchorLift": 7.765,
+          "meanBroadLift": 5.8374999999999995,
+          "meanLiftDelta": -1.9275000000000002
+        },
+        {
+          "scheme": "section",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 2,
+          "broadPasses": 2,
+          "meanAnchorLift": 3.4324999999999997,
+          "meanBroadLift": 2.1775000000000007,
+          "meanLiftDelta": -1.254999999999999
+        },
+        {
+          "scheme": "shiftedWindow",
+          "strict": false,
+          "tiedLift": true,
+          "softSupportsBroad": true,
+          "anchorPasses": 2,
+          "broadPasses": 2,
+          "meanAnchorLift": 6.192500000000001,
+          "meanBroadLift": 6.6775,
+          "meanLiftDelta": 0.48499999999999943
+        }
+      ]
+    },
+    {
+      "phase": 0.09375,
+      "fold": 3,
+      "status": "bothFail",
+      "strictSupportCount": 0,
+      "softSupportCount": 1,
+      "outerQ": 0.2,
+      "passed": false,
+      "v28Passed": false,
+      "heldoutPrecisionLift": 4.88,
+      "v28Lift": 4.88,
+      "meanTrainingLiftDeltaBroadMinusAnchor": -0.3924999999999989,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "strict": false,
+          "tiedLift": true,
+          "softSupportsBroad": true,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanAnchorLift": 8.732499999999998,
+          "meanBroadLift": 9.3975,
+          "meanLiftDelta": 0.6650000000000027
+        },
+        {
+          "scheme": "section",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanAnchorLift": 12.01,
+          "meanBroadLift": 10.3725,
+          "meanLiftDelta": -1.6374999999999993
+        },
+        {
+          "scheme": "shiftedWindow",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanAnchorLift": 9.492500000000001,
+          "meanBroadLift": 9.287500000000001,
+          "meanLiftDelta": -0.20500000000000007
+        }
+      ]
+    },
+    {
+      "phase": 0.09375,
+      "fold": 4,
+      "status": "bothPass",
+      "strictSupportCount": 0,
+      "softSupportCount": 0,
+      "outerQ": 0.2,
+      "passed": true,
+      "v28Passed": true,
+      "heldoutPrecisionLift": 8.43,
+      "v28Lift": 8.43,
+      "meanTrainingLiftDeltaBroadMinusAnchor": -0.7183333333333325,
+      "schemes": [
+        {
+          "scheme": "normal",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanAnchorLift": 11.427499999999998,
+          "meanBroadLift": 10.0725,
+          "meanLiftDelta": -1.3549999999999986
+        },
+        {
+          "scheme": "section",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 4,
+          "broadPasses": 4,
+          "meanAnchorLift": 10.5725,
+          "meanBroadLift": 10.425,
+          "meanLiftDelta": -0.14749999999999908
+        },
+        {
+          "scheme": "shiftedWindow",
+          "strict": false,
+          "tiedLift": false,
+          "softSupportsBroad": false,
+          "anchorPasses": 2,
+          "broadPasses": 2,
+          "meanAnchorLift": 5.42,
+          "meanBroadLift": 4.7675,
+          "meanLiftDelta": -0.6524999999999999
+        }
+      ]
+    }
+  ],
+  "newReserved1over64OddPhasesReferenced": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "newTuningPerformed": false,
+  "heldoutLabelsUsedForDiagnosticComparison": true,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

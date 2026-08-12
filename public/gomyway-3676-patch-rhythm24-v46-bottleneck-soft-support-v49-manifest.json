@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 49,
+  "bottleneckPhase": 0.09375,
+  "softSupportHistogram": {
+    "0": 2,
+    "1": 3,
+    "2": 0,
+    "3": 0
+  },
+  "failureSoftSupportHistogram": {
+    "0": 1,
+    "1": 1,
+    "2": 0,
+    "3": 0
+  },
+  "outcomesBySoftSupport": {
+    "0": {
+      "bothPass": 1,
+      "bothFail": 1,
+      "rescue": 0,
+      "regression": 0
+    },
+    "1": {
+      "bothPass": 2,
+      "bothFail": 1,
+      "rescue": 0,
+      "regression": 0
+    },
+    "2": {
+      "bothPass": 0,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    },
+    "3": {
+      "bothPass": 0,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    }
+  },
+  "newReserved1over64OddPhasesReferenced": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
