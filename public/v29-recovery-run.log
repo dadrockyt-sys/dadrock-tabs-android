@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/profile_gomyway_3676_patch_rhythm24_v28_failure_map_v29.py", line 10, in <module>
+    import benchmark_gomyway_3676_patch_pairwise_rank_section_calibrated_nested_cv_v5 as v5
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/benchmark_gomyway_3676_patch_pairwise_rank_section_calibrated_nested_cv_v5.py", line 10, in <module>
+    import benchmark_gomyway_3676_patch_pairwise_rank_stratified_nested_cv_v2 as v2
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/benchmark_gomyway_3676_patch_pairwise_rank_stratified_nested_cv_v2.py", line 10, in <module>
+    import benchmark_gomyway_3676_patch_pairwise_rank_nested_cv_v1 as v1
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/benchmark_gomyway_3676_patch_pairwise_rank_nested_cv_v1.py", line 10, in <module>
+    import benchmark_gomyway_3676_patch_ridge_recurrent_feature_gate_nested_cv_v1 as recurrent
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/benchmark_gomyway_3676_patch_ridge_recurrent_feature_gate_nested_cv_v1.py", line 11, in <module>
+    import benchmark_gomyway_3676_onset_slot_spectro_temporal_patch_ridge_nested_cv_v1 as ridge
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/benchmark_gomyway_3676_onset_slot_spectro_temporal_patch_ridge_nested_cv_v1.py", line 10, in <module>
+    import profile_gomyway_3676_onset_slot_spectro_temporal_patch_stability_v1 as patch
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/profile_gomyway_3676_onset_slot_spectro_temporal_patch_stability_v1.py", line 11, in <module>
+    import profile_gomyway_3676_onset_slot_richer_audio_stability_v1 as richer
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/profile_gomyway_3676_onset_slot_richer_audio_stability_v1.py", line 11, in <module>
+    import profile_gomyway_3676_onset_slot_stability_v1 as onset
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/profile_gomyway_3676_onset_slot_stability_v1.py", line 11, in <module>
+    import profile_gomyway_3676_pitch_register_interval_recovery_v1 as prof
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/profile_gomyway_3676_pitch_register_interval_recovery_v1.py", line 9, in <module>
+    import profile_gomyway_3676_repeated_phrase_template_recovery_v1 as phrase
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/profile_gomyway_3676_repeated_phrase_template_recovery_v1.py", line 9, in <module>
+    import profile_gomyway_3161_wide_recall_contextual_pattern_recovery_v1 as patt
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/profile_gomyway_3161_wide_recall_contextual_pattern_recovery_v1.py", line 9, in <module>
+    import profile_gomyway_3161_wide_recall_candidate_selection_v1 as sel
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/profile_gomyway_3161_wide_recall_candidate_selection_v1.py", line 10, in <module>
+    from basic_pitch.inference import predict
+ModuleNotFoundError: No module named 'basic_pitch'
