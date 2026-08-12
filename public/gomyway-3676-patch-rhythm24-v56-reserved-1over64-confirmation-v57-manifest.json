@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 57,
+  "output": "public/gomyway-3676-patch-rhythm24-v56-reserved-1over64-confirmation-v57.json",
+  "foldsPassed": 135,
+  "foldsTotal": 160,
+  "minimumPhasePasses": 3,
+  "v28ComparisonPasses": 137,
+  "rescuesVsV28": 3,
+  "regressionsVsV28": 5,
+  "chosenQCounts": {
+    "tight": 42,
+    "anchor": 65,
+    "broad": 53
+  },
+  "unanimousTightEscapeFolds": 42,
+  "reservedUntouchedPhasesConsumed": true,
+  "architectureFrozenBeforeConfirmation": true,
+  "parameterSearchPerformed": false,
+  "confirmationSuccess": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
