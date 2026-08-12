@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 53,
+  "qCounts": {
+    "0.175": 10,
+    "0.200": 75,
+    "0.225": 35
+  },
+  "reasonCounts": {
+    "training-anchor-hole-tie-break-lift": 10,
+    "anchor": 75,
+    "v46-strict-broad-support": 30,
+    "training-anchor-hole-tight": 1,
+    "training-anchor-hole-broad": 4
+  },
+  "outcomesByReason": {
+    "training-anchor-hole-tie-break-lift": {
+      "bothPass": 10,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    },
+    "anchor": {
+      "bothPass": 62,
+      "bothFail": 13,
+      "rescue": 0,
+      "regression": 0
+    },
+    "v46-strict-broad-support": {
+      "bothPass": 24,
+      "bothFail": 4,
+      "rescue": 2,
+      "regression": 0
+    },
+    "training-anchor-hole-tight": {
+      "bothPass": 1,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    },
+    "training-anchor-hole-broad": {
+      "bothPass": 4,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    }
+  },
+  "outcomesByQ": {
+    "0.175": {
+      "bothPass": 10,
+      "bothFail": 0,
+      "rescue": 0,
+      "regression": 0
+    },
+    "0.200": {
+      "bothPass": 62,
+      "bothFail": 13,
+      "rescue": 0,
+      "regression": 0
+    },
+    "0.225": {
+      "bothPass": 29,
+      "bothFail": 4,
+      "rescue": 2,
+      "regression": 0
+    }
+  },
+  "changedFromV46": {},
+  "minimumPhasePasses": 3,
+  "bottleneckPhases": [
+    {
+      "phase": 0.09375,
+      "passes": 3,
+      "rescues": 0,
+      "regressions": 0,
+      "qCounts": {
+        "0.225": 1,
+        "0.200": 4
+      },
+      "reasonCounts": {
+        "v46-strict-broad-support": 1,
+        "anchor": 4
+      }
+    }
+  ],
+  "newReserved1over64OddPhasesReferenced": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
