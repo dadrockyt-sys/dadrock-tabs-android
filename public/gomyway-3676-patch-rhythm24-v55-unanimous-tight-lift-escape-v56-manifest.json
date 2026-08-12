@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 56,
+  "foldsPassed": 102,
+  "foldsTotal": 120,
+  "minimumPhasePasses": 4,
+  "v28ComparisonPasses": 101,
+  "rescuesVsV28": 3,
+  "regressionsVsV28": 2,
+  "chosenQCounts": {
+    "tight": 25,
+    "anchor": 50,
+    "broad": 45
+  },
+  "unanimousTightEscapeFolds": 25,
+  "exploratoryPromising": true,
+  "architectureTaintedByV55Diagnostic": true,
+  "requiresFreshUntouchedConfirmation": true,
+  "newReserved1over64OddPhasesReferenced": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
