@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 63,
+  "broadRows": 98,
+  "statusCounts": {
+    "bothPass": 85,
+    "rescue": 4,
+    "regression": 2,
+    "bothFail": 7
+  },
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "protected949CandidateHashUnchanged": true,
+  "validatedNewChampion": false,
+  "productionPromotionAllowed": false
+}

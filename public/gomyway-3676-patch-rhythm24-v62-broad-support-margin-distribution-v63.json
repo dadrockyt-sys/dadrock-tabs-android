@@ -1,0 +1,426 @@
+{
+  "schemaVersion": 63,
+  "profileType": "v62-broad-support-margin-distribution",
+  "broadQ": 0.225,
+  "broadRows": 98,
+  "statusCounts": {
+    "bothPass": 85,
+    "rescue": 4,
+    "regression": 2,
+    "bothFail": 7
+  },
+  "distributionByStatus": {
+    "bothPass": {
+      "broadMeanLiftDelta": {
+        "count": 85,
+        "min": -1.0408333333333328,
+        "q25": -0.399166666666666,
+        "median": -0.14083333333333314,
+        "q75": 0.19916666666666583,
+        "max": 1.2816666666666674,
+        "mean": -0.05233333333333344
+      },
+      "broadMinLiftDelta": {
+        "count": 85,
+        "min": -1.9949999999999992,
+        "q25": -1.1600000000000001,
+        "median": -0.7849999999999984,
+        "q75": -0.40750000000000064,
+        "max": 0.5224999999999991,
+        "mean": -0.8122352941176468
+      },
+      "broadMaxLiftDelta": {
+        "count": 85,
+        "min": -0.6225000000000005,
+        "q25": 0.27499999999999947,
+        "median": 0.6950000000000003,
+        "q75": 1.390000000000001,
+        "max": 2.7174999999999976,
+        "mean": 0.8015882352941175
+      },
+      "broadLiftDeltaStd": {
+        "count": 85,
+        "min": 0.13272779161376413,
+        "q25": 0.43841095637160515,
+        "median": 0.6701813601970404,
+        "q75": 0.8987174503455218,
+        "max": 1.5329197811873767,
+        "mean": 0.6868807924249101
+      },
+      "strictBroadSupportCount": {
+        "count": 85,
+        "min": 1.0,
+        "q25": 1.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "max": 2.0,
+        "mean": 1.2352941176470589
+      },
+      "nonnegativeBroadPassDeltaSchemeCount": {
+        "count": 85,
+        "min": 2.0,
+        "q25": 3.0,
+        "median": 3.0,
+        "q75": 3.0,
+        "max": 3.0,
+        "mean": 2.823529411764706
+      },
+      "positiveBroadLiftDeltaSchemeCount": {
+        "count": 85,
+        "min": 0.0,
+        "q25": 1.0,
+        "median": 1.0,
+        "q75": 2.0,
+        "max": 3.0,
+        "mean": 1.3058823529411765
+      }
+    },
+    "rescue": {
+      "broadMeanLiftDelta": {
+        "count": 4,
+        "min": -0.9691666666666663,
+        "q25": -0.9691666666666663,
+        "median": -0.5308333333333325,
+        "q75": -0.09249999999999876,
+        "max": -0.09249999999999876,
+        "mean": -0.5308333333333325
+      },
+      "broadMinLiftDelta": {
+        "count": 4,
+        "min": -1.1899999999999995,
+        "q25": -1.1899999999999995,
+        "median": -1.1612499999999981,
+        "q75": -1.1324999999999967,
+        "max": -1.1324999999999967,
+        "mean": -1.1612499999999981
+      },
+      "broadMaxLiftDelta": {
+        "count": 4,
+        "min": -0.7750000000000004,
+        "q25": -0.7750000000000004,
+        "median": 0.025000000000000355,
+        "q75": 0.8250000000000011,
+        "max": 0.8250000000000011,
+        "mean": 0.025000000000000355
+      },
+      "broadLiftDeltaStd": {
+        "count": 4,
+        "min": 0.17046912395569505,
+        "q25": 0.17046912395569505,
+        "median": 0.4871479543896949,
+        "q75": 0.8038267848236947,
+        "max": 0.8038267848236947,
+        "mean": 0.48714795438969494
+      },
+      "strictBroadSupportCount": {
+        "count": 4,
+        "min": 1.0,
+        "q25": 1.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "max": 1.0,
+        "mean": 1.0
+      },
+      "nonnegativeBroadPassDeltaSchemeCount": {
+        "count": 4,
+        "min": 3.0,
+        "q25": 3.0,
+        "median": 3.0,
+        "q75": 3.0,
+        "max": 3.0,
+        "mean": 3.0
+      },
+      "positiveBroadLiftDeltaSchemeCount": {
+        "count": 4,
+        "min": 0.0,
+        "q25": 0.0,
+        "median": 1.0,
+        "q75": 2.0,
+        "max": 2.0,
+        "mean": 1.0
+      }
+    },
+    "regression": {
+      "broadMeanLiftDelta": {
+        "count": 2,
+        "min": -0.7758333333333335,
+        "q25": -0.6729166666666667,
+        "median": -0.57,
+        "q75": -0.46708333333333324,
+        "max": -0.36416666666666647,
+        "mean": -0.57
+      },
+      "broadMinLiftDelta": {
+        "count": 2,
+        "min": -2.1800000000000015,
+        "q25": -2.143750000000001,
+        "median": -2.107500000000001,
+        "q75": -2.0712500000000005,
+        "max": -2.035,
+        "mean": -2.107500000000001
+      },
+      "broadMaxLiftDelta": {
+        "count": 2,
+        "min": 0.4499999999999993,
+        "q25": 0.5662499999999993,
+        "median": 0.6824999999999992,
+        "q75": 0.7987499999999992,
+        "max": 0.9149999999999991,
+        "mean": 0.6824999999999992
+      },
+      "broadLiftDeltaStd": {
+        "count": 2,
+        "min": 1.0810726412020408,
+        "q25": 1.1197460262984265,
+        "median": 1.1584194113948119,
+        "q75": 1.1970927964911975,
+        "max": 1.2357661815875831,
+        "mean": 1.1584194113948119
+      },
+      "strictBroadSupportCount": {
+        "count": 2,
+        "min": 1.0,
+        "q25": 1.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "max": 1.0,
+        "mean": 1.0
+      },
+      "nonnegativeBroadPassDeltaSchemeCount": {
+        "count": 2,
+        "min": 3.0,
+        "q25": 3.0,
+        "median": 3.0,
+        "q75": 3.0,
+        "max": 3.0,
+        "mean": 3.0
+      },
+      "positiveBroadLiftDeltaSchemeCount": {
+        "count": 2,
+        "min": 1.0,
+        "q25": 1.25,
+        "median": 1.5,
+        "q75": 1.75,
+        "max": 2.0,
+        "mean": 1.5
+      }
+    },
+    "bothFail": {
+      "broadMeanLiftDelta": {
+        "count": 7,
+        "min": -0.7858333333333339,
+        "q25": -0.731666666666668,
+        "median": -0.677500000000002,
+        "q75": 0.027916666666666146,
+        "max": 0.07999999999999947,
+        "mean": -0.39869047619047715
+      },
+      "broadMinLiftDelta": {
+        "count": 7,
+        "min": -1.9175000000000004,
+        "q25": -1.8625000000000016,
+        "median": -1.8075000000000028,
+        "q75": -0.5999999999999996,
+        "max": -0.48499999999999943,
+        "mean": -1.3050000000000008
+      },
+      "broadMaxLiftDelta": {
+        "count": 7,
+        "min": -0.14750000000000085,
+        "q25": 0.24374999999999947,
+        "median": 0.6349999999999998,
+        "q75": 0.9537499999999985,
+        "max": 1.067499999999999,
+        "mean": 0.5642857142857134
+      },
+      "broadLiftDeltaStd": {
+        "count": 7,
+        "min": 0.6115088352228072,
+        "q25": 0.7146356880723673,
+        "median": 0.8023957183889309,
+        "q75": 0.903928942047582,
+        "max": 1.0054621657062333,
+        "mean": 0.8080708542225529
+      },
+      "strictBroadSupportCount": {
+        "count": 7,
+        "min": 1.0,
+        "q25": 1.0,
+        "median": 1.0,
+        "q75": 1.0,
+        "max": 1.0,
+        "mean": 1.0
+      },
+      "nonnegativeBroadPassDeltaSchemeCount": {
+        "count": 7,
+        "min": 3.0,
+        "q25": 3.0,
+        "median": 3.0,
+        "q75": 3.0,
+        "max": 3.0,
+        "mean": 3.0
+      },
+      "positiveBroadLiftDeltaSchemeCount": {
+        "count": 7,
+        "min": 0.0,
+        "q25": 0.5,
+        "median": 1.0,
+        "q75": 1.0,
+        "max": 1.0,
+        "mean": 0.7142857142857143
+      }
+    }
+  },
+  "changedRows": [
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.3125,
+      "fold": 3,
+      "status": "rescue",
+      "strictBroadSupportCount": 1,
+      "broadPassDeltasByScheme": [
+        1,
+        0,
+        0
+      ],
+      "broadLiftDeltasByScheme": [
+        0.8250000000000011,
+        -1.1324999999999967,
+        0.02999999999999936
+      ],
+      "broadMeanLiftDelta": -0.09249999999999876,
+      "broadMinLiftDelta": -1.1324999999999967,
+      "broadMaxLiftDelta": 0.8250000000000011,
+      "broadLiftDeltaStd": 0.8038267848236947,
+      "positiveBroadLiftDeltaSchemeCount": 2,
+      "heldoutPrecisionLift": 5.02,
+      "v28HeldoutPrecisionLift": 4.89
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.03125,
+      "fold": 3,
+      "status": "rescue",
+      "strictBroadSupportCount": 1,
+      "broadPassDeltasByScheme": [
+        0,
+        0,
+        1
+      ],
+      "broadLiftDeltasByScheme": [
+        -0.942499999999999,
+        -0.7750000000000004,
+        -1.1899999999999995
+      ],
+      "broadMeanLiftDelta": -0.9691666666666663,
+      "broadMinLiftDelta": -1.1899999999999995,
+      "broadMaxLiftDelta": -0.7750000000000004,
+      "broadLiftDeltaStd": 0.17046912395569505,
+      "positiveBroadLiftDeltaSchemeCount": 0,
+      "heldoutPrecisionLift": 6.31,
+      "v28HeldoutPrecisionLift": 4.88
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.046875,
+      "fold": 3,
+      "status": "rescue",
+      "strictBroadSupportCount": 1,
+      "broadPassDeltasByScheme": [
+        0,
+        0,
+        1
+      ],
+      "broadLiftDeltasByScheme": [
+        -0.942499999999999,
+        -0.7750000000000004,
+        -1.1899999999999995
+      ],
+      "broadMeanLiftDelta": -0.9691666666666663,
+      "broadMinLiftDelta": -1.1899999999999995,
+      "broadMaxLiftDelta": -0.7750000000000004,
+      "broadLiftDeltaStd": 0.17046912395569505,
+      "positiveBroadLiftDeltaSchemeCount": 0,
+      "heldoutPrecisionLift": 6.31,
+      "v28HeldoutPrecisionLift": 4.88
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.171875,
+      "fold": 3,
+      "status": "regression",
+      "strictBroadSupportCount": 1,
+      "broadPassDeltasByScheme": [
+        0,
+        0,
+        1
+      ],
+      "broadLiftDeltasByScheme": [
+        -0.5974999999999984,
+        -2.1800000000000015,
+        0.4499999999999993
+      ],
+      "broadMeanLiftDelta": -0.7758333333333335,
+      "broadMinLiftDelta": -2.1800000000000015,
+      "broadMaxLiftDelta": 0.4499999999999993,
+      "broadLiftDeltaStd": 1.0810726412020408,
+      "positiveBroadLiftDeltaSchemeCount": 1,
+      "heldoutPrecisionLift": 3.44,
+      "v28HeldoutPrecisionLift": 5.0
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.265625,
+      "fold": 3,
+      "status": "regression",
+      "strictBroadSupportCount": 1,
+      "broadPassDeltasByScheme": [
+        1,
+        0,
+        0
+      ],
+      "broadLiftDeltasByScheme": [
+        0.9149999999999991,
+        0.027500000000001634,
+        -2.035
+      ],
+      "broadMeanLiftDelta": -0.36416666666666647,
+      "broadMinLiftDelta": -2.035,
+      "broadMaxLiftDelta": 0.9149999999999991,
+      "broadLiftDeltaStd": 1.2357661815875831,
+      "positiveBroadLiftDeltaSchemeCount": 2,
+      "heldoutPrecisionLift": 4.36,
+      "v28HeldoutPrecisionLift": 5.87
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.296875,
+      "fold": 3,
+      "status": "rescue",
+      "strictBroadSupportCount": 1,
+      "broadPassDeltasByScheme": [
+        1,
+        0,
+        0
+      ],
+      "broadLiftDeltasByScheme": [
+        0.8250000000000011,
+        -1.1324999999999967,
+        0.02999999999999936
+      ],
+      "broadMeanLiftDelta": -0.09249999999999876,
+      "broadMinLiftDelta": -1.1324999999999967,
+      "broadMaxLiftDelta": 0.8250000000000011,
+      "broadLiftDeltaStd": 0.8038267848236947,
+      "positiveBroadLiftDeltaSchemeCount": 2,
+      "heldoutPrecisionLift": 5.02,
+      "v28HeldoutPrecisionLift": 4.89
+    }
+  ],
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "heldoutLabelsDiagnosticOnly": true,
+  "protected949CandidateHashUnchanged": true,
+  "validatedNewChampion": false,
+  "productionPromotionAllowed": false
+}
