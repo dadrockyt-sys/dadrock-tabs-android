@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 50,
+  "bottleneckPhase": 0.09375,
+  "failedFolds": [
+    1,
+    3
+  ],
+  "directionCounts": {
+    "onlyBroaderThanAnchorRecovers": 0,
+    "onlyTighterThanAnchorRecovers": 0,
+    "bothDirectionsRecover": 2,
+    "noRecoveryInSweep": 0,
+    "anchorAlreadyPasses": 0
+  },
+  "heldoutLabelsUsedForDiagnosticSweep": true,
+  "diagnosticQValuesTaintedForSelection": true,
+  "newTuningPerformed": false,
+  "newReserved1over64OddPhasesReferenced": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
