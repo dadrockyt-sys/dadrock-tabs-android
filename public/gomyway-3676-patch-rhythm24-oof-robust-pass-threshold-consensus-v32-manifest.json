@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 32,
+  "output": "public/gomyway-3676-patch-rhythm24-oof-robust-pass-threshold-consensus-v32.json",
+  "foldsPassed": 23,
+  "foldsTotal": 40,
+  "minimumPhasePasses": 2,
+  "v28ComparisonPasses": 34,
+  "rescuesVsV28": 1,
+  "regressionsVsV28": 12,
+  "exploratoryPromising": false,
+  "reservedUntouchedPhasesConsumed": false,
+  "qSearchPerformed": false,
+  "v29DiagnosticQValuesUsed": false,
+  "v31ObservedCutoffCopied": false,
+  "outerHeldoutLabelsUsedToChooseCalibrationParameters": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
