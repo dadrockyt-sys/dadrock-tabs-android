@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 47,
+  "output": "public/gomyway-3676-patch-rhythm24-v46-phase-bottleneck-map-v47.json",
+  "minimumPhasePasses": 3,
+  "bottleneckPhases": [
+    0.09375
+  ],
+  "failureCount": 17,
+  "rescueCount": 2,
+  "regressionCount": 0,
+  "newReserved1over64OddPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "productionPromotionAllowed": false
+}
