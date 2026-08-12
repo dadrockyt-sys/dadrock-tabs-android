@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 45,
+  "output": "public/gomyway-3676-patch-rhythm24-v44-confirmation-failure-map-v45.json",
+  "statusCounts": {
+    "bothPass": 65,
+    "bothFail": 12,
+    "rescue": 1,
+    "regression": 2
+  },
+  "gateCounts": {
+    "strict-and-two-soft": 12,
+    "anchor": 41,
+    "strict-only": 15,
+    "two-soft-only": 12
+  },
+  "outcomesByGateType": {
+    "strict-and-two-soft": {
+      "bothPass": 12
+    },
+    "anchor": {
+      "bothFail": 10,
+      "bothPass": 31
+    },
+    "strict-only": {
+      "rescue": 1,
+      "bothPass": 12,
+      "bothFail": 2
+    },
+    "two-soft-only": {
+      "bothPass": 10,
+      "regression": 2
+    }
+  },
+  "reserved1over32AlreadyConsumed": true,
+  "newReserved1over64OddPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

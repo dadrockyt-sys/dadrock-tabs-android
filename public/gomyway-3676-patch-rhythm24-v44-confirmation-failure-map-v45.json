@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 45,
+  "profileType": "v44-confirmation-failure-map",
+  "diagnosticScope": "already-exposed-v44-1over32-confirmation-only",
+  "statusCounts": {
+    "bothPass": 65,
+    "bothFail": 12,
+    "rescue": 1,
+    "regression": 2
+  },
+  "gateCounts": {
+    "strict-and-two-soft": 12,
+    "anchor": 41,
+    "strict-only": 15,
+    "two-soft-only": 12
+  },
+  "outcomesByGateType": {
+    "strict-and-two-soft": {
+      "bothPass": 12
+    },
+    "anchor": {
+      "bothFail": 10,
+      "bothPass": 31
+    },
+    "strict-only": {
+      "rescue": 1,
+      "bothPass": 12,
+      "bothFail": 2
+    },
+    "two-soft-only": {
+      "bothPass": 10,
+      "regression": 2
+    }
+  },
+  "changedOutcomeRows": [
+    {
+      "phase": 0.03125,
+      "fold": 3,
+      "status": "rescue",
+      "gateType": "strict-only",
+      "outerQ": 0.225,
+      "strictSupportCount": 1,
+      "softSupportCount": 1,
+      "v43Lift": 6.31,
+      "v28Lift": 4.88,
+      "v43Held": {
+        "selected": 68,
+        "true": 11,
+        "false": 57,
+        "precision": 16.18,
+        "selectedPct": 22.37
+      },
+      "v28Held": {
+        "selected": 61,
+        "true": 9,
+        "false": 52,
+        "precision": 14.75,
+        "selectedPct": 20.07
+      }
+    },
+    {
+      "phase": 0.40625,
+      "fold": 0,
+      "status": "regression",
+      "gateType": "two-soft-only",
+      "outerQ": 0.225,
+      "strictSupportCount": 0,
+      "softSupportCount": 2,
+      "v43Lift": 4.45,
+      "v28Lift": 6.47,
+      "v43Held": {
+        "selected": 68,
+        "true": 12,
+        "false": 56,
+        "precision": 17.65,
+        "selectedPct": 22.44
+      },
+      "v28Held": {
+        "selected": 61,
+        "true": 12,
+        "false": 49,
+        "precision": 19.67,
+        "selectedPct": 20.13
+      }
+    },
+    {
+      "phase": 0.71875,
+      "fold": 2,
+      "status": "regression",
+      "gateType": "two-soft-only",
+      "outerQ": 0.225,
+      "strictSupportCount": 0,
+      "softSupportCount": 2,
+      "v43Lift": 3.61,
+      "v28Lift": 5.0,
+      "v43Held": {
+        "selected": 72,
+        "true": 17,
+        "false": 55,
+        "precision": 23.61,
+        "selectedPct": 22.5
+      },
+      "v28Held": {
+        "selected": 64,
+        "true": 16,
+        "false": 48,
+        "precision": 25.0,
+        "selectedPct": 20.0
+      }
+    }
+  ],
+  "v43FailureRows": [
+    {
+      "phase": 0.03125,
+      "fold": 1,
+      "gateType": "anchor",
+      "outerQ": 0.2,
+      "strictSupportCount": 0,
+      "softSupportCount": 0,
+      "v28Passed": false,
+      "v43Lift": 2.19,
+      "v28Lift": 2.19
+    },
+    {
+      "phase": 0.09375,
+      "fold": 1,
+      "gateType": "anchor",
+      "outerQ": 0.2,
+      "strictSupportCount": 0,
+      "softSupportCount": 0,
+      "v28Passed": false,
+      "v43Lift": 4.85,
+      "v28Lift": 4.85
+    },
+    {
+      "phase": 0.09375,
+      "fold": 3,
+      "gateType": "anchor",
+      "outerQ": 0.2,
+      "strictSupportCount": 0,
+      "softSupportCount": 1,
+      "v28Passed": false,
+      "v43Lift": 4.88,
+      "v28Lift": 4.88
+    },
+    {
+      "phase": 0.21875,
+      "fold": 0,
+      "gateType": "anchor",
+      "outerQ": 0.2,
+      "strictSupportCount": 0,
+      "softSupportCount": 0,
+      "v28Passed": false,
+      "v43Lift": 2.45,
+      "v28Lift": 2.45
+    },
+    {
+      "phase": 0.34375,
+      "fold": 3,
+      "gateType": "anchor",
+      "outerQ": 0.2,
+      "strictSupportCount": 0,
+      "softSupportCount": 0,
+      "v28Passed": false,
+      "v43Lift": 3.59,
+      "v28Lift": 3.59
+    },
+    {
+      "phase": 0.40625,
+      "fold": 0,
+      "gateType": "two-soft-only",
+      "outerQ": 0.225,
+      "strictSupportCount": 0,
+      "softSupportCount": 2,
+      "v28Passed": true,
+      "v43Lift": 4.45,
+      "v28Lift": 6.47
+    },
+    {
+      "phase": 0.40625,
+      "fold": 3,
+      "gateType": "strict-only",
+      "outerQ": 0.225,
+      "strictSupportCount": 1,
+      "softSupportCount": 1,
+      "v28Passed": false,
+      "v43Lift": 1.58,
+      "v28Lift": 2.6
+    },
+    {
+      "phase": 0.46875,
+      "fold": 3,
+      "gateType": "anchor",
+      "outerQ": 0.2,
+      "strictSupportCount": 0,
+      "softSupportCount": 0,
+      "v28Passed": false,
+      "v43Lift": 2.6,
+      "v28Lift": 2.6
+    },
+    {
+      "phase": 0.71875,
+      "fold": 2,
+      "gateType": "two-soft-only",
+      "outerQ": 0.225,
+      "strictSupportCount": 0,
+      "softSupportCount": 2,
+      "v28Passed": true,
+      "v43Lift": 3.61,
+      "v28Lift": 5.0
+    },
+    {
+      "phase": 0.71875,
+      "fold": 4,
+      "gateType": "strict-only",
+      "outerQ": 0.225,
+      "strictSupportCount": 1,
+      "softSupportCount": 1,
+      "v28Passed": false,
+      "v43Lift": 4.17,
+      "v28Lift": 4.69
+    },
+    {
+      "phase": 0.78125,
+      "fold": 2,
+      "gateType": "anchor",
+      "outerQ": 0.2,
+      "strictSupportCount": 0,
+      "softSupportCount": 0,
+      "v28Passed": false,
+      "v43Lift": 4.69,
+      "v28Lift": 4.69
+    },
+    {
+      "phase": 0.84375,
+      "fold": 2,
+      "gateType": "anchor",
+      "outerQ": 0.2,
+      "strictSupportCount": 0,
+      "softSupportCount": 1,
+      "v28Passed": false,
+      "v43Lift": 4.2,
+      "v28Lift": 4.2
+    },
+    {
+      "phase": 0.90625,
+      "fold": 2,
+      "gateType": "anchor",
+      "outerQ": 0.2,
+      "strictSupportCount": 0,
+      "softSupportCount": 1,
+      "v28Passed": false,
+      "v43Lift": 4.52,
+      "v28Lift": 4.52
+    },
+    {
+      "phase": 0.96875,
+      "fold": 2,
+      "gateType": "anchor",
+      "outerQ": 0.2,
+      "strictSupportCount": 0,
+      "softSupportCount": 0,
+      "v28Passed": false,
+      "v43Lift": 3.87,
+      "v28Lift": 3.87
+    }
+  ],
+  "reserved1over32AlreadyConsumed": true,
+  "newReserved1over64OddPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "parameterSearchPerformed": false,
+  "heldoutLabelsUsedForDiagnosticComparison": true,
+  "requiresTrainingOnlyEvidenceForNextChallenger": true,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
