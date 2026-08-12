@@ -23,7 +23,7 @@ V17 remains the frozen exploratory reference:
 - protected candidate unchanged
 - production promotion false
 
-## Key progression
+## Key progression through V43
 
 V18: 18/20 boundary stress.
 V23: 31/40 unseen-phase confirmation; minimum 3/5.
@@ -41,58 +41,96 @@ V37 showed percentile>=0.80 is not equivalent to exact q=0.20 top-fraction seman
 V38 restored exact V28 semantics: 34/40, no changes; unanimous tightening never activated.
 V39 showed no inner scheme supported tightening below q=0.20.
 V40 tested predeclared q=0.225 broadening under unanimous scheme support: 34/40; gate never activated.
-V41 diagnosed broadening support. Strict support histogram: 0:22, 1:15, 2:3, 3:0. Soft support histogram: 0:11, 1:13, 2:15, 3:1.
+V41 diagnosed broadening support. Strict support histogram 0:22, 1:15, 2:3, 3:0. Soft support histogram 0:11, 1:13, 2:15, 3:1.
 V42 used fixed q=0.225 when >=2/3 schemes gave soft training-only support: 35/40, minimum 3/5, 1 rescue, 0 regressions, 16 broadened folds; exploratory promising true.
-V43 broadened when >=1 strict scheme OR >=2 soft schemes: 35/40, minimum 4/5, 1 rescue, 0 regressions, 23 broadened folds; exploratory promising true. This earned one untouched confirmation attempt.
+V43 broadened when >=1 strict scheme OR >=2 soft schemes: 35/40, minimum 4/5, 1 rescue, 0 regressions, 23 broadened folds; exploratory promising true.
 
 ## V44 — reserved 1/32 confirmation — COMPLETE, FAILED
 
-File:
-`analyzer/confirm_gomyway_3676_patch_rhythm24_v43_reserved_1over32_v44.py`
-
-The previously reserved 1/32 phase family was consumed for the first time by V44:
-`0.03125, 0.09375, 0.15625, 0.21875, 0.28125, 0.34375, 0.40625, 0.46875, 0.53125, 0.59375, 0.65625, 0.71875, 0.78125, 0.84375, 0.90625, 0.96875`
-
+Consumed 16 previously untouched 1/32 phases.
 Result:
-- V44 / frozen V43 architecture: 66 / 80
-- V28 comparison: 67 / 80
-- minimum phase passes: 3 / 5
-- rescues vs V28: 1
-- regressions vs V28: 2
-- folds broadened above V28 q: 39
+- V43 architecture: 66/80
+- V28 comparison: 67/80
+- minimum phase: 3/5
+- rescues: 1
+- regressions: 2
 - confirmation success: False
 - validated new champion: False
-- reserved 1/32 phases consumed: True
+- protected candidate unchanged
+- production promotion false
+
+The 1/32 family is exposed from V44 onward.
+
+## V45–V56 exploratory redesign on exposed data
+
+V45 diagnosed V44 gate subtypes: both regressions came from `two-soft-only`; the one rescue came from `strict-only`.
+V46 removed `two-soft-only` and broadened only on >=1 strict training scheme: 103/120 vs V28 101/120, minimum 3/5, 2 rescues, 0 regressions, 45 broadened folds.
+V47 isolated the only 3/5 bottleneck phase at 0.09375.
+V48 showed the two remaining bottleneck failures had strict-support=0 and stayed at q=0.20.
+V49 found no useful soft-support signature for those failures.
+V50 showed both failures were recoverable on both sides of q=0.20 in diagnostic sweeps; diagnostic q values remain tainted.
+V51 confirmed q=0.20 sat inside isolated failure holes for both failures.
+V52 added a symmetric training-only anchor-hole escape (q=0.175/0.20/0.225): 103/120, minimum 3/5, 2 rescues, 0 regressions; tied V46.
+V53 showed V52 changed no outcomes vs V46.
+V54/V55 examined bottleneck inner margins and per-scheme signatures.
+V56 preserved V46 broadening and added a conservative q=0.175 tight escape only when all three training schemes said tight was pass-count non-worse and had better mean lift than anchor.
+V56 result on exposed 120 partitions:
+- 102/120
+- V28 comparison 101/120
+- minimum phase 4/5
+- rescues 3
+- regressions 2
+- chosen q counts: tight 25, anchor 50, broad 45
+- unanimous tight-escape folds 25
+- exploratoryPromising True
+- protected candidate unchanged
+- production promotion false
+
+V56 therefore earned a fresh untouched confirmation attempt.
+
+## V57 — reserved 1/64 odd-offset confirmation — COMPLETE, FAILED
+
+The previously reserved 32-phase 1/64 odd-offset family was consumed for the first time by V57:
+`0.015625, 0.046875, 0.078125, 0.109375, 0.140625, 0.171875, 0.203125, 0.234375, 0.265625, 0.296875, 0.328125, 0.359375, 0.390625, 0.421875, 0.453125, 0.484375, 0.515625, 0.546875, 0.578125, 0.609375, 0.640625, 0.671875, 0.703125, 0.734375, 0.765625, 0.796875, 0.828125, 0.859375, 0.890625, 0.921875, 0.953125, 0.984375`
+
+Result:
+- V57 / frozen V56 architecture: 135/160
+- V28 comparison: 137/160
+- minimum phase: 3/5
+- rescues vs V28: 3
+- regressions vs V28: 5
+- chosen q counts: tight 42, anchor 65, broad 53
+- unanimous tight-escape folds: 42
+- architecture frozen before confirmation: True
+- parameter search performed: False
+- confirmation success: False
+- validated new champion: False
+- 1/64 reserve consumed: True
 - protected 949-event candidate unchanged: True
 - production promotion allowed: False
 
-Conclusion: V43 does not validate. The 1/32 family is now exposed and may only be used diagnostically/exploratorily from this point onward.
+Conclusion: V56 does not validate. The 1/64 odd-offset family is now exposed and may only be used diagnostically/exploratorily.
 
-## NEW untouched reserve — 1/64 odd-offset family
+## NEW untouched reserve — 1/128 odd-numerator family
 
-Before any V44 post-hoc diagnostic is used to design another challenger, reserve the following 32 phases as the next genuinely untouched family:
+Before using V57 post-hoc outcomes to design another challenger, reserve the following 64 phases as the next genuinely untouched family:
 
-`0.015625, 0.046875, 0.078125, 0.109375, 0.140625, 0.171875, 0.203125, 0.234375, 0.265625, 0.296875, 0.328125, 0.359375, 0.390625, 0.421875, 0.453125, 0.484375, 0.515625, 0.546875, 0.578125, 0.609375, 0.640625, 0.671875, 0.703125, 0.734375, 0.765625, 0.796875, 0.828125, 0.859375, 0.890625, 0.921875, 0.953125, 0.984375`
+`0.0078125, 0.0234375, 0.0390625, 0.0546875, 0.0703125, 0.0859375, 0.1015625, 0.1171875, 0.1328125, 0.1484375, 0.1640625, 0.1796875, 0.1953125, 0.2109375, 0.2265625, 0.2421875, 0.2578125, 0.2734375, 0.2890625, 0.3046875, 0.3203125, 0.3359375, 0.3515625, 0.3671875, 0.3828125, 0.3984375, 0.4140625, 0.4296875, 0.4453125, 0.4609375, 0.4765625, 0.4921875, 0.5078125, 0.5234375, 0.5390625, 0.5546875, 0.5703125, 0.5859375, 0.6015625, 0.6171875, 0.6328125, 0.6484375, 0.6640625, 0.6796875, 0.6953125, 0.7109375, 0.7265625, 0.7421875, 0.7578125, 0.7734375, 0.7890625, 0.8046875, 0.8203125, 0.8359375, 0.8515625, 0.8671875, 0.8828125, 0.8984375, 0.9140625, 0.9296875, 0.9453125, 0.9609375, 0.9765625, 0.9921875`
 
-These phases are reserved now, before V45 interpretation. Do not inspect, evaluate, or reference them in V45 or any exploratory challenger. They may be consumed only after a later architecture is frozen and earns a fresh confirmation attempt under a predeclared gate.
+These 64 phases are reserved now, before V58 interpretation. Do not inspect, evaluate, or reference them in V58 or any exploratory challenger. They may be consumed only after a later architecture is frozen and earns a new confirmation attempt under a predeclared gate.
 
-## CURRENT NEXT STEP — V45 — CREATED, NOT YET RUN
+## CURRENT NEXT STEP — V58 diagnostic
 
-File:
-`analyzer/profile_gomyway_3676_patch_rhythm24_v44_confirmation_failure_map_v45.py`
+V58 should analyze only the now-exposed V57 1/64 confirmation outcomes and determine which V56 branch (`tight`, `anchor`, `broad`) produced the 3 rescues and 5 regressions, plus phase-floor/bottleneck structure. Any architecture idea derived from V57/V58 is tainted for all exposed families and must first be tested on exposed data before it can earn the reserved 1/128 family.
 
-Purpose: diagnostic-only characterization of V44's exposed 1/32 outcomes. It classifies each fold by V43 gate subtype (`anchor`, `strict-only`, `two-soft-only`, `strict-and-two-soft`) and reports where the one rescue and two regressions occurred.
-
-Safety:
-- reads only the already-exposed V44 1/32 output
-- does not reference the new 1/64 reserve
-- performs no parameter search or tuning
-- held-out labels are diagnostic only
-- protected candidate must remain unchanged
-- validatedNewChampion remains false
-- productionPromotionAllowed remains false
-
-After V45, any architecture idea derived from V44/V45 is tainted for the 1/32 family. It must first be tested exploratorily on already-exposed data, then frozen before touching the reserved 1/64 odd-offset family.
+Safety for V58:
+- reads only already-exposed V57 output
+- must not reference the new 1/128 reserve
+- no parameter tuning/search
+- held-out labels diagnostic only
+- protected candidate unchanged
+- validatedNewChampion false
+- productionPromotionAllowed false
 
 ## Recovery commands
 
@@ -112,5 +150,5 @@ Continue my GOMYWAY / Jimmy Paige rhythm24 calibration workflow from GitHub.
 Repo: dadrockyt-sys/dadrock-tabs-android
 Branch: jimmy-paige-v8-targeted-rhythm-corrections
 Read analyzer/WORKFLOW_RECOVERY_CHECKPOINT.md first and treat it as the source of truth.
-Preserve frozen V17, the protected 949-event candidate, leakage rules, the new reserved untouched 1/64 odd-offset confirmation family, and production-promotion=false. Continue from the CURRENT NEXT STEP without unnecessary pauses.
+Preserve frozen V17, the protected 949-event candidate, leakage rules, the newly reserved untouched 1/128 odd-numerator confirmation family, and production-promotion=false. Continue from V58 without unnecessary pauses.
 ```
