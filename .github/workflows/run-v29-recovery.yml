@@ -1,0 +1,46 @@
+name: Run V29 recovery diagnostic
+
+on:
+  push:
+    branches:
+      - jimmy-paige-v8-targeted-rhythm-corrections
+    paths:
+      - .github/workflows/run-v29-recovery.yml
+
+permissions:
+  contents: write
+
+jobs:
+  run-v29:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: jimmy-paige-v8-targeted-rhythm-corrections
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install runtime dependency
+        run: python -m pip install numpy
+
+      - name: Compile V29
+        run: python -m py_compile analyzer/profile_gomyway_3676_patch_rhythm24_v28_failure_map_v29.py
+
+      - name: Run V29
+        run: python analyzer/profile_gomyway_3676_patch_rhythm24_v28_failure_map_v29.py
+
+      - name: Commit exact V29 outputs and remove temporary runner
+        run: |
+          rm .github/workflows/run-v29-recovery.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/gomyway-3676-patch-rhythm24-v28-failure-map-v29.json \
+                  public/gomyway-3676-patch-rhythm24-v28-failure-map-v29-manifest.json \
+                  .github/workflows/run-v29-recovery.yml
+          git commit -m "Run V29 rhythm24 failure map"
+          git push origin HEAD:jimmy-paige-v8-targeted-rhythm-corrections
