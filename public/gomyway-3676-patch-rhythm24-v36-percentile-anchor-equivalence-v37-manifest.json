@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 37,
+  "output": "public/gomyway-3676-patch-rhythm24-v36-percentile-anchor-equivalence-v37.json",
+  "statusCounts": {
+    "bothPass": 31,
+    "rescue": 3,
+    "regression": 3,
+    "bothFail": 3
+  },
+  "foldsTightenedBeyondV28Floor": 0,
+  "statusChangedRows": 6,
+  "selectedCountChangedRows": 39,
+  "statusChangedWithSameSelectedCountRows": 0,
+  "reservedUntouchedPhasesConsumed": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
