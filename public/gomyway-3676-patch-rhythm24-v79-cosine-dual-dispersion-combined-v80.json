@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 80,
+  "profileType": "cosine-only-plus-v64-dual-dispersion-combined-diagnostic",
+  "representation": "base+p2-cos+p4-cos",
+  "modelHyperparametersFrozenOrTrainingOnlyReconstructedFromOriginalFullV17Representation": true,
+  "fixedTightLiftDeltaStdMinimum": 0.5,
+  "fixedBroadLiftDeltaStdMaximum": 0.9,
+  "thresholdsChosenFromExposedDiagnostics": true,
+  "results": [
+    {
+      "source": "v56_exposed_120",
+      "foldsPassed": 106,
+      "foldsTotal": 120,
+      "v28ComparisonPasses": 101,
+      "rescuesVsV28": 6,
+      "regressionsVsV28": 1,
+      "minimumPhasePasses": 3,
+      "bottleneckPhases": [
+        0.03125
+      ],
+      "selectedQCounts": {
+        "tight": 10,
+        "anchor": 74,
+        "broad": 36
+      },
+      "decisionCounts": {
+        "keep-broad-low-dispersion": 36,
+        "keep-tight-high-dispersion": 10,
+        "keep-anchor": 50,
+        "revert-tight-to-anchor-low-dispersion": 15,
+        "revert-broad-to-anchor-high-dispersion": 9
+      },
+      "modelChoicesReconstructedTrainingOnly": 120
+    },
+    {
+      "source": "v57_exposed_160",
+      "foldsPassed": 144,
+      "foldsTotal": 160,
+      "v28ComparisonPasses": 137,
+      "rescuesVsV28": 9,
+      "regressionsVsV28": 2,
+      "minimumPhasePasses": 3,
+      "bottleneckPhases": [
+        0.046875
+      ],
+      "selectedQCounts": {
+        "tight": 19,
+        "anchor": 103,
+        "broad": 38
+      },
+      "decisionCounts": {
+        "keep-anchor": 65,
+        "revert-tight-to-anchor-low-dispersion": 23,
+        "keep-broad-low-dispersion": 38,
+        "keep-tight-high-dispersion": 19,
+        "revert-broad-to-anchor-high-dispersion": 15
+      },
+      "modelChoicesReconstructedTrainingOnly": 0
+    }
+  ],
+  "combined": {
+    "foldsPassed": 250,
+    "foldsTotal": 280,
+    "v28ComparisonPasses": 238,
+    "rescuesVsV28": 15,
+    "regressionsVsV28": 3,
+    "minimumPhasePassesAcrossSources": 3,
+    "modelChoicesReconstructedTrainingOnly": 120
+  },
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
