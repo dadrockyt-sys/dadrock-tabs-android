@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 69,
+  "bottleneckPhases": [
+    0.328125,
+    0.703125,
+    0.984375
+  ],
+  "rowCount": 15,
+  "failureModelCounts": {
+    "r=8|lambda=1": 1,
+    "r=4|lambda=1": 2,
+    "r=8|lambda=100": 1,
+    "r=2|lambda=1": 1,
+    "r=4|lambda=100": 1
+  },
+  "passModelCounts": {
+    "r=4|lambda=1": 6,
+    "r=4|lambda=10": 1,
+    "r=8|lambda=100": 1,
+    "r=8|lambda=1": 1
+  },
+  "v67NonePassModelCounts": {
+    "r=8|lambda=1": 1,
+    "r=4|lambda=1": 1,
+    "r=8|lambda=100": 1
+  },
+  "diagnosticUsesAlreadyExposedV57Outcomes": true,
+  "newTuningPerformed": false,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
