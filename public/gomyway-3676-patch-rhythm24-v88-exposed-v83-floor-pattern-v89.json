@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 89,
+  "profileType": "exposed-v83-floor-pattern-diagnostic",
+  "sources": [
+    {
+      "source": "v56_exposed_120",
+      "minimumPhasePasses": 3,
+      "bottleneckPhases": [
+        0.3125,
+        0.03125
+      ],
+      "floorFailureCount": 4,
+      "floorFailures": [
+        {
+          "source": "v56_exposed_120",
+          "phase": 0.3125,
+          "fold": 0,
+          "v83Passed": false,
+          "v28Passed": false,
+          "oldQBucket": "broad",
+          "guardAppliedV80": false,
+          "v80Decision": "v83-fallback-v28",
+          "finalQ": 0.2,
+          "dispersion": null,
+          "pairRadius": null,
+          "lambda": null,
+          "selectionReason": "v46-strict-broad-support",
+          "strictBroadSupportCount": 1,
+          "unanimousTightEscape": false
+        },
+        {
+          "source": "v56_exposed_120",
+          "phase": 0.3125,
+          "fold": 3,
+          "v83Passed": false,
+          "v28Passed": false,
+          "oldQBucket": "broad",
+          "guardAppliedV80": false,
+          "v80Decision": "v83-fallback-v28",
+          "finalQ": 0.2,
+          "dispersion": null,
+          "pairRadius": null,
+          "lambda": null,
+          "selectionReason": "v46-strict-broad-support",
+          "strictBroadSupportCount": 1,
+          "unanimousTightEscape": false
+        },
+        {
+          "source": "v56_exposed_120",
+          "phase": 0.03125,
+          "fold": 1,
+          "v83Passed": false,
+          "v28Passed": false,
+          "oldQBucket": "anchor",
+          "guardAppliedV80": false,
+          "v80Decision": "v83-fallback-v28",
+          "finalQ": 0.2,
+          "dispersion": null,
+          "pairRadius": null,
+          "lambda": null,
+          "selectionReason": "anchor",
+          "strictBroadSupportCount": 0,
+          "unanimousTightEscape": false
+        },
+        {
+          "source": "v56_exposed_120",
+          "phase": 0.03125,
+          "fold": 3,
+          "v83Passed": false,
+          "v28Passed": false,
+          "oldQBucket": "broad",
+          "guardAppliedV80": false,
+          "v80Decision": "v83-fallback-v28",
+          "finalQ": 0.2,
+          "dispersion": null,
+          "pairRadius": null,
+          "lambda": null,
+          "selectionReason": "v46-strict-broad-support",
+          "strictBroadSupportCount": 1,
+          "unanimousTightEscape": false
+        }
+      ]
+    },
+    {
+      "source": "v57_exposed_160",
+      "minimumPhasePasses": 3,
+      "bottleneckPhases": [
+        0.046875,
+        0.703125,
+        0.984375
+      ],
+      "floorFailureCount": 6,
+      "floorFailures": [
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.046875,
+          "fold": 1,
+          "v83Passed": false,
+          "v28Passed": false,
+          "oldQBucket": "tight",
+          "guardAppliedV80": true,
+          "v80Decision": "keep-tight-high-dispersion",
+          "finalQ": 0.175,
+          "dispersion": 0.6637027865610384,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "selectionReason": "unanimous-tight-nonworse-plus-lift",
+          "strictBroadSupportCount": 0,
+          "unanimousTightEscape": true
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.046875,
+          "fold": 3,
+          "v83Passed": false,
+          "v28Passed": false,
+          "oldQBucket": "broad",
+          "guardAppliedV80": false,
+          "v80Decision": "v83-fallback-v28",
+          "finalQ": 0.2,
+          "dispersion": null,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "selectionReason": "v46-strict-broad-support",
+          "strictBroadSupportCount": 1,
+          "unanimousTightEscape": false
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.703125,
+          "fold": 2,
+          "v83Passed": false,
+          "v28Passed": false,
+          "oldQBucket": "anchor",
+          "guardAppliedV80": false,
+          "v80Decision": "v83-fallback-v28",
+          "finalQ": 0.2,
+          "dispersion": null,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "selectionReason": "anchor",
+          "strictBroadSupportCount": 0,
+          "unanimousTightEscape": false
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.703125,
+          "fold": 4,
+          "v83Passed": false,
+          "v28Passed": false,
+          "oldQBucket": "broad",
+          "guardAppliedV80": false,
+          "v80Decision": "v83-fallback-v28",
+          "finalQ": 0.2,
+          "dispersion": null,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "selectionReason": "v46-strict-broad-support",
+          "strictBroadSupportCount": 1,
+          "unanimousTightEscape": false
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.984375,
+          "fold": 2,
+          "v83Passed": false,
+          "v28Passed": false,
+          "oldQBucket": "anchor",
+          "guardAppliedV80": false,
+          "v80Decision": "v83-fallback-v28",
+          "finalQ": 0.2,
+          "dispersion": null,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "selectionReason": "anchor",
+          "strictBroadSupportCount": 0,
+          "unanimousTightEscape": false
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.984375,
+          "fold": 4,
+          "v83Passed": false,
+          "v28Passed": false,
+          "oldQBucket": "tight",
+          "guardAppliedV80": true,
+          "v80Decision": "keep-tight-high-dispersion",
+          "finalQ": 0.175,
+          "dispersion": 0.9570709076250437,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "selectionReason": "unanimous-tight-nonworse-plus-lift",
+          "strictBroadSupportCount": 0,
+          "unanimousTightEscape": true
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "floorFailureCount": 10,
+    "byOldQBucket": {
+      "broad": 5,
+      "anchor": 3,
+      "tight": 2
+    },
+    "byDecision": {
+      "v83-fallback-v28": 8,
+      "keep-tight-high-dispersion": 2
+    },
+    "byPairRadius": {
+      "None": 4,
+      "8": 2,
+      "4": 3,
+      "2": 1
+    },
+    "byLambda": {
+      "None": 4,
+      "1.0": 4,
+      "100.0": 2
+    },
+    "bySelectionReason": {
+      "v46-strict-broad-support": 5,
+      "anchor": 3,
+      "unanimous-tight-nonworse-plus-lift": 2
+    },
+    "byStrictBroadSupportCount": {
+      "1": 5,
+      "0": 5
+    },
+    "byUnanimousTightEscape": {
+      "False": 8,
+      "True": 2
+    }
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v84OpenedConfirmationReferenced": false,
+  "newReserved1over256OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
