@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 79,
+  "profileType": "v78-v57-cosine-only-phase-global-diagnostic",
+  "diagnosticScope": "already-exposed-v57-1over64-family-only",
+  "representation": "base+p2-cos+p4-cos",
+  "qFrozen": 0.2,
+  "modelHyperparametersFrozenFromV57": true,
+  "cosineOnlyPasses": 142,
+  "fullPhaseAnchorPasses": 137,
+  "rescuesVsFullPhaseAnchor": 9,
+  "regressionsVsFullPhaseAnchor": 4,
+  "minimumCosineOnlyPhasePasses": 3,
+  "minimumFullPhaseAnchorPasses": 3,
+  "cosineOnlyBottleneckPhases": [
+    0.328125
+  ],
+  "flipCounts": {
+    "same": 147,
+    "cosine-rescue": 9,
+    "fullphase-rescue": 4
+  },
+  "phaseRows": [
+    {
+      "phase": 0.015625,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.046875,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 3
+    },
+    {
+      "phase": 0.078125,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.109375,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 3
+    },
+    {
+      "phase": 0.140625,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.171875,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.203125,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.234375,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.265625,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.296875,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.328125,
+      "cosineOnlyPasses": 3,
+      "fullPhaseAnchorPasses": 3
+    },
+    {
+      "phase": 0.359375,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.390625,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.421875,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.453125,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.484375,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.515625,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.546875,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.578125,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.609375,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.640625,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.671875,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.703125,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 3
+    },
+    {
+      "phase": 0.734375,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.765625,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.796875,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.828125,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.859375,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.890625,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.921875,
+      "cosineOnlyPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.953125,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.984375,
+      "cosineOnlyPasses": 4,
+      "fullPhaseAnchorPasses": 3
+    }
+  ],
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
