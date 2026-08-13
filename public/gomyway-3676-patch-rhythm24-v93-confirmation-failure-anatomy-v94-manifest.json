@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 94,
+  "output": "public/gomyway-3676-patch-rhythm24-v93-confirmation-failure-anatomy-v94.json",
+  "regressionCount": 3,
+  "rescueCount": 19,
+  "bottleneckFailureCount": 22,
+  "regressionsByBranch": {
+    "safe-broad": 3
+  },
+  "bottleneckFailuresByBranch": {
+    "tight": 9,
+    "fallback-v28": 9,
+    "safe-broad": 4
+  },
+  "v93OutcomesTaintedForFutureSelection": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "productionPromotionAllowed": false
+}
