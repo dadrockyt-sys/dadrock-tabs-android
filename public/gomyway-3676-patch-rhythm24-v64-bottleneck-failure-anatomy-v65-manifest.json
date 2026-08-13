@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 65,
+  "minimumPhasePasses": 3,
+  "bottleneckPhases": [
+    0.328125,
+    0.703125,
+    0.984375
+  ],
+  "bottleneckFailureCount": 6,
+  "bottleneckFailureBranchCounts": {
+    "broad": 1,
+    "tight": 2,
+    "anchor": 3
+  },
+  "bottleneckFailureDecisionCounts": {
+    "keep-broad-low-dispersion": 1,
+    "keep-tight-high-dispersion": 2,
+    "keep-current": 2,
+    "revert-broad-to-anchor-high-dispersion": 1
+  },
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "protected949CandidateHashUnchanged": true,
+  "validatedNewChampion": false,
+  "productionPromotionAllowed": false
+}
