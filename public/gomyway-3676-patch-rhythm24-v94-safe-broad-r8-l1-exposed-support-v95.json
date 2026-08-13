@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 95,
+  "profileType": "v93-regression-signature-independent-exposed-support-diagnostic",
+  "hypothesisFromOpenedV93": "safe-broad keep-broad-low-dispersion with pairRadius=8 and lambda=1.0",
+  "allSafeBroad": {
+    "rows": 74,
+    "v90Passes": 67,
+    "v28Passes": 65,
+    "rescuesVsV28": 2,
+    "regressionsVsV28": 0,
+    "bothPass": 65,
+    "bothFail": 7,
+    "bySource": {
+      "v56_exposed_120": 36,
+      "v57_exposed_160": 38
+    }
+  },
+  "v93RegressionSignatureOnPreviouslyExposedV56V57": {
+    "rows": 9,
+    "v90Passes": 7,
+    "v28Passes": 7,
+    "rescuesVsV28": 0,
+    "regressionsVsV28": 0,
+    "bothPass": 7,
+    "bothFail": 2,
+    "bySource": {
+      "v56_exposed_120": 4,
+      "v57_exposed_160": 5
+    }
+  },
+  "otherSafeBroad": {
+    "rows": 65,
+    "v90Passes": 60,
+    "v28Passes": 58,
+    "rescuesVsV28": 2,
+    "regressionsVsV28": 0,
+    "bothPass": 58,
+    "bothFail": 5,
+    "bySource": {
+      "v56_exposed_120": 32,
+      "v57_exposed_160": 33
+    }
+  },
+  "signatureRows": [
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.0625,
+      "fold": 0,
+      "v90Passed": true,
+      "v28Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": true,
+      "isV93RegressionSignature": true
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.3125,
+      "fold": 0,
+      "v90Passed": false,
+      "v28Passed": false,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": false,
+      "isV93RegressionSignature": true
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.15625,
+      "fold": 1,
+      "v90Passed": true,
+      "v28Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": true,
+      "isV93RegressionSignature": true
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.96875,
+      "fold": 3,
+      "v90Passed": true,
+      "v28Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": false,
+      "isV93RegressionSignature": true
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.171875,
+      "fold": 1,
+      "v90Passed": true,
+      "v28Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": true,
+      "isV93RegressionSignature": true
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.265625,
+      "fold": 1,
+      "v90Passed": true,
+      "v28Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": false,
+      "isV93RegressionSignature": true
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.328125,
+      "fold": 0,
+      "v90Passed": false,
+      "v28Passed": false,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": false,
+      "isV93RegressionSignature": true
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.953125,
+      "fold": 3,
+      "v90Passed": true,
+      "v28Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": false,
+      "isV93RegressionSignature": true
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.984375,
+      "fold": 3,
+      "v90Passed": true,
+      "v28Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": false,
+      "isV93RegressionSignature": true
+    }
+  ],
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v93OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

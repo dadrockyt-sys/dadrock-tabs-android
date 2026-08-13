@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 95,
+  "output": "public/gomyway-3676-patch-rhythm24-v94-safe-broad-r8-l1-exposed-support-v95.json",
+  "allSafeBroad": {
+    "rows": 74,
+    "v90Passes": 67,
+    "v28Passes": 65,
+    "rescuesVsV28": 2,
+    "regressionsVsV28": 0,
+    "bothPass": 65,
+    "bothFail": 7,
+    "bySource": {
+      "v56_exposed_120": 36,
+      "v57_exposed_160": 38
+    }
+  },
+  "v93RegressionSignatureOnPreviouslyExposedV56V57": {
+    "rows": 9,
+    "v90Passes": 7,
+    "v28Passes": 7,
+    "rescuesVsV28": 0,
+    "regressionsVsV28": 0,
+    "bothPass": 7,
+    "bothFail": 2,
+    "bySource": {
+      "v56_exposed_120": 4,
+      "v57_exposed_160": 5
+    }
+  },
+  "otherSafeBroad": {
+    "rows": 65,
+    "v90Passes": 60,
+    "v28Passes": 58,
+    "rescuesVsV28": 2,
+    "regressionsVsV28": 0,
+    "bothPass": 58,
+    "bothFail": 5,
+    "bySource": {
+      "v56_exposed_120": 32,
+      "v57_exposed_160": 33
+    }
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v93OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
