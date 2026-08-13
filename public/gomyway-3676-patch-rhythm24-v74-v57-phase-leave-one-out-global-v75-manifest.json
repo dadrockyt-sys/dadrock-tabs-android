@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 75,
+  "fullPhaseAnchorPasses": 137,
+  "rankedVariants": [
+    {
+      "dropIndex": 2,
+      "droppedFeature": "p4-sin",
+      "passes": 142,
+      "rescues": 9,
+      "regressions": 4,
+      "minimumPhasePasses": 3,
+      "bottleneckPhases": [
+        0.328125
+      ]
+    },
+    {
+      "dropIndex": 0,
+      "droppedFeature": "p2-sin",
+      "passes": 137,
+      "rescues": 0,
+      "regressions": 0,
+      "minimumPhasePasses": 3,
+      "bottleneckPhases": [
+        0.046875,
+        0.109375,
+        0.328125,
+        0.703125,
+        0.984375
+      ]
+    },
+    {
+      "dropIndex": 1,
+      "droppedFeature": "p2-cos",
+      "passes": 114,
+      "rescues": 8,
+      "regressions": 31,
+      "minimumPhasePasses": 2,
+      "bottleneckPhases": [
+        0.109375,
+        0.171875,
+        0.421875
+      ]
+    },
+    {
+      "dropIndex": 3,
+      "droppedFeature": "p4-cos",
+      "passes": 105,
+      "rescues": 7,
+      "regressions": 39,
+      "minimumPhasePasses": 2,
+      "bottleneckPhases": [
+        0.421875
+      ]
+    }
+  ],
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
