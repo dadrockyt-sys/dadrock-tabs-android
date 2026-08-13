@@ -8,6 +8,7 @@ from typing import Any
 
 import numpy as np
 
+import benchmark_gomyway_3676_patch_pairwise_rank_section_calibrated_nested_cv_v5 as v5
 import benchmark_gomyway_3676_patch_pairwise_rank_stratified_nested_cv_v2 as v2
 import benchmark_gomyway_3676_patch_pairwise_rank_nested_cv_v1 as v1
 import benchmark_gomyway_3676_patch_rhythm24_shifted_only_q_selector_nested_cv_v17 as v17
@@ -87,6 +88,7 @@ def main() -> None:
     base_names = sorted((rows[0].get("features") or {}).keys())
     xb = np.asarray([[float((r.get("features") or {}).get(f, 0.0)) for f in base_names] for r in rows], dtype=np.float64)
     pf = v17.phase_features(rows)
+    x_full = np.concatenate([xb, pf], axis=1)
     x = np.concatenate([xb, pf[:, [1, 3]]], axis=1)  # p2-cos + p4-cos only
     y = np.asarray([str(r.get("label")) == "true" for r in rows], dtype=bool)
     measures = np.asarray([int(r["measure"]) for r in rows], dtype=np.int32)
@@ -101,6 +103,7 @@ def main() -> None:
         phase_rows = []
         q_counts = {"tight": 0, "anchor": 0, "broad": 0}
         decision_counts: dict[str, int] = {}
+        reconstructed_model_count = 0
 
         for scheme in src.get("schemes") or []:
             phase = float(scheme["phase"])
@@ -110,9 +113,23 @@ def main() -> None:
 
             for fold in range(OUTER_FOLDS):
                 row = folds[fold]
+                test = ids == fold
+                train = ~test
+
                 cm = row.get("chosenModel") or {}
-                radius = int(cm["pairRadius"])
-                lam = float(cm["lambda"])
+                if "pairRadius" in cm and "lambda" in cm:
+                    radius = int(cm["pairRadius"])
+                    lam = float(cm["lambda"])
+                else:
+                    # V56 did not persist chosenModel in its output. Reconstruct the
+                    # exact V56 training-only model choice using the original full V17
+                    # representation, matching benchmark V56 before evaluating the
+                    # cosine-only representation. No outer labels are used here.
+                    cm = v5.choose_model(x_full[train], y[train], measures[train])
+                    radius = int(cm["pairRadius"])
+                    lam = float(cm["lambda"])
+                    reconstructed_model_count += 1
+
                 q, decision, _ = selected_q(row)
                 decision_counts[decision] = decision_counts.get(decision, 0) + 1
                 if abs(q - TIGHT_Q) < 1e-12:
@@ -122,8 +139,6 @@ def main() -> None:
                 else:
                     q_counts["anchor"] += 1
 
-                test = ids == fold
-                train = ~test
                 print(f"{source_name} phase={phase} fold={fold} V80 cosine+dual-dispersion ...", flush=True)
                 model = v2.fit_pairwise_ranker(x[train], y[train], measures[train], radius, lam)
                 passed, _ = pass_at_q(v2.scores_for(x[test], model), y[test], q)
@@ -151,6 +166,7 @@ def main() -> None:
             "bottleneckPhases": bottlenecks,
             "selectedQCounts": q_counts,
             "decisionCounts": decision_counts,
+            "modelChoicesReconstructedTrainingOnly": reconstructed_model_count,
         }
         all_results.append(result)
         print(source_name, result, flush=True)
@@ -162,6 +178,7 @@ def main() -> None:
         "rescuesVsV28": sum(r["rescuesVsV28"] for r in all_results),
         "regressionsVsV28": sum(r["regressionsVsV28"] for r in all_results),
         "minimumPhasePassesAcrossSources": min(r["minimumPhasePasses"] for r in all_results),
+        "modelChoicesReconstructedTrainingOnly": sum(r["modelChoicesReconstructedTrainingOnly"] for r in all_results),
     }
 
     after = sha256(candidate_path)
@@ -172,7 +189,7 @@ def main() -> None:
         "schemaVersion": 80,
         "profileType": "cosine-only-plus-v64-dual-dispersion-combined-diagnostic",
         "representation": "base+p2-cos+p4-cos",
-        "modelHyperparametersFrozenFromSources": True,
+        "modelHyperparametersFrozenOrTrainingOnlyReconstructedFromOriginalFullV17Representation": True,
         "fixedTightLiftDeltaStdMinimum": TIGHT_STD_MIN,
         "fixedBroadLiftDeltaStdMaximum": BROAD_STD_MAX,
         "thresholdsChosenFromExposedDiagnostics": True,
@@ -192,7 +209,7 @@ def main() -> None:
     for r in all_results:
         print(r["source"], "passes", r["foldsPassed"], "/", r["foldsTotal"], "V28", r["v28ComparisonPasses"],
               "rescues", r["rescuesVsV28"], "regressions", r["regressionsVsV28"], "min", r["minimumPhasePasses"],
-              "bottlenecks", r["bottleneckPhases"])
+              "bottlenecks", r["bottleneckPhases"], "reconstructed-models", r["modelChoicesReconstructedTrainingOnly"])
     print("Combined:", combined)
     print("New reserved 1/128 odd-numerator phases referenced: False")
     print("New tuning performed: False")
