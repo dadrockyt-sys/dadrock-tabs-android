@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 66,
+  "bottleneckFailureCount": 6,
+  "recoverabilityCounts": {
+    "none-pass": 3,
+    "tight-only": 1,
+    "broad-only": 2
+  },
+  "heldoutLabelsUsedForDiagnosticTriad": true,
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newTuningPerformed": false,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
