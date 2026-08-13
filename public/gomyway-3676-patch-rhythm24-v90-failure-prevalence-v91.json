@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 91,
+  "profileType": "exposed-v90-failure-prevalence-diagnostic",
+  "sources": [
+    {
+      "source": "v56_exposed_120",
+      "foldsTotal": 120,
+      "v90Passes": 105,
+      "minimumPhasePasses": 3,
+      "bottleneckPhases": [
+        0.03125
+      ]
+    },
+    {
+      "source": "v57_exposed_160",
+      "foldsTotal": 160,
+      "v90Passes": 142,
+      "minimumPhasePasses": 3,
+      "bottleneckPhases": [
+        0.046875,
+        0.703125,
+        0.984375
+      ]
+    }
+  ],
+  "combined": {
+    "foldsTotal": 280,
+    "v90Passes": 247,
+    "failures": 33,
+    "rescuesVsV28": 9,
+    "regressionsVsV28": 0,
+    "minimumPhasePassesAcrossSources": 3
+  },
+  "prevalence": {
+    "oldQBucket": [
+      {
+        "value": "anchor",
+        "total": 115,
+        "failures": 17,
+        "bottleneckFailures": 3,
+        "failureRate": 0.14782608695652175
+      },
+      {
+        "value": "tight",
+        "total": 67,
+        "failures": 7,
+        "bottleneckFailures": 2,
+        "failureRate": 0.1044776119402985
+      },
+      {
+        "value": "broad",
+        "total": 98,
+        "failures": 9,
+        "bottleneckFailures": 3,
+        "failureRate": 0.09183673469387756
+      }
+    ],
+    "v90Decision": [
+      {
+        "value": "v90-fallback-v28",
+        "total": 139,
+        "failures": 19,
+        "bottleneckFailures": 4,
+        "failureRate": 0.1366906474820144
+      },
+      {
+        "value": "revert-tight-to-anchor-low-dispersion",
+        "total": 38,
+        "failures": 4,
+        "bottleneckFailures": 0,
+        "failureRate": 0.10526315789473684
+      },
+      {
+        "value": "keep-tight-high-dispersion",
+        "total": 29,
+        "failures": 3,
+        "bottleneckFailures": 2,
+        "failureRate": 0.10344827586206896
+      },
+      {
+        "value": "keep-broad-low-dispersion",
+        "total": 74,
+        "failures": 7,
+        "bottleneckFailures": 2,
+        "failureRate": 0.0945945945945946
+      }
+    ],
+    "guardAppliedV90": [
+      {
+        "value": "False",
+        "total": 139,
+        "failures": 19,
+        "bottleneckFailures": 4,
+        "failureRate": 0.1366906474820144
+      },
+      {
+        "value": "True",
+        "total": 141,
+        "failures": 14,
+        "bottleneckFailures": 4,
+        "failureRate": 0.09929078014184398
+      }
+    ],
+    "pairRadius": [
+      {
+        "value": "None",
+        "total": 59,
+        "failures": 9,
+        "bottleneckFailures": 1,
+        "failureRate": 0.15254237288135594
+      },
+      {
+        "value": "8",
+        "total": 48,
+        "failures": 6,
+        "bottleneckFailures": 2,
+        "failureRate": 0.125
+      },
+      {
+        "value": "4",
+        "total": 141,
+        "failures": 17,
+        "bottleneckFailures": 4,
+        "failureRate": 0.12056737588652482
+      },
+      {
+        "value": "2",
+        "total": 32,
+        "failures": 1,
+        "bottleneckFailures": 1,
+        "failureRate": 0.03125
+      }
+    ],
+    "lambda": [
+      {
+        "value": "None",
+        "total": 59,
+        "failures": 9,
+        "bottleneckFailures": 1,
+        "failureRate": 0.15254237288135594
+      },
+      {
+        "value": "1.0",
+        "total": 126,
+        "failures": 15,
+        "bottleneckFailures": 5,
+        "failureRate": 0.11904761904761904
+      },
+      {
+        "value": "100.0",
+        "total": 84,
+        "failures": 9,
+        "bottleneckFailures": 2,
+        "failureRate": 0.10714285714285714
+      },
+      {
+        "value": "10.0",
+        "total": 11,
+        "failures": 0,
+        "bottleneckFailures": 0,
+        "failureRate": 0.0
+      }
+    ],
+    "selectionReason": [
+      {
+        "value": "anchor",
+        "total": 115,
+        "failures": 17,
+        "bottleneckFailures": 3,
+        "failureRate": 0.14782608695652175
+      },
+      {
+        "value": "unanimous-tight-nonworse-plus-lift",
+        "total": 67,
+        "failures": 7,
+        "bottleneckFailures": 2,
+        "failureRate": 0.1044776119402985
+      },
+      {
+        "value": "v46-strict-broad-support",
+        "total": 98,
+        "failures": 9,
+        "bottleneckFailures": 3,
+        "failureRate": 0.09183673469387756
+      }
+    ],
+    "strictBroadSupportCount": [
+      {
+        "value": "0",
+        "total": 182,
+        "failures": 24,
+        "bottleneckFailures": 5,
+        "failureRate": 0.13186813186813187
+      },
+      {
+        "value": "1",
+        "total": 78,
+        "failures": 9,
+        "bottleneckFailures": 3,
+        "failureRate": 0.11538461538461539
+      },
+      {
+        "value": "2",
+        "total": 20,
+        "failures": 0,
+        "bottleneckFailures": 0,
+        "failureRate": 0.0
+      }
+    ],
+    "unanimousTightEscape": [
+      {
+        "value": "False",
+        "total": 189,
+        "failures": 24,
+        "bottleneckFailures": 6,
+        "failureRate": 0.12698412698412698
+      },
+      {
+        "value": "True",
+        "total": 91,
+        "failures": 9,
+        "bottleneckFailures": 2,
+        "failureRate": 0.0989010989010989
+      }
+    ]
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v84OpenedConfirmationReferenced": false,
+  "newReserved1over256OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
