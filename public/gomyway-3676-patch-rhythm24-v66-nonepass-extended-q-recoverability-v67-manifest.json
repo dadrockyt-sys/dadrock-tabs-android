@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 67,
+  "nonePassFoldCount": 3,
+  "recoveryCounts": {
+    "recover-broader-outside-triad": 1,
+    "recover-outside-triad-mixed": 2
+  },
+  "heldoutLabelsUsedForDiagnosticSweep": true,
+  "diagnosticQValuesTaintedForSelection": true,
+  "newTuningPerformed": false,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

@@ -1,0 +1,2340 @@
+{
+  "schemaVersion": 67,
+  "profileType": "v66-nonepass-extended-q-recoverability-diagnostic",
+  "diagnosticScope": "already-exposed-v57-v64-bottleneck-nonepass-folds-only",
+  "diagnosticQGrid": [
+    0.05,
+    0.075,
+    0.1,
+    0.125,
+    0.15,
+    0.175,
+    0.2,
+    0.225,
+    0.25,
+    0.275,
+    0.3,
+    0.325,
+    0.35,
+    0.375,
+    0.4
+  ],
+  "nonePassFoldCount": 3,
+  "recoveryCounts": {
+    "recover-broader-outside-triad": 1,
+    "recover-outside-triad-mixed": 2
+  },
+  "diagnostics": [
+    {
+      "phase": 0.328125,
+      "fold": 0,
+      "v64NewBranch": "broad",
+      "v64Decision": "keep-broad-low-dispersion",
+      "chosenModel": {
+        "pairRadius": 8,
+        "lambda": 1.0,
+        "tailQuantile": 0.05,
+        "sectionPassCount": 3,
+        "sectionFoldCount": 3,
+        "sectionMeanLift": 25.413,
+        "overallPassCount": 9,
+        "overallFoldCount": 9,
+        "overallMeanLift": 22.268,
+        "sectionTrue": 25,
+        "sectionFalse": 37,
+        "qDiagnostics": [
+          {
+            "tailQuantile": 0.05,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 9,
+                "false": 11,
+                "precision": 45.0,
+                "selectedPct": 5.0,
+                "basePrecision": 14.5,
+                "lift": 30.5,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 5,
+                "false": 16,
+                "precision": 23.81,
+                "selectedPct": 5.05,
+                "basePrecision": 13.94,
+                "lift": 9.87,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 7,
+                "false": 14,
+                "precision": 33.33,
+                "selectedPct": 5.05,
+                "basePrecision": 16.35,
+                "lift": 16.98,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 9,
+                "false": 12,
+                "precision": 42.86,
+                "selectedPct": 5.05,
+                "basePrecision": 18.99,
+                "lift": 23.87,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 8,
+                "false": 13,
+                "precision": 38.1,
+                "selectedPct": 5.05,
+                "basePrecision": 12.98,
+                "lift": 25.12,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 8,
+                "false": 12,
+                "precision": 40.0,
+                "selectedPct": 5.0,
+                "basePrecision": 12.75,
+                "lift": 27.25,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 9,
+                "false": 11,
+                "precision": 45.0,
+                "selectedPct": 5.0,
+                "basePrecision": 16.0,
+                "lift": 29.0,
+                "passed": true
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 9,
+                "false": 12,
+                "precision": 42.86,
+                "selectedPct": 5.05,
+                "basePrecision": 19.23,
+                "lift": 23.63,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 5,
+                "false": 16,
+                "precision": 23.81,
+                "selectedPct": 5.05,
+                "basePrecision": 9.62,
+                "lift": 14.19,
+                "passed": true
+              }
+            ],
+            "overallPassCount": 9,
+            "overallFoldCount": 9,
+            "overallMeanLift": 22.268,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 25.413,
+            "sectionTrue": 25,
+            "sectionFalse": 37
+          },
+          {
+            "tailQuantile": 0.075,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 12,
+                "false": 18,
+                "precision": 40.0,
+                "selectedPct": 7.5,
+                "basePrecision": 14.5,
+                "lift": 25.5,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 21,
+                "precision": 32.26,
+                "selectedPct": 7.45,
+                "basePrecision": 13.94,
+                "lift": 18.32,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 14,
+                "false": 17,
+                "precision": 45.16,
+                "selectedPct": 7.45,
+                "basePrecision": 16.35,
+                "lift": 28.81,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 21,
+                "precision": 32.26,
+                "selectedPct": 7.45,
+                "basePrecision": 18.99,
+                "lift": 13.27,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 12,
+                "false": 19,
+                "precision": 38.71,
+                "selectedPct": 7.45,
+                "basePrecision": 12.98,
+                "lift": 25.73,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 8,
+                "false": 22,
+                "precision": 26.67,
+                "selectedPct": 7.5,
+                "basePrecision": 12.75,
+                "lift": 13.92,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 14,
+                "false": 16,
+                "precision": 46.67,
+                "selectedPct": 7.5,
+                "basePrecision": 16.0,
+                "lift": 30.67,
+                "passed": true
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 13,
+                "false": 18,
+                "precision": 41.94,
+                "selectedPct": 7.45,
+                "basePrecision": 19.23,
+                "lift": 22.71,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 7,
+                "false": 24,
+                "precision": 22.58,
+                "selectedPct": 7.45,
+                "basePrecision": 9.62,
+                "lift": 12.96,
+                "passed": true
+              }
+            ],
+            "overallPassCount": 9,
+            "overallFoldCount": 9,
+            "overallMeanLift": 21.321,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 17.64,
+            "sectionTrue": 30,
+            "sectionFalse": 62
+          },
+          {
+            "tailQuantile": 0.1,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 15,
+                "false": 25,
+                "precision": 37.5,
+                "selectedPct": 10.0,
+                "basePrecision": 14.5,
+                "lift": 23.0,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 12,
+                "false": 30,
+                "precision": 28.57,
+                "selectedPct": 10.1,
+                "basePrecision": 13.94,
+                "lift": 14.63,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 15,
+                "false": 27,
+                "precision": 35.71,
+                "selectedPct": 10.1,
+                "basePrecision": 16.35,
+                "lift": 19.36,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 12,
+                "false": 30,
+                "precision": 28.57,
+                "selectedPct": 10.1,
+                "basePrecision": 18.99,
+                "lift": 9.58,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 15,
+                "false": 27,
+                "precision": 35.71,
+                "selectedPct": 10.1,
+                "basePrecision": 12.98,
+                "lift": 22.73,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 30,
+                "precision": 25.0,
+                "selectedPct": 10.0,
+                "basePrecision": 12.75,
+                "lift": 12.25,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 15,
+                "false": 25,
+                "precision": 37.5,
+                "selectedPct": 10.0,
+                "basePrecision": 16.0,
+                "lift": 21.5,
+                "passed": true
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 15,
+                "false": 27,
+                "precision": 35.71,
+                "selectedPct": 10.1,
+                "basePrecision": 19.23,
+                "lift": 16.48,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 7,
+                "false": 35,
+                "precision": 16.67,
+                "selectedPct": 10.1,
+                "basePrecision": 9.62,
+                "lift": 7.05,
+                "passed": true
+              }
+            ],
+            "overallPassCount": 9,
+            "overallFoldCount": 9,
+            "overallMeanLift": 16.287,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 14.853,
+            "sectionTrue": 37,
+            "sectionFalse": 87
+          },
+          {
+            "tailQuantile": 0.15,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 21,
+                "false": 39,
+                "precision": 35.0,
+                "selectedPct": 15.0,
+                "basePrecision": 14.5,
+                "lift": 20.5,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 16,
+                "false": 46,
+                "precision": 25.81,
+                "selectedPct": 14.9,
+                "basePrecision": 13.94,
+                "lift": 11.87,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 20,
+                "false": 42,
+                "precision": 32.26,
+                "selectedPct": 14.9,
+                "basePrecision": 16.35,
+                "lift": 15.91,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 16,
+                "false": 46,
+                "precision": 25.81,
+                "selectedPct": 14.9,
+                "basePrecision": 18.99,
+                "lift": 6.82,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 19,
+                "false": 43,
+                "precision": 30.65,
+                "selectedPct": 14.9,
+                "basePrecision": 12.98,
+                "lift": 17.67,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 13,
+                "false": 47,
+                "precision": 21.67,
+                "selectedPct": 15.0,
+                "basePrecision": 12.75,
+                "lift": 8.92,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 20,
+                "false": 40,
+                "precision": 33.33,
+                "selectedPct": 15.0,
+                "basePrecision": 16.0,
+                "lift": 17.33,
+                "passed": true
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 21,
+                "false": 41,
+                "precision": 33.87,
+                "selectedPct": 14.9,
+                "basePrecision": 19.23,
+                "lift": 14.64,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 9,
+                "false": 53,
+                "precision": 14.52,
+                "selectedPct": 14.9,
+                "basePrecision": 9.62,
+                "lift": 4.9,
+                "passed": false
+              }
+            ],
+            "overallPassCount": 8,
+            "overallFoldCount": 9,
+            "overallMeanLift": 13.173,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 11.137,
+            "sectionTrue": 48,
+            "sectionFalse": 136
+          }
+        ]
+      },
+      "passingQCount": 2,
+      "passingQRange": [
+        0.25,
+        0.275
+      ],
+      "recoveryClass": "recover-broader-outside-triad",
+      "qSweep": [
+        {
+          "q": 0.05,
+          "passed": false,
+          "heldoutPrecisionLift": -0.67,
+          "heldoutCandidate": {
+            "selected": 16,
+            "true": 2,
+            "false": 14,
+            "precision": 12.5,
+            "selectedPct": 5.02
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.075,
+          "passed": false,
+          "heldoutPrecisionLift": 3.5,
+          "heldoutCandidate": {
+            "selected": 24,
+            "true": 4,
+            "false": 20,
+            "precision": 16.67,
+            "selectedPct": 7.52
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.1,
+          "passed": false,
+          "heldoutPrecisionLift": -0.67,
+          "heldoutCandidate": {
+            "selected": 32,
+            "true": 4,
+            "false": 28,
+            "precision": 12.5,
+            "selectedPct": 10.03
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.125,
+          "passed": false,
+          "heldoutPrecisionLift": -0.67,
+          "heldoutCandidate": {
+            "selected": 40,
+            "true": 5,
+            "false": 35,
+            "precision": 12.5,
+            "selectedPct": 12.54
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.15,
+          "passed": false,
+          "heldoutPrecisionLift": -2.75,
+          "heldoutCandidate": {
+            "selected": 48,
+            "true": 5,
+            "false": 43,
+            "precision": 10.42,
+            "selectedPct": 15.05
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.175,
+          "passed": false,
+          "heldoutPrecisionLift": 1.12,
+          "heldoutCandidate": {
+            "selected": 56,
+            "true": 8,
+            "false": 48,
+            "precision": 14.29,
+            "selectedPct": 17.55
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.2,
+          "passed": false,
+          "heldoutPrecisionLift": 4.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.225,
+          "passed": false,
+          "heldoutPrecisionLift": 4.89,
+          "heldoutCandidate": {
+            "selected": 72,
+            "true": 13,
+            "false": 59,
+            "precision": 18.06,
+            "selectedPct": 22.57
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.25,
+          "passed": true,
+          "heldoutPrecisionLift": 5.58,
+          "heldoutCandidate": {
+            "selected": 80,
+            "true": 15,
+            "false": 65,
+            "precision": 18.75,
+            "selectedPct": 25.08
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.275,
+          "passed": true,
+          "heldoutPrecisionLift": 5.01,
+          "heldoutCandidate": {
+            "selected": 88,
+            "true": 16,
+            "false": 72,
+            "precision": 18.18,
+            "selectedPct": 27.59
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.3,
+          "passed": false,
+          "heldoutPrecisionLift": 4.54,
+          "heldoutCandidate": {
+            "selected": 96,
+            "true": 17,
+            "false": 79,
+            "precision": 17.71,
+            "selectedPct": 30.09
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.325,
+          "passed": false,
+          "heldoutPrecisionLift": 3.18,
+          "heldoutCandidate": {
+            "selected": 104,
+            "true": 17,
+            "false": 87,
+            "precision": 16.35,
+            "selectedPct": 32.6
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.35,
+          "passed": false,
+          "heldoutPrecisionLift": 3.79,
+          "heldoutCandidate": {
+            "selected": 112,
+            "true": 19,
+            "false": 93,
+            "precision": 16.96,
+            "selectedPct": 35.11
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.375,
+          "passed": false,
+          "heldoutPrecisionLift": 2.66,
+          "heldoutCandidate": {
+            "selected": 120,
+            "true": 19,
+            "false": 101,
+            "precision": 15.83,
+            "selectedPct": 37.62
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "q": 0.4,
+          "passed": false,
+          "heldoutPrecisionLift": 2.45,
+          "heldoutCandidate": {
+            "selected": 128,
+            "true": 20,
+            "false": 108,
+            "precision": 15.62,
+            "selectedPct": 40.13
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.328125,
+      "fold": 3,
+      "v64NewBranch": "tight",
+      "v64Decision": "keep-tight-high-dispersion",
+      "chosenModel": {
+        "pairRadius": 4,
+        "lambda": 1.0,
+        "tailQuantile": 0.05,
+        "sectionPassCount": 3,
+        "sectionFoldCount": 3,
+        "sectionMeanLift": 21.45,
+        "overallPassCount": 9,
+        "overallFoldCount": 9,
+        "overallMeanLift": 16.802,
+        "sectionTrue": 22,
+        "sectionFalse": 39,
+        "qDiagnostics": [
+          {
+            "tailQuantile": 0.05,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 7,
+                "false": 13,
+                "precision": 35.0,
+                "selectedPct": 5.0,
+                "basePrecision": 17.0,
+                "lift": 18.0,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 5,
+                "false": 15,
+                "precision": 25.0,
+                "selectedPct": 5.0,
+                "basePrecision": 15.5,
+                "lift": 9.5,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 6,
+                "false": 16,
+                "precision": 27.27,
+                "selectedPct": 5.1,
+                "basePrecision": 16.01,
+                "lift": 11.26,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 9,
+                "false": 17,
+                "precision": 34.62,
+                "selectedPct": 4.92,
+                "basePrecision": 17.99,
+                "lift": 16.63,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 8,
+                "false": 7,
+                "precision": 53.33,
+                "selectedPct": 4.93,
+                "basePrecision": 19.08,
+                "lift": 34.25,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 5,
+                "false": 15,
+                "precision": 25.0,
+                "selectedPct": 5.01,
+                "basePrecision": 11.53,
+                "lift": 13.47,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 8,
+                "false": 18,
+                "precision": 30.77,
+                "selectedPct": 4.93,
+                "basePrecision": 12.71,
+                "lift": 18.06,
+                "passed": true
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 9,
+                "false": 17,
+                "precision": 34.62,
+                "selectedPct": 5.08,
+                "basePrecision": 20.51,
+                "lift": 14.11,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 3,
+                "false": 7,
+                "precision": 30.0,
+                "selectedPct": 5.21,
+                "basePrecision": 14.06,
+                "lift": 15.94,
+                "passed": true
+              }
+            ],
+            "overallPassCount": 9,
+            "overallFoldCount": 9,
+            "overallMeanLift": 16.802,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 21.45,
+            "sectionTrue": 22,
+            "sectionFalse": 39
+          },
+          {
+            "tailQuantile": 0.075,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 9,
+                "false": 21,
+                "precision": 30.0,
+                "selectedPct": 7.5,
+                "basePrecision": 17.0,
+                "lift": 13.0,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 7,
+                "false": 23,
+                "precision": 23.33,
+                "selectedPct": 7.5,
+                "basePrecision": 15.5,
+                "lift": 7.83,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 8,
+                "false": 24,
+                "precision": 25.0,
+                "selectedPct": 7.42,
+                "basePrecision": 16.01,
+                "lift": 8.99,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 13,
+                "false": 27,
+                "precision": 32.5,
+                "selectedPct": 7.58,
+                "basePrecision": 17.99,
+                "lift": 14.51,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 13,
+                "precision": 43.48,
+                "selectedPct": 7.57,
+                "basePrecision": 19.08,
+                "lift": 24.4,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 6,
+                "false": 24,
+                "precision": 20.0,
+                "selectedPct": 7.52,
+                "basePrecision": 11.53,
+                "lift": 8.47,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 30,
+                "precision": 25.0,
+                "selectedPct": 7.59,
+                "basePrecision": 12.71,
+                "lift": 12.29,
+                "passed": true
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 11,
+                "false": 27,
+                "precision": 28.95,
+                "selectedPct": 7.42,
+                "basePrecision": 20.51,
+                "lift": 8.44,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 5,
+                "false": 9,
+                "precision": 35.71,
+                "selectedPct": 7.29,
+                "basePrecision": 14.06,
+                "lift": 21.65,
+                "passed": true
+              }
+            ],
+            "overallPassCount": 9,
+            "overallFoldCount": 9,
+            "overallMeanLift": 13.287,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 15.793,
+            "sectionTrue": 29,
+            "sectionFalse": 64
+          },
+          {
+            "tailQuantile": 0.1,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 30,
+                "precision": 25.0,
+                "selectedPct": 10.0,
+                "basePrecision": 17.0,
+                "lift": 8.0,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 9,
+                "false": 31,
+                "precision": 22.5,
+                "selectedPct": 10.0,
+                "basePrecision": 15.5,
+                "lift": 7.0,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 11,
+                "false": 32,
+                "precision": 25.58,
+                "selectedPct": 9.98,
+                "basePrecision": 16.01,
+                "lift": 9.57,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 17,
+                "false": 36,
+                "precision": 32.08,
+                "selectedPct": 10.04,
+                "basePrecision": 17.99,
+                "lift": 14.09,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 13,
+                "false": 17,
+                "precision": 43.33,
+                "selectedPct": 9.87,
+                "basePrecision": 19.08,
+                "lift": 24.25,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 30,
+                "precision": 25.0,
+                "selectedPct": 10.03,
+                "basePrecision": 11.53,
+                "lift": 13.47,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 13,
+                "false": 40,
+                "precision": 24.53,
+                "selectedPct": 10.06,
+                "basePrecision": 12.71,
+                "lift": 11.82,
+                "passed": true
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 19,
+                "false": 32,
+                "precision": 37.25,
+                "selectedPct": 9.96,
+                "basePrecision": 20.51,
+                "lift": 16.74,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 7,
+                "false": 12,
+                "precision": 36.84,
+                "selectedPct": 9.9,
+                "basePrecision": 14.06,
+                "lift": 22.78,
+                "passed": true
+              }
+            ],
+            "overallPassCount": 9,
+            "overallFoldCount": 9,
+            "overallMeanLift": 14.191,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 17.27,
+            "sectionTrue": 40,
+            "sectionFalse": 83
+          },
+          {
+            "tailQuantile": 0.15,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 19,
+                "false": 41,
+                "precision": 31.67,
+                "selectedPct": 15.0,
+                "basePrecision": 17.0,
+                "lift": 14.67,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 17,
+                "false": 43,
+                "precision": 28.33,
+                "selectedPct": 15.0,
+                "basePrecision": 15.5,
+                "lift": 12.83,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 17,
+                "false": 48,
+                "precision": 26.15,
+                "selectedPct": 15.08,
+                "basePrecision": 16.01,
+                "lift": 10.14,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 23,
+                "false": 56,
+                "precision": 29.11,
+                "selectedPct": 14.96,
+                "basePrecision": 17.99,
+                "lift": 11.12,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 18,
+                "false": 28,
+                "precision": 39.13,
+                "selectedPct": 15.13,
+                "basePrecision": 19.08,
+                "lift": 20.05,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 13,
+                "false": 47,
+                "precision": 21.67,
+                "selectedPct": 15.04,
+                "basePrecision": 11.53,
+                "lift": 10.14,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 17,
+                "false": 62,
+                "precision": 21.52,
+                "selectedPct": 14.99,
+                "basePrecision": 12.71,
+                "lift": 8.81,
+                "passed": true
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 24,
+                "false": 53,
+                "precision": 31.17,
+                "selectedPct": 15.04,
+                "basePrecision": 20.51,
+                "lift": 10.66,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 8,
+                "false": 21,
+                "precision": 27.59,
+                "selectedPct": 15.1,
+                "basePrecision": 14.06,
+                "lift": 13.53,
+                "passed": true
+              }
+            ],
+            "overallPassCount": 9,
+            "overallFoldCount": 9,
+            "overallMeanLift": 12.439,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 13.77,
+            "sectionTrue": 54,
+            "sectionFalse": 131
+          }
+        ]
+      },
+      "passingQCount": 8,
+      "passingQRange": [
+        0.075,
+        0.325
+      ],
+      "recoveryClass": "recover-outside-triad-mixed",
+      "qSweep": [
+        {
+          "q": 0.05,
+          "passed": false,
+          "heldoutPrecisionLift": 4.06,
+          "heldoutCandidate": {
+            "selected": 16,
+            "true": 2,
+            "false": 14,
+            "precision": 12.5,
+            "selectedPct": 5.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.075,
+          "passed": true,
+          "heldoutPrecisionLift": 8.23,
+          "heldoutCandidate": {
+            "selected": 24,
+            "true": 4,
+            "false": 20,
+            "precision": 16.67,
+            "selectedPct": 7.5
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.1,
+          "passed": true,
+          "heldoutPrecisionLift": 10.31,
+          "heldoutCandidate": {
+            "selected": 32,
+            "true": 6,
+            "false": 26,
+            "precision": 18.75,
+            "selectedPct": 10.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.125,
+          "passed": true,
+          "heldoutPrecisionLift": 9.06,
+          "heldoutCandidate": {
+            "selected": 40,
+            "true": 7,
+            "false": 33,
+            "precision": 17.5,
+            "selectedPct": 12.5
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.15,
+          "passed": true,
+          "heldoutPrecisionLift": 6.14,
+          "heldoutCandidate": {
+            "selected": 48,
+            "true": 7,
+            "false": 41,
+            "precision": 14.58,
+            "selectedPct": 15.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.175,
+          "passed": false,
+          "heldoutPrecisionLift": 4.06,
+          "heldoutCandidate": {
+            "selected": 56,
+            "true": 7,
+            "false": 49,
+            "precision": 12.5,
+            "selectedPct": 17.5
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.2,
+          "passed": false,
+          "heldoutPrecisionLift": 2.5,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 7,
+            "false": 57,
+            "precision": 10.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.225,
+          "passed": false,
+          "heldoutPrecisionLift": 4.06,
+          "heldoutCandidate": {
+            "selected": 72,
+            "true": 9,
+            "false": 63,
+            "precision": 12.5,
+            "selectedPct": 22.5
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.25,
+          "passed": true,
+          "heldoutPrecisionLift": 6.56,
+          "heldoutCandidate": {
+            "selected": 80,
+            "true": 12,
+            "false": 68,
+            "precision": 15.0,
+            "selectedPct": 25.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.275,
+          "passed": true,
+          "heldoutPrecisionLift": 6.33,
+          "heldoutCandidate": {
+            "selected": 88,
+            "true": 13,
+            "false": 75,
+            "precision": 14.77,
+            "selectedPct": 27.5
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.3,
+          "passed": true,
+          "heldoutPrecisionLift": 6.14,
+          "heldoutCandidate": {
+            "selected": 96,
+            "true": 14,
+            "false": 82,
+            "precision": 14.58,
+            "selectedPct": 30.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.325,
+          "passed": true,
+          "heldoutPrecisionLift": 5.02,
+          "heldoutCandidate": {
+            "selected": 104,
+            "true": 14,
+            "false": 90,
+            "precision": 13.46,
+            "selectedPct": 32.5
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.35,
+          "passed": false,
+          "heldoutPrecisionLift": 4.06,
+          "heldoutCandidate": {
+            "selected": 112,
+            "true": 14,
+            "false": 98,
+            "precision": 12.5,
+            "selectedPct": 35.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.375,
+          "passed": false,
+          "heldoutPrecisionLift": 3.23,
+          "heldoutCandidate": {
+            "selected": 120,
+            "true": 14,
+            "false": 106,
+            "precision": 11.67,
+            "selectedPct": 37.5
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "q": 0.4,
+          "passed": false,
+          "heldoutPrecisionLift": 2.5,
+          "heldoutCandidate": {
+            "selected": 128,
+            "true": 14,
+            "false": 114,
+            "precision": 10.94,
+            "selectedPct": 40.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.703125,
+      "fold": 2,
+      "v64NewBranch": "anchor",
+      "v64Decision": "keep-current",
+      "chosenModel": {
+        "pairRadius": 8,
+        "lambda": 100.0,
+        "tailQuantile": 0.075,
+        "sectionPassCount": 3,
+        "sectionFoldCount": 3,
+        "sectionMeanLift": 21.057,
+        "overallPassCount": 9,
+        "overallFoldCount": 9,
+        "overallMeanLift": 18.669,
+        "sectionTrue": 31,
+        "sectionFalse": 62,
+        "qDiagnostics": [
+          {
+            "tailQuantile": 0.05,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 11,
+                "false": 10,
+                "precision": 52.38,
+                "selectedPct": 5.05,
+                "basePrecision": 13.94,
+                "lift": 38.44,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 5,
+                "false": 15,
+                "precision": 25.0,
+                "selectedPct": 5.0,
+                "basePrecision": 12.0,
+                "lift": 13.0,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 6,
+                "false": 16,
+                "precision": 27.27,
+                "selectedPct": 5.1,
+                "basePrecision": 13.69,
+                "lift": 13.58,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 7,
+                "false": 14,
+                "precision": 33.33,
+                "selectedPct": 5.05,
+                "basePrecision": 17.31,
+                "lift": 16.02,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 5,
+                "false": 11,
+                "precision": 31.25,
+                "selectedPct": 5.0,
+                "basePrecision": 10.31,
+                "lift": 20.94,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 8,
+                "false": 18,
+                "precision": 30.77,
+                "selectedPct": 5.09,
+                "basePrecision": 11.74,
+                "lift": 19.03,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 3,
+                "false": 23,
+                "precision": 11.54,
+                "selectedPct": 4.93,
+                "basePrecision": 12.71,
+                "lift": -1.17,
+                "passed": false
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 5,
+                "false": 5,
+                "precision": 50.0,
+                "selectedPct": 4.81,
+                "basePrecision": 21.15,
+                "lift": 28.85,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 4,
+                "false": 22,
+                "precision": 15.38,
+                "selectedPct": 5.08,
+                "basePrecision": 10.55,
+                "lift": 4.83,
+                "passed": false
+              }
+            ],
+            "overallPassCount": 7,
+            "overallFoldCount": 9,
+            "overallMeanLift": 17.058,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 18.663,
+            "sectionTrue": 20,
+            "sectionFalse": 43
+          },
+          {
+            "tailQuantile": 0.075,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 15,
+                "false": 16,
+                "precision": 48.39,
+                "selectedPct": 7.45,
+                "basePrecision": 13.94,
+                "lift": 34.45,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 20,
+                "precision": 33.33,
+                "selectedPct": 7.5,
+                "basePrecision": 12.0,
+                "lift": 21.33,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 8,
+                "false": 24,
+                "precision": 25.0,
+                "selectedPct": 7.42,
+                "basePrecision": 13.69,
+                "lift": 11.31,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 12,
+                "false": 19,
+                "precision": 38.71,
+                "selectedPct": 7.45,
+                "basePrecision": 17.31,
+                "lift": 21.4,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 9,
+                "false": 15,
+                "precision": 37.5,
+                "selectedPct": 7.5,
+                "basePrecision": 10.31,
+                "lift": 27.19,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 28,
+                "precision": 26.32,
+                "selectedPct": 7.44,
+                "basePrecision": 11.74,
+                "lift": 14.58,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 8,
+                "false": 32,
+                "precision": 20.0,
+                "selectedPct": 7.59,
+                "basePrecision": 12.71,
+                "lift": 7.29,
+                "passed": true
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 7,
+                "false": 9,
+                "precision": 43.75,
+                "selectedPct": 7.69,
+                "basePrecision": 21.15,
+                "lift": 22.6,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 7,
+                "false": 31,
+                "precision": 18.42,
+                "selectedPct": 7.42,
+                "basePrecision": 10.55,
+                "lift": 7.87,
+                "passed": true
+              }
+            ],
+            "overallPassCount": 9,
+            "overallFoldCount": 9,
+            "overallMeanLift": 18.669,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 21.057,
+            "sectionTrue": 31,
+            "sectionFalse": 62
+          },
+          {
+            "tailQuantile": 0.1,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 16,
+                "false": 26,
+                "precision": 38.1,
+                "selectedPct": 10.1,
+                "basePrecision": 13.94,
+                "lift": 24.16,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 14,
+                "false": 26,
+                "precision": 35.0,
+                "selectedPct": 10.0,
+                "basePrecision": 12.0,
+                "lift": 23.0,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 33,
+                "precision": 23.26,
+                "selectedPct": 9.98,
+                "basePrecision": 13.69,
+                "lift": 9.57,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 16,
+                "false": 26,
+                "precision": 38.1,
+                "selectedPct": 10.1,
+                "basePrecision": 17.31,
+                "lift": 20.79,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 11,
+                "false": 21,
+                "precision": 34.38,
+                "selectedPct": 10.0,
+                "basePrecision": 10.31,
+                "lift": 24.07,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 11,
+                "false": 40,
+                "precision": 21.57,
+                "selectedPct": 9.98,
+                "basePrecision": 11.74,
+                "lift": 9.83,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 43,
+                "precision": 18.87,
+                "selectedPct": 10.06,
+                "basePrecision": 12.71,
+                "lift": 6.16,
+                "passed": true
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 11,
+                "precision": 47.62,
+                "selectedPct": 10.1,
+                "basePrecision": 21.15,
+                "lift": 26.47,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 10,
+                "false": 41,
+                "precision": 19.61,
+                "selectedPct": 9.96,
+                "basePrecision": 10.55,
+                "lift": 9.06,
+                "passed": true
+              }
+            ],
+            "overallPassCount": 9,
+            "overallFoldCount": 9,
+            "overallMeanLift": 17.012,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 18.23,
+            "sectionTrue": 38,
+            "sectionFalse": 87
+          },
+          {
+            "tailQuantile": 0.15,
+            "folds": [
+              {
+                "split": "normal:0",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 20,
+                "false": 42,
+                "precision": 32.26,
+                "selectedPct": 14.9,
+                "basePrecision": 13.94,
+                "lift": 18.32,
+                "passed": true
+              },
+              {
+                "split": "normal:1",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 17,
+                "false": 43,
+                "precision": 28.33,
+                "selectedPct": 15.0,
+                "basePrecision": 12.0,
+                "lift": 16.33,
+                "passed": true
+              },
+              {
+                "split": "normal:2",
+                "family": "normal",
+                "pairCount": 6000,
+                "true": 16,
+                "false": 49,
+                "precision": 24.62,
+                "selectedPct": 15.08,
+                "basePrecision": 13.69,
+                "lift": 10.93,
+                "passed": true
+              },
+              {
+                "split": "section:0",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 23,
+                "false": 39,
+                "precision": 37.1,
+                "selectedPct": 14.9,
+                "basePrecision": 17.31,
+                "lift": 19.79,
+                "passed": true
+              },
+              {
+                "split": "section:1",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 12,
+                "false": 36,
+                "precision": 25.0,
+                "selectedPct": 15.0,
+                "basePrecision": 10.31,
+                "lift": 14.69,
+                "passed": true
+              },
+              {
+                "split": "section:2",
+                "family": "section",
+                "pairCount": 6000,
+                "true": 15,
+                "false": 62,
+                "precision": 19.48,
+                "selectedPct": 15.07,
+                "basePrecision": 11.74,
+                "lift": 7.74,
+                "passed": true
+              },
+              {
+                "split": "shifted:0",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 17,
+                "false": 62,
+                "precision": 21.52,
+                "selectedPct": 14.99,
+                "basePrecision": 12.71,
+                "lift": 8.81,
+                "passed": true
+              },
+              {
+                "split": "shifted:1",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 14,
+                "false": 17,
+                "precision": 45.16,
+                "selectedPct": 14.9,
+                "basePrecision": 21.15,
+                "lift": 24.01,
+                "passed": true
+              },
+              {
+                "split": "shifted:2",
+                "family": "shiftedWindow",
+                "pairCount": 6000,
+                "true": 14,
+                "false": 63,
+                "precision": 18.18,
+                "selectedPct": 15.04,
+                "basePrecision": 10.55,
+                "lift": 7.63,
+                "passed": true
+              }
+            ],
+            "overallPassCount": 9,
+            "overallFoldCount": 9,
+            "overallMeanLift": 14.25,
+            "sectionPassCount": 3,
+            "sectionFoldCount": 3,
+            "sectionMeanLift": 14.073,
+            "sectionTrue": 50,
+            "sectionFalse": 137
+          }
+        ]
+      },
+      "passingQCount": 6,
+      "passingQRange": [
+        0.05,
+        0.275
+      ],
+      "recoveryClass": "recover-outside-triad-mixed",
+      "qSweep": [
+        {
+          "q": 0.05,
+          "passed": true,
+          "heldoutPrecisionLift": 19.93,
+          "heldoutCandidate": {
+            "selected": 15,
+            "true": 6,
+            "false": 9,
+            "precision": 40.0,
+            "selectedPct": 4.93
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.075,
+          "passed": true,
+          "heldoutPrecisionLift": 10.36,
+          "heldoutCandidate": {
+            "selected": 23,
+            "true": 7,
+            "false": 16,
+            "precision": 30.43,
+            "selectedPct": 7.57
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.1,
+          "passed": true,
+          "heldoutPrecisionLift": 9.93,
+          "heldoutCandidate": {
+            "selected": 30,
+            "true": 9,
+            "false": 21,
+            "precision": 30.0,
+            "selectedPct": 9.87
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.125,
+          "passed": true,
+          "heldoutPrecisionLift": 8.88,
+          "heldoutCandidate": {
+            "selected": 38,
+            "true": 11,
+            "false": 27,
+            "precision": 28.95,
+            "selectedPct": 12.5
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.15,
+          "passed": true,
+          "heldoutPrecisionLift": 6.02,
+          "heldoutCandidate": {
+            "selected": 46,
+            "true": 12,
+            "false": 34,
+            "precision": 26.09,
+            "selectedPct": 15.13
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.175,
+          "passed": false,
+          "heldoutPrecisionLift": 2.57,
+          "heldoutCandidate": {
+            "selected": 53,
+            "true": 12,
+            "false": 41,
+            "precision": 22.64,
+            "selectedPct": 17.43
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.2,
+          "passed": false,
+          "heldoutPrecisionLift": 2.88,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.225,
+          "passed": false,
+          "heldoutPrecisionLift": 3.46,
+          "heldoutCandidate": {
+            "selected": 68,
+            "true": 16,
+            "false": 52,
+            "precision": 23.53,
+            "selectedPct": 22.37
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.25,
+          "passed": false,
+          "heldoutPrecisionLift": 4.93,
+          "heldoutCandidate": {
+            "selected": 76,
+            "true": 19,
+            "false": 57,
+            "precision": 25.0,
+            "selectedPct": 25.0
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.275,
+          "passed": true,
+          "heldoutPrecisionLift": 6.12,
+          "heldoutCandidate": {
+            "selected": 84,
+            "true": 22,
+            "false": 62,
+            "precision": 26.19,
+            "selectedPct": 27.63
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.3,
+          "passed": false,
+          "heldoutPrecisionLift": 4.11,
+          "heldoutCandidate": {
+            "selected": 91,
+            "true": 22,
+            "false": 69,
+            "precision": 24.18,
+            "selectedPct": 29.93
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.325,
+          "passed": false,
+          "heldoutPrecisionLift": 2.15,
+          "heldoutCandidate": {
+            "selected": 99,
+            "true": 22,
+            "false": 77,
+            "precision": 22.22,
+            "selectedPct": 32.57
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.35,
+          "passed": false,
+          "heldoutPrecisionLift": 2.57,
+          "heldoutCandidate": {
+            "selected": 106,
+            "true": 24,
+            "false": 82,
+            "precision": 22.64,
+            "selectedPct": 34.87
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.375,
+          "passed": false,
+          "heldoutPrecisionLift": 1.86,
+          "heldoutCandidate": {
+            "selected": 114,
+            "true": 25,
+            "false": 89,
+            "precision": 21.93,
+            "selectedPct": 37.5
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "q": 0.4,
+          "passed": false,
+          "heldoutPrecisionLift": 2.06,
+          "heldoutCandidate": {
+            "selected": 122,
+            "true": 27,
+            "false": 95,
+            "precision": 22.13,
+            "selectedPct": 40.13
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        }
+      ]
+    }
+  ],
+  "heldoutLabelsUsedForDiagnosticSweep": true,
+  "diagnosticQValuesTaintedForSelection": true,
+  "newTuningPerformed": false,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
