@@ -1,0 +1,1024 @@
+{
+  "schemaVersion": 78,
+  "profileType": "v77-training-evidence-separability-diagnostic",
+  "diagnosticScope": "13 already-exposed V76 changed folds only",
+  "changedFoldCount": 13,
+  "statusCounts": {
+    "rescue": 9,
+    "regression": 4
+  },
+  "exactTrainingEvidencePatterns": {
+    "('rescue', 0, 3, 1, 0, -0.341)": 1,
+    "('regression', 3, 3, 3, 3, 0.978)": 1,
+    "('rescue', 0, 2, 3, -1, 1.196)": 1,
+    "('regression', 1, 3, 2, 1, 0.39)": 1,
+    "('regression', 0, 2, 1, -1, -0.677)": 1,
+    "('rescue', 1, 3, 1, 1, 0.052)": 1,
+    "('rescue', 0, 3, 2, 0, 0.528)": 1,
+    "('regression', 0, 3, 3, 0, 0.411)": 1,
+    "('rescue', 0, 2, 1, -1, -0.207)": 1,
+    "('rescue', 0, 2, 1, -1, -0.13)": 1,
+    "('rescue', 0, 3, 1, 0, -1.226)": 1,
+    "('rescue', 0, 2, 2, -1, -0.141)": 1,
+    "('rescue', 0, 3, 1, 0, 0.151)": 1
+  },
+  "predeclaredGuardResults": [
+    {
+      "guard": "better0_and_meanLiftPositive",
+      "kept": 4,
+      "rescuesKept": 3,
+      "regressionsKept": 1,
+      "netChangedOutcomeGain": 2,
+      "changedRowsKept": [
+        {
+          "phase": 0.109375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": 1.195833
+        },
+        {
+          "phase": 0.296875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.528333
+        },
+        {
+          "phase": 0.359375,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.410833
+        },
+        {
+          "phase": 0.984375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.150833
+        }
+      ]
+    },
+    {
+      "guard": "betterSchemes_eq_0",
+      "kept": 10,
+      "rescuesKept": 8,
+      "regressionsKept": 2,
+      "netChangedOutcomeGain": 6,
+      "changedRowsKept": [
+        {
+          "phase": 0.046875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -0.340833
+        },
+        {
+          "phase": 0.109375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": 1.195833
+        },
+        {
+          "phase": 0.203125,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.676667
+        },
+        {
+          "phase": 0.296875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.528333
+        },
+        {
+          "phase": 0.359375,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.410833
+        },
+        {
+          "phase": 0.359375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.2075
+        },
+        {
+          "phase": 0.671875,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.13
+        },
+        {
+          "phase": 0.703125,
+          "fold": 4,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -1.225833
+        },
+        {
+          "phase": 0.859375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.140833
+        },
+        {
+          "phase": 0.984375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.150833
+        }
+      ]
+    },
+    {
+      "guard": "better0_and_nonWorse2plus",
+      "kept": 10,
+      "rescuesKept": 8,
+      "regressionsKept": 2,
+      "netChangedOutcomeGain": 6,
+      "changedRowsKept": [
+        {
+          "phase": 0.046875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -0.340833
+        },
+        {
+          "phase": 0.109375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": 1.195833
+        },
+        {
+          "phase": 0.203125,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.676667
+        },
+        {
+          "phase": 0.296875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.528333
+        },
+        {
+          "phase": 0.359375,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.410833
+        },
+        {
+          "phase": 0.359375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.2075
+        },
+        {
+          "phase": 0.671875,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.13
+        },
+        {
+          "phase": 0.703125,
+          "fold": 4,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -1.225833
+        },
+        {
+          "phase": 0.859375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.140833
+        },
+        {
+          "phase": 0.984375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.150833
+        }
+      ]
+    },
+    {
+      "guard": "betterSchemes_le_1",
+      "kept": 12,
+      "rescuesKept": 9,
+      "regressionsKept": 3,
+      "netChangedOutcomeGain": 6,
+      "changedRowsKept": [
+        {
+          "phase": 0.046875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -0.340833
+        },
+        {
+          "phase": 0.109375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": 1.195833
+        },
+        {
+          "phase": 0.140625,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.39
+        },
+        {
+          "phase": 0.203125,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.676667
+        },
+        {
+          "phase": 0.203125,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.0525
+        },
+        {
+          "phase": 0.296875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.528333
+        },
+        {
+          "phase": 0.359375,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.410833
+        },
+        {
+          "phase": 0.359375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.2075
+        },
+        {
+          "phase": 0.671875,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.13
+        },
+        {
+          "phase": 0.703125,
+          "fold": 4,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -1.225833
+        },
+        {
+          "phase": 0.859375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.140833
+        },
+        {
+          "phase": 0.984375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.150833
+        }
+      ]
+    },
+    {
+      "guard": "betterLe1_and_nonWorse2plus",
+      "kept": 12,
+      "rescuesKept": 9,
+      "regressionsKept": 3,
+      "netChangedOutcomeGain": 6,
+      "changedRowsKept": [
+        {
+          "phase": 0.046875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -0.340833
+        },
+        {
+          "phase": 0.109375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": 1.195833
+        },
+        {
+          "phase": 0.140625,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.39
+        },
+        {
+          "phase": 0.203125,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.676667
+        },
+        {
+          "phase": 0.203125,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.0525
+        },
+        {
+          "phase": 0.296875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.528333
+        },
+        {
+          "phase": 0.359375,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.410833
+        },
+        {
+          "phase": 0.359375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.2075
+        },
+        {
+          "phase": 0.671875,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.13
+        },
+        {
+          "phase": 0.703125,
+          "fold": 4,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -1.225833
+        },
+        {
+          "phase": 0.859375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.140833
+        },
+        {
+          "phase": 0.984375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.150833
+        }
+      ]
+    },
+    {
+      "guard": "nonWorseSchemes_eq_3",
+      "kept": 8,
+      "rescuesKept": 5,
+      "regressionsKept": 3,
+      "netChangedOutcomeGain": 2,
+      "changedRowsKept": [
+        {
+          "phase": 0.046875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -0.340833
+        },
+        {
+          "phase": 0.078125,
+          "fold": 1,
+          "status": "regression",
+          "dropBetterSchemeCount": 3,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 3,
+          "meanSchemeLiftDeltaDropMinusFull": 0.978333
+        },
+        {
+          "phase": 0.140625,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.39
+        },
+        {
+          "phase": 0.203125,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.0525
+        },
+        {
+          "phase": 0.296875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.528333
+        },
+        {
+          "phase": 0.359375,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.410833
+        },
+        {
+          "phase": 0.703125,
+          "fold": 4,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -1.225833
+        },
+        {
+          "phase": 0.984375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.150833
+        }
+      ]
+    },
+    {
+      "guard": "innerPassDelta_ge_0",
+      "kept": 8,
+      "rescuesKept": 5,
+      "regressionsKept": 3,
+      "netChangedOutcomeGain": 2,
+      "changedRowsKept": [
+        {
+          "phase": 0.046875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -0.340833
+        },
+        {
+          "phase": 0.078125,
+          "fold": 1,
+          "status": "regression",
+          "dropBetterSchemeCount": 3,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 3,
+          "meanSchemeLiftDeltaDropMinusFull": 0.978333
+        },
+        {
+          "phase": 0.140625,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.39
+        },
+        {
+          "phase": 0.203125,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.0525
+        },
+        {
+          "phase": 0.296875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.528333
+        },
+        {
+          "phase": 0.359375,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.410833
+        },
+        {
+          "phase": 0.703125,
+          "fold": 4,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -1.225833
+        },
+        {
+          "phase": 0.984375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.150833
+        }
+      ]
+    },
+    {
+      "guard": "meanLiftDelta_gt_0",
+      "kept": 7,
+      "rescuesKept": 4,
+      "regressionsKept": 3,
+      "netChangedOutcomeGain": 1,
+      "changedRowsKept": [
+        {
+          "phase": 0.078125,
+          "fold": 1,
+          "status": "regression",
+          "dropBetterSchemeCount": 3,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 3,
+          "meanSchemeLiftDeltaDropMinusFull": 0.978333
+        },
+        {
+          "phase": 0.109375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": 1.195833
+        },
+        {
+          "phase": 0.140625,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.39
+        },
+        {
+          "phase": 0.203125,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.0525
+        },
+        {
+          "phase": 0.296875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.528333
+        },
+        {
+          "phase": 0.359375,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.410833
+        },
+        {
+          "phase": 0.984375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.150833
+        }
+      ]
+    },
+    {
+      "guard": "liftBetterSchemes_ge_2",
+      "kept": 6,
+      "rescuesKept": 3,
+      "regressionsKept": 3,
+      "netChangedOutcomeGain": 0,
+      "changedRowsKept": [
+        {
+          "phase": 0.078125,
+          "fold": 1,
+          "status": "regression",
+          "dropBetterSchemeCount": 3,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 3,
+          "meanSchemeLiftDeltaDropMinusFull": 0.978333
+        },
+        {
+          "phase": 0.109375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": 1.195833
+        },
+        {
+          "phase": 0.140625,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.39
+        },
+        {
+          "phase": 0.296875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.528333
+        },
+        {
+          "phase": 0.359375,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.410833
+        },
+        {
+          "phase": 0.859375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.140833
+        }
+      ]
+    },
+    {
+      "guard": "nonWorseSchemes_ge_2",
+      "kept": 13,
+      "rescuesKept": 9,
+      "regressionsKept": 4,
+      "netChangedOutcomeGain": 5,
+      "changedRowsKept": [
+        {
+          "phase": 0.046875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -0.340833
+        },
+        {
+          "phase": 0.078125,
+          "fold": 1,
+          "status": "regression",
+          "dropBetterSchemeCount": 3,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 3,
+          "meanSchemeLiftDeltaDropMinusFull": 0.978333
+        },
+        {
+          "phase": 0.109375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": 1.195833
+        },
+        {
+          "phase": 0.140625,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.39
+        },
+        {
+          "phase": 0.203125,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.676667
+        },
+        {
+          "phase": 0.203125,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 1,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 1,
+          "meanSchemeLiftDeltaDropMinusFull": 0.0525
+        },
+        {
+          "phase": 0.296875,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.528333
+        },
+        {
+          "phase": 0.359375,
+          "fold": 0,
+          "status": "regression",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 3,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.410833
+        },
+        {
+          "phase": 0.359375,
+          "fold": 3,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.2075
+        },
+        {
+          "phase": 0.671875,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.13
+        },
+        {
+          "phase": 0.703125,
+          "fold": 4,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": -1.225833
+        },
+        {
+          "phase": 0.859375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 2,
+          "dropLiftBetterSchemeCount": 2,
+          "totalInnerPassDeltaDropMinusFull": -1,
+          "meanSchemeLiftDeltaDropMinusFull": -0.140833
+        },
+        {
+          "phase": 0.984375,
+          "fold": 2,
+          "status": "rescue",
+          "dropBetterSchemeCount": 0,
+          "dropNonWorseSchemeCount": 3,
+          "dropLiftBetterSchemeCount": 1,
+          "totalInnerPassDeltaDropMinusFull": 0,
+          "meanSchemeLiftDeltaDropMinusFull": 0.150833
+        }
+      ]
+    }
+  ],
+  "zeroRegressionGuards": [],
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

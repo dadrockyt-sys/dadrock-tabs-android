@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 78,
+  "changedFoldCount": 13,
+  "statusCounts": {
+    "rescue": 9,
+    "regression": 4
+  },
+  "zeroRegressionGuards": [],
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
