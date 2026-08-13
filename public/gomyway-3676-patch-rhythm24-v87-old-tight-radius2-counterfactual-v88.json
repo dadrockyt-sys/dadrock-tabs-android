@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 88,
+  "profileType": "old-tight-guarded-radius2-counterfactual-on-exposed-families",
+  "forcedRadius": 2,
+  "lambdaFrozenFromOriginalTrainingOnlyModelChoice": true,
+  "representation": "base+p2-cos+p4-cos",
+  "v83GuardFrozen": "apply V80 only when original outerQ is tight; otherwise fallback to V28",
+  "results": [
+    {
+      "source": "v56_exposed_120",
+      "foldsTotal": 120,
+      "guardedOldTightFolds": 25,
+      "v28Passes": 101,
+      "v83Passes": 104,
+      "v88Passes": 104,
+      "v83RescuesVsV28": 3,
+      "v83RegressionsVsV28": 0,
+      "v88RescuesVsV28": 4,
+      "v88RegressionsVsV28": 1,
+      "v88GainsVsV83": 1,
+      "v88LossesVsV83": 1,
+      "v83MinimumPhasePasses": 3,
+      "v88MinimumPhasePasses": 3,
+      "v88BottleneckPhases": [
+        0.3125,
+        0.03125
+      ]
+    },
+    {
+      "source": "v57_exposed_160",
+      "foldsTotal": 160,
+      "guardedOldTightFolds": 42,
+      "v28Passes": 137,
+      "v83Passes": 141,
+      "v88Passes": 140,
+      "v83RescuesVsV28": 4,
+      "v83RegressionsVsV28": 0,
+      "v88RescuesVsV28": 5,
+      "v88RegressionsVsV28": 2,
+      "v88GainsVsV83": 1,
+      "v88LossesVsV83": 2,
+      "v83MinimumPhasePasses": 3,
+      "v88MinimumPhasePasses": 3,
+      "v88BottleneckPhases": [
+        0.046875,
+        0.703125,
+        0.984375
+      ]
+    }
+  ],
+  "combined": {
+    "foldsTotal": 280,
+    "guardedOldTightFolds": 67,
+    "v28Passes": 238,
+    "v83Passes": 245,
+    "v88Passes": 244,
+    "v83RescuesVsV28": 7,
+    "v83RegressionsVsV28": 0,
+    "v88RescuesVsV28": 9,
+    "v88RegressionsVsV28": 3,
+    "v88GainsVsV83": 2,
+    "v88LossesVsV83": 3,
+    "v83MinimumPhasePassesAcrossSources": 3,
+    "v88MinimumPhasePassesAcrossSources": 3
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v84OpenedConfirmationReferenced": false,
+  "newReserved1over256OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
