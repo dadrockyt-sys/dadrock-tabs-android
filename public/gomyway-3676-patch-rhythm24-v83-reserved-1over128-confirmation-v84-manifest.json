@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 84,
+  "output": "public/gomyway-3676-patch-rhythm24-v83-reserved-1over128-confirmation-v84.json",
+  "reservedPhaseFamily": "odd-numerators-over-128",
+  "foldsPassed": 282,
+  "foldsTotal": 320,
+  "minimumPhasePasses": 3,
+  "bottleneckPhases": [
+    0.0078125,
+    0.0390625,
+    0.0546875,
+    0.2109375,
+    0.7109375,
+    0.9921875
+  ],
+  "v28ComparisonPasses": 274,
+  "rescuesVsV28": 8,
+  "regressionsVsV28": 0,
+  "guardedV80Folds": 75,
+  "originalTrainingOnlyQCounts": {
+    "tight": 75,
+    "anchor": 143,
+    "broad": 102
+  },
+  "finalQCounts": {
+    "tight": 32,
+    "anchor": 288,
+    "broad": 0
+  },
+  "reservedUntouchedPhasesConsumed": true,
+  "architectureFrozenBeforeConfirmation": true,
+  "parameterSearchPerformed": false,
+  "thresholdSearchPerformed": false,
+  "confirmationSuccess": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
