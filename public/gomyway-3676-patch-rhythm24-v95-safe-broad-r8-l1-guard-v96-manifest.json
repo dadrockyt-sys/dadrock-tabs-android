@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 96,
+  "profileType": "v90-minus-safe-broad-r8-lambda1-exposed-counterfactual",
+  "guard": "V90 unchanged except safe-broad folds with pairRadius=8 and lambda=1.0 fall back to V28",
+  "results": [
+    {
+      "foldsTotal": 120,
+      "v28Passes": 101,
+      "v90Passes": 105,
+      "v96Passes": 105,
+      "v96RescuesVsV28": 4,
+      "v96RegressionsVsV28": 0,
+      "v96GainsVsV90": 0,
+      "v96LossesVsV90": 0,
+      "excludedSafeBroadR8L1Folds": 4,
+      "v90MinimumPhasePasses": 3,
+      "v96MinimumPhasePasses": 3,
+      "v96BottleneckPhases": [
+        0.03125
+      ],
+      "source": "v56_exposed_120"
+    },
+    {
+      "foldsTotal": 160,
+      "v28Passes": 137,
+      "v90Passes": 142,
+      "v96Passes": 142,
+      "v96RescuesVsV28": 5,
+      "v96RegressionsVsV28": 0,
+      "v96GainsVsV90": 0,
+      "v96LossesVsV90": 0,
+      "excludedSafeBroadR8L1Folds": 5,
+      "v90MinimumPhasePasses": 3,
+      "v96MinimumPhasePasses": 3,
+      "v96BottleneckPhases": [
+        0.046875,
+        0.703125,
+        0.984375
+      ],
+      "source": "v57_exposed_160"
+    }
+  ],
+  "combined": {
+    "foldsTotal": 280,
+    "v28Passes": 238,
+    "v90Passes": 247,
+    "v96Passes": 247,
+    "v96RescuesVsV28": 9,
+    "v96RegressionsVsV28": 0,
+    "v96GainsVsV90": 0,
+    "v96LossesVsV90": 0,
+    "excludedSafeBroadR8L1Folds": 9,
+    "v90MinimumPhasePassesAcrossSources": 3,
+    "v96MinimumPhasePassesAcrossSources": 3
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v93OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
