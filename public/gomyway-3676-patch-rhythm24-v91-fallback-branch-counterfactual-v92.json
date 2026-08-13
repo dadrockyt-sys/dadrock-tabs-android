@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 92,
+  "profileType": "exposed-v90-fallback-branch-counterfactual",
+  "hypothesis": "V91 showed V90 fallback-to-V28 had the highest branch-level failure prevalence; test fixed representation-only expansion separately on anchor fallback, unsafe-broad fallback, and all fallback folds.",
+  "summary": {
+    "v90": {
+      "foldsPassed": 247,
+      "foldsTotal": 280,
+      "rescuesVsV28": 9,
+      "regressionsVsV28": 0,
+      "gainsVsV90": 0,
+      "lossesVsV90": 0,
+      "minimumPhasePassesAcrossSources": 3,
+      "bottleneckPhases": [
+        {
+          "source": "v56_exposed_120",
+          "phase": 0.03125
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.046875
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.703125
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.984375
+        }
+      ]
+    },
+    "v92_anchor_fallback": {
+      "foldsPassed": 249,
+      "foldsTotal": 280,
+      "rescuesVsV28": 13,
+      "regressionsVsV28": 2,
+      "gainsVsV90": 4,
+      "lossesVsV90": 2,
+      "minimumPhasePassesAcrossSources": 3,
+      "bottleneckPhases": [
+        {
+          "source": "v56_exposed_120",
+          "phase": 0.03125
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.046875
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.703125
+        }
+      ]
+    },
+    "v92_unsafe_broad_fallback": {
+      "foldsPassed": 248,
+      "foldsTotal": 280,
+      "rescuesVsV28": 11,
+      "regressionsVsV28": 1,
+      "gainsVsV90": 2,
+      "lossesVsV90": 1,
+      "minimumPhasePassesAcrossSources": 3,
+      "bottleneckPhases": [
+        {
+          "source": "v56_exposed_120",
+          "phase": 0.03125
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.046875
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.984375
+        }
+      ]
+    },
+    "v92_all_fallback": {
+      "foldsPassed": 250,
+      "foldsTotal": 280,
+      "rescuesVsV28": 15,
+      "regressionsVsV28": 3,
+      "gainsVsV90": 6,
+      "lossesVsV90": 3,
+      "minimumPhasePassesAcrossSources": 3,
+      "bottleneckPhases": [
+        {
+          "source": "v56_exposed_120",
+          "phase": 0.03125
+        },
+        {
+          "source": "v57_exposed_160",
+          "phase": 0.046875
+        }
+      ]
+    }
+  },
+  "changedRows": [
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.1875,
+      "fold": 3,
+      "oldQBucket": "anchor",
+      "decision": "keep-anchor",
+      "safeBroad": false,
+      "v28Passed": false,
+      "v90Passed": false,
+      "challengerPassed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "outcomes": {
+        "v90": false,
+        "v92_anchor_fallback": true,
+        "v92_unsafe_broad_fallback": false,
+        "v92_all_fallback": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.34375,
+      "fold": 0,
+      "oldQBucket": "anchor",
+      "decision": "keep-anchor",
+      "safeBroad": false,
+      "v28Passed": true,
+      "v90Passed": true,
+      "challengerPassed": false,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "outcomes": {
+        "v90": true,
+        "v92_anchor_fallback": false,
+        "v92_unsafe_broad_fallback": true,
+        "v92_all_fallback": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.71875,
+      "fold": 4,
+      "oldQBucket": "broad",
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "safeBroad": false,
+      "v28Passed": false,
+      "v90Passed": false,
+      "challengerPassed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "outcomes": {
+        "v90": false,
+        "v92_anchor_fallback": false,
+        "v92_unsafe_broad_fallback": true,
+        "v92_all_fallback": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.140625,
+      "fold": 0,
+      "oldQBucket": "broad",
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "safeBroad": false,
+      "v28Passed": true,
+      "v90Passed": true,
+      "challengerPassed": false,
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "outcomes": {
+        "v90": true,
+        "v92_anchor_fallback": true,
+        "v92_unsafe_broad_fallback": false,
+        "v92_all_fallback": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.203125,
+      "fold": 3,
+      "oldQBucket": "anchor",
+      "decision": "keep-anchor",
+      "safeBroad": false,
+      "v28Passed": false,
+      "v90Passed": false,
+      "challengerPassed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "outcomes": {
+        "v90": false,
+        "v92_anchor_fallback": true,
+        "v92_unsafe_broad_fallback": false,
+        "v92_all_fallback": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.359375,
+      "fold": 0,
+      "oldQBucket": "anchor",
+      "decision": "keep-anchor",
+      "safeBroad": false,
+      "v28Passed": true,
+      "v90Passed": true,
+      "challengerPassed": false,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "outcomes": {
+        "v90": true,
+        "v92_anchor_fallback": false,
+        "v92_unsafe_broad_fallback": true,
+        "v92_all_fallback": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.671875,
+      "fold": 2,
+      "oldQBucket": "anchor",
+      "decision": "keep-anchor",
+      "safeBroad": false,
+      "v28Passed": false,
+      "v90Passed": false,
+      "challengerPassed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "outcomes": {
+        "v90": false,
+        "v92_anchor_fallback": true,
+        "v92_unsafe_broad_fallback": false,
+        "v92_all_fallback": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.703125,
+      "fold": 4,
+      "oldQBucket": "broad",
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "safeBroad": false,
+      "v28Passed": false,
+      "v90Passed": false,
+      "challengerPassed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "outcomes": {
+        "v90": false,
+        "v92_anchor_fallback": false,
+        "v92_unsafe_broad_fallback": true,
+        "v92_all_fallback": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.984375,
+      "fold": 2,
+      "oldQBucket": "anchor",
+      "decision": "keep-anchor",
+      "safeBroad": false,
+      "v28Passed": false,
+      "v90Passed": false,
+      "challengerPassed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "outcomes": {
+        "v90": false,
+        "v92_anchor_fallback": true,
+        "v92_unsafe_broad_fallback": false,
+        "v92_all_fallback": true
+      }
+    }
+  ],
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v84OpenedConfirmationReferenced": false,
+  "newReserved1over256OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "diagnosticOutcomesTaintedForSelection": true,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
