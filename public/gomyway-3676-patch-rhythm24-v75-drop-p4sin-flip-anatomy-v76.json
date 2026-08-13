@@ -1,0 +1,1214 @@
+{
+  "schemaVersion": 76,
+  "profileType": "v75-drop-p4sin-flip-anatomy-diagnostic",
+  "diagnosticScope": "already-exposed-v57-1over64-family-only",
+  "representation": "base+p2-sin+p2-cos+p4-cos",
+  "qFrozen": 0.2,
+  "modelHyperparametersFrozenFromV57": true,
+  "dropP4SinPasses": 142,
+  "fullPhaseAnchorPasses": 137,
+  "rescuesVsFullPhaseAnchor": 9,
+  "regressionsVsFullPhaseAnchor": 4,
+  "minimumDropP4SinPhasePasses": 3,
+  "dropP4SinBottleneckPhases": [
+    0.328125
+  ],
+  "statusCounts": {
+    "bothPass": 133,
+    "bothFail": 14,
+    "rescue": 9,
+    "regression": 4
+  },
+  "changedOutcomeCount": 13,
+  "changedOutcomesBySelectionReasonStatus": {
+    "('anchor', 'bothPass')": 55,
+    "('unanimous-tight-nonworse-plus-lift', 'bothFail')": 6,
+    "('v46-strict-broad-support', 'bothPass')": 46,
+    "('unanimous-tight-nonworse-plus-lift', 'bothPass')": 32,
+    "('v46-strict-broad-support', 'rescue')": 3,
+    "('v46-strict-broad-support', 'regression')": 2,
+    "('anchor', 'bothFail')": 6,
+    "('unanimous-tight-nonworse-plus-lift', 'rescue')": 3,
+    "('unanimous-tight-nonworse-plus-lift', 'regression')": 1,
+    "('anchor', 'rescue')": 3,
+    "('v46-strict-broad-support', 'bothFail')": 2,
+    "('anchor', 'regression')": 1
+  },
+  "changedOutcomesByModelStatus": {
+    "('r=4|lambda=1', 'bothPass')": 46,
+    "('r=4|lambda=100', 'bothFail')": 6,
+    "('r=2|lambda=1', 'bothPass')": 12,
+    "('r=2|lambda=100', 'bothPass')": 7,
+    "('r=8|lambda=1', 'bothFail')": 2,
+    "('r=4|lambda=100', 'bothPass')": 37,
+    "('r=4|lambda=1', 'rescue')": 4,
+    "('r=8|lambda=100', 'regression')": 1,
+    "('r=8|lambda=100', 'bothPass')": 9,
+    "('r=4|lambda=1', 'bothFail')": 5,
+    "('r=4|lambda=100', 'rescue')": 1,
+    "('r=2|lambda=100', 'regression')": 1,
+    "('r=8|lambda=1', 'bothPass')": 14,
+    "('r=4|lambda=1', 'regression')": 1,
+    "('r=8|lambda=1', 'regression')": 1,
+    "('r=8|lambda=1', 'rescue')": 2,
+    "('r=8|lambda=10', 'bothPass')": 3,
+    "('r=4|lambda=10', 'bothPass')": 3,
+    "('r=2|lambda=10', 'bothPass')": 2,
+    "('r=8|lambda=100', 'rescue')": 1,
+    "('r=8|lambda=100', 'bothFail')": 1,
+    "('r=2|lambda=1', 'rescue')": 1
+  },
+  "changedOutcomesByStrictSupportStatus": {
+    "(0, 'bothPass')": 87,
+    "(0, 'bothFail')": 12,
+    "(1, 'bothPass')": 36,
+    "(2, 'bothPass')": 10,
+    "(1, 'rescue')": 3,
+    "(1, 'regression')": 2,
+    "(0, 'rescue')": 6,
+    "(0, 'regression')": 2,
+    "(1, 'bothFail')": 2
+  },
+  "changedOutcomesByUnanimousTightEscapeStatus": {
+    "(False, 'bothPass')": 91,
+    "(True, 'bothFail')": 7,
+    "(True, 'bothPass')": 42,
+    "(False, 'rescue')": 6,
+    "(True, 'regression')": 3,
+    "(False, 'bothFail')": 7,
+    "(True, 'rescue')": 3,
+    "(False, 'regression')": 1
+  },
+  "changedOutcomes": [
+    {
+      "phase": 0.046875,
+      "fold": 3,
+      "status": "rescue",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": false,
+      "savedV57OuterQ": 0.225,
+      "dropP4SinAnchorLift": 6.52,
+      "fullPhaseAnchorLift": 4.88,
+      "dropP4SinCandidate": {
+        "selected": 61,
+        "true": 10,
+        "false": 51,
+        "precision": 16.39,
+        "selectedPct": 20.07
+      },
+      "fullPhaseCandidate": {
+        "selected": 61,
+        "true": 9,
+        "false": 52,
+        "precision": 14.75,
+        "selectedPct": 20.07
+      },
+      "heldoutBase": {
+        "true": 30,
+        "false": 274,
+        "precision": 9.87
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": false,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 10.4025,
+            "meanAnchorLift": 9.864999999999998,
+            "meanBroadLift": 8.9225,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 15.177500000000002,
+            "meanAnchorLift": 15.105,
+            "meanBroadLift": 14.33,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 3,
+            "anchorPasses": 3,
+            "broadPasses": 4,
+            "meanTightLift": 10.3375,
+            "meanAnchorLift": 11.3,
+            "meanBroadLift": 10.110000000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": false,
+            "strictBroadSupport": true
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.078125,
+      "fold": 1,
+      "status": "regression",
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": true,
+      "savedV57OuterQ": 0.225,
+      "dropP4SinAnchorLift": 4.38,
+      "fullPhaseAnchorLift": 5.94,
+      "dropP4SinCandidate": {
+        "selected": 64,
+        "true": 15,
+        "false": 49,
+        "precision": 23.44,
+        "selectedPct": 20.0
+      },
+      "fullPhaseCandidate": {
+        "selected": 64,
+        "true": 16,
+        "false": 48,
+        "precision": 25.0,
+        "selectedPct": 20.0
+      },
+      "heldoutBase": {
+        "true": 61,
+        "false": 259,
+        "precision": 19.06
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 3,
+            "anchorPasses": 3,
+            "broadPasses": 4,
+            "meanTightLift": 13.06,
+            "meanAnchorLift": 11.2525,
+            "meanBroadLift": 12.255,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": true
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 3,
+            "anchorPasses": 3,
+            "broadPasses": 3,
+            "meanTightLift": 13.229999999999999,
+            "meanAnchorLift": 12.235,
+            "meanBroadLift": 13.357500000000002,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 3,
+            "broadPasses": 3,
+            "meanTightLift": 14.5425,
+            "meanAnchorLift": 11.482499999999998,
+            "meanBroadLift": 10.940000000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.109375,
+      "fold": 3,
+      "status": "rescue",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "selectionReason": "unanimous-tight-nonworse-plus-lift",
+      "strictBroadSupportCount": 0,
+      "unanimousTightEscape": true,
+      "savedV57OuterQ": 0.175,
+      "dropP4SinAnchorLift": 6.52,
+      "fullPhaseAnchorLift": 4.88,
+      "dropP4SinCandidate": {
+        "selected": 61,
+        "true": 10,
+        "false": 51,
+        "precision": 16.39,
+        "selectedPct": 20.07
+      },
+      "fullPhaseCandidate": {
+        "selected": 61,
+        "true": 9,
+        "false": 52,
+        "precision": 14.75,
+        "selectedPct": 20.07
+      },
+      "heldoutBase": {
+        "true": 30,
+        "false": 274,
+        "precision": 9.87
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 9.5175,
+            "meanAnchorLift": 8.732499999999998,
+            "meanBroadLift": 9.3975,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 14.4975,
+            "meanAnchorLift": 12.01,
+            "meanBroadLift": 10.3725,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 10.007500000000002,
+            "meanAnchorLift": 9.492500000000001,
+            "meanBroadLift": 9.287500000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.140625,
+      "fold": 0,
+      "status": "regression",
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": true,
+      "savedV57OuterQ": 0.225,
+      "dropP4SinAnchorLift": 3.84,
+      "fullPhaseAnchorLift": 7.12,
+      "dropP4SinCandidate": {
+        "selected": 61,
+        "true": 11,
+        "false": 50,
+        "precision": 18.03,
+        "selectedPct": 20.13
+      },
+      "fullPhaseCandidate": {
+        "selected": 61,
+        "true": 13,
+        "false": 48,
+        "precision": 21.31,
+        "selectedPct": 20.13
+      },
+      "heldoutBase": {
+        "true": 43,
+        "false": 260,
+        "precision": 14.19
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 11.087500000000002,
+            "meanAnchorLift": 11.0075,
+            "meanBroadLift": 9.66,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 12.4825,
+            "meanAnchorLift": 11.005,
+            "meanBroadLift": 10.434999999999999,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 3,
+            "broadPasses": 4,
+            "meanTightLift": 9.705,
+            "meanAnchorLift": 8.605,
+            "meanBroadLift": 9.675,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": true
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.203125,
+      "fold": 0,
+      "status": "regression",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectionReason": "unanimous-tight-nonworse-plus-lift",
+      "strictBroadSupportCount": 0,
+      "unanimousTightEscape": true,
+      "savedV57OuterQ": 0.175,
+      "dropP4SinAnchorLift": 4.5,
+      "fullPhaseAnchorLift": 6.14,
+      "dropP4SinCandidate": {
+        "selected": 61,
+        "true": 11,
+        "false": 50,
+        "precision": 18.03,
+        "selectedPct": 20.13
+      },
+      "fullPhaseCandidate": {
+        "selected": 61,
+        "true": 12,
+        "false": 49,
+        "precision": 19.67,
+        "selectedPct": 20.13
+      },
+      "heldoutBase": {
+        "true": 41,
+        "false": 262,
+        "precision": 13.53
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 13.1725,
+            "meanAnchorLift": 11.985,
+            "meanBroadLift": 10.197499999999998,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 10.8825,
+            "meanAnchorLift": 10.42,
+            "meanBroadLift": 9.5225,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 12.365,
+            "meanAnchorLift": 10.07,
+            "meanBroadLift": 9.2175,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.203125,
+      "fold": 3,
+      "status": "rescue",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectionReason": "anchor",
+      "strictBroadSupportCount": 0,
+      "unanimousTightEscape": false,
+      "savedV57OuterQ": 0.2,
+      "dropP4SinAnchorLift": 7.84,
+      "fullPhaseAnchorLift": 4.56,
+      "dropP4SinCandidate": {
+        "selected": 61,
+        "true": 10,
+        "false": 51,
+        "precision": 16.39,
+        "selectedPct": 20.07
+      },
+      "fullPhaseCandidate": {
+        "selected": 61,
+        "true": 8,
+        "false": 53,
+        "precision": 13.11,
+        "selectedPct": 20.07
+      },
+      "heldoutBase": {
+        "true": 26,
+        "false": 278,
+        "precision": 8.55
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": false,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 3,
+            "anchorPasses": 3,
+            "broadPasses": 3,
+            "meanTightLift": 9.245000000000001,
+            "meanAnchorLift": 10.04,
+            "meanBroadLift": 9.732499999999998,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": false,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 14.4875,
+            "meanAnchorLift": 14.212499999999999,
+            "meanBroadLift": 14.735,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 13.469999999999999,
+            "meanAnchorLift": 12.3125,
+            "meanBroadLift": 11.695,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.296875,
+      "fold": 3,
+      "status": "rescue",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": false,
+      "savedV57OuterQ": 0.225,
+      "dropP4SinAnchorLift": 6.53,
+      "fullPhaseAnchorLift": 4.89,
+      "dropP4SinCandidate": {
+        "selected": 61,
+        "true": 9,
+        "false": 52,
+        "precision": 14.75,
+        "selectedPct": 20.07
+      },
+      "fullPhaseCandidate": {
+        "selected": 61,
+        "true": 8,
+        "false": 53,
+        "precision": 13.11,
+        "selectedPct": 20.07
+      },
+      "heldoutBase": {
+        "true": 25,
+        "false": 279,
+        "precision": 8.22
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": false,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 3,
+            "anchorPasses": 3,
+            "broadPasses": 4,
+            "meanTightLift": 8.0825,
+            "meanAnchorLift": 7.4399999999999995,
+            "meanBroadLift": 8.265,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": true
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 14.8325,
+            "meanAnchorLift": 16.3375,
+            "meanBroadLift": 15.205000000000002,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": false,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 12.9725,
+            "meanAnchorLift": 12.7,
+            "meanBroadLift": 12.729999999999999,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.359375,
+      "fold": 0,
+      "status": "regression",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "anchor",
+      "strictBroadSupportCount": 0,
+      "unanimousTightEscape": false,
+      "savedV57OuterQ": 0.2,
+      "dropP4SinAnchorLift": 3.85,
+      "fullPhaseAnchorLift": 5.49,
+      "dropP4SinCandidate": {
+        "selected": 61,
+        "true": 10,
+        "false": 51,
+        "precision": 16.39,
+        "selectedPct": 20.13
+      },
+      "fullPhaseCandidate": {
+        "selected": 61,
+        "true": 11,
+        "false": 50,
+        "precision": 18.03,
+        "selectedPct": 20.13
+      },
+      "heldoutBase": {
+        "true": 38,
+        "false": 265,
+        "precision": 12.54
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": false,
+        "unanimousTightMeanLiftBetter": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 13.445,
+            "meanAnchorLift": 12.172499999999998,
+            "meanBroadLift": 12.0825,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 12.557500000000001,
+            "meanAnchorLift": 12.1675,
+            "meanBroadLift": 12.485000000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 3,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 14.0625,
+            "meanAnchorLift": 13.087499999999999,
+            "meanBroadLift": 12.59,
+            "tightPassCountNonWorse": false,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.359375,
+      "fold": 3,
+      "status": "rescue",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "unanimous-tight-nonworse-plus-lift",
+      "strictBroadSupportCount": 0,
+      "unanimousTightEscape": true,
+      "savedV57OuterQ": 0.175,
+      "dropP4SinAnchorLift": 5.22,
+      "fullPhaseAnchorLift": 3.59,
+      "dropP4SinCandidate": {
+        "selected": 61,
+        "true": 8,
+        "false": 53,
+        "precision": 13.11,
+        "selectedPct": 20.07
+      },
+      "fullPhaseCandidate": {
+        "selected": 61,
+        "true": 7,
+        "false": 54,
+        "precision": 11.48,
+        "selectedPct": 20.07
+      },
+      "heldoutBase": {
+        "true": 24,
+        "false": 280,
+        "precision": 7.89
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 3,
+            "anchorPasses": 3,
+            "broadPasses": 3,
+            "meanTightLift": 8.45,
+            "meanAnchorLift": 7.699999999999999,
+            "meanBroadLift": 7.6625,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 14.5175,
+            "meanAnchorLift": 13.237499999999999,
+            "meanBroadLift": 13.2,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 14.6875,
+            "meanAnchorLift": 13.61,
+            "meanBroadLift": 12.315,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.671875,
+      "fold": 2,
+      "status": "rescue",
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "selectionReason": "anchor",
+      "strictBroadSupportCount": 0,
+      "unanimousTightEscape": false,
+      "savedV57OuterQ": 0.2,
+      "dropP4SinAnchorLift": 5.0,
+      "fullPhaseAnchorLift": 3.44,
+      "dropP4SinCandidate": {
+        "selected": 64,
+        "true": 16,
+        "false": 48,
+        "precision": 25.0,
+        "selectedPct": 20.0
+      },
+      "fullPhaseCandidate": {
+        "selected": 64,
+        "true": 15,
+        "false": 49,
+        "precision": 23.44,
+        "selectedPct": 20.0
+      },
+      "heldoutBase": {
+        "true": 64,
+        "false": 256,
+        "precision": 20.0
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": false,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 12.865000000000002,
+            "meanAnchorLift": 12.732500000000002,
+            "meanBroadLift": 11.83,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 20.352500000000003,
+            "meanAnchorLift": 16.72,
+            "meanBroadLift": 15.865000000000002,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 12.1475,
+            "meanAnchorLift": 12.95,
+            "meanBroadLift": 11.9,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": false,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.703125,
+      "fold": 4,
+      "status": "rescue",
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "selectionReason": "v46-strict-broad-support",
+      "strictBroadSupportCount": 1,
+      "unanimousTightEscape": false,
+      "savedV57OuterQ": 0.225,
+      "dropP4SinAnchorLift": 9.38,
+      "fullPhaseAnchorLift": 4.69,
+      "dropP4SinCandidate": {
+        "selected": 64,
+        "true": 14,
+        "false": 50,
+        "precision": 21.88,
+        "selectedPct": 20.0
+      },
+      "fullPhaseCandidate": {
+        "selected": 64,
+        "true": 11,
+        "false": 53,
+        "precision": 17.19,
+        "selectedPct": 20.0
+      },
+      "heldoutBase": {
+        "true": 40,
+        "false": 280,
+        "precision": 12.5
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": false,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 12.8,
+            "meanAnchorLift": 12.400000000000002,
+            "meanBroadLift": 10.5925,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 11.735,
+            "meanAnchorLift": 13.032500000000002,
+            "meanBroadLift": 12.1725,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": false,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 3,
+            "anchorPasses": 3,
+            "broadPasses": 4,
+            "meanTightLift": 11.25,
+            "meanAnchorLift": 9.5425,
+            "meanBroadLift": 10.1775,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": true
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.859375,
+      "fold": 2,
+      "status": "rescue",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectionReason": "unanimous-tight-nonworse-plus-lift",
+      "strictBroadSupportCount": 0,
+      "unanimousTightEscape": true,
+      "savedV57OuterQ": 0.175,
+      "dropP4SinAnchorLift": 5.84,
+      "fullPhaseAnchorLift": 4.2,
+      "dropP4SinCandidate": {
+        "selected": 61,
+        "true": 16,
+        "false": 45,
+        "precision": 26.23,
+        "selectedPct": 20.07
+      },
+      "fullPhaseCandidate": {
+        "selected": 61,
+        "true": 15,
+        "false": 46,
+        "precision": 24.59,
+        "selectedPct": 20.07
+      },
+      "heldoutBase": {
+        "true": 62,
+        "false": 242,
+        "precision": 20.39
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": true,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 15.287500000000001,
+            "meanAnchorLift": 14.05,
+            "meanBroadLift": 12.55,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 16.9825,
+            "meanAnchorLift": 15.077500000000002,
+            "meanBroadLift": 15.850000000000001,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 14.5,
+            "meanAnchorLift": 13.785,
+            "meanBroadLift": 12.927500000000002,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    },
+    {
+      "phase": 0.984375,
+      "fold": 2,
+      "status": "rescue",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectionReason": "anchor",
+      "strictBroadSupportCount": 0,
+      "unanimousTightEscape": false,
+      "savedV57OuterQ": 0.2,
+      "dropP4SinAnchorLift": 5.0,
+      "fullPhaseAnchorLift": 3.44,
+      "dropP4SinCandidate": {
+        "selected": 64,
+        "true": 15,
+        "false": 49,
+        "precision": 23.44,
+        "selectedPct": 20.0
+      },
+      "fullPhaseCandidate": {
+        "selected": 64,
+        "true": 14,
+        "false": 50,
+        "precision": 21.88,
+        "selectedPct": 20.0
+      },
+      "heldoutBase": {
+        "true": 59,
+        "false": 261,
+        "precision": 18.44
+      },
+      "selectorTrainingSummary": {
+        "unanimousTightPassCountNonWorse": true,
+        "unanimousTightMeanLiftBetter": false,
+        "schemes": [
+          {
+            "scheme": "normal",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 13.8625,
+            "meanAnchorLift": 13.49,
+            "meanBroadLift": 12.415,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "section",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 4,
+            "meanTightLift": 16.45,
+            "meanAnchorLift": 14.185,
+            "meanBroadLift": 12.9025,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": true,
+            "strictBroadSupport": false
+          },
+          {
+            "scheme": "shiftedWindow",
+            "tightPasses": 4,
+            "anchorPasses": 4,
+            "broadPasses": 3,
+            "meanTightLift": 13.355,
+            "meanAnchorLift": 13.370000000000001,
+            "meanBroadLift": 13.3075,
+            "tightPassCountNonWorse": true,
+            "tightMeanLiftBetter": false,
+            "strictBroadSupport": false
+          }
+        ]
+      }
+    }
+  ],
+  "phaseRows": [
+    {
+      "phase": 0.015625,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.046875,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 3
+    },
+    {
+      "phase": 0.078125,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.109375,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 3
+    },
+    {
+      "phase": 0.140625,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.171875,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.203125,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.234375,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.265625,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.296875,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.328125,
+      "dropP4SinPasses": 3,
+      "fullPhaseAnchorPasses": 3
+    },
+    {
+      "phase": 0.359375,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.390625,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.421875,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.453125,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.484375,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.515625,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.546875,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.578125,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.609375,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.640625,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.671875,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.703125,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 3
+    },
+    {
+      "phase": 0.734375,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.765625,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.796875,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.828125,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.859375,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.890625,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.921875,
+      "dropP4SinPasses": 5,
+      "fullPhaseAnchorPasses": 5
+    },
+    {
+      "phase": 0.953125,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 4
+    },
+    {
+      "phase": 0.984375,
+      "dropP4SinPasses": 4,
+      "fullPhaseAnchorPasses": 3
+    }
+  ],
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
