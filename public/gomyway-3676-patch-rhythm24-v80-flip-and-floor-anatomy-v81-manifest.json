@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 81,
+  "reproducedV80": {
+    "foldsPassed": 250,
+    "v28ComparisonPasses": 238,
+    "rescuesVsV28": 15,
+    "regressionsVsV28": 3
+  },
+  "changedOutcomeCount": 18,
+  "floorFailureCount": 4,
+  "changedByDecisionStatus": {
+    "rescue|keep-anchor": 4,
+    "rescue|keep-broad-low-dispersion": 2,
+    "rescue|keep-tight-high-dispersion": 3,
+    "regression|keep-anchor": 2,
+    "rescue|revert-tight-to-anchor-low-dispersion": 4,
+    "rescue|revert-broad-to-anchor-high-dispersion": 2,
+    "regression|revert-broad-to-anchor-high-dispersion": 1
+  },
+  "changedByModelStatus": {
+    "rescue|r4|lambda1": 6,
+    "rescue|r4|lambda100": 2,
+    "regression|r8|lambda1": 2,
+    "rescue|r8|lambda1": 4,
+    "rescue|r2|lambda1": 2,
+    "regression|r2|lambda100": 1,
+    "rescue|r8|lambda100": 1
+  },
+  "changedByOldBranchStatus": {
+    "rescue|anchor": 4,
+    "rescue|broad": 4,
+    "rescue|tight": 7,
+    "regression|anchor": 2,
+    "regression|broad": 1
+  },
+  "changedByStrictSupportStatus": {
+    "rescue|0": 11,
+    "rescue|1": 4,
+    "regression|0": 2,
+    "regression|1": 1
+  },
+  "changedByUnanimousTightStatus": {
+    "rescue|False": 8,
+    "rescue|True": 7,
+    "regression|False": 2,
+    "regression|True": 1
+  },
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
