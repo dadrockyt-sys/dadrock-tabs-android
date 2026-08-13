@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 82,
+  "profileType": "v81-v80-simple-training-side-guard-separability-diagnostic",
+  "changedOutcomeCount": 18,
+  "floorFailureCount": 4,
+  "guardResults": [
+    {
+      "guard": "all-v80",
+      "changedSelected": 18,
+      "rescuesKept": 15,
+      "regressionsKept": 3,
+      "netVsV28AmongChanged": 12,
+      "v80FloorFailuresMatchingGuard": 4
+    },
+    {
+      "guard": "decision-keep-anchor",
+      "changedSelected": 6,
+      "rescuesKept": 4,
+      "regressionsKept": 2,
+      "netVsV28AmongChanged": 2,
+      "v80FloorFailuresMatchingGuard": 1
+    },
+    {
+      "guard": "decision-keep-tight",
+      "changedSelected": 3,
+      "rescuesKept": 3,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 3,
+      "v80FloorFailuresMatchingGuard": 1
+    },
+    {
+      "guard": "decision-keep-broad",
+      "changedSelected": 2,
+      "rescuesKept": 2,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 2,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "decision-revert-tight",
+      "changedSelected": 4,
+      "rescuesKept": 4,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 4,
+      "v80FloorFailuresMatchingGuard": 0
+    },
+    {
+      "guard": "decision-revert-broad",
+      "changedSelected": 3,
+      "rescuesKept": 2,
+      "regressionsKept": 1,
+      "netVsV28AmongChanged": 1,
+      "v80FloorFailuresMatchingGuard": 0
+    },
+    {
+      "guard": "old-anchor",
+      "changedSelected": 6,
+      "rescuesKept": 4,
+      "regressionsKept": 2,
+      "netVsV28AmongChanged": 2,
+      "v80FloorFailuresMatchingGuard": 1
+    },
+    {
+      "guard": "old-tight",
+      "changedSelected": 7,
+      "rescuesKept": 7,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 7,
+      "v80FloorFailuresMatchingGuard": 1
+    },
+    {
+      "guard": "old-broad",
+      "changedSelected": 5,
+      "rescuesKept": 4,
+      "regressionsKept": 1,
+      "netVsV28AmongChanged": 3,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "strict-support-0",
+      "changedSelected": 13,
+      "rescuesKept": 11,
+      "regressionsKept": 2,
+      "netVsV28AmongChanged": 9,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "strict-support-ge1",
+      "changedSelected": 5,
+      "rescuesKept": 4,
+      "regressionsKept": 1,
+      "netVsV28AmongChanged": 3,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "unanimous-tight-true",
+      "changedSelected": 8,
+      "rescuesKept": 7,
+      "regressionsKept": 1,
+      "netVsV28AmongChanged": 6,
+      "v80FloorFailuresMatchingGuard": 1
+    },
+    {
+      "guard": "unanimous-tight-false",
+      "changedSelected": 10,
+      "rescuesKept": 8,
+      "regressionsKept": 2,
+      "netVsV28AmongChanged": 6,
+      "v80FloorFailuresMatchingGuard": 3
+    },
+    {
+      "guard": "radius-2",
+      "changedSelected": 3,
+      "rescuesKept": 2,
+      "regressionsKept": 1,
+      "netVsV28AmongChanged": 1,
+      "v80FloorFailuresMatchingGuard": 0
+    },
+    {
+      "guard": "radius-4",
+      "changedSelected": 8,
+      "rescuesKept": 8,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 8,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "radius-8",
+      "changedSelected": 7,
+      "rescuesKept": 5,
+      "regressionsKept": 2,
+      "netVsV28AmongChanged": 3,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "lambda-1",
+      "changedSelected": 14,
+      "rescuesKept": 12,
+      "regressionsKept": 2,
+      "netVsV28AmongChanged": 10,
+      "v80FloorFailuresMatchingGuard": 4
+    },
+    {
+      "guard": "lambda-100",
+      "changedSelected": 4,
+      "rescuesKept": 3,
+      "regressionsKept": 1,
+      "netVsV28AmongChanged": 2,
+      "v80FloorFailuresMatchingGuard": 0
+    },
+    {
+      "guard": "dispersion-none",
+      "changedSelected": 6,
+      "rescuesKept": 4,
+      "regressionsKept": 2,
+      "netVsV28AmongChanged": 2,
+      "v80FloorFailuresMatchingGuard": 1
+    },
+    {
+      "guard": "dispersion-lt-0.5",
+      "changedSelected": 4,
+      "rescuesKept": 4,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 4,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "dispersion-0.5-to-0.9",
+      "changedSelected": 5,
+      "rescuesKept": 5,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 5,
+      "v80FloorFailuresMatchingGuard": 1
+    },
+    {
+      "guard": "dispersion-gt-0.9",
+      "changedSelected": 3,
+      "rescuesKept": 2,
+      "regressionsKept": 1,
+      "netVsV28AmongChanged": 1,
+      "v80FloorFailuresMatchingGuard": 0
+    }
+  ],
+  "zeroRegressionGuards": [
+    {
+      "guard": "decision-keep-tight",
+      "changedSelected": 3,
+      "rescuesKept": 3,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 3,
+      "v80FloorFailuresMatchingGuard": 1
+    },
+    {
+      "guard": "decision-keep-broad",
+      "changedSelected": 2,
+      "rescuesKept": 2,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 2,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "decision-revert-tight",
+      "changedSelected": 4,
+      "rescuesKept": 4,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 4,
+      "v80FloorFailuresMatchingGuard": 0
+    },
+    {
+      "guard": "old-tight",
+      "changedSelected": 7,
+      "rescuesKept": 7,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 7,
+      "v80FloorFailuresMatchingGuard": 1
+    },
+    {
+      "guard": "radius-4",
+      "changedSelected": 8,
+      "rescuesKept": 8,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 8,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "dispersion-lt-0.5",
+      "changedSelected": 4,
+      "rescuesKept": 4,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 4,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "dispersion-0.5-to-0.9",
+      "changedSelected": 5,
+      "rescuesKept": 5,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 5,
+      "v80FloorFailuresMatchingGuard": 1
+    }
+  ],
+  "bestNetGuards": [
+    {
+      "guard": "all-v80",
+      "changedSelected": 18,
+      "rescuesKept": 15,
+      "regressionsKept": 3,
+      "netVsV28AmongChanged": 12,
+      "v80FloorFailuresMatchingGuard": 4
+    }
+  ],
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

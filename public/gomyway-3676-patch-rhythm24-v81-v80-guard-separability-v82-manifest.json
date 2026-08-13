@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 82,
+  "changedOutcomeCount": 18,
+  "floorFailureCount": 4,
+  "zeroRegressionGuards": [
+    {
+      "guard": "decision-keep-tight",
+      "changedSelected": 3,
+      "rescuesKept": 3,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 3,
+      "v80FloorFailuresMatchingGuard": 1
+    },
+    {
+      "guard": "decision-keep-broad",
+      "changedSelected": 2,
+      "rescuesKept": 2,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 2,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "decision-revert-tight",
+      "changedSelected": 4,
+      "rescuesKept": 4,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 4,
+      "v80FloorFailuresMatchingGuard": 0
+    },
+    {
+      "guard": "old-tight",
+      "changedSelected": 7,
+      "rescuesKept": 7,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 7,
+      "v80FloorFailuresMatchingGuard": 1
+    },
+    {
+      "guard": "radius-4",
+      "changedSelected": 8,
+      "rescuesKept": 8,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 8,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "dispersion-lt-0.5",
+      "changedSelected": 4,
+      "rescuesKept": 4,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 4,
+      "v80FloorFailuresMatchingGuard": 2
+    },
+    {
+      "guard": "dispersion-0.5-to-0.9",
+      "changedSelected": 5,
+      "rescuesKept": 5,
+      "regressionsKept": 0,
+      "netVsV28AmongChanged": 5,
+      "v80FloorFailuresMatchingGuard": 1
+    }
+  ],
+  "bestNetGuards": [
+    {
+      "guard": "all-v80",
+      "changedSelected": 18,
+      "rescuesKept": 15,
+      "regressionsKept": 3,
+      "netVsV28AmongChanged": 12,
+      "v80FloorFailuresMatchingGuard": 4
+    }
+  ],
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
