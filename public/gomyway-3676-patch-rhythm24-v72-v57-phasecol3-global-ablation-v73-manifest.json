@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 73,
+  "phaseColumnIndex": 3,
+  "phaseColumnMeaning": "cos(2*pi*(step mod 4)/4)",
+  "qFrozen": 0.2,
+  "modelHyperparametersFrozenFromV57": true,
+  "phaseCol3Passes": 113,
+  "fullPhaseAnchorPasses": 137,
+  "rescuesVsFullPhaseAnchor": 8,
+  "regressionsVsFullPhaseAnchor": 32,
+  "minimumPhaseCol3Passes": 2,
+  "minimumFullPhaseAnchorPasses": 3,
+  "phaseCol3BottleneckPhases": [
+    0.796875
+  ],
+  "flipCounts": {
+    "same": 120,
+    "fullphase-rescue": 32,
+    "col3-rescue": 8
+  },
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
