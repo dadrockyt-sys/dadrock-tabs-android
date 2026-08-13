@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 90,
+  "profileType": "v83-plus-predeclared-safe-broad-exposed-counterfactual",
+  "guard": "apply cosine dual-dispersion challenger when original branch is tight OR original branch is broad and frozen V64 dispersion decision is keep-broad-low-dispersion; otherwise fallback to V28",
+  "results": [
+    {
+      "source": "v56_exposed_120",
+      "foldsTotal": 120,
+      "v28Passes": 101,
+      "v83Passes": 104,
+      "v90Passes": 105,
+      "v90RescuesVsV28": 4,
+      "v90RegressionsVsV28": 0,
+      "v90GainsVsV83": 1,
+      "v90LossesVsV83": 0,
+      "tightGuardedFolds": 25,
+      "safeBroadGuardedFolds": 36,
+      "v83MinimumPhasePasses": 3,
+      "v90MinimumPhasePasses": 3,
+      "v90BottleneckPhases": [
+        0.03125
+      ]
+    },
+    {
+      "source": "v57_exposed_160",
+      "foldsTotal": 160,
+      "v28Passes": 137,
+      "v83Passes": 141,
+      "v90Passes": 142,
+      "v90RescuesVsV28": 5,
+      "v90RegressionsVsV28": 0,
+      "v90GainsVsV83": 1,
+      "v90LossesVsV83": 0,
+      "tightGuardedFolds": 42,
+      "safeBroadGuardedFolds": 38,
+      "v83MinimumPhasePasses": 3,
+      "v90MinimumPhasePasses": 3,
+      "v90BottleneckPhases": [
+        0.046875,
+        0.703125,
+        0.984375
+      ]
+    }
+  ],
+  "combined": {
+    "foldsTotal": 280,
+    "v28Passes": 238,
+    "v83Passes": 245,
+    "v90Passes": 247,
+    "v90RescuesVsV28": 9,
+    "v90RegressionsVsV28": 0,
+    "v90GainsVsV83": 2,
+    "v90LossesVsV83": 0,
+    "v83MinimumPhasePassesAcrossSources": 3,
+    "v90MinimumPhasePassesAcrossSources": 3
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v84OpenedConfirmationReferenced": false,
+  "newReserved1over256OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
