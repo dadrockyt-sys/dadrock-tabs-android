@@ -1,0 +1,3943 @@
+{
+  "schemaVersion": 74,
+  "profileType": "v73-v57-base-global-ablation-diagnostic",
+  "diagnosticScope": "already-exposed-v57-1over64-family-only",
+  "qFrozen": 0.2,
+  "modelHyperparametersFrozenFromV57": true,
+  "basePasses": 93,
+  "fullPhaseAnchorPasses": 137,
+  "rescuesVsFullPhaseAnchor": 10,
+  "regressionsVsFullPhaseAnchor": 54,
+  "minimumBasePasses": 2,
+  "minimumFullPhaseAnchorPasses": 3,
+  "baseBottleneckPhases": [
+    0.390625,
+    0.421875,
+    0.453125,
+    0.546875,
+    0.578125,
+    0.609375,
+    0.640625,
+    0.734375,
+    0.796875,
+    0.890625,
+    0.921875
+  ],
+  "flipCounts": {
+    "same": 96,
+    "base-rescue": 10,
+    "fullphase-rescue": 54
+  },
+  "schemes": [
+    {
+      "phase": 0.015625,
+      "basePasses": 4,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.015625,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 9.37,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 14.06,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 17,
+            "false": 47,
+            "precision": 26.56,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 55,
+            "false": 265,
+            "precision": 17.19
+          }
+        },
+        {
+          "phase": 0.015625,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 5.19,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 3.55,
+          "flip": "base-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 54,
+            "false": 250,
+            "precision": 17.76
+          }
+        },
+        {
+          "phase": 0.015625,
+          "fold": 2,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 14.7,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 17.98,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 50,
+            "false": 254,
+            "precision": 16.45
+          }
+        },
+        {
+          "phase": 0.015625,
+          "fold": 3,
+          "pairRadius": 2,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": -2.5,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 8.44,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 5,
+            "false": 59,
+            "precision": 7.81,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 33,
+            "false": 287,
+            "precision": 10.31
+          }
+        },
+        {
+          "phase": 0.015625,
+          "fold": 4,
+          "pairRadius": 2,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 5.17,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 10.09,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.046875,
+      "basePasses": 4,
+      "fullPhaseAnchorPasses": 3,
+      "folds": [
+        {
+          "phase": 0.046875,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 11.09,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 12.73,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 51,
+            "false": 253,
+            "precision": 16.78
+          }
+        },
+        {
+          "phase": 0.046875,
+          "fold": 1,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 6.5,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.86,
+          "flip": "base-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 15,
+            "false": 46,
+            "precision": 24.59,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 55,
+            "false": 249,
+            "precision": 18.09
+          }
+        },
+        {
+          "phase": 0.046875,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 20.94,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 22.5,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 24,
+            "false": 40,
+            "precision": 37.5,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 267,
+            "precision": 16.56
+          }
+        },
+        {
+          "phase": 0.046875,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": -1.67,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.88,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 5,
+            "false": 56,
+            "precision": 8.2,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 30,
+            "false": 274,
+            "precision": 9.87
+          }
+        },
+        {
+          "phase": 0.046875,
+          "fold": 4,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 5.59,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 11.84,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 37,
+            "false": 282,
+            "precision": 11.6
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.078125,
+      "basePasses": 4,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.078125,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 8.1,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 9.74,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 45,
+            "false": 258,
+            "precision": 14.85
+          }
+        },
+        {
+          "phase": 0.078125,
+          "fold": 1,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 7.5,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.94,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 17,
+            "false": 47,
+            "precision": 26.56,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 259,
+            "precision": 19.06
+          }
+        },
+        {
+          "phase": 0.078125,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 20.59,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 23.87,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 23,
+            "false": 38,
+            "precision": 37.7,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 52,
+            "false": 252,
+            "precision": 17.11
+          }
+        },
+        {
+          "phase": 0.078125,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 1.25,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 9.06,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 7,
+            "false": 57,
+            "precision": 10.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 289,
+            "precision": 9.69
+          }
+        },
+        {
+          "phase": 0.078125,
+          "fold": 4,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 7.5,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 10.78,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 12,
+            "false": 49,
+            "precision": 19.67,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 37,
+            "false": 267,
+            "precision": 12.17
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.109375,
+      "basePasses": 4,
+      "fullPhaseAnchorPasses": 3,
+      "folds": [
+        {
+          "phase": 0.109375,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 5.89,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.46,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 13,
+            "false": 51,
+            "precision": 20.31,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 46,
+            "false": 273,
+            "precision": 14.42
+          }
+        },
+        {
+          "phase": 0.109375,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 8.13,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.85,
+          "flip": "base-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        {
+          "phase": 0.109375,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 17.82,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 19.38,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 22,
+            "false": 42,
+            "precision": 34.38,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 267,
+            "precision": 16.56
+          }
+        },
+        {
+          "phase": 0.109375,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 1.61,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.88,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 7,
+            "false": 54,
+            "precision": 11.48,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 30,
+            "false": 274,
+            "precision": 9.87
+          }
+        },
+        {
+          "phase": 0.109375,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 9.14,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.5,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 13,
+            "false": 48,
+            "precision": 21.31,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 37,
+            "false": 267,
+            "precision": 12.17
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.140625,
+      "basePasses": 4,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.140625,
+          "fold": 0,
+          "pairRadius": 2,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 7.12,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.12,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 13,
+            "false": 48,
+            "precision": 21.31,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 43,
+            "false": 260,
+            "precision": 14.19
+          }
+        },
+        {
+          "phase": 0.140625,
+          "fold": 1,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 6.87,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 8.43,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 17,
+            "false": 47,
+            "precision": 26.56,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 63,
+            "false": 257,
+            "precision": 19.69
+          }
+        },
+        {
+          "phase": 0.140625,
+          "fold": 2,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 20.27,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 23.55,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 23,
+            "false": 38,
+            "precision": 37.7,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        {
+          "phase": 0.140625,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 0.3,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.21,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 6,
+            "false": 55,
+            "precision": 9.84,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 29,
+            "false": 275,
+            "precision": 9.54
+          }
+        },
+        {
+          "phase": 0.140625,
+          "fold": 4,
+          "pairRadius": 2,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 10.0,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 10.0,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 14,
+            "false": 50,
+            "precision": 21.88,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 38,
+            "false": 282,
+            "precision": 11.88
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.171875,
+      "basePasses": 4,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.171875,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 6.52,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 6.52,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 13,
+            "false": 51,
+            "precision": 20.31,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 44,
+            "false": 275,
+            "precision": 13.79
+          }
+        },
+        {
+          "phase": 0.171875,
+          "fold": 1,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 9.12,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 9.12,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 18,
+            "false": 43,
+            "precision": 29.51,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 62,
+            "false": 242,
+            "precision": 20.39
+          }
+        },
+        {
+          "phase": 0.171875,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 18.31,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 19.94,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 22,
+            "false": 39,
+            "precision": 36.07,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 54,
+            "false": 250,
+            "precision": 17.76
+          }
+        },
+        {
+          "phase": 0.171875,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 0.32,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.0,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 6,
+            "false": 58,
+            "precision": 9.38,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 29,
+            "false": 291,
+            "precision": 9.06
+          }
+        },
+        {
+          "phase": 0.171875,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 9.14,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.5,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 13,
+            "false": 48,
+            "precision": 21.31,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 37,
+            "false": 267,
+            "precision": 12.17
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.203125,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.203125,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 4.5,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 6.14,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 11,
+            "false": 50,
+            "precision": 18.03,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 41,
+            "false": 262,
+            "precision": 13.53
+          }
+        },
+        {
+          "phase": 0.203125,
+          "fold": 1,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 7.8,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 11.08,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "phase": 0.203125,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 16.26,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.26,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 22,
+            "false": 42,
+            "precision": 34.38,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 262,
+            "precision": 18.12
+          }
+        },
+        {
+          "phase": 0.203125,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 1.29,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.56,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 6,
+            "false": 55,
+            "precision": 9.84,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 26,
+            "false": 278,
+            "precision": 8.55
+          }
+        },
+        {
+          "phase": 0.203125,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 12.5,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 10.94,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 16,
+            "false": 48,
+            "precision": 25.0,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.234375,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.234375,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 4.83,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 3.19,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 11,
+            "false": 50,
+            "precision": 18.03,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 263,
+            "precision": 13.2
+          }
+        },
+        {
+          "phase": 0.234375,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 10.0,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 13.12,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 19,
+            "false": 45,
+            "precision": 29.69,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 63,
+            "false": 257,
+            "precision": 19.69
+          }
+        },
+        {
+          "phase": 0.234375,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 17.98,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 21.25,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 22,
+            "false": 39,
+            "precision": 36.07,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 55,
+            "false": 249,
+            "precision": 18.09
+          }
+        },
+        {
+          "phase": 0.234375,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": -1.25,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 6.56,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 5,
+            "false": 59,
+            "precision": 7.81,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 29,
+            "false": 291,
+            "precision": 9.06
+          }
+        },
+        {
+          "phase": 0.234375,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 11.76,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 11.76,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 15,
+            "false": 46,
+            "precision": 24.59,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.265625,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.265625,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 4.65,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.65,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 279,
+            "precision": 12.54
+          }
+        },
+        {
+          "phase": 0.265625,
+          "fold": 1,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 14.36,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 9.44,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 21,
+            "false": 40,
+            "precision": 34.43,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "phase": 0.265625,
+          "fold": 2,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 22.81,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 21.25,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 26,
+            "false": 38,
+            "precision": 40.62,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 57,
+            "false": 263,
+            "precision": 17.81
+          }
+        },
+        {
+          "phase": 0.265625,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": -0.68,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.87,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 5,
+            "false": 56,
+            "precision": 8.2,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 277,
+            "precision": 8.88
+          }
+        },
+        {
+          "phase": 0.265625,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 9.46,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 12.74,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 41,
+            "false": 263,
+            "precision": 13.49
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.296875,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.296875,
+          "fold": 0,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 2.21,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.49,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 9,
+            "false": 52,
+            "precision": 14.75,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 38,
+            "false": 265,
+            "precision": 12.54
+          }
+        },
+        {
+          "phase": 0.296875,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 13.12,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 13.12,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 21,
+            "false": 43,
+            "precision": 32.81,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 63,
+            "false": 257,
+            "precision": 19.69
+          }
+        },
+        {
+          "phase": 0.296875,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 18.95,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 17.32,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 23,
+            "false": 38,
+            "precision": 37.7,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 57,
+            "false": 247,
+            "precision": 18.75
+          }
+        },
+        {
+          "phase": 0.296875,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": -1.66,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.89,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 4,
+            "false": 57,
+            "precision": 6.56,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 25,
+            "false": 279,
+            "precision": 8.22
+          }
+        },
+        {
+          "phase": 0.296875,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 8.44,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 13.12,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 14,
+            "false": 50,
+            "precision": 21.88,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 43,
+            "false": 277,
+            "precision": 13.44
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.328125,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 3,
+      "folds": [
+        {
+          "phase": 0.328125,
+          "fold": 0,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 4.02,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.02,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        {
+          "phase": 0.328125,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 13.05,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 11.41,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 20,
+            "false": 41,
+            "precision": 32.79,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        {
+          "phase": 0.328125,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 20.26,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 15.35,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 24,
+            "false": 37,
+            "precision": 39.34,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        {
+          "phase": 0.328125,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": -3.75,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 2.5,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 3,
+            "false": 61,
+            "precision": 4.69,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "phase": 0.328125,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 10.12,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.68,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.359375,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.359375,
+          "fold": 0,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 0.57,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.49,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 38,
+            "false": 265,
+            "precision": 12.54
+          }
+        },
+        {
+          "phase": 0.359375,
+          "fold": 1,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 14.36,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 12.72,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 21,
+            "false": 40,
+            "precision": 34.43,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "phase": 0.359375,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 18.44,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 15.32,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 24,
+            "false": 40,
+            "precision": 37.5,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 259,
+            "precision": 19.06
+          }
+        },
+        {
+          "phase": 0.359375,
+          "fold": 3,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": -2.97,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 3.59,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 3,
+            "false": 58,
+            "precision": 4.92,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 24,
+            "false": 280,
+            "precision": 7.89
+          }
+        },
+        {
+          "phase": 0.359375,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 8.76,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 18.13,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 14,
+            "false": 50,
+            "precision": 21.88,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 278,
+            "precision": 13.12
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.390625,
+      "basePasses": 2,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.390625,
+          "fold": 0,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 1.55,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 6.47,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 9,
+            "false": 52,
+            "precision": 14.75,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 263,
+            "precision": 13.2
+          }
+        },
+        {
+          "phase": 0.390625,
+          "fold": 1,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 14.69,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 13.12,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 22,
+            "false": 42,
+            "precision": 34.38,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 63,
+            "false": 257,
+            "precision": 19.69
+          }
+        },
+        {
+          "phase": 0.390625,
+          "fold": 2,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 17.63,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 17.63,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 23,
+            "false": 38,
+            "precision": 37.7,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "phase": 0.390625,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": -4.38,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.0,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 2,
+            "false": 62,
+            "precision": 3.12,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 24,
+            "false": 296,
+            "precision": 7.5
+          }
+        },
+        {
+          "phase": 0.390625,
+          "fold": 4,
+          "pairRadius": 8,
+          "lambda": 10.0,
+          "basePassed": false,
+          "baseLift": 3.89,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 15.37,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 38,
+            "false": 266,
+            "precision": 12.5
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.421875,
+      "basePasses": 2,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.421875,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 1.21,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.46,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 9,
+            "false": 55,
+            "precision": 14.06,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 41,
+            "false": 278,
+            "precision": 12.85
+          }
+        },
+        {
+          "phase": 0.421875,
+          "fold": 1,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 16.99,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 15.35,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 22,
+            "false": 39,
+            "precision": 36.07,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        {
+          "phase": 0.421875,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 15.32,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 18.44,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 23,
+            "false": 41,
+            "precision": 35.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 66,
+            "false": 254,
+            "precision": 20.62
+          }
+        },
+        {
+          "phase": 0.421875,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": -3.96,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 2.6,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 2,
+            "false": 59,
+            "precision": 3.28,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 22,
+            "false": 282,
+            "precision": 7.24
+          }
+        },
+        {
+          "phase": 0.421875,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 1.92,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 10.12,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 9,
+            "false": 52,
+            "precision": 14.75,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.453125,
+      "basePasses": 2,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.453125,
+          "fold": 0,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": -2.7,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 10.41,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 6,
+            "false": 55,
+            "precision": 9.84,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 38,
+            "false": 265,
+            "precision": 12.54
+          }
+        },
+        {
+          "phase": 0.453125,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 15.32,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 20.0,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 22,
+            "false": 42,
+            "precision": 34.38,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 259,
+            "precision": 19.06
+          }
+        },
+        {
+          "phase": 0.453125,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 17.96,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.32,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 24,
+            "false": 37,
+            "precision": 39.34,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 65,
+            "false": 239,
+            "precision": 21.38
+          }
+        },
+        {
+          "phase": 0.453125,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": -5.6,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 2.6,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 1,
+            "false": 60,
+            "precision": 1.64,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 22,
+            "false": 282,
+            "precision": 7.24
+          }
+        },
+        {
+          "phase": 0.453125,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 4.69,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 12.5,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.484375,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.484375,
+          "fold": 0,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": -2.85,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 11.21,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 6,
+            "false": 58,
+            "precision": 9.38,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 280,
+            "precision": 12.23
+          }
+        },
+        {
+          "phase": 0.484375,
+          "fold": 1,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 20.26,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.99,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 24,
+            "false": 37,
+            "precision": 39.34,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        {
+          "phase": 0.484375,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 16.98,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 13.71,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 23,
+            "false": 38,
+            "precision": 37.7,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 63,
+            "false": 241,
+            "precision": 20.72
+          }
+        },
+        {
+          "phase": 0.484375,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": -0.63,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.18,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 5,
+            "false": 59,
+            "precision": 7.81,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        {
+          "phase": 0.484375,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 10.0,
+          "basePassed": true,
+          "baseLift": 5.2,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 11.76,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 11,
+            "false": 50,
+            "precision": 18.03,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.515625,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.515625,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": -3.79,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 8.71,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 5,
+            "false": 59,
+            "precision": 7.81,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 37,
+            "false": 282,
+            "precision": 11.6
+          }
+        },
+        {
+          "phase": 0.515625,
+          "fold": 1,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 18.62,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.99,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 23,
+            "false": 38,
+            "precision": 37.7,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        {
+          "phase": 0.515625,
+          "fold": 2,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 16.88,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 13.76,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 24,
+            "false": 40,
+            "precision": 37.5,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 66,
+            "false": 254,
+            "precision": 20.62
+          }
+        },
+        {
+          "phase": 0.515625,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": -1.66,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 9.81,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 4,
+            "false": 57,
+            "precision": 6.56,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 25,
+            "false": 279,
+            "precision": 8.22
+          }
+        },
+        {
+          "phase": 0.515625,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 6.51,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 13.07,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 12,
+            "false": 49,
+            "precision": 19.67,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 264,
+            "precision": 13.16
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.546875,
+      "basePasses": 2,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.546875,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 3.53,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 11.73,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 9,
+            "false": 52,
+            "precision": 14.75,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        {
+          "phase": 0.546875,
+          "fold": 1,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 16.88,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 18.44,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 23,
+            "false": 41,
+            "precision": 35.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 259,
+            "precision": 19.06
+          }
+        },
+        {
+          "phase": 0.546875,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 12.72,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 11.08,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 20,
+            "false": 41,
+            "precision": 32.79,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "phase": 0.546875,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 0.3,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 10.13,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 6,
+            "false": 55,
+            "precision": 9.84,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 29,
+            "false": 275,
+            "precision": 9.54
+          }
+        },
+        {
+          "phase": 0.546875,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 4.38,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 12.19,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 41,
+            "false": 279,
+            "precision": 12.81
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.578125,
+      "basePasses": 2,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.578125,
+          "fold": 0,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": -0.03,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 10.91,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 7,
+            "false": 57,
+            "precision": 10.94,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 35,
+            "false": 284,
+            "precision": 10.97
+          }
+        },
+        {
+          "phase": 0.578125,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 18.29,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 21.57,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 23,
+            "false": 38,
+            "precision": 37.7,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 245,
+            "precision": 19.41
+          }
+        },
+        {
+          "phase": 0.578125,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 11.41,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 6.49,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        {
+          "phase": 0.578125,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 0.94,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 13.44,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 7,
+            "false": 57,
+            "precision": 10.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 288,
+            "precision": 10.0
+          }
+        },
+        {
+          "phase": 0.578125,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 1.59,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 14.71,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 9,
+            "false": 52,
+            "precision": 14.75,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 264,
+            "precision": 13.16
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.609375,
+      "basePasses": 2,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.609375,
+          "fold": 0,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 1.25,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 12.72,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 7,
+            "false": 54,
+            "precision": 11.48,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 272,
+            "precision": 10.23
+          }
+        },
+        {
+          "phase": 0.609375,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 16.66,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 18.29,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 22,
+            "false": 39,
+            "precision": 36.07,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 245,
+            "precision": 19.41
+          }
+        },
+        {
+          "phase": 0.609375,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 9.69,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 9.69,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 19,
+            "false": 45,
+            "precision": 29.69,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 64,
+            "false": 256,
+            "precision": 20.0
+          }
+        },
+        {
+          "phase": 0.609375,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 1.94,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.69,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 7,
+            "false": 54,
+            "precision": 11.48,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 29,
+            "false": 275,
+            "precision": 9.54
+          }
+        },
+        {
+          "phase": 0.609375,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 2.18,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 11.56,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 10,
+            "false": 54,
+            "precision": 15.62,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 43,
+            "false": 277,
+            "precision": 13.44
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.640625,
+      "basePasses": 2,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.640625,
+          "fold": 0,
+          "pairRadius": 2,
+          "lambda": 10.0,
+          "basePassed": false,
+          "baseLift": 2.22,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.14,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 33,
+            "false": 270,
+            "precision": 10.89
+          }
+        },
+        {
+          "phase": 0.640625,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 10.63,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 18.44,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 19,
+            "false": 45,
+            "precision": 29.69,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 259,
+            "precision": 19.06
+          }
+        },
+        {
+          "phase": 0.640625,
+          "fold": 2,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 16.0,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.8,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 22,
+            "false": 39,
+            "precision": 36.07,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "phase": 0.640625,
+          "fold": 3,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": -0.62,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 15.0,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 6,
+            "false": 58,
+            "precision": 9.38,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 288,
+            "precision": 10.0
+          }
+        },
+        {
+          "phase": 0.640625,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 1.92,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 6.84,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 9,
+            "false": 52,
+            "precision": 14.75,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.671875,
+      "basePasses": 4,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.671875,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": -3.16,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.78,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 5,
+            "false": 59,
+            "precision": 7.81,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 35,
+            "false": 284,
+            "precision": 10.97
+          }
+        },
+        {
+          "phase": 0.671875,
+          "fold": 1,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 12.07,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.99,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        {
+          "phase": 0.671875,
+          "fold": 2,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 12.81,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 3.44,
+          "flip": "base-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 21,
+            "false": 43,
+            "precision": 32.81,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 64,
+            "false": 256,
+            "precision": 20.0
+          }
+        },
+        {
+          "phase": 0.671875,
+          "fold": 3,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 6.52,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 14.72,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 30,
+            "false": 274,
+            "precision": 9.87
+          }
+        },
+        {
+          "phase": 0.671875,
+          "fold": 4,
+          "pairRadius": 2,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 5.2,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.2,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 11,
+            "false": 50,
+            "precision": 18.03,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.703125,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 3,
+      "folds": [
+        {
+          "phase": 0.703125,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 1.89,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 8.45,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        {
+          "phase": 0.703125,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 9.68,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 22.18,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 18,
+            "false": 46,
+            "precision": 28.12,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        {
+          "phase": 0.703125,
+          "fold": 2,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 14.36,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 2.88,
+          "flip": "base-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 21,
+            "false": 40,
+            "precision": 34.43,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "phase": 0.703125,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 5.86,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 15.7,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 272,
+            "precision": 10.53
+          }
+        },
+        {
+          "phase": 0.703125,
+          "fold": 4,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 3.12,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.69,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 10,
+            "false": 54,
+            "precision": 15.62,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.734375,
+      "basePasses": 2,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.734375,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 3.09,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 9.34,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 9,
+            "false": 55,
+            "precision": 14.06,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 35,
+            "false": 284,
+            "precision": 10.97
+          }
+        },
+        {
+          "phase": 0.734375,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 9.45,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 17.65,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 56,
+            "false": 248,
+            "precision": 18.42
+          }
+        },
+        {
+          "phase": 0.734375,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 11.08,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.8,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "phase": 0.734375,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 4.68,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 14.06,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 10,
+            "false": 54,
+            "precision": 15.62,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 35,
+            "false": 285,
+            "precision": 10.94
+          }
+        },
+        {
+          "phase": 0.734375,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 1.92,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.2,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 9,
+            "false": 52,
+            "precision": 14.75,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.765625,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.765625,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 5.17,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 6.81,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        {
+          "phase": 0.765625,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 8.8,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 20.27,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 16,
+            "false": 45,
+            "precision": 26.23,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        {
+          "phase": 0.765625,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 10.94,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.69,
+          "flip": "base-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 20,
+            "false": 44,
+            "precision": 31.25,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 65,
+            "false": 255,
+            "precision": 20.31
+          }
+        },
+        {
+          "phase": 0.765625,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 4.88,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.36,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 35,
+            "false": 269,
+            "precision": 11.51
+          }
+        },
+        {
+          "phase": 0.765625,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 1.87,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.0,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 9,
+            "false": 55,
+            "precision": 14.06,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 281,
+            "precision": 12.19
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.796875,
+      "basePasses": 2,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.796875,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 2.22,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.14,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 33,
+            "false": 270,
+            "precision": 10.89
+          }
+        },
+        {
+          "phase": 0.796875,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 10.93,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 18.75,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 18,
+            "false": 46,
+            "precision": 28.12,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 55,
+            "false": 265,
+            "precision": 17.19
+          }
+        },
+        {
+          "phase": 0.796875,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 8.79,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.51,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 18,
+            "false": 43,
+            "precision": 29.51,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 63,
+            "false": 241,
+            "precision": 20.72
+          }
+        },
+        {
+          "phase": 0.796875,
+          "fold": 3,
+          "pairRadius": 2,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": -0.62,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 13.44,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 7,
+            "false": 57,
+            "precision": 10.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 37,
+            "false": 283,
+            "precision": 11.56
+          }
+        },
+        {
+          "phase": 0.796875,
+          "fold": 4,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 3.89,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.53,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 38,
+            "false": 266,
+            "precision": 12.5
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.828125,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.828125,
+          "fold": 0,
+          "pairRadius": 2,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 6.22,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 10.91,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 35,
+            "false": 284,
+            "precision": 10.97
+          }
+        },
+        {
+          "phase": 0.828125,
+          "fold": 1,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 9.12,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 18.96,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 16,
+            "false": 45,
+            "precision": 26.23,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 52,
+            "false": 252,
+            "precision": 17.11
+          }
+        },
+        {
+          "phase": 0.828125,
+          "fold": 2,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 9.07,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.94,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 19,
+            "false": 45,
+            "precision": 29.69,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 66,
+            "false": 254,
+            "precision": 20.62
+          }
+        },
+        {
+          "phase": 0.828125,
+          "fold": 3,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 1.6,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 18.0,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 35,
+            "false": 269,
+            "precision": 11.51
+          }
+        },
+        {
+          "phase": 0.828125,
+          "fold": 4,
+          "pairRadius": 8,
+          "lambda": 10.0,
+          "basePassed": false,
+          "baseLift": 2.25,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.17,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 9,
+            "false": 52,
+            "precision": 14.75,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 38,
+            "false": 266,
+            "precision": 12.5
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.859375,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.859375,
+          "fold": 0,
+          "pairRadius": 2,
+          "lambda": 10.0,
+          "basePassed": false,
+          "baseLift": 3.86,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 10.42,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 9,
+            "false": 52,
+            "precision": 14.75,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 33,
+            "false": 270,
+            "precision": 10.89
+          }
+        },
+        {
+          "phase": 0.859375,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 11.24,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 17.5,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 18,
+            "false": 46,
+            "precision": 28.12,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 54,
+            "false": 266,
+            "precision": 16.88
+          }
+        },
+        {
+          "phase": 0.859375,
+          "fold": 2,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 7.48,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.2,
+          "flip": "base-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 62,
+            "false": 242,
+            "precision": 20.39
+          }
+        },
+        {
+          "phase": 0.859375,
+          "fold": 3,
+          "pairRadius": 2,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 5.2,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 13.4,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 11,
+            "false": 50,
+            "precision": 18.03,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        },
+        {
+          "phase": 0.859375,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 0.62,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 6.87,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 8,
+            "false": 56,
+            "precision": 12.5,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 38,
+            "false": 282,
+            "precision": 11.88
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.890625,
+      "basePasses": 2,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.890625,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 4.02,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 5.59,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 10,
+            "false": 54,
+            "precision": 15.62,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 37,
+            "false": 282,
+            "precision": 11.6
+          }
+        },
+        {
+          "phase": 0.890625,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 9.45,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.01,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 16,
+            "false": 45,
+            "precision": 26.23,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 51,
+            "false": 253,
+            "precision": 16.78
+          }
+        },
+        {
+          "phase": 0.890625,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 12.72,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 4.52,
+          "flip": "base-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 20,
+            "false": 41,
+            "precision": 32.79,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        {
+          "phase": 0.890625,
+          "fold": 3,
+          "pairRadius": 8,
+          "lambda": 10.0,
+          "basePassed": false,
+          "baseLift": 3.75,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.25,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 43,
+            "false": 277,
+            "precision": 13.44
+          }
+        },
+        {
+          "phase": 0.890625,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 1.93,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 8.49,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 270,
+            "precision": 11.18
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.921875,
+      "basePasses": 2,
+      "fullPhaseAnchorPasses": 5,
+      "folds": [
+        {
+          "phase": 0.921875,
+          "fold": 0,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 2.22,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.14,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 33,
+            "false": 270,
+            "precision": 10.89
+          }
+        },
+        {
+          "phase": 0.921875,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 5.84,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 12.4,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 52,
+            "false": 252,
+            "precision": 17.11
+          }
+        },
+        {
+          "phase": 0.921875,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 9.69,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 8.12,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 19,
+            "false": 45,
+            "precision": 29.69,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 64,
+            "false": 256,
+            "precision": 20.0
+          }
+        },
+        {
+          "phase": 0.921875,
+          "fold": 3,
+          "pairRadius": 2,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 4.54,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.02,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 11,
+            "false": 50,
+            "precision": 18.03,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 41,
+            "false": 263,
+            "precision": 13.49
+          }
+        },
+        {
+          "phase": 0.921875,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": 1.25,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.5,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 8,
+            "false": 56,
+            "precision": 12.5,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 284,
+            "precision": 11.25
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.953125,
+      "basePasses": 3,
+      "fullPhaseAnchorPasses": 4,
+      "folds": [
+        {
+          "phase": 0.953125,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": 0.59,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 7.14,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 7,
+            "false": 54,
+            "precision": 11.48,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 33,
+            "false": 270,
+            "precision": 10.89
+          }
+        },
+        {
+          "phase": 0.953125,
+          "fold": 1,
+          "pairRadius": 4,
+          "lambda": 10.0,
+          "basePassed": true,
+          "baseLift": 6.56,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 12.81,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 15,
+            "false": 49,
+            "precision": 23.44,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 54,
+            "false": 266,
+            "precision": 16.88
+          }
+        },
+        {
+          "phase": 0.953125,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 7.15,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 3.87,
+          "flip": "base-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 16,
+            "false": 45,
+            "precision": 26.23,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        {
+          "phase": 0.953125,
+          "fold": 3,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 7.19,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 16.56,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 14,
+            "false": 50,
+            "precision": 21.88,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 273,
+            "precision": 14.69
+          }
+        },
+        {
+          "phase": 0.953125,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": false,
+          "baseLift": -1.34,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 6.85,
+          "flip": "fullphase-rescue",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 6,
+            "false": 55,
+            "precision": 9.84,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 270,
+            "precision": 11.18
+          }
+        }
+      ]
+    },
+    {
+      "phase": 0.984375,
+      "basePasses": 4,
+      "fullPhaseAnchorPasses": 3,
+      "folds": [
+        {
+          "phase": 0.984375,
+          "fold": 0,
+          "pairRadius": 4,
+          "lambda": 10.0,
+          "basePassed": true,
+          "baseLift": 5.9,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 9.02,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 283,
+            "precision": 11.29
+          }
+        },
+        {
+          "phase": 0.984375,
+          "fold": 1,
+          "pairRadius": 8,
+          "lambda": 100.0,
+          "basePassed": true,
+          "baseLift": 10.44,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 10.44,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        {
+          "phase": 0.984375,
+          "fold": 2,
+          "pairRadius": 4,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 6.56,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 3.44,
+          "flip": "base-rescue",
+          "baseCandidate": {
+            "selected": 64,
+            "true": 16,
+            "false": 48,
+            "precision": 25.0,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        {
+          "phase": 0.984375,
+          "fold": 3,
+          "pairRadius": 8,
+          "lambda": 1.0,
+          "basePassed": true,
+          "baseLift": 7.49,
+          "fullPhaseAnchorPassed": true,
+          "fullPhaseAnchorLift": 15.69,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 257,
+            "precision": 15.46
+          }
+        },
+        {
+          "phase": 0.984375,
+          "fold": 4,
+          "pairRadius": 4,
+          "lambda": 100.0,
+          "basePassed": false,
+          "baseLift": -3.64,
+          "fullPhaseAnchorPassed": false,
+          "fullPhaseAnchorLift": 2.91,
+          "flip": "same",
+          "baseCandidate": {
+            "selected": 61,
+            "true": 4,
+            "false": 57,
+            "precision": 6.56,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 273,
+            "precision": 10.2
+          }
+        }
+      ]
+    }
+  ],
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

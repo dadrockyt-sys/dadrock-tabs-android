@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 74,
+  "qFrozen": 0.2,
+  "modelHyperparametersFrozenFromV57": true,
+  "basePasses": 93,
+  "fullPhaseAnchorPasses": 137,
+  "rescuesVsFullPhaseAnchor": 10,
+  "regressionsVsFullPhaseAnchor": 54,
+  "minimumBasePasses": 2,
+  "minimumFullPhaseAnchorPasses": 3,
+  "baseBottleneckPhases": [
+    0.390625,
+    0.421875,
+    0.453125,
+    0.546875,
+    0.578125,
+    0.609375,
+    0.640625,
+    0.734375,
+    0.796875,
+    0.890625,
+    0.921875
+  ],
+  "flipCounts": {
+    "same": 96,
+    "base-rescue": 10,
+    "fullphase-rescue": 54
+  },
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
