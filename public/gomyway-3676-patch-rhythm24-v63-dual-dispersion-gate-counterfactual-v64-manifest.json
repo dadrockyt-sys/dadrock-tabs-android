@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 64,
+  "fixedTightLiftDeltaStdMinimum": 0.5,
+  "fixedBroadLiftDeltaStdMaximum": 0.9,
+  "results": [
+    {
+      "source": "v56_exposed_120",
+      "foldsPassed": 104,
+      "foldsTotal": 120,
+      "v28ComparisonPasses": 101,
+      "minimumPhasePasses": 4,
+      "rescuesVsV28": 3,
+      "regressionsVsV28": 0,
+      "tightKept": 10,
+      "tightReverted": 15,
+      "broadKept": 36,
+      "broadReverted": 9,
+      "changedOutcomeCountVsSource": 2
+    },
+    {
+      "source": "v57_exposed_160",
+      "foldsPassed": 140,
+      "foldsTotal": 160,
+      "v28ComparisonPasses": 137,
+      "minimumPhasePasses": 3,
+      "rescuesVsV28": 3,
+      "regressionsVsV28": 0,
+      "tightKept": 19,
+      "tightReverted": 23,
+      "broadKept": 38,
+      "broadReverted": 15,
+      "changedOutcomeCountVsSource": 5
+    }
+  ],
+  "combined": {
+    "foldsPassed": 244,
+    "foldsTotal": 280,
+    "v28ComparisonPasses": 238,
+    "rescuesVsV28": 6,
+    "regressionsVsV28": 0,
+    "minimumPhasePassesAcrossSources": 3,
+    "tightKept": 29,
+    "tightReverted": 38,
+    "broadKept": 74,
+    "broadReverted": 24
+  },
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
