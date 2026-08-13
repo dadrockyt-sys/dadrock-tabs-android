@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 72,
+  "phaseFeatureColumnCount": 4,
+  "passCounts": {
+    "base": 10,
+    "fullPhase": 9,
+    "basePlusPhaseCol0": 10,
+    "basePlusPhaseCol1": 9,
+    "basePlusPhaseCol2": 10,
+    "basePlusPhaseCol3": 11,
+    "basePlusFirst1PhaseCols": 10,
+    "basePlusFirst2PhaseCols": 9,
+    "basePlusFirst3PhaseCols": 9,
+    "basePlusFirst4PhaseCols": 9
+  },
+  "rankedRepresentations": [
+    [
+      "basePlusPhaseCol3",
+      11
+    ],
+    [
+      "base",
+      10
+    ],
+    [
+      "basePlusFirst1PhaseCols",
+      10
+    ],
+    [
+      "basePlusPhaseCol0",
+      10
+    ],
+    [
+      "basePlusPhaseCol2",
+      10
+    ],
+    [
+      "basePlusFirst2PhaseCols",
+      9
+    ],
+    [
+      "basePlusFirst3PhaseCols",
+      9
+    ],
+    [
+      "basePlusFirst4PhaseCols",
+      9
+    ],
+    [
+      "basePlusPhaseCol1",
+      9
+    ],
+    [
+      "fullPhase",
+      9
+    ]
+  ],
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newTuningPerformed": false,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

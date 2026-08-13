@@ -1,0 +1,2598 @@
+{
+  "schemaVersion": 72,
+  "profileType": "v71-phase-feature-column-ablation-diagnostic",
+  "diagnosticScope": "already-exposed-v57-bottleneck-phases-only",
+  "phaseFeatureColumnCount": 4,
+  "passCounts": {
+    "base": 10,
+    "fullPhase": 9,
+    "basePlusPhaseCol0": 10,
+    "basePlusPhaseCol1": 9,
+    "basePlusPhaseCol2": 10,
+    "basePlusPhaseCol3": 11,
+    "basePlusFirst1PhaseCols": 10,
+    "basePlusFirst2PhaseCols": 9,
+    "basePlusFirst3PhaseCols": 9,
+    "basePlusFirst4PhaseCols": 9
+  },
+  "rankedRepresentations": [
+    [
+      "basePlusPhaseCol3",
+      11
+    ],
+    [
+      "base",
+      10
+    ],
+    [
+      "basePlusFirst1PhaseCols",
+      10
+    ],
+    [
+      "basePlusPhaseCol0",
+      10
+    ],
+    [
+      "basePlusPhaseCol2",
+      10
+    ],
+    [
+      "basePlusFirst2PhaseCols",
+      9
+    ],
+    [
+      "basePlusFirst3PhaseCols",
+      9
+    ],
+    [
+      "basePlusFirst4PhaseCols",
+      9
+    ],
+    [
+      "basePlusPhaseCol1",
+      9
+    ],
+    [
+      "fullPhase",
+      9
+    ]
+  ],
+  "rows": [
+    {
+      "phase": 0.328125,
+      "fold": 0,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "representations": {
+        "base": {
+          "passed": false,
+          "heldoutPrecisionLift": 4.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        "fullPhase": {
+          "passed": false,
+          "heldoutPrecisionLift": 4.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": false,
+          "heldoutPrecisionLift": 4.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": false,
+          "heldoutPrecisionLift": 0.89,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 9,
+            "false": 55,
+            "precision": 14.06,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": false,
+          "heldoutPrecisionLift": 4.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": false,
+          "heldoutPrecisionLift": 0.89,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 9,
+            "false": 55,
+            "precision": 14.06,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 4.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 0.89,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 9,
+            "false": 55,
+            "precision": 14.06,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": -0.67,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 8,
+            "false": 56,
+            "precision": 12.5,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 4.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 42,
+            "false": 277,
+            "precision": 13.17
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.328125,
+      "fold": 1,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representations": {
+        "base": {
+          "passed": true,
+          "heldoutPrecisionLift": 13.05,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 20,
+            "false": 41,
+            "precision": 32.79,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        "fullPhase": {
+          "passed": true,
+          "heldoutPrecisionLift": 11.41,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": true,
+          "heldoutPrecisionLift": 13.05,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 20,
+            "false": 41,
+            "precision": 32.79,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": true,
+          "heldoutPrecisionLift": 11.41,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.77,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 18,
+            "false": 43,
+            "precision": 29.51,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": true,
+          "heldoutPrecisionLift": 11.41,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 13.05,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 20,
+            "false": 41,
+            "precision": 32.79,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 11.41,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.77,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 18,
+            "false": 43,
+            "precision": 29.51,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 11.41,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 60,
+            "false": 244,
+            "precision": 19.74
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.328125,
+      "fold": 2,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representations": {
+        "base": {
+          "passed": true,
+          "heldoutPrecisionLift": 20.26,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 24,
+            "false": 37,
+            "precision": 39.34,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        "fullPhase": {
+          "passed": true,
+          "heldoutPrecisionLift": 15.35,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 21,
+            "false": 40,
+            "precision": 34.43,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": true,
+          "heldoutPrecisionLift": 20.26,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 24,
+            "false": 37,
+            "precision": 39.34,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": true,
+          "heldoutPrecisionLift": 18.62,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 23,
+            "false": 38,
+            "precision": 37.7,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": true,
+          "heldoutPrecisionLift": 16.99,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 22,
+            "false": 39,
+            "precision": 36.07,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": true,
+          "heldoutPrecisionLift": 20.26,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 24,
+            "false": 37,
+            "precision": 39.34,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 20.26,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 24,
+            "false": 37,
+            "precision": 39.34,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 18.62,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 23,
+            "false": 38,
+            "precision": 37.7,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 16.99,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 22,
+            "false": 39,
+            "precision": 36.07,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 15.35,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 21,
+            "false": 40,
+            "precision": 34.43,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 58,
+            "false": 246,
+            "precision": 19.08
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.328125,
+      "fold": 3,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representations": {
+        "base": {
+          "passed": false,
+          "heldoutPrecisionLift": -3.75,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 3,
+            "false": 61,
+            "precision": 4.69,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        "fullPhase": {
+          "passed": false,
+          "heldoutPrecisionLift": 2.5,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 7,
+            "false": 57,
+            "precision": 10.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": false,
+          "heldoutPrecisionLift": -3.75,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 3,
+            "false": 61,
+            "precision": 4.69,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": false,
+          "heldoutPrecisionLift": 0.94,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 6,
+            "false": 58,
+            "precision": 9.38,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": false,
+          "heldoutPrecisionLift": -3.75,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 3,
+            "false": 61,
+            "precision": 4.69,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": false,
+          "heldoutPrecisionLift": 2.5,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 7,
+            "false": 57,
+            "precision": 10.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": -3.75,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 3,
+            "false": 61,
+            "precision": 4.69,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 0.94,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 6,
+            "false": 58,
+            "precision": 9.38,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 0.94,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 6,
+            "false": 58,
+            "precision": 9.38,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 2.5,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 7,
+            "false": 57,
+            "precision": 10.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 27,
+            "false": 293,
+            "precision": 8.44
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.328125,
+      "fold": 4,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representations": {
+        "base": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.12,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        },
+        "fullPhase": {
+          "passed": true,
+          "heldoutPrecisionLift": 16.68,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 18,
+            "false": 43,
+            "precision": 29.51,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.12,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.12,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": true,
+          "heldoutPrecisionLift": 8.48,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 13,
+            "false": 48,
+            "precision": 21.31,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.12,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.12,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.12,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.12,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 16.68,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 18,
+            "false": 43,
+            "precision": 29.51,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 39,
+            "false": 265,
+            "precision": 12.83
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.703125,
+      "fold": 0,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representations": {
+        "base": {
+          "passed": false,
+          "heldoutPrecisionLift": 1.89,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        "fullPhase": {
+          "passed": true,
+          "heldoutPrecisionLift": 8.45,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 12,
+            "false": 49,
+            "precision": 19.67,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": false,
+          "heldoutPrecisionLift": 1.89,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": true,
+          "heldoutPrecisionLift": 5.17,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.53,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 9,
+            "false": 52,
+            "precision": 14.75,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": true,
+          "heldoutPrecisionLift": 5.17,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 1.89,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 5.17,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.53,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 9,
+            "false": 52,
+            "precision": 14.75,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 8.45,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 12,
+            "false": 49,
+            "precision": 19.67,
+            "selectedPct": 20.13
+          },
+          "heldoutBase": {
+            "true": 34,
+            "false": 269,
+            "precision": 11.22
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.703125,
+      "fold": 1,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representations": {
+        "base": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.68,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 18,
+            "false": 46,
+            "precision": 28.12,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "fullPhase": {
+          "passed": true,
+          "heldoutPrecisionLift": 22.18,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 26,
+            "false": 38,
+            "precision": 40.62,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.68,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 18,
+            "false": 46,
+            "precision": 28.12,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": true,
+          "heldoutPrecisionLift": 17.5,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 23,
+            "false": 41,
+            "precision": 35.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": true,
+          "heldoutPrecisionLift": 12.81,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 20,
+            "false": 44,
+            "precision": 31.25,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": true,
+          "heldoutPrecisionLift": 14.37,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 21,
+            "false": 43,
+            "precision": 32.81,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.68,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 18,
+            "false": 46,
+            "precision": 28.12,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 17.5,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 23,
+            "false": 41,
+            "precision": 35.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 17.5,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 23,
+            "false": 41,
+            "precision": 35.94,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 22.18,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 26,
+            "false": 38,
+            "precision": 40.62,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.703125,
+      "fold": 2,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "representations": {
+        "base": {
+          "passed": true,
+          "heldoutPrecisionLift": 14.36,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 21,
+            "false": 40,
+            "precision": 34.43,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        "fullPhase": {
+          "passed": false,
+          "heldoutPrecisionLift": 2.88,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": true,
+          "heldoutPrecisionLift": 14.36,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 21,
+            "false": 40,
+            "precision": 34.43,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": false,
+          "heldoutPrecisionLift": 4.52,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 15,
+            "false": 46,
+            "precision": 24.59,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": true,
+          "heldoutPrecisionLift": 12.72,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 20,
+            "false": 41,
+            "precision": 32.79,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.44,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 18,
+            "false": 43,
+            "precision": 29.51,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 14.36,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 21,
+            "false": 40,
+            "precision": 34.43,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 4.52,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 15,
+            "false": 46,
+            "precision": 24.59,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 7.8,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 2.88,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 61,
+            "false": 243,
+            "precision": 20.07
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.703125,
+      "fold": 3,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representations": {
+        "base": {
+          "passed": true,
+          "heldoutPrecisionLift": 5.86,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 272,
+            "precision": 10.53
+          }
+        },
+        "fullPhase": {
+          "passed": true,
+          "heldoutPrecisionLift": 15.7,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 16,
+            "false": 45,
+            "precision": 26.23,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 272,
+            "precision": 10.53
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": true,
+          "heldoutPrecisionLift": 5.86,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 272,
+            "precision": 10.53
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.14,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 12,
+            "false": 49,
+            "precision": 19.67,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 272,
+            "precision": 10.53
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": true,
+          "heldoutPrecisionLift": 7.5,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 11,
+            "false": 50,
+            "precision": 18.03,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 272,
+            "precision": 10.53
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": true,
+          "heldoutPrecisionLift": 14.06,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 15,
+            "false": 46,
+            "precision": 24.59,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 272,
+            "precision": 10.53
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 5.86,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 10,
+            "false": 51,
+            "precision": 16.39,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 272,
+            "precision": 10.53
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.14,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 12,
+            "false": 49,
+            "precision": 19.67,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 272,
+            "precision": 10.53
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.78,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 13,
+            "false": 48,
+            "precision": 21.31,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 272,
+            "precision": 10.53
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 15.7,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 16,
+            "false": 45,
+            "precision": 26.23,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 32,
+            "false": 272,
+            "precision": 10.53
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.703125,
+      "fold": 4,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "representations": {
+        "base": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.12,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 10,
+            "false": 54,
+            "precision": 15.62,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        },
+        "fullPhase": {
+          "passed": false,
+          "heldoutPrecisionLift": 4.69,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.12,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 10,
+            "false": 54,
+            "precision": 15.62,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": false,
+          "heldoutPrecisionLift": 1.56,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 9,
+            "false": 55,
+            "precision": 14.06,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": false,
+          "heldoutPrecisionLift": 1.56,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 9,
+            "false": 55,
+            "precision": 14.06,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.12,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 10,
+            "false": 54,
+            "precision": 15.62,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.12,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 10,
+            "false": 54,
+            "precision": 15.62,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 1.56,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 9,
+            "false": 55,
+            "precision": 14.06,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.12,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 10,
+            "false": 54,
+            "precision": 15.62,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 4.69,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 40,
+            "false": 280,
+            "precision": 12.5
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.984375,
+      "fold": 0,
+      "pairRadius": 4,
+      "lambda": 10.0,
+      "representations": {
+        "base": {
+          "passed": true,
+          "heldoutPrecisionLift": 5.9,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 283,
+            "precision": 11.29
+          }
+        },
+        "fullPhase": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 13,
+            "false": 51,
+            "precision": 20.31,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 283,
+            "precision": 11.29
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": true,
+          "heldoutPrecisionLift": 5.9,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 283,
+            "precision": 11.29
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 13,
+            "false": 51,
+            "precision": 20.31,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 283,
+            "precision": 11.29
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": true,
+          "heldoutPrecisionLift": 7.46,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 12,
+            "false": 52,
+            "precision": 18.75,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 283,
+            "precision": 11.29
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": true,
+          "heldoutPrecisionLift": 7.46,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 12,
+            "false": 52,
+            "precision": 18.75,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 283,
+            "precision": 11.29
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 5.9,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 11,
+            "false": 53,
+            "precision": 17.19,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 283,
+            "precision": 11.29
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 13,
+            "false": 51,
+            "precision": 20.31,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 283,
+            "precision": 11.29
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 13,
+            "false": 51,
+            "precision": 20.31,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 283,
+            "precision": 11.29
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.02,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 13,
+            "false": 51,
+            "precision": 20.31,
+            "selectedPct": 20.06
+          },
+          "heldoutBase": {
+            "true": 36,
+            "false": 283,
+            "precision": 11.29
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.984375,
+      "fold": 1,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "representations": {
+        "base": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.44,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        "fullPhase": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.44,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.44,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.44,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.44,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": true,
+          "heldoutPrecisionLift": 12.08,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 18,
+            "false": 43,
+            "precision": 29.51,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.44,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.44,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 13.72,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.44,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 17,
+            "false": 44,
+            "precision": 27.87,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 53,
+            "false": 251,
+            "precision": 17.43
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.984375,
+      "fold": 2,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representations": {
+        "base": {
+          "passed": true,
+          "heldoutPrecisionLift": 6.56,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 16,
+            "false": 48,
+            "precision": 25.0,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "fullPhase": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.44,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 14,
+            "false": 50,
+            "precision": 21.88,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": true,
+          "heldoutPrecisionLift": 6.56,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 16,
+            "false": 48,
+            "precision": 25.0,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.44,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 14,
+            "false": 50,
+            "precision": 21.88,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": true,
+          "heldoutPrecisionLift": 9.68,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 18,
+            "false": 46,
+            "precision": 28.12,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": true,
+          "heldoutPrecisionLift": 6.56,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 16,
+            "false": 48,
+            "precision": 25.0,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 6.56,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 16,
+            "false": 48,
+            "precision": 25.0,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.44,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 14,
+            "false": 50,
+            "precision": 21.88,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.44,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 14,
+            "false": 50,
+            "precision": 21.88,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 3.44,
+          "heldoutCandidate": {
+            "selected": 64,
+            "true": 14,
+            "false": 50,
+            "precision": 21.88,
+            "selectedPct": 20.0
+          },
+          "heldoutBase": {
+            "true": 59,
+            "false": 261,
+            "precision": 18.44
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.984375,
+      "fold": 3,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "representations": {
+        "base": {
+          "passed": true,
+          "heldoutPrecisionLift": 7.49,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 257,
+            "precision": 15.46
+          }
+        },
+        "fullPhase": {
+          "passed": true,
+          "heldoutPrecisionLift": 15.69,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 257,
+            "precision": 15.46
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": true,
+          "heldoutPrecisionLift": 7.49,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 257,
+            "precision": 15.46
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": true,
+          "heldoutPrecisionLift": 15.69,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 257,
+            "precision": 15.46
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.77,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 16,
+            "false": 45,
+            "precision": 26.23,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 257,
+            "precision": 15.46
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": true,
+          "heldoutPrecisionLift": 15.69,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 257,
+            "precision": 15.46
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 7.49,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 14,
+            "false": 47,
+            "precision": 22.95,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 257,
+            "precision": 15.46
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 15.69,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 257,
+            "precision": 15.46
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 10.77,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 16,
+            "false": 45,
+            "precision": 26.23,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 257,
+            "precision": 15.46
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": true,
+          "heldoutPrecisionLift": 15.69,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 19,
+            "false": 42,
+            "precision": 31.15,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 47,
+            "false": 257,
+            "precision": 15.46
+          }
+        }
+      }
+    },
+    {
+      "phase": 0.984375,
+      "fold": 4,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "representations": {
+        "base": {
+          "passed": false,
+          "heldoutPrecisionLift": -3.64,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 4,
+            "false": 57,
+            "precision": 6.56,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 273,
+            "precision": 10.2
+          }
+        },
+        "fullPhase": {
+          "passed": false,
+          "heldoutPrecisionLift": 2.91,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 273,
+            "precision": 10.2
+          }
+        },
+        "basePlusPhaseCol0": {
+          "passed": false,
+          "heldoutPrecisionLift": -3.64,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 4,
+            "false": 57,
+            "precision": 6.56,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 273,
+            "precision": 10.2
+          }
+        },
+        "basePlusPhaseCol1": {
+          "passed": false,
+          "heldoutPrecisionLift": -3.64,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 4,
+            "false": 57,
+            "precision": 6.56,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 273,
+            "precision": 10.2
+          }
+        },
+        "basePlusPhaseCol2": {
+          "passed": false,
+          "heldoutPrecisionLift": -3.64,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 4,
+            "false": 57,
+            "precision": 6.56,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 273,
+            "precision": 10.2
+          }
+        },
+        "basePlusPhaseCol3": {
+          "passed": false,
+          "heldoutPrecisionLift": -2.0,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 5,
+            "false": 56,
+            "precision": 8.2,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 273,
+            "precision": 10.2
+          }
+        },
+        "basePlusFirst1PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": -3.64,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 4,
+            "false": 57,
+            "precision": 6.56,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 273,
+            "precision": 10.2
+          }
+        },
+        "basePlusFirst2PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": -3.64,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 4,
+            "false": 57,
+            "precision": 6.56,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 273,
+            "precision": 10.2
+          }
+        },
+        "basePlusFirst3PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": -2.0,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 5,
+            "false": 56,
+            "precision": 8.2,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 273,
+            "precision": 10.2
+          }
+        },
+        "basePlusFirst4PhaseCols": {
+          "passed": false,
+          "heldoutPrecisionLift": 2.91,
+          "heldoutCandidate": {
+            "selected": 61,
+            "true": 8,
+            "false": 53,
+            "precision": 13.11,
+            "selectedPct": 20.07
+          },
+          "heldoutBase": {
+            "true": 31,
+            "false": 273,
+            "precision": 10.2
+          }
+        }
+      }
+    }
+  ],
+  "v71Summary": {
+    "baseRepresentationPasses": 10,
+    "phaseAugmentedRepresentationPasses": 9,
+    "flipCounts": {
+      "both-fail": 4,
+      "both-pass": 8,
+      "phase-rescue": 1,
+      "base-rescue": 2
+    }
+  },
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newTuningPerformed": false,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
