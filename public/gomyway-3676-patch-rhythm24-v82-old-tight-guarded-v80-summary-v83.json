@@ -1,0 +1,336 @@
+{
+  "schemaVersion": 83,
+  "profileType": "v82-old-tight-guarded-v80-exposed-family-summary",
+  "guard": "apply-v80-only-when-original-oldQBucket-is-tight-else-v28",
+  "guardSelectedFromExposedV82Outcomes": true,
+  "results": [
+    {
+      "source": "v56_exposed_120",
+      "foldsPassed": 104,
+      "foldsTotal": 120,
+      "v28ComparisonPasses": 101,
+      "rescuesVsV28": 3,
+      "regressionsVsV28": 0,
+      "minimumPhasePasses": 3,
+      "bottleneckPhases": [
+        0.03125,
+        0.3125
+      ],
+      "guardedV80ChangedFoldsApplied": 3,
+      "phaseRows": [
+        {
+          "phase": 0.03125,
+          "guardedPasses": 3,
+          "v28Passes": 3
+        },
+        {
+          "phase": 0.0625,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.09375,
+          "guardedPasses": 4,
+          "v28Passes": 3
+        },
+        {
+          "phase": 0.15625,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.1875,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.21875,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.28125,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.3125,
+          "guardedPasses": 3,
+          "v28Passes": 3
+        },
+        {
+          "phase": 0.34375,
+          "guardedPasses": 5,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.40625,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.4375,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.46875,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.53125,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.5625,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.59375,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.65625,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.6875,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.71875,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.78125,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.8125,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.84375,
+          "guardedPasses": 5,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.90625,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.9375,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.96875,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        }
+      ]
+    },
+    {
+      "source": "v57_exposed_160",
+      "foldsPassed": 141,
+      "foldsTotal": 160,
+      "v28ComparisonPasses": 137,
+      "rescuesVsV28": 4,
+      "regressionsVsV28": 0,
+      "minimumPhasePasses": 3,
+      "bottleneckPhases": [
+        0.046875,
+        0.703125,
+        0.984375
+      ],
+      "guardedV80ChangedFoldsApplied": 4,
+      "phaseRows": [
+        {
+          "phase": 0.015625,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.046875,
+          "guardedPasses": 3,
+          "v28Passes": 3
+        },
+        {
+          "phase": 0.078125,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.109375,
+          "guardedPasses": 4,
+          "v28Passes": 3
+        },
+        {
+          "phase": 0.140625,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.171875,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.203125,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.234375,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.265625,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.296875,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.328125,
+          "guardedPasses": 4,
+          "v28Passes": 3
+        },
+        {
+          "phase": 0.359375,
+          "guardedPasses": 5,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.390625,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.421875,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.453125,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.484375,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.515625,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.546875,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.578125,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.609375,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.640625,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.671875,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.703125,
+          "guardedPasses": 3,
+          "v28Passes": 3
+        },
+        {
+          "phase": 0.734375,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.765625,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.796875,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.828125,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.859375,
+          "guardedPasses": 5,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.890625,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.921875,
+          "guardedPasses": 5,
+          "v28Passes": 5
+        },
+        {
+          "phase": 0.953125,
+          "guardedPasses": 4,
+          "v28Passes": 4
+        },
+        {
+          "phase": 0.984375,
+          "guardedPasses": 3,
+          "v28Passes": 3
+        }
+      ]
+    }
+  ],
+  "combined": {
+    "foldsPassed": 245,
+    "foldsTotal": 280,
+    "v28ComparisonPasses": 238,
+    "rescuesVsV28": 7,
+    "regressionsVsV28": 0,
+    "minimumPhasePassesAcrossSources": 3
+  },
+  "requiresFreshUntouchedConfirmation": true,
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 83,
+  "guard": "apply-v80-only-when-original-oldQBucket-is-tight-else-v28",
+  "guardSelectedFromExposedV82Outcomes": true,
+  "combined": {
+    "foldsPassed": 245,
+    "foldsTotal": 280,
+    "v28ComparisonPasses": 238,
+    "rescuesVsV28": 7,
+    "regressionsVsV28": 0,
+    "minimumPhasePassesAcrossSources": 3
+  },
+  "requiresFreshUntouchedConfirmation": true,
+  "diagnosticOutcomesTaintedForSelection": true,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
