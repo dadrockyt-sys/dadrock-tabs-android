@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 68,
+  "profileType": "v67-nonepass-training-edge-pressure-diagnostic",
+  "diagnosticScope": "already-exposed-v67-nonepass-folds-only",
+  "edgePressureCounts": {
+    "tight-edge-pressure": 1,
+    "unanimous-tight-edge-pressure": 1,
+    "no-clear-training-edge-pressure": 1
+  },
+  "diagnostics": [
+    {
+      "phase": 0.328125,
+      "fold": 0,
+      "v67RecoveryClass": "recover-broader-outside-triad",
+      "v67PassingQRange": [
+        0.25,
+        0.275
+      ],
+      "v64Branch": "broad",
+      "v64Decision": "keep-broad-low-dispersion",
+      "trainingEdgePressure": "tight-edge-pressure",
+      "tightVoteCount": 2,
+      "broadVoteCount": 0,
+      "tightPassNonWorseVoteCount": 2,
+      "broadPassNonWorseVoteCount": 3,
+      "schemeSignatures": [
+        {
+          "scheme": "normal",
+          "passes": [
+            4,
+            4,
+            4
+          ],
+          "liftDeltasVsAnchor": [
+            0.575,
+            0.0,
+            -1.9175
+          ],
+          "tightNonWorsePass": true,
+          "broadNonWorsePass": true,
+          "tightLiftBetter": true,
+          "broadLiftBetter": false
+        },
+        {
+          "scheme": "section",
+          "passes": [
+            4,
+            3,
+            4
+          ],
+          "liftDeltasVsAnchor": [
+            1.475,
+            0.0,
+            -0.1475
+          ],
+          "tightNonWorsePass": true,
+          "broadNonWorsePass": true,
+          "tightLiftBetter": true,
+          "broadLiftBetter": false
+        },
+        {
+          "scheme": "shiftedWindow",
+          "passes": [
+            2,
+            3,
+            3
+          ],
+          "liftDeltasVsAnchor": [
+            -0.1775,
+            0.0,
+            -0.2925
+          ],
+          "tightNonWorsePass": false,
+          "broadNonWorsePass": true,
+          "tightLiftBetter": false,
+          "broadLiftBetter": false
+        }
+      ]
+    },
+    {
+      "phase": 0.328125,
+      "fold": 3,
+      "v67RecoveryClass": "recover-outside-triad-mixed",
+      "v67PassingQRange": [
+        0.075,
+        0.325
+      ],
+      "v64Branch": "tight",
+      "v64Decision": "keep-tight-high-dispersion",
+      "trainingEdgePressure": "unanimous-tight-edge-pressure",
+      "tightVoteCount": 3,
+      "broadVoteCount": 0,
+      "tightPassNonWorseVoteCount": 3,
+      "broadPassNonWorseVoteCount": 3,
+      "schemeSignatures": [
+        {
+          "scheme": "normal",
+          "passes": [
+            3,
+            3,
+            3
+          ],
+          "liftDeltasVsAnchor": [
+            0.75,
+            0.0,
+            -0.3025
+          ],
+          "tightNonWorsePass": true,
+          "broadNonWorsePass": true,
+          "tightLiftBetter": true,
+          "broadLiftBetter": false
+        },
+        {
+          "scheme": "section",
+          "passes": [
+            4,
+            4,
+            4
+          ],
+          "liftDeltasVsAnchor": [
+            2.0225,
+            0.0,
+            -1.325
+          ],
+          "tightNonWorsePass": true,
+          "broadNonWorsePass": true,
+          "tightLiftBetter": true,
+          "broadLiftBetter": false
+        },
+        {
+          "scheme": "shiftedWindow",
+          "passes": [
+            4,
+            4,
+            4
+          ],
+          "liftDeltasVsAnchor": [
+            0.9675,
+            0.0,
+            -1.695
+          ],
+          "tightNonWorsePass": true,
+          "broadNonWorsePass": true,
+          "tightLiftBetter": true,
+          "broadLiftBetter": false
+        }
+      ]
+    },
+    {
+      "phase": 0.703125,
+      "fold": 2,
+      "v67RecoveryClass": "recover-outside-triad-mixed",
+      "v67PassingQRange": [
+        0.05,
+        0.275
+      ],
+      "v64Branch": "anchor",
+      "v64Decision": "keep-current",
+      "trainingEdgePressure": "no-clear-training-edge-pressure",
+      "tightVoteCount": 1,
+      "broadVoteCount": 0,
+      "tightPassNonWorseVoteCount": 2,
+      "broadPassNonWorseVoteCount": 3,
+      "schemeSignatures": [
+        {
+          "scheme": "normal",
+          "passes": [
+            4,
+            4,
+            4
+          ],
+          "liftDeltasVsAnchor": [
+            -0.59,
+            0.0,
+            -0.7475
+          ],
+          "tightNonWorsePass": true,
+          "broadNonWorsePass": true,
+          "tightLiftBetter": false,
+          "broadLiftBetter": false
+        },
+        {
+          "scheme": "section",
+          "passes": [
+            4,
+            4,
+            4
+          ],
+          "liftDeltasVsAnchor": [
+            2.8925,
+            0.0,
+            -1.04
+          ],
+          "tightNonWorsePass": true,
+          "broadNonWorsePass": true,
+          "tightLiftBetter": true,
+          "broadLiftBetter": false
+        },
+        {
+          "scheme": "shiftedWindow",
+          "passes": [
+            3,
+            4,
+            4
+          ],
+          "liftDeltasVsAnchor": [
+            -0.4875,
+            0.0,
+            -0.4825
+          ],
+          "tightNonWorsePass": false,
+          "broadNonWorsePass": true,
+          "tightLiftBetter": false,
+          "broadLiftBetter": false
+        }
+      ]
+    }
+  ],
+  "v67ExtendedQOutcomesTaintedForSelection": true,
+  "trainingSignalsOnlyUsedForEdgePressure": true,
+  "newTuningPerformed": false,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

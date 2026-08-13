@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 68,
+  "diagnosticCount": 3,
+  "edgePressureCounts": {
+    "tight-edge-pressure": 1,
+    "unanimous-tight-edge-pressure": 1,
+    "no-clear-training-edge-pressure": 1
+  },
+  "v67ExtendedQOutcomesTaintedForSelection": true,
+  "trainingSignalsOnlyUsedForEdgePressure": true,
+  "newTuningPerformed": false,
+  "newReserved1over128OddNumeratorPhasesReferenced": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
