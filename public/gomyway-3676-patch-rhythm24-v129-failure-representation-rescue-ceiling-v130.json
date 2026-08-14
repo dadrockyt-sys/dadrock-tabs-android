@@ -1,0 +1,531 @@
+{
+  "schemaVersion": 130,
+  "profileType": "exposed-v128-failure-only-representation-rescue-ceiling-diagnostic",
+  "summary": {
+    "exposedFailureRows": 11,
+    "frozenV128Passes": 309,
+    "frozenV128ScorePercent": 96.5625,
+    "rescuedFailuresByRepresentation": {
+      "base": 7,
+      "phase_col3": 5,
+      "full_phase": 0,
+      "cosine": 0,
+      "v112_interactions": 4
+    },
+    "oracleUnionRescuedFailures": 9,
+    "oracleUnionPasses": 318,
+    "oracleUnionScorePercent": 99.375,
+    "remainingFailuresEvenWithPerFailureRepresentationOracle": 2,
+    "failureRescuePatterns": {
+      "base=1|phase_col3=0|full_phase=0|cosine=0|v112_interactions=1": 4,
+      "base=0|phase_col3=1|full_phase=0|cosine=0|v112_interactions=0": 2,
+      "base=0|phase_col3=0|full_phase=0|cosine=0|v112_interactions=0": 2,
+      "base=1|phase_col3=1|full_phase=0|cosine=0|v112_interactions=0": 3
+    }
+  },
+  "structuralRescueCounts": [
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "rescuesByRepresentation": {
+        "base": 3,
+        "phase_col3": 3
+      }
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "rescuesByRepresentation": {
+        "base": 2,
+        "v112_interactions": 2
+      }
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "rescuesByRepresentation": {
+        "base": 2,
+        "v112_interactions": 2,
+        "phase_col3": 2
+      }
+    }
+  ],
+  "failureDetail": [
+    {
+      "phase": 0.0224609375,
+      "fold": 1,
+      "gateScore": -5.279170576979833,
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "structuralPolicyApplied": false,
+      "structuralRepresentation": null,
+      "v127GuardApplied": false,
+      "finalRepresentation": "full_phase",
+      "v28Passed": false,
+      "v96Passed": false,
+      "v115Passed": false,
+      "v118Passed": false,
+      "v122Passed": false,
+      "v128Passed": false,
+      "heldoutPrecisionLift": 2.19,
+      "reconstructedDecision": "keep-anchor",
+      "qUsed": 0.2,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "full_phase": false,
+        "cosine": false,
+        "v112_interactions": true
+      },
+      "representationLift": {
+        "base": 8.44,
+        "phase_col3": 2.19,
+        "full_phase": 2.19,
+        "cosine": 3.76,
+        "v112_interactions": 5.32
+      },
+      "rescuedBy": [
+        "base",
+        "v112_interactions"
+      ]
+    },
+    {
+      "phase": 0.0380859375,
+      "fold": 1,
+      "gateScore": -5.279170576979833,
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "structuralPolicyApplied": false,
+      "structuralRepresentation": null,
+      "v127GuardApplied": false,
+      "finalRepresentation": "full_phase",
+      "v28Passed": false,
+      "v96Passed": false,
+      "v115Passed": false,
+      "v118Passed": false,
+      "v122Passed": false,
+      "v128Passed": false,
+      "heldoutPrecisionLift": 2.19,
+      "reconstructedDecision": "keep-anchor",
+      "qUsed": 0.2,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "full_phase": false,
+        "cosine": false,
+        "v112_interactions": true
+      },
+      "representationLift": {
+        "base": 8.44,
+        "phase_col3": 2.19,
+        "full_phase": 2.19,
+        "cosine": 3.76,
+        "v112_interactions": 5.32
+      },
+      "rescuedBy": [
+        "base",
+        "v112_interactions"
+      ]
+    },
+    {
+      "phase": 0.1005859375,
+      "fold": 1,
+      "gateScore": -5.466747003059044,
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "structuralPolicyApplied": true,
+      "structuralRepresentation": "cosine",
+      "v127GuardApplied": false,
+      "finalRepresentation": "cosine",
+      "v28Passed": false,
+      "v96Passed": false,
+      "v115Passed": false,
+      "v118Passed": false,
+      "v122Passed": false,
+      "v128Passed": false,
+      "heldoutPrecisionLift": 4.85,
+      "reconstructedDecision": "keep-anchor",
+      "qUsed": 0.2,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "full_phase": false,
+        "cosine": false,
+        "v112_interactions": true
+      },
+      "representationLift": {
+        "base": 8.13,
+        "phase_col3": 3.21,
+        "full_phase": 4.85,
+        "cosine": 4.85,
+        "v112_interactions": 8.13
+      },
+      "rescuedBy": [
+        "base",
+        "v112_interactions"
+      ]
+    },
+    {
+      "phase": 0.1162109375,
+      "fold": 1,
+      "gateScore": -5.466747003059044,
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "structuralPolicyApplied": true,
+      "structuralRepresentation": "cosine",
+      "v127GuardApplied": false,
+      "finalRepresentation": "cosine",
+      "v28Passed": false,
+      "v96Passed": false,
+      "v115Passed": false,
+      "v118Passed": false,
+      "v122Passed": false,
+      "v128Passed": false,
+      "heldoutPrecisionLift": 4.85,
+      "reconstructedDecision": "keep-anchor",
+      "qUsed": 0.2,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "full_phase": false,
+        "cosine": false,
+        "v112_interactions": true
+      },
+      "representationLift": {
+        "base": 8.13,
+        "phase_col3": 3.21,
+        "full_phase": 4.85,
+        "cosine": 4.85,
+        "v112_interactions": 8.13
+      },
+      "rescuedBy": [
+        "base",
+        "v112_interactions"
+      ]
+    },
+    {
+      "phase": 0.2099609375,
+      "fold": 0,
+      "gateScore": -8.230339809339906,
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "structuralPolicyApplied": true,
+      "structuralRepresentation": "cosine",
+      "v127GuardApplied": false,
+      "finalRepresentation": "cosine",
+      "v28Passed": false,
+      "v96Passed": false,
+      "v115Passed": false,
+      "v118Passed": false,
+      "v122Passed": false,
+      "v128Passed": false,
+      "heldoutPrecisionLift": 2.45,
+      "reconstructedDecision": "keep-anchor",
+      "qUsed": 0.2,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "full_phase": false,
+        "cosine": false,
+        "v112_interactions": false
+      },
+      "representationLift": {
+        "base": 2.45,
+        "phase_col3": 5.58,
+        "full_phase": 2.45,
+        "cosine": 2.45,
+        "v112_interactions": 4.02
+      },
+      "rescuedBy": [
+        "phase_col3"
+      ]
+    },
+    {
+      "phase": 0.2255859375,
+      "fold": 0,
+      "gateScore": -8.230339809339906,
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "structuralPolicyApplied": true,
+      "structuralRepresentation": "cosine",
+      "v127GuardApplied": false,
+      "finalRepresentation": "cosine",
+      "v28Passed": false,
+      "v96Passed": false,
+      "v115Passed": false,
+      "v118Passed": false,
+      "v122Passed": false,
+      "v128Passed": false,
+      "heldoutPrecisionLift": 2.45,
+      "reconstructedDecision": "keep-anchor",
+      "qUsed": 0.2,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "full_phase": false,
+        "cosine": false,
+        "v112_interactions": false
+      },
+      "representationLift": {
+        "base": 2.45,
+        "phase_col3": 5.58,
+        "full_phase": 2.45,
+        "cosine": 2.45,
+        "v112_interactions": 4.02
+      },
+      "rescuedBy": [
+        "phase_col3"
+      ]
+    },
+    {
+      "phase": 0.2724609375,
+      "fold": 0,
+      "gateScore": -8.388588445786013,
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "selectedForV112": false,
+      "structuralPolicyApplied": true,
+      "structuralRepresentation": "v112_interactions",
+      "v127GuardApplied": false,
+      "finalRepresentation": "v112_interactions",
+      "v28Passed": false,
+      "v96Passed": false,
+      "v115Passed": false,
+      "v118Passed": false,
+      "v122Passed": false,
+      "v128Passed": false,
+      "heldoutPrecisionLift": 3.08,
+      "reconstructedDecision": "keep-anchor",
+      "qUsed": 0.2,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "full_phase": false,
+        "cosine": false,
+        "v112_interactions": false
+      },
+      "representationLift": {
+        "base": 4.65,
+        "phase_col3": 1.52,
+        "full_phase": 4.65,
+        "cosine": 3.08,
+        "v112_interactions": 3.08
+      },
+      "rescuedBy": []
+    },
+    {
+      "phase": 0.3193359375,
+      "fold": 0,
+      "gateScore": -8.304348975057673,
+      "originalQBucket": "broad",
+      "v96Decision": "keep-broad-low-dispersion",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "structuralPolicyApplied": false,
+      "structuralRepresentation": null,
+      "v127GuardApplied": false,
+      "finalRepresentation": "full_phase",
+      "v28Passed": false,
+      "v96Passed": false,
+      "v115Passed": false,
+      "v118Passed": false,
+      "v122Passed": false,
+      "v128Passed": false,
+      "heldoutPrecisionLift": 4.02,
+      "reconstructedDecision": "keep-broad-low-dispersion",
+      "qUsed": 0.225,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "full_phase": false,
+        "cosine": false,
+        "v112_interactions": false
+      },
+      "representationLift": {
+        "base": 2.11,
+        "phase_col3": 0.72,
+        "full_phase": 4.89,
+        "cosine": 3.5,
+        "v112_interactions": 3.5
+      },
+      "rescuedBy": []
+    },
+    {
+      "phase": 0.7724609375,
+      "fold": 2,
+      "gateScore": -6.0907723105378855,
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "selectedForV112": false,
+      "structuralPolicyApplied": true,
+      "structuralRepresentation": "v112_interactions",
+      "v127GuardApplied": false,
+      "finalRepresentation": "v112_interactions",
+      "v28Passed": false,
+      "v96Passed": false,
+      "v115Passed": false,
+      "v118Passed": false,
+      "v122Passed": false,
+      "v128Passed": false,
+      "heldoutPrecisionLift": 4.69,
+      "reconstructedDecision": "keep-anchor",
+      "qUsed": 0.2,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "full_phase": false,
+        "cosine": false,
+        "v112_interactions": false
+      },
+      "representationLift": {
+        "base": 10.94,
+        "phase_col3": 6.25,
+        "full_phase": 4.69,
+        "cosine": 4.69,
+        "v112_interactions": 4.69
+      },
+      "rescuedBy": [
+        "base",
+        "phase_col3"
+      ]
+    },
+    {
+      "phase": 0.9443359375,
+      "fold": 2,
+      "gateScore": -5.3634623285093435,
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "selectedForV112": false,
+      "structuralPolicyApplied": true,
+      "structuralRepresentation": "v112_interactions",
+      "v127GuardApplied": false,
+      "finalRepresentation": "v112_interactions",
+      "v28Passed": false,
+      "v96Passed": false,
+      "v115Passed": false,
+      "v118Passed": false,
+      "v122Passed": false,
+      "v128Passed": false,
+      "heldoutPrecisionLift": 2.23,
+      "reconstructedDecision": "keep-anchor",
+      "qUsed": 0.2,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "full_phase": false,
+        "cosine": false,
+        "v112_interactions": false
+      },
+      "representationLift": {
+        "base": 7.15,
+        "phase_col3": 7.15,
+        "full_phase": 3.87,
+        "cosine": 2.23,
+        "v112_interactions": 2.23
+      },
+      "rescuedBy": [
+        "base",
+        "phase_col3"
+      ]
+    },
+    {
+      "phase": 0.9599609375,
+      "fold": 2,
+      "gateScore": -5.3634623285093435,
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "selectedForV112": false,
+      "structuralPolicyApplied": true,
+      "structuralRepresentation": "v112_interactions",
+      "v127GuardApplied": false,
+      "finalRepresentation": "v112_interactions",
+      "v28Passed": false,
+      "v96Passed": false,
+      "v115Passed": false,
+      "v118Passed": false,
+      "v122Passed": false,
+      "v128Passed": false,
+      "heldoutPrecisionLift": 2.23,
+      "reconstructedDecision": "keep-anchor",
+      "qUsed": 0.2,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "full_phase": false,
+        "cosine": false,
+        "v112_interactions": false
+      },
+      "representationLift": {
+        "base": 7.15,
+        "phase_col3": 7.15,
+        "full_phase": 3.87,
+        "cosine": 2.23,
+        "v112_interactions": 2.23
+      },
+      "rescuedBy": [
+        "base",
+        "phase_col3"
+      ]
+    }
+  ],
+  "derivedInteractionFeatures": [
+    "mean::lowBurst*p2sin",
+    "mean::lowBurst*p2cos",
+    "mean::lowBurst*p4sin",
+    "mean::lowBurst*p4cos",
+    "mean::lowRise*p2sin",
+    "mean::lowRise*p2cos",
+    "mean::lowRise*p4sin",
+    "mean::lowRise*p4cos",
+    "mean::lowDecay30*p2sin",
+    "mean::lowDecay30*p2cos",
+    "mean::lowDecay30*p4sin",
+    "mean::lowDecay30*p4cos",
+    "mean::lowPostSlope*p2sin",
+    "mean::lowPostSlope*p2cos",
+    "mean::lowPostSlope*p4sin",
+    "mean::lowPostSlope*p4cos"
+  ],
+  "evaluatesOnlyAlreadyExposedV128Failures": true,
+  "doesNotMeasureRepresentationLossesOnV128Passes": true,
+  "heldoutLabelsUsedForDiagnosisOnly": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

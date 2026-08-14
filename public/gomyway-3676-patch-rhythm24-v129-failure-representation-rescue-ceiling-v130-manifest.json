@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 130,
+  "profileType": "exposed-v128-failure-only-representation-rescue-ceiling-diagnostic",
+  "summary": {
+    "exposedFailureRows": 11,
+    "frozenV128Passes": 309,
+    "frozenV128ScorePercent": 96.5625,
+    "rescuedFailuresByRepresentation": {
+      "base": 7,
+      "phase_col3": 5,
+      "full_phase": 0,
+      "cosine": 0,
+      "v112_interactions": 4
+    },
+    "oracleUnionRescuedFailures": 9,
+    "oracleUnionPasses": 318,
+    "oracleUnionScorePercent": 99.375,
+    "remainingFailuresEvenWithPerFailureRepresentationOracle": 2,
+    "failureRescuePatterns": {
+      "base=1|phase_col3=0|full_phase=0|cosine=0|v112_interactions=1": 4,
+      "base=0|phase_col3=1|full_phase=0|cosine=0|v112_interactions=0": 2,
+      "base=0|phase_col3=0|full_phase=0|cosine=0|v112_interactions=0": 2,
+      "base=1|phase_col3=1|full_phase=0|cosine=0|v112_interactions=0": 3
+    }
+  },
+  "structuralRescueCounts": [
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "rescuesByRepresentation": {
+        "base": 3,
+        "phase_col3": 3
+      }
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "rescuesByRepresentation": {
+        "base": 2,
+        "v112_interactions": 2
+      }
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "rescuesByRepresentation": {
+        "base": 2,
+        "v112_interactions": 2,
+        "phase_col3": 2
+      }
+    }
+  ],
+  "derivedInteractionFeatures": [
+    "mean::lowBurst*p2sin",
+    "mean::lowBurst*p2cos",
+    "mean::lowBurst*p4sin",
+    "mean::lowBurst*p4cos",
+    "mean::lowRise*p2sin",
+    "mean::lowRise*p2cos",
+    "mean::lowRise*p4sin",
+    "mean::lowRise*p4cos",
+    "mean::lowDecay30*p2sin",
+    "mean::lowDecay30*p2cos",
+    "mean::lowDecay30*p4sin",
+    "mean::lowDecay30*p4cos",
+    "mean::lowPostSlope*p2sin",
+    "mean::lowPostSlope*p2cos",
+    "mean::lowPostSlope*p4sin",
+    "mean::lowPostSlope*p4cos"
+  ],
+  "evaluatesOnlyAlreadyExposedV128Failures": true,
+  "doesNotMeasureRepresentationLossesOnV128Passes": true,
+  "heldoutLabelsUsedForDiagnosisOnly": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
