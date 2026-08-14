@@ -1,0 +1,2508 @@
+{
+  "schemaVersion": 131,
+  "profileType": "consumed-v128-structural-representation-gain-loss-utility-diagnostic",
+  "summary": {
+    "foldsTotal": 320,
+    "frozenV128Passes": 309,
+    "frozenV128ScorePercent": 96.5625,
+    "structuralGroupsEvaluated": 3,
+    "interventionsEvaluated": 7,
+    "positiveBestPerGroupCount": 0,
+    "provisionalCombinedGains": 0,
+    "provisionalCombinedLosses": 0,
+    "provisionalCombinedNet": 0,
+    "provisionalCombinedPasses": 309,
+    "provisionalCombinedScorePercent": 96.5625
+  },
+  "interventionUtility": [
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "representation": "v112_interactions",
+      "rows": 14,
+      "baselinePasses": 12,
+      "candidatePasses": 12,
+      "gains": 2,
+      "losses": 2,
+      "net": 0
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representation": "v112_interactions",
+      "rows": 42,
+      "baselinePasses": 38,
+      "candidatePasses": 37,
+      "gains": 2,
+      "losses": 3,
+      "net": -1
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "representation": "base",
+      "rows": 14,
+      "baselinePasses": 12,
+      "candidatePasses": 8,
+      "gains": 2,
+      "losses": 6,
+      "net": -4
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "representation": "phase_col3",
+      "rows": 44,
+      "baselinePasses": 40,
+      "candidatePasses": 34,
+      "gains": 3,
+      "losses": 9,
+      "net": -6
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representation": "phase_col3",
+      "rows": 42,
+      "baselinePasses": 38,
+      "candidatePasses": 31,
+      "gains": 2,
+      "losses": 9,
+      "net": -7
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "representation": "base",
+      "rows": 44,
+      "baselinePasses": 40,
+      "candidatePasses": 26,
+      "gains": 3,
+      "losses": 17,
+      "net": -14
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representation": "base",
+      "rows": 42,
+      "baselinePasses": 38,
+      "candidatePasses": 24,
+      "gains": 2,
+      "losses": 16,
+      "net": -14
+    }
+  ],
+  "positiveBestPerStructuralGroup": [],
+  "rowResults": [
+    {
+      "phase": 0.0068359375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 9.37
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 12.5
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 14.06
+        }
+      }
+    },
+    {
+      "phase": 0.0224609375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": false,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 8.44
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 5.32
+        }
+      }
+    },
+    {
+      "phase": 0.0380859375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": false,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 8.44
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 5.32
+        }
+      }
+    },
+    {
+      "phase": 0.0537109375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 20.94
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 25.63
+        }
+      }
+    },
+    {
+      "phase": 0.0693359375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 20.59
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 23.87
+        }
+      }
+    },
+    {
+      "phase": 0.0849609375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 20.59
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 23.87
+        }
+      }
+    },
+    {
+      "phase": 0.0849609375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 8.43
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 6.87
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 8.43
+        }
+      }
+    },
+    {
+      "phase": 0.1005859375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": false,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 8.13
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 3.21
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 8.13
+        }
+      }
+    },
+    {
+      "phase": 0.1005859375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 17.82
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 22.5
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 13.13
+        }
+      }
+    },
+    {
+      "phase": 0.1005859375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 8.43
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 6.87
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 8.43
+        }
+      }
+    },
+    {
+      "phase": 0.1162109375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 5.89
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 7.46
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 7.46
+        }
+      }
+    },
+    {
+      "phase": 0.1162109375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": false,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 8.13
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 3.21
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 8.13
+        }
+      }
+    },
+    {
+      "phase": 0.1943359375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.29
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 2.93
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 9.48
+        }
+      }
+    },
+    {
+      "phase": 0.2099609375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": false,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 2.45
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 5.58
+        },
+        "v112_interactions": {
+          "passed": false,
+          "lift": 4.02
+        }
+      }
+    },
+    {
+      "phase": 0.2099609375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.29
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 2.93
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 9.48
+        }
+      }
+    },
+    {
+      "phase": 0.2255859375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": false,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 2.45
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 5.58
+        },
+        "v112_interactions": {
+          "passed": false,
+          "lift": 4.02
+        }
+      }
+    },
+    {
+      "phase": 0.2255859375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 17.98
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 24.53
+        }
+      }
+    },
+    {
+      "phase": 0.2412109375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 17.98
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 24.53
+        }
+      }
+    },
+    {
+      "phase": 0.2412109375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 9.07
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 5.94
+        }
+      }
+    },
+    {
+      "phase": 0.2568359375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 22.81
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 19.69
+        }
+      }
+    },
+    {
+      "phase": 0.2568359375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 9.07
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 5.94
+        }
+      }
+    },
+    {
+      "phase": 0.2724609375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": false,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 4.65
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 1.52
+        }
+      }
+    },
+    {
+      "phase": 0.2724609375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 18.95
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 18.95
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 18.95
+        }
+      }
+    },
+    {
+      "phase": 0.2880859375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 18.95
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 18.95
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 18.95
+        }
+      }
+    },
+    {
+      "phase": 0.3037109375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 13.05
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 11.41
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 13.05
+        }
+      }
+    },
+    {
+      "phase": 0.3037109375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 18.75
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 23.44
+        }
+      }
+    },
+    {
+      "phase": 0.3037109375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 8.44
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 8.44
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 11.56
+        }
+      }
+    },
+    {
+      "phase": 0.3193359375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 13.05
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 11.41
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 13.05
+        }
+      }
+    },
+    {
+      "phase": 0.3193359375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 18.75
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 23.44
+        }
+      }
+    },
+    {
+      "phase": 0.3349609375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 0.57
+        },
+        "v112_interactions": {
+          "passed": false,
+          "lift": 2.21
+        }
+      }
+    },
+    {
+      "phase": 0.3349609375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 12.81
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 12.81
+        }
+      }
+    },
+    {
+      "phase": 0.3505859375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 0.57
+        },
+        "v112_interactions": {
+          "passed": false,
+          "lift": 2.21
+        }
+      }
+    },
+    {
+      "phase": 0.3818359375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": -4.38
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 0.31
+        }
+      }
+    },
+    {
+      "phase": 0.4130859375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.21
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 4.34
+        }
+      }
+    },
+    {
+      "phase": 0.4130859375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 15.32
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 13.76
+        }
+      }
+    },
+    {
+      "phase": 0.4130859375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.92
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 5.2
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 11.76
+        }
+      }
+    },
+    {
+      "phase": 0.4287109375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.21
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 4.34
+        }
+      }
+    },
+    {
+      "phase": 0.4287109375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 17.96
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 14.69
+        }
+      }
+    },
+    {
+      "phase": 0.4287109375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.92
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 5.2
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 11.76
+        }
+      }
+    },
+    {
+      "phase": 0.4443359375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 15.32
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 16.88
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 16.88
+        }
+      }
+    },
+    {
+      "phase": 0.4443359375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 17.96
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 14.69
+        }
+      }
+    },
+    {
+      "phase": 0.4443359375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": -5.6
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 0.96
+        }
+      }
+    },
+    {
+      "phase": 0.4443359375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 4.69
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 7.81
+        }
+      }
+    },
+    {
+      "phase": 0.4599609375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 20.94
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 16.25
+        }
+      }
+    },
+    {
+      "phase": 0.4599609375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": -5.6
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 0.96
+        }
+      }
+    },
+    {
+      "phase": 0.4599609375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 4.69
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 7.81
+        }
+      }
+    },
+    {
+      "phase": 0.4755859375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 16.98
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 13.71
+        }
+      }
+    },
+    {
+      "phase": 0.4912109375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": -0.4
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 9.43
+        }
+      }
+    },
+    {
+      "phase": 0.4912109375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 16.98
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 13.71
+        }
+      }
+    },
+    {
+      "phase": 0.5068359375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": -0.4
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 9.43
+        }
+      }
+    },
+    {
+      "phase": 0.5224609375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": -3.79
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 5.59
+        }
+      }
+    },
+    {
+      "phase": 0.5849609375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 11.41
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 6.49
+        }
+      }
+    },
+    {
+      "phase": 0.5849609375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 0.94
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 10.31
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 13.44
+        }
+      }
+    },
+    {
+      "phase": 0.6005859375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 14.69
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 16.25
+        }
+      }
+    },
+    {
+      "phase": 0.6005859375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 11.41
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 6.49
+        }
+      }
+    },
+    {
+      "phase": 0.6005859375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.94
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 11.77
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 13.41
+        }
+      }
+    },
+    {
+      "phase": 0.6005859375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 2.18
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 3.75
+        }
+      }
+    },
+    {
+      "phase": 0.6162109375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.94
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 11.77
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 13.41
+        }
+      }
+    },
+    {
+      "phase": 0.6162109375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 2.18
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 3.75
+        }
+      }
+    },
+    {
+      "phase": 0.6318359375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 16.0
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 7.8
+        }
+      }
+    },
+    {
+      "phase": 0.6318359375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.92
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 5.2
+        }
+      }
+    },
+    {
+      "phase": 0.6474609375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 10.63
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 13.75
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 16.88
+        }
+      }
+    },
+    {
+      "phase": 0.6474609375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 16.0
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 7.8
+        }
+      }
+    },
+    {
+      "phase": 0.6474609375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.92
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 5.2
+        }
+      }
+    },
+    {
+      "phase": 0.6630859375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 6.52
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 13.08
+        }
+      }
+    },
+    {
+      "phase": 0.6630859375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 2.81
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 2.81
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 12.19
+        }
+      }
+    },
+    {
+      "phase": 0.6787109375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 6.52
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 13.08
+        }
+      }
+    },
+    {
+      "phase": 0.6943359375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 9.68
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 14.37
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 19.06
+        }
+      }
+    },
+    {
+      "phase": 0.7099609375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 9.68
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 14.37
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 19.06
+        }
+      }
+    },
+    {
+      "phase": 0.7099609375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 5.86
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 14.06
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 12.42
+        }
+      }
+    },
+    {
+      "phase": 0.7255859375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 9.45
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 16.01
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 19.28
+        }
+      }
+    },
+    {
+      "phase": 0.7255859375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 5.86
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 14.06
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 12.42
+        }
+      }
+    },
+    {
+      "phase": 0.7255859375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.92
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 3.56
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 11.76
+        }
+      }
+    },
+    {
+      "phase": 0.7412109375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 9.45
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 16.01
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 19.28
+        }
+      }
+    },
+    {
+      "phase": 0.7412109375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 11.08
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 6.16
+        }
+      }
+    },
+    {
+      "phase": 0.7412109375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 4.68
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 14.06
+        }
+      }
+    },
+    {
+      "phase": 0.7412109375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.92
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 3.56
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 11.76
+        }
+      }
+    },
+    {
+      "phase": 0.7568359375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 13.44
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 15.0
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 15.0
+        }
+      }
+    },
+    {
+      "phase": 0.7568359375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 11.08
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 6.16
+        }
+      }
+    },
+    {
+      "phase": 0.7568359375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 4.88
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 11.44
+        }
+      }
+    },
+    {
+      "phase": 0.7568359375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.87
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 3.43
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 9.69
+        }
+      }
+    },
+    {
+      "phase": 0.7724609375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": false,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 10.94
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 6.25
+        }
+      }
+    },
+    {
+      "phase": 0.7724609375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 4.88
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 11.44
+        }
+      }
+    },
+    {
+      "phase": 0.7724609375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 1.87
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 3.43
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 9.69
+        }
+      }
+    },
+    {
+      "phase": 0.8037109375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 2.22
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 2.22
+        }
+      }
+    },
+    {
+      "phase": 0.8193359375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 2.22
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 2.22
+        }
+      }
+    },
+    {
+      "phase": 0.8505859375,
+      "fold": 3,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 5.0
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 14.37
+        }
+      }
+    },
+    {
+      "phase": 0.8662109375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 9.45
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 14.37
+        }
+      }
+    },
+    {
+      "phase": 0.8818359375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 9.45
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 14.37
+        }
+      }
+    },
+    {
+      "phase": 0.8974609375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 10.93
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 10.93
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 15.62
+        }
+      }
+    },
+    {
+      "phase": 0.9130859375,
+      "fold": 1,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 10.93
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 10.93
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 15.62
+        }
+      }
+    },
+    {
+      "phase": 0.9287109375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 4.65
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 6.22
+        }
+      }
+    },
+    {
+      "phase": 0.9443359375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "full_phase",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 4.65
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 6.22
+        }
+      }
+    },
+    {
+      "phase": 0.9443359375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": false,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 7.15
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 7.15
+        }
+      }
+    },
+    {
+      "phase": 0.9599609375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 0.59
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 5.5
+        },
+        "v112_interactions": {
+          "passed": false,
+          "lift": 3.86
+        }
+      }
+    },
+    {
+      "phase": 0.9599609375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      "baselineV128Passed": false,
+      "baselineFinalRepresentation": "v112_interactions",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 7.15
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 7.15
+        }
+      }
+    },
+    {
+      "phase": 0.9599609375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": -1.24
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 0.32
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 9.69
+        }
+      }
+    },
+    {
+      "phase": 0.9755859375,
+      "fold": 0,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": 0.59
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 5.5
+        },
+        "v112_interactions": {
+          "passed": false,
+          "lift": 3.86
+        }
+      }
+    },
+    {
+      "phase": 0.9755859375,
+      "fold": 2,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": true,
+          "lift": 6.56
+        },
+        "phase_col3": {
+          "passed": true,
+          "lift": 6.56
+        },
+        "v112_interactions": {
+          "passed": false,
+          "lift": 1.87
+        }
+      }
+    },
+    {
+      "phase": 0.9755859375,
+      "fold": 4,
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "baselineV128Passed": true,
+      "baselineFinalRepresentation": "cosine",
+      "candidateRepresentations": {
+        "base": {
+          "passed": false,
+          "lift": -1.24
+        },
+        "phase_col3": {
+          "passed": false,
+          "lift": 0.32
+        },
+        "v112_interactions": {
+          "passed": true,
+          "lift": 9.69
+        }
+      }
+    }
+  ],
+  "derivedInteractionFeatures": [
+    "mean::lowBurst*p2sin",
+    "mean::lowBurst*p2cos",
+    "mean::lowBurst*p4sin",
+    "mean::lowBurst*p4cos",
+    "mean::lowRise*p2sin",
+    "mean::lowRise*p2cos",
+    "mean::lowRise*p4sin",
+    "mean::lowRise*p4cos",
+    "mean::lowDecay30*p2sin",
+    "mean::lowDecay30*p2cos",
+    "mean::lowDecay30*p4sin",
+    "mean::lowDecay30*p4cos",
+    "mean::lowPostSlope*p2sin",
+    "mean::lowPostSlope*p2cos",
+    "mean::lowPostSlope*p4sin",
+    "mean::lowPostSlope*p4cos"
+  ],
+  "motivatedOnlyByV130ExposedFailureRescues": true,
+  "evaluatesOnAlreadyConsumedV128Rows": true,
+  "heldoutLabelsUsedForDiagnosisAndDevelopmentOnly": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
