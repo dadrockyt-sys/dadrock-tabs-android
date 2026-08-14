@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 118,
+  "profileType": "post-v116-dangerous-signature-exclusion-counterfactual-diagnostic",
+  "dangerousSignature": {
+    "originalQBucket": "tight",
+    "v96Decision": "revert-tight-to-anchor-low-dispersion",
+    "pairRadius": 8,
+    "lambda": 1.0
+  },
+  "signatureChosenFromConsumedV116Outcomes": true,
+  "developmentReverseValidation": {
+    "label": "previously-exposed-v115-development",
+    "foldsTotal": 280,
+    "v96Passes": 247,
+    "v115Passes": 251,
+    "v118CounterfactualPasses": 251,
+    "v96ScorePercent": 88.2143,
+    "v115ScorePercent": 89.6429,
+    "v118CounterfactualScorePercent": 89.6429,
+    "v115GainsVsV96": 6,
+    "v115LossesVsV96": 2,
+    "v118GainsVsV96": 6,
+    "v118LossesVsV96": 2,
+    "v118NetVsV96": 4,
+    "excludedSelectedRows": 0,
+    "excludedV115Gains": 0,
+    "excludedV115Losses": 0
+  },
+  "consumedConfirmationCounterfactual": {
+    "label": "consumed-v116-confirmation",
+    "foldsTotal": 320,
+    "v96Passes": 283,
+    "v115Passes": 288,
+    "v118CounterfactualPasses": 290,
+    "v96ScorePercent": 88.4375,
+    "v115ScorePercent": 90.0,
+    "v118CounterfactualScorePercent": 90.625,
+    "v115GainsVsV96": 7,
+    "v115LossesVsV96": 2,
+    "v118GainsVsV96": 7,
+    "v118LossesVsV96": 0,
+    "v118NetVsV96": 7,
+    "excludedSelectedRows": 2,
+    "excludedV115Gains": 0,
+    "excludedV115Losses": 2
+  },
+  "candidatePolicy": "Use frozen V115 except do not activate V112 on the dangerous signature; use V96 there.",
+  "candidatePolicyValidated": false,
+  "diagnosticOutcomesTaintedForFutureSelection": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "productionPromotionAllowed": false
+}
