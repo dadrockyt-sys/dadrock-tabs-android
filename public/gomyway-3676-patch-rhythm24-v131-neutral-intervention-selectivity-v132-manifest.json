@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 132,
+  "profileType": "consumed-v128-near-neutral-intervention-selectivity-diagnostic",
+  "frozenV128Passes": 309,
+  "frozenV128ScorePercent": 96.5625,
+  "targetInterventionCount": 2,
+  "usesHeldoutLabelsForDiagnosisOnly": true,
+  "heldoutPrecisionLiftNeverProposedAsGuardFeature": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

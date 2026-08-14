@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 132,
+  "profileType": "consumed-v128-near-neutral-intervention-selectivity-diagnostic",
+  "frozenV128Passes": 309,
+  "frozenV128ScorePercent": 96.5625,
+  "targetInterventionCount": 2,
+  "diagnostics": [
+    {
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      "representation": "v112_interactions",
+      "v131Utility": {
+        "rows": 14,
+        "gains": 2,
+        "losses": 2,
+        "net": 0
+      },
+      "gainGateScoreRange": [
+        -5.279170576979833,
+        -5.279170576979833
+      ],
+      "lossGateScoreRange": [
+        -8.188049001054011,
+        -8.188049001054011
+      ],
+      "gainPhaseRange": [
+        0.0224609375,
+        0.0380859375
+      ],
+      "lossPhaseRange": [
+        0.3349609375,
+        0.3505859375
+      ],
+      "changedRows": [
+        {
+          "phase": 0.3349609375,
+          "fold": 0,
+          "state": "loss",
+          "gateScore": -8.188049001054011,
+          "selectedForV112": false,
+          "baselineFinalRepresentation": "full_phase",
+          "heldoutPrecisionLift": 5.49
+        },
+        {
+          "phase": 0.3505859375,
+          "fold": 0,
+          "state": "loss",
+          "gateScore": -8.188049001054011,
+          "selectedForV112": false,
+          "baselineFinalRepresentation": "full_phase",
+          "heldoutPrecisionLift": 5.49
+        },
+        {
+          "phase": 0.0224609375,
+          "fold": 1,
+          "state": "gain",
+          "gateScore": -5.279170576979833,
+          "selectedForV112": false,
+          "baselineFinalRepresentation": "full_phase",
+          "heldoutPrecisionLift": 2.19
+        },
+        {
+          "phase": 0.0380859375,
+          "fold": 1,
+          "state": "gain",
+          "gateScore": -5.279170576979833,
+          "selectedForV112": false,
+          "baselineFinalRepresentation": "full_phase",
+          "heldoutPrecisionLift": 2.19
+        }
+      ],
+      "statesBySelectedForV112": {
+        "False": {
+          "gain": 2,
+          "both-pass": 8,
+          "loss": 2
+        },
+        "True": {
+          "both-pass": 2
+        }
+      },
+      "statesByBaselineRepresentation": {
+        "full_phase": {
+          "gain": 2,
+          "both-pass": 10,
+          "loss": 2
+        }
+      }
+    },
+    {
+      "structuralKey": {
+        "originalQBucket": "anchor",
+        "v96Decision": "keep-anchor",
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      "representation": "v112_interactions",
+      "v131Utility": {
+        "rows": 42,
+        "gains": 2,
+        "losses": 3,
+        "net": -1
+      },
+      "gainGateScoreRange": [
+        -5.466747003059044,
+        -5.466747003059044
+      ],
+      "lossGateScoreRange": [
+        -5.313612972405915,
+        -5.144574736653597
+      ],
+      "gainPhaseRange": [
+        0.1005859375,
+        0.1162109375
+      ],
+      "lossPhaseRange": [
+        0.9599609375,
+        0.9755859375
+      ],
+      "changedRows": [
+        {
+          "phase": 0.1005859375,
+          "fold": 1,
+          "state": "gain",
+          "gateScore": -5.466747003059044,
+          "selectedForV112": false,
+          "baselineFinalRepresentation": "cosine",
+          "heldoutPrecisionLift": 4.85
+        },
+        {
+          "phase": 0.1162109375,
+          "fold": 1,
+          "state": "gain",
+          "gateScore": -5.466747003059044,
+          "selectedForV112": false,
+          "baselineFinalRepresentation": "cosine",
+          "heldoutPrecisionLift": 4.85
+        },
+        {
+          "phase": 0.9755859375,
+          "fold": 2,
+          "state": "loss",
+          "gateScore": -5.313612972405915,
+          "selectedForV112": false,
+          "baselineFinalRepresentation": "cosine",
+          "heldoutPrecisionLift": 5.0
+        },
+        {
+          "phase": 0.9599609375,
+          "fold": 0,
+          "state": "loss",
+          "gateScore": -5.144574736653597,
+          "selectedForV112": false,
+          "baselineFinalRepresentation": "cosine",
+          "heldoutPrecisionLift": 7.14
+        },
+        {
+          "phase": 0.9755859375,
+          "fold": 0,
+          "state": "loss",
+          "gateScore": -5.144574736653597,
+          "selectedForV112": false,
+          "baselineFinalRepresentation": "cosine",
+          "heldoutPrecisionLift": 7.14
+        }
+      ],
+      "statesBySelectedForV112": {
+        "False": {
+          "both-pass": 20,
+          "gain": 2,
+          "both-fail": 2,
+          "loss": 3
+        },
+        "True": {
+          "both-pass": 15
+        }
+      },
+      "statesByBaselineRepresentation": {
+        "cosine": {
+          "both-pass": 35,
+          "gain": 2,
+          "both-fail": 2,
+          "loss": 3
+        }
+      }
+    }
+  ],
+  "usesHeldoutLabelsForDiagnosisOnly": true,
+  "heldoutPrecisionLiftNeverProposedAsGuardFeature": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
