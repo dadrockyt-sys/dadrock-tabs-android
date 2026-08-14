@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 108,
+  "profileType": "v107-motivated-lowband-quadratic-interaction-augmentation-on-old-exposed-v56-v57",
+  "summary": {
+    "foldsTotal": 280,
+    "v28Passes": 238,
+    "v96Passes": 247,
+    "v108Passes": 229,
+    "v96ScorePercent": 88.2143,
+    "v108ScorePercent": 81.7857,
+    "gainsVsV96": 0,
+    "lossesVsV96": 18,
+    "netVsV96": -18,
+    "v108RescuesVsV28": 5,
+    "v108RegressionsVsV28": 14,
+    "rescuesOfV96Failures": 0,
+    "predeclaredSourceFeatures": [
+      "mean::lowBurst",
+      "mean::lowRise",
+      "mean::lowDecay30",
+      "mean::lowPostSlope"
+    ],
+    "derivedInteractionFeatures": [
+      "mean::lowBurst^2",
+      "mean::lowRise^2",
+      "mean::lowDecay30^2",
+      "mean::lowPostSlope^2",
+      "mean::lowBurst*mean::lowRise",
+      "mean::lowBurst*mean::lowDecay30",
+      "mean::lowBurst*mean::lowPostSlope",
+      "mean::lowRise*mean::lowDecay30",
+      "mean::lowRise*mean::lowPostSlope",
+      "mean::lowDecay30*mean::lowPostSlope"
+    ],
+    "sourceSummaries": [
+      {
+        "source": "v56_exposed_120",
+        "foldsTotal": 120,
+        "v28Passes": 101,
+        "v96Passes": 105,
+        "v108Passes": 97,
+        "gainsVsV96": 0,
+        "lossesVsV96": 8,
+        "rescuesVsV28": 2,
+        "regressionsVsV28": 6,
+        "rescuesOfV96Failures": 0,
+        "v96ScorePercent": 87.5,
+        "v108ScorePercent": 80.8333
+      },
+      {
+        "source": "v57_exposed_160",
+        "foldsTotal": 160,
+        "v28Passes": 137,
+        "v96Passes": 142,
+        "v108Passes": 132,
+        "gainsVsV96": 0,
+        "lossesVsV96": 10,
+        "rescuesVsV28": 3,
+        "regressionsVsV28": 8,
+        "rescuesOfV96Failures": 0,
+        "v96ScorePercent": 88.75,
+        "v108ScorePercent": 82.5
+      }
+    ]
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "v107HeldoutDiagnosisMotivatedFeatureFamily": true,
+  "diagnosticOutcomesTaintedForFutureSelection": true,
+  "newProductionTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
