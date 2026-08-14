@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 102,
+  "profileType": "saved-v101-representation-rescue-oracle-ceiling-diagnostic",
+  "summary": {
+    "rows": 280,
+    "v96Passes": 247,
+    "v96ScorePercent": 88.2143,
+    "v96Failures": 33,
+    "rescuedFailuresByRepresentation": {
+      "full_phase": 2,
+      "phase_col3": 3,
+      "base": 5
+    },
+    "lossesByRepresentation": {
+      "full_phase": 5,
+      "phase_col3": 33,
+      "base": 53
+    },
+    "oracleUnionRescuedFailures": 8,
+    "oracleUnionPasses": 255,
+    "oracleUnionScorePercent": 91.0714,
+    "remainingFailuresEvenWithPerfectPerFoldRepresentationOracle": 25,
+    "failureRescuePatterns": {
+      "full_phase=0|phase_col3=0|base=1": 3,
+      "full_phase=0|phase_col3=0|base=0": 25,
+      "full_phase=1|phase_col3=0|base=0": 2,
+      "full_phase=0|phase_col3=1|base=1": 2,
+      "full_phase=0|phase_col3=1|base=0": 1
+    }
+  },
+  "positiveStructuralGroups": [
+    {
+      "decision": "keep-broad-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representation": "full_phase",
+      "rows": 30,
+      "rescues": 2,
+      "losses": 0,
+      "net": 2
+    },
+    {
+      "decision": "keep-tight-high-dispersion",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "representation": "base",
+      "rows": 5,
+      "rescues": 2,
+      "losses": 0,
+      "net": 2
+    },
+    {
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representation": "phase_col3",
+      "rows": 12,
+      "rescues": 3,
+      "losses": 2,
+      "net": 1
+    },
+    {
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "representation": "base",
+      "rows": 6,
+      "rescues": 1,
+      "losses": 0,
+      "net": 1
+    },
+    {
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representation": "base",
+      "rows": 12,
+      "rescues": 2,
+      "losses": 4,
+      "net": -2
+    }
+  ],
+  "rescueRows": [
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.0625,
+      "fold": 1,
+      "decision": "keep-tight-high-dispersion",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "rescuedBy": [
+        "base"
+      ],
+      "v28Passed": false
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.03125,
+      "fold": 3,
+      "decision": "keep-broad-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "rescuedBy": [
+        "full_phase"
+      ],
+      "v28Passed": false
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.90625,
+      "fold": 2,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "rescuedBy": [
+        "phase_col3",
+        "base"
+      ],
+      "v28Passed": false
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.015625,
+      "fold": 1,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "rescuedBy": [
+        "base"
+      ],
+      "v28Passed": false
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.046875,
+      "fold": 1,
+      "decision": "keep-tight-high-dispersion",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "rescuedBy": [
+        "base"
+      ],
+      "v28Passed": false
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.046875,
+      "fold": 3,
+      "decision": "keep-broad-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "rescuedBy": [
+        "full_phase"
+      ],
+      "v28Passed": false
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.234375,
+      "fold": 0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "rescuedBy": [
+        "phase_col3"
+      ],
+      "v28Passed": false
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.890625,
+      "fold": 2,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "rescuedBy": [
+        "phase_col3",
+        "base"
+      ],
+      "v28Passed": false
+    }
+  ],
+  "usesSavedV101Only": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
