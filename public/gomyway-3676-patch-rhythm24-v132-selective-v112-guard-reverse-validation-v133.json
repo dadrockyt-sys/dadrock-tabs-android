@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 133,
+  "profileType": "selective-v112-interactions-consumed-development-plus-v116-reverse-validation",
+  "targetStructuralKey": {
+    "originalQBucket": "anchor",
+    "v96Decision": "keep-anchor",
+    "pairRadius": 4,
+    "lambda": 1.0
+  },
+  "targetRepresentation": "v112_interactions",
+  "candidateSelectors": {
+    "gate": "gateScore <= -5.4",
+    "phase": "phase < 0.5",
+    "conjunction": "gateScore <= -5.4 AND phase < 0.5"
+  },
+  "consumedV128Development": {
+    "gate": {
+      "passes": 311,
+      "gains": 2,
+      "losses": 0,
+      "net": 2,
+      "appliedRows": 14
+    },
+    "phase": {
+      "passes": 311,
+      "gains": 2,
+      "losses": 0,
+      "net": 2,
+      "appliedRows": 19
+    },
+    "conjunction": {
+      "passes": 311,
+      "gains": 2,
+      "losses": 0,
+      "net": 2,
+      "appliedRows": 6
+    }
+  },
+  "v116ReverseValidation": {
+    "gate": {
+      "baselinePasses": 309,
+      "passes": 311,
+      "gains": 2,
+      "losses": 0,
+      "appliedRows": 13,
+      "net": 2
+    },
+    "phase": {
+      "baselinePasses": 309,
+      "passes": 311,
+      "gains": 2,
+      "losses": 0,
+      "appliedRows": 19,
+      "net": 2
+    },
+    "conjunction": {
+      "baselinePasses": 309,
+      "passes": 311,
+      "gains": 2,
+      "losses": 0,
+      "appliedRows": 6,
+      "net": 2
+    }
+  },
+  "v132MotivatedSelectorsFromConsumedOutcomes": true,
+  "noSelectorChosenByV133": true,
+  "reverseValidationIsCorroborativeNotFreshConfirmation": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
