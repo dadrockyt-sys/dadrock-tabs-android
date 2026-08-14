@@ -19,16 +19,15 @@ Repository: `dadrockyt-sys/dadrock-tabs-android`
 
 ## Frozen historical reference
 
-V17 remains immutable. V18–V121 are historical/exposed development or prior confirmation material. V115/V116 and V118/V119 are frozen prior validated-champion checkpoints. Do not reinterpret any exposed family as fresh confirmation.
+V17 remains immutable. V18–V127 are historical/exposed development, diagnostics, reverse-validation, or prior confirmation material. V115/V116, V118/V119, V122/V124, and V127/V128 are frozen checkpoints. Do not reinterpret any exposed family as fresh confirmation.
 
-## Current validated champion — V122, confirmed by V124
+## Current validated champion — guarded V122 policy, confirmed by V128
 
-V122 is now frozen as the validated rhythm24 champion policy.
+The current validated rhythm24 champion is the frozen V122 structural policy plus the frozen V127 guard, freshly confirmed by V128.
 
 Architecture:
-- V118 remains the baseline policy: V96 backbone + frozen V115 top-2/7 selective V112 gate + the frozen V118 dangerous-signature exclusion.
-- V122 adds seven frozen structural representation switches selected only on exposed V119 development data and corroborated on exposed V116 reverse validation before fresh confirmation.
-- Frozen structural groups:
+- V118 baseline: V96 backbone + frozen V115 top-2/7 selective V112 gate + frozen V118 dangerous-signature exclusion.
+- V122 adds seven frozen structural representation switches:
   - anchor / keep-anchor / r4 / lambda1 -> cosine
   - anchor / keep-anchor / r4 / lambda100 -> v112_interactions
   - anchor / keep-anchor / r8 / lambda100 -> v112_interactions
@@ -36,71 +35,82 @@ Architecture:
   - tight / keep-tight-high-dispersion / r8 / lambda1 -> base
   - tight / revert-tight-to-anchor-low-dispersion / r4 / lambda1 -> phase_col3
   - tight / revert-tight-to-anchor-low-dispersion / r4 / lambda100 -> base
+- V127 adds one frozen surgical guard inside the phase_col3 group:
+  - structural key: tight / revert-tight-to-anchor-low-dispersion / r4 / lambda1
+  - representation: phase_col3
+  - condition: `selectedForV112 == true`
+  - action: fall back to frozen V118 baseline
 - No production promotion is allowed.
 
-### V123 corroborative reverse validation on prior V116 family
+### V127 corroborative guard evidence
 
-- reconstructed V118 baseline: 290/320 = 90.6250%
-- frozen V122 policy: 307/320 = 95.9375%
-- gains/losses vs V118: +19/-2, net +17
-- policy-applied rows: 134/320
+Guard chosen from consumed V124 diagnostics, then reverse-validated on consumed V116:
+- consumed V124: V122 308/320 -> guarded 310/320; +2/-0, net +2
+- reverse V116: V122 307/320 -> guarded 309/320; +2/-0, net +2
 - corroborative only; not fresh confirmation
 
-### V124 fresh confirmation — SUCCESS
+### V128 fresh confirmation — SUCCESS
 
-Fresh reserved family consumed for the first time by V124:
-- 64 phases, numerators congruent to 5 mod 16 over 1024
+Fresh reserved family consumed for the first time by V128:
+- 64 phases, numerators congruent to 7 mod 16 over 1024
 - 320 folds total
 
 Result:
-- V28: 274/320 = 85.6250%
-- V96: 283/320 = 88.4375%
+- V28: 276/320 = 86.2500%
+- V96: 284/320 = 88.7500%
 - V115: 289/320 = 90.3125%
 - V118: 291/320 = 90.9375%
-- V122: 308/320 = 96.2500%
-- V122 gains/losses vs V118: +19/-2, net +17
-- V122 gains/losses vs V96: +27/-2, net +25
-- rescues/regressions vs V28: +36/-2
+- V122 baseline: 307/320 = 95.9375%
+- guarded V128: 309/320 = 96.5625%
+- V128 gains/losses vs V122: +2/-0, net +2
+- V128 gains/losses vs V118: +18/-0, net +18
+- V128 gains/losses vs V96: +25/-0, net +25
+- rescues/regressions vs V28: +33/-0
 - structural policy applied: 137/320
-- minimum V122 phase passes: 3/5
-- bottleneck phases: 0.9423828125 and 0.9580078125
+- V127 guard applied: 2/320
+- minimum V128 phase passes: 4/5
+- bottleneck phases: 0.0224609375, 0.0380859375, 0.1005859375, 0.1162109375, 0.2099609375, 0.2255859375, 0.2724609375, 0.3193359375, 0.7724609375, 0.9443359375, 0.9599609375
 - crosses 95 percent: True
 - confirmation success: True
 - validated new champion: True
-- protected 949-event candidate unchanged: True
+- policy and guard frozen before held-out evaluation: True
+- new tuning performed: False
 - candidate events modified: False
+- protected 949-event candidate unchanged: True
 - production promotion allowed: False
 
-Authoritative committed V124 files:
-- `public/gomyway-3676-patch-rhythm24-v122-reserved-5mod16-over1024-confirmation-v124.json`
-- `public/gomyway-3676-patch-rhythm24-v122-reserved-5mod16-over1024-confirmation-v124-manifest.json`
+Authoritative committed V128 files:
+- `public/gomyway-3676-patch-rhythm24-v127-guarded-v122-reserved-7mod16-over1024-confirmation-v128.json`
+- `public/gomyway-3676-patch-rhythm24-v127-guarded-v122-reserved-7mod16-over1024-confirmation-v128-manifest.json`
 
-V122/V124 are frozen. Do not modify them in place.
+V122/V124 and V127/V128 are frozen. Do not modify them in place.
 
-## Next untouched reserve — reserved BEFORE V125 interpretation
+## Next untouched reserve — reserved BEFORE V129 interpretation
 
-Reserve the following family now, before using V124 outcomes to design another challenger:
+Reserve now, before using V128 failures to design another challenger:
 
-`phase_k = (7 + 16*k) / 1024`, for `k = 0..63`.
+`phase_k = (9 + 16*k) / 1024`, for `k = 0..63`.
 
-This is the 64-phase **numerators-7-mod-16-over-1024** family. All numerators are odd, so none reduces to a /512-or-coarser dyadic phase. It is disjoint from the consumed V116 1-mod-16, V119 3-mod-16, and V124 5-mod-16 families.
+This is the 64-phase **numerators-9-mod-16-over-1024** family. It is disjoint from the consumed 1-mod-16 V116, 3-mod-16 V119, 5-mod-16 V124, and 7-mod-16 V128 families.
 
-Do not inspect, evaluate, or reference this reserve in V125 or any exploratory challenger. It may be consumed only after a later architecture is frozen and earns a genuinely fresh confirmation attempt under a predeclared gate.
+Do not inspect, evaluate, or reference this reserve in V129 or any exploratory challenger. It may be consumed only after a later architecture is frozen and earns a genuinely fresh confirmation attempt under a predeclared gate.
 
-## CURRENT NEXT STEP — V125 diagnostic
+## CURRENT NEXT STEP — V129 diagnostic
 
-V125 should use only the now-exposed V124 output. It should characterize the 12 remaining V122 failures without any model search or new held-out evaluation. In particular:
-- summarize failures by structural key, final representation, selected-for-V112 status, phase and fold;
-- identify which failures are regressions relative to V118/V96/V28 and which are shared hard failures;
-- identify whether failures concentrate inside or outside the seven V122 structural switches;
-- characterize the two 3/5 bottleneck phases;
-- keep the newly reserved 7-mod-16/1024 family completely untouched.
+V129 should read only the now-exposed V128 output and characterize the 11 remaining guarded-champion failures without any new held-out evaluation or model search.
 
-V125 is anatomy only. Any rule suggested by V125 is tainted and must become a separately versioned exploratory challenger on already exposed families before it may earn the new 7-mod-16/1024 reserve.
+Required questions:
+- Which failures are regressions relative to V122/V118/V96/V28, and which are shared hard failures?
+- How many sit inside versus outside the seven V122 structural groups?
+- How many are in rows where the V127 guard fired?
+- How are failures distributed by final representation, structural key, selected-for-V112 status, phase and fold?
+- Which of the 4/5 bottleneck phases contain the remaining failure and what structural state produced it?
 
-Safety for V125:
-- reads only already-exposed V124 output
-- must not reference the new 7-mod-16/1024 reserve
+V129 is anatomy only. Any rule suggested by V129 is tainted and must become a separately versioned exploratory challenger on already exposed families before it may earn the new 9-mod-16/1024 reserve.
+
+Safety for V129:
+- reads only already-exposed V128 output
+- must not reference the new 9-mod-16/1024 reserve
 - no parameter tuning/search
 - held-out labels diagnostic only
 - no new production tuning
@@ -125,7 +135,7 @@ Continue my GOMYWAY / Jimmy Paige rhythm24 calibration workflow from GitHub.
 Repo: dadrockyt-sys/dadrock-tabs-android
 Branch: jimmy-paige-v8-targeted-rhythm-corrections
 Read analyzer/WORKFLOW_RECOVERY_CHECKPOINT.md first and treat it as the source of truth.
-V122 is frozen and validated by V124 at 308/320 = 96.2500% on a fresh family.
-Preserve frozen V17, frozen V122/V124, the protected 949-event candidate, leakage rules, the newly reserved untouched numerators-7-mod-16-over-1024 family, and production-promotion=false.
-Continue from V125 without unnecessary pauses.
+The current frozen validated champion is V122 + V127 guard, confirmed by V128 at 309/320 = 96.5625% on a fresh family.
+Preserve frozen V17, frozen V122/V124, frozen V127/V128, the protected 949-event candidate, leakage rules, the newly reserved untouched numerators-9-mod-16-over-1024 family, and production-promotion=false.
+Continue from V129 without unnecessary pauses.
 ```
