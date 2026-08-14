@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 115,
+  "profileType": "cross-source-selective-v112-top2over7-development-challenger",
+  "summary": {
+    "foldsTotal": 280,
+    "v96Passes": 247,
+    "v96ScorePercent": 88.2143,
+    "v115Passes": 251,
+    "v115ScorePercent": 89.6429,
+    "selectedRows": 81,
+    "gateFraction": "2/7",
+    "gainsVsV96": 6,
+    "lossesVsV96": 2,
+    "netVsV96": 4,
+    "rescuesVsV28": 13,
+    "regressionsVsV28": 0,
+    "bothPassVsV28": 238,
+    "bothFailVsV28": 29,
+    "sourceGateSummaries": [
+      {
+        "trainSource": "v56_exposed_120",
+        "testSource": "v57_exposed_160",
+        "testRows": 160,
+        "selectedRows": 46,
+        "selectedFraction": 0.2875,
+        "gainsCaptured": 3,
+        "lossesCaptured": 1,
+        "netChangedOutcomeUtility": 2
+      },
+      {
+        "trainSource": "v57_exposed_160",
+        "testSource": "v56_exposed_120",
+        "testRows": 120,
+        "selectedRows": 35,
+        "selectedFraction": 0.291667,
+        "gainsCaptured": 3,
+        "lossesCaptured": 1,
+        "netChangedOutcomeUtility": 2
+      }
+    ]
+  },
+  "gateMotivatedByV114ExposedDiagnostics": true,
+  "developmentOutcomesTaintedForFutureSelection": true,
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "newProductionTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
