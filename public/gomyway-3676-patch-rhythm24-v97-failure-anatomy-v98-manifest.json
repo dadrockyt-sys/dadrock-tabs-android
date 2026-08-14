@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 98,
+  "output": "public/gomyway-3676-patch-rhythm24-v97-failure-anatomy-v98.json",
+  "foldPassScorePercent": 88.9062,
+  "v28FoldPassScorePercent": 86.0156,
+  "percentagePointGainVsV28": 2.8906,
+  "failureCount": 142,
+  "bottleneckFailureCount": 42,
+  "usesSavedV97Only": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "productionPromotionAllowed": false
+}

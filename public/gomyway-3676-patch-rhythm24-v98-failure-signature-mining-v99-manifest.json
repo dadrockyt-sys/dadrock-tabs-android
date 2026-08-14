@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 99,
+  "output": "public/gomyway-3676-patch-rhythm24-v98-failure-signature-mining-v99.json",
+  "foldPassScorePercent": 88.9062,
+  "failureCount": 142,
+  "bottleneckFailureCount": 42,
+  "usesSavedV97Only": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "productionPromotionAllowed": false
+}

@@ -1,0 +1,1321 @@
+{
+  "schemaVersion": 99,
+  "profileType": "saved-v97-multidimensional-failure-signature-mining",
+  "source": "public/gomyway-3676-patch-rhythm24-v96-reserved-1over512-confirmation-v97.json",
+  "foldPassScorePercent": 88.9062,
+  "foldsTotal": 1280,
+  "failureCount": 142,
+  "overallFailureRate": 0.110937,
+  "bottleneckFailureCount": 42,
+  "minimumRowsPerSignature": 8,
+  "maximumSignatureWidth": 3,
+  "topFailureCoverageSignatures": [
+    {
+      "width": 1,
+      "features": [
+        "strictBroadSupportCount"
+      ],
+      "values": {
+        "strictBroadSupportCount": 0
+      },
+      "rows": 858,
+      "failures": 110,
+      "failureRate": 0.128205,
+      "failureRateLiftVsOverall": 1.1557,
+      "failureCoverage": 0.774648,
+      "bottleneckFailures": 31,
+      "bottleneckFailureCoverage": 0.738095,
+      "rescuesVsV28": 29,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 29
+    },
+    {
+      "width": 1,
+      "features": [
+        "finalQBucket"
+      ],
+      "values": {
+        "finalQBucket": "anchor"
+      },
+      "rows": 889,
+      "failures": 106,
+      "failureRate": 0.119235,
+      "failureRateLiftVsOverall": 1.0748,
+      "failureCoverage": 0.746479,
+      "bottleneckFailures": 21,
+      "bottleneckFailureCoverage": 0.5,
+      "rescuesVsV28": 16,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 16
+    },
+    {
+      "width": 1,
+      "features": [
+        "pairRadius"
+      ],
+      "values": {
+        "pairRadius": 4
+      },
+      "rows": 797,
+      "failures": 105,
+      "failureRate": 0.131744,
+      "failureRateLiftVsOverall": 1.1876,
+      "failureCoverage": 0.739437,
+      "bottleneckFailures": 28,
+      "bottleneckFailureCoverage": 0.666667,
+      "rescuesVsV28": 21,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 21
+    },
+    {
+      "width": 1,
+      "features": [
+        "unanimousTightEscape"
+      ],
+      "values": {
+        "unanimousTightEscape": false
+      },
+      "rows": 874,
+      "failures": 95,
+      "failureRate": 0.108696,
+      "failureRateLiftVsOverall": 0.9798,
+      "failureCoverage": 0.669014,
+      "bottleneckFailures": 23,
+      "bottleneckFailureCoverage": 0.547619,
+      "rescuesVsV28": 8,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 8
+    },
+    {
+      "width": 2,
+      "features": [
+        "finalQBucket",
+        "strictBroadSupportCount"
+      ],
+      "values": {
+        "finalQBucket": "anchor",
+        "strictBroadSupportCount": 0
+      },
+      "rows": 732,
+      "failures": 95,
+      "failureRate": 0.129781,
+      "failureRateLiftVsOverall": 1.1699,
+      "failureCoverage": 0.669014,
+      "bottleneckFailures": 18,
+      "bottleneckFailureCoverage": 0.428571,
+      "rescuesVsV28": 16,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 16
+    },
+    {
+      "width": 2,
+      "features": [
+        "pairRadius",
+        "strictBroadSupportCount"
+      ],
+      "values": {
+        "pairRadius": 4,
+        "strictBroadSupportCount": 0
+      },
+      "rows": 520,
+      "failures": 84,
+      "failureRate": 0.161538,
+      "failureRateLiftVsOverall": 1.4561,
+      "failureCoverage": 0.591549,
+      "bottleneckFailures": 20,
+      "bottleneckFailureCoverage": 0.47619,
+      "rescuesVsV28": 13,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 13
+    },
+    {
+      "width": 2,
+      "features": [
+        "finalQBucket",
+        "unanimousTightEscape"
+      ],
+      "values": {
+        "finalQBucket": "anchor",
+        "unanimousTightEscape": false
+      },
+      "rows": 673,
+      "failures": 82,
+      "failureRate": 0.121842,
+      "failureRateLiftVsOverall": 1.0983,
+      "failureCoverage": 0.577465,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 1,
+      "features": [
+        "lambda"
+      ],
+      "values": {
+        "lambda": 1.0
+      },
+      "rows": 702,
+      "failures": 81,
+      "failureRate": 0.115385,
+      "failureRateLiftVsOverall": 1.0401,
+      "failureCoverage": 0.570423,
+      "bottleneckFailures": 25,
+      "bottleneckFailureCoverage": 0.595238,
+      "rescuesVsV28": 29,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 29
+    },
+    {
+      "width": 2,
+      "features": [
+        "branch",
+        "unanimousTightEscape"
+      ],
+      "values": {
+        "branch": "fallback-v28",
+        "unanimousTightEscape": false
+      },
+      "rows": 641,
+      "failures": 77,
+      "failureRate": 0.120125,
+      "failureRateLiftVsOverall": 1.0828,
+      "failureCoverage": 0.542254,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "v96Decision",
+        "unanimousTightEscape"
+      ],
+      "values": {
+        "v96Decision": "v96-fallback-v28",
+        "unanimousTightEscape": false
+      },
+      "rows": 641,
+      "failures": 77,
+      "failureRate": 0.120125,
+      "failureRateLiftVsOverall": 1.0828,
+      "failureCoverage": 0.542254,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "v96Decision",
+        "unanimousTightEscape"
+      ],
+      "values": {
+        "branch": "fallback-v28",
+        "v96Decision": "v96-fallback-v28",
+        "unanimousTightEscape": false
+      },
+      "rows": 641,
+      "failures": 77,
+      "failureRate": 0.120125,
+      "failureRateLiftVsOverall": 1.0828,
+      "failureCoverage": 0.542254,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "finalQBucket",
+        "unanimousTightEscape"
+      ],
+      "values": {
+        "branch": "fallback-v28",
+        "finalQBucket": "anchor",
+        "unanimousTightEscape": false
+      },
+      "rows": 641,
+      "failures": 77,
+      "failureRate": 0.120125,
+      "failureRateLiftVsOverall": 1.0828,
+      "failureCoverage": 0.542254,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "v96Decision",
+        "finalQBucket",
+        "unanimousTightEscape"
+      ],
+      "values": {
+        "v96Decision": "v96-fallback-v28",
+        "finalQBucket": "anchor",
+        "unanimousTightEscape": false
+      },
+      "rows": 641,
+      "failures": 77,
+      "failureRate": 0.120125,
+      "failureRateLiftVsOverall": 1.0828,
+      "failureCoverage": 0.542254,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 1,
+      "features": [
+        "branch"
+      ],
+      "values": {
+        "branch": "fallback-v28"
+      },
+      "rows": 670,
+      "failures": 77,
+      "failureRate": 0.114925,
+      "failureRateLiftVsOverall": 1.0359,
+      "failureCoverage": 0.542254,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 1,
+      "features": [
+        "v96Decision"
+      ],
+      "values": {
+        "v96Decision": "v96-fallback-v28"
+      },
+      "rows": 670,
+      "failures": 77,
+      "failureRate": 0.114925,
+      "failureRateLiftVsOverall": 1.0359,
+      "failureCoverage": 0.542254,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "branch",
+        "v96Decision"
+      ],
+      "values": {
+        "branch": "fallback-v28",
+        "v96Decision": "v96-fallback-v28"
+      },
+      "rows": 670,
+      "failures": 77,
+      "failureRate": 0.114925,
+      "failureRateLiftVsOverall": 1.0359,
+      "failureCoverage": 0.542254,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "branch",
+        "finalQBucket"
+      ],
+      "values": {
+        "branch": "fallback-v28",
+        "finalQBucket": "anchor"
+      },
+      "rows": 670,
+      "failures": 77,
+      "failureRate": 0.114925,
+      "failureRateLiftVsOverall": 1.0359,
+      "failureCoverage": 0.542254,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "v96Decision",
+        "finalQBucket"
+      ],
+      "values": {
+        "v96Decision": "v96-fallback-v28",
+        "finalQBucket": "anchor"
+      },
+      "rows": 670,
+      "failures": 77,
+      "failureRate": 0.114925,
+      "failureRateLiftVsOverall": 1.0359,
+      "failureCoverage": 0.542254,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "v96Decision",
+        "finalQBucket"
+      ],
+      "values": {
+        "branch": "fallback-v28",
+        "v96Decision": "v96-fallback-v28",
+        "finalQBucket": "anchor"
+      },
+      "rows": 670,
+      "failures": 77,
+      "failureRate": 0.114925,
+      "failureRateLiftVsOverall": 1.0359,
+      "failureCoverage": 0.542254,
+      "bottleneckFailures": 15,
+      "bottleneckFailureCoverage": 0.357143,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "finalQBucket",
+        "pairRadius",
+        "strictBroadSupportCount"
+      ],
+      "values": {
+        "finalQBucket": "anchor",
+        "pairRadius": 4,
+        "strictBroadSupportCount": 0
+      },
+      "rows": 435,
+      "failures": 76,
+      "failureRate": 0.174713,
+      "failureRateLiftVsOverall": 1.5749,
+      "failureCoverage": 0.535211,
+      "bottleneckFailures": 12,
+      "bottleneckFailureCoverage": 0.285714,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "finalQBucket",
+        "pairRadius"
+      ],
+      "values": {
+        "finalQBucket": "anchor",
+        "pairRadius": 4
+      },
+      "rows": 509,
+      "failures": 76,
+      "failureRate": 0.149312,
+      "failureRateLiftVsOverall": 1.3459,
+      "failureCoverage": 0.535211,
+      "bottleneckFailures": 12,
+      "bottleneckFailureCoverage": 0.285714,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 1,
+      "features": [
+        "originalQBucket"
+      ],
+      "values": {
+        "originalQBucket": "anchor"
+      },
+      "rows": 558,
+      "failures": 71,
+      "failureRate": 0.12724,
+      "failureRateLiftVsOverall": 1.147,
+      "failureCoverage": 0.5,
+      "bottleneckFailures": 12,
+      "bottleneckFailureCoverage": 0.285714,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 1,
+      "features": [
+        "selectionReason"
+      ],
+      "values": {
+        "selectionReason": "anchor"
+      },
+      "rows": 558,
+      "failures": 71,
+      "failureRate": 0.12724,
+      "failureRateLiftVsOverall": 1.147,
+      "failureCoverage": 0.5,
+      "bottleneckFailures": 12,
+      "bottleneckFailureCoverage": 0.285714,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "branch",
+        "originalQBucket"
+      ],
+      "values": {
+        "branch": "fallback-v28",
+        "originalQBucket": "anchor"
+      },
+      "rows": 558,
+      "failures": 71,
+      "failureRate": 0.12724,
+      "failureRateLiftVsOverall": 1.147,
+      "failureCoverage": 0.5,
+      "bottleneckFailures": 12,
+      "bottleneckFailureCoverage": 0.285714,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "branch",
+        "selectionReason"
+      ],
+      "values": {
+        "branch": "fallback-v28",
+        "selectionReason": "anchor"
+      },
+      "rows": 558,
+      "failures": 71,
+      "failureRate": 0.12724,
+      "failureRateLiftVsOverall": 1.147,
+      "failureCoverage": 0.5,
+      "bottleneckFailures": 12,
+      "bottleneckFailureCoverage": 0.285714,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "branch",
+        "strictBroadSupportCount"
+      ],
+      "values": {
+        "branch": "fallback-v28",
+        "strictBroadSupportCount": 0
+      },
+      "rows": 558,
+      "failures": 71,
+      "failureRate": 0.12724,
+      "failureRateLiftVsOverall": 1.147,
+      "failureCoverage": 0.5,
+      "bottleneckFailures": 12,
+      "bottleneckFailureCoverage": 0.285714,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "v96Decision",
+        "originalQBucket"
+      ],
+      "values": {
+        "v96Decision": "v96-fallback-v28",
+        "originalQBucket": "anchor"
+      },
+      "rows": 558,
+      "failures": 71,
+      "failureRate": 0.12724,
+      "failureRateLiftVsOverall": 1.147,
+      "failureCoverage": 0.5,
+      "bottleneckFailures": 12,
+      "bottleneckFailureCoverage": 0.285714,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "v96Decision",
+        "selectionReason"
+      ],
+      "values": {
+        "v96Decision": "v96-fallback-v28",
+        "selectionReason": "anchor"
+      },
+      "rows": 558,
+      "failures": 71,
+      "failureRate": 0.12724,
+      "failureRateLiftVsOverall": 1.147,
+      "failureCoverage": 0.5,
+      "bottleneckFailures": 12,
+      "bottleneckFailureCoverage": 0.285714,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "v96Decision",
+        "strictBroadSupportCount"
+      ],
+      "values": {
+        "v96Decision": "v96-fallback-v28",
+        "strictBroadSupportCount": 0
+      },
+      "rows": 558,
+      "failures": 71,
+      "failureRate": 0.12724,
+      "failureRateLiftVsOverall": 1.147,
+      "failureCoverage": 0.5,
+      "bottleneckFailures": 12,
+      "bottleneckFailureCoverage": 0.285714,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "originalQBucket",
+        "finalQBucket"
+      ],
+      "values": {
+        "originalQBucket": "anchor",
+        "finalQBucket": "anchor"
+      },
+      "rows": 558,
+      "failures": 71,
+      "failureRate": 0.12724,
+      "failureRateLiftVsOverall": 1.147,
+      "failureCoverage": 0.5,
+      "bottleneckFailures": 12,
+      "bottleneckFailureCoverage": 0.285714,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    }
+  ],
+  "topSurgicalSignatures": [
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "lambda",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "branch": "tight",
+        "lambda": 100.0,
+        "phaseBin1over32": "31/32-32/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 8,
+      "bottleneckFailureCoverage": 0.190476,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "strictBroadSupportCount",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "branch": "safe-broad",
+        "strictBroadSupportCount": 1,
+        "phaseBin1over32": "1/32-2/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 8,
+      "bottleneckFailureCoverage": 0.190476,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "v96Decision",
+        "strictBroadSupportCount",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "v96Decision": "keep-broad-low-dispersion",
+        "strictBroadSupportCount": 1,
+        "phaseBin1over32": "1/32-2/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 8,
+      "bottleneckFailureCoverage": 0.190476,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "originalQBucket",
+        "lambda",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "originalQBucket": "tight",
+        "lambda": 100.0,
+        "phaseBin1over32": "31/32-32/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 8,
+      "bottleneckFailureCoverage": 0.190476,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "finalQBucket",
+        "strictBroadSupportCount",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "finalQBucket": "broad",
+        "strictBroadSupportCount": 1,
+        "phaseBin1over32": "1/32-2/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 8,
+      "bottleneckFailureCoverage": 0.190476,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "pairRadius",
+        "lambda",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "pairRadius": 4,
+        "lambda": 100.0,
+        "phaseBin1over32": "31/32-32/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 8,
+      "bottleneckFailureCoverage": 0.190476,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "pairRadius",
+        "strictBroadSupportCount",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "pairRadius": 4,
+        "strictBroadSupportCount": 1,
+        "phaseBin1over32": "1/32-2/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 8,
+      "bottleneckFailureCoverage": 0.190476,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "lambda",
+        "selectionReason",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "lambda": 100.0,
+        "selectionReason": "unanimous-tight-nonworse-plus-lift",
+        "phaseBin1over32": "31/32-32/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 8,
+      "bottleneckFailureCoverage": 0.190476,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "lambda",
+        "unanimousTightEscape",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "lambda": 100.0,
+        "unanimousTightEscape": true,
+        "phaseBin1over32": "31/32-32/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 8,
+      "bottleneckFailureCoverage": 0.190476,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "strictBroadSupportCount",
+        "unanimousTightEscape",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "strictBroadSupportCount": 1,
+        "unanimousTightEscape": false,
+        "phaseBin1over32": "1/32-2/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 8,
+      "bottleneckFailureCoverage": 0.190476,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "pairRadius",
+        "lambda",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "pairRadius": 4,
+        "lambda": 100.0,
+        "phaseBin1over32": "0/32-1/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 6,
+      "bottleneckFailureCoverage": 0.142857,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "branch",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "branch": "safe-broad",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "v96Decision",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "v96Decision": "keep-broad-low-dispersion",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "originalQBucket",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "originalQBucket": "broad",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "finalQBucket",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "finalQBucket": "broad",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "lambda",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "lambda": 100.0,
+        "phaseBin1over32": "30/32-31/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "selectionReason",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "selectionReason": "v46-strict-broad-support",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 2,
+      "features": [
+        "strictBroadSupportCount",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "strictBroadSupportCount": 1,
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "v96Decision",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "branch": "safe-broad",
+        "v96Decision": "keep-broad-low-dispersion",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "originalQBucket",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "branch": "safe-broad",
+        "originalQBucket": "broad",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "finalQBucket",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "branch": "safe-broad",
+        "finalQBucket": "broad",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "pairRadius",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "branch": "safe-broad",
+        "pairRadius": 4,
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "lambda",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "branch": "fallback-v28",
+        "lambda": 100.0,
+        "phaseBin1over32": "30/32-31/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "selectionReason",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "branch": "safe-broad",
+        "selectionReason": "v46-strict-broad-support",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "branch",
+        "strictBroadSupportCount",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "branch": "safe-broad",
+        "strictBroadSupportCount": 1,
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "v96Decision",
+        "originalQBucket",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "v96Decision": "keep-broad-low-dispersion",
+        "originalQBucket": "broad",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "v96Decision",
+        "finalQBucket",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "v96Decision": "keep-broad-low-dispersion",
+        "finalQBucket": "broad",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "v96Decision",
+        "pairRadius",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "v96Decision": "keep-broad-low-dispersion",
+        "pairRadius": 4,
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "v96Decision",
+        "lambda",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "v96Decision": "v96-fallback-v28",
+        "lambda": 100.0,
+        "phaseBin1over32": "30/32-31/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    },
+    {
+      "width": 3,
+      "features": [
+        "v96Decision",
+        "selectionReason",
+        "phaseBin1over32"
+      ],
+      "values": {
+        "v96Decision": "keep-broad-low-dispersion",
+        "selectionReason": "v46-strict-broad-support",
+        "phaseBin1over32": "13/32-14/32"
+      },
+      "rows": 8,
+      "failures": 8,
+      "failureRate": 1.0,
+      "failureRateLiftVsOverall": 9.0141,
+      "failureCoverage": 0.056338,
+      "bottleneckFailures": 0,
+      "bottleneckFailureCoverage": 0.0,
+      "rescuesVsV28": 0,
+      "regressionsVsV28": 0,
+      "netVsV28WithinSignature": 0
+    }
+  ],
+  "usesSavedV97Only": true,
+  "v97OutcomesTaintedForFutureSelection": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "protectedCandidateTouched": false,
+  "productionPromotionAllowed": false,
+  "metricNote": "The 88.9063% score is the fold-pass benchmark score, not a direct event-by-event professional-reference agreement percentage."
+}
