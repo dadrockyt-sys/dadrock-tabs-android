@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 117,
+  "profileType": "v116-confirmation-failure-anatomy-diagnostic",
+  "sourceV116": "public/gomyway-3676-patch-rhythm24-v115-reserved-1over1024-stride16-confirmation-v116.json",
+  "v115ValidatedChampionScorePercent": 90.0,
+  "v115Passes": 288,
+  "v96Passes": 283,
+  "gainsVsV96": 7,
+  "lossesVsV96": 2,
+  "netVsV96": 5,
+  "gainCounts": {
+    "rows": 7,
+    "byQBucket": {
+      "tight": 2,
+      "broad": 5
+    },
+    "byDecision": {
+      "keep-tight-high-dispersion": 2,
+      "keep-broad-low-dispersion": 5
+    },
+    "byModel": {
+      "r4_lambda100.0": 4,
+      "r4_lambda1.0": 3
+    },
+    "byRepresentation": {
+      "cosine-plus-lowband-phase-interactions": 7
+    },
+    "selectedForV112": 7
+  },
+  "lossCounts": {
+    "rows": 2,
+    "byQBucket": {
+      "tight": 2
+    },
+    "byDecision": {
+      "revert-tight-to-anchor-low-dispersion": 2
+    },
+    "byModel": {
+      "r8_lambda1.0": 2
+    },
+    "byRepresentation": {
+      "cosine-plus-lowband-phase-interactions": 2
+    },
+    "selectedForV112": 2
+  },
+  "gateScoreSummary": {
+    "gain": {
+      "n": 7,
+      "min": -2.2133819165750475,
+      "max": -2.122632589615759,
+      "mean": -2.1612661161170896
+    },
+    "loss": {
+      "n": 2,
+      "min": -2.0106951540176166,
+      "max": -2.0106951540176166,
+      "mean": -2.0106951540176166
+    },
+    "changed": {
+      "n": 9,
+      "min": -2.2133819165750475,
+      "max": -2.0106951540176166,
+      "mean": -2.127805902317207
+    },
+    "selectedUnchanged": {
+      "n": 83,
+      "min": -4.152819842017246,
+      "max": -1.6978691085825746,
+      "mean": -3.0130642679388466
+    }
+  },
+  "changedSignatures": [
+    {
+      "signature": "broad|keep-broad-low-dispersion|r4_lambda1.0|cosine-plus-lowband-phase-interactions",
+      "gains": 3,
+      "losses": 0,
+      "rows": 3,
+      "net": 3
+    },
+    {
+      "signature": "broad|keep-broad-low-dispersion|r4_lambda100.0|cosine-plus-lowband-phase-interactions",
+      "gains": 2,
+      "losses": 0,
+      "rows": 2,
+      "net": 2
+    },
+    {
+      "signature": "tight|keep-tight-high-dispersion|r4_lambda100.0|cosine-plus-lowband-phase-interactions",
+      "gains": 2,
+      "losses": 0,
+      "rows": 2,
+      "net": 2
+    },
+    {
+      "signature": "tight|revert-tight-to-anchor-low-dispersion|r8_lambda1.0|cosine-plus-lowband-phase-interactions",
+      "gains": 0,
+      "losses": 2,
+      "rows": 2,
+      "net": -2
+    }
+  ],
+  "bottleneckPhase": 0.7041015625,
+  "bottleneckPassesV115": 3,
+  "bottleneckPassesV96": 3,
+  "selectedRows": 92,
+  "selectedUnchangedRows": 83,
+  "diagnosticOnly": true,
+  "heldoutLabelsUsedForDiagnosisOnly": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "newGateChosen": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
