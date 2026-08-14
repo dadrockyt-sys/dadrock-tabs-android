@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 123,
+  "profileType": "reverse-validation-of-v122-structural-policy-on-prior-v116-family",
+  "summary": {
+    "foldsTotal": 320,
+    "reverseValidationFamily": "V116 numerators-1-mod-16-over-1024",
+    "baselineV118PassesReconstructed": 290,
+    "baselineV118ScorePercent": 90.625,
+    "v122PolicyPasses": 307,
+    "v122PolicyScorePercent": 95.9375,
+    "gainsVsV118": 19,
+    "lossesVsV118": 2,
+    "netVsV118": 17,
+    "rowsPolicyApplied": 134,
+    "positiveStructuralGroupsFrozen": 7
+  },
+  "frozenPolicy": [
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representation": "cosine"
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "representation": "v112_interactions"
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "representation": "v112_interactions"
+    },
+    {
+      "originalQBucket": "broad",
+      "v96Decision": "revert-broad-to-anchor-high-dispersion",
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "representation": "cosine"
+    },
+    {
+      "originalQBucket": "tight",
+      "v96Decision": "keep-tight-high-dispersion",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "representation": "base"
+    },
+    {
+      "originalQBucket": "tight",
+      "v96Decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representation": "phase_col3"
+    },
+    {
+      "originalQBucket": "tight",
+      "v96Decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "representation": "base"
+    }
+  ],
+  "appliedRowsByGroup": {
+    "('anchor', 'keep-anchor', 4, 1.0)|cosine": 41,
+    "('tight', 'revert-tight-to-anchor-low-dispersion', 4, 100.0)|base": 7,
+    "('tight', 'keep-tight-high-dispersion', 8, 1.0)|base": 6,
+    "('anchor', 'keep-anchor', 4, 100.0)|v112_interactions": 43,
+    "('anchor', 'keep-anchor', 8, 100.0)|v112_interactions": 17,
+    "('broad', 'revert-broad-to-anchor-high-dispersion', 2, 1.0)|cosine": 6,
+    "('tight', 'revert-tight-to-anchor-low-dispersion', 4, 1.0)|phase_col3": 14
+  },
+  "policyChosenWithoutUsingV116ForStructuralSelection": true,
+  "v116PreviouslyConsumedForEarlierV115V118Development": true,
+  "reverseValidationIsCorroborativeNotFreshConfirmation": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
