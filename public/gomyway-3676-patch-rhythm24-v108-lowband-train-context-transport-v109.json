@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 109,
+  "profileType": "low-band-train-context-transport-diagnostic-after-v108-negative-augmentation",
+  "summary": {
+    "rows": 280,
+    "residualUnrescuedFailures": 21,
+    "rescuedV96Failures": 12,
+    "v96Passes": 247,
+    "predeclaredLowBandFeatures": [
+      "mean::lowBurst",
+      "mean::lowRise",
+      "mean::lowDecay30",
+      "mean::lowPostSlope"
+    ],
+    "topTrainingContextEffects": [
+      {
+        "metric": "trainStd:mean::lowBurst",
+        "residualVsRescuedCohenD": -0.473543,
+        "residualVsPassCohenD": -1.275408,
+        "residualMean": 0.62799684,
+        "rescuedMean": 0.63392622,
+        "passMean": 0.64033452
+      },
+      {
+        "metric": "trainStd:mean::lowDecay30",
+        "residualVsRescuedCohenD": -0.443236,
+        "residualVsPassCohenD": -1.155027,
+        "residualMean": 0.79592084,
+        "rescuedMean": 0.80494633,
+        "passMean": 0.81429376
+      },
+      {
+        "metric": "trainStd:mean::lowRise",
+        "residualVsRescuedCohenD": -0.510604,
+        "residualVsPassCohenD": -1.130976,
+        "residualMean": 0.7948978,
+        "rescuedMean": 0.80048047,
+        "passMean": 0.80795834
+      },
+      {
+        "metric": "trainMean:mean::lowPostSlope",
+        "residualVsRescuedCohenD": 0.245645,
+        "residualVsPassCohenD": 1.065122,
+        "residualMean": -0.00366139,
+        "rescuedMean": -0.0056046,
+        "passMean": -0.01150909
+      },
+      {
+        "metric": "trainMean:mean::lowDecay30",
+        "residualVsRescuedCohenD": -0.220291,
+        "residualVsPassCohenD": -0.976897,
+        "residualMean": -5.364e-05,
+        "rescuedMean": 0.00211257,
+        "passMean": 0.00919815
+      },
+      {
+        "metric": "trainMean:mean::lowBurst",
+        "residualVsRescuedCohenD": 0.180041,
+        "residualVsPassCohenD": -0.69581,
+        "residualMean": 0.00069155,
+        "rescuedMean": -0.0002779,
+        "passMean": 0.00528551
+      },
+      {
+        "metric": "trainStd:mean::lowPostSlope",
+        "residualVsRescuedCohenD": 0.396971,
+        "residualVsPassCohenD": -0.5995,
+        "residualMean": 1.14063292,
+        "rescuedMean": 1.13481958,
+        "passMean": 1.15069726
+      },
+      {
+        "metric": "trainMean:mean::lowRise",
+        "residualVsRescuedCohenD": 0.857469,
+        "residualVsPassCohenD": 0.007117,
+        "residualMean": 0.00143675,
+        "rescuedMean": -0.00266837,
+        "passMean": 0.00137286
+      }
+    ],
+    "trainToTestTransport": [
+      {
+        "feature": "mean::lowBurst",
+        "stat": "std",
+        "trainTestCorrelationAcrossFolds": -0.998189,
+        "trainResidualVsPassAbsD": 1.275408,
+        "testResidualVsPassAbsD": 1.259421
+      },
+      {
+        "feature": "mean::lowDecay30",
+        "stat": "std",
+        "trainTestCorrelationAcrossFolds": -0.998024,
+        "trainResidualVsPassAbsD": 1.155027,
+        "testResidualVsPassAbsD": 1.100239
+      },
+      {
+        "feature": "mean::lowRise",
+        "stat": "std",
+        "trainTestCorrelationAcrossFolds": -0.998176,
+        "trainResidualVsPassAbsD": 1.130976,
+        "testResidualVsPassAbsD": 1.119518
+      },
+      {
+        "feature": "mean::lowPostSlope",
+        "stat": "mean",
+        "trainTestCorrelationAcrossFolds": -0.999524,
+        "trainResidualVsPassAbsD": 1.065122,
+        "testResidualVsPassAbsD": 1.046618
+      },
+      {
+        "feature": "mean::lowDecay30",
+        "stat": "mean",
+        "trainTestCorrelationAcrossFolds": -0.999524,
+        "trainResidualVsPassAbsD": 0.976897,
+        "testResidualVsPassAbsD": 0.959736
+      },
+      {
+        "feature": "mean::lowBurst",
+        "stat": "mean",
+        "trainTestCorrelationAcrossFolds": -0.999525,
+        "trainResidualVsPassAbsD": 0.69581,
+        "testResidualVsPassAbsD": 0.691104
+      },
+      {
+        "feature": "mean::lowPostSlope",
+        "stat": "std",
+        "trainTestCorrelationAcrossFolds": -0.998503,
+        "trainResidualVsPassAbsD": 0.5995,
+        "testResidualVsPassAbsD": 0.600076
+      },
+      {
+        "feature": "mean::lowRise",
+        "stat": "mean",
+        "trainTestCorrelationAcrossFolds": -0.999512,
+        "trainResidualVsPassAbsD": 0.007117,
+        "testResidualVsPassAbsD": 0.003091
+      }
+    ]
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "heldoutLabelsUsedForDiagnosisOnly": true,
+  "newProductionTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
