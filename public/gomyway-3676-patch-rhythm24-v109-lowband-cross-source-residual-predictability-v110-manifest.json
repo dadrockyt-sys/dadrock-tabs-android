@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 110,
+  "profileType": "low-band-training-context-cross-source-residual-predictability-diagnostic",
+  "summary": {
+    "rows": 280,
+    "residualHardFailures": 21,
+    "nonResidualRows": 259,
+    "predeclaredTrainingContextFeatures": [
+      "trainMean:mean::lowBurst",
+      "trainStd:mean::lowBurst",
+      "trainMean:mean::lowRise",
+      "trainStd:mean::lowRise",
+      "trainMean:mean::lowDecay30",
+      "trainStd:mean::lowDecay30",
+      "trainMean:mean::lowPostSlope",
+      "trainStd:mean::lowPostSlope"
+    ],
+    "crossSourceTransfers": [
+      {
+        "trainSource": "v56_exposed_120",
+        "testSource": "v57_exposed_160",
+        "trainRows": 120,
+        "trainResiduals": 10,
+        "testRows": 160,
+        "testResiduals": 11,
+        "testAUC": 0.849298
+      },
+      {
+        "trainSource": "v57_exposed_160",
+        "testSource": "v56_exposed_120",
+        "trainRows": 160,
+        "trainResiduals": 11,
+        "testRows": 120,
+        "testResiduals": 10,
+        "testAUC": 0.840909
+      }
+    ],
+    "pooledCrossSourceAUC": 0.839125,
+    "rankingConcentration": [
+      {
+        "topK": 10,
+        "residualsCaptured": 2,
+        "residualCaptureRate": 0.095238,
+        "precision": 0.2
+      },
+      {
+        "topK": 20,
+        "residualsCaptured": 6,
+        "residualCaptureRate": 0.285714,
+        "precision": 0.3
+      },
+      {
+        "topK": 40,
+        "residualsCaptured": 11,
+        "residualCaptureRate": 0.52381,
+        "precision": 0.275
+      },
+      {
+        "topK": 80,
+        "residualsCaptured": 17,
+        "residualCaptureRate": 0.809524,
+        "precision": 0.2125
+      }
+    ]
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "v109DiagnosticFamilyUsed": true,
+  "crossSourceOutcomeLabelsUsedForDiagnosisOnly": true,
+  "thresholdOrGuardChosen": false,
+  "newProductionTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
