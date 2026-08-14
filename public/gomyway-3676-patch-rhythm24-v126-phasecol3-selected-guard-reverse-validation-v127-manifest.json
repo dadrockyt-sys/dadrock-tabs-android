@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 127,
+  "profileType": "phase-col3-selected-for-v112-guard-consumed-counterfactual-plus-reverse-validation",
+  "summary": {
+    "guard": "within tight/revert-tight-to-anchor-low-dispersion/r4/lambda1 phase_col3 group, fall back to frozen V118 whenever selectedForV112 is true",
+    "v124Consumed": {
+      "v122Passes": 308,
+      "guardedPasses": 310,
+      "gainsVsV122": 2,
+      "lossesVsV122": 0,
+      "netVsV122": 2,
+      "guardedRows": 2
+    },
+    "v116ReverseValidation": {
+      "v122Passes": 307,
+      "guardedPasses": 309,
+      "gainsVsV122": 2,
+      "lossesVsV122": 0,
+      "netVsV122": 2,
+      "guardedRows": 2
+    }
+  },
+  "guardChosenFromConsumedV124Outcomes": true,
+  "v116PreviouslyConsumed": true,
+  "reverseValidationIsCorroborativeNotFreshConfirmation": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
