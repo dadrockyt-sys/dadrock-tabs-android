@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 106,
+  "profileType": "fixed-model-joint-representation-q-rescue-ceiling-on-old-exposed-v56-v57",
+  "summary": {
+    "rows": 280,
+    "v28Passes": 238,
+    "v96Passes": 247,
+    "v96ScorePercent": 88.2143,
+    "representations": [
+      "base",
+      "phase_col3",
+      "cosine_current",
+      "full_phase"
+    ],
+    "qGrid": [
+      0.05,
+      0.075,
+      0.1,
+      0.125,
+      0.15,
+      0.175,
+      0.2,
+      0.225,
+      0.25,
+      0.275,
+      0.3,
+      0.325,
+      0.35,
+      0.375,
+      0.4
+    ],
+    "perRepresentationQOraclePasses": {
+      "base": 244,
+      "phase_col3": 254,
+      "cosine_current": 259,
+      "full_phase": 259
+    },
+    "perRepresentationQOracleScorePercent": {
+      "base": 87.1429,
+      "phase_col3": 90.7143,
+      "cosine_current": 92.5,
+      "full_phase": 92.5
+    },
+    "perfectPerFoldJointRepresentationQOraclePasses": 259,
+    "perfectPerFoldJointRepresentationQOracleScorePercent": 92.5,
+    "oracleRescuesOfV96Failures": 12,
+    "v96FailuresNotRescuedByAnyRepresentationQCombination": 21
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "diagnosticRepresentationQGridEnumerated": true,
+  "diagnosticOutcomesTaintedForFutureSelection": true,
+  "newProductionTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
