@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 103,
+  "profileType": "fixed-cosine-fixed-q-model-grid-rescue-ceiling-on-old-exposed-v56-v57",
+  "summary": {
+    "rows": 280,
+    "v28Passes": 238,
+    "v96Passes": 247,
+    "v96ScorePercent": 88.2143,
+    "modelStats": {
+      "r2_lambda1": {
+        "pairRadius": 2,
+        "lambda": 1.0,
+        "passes": 250,
+        "gainsVsV96": 7,
+        "lossesVsV96": 4,
+        "rescuesVsV28": 16,
+        "regressionsVsV28": 4,
+        "rescuesOfV96Failures": 7,
+        "scorePercent": 89.2857,
+        "netVsV96": 3
+      },
+      "r2_lambda10": {
+        "pairRadius": 2,
+        "lambda": 10.0,
+        "passes": 250,
+        "gainsVsV96": 7,
+        "lossesVsV96": 4,
+        "rescuesVsV28": 16,
+        "regressionsVsV28": 4,
+        "rescuesOfV96Failures": 7,
+        "scorePercent": 89.2857,
+        "netVsV96": 3
+      },
+      "r2_lambda100": {
+        "pairRadius": 2,
+        "lambda": 100.0,
+        "passes": 251,
+        "gainsVsV96": 8,
+        "lossesVsV96": 4,
+        "rescuesVsV28": 17,
+        "regressionsVsV28": 4,
+        "rescuesOfV96Failures": 8,
+        "scorePercent": 89.6429,
+        "netVsV96": 4
+      },
+      "r4_lambda1": {
+        "pairRadius": 4,
+        "lambda": 1.0,
+        "passes": 243,
+        "gainsVsV96": 0,
+        "lossesVsV96": 4,
+        "rescuesVsV28": 9,
+        "regressionsVsV28": 4,
+        "rescuesOfV96Failures": 0,
+        "scorePercent": 86.7857,
+        "netVsV96": -4
+      },
+      "r4_lambda10": {
+        "pairRadius": 4,
+        "lambda": 10.0,
+        "passes": 241,
+        "gainsVsV96": 0,
+        "lossesVsV96": 6,
+        "rescuesVsV28": 9,
+        "regressionsVsV28": 6,
+        "rescuesOfV96Failures": 0,
+        "scorePercent": 86.0714,
+        "netVsV96": -6
+      },
+      "r4_lambda100": {
+        "pairRadius": 4,
+        "lambda": 100.0,
+        "passes": 244,
+        "gainsVsV96": 0,
+        "lossesVsV96": 3,
+        "rescuesVsV28": 9,
+        "regressionsVsV28": 3,
+        "rescuesOfV96Failures": 0,
+        "scorePercent": 87.1429,
+        "netVsV96": -3
+      },
+      "r8_lambda1": {
+        "pairRadius": 8,
+        "lambda": 1.0,
+        "passes": 244,
+        "gainsVsV96": 2,
+        "lossesVsV96": 5,
+        "rescuesVsV28": 10,
+        "regressionsVsV28": 4,
+        "rescuesOfV96Failures": 2,
+        "scorePercent": 87.1429,
+        "netVsV96": -3
+      },
+      "r8_lambda10": {
+        "pairRadius": 8,
+        "lambda": 10.0,
+        "passes": 244,
+        "gainsVsV96": 2,
+        "lossesVsV96": 5,
+        "rescuesVsV28": 10,
+        "regressionsVsV28": 4,
+        "rescuesOfV96Failures": 2,
+        "scorePercent": 87.1429,
+        "netVsV96": -3
+      },
+      "r8_lambda100": {
+        "pairRadius": 8,
+        "lambda": 100.0,
+        "passes": 247,
+        "gainsVsV96": 2,
+        "lossesVsV96": 2,
+        "rescuesVsV28": 11,
+        "regressionsVsV28": 2,
+        "rescuesOfV96Failures": 2,
+        "scorePercent": 88.2143,
+        "netVsV96": 0
+      }
+    },
+    "perfectPerFoldModelOraclePasses": 255,
+    "perfectPerFoldModelOracleScorePercent": 91.0714,
+    "oracleRescuesOfV96Failures": 8,
+    "v96FailuresNotRescuedByAnyModelInGrid": 25
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "diagnosticModelGridEnumerated": true,
+  "diagnosticOutcomesTaintedForFutureSelection": true,
+  "newProductionTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
