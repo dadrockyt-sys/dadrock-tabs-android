@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 126,
+  "profileType": "consumed-v124-phase-col3-regression-guard-diagnostic",
+  "summary": {
+    "targetStructuralGroup": {
+      "originalQBucket": "tight",
+      "v96Decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representation": "phase_col3"
+    },
+    "rows": 15,
+    "gainsVsV118": 4,
+    "lossesVsV118": 2,
+    "bothPass": 9,
+    "bothFail": 0,
+    "gainGateScoreRange": {
+      "min": -8.463244599346956,
+      "max": -5.474538625687438,
+      "mean": -6.968891612517196
+    },
+    "lossGateScoreRange": {
+      "min": -2.5334085895570104,
+      "max": -2.5334085895570104,
+      "mean": -2.5334085895570104
+    },
+    "gainPhaseRange": {
+      "min": 0.2392578125,
+      "max": 0.9111328125,
+      "mean": 0.5751953125
+    },
+    "lossPhaseRange": {
+      "min": 0.9423828125,
+      "max": 0.9580078125,
+      "mean": 0.9501953125
+    },
+    "lossesSelectedForV112": 2,
+    "gainsSelectedForV112": 0
+  },
+  "heldoutLabelsUsedForDiagnosisOnly": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

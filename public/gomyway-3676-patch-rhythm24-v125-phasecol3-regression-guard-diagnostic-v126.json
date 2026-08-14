@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 126,
+  "profileType": "consumed-v124-phase-col3-regression-guard-diagnostic",
+  "summary": {
+    "targetStructuralGroup": {
+      "originalQBucket": "tight",
+      "v96Decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "representation": "phase_col3"
+    },
+    "rows": 15,
+    "gainsVsV118": 4,
+    "lossesVsV118": 2,
+    "bothPass": 9,
+    "bothFail": 0,
+    "gainGateScoreRange": {
+      "min": -8.463244599346956,
+      "max": -5.474538625687438,
+      "mean": -6.968891612517196
+    },
+    "lossGateScoreRange": {
+      "min": -2.5334085895570104,
+      "max": -2.5334085895570104,
+      "mean": -2.5334085895570104
+    },
+    "gainPhaseRange": {
+      "min": 0.2392578125,
+      "max": 0.9111328125,
+      "mean": 0.5751953125
+    },
+    "lossPhaseRange": {
+      "min": 0.9423828125,
+      "max": 0.9580078125,
+      "mean": 0.9501953125
+    },
+    "lossesSelectedForV112": 2,
+    "gainsSelectedForV112": 0
+  },
+  "rows": [
+    {
+      "phase": 0.2392578125,
+      "fold": 0,
+      "gateScore": -8.463244599346956,
+      "selectedForV112": false,
+      "stateVsV118": "gain",
+      "v118Passed": false,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 6.47
+    },
+    {
+      "phase": 0.2548828125,
+      "fold": 0,
+      "gateScore": -8.463244599346956,
+      "selectedForV112": false,
+      "stateVsV118": "gain",
+      "v118Passed": false,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 6.47
+    },
+    {
+      "phase": 0.8486328125,
+      "fold": 1,
+      "gateScore": -6.555313938796631,
+      "selectedForV112": false,
+      "stateVsV118": "both-pass",
+      "v118Passed": true,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 17.5
+    },
+    {
+      "phase": 0.8642578125,
+      "fold": 1,
+      "gateScore": -6.555313938796631,
+      "selectedForV112": false,
+      "stateVsV118": "both-pass",
+      "v118Passed": true,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 17.5
+    },
+    {
+      "phase": 0.6923828125,
+      "fold": 0,
+      "gateScore": -6.3580283405843225,
+      "selectedForV112": false,
+      "stateVsV118": "both-pass",
+      "v118Passed": true,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 5.17
+    },
+    {
+      "phase": 0.7080078125,
+      "fold": 0,
+      "gateScore": -6.3580283405843225,
+      "selectedForV112": false,
+      "stateVsV118": "both-pass",
+      "v118Passed": true,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 5.17
+    },
+    {
+      "phase": 0.7548828125,
+      "fold": 0,
+      "gateScore": -6.085322535813551,
+      "selectedForV112": false,
+      "stateVsV118": "both-pass",
+      "v118Passed": true,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 5.17
+    },
+    {
+      "phase": 0.7705078125,
+      "fold": 0,
+      "gateScore": -6.085322535813551,
+      "selectedForV112": false,
+      "stateVsV118": "both-pass",
+      "v118Passed": true,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 5.17
+    },
+    {
+      "phase": 0.8955078125,
+      "fold": 2,
+      "gateScore": -5.474538625687438,
+      "selectedForV112": false,
+      "stateVsV118": "gain",
+      "v118Passed": false,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 11.08
+    },
+    {
+      "phase": 0.9111328125,
+      "fold": 2,
+      "gateScore": -5.474538625687438,
+      "selectedForV112": false,
+      "stateVsV118": "gain",
+      "v118Passed": false,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 11.08
+    },
+    {
+      "phase": 0.3642578125,
+      "fold": 2,
+      "gateScore": -5.391425405336679,
+      "selectedForV112": false,
+      "stateVsV118": "both-pass",
+      "v118Passed": true,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 18.44
+    },
+    {
+      "phase": 0.3330078125,
+      "fold": 2,
+      "gateScore": -5.014940984067504,
+      "selectedForV112": false,
+      "stateVsV118": "both-pass",
+      "v118Passed": true,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 20.26
+    },
+    {
+      "phase": 0.3486328125,
+      "fold": 2,
+      "gateScore": -5.014940984067504,
+      "selectedForV112": false,
+      "stateVsV118": "both-pass",
+      "v118Passed": true,
+      "v122Passed": true,
+      "heldoutPrecisionLift": 20.26
+    },
+    {
+      "phase": 0.9423828125,
+      "fold": 4,
+      "gateScore": -2.5334085895570104,
+      "selectedForV112": true,
+      "stateVsV118": "loss",
+      "v118Passed": true,
+      "v122Passed": false,
+      "heldoutPrecisionLift": 0.3
+    },
+    {
+      "phase": 0.9580078125,
+      "fold": 4,
+      "gateScore": -2.5334085895570104,
+      "selectedForV112": true,
+      "stateVsV118": "loss",
+      "v118Passed": true,
+      "v122Passed": false,
+      "heldoutPrecisionLift": 0.3
+    }
+  ],
+  "heldoutLabelsUsedForDiagnosisOnly": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
