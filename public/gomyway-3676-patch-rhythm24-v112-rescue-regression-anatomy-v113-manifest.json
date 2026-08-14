@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 113,
+  "profileType": "v112-rescue-vs-regression-anatomy-diagnostic",
+  "summary": {
+    "v96ScorePercent": 88.2143,
+    "v112ScorePercent": 87.8571,
+    "changedRows": 13,
+    "gainsVsV96": 6,
+    "lossesVsV96": 7,
+    "netVsV96": -1,
+    "categorical": {
+      "source": {
+        "gain": {
+          "v56_exposed_120": 3,
+          "v57_exposed_160": 3
+        },
+        "loss": {
+          "v57_exposed_160": 4,
+          "v56_exposed_120": 3
+        }
+      },
+      "decision": {
+        "gain": {
+          "keep-broad-low-dispersion": 5,
+          "keep-tight-high-dispersion": 1
+        },
+        "loss": {
+          "revert-tight-to-anchor-low-dispersion": 5,
+          "keep-broad-low-dispersion": 2
+        }
+      },
+      "pairRadius": {
+        "gain": {
+          "4": 6
+        },
+        "loss": {
+          "4": 4,
+          "8": 3
+        }
+      },
+      "lambda": {
+        "gain": {
+          "1.0": 4,
+          "100.0": 2
+        },
+        "loss": {
+          "100.0": 4,
+          "1.0": 3
+        }
+      },
+      "v28Passed": {
+        "gain": {
+          "False": 6
+        },
+        "loss": {
+          "True": 5,
+          "False": 2
+        }
+      },
+      "phaseBin1over16": {
+        "gain": {
+          "7/16-8/16": 1,
+          "0/16-1/16": 2,
+          "6/16-7/16": 2,
+          "15/16-16/16": 1
+        },
+        "loss": {
+          "11/16-12/16": 1,
+          "13/16-14/16": 2,
+          "5/16-6/16": 2,
+          "10/16-11/16": 1,
+          "12/16-13/16": 1
+        }
+      }
+    },
+    "topNumericEffectsGainVsLoss": [
+      {
+        "metric": "testMean::mean::lowDecay30",
+        "gainMean": -0.011458182647576894,
+        "lossMean": 0.04144417998239114,
+        "differenceGainMinusLoss": -0.05290236262996803,
+        "cohenD": -1.660974770484997,
+        "absCohenD": 1.660974770484997,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testMean::mean::lowRise*p4sin",
+        "gainMean": 0.015153159914651678,
+        "lossMean": -0.02108048385621337,
+        "differenceGainMinusLoss": 0.03623364377086505,
+        "cohenD": 1.565183064646611,
+        "absCohenD": 1.565183064646611,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testMean::mean::lowPostSlope",
+        "gainMean": 0.004448758111095996,
+        "lossMean": -0.03179137969148127,
+        "differenceGainMinusLoss": 0.03624013780257727,
+        "cohenD": 1.4543215071933118,
+        "absCohenD": 1.4543215071933118,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::mean::lowDecay30*p2cos",
+        "gainMean": 0.745098897041753,
+        "lossMean": 0.8445344532180581,
+        "differenceGainMinusLoss": -0.09943555617630506,
+        "cohenD": -1.4100805840394894,
+        "absCohenD": 1.4100805840394894,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::mean::lowDecay30",
+        "gainMean": 0.7552958962573556,
+        "lossMean": 0.8517542732702085,
+        "differenceGainMinusLoss": -0.09645837701285287,
+        "cohenD": -1.409243359507119,
+        "absCohenD": 1.409243359507119,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testMean::mean::lowRise",
+        "gainMean": 0.019203938247292395,
+        "lossMean": 0.0015220066971928584,
+        "differenceGainMinusLoss": 0.017681931550099537,
+        "cohenD": 1.3321121553133508,
+        "absCohenD": 1.3321121553133508,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testMean::mean::lowRise*p2cos",
+        "gainMean": -0.03755589420108232,
+        "lossMean": -0.011935631809993076,
+        "differenceGainMinusLoss": -0.025620262391089242,
+        "cohenD": -1.3008371252693107,
+        "absCohenD": 1.3008371252693107,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testMean::mean::lowBurst*p4cos",
+        "gainMean": -0.046992560347477556,
+        "lossMean": 0.00026019627224542285,
+        "differenceGainMinusLoss": -0.04725275661972298,
+        "cohenD": -1.2205918556695454,
+        "absCohenD": 1.2205918556695454,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::mean::lowPostSlope*p4cos",
+        "gainMean": 0.8232535636735475,
+        "lossMean": 0.7612417634581938,
+        "differenceGainMinusLoss": 0.062011800215353685,
+        "cohenD": 1.2118734938557345,
+        "absCohenD": 1.2118734938557345,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::mean::lowBurst*p2cos",
+        "gainMean": 0.6132126504540222,
+        "lossMean": 0.6745970100635004,
+        "differenceGainMinusLoss": -0.06138435960947819,
+        "cohenD": -1.1481853959102353,
+        "absCohenD": 1.1481853959102353,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::mean::lowBurst",
+        "gainMean": 0.6149366896238204,
+        "lossMean": 0.6759997121328707,
+        "differenceGainMinusLoss": -0.06106302250905027,
+        "cohenD": -1.1364605796949552,
+        "absCohenD": 1.1364605796949552,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::mean::lowPostSlope",
+        "gainMean": 1.2387760174057971,
+        "lossMean": 1.1556948894394077,
+        "differenceGainMinusLoss": 0.08308112796638945,
+        "cohenD": 1.1062802092286428,
+        "absCohenD": 1.1062802092286428,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testMean::mean::lowPostSlope*p4cos",
+        "gainMean": -0.05145657811828183,
+        "lossMean": 0.01642177019191533,
+        "differenceGainMinusLoss": -0.06787834831019716,
+        "cohenD": -1.0860875128223972,
+        "absCohenD": 1.0860875128223972,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testMean::mean::lowDecay30*p4cos",
+        "gainMean": -0.0067541739075534036,
+        "lossMean": 0.09085022027911083,
+        "differenceGainMinusLoss": -0.09760439418666424,
+        "cohenD": -1.0795455849221307,
+        "absCohenD": 1.0795455849221307,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::mean::lowPostSlope*p2cos",
+        "gainMean": 1.230449837850273,
+        "lossMean": 1.1541628828562824,
+        "differenceGainMinusLoss": 0.07628695499399063,
+        "cohenD": 0.9960224621453316,
+        "absCohenD": 0.9960224621453316,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::mean::lowPostSlope*p4sin",
+        "gainMean": 0.8950373996210867,
+        "lossMean": 0.8432233182665984,
+        "differenceGainMinusLoss": 0.051814081354488395,
+        "cohenD": 0.9583560983568685,
+        "absCohenD": 0.9583560983568685,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testMean::mean::lowBurst",
+        "gainMean": 0.00387287779985776,
+        "lossMean": 0.02148309333979201,
+        "differenceGainMinusLoss": -0.01761021553993425,
+        "cohenD": -0.9359155685183136,
+        "absCohenD": 0.9359155685183136,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::p4cos",
+        "gainMean": 0.7071067811865476,
+        "lossMean": 0.7074231956465372,
+        "differenceGainMinusLoss": -0.00031641445998964457,
+        "cohenD": -0.7928249671723304,
+        "absCohenD": 0.7928249671723304,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testMean::p2cos",
+        "gainMean": 0.0,
+        "lossMean": 0.0008956560680698612,
+        "differenceGainMinusLoss": -0.0008956560680698612,
+        "cohenD": -0.7928249671720919,
+        "absCohenD": 0.7928249671720919,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testMean::p4sin",
+        "gainMean": 4.6356680677331094e-17,
+        "lossMean": 0.0008956560680699073,
+        "differenceGainMinusLoss": -0.0008956560680698609,
+        "cohenD": -0.7928249671720918,
+        "absCohenD": 0.7928249671720918,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::p4sin",
+        "gainMean": 0.7071067811865476,
+        "lossMean": 0.7067878819170799,
+        "differenceGainMinusLoss": 0.0003188992694677095,
+        "cohenD": 0.7928249671719736,
+        "absCohenD": 0.7928249671719736,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::p2cos",
+        "gainMean": 1.0,
+        "lossMean": 0.9999985961469147,
+        "differenceGainMinusLoss": 1.4038530853355269e-06,
+        "cohenD": 0.7928249671362635,
+        "absCohenD": 0.7928249671362635,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::mean::lowDecay30*p4cos",
+        "gainMean": 0.5530718565435143,
+        "lossMean": 0.6298858701352659,
+        "differenceGainMinusLoss": -0.07681401359175155,
+        "cohenD": -0.7567672503656568,
+        "absCohenD": 0.7567672503656568,
+        "gainN": 6,
+        "lossN": 7
+      },
+      {
+        "metric": "testStd::mean::lowRise*p2cos",
+        "gainMean": 0.8004993256591252,
+        "lossMean": 0.844837222940197,
+        "differenceGainMinusLoss": -0.04433789728107185,
+        "cohenD": -0.7067510107062751,
+        "absCohenD": 0.7067510107062751,
+        "gainN": 6,
+        "lossN": 7
+      }
+    ]
+  },
+  "usesSavedV112OutcomesOnlyForDiagnosis": true,
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "heldoutOutcomeChangesUsedForDiagnosisOnly": true,
+  "diagnosticOutcomesTaintedForFutureSelection": true,
+  "newProductionTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
