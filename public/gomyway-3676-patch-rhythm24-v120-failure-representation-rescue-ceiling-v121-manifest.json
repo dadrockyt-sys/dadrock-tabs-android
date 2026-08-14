@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 121,
+  "profileType": "exposed-v119-failure-only-representation-rescue-ceiling-diagnostic",
+  "summary": {
+    "exposedFailureRows": 27,
+    "frozenV118Passes": 293,
+    "frozenV118ScorePercent": 91.5625,
+    "rescuedFailuresByRepresentation": {
+      "base": 17,
+      "phase_col3": 13,
+      "full_phase": 0,
+      "cosine": 6,
+      "v112_interactions": 11
+    },
+    "oracleUnionRescuedFailures": 25,
+    "oracleUnionPasses": 318,
+    "oracleUnionScorePercent": 99.375,
+    "remainingFailuresEvenWithPerFailureRepresentationOracle": 2,
+    "failureRescuePatterns": {
+      "base=1|phase_col3=0|full_phase=0|cosine=0|v112_interactions=0": 4,
+      "base=1|phase_col3=0|full_phase=0|cosine=0|v112_interactions=1": 3,
+      "base=0|phase_col3=0|full_phase=0|cosine=1|v112_interactions=1": 3,
+      "base=0|phase_col3=1|full_phase=0|cosine=0|v112_interactions=0": 3,
+      "base=0|phase_col3=0|full_phase=0|cosine=0|v112_interactions=0": 2,
+      "base=0|phase_col3=0|full_phase=0|cosine=0|v112_interactions=1": 2,
+      "base=1|phase_col3=1|full_phase=0|cosine=1|v112_interactions=1": 1,
+      "base=1|phase_col3=1|full_phase=0|cosine=0|v112_interactions=1": 2,
+      "base=1|phase_col3=1|full_phase=0|cosine=0|v112_interactions=0": 5,
+      "base=1|phase_col3=1|full_phase=0|cosine=1|v112_interactions=0": 2
+    }
+  },
+  "structuralRescueCounts": [
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "rescuesByRepresentation": {
+        "base": 4,
+        "v112_interactions": 4,
+        "cosine": 4,
+        "phase_col3": 3
+      }
+    },
+    {
+      "originalQBucket": "tight",
+      "v96Decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "rescuesByRepresentation": {
+        "phase_col3": 4,
+        "base": 2
+      }
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "rescuesByRepresentation": {
+        "v112_interactions": 2,
+        "base": 3,
+        "phase_col3": 3
+      }
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "rescuesByRepresentation": {
+        "base": 3,
+        "phase_col3": 3,
+        "cosine": 1,
+        "v112_interactions": 3
+      }
+    },
+    {
+      "originalQBucket": "tight",
+      "v96Decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "rescuesByRepresentation": {
+        "base": 2
+      }
+    },
+    {
+      "originalQBucket": "tight",
+      "v96Decision": "keep-tight-high-dispersion",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "rescuesByRepresentation": {
+        "base": 2
+      }
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "rescuesByRepresentation": {
+        "base": 1,
+        "v112_interactions": 1
+      }
+    },
+    {
+      "originalQBucket": "broad",
+      "v96Decision": "revert-broad-to-anchor-high-dispersion",
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "rescuesByRepresentation": {
+        "cosine": 1,
+        "v112_interactions": 1
+      }
+    }
+  ],
+  "derivedInteractionFeatures": [
+    "mean::lowBurst*p2sin",
+    "mean::lowBurst*p2cos",
+    "mean::lowBurst*p4sin",
+    "mean::lowBurst*p4cos",
+    "mean::lowRise*p2sin",
+    "mean::lowRise*p2cos",
+    "mean::lowRise*p4sin",
+    "mean::lowRise*p4cos",
+    "mean::lowDecay30*p2sin",
+    "mean::lowDecay30*p2cos",
+    "mean::lowDecay30*p4sin",
+    "mean::lowDecay30*p4cos",
+    "mean::lowPostSlope*p2sin",
+    "mean::lowPostSlope*p2cos",
+    "mean::lowPostSlope*p4sin",
+    "mean::lowPostSlope*p4cos"
+  ],
+  "evaluatesOnlyAlreadyExposedV119Failures": true,
+  "doesNotMeasureRepresentationLossesOnV118Passes": true,
+  "heldoutLabelsUsedForDiagnosisOnly": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
