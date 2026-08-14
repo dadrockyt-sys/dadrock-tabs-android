@@ -19,13 +19,15 @@ Repository: `dadrockyt-sys/dadrock-tabs-android`
 
 ## Frozen historical reference
 
-V17 remains immutable. V18–V133 are historical/exposed development, diagnostics, reverse-validation, or prior confirmation material. V115/V116, V118/V119, V122/V124, and V127/V128 are frozen checkpoints. Do not reinterpret any exposed family as fresh confirmation.
+V17 remains immutable. V18–V133 are historical/exposed development, diagnostics, reverse-validation, or prior confirmation material. V115/V116, V118/V119, V122/V124, V127/V128, and V133/V134 are frozen checkpoints. Do not reinterpret any exposed family as fresh confirmation.
 
-## Current validated champion — guarded V122 policy, confirmed by V128
+## Current validated champion — V133 selective conjunction guard, confirmed by V134
 
-The current validated rhythm24 champion is the frozen V122 structural policy plus the frozen V127 guard, freshly confirmed by V128.
+The current validated rhythm24 champion is the frozen V128 architecture plus the frozen V133 selective intervention, freshly confirmed by V134.
 
-Architecture:
+### Frozen architecture
+
+Base validated architecture carried forward from V128:
 - V118 baseline: V96 backbone + frozen V115 top-2/7 selective V112 gate + frozen V118 dangerous-signature exclusion.
 - V122 adds seven frozen structural representation switches:
   - anchor / keep-anchor / r4 / lambda1 -> cosine
@@ -40,33 +42,49 @@ Architecture:
   - representation: phase_col3
   - condition: `selectedForV112 == true`
   - action: fall back to frozen V118 baseline
+- V133 selective intervention:
+  - target structural key: anchor / keep-anchor / r4 / lambda1
+  - candidate representation: `v112_interactions`
+  - selector: `gateScore <= -5.4 AND phase < 0.5`
+  - otherwise retain frozen V128 behavior unchanged
 - No production promotion is allowed.
 
-### V128 fresh confirmation — SUCCESS
+### V134 fresh confirmation — SUCCESS
 
-Fresh 7-mod-16-over-1024 family, 64 phases / 320 folds:
-- V122 baseline: 307/320 = 95.9375%
-- guarded V128: 309/320 = 96.5625%
-- +2/-0 vs V122, net +2
-- minimum V128 phase passes: 4/5
+Fresh 9-mod-16-over-1024 family, 64 phases / 320 folds:
+- frozen V128 baseline: 309/320 = 96.5625%
+- V134 selective champion: 311/320 = 97.1875%
+- +2/-0 vs V128, net +2
+- selective intervention applied rows: 5/320
+- minimum V134 phase passes: 4/5
 - confirmation success: True
 - validated new champion: True
+- reserved untouched phases consumed: True
+- new tuning performed: False
 - protected 949-event candidate unchanged: True
 - production promotion allowed: False
 
 Authoritative files:
-- `public/gomyway-3676-patch-rhythm24-v127-guarded-v122-reserved-7mod16-over1024-confirmation-v128.json`
-- `public/gomyway-3676-patch-rhythm24-v127-guarded-v122-reserved-7mod16-over1024-confirmation-v128-manifest.json`
+- `public/gomyway-3676-patch-rhythm24-v133-conjunction-guard-reserved-9mod16-over1024-confirmation-v134.json`
+- `public/gomyway-3676-patch-rhythm24-v133-conjunction-guard-reserved-9mod16-over1024-confirmation-v134-manifest.json`
 
-V122/V124 and V127/V128 are frozen. Do not modify them in place.
+V133/V134 are now frozen. Do not modify them in place.
 
-## Post-V128 exposed development: V129–V133
+## Motivating validated-score milestones
 
-All work below uses already-consumed V128 and older consumed V116 data only. None of it is fresh confirmation.
+These percentages are fresh-confirmed validated checkpoints, not exposed-development ceilings:
+- V118/V119 era: 291/320 on the later V124 comparison family = 90.9375% baseline reference
+- V122/V124: 308/320 = 96.2500%
+- V127/V128: 309/320 = 96.5625%
+- V133/V134: 311/320 = 97.1875% — CURRENT VALIDATED CHAMPION
+
+Current fresh-family error count: 9/320.
+
+## Post-V128 exposed development leading to V134
 
 ### V129
 - V128 failure anatomy on 11 remaining failures.
-- No new reserve referenced.
+- No fresh reserve referenced.
 
 ### V130
 - Representation rescue ceiling on the 11 exposed failures:
@@ -84,13 +102,13 @@ All work below uses already-consumed V128 and older consumed V116 data only. Non
 - No whole structural-group switch was positive:
   - best intervention: +2/-2 net 0
   - next: +2/-3 net -1
-- Therefore broad structural replacement is rejected.
+- Therefore broad structural replacement was rejected.
 
 ### V132
 - Near-neutral intervention selectivity anatomy.
 - For target `anchor / keep-anchor / r4 / lambda1`, candidate `v112_interactions`:
-  - 2 gains cluster at early phase and stronger-negative gate score
-  - 3 losses cluster at late phase and weaker gate score
+  - 2 gains clustered at early phase and stronger-negative gate score
+  - 3 losses clustered at late phase and weaker gate score
 - No guard chosen by V132.
 
 ### V133 corroborative selective-guard test
@@ -99,7 +117,7 @@ Target structural key:
 - anchor / keep-anchor / r4 / lambda1
 
 Candidate representation:
-- `v112_interactions` instead of frozen V128 final choice for selected rows
+- `v112_interactions`
 
 Three selectors were evaluated on consumed V128 and reverse-validated on consumed V116:
 
@@ -113,36 +131,37 @@ Three selectors were evaluated on consumed V128 and reverse-validated on consume
    - consumed V128: 309 -> 311, +2/-0, applied 6
    - reverse V116: 309 -> 311, +2/-0, applied 6
 
-V133 chose no selector. For the next frozen challenger, choose the **conjunction** because it reproduces the full +2/-0 benefit on both exposed families while modifying the fewest rows (6), making it the most conservative of the equally successful selectors.
+The conjunction was frozen for V134 because it reproduced the full +2/-0 benefit on both exposed families while modifying the fewest rows.
 
-## Next untouched reserve — PREDECLARED BEFORE V129 INTERPRETATION
+## Consumed fresh confirmation families
 
-`phase_k = (9 + 16*k) / 1024`, for `k = 0..63`.
+The following are permanently exposed/consumed and must never be reused as fresh confirmation:
+- 1-mod-16-over-1024
+- 3-mod-16-over-1024
+- 5-mod-16-over-1024
+- 7-mod-16-over-1024
+- 9-mod-16-over-1024
 
-This is the 64-phase numerators-9-mod-16-over-1024 family, disjoint from consumed 1-, 3-, 5-, and 7-mod-16 families.
+## Next untouched reserve — PREDECLARED BEFORE V134 FAILURE INTERPRETATION
 
-It remains untouched through V133. Do not inspect or reference it outside the frozen V134 confirmation.
+`phase_k = (11 + 16*k) / 1024`, for `k = 0..63`.
 
-## CURRENT NEXT STEP — V134 fresh confirmation
+This is the 64-phase numerators-11-mod-16-over-1024 family, disjoint from all consumed 1-, 3-, 5-, 7-, and 9-mod-16 families.
 
-Freeze the current validated V128 architecture plus exactly one additional selective intervention:
+It is now sealed. Do not inspect or reference it during V135+ diagnosis/development. It may be consumed only by a future fully frozen confirmation challenger.
 
-- target key: anchor / keep-anchor / r4 / lambda1
-- candidate representation: `v112_interactions`
-- selector: `gateScore <= -5.4 AND phase < 0.5`
-- otherwise retain frozen V128 behavior unchanged
+## CURRENT NEXT STEP — V135 anatomy only
 
-V134 may consume the predeclared 9-mod-16-over-1024 reserve exactly once.
+V134 is frozen and preserved. The 11-mod-16 reserve was declared before interpreting its remaining 9 failures.
 
-Predeclared validation gate:
-- V134 passes > frozen V128 baseline passes on the same fresh family
-- gains vs V128 > losses vs V128
-- minimum V134 phase passes >= 3/5
-- protected candidate unchanged
-- no tuning after held-out evaluation begins
-- production promotion remains false
+V135 should inspect only the already-exposed V134 result and characterize the 9 remaining failures. It must not:
+- reference the 11-mod-16 reserve,
+- perform production tuning,
+- alter V133/V134,
+- modify the protected 949-event candidate,
+- permit production promotion.
 
-If the gate passes, V134 may set `validatedNewChampion = true`. If it fails, V128 remains champion and the V134 family is permanently consumed/exposed.
+The goal is to determine whether the 9 remaining failures are shared hard failures, representation-rescuable failures, or candidates for another conservative pre-held-out selector.
 
 ## Recovery commands
 
@@ -162,9 +181,9 @@ Continue my GOMYWAY / Jimmy Paige rhythm24 calibration workflow from GitHub.
 Repo: dadrockyt-sys/dadrock-tabs-android
 Branch: jimmy-paige-v8-targeted-rhythm-corrections
 Read analyzer/WORKFLOW_RECOVERY_CHECKPOINT.md first and treat it as the source of truth.
-Current validated champion: frozen V122 + V127 guard, confirmed by V128 at 309/320 = 96.5625%.
-V129-V133 are exposed development/reverse-validation only.
-V133 showed three equally successful +2/-0 selectors on consumed V128 and reverse V116; the frozen V134 challenger uses the conservative conjunction gateScore <= -5.4 AND phase < 0.5 because it applies to only 6 rows on each exposed family.
-The untouched 9-mod-16-over-1024 reserve was predeclared before V129 and remains sealed until V134.
-Preserve frozen V17, V122/V124, V127/V128, protected 949-event candidate, leakage rules, and production-promotion=false.
+Current validated champion: frozen V128 architecture + V133 conjunction selector, confirmed by V134 at 311/320 = 97.1875%.
+V134 fresh 9-mod-16 confirmation: +2/-0 vs V128, minimum phase passes 4/5, validatedNewChampion=True.
+The 9-mod-16 family is consumed. The next untouched reserve, 11-mod-16-over-1024, was predeclared before V134 failure interpretation and must remain sealed during V135+ development.
+Preserve frozen V17, V122/V124, V127/V128, V133/V134, protected 949-event candidate, leakage rules, and production-promotion=false.
+Immediate next step: V135 anatomy-only on the 9 remaining exposed V134 failures.
 ```
