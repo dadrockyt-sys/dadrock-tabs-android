@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 111,
+  "profileType": "low-band-cross-source-fallback-to-v28-utility-diagnostic",
+  "summary": {
+    "rows": 280,
+    "v96Passes": 247,
+    "v28Passes": 238,
+    "beneficialFallbackRows": 0,
+    "harmfulFallbackRows": 9,
+    "bothPassRows": 238,
+    "bothFailRows": 33,
+    "crossSourceTransfers": [
+      {
+        "trainSource": "v56_exposed_120",
+        "testSource": "v57_exposed_160",
+        "trainRows": 120,
+        "trainBeneficial": 0,
+        "testRows": 160,
+        "testBeneficial": 0,
+        "testAUCForBeneficialFallback": 0.5
+      },
+      {
+        "trainSource": "v57_exposed_160",
+        "testSource": "v56_exposed_120",
+        "trainRows": 160,
+        "trainBeneficial": 0,
+        "testRows": 120,
+        "testBeneficial": 0,
+        "testAUCForBeneficialFallback": 0.5
+      }
+    ],
+    "pooledCrossSourceAUCForBeneficialFallback": 0.5,
+    "fixedTopKDiagnostics": [
+      {
+        "topK": 5,
+        "beneficialFallbacks": 0,
+        "harmfulFallbacks": 1,
+        "netDeltaVsV96": -1,
+        "hybridPasses": 246,
+        "hybridScorePercent": 87.8571,
+        "precisionBeneficial": 0.0
+      },
+      {
+        "topK": 10,
+        "beneficialFallbacks": 0,
+        "harmfulFallbacks": 1,
+        "netDeltaVsV96": -1,
+        "hybridPasses": 246,
+        "hybridScorePercent": 87.8571,
+        "precisionBeneficial": 0.0
+      },
+      {
+        "topK": 20,
+        "beneficialFallbacks": 0,
+        "harmfulFallbacks": 1,
+        "netDeltaVsV96": -1,
+        "hybridPasses": 246,
+        "hybridScorePercent": 87.8571,
+        "precisionBeneficial": 0.0
+      },
+      {
+        "topK": 40,
+        "beneficialFallbacks": 0,
+        "harmfulFallbacks": 2,
+        "netDeltaVsV96": -2,
+        "hybridPasses": 245,
+        "hybridScorePercent": 87.5,
+        "precisionBeneficial": 0.0
+      },
+      {
+        "topK": 80,
+        "beneficialFallbacks": 0,
+        "harmfulFallbacks": 3,
+        "netDeltaVsV96": -3,
+        "hybridPasses": 244,
+        "hybridScorePercent": 87.1429,
+        "precisionBeneficial": 0.0
+      }
+    ],
+    "perfectFallbackToV28OraclePasses": 247,
+    "perfectFallbackToV28OracleScorePercent": 88.2143
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "crossSourceOutcomeLabelsUsedForDiagnosisOnly": true,
+  "thresholdOrGuardChosen": false,
+  "newProductionTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
