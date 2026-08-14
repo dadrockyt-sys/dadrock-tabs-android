@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 120,
+  "profileType": "post-v119-v118-failure-anatomy-diagnostic",
+  "summary": {
+    "foldsTotal": 320,
+    "v118Passes": 293,
+    "v118Failures": 27,
+    "v118ScorePercent": 91.5625,
+    "failuresWhereV96Passed": 0,
+    "failuresWhereV115Passed": 0,
+    "failuresWhereV28Passed": 0,
+    "failuresSelectedForV112": 5,
+    "failuresNotSelectedForV112": 22,
+    "bottleneckPhase": 0.7060546875,
+    "bottleneckPasses": 3,
+    "bottleneckFailures": 2
+  },
+  "failureCountsByQBucket": {
+    "tight": 8,
+    "anchor": 17,
+    "broad": 2
+  },
+  "failureCountsByDecision": {
+    "revert-tight-to-anchor-low-dispersion": 6,
+    "keep-anchor": 17,
+    "keep-tight-high-dispersion": 2,
+    "keep-broad-low-dispersion": 1,
+    "revert-broad-to-anchor-high-dispersion": 1
+  },
+  "failureCountsByPairRadius": {
+    "4": 19,
+    "8": 7,
+    "2": 1
+  },
+  "failureCountsByLambda": {
+    "100.0": 11,
+    "1.0": 16
+  },
+  "failureCountsBySelectedForV112": {
+    "False": 22,
+    "True": 5
+  },
+  "failureCountsByRepresentation": {
+    "cosine-only": 8,
+    "full-v17-fallback": 19
+  },
+  "failureSignatures": [
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "representation": "full-v17-fallback",
+      "rows": 26,
+      "failures": 5,
+      "passes": 21,
+      "failureRate": 0.192308,
+      "liftVsOverallFailureRate": 2.279
+    },
+    {
+      "originalQBucket": "tight",
+      "v96Decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "representation": "cosine-only",
+      "rows": 12,
+      "failures": 4,
+      "passes": 8,
+      "failureRate": 0.333333,
+      "liftVsOverallFailureRate": 3.951
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "selectedForV112": false,
+      "representation": "full-v17-fallback",
+      "rows": 33,
+      "failures": 4,
+      "passes": 29,
+      "failureRate": 0.121212,
+      "liftVsOverallFailureRate": 1.437
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "selectedForV112": false,
+      "representation": "full-v17-fallback",
+      "rows": 16,
+      "failures": 3,
+      "passes": 13,
+      "failureRate": 0.1875,
+      "liftVsOverallFailureRate": 2.222
+    },
+    {
+      "originalQBucket": "tight",
+      "v96Decision": "keep-tight-high-dispersion",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "representation": "cosine-only",
+      "rows": 6,
+      "failures": 2,
+      "passes": 4,
+      "failureRate": 0.333333,
+      "liftVsOverallFailureRate": 3.951
+    },
+    {
+      "originalQBucket": "tight",
+      "v96Decision": "revert-tight-to-anchor-low-dispersion",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "selectedForV112": false,
+      "representation": "cosine-only",
+      "rows": 7,
+      "failures": 2,
+      "passes": 5,
+      "failureRate": 0.285714,
+      "liftVsOverallFailureRate": 3.386
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "selectedForV112": true,
+      "representation": "full-v17-fallback",
+      "rows": 10,
+      "failures": 2,
+      "passes": 8,
+      "failureRate": 0.2,
+      "liftVsOverallFailureRate": 2.37
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "selectedForV112": true,
+      "representation": "full-v17-fallback",
+      "rows": 16,
+      "failures": 2,
+      "passes": 14,
+      "failureRate": 0.125,
+      "liftVsOverallFailureRate": 1.481
+    },
+    {
+      "originalQBucket": "broad",
+      "v96Decision": "revert-broad-to-anchor-high-dispersion",
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "selectedForV112": true,
+      "representation": "full-v17-fallback",
+      "rows": 3,
+      "failures": 1,
+      "passes": 2,
+      "failureRate": 0.333333,
+      "liftVsOverallFailureRate": 3.951
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "representation": "full-v17-fallback",
+      "rows": 11,
+      "failures": 1,
+      "passes": 10,
+      "failureRate": 0.090909,
+      "liftVsOverallFailureRate": 1.077
+    },
+    {
+      "originalQBucket": "broad",
+      "v96Decision": "keep-broad-low-dispersion",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "selectedForV112": false,
+      "representation": "full-v17-fallback",
+      "rows": 12,
+      "failures": 1,
+      "passes": 11,
+      "failureRate": 0.083333,
+      "liftVsOverallFailureRate": 0.988
+    }
+  ],
+  "heldoutLabelsUsedForDiagnosisOnly": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "candidatePolicyChanged": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
