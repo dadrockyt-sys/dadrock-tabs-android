@@ -1,0 +1,31 @@
+{
+  "exam": "Jimmy PAIge V134 Mid-Term 113",
+  "createdUtc": "2026-08-14T23:27:34.886652+00:00",
+  "audioPath": "public/jimmy-paige-midterm-v1/gomyway-midterm-source.m4a",
+  "audioSha256": "c187bead44529d38544b8452f57328aaf17ce606f08217b78e3157c648392481",
+  "ffprobe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2
+      },
+      {
+        "codec_name": "mjpeg"
+      }
+    ],
+    "format": {
+      "duration": "210.674649",
+      "size": "3464988"
+    }
+  },
+  "requiredMeasures": 113,
+  "championFrozen": "V133/V134",
+  "validatedChampionScore": "311/320 = 97.1875%",
+  "blindGeneration": true,
+  "professionalReferenceAllowedDuringGeneration": false,
+  "professionalReferenceAllowedOnlyAfterSubmissionHash": true,
+  "sealedCalibrationReserveTouched": false,
+  "productionPromotionAllowed": false
+}
