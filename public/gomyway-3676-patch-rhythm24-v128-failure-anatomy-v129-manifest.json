@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 129,
+  "profileType": "v128-guarded-champion-failure-anatomy-diagnostic",
+  "summary": {
+    "foldsTotal": 320,
+    "v128Passes": 309,
+    "v128ScorePercent": 96.5625,
+    "failureCount": 11,
+    "failuresWhereV122Passed": 0,
+    "failuresWhereV118Passed": 0,
+    "failuresWhereV96Passed": 0,
+    "failuresWhereV28Passed": 0,
+    "sharedHardFailuresVsV122": 11,
+    "sharedHardFailuresVsV118": 11,
+    "failuresInsideStructuralPolicy": 8,
+    "failuresOutsideStructuralPolicy": 3,
+    "failuresWhereV127GuardApplied": 0,
+    "failuresWhereV127GuardNotApplied": 11,
+    "failuresSelectedForV112": 0,
+    "failuresNotSelectedForV112": 11,
+    "bottleneckPhases": [
+      0.0224609375,
+      0.0380859375,
+      0.1005859375,
+      0.1162109375,
+      0.2099609375,
+      0.2255859375,
+      0.2724609375,
+      0.3193359375,
+      0.7724609375,
+      0.9443359375,
+      0.9599609375
+    ],
+    "bottleneckFailureRows": 11
+  },
+  "failureCountsByRepresentation": {
+    "full_phase": 3,
+    "cosine": 4,
+    "v112_interactions": 4
+  },
+  "failureCountsByPhase": {
+    "0.0224609375": 1,
+    "0.0380859375": 1,
+    "0.1005859375": 1,
+    "0.1162109375": 1,
+    "0.2099609375": 1,
+    "0.2255859375": 1,
+    "0.2724609375": 1,
+    "0.3193359375": 1,
+    "0.7724609375": 1,
+    "0.9443359375": 1,
+    "0.9599609375": 1
+  },
+  "topFailureStructuralSignatures": [
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "rows": 42,
+      "passes": 38,
+      "failures": 4,
+      "failureRate": 0.095238
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "rows": 44,
+      "passes": 40,
+      "failures": 4,
+      "failureRate": 0.090909
+    },
+    {
+      "originalQBucket": "anchor",
+      "v96Decision": "keep-anchor",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "rows": 14,
+      "passes": 12,
+      "failures": 2,
+      "failureRate": 0.142857
+    },
+    {
+      "originalQBucket": "broad",
+      "v96Decision": "keep-broad-low-dispersion",
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "rows": 11,
+      "passes": 10,
+      "failures": 1,
+      "failureRate": 0.090909
+    }
+  ],
+  "heldoutLabelsUsedForDiagnosisOnly": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "candidatePolicyChanged": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
