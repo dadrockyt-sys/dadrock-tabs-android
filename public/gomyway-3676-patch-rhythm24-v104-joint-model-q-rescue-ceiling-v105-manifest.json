@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 105,
+  "profileType": "fixed-cosine-joint-model-q-rescue-ceiling-on-old-exposed-v56-v57",
+  "summary": {
+    "rows": 280,
+    "v28Passes": 238,
+    "v96Passes": 247,
+    "v96ScorePercent": 88.2143,
+    "modelGrid": [
+      {
+        "pairRadius": 2,
+        "lambda": 1.0
+      },
+      {
+        "pairRadius": 2,
+        "lambda": 10.0
+      },
+      {
+        "pairRadius": 2,
+        "lambda": 100.0
+      },
+      {
+        "pairRadius": 4,
+        "lambda": 1.0
+      },
+      {
+        "pairRadius": 4,
+        "lambda": 10.0
+      },
+      {
+        "pairRadius": 4,
+        "lambda": 100.0
+      },
+      {
+        "pairRadius": 8,
+        "lambda": 1.0
+      },
+      {
+        "pairRadius": 8,
+        "lambda": 10.0
+      },
+      {
+        "pairRadius": 8,
+        "lambda": 100.0
+      }
+    ],
+    "qGrid": [
+      0.05,
+      0.075,
+      0.1,
+      0.125,
+      0.15,
+      0.175,
+      0.2,
+      0.225,
+      0.25,
+      0.275,
+      0.3,
+      0.325,
+      0.35,
+      0.375,
+      0.4
+    ],
+    "topFixedModelQCounterfactuals": {
+      "r2_lambda100_q0.250": {
+        "pairRadius": 2,
+        "lambda": 100.0,
+        "q": 0.25,
+        "passes": 249,
+        "gainsVsV96": 9,
+        "lossesVsV96": 7,
+        "rescuesVsV28": 17,
+        "regressionsVsV28": 6,
+        "rescuesOfV96Failures": 9,
+        "scorePercent": 88.9286,
+        "netVsV96": 2
+      },
+      "r8_lambda100_q0.125": {
+        "pairRadius": 8,
+        "lambda": 100.0,
+        "q": 0.125,
+        "passes": 248,
+        "gainsVsV96": 9,
+        "lossesVsV96": 8,
+        "rescuesVsV28": 18,
+        "regressionsVsV28": 8,
+        "rescuesOfV96Failures": 9,
+        "scorePercent": 88.5714,
+        "netVsV96": 1
+      },
+      "r2_lambda10_q0.225": {
+        "pairRadius": 2,
+        "lambda": 10.0,
+        "q": 0.225,
+        "passes": 247,
+        "gainsVsV96": 8,
+        "lossesVsV96": 8,
+        "rescuesVsV28": 16,
+        "regressionsVsV28": 7,
+        "rescuesOfV96Failures": 8,
+        "scorePercent": 88.2143,
+        "netVsV96": 0
+      },
+      "r2_lambda1_q0.225": {
+        "pairRadius": 2,
+        "lambda": 1.0,
+        "q": 0.225,
+        "passes": 247,
+        "gainsVsV96": 8,
+        "lossesVsV96": 8,
+        "rescuesVsV28": 16,
+        "regressionsVsV28": 7,
+        "rescuesOfV96Failures": 8,
+        "scorePercent": 88.2143,
+        "netVsV96": 0
+      },
+      "r2_lambda10_q0.250": {
+        "pairRadius": 2,
+        "lambda": 10.0,
+        "q": 0.25,
+        "passes": 247,
+        "gainsVsV96": 9,
+        "lossesVsV96": 9,
+        "rescuesVsV28": 17,
+        "regressionsVsV28": 8,
+        "rescuesOfV96Failures": 9,
+        "scorePercent": 88.2143,
+        "netVsV96": 0
+      },
+      "r2_lambda1_q0.250": {
+        "pairRadius": 2,
+        "lambda": 1.0,
+        "q": 0.25,
+        "passes": 247,
+        "gainsVsV96": 9,
+        "lossesVsV96": 9,
+        "rescuesVsV28": 17,
+        "regressionsVsV28": 8,
+        "rescuesOfV96Failures": 9,
+        "scorePercent": 88.2143,
+        "netVsV96": 0
+      },
+      "r2_lambda100_q0.225": {
+        "pairRadius": 2,
+        "lambda": 100.0,
+        "q": 0.225,
+        "passes": 246,
+        "gainsVsV96": 8,
+        "lossesVsV96": 9,
+        "rescuesVsV28": 16,
+        "regressionsVsV28": 8,
+        "rescuesOfV96Failures": 8,
+        "scorePercent": 87.8571,
+        "netVsV96": -1
+      },
+      "r8_lambda10_q0.125": {
+        "pairRadius": 8,
+        "lambda": 10.0,
+        "q": 0.125,
+        "passes": 246,
+        "gainsVsV96": 9,
+        "lossesVsV96": 10,
+        "rescuesVsV28": 18,
+        "regressionsVsV28": 10,
+        "rescuesOfV96Failures": 9,
+        "scorePercent": 87.8571,
+        "netVsV96": -1
+      },
+      "r8_lambda1_q0.125": {
+        "pairRadius": 8,
+        "lambda": 1.0,
+        "q": 0.125,
+        "passes": 246,
+        "gainsVsV96": 9,
+        "lossesVsV96": 10,
+        "rescuesVsV28": 18,
+        "regressionsVsV28": 10,
+        "rescuesOfV96Failures": 9,
+        "scorePercent": 87.8571,
+        "netVsV96": -1
+      },
+      "r4_lambda100_q0.225": {
+        "pairRadius": 4,
+        "lambda": 100.0,
+        "q": 0.225,
+        "passes": 245,
+        "gainsVsV96": 3,
+        "lossesVsV96": 5,
+        "rescuesVsV28": 12,
+        "regressionsVsV28": 5,
+        "rescuesOfV96Failures": 3,
+        "scorePercent": 87.5,
+        "netVsV96": -2
+      },
+      "r4_lambda100_q0.200": {
+        "pairRadius": 4,
+        "lambda": 100.0,
+        "q": 0.2,
+        "passes": 244,
+        "gainsVsV96": 2,
+        "lossesVsV96": 5,
+        "rescuesVsV28": 10,
+        "regressionsVsV28": 4,
+        "rescuesOfV96Failures": 2,
+        "scorePercent": 87.1429,
+        "netVsV96": -3
+      },
+      "r2_lambda100_q0.200": {
+        "pairRadius": 2,
+        "lambda": 100.0,
+        "q": 0.2,
+        "passes": 244,
+        "gainsVsV96": 7,
+        "lossesVsV96": 10,
+        "rescuesVsV28": 14,
+        "regressionsVsV28": 8,
+        "rescuesOfV96Failures": 7,
+        "scorePercent": 87.1429,
+        "netVsV96": -3
+      },
+      "r4_lambda10_q0.200": {
+        "pairRadius": 4,
+        "lambda": 10.0,
+        "q": 0.2,
+        "passes": 243,
+        "gainsVsV96": 2,
+        "lossesVsV96": 6,
+        "rescuesVsV28": 10,
+        "regressionsVsV28": 5,
+        "rescuesOfV96Failures": 2,
+        "scorePercent": 86.7857,
+        "netVsV96": -4
+      },
+      "r4_lambda1_q0.200": {
+        "pairRadius": 4,
+        "lambda": 1.0,
+        "q": 0.2,
+        "passes": 243,
+        "gainsVsV96": 2,
+        "lossesVsV96": 6,
+        "rescuesVsV28": 10,
+        "regressionsVsV28": 5,
+        "rescuesOfV96Failures": 2,
+        "scorePercent": 86.7857,
+        "netVsV96": -4
+      },
+      "r4_lambda10_q0.225": {
+        "pairRadius": 4,
+        "lambda": 10.0,
+        "q": 0.225,
+        "passes": 243,
+        "gainsVsV96": 3,
+        "lossesVsV96": 7,
+        "rescuesVsV28": 12,
+        "regressionsVsV28": 7,
+        "rescuesOfV96Failures": 3,
+        "scorePercent": 86.7857,
+        "netVsV96": -4
+      }
+    },
+    "perfectPerFoldJointModelQOraclePasses": 259,
+    "perfectPerFoldJointModelQOracleScorePercent": 92.5,
+    "oracleRescuesOfV96Failures": 12,
+    "v96FailuresNotRescuedByAnyModelQCombination": 21
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "diagnosticJointModelQGridEnumerated": true,
+  "diagnosticOutcomesTaintedForFutureSelection": true,
+  "newProductionTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
