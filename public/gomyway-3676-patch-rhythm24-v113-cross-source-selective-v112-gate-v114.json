@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 114,
+  "profileType": "cross-source-training-context-selective-v112-gate-diagnostic",
+  "summary": {
+    "rows": 280,
+    "v112GainsVsV96": 6,
+    "v112LossesVsV96": 7,
+    "changedRows": 13,
+    "predeclaredTrainingContextFeatures": [
+      "trainMean:mean::lowBurst",
+      "trainStd:mean::lowBurst",
+      "trainMean:mean::lowRise",
+      "trainStd:mean::lowRise",
+      "trainMean:mean::lowDecay30",
+      "trainStd:mean::lowDecay30",
+      "trainMean:mean::lowPostSlope",
+      "trainStd:mean::lowPostSlope",
+      "trainMean:mean::lowBurst*p2sin",
+      "trainStd:mean::lowBurst*p2sin",
+      "trainMean:mean::lowBurst*p2cos",
+      "trainStd:mean::lowBurst*p2cos",
+      "trainMean:mean::lowBurst*p4sin",
+      "trainStd:mean::lowBurst*p4sin",
+      "trainMean:mean::lowBurst*p4cos",
+      "trainStd:mean::lowBurst*p4cos",
+      "trainMean:mean::lowRise*p2sin",
+      "trainStd:mean::lowRise*p2sin",
+      "trainMean:mean::lowRise*p2cos",
+      "trainStd:mean::lowRise*p2cos",
+      "trainMean:mean::lowRise*p4sin",
+      "trainStd:mean::lowRise*p4sin",
+      "trainMean:mean::lowRise*p4cos",
+      "trainStd:mean::lowRise*p4cos",
+      "trainMean:mean::lowDecay30*p2sin",
+      "trainStd:mean::lowDecay30*p2sin",
+      "trainMean:mean::lowDecay30*p2cos",
+      "trainStd:mean::lowDecay30*p2cos",
+      "trainMean:mean::lowDecay30*p4sin",
+      "trainStd:mean::lowDecay30*p4sin",
+      "trainMean:mean::lowDecay30*p4cos",
+      "trainStd:mean::lowDecay30*p4cos",
+      "trainMean:mean::lowPostSlope*p2sin",
+      "trainStd:mean::lowPostSlope*p2sin",
+      "trainMean:mean::lowPostSlope*p2cos",
+      "trainStd:mean::lowPostSlope*p2cos",
+      "trainMean:mean::lowPostSlope*p4sin",
+      "trainStd:mean::lowPostSlope*p4sin",
+      "trainMean:mean::lowPostSlope*p4cos",
+      "trainStd:mean::lowPostSlope*p4cos"
+    ],
+    "crossSourceTransfers": [
+      {
+        "trainSource": "v56_exposed_120",
+        "testSource": "v57_exposed_160",
+        "trainRows": 120,
+        "trainGains": 3,
+        "trainLosses": 3,
+        "testRows": 160,
+        "testGains": 3,
+        "testLosses": 4,
+        "testGainAUC": 0.912951
+      },
+      {
+        "trainSource": "v57_exposed_160",
+        "testSource": "v56_exposed_120",
+        "trainRows": 160,
+        "trainGains": 3,
+        "trainLosses": 4,
+        "testRows": 120,
+        "testGains": 3,
+        "testLosses": 3,
+        "testGainAUC": 0.931624
+      }
+    ],
+    "pooledCrossSourceGainAUCAllRows": 0.911192,
+    "pooledCrossSourceGainVsLossAUCChangedRows": 0.833333,
+    "fixedTopKUtilityDiagnostics": [
+      {
+        "topK": 5,
+        "gainsCaptured": 1,
+        "lossesCaptured": 1,
+        "netChangedOutcomeUtility": 0,
+        "precisionAmongChanged": 0.5
+      },
+      {
+        "topK": 10,
+        "gainsCaptured": 1,
+        "lossesCaptured": 1,
+        "netChangedOutcomeUtility": 0,
+        "precisionAmongChanged": 0.5
+      },
+      {
+        "topK": 20,
+        "gainsCaptured": 2,
+        "lossesCaptured": 1,
+        "netChangedOutcomeUtility": 1,
+        "precisionAmongChanged": 0.666667
+      },
+      {
+        "topK": 40,
+        "gainsCaptured": 4,
+        "lossesCaptured": 2,
+        "netChangedOutcomeUtility": 2,
+        "precisionAmongChanged": 0.666667
+      },
+      {
+        "topK": 80,
+        "gainsCaptured": 6,
+        "lossesCaptured": 2,
+        "netChangedOutcomeUtility": 4,
+        "precisionAmongChanged": 0.75
+      }
+    ]
+  },
+  "usesSavedV112OutcomesOnlyOnPreviouslyExposedV56V57": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "heldoutOutcomeChangesUsedOnlyAsCrossSourceDiagnosticLabels": true,
+  "thresholdOrGateChosen": false,
+  "newProductionTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
