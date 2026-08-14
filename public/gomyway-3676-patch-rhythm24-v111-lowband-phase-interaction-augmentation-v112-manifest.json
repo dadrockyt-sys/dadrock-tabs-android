@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 112,
+  "profileType": "lowband-envelope-by-rhythmic-phase-interaction-augmentation-on-old-exposed-v56-v57",
+  "summary": {
+    "foldsTotal": 280,
+    "v28Passes": 238,
+    "v96Passes": 247,
+    "v112Passes": 246,
+    "v96ScorePercent": 88.2143,
+    "v112ScorePercent": 87.8571,
+    "gainsVsV96": 6,
+    "lossesVsV96": 7,
+    "netVsV96": -1,
+    "v112RescuesVsV28": 13,
+    "v112RegressionsVsV28": 5,
+    "rescuesOfV96Failures": 6,
+    "predeclaredLowbandFeatures": [
+      "mean::lowBurst",
+      "mean::lowRise",
+      "mean::lowDecay30",
+      "mean::lowPostSlope"
+    ],
+    "phaseFeatures": [
+      "p2sin",
+      "p2cos",
+      "p4sin",
+      "p4cos"
+    ],
+    "derivedInteractionFeatures": [
+      "mean::lowBurst*p2sin",
+      "mean::lowBurst*p2cos",
+      "mean::lowBurst*p4sin",
+      "mean::lowBurst*p4cos",
+      "mean::lowRise*p2sin",
+      "mean::lowRise*p2cos",
+      "mean::lowRise*p4sin",
+      "mean::lowRise*p4cos",
+      "mean::lowDecay30*p2sin",
+      "mean::lowDecay30*p2cos",
+      "mean::lowDecay30*p4sin",
+      "mean::lowDecay30*p4cos",
+      "mean::lowPostSlope*p2sin",
+      "mean::lowPostSlope*p2cos",
+      "mean::lowPostSlope*p4sin",
+      "mean::lowPostSlope*p4cos"
+    ],
+    "sourceSummaries": [
+      {
+        "source": "v56_exposed_120",
+        "foldsTotal": 120,
+        "v28Passes": 101,
+        "v96Passes": 105,
+        "v112Passes": 105,
+        "gainsVsV96": 3,
+        "lossesVsV96": 3,
+        "rescuesVsV28": 6,
+        "regressionsVsV28": 2,
+        "rescuesOfV96Failures": 3,
+        "v96ScorePercent": 87.5,
+        "v112ScorePercent": 87.5
+      },
+      {
+        "source": "v57_exposed_160",
+        "foldsTotal": 160,
+        "v28Passes": 137,
+        "v96Passes": 142,
+        "v112Passes": 141,
+        "gainsVsV96": 3,
+        "lossesVsV96": 4,
+        "rescuesVsV28": 7,
+        "regressionsVsV28": 3,
+        "rescuesOfV96Failures": 3,
+        "v96ScorePercent": 88.75,
+        "v112ScorePercent": 88.125
+      }
+    ]
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "v107DiagnosisMotivatedLowbandFamily": true,
+  "v108HarmfulLowbandOnlyNonlinearTermsExcluded": true,
+  "diagnosticOutcomesTaintedForFutureSelection": true,
+  "newProductionTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
