@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 100,
+  "output": "public/gomyway-3676-patch-rhythm24-v99-structural-support-v100.json",
+  "candidateStructuralSupport": {
+    "tight_lambda100": {
+      "rows": 18,
+      "failures": 2,
+      "failureRate": 0.111111,
+      "liftVsOverallFailureRate": 0.943,
+      "rescuesVsV28": 2,
+      "regressionsVsV28": 0,
+      "bothPass": 14,
+      "bothFail": 2
+    },
+    "tight_r4_lambda100": {
+      "rows": 13,
+      "failures": 2,
+      "failureRate": 0.153846,
+      "liftVsOverallFailureRate": 1.305,
+      "rescuesVsV28": 2,
+      "regressionsVsV28": 0,
+      "bothPass": 9,
+      "bothFail": 2
+    },
+    "safe_broad_strict1": {
+      "rows": 51,
+      "failures": 5,
+      "failureRate": 0.098039,
+      "liftVsOverallFailureRate": 0.832,
+      "rescuesVsV28": 2,
+      "regressionsVsV28": 0,
+      "bothPass": 44,
+      "bothFail": 5
+    },
+    "safe_broad_r4_strict1": {
+      "rows": 43,
+      "failures": 5,
+      "failureRate": 0.116279,
+      "liftVsOverallFailureRate": 0.987,
+      "rescuesVsV28": 2,
+      "regressionsVsV28": 0,
+      "bothPass": 36,
+      "bothFail": 5
+    },
+    "tight_unanimous_escape": {
+      "rows": 67,
+      "failures": 7,
+      "failureRate": 0.104478,
+      "liftVsOverallFailureRate": 0.886,
+      "rescuesVsV28": 7,
+      "regressionsVsV28": 0,
+      "bothPass": 53,
+      "bothFail": 7
+    }
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "phaseBinFromV97NotUsedForGuardSelection": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

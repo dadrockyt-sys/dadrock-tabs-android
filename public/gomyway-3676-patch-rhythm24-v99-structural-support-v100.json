@@ -1,0 +1,502 @@
+{
+  "schemaVersion": 100,
+  "profileType": "v99-motivated-structural-signatures-independent-support-on-old-exposed-v56-v57",
+  "summary": {
+    "rows": 280,
+    "v96Passes": 247,
+    "v28Passes": 238,
+    "overallFailureRate": 0.117857,
+    "byBranch": {
+      "excluded-safe-broad-r8-lambda1": {
+        "rows": 9,
+        "failures": 2,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 7,
+        "bothFail": 2,
+        "failureRate": 0.222222
+      },
+      "fallback-v28": {
+        "rows": 139,
+        "failures": 19,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 120,
+        "bothFail": 19,
+        "failureRate": 0.136691
+      },
+      "tight": {
+        "rows": 67,
+        "failures": 7,
+        "rescuesVsV28": 7,
+        "regressionsVsV28": 0,
+        "bothPass": 53,
+        "bothFail": 7,
+        "failureRate": 0.104478
+      },
+      "safe-broad": {
+        "rows": 65,
+        "failures": 5,
+        "rescuesVsV28": 2,
+        "regressionsVsV28": 0,
+        "bothPass": 58,
+        "bothFail": 5,
+        "failureRate": 0.076923
+      }
+    },
+    "byBranchLambda": {
+      "('excluded-safe-broad-r8-lambda1', 1.0)": {
+        "rows": 9,
+        "failures": 2,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 7,
+        "bothFail": 2,
+        "failureRate": 0.222222
+      },
+      "('fallback-v28', None)": {
+        "rows": 59,
+        "failures": 9,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 50,
+        "bothFail": 9,
+        "failureRate": 0.152542
+      },
+      "('fallback-v28', 100.0)": {
+        "rows": 40,
+        "failures": 6,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 34,
+        "bothFail": 6,
+        "failureRate": 0.15
+      },
+      "('fallback-v28', 1.0)": {
+        "rows": 35,
+        "failures": 4,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 31,
+        "bothFail": 4,
+        "failureRate": 0.114286
+      },
+      "('safe-broad', 1.0)": {
+        "rows": 35,
+        "failures": 4,
+        "rescuesVsV28": 2,
+        "regressionsVsV28": 0,
+        "bothPass": 29,
+        "bothFail": 4,
+        "failureRate": 0.114286
+      },
+      "('tight', 100.0)": {
+        "rows": 18,
+        "failures": 2,
+        "rescuesVsV28": 2,
+        "regressionsVsV28": 0,
+        "bothPass": 14,
+        "bothFail": 2,
+        "failureRate": 0.111111
+      },
+      "('tight', 1.0)": {
+        "rows": 47,
+        "failures": 5,
+        "rescuesVsV28": 5,
+        "regressionsVsV28": 0,
+        "bothPass": 37,
+        "bothFail": 5,
+        "failureRate": 0.106383
+      },
+      "('safe-broad', 100.0)": {
+        "rows": 26,
+        "failures": 1,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 25,
+        "bothFail": 1,
+        "failureRate": 0.038462
+      },
+      "('fallback-v28', 10.0)": {
+        "rows": 5,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 5,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('safe-broad', 10.0)": {
+        "rows": 4,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 4,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('tight', 10.0)": {
+        "rows": 2,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 2,
+        "bothFail": 0,
+        "failureRate": 0.0
+      }
+    },
+    "byBranchRadiusLambda": {
+      "('excluded-safe-broad-r8-lambda1', 8, 1.0)": {
+        "rows": 9,
+        "failures": 2,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 7,
+        "bothFail": 2,
+        "failureRate": 0.222222
+      },
+      "('fallback-v28', 8, 100.0)": {
+        "rows": 9,
+        "failures": 2,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 7,
+        "bothFail": 2,
+        "failureRate": 0.222222
+      },
+      "('tight', 4, 100.0)": {
+        "rows": 13,
+        "failures": 2,
+        "rescuesVsV28": 2,
+        "regressionsVsV28": 0,
+        "bothPass": 9,
+        "bothFail": 2,
+        "failureRate": 0.153846
+      },
+      "('fallback-v28', None, None)": {
+        "rows": 59,
+        "failures": 9,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 50,
+        "bothFail": 9,
+        "failureRate": 0.152542
+      },
+      "('fallback-v28', 4, 100.0)": {
+        "rows": 28,
+        "failures": 4,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 24,
+        "bothFail": 4,
+        "failureRate": 0.142857
+      },
+      "('fallback-v28', 2, 1.0)": {
+        "rows": 7,
+        "failures": 1,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 6,
+        "bothFail": 1,
+        "failureRate": 0.142857
+      },
+      "('safe-broad', 4, 1.0)": {
+        "rows": 30,
+        "failures": 4,
+        "rescuesVsV28": 2,
+        "regressionsVsV28": 0,
+        "bothPass": 24,
+        "bothFail": 4,
+        "failureRate": 0.133333
+      },
+      "('fallback-v28', 4, 1.0)": {
+        "rows": 24,
+        "failures": 3,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 21,
+        "bothFail": 3,
+        "failureRate": 0.125
+      },
+      "('tight', 4, 1.0)": {
+        "rows": 24,
+        "failures": 3,
+        "rescuesVsV28": 1,
+        "regressionsVsV28": 0,
+        "bothPass": 20,
+        "bothFail": 3,
+        "failureRate": 0.125
+      },
+      "('tight', 8, 1.0)": {
+        "rows": 16,
+        "failures": 2,
+        "rescuesVsV28": 4,
+        "regressionsVsV28": 0,
+        "bothPass": 10,
+        "bothFail": 2,
+        "failureRate": 0.125
+      },
+      "('safe-broad', 4, 100.0)": {
+        "rows": 18,
+        "failures": 1,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 17,
+        "bothFail": 1,
+        "failureRate": 0.055556
+      },
+      "('tight', 2, 1.0)": {
+        "rows": 7,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 7,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('safe-broad', 2, 100.0)": {
+        "rows": 6,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 6,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('safe-broad', 2, 1.0)": {
+        "rows": 5,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 5,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('fallback-v28', 8, 1.0)": {
+        "rows": 4,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 4,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('tight', 8, 100.0)": {
+        "rows": 4,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 4,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('fallback-v28', 2, 100.0)": {
+        "rows": 3,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 3,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('fallback-v28', 4, 10.0)": {
+        "rows": 2,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 2,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('fallback-v28', 8, 10.0)": {
+        "rows": 2,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 2,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('safe-broad', 4, 10.0)": {
+        "rows": 2,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 2,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('safe-broad', 8, 10.0)": {
+        "rows": 2,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 2,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('safe-broad', 8, 100.0)": {
+        "rows": 2,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 2,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('tight', 2, 10.0)": {
+        "rows": 2,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 2,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('fallback-v28', 2, 10.0)": {
+        "rows": 1,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 1,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('tight', 2, 100.0)": {
+        "rows": 1,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 1,
+        "bothFail": 0,
+        "failureRate": 0.0
+      }
+    },
+    "byBranchStrictBroadSupport": {
+      "('excluded-safe-broad-r8-lambda1', 1)": {
+        "rows": 9,
+        "failures": 2,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 7,
+        "bothFail": 2,
+        "failureRate": 0.222222
+      },
+      "('fallback-v28', 0)": {
+        "rows": 115,
+        "failures": 17,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 98,
+        "bothFail": 17,
+        "failureRate": 0.147826
+      },
+      "('fallback-v28', 1)": {
+        "rows": 18,
+        "failures": 2,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 16,
+        "bothFail": 2,
+        "failureRate": 0.111111
+      },
+      "('tight', 0)": {
+        "rows": 67,
+        "failures": 7,
+        "rescuesVsV28": 7,
+        "regressionsVsV28": 0,
+        "bothPass": 53,
+        "bothFail": 7,
+        "failureRate": 0.104478
+      },
+      "('safe-broad', 1)": {
+        "rows": 51,
+        "failures": 5,
+        "rescuesVsV28": 2,
+        "regressionsVsV28": 0,
+        "bothPass": 44,
+        "bothFail": 5,
+        "failureRate": 0.098039
+      },
+      "('safe-broad', 2)": {
+        "rows": 14,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 14,
+        "bothFail": 0,
+        "failureRate": 0.0
+      },
+      "('fallback-v28', 2)": {
+        "rows": 6,
+        "failures": 0,
+        "rescuesVsV28": 0,
+        "regressionsVsV28": 0,
+        "bothPass": 6,
+        "bothFail": 0,
+        "failureRate": 0.0
+      }
+    },
+    "candidateStructuralSupport": {
+      "tight_lambda100": {
+        "rows": 18,
+        "failures": 2,
+        "failureRate": 0.111111,
+        "liftVsOverallFailureRate": 0.943,
+        "rescuesVsV28": 2,
+        "regressionsVsV28": 0,
+        "bothPass": 14,
+        "bothFail": 2
+      },
+      "tight_r4_lambda100": {
+        "rows": 13,
+        "failures": 2,
+        "failureRate": 0.153846,
+        "liftVsOverallFailureRate": 1.305,
+        "rescuesVsV28": 2,
+        "regressionsVsV28": 0,
+        "bothPass": 9,
+        "bothFail": 2
+      },
+      "safe_broad_strict1": {
+        "rows": 51,
+        "failures": 5,
+        "failureRate": 0.098039,
+        "liftVsOverallFailureRate": 0.832,
+        "rescuesVsV28": 2,
+        "regressionsVsV28": 0,
+        "bothPass": 44,
+        "bothFail": 5
+      },
+      "safe_broad_r4_strict1": {
+        "rows": 43,
+        "failures": 5,
+        "failureRate": 0.116279,
+        "liftVsOverallFailureRate": 0.987,
+        "rescuesVsV28": 2,
+        "regressionsVsV28": 0,
+        "bothPass": 36,
+        "bothFail": 5
+      },
+      "tight_unanimous_escape": {
+        "rows": 67,
+        "failures": 7,
+        "failureRate": 0.104478,
+        "liftVsOverallFailureRate": 0.886,
+        "rescuesVsV28": 7,
+        "regressionsVsV28": 0,
+        "bothPass": 53,
+        "bothFail": 7
+      }
+    }
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "v97UsedOnlyToMotivateStructuralHypotheses": true,
+  "phaseBinFromV97NotUsedForGuardSelection": true,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
