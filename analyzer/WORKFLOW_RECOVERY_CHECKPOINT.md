@@ -15,102 +15,83 @@ Repository: `dadrockyt-sys/dadrock-tabs-android`
 7. Version every new diagnostic/challenger separately.
 8. Preserve all benchmark JSON/manifest outputs under `public/`.
 9. Never retune a policy after seeing its fresh confirmation family; derive a new version instead.
+10. Reserve the next untouched confirmation family before interpreting a consumed confirmation to design the next challenger.
 
 ## Frozen historical reference
 
-V17 remains immutable. Earlier progression V18–V114 is historical/exposed development material. Do not reinterpret any exposed family as fresh confirmation.
+V17 remains immutable. Earlier progression V18–V117 is historical/exposed development material. V115/V116 are also frozen historical validated-champion checkpoints. Do not reinterpret any exposed family as fresh confirmation.
 
-## Current validated champion — V115, confirmed by V116
+## Current validated champion — V118, confirmed by V119
 
-V115 is now frozen as the validated rhythm24 champion architecture.
+V118 is now frozen as the validated rhythm24 champion policy.
 
-Development result on the already-exposed 280-fold V56/V57 families:
-- V96 backbone: 247/280 = 88.2143%
-- V115 selective V112 policy: 251/280 = 89.6429%
-- selected for V112: 81/280
-- gains vs V96: 6
-- losses vs V96: 2
-- net vs V96: +4
-- rescues vs V28: 13
-- regressions vs V28: 0
-- gate fraction frozen before confirmation: 2/7
-
-V115 policy:
+Architecture:
 - V96 backbone remains the default behavior.
-- V112 low-band × rhythmic-phase interaction representation is applied only to the top 2/7 of folds ranked by the frozen training-context gate.
-- Gate fit uses only previously exposed V56/V57 development data.
-- Gate features: training-side low-band envelope statistics plus low-band × p2/p4 rhythmic-phase interactions.
+- Frozen V115 selective-V112 gate applies the V112 low-band × rhythmic-phase interaction representation to the top 2/7 of folds ranked by the frozen training-context gate.
+- V118 adds one frozen exclusion discovered after V116: when the selected fold has `originalQBucket=tight`, `v96Decision=revert-tight-to-anchor-low-dispersion`, `pairRadius=8`, and `lambda=1.0`, do not activate V112; fall back to V96.
+- No production promotion is allowed.
 
-### V116 fresh confirmation — SUCCESS
+### V119 fresh confirmation — SUCCESS
 
-Fresh reserved family consumed for the first time by V116:
-- 64 phases, numerators congruent to 1 mod 16 over 1024
+Fresh reserved family consumed for the first time by V119:
+- 64 phases, numerators congruent to 3 mod 16 over 1024
 - 320 folds total
 
 Result:
-- V28: 274/320 = 85.6250%
-- V96: 283/320 = 88.4375%
-- V115: 288/320 = 90.0000%
+- V28: 276/320 = 86.2500%
+- V96: 285/320 = 89.0625%
+- V115: 291/320 = 90.9375%
+- V118: 293/320 = 91.5625%
 - selected for V112 before held-out evaluation: 92/320
-- gains vs V96: 7
-- losses vs V96: 2
-- net vs V96: +5
-- rescues vs V28: 14
-- regressions vs V28: 0
-- minimum V115 phase passes: 3/5
-- minimum V96 phase passes: 3/5
-- V115 bottleneck phase: 0.7041015625
+- V118 gains vs V115: 2
+- V118 losses vs V115: 0
+- V118 net vs V115: +2
+- V118 gains vs V96: 8
+- V118 losses vs V96: 0
+- V118 net vs V96: +8
+- V118 rescues vs V28: 17
+- V118 regressions vs V28: 0
+- dangerous-signature exclusions applied: 2
+- excluded V115 gains: 0
+- excluded V115 losses: 2
+- minimum V118 phase passes: 3/5
+- bottleneck phase: 0.7060546875
 - confirmation success: True
 - validated new champion: True
 - protected 949-event candidate unchanged: True
 - candidate events modified: False
 - production promotion allowed: False
 
-Authoritative committed V116 files:
-- `public/gomyway-3676-patch-rhythm24-v115-reserved-1over1024-stride16-confirmation-v116.json`
-- `public/gomyway-3676-patch-rhythm24-v115-reserved-1over1024-stride16-confirmation-v116-manifest.json`
+Authoritative committed V119 files:
+- `public/gomyway-3676-patch-rhythm24-v118-reserved-3mod16-over1024-confirmation-v119.json`
+- `public/gomyway-3676-patch-rhythm24-v118-reserved-3mod16-over1024-confirmation-v119-manifest.json`
 
-V115/V116 are frozen. Do not modify them in place.
+V118/V119 are frozen. Do not modify them in place.
 
-## Recent committed lineage
+## Next untouched reserve — reserved BEFORE V120 interpretation
 
-- `c7e6dbaa` Record V110 low-band cross-source residual predictability
-- `d0b0694f` Add V112 low-band phase interaction diagnostic
-- `dd43d8ba` Record V111 low-band fallback utility diagnostic
-- `376b4fc7` Add V113 rescue-vs-regression anatomy diagnostic
-- `965532ce` Record V112 low-band rhythmic-phase interaction diagnostic
-- `e239e137` Add V114 cross-source selective V112 gate diagnostic
-- `514c6aeb` Record V113 V112 rescue regression anatomy
-- `f36ae504` Add V115 selective V112 top-2over7 challenger
-- `725cf972` Add V116 fixed V115 compact fresh confirmation
-- `582442a9` Record V114 cross-source selective V112 gate diagnostic
-- `2de578b2` Record regenerated V115 selective V112 challenger
-- `078c7f98` Record V116 confirmation of validated V115 champion
+Reserve the following family now, before using V119 outcomes to design another challenger:
 
-## Next untouched reserve — reserve BEFORE V117 interpretation
+`phase_k = (5 + 16*k) / 1024`, for `k = 0..63`.
 
-Reserve the following family now, before using V116 outcomes to design another challenger:
+This is the 64-phase **numerators-5-mod-16-over-1024** family. All numerators are odd, so none reduces to a /512-or-coarser dyadic phase. It is disjoint from V116's 1-mod-16 family and V119's 3-mod-16 family.
 
-`phase_k = (3 + 16*k) / 1024`, for `k = 0..63`.
+Do not inspect, evaluate, or reference this reserve in V120 or any exploratory challenger. It may be consumed only after a later architecture is frozen and earns a genuinely fresh confirmation attempt under a predeclared gate.
 
-This is the 64-phase **numerators-3-mod-16-over-1024** family. All numerators are odd, so none reduces to a /512-or-coarser dyadic phase. It is disjoint from V116's numerators-1-mod-16 family.
+## CURRENT NEXT STEP — V120 diagnostic
 
-Do not inspect, evaluate, or reference this new reserve in V117 or any exploratory challenger. It may be consumed only after a later architecture is frozen and earns a genuinely fresh confirmation attempt under a predeclared gate.
+V120 should use only the now-exposed V119 output for diagnosis. It should characterize the 27 V118 failures and the 0.7060546875 bottleneck phase without model search or new held-out evaluation. In particular:
+- summarize remaining failures by q bucket, V96 decision, pair radius, lambda, selected-for-V112 status, and final representation;
+- identify repeated structural signatures among failures;
+- compare failure signatures against pass prevalence to find high-lift but non-exclusive structural concentrations;
+- report how many failures are V96 failures, V115 failures, and V118-only failures;
+- keep the newly reserved 5-mod-16/1024 family completely untouched.
 
-## CURRENT NEXT STEP — V117 diagnostic
+V120 is anatomy only. Any rule suggested by V120 is tainted and must become a separately versioned exploratory challenger on already exposed families before it may earn the new 5-mod-16/1024 reserve.
 
-V117 should use only the now-exposed V116 confirmation output for diagnosis. It should characterize:
-- the 7 V115 gains vs V96,
-- the 2 V115 losses vs V96,
-- the 0.7041015625 bottleneck phase,
-- gate-score / chosen-model / q-bucket / decision structure of those changed folds,
-- whether the two losses share a narrow, pre-actionable signature that can later be tested on exposed data.
-
-V117 must not choose a new production threshold or gate from held-out labels. It is anatomy only. Any rule suggested by V117 is tainted and must become a separately versioned exploratory challenger on exposed families before it may earn the new 3-mod-16/1024 reserve.
-
-Safety for V117:
-- reads only already-exposed V116 output
-- must not reference the new 3-mod-16/1024 reserve
+Safety for V120:
+- reads only already-exposed V119 output
+- must not reference the new 5-mod-16/1024 reserve
 - no parameter tuning/search
 - held-out labels diagnostic only
 - no new production tuning
@@ -135,7 +116,7 @@ Continue my GOMYWAY / Jimmy Paige rhythm24 calibration workflow from GitHub.
 Repo: dadrockyt-sys/dadrock-tabs-android
 Branch: jimmy-paige-v8-targeted-rhythm-corrections
 Read analyzer/WORKFLOW_RECOVERY_CHECKPOINT.md first and treat it as the source of truth.
-V115 is frozen and validated by V116 at 288/320 = 90.0000% on a fresh family.
-Preserve frozen V17, frozen V115/V116, the protected 949-event candidate, leakage rules, the newly reserved untouched numerators-3-mod-16-over-1024 family, and production-promotion=false.
-Continue from V117 without unnecessary pauses.
+V118 is frozen and validated by V119 at 293/320 = 91.5625% on a fresh family.
+Preserve frozen V17, frozen V118/V119, the protected 949-event candidate, leakage rules, the newly reserved untouched numerators-5-mod-16-over-1024 family, and production-promotion=false.
+Continue from V120 without unnecessary pauses.
 ```
