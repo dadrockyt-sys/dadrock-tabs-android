@@ -27,7 +27,8 @@ OUTER_FOLDS = 5
 
 # Predeclared from V107's strongest residual-vs-pass distribution effects.
 # V108 does NOT tune which terms to use: this exact set is fixed before evaluation.
-LOWBAND_FEATURES = ["lowBurst", "lowRise", "lowDecay30", "lowPostSlope"]
+# The source JSON stores these aggregate feature names with the "mean::" prefix.
+LOWBAND_FEATURES = ["mean::lowBurst", "mean::lowRise", "mean::lowDecay30", "mean::lowPostSlope"]
 
 
 def sha256(path: Path) -> str:
