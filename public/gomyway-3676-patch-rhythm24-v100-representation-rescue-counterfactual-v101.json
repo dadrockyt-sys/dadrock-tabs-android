@@ -1,0 +1,4822 @@
+{
+  "schemaVersion": 101,
+  "profileType": "fixed-hyperparameter-representation-rescue-counterfactual-on-old-exposed-v56-v57",
+  "baseline": {
+    "rows": 280,
+    "v28Passes": 238,
+    "v96Passes": 247,
+    "v96Failures": 33,
+    "v96ScorePercent": 88.2143
+  },
+  "representationStats": {
+    "base": {
+      "passes": 199,
+      "gainsVsV96": 5,
+      "lossesVsV96": 53,
+      "rescuesVsV28": 7,
+      "regressionsVsV28": 46,
+      "rescuesOfV96Failures": 5,
+      "scorePercent": 71.0714,
+      "netVsV96": -48
+    },
+    "phase_col3": {
+      "passes": 217,
+      "gainsVsV96": 3,
+      "lossesVsV96": 33,
+      "rescuesVsV28": 5,
+      "regressionsVsV28": 26,
+      "rescuesOfV96Failures": 3,
+      "scorePercent": 77.5,
+      "netVsV96": -30
+    },
+    "cosine_current": {
+      "passes": 247,
+      "gainsVsV96": 0,
+      "lossesVsV96": 0,
+      "rescuesVsV28": 9,
+      "regressionsVsV28": 0,
+      "rescuesOfV96Failures": 0,
+      "scorePercent": 88.2143,
+      "netVsV96": 0
+    },
+    "full_phase": {
+      "passes": 244,
+      "gainsVsV96": 2,
+      "lossesVsV96": 5,
+      "rescuesVsV28": 6,
+      "regressionsVsV28": 0,
+      "rescuesOfV96Failures": 2,
+      "scorePercent": 87.1429,
+      "netVsV96": -3
+    }
+  },
+  "rows": [
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.0625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": true,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.0625,
+      "fold": 1,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.0625,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.0625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.0625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.1875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.1875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.1875,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.1875,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.1875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.3125,
+      "fold": 0,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": true,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.3125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.3125,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.3125,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.3125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.4375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.4375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.4375,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.4375,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.4375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.5625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.5625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.5625,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.5625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.5625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.6875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.6875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.6875,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.6875,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.6875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.8125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.8125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.8125,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.8125,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.8125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.9375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.9375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.9375,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.9375,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.9375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.03125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.03125,
+      "fold": 1,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.03125,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.03125,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.03125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.09375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.09375,
+      "fold": 1,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.09375,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.09375,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.09375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.15625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.15625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": true,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.15625,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.15625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.15625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.21875,
+      "fold": 0,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.21875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.21875,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.21875,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.21875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.28125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.28125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.28125,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.28125,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.28125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.34375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.34375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.34375,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.34375,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.34375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.40625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.40625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.40625,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.40625,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.40625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.46875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.46875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.46875,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.46875,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.46875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.53125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.53125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.53125,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.53125,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.53125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.59375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.59375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.59375,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.59375,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.59375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.65625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 10.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.65625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.65625,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.65625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.65625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.71875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.71875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.71875,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.71875,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.71875,
+      "fold": 4,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.78125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.78125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.78125,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.78125,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.78125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.84375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.84375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.84375,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.84375,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.84375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 10.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.90625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.90625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.90625,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.90625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.90625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.96875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.96875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 10.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.96875,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.96875,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": true,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v56_exposed_120",
+      "phase": 0.96875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": null,
+      "lambda": null,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.015625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.015625,
+      "fold": 1,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.015625,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.015625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.015625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.046875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.046875,
+      "fold": 1,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.046875,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.046875,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.046875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.078125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.078125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.078125,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.078125,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.078125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.109375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.109375,
+      "fold": 1,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.109375,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.109375,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.109375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.140625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.140625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.140625,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.140625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.140625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.171875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.171875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": true,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.171875,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.171875,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.171875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.203125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.203125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.203125,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.203125,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.203125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.234375,
+      "fold": 0,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.234375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.234375,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.234375,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.234375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.265625,
+      "fold": 0,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.265625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": true,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.265625,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.265625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.265625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.296875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.296875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.296875,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.296875,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.296875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.328125,
+      "fold": 0,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": true,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.328125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.328125,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.328125,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.328125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.359375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.359375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.359375,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.359375,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.359375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.390625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.390625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.390625,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.390625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.390625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 10.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.421875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.421875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.421875,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.421875,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.421875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.453125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.453125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.453125,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.453125,
+      "fold": 3,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.453125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.484375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.484375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.484375,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.484375,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.484375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 10.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.515625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.515625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.515625,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.515625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.515625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.546875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.546875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.546875,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.546875,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.546875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.578125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.578125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.578125,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.578125,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.578125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.609375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.609375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.609375,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.609375,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.609375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.640625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 10.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.640625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.640625,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.640625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.640625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.671875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.671875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.671875,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.671875,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.671875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.703125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.703125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.703125,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.703125,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.703125,
+      "fold": 4,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.734375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.734375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.734375,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.734375,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.734375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.765625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.765625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.765625,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.765625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.765625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.796875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.796875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.796875,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.796875,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.796875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.828125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.828125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.828125,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.828125,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.828125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 10.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.859375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 10.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.859375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.859375,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.859375,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 1.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.859375,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.890625,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.890625,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.890625,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.890625,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 10.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.890625,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.921875,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "revert-broad-to-anchor-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.921875,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.921875,
+      "fold": 2,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.921875,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 2,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.921875,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.953125,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.953125,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 10.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.953125,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.953125,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": true,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.953125,
+      "fold": 4,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "revert-tight-to-anchor-low-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.984375,
+      "fold": 0,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 4,
+      "lambda": 10.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.984375,
+      "fold": 1,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 100.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.984375,
+      "fold": 2,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 1.0,
+      "decision": "keep-anchor",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.984375,
+      "fold": 3,
+      "v28Passed": true,
+      "v96Passed": true,
+      "pairRadius": 8,
+      "lambda": 1.0,
+      "decision": "keep-broad-low-dispersion",
+      "excluded": true,
+      "representationPasses": {
+        "base": true,
+        "phase_col3": true,
+        "cosine_current": true,
+        "full_phase": true
+      }
+    },
+    {
+      "source": "v57_exposed_160",
+      "phase": 0.984375,
+      "fold": 4,
+      "v28Passed": false,
+      "v96Passed": false,
+      "pairRadius": 4,
+      "lambda": 100.0,
+      "decision": "keep-tight-high-dispersion",
+      "excluded": false,
+      "representationPasses": {
+        "base": false,
+        "phase_col3": false,
+        "cosine_current": false,
+        "full_phase": false
+      }
+    }
+  ],
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}

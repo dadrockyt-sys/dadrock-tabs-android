@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 101,
+  "profileType": "fixed-hyperparameter-representation-rescue-counterfactual-on-old-exposed-v56-v57",
+  "baseline": {
+    "rows": 280,
+    "v28Passes": 238,
+    "v96Passes": 247,
+    "v96Failures": 33,
+    "v96ScorePercent": 88.2143
+  },
+  "representationStats": {
+    "base": {
+      "passes": 199,
+      "gainsVsV96": 5,
+      "lossesVsV96": 53,
+      "rescuesVsV28": 7,
+      "regressionsVsV28": 46,
+      "rescuesOfV96Failures": 5,
+      "scorePercent": 71.0714,
+      "netVsV96": -48
+    },
+    "phase_col3": {
+      "passes": 217,
+      "gainsVsV96": 3,
+      "lossesVsV96": 33,
+      "rescuesVsV28": 5,
+      "regressionsVsV28": 26,
+      "rescuesOfV96Failures": 3,
+      "scorePercent": 77.5,
+      "netVsV96": -30
+    },
+    "cosine_current": {
+      "passes": 247,
+      "gainsVsV96": 0,
+      "lossesVsV96": 0,
+      "rescuesVsV28": 9,
+      "regressionsVsV28": 0,
+      "rescuesOfV96Failures": 0,
+      "scorePercent": 88.2143,
+      "netVsV96": 0
+    },
+    "full_phase": {
+      "passes": 244,
+      "gainsVsV96": 2,
+      "lossesVsV96": 5,
+      "rescuesVsV28": 6,
+      "regressionsVsV28": 0,
+      "rescuesOfV96Failures": 2,
+      "scorePercent": 87.1429,
+      "netVsV96": -3
+    }
+  },
+  "usesOnlyPreviouslyExposedV56V57Families": true,
+  "v97OpenedConfirmationUsedForOutcomeSelection": false,
+  "newReservedPhaseFamilyReferenced": false,
+  "newTuningPerformed": false,
+  "validatedNewChampion": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false
+}
