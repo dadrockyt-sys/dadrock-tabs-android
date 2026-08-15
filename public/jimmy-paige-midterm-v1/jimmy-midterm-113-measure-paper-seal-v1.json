@@ -1,0 +1,14 @@
+{
+  "sealedUtc": "2026-08-15T00:24:04.281865+00:00",
+  "paperPath": "public/jimmy-paige-midterm-v1/jimmy-midterm-113-measure-paper-v1.json",
+  "paperSha256": "a07539de27d52245b66122074dcec44c3f8ebb39e9687edd72e0c932ee29218a",
+  "sourceSubmissionSha256": "3d8d50c3366c93c8c88873ee9552928a6996ac25fecec634ad4aa4af4923ed14",
+  "rawResultSha256": "b336c206992cf04a1ac53de2ab9239ee467edb78c1f2fca31f527a03f06f3d86",
+  "candidateEventCount": 1056,
+  "measuresRepresented": 113,
+  "measure113ExplicitlyRecorded": true,
+  "professionalReferenceOpenedBeforeSeal": false,
+  "gradingPerformedBeforeSeal": false,
+  "paperFrozen": true,
+  "productionPromotionAllowed": false
+}

@@ -1,0 +1,583 @@
+{
+  "exam": "Jimmy PAIge blind full-song transfer exam",
+  "paperVersion": 1,
+  "sourceSubmissionSha256": "3d8d50c3366c93c8c88873ee9552928a6996ac25fecec634ad4aa4af4923ed14",
+  "rawResultSha256": "b336c206992cf04a1ac53de2ab9239ee467edb78c1f2fca31f527a03f06f3d86",
+  "candidateEventCount": 1056,
+  "measures": [
+    {
+      "measure": 1,
+      "candidateEventCount": 13,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 2,
+      "candidateEventCount": 12,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 3,
+      "candidateEventCount": 10,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 4,
+      "candidateEventCount": 14,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 5,
+      "candidateEventCount": 14,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 6,
+      "candidateEventCount": 15,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 7,
+      "candidateEventCount": 14,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 8,
+      "candidateEventCount": 12,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 9,
+      "candidateEventCount": 12,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 10,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 11,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 12,
+      "candidateEventCount": 10,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 13,
+      "candidateEventCount": 10,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 14,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 15,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 16,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 17,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 18,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 19,
+      "candidateEventCount": 7,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 20,
+      "candidateEventCount": 5,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 21,
+      "candidateEventCount": 6,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 22,
+      "candidateEventCount": 3,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 23,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 24,
+      "candidateEventCount": 5,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 25,
+      "candidateEventCount": 12,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 26,
+      "candidateEventCount": 13,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 27,
+      "candidateEventCount": 13,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 28,
+      "candidateEventCount": 14,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 29,
+      "candidateEventCount": 10,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 30,
+      "candidateEventCount": 6,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 31,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 32,
+      "candidateEventCount": 5,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 33,
+      "candidateEventCount": 13,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 34,
+      "candidateEventCount": 12,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 35,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 36,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 37,
+      "candidateEventCount": 15,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 38,
+      "candidateEventCount": 14,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 39,
+      "candidateEventCount": 13,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 40,
+      "candidateEventCount": 12,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 41,
+      "candidateEventCount": 11,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 42,
+      "candidateEventCount": 11,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 43,
+      "candidateEventCount": 11,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 44,
+      "candidateEventCount": 11,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 45,
+      "candidateEventCount": 10,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 46,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 47,
+      "candidateEventCount": 7,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 48,
+      "candidateEventCount": 10,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 49,
+      "candidateEventCount": 6,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 50,
+      "candidateEventCount": 5,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 51,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 52,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 53,
+      "candidateEventCount": 6,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 54,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 55,
+      "candidateEventCount": 11,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 56,
+      "candidateEventCount": 14,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 57,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 58,
+      "candidateEventCount": 12,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 59,
+      "candidateEventCount": 7,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 60,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 61,
+      "candidateEventCount": 12,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 62,
+      "candidateEventCount": 10,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 63,
+      "candidateEventCount": 13,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 64,
+      "candidateEventCount": 12,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 65,
+      "candidateEventCount": 7,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 66,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 67,
+      "candidateEventCount": 10,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 68,
+      "candidateEventCount": 15,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 69,
+      "candidateEventCount": 13,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 70,
+      "candidateEventCount": 4,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 71,
+      "candidateEventCount": 11,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 72,
+      "candidateEventCount": 6,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 73,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 74,
+      "candidateEventCount": 10,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 75,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 76,
+      "candidateEventCount": 7,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 77,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 78,
+      "candidateEventCount": 13,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 79,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 80,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 81,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 82,
+      "candidateEventCount": 10,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 83,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 84,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 85,
+      "candidateEventCount": 7,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 86,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 87,
+      "candidateEventCount": 6,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 88,
+      "candidateEventCount": 10,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 89,
+      "candidateEventCount": 7,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 90,
+      "candidateEventCount": 14,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 91,
+      "candidateEventCount": 11,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 92,
+      "candidateEventCount": 11,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 93,
+      "candidateEventCount": 12,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 94,
+      "candidateEventCount": 6,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 95,
+      "candidateEventCount": 9,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 96,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 97,
+      "candidateEventCount": 6,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 98,
+      "candidateEventCount": 7,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 99,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 100,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 101,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 102,
+      "candidateEventCount": 12,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 103,
+      "candidateEventCount": 6,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 104,
+      "candidateEventCount": 11,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 105,
+      "candidateEventCount": 6,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 106,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 107,
+      "candidateEventCount": 8,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 108,
+      "candidateEventCount": 11,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 109,
+      "candidateEventCount": 11,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 110,
+      "candidateEventCount": 7,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 111,
+      "candidateEventCount": 3,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 112,
+      "candidateEventCount": 4,
+      "statusBeforeGrading": "candidate-present"
+    },
+    {
+      "measure": 113,
+      "candidateEventCount": 0,
+      "statusBeforeGrading": "no-candidate-events"
+    }
+  ],
+  "gradingPerformed": false,
+  "professionalReferenceOpened": false,
+  "productionPromotionAllowed": false,
+  "measure113BlindFinding": {
+    "candidateEventCount": 0,
+    "finalRawEventEndsBeforeMeasure113Boundary": true,
+    "interpretation": "no continuing sustain predicted into measure 113",
+    "preGradingDisposition": "frozen-miss-candidate"
+  }
+}
