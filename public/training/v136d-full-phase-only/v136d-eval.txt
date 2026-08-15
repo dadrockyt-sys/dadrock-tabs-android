@@ -1,0 +1,84 @@
+WARNING:root:Coremltools is not installed. If you plan to use a CoreML Saved Model, reinstall basic-pitch with `pip install 'basic-pitch[coreml]'`
+WARNING:root:tflite-runtime is not installed. If you plan to use a TFLite Model, reinstall basic-pitch with `pip install 'basic-pitch tflite-runtime'` or `pip install 'basic-pitch[tf]'
+WARNING:root:onnxruntime is not installed. If you plan to use an ONNX Model, reinstall basic-pitch with `pip install 'basic-pitch[onnx]'`
+2026-08-15 07:02:46.535472: I external/local_tsl/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-08-15 07:02:46.690120: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-08-15 07:02:46.690175: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-08-15 07:02:46.693070: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-08-15 07:02:46.724738: I external/local_tsl/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-08-15 07:02:46.725087: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-08-15 07:02:47.976791: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+V136D representation gate:
+  base: PRESERVED
+  cosine: PRESERVED
+  full_phase: +15 frozen sustain interactions
+  v112_interactions: PRESERVED
+
+=== V136D BASELINE REPRODUCTION GUARD ===
+baseline heartbeat 40/320
+baseline heartbeat 80/320
+baseline heartbeat 120/320
+baseline heartbeat 160/320
+baseline heartbeat 200/320
+baseline heartbeat 240/320
+baseline heartbeat 280/320
+baseline heartbeat 320/320
+baseline reproduced passes: 285/320
+artifact pass mismatches: 36
+
+=== CURRENT REPRODUCIBLE BASELINE FROZEN FOR THIS RUN ===
+Known historical diagnostic carrier: phase=0.3212890625 fold=0 currentLift=4.89 historicalLift=4.02
+Current baseline passes: 285/320
+Historical-artifact pass mismatches: 36
+First historical-artifact mismatches (diagnostic only):
+{'phase': 0.0087890625, 'fold': 1, 'artifactPass': True, 'reproducedPass': False, 'artifactLift': 5.19, 'reproducedLift': 3.55, 'representation': 'base'}
+{'phase': 0.0087890625, 'fold': 3, 'artifactPass': True, 'reproducedPass': False, 'artifactLift': 8.67, 'reproducedLift': 2.76, 'representation': 'v112_interactions'}
+{'phase': 0.0244140625, 'fold': 3, 'artifactPass': True, 'reproducedPass': False, 'artifactLift': 7.75, 'reproducedLift': 4.97, 'representation': 'v112_interactions'}
+{'phase': 0.1494140625, 'fold': 3, 'artifactPass': True, 'reproducedPass': False, 'artifactLift': 6.64, 'reproducedLift': 4.95, 'representation': 'v112_interactions'}
+{'phase': 0.1650390625, 'fold': 3, 'artifactPass': True, 'reproducedPass': False, 'artifactLift': 5.0, 'reproducedLift': 3.44, 'representation': 'full_phase'}
+{'phase': 0.1806640625, 'fold': 0, 'artifactPass': True, 'reproducedPass': False, 'artifactLift': 5.34, 'reproducedLift': 3.45, 'representation': 'cosine'}
+{'phase': 0.1806640625, 'fold': 3, 'artifactPass': True, 'reproducedPass': False, 'artifactLift': 5.0, 'reproducedLift': 3.44, 'representation': 'full_phase'}
+{'phase': 0.1962890625, 'fold': 0, 'artifactPass': True, 'reproducedPass': False, 'artifactLift': 5.34, 'reproducedLift': 3.45, 'representation': 'cosine'}
+{'phase': 0.1962890625, 'fold': 3, 'artifactPass': True, 'reproducedPass': False, 'artifactLift': 7.84, 'reproducedLift': 4.56, 'representation': 'cosine'}
+{'phase': 0.2119140625, 'fold': 0, 'artifactPass': False, 'reproducedPass': True, 'artifactLift': 4.02, 'reproducedLift': 5.58, 'representation': 'v112_interactions'}
+{'phase': 0.2119140625, 'fold': 3, 'artifactPass': True, 'reproducedPass': False, 'artifactLift': 7.84, 'reproducedLift': 4.56, 'representation': 'cosine'}
+{'phase': 0.2275390625, 'fold': 0, 'artifactPass': True, 'reproducedPass': False, 'artifactLift': 6.47, 'reproducedLift': 3.19, 'representation': 'phase_col3'}
+Historical V134 311/320 retained as context only.
+It is NOT used as a reproducibility gate for V136D.
+V136D will be compared against the recomputed baseline above.
+
+
+=== V136D 320-FOLD FIXED REPRESENTATION EVALUATION ===
+NO Q TUNING
+NO LAMBDA TUNING
+NO FAILURE-ONLY FITTING
+15 INTERACTIONS FROZEN BEFORE THIS EVALUATION
+
+V136D heartbeat 40/320
+V136D heartbeat 80/320
+V136D heartbeat 120/320
+V136D heartbeat 160/320
+V136D heartbeat 200/320
+V136D heartbeat 240/320
+V136D heartbeat 280/320
+V136D heartbeat 320/320
+
+=== V136D COMPLETE ===
+Current reproducible baseline: 285/320
+V136D fixed interactions: 287/320
+Gains/losses vs current baseline: +3/-1 net=+2
+Crosses 95 percent: False
+Protected candidate hash unchanged: True
+11-mod-16-over-1024 reserve inspected: False
+Professional/midterm answers used: False
+New hyperparameter tuning performed: False
+Production promotion: False
+
+Changed carriers:
+LOSS phase=0.227539062500 fold=3 baseLift=5.00 v136dLift=3.44 rep=full_phase
+GAIN phase=0.243164062500 fold=3 baseLift=2.60 v136dLift=5.87 rep=full_phase
+GAIN phase=0.258789062500 fold=3 baseLift=2.60 v136dLift=5.87 rep=full_phase
+GAIN phase=0.321289062500 fold=0 baseLift=4.89 v136dLift=6.27 rep=full_phase
+
+saved: /tmp/v136d-eval.json
