@@ -1,0 +1,15 @@
+{
+  "exam": "Jimmy PAIge blind full-song transfer exam",
+  "sealedUtc": "2026-08-15T00:12:54.466870+00:00",
+  "modalCallId": "fc-01M01C02YFW8EZGZEQQ0DHE99F",
+  "sourceSha256": "c187bead44529d38544b8452f57328aaf17ce606f08217b78e3157c648392481",
+  "rawResultPath": "public/jimmy-paige-midterm-v1/jimmy-midterm-raw-modal-result.bin",
+  "rawResultSha256": "b336c206992cf04a1ac53de2ab9239ee467edb78c1f2fca31f527a03f06f3d86",
+  "submissionPath": "public/jimmy-paige-midterm-v1/jimmy-v134-blind-submission-v1.json",
+  "submissionSha256": "3d8d50c3366c93c8c88873ee9552928a6996ac25fecec634ad4aa4af4923ed14",
+  "returnedEventCount": 1630,
+  "professionalReferenceOpenedBeforeSeal": false,
+  "gradingPerformedBeforeSeal": false,
+  "submissionFrozen": true,
+  "productionPromotionAllowed": false
+}

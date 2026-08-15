@@ -1,0 +1,12 @@
+{
+  "app": "dadrock-jimmy-paige-training-worker",
+  "function": "upper_string_recovery",
+  "callId": "fc-01M01C02YFW8EZGZEQQ0DHE99F",
+  "sourceSha256": "c187bead44529d38544b8452f57328aaf17ce606f08217b78e3157c648392481",
+  "submittedAtUnix": 1786752535.374722,
+  "status": "completed",
+  "professionalReferenceOpened": false,
+  "gradingPerformed": false,
+  "completedAtUnix": 1786752668.4983363,
+  "rawResultPath": "public/jimmy-paige-midterm-v1/jimmy-midterm-raw-modal-result.bin"
+}
