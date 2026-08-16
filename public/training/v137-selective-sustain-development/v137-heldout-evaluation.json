@@ -1,0 +1,44 @@
+{
+  "experiment": "V137-frozen-selective-sustain-heldout-evaluation",
+  "baseline": {
+    "name": "V134",
+    "passes": 311,
+    "total": 320,
+    "artifactPassMismatches": 0
+  },
+  "v137": {
+    "passes": 311,
+    "total": 320,
+    "gains": 0,
+    "losses": 0,
+    "net": 0,
+    "selectedCarriers": 3,
+    "appliedCarriers": [
+      {
+        "phase": 0.1494140625,
+        "fold": 4
+      },
+      {
+        "phase": 0.2587890625,
+        "fold": 2
+      },
+      {
+        "phase": 0.2744140625,
+        "fold": 1
+      }
+    ],
+    "promotionCandidate": false
+  },
+  "changedCarriers": [],
+  "selectorFrozenBeforeHeldoutEvaluation": true,
+  "v136dEvaluationRowsRead": false,
+  "v136dEvaluationLossesUsed": false,
+  "professionalMidtermAnswersUsed": false,
+  "reserve11mod16Inspected": false,
+  "newQHyperparameterTuningPerformed": false,
+  "newLambdaHyperparameterTuningPerformed": false,
+  "candidateEventsModified": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false,
+  "blind11mod16ConfirmationAllowed": false
+}
