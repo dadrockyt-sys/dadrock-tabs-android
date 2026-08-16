@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 14311,
+  "experiment": "V143-final-multifamily-blind-11mod16-confirmation",
+  "frozenBeforeReserveInspection": true,
+  "reservePhaseFamily": "numerators-11-mod-16-over-1024",
+  "reserveFormula": "(11 + 16*k) / 1024 for k=0..63",
+  "reservePhaseCount": 64,
+  "outerFoldsPerPhase": 5,
+  "expectedCarrierCount": 320,
+  "baseline": "V134",
+  "challenger": "V143",
+  "v143TransportPolicy": {
+    "description": "For every untouched reserve carrier, run the already-frozen V143 training-only multi-family selector using only that carrier's outer-training rows; if a family qualifies, append only that winning family to the frozen V134 representation before scoring the untouched outer fold. If no family qualifies, use V134 unchanged.",
+    "familyMenuSource": "public/training/v143-final-multifamily-development/v143-final-multifamily-spec.json",
+    "familyMenuFeatureCount": 80,
+    "families": {
+      "normalized_temporal_contrast": 20,
+      "adjacent_band_balance": 20,
+      "spectral_shape": 10,
+      "attack_sustain_summary": 15,
+      "temporal_extrema": 15
+    },
+    "innerFolds": 4,
+    "replicatedValidationPhaseOffsets": [0.0, 0.125],
+    "minimumValidInnerFoldsPerView": 3,
+    "minimumPassGainsPerView": 1,
+    "maximumPassLossesAcrossAllViews": 0,
+    "requirePositiveMeanLiftDeltaPerView": true,
+    "requireNonnegativeMedianLiftDeltaPerView": true,
+    "allowAtMostOneNegativeLiftFoldPerView": true,
+    "winnerRanking": [
+      "descending minimumMeanLiftDeltaAcrossViews",
+      "descending totalInnerGainsAcrossViews",
+      "descending minimumMedianLiftDeltaAcrossViews",
+      "descending sumMeanLiftDeltaAcrossViews",
+      "ascending family name"
+    ],
+    "qTuningAllowed": false,
+    "lambdaTuningAllowed": false,
+    "pairRadiusTuningAllowed": false
+  },
+  "oneShotReserveEvaluation": true,
+  "promotionRule": {
+    "requireV143PassesGreaterThanV134": true,
+    "minimumBlindGains": 1,
+    "maximumBlindLosses": 0,
+    "minimumV143PassesPerPhase": 3,
+    "validatedNewChampionOnlyIfAllConditionsPass": true
+  },
+  "priorHeldoutRowsAllowedForReserveSelection": false,
+  "v143HeldoutOutcomeAllowedForReserveSelection": false,
+  "professionalMidtermAnswersAllowed": false,
+  "reserve11mod16InspectionBeforeProtocolFreezeAllowed": false,
+  "candidateModificationAllowed": false,
+  "productionPromotionBeforeBlindConfirmationAllowed": false,
+  "finalRhythmSustainSweep": true,
+  "stopAfterV143": true,
+  "noV144RhythmSustainSweepAllowed": true,
+  "outcomePolicy": {
+    "ifConfirmationPasses": "V143 becomes the confirmed rhythm/sustain champion eligible for pipeline integration.",
+    "ifConfirmationFails": "V134 remains the confirmed production rhythm/sustain champion; V143 remains a 312/320 research result only. Do not tune V143 or create V144.",
+    "afterEitherOutcome": "Close rhythm/sustain research and move to the AI-tab pipeline."
+  }
+}
