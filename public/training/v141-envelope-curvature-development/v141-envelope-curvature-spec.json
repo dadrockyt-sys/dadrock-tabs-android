@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 141,
+  "name": "V141 temporal envelope curvature sustain challenger",
+  "purpose": "Model curvature in the frozen within-band attack-to-tail envelope without using any held-out V136D, V137, V138, V139, or V140 carrier outcomes or professional/midterm answers.",
+  "designBasis": [
+    "pre-midterm chord/sustain diagnostics treated repeated attacks and sustained ringing as distinct temporal requirements",
+    "V140 used direct attack-to-tail products; V141 changes family to second-difference envelope curvature across the frozen temporal descriptors",
+    "all source columns are drawn from the frozen spectro-temporal feature set"
+  ],
+  "bands": ["low", "lowMid", "mid", "highMid", "high"],
+  "recipe": {
+    "earlyCurvature": "mean::<band>Burst - 2*mean::<band>Rise + mean::<band>Decay30",
+    "midCurvature": "mean::<band>Rise - 2*mean::<band>Decay30 + mean::<band>Decay60",
+    "lateCurvature": "mean::<band>Decay30 - 2*mean::<band>Decay60 + mean::<band>PostSlope"
+  },
+  "featureCount": 15,
+  "eligibleRepresentations": ["base", "phase_col3", "full_phase", "cosine", "v112_interactions"],
+  "selectionRule": {
+    "innerFolds": 4,
+    "validationPhaseOffsets": [0.0, 0.125],
+    "minimumValidInnerFoldsPerView": 3,
+    "minimumPassGainsPerView": 1,
+    "maximumPassLossesAcrossAllViews": 0,
+    "requirePositiveMeanLiftDeltaEachView": true,
+    "requireNonnegativeMedianLiftDeltaEachView": true,
+    "requireNonnegativeLiftOnAllButAtMostOneValidFoldEachView": true
+  },
+  "qTuningAllowed": false,
+  "lambdaTuningAllowed": false,
+  "pairRadiusTuningAllowed": false,
+  "heldoutV134ScoringAllowedDuringDevelopment": false,
+  "v136dEvaluationRowsAllowed": false,
+  "v137HeldoutEvaluationRowsAllowed": false,
+  "v138HeldoutEvaluationRowsAllowed": false,
+  "v139HeldoutEvaluationRowsAllowed": false,
+  "v140HeldoutEvaluationRowsAllowed": false,
+  "professionalMidtermAnswersAllowed": false,
+  "reserve11mod16InspectionAllowed": false,
+  "candidateModificationAllowed": false,
+  "productionPromotionAllowed": false,
+  "frozenBeforeDevelopmentRun": true
+}
