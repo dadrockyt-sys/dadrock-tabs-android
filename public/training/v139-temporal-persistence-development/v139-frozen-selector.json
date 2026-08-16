@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 139,
+  "experiment": "V139-frozen-temporal-persistence-selector",
+  "baselineChampion": {
+    "name": "V134",
+    "passes": 311,
+    "total": 320,
+    "scorePercent": 97.1875
+  },
+  "persistenceSpec": {
+    "path": "public/training/v139-temporal-persistence-development/v139-persistence-spec.json",
+    "sha256": "e244f1ed07e4c30fcc15877ae4a6f4a10a4985fc71bdbde1025bf5973b9e1e9b",
+    "featureCount": 14
+  },
+  "developmentEvidence": {
+    "path": "public/training/v139-temporal-persistence-development/v139-training-only-selector.json",
+    "sha256": "160df11d6c46a599390bae1cd77629ee9ae0b92be1c92f0eb0ddc4a5a1c1946d",
+    "selectedCarriers": 3,
+    "selectedByRepresentation": {
+      "full_phase": 2,
+      "v112_interactions": 1
+    },
+    "selectionRule": {
+      "innerFolds": 4,
+      "validationPhaseOffsets": [
+        0.0,
+        0.125
+      ],
+      "minimumValidInnerFoldsPerView": 3,
+      "minimumPassGainsPerView": 1,
+      "maximumPassLossesAcrossAllViews": 0,
+      "requirePositiveMeanLiftDeltaEachView": true,
+      "requireNonnegativeMedianLiftDeltaEachView": true,
+      "requireNonnegativeLiftOnAllButAtMostOneValidFoldEachView": true
+    }
+  },
+  "selected": [
+    {
+      "phase": 0.5712890625,
+      "fold": 3,
+      "v134Representation": "full_phase",
+      "totalInnerLossesAcrossViews": 0,
+      "replicatedViews": [
+        {
+          "phaseOffset": 0.0,
+          "innerPhase": 0.5712890625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 1.1175,
+          "medianInnerLiftDelta": 0.65,
+          "nonnegativeLiftFolds": 3,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        },
+        {
+          "phaseOffset": 0.125,
+          "innerPhase": 0.6962890625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 0.3875,
+          "medianInnerLiftDelta": 0.645,
+          "nonnegativeLiftFolds": 3,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        }
+      ]
+    },
+    {
+      "phase": 0.6494140625,
+      "fold": 3,
+      "v134Representation": "full_phase",
+      "totalInnerLossesAcrossViews": 0,
+      "replicatedViews": [
+        {
+          "phaseOffset": 0.0,
+          "innerPhase": 0.6494140625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 0.325,
+          "medianInnerLiftDelta": 0.0,
+          "nonnegativeLiftFolds": 4,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        },
+        {
+          "phaseOffset": 0.125,
+          "innerPhase": 0.7744140625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 2.0075,
+          "medianInnerLiftDelta": 1.63,
+          "nonnegativeLiftFolds": 4,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        }
+      ]
+    },
+    {
+      "phase": 0.6962890625,
+      "fold": 2,
+      "v134Representation": "v112_interactions",
+      "totalInnerLossesAcrossViews": 0,
+      "replicatedViews": [
+        {
+          "phaseOffset": 0.0,
+          "innerPhase": 0.6962890625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 0.61,
+          "medianInnerLiftDelta": 0.65,
+          "nonnegativeLiftFolds": 3,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        },
+        {
+          "phaseOffset": 0.125,
+          "innerPhase": 0.8212890625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 2.2375,
+          "medianInnerLiftDelta": 2.55,
+          "nonnegativeLiftFolds": 4,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        }
+      ]
+    }
+  ],
+  "frozenBeforeHeldoutEvaluation": true,
+  "heldoutV134FoldScoredDuringDevelopment": false,
+  "heldoutOutcomeFieldsUsedForSelection": false,
+  "v136dEvaluationRowsUsed": false,
+  "v137HeldoutEvaluationRowsUsed": false,
+  "v138HeldoutEvaluationRowsUsed": false,
+  "professionalMidtermAnswersUsed": false,
+  "reserve11mod16Inspected": false,
+  "candidateEventsModified": false,
+  "productionPromotionAllowed": false
+}
