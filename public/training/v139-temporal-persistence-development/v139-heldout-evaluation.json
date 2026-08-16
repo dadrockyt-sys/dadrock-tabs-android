@@ -1,0 +1,65 @@
+{
+  "experiment": "V139-frozen-temporal-persistence-heldout-evaluation",
+  "baseline": {
+    "name": "V134",
+    "passes": 311,
+    "total": 320,
+    "artifactPassMismatches": 0
+  },
+  "v139": {
+    "passes": 310,
+    "total": 320,
+    "gains": 0,
+    "losses": 1,
+    "net": -1,
+    "selectedCarriers": 3,
+    "selectedByRepresentation": {
+      "full_phase": 2,
+      "v112_interactions": 1
+    },
+    "appliedCarriers": [
+      {
+        "phase": 0.5712890625,
+        "fold": 3,
+        "v134Representation": "full_phase"
+      },
+      {
+        "phase": 0.6494140625,
+        "fold": 3,
+        "v134Representation": "full_phase"
+      },
+      {
+        "phase": 0.6962890625,
+        "fold": 2,
+        "v134Representation": "v112_interactions"
+      }
+    ],
+    "promotionCandidate": false
+  },
+  "changedCarriers": [
+    {
+      "change": "LOSS",
+      "phase": 0.6962890625,
+      "fold": 2,
+      "baseLift": 6.16,
+      "v139Lift": 4.52,
+      "representation": "v112_interactions"
+    }
+  ],
+  "selectorFrozenBeforeHeldoutEvaluation": true,
+  "persistenceSpecSha256": "e244f1ed07e4c30fcc15877ae4a6f4a10a4985fc71bdbde1025bf5973b9e1e9b",
+  "frozenSelectorSha256": "cccc86ba8bded0d1e05631747ccdae4eb2615da568cbd8c03c26f93832c82c5f",
+  "v136dEvaluationRowsRead": false,
+  "v136dEvaluationLossesUsed": false,
+  "v137HeldoutEvaluationRowsRead": false,
+  "v138HeldoutEvaluationRowsRead": false,
+  "professionalMidtermAnswersUsed": false,
+  "reserve11mod16Inspected": false,
+  "newQHyperparameterTuningPerformed": false,
+  "newLambdaHyperparameterTuningPerformed": false,
+  "newPairRadiusTuningPerformed": false,
+  "candidateEventsModified": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false,
+  "blind11mod16ConfirmationAllowed": false
+}
