@@ -1,0 +1,92 @@
+{
+  "name": "V136B fixed sustain-envelope interactions",
+  "bands": [
+    "high",
+    "highMid",
+    "low",
+    "lowMid",
+    "mid"
+  ],
+  "interactionCount": 15,
+  "interactions": [
+    {
+      "name": "v136b::highDecay30_x_Decay60",
+      "left": "mean::highDecay30",
+      "right": "mean::highDecay60"
+    },
+    {
+      "name": "v136b::highDecay30_x_PostSlope",
+      "left": "mean::highDecay30",
+      "right": "mean::highPostSlope"
+    },
+    {
+      "name": "v136b::highDecay60_x_PostSlope",
+      "left": "mean::highDecay60",
+      "right": "mean::highPostSlope"
+    },
+    {
+      "name": "v136b::highMidDecay30_x_Decay60",
+      "left": "mean::highMidDecay30",
+      "right": "mean::highMidDecay60"
+    },
+    {
+      "name": "v136b::highMidDecay30_x_PostSlope",
+      "left": "mean::highMidDecay30",
+      "right": "mean::highMidPostSlope"
+    },
+    {
+      "name": "v136b::highMidDecay60_x_PostSlope",
+      "left": "mean::highMidDecay60",
+      "right": "mean::highMidPostSlope"
+    },
+    {
+      "name": "v136b::lowDecay30_x_Decay60",
+      "left": "mean::lowDecay30",
+      "right": "mean::lowDecay60"
+    },
+    {
+      "name": "v136b::lowDecay30_x_PostSlope",
+      "left": "mean::lowDecay30",
+      "right": "mean::lowPostSlope"
+    },
+    {
+      "name": "v136b::lowDecay60_x_PostSlope",
+      "left": "mean::lowDecay60",
+      "right": "mean::lowPostSlope"
+    },
+    {
+      "name": "v136b::lowMidDecay30_x_Decay60",
+      "left": "mean::lowMidDecay30",
+      "right": "mean::lowMidDecay60"
+    },
+    {
+      "name": "v136b::lowMidDecay30_x_PostSlope",
+      "left": "mean::lowMidDecay30",
+      "right": "mean::lowMidPostSlope"
+    },
+    {
+      "name": "v136b::lowMidDecay60_x_PostSlope",
+      "left": "mean::lowMidDecay60",
+      "right": "mean::lowMidPostSlope"
+    },
+    {
+      "name": "v136b::midDecay30_x_Decay60",
+      "left": "mean::midDecay30",
+      "right": "mean::midDecay60"
+    },
+    {
+      "name": "v136b::midDecay30_x_PostSlope",
+      "left": "mean::midDecay30",
+      "right": "mean::midPostSlope"
+    },
+    {
+      "name": "v136b::midDecay60_x_PostSlope",
+      "left": "mean::midDecay60",
+      "right": "mean::midPostSlope"
+    }
+  ],
+  "tuningAfterFreezeAllowed": false,
+  "reserve11mod16Inspected": false,
+  "professionalMidtermAnswersUsed": false,
+  "productionPromotionAllowed": false
+}
