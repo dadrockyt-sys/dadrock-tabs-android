@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 143,
+  "name": "V143 final predeclared multi-family rhythm-sustain sweep",
+  "purpose": "Run one final training-only sweep across a frozen menu of distinct spectro-temporal feature families, then stop rhythm/sustain feature engineering and move to the AI-tab pipeline regardless of outcome.",
+  "designBasis": [
+    "all challenger features are deterministic transforms of the frozen spectro-temporal source columns",
+    "no V136D, V137, V138, V139, V140, V141, or V142 held-out outcome rows are permitted during development",
+    "family selection is performed only from replicated inner-CV evidence on each carrier's outer-training partition",
+    "the winning family must independently pass the same strict replicated zero-loss rule in both validation views",
+    "after V143 there will be no V144 rhythm/sustain feature sweep; the champion is locked and work moves to the AI-tab pipeline"
+  ],
+  "bands": ["low", "lowMid", "mid", "highMid", "high"],
+  "stages": ["Burst", "Rise", "Decay30", "Decay60", "PostSlope"],
+  "families": {
+    "normalized_temporal_contrast": {
+      "featureCount": 20,
+      "description": "Stabilized normalized first differences between consecutive temporal stages within each band."
+    },
+    "adjacent_band_balance": {
+      "featureCount": 20,
+      "description": "Adjacent-band differences at each frozen temporal stage."
+    },
+    "spectral_shape": {
+      "featureCount": 10,
+      "description": "Absolute-energy spectral centroid and spread across the five bands at each temporal stage."
+    },
+    "attack_sustain_summary": {
+      "featureCount": 15,
+      "description": "Per-band attack mean, sustain mean, and stabilized normalized sustain-minus-attack contrast."
+    },
+    "temporal_extrema": {
+      "featureCount": 15,
+      "description": "Per-band temporal range, temporal standard deviation, and stabilized endpoint contrast."
+    }
+  },
+  "totalMenuFeatureCount": 80,
+  "eligibleRepresentations": ["base", "phase_col3", "full_phase", "cosine", "v112_interactions"],
+  "selectionRule": {
+    "innerFolds": 4,
+    "validationPhaseOffsets": [0.0, 0.125],
+    "minimumValidInnerFoldsPerView": 3,
+    "minimumPassGainsPerView": 1,
+    "maximumPassLossesAcrossAllViewsForWinningFamily": 0,
+    "requirePositiveMeanLiftDeltaEachView": true,
+    "requireNonnegativeMedianLiftDeltaEachView": true,
+    "requireNonnegativeLiftOnAllButAtMostOneValidFoldEachView": true,
+    "familyWinnerOrder": [
+      "maximum minimumMeanLiftDeltaAcrossViews",
+      "maximum totalInnerGainsAcrossViews",
+      "maximum minimumMedianLiftDeltaAcrossViews",
+      "maximum sumMeanLiftDeltaAcrossViews",
+      "alphabetical family name"
+    ]
+  },
+  "qTuningAllowed": false,
+  "lambdaTuningAllowed": false,
+  "pairRadiusTuningAllowed": false,
+  "heldoutV134ScoringAllowedDuringDevelopment": false,
+  "v136dEvaluationRowsAllowed": false,
+  "v137HeldoutEvaluationRowsAllowed": false,
+  "v138HeldoutEvaluationRowsAllowed": false,
+  "v139HeldoutEvaluationRowsAllowed": false,
+  "v140HeldoutEvaluationRowsAllowed": false,
+  "v141HeldoutEvaluationRowsAllowed": false,
+  "v142HeldoutEvaluationRowsAllowed": false,
+  "professionalMidtermAnswersAllowed": false,
+  "reserve11mod16InspectionAllowed": false,
+  "candidateModificationAllowed": false,
+  "productionPromotionAllowedDuringDevelopment": false,
+  "frozenBeforeDevelopmentRun": true,
+  "finalSweep": true,
+  "stopAfterV143": true
+}
