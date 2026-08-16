@@ -1,0 +1,57 @@
+{
+  "experiment": "V140-frozen-attack-tail-coupling-heldout-evaluation",
+  "baseline": {
+    "name": "V134",
+    "passes": 311,
+    "total": 320,
+    "artifactPassMismatches": 0
+  },
+  "v140": {
+    "passes": 311,
+    "total": 320,
+    "gains": 0,
+    "losses": 0,
+    "net": 0,
+    "selectedCarriers": 3,
+    "selectedByRepresentation": {
+      "cosine": 1,
+      "v112_interactions": 2
+    },
+    "appliedCarriers": [
+      {
+        "phase": 0.3056640625,
+        "fold": 4,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.6650390625,
+        "fold": 2,
+        "v134Representation": "v112_interactions"
+      },
+      {
+        "phase": 0.7744140625,
+        "fold": 2,
+        "v134Representation": "v112_interactions"
+      }
+    ],
+    "promotionCandidate": false
+  },
+  "changedCarriers": [],
+  "selectorFrozenBeforeHeldoutEvaluation": true,
+  "attackTailSpecSha256": "0302c77bfddfb95d550251b603a96435063b7da34d175f1a28fbd55ebe23b74b",
+  "frozenSelectorSha256": "56600158f2cac67313f265e73198ae2fb491e55d74834e813e16a91e73eeb361",
+  "v136dEvaluationRowsRead": false,
+  "v136dEvaluationLossesUsed": false,
+  "v137HeldoutEvaluationRowsRead": false,
+  "v138HeldoutEvaluationRowsRead": false,
+  "v139HeldoutEvaluationRowsRead": false,
+  "professionalMidtermAnswersUsed": false,
+  "reserve11mod16Inspected": false,
+  "newQHyperparameterTuningPerformed": false,
+  "newLambdaHyperparameterTuningPerformed": false,
+  "newPairRadiusTuningPerformed": false,
+  "candidateEventsModified": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false,
+  "blind11mod16ConfirmationAllowed": false
+}
