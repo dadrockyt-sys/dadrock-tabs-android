@@ -1,0 +1,206 @@
+{
+  "experiment": "V138-frozen-cross-band-sustain-heldout-evaluation",
+  "baseline": {
+    "name": "V134",
+    "passes": 311,
+    "total": 320,
+    "artifactPassMismatches": 0
+  },
+  "v138": {
+    "passes": 308,
+    "total": 320,
+    "gains": 0,
+    "losses": 3,
+    "net": -3,
+    "selectedCarriers": 28,
+    "selectedByRepresentation": {
+      "full_phase": 6,
+      "cosine": 14,
+      "v112_interactions": 8
+    },
+    "appliedCarriers": [
+      {
+        "phase": 0.0244140625,
+        "fold": 2,
+        "v134Representation": "full_phase"
+      },
+      {
+        "phase": 0.0869140625,
+        "fold": 1,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.1806640625,
+        "fold": 2,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.2119140625,
+        "fold": 1,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.2119140625,
+        "fold": 2,
+        "v134Representation": "v112_interactions"
+      },
+      {
+        "phase": 0.2275390625,
+        "fold": 2,
+        "v134Representation": "v112_interactions"
+      },
+      {
+        "phase": 0.2431640625,
+        "fold": 2,
+        "v134Representation": "v112_interactions"
+      },
+      {
+        "phase": 0.2587890625,
+        "fold": 2,
+        "v134Representation": "full_phase"
+      },
+      {
+        "phase": 0.2744140625,
+        "fold": 2,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.2900390625,
+        "fold": 0,
+        "v134Representation": "v112_interactions"
+      },
+      {
+        "phase": 0.3212890625,
+        "fold": 1,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.3212890625,
+        "fold": 4,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.3369140625,
+        "fold": 4,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.4150390625,
+        "fold": 2,
+        "v134Representation": "v112_interactions"
+      },
+      {
+        "phase": 0.4150390625,
+        "fold": 4,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.4306640625,
+        "fold": 2,
+        "v134Representation": "v112_interactions"
+      },
+      {
+        "phase": 0.4306640625,
+        "fold": 4,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.5087890625,
+        "fold": 1,
+        "v134Representation": "v112_interactions"
+      },
+      {
+        "phase": 0.5244140625,
+        "fold": 4,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.6025390625,
+        "fold": 1,
+        "v134Representation": "v112_interactions"
+      },
+      {
+        "phase": 0.8681640625,
+        "fold": 3,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.8837890625,
+        "fold": 3,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.8994140625,
+        "fold": 1,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.8994140625,
+        "fold": 3,
+        "v134Representation": "full_phase"
+      },
+      {
+        "phase": 0.9150390625,
+        "fold": 3,
+        "v134Representation": "full_phase"
+      },
+      {
+        "phase": 0.9306640625,
+        "fold": 1,
+        "v134Representation": "cosine"
+      },
+      {
+        "phase": 0.9306640625,
+        "fold": 3,
+        "v134Representation": "full_phase"
+      },
+      {
+        "phase": 0.9462890625,
+        "fold": 3,
+        "v134Representation": "full_phase"
+      }
+    ],
+    "promotionCandidate": false
+  },
+  "changedCarriers": [
+    {
+      "change": "LOSS",
+      "phase": 0.0869140625,
+      "fold": 1,
+      "baseLift": 7.33,
+      "v138Lift": 4.55,
+      "representation": "cosine"
+    },
+    {
+      "change": "LOSS",
+      "phase": 0.4150390625,
+      "fold": 4,
+      "baseLift": 10.12,
+      "v138Lift": 3.56,
+      "representation": "cosine"
+    },
+    {
+      "change": "LOSS",
+      "phase": 0.4306640625,
+      "fold": 4,
+      "baseLift": 10.12,
+      "v138Lift": 3.56,
+      "representation": "cosine"
+    }
+  ],
+  "selectorFrozenBeforeHeldoutEvaluation": true,
+  "structureSpecSha256": "940bdc5d712c608c342758ae732bae9685f0f0b8cd661289a127619befcb2f0f",
+  "frozenSelectorSha256": "8c80edc1c6489a7c714234ab394d9af795d31ec06c1274ac8b7947eb86ffc923",
+  "v136dEvaluationRowsRead": false,
+  "v136dEvaluationLossesUsed": false,
+  "v137HeldoutEvaluationRowsRead": false,
+  "professionalMidtermAnswersUsed": false,
+  "reserve11mod16Inspected": false,
+  "newQHyperparameterTuningPerformed": false,
+  "newLambdaHyperparameterTuningPerformed": false,
+  "newPairRadiusTuningPerformed": false,
+  "candidateEventsModified": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false,
+  "blind11mod16ConfirmationAllowed": false
+}
