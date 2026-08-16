@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 140,
+  "name": "V140 attack-tail coupling sustain challenger",
+  "purpose": "Model the relationship between repeated attack energy and later sustain-tail behavior without using any held-out V136D, V137, V138, or V139 carrier outcomes or professional/midterm answers.",
+  "designBasis": [
+    "pre-midterm chord/sustain diagnostics treated repeated chord attacks and sustained ringing as separate requirements",
+    "V136 used within-band decay products, V138 used cross-band decay products, and V139 used decay persistence deltas; V140 changes family to attack-to-tail coupling",
+    "all source columns are drawn from the frozen spectro-temporal feature set"
+  ],
+  "bands": ["low", "lowMid", "mid", "highMid", "high"],
+  "recipe": {
+    "burstToDecay60Coupling": "mean::<band>Burst * mean::<band>Decay60",
+    "riseToDecay60Coupling": "mean::<band>Rise * mean::<band>Decay60",
+    "riseToPostSlopeCoupling": "mean::<band>Rise * mean::<band>PostSlope"
+  },
+  "featureCount": 15,
+  "eligibleRepresentations": ["base", "phase_col3", "full_phase", "cosine", "v112_interactions"],
+  "selectionRule": {
+    "innerFolds": 4,
+    "validationPhaseOffsets": [0.0, 0.125],
+    "minimumValidInnerFoldsPerView": 3,
+    "minimumPassGainsPerView": 1,
+    "maximumPassLossesAcrossAllViews": 0,
+    "requirePositiveMeanLiftDeltaEachView": true,
+    "requireNonnegativeMedianLiftDeltaEachView": true,
+    "requireNonnegativeLiftOnAllButAtMostOneValidFoldEachView": true
+  },
+  "qTuningAllowed": false,
+  "lambdaTuningAllowed": false,
+  "pairRadiusTuningAllowed": false,
+  "heldoutV134ScoringAllowedDuringDevelopment": false,
+  "v136dEvaluationRowsAllowed": false,
+  "v137HeldoutEvaluationRowsAllowed": false,
+  "v138HeldoutEvaluationRowsAllowed": false,
+  "v139HeldoutEvaluationRowsAllowed": false,
+  "professionalMidtermAnswersAllowed": false,
+  "reserve11mod16InspectionAllowed": false,
+  "candidateModificationAllowed": false,
+  "productionPromotionAllowed": false,
+  "frozenBeforeDevelopmentRun": true
+}
