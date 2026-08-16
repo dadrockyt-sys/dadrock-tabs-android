@@ -1,0 +1,176 @@
+{
+  "experiment": "V143-frozen-final-multifamily-heldout-evaluation",
+  "baseline": {
+    "name": "V134",
+    "passes": 311,
+    "total": 320,
+    "artifactPassMismatches": 0
+  },
+  "v143": {
+    "passes": 312,
+    "total": 320,
+    "gains": 1,
+    "losses": 0,
+    "net": 1,
+    "selectedCarriers": 18,
+    "selectedByFamily": {
+      "attack_sustain_summary": 3,
+      "normalized_temporal_contrast": 4,
+      "spectral_shape": 10,
+      "temporal_extrema": 1
+    },
+    "selectedByRepresentation": {
+      "base": 4,
+      "cosine": 6,
+      "full_phase": 5,
+      "phase_col3": 1,
+      "v112_interactions": 2
+    },
+    "appliedCarriers": [
+      {
+        "phase": 0.0087890625,
+        "fold": 1,
+        "v134Representation": "base",
+        "selectedFamily": "attack_sustain_summary"
+      },
+      {
+        "phase": 0.1337890625,
+        "fold": 2,
+        "v134Representation": "base",
+        "selectedFamily": "spectral_shape"
+      },
+      {
+        "phase": 0.1494140625,
+        "fold": 2,
+        "v134Representation": "base",
+        "selectedFamily": "spectral_shape"
+      },
+      {
+        "phase": 0.2119140625,
+        "fold": 1,
+        "v134Representation": "cosine",
+        "selectedFamily": "temporal_extrema"
+      },
+      {
+        "phase": 0.4462890625,
+        "fold": 3,
+        "v134Representation": "v112_interactions",
+        "selectedFamily": "spectral_shape"
+      },
+      {
+        "phase": 0.5556640625,
+        "fold": 3,
+        "v134Representation": "full_phase",
+        "selectedFamily": "normalized_temporal_contrast"
+      },
+      {
+        "phase": 0.6181640625,
+        "fold": 3,
+        "v134Representation": "cosine",
+        "selectedFamily": "spectral_shape"
+      },
+      {
+        "phase": 0.6337890625,
+        "fold": 3,
+        "v134Representation": "full_phase",
+        "selectedFamily": "normalized_temporal_contrast"
+      },
+      {
+        "phase": 0.6494140625,
+        "fold": 3,
+        "v134Representation": "full_phase",
+        "selectedFamily": "normalized_temporal_contrast"
+      },
+      {
+        "phase": 0.6650390625,
+        "fold": 3,
+        "v134Representation": "full_phase",
+        "selectedFamily": "normalized_temporal_contrast"
+      },
+      {
+        "phase": 0.7744140625,
+        "fold": 2,
+        "v134Representation": "v112_interactions",
+        "selectedFamily": "spectral_shape"
+      },
+      {
+        "phase": 0.7900390625,
+        "fold": 1,
+        "v134Representation": "cosine",
+        "selectedFamily": "spectral_shape"
+      },
+      {
+        "phase": 0.8056640625,
+        "fold": 1,
+        "v134Representation": "cosine",
+        "selectedFamily": "spectral_shape"
+      },
+      {
+        "phase": 0.8212890625,
+        "fold": 1,
+        "v134Representation": "cosine",
+        "selectedFamily": "spectral_shape"
+      },
+      {
+        "phase": 0.8525390625,
+        "fold": 1,
+        "v134Representation": "phase_col3",
+        "selectedFamily": "attack_sustain_summary"
+      },
+      {
+        "phase": 0.8681640625,
+        "fold": 3,
+        "v134Representation": "cosine",
+        "selectedFamily": "spectral_shape"
+      },
+      {
+        "phase": 0.9462890625,
+        "fold": 3,
+        "v134Representation": "full_phase",
+        "selectedFamily": "spectral_shape"
+      },
+      {
+        "phase": 0.9931640625,
+        "fold": 2,
+        "v134Representation": "base",
+        "selectedFamily": "attack_sustain_summary"
+      }
+    ],
+    "promotionCandidate": true
+  },
+  "changedCarriers": [
+    {
+      "change": "GAIN",
+      "phase": 0.7744140625,
+      "fold": 2,
+      "baseLift": 4.69,
+      "v143Lift": 6.25,
+      "representation": "v112_interactions",
+      "selectedFamily": "spectral_shape"
+    }
+  ],
+  "championAfterV143Heldout": "V143",
+  "selectorFrozenBeforeHeldoutEvaluation": true,
+  "multiFamilySpecSha256": "f18994bd54444bcbb2451fb5cdca0b62ae4e26262be24af94d0b12fbababa93b",
+  "trainingOnlySelectorSha256": "23a4ffc5b14c972f06fd2d93ff81f2150b2467e77c60e2e6111fe94d96201380",
+  "frozenSelectorSha256": "f93c9852a1d792a259e6b5059f57430ac747002c3ec7cb3809d51efdca53663c",
+  "v136dEvaluationRowsRead": false,
+  "v137HeldoutEvaluationRowsRead": false,
+  "v138HeldoutEvaluationRowsRead": false,
+  "v139HeldoutEvaluationRowsRead": false,
+  "v140HeldoutEvaluationRowsRead": false,
+  "v141HeldoutEvaluationRowsRead": false,
+  "v142HeldoutEvaluationRowsRead": false,
+  "professionalMidtermAnswersUsed": false,
+  "reserve11mod16Inspected": false,
+  "newQHyperparameterTuningPerformed": false,
+  "newLambdaHyperparameterTuningPerformed": false,
+  "newPairRadiusTuningPerformed": false,
+  "candidateEventsModified": false,
+  "protected949CandidateHashUnchanged": true,
+  "productionPromotionAllowed": false,
+  "blind11mod16ConfirmationAllowed": true,
+  "finalRhythmSustainSweep": true,
+  "stopAfterV143": true,
+  "noV144RhythmSustainSweepAllowed": true
+}
