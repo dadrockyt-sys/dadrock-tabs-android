@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 139,
+  "name": "V139 temporal persistence sustain challenger",
+  "purpose": "Model sustain continuity from 30 ms to 60 ms and simultaneous adjacent-band persistence without using any held-out V136D, V137, or V138 carrier outcomes or professional/midterm answers.",
+  "designBasis": [
+    "pre-midterm chord/sustain diagnostics emphasized sustained chord duration and simultaneous ringing notes",
+    "V136 used within-band decay products and V138 used raw cross-band products; V139 changes family to temporal persistence deltas",
+    "all source columns are already present in the frozen spectro-temporal feature set"
+  ],
+  "bands": ["low", "lowMid", "mid", "highMid", "high"],
+  "recipe": {
+    "perBandSignedPersistence": "mean::<band>Decay60 - mean::<band>Decay30",
+    "perBandAbsolutePersistence": "abs(mean::<band>Decay60 - mean::<band>Decay30)",
+    "adjacentPersistenceCoherence": "signedPersistence(leftBand) * signedPersistence(rightBand)"
+  },
+  "featureCount": 14,
+  "eligibleRepresentations": ["base", "phase_col3", "full_phase", "cosine", "v112_interactions"],
+  "selectionRule": {
+    "innerFolds": 4,
+    "validationPhaseOffsets": [0.0, 0.125],
+    "minimumValidInnerFoldsPerView": 3,
+    "minimumPassGainsPerView": 1,
+    "maximumPassLossesAcrossAllViews": 0,
+    "requirePositiveMeanLiftDeltaEachView": true,
+    "requireNonnegativeMedianLiftDeltaEachView": true,
+    "requireNonnegativeLiftOnAllButAtMostOneValidFoldEachView": true
+  },
+  "qTuningAllowed": false,
+  "lambdaTuningAllowed": false,
+  "pairRadiusTuningAllowed": false,
+  "heldoutV134ScoringAllowedDuringDevelopment": false,
+  "v136dEvaluationRowsAllowed": false,
+  "v137HeldoutEvaluationRowsAllowed": false,
+  "v138HeldoutEvaluationRowsAllowed": false,
+  "professionalMidtermAnswersAllowed": false,
+  "reserve11mod16InspectionAllowed": false,
+  "candidateModificationAllowed": false,
+  "productionPromotionAllowed": false,
+  "frozenBeforeDevelopmentRun": true
+}
