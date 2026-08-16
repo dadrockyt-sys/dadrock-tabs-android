@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 142,
+  "name": "V142 temporal slope progression sustain challenger",
+  "purpose": "Model first-difference progression across the frozen within-band attack-to-tail envelope without using any held-out V136D, V137, V138, V139, V140, or V141 carrier outcomes or professional/midterm answers.",
+  "designBasis": [
+    "pre-midterm chord/sustain diagnostics treated repeated attacks and sustained ringing as distinct temporal requirements",
+    "V139 used decay persistence, V140 used direct attack-tail products, and V141 used second-difference curvature; V142 changes family to first-difference temporal slope progression",
+    "all source columns are drawn from the frozen spectro-temporal feature set"
+  ],
+  "bands": ["low", "lowMid", "mid", "highMid", "high"],
+  "recipe": {
+    "attackSlope": "mean::<band>Rise - mean::<band>Burst",
+    "earlyDecaySlope": "mean::<band>Decay30 - mean::<band>Rise",
+    "lateDecaySlope": "mean::<band>Decay60 - mean::<band>Decay30",
+    "tailSlope": "mean::<band>PostSlope - mean::<band>Decay60"
+  },
+  "featureCount": 20,
+  "eligibleRepresentations": ["base", "phase_col3", "full_phase", "cosine", "v112_interactions"],
+  "selectionRule": {
+    "innerFolds": 4,
+    "validationPhaseOffsets": [0.0, 0.125],
+    "minimumValidInnerFoldsPerView": 3,
+    "minimumPassGainsPerView": 1,
+    "maximumPassLossesAcrossAllViews": 0,
+    "requirePositiveMeanLiftDeltaEachView": true,
+    "requireNonnegativeMedianLiftDeltaEachView": true,
+    "requireNonnegativeLiftOnAllButAtMostOneValidFoldEachView": true
+  },
+  "qTuningAllowed": false,
+  "lambdaTuningAllowed": false,
+  "pairRadiusTuningAllowed": false,
+  "heldoutV134ScoringAllowedDuringDevelopment": false,
+  "v136dEvaluationRowsAllowed": false,
+  "v137HeldoutEvaluationRowsAllowed": false,
+  "v138HeldoutEvaluationRowsAllowed": false,
+  "v139HeldoutEvaluationRowsAllowed": false,
+  "v140HeldoutEvaluationRowsAllowed": false,
+  "v141HeldoutEvaluationRowsAllowed": false,
+  "professionalMidtermAnswersAllowed": false,
+  "reserve11mod16InspectionAllowed": false,
+  "candidateModificationAllowed": false,
+  "productionPromotionAllowed": false,
+  "frozenBeforeDevelopmentRun": true
+}
