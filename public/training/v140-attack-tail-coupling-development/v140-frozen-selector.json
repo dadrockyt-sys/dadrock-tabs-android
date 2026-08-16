@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 140,
+  "experiment": "V140-frozen-attack-tail-coupling-selector",
+  "baselineChampion": {
+    "name": "V134",
+    "passes": 311,
+    "total": 320,
+    "scorePercent": 97.1875
+  },
+  "attackTailSpec": {
+    "path": "public/training/v140-attack-tail-coupling-development/v140-attack-tail-spec.json",
+    "sha256": "0302c77bfddfb95d550251b603a96435063b7da34d175f1a28fbd55ebe23b74b",
+    "featureCount": 15
+  },
+  "developmentEvidence": {
+    "path": "public/training/v140-attack-tail-coupling-development/v140-training-only-selector.json",
+    "sha256": "19be62884c419e35663c8e7986c5595438ff4401b3fe8c2cc90e0b3d14341c4d",
+    "selectedCarriers": 3,
+    "selectedByRepresentation": {
+      "cosine": 1,
+      "v112_interactions": 2
+    },
+    "selectionRule": {
+      "innerFolds": 4,
+      "validationPhaseOffsets": [
+        0.0,
+        0.125
+      ],
+      "minimumValidInnerFoldsPerView": 3,
+      "minimumPassGainsPerView": 1,
+      "maximumPassLossesAcrossAllViews": 0,
+      "requirePositiveMeanLiftDeltaEachView": true,
+      "requireNonnegativeMedianLiftDeltaEachView": true,
+      "requireNonnegativeLiftOnAllButAtMostOneValidFoldEachView": true
+    }
+  },
+  "selected": [
+    {
+      "phase": 0.3056640625,
+      "fold": 4,
+      "v134Representation": "cosine",
+      "totalInnerLossesAcrossViews": 0,
+      "replicatedViews": [
+        {
+          "phaseOffset": 0.0,
+          "innerPhase": 0.3056640625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 3.525,
+          "medianInnerLiftDelta": 1.295,
+          "nonnegativeLiftFolds": 3,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        },
+        {
+          "phaseOffset": 0.125,
+          "innerPhase": 0.4306640625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 1.5575,
+          "medianInnerLiftDelta": 1.3,
+          "nonnegativeLiftFolds": 3,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        }
+      ]
+    },
+    {
+      "phase": 0.6650390625,
+      "fold": 2,
+      "v134Representation": "v112_interactions",
+      "totalInnerLossesAcrossViews": 0,
+      "replicatedViews": [
+        {
+          "phaseOffset": 0.0,
+          "innerPhase": 0.6650390625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 1.35,
+          "medianInnerLiftDelta": 1.275,
+          "nonnegativeLiftFolds": 4,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        },
+        {
+          "phaseOffset": 0.125,
+          "innerPhase": 0.7900390625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 1.7675,
+          "medianInnerLiftDelta": 1.565,
+          "nonnegativeLiftFolds": 3,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        }
+      ]
+    },
+    {
+      "phase": 0.7744140625,
+      "fold": 2,
+      "v134Representation": "v112_interactions",
+      "totalInnerLossesAcrossViews": 0,
+      "replicatedViews": [
+        {
+          "phaseOffset": 0.0,
+          "innerPhase": 0.7744140625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 1.97,
+          "medianInnerLiftDelta": 2.215,
+          "nonnegativeLiftFolds": 4,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        },
+        {
+          "phaseOffset": 0.125,
+          "innerPhase": 0.8994140625,
+          "validInnerFolds": 4,
+          "innerGains": 1,
+          "innerLosses": 0,
+          "meanInnerLiftDelta": 1.425,
+          "medianInnerLiftDelta": 1.875,
+          "nonnegativeLiftFolds": 3,
+          "requiredNonnegativeLiftFolds": 3,
+          "viewRulePassed": true
+        }
+      ]
+    }
+  ],
+  "frozenBeforeHeldoutEvaluation": true,
+  "heldoutV134FoldScoredDuringDevelopment": false,
+  "heldoutOutcomeFieldsUsedForSelection": false,
+  "v136dEvaluationRowsUsed": false,
+  "v137HeldoutEvaluationRowsUsed": false,
+  "v138HeldoutEvaluationRowsUsed": false,
+  "v139HeldoutEvaluationRowsUsed": false,
+  "professionalMidtermAnswersUsed": false,
+  "reserve11mod16Inspected": false,
+  "candidateEventsModified": false,
+  "productionPromotionAllowed": false
+}
