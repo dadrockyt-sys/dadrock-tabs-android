@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 138,
+  "name": "V138 cross-band sustain coherence challenger",
+  "purpose": "Model simultaneous multi-band sustain structure without using professional/midterm answers or any held-out V137/V136D carrier outcomes.",
+  "designBasis": [
+    "pre-midterm chord/sustain work emphasized simultaneous ringing tones and sustain continuity",
+    "V136 used within-band decay products; V138 deliberately changes family to cross-band coherence",
+    "all source columns below were already present in the frozen spectro-temporal feature set"
+  ],
+  "features": [
+    {"name":"v138::lowDecay30_x_lowMidDecay30","operator":"product","left":"mean::lowDecay30","right":"mean::lowMidDecay30"},
+    {"name":"v138::lowMidDecay30_x_midDecay30","operator":"product","left":"mean::lowMidDecay30","right":"mean::midDecay30"},
+    {"name":"v138::midDecay30_x_highMidDecay30","operator":"product","left":"mean::midDecay30","right":"mean::highMidDecay30"},
+    {"name":"v138::highMidDecay30_x_highDecay30","operator":"product","left":"mean::highMidDecay30","right":"mean::highDecay30"},
+
+    {"name":"v138::lowDecay60_x_lowMidDecay60","operator":"product","left":"mean::lowDecay60","right":"mean::lowMidDecay60"},
+    {"name":"v138::lowMidDecay60_x_midDecay60","operator":"product","left":"mean::lowMidDecay60","right":"mean::midDecay60"},
+    {"name":"v138::midDecay60_x_highMidDecay60","operator":"product","left":"mean::midDecay60","right":"mean::highMidDecay60"},
+    {"name":"v138::highMidDecay60_x_highDecay60","operator":"product","left":"mean::highMidDecay60","right":"mean::highDecay60"},
+
+    {"name":"v138::lowPostSlope_x_lowMidPostSlope","operator":"product","left":"mean::lowPostSlope","right":"mean::lowMidPostSlope"},
+    {"name":"v138::lowMidPostSlope_x_midPostSlope","operator":"product","left":"mean::lowMidPostSlope","right":"mean::midPostSlope"},
+    {"name":"v138::midPostSlope_x_highMidPostSlope","operator":"product","left":"mean::midPostSlope","right":"mean::highMidPostSlope"},
+    {"name":"v138::highMidPostSlope_x_highPostSlope","operator":"product","left":"mean::highMidPostSlope","right":"mean::highPostSlope"},
+
+    {"name":"v138::lowDecay30_x_highDecay60","operator":"product","left":"mean::lowDecay30","right":"mean::highDecay60"},
+    {"name":"v138::highDecay30_x_lowDecay60","operator":"product","left":"mean::highDecay30","right":"mean::lowDecay60"},
+    {"name":"v138::lowMidDecay30_x_highMidDecay60","operator":"product","left":"mean::lowMidDecay30","right":"mean::highMidDecay60"},
+    {"name":"v138::highMidDecay30_x_lowMidDecay60","operator":"product","left":"mean::highMidDecay30","right":"mean::lowMidDecay60"}
+  ],
+  "featureCount": 16,
+  "eligibleRepresentations": ["base","phase_col3","full_phase","cosine","v112_interactions"],
+  "selectionRule": {
+    "innerFolds": 4,
+    "minimumValidInnerFolds": 3,
+    "minimumPassGains": 1,
+    "maximumPassLosses": 0,
+    "requirePositiveMeanLiftDelta": true,
+    "requireNonnegativeMedianLiftDelta": true,
+    "requireNonnegativeLiftOnAllButAtMostOneValidFold": true
+  },
+  "qTuningAllowed": false,
+  "lambdaTuningAllowed": false,
+  "pairRadiusTuningAllowed": false,
+  "heldoutV134ScoringAllowedDuringDevelopment": false,
+  "v136dEvaluationRowsAllowed": false,
+  "v137HeldoutEvaluationRowsAllowed": false,
+  "professionalMidtermAnswersAllowed": false,
+  "reserve11mod16InspectionAllowed": false,
+  "candidateModificationAllowed": false,
+  "productionPromotionAllowed": false,
+  "frozenBeforeDevelopmentRun": true
+}
