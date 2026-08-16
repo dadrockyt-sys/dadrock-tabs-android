@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 137,
+  "candidateName": "V137 selective sustain training-only frozen challenger",
+  "baselineChampion": {
+    "name": "V134",
+    "passes": 311,
+    "total": 320,
+    "scorePercent": 97.1875
+  },
+  "sustainSource": {
+    "name": "V136B fixed sustain-envelope interactions",
+    "interactionCount": 15,
+    "specPath": "public/training/v136d-pairwise-reproduction-checkpoint/v136b-fixed-interaction-spec.json",
+    "note": "The frozen interaction definitions are reused as a challenger feature set; the V136D held-out evaluation outcomes are not read or used."
+  },
+  "selector": {
+    "eligibleRepresentation": "full_phase",
+    "innerFolds": 4,
+    "rule": "select sustain only when >=3 valid inner folds, >=1 sustain pass gain, 0 sustain pass losses, and positive mean sustain-minus-V134 lift",
+    "eligibleCarriers": 72,
+    "selectedCarriers": 3
+  },
+  "selected": [
+    {
+      "phase": 0.1494140625,
+      "fold": 4,
+      "innerGains": 1,
+      "innerLosses": 0,
+      "meanInnerLiftDelta": 2.5
+    },
+    {
+      "phase": 0.2587890625,
+      "fold": 2,
+      "innerGains": 2,
+      "innerLosses": 0,
+      "meanInnerLiftDelta": 0.6575
+    },
+    {
+      "phase": 0.2744140625,
+      "fold": 1,
+      "innerGains": 1,
+      "innerLosses": 0,
+      "meanInnerLiftDelta": 1.3225
+    }
+  ],
+  "frozenBeforeHeldoutEvaluation": true,
+  "heldoutV134FoldScoredDuringDevelopment": false,
+  "v136dEvaluationRowsRead": false,
+  "v136dEvaluationLossesUsed": false,
+  "professionalMidtermAnswersUsed": false,
+  "reserve11mod16Inspected": false,
+  "newQHyperparameterTuningPerformed": false,
+  "newLambdaHyperparameterTuningPerformed": false,
+  "candidateEventsModified": false,
+  "productionPromotionAllowed": false,
+  "promotionRule": "candidate must improve above 311/320 with zero losses versus V134 before any blind 11-mod-16 reserve confirmation is considered"
+}
