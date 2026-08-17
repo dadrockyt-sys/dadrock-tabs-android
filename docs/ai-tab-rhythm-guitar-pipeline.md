@@ -15,8 +15,9 @@ dadrocktabs.com/ai-tab
   -> external production compute
       -> audio conversion
       -> instrument separation
-      -> Rhythm Guitar stem
-      -> proven carrier/candidate feature producer
+      -> Rhythm Guitar stem(s)
+      -> generic candidate/timing-grid generation
+      -> exact proven carrier feature extraction
       -> V143 feature construction
       -> V143ProductionEngine
       -> notes + techniques + metadata
@@ -35,6 +36,8 @@ dadrocktabs.com/ai-tab
 - `V143ProductionEngine` remains the authoritative V143 scoring implementation.
 - Production inference must be reference-free. Human/professional reference material is used only for offline validation/grading.
 - Frozen training/reference artifacts must not be casually modified.
+- Historical Go My Way research `main()` wrappers are evidence/authority, not production request handlers.
+- Reuse exact proven feature math and ordering; do not recreate V143 logic from memory.
 
 ## Website/UI entry point
 
@@ -81,7 +84,8 @@ The Rhythm Guitar production runtime must perform this proven chain:
 
 ```text
 separated Rhythm Guitar audio
-  -> proven upstream carrier/candidate producer
+  -> generic candidate events + measure/step timing grid
+  -> exact proven carrier feature extraction
   -> candidate rows containing rows[*]["features"]
   -> base carrier matrix
   -> phase features/interactions
@@ -104,7 +108,7 @@ Verification/replay path:
 
 `analyzer/replay_v143_production_engine.py`
 
-Training/feature-engineering authority currently being traced:
+Training/feature-engineering authority:
 
 `analyzer/develop_gomyway_v143_final_multifamily_training_only.py`
 
@@ -114,7 +118,7 @@ Important resolved import detail:
 import confirm_gomyway_3676_patch_rhythm24_v133_conjunction_guard_reserved_9mod16_over1024_v134 as v134
 ```
 
-The historical alias chain leading toward the upstream candidate producer is:
+The historical alias chain remains useful for provenance:
 
 ```text
 v134
@@ -129,7 +133,92 @@ v134
   -> recall
 ```
 
-The next analyzer milestone is to identify and reuse the exact `recall`-side callable that creates the candidate carrier rows/features from arbitrary separated Rhythm Guitar audio.
+However, the production integration no longer needs to keep descending this chain searching for a single magical `recall` request handler. The direct V143 carrier boundary has now been verified.
+
+## Verified V143 carrier boundary
+
+### Direct carrier source consumed by V124/V143
+
+`analyzer/confirm_gomyway_3676_patch_rhythm24_v122_reserved_5mod16_over1024_v124.py` defines:
+
+```python
+SOURCE_PATH = PUBLIC / "gomyway-3676-onset-slot-spectro-temporal-patch-stability-v1.json"
+```
+
+Therefore the direct base-carrier artifact feeding the V124/V143 path is:
+
+`public/gomyway-3676-onset-slot-spectro-temporal-patch-stability-v1.json`
+
+Its `candidateSlots` rows provide the carrier substrate ultimately consumed as `rows[*]["features"]` by V143.
+
+This is a more precise production boundary than treating `recall.CANDIDATE_PATH` as the direct V143 carrier source. `recall.CANDIDATE_PATH` remains part of the historical candidate/event and protection/validation lineage, but V124 directly reads the spectro-temporal patch-stability carrier artifact.
+
+### Exact carrier producer identified
+
+The artifact is produced by:
+
+`analyzer/profile_gomyway_3676_onset_slot_spectro_temporal_patch_stability_v1.py`
+
+Verified reusable feature functions in that file include:
+
+- `band_log_power(...)`
+- `stem_patch(...)`
+- `pair_patch(...)`
+
+`stem_patch(...)` measures a temporal/spectral patch around a candidate time across five frequency bands and multiple offsets, including rise/decay/post-slope/burst summaries.
+
+`pair_patch(...)` combines two stem measurements into deterministic carrier features using paired mean/agreement values.
+
+### Important production limitation of the historical wrapper
+
+The historical producer `main()` is **not** a generic uploaded-audio production callable. It is a Go My Way research/diagnostic wrapper that:
+
+- reads a fixed historical source artifact;
+- reads the protected historical candidate event set;
+- builds its timing grid from that protected candidate;
+- loads two historical winner/alternate stem sources;
+- attaches labels for downstream diagnostic evaluation;
+- writes a fixed Go My Way output/manifest.
+
+Production must **not** run that research wrapper against user uploads and must **not** bring its labels/professional-reference evaluation path into runtime inference.
+
+The correct integration strategy is to preserve/reuse the exact proven feature math and schema while replacing the hard-coded research orchestration with a clean runtime adapter for arbitrary uploaded Rhythm Guitar audio.
+
+## Production adapter boundary
+
+The production Rhythm adapter should have two clean upstream responsibilities before V143:
+
+### 1. Candidate/timing generation
+
+From arbitrary separated Rhythm Guitar audio, produce reference-free candidate events with enough timing information to map each candidate to the measure/step grid expected by the proven carrier/V143 path.
+
+This stage must not depend on protected Go My Way candidate files or professional labels.
+
+### 2. Exact carrier extraction
+
+For each candidate time:
+
+1. Obtain the required production stem inputs using the validated separation strategy.
+2. Apply the exact proven spectro-temporal patch feature math.
+3. Apply the exact paired carrier-combination math.
+4. Produce `candidateSlots` rows containing the authoritative `features` dictionary/schema.
+5. Feed those rows into the exact V143 feature-building path.
+6. Assert the final 148 feature names/order against `V143ProductionEngine.feature_names`.
+7. Score only through `V143ProductionEngine.score_matrix(...)`.
+
+Do not prematurely collapse the historical two-stem feature contract to a single stem. If production uses a different stem arrangement, equivalence must be demonstrated by validation rather than assumed.
+
+## Immediate next milestone
+
+Stop broad historical analyzer archaeology.
+
+The next milestone is now narrowly defined:
+
+1. Put the authoritative V143 scorer/replay source files on this GitHub branch if they are still only present in the Codespace.
+2. Identify the **smallest reusable, reference-free candidate-event/timing-grid implementation** already present in source.
+3. If no clean generic callable exists after a targeted inspection, create a new production adapter around the proven pure functions rather than executing historical research `main()` wrappers.
+4. Prove on an arbitrary separated Rhythm Guitar input that the adapter produces the exact carrier feature schema expected by V143.
+5. Prove the final constructed matrix matches the authoritative 148-feature schema before any Modal/API deployment work.
 
 ## PDF/output target
 
@@ -151,15 +240,16 @@ Rhythm Guitar is considered complete only when a real user-style upload can succ
 1. Upload audio from `dadrocktabs.com/ai-tab`.
 2. Select Rhythm Guitar.
 3. Convert/download the uploaded source on production compute.
-4. Separate or isolate the Rhythm Guitar stem using the chosen production separation path.
-5. Build the exact carrier schema expected by V143.
-6. Build the exact 148-feature V143 schema in authoritative order.
-7. Score only through `V143ProductionEngine`.
-8. Produce selected notes and techniques without professional-reference leakage.
-9. Return valid AI-Tab response metadata through `/api/analyze-audio-tab`.
-10. Render the polished DadRock Tabs PDF.
-11. Grade the rendered result offline against the supplied professional human-written Rhythm Guitar reference.
-12. Pass the agreed professional-quality acceptance threshold.
+4. Separate or isolate the Rhythm Guitar stem inputs using the chosen production separation path.
+5. Generate reference-free candidate events and timing/grid mapping from the uploaded performance.
+6. Build the exact carrier schema expected by V143 using the proven feature math.
+7. Build the exact 148-feature V143 schema in authoritative order.
+8. Score only through `V143ProductionEngine`.
+9. Produce selected notes and techniques without professional-reference leakage.
+10. Return valid AI-Tab response metadata through `/api/analyze-audio-tab`.
+11. Render the polished DadRock Tabs PDF.
+12. Grade the rendered result offline against the supplied professional human-written Rhythm Guitar reference.
+13. Pass the agreed professional-quality acceptance threshold.
 
 ## Reuse rule for Bass and Lead Guitar
 
