@@ -49,6 +49,9 @@ legacy_image = legacy.image.add_local_python_source("modal_analyzer")
 rhythm_image = (
     separator_gpu_image
     .pip_install(
+        # Basic Pitch -> resampy still imports pkg_resources. Setuptools 82+
+        # removed pkg_resources, so pin the final release line that provides it.
+        "setuptools==81.0.0",
         "basic-pitch",
         "scipy",
         "soundfile",
@@ -231,7 +234,9 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
 def rhythm_dependency_smoke() -> dict[str, Any]:
     """Prove the deploy image can import the separator and frozen V143 stack."""
     import numpy as np
+    import pkg_resources
     import scipy
+    import setuptools
     import soundfile
     import torch
     from basic_pitch.inference import predict as _predict
@@ -250,6 +255,8 @@ def rhythm_dependency_smoke() -> dict[str, Any]:
         ),
         "numpyVersion": str(np.__version__),
         "scipyVersion": str(scipy.__version__),
+        "setuptoolsVersion": str(setuptools.__version__),
+        "pkgResourcesImported": bool(pkg_resources),
         "soundfileImported": bool(soundfile),
         "basicPitchImported": bool(_predict),
         "featureCount": len(engine.feature_names),
