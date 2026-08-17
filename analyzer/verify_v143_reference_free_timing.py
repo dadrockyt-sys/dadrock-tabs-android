@@ -13,14 +13,20 @@ from v143_candidate_timing_adapter import build_subdivision_grid
 
 
 SAMPLE_RATE = 44_100
-TRUE_BPM = 120.0
 BEAT_COUNT = 32
 FIRST_CLICK_SECONDS = 0.25
-DOWNBEAT_INDEX_MOD4 = 1
+TEMPO_PHASE_CASES = (
+    (80.0, 0),
+    (120.0, 1),
+    (180.0, 3),
+)
 
 
-def _synthetic_click_track() -> tuple[np.ndarray, np.ndarray]:
-    interval = 60.0 / TRUE_BPM
+def _synthetic_click_track(
+    bpm: float,
+    downbeat_index_mod4: int,
+) -> tuple[np.ndarray, np.ndarray]:
+    interval = 60.0 / float(bpm)
     duration = FIRST_CLICK_SECONDS + (BEAT_COUNT + 1) * interval
     audio = np.zeros(int(math.ceil(duration * SAMPLE_RATE)), dtype=np.float64)
     expected_beats = FIRST_CLICK_SECONDS + np.arange(BEAT_COUNT) * interval
@@ -34,15 +40,47 @@ def _synthetic_click_track() -> tuple[np.ndarray, np.ndarray]:
     )
 
     for beat_index, beat_time in enumerate(expected_beats):
-        amplitude = 1.0 if beat_index % 4 == DOWNBEAT_INDEX_MOD4 else 0.35
+        amplitude = (
+            1.0 if beat_index % 4 == int(downbeat_index_mod4) else 0.35
+        )
         start = int(round(float(beat_time) * SAMPLE_RATE))
         click = amplitude * envelope * carrier
         end = min(len(audio), start + len(click))
         audio[start:end] += click[: end - start]
 
-    # Exercise the production stereo-to-mono path as well.
     stereo = np.stack((audio, 0.85 * audio), axis=1)
     return stereo, expected_beats
+
+
+def _assert_tempo_phase_case(
+    bpm: float,
+    downbeat_index_mod4: int,
+) -> timing.ReferenceFreeTimingEstimate:
+    audio, expected_beats = _synthetic_click_track(
+        bpm,
+        downbeat_index_mod4,
+    )
+    estimate = timing.estimate_reference_free_timing_from_samples(
+        audio,
+        SAMPLE_RATE,
+    )
+
+    assert abs(estimate.tempo_bpm - bpm) <= 2.5
+    assert len(estimate.beat_times) >= BEAT_COUNT - 2
+    tracked = np.asarray(estimate.beat_times[:BEAT_COUNT], dtype=np.float64)
+    expected = expected_beats[: len(tracked)]
+    beat_error = np.abs(tracked - expected)
+    assert float(np.max(beat_error)) <= 0.040
+
+    expected_first_beat = int((-downbeat_index_mod4) % 4)
+    assert estimate.downbeat_index_mod4 == int(downbeat_index_mod4)
+    assert estimate.first_beat_in_measure == expected_first_beat
+    assert estimate.bar_phase == expected_first_beat
+    assert 0.0 <= estimate.beat_confidence <= 1.0
+    assert 0.0 <= estimate.bar_confidence <= 1.0
+    assert estimate.beat_confidence > 0.30
+    assert estimate.bar_confidence > 0.30
+    return estimate
 
 
 def _assert_silence_rejected() -> None:
@@ -55,39 +93,24 @@ def _assert_silence_rejected() -> None:
 
 
 def main() -> None:
-    audio, expected_beats = _synthetic_click_track()
+    estimates = {
+        (bpm, phase): _assert_tempo_phase_case(bpm, phase)
+        for bpm, phase in TEMPO_PHASE_CASES
+    }
 
-    direct = timing.estimate_reference_free_timing_from_samples(
-        audio,
-        SAMPLE_RATE,
-    )
+    direct = estimates[(120.0, 1)]
+    audio, _expected_beats = _synthetic_click_track(120.0, 1)
+
     repeated = timing.estimate_reference_free_timing_from_samples(
         audio,
         SAMPLE_RATE,
     )
     assert direct == repeated
 
-    assert abs(direct.tempo_bpm - TRUE_BPM) <= 2.5
-    assert len(direct.beat_times) >= BEAT_COUNT - 2
-    tracked = np.asarray(direct.beat_times[:BEAT_COUNT], dtype=np.float64)
-    expected = expected_beats[: len(tracked)]
-    beat_error = np.abs(tracked - expected)
-    assert float(np.max(beat_error)) <= 0.040
-
-    # The synthetic sequence's downbeats are beat indices 1, 5, 9, ... .
-    # Therefore beat_times[0] is beat 4 of the preceding measure, represented
-    # by adapter-facing zero-based first_beat_in_measure == 3.
-    assert direct.downbeat_index_mod4 == DOWNBEAT_INDEX_MOD4
-    assert direct.first_beat_in_measure == 3
-    assert direct.bar_phase == 3
-    assert 0.0 <= direct.beat_confidence <= 1.0
-    assert 0.0 <= direct.bar_confidence <= 1.0
-    assert direct.beat_confidence > 0.30
-    assert direct.bar_confidence > 0.30
-
     adapter_kwargs = direct.candidate_adapter_kwargs()
     assert set(adapter_kwargs) == {"beat_times", "first_beat_in_measure"}
     grid = build_subdivision_grid(**adapter_kwargs)
+    assert direct.first_beat_in_measure == 3
     assert grid[0].step == 12
     assert grid[4].step == 0
     assert grid[4].measure == grid[0].measure + 1
@@ -96,14 +119,9 @@ def main() -> None:
 
     with tempfile.TemporaryDirectory() as directory:
         audio_path = Path(directory) / "reference-free-timing.wav"
-        sf.write(
-            str(audio_path),
-            audio,
-            SAMPLE_RATE,
-            subtype="FLOAT",
-        )
+        sf.write(str(audio_path), audio, SAMPLE_RATE, subtype="FLOAT")
         loaded = timing.estimate_reference_free_timing(audio_path)
-    assert abs(loaded.tempo_bpm - TRUE_BPM) <= 2.5
+    assert abs(loaded.tempo_bpm - 120.0) <= 2.5
     assert loaded.first_beat_in_measure == direct.first_beat_in_measure
     assert len(loaded.beat_times) == len(direct.beat_times)
 
@@ -125,9 +143,9 @@ def main() -> None:
     print("=== V143 REFERENCE-FREE TIMING ESTIMATOR VERIFIED ===")
     print("Arbitrary decoded stereo audio accepted: True")
     print("44.1 kHz -> deterministic 22.05 kHz analysis: True")
-    print("Tempo recovery within 2.5 BPM: True")
+    print("80/120/180 BPM recovery within 2.5 BPM: True")
     print("Beat timestamps within 40 ms: True")
-    print("Explicit 4/4 downbeat/bar phase: True")
+    print("Multiple explicit 4/4 downbeat phases: True")
     print("Adapter first_beat_in_measure semantics exact: True")
     print("Direct candidate-adapter grid handoff: True")
     print("Beat confidence emitted: True")
