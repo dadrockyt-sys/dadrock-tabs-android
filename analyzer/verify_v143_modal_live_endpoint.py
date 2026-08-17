@@ -121,6 +121,7 @@ def main() -> None:
 
     required_modules = {
         "modal_analyzer",
+        "v143_ai_tab_gpu_worker",
         "v143_candidate_timing_adapter",
         "v143_modal_rhythm_router",
         "v143_production_engine",
@@ -136,6 +137,7 @@ def main() -> None:
         "v143_vercel_audio_request_adapter",
     }
     source_manifest_complete = required_modules.issubset(set(V143_MODULES))
+    gpu_worker_explicitly_packaged = "v143_ai_tab_gpu_worker" in V143_MODULES
     production_model_mounted = MODEL_REMOTE_PATH.endswith(
         "/v143-production-model-candidate-v1.json"
     )
@@ -176,6 +178,7 @@ def main() -> None:
         "Invalid transcription type rejected": invalid_type_rejected,
         "Invalid audio URL rejected": invalid_url_rejected,
         "V143 Modal source manifest complete": source_manifest_complete,
+        "V143 GPU worker explicitly packaged": gpu_worker_explicitly_packaged,
         "Frozen V143 production model mounted": production_model_mounted,
         "Professional reference used": False,
         "Runtime labels required": False,
@@ -194,6 +197,7 @@ def main() -> None:
         and invalid_type_rejected
         and invalid_url_rejected
         and source_manifest_complete
+        and gpu_worker_explicitly_packaged
         and production_model_mounted
         and deterministic_repeat
     )
