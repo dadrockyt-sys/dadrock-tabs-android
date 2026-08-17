@@ -28,6 +28,7 @@ MODEL_REMOTE_PATH = (
 
 V143_MODULES = (
     "modal_analyzer",
+    "v143_ai_tab_gpu_worker",
     "v143_candidate_timing_adapter",
     "v143_modal_rhythm_router",
     "v143_production_engine",
@@ -256,58 +257,3 @@ def rhythm_dependency_smoke() -> dict[str, Any]:
         "demucsModel": separator.get("demucsModel"),
         "bsRoformerModel": separator.get("bsRoformerModel"),
     }
-
-
-@app.function(
-    image=legacy_image,
-    timeout=1200,
-    memory=4096,
-    secrets=[modal.Secret.from_name("dadrock-analyzer-secret")],
-)
-@modal.fastapi_endpoint(method="POST")
-def analyze(payload: dict) -> dict:
-    """Vercel-facing endpoint: legacy Lead/Bass, frozen V143 Rhythm Guitar."""
-    from fastapi import HTTPException
-
-    expected_token = str(os.environ.get("ANALYZER_API_TOKEN") or "")
-
-    try:
-        return dispatch_authorized_request(
-            payload,
-            expected_token=expected_token,
-            legacy_handler=_legacy_request,
-            rhythm_handler=lambda body: rhythm_v143_request.remote(body),
-        )
-    except PermissionError as error:
-        raise HTTPException(status_code=401, detail=str(error)) from error
-    except ValueError as error:
-        raise HTTPException(status_code=400, detail=str(error)) from error
-    except Exception as error:
-        raise HTTPException(
-            status_code=502,
-            detail="The audio could not be analyzed.",
-        ) from error
-
-
-@app.local_entrypoint()
-def main(mode: str = "smoke") -> None:
-    import json
-
-    if mode != "smoke":
-        raise RuntimeError("Only --mode smoke is supported before deployment")
-
-    result = rhythm_dependency_smoke.remote()
-    ready = bool(
-        result.get("cudaAvailable")
-        and result.get("basicPitchImported")
-        and result.get("soundfileImported")
-        and int(result.get("featureCount") or 0) == 148
-        and result.get("referenceFree") is True
-    )
-
-    print("=== V143 LIVE MODAL IMAGE SMOKE ===")
-    print(json.dumps(result, indent=2, sort_keys=True))
-    print(f"READY FOR MODAL DEPLOY: {ready}")
-
-    if not ready:
-        raise SystemExit(1)
