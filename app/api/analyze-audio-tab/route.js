@@ -74,8 +74,23 @@ export async function POST(request) {
       );
     }
 
-    const analyzerUrl =
+    // Preserve the existing analyzer as the default for Lead/Bass and as the
+    // rollback path for Rhythm. V143 is opt-in only through its own environment
+    // variable, so adding this code cannot switch production Rhythm by itself.
+    const legacyAnalyzerUrl =
       process.env.ANALYZER_API_URL;
+
+    const v143RhythmAnalyzerUrl =
+      process.env.ANALYZER_API_URL_V143;
+
+    const usingV143RhythmAnalyzer =
+      transcriptionType === 'rhythm' &&
+      Boolean(v143RhythmAnalyzerUrl);
+
+    const analyzerUrl =
+      usingV143RhythmAnalyzer
+        ? v143RhythmAnalyzerUrl
+        : legacyAnalyzerUrl;
 
     const analyzerToken =
       process.env.ANALYZER_API_TOKEN;
@@ -91,8 +106,13 @@ export async function POST(request) {
       console.error(
         'Analyzer configuration missing:',
         {
-          hasAnalyzerUrl:
+          transcriptionType,
+          hasSelectedAnalyzerUrl:
             Boolean(analyzerUrl),
+          hasLegacyAnalyzerUrl:
+            Boolean(legacyAnalyzerUrl),
+          hasV143RhythmAnalyzerUrl:
+            Boolean(v143RhythmAnalyzerUrl),
           hasAnalyzerToken:
             Boolean(analyzerToken),
           hasBlobToken:
@@ -138,7 +158,11 @@ export async function POST(request) {
     if (!analyzerResponse.ok) {
       console.error(
         'Modal analyzer error:',
-        analyzerData
+        {
+          transcriptionType,
+          usingV143RhythmAnalyzer,
+          analyzerData,
+        }
       );
 
       return NextResponse.json(
@@ -169,6 +193,26 @@ export async function POST(request) {
       );
     }
 
+    // During the Rhythm canary, require the new endpoint to identify itself.
+    // If the wrong Modal target is configured, fail closed instead of silently
+    // presenting legacy output as a successful V143 result.
+    if (
+      usingV143RhythmAnalyzer &&
+      analyzerData?.liveV143?.referenceFree !== true
+    ) {
+      console.error(
+        'V143 rhythm analyzer identity check failed.'
+      );
+
+      return NextResponse.json(
+        {
+          error:
+            'The V143 rhythm analyzer did not identify itself correctly.',
+        },
+        { status: 502 }
+      );
+    }
+
     return NextResponse.json({
       generatedTab,
       tuning:
@@ -194,6 +238,12 @@ export async function POST(request) {
         null,
       noteCount:
         analyzerData?.noteCount ?? 0,
+      analysisEngine:
+        analyzerData?.liveV143?.referenceFree === true
+          ? 'v143-reference-free-rhythm'
+          : 'legacy',
+      rhythmCanaryActive:
+        usingV143RhythmAnalyzer,
     });
   } catch (error) {
     console.error(
