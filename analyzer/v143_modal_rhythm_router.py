@@ -13,6 +13,7 @@ LegacyAnalyzer = Callable[[str, str], dict[str, Any]]
 RhythmStemProvider = Callable[[str | Path], "RhythmStemBundle"]
 RhythmPipeline = Callable[..., Any]
 EventAssembler = Callable[[Any], Any]
+AssemblyEnricher = Callable[[Any, "RhythmStemBundle"], Any]
 OutputBuilder = Callable[[Any], dict[str, Any]]
 
 
@@ -52,6 +53,7 @@ def route_normalized_audio(
     rhythm_stem_provider: RhythmStemProvider,
     rhythm_pipeline: RhythmPipeline = analyze_reference_free_rhythm,
     event_assembler: EventAssembler = assemble_rhythm_events,
+    assembly_enricher: AssemblyEnricher | None = None,
     output_builder: OutputBuilder = build_rhythm_output,
     rhythm_pipeline_kwargs: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
@@ -61,6 +63,11 @@ def route_normalized_audio(
     Lead Guitar and Bass are delegated byte-for-byte as returned by the existing
     analyzer. Rhythm Guitar bypasses the legacy note/voicing path and consumes a
     provider-supplied candidate/carrier stem bundle through the frozen V143 chain.
+
+    Optional assembly enrichment happens strictly after frozen V143 selection,
+    timing, pitch hypotheses, and deterministic string/fret mapping. It may append
+    evidence-derived notation metadata, but it must return an assembly compatible
+    with the existing output builder.
     """
     requested = str(transcription_type or "").strip().lower()
     if requested not in {"lead", "rhythm", "bass"}:
@@ -85,6 +92,11 @@ def route_normalized_audio(
         **kwargs,
     )
     assembly = event_assembler(rhythm_result)
+    if assembly_enricher is not None:
+        enriched = assembly_enricher(assembly, bundle)
+        if enriched is None:
+            raise TypeError("assembly_enricher returned None")
+        assembly = enriched
     output = output_builder(assembly)
 
     if not isinstance(output, dict):
@@ -102,6 +114,7 @@ def route_normalized_audio(
         "normalizedFullMixTimingSource": True,
         "candidateStemCount": len(bundle.candidate_stem_paths),
         "pairedCarrierStemContractPreserved": True,
+        "postSelectionEvidenceEnrichment": assembly_enricher is not None,
         "professionalReferenceUsed": False,
         "runtimeLabelsRequired": False,
     }
