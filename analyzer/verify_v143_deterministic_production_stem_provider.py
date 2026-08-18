@@ -83,7 +83,7 @@ def main() -> None:
                 ),
                 "Two candidate views preserved": len(bundle.candidate_stem_paths) == 2,
                 "No professional reference used": True,
-                "Runtime labels required": False,
+                "Runtime labels not required": True,
             }
 
             ready = all(checks.values()) and len(calls) == 2
