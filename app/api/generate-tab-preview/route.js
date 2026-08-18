@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createTabPdf } from '@/lib/createTabPdfPolished';
+import { createAiTabPdf } from '@/lib/createAiTabPdf';
+import { projectV143RenderEvents } from '@/lib/v143RenderContract';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -43,6 +44,8 @@ export async function POST(request) {
     const timeSignature =
       cleanText(body?.timeSignature, 20) || '4/4';
     const keySignature = cleanText(body?.keySignature, 40);
+    const analysisEngine = cleanText(body?.analysisEngine, 80);
+    const renderEvents = projectV143RenderEvents(body?.renderEvents);
     const previewSystems = Math.min(
       4,
       Math.max(1, Number(body?.previewSystems) || 4)
@@ -73,7 +76,7 @@ export async function POST(request) {
       );
     }
 
-    const pdfBytes = await createTabPdf({
+    const pdfBytes = await createAiTabPdf({
       song,
       artist,
       transcriptionType,
@@ -82,6 +85,8 @@ export async function POST(request) {
       tempo,
       timeSignature,
       keySignature,
+      analysisEngine,
+      renderEvents,
       preview: true,
       previewSystems,
     });

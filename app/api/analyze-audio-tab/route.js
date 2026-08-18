@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { projectV143RenderEvents } from '@/lib/v143RenderContract';
 
 export const runtime = 'nodejs';
 export const maxDuration = 600;
@@ -213,6 +214,11 @@ export async function POST(request) {
       );
     }
 
+    const renderEvents =
+      analyzerData?.liveV143?.referenceFree === true
+        ? projectV143RenderEvents(analyzerData?.events)
+        : [];
+
     return NextResponse.json({
       generatedTab,
       tuning:
@@ -233,6 +239,9 @@ export async function POST(request) {
       )
         ? analyzerData.techniques
         : [],
+      renderEvents,
+      renderContractVersion:
+        renderEvents.length > 0 ? 1 : null,
       confidence:
         analyzerData?.confidence ??
         null,
