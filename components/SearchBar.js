@@ -33,7 +33,10 @@ export default function SearchBar({ variant = 'full', placeholder = null, curren
   const router = useRouter();
   const prefix = currentLang === 'en' ? '' : `/${currentLang}`;
   const copy = searchCopy[currentLang] || searchCopy.en;
-  const effectivePlaceholder = placeholder || copy.placeholder;
+  const isLegacyEnglishPlaceholder = placeholder === searchCopy.en.placeholder;
+  const effectivePlaceholder = currentLang !== 'en' && (!placeholder || isLegacyEnglishPlaceholder)
+    ? copy.placeholder
+    : (placeholder || copy.placeholder);
 
   const performSearch = useCallback(async (searchQuery) => {
     if (searchQuery.length < 2) {
