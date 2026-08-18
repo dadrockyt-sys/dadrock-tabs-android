@@ -3,7 +3,12 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any
 
-from v143_modal_http_endpoint import route_http_payload
+from v143_modal_http_endpoint import (
+    HTTP_APP_NAME,
+    WORKER_APP_NAME,
+    WORKER_FUNCTION_NAME,
+    route_http_payload,
+)
 
 
 def main() -> None:
@@ -124,6 +129,12 @@ def main() -> None:
     )
     deterministic_repeat = deterministic_a == deterministic_b
 
+    apps_decoupled = HTTP_APP_NAME != WORKER_APP_NAME
+    worker_target_frozen = bool(
+        WORKER_APP_NAME == "dadrock-v143-ai-tab-live"
+        and WORKER_FUNCTION_NAME == "rhythm_v143_request"
+    )
+
     checks = {
         "Lead stays on legacy handler": lead_legacy,
         "Bass stays on legacy handler": bass_legacy,
@@ -133,6 +144,8 @@ def main() -> None:
         "Unauthorized request rejected": unauthorized_rejected,
         "Invalid transcription type rejected": invalid_type_rejected,
         "Invalid audio URL rejected": invalid_url_rejected,
+        "HTTP bridge separated from GPU worker app": apps_decoupled,
+        "Frozen V143 worker target preserved": worker_target_frozen,
         "Professional reference used": False,
         "Runtime labels required": False,
         "Deterministic repeat exact": deterministic_repeat,
@@ -147,6 +160,8 @@ def main() -> None:
         and unauthorized_rejected
         and invalid_type_rejected
         and invalid_url_rejected
+        and apps_decoupled
+        and worker_target_frozen
         and deterministic_repeat
     )
 
