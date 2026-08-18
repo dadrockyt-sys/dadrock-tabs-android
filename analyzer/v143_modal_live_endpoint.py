@@ -35,6 +35,7 @@ V143_MODULES = (
     "v143_production_separator",
     "v143_reference_free_rhythm_pipeline",
     "v143_reference_free_timing",
+    "v143_rhythm_bend_evidence",
     "v143_rhythm_event_assembly",
     "v143_rhythm_guitar_note_mapper",
     "v143_rhythm_output_adapter",
@@ -53,6 +54,7 @@ rhythm_image = (
         # removed pkg_resources, so pin the final release line that provides it.
         "setuptools==81.0.0",
         "basic-pitch",
+        "librosa",
         "scipy",
         "soundfile",
         "requests",
@@ -177,6 +179,8 @@ def _legacy_request(payload: dict[str, Any]) -> dict[str, Any]:
 )
 def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
     """Execute one real Rhythm Guitar request entirely inside the Modal L4 worker."""
+    from v143_modal_rhythm_router import route_normalized_audio
+    from v143_rhythm_bend_evidence import enrich_router_assembly_with_bends
     from v143_rhythm_stem_provider import build_rhythm_stem_bundle
     from v143_vercel_audio_request_adapter import process_vercel_audio_request
 
@@ -199,12 +203,28 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
             legacy.inspect_audio_file(str(destination))
         )
 
+    def rhythm_router(
+        normalized_path: str | Path,
+        transcription_type: str,
+        *,
+        legacy_analyzer: Callable[[str, str], dict[str, Any]],
+        rhythm_stem_provider: Callable[..., Any],
+    ) -> dict[str, Any]:
+        return route_normalized_audio(
+            normalized_path,
+            transcription_type,
+            legacy_analyzer=legacy_analyzer,
+            rhythm_stem_provider=rhythm_stem_provider,
+            assembly_enricher=enrich_router_assembly_with_bends,
+        )
+
     result = process_vercel_audio_request(
         payload,
         download_blob=download_blob,
         normalize_audio=normalize_audio,
         legacy_analyzer=legacy.analyze_audio_file,
         rhythm_stem_provider=build_rhythm_stem_bundle,
+        rhythm_router=rhythm_router,
     )
 
     result["audioMetadata"] = dict(audio_metadata_box)
@@ -215,10 +235,11 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
         "formatName": normalized_metadata_box.get("formatName"),
     }
     result["liveV143"] = {
-        "version": 1,
+        "version": 2,
         "modalGpu": "L4",
         "rhythmOnly": True,
         "referenceFree": True,
+        "bendEvidence": "cross-separated-harmonic-contour",
         "professionalReferenceUsed": False,
         "runtimeLabelsRequired": False,
     }
@@ -233,6 +254,7 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
 )
 def rhythm_dependency_smoke() -> dict[str, Any]:
     """Prove the deploy image can import the separator and frozen V143 stack."""
+    import librosa
     import numpy as np
     import pkg_resources
     import scipy
@@ -242,6 +264,7 @@ def rhythm_dependency_smoke() -> dict[str, Any]:
     from basic_pitch.inference import predict as _predict
     from v143_production_engine import V143ProductionEngine
     from v143_production_separator import describe
+    from v143_rhythm_bend_evidence import build_pitch_energy_view
 
     engine = V143ProductionEngine()
     separator = describe()
@@ -255,10 +278,12 @@ def rhythm_dependency_smoke() -> dict[str, Any]:
         ),
         "numpyVersion": str(np.__version__),
         "scipyVersion": str(scipy.__version__),
+        "librosaVersion": str(librosa.__version__),
         "setuptoolsVersion": str(setuptools.__version__),
         "pkgResourcesImported": bool(pkg_resources),
         "soundfileImported": bool(soundfile),
         "basicPitchImported": bool(_predict),
+        "bendEvidenceImported": bool(build_pitch_energy_view),
         "featureCount": len(engine.feature_names),
         "referenceFree": separator.get("referenceFree") is True,
         "demucsModel": separator.get("demucsModel"),
