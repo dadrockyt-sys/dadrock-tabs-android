@@ -8,7 +8,8 @@ from v143_rhythm_event_assembly import RhythmEventAssemblyResult
 
 STRING_LABELS = ("e", "B", "G", "D", "A", "E")
 STEPS_PER_MEASURE = 16
-CELL_WIDTH = 4
+# Wide enough for two-digit full bend/release notation such as 10b12r10.
+CELL_WIDTH = 11
 
 
 def _technique_types(event: dict[str, Any]) -> set[str]:
@@ -19,17 +20,48 @@ def _technique_types(event: dict[str, Any]) -> set[str]:
     }
 
 
+def _bend_token(event: dict[str, Any], fret: int, techniques: set[str]) -> str | None:
+    if "bend" not in techniques and "bend-release" not in techniques:
+        return None
+
+    amount_raw = event.get("bendSemitones")
+    target_raw = event.get("bendTargetFret")
+    try:
+        amount = max(0, int(round(float(amount_raw)))) if amount_raw is not None else 0
+    except (TypeError, ValueError):
+        amount = 0
+    try:
+        target_fret = int(round(float(target_raw))) if target_raw is not None else fret + amount
+    except (TypeError, ValueError):
+        target_fret = fret + amount
+
+    token = f"{fret}b"
+    if amount > 0 or target_raw is not None:
+        token += str(target_fret)
+
+    release = bool(event.get("bendRelease")) or "bend-release" in techniques
+    if release:
+        token += f"r{fret}"
+    if "vibrato" in techniques:
+        token += "~"
+    return token
+
+
 def render_event_token(event: dict[str, Any]) -> str:
     fret = int(event["fret"])
-    token = str(fret)
     techniques = _technique_types(event)
 
-    if "bend" in techniques:
-        token += "b"
+    bend_token = _bend_token(event, fret, techniques)
+    if bend_token is not None:
+        token = bend_token
     elif "natural-harmonic" in techniques:
-        token = f"<{token}>"
+        token = f"<{fret}>"
     elif "dead-note" in techniques or "muted-strum" in techniques:
         token = "x"
+    else:
+        token = str(fret)
+        if "vibrato" in techniques:
+            token += "~"
 
     if len(token) > CELL_WIDTH - 1:
         return token[: CELL_WIDTH - 1]
@@ -129,7 +161,7 @@ def build_rhythm_output(
         "candidateCount": int(payload["candidateCount"]),
         "selectedCount": int(payload["selectedCount"]),
         "assembly": deepcopy(payload["assembly"]),
-        "engineVersion": "v143-reference-free-rhythm-output-v1",
+        "engineVersion": "v143-reference-free-rhythm-output-v2",
     }
 
 
