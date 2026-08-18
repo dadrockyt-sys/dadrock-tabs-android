@@ -3,12 +3,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import modal
-
 from v143_intro_stage_diagnostic import (
     DEFAULT_AUDIO_PATH,
     REFERENCE_PATH,
     REPO_ROOT,
+    app,
     grade_stages,
     run_v143_stages,
 )
@@ -21,14 +20,12 @@ CACHE_PATH = (
     / "intro-analysis-cache.json"
 )
 
-# Use a dedicated local-only Modal app for cache capture. The imported stage
-# diagnostic owns its own app and local entrypoint; reusing that app here would
-# register a second entrypoint named "main" and Modal rejects duplicate names.
-capture_app = modal.App("dadrock-v143-intro-cache-capture")
-
-
-@capture_app.local_entrypoint()
-def main(audio_path: str = str(DEFAULT_AUDIO_PATH)) -> None:
+# The remote stage function belongs to the diagnostic app, so this local
+# entrypoint must run that same app in order for run_v143_stages to be hydrated.
+# Give this entrypoint an explicit unique name so it can coexist with the
+# diagnostic module's own local entrypoint without a duplicate-name error.
+@app.local_entrypoint(name="capture_intro_cache")
+def capture_intro_cache(audio_path: str = str(DEFAULT_AUDIO_PATH)) -> None:
     source = Path(audio_path)
     if not source.exists() or source.stat().st_size <= 0:
         raise RuntimeError(f"Audio file missing or empty: {source}")
@@ -67,7 +64,3 @@ def main(audio_path: str = str(DEFAULT_AUDIO_PATH)) -> None:
     print("Production modified: False")
     print("Cache:", CACHE_PATH.relative_to(REPO_ROOT))
     print("READY FOR LOCAL SELECTION/RECONSTRUCTION SWEEPS: True")
-
-
-if __name__ == "__main__":
-    main()
