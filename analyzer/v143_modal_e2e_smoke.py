@@ -8,8 +8,15 @@ from typing import Any
 from v143_modal_live_endpoint import app, rhythm_image
 
 
+# The E2E entrypoint is its own Modal source module. When Modal hydrates the
+# remote function it imports this file again, so the sibling live-endpoint
+# module must also be explicitly present in the function image. The production
+# rhythm image already contains the rest of the frozen V143 source manifest.
+e2e_image = rhythm_image.add_local_python_source("v143_modal_live_endpoint")
+
+
 @app.function(
-    image=rhythm_image,
+    image=e2e_image,
     gpu="L4",
     timeout=1200,
     memory=8192,
