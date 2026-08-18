@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { Globe, ChevronDown } from 'lucide-react';
 import { locales, localeNames, localeFlags } from '@/lib/i18n';
 
 const LANG_STORAGE_KEY = 'dadrock_language';
+const LanguageContext = createContext(null);
 
 const LOCALIZED_ROUTE_ROOTS = new Set([
   'artist',
@@ -20,27 +21,21 @@ const LOCALIZED_ROUTE_ROOTS = new Set([
   'whats-new',
 ]);
 
-// Hook to use language across any component
-export function useLanguage() {
-  const [lang, setLang] = useState('en');
+export function LanguageProvider({ initialLang = 'en', children }) {
+  const safeInitialLang = locales.includes(initialLang) ? initialLang : 'en';
+  const [lang, setLang] = useState(safeInitialLang);
 
   useEffect(() => {
-  const pathLocale = window.location.pathname.split('/')[1];
-
-  if (pathLocale && locales.includes(pathLocale)) {
-    setLang(pathLocale);
-    localStorage.setItem(LANG_STORAGE_KEY, pathLocale);
-    return;
-  }
-setLang('en');
-localStorage.setItem(LANG_STORAGE_KEY, 'en');
-  
-}, []);
+    const pathLocale = window.location.pathname.split('/')[1];
+    const resolvedLang = pathLocale && locales.includes(pathLocale) ? pathLocale : 'en';
+    setLang(resolvedLang);
+    localStorage.setItem(LANG_STORAGE_KEY, resolvedLang);
+  }, []);
 
   const changeLang = useCallback((newLang) => {
+    if (!locales.includes(newLang)) return;
     setLang(newLang);
     localStorage.setItem(LANG_STORAGE_KEY, newLang);
-    // Dispatch custom event so all LanguageSelector instances + pages update
     window.dispatchEvent(new CustomEvent('dadrock-lang-change', { detail: newLang }));
   }, []);
 
@@ -54,7 +49,34 @@ localStorage.setItem(LANG_STORAGE_KEY, 'en');
     return () => window.removeEventListener('dadrock-lang-change', handler);
   }, []);
 
-  return [lang, changeLang];
+  return (
+    <LanguageContext.Provider value={{ lang, changeLang }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+}
+
+// Hook to use language across any component. When rendered beneath the root
+// provider, the first server/client render uses the URL locale immediately.
+export function useLanguage() {
+  const context = useContext(LanguageContext);
+  const [fallbackLang, setFallbackLang] = useState('en');
+
+  useEffect(() => {
+    if (context) return;
+    const pathLocale = window.location.pathname.split('/')[1];
+    setFallbackLang(pathLocale && locales.includes(pathLocale) ? pathLocale : 'en');
+  }, [context]);
+
+  const fallbackChangeLang = useCallback((newLang) => {
+    if (!locales.includes(newLang)) return;
+    setFallbackLang(newLang);
+    localStorage.setItem(LANG_STORAGE_KEY, newLang);
+    window.dispatchEvent(new CustomEvent('dadrock-lang-change', { detail: newLang }));
+  }, []);
+
+  if (context) return [context.lang, context.changeLang];
+  return [fallbackLang, fallbackChangeLang];
 }
 
 export default function LanguageSelector({ onLanguageChange }) {
