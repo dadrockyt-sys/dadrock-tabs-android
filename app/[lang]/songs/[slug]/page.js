@@ -1,6 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import { generateSeoContent } from '@/lib/artistData';
 import { generateAlternates } from '@/lib/seo';
+import { getSeoMeta } from '@/lib/seoTranslations';
 import SongPageClient from '../../../songs/[slug]/SongPageClient';
 import { permanentRedirect, notFound } from 'next/navigation';
 import { artistToSlug } from '@/lib/slugify';
@@ -18,26 +19,42 @@ export async function generateMetadata({ params }) {
     }
 
     const cleanArtist = song.artist?.replace(/\s*-\s*$/, '').trim() || 'DadRock Tabs';
-    const title = `${song.title} Guitar Lesson - ${cleanArtist} | DadRock Tabs`;
-    const description = `Learn "${song.title}" by ${cleanArtist} with a video-based guitar and bass practice lesson featuring synchronized tablature-style guidance, techniques, and practice tips.`;
+    const localizedMeta = getSeoMeta(lang, 'song', {
+      song: song.title,
+      artist: cleanArtist,
+    });
+    const title = localizedMeta.title;
+    let description = localizedMeta.description;
+
+    // Prefer a translated, song-specific meta description when one exists.
+    if (lang !== 'en') {
+      try {
+        const songSeoDoc = await db.collection('song_seo_content').findOne({ slug });
+        const translatedSeo = songSeoDoc?.translations?.[lang];
+        if (translatedSeo?.meta_description) {
+          description = translatedSeo.meta_description;
+        }
+      } catch { /* use localized template */ }
+    }
+
     const thumbUrl = song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`;
     const ogImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(cleanArtist)}&type=song&thumb=${encodeURIComponent(thumbUrl)}`;
 
     return {
       title,
       description,
-      keywords: `${song.title} tab, ${song.title} guitar tab, ${cleanArtist} ${song.title}, how to play ${song.title}, ${cleanArtist} bass tab, ${song.title} lesson, ${cleanArtist} guitar tutorial, free guitar tabs, DadRock Tabs`,
+      keywords: `${song.title}, ${cleanArtist}, guitar tab, bass tab, guitar lesson, bass lesson, DadRock Tabs`,
       openGraph: {
-        title: `${song.title} Guitar Lesson - ${cleanArtist}`,
+        title,
         description,
         type: 'video.other',
         url: `https://dadrocktabs.com/${lang}/songs/${slug}`,
         siteName: 'DadRock Tabs',
-        images: [{ url: ogImage, width: 1200, height: 630, alt: `${song.title} by ${cleanArtist} - Guitar Tab` }],
+        images: [{ url: ogImage, width: 1200, height: 630, alt: `${song.title} - ${cleanArtist}` }],
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${song.title} - ${cleanArtist} | Guitar & Bass Tab`,
+        title,
         description,
         images: [ogImage],
       },
