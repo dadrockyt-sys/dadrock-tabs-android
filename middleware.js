@@ -97,6 +97,15 @@ export function middleware(request) {
   const hostname = request.headers.get('host') || '';
   const pathname = request.nextUrl.pathname;
   const userAgent = request.headers.get('user-agent') || '';
+
+  // Forward the URL locale to Server Components so the root <html lang> can
+  // be rendered correctly in the initial HTML response (not patched client-side).
+  const continueWithLocale = (locale = 'en') => {
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-dadrock-lang', locale);
+    const response = NextResponse.next({ request: { headers: requestHeaders } });
+    return addSecurityHeaders(response);
+  };
   
   // ─── 1. Redirect www to non-www ───
   // Also apply path-level redirects in the same hop to avoid redirect chains
@@ -325,21 +334,18 @@ export function middleware(request) {
     }
   }
 
-  // If no locale matched, add security headers and continue
+  // If no locale matched, add security headers and continue as English
   if (!matchedLocale) {
-    const response = NextResponse.next();
-    return addSecurityHeaders(response);
+    return continueWithLocale('en');
   }
 
   // If it's just the locale root, let [lang]/page.js handle it
   if (!restPath || restPath === '' || restPath === '/') {
-    const response = NextResponse.next();
-    return addSecurityHeaders(response);
+    return continueWithLocale(matchedLocale);
   }
 
   // Let translated subpaths like /es/artist/acdc load normally
-const response = NextResponse.next();
-return addSecurityHeaders(response);
+  return continueWithLocale(matchedLocale);
 }
 
 export const config = {
