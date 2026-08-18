@@ -76,7 +76,7 @@ const websiteJsonLd = {
       'name': 'DadRock Tabs',
       'description': 'Free guitar and bass tabs for classic rock hits. Learn to play Led Zeppelin, AC/DC, Van Halen, Metallica and more.',
       'publisher': { '@id': 'https://dadrocktabs.com/#organization' },
-      'inLanguage': 'en'
+      'inLanguage': locales
     },
     {
       '@type': 'Organization',
