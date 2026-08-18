@@ -2,6 +2,7 @@ import './globals.css';
 import { Suspense } from 'react';
 import { headers } from 'next/headers';
 import { locales } from '@/lib/i18n';
+import { LanguageProvider } from '@/components/LanguageSelector';
 import GAPageTracker from '@/components/GAPageTracker';
 import PlayStoreReviewBanner from '@/components/PlayStoreReviewBanner';
 import FlameTransition from '@/components/FlameTransition';
@@ -99,9 +100,8 @@ const websiteJsonLd = {
 export default async function RootLayout({ children }) {
   const requestHeaders = await headers();
   const requestedLang = requestHeaders.get('x-dadrock-lang') || 'en';
-  const documentLang = locales.includes(requestedLang)
-    ? (requestedLang === 'pt-br' ? 'pt-BR' : requestedLang)
-    : 'en';
+  const routeLang = locales.includes(requestedLang) ? requestedLang : 'en';
+  const documentLang = routeLang === 'pt-br' ? 'pt-BR' : routeLang;
 
   return (
     <html lang={documentLang} className="dark">
@@ -333,13 +333,15 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-screen bg-background antialiased">
-        <FlameTransition />
-        <ExitIntentPopup />
-        <Suspense fallback={null}>
-          <GAPageTracker />
-        </Suspense>
-        <PlayStoreReviewBanner />
-        {children}
+        <LanguageProvider initialLang={routeLang}>
+          <FlameTransition />
+          <ExitIntentPopup />
+          <Suspense fallback={null}>
+            <GAPageTracker />
+          </Suspense>
+          <PlayStoreReviewBanner />
+          {children}
+        </LanguageProvider>
         {/* Service Worker Registration for PWA */}
         <script
           dangerouslySetInnerHTML={{
