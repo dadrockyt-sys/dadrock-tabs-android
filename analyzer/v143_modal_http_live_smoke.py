@@ -15,7 +15,7 @@ probe_image = (
 )
 
 DEFAULT_ENDPOINT = (
-    "https://dadrockyt--dadrock-v143-ai-tab-live-analyze.modal.run"
+    "https://dadrockyt--dadrock-v143-http-bridge-analyze.modal.run"
 )
 
 # Public CC-licensed guitar test fixture described by the Mustango project as an
