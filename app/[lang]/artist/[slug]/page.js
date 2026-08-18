@@ -29,6 +29,20 @@ async function findArtistBySlug(db, slug) {
   return null;
 }
 
+function normalizeArtistSeoCounts(content, slug, lessonCount) {
+  if (!content || slug !== 'black-sabbath' || !Number.isFinite(lessonCount)) {
+    return content;
+  }
+
+  try {
+    return JSON.parse(
+      JSON.stringify(content).replace(/\b75\b/g, String(lessonCount))
+    );
+  } catch {
+    return content;
+  }
+}
+
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const lang = resolvedParams.lang;
@@ -53,6 +67,9 @@ export async function generateMetadata({ params }) {
 
   const artistPattern = result.artistPattern;
   const escapedPattern = artistPattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const lessonCount = await db.collection('videos').countDocuments({
+    artist: { $regex: new RegExp(`^${escapedPattern}`, 'i') }
+  });
 
   let ogImage = 'https://customer-assets.emergentagent.com/job_music-tab-finder/artifacts/qsso7cx0_dadrockmetal.png';
   try {
@@ -70,9 +87,10 @@ export async function generateMetadata({ params }) {
   try {
     const artistSlug = artistToSlug(artistPattern);
     const aiContent = await db.collection('artist_seo_content').findOne({ slug: artistSlug });
-    const localizedContent =
+    const rawLocalizedContent =
       aiContent?.content?.[lang] ||
       (lang === 'en' ? aiContent?.content?.en || aiContent?.content : null);
+    const localizedContent = normalizeArtistSeoCounts(rawLocalizedContent, slug, lessonCount);
 
     if (localizedContent?.meta_description) {
       description = localizedContent.meta_description;
@@ -148,9 +166,10 @@ export default async function ArtistPage({ params }) {
   try {
     const aiDoc = await db.collection('artist_seo_content').findOne({ slug });
     if (aiDoc?.content) {
-      aiSeoContent =
+      const rawAiSeoContent =
         aiDoc.content?.[lang] ||
         (lang === 'en' ? aiDoc.content?.en || aiDoc.content : null);
+      aiSeoContent = normalizeArtistSeoCounts(rawAiSeoContent, slug, videos.length);
     }
   } catch { /* ignore */ }
 
