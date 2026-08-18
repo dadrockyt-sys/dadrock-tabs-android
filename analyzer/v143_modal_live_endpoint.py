@@ -36,10 +36,12 @@ V143_MODULES = (
     "v143_production_separator",
     "v143_reference_free_rhythm_pipeline",
     "v143_reference_free_timing",
+    "v143_rhythm_bend_consensus",
     "v143_rhythm_bend_evidence",
     "v143_rhythm_deterministic_stem_provider",
     "v143_rhythm_event_assembly",
     "v143_rhythm_guitar_note_mapper",
+    "v143_rhythm_legato_evidence",
     "v143_rhythm_output_adapter",
     "v143_rhythm_runtime",
     "v143_rhythm_stem_provider",
@@ -184,10 +186,11 @@ def _legacy_request(payload: dict[str, Any]) -> dict[str, Any]:
 def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
     """Execute one deterministic Rhythm Guitar request inside the Modal L4 worker."""
     from v143_modal_rhythm_router import route_normalized_audio
-    from v143_rhythm_bend_evidence import enrich_router_assembly_with_bends
+    from v143_rhythm_bend_consensus import enrich_router_assembly_with_consensus_bends
     from v143_rhythm_deterministic_stem_provider import (
         build_deterministic_rhythm_stem_bundle,
     )
+    from v143_rhythm_legato_evidence import enrich_router_assembly_with_legato
     from v143_vercel_audio_request_adapter import process_vercel_audio_request
 
     audio_metadata_box: dict[str, Any] = {}
@@ -209,6 +212,12 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
             legacy.inspect_audio_file(str(destination))
         )
 
+    def enrich_rhythm_techniques(assembly: Any, bundle: Any) -> Any:
+        # Strict bend consensus runs first so confirmed bends cannot later be
+        # reclassified as legato. Legato itself also requires both carrier views.
+        with_bends = enrich_router_assembly_with_consensus_bends(assembly, bundle)
+        return enrich_router_assembly_with_legato(with_bends, bundle)
+
     def rhythm_router(
         normalized_path: str | Path,
         transcription_type: str,
@@ -221,7 +230,7 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
             transcription_type,
             legacy_analyzer=legacy_analyzer,
             rhythm_stem_provider=rhythm_stem_provider,
-            assembly_enricher=enrich_router_assembly_with_bends,
+            assembly_enricher=enrich_rhythm_techniques,
         )
 
     result = process_vercel_audio_request(
@@ -241,11 +250,14 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
         "formatName": normalized_metadata_box.get("formatName"),
     }
     result["liveV143"] = {
-        "version": 3,
+        "version": 4,
         "modalGpu": "L4",
         "rhythmOnly": True,
         "referenceFree": True,
-        "bendEvidence": "cross-separated-harmonic-contour",
+        "bendEvidence": "strict-two-view-cross-separated-harmonic-contour",
+        "bendConsensusViews": 2,
+        "legatoEvidence": "strict-two-view-pitch-path-and-reattack",
+        "legatoConsensusViews": 2,
         "separatorDeterministic": True,
         "separatorSeed": 143,
         "demucsShifts": 1,
@@ -274,10 +286,12 @@ def rhythm_dependency_smoke() -> dict[str, Any]:
     from v143_deterministic_separator import PRODUCTION_SEPARATOR_SEED
     from v143_production_engine import V143ProductionEngine
     from v143_production_separator import describe
+    from v143_rhythm_bend_consensus import enrich_router_assembly_with_consensus_bends
     from v143_rhythm_bend_evidence import build_pitch_energy_view
     from v143_rhythm_deterministic_stem_provider import (
         build_deterministic_rhythm_stem_bundle,
     )
+    from v143_rhythm_legato_evidence import enrich_router_assembly_with_legato
 
     engine = V143ProductionEngine()
     separator = describe()
@@ -297,6 +311,8 @@ def rhythm_dependency_smoke() -> dict[str, Any]:
         "soundfileImported": bool(soundfile),
         "basicPitchImported": bool(_predict),
         "bendEvidenceImported": bool(build_pitch_energy_view),
+        "bendConsensusImported": bool(enrich_router_assembly_with_consensus_bends),
+        "legatoEvidenceImported": bool(enrich_router_assembly_with_legato),
         "deterministicProviderImported": bool(build_deterministic_rhythm_stem_bundle),
         "deterministicSeparatorSeed": PRODUCTION_SEPARATOR_SEED,
         "featureCount": len(engine.feature_names),
