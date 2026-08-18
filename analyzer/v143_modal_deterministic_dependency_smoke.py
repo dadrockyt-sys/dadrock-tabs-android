@@ -22,6 +22,11 @@ def main() -> None:
         "pkgResourcesImported": result.get("pkgResourcesImported") is True,
         "basicPitchImported": result.get("basicPitchImported") is True,
         "bendEvidenceImported": result.get("bendEvidenceImported") is True,
+        "bendConsensusImported": result.get("bendConsensusImported") is True,
+        "legatoEvidenceImported": result.get("legatoEvidenceImported") is True,
+        "deterministicProviderImported": result.get("deterministicProviderImported") is True,
+        "deterministicSeed143": int(result.get("deterministicSeparatorSeed") or 0) == 143,
+        "demucsShifts1": int(result.get("demucsShifts") or 0) == 1,
     }
 
     print()
@@ -30,7 +35,7 @@ def main() -> None:
         print(f"{label}: {value}")
 
     ready = all(checks.values())
-    print(f"READY FOR DETERMINISTIC MODAL DEPLOY: {ready}")
+    print(f"READY FOR STRICT DETERMINISTIC MODAL DEPLOY: {ready}")
 
     if not ready:
         raise SystemExit(1)
