@@ -30,18 +30,22 @@ V143_MODULES = (
     "modal_analyzer",
     "v143_ai_tab_gpu_worker",
     "v143_candidate_timing_adapter",
+    "v143_deterministic_separator",
     "v143_modal_rhythm_router",
     "v143_production_engine",
     "v143_production_separator",
     "v143_reference_free_rhythm_pipeline",
     "v143_reference_free_timing",
     "v143_rhythm_bend_evidence",
+    "v143_rhythm_deterministic_stem_provider",
     "v143_rhythm_event_assembly",
     "v143_rhythm_guitar_note_mapper",
     "v143_rhythm_output_adapter",
     "v143_rhythm_runtime",
     "v143_rhythm_stem_provider",
     "v143_rhythm_sustain_technique_enricher",
+    "v143_seeded_audio_separator_cli",
+    "v143_seeded_separator",
     "v143_vercel_audio_request_adapter",
 )
 
@@ -178,10 +182,12 @@ def _legacy_request(payload: dict[str, Any]) -> dict[str, Any]:
     memory=8192,
 )
 def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
-    """Execute one real Rhythm Guitar request entirely inside the Modal L4 worker."""
+    """Execute one deterministic Rhythm Guitar request inside the Modal L4 worker."""
     from v143_modal_rhythm_router import route_normalized_audio
     from v143_rhythm_bend_evidence import enrich_router_assembly_with_bends
-    from v143_rhythm_stem_provider import build_rhythm_stem_bundle
+    from v143_rhythm_deterministic_stem_provider import (
+        build_deterministic_rhythm_stem_bundle,
+    )
     from v143_vercel_audio_request_adapter import process_vercel_audio_request
 
     audio_metadata_box: dict[str, Any] = {}
@@ -223,7 +229,7 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
         download_blob=download_blob,
         normalize_audio=normalize_audio,
         legacy_analyzer=legacy.analyze_audio_file,
-        rhythm_stem_provider=build_rhythm_stem_bundle,
+        rhythm_stem_provider=build_deterministic_rhythm_stem_bundle,
         rhythm_router=rhythm_router,
     )
 
@@ -235,11 +241,14 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
         "formatName": normalized_metadata_box.get("formatName"),
     }
     result["liveV143"] = {
-        "version": 2,
+        "version": 3,
         "modalGpu": "L4",
         "rhythmOnly": True,
         "referenceFree": True,
         "bendEvidence": "cross-separated-harmonic-contour",
+        "separatorDeterministic": True,
+        "separatorSeed": 143,
+        "demucsShifts": 1,
         "professionalReferenceUsed": False,
         "runtimeLabelsRequired": False,
     }
@@ -253,7 +262,7 @@ def rhythm_v143_request(payload: dict[str, Any]) -> dict[str, Any]:
     memory=8192,
 )
 def rhythm_dependency_smoke() -> dict[str, Any]:
-    """Prove the deploy image can import the separator and frozen V143 stack."""
+    """Prove the deploy image can import the deterministic separator and V143 stack."""
     import librosa
     import numpy as np
     import pkg_resources
@@ -262,9 +271,13 @@ def rhythm_dependency_smoke() -> dict[str, Any]:
     import soundfile
     import torch
     from basic_pitch.inference import predict as _predict
+    from v143_deterministic_separator import PRODUCTION_SEPARATOR_SEED
     from v143_production_engine import V143ProductionEngine
     from v143_production_separator import describe
     from v143_rhythm_bend_evidence import build_pitch_energy_view
+    from v143_rhythm_deterministic_stem_provider import (
+        build_deterministic_rhythm_stem_bundle,
+    )
 
     engine = V143ProductionEngine()
     separator = describe()
@@ -284,8 +297,11 @@ def rhythm_dependency_smoke() -> dict[str, Any]:
         "soundfileImported": bool(soundfile),
         "basicPitchImported": bool(_predict),
         "bendEvidenceImported": bool(build_pitch_energy_view),
+        "deterministicProviderImported": bool(build_deterministic_rhythm_stem_bundle),
+        "deterministicSeparatorSeed": PRODUCTION_SEPARATOR_SEED,
         "featureCount": len(engine.feature_names),
         "referenceFree": separator.get("referenceFree") is True,
         "demucsModel": separator.get("demucsModel"),
         "bsRoformerModel": separator.get("bsRoformerModel"),
+        "demucsShifts": separator.get("demucsShifts"),
     }
