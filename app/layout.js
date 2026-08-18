@@ -1,5 +1,6 @@
 import './globals.css';
 import { Suspense } from 'react';
+import { headers } from 'next/headers';
 import { locales } from '@/lib/i18n';
 import GAPageTracker from '@/components/GAPageTracker';
 import PlayStoreReviewBanner from '@/components/PlayStoreReviewBanner';
@@ -95,9 +96,15 @@ const websiteJsonLd = {
   ]
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const requestHeaders = await headers();
+  const requestedLang = requestHeaders.get('x-dadrock-lang') || 'en';
+  const documentLang = locales.includes(requestedLang)
+    ? (requestedLang === 'pt-br' ? 'pt-BR' : requestedLang)
+    : 'en';
+
   return (
-    <html lang="en" className="dark">
+    <html lang={documentLang} className="dark">
       <head>
         {/* 
           IMPORTANT: Do NOT add <link rel="canonical"> or hreflang tags here.
