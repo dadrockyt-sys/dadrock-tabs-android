@@ -3,11 +3,12 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import modal
+
 from v143_intro_stage_diagnostic import (
     DEFAULT_AUDIO_PATH,
     REFERENCE_PATH,
     REPO_ROOT,
-    app,
     grade_stages,
     run_v143_stages,
 )
@@ -20,8 +21,13 @@ CACHE_PATH = (
     / "intro-analysis-cache.json"
 )
 
+# Use a dedicated local-only Modal app for cache capture. The imported stage
+# diagnostic owns its own app and local entrypoint; reusing that app here would
+# register a second entrypoint named "main" and Modal rejects duplicate names.
+capture_app = modal.App("dadrock-v143-intro-cache-capture")
 
-@app.local_entrypoint()
+
+@capture_app.local_entrypoint()
 def main(audio_path: str = str(DEFAULT_AUDIO_PATH)) -> None:
     source = Path(audio_path)
     if not source.exists() or source.stat().st_size <= 0:
