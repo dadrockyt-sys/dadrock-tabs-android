@@ -8,6 +8,11 @@ import modal
 
 from v143_modal_live_endpoint import rhythm_image
 
+# The spectral capture reuses the production Rhythm image, but Modal must also
+# package the module that constructs that image because this file imports it at
+# remote container import time.
+rhythm_image = rhythm_image.add_local_python_source("v143_modal_live_endpoint")
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_AUDIO_PATH = REPO_ROOT / "public" / "gomywayfullaitest.m4a"
