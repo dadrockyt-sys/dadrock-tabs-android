@@ -2,18 +2,26 @@ import { getDb } from '@/lib/mongodb';
 import { generateSeoContent } from '@/lib/artistData';
 import { generateAlternates } from '@/lib/seo';
 import { getSeoMeta } from '@/lib/seoTranslations';
+import { getSubPageTranslation } from '@/lib/subPageI18n';
 import SongPageClient from '../../../songs/[slug]/SongPageClient';
 import { permanentRedirect, notFound } from 'next/navigation';
 import { artistToSlug } from '@/lib/slugify';
 
-// Generate metadata for SEO
+function cleanLocalizedDescription(lang, value) {
+  if (!value) return value;
+  if (lang === 'es') {
+    return value.replace(/lezión/gi, 'lección');
+  }
+  return value;
+}
+
 export async function generateMetadata({ params }) {
   const { lang, slug } = await params;
-  
+
   try {
     const db = await getDb();
     const song = await db.collection('song_pages').findOne({ slug });
-    
+
     if (!song) {
       return { title: 'Song Not Found | DadRock Tabs' };
     }
@@ -26,7 +34,6 @@ export async function generateMetadata({ params }) {
     const title = localizedMeta.title;
     let description = localizedMeta.description;
 
-    // Prefer a translated, song-specific meta description when one exists.
     if (lang !== 'en') {
       try {
         const songSeoDoc = await db.collection('song_seo_content').findOne({ slug });
@@ -36,6 +43,8 @@ export async function generateMetadata({ params }) {
         }
       } catch { /* use localized template */ }
     }
+
+    description = cleanLocalizedDescription(lang, description);
 
     const thumbUrl = song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`;
     const ogImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(cleanArtist)}&type=song&thumb=${encodeURIComponent(thumbUrl)}`;
@@ -65,16 +74,13 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// Helper: try to find artist slug from a song slug like "van-halen-best-of-both-worlds"
 async function findArtistFromSongSlug(db, songSlug) {
   const allArtists = await db.collection('videos').distinct('artist');
-  // Generate slugs for all artists and find which one the song slug starts with
-  // Sort by slug length descending so we match the longest (most specific) artist first
   const artistSlugs = allArtists
     .map(a => ({ name: a, slug: artistToSlug(a) }))
-    .filter(a => a.slug) // remove empty
+    .filter(a => a.slug)
     .sort((a, b) => b.slug.length - a.slug.length);
-  
+
   for (const { slug: aSlug } of artistSlugs) {
     if (songSlug.startsWith(aSlug + '-') || songSlug === aSlug) {
       return aSlug;
@@ -85,10 +91,11 @@ async function findArtistFromSongSlug(db, songSlug) {
 
 export default async function SongPage({ params }) {
   const { lang, slug } = await params;
-  
+  const t = getSubPageTranslation(lang);
+
   const db = await getDb();
   const song = await db.collection('song_pages').findOne({ slug });
-  
+
   if (!song) {
     const savedRedirect = await db.collection('song_redirects').findOne(
       { slug },
@@ -103,8 +110,6 @@ export default async function SongPage({ params }) {
       permanentRedirect(localizedTarget);
     }
 
-    // Historical song pages may predate the redirect registry. Recover only
-    // when the slug prefix matches a real current artist, preserving locale.
     const artistSlug = await findArtistFromSongSlug(db, slug);
     if (artistSlug) {
       const target = lang && lang !== 'en'
@@ -120,16 +125,13 @@ export default async function SongPage({ params }) {
   let aiSeoContent = null;
 
   try {
-    // Fetch AI-generated SEO content (server-side for SSR)
     try {
       const aiDoc = await db.collection('song_seo_content').findOne({ slug });
-
-if (aiDoc?.content) {
-  aiSeoContent = aiDoc.content;
-}
+      if (aiDoc?.content) {
+        aiSeoContent = aiDoc.content;
+      }
     } catch { /* ignore */ }
 
-    // Fetch ad settings
     const settings = await db.collection('settings').findOne({ type: 'site' });
     adSettings = {
       ad_link: settings?.ad_link || 'https://my-store-b8bb42.creator-spring.com/',
@@ -148,130 +150,153 @@ if (aiDoc?.content) {
   let seoContent = generateSeoContent(song.title, song.artist);
 
   if (lang !== 'en') {
-  const songSeoDoc = await db.collection('song_seo_content').findOne({
-    slug: song.slug
+    const songSeoDoc = await db.collection('song_seo_content').findOne({ slug: song.slug });
+    if (songSeoDoc?.translations?.[lang]) {
+      seoContent = songSeoDoc.translations[lang];
+    }
+  }
+
+  if (seoContent?.meta_description) {
+    seoContent = {
+      ...seoContent,
+      meta_description: cleanLocalizedDescription(lang, seoContent.meta_description),
+    };
+  }
+
+  const localizedMeta = getSeoMeta(lang, 'song', {
+    song: song.title,
+    artist: cleanArtist,
   });
+  const schemaDescription = cleanLocalizedDescription(
+    lang,
+    seoContent?.meta_description || localizedMeta.description
+  );
 
-  if (songSeoDoc?.translations?.[lang]) {
-    seoContent = songSeoDoc.translations[lang];
-  }
-  }
-
-  // JSON-LD Schema — MusicRecording + VideoObject + BreadcrumbList + HowTo
   const durationMinutes = song.duration ? Math.floor(song.duration / 60) : 5;
   const localizedHomeUrl = `https://dadrocktabs.com/${lang}`;
   const localizedArtistUrl = `https://dadrocktabs.com/${lang}/artist/${artistToSlug(cleanArtist)}`;
   const localizedSongUrl = `https://dadrocktabs.com/${lang}/songs/${slug}`;
+
+  const schemaGraph = [
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': t.home,
+          'item': localizedHomeUrl
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': cleanArtist,
+          'item': localizedArtistUrl
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': song.title,
+          'item': localizedSongUrl
+        }
+      ]
+    },
+    {
+      '@type': 'MusicRecording',
+      'name': song.title,
+      'byArtist': {
+        '@type': 'MusicGroup',
+        'name': cleanArtist,
+        'url': localizedArtistUrl
+      },
+      'genre': 'Rock',
+      'url': localizedSongUrl,
+      'description': schemaDescription,
+      'inLanguage': lang,
+    },
+    {
+      '@type': 'VideoObject',
+      'name': localizedMeta.title,
+      'description': schemaDescription,
+      'thumbnailUrl': song.thumbnail,
+      'uploadDate': song.publishedAt || undefined,
+      'embedUrl': `https://www.youtube.com/embed/${song.videoId}`,
+      'duration': song.duration ? `PT${Math.floor(song.duration / 60)}M${song.duration % 60}S` : undefined,
+      'inLanguage': lang,
+      'interactionStatistic': {
+        '@type': 'InteractionCounter',
+        'interactionType': { '@type': 'WatchAction' },
+        'userInteractionCount': song.viewCount || 0,
+      },
+      'publisher': { '@id': 'https://dadrocktabs.com/#organization' },
+    },
+  ];
+
+  // Keep the detailed HowTo schema on the English page only. The translated
+  // pages use localized MusicRecording/VideoObject schema rather than mixing
+  // English HowTo instructions into otherwise localized documents.
+  if (lang === 'en') {
+    schemaGraph.push({
+      '@type': 'HowTo',
+      'name': `How to Play "${song.title}" by ${cleanArtist} on Guitar`,
+      'description': `Step-by-step guide to learning "${song.title}" by ${cleanArtist} using free guitar and bass tablature video lessons from DadRock Tabs.`,
+      'totalTime': `PT${durationMinutes + 15}M`,
+      'estimatedCost': { '@type': 'MonetaryAmount', 'currency': 'USD', 'value': '0' },
+      'supply': [
+        { '@type': 'HowToSupply', 'name': 'Electric or acoustic guitar' },
+        { '@type': 'HowToSupply', 'name': 'Guitar pick' },
+        { '@type': 'HowToSupply', 'name': 'Guitar amplifier (optional)' }
+      ],
+      'tool': [
+        { '@type': 'HowToTool', 'name': 'Computer or smartphone for video playback' },
+        { '@type': 'HowToTool', 'name': 'Guitar tuner' }
+      ],
+      'step': [
+        {
+          '@type': 'HowToStep',
+          'position': 1,
+          'name': 'Watch the Full Lesson',
+          'text': `Start by watching the complete tab tutorial video for "${song.title}" by ${cleanArtist} to get familiar with the song structure, riffs, and overall feel.`,
+          'url': localizedSongUrl,
+          'image': song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`,
+        },
+        {
+          '@type': 'HowToStep',
+          'position': 2,
+          'name': 'Learn the Main Riff',
+          'text': `Focus on the main guitar riff of "${song.title}". Follow the on-screen tablature notation, playing each note slowly. Pay attention to the picking pattern and timing.`,
+          'url': localizedSongUrl,
+        },
+        {
+          '@type': 'HowToStep',
+          'position': 3,
+          'name': 'Practice at Slow Tempo',
+          'text': `Use YouTube's playback speed controls to slow the video to 0.5x or 0.75x speed. Practice each section until you can play it cleanly without mistakes.`,
+          'url': localizedSongUrl,
+        },
+        {
+          '@type': 'HowToStep',
+          'position': 4,
+          'name': 'Build Up to Full Speed',
+          'text': `Gradually increase the playback speed as you get comfortable. Work through the verse, chorus, and bridge sections until you can play the full song at normal tempo.`,
+          'url': localizedSongUrl,
+        },
+        {
+          '@type': 'HowToStep',
+          'position': 5,
+          'name': 'Play Along with the Recording',
+          'text': `Once you've mastered the tab, play along with the original ${cleanArtist} recording to test your timing and feel. Congratulations — you've learned "${song.title}"!`,
+          'url': localizedSongUrl,
+        }
+      ],
+      'image': song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`,
+      'url': localizedSongUrl,
+    });
+  }
+
   const schema = {
     '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        'itemListElement': [
-          {
-            '@type': 'ListItem',
-            'position': 1,
-            'name': 'Home',
-            'item': localizedHomeUrl
-          },
-          {
-            '@type': 'ListItem',
-            'position': 2,
-            'name': `${cleanArtist} Tabs`,
-            'item': localizedArtistUrl
-          },
-          {
-            '@type': 'ListItem',
-            'position': 3,
-            'name': song.title,
-            'item': localizedSongUrl
-          }
-        ]
-      },
-      {
-        '@type': 'MusicRecording',
-        'name': song.title,
-        'byArtist': {
-          '@type': 'MusicGroup',
-          'name': cleanArtist,
-          'url': localizedArtistUrl
-        },
-        'genre': 'Rock',
-        'url': localizedSongUrl,
-        'description': `Learn to play ${song.title} by ${cleanArtist} with free guitar and bass tablature.`
-      },
-      {
-        '@type': 'VideoObject',
-        'name': `${song.title} - ${cleanArtist} Guitar & Bass Tab Tutorial`,
-        'description': `Learn to play ${song.title} by ${cleanArtist} with this step-by-step guitar and bass tablature video lesson. Free tutorial from DadRock Tabs.`,
-        'thumbnailUrl': song.thumbnail,
-        'uploadDate': song.publishedAt || undefined,
-        'embedUrl': `https://www.youtube.com/embed/${song.videoId}`,
-        'duration': song.duration ? `PT${Math.floor(song.duration / 60)}M${song.duration % 60}S` : undefined,
-        'interactionStatistic': {
-          '@type': 'InteractionCounter',
-          'interactionType': { '@type': 'WatchAction' },
-          'userInteractionCount': song.viewCount || 0,
-        },
-        'publisher': { '@id': 'https://dadrocktabs.com/#organization' },
-      },
-      {
-        '@type': 'HowTo',
-        'name': `How to Play "${song.title}" by ${cleanArtist} on Guitar`,
-        'description': `Step-by-step guide to learning "${song.title}" by ${cleanArtist} using free guitar and bass tablature video lessons from DadRock Tabs.`,
-        'totalTime': `PT${durationMinutes + 15}M`,
-        'estimatedCost': { '@type': 'MonetaryAmount', 'currency': 'USD', 'value': '0' },
-        'supply': [
-          { '@type': 'HowToSupply', 'name': 'Electric or acoustic guitar' },
-          { '@type': 'HowToSupply', 'name': 'Guitar pick' },
-          { '@type': 'HowToSupply', 'name': 'Guitar amplifier (optional)' }
-        ],
-        'tool': [
-          { '@type': 'HowToTool', 'name': 'Computer or smartphone for video playback' },
-          { '@type': 'HowToTool', 'name': 'Guitar tuner' }
-        ],
-        'step': [
-          {
-            '@type': 'HowToStep',
-            'position': 1,
-            'name': 'Watch the Full Lesson',
-            'text': `Start by watching the complete tab tutorial video for "${song.title}" by ${cleanArtist} to get familiar with the song structure, riffs, and overall feel.`,
-            'url': localizedSongUrl,
-            'image': song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`,
-          },
-          {
-            '@type': 'HowToStep',
-            'position': 2,
-            'name': 'Learn the Main Riff',
-            'text': `Focus on the main guitar riff of "${song.title}". Follow the on-screen tablature notation, playing each note slowly. Pay attention to the picking pattern and timing.`,
-            'url': localizedSongUrl,
-          },
-          {
-            '@type': 'HowToStep',
-            'position': 3,
-            'name': 'Practice at Slow Tempo',
-            'text': `Use YouTube's playback speed controls to slow the video to 0.5x or 0.75x speed. Practice each section until you can play it cleanly without mistakes.`,
-            'url': localizedSongUrl,
-          },
-          {
-            '@type': 'HowToStep',
-            'position': 4,
-            'name': 'Build Up to Full Speed',
-            'text': `Gradually increase the playback speed as you get comfortable. Work through the verse, chorus, and bridge sections until you can play the full song at normal tempo.`,
-            'url': localizedSongUrl,
-          },
-          {
-            '@type': 'HowToStep',
-            'position': 5,
-            'name': 'Play Along with the Recording',
-            'text': `Once you've mastered the tab, play along with the original ${cleanArtist} recording to test your timing and feel. Congratulations — you've learned "${song.title}"!`,
-            'url': localizedSongUrl,
-          }
-        ],
-        'image': song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`,
-        'url': localizedSongUrl,
-      }
-    ]
+    '@graph': schemaGraph,
   };
 
   const songData = {
@@ -286,17 +311,16 @@ if (aiDoc?.content) {
     duration: song.duration || 0,
   };
 
-  // Fetch more songs by the same artist for internal linking
   let moreSongsByArtist = [];
   try {
     const artistSongs = await db.collection('song_pages')
-      .find({ 
+      .find({
         artist: { $regex: new RegExp(`^${cleanArtist.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i') },
-        slug: { $ne: slug } // Exclude current song
+        slug: { $ne: slug }
       })
       .limit(6)
       .toArray();
-    
+
     moreSongsByArtist = artistSongs.map(s => ({
       slug: s.slug,
       title: s.title,
@@ -312,13 +336,13 @@ if (aiDoc?.content) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <SongPageClient
-  song={songData}
-  seoContent={seoContent}
-  adSettings={adSettings}
-  initialAiContent={aiSeoContent}
-  moreSongs={moreSongsByArtist}
-  currentLang={lang}
-/>
+        song={songData}
+        seoContent={seoContent}
+        adSettings={adSettings}
+        initialAiContent={aiSeoContent}
+        moreSongs={moreSongsByArtist}
+        currentLang={lang}
+      />
     </>
   );
 }
