@@ -91,10 +91,18 @@ def probe_live_http(
         "requestedPart": routing.get("requestedPart"),
         "vercelHandoffRequestedPart": handoff.get("requestedPart"),
         "normalizedBeforeRouting": handoff.get("normalizedBeforeRouting"),
+        "liveVersion": live.get("version"),
         "referenceFree": live.get("referenceFree"),
         "professionalReferenceUsed": live.get("professionalReferenceUsed"),
         "runtimeLabelsRequired": live.get("runtimeLabelsRequired"),
         "modalGpu": live.get("modalGpu"),
+        "separatorDeterministic": live.get("separatorDeterministic"),
+        "separatorSeed": live.get("separatorSeed"),
+        "demucsShifts": live.get("demucsShifts"),
+        "bendConsensusViews": live.get("bendConsensusViews"),
+        "legatoConsensusViews": live.get("legatoConsensusViews"),
+        "bendEvidence": live.get("bendEvidence"),
+        "legatoEvidence": live.get("legatoEvidence"),
     }
 
     required_true = (
@@ -105,11 +113,18 @@ def probe_live_http(
         and result["requestedPart"] == "rhythm"
         and result["vercelHandoffRequestedPart"] == "rhythm"
         and result["normalizedBeforeRouting"] is True
+        and result["liveVersion"] == 4
         and result["referenceFree"] is True
         and result["professionalReferenceUsed"] is False
         and result["runtimeLabelsRequired"] is False
         and result["modalGpu"] == "L4"
+        and result["separatorDeterministic"] is True
+        and result["separatorSeed"] == 143
+        and result["demucsShifts"] == 1
+        and result["bendConsensusViews"] == 2
+        and result["legatoConsensusViews"] == 2
     )
+    result["readyForDeterministicStrictV143"] = bool(required_true)
     result["readyForVercelCanary"] = bool(required_true)
     return result
 
@@ -124,5 +139,7 @@ def main(
     print()
     print("=== V143 LIVE HTTP SMOKE COMPLETE ===")
     print(json.dumps(result, indent=2, default=str))
-    if result.get("readyForVercelCanary") is not True:
-        raise RuntimeError("Live V143 HTTP smoke did not satisfy the canary gate")
+    if result.get("readyForDeterministicStrictV143") is not True:
+        raise RuntimeError(
+            "Live V143 HTTP smoke did not satisfy the deterministic strict-v4 gate"
+        )
