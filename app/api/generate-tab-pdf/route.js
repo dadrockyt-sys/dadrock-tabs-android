@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { resend } from '@/lib/resend';
-import { createTabPdf } from '@/lib/createTabPdfPolished';
+import { createAiTabPdf } from '@/lib/createAiTabPdf';
+import { projectV143RenderEvents } from '@/lib/v143RenderContract';
 import { getDb } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
@@ -218,6 +219,8 @@ export async function POST(request) {
     const timeSignature =
       cleanText(body?.timeSignature, 20) || '4/4';
     const keySignature = cleanText(body?.keySignature, 40);
+    const analysisEngine = cleanText(body?.analysisEngine, 80);
+    const renderEvents = projectV143RenderEvents(body?.renderEvents);
 
     const emailIsValid =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail);
@@ -290,7 +293,7 @@ export async function POST(request) {
       });
     }
 
-    const pdfBytes = await createTabPdf({
+    const pdfBytes = await createAiTabPdf({
       song,
       artist,
       transcriptionType,
@@ -299,6 +302,8 @@ export async function POST(request) {
       tempo,
       timeSignature,
       keySignature,
+      analysisEngine,
+      renderEvents,
       preview: false,
     });
 
