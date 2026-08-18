@@ -5,6 +5,7 @@ import ArtistPageClient from './ArtistPageClient';
 import { locales } from '@/lib/i18n';
 import { getSubPageTranslation } from '@/lib/subPageI18n';
 import { generateAlternates } from '@/lib/seo';
+import { getSeoMeta } from '@/lib/seoTranslations';
 
 // Find artist name from slug by checking the database
 // This handles cases where slugToArtistPattern can't reverse the slug correctly
@@ -71,21 +72,22 @@ if (!locales.includes(lang)) {
     if (firstVideo?.thumbnail) ogImage = firstVideo.thumbnail;
   } catch { /* use default */ }
   
-  const title = `${artistPattern} Guitar & Bass Tabs - ${videoCount} Free Lessons | DadRock Tabs`;
+  const localizedMeta = getSeoMeta(lang, 'artist', { artist: artistPattern });
+  const title = localizedMeta.title;
+  let description = localizedMeta.description;
   
-  // Try to use AI-generated meta description if available
-  let description;
+  // Prefer a translated, artist-specific meta description when one exists.
   try {
-    const artistSlug = (await import('@/lib/slugify')).artistToSlug(artistPattern);
+    const artistSlug = artistToSlug(artistPattern);
     const aiContent = await db.collection('artist_seo_content').findOne({ slug: artistSlug });
-    if (aiContent?.content?.meta_description) {
-      description = aiContent.content.meta_description;
+    const localizedContent =
+      aiContent?.content?.[lang] ||
+      (lang === 'en' ? aiContent?.content?.en || aiContent?.content : null);
+
+    if (localizedContent?.meta_description) {
+      description = localizedContent.meta_description;
     }
-  } catch { /* ignore */ }
-  
-  if (!description) {
-    description = `Learn ${videoCount} songs by ${artistPattern} with free guitar and bass tab video lessons. Step-by-step tutorials perfect for beginner and intermediate players. Start playing ${artistPattern} riffs today!`;
-  }
+  } catch { /* use localized template */ }
   
   const localizedArtistUrl = `https://dadrocktabs.com/${lang}/artist/${slug}`;
   const dynamicOgImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(artistPattern)}&type=artist&thumb=${encodeURIComponent(ogImage)}`;
@@ -93,9 +95,9 @@ if (!locales.includes(lang)) {
   return {
     title,
     description,
-    keywords: `${artistPattern} tabs, ${artistPattern} guitar tabs, ${artistPattern} bass tabs, learn ${artistPattern} songs, ${artistPattern} tab lessons, how to play ${artistPattern}, ${artistPattern} riffs, classic rock tabs, free guitar tabs`,
+    keywords: `${artistPattern}, guitar tabs, bass tabs, guitar lessons, bass lessons, rock tabs, DadRock Tabs`,
     openGraph: {
-      title: `${artistPattern} - Free Guitar & Bass Tab Lessons`,
+      title,
       description,
       type: 'website',
       url: localizedArtistUrl,
@@ -104,7 +106,7 @@ if (!locales.includes(lang)) {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${artistPattern} Guitar & Bass Tabs - ${videoCount} Free Lessons`,
+      title,
       description,
       images: [dynamicOgImage],
     },
