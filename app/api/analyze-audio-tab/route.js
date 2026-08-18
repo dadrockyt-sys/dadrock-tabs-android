@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
-export const maxDuration = 300;
+export const maxDuration = 600;
 
 const ALLOWED_TRANSCRIPTION_TYPES = [
   'lead',
