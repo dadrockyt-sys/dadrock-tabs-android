@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { Search, X, Music, User, Loader2 } from 'lucide-react';
 
 const searchCopy = {
@@ -31,10 +31,14 @@ export default function SearchBar({ variant = 'full', placeholder = null, curren
   const dropdownRef = useRef(null);
   const debounceRef = useRef(null);
   const router = useRouter();
-  const prefix = currentLang === 'en' ? '' : `/${currentLang}`;
-  const copy = searchCopy[currentLang] || searchCopy.en;
+  const pathname = usePathname() || '/';
+  const routeSegment = pathname.split('/').filter(Boolean)[0] || 'en';
+  const routeLang = searchCopy[routeSegment] ? routeSegment : 'en';
+  const effectiveLang = currentLang !== 'en' ? currentLang : routeLang;
+  const prefix = effectiveLang === 'en' ? '' : `/${effectiveLang}`;
+  const copy = searchCopy[effectiveLang] || searchCopy.en;
   const isLegacyEnglishPlaceholder = placeholder === searchCopy.en.placeholder;
-  const effectivePlaceholder = currentLang !== 'en' && (!placeholder || isLegacyEnglishPlaceholder)
+  const effectivePlaceholder = effectiveLang !== 'en' && (!placeholder || isLegacyEnglishPlaceholder)
     ? copy.placeholder
     : (placeholder || copy.placeholder);
 
