@@ -1,6 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import QuickiesClient from '../../quickies/QuickiesClient';
 import { generateAlternates } from '@/lib/seo';
+import { getSeoMeta } from '@/lib/seoTranslations';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,21 +11,26 @@ export async function generateMetadata({ params }) {
   const pageUrl = lang === 'en'
     ? 'https://dadrocktabs.com/quickies'
     : `https://dadrocktabs.com/${lang}/quickies`;
+  const localizedMeta = getSeoMeta(lang, 'quickies');
 
   return {
-    title: 'DadRock Tabs Quickies - Quick Guitar & Bass Lessons | DadRock Tabs',
-    description: 'Quick guitar and bass tab lessons from DadRock Tabs. Short, focused tutorials that get you playing classic rock and heavy metal riffs fast.',
+    title: localizedMeta.title,
+    description: localizedMeta.description,
     openGraph: {
-      title: 'DadRock Tabs Quickies - Quick Guitar & Bass Lessons',
-      description: 'Quick guitar and bass tab lessons — short, sweet, and straight to the riff!',
+      title: localizedMeta.title,
+      description: localizedMeta.description,
       type: 'website',
       url: pageUrl,
       siteName: 'DadRock Tabs',
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: localizedMeta.title,
+      description: localizedMeta.description,
+    },
     alternates: generateAlternates('/quickies', lang),
   };
 }
-
 
 export default async function QuickiesPage({ params }) {
   const resolvedParams = await params;
