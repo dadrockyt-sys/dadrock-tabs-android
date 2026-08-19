@@ -1,0 +1,42 @@
+{
+  "model": "v143-correlation-safe-sequence-event-model",
+  "bestValidationConfiguration": {
+    "pcaComponents": 24,
+    "l2": 0.001,
+    "threshold": 0.35,
+    "objective": 96.875
+  },
+  "validationLocation": {
+    "predicted": 32,
+    "reference": 32,
+    "tp": 31,
+    "fp": 1,
+    "fn": 1,
+    "precision": 0.96875,
+    "recall": 0.96875,
+    "f1": 0.96875
+  },
+  "developmentLocation": {
+    "predicted": 98,
+    "reference": 96,
+    "tp": 90,
+    "fp": 8,
+    "fn": 6,
+    "precision": 0.9183673469387755,
+    "recall": 0.9375,
+    "f1": 0.9278350515463918
+  },
+  "diagnosticLocation13to16": {
+    "predicted": 35,
+    "reference": 32,
+    "tp": 32,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.9142857142857143,
+    "recall": 1.0,
+    "f1": 0.955223880597015
+  },
+  "verse1ReferenceUsedForTraining": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false
+}
