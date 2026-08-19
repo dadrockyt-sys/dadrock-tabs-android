@@ -43,6 +43,92 @@ function normalizeArtistSeoCounts(content, slug, lessonCount) {
   }
 }
 
+function normalizeForComparison(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function looksLikeUntranslatedEnglish(value, englishValue) {
+  const text = String(value || '').trim();
+  const english = String(englishValue || '').trim();
+  if (!text || !english) return false;
+
+  const normalizedText = normalizeForComparison(text);
+  const normalizedEnglish = normalizeForComparison(english);
+
+  if (normalizedText.length >= 40 && normalizedEnglish.includes(normalizedText)) {
+    return true;
+  }
+
+  const latinChars = (text.match(/[A-Za-z]/g) || []).length;
+  const letterChars = (text.match(/\p{L}/gu) || []).length;
+  const mostlyLatin = letterChars > 0 && latinChars / letterChars > 0.65;
+  if (!mostlyLatin) return false;
+
+  const candidateWords = normalizedText
+    .split(/\s+/)
+    .filter(word => word.length > 4);
+  if (candidateWords.length < 8) return false;
+
+  const englishWords = new Set(
+    normalizedEnglish
+      .split(/\s+/)
+      .filter(word => word.length > 4)
+  );
+  const matchingWords = candidateWords.filter(word => englishWords.has(word));
+
+  return matchingWords.length / candidateWords.length >= 0.8;
+}
+
+function sanitizeLocalizedString(value, englishValue) {
+  if (typeof value !== 'string') return value;
+
+  const paragraphs = value
+    .split(/\n+/)
+    .map(part => part.trim())
+    .filter(Boolean)
+    .filter(part => !looksLikeUntranslatedEnglish(part, englishValue));
+
+  return paragraphs.length ? paragraphs.join('\n') : undefined;
+}
+
+function sanitizeLocalizedArtistContent(localizedContent, englishContent, lang) {
+  if (!localizedContent || typeof localizedContent !== 'object') return null;
+  if (lang === 'en') return localizedContent;
+
+  const sanitized = { ...localizedContent };
+  const stringFields = ['bio', 'playing_style', 'gear_info', 'why_learn'];
+
+  for (const field of stringFields) {
+    sanitized[field] = sanitizeLocalizedString(
+      localizedContent[field],
+      englishContent?.[field]
+    );
+  }
+
+  if (Array.isArray(localizedContent.fun_facts)) {
+    const englishFacts = Array.isArray(englishContent?.fun_facts)
+      ? englishContent.fun_facts
+      : [];
+
+    sanitized.fun_facts = localizedContent.fun_facts
+      .map((fact, index) => sanitizeLocalizedString(
+        fact,
+        englishFacts[index] || englishFacts.join(' ')
+      ))
+      .filter(Boolean);
+  }
+
+  // Never use machine-generated localized meta descriptions directly.
+  // The vetted templates in seoTranslations.js are guaranteed to match the URL language.
+  delete sanitized.meta_description;
+
+  return sanitized;
+}
+
 function extractYouTubeVideoId(video) {
   const directId = String(video?.video_id || '').trim();
   if (/^[a-zA-Z0-9_-]{11}$/.test(directId)) return directId;
@@ -115,18 +201,21 @@ export async function generateMetadata({ params }) {
   const title = localizedMeta.title;
   let description = localizedMeta.description;
 
-  try {
-    const artistSlug = artistToSlug(artistPattern);
-    const aiContent = await db.collection('artist_seo_content').findOne({ slug: artistSlug });
-    const rawLocalizedContent =
-      aiContent?.content?.[lang] ||
-      (lang === 'en' ? aiContent?.content?.en || aiContent?.content : null);
-    const localizedContent = normalizeArtistSeoCounts(rawLocalizedContent, slug, lessonCount);
+  // English can keep the richer generated description. Non-English pages always
+  // use the vetted localized template so stale/partial translations cannot leak
+  // English prose into title/description/OG/Twitter metadata.
+  if (lang === 'en') {
+    try {
+      const artistSlug = artistToSlug(artistPattern);
+      const aiContent = await db.collection('artist_seo_content').findOne({ slug: artistSlug });
+      const rawEnglishContent = aiContent?.content?.en || aiContent?.content;
+      const englishContent = normalizeArtistSeoCounts(rawEnglishContent, slug, lessonCount);
 
-    if (localizedContent?.meta_description) {
-      description = localizedContent.meta_description;
-    }
-  } catch { /* use localized template */ }
+      if (englishContent?.meta_description) {
+        description = englishContent.meta_description;
+      }
+    } catch { /* use localized template */ }
+  }
 
   const localizedArtistUrl = `https://dadrocktabs.com/${lang}/artist/${slug}`;
   const dynamicOgImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(artistPattern)}&type=artist&thumb=${encodeURIComponent(ogImage)}`;
@@ -141,7 +230,7 @@ export async function generateMetadata({ params }) {
       type: 'website',
       url: localizedArtistUrl,
       siteName: 'DadRock Tabs',
-      images: [{ url: dynamicOgImage, width: 1200, height: 630, alt: `${artistPattern} Guitar Tabs` }],
+      images: [{ url: dynamicOgImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -197,10 +286,14 @@ export default async function ArtistPage({ params }) {
   try {
     const aiDoc = await db.collection('artist_seo_content').findOne({ slug });
     if (aiDoc?.content) {
+      const englishContent = aiDoc.content?.en ||
+        (aiDoc.content?.bio ? aiDoc.content : null);
       const rawAiSeoContent =
         aiDoc.content?.[lang] ||
-        (lang === 'en' ? aiDoc.content?.en || aiDoc.content : null);
-      aiSeoContent = normalizeArtistSeoCounts(rawAiSeoContent, slug, videos.length);
+        (lang === 'en' ? englishContent : null);
+      const normalizedContent = normalizeArtistSeoCounts(rawAiSeoContent, slug, videos.length);
+      const normalizedEnglish = normalizeArtistSeoCounts(englishContent, slug, videos.length);
+      aiSeoContent = sanitizeLocalizedArtistContent(normalizedContent, normalizedEnglish, lang);
     }
   } catch { /* ignore */ }
 
@@ -216,7 +309,9 @@ export default async function ArtistPage({ params }) {
   }));
 
   const localizedMeta = getSeoMeta(lang, 'artist', { artist: displayArtistName });
-  const schemaDescription = aiSeoContent?.meta_description || localizedMeta.description;
+  const schemaDescription = lang === 'en'
+    ? aiSeoContent?.meta_description || localizedMeta.description
+    : localizedMeta.description;
   const localizedHomeUrl = `https://dadrocktabs.com/${lang}`;
   const localizedArtistUrl = `https://dadrocktabs.com/${lang}/artist/${slug}`;
 
