@@ -32,6 +32,104 @@ function requireEnv() {
   if (!LANGUAGE_NAMES[TARGET_LANG]) throw new Error(`Unsupported TARGET_LANG: ${TARGET_LANG}`);
 }
 
+function normalizeForComparison(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function containsUntranslatedEnglishChunk(translatedValue, englishValue) {
+  const translated = String(translatedValue || '').trim();
+  const english = String(englishValue || '').trim();
+  if (!translated || !english) return false;
+  if (translated === english) return true;
+
+  const normalizedEnglish = normalizeForComparison(english);
+  const englishWords = new Set(
+    normalizedEnglish
+      .split(/\s+/)
+      .filter(word => word.length > 4)
+  );
+
+  const chunks = translated
+    .split(/\n+/)
+    .map(part => part.trim())
+    .filter(Boolean);
+
+  return chunks.some(chunk => {
+    const normalizedChunk = normalizeForComparison(chunk);
+    if (!normalizedChunk) return false;
+
+    if (normalizedChunk.length >= 40 && normalizedEnglish.includes(normalizedChunk)) {
+      return true;
+    }
+
+    const latinChars = (chunk.match(/[A-Za-z]/g) || []).length;
+    const letterChars = (chunk.match(/\p{L}/gu) || []).length;
+    const mostlyLatin = letterChars > 0 && latinChars / letterChars > 0.65;
+    if (!mostlyLatin) return false;
+
+    const candidateWords = normalizedChunk
+      .split(/\s+/)
+      .filter(word => word.length > 4);
+    if (candidateWords.length < 8) return false;
+
+    const matchingWords = candidateWords.filter(word => englishWords.has(word));
+    return matchingWords.length / candidateWords.length >= 0.8;
+  });
+}
+
+function hasMeaningfulTranslation(translatedContent, englishContent) {
+  if (!translatedContent || typeof translatedContent !== 'object') return false;
+
+  // If an older record has no English source object, require the key localized
+  // content fields to at least be populated. New records should normally have
+  // englishContent and will receive the stricter comparison below.
+  if (!englishContent || typeof englishContent !== 'object') {
+    return ['song_story', 'lesson_overview', 'difficulty_info', 'meta_description']
+      .every(key => typeof translatedContent[key] === 'string' && translatedContent[key].trim().length >= 20);
+  }
+
+  const englishStringKeys = Object.keys(englishContent).filter(key =>
+    typeof englishContent[key] === 'string' && englishContent[key].trim().length > 20
+  );
+
+  const stringsAreTranslated = englishStringKeys.every(key => {
+    const englishValue = englishContent[key].trim();
+    const translatedValue = translatedContent[key];
+
+    if (typeof translatedValue !== 'string' || translatedValue.trim().length < 20) {
+      return false;
+    }
+
+    return !containsUntranslatedEnglishChunk(translatedValue, englishValue);
+  });
+
+  if (!stringsAreTranslated) return false;
+
+  const englishArrayKeys = Object.keys(englishContent).filter(key =>
+    Array.isArray(englishContent[key]) && englishContent[key].some(item => typeof item === 'string')
+  );
+
+  return englishArrayKeys.every(key => {
+    const englishArray = englishContent[key];
+    const translatedArray = translatedContent[key];
+
+    if (!Array.isArray(translatedArray) || translatedArray.length < englishArray.length) {
+      return false;
+    }
+
+    return englishArray.every((englishItem, index) => {
+      if (typeof englishItem !== 'string' || englishItem.trim().length < 5) return true;
+      const translatedItem = translatedArray[index];
+      if (typeof translatedItem !== 'string' || translatedItem.trim().length < 3) return false;
+      return !containsUntranslatedEnglishChunk(translatedItem, englishItem);
+    });
+  });
+}
+
 async function translateSong(song, existingContent) {
   const languageName = LANGUAGE_NAMES[TARGET_LANG];
 
@@ -50,6 +148,10 @@ Rules:
 - Keep artist names and song titles recognizable.
 - Do not invent facts.
 - Keep the meaning natural for guitar/bass lesson SEO.
+- Translate EVERY sentence and paragraph in every prose field.
+- Translate meta_description completely; do not leave English boilerplate in it.
+- Translate every techniques and pro_tips array item where a natural localized term exists.
+- Established music terms, song titles, artist names, album names and gear brands may remain unchanged where natural.
 - Return valid JSON only.
 - No markdown.
 
@@ -63,7 +165,8 @@ JSON format:
     "lesson_overview": "...",
     "difficulty_info": "...",
     "techniques": ["...", "..."],
-    "pro_tips": ["...", "..."]
+    "pro_tips": ["...", "..."],
+    "meta_description": "..."
   }
 }
 
@@ -88,19 +191,19 @@ ${JSON.stringify(source, null, 2)}
     throw new Error(`OpenAI error ${res.status}: ${text}`);
   }
 
-    const data = await res.json();
+  const data = await res.json();
 
-const text =
-  data.output_text ||
-  data.output
-    ?.flatMap(item => item.content || [])
-    ?.map(content => content.text || '')
-    ?.join('')
-    ?.trim();
+  const text =
+    data.output_text ||
+    data.output
+      ?.flatMap(item => item.content || [])
+      ?.map(content => content.text || '')
+      ?.join('')
+      ?.trim();
 
-if (!text) throw new Error('No translation text returned');
+  if (!text) throw new Error('No translation text returned');
 
-return JSON.parse(text);
+  return JSON.parse(text);
 }
 
 async function worker(items, db, workerId) {
@@ -112,13 +215,24 @@ async function worker(items, db, workerId) {
       const seoCol = db.collection('song_seo_content');
 
       let seoDoc = await seoCol.findOne({ slug });
+      const englishContent = seoDoc?.content || null;
+      const existingTranslation = seoDoc?.translations?.[TARGET_LANG];
 
-      if (seoDoc?.translations?.[TARGET_LANG]) {
-        console.log(`⏭️  [${workerId}] Skipping ${slug} — already translated`);
+      if (hasMeaningfulTranslation(existingTranslation, englishContent)) {
+        console.log(`⏭️  [${workerId}] Skipping ${slug} — verified ${TARGET_LANG} translation`);
         continue;
       }
 
-      const translated = await translateSong(song, seoDoc?.content || null);
+      if (existingTranslation) {
+        console.log(`🔧 [${workerId}] Repairing partial/mixed ${TARGET_LANG} translation for ${slug}`);
+      }
+
+      const translated = await translateSong(song, englishContent);
+      const translatedSeoContent = translated.seoContent || translated;
+
+      if (!hasMeaningfulTranslation(translatedSeoContent, englishContent)) {
+        throw new Error(`Rejected partial/mixed ${TARGET_LANG} translation`);
+      }
 
       await seoCol.updateOne(
         { slug },
@@ -128,7 +242,7 @@ async function worker(items, db, workerId) {
             title: song.title,
             artist: song.artist,
             updated_at: new Date().toISOString(),
-            [`translations.${TARGET_LANG}`]: translated.seoContent || translated,
+            [`translations.${TARGET_LANG}`]: translatedSeoContent,
           },
           $setOnInsert: {
             created_at: new Date().toISOString(),
@@ -143,6 +257,7 @@ async function worker(items, db, workerId) {
     }
   }
 }
+
 async function main() {
   requireEnv();
 
