@@ -50,47 +50,110 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function normalizeForComparison(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function containsUntranslatedEnglishChunk(translatedValue, englishValue) {
+  const translated = String(translatedValue || '').trim();
+  const english = String(englishValue || '').trim();
+  if (!translated || !english) return false;
+
+  if (translated === english) return true;
+
+  const normalizedEnglish = normalizeForComparison(english);
+  const englishWords = new Set(
+    normalizedEnglish
+      .split(/\s+/)
+      .filter(word => word.length > 4)
+  );
+
+  const chunks = translated
+    .split(/\n+/)
+    .map(part => part.trim())
+    .filter(Boolean);
+
+  return chunks.some(chunk => {
+    const normalizedChunk = normalizeForComparison(chunk);
+    if (!normalizedChunk) return false;
+
+    // Catch whole English paragraphs/sentences copied unchanged into a translation.
+    if (normalizedChunk.length >= 40 && normalizedEnglish.includes(normalizedChunk)) {
+      return true;
+    }
+
+    // For Latin-script translations, catch chunks where nearly all meaningful
+    // words are still English source words. This remains tolerant of artist names,
+    // album/song titles, gear brands, and common guitar terminology.
+    const latinChars = (chunk.match(/[A-Za-z]/g) || []).length;
+    const letterChars = (chunk.match(/\p{L}/gu) || []).length;
+    const mostlyLatin = letterChars > 0 && latinChars / letterChars > 0.65;
+    if (!mostlyLatin) return false;
+
+    const candidateWords = normalizedChunk
+      .split(/\s+/)
+      .filter(word => word.length > 4);
+    if (candidateWords.length < 8) return false;
+
+    const matchingWords = candidateWords.filter(word => englishWords.has(word));
+    return matchingWords.length / candidateWords.length >= 0.8;
+  });
+}
+
 function hasMeaningfulTranslation(translatedContent, englishContent) {
   if (!translatedContent || typeof translatedContent !== 'object') return false;
   if (!englishContent || typeof englishContent !== 'object') return false;
 
-  const englishKeys = Object.keys(englishContent).filter(key => {
+  const englishStringKeys = Object.keys(englishContent).filter(key => {
     return typeof englishContent[key] === 'string' && englishContent[key].trim().length > 20;
   });
 
-  if (englishKeys.length === 0) return false;
+  if (englishStringKeys.length === 0) return false;
 
-  return englishKeys.every(key => {
+  const stringsAreTranslated = englishStringKeys.every(key => {
     const englishValue = englishContent[key].trim();
     const translatedValue = translatedContent[key];
 
     if (typeof translatedValue !== 'string') return false;
 
     const cleanedTranslated = translatedValue.trim();
-
     if (cleanedTranslated.length < 20) return false;
-
-    // If the translated field is exactly the same as English, it is NOT translated
-    if (cleanedTranslated === englishValue) return false;
-
-    // If most of the English text is still present, it is NOT translated
-    const englishWords = englishValue
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, ' ')
-      .split(/\s+/)
-      .filter(word => word.length > 4);
-
-    const translatedLower = cleanedTranslated.toLowerCase();
-
-    const matchingWords = englishWords.filter(word => translatedLower.includes(word));
-
-    if (englishWords.length > 10 && matchingWords.length / englishWords.length > 0.35) {
-      return false;
-    }
+    if (containsUntranslatedEnglishChunk(cleanedTranslated, englishValue)) return false;
 
     return true;
   });
+
+  if (!stringsAreTranslated) return false;
+
+  // Validate array fields such as fun_facts as well. The old validator ignored
+  // them, which allowed fully English facts to survive in localized records.
+  const englishArrayKeys = Object.keys(englishContent).filter(key =>
+    Array.isArray(englishContent[key]) && englishContent[key].some(item => typeof item === 'string')
+  );
+
+  return englishArrayKeys.every(key => {
+    const englishArray = englishContent[key];
+    const translatedArray = translatedContent[key];
+
+    if (!Array.isArray(translatedArray) || translatedArray.length < englishArray.length) {
+      return false;
+    }
+
+    return englishArray.every((englishItem, index) => {
+      if (typeof englishItem !== 'string' || englishItem.trim().length < 10) return true;
+
+      const translatedItem = translatedArray[index];
+      if (typeof translatedItem !== 'string' || translatedItem.trim().length < 5) return false;
+
+      return !containsUntranslatedEnglishChunk(translatedItem, englishItem);
+    });
+  });
 }
+
 function extractOutputText(data) {
   let text = '';
 
@@ -106,6 +169,7 @@ function extractOutputText(data) {
 
   return text.trim();
 }
+
 function parseJsonFromText(text) {
   try {
     return JSON.parse(text);
@@ -151,6 +215,7 @@ async function callOpenAI(prompt) {
 
   return parseJsonFromText(text);
 }
+
 async function translateArtistContent(artistName, englishContent, missingLangs) {
   const languages = missingLangs
     .map(code => `${code}: ${LANGUAGE_NAMES[code] || code}`)
@@ -166,8 +231,11 @@ Rules:
 - Return ONE JSON object.
 - Top level keys must be the language codes.
 - Keep every JSON key exactly the same.
-- Translate ONLY the values.
-- Artist names, album names, song titles, equipment brands, and guitar terminology stay unchanged.
+- Translate EVERY sentence and EVERY paragraph in every prose field.
+- Do not leave English sentences, paragraphs, introductions, or meta-description boilerplate in a translated value.
+- Translate every fun_facts array item too.
+- Artist names, album names, song titles, equipment brands, and established guitar terminology may stay unchanged where natural.
+- Preserve paragraph breaks with \n where present.
 - Return ONLY valid JSON.
 
 Example format:
@@ -209,6 +277,7 @@ async function processQueue(items, worker) {
     await sleep(1000);
   }
 }
+
 async function main() {
   if (!API_KEY) {
     console.error('No OPENAI_API_KEY found.');
@@ -240,10 +309,9 @@ async function main() {
     const englishContent = doc.content.en || doc.content;
 
     const missingLangs = TARGET_LANGS.filter(lang => {
-  const translatedContent = doc.content?.[lang];
-
-  return !hasMeaningfulTranslation(translatedContent, englishContent);
-});
+      const translatedContent = doc.content?.[lang];
+      return !hasMeaningfulTranslation(translatedContent, englishContent);
+    });
 
     if (missingLangs.length === 0) {
       skipped++;
@@ -282,12 +350,18 @@ async function main() {
     };
 
     for (const lang of missingLangs) {
-      if (!translatedByLang?.[lang]) {
+      const translatedContent = translatedByLang?.[lang];
+      if (!translatedContent) {
         console.warn(`⚠️ Missing ${lang} translation for ${artistName}`);
         continue;
       }
 
-      updates[`content.${lang}`] = translatedByLang[lang];
+      if (!hasMeaningfulTranslation(translatedContent, englishContent)) {
+        console.warn(`⚠️ Rejected partial/mixed ${lang} translation for ${artistName}`);
+        continue;
+      }
+
+      updates[`content.${lang}`] = translatedContent;
       updates[`translated_at_${lang}`] = new Date();
     }
 
