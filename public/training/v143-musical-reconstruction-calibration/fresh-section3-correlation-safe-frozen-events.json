@@ -1,0 +1,876 @@
+{
+  "schemaVersion": 1,
+  "scope": "fresh-section3-correlation-safe-frozen-events",
+  "section": {
+    "name": "Fresh Section 3",
+    "startMeasure": 49,
+    "endMeasure": 64
+  },
+  "captureArtifact": "public/training/v143-musical-reconstruction-calibration/fresh-section3-reference-free-cache.json",
+  "baseModelArtifact": "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-model.json",
+  "sequenceModelArtifact": "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-sequence-event-model.json",
+  "baseModelSha256": "87451e926699df159a6d6ddfc886cc5b4b27d841255c0fa6ede33ab700ec1a0c",
+  "sequenceModelSha256": "46c16e1ab5bbaafad08060e55ee2e98d2a11faefd50e4f9bd333727f7b23fd3e",
+  "referenceFreeCapture": true,
+  "professionalReferenceOpenedByPredictor": false,
+  "professionalReferenceUsedForPrediction": false,
+  "professionalReferenceRequiredAtRuntime": false,
+  "predictionsFrozenBeforeGrading": true,
+  "failedAttackNoveltyGateUsed": false,
+  "baseSelectedEventCount": 94,
+  "sequenceSelectedEventCount": 119,
+  "perMeasureEventCounts": {
+    "49": 7,
+    "50": 8,
+    "51": 6,
+    "52": 8,
+    "53": 7,
+    "54": 8,
+    "55": 8,
+    "56": 6,
+    "57": 7,
+    "58": 7,
+    "59": 7,
+    "60": 7,
+    "61": 8,
+    "62": 9,
+    "63": 8,
+    "64": 8
+  },
+  "predictions": [
+    {
+      "measure": 49,
+      "step": 0,
+      "gridTimeSeconds": 88.351927438,
+      "baseScore": 0.66966295,
+      "sequenceScore": 0.57357576
+    },
+    {
+      "measure": 49,
+      "step": 2,
+      "gridTimeSeconds": 88.589931973,
+      "baseScore": 0.86815488,
+      "sequenceScore": 1.00898816
+    },
+    {
+      "measure": 49,
+      "step": 6,
+      "gridTimeSeconds": 89.065941043,
+      "baseScore": -0.00479509,
+      "sequenceScore": 0.48878656
+    },
+    {
+      "measure": 49,
+      "step": 8,
+      "gridTimeSeconds": 89.303945578,
+      "baseScore": 0.46390315,
+      "sequenceScore": 0.49122217
+    },
+    {
+      "measure": 49,
+      "step": 10,
+      "gridTimeSeconds": 89.530340136,
+      "baseScore": 0.72589854,
+      "sequenceScore": 1.05122708
+    },
+    {
+      "measure": 49,
+      "step": 12,
+      "gridTimeSeconds": 89.756734694,
+      "baseScore": 0.63785775,
+      "sequenceScore": 0.67014672
+    },
+    {
+      "measure": 49,
+      "step": 14,
+      "gridTimeSeconds": 89.98893424,
+      "baseScore": 0.40651676,
+      "sequenceScore": 1.02249953
+    },
+    {
+      "measure": 50,
+      "step": 0,
+      "gridTimeSeconds": 90.221133787,
+      "baseScore": 0.68990132,
+      "sequenceScore": 0.68584083
+    },
+    {
+      "measure": 50,
+      "step": 2,
+      "gridTimeSeconds": 90.459138322,
+      "baseScore": 0.94836701,
+      "sequenceScore": 1.0645879
+    },
+    {
+      "measure": 50,
+      "step": 4,
+      "gridTimeSeconds": 90.697142857,
+      "baseScore": 0.05599596,
+      "sequenceScore": 0.35338624
+    },
+    {
+      "measure": 50,
+      "step": 6,
+      "gridTimeSeconds": 90.929342404,
+      "baseScore": -0.05903973,
+      "sequenceScore": 0.36578521
+    },
+    {
+      "measure": 50,
+      "step": 8,
+      "gridTimeSeconds": 91.16154195,
+      "baseScore": 0.7061033,
+      "sequenceScore": 0.57639863
+    },
+    {
+      "measure": 50,
+      "step": 10,
+      "gridTimeSeconds": 91.399546485,
+      "baseScore": 0.812196,
+      "sequenceScore": 1.19130454
+    },
+    {
+      "measure": 50,
+      "step": 12,
+      "gridTimeSeconds": 91.63755102,
+      "baseScore": 0.95561872,
+      "sequenceScore": 0.66073482
+    },
+    {
+      "measure": 50,
+      "step": 14,
+      "gridTimeSeconds": 91.869750567,
+      "baseScore": 0.53307698,
+      "sequenceScore": 1.13979549
+    },
+    {
+      "measure": 51,
+      "step": 0,
+      "gridTimeSeconds": 92.101950113,
+      "baseScore": 0.67912137,
+      "sequenceScore": 0.67570512
+    },
+    {
+      "measure": 51,
+      "step": 2,
+      "gridTimeSeconds": 92.328344671,
+      "baseScore": 0.61297778,
+      "sequenceScore": 1.083834
+    },
+    {
+      "measure": 51,
+      "step": 6,
+      "gridTimeSeconds": 92.781133787,
+      "baseScore": -0.27164365,
+      "sequenceScore": 0.40071146
+    },
+    {
+      "measure": 51,
+      "step": 10,
+      "gridTimeSeconds": 93.24553288,
+      "baseScore": 0.98875074,
+      "sequenceScore": 1.16528763
+    },
+    {
+      "measure": 51,
+      "step": 12,
+      "gridTimeSeconds": 93.483537415,
+      "baseScore": 0.75423195,
+      "sequenceScore": 0.72307851
+    },
+    {
+      "measure": 51,
+      "step": 14,
+      "gridTimeSeconds": 93.709931973,
+      "baseScore": 0.63326236,
+      "sequenceScore": 1.0213428
+    },
+    {
+      "measure": 52,
+      "step": 0,
+      "gridTimeSeconds": 93.936326531,
+      "baseScore": 0.53704432,
+      "sequenceScore": 0.60634163
+    },
+    {
+      "measure": 52,
+      "step": 2,
+      "gridTimeSeconds": 94.174331066,
+      "baseScore": 0.56583857,
+      "sequenceScore": 0.99232256
+    },
+    {
+      "measure": 52,
+      "step": 6,
+      "gridTimeSeconds": 94.644535147,
+      "baseScore": 0.15161666,
+      "sequenceScore": 0.43496977
+    },
+    {
+      "measure": 52,
+      "step": 8,
+      "gridTimeSeconds": 94.876734694,
+      "baseScore": 0.42666412,
+      "sequenceScore": 0.60985244
+    },
+    {
+      "measure": 52,
+      "step": 10,
+      "gridTimeSeconds": 95.114739229,
+      "baseScore": 0.852651,
+      "sequenceScore": 1.04543372
+    },
+    {
+      "measure": 52,
+      "step": 12,
+      "gridTimeSeconds": 95.352743764,
+      "baseScore": 0.60791069,
+      "sequenceScore": 0.73036566
+    },
+    {
+      "measure": 52,
+      "step": 14,
+      "gridTimeSeconds": 95.579138322,
+      "baseScore": 1.09296411,
+      "sequenceScore": 1.20389739
+    },
+    {
+      "measure": 52,
+      "step": 15,
+      "gridTimeSeconds": 95.692335601,
+      "baseScore": 0.75362373,
+      "sequenceScore": 0.45351441
+    },
+    {
+      "measure": 53,
+      "step": 2,
+      "gridTimeSeconds": 96.031927438,
+      "baseScore": 1.08228238,
+      "sequenceScore": 1.06343667
+    },
+    {
+      "measure": 53,
+      "step": 6,
+      "gridTimeSeconds": 96.490521542,
+      "baseScore": 0.14535343,
+      "sequenceScore": 0.58190271
+    },
+    {
+      "measure": 53,
+      "step": 8,
+      "gridTimeSeconds": 96.722721088,
+      "baseScore": 0.50875443,
+      "sequenceScore": 0.63172885
+    },
+    {
+      "measure": 53,
+      "step": 10,
+      "gridTimeSeconds": 96.966530612,
+      "baseScore": 0.8667667,
+      "sequenceScore": 1.17966177
+    },
+    {
+      "measure": 53,
+      "step": 12,
+      "gridTimeSeconds": 97.210340136,
+      "baseScore": 0.58513215,
+      "sequenceScore": 0.72016144
+    },
+    {
+      "measure": 53,
+      "step": 14,
+      "gridTimeSeconds": 97.436734694,
+      "baseScore": 1.16047795,
+      "sequenceScore": 1.0706725
+    },
+    {
+      "measure": 53,
+      "step": 15,
+      "gridTimeSeconds": 97.549931973,
+      "baseScore": 0.58726001,
+      "sequenceScore": 0.46736069
+    },
+    {
+      "measure": 54,
+      "step": 0,
+      "gridTimeSeconds": 97.663129252,
+      "baseScore": 0.34658311,
+      "sequenceScore": 0.81650903
+    },
+    {
+      "measure": 54,
+      "step": 2,
+      "gridTimeSeconds": 97.895328798,
+      "baseScore": 0.59511561,
+      "sequenceScore": 1.11763413
+    },
+    {
+      "measure": 54,
+      "step": 6,
+      "gridTimeSeconds": 98.36553288,
+      "baseScore": 0.06167148,
+      "sequenceScore": 0.50904327
+    },
+    {
+      "measure": 54,
+      "step": 8,
+      "gridTimeSeconds": 98.603537415,
+      "baseScore": 0.78662232,
+      "sequenceScore": 0.63625164
+    },
+    {
+      "measure": 54,
+      "step": 10,
+      "gridTimeSeconds": 98.835736961,
+      "baseScore": 0.91872281,
+      "sequenceScore": 1.13684878
+    },
+    {
+      "measure": 54,
+      "step": 12,
+      "gridTimeSeconds": 99.067936508,
+      "baseScore": 0.59607705,
+      "sequenceScore": 0.81729622
+    },
+    {
+      "measure": 54,
+      "step": 14,
+      "gridTimeSeconds": 99.300136054,
+      "baseScore": 1.06918942,
+      "sequenceScore": 1.18561749
+    },
+    {
+      "measure": 54,
+      "step": 15,
+      "gridTimeSeconds": 99.416235828,
+      "baseScore": 0.78565295,
+      "sequenceScore": 0.48987099
+    },
+    {
+      "measure": 55,
+      "step": 0,
+      "gridTimeSeconds": 99.532335601,
+      "baseScore": 0.43785422,
+      "sequenceScore": 0.53107734
+    },
+    {
+      "measure": 55,
+      "step": 2,
+      "gridTimeSeconds": 99.770340136,
+      "baseScore": 0.92146199,
+      "sequenceScore": 1.03244332
+    },
+    {
+      "measure": 55,
+      "step": 6,
+      "gridTimeSeconds": 100.234739229,
+      "baseScore": 0.22178003,
+      "sequenceScore": 0.49323772
+    },
+    {
+      "measure": 55,
+      "step": 8,
+      "gridTimeSeconds": 100.461133787,
+      "baseScore": 0.72749033,
+      "sequenceScore": 0.58692649
+    },
+    {
+      "measure": 55,
+      "step": 10,
+      "gridTimeSeconds": 100.693333333,
+      "baseScore": 0.73316568,
+      "sequenceScore": 1.00988778
+    },
+    {
+      "measure": 55,
+      "step": 12,
+      "gridTimeSeconds": 100.92553288,
+      "baseScore": 0.77578396,
+      "sequenceScore": 0.84046905
+    },
+    {
+      "measure": 55,
+      "step": 14,
+      "gridTimeSeconds": 101.157732426,
+      "baseScore": 0.69627575,
+      "sequenceScore": 1.08164113
+    },
+    {
+      "measure": 55,
+      "step": 15,
+      "gridTimeSeconds": 101.2738322,
+      "baseScore": 0.3079109,
+      "sequenceScore": 0.56909727
+    },
+    {
+      "measure": 56,
+      "step": 0,
+      "gridTimeSeconds": 101.389931973,
+      "baseScore": 0.91179957,
+      "sequenceScore": 0.85734499
+    },
+    {
+      "measure": 56,
+      "step": 2,
+      "gridTimeSeconds": 101.616326531,
+      "baseScore": 1.07184066,
+      "sequenceScore": 1.1076176
+    },
+    {
+      "measure": 56,
+      "step": 8,
+      "gridTimeSeconds": 102.307120181,
+      "baseScore": 0.75412413,
+      "sequenceScore": 0.39320812
+    },
+    {
+      "measure": 56,
+      "step": 10,
+      "gridTimeSeconds": 102.545124717,
+      "baseScore": 0.79062179,
+      "sequenceScore": 1.04386993
+    },
+    {
+      "measure": 56,
+      "step": 12,
+      "gridTimeSeconds": 102.783129252,
+      "baseScore": 0.65185071,
+      "sequenceScore": 0.89182526
+    },
+    {
+      "measure": 56,
+      "step": 14,
+      "gridTimeSeconds": 103.00952381,
+      "baseScore": 1.04689439,
+      "sequenceScore": 1.35888152
+    },
+    {
+      "measure": 57,
+      "step": 0,
+      "gridTimeSeconds": 103.235918367,
+      "baseScore": 1.11331134,
+      "sequenceScore": 0.63261627
+    },
+    {
+      "measure": 57,
+      "step": 2,
+      "gridTimeSeconds": 103.473922902,
+      "baseScore": -0.06916845,
+      "sequenceScore": 1.08818953
+    },
+    {
+      "measure": 57,
+      "step": 6,
+      "gridTimeSeconds": 103.944126984,
+      "baseScore": -0.10534907,
+      "sequenceScore": 0.45019071
+    },
+    {
+      "measure": 57,
+      "step": 8,
+      "gridTimeSeconds": 104.176326531,
+      "baseScore": 0.72737507,
+      "sequenceScore": 0.63465422
+    },
+    {
+      "measure": 57,
+      "step": 10,
+      "gridTimeSeconds": 104.402721088,
+      "baseScore": 0.80681846,
+      "sequenceScore": 1.21590639
+    },
+    {
+      "measure": 57,
+      "step": 12,
+      "gridTimeSeconds": 104.629115646,
+      "baseScore": 0.75608072,
+      "sequenceScore": 0.79177896
+    },
+    {
+      "measure": 57,
+      "step": 14,
+      "gridTimeSeconds": 104.867120181,
+      "baseScore": 0.80028079,
+      "sequenceScore": 1.11285975
+    },
+    {
+      "measure": 58,
+      "step": 0,
+      "gridTimeSeconds": 105.105124717,
+      "baseScore": 1.09181193,
+      "sequenceScore": 0.75266718
+    },
+    {
+      "measure": 58,
+      "step": 2,
+      "gridTimeSeconds": 105.337324263,
+      "baseScore": 0.12024744,
+      "sequenceScore": 0.88572112
+    },
+    {
+      "measure": 58,
+      "step": 8,
+      "gridTimeSeconds": 106.022312925,
+      "baseScore": 0.86594741,
+      "sequenceScore": 0.67347084
+    },
+    {
+      "measure": 58,
+      "step": 10,
+      "gridTimeSeconds": 106.190657596,
+      "baseScore": 0.6941423,
+      "sequenceScore": 0.9368256
+    },
+    {
+      "measure": 58,
+      "step": 12,
+      "gridTimeSeconds": 106.359002268,
+      "baseScore": 0.40010769,
+      "sequenceScore": 0.70873907
+    },
+    {
+      "measure": 58,
+      "step": 14,
+      "gridTimeSeconds": 106.538956916,
+      "baseScore": 0.63063372,
+      "sequenceScore": 1.10861505
+    },
+    {
+      "measure": 58,
+      "step": 15,
+      "gridTimeSeconds": 106.62893424,
+      "baseScore": -0.00755955,
+      "sequenceScore": 0.45078403
+    },
+    {
+      "measure": 59,
+      "step": 0,
+      "gridTimeSeconds": 106.718911565,
+      "baseScore": 0.68005431,
+      "sequenceScore": 0.75813371
+    },
+    {
+      "measure": 59,
+      "step": 2,
+      "gridTimeSeconds": 106.875646259,
+      "baseScore": 0.34189845,
+      "sequenceScore": 0.95220572
+    },
+    {
+      "measure": 59,
+      "step": 8,
+      "gridTimeSeconds": 107.380680272,
+      "baseScore": 0.4542383,
+      "sequenceScore": 0.52851543
+    },
+    {
+      "measure": 59,
+      "step": 10,
+      "gridTimeSeconds": 107.549024943,
+      "baseScore": -0.17201865,
+      "sequenceScore": 0.73554544
+    },
+    {
+      "measure": 59,
+      "step": 12,
+      "gridTimeSeconds": 107.717369615,
+      "baseScore": 0.4462929,
+      "sequenceScore": 0.45997047
+    },
+    {
+      "measure": 59,
+      "step": 14,
+      "gridTimeSeconds": 107.879909297,
+      "baseScore": 0.06244736,
+      "sequenceScore": 1.00981391
+    },
+    {
+      "measure": 59,
+      "step": 15,
+      "gridTimeSeconds": 107.961179138,
+      "baseScore": 0.34288579,
+      "sequenceScore": 0.54958217
+    },
+    {
+      "measure": 60,
+      "step": 0,
+      "gridTimeSeconds": 108.04244898,
+      "baseScore": 0.61262663,
+      "sequenceScore": 0.70046082
+    },
+    {
+      "measure": 60,
+      "step": 2,
+      "gridTimeSeconds": 108.216598639,
+      "baseScore": 0.0988199,
+      "sequenceScore": 0.88959632
+    },
+    {
+      "measure": 60,
+      "step": 6,
+      "gridTimeSeconds": 108.547482993,
+      "baseScore": -0.03841593,
+      "sequenceScore": 0.53912197
+    },
+    {
+      "measure": 60,
+      "step": 8,
+      "gridTimeSeconds": 108.704217687,
+      "baseScore": 0.08305739,
+      "sequenceScore": 0.50970586
+    },
+    {
+      "measure": 60,
+      "step": 10,
+      "gridTimeSeconds": 108.919002268,
+      "baseScore": 0.36903393,
+      "sequenceScore": 0.81853752
+    },
+    {
+      "measure": 60,
+      "step": 12,
+      "gridTimeSeconds": 109.133786848,
+      "baseScore": 0.33443856,
+      "sequenceScore": 0.59407481
+    },
+    {
+      "measure": 60,
+      "step": 14,
+      "gridTimeSeconds": 109.371791383,
+      "baseScore": 0.88565947,
+      "sequenceScore": 1.24406708
+    },
+    {
+      "measure": 61,
+      "step": 0,
+      "gridTimeSeconds": 109.609795918,
+      "baseScore": 0.8436299,
+      "sequenceScore": 0.79548644
+    },
+    {
+      "measure": 61,
+      "step": 2,
+      "gridTimeSeconds": 109.836190476,
+      "baseScore": 0.68849122,
+      "sequenceScore": 1.07079942
+    },
+    {
+      "measure": 61,
+      "step": 6,
+      "gridTimeSeconds": 110.29478458,
+      "baseScore": 0.87822378,
+      "sequenceScore": 0.38470578
+    },
+    {
+      "measure": 61,
+      "step": 8,
+      "gridTimeSeconds": 110.526984127,
+      "baseScore": 0.36163922,
+      "sequenceScore": 0.61137152
+    },
+    {
+      "measure": 61,
+      "step": 10,
+      "gridTimeSeconds": 110.753378685,
+      "baseScore": 0.93307688,
+      "sequenceScore": 1.0190548
+    },
+    {
+      "measure": 61,
+      "step": 12,
+      "gridTimeSeconds": 110.979773243,
+      "baseScore": 0.23699844,
+      "sequenceScore": 0.53339446
+    },
+    {
+      "measure": 61,
+      "step": 14,
+      "gridTimeSeconds": 111.211972789,
+      "baseScore": -0.16462725,
+      "sequenceScore": 0.92768835
+    },
+    {
+      "measure": 61,
+      "step": 15,
+      "gridTimeSeconds": 111.328072562,
+      "baseScore": 0.44676344,
+      "sequenceScore": 0.58713063
+    },
+    {
+      "measure": 62,
+      "step": 0,
+      "gridTimeSeconds": 111.444172336,
+      "baseScore": 0.90303889,
+      "sequenceScore": 0.83094943
+    },
+    {
+      "measure": 62,
+      "step": 2,
+      "gridTimeSeconds": 111.676371882,
+      "baseScore": 0.88584466,
+      "sequenceScore": 1.09808406
+    },
+    {
+      "measure": 62,
+      "step": 4,
+      "gridTimeSeconds": 111.908571429,
+      "baseScore": 0.54018204,
+      "sequenceScore": 0.44111266
+    },
+    {
+      "measure": 62,
+      "step": 6,
+      "gridTimeSeconds": 112.140770975,
+      "baseScore": 0.93286453,
+      "sequenceScore": 0.46614691
+    },
+    {
+      "measure": 62,
+      "step": 8,
+      "gridTimeSeconds": 112.372970522,
+      "baseScore": 0.40350257,
+      "sequenceScore": 0.82432864
+    },
+    {
+      "measure": 62,
+      "step": 10,
+      "gridTimeSeconds": 112.610975057,
+      "baseScore": 0.90569543,
+      "sequenceScore": 1.18684758
+    },
+    {
+      "measure": 62,
+      "step": 12,
+      "gridTimeSeconds": 112.848979592,
+      "baseScore": 0.66802369,
+      "sequenceScore": 0.83062289
+    },
+    {
+      "measure": 62,
+      "step": 14,
+      "gridTimeSeconds": 113.081179138,
+      "baseScore": 0.51739126,
+      "sequenceScore": 1.26699361
+    },
+    {
+      "measure": 62,
+      "step": 15,
+      "gridTimeSeconds": 113.197278912,
+      "baseScore": 0.11477017,
+      "sequenceScore": 0.58037064
+    },
+    {
+      "measure": 63,
+      "step": 0,
+      "gridTimeSeconds": 113.313378685,
+      "baseScore": 1.03483834,
+      "sequenceScore": 0.84682788
+    },
+    {
+      "measure": 63,
+      "step": 2,
+      "gridTimeSeconds": 113.545578231,
+      "baseScore": 0.72207993,
+      "sequenceScore": 1.12988465
+    },
+    {
+      "measure": 63,
+      "step": 6,
+      "gridTimeSeconds": 114.015782313,
+      "baseScore": 0.79693883,
+      "sequenceScore": 0.49506495
+    },
+    {
+      "measure": 63,
+      "step": 8,
+      "gridTimeSeconds": 114.253786848,
+      "baseScore": 0.36169774,
+      "sequenceScore": 0.6973642
+    },
+    {
+      "measure": 63,
+      "step": 10,
+      "gridTimeSeconds": 114.480181406,
+      "baseScore": 0.6546774,
+      "sequenceScore": 0.9596645
+    },
+    {
+      "measure": 63,
+      "step": 12,
+      "gridTimeSeconds": 114.706575964,
+      "baseScore": 0.49405322,
+      "sequenceScore": 0.59426216
+    },
+    {
+      "measure": 63,
+      "step": 14,
+      "gridTimeSeconds": 114.944580499,
+      "baseScore": 0.51311265,
+      "sequenceScore": 1.11304699
+    },
+    {
+      "measure": 63,
+      "step": 15,
+      "gridTimeSeconds": 115.063582766,
+      "baseScore": 0.01114013,
+      "sequenceScore": 0.44356026
+    },
+    {
+      "measure": 64,
+      "step": 0,
+      "gridTimeSeconds": 115.182585034,
+      "baseScore": 0.79993387,
+      "sequenceScore": 0.83449612
+    },
+    {
+      "measure": 64,
+      "step": 2,
+      "gridTimeSeconds": 115.41478458,
+      "baseScore": 0.64662817,
+      "sequenceScore": 1.10100538
+    },
+    {
+      "measure": 64,
+      "step": 6,
+      "gridTimeSeconds": 115.879183673,
+      "baseScore": 0.54961163,
+      "sequenceScore": 0.36416127
+    },
+    {
+      "measure": 64,
+      "step": 8,
+      "gridTimeSeconds": 116.11138322,
+      "baseScore": 0.2974949,
+      "sequenceScore": 0.60149836
+    },
+    {
+      "measure": 64,
+      "step": 10,
+      "gridTimeSeconds": 116.343582766,
+      "baseScore": 0.45027098,
+      "sequenceScore": 0.81407999
+    },
+    {
+      "measure": 64,
+      "step": 12,
+      "gridTimeSeconds": 116.575782313,
+      "baseScore": 0.56658886,
+      "sequenceScore": 0.46271913
+    },
+    {
+      "measure": 64,
+      "step": 14,
+      "gridTimeSeconds": 116.813786848,
+      "baseScore": 0.66988024,
+      "sequenceScore": 1.22409701
+    },
+    {
+      "measure": 64,
+      "step": 15,
+      "gridTimeSeconds": 116.932789116,
+      "baseScore": 0.35729184,
+      "sequenceScore": 0.52000843
+    }
+  ],
+  "productionModified": false
+}
