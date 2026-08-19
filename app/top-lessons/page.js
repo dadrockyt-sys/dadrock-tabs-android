@@ -1,5 +1,6 @@
 import TopLessonsClient from './TopLessonsClient';
 import { generateAlternates, generateCanonical } from '@/lib/seo';
+import { getSeoMeta } from '@/lib/seoTranslations';
 
 // Force dynamic rendering - this page fetches real-time data
 export const dynamic = 'force-dynamic';
@@ -9,22 +10,24 @@ export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
   const pageUrl = generateCanonical('/top-lessons', lang);
+  const localizedMeta = getSeoMeta(lang, 'topLessons');
 
   return {
-    title: 'Top 10 Most Viewed Guitar Lessons | DadRock Tabs',
-    description: 'Discover the most popular guitar and bass tab video lessons at DadRock Tabs. Our top 10 most-watched tutorials feature classic rock, heavy metal, and hair metal songs from legendary artists.',
+    title: localizedMeta.title,
+    description: localizedMeta.description,
     keywords: 'most viewed guitar lessons, popular bass tabs, top guitar tutorials, best rock lessons, classic rock tabs, heavy metal guitar, free guitar lessons, DadRock Tabs',
     alternates: generateAlternates('/top-lessons', lang),
     openGraph: {
-      title: 'Top 10 Most Viewed Guitar Lessons | DadRock Tabs',
-      description: 'Discover the most popular guitar lessons at DadRock Tabs. Learn the songs everyone loves!',
+      title: localizedMeta.title,
+      description: localizedMeta.description,
       type: 'website',
       url: pageUrl,
+      siteName: 'DadRock Tabs',
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Top 10 Most Viewed Guitar Lessons | DadRock Tabs',
-      description: 'Discover the most popular guitar lessons at DadRock Tabs.',
+      title: localizedMeta.title,
+      description: localizedMeta.description,
     },
   };
 }
@@ -32,12 +35,15 @@ export async function generateMetadata({ params }) {
 // JSON-LD Schema for SEO
 function generateSchema(lang = 'en') {
   const pageUrl = generateCanonical('/top-lessons', lang);
+  const localizedMeta = getSeoMeta(lang, 'topLessons');
+
   return {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Top 10 Most Viewed Guitar Lessons',
-    description: 'The most popular guitar and bass tab video lessons at DadRock Tabs',
+    name: localizedMeta.title,
+    description: localizedMeta.description,
     url: pageUrl,
+    inLanguage: lang === 'pt-br' ? 'pt-BR' : lang,
     isPartOf: {
       '@type': 'WebSite',
       name: 'DadRock Tabs',
