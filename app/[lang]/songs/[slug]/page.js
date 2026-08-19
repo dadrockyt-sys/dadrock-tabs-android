@@ -32,19 +32,11 @@ export async function generateMetadata({ params }) {
       artist: cleanArtist,
     });
     const title = localizedMeta.title;
-    let description = localizedMeta.description;
 
-    if (lang !== 'en') {
-      try {
-        const songSeoDoc = await db.collection('song_seo_content').findOne({ slug });
-        const translatedSeo = songSeoDoc?.translations?.[lang];
-        if (translatedSeo?.meta_description) {
-          description = translatedSeo.meta_description;
-        }
-      } catch { /* use localized template */ }
-    }
-
-    description = cleanLocalizedDescription(lang, description);
+    // Localized route metadata must stay in the route language. Some older
+    // song translation records contain an untranslated English meta_description,
+    // so do not let database prose override the vetted language template here.
+    const description = cleanLocalizedDescription(lang, localizedMeta.description);
 
     const thumbUrl = song.thumbnail || `https://img.youtube.com/vi/${song.videoId}/maxresdefault.jpg`;
     const ogImage = `https://dadrocktabs.com/api/og?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(cleanArtist)}&type=song&thumb=${encodeURIComponent(thumbUrl)}`;
@@ -59,7 +51,7 @@ export async function generateMetadata({ params }) {
         type: 'video.other',
         url: `https://dadrocktabs.com/${lang}/songs/${slug}`,
         siteName: 'DadRock Tabs',
-        images: [{ url: ogImage, width: 1200, height: 630, alt: `${song.title} - ${cleanArtist}` }],
+        images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
       },
       twitter: {
         card: 'summary_large_image',
@@ -125,12 +117,17 @@ export default async function SongPage({ params }) {
   let aiSeoContent = null;
 
   try {
-    try {
-      const aiDoc = await db.collection('song_seo_content').findOne({ slug });
-      if (aiDoc?.content) {
-        aiSeoContent = aiDoc.content;
-      }
-    } catch { /* ignore */ }
+    // English source content is only needed on the English route. Keeping it out
+    // of translated page payloads also prevents stale English SEO prose from
+    // becoming a fallback during hydration.
+    if (lang === 'en') {
+      try {
+        const aiDoc = await db.collection('song_seo_content').findOne({ slug });
+        if (aiDoc?.content) {
+          aiSeoContent = aiDoc.content;
+        }
+      } catch { /* ignore */ }
+    }
 
     const settings = await db.collection('settings').findOne({ type: 'site' });
     adSettings = {
@@ -157,10 +154,17 @@ export default async function SongPage({ params }) {
   }
 
   if (seoContent?.meta_description) {
-    seoContent = {
-      ...seoContent,
-      meta_description: cleanLocalizedDescription(lang, seoContent.meta_description),
-    };
+    if (lang === 'en') {
+      seoContent = {
+        ...seoContent,
+        meta_description: cleanLocalizedDescription(lang, seoContent.meta_description),
+      };
+    } else {
+      // Rich translated body content remains useful, but meta_description is
+      // intentionally discarded because older records may contain English text.
+      const { meta_description: _discardedMetaDescription, ...localizedSeoContent } = seoContent;
+      seoContent = localizedSeoContent;
+    }
   }
 
   const localizedMeta = getSeoMeta(lang, 'song', {
@@ -169,7 +173,9 @@ export default async function SongPage({ params }) {
   });
   const schemaDescription = cleanLocalizedDescription(
     lang,
-    seoContent?.meta_description || localizedMeta.description
+    lang === 'en'
+      ? seoContent?.meta_description || localizedMeta.description
+      : localizedMeta.description
   );
 
   const durationMinutes = song.duration ? Math.floor(song.duration / 60) : 5;
