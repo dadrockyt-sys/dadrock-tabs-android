@@ -34,21 +34,22 @@ export default async function LearnPage({ params }) {
   const t = getSubPageTranslation(lang);
   const guides = getAllGuides();
   const categories = [
-  ...new Set(
-    guides.map((guide) =>
-      typeof guide.category === 'object'
-        ? guide.category.en
-        : guide.category
-    )
-  ),
-];
+    ...new Set(
+      guides.map((guide) =>
+        typeof guide.category === 'object'
+          ? guide.category.en
+          : guide.category
+      )
+    ),
+  ];
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    'name': 'Learn Guitar - Free Guides & Techniques',
-    'description': 'Free guitar learning hub with guides on techniques, theory, and practice tips for rock and metal guitarists.',
+    'name': `${t.learn || 'Learn'} ${t.guitar || 'Guitar'}`,
+    'description': t.learnSubtitle || 'Free guitar learning hub with guides on techniques, theory, and practice tips for rock and metal guitarists.',
     'url': pageUrl,
+    'inLanguage': lang === 'pt-br' ? 'pt-BR' : lang,
     'isPartOf': { '@id': 'https://dadrocktabs.com/#website' },
     'mainEntity': {
       '@type': 'ItemList',
@@ -59,14 +60,14 @@ export default async function LearnPage({ params }) {
         'item': {
           '@type': 'Article',
           'name':
-  typeof guide.title === 'object'
-    ? guide.title[lang] || guide.title.en
-    : guide.title,
+            typeof guide.title === 'object'
+              ? guide.title[lang] || guide.title.en
+              : guide.title,
           'url': `https://dadrocktabs.com${getLocalizedPath(`/learn/${guide.slug}`, lang)}`,
           'description':
-  typeof guide.description === 'object'
-    ? guide.description[lang] || guide.description.en
-    : guide.description,
+            typeof guide.description === 'object'
+              ? guide.description[lang] || guide.description.en
+              : guide.description,
         }
       }))
     }
@@ -105,53 +106,53 @@ export default async function LearnPage({ params }) {
             <section key={category} className="mb-12">
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
                 <span
-  className={`px-3 py-1 rounded-lg text-sm font-semibold ${
-    category === 'Beginner'
-      ? 'bg-green-500/20 text-green-400'
-      : category === 'Technique'
-        ? 'bg-amber-500/20 text-amber-400'
-        : 'bg-purple-500/20 text-purple-400'
-  }`}
->
-  {category === 'Beginner'
-    ? t.beginner
-    : category === 'Technique'
-      ? t.technique
-      : category === 'Intermediate'
-        ? t.intermediate
-        : category}
-</span>
+                  className={`px-3 py-1 rounded-lg text-sm font-semibold ${
+                    category === 'Beginner'
+                      ? 'bg-green-500/20 text-green-400'
+                      : category === 'Technique'
+                        ? 'bg-amber-500/20 text-amber-400'
+                        : 'bg-purple-500/20 text-purple-400'
+                  }`}
+                >
+                  {category === 'Beginner'
+                    ? t.beginner
+                    : category === 'Technique'
+                      ? t.technique
+                      : category === 'Intermediate'
+                        ? t.intermediate
+                        : category}
+                </span>
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {guides
-  .filter((guide) => {
-    const guideCategory =
-      typeof guide.category === 'object'
-        ? guide.category.en
-        : guide.category;
+                  .filter((guide) => {
+                    const guideCategory =
+                      typeof guide.category === 'object'
+                        ? guide.category.en
+                        : guide.category;
 
-    return guideCategory === category;
-  })
-  .map((guide) => (
-                  <Link
-                    key={guide.slug}
-                    href={getLocalizedPath(`/learn/${guide.slug}`, lang)}
-                    className="group bg-zinc-900/80 rounded-xl border border-zinc-800 p-6 hover:border-amber-500/50 hover:bg-zinc-900 transition-all duration-300"
-                  >
-                    <div className="flex items-start gap-4">
-                      <span className="text-3xl">{guide.icon}</span>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-lg text-white group-hover:text-amber-500 transition-colors mb-2">
-                          {typeof guide.title === 'object' ? (guide.title[lang] || guide.title.en) : guide.title}
-                        </h3>
-                        <p className="text-zinc-400 text-sm leading-relaxed mb-3">
-                          {typeof guide.description === 'object' ? (guide.description[lang] || guide.description.en) : guide.description}
-                        </p>
-                        <span className="text-xs text-zinc-500">{typeof guide.readTime === 'object' ? (guide.readTime[lang] || guide.readTime.en) : guide.readTime}</span>
+                    return guideCategory === category;
+                  })
+                  .map((guide) => (
+                    <Link
+                      key={guide.slug}
+                      href={getLocalizedPath(`/learn/${guide.slug}`, lang)}
+                      className="group bg-zinc-900/80 rounded-xl border border-zinc-800 p-6 hover:border-amber-500/50 hover:bg-zinc-900 transition-all duration-300"
+                    >
+                      <div className="flex items-start gap-4">
+                        <span className="text-3xl">{guide.icon}</span>
+                        <div className="flex-1">
+                          <h3 className="font-bold text-lg text-white group-hover:text-amber-500 transition-colors mb-2">
+                            {typeof guide.title === 'object' ? (guide.title[lang] || guide.title.en) : guide.title}
+                          </h3>
+                          <p className="text-zinc-400 text-sm leading-relaxed mb-3">
+                            {typeof guide.description === 'object' ? (guide.description[lang] || guide.description.en) : guide.description}
+                          </p>
+                          <span className="text-xs text-zinc-500">{typeof guide.readTime === 'object' ? (guide.readTime[lang] || guide.readTime.en) : guide.readTime}</span>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  ))}
               </div>
             </section>
           ))}
