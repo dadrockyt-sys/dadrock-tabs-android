@@ -43,6 +43,37 @@ function normalizeArtistSeoCounts(content, slug, lessonCount) {
   }
 }
 
+function extractYouTubeVideoId(video) {
+  const directId = String(video?.video_id || '').trim();
+  if (/^[a-zA-Z0-9_-]{11}$/.test(directId)) return directId;
+
+  const rawUrl = String(video?.youtube_url || '').trim();
+  if (!rawUrl) return '';
+
+  try {
+    const url = new URL(rawUrl);
+    const host = url.hostname.replace(/^www\./, '');
+
+    if (host === 'youtu.be') {
+      const id = url.pathname.split('/').filter(Boolean)[0] || '';
+      return /^[a-zA-Z0-9_-]{11}$/.test(id) ? id : '';
+    }
+
+    if (host === 'youtube.com' || host === 'm.youtube.com') {
+      const watchId = url.searchParams.get('v') || '';
+      if (/^[a-zA-Z0-9_-]{11}$/.test(watchId)) return watchId;
+
+      const parts = url.pathname.split('/').filter(Boolean);
+      if (['embed', 'shorts', 'live'].includes(parts[0])) {
+        const id = parts[1] || '';
+        if (/^[a-zA-Z0-9_-]{11}$/.test(id)) return id;
+      }
+    }
+  } catch { /* ignore malformed URLs */ }
+
+  return '';
+}
+
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const lang = resolvedParams.lang;
@@ -237,21 +268,25 @@ export default async function ArtistPage({ params }) {
         'mainEntity': {
           '@type': 'ItemList',
           'numberOfItems': plainVideos.length,
-          'itemListElement': plainVideos.slice(0, 10).map((video, index) => ({
-            '@type': 'ListItem',
-            'position': index + 1,
-            'item': {
-              '@type': 'VideoObject',
-              'name': video.song || video.title,
-              'thumbnailUrl': video.thumbnail,
-              'uploadDate': video.created_at || undefined,
-              'embedUrl': /^[a-zA-Z0-9_-]{11}$/.test(video.video_id || '')
-                ? `https://www.youtube.com/embed/${video.video_id}`
-                : undefined,
-              'inLanguage': lang,
-              'publisher': { '@id': 'https://dadrocktabs.com/#organization' }
-            }
-          }))
+          'itemListElement': plainVideos.slice(0, 10).map((video, index) => {
+            const videoId = extractYouTubeVideoId(video);
+            const videoName = video.song || video.title || `${displayArtistName} video lesson`;
+
+            return {
+              '@type': 'ListItem',
+              'position': index + 1,
+              'item': {
+                '@type': 'VideoObject',
+                'name': videoName,
+                'description': `${videoName}. ${schemaDescription}`,
+                'thumbnailUrl': video.thumbnail || (videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : undefined),
+                'uploadDate': video.created_at || undefined,
+                'embedUrl': videoId ? `https://www.youtube.com/embed/${videoId}` : undefined,
+                'inLanguage': lang,
+                'publisher': { '@id': 'https://dadrocktabs.com/#organization' }
+              }
+            };
+          })
         }
       }
     ]
