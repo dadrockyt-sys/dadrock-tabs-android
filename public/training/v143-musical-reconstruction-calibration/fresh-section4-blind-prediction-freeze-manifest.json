@@ -1,0 +1,17 @@
+{
+  "scope": "V143 final blind holdout measures 65-80",
+  "measureRange": "65..80",
+  "sourceCache": "public/training/v143-musical-reconstruction-calibration/fresh-section4-reference-free-cache.json",
+  "sourceCacheSha256": "8876696cd9f02f56e7639ba6e7e4940fe4e729e73d77f1fd9a31bd221aa73e5a",
+  "referenceFreeCapture": true,
+  "professionalReferenceOpened": false,
+  "candidateThresholdFrozenBeforeHoldout": 0.27,
+  "incumbentThreshold": 0.45,
+  "incumbentPredictionFile": "public/training/v143-musical-reconstruction-calibration/fresh-section4-threshold045-frozen-events.json",
+  "candidatePredictionFile": "public/training/v143-musical-reconstruction-calibration/fresh-section4-threshold027-frozen-events.json",
+  "incumbentPredictedEventCount": 118,
+  "candidatePredictedEventCount": 157,
+  "modelWeightsIdentical": true,
+  "onlyThresholdDiffers": true,
+  "productionModified": false
+}

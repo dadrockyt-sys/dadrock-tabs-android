@@ -1,0 +1,820 @@
+{
+  "scope": "fresh-section4-measures-65-80-blind-holdout",
+  "measureRange": "65..80",
+  "referenceFree": true,
+  "professionalReferenceOpened": false,
+  "professionalReferenceUsedForPrediction": false,
+  "modelPath": "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-threshold027-candidate.json",
+  "modelSha256": "00ab23fc7059137df6dddc92534f23881c0f780fcc1c93b8322ca255e378df24",
+  "sourceCachePath": "public/training/v143-musical-reconstruction-calibration/fresh-section4-reference-free-cache.json",
+  "sourceCacheSha256": "8876696cd9f02f56e7639ba6e7e4940fe4e729e73d77f1fd9a31bd221aa73e5a",
+  "threshold": 0.27,
+  "predictedEventCount": 157,
+  "perMeasureSelectedCounts": {
+    "65": 11,
+    "66": 10,
+    "67": 11,
+    "68": 9,
+    "69": 6,
+    "70": 15,
+    "71": 11,
+    "72": 9,
+    "73": 11,
+    "74": 11,
+    "75": 9,
+    "76": 7,
+    "77": 10,
+    "78": 9,
+    "79": 10,
+    "80": 8
+  },
+  "predictions": [
+    {
+      "measure": 65,
+      "step": 0,
+      "score": 0.5212987743874206
+    },
+    {
+      "measure": 65,
+      "step": 2,
+      "score": 0.28806349033246437
+    },
+    {
+      "measure": 65,
+      "step": 3,
+      "score": 0.31552571268679613
+    },
+    {
+      "measure": 65,
+      "step": 4,
+      "score": 0.5057923654693777
+    },
+    {
+      "measure": 65,
+      "step": 5,
+      "score": 0.33610036409327515
+    },
+    {
+      "measure": 65,
+      "step": 10,
+      "score": 0.7630538444157939
+    },
+    {
+      "measure": 65,
+      "step": 11,
+      "score": 0.2729037273449288
+    },
+    {
+      "measure": 65,
+      "step": 12,
+      "score": 0.632714196619847
+    },
+    {
+      "measure": 65,
+      "step": 13,
+      "score": 0.6343460981032434
+    },
+    {
+      "measure": 65,
+      "step": 14,
+      "score": 0.4834362623861303
+    },
+    {
+      "measure": 65,
+      "step": 15,
+      "score": 0.586322383124845
+    },
+    {
+      "measure": 66,
+      "step": 0,
+      "score": 0.7076695274908457
+    },
+    {
+      "measure": 66,
+      "step": 1,
+      "score": 0.31053420473931403
+    },
+    {
+      "measure": 66,
+      "step": 3,
+      "score": 0.2985307703277296
+    },
+    {
+      "measure": 66,
+      "step": 4,
+      "score": 0.39789690749324247
+    },
+    {
+      "measure": 66,
+      "step": 6,
+      "score": 0.36879359978880233
+    },
+    {
+      "measure": 66,
+      "step": 7,
+      "score": 0.5551569039221057
+    },
+    {
+      "measure": 66,
+      "step": 10,
+      "score": 0.32458750626000277
+    },
+    {
+      "measure": 66,
+      "step": 12,
+      "score": 0.5298914197279083
+    },
+    {
+      "measure": 66,
+      "step": 13,
+      "score": 0.4857023737131326
+    },
+    {
+      "measure": 66,
+      "step": 15,
+      "score": 0.4679359302384938
+    },
+    {
+      "measure": 67,
+      "step": 0,
+      "score": 0.8632317857363923
+    },
+    {
+      "measure": 67,
+      "step": 2,
+      "score": 0.3994188470178843
+    },
+    {
+      "measure": 67,
+      "step": 3,
+      "score": 0.7364494168957074
+    },
+    {
+      "measure": 67,
+      "step": 4,
+      "score": 0.48996575624709593
+    },
+    {
+      "measure": 67,
+      "step": 7,
+      "score": 0.35609260739975324
+    },
+    {
+      "measure": 67,
+      "step": 9,
+      "score": 1.2706210707073553
+    },
+    {
+      "measure": 67,
+      "step": 10,
+      "score": 0.9291552660989811
+    },
+    {
+      "measure": 67,
+      "step": 12,
+      "score": 0.45750123619030636
+    },
+    {
+      "measure": 67,
+      "step": 13,
+      "score": 0.6740512392938401
+    },
+    {
+      "measure": 67,
+      "step": 14,
+      "score": 0.43149422449459046
+    },
+    {
+      "measure": 67,
+      "step": 15,
+      "score": 0.4380357925293689
+    },
+    {
+      "measure": 68,
+      "step": 0,
+      "score": 0.9541843202251563
+    },
+    {
+      "measure": 68,
+      "step": 2,
+      "score": 0.7314315675758867
+    },
+    {
+      "measure": 68,
+      "step": 3,
+      "score": 0.3425958799383803
+    },
+    {
+      "measure": 68,
+      "step": 4,
+      "score": 0.35682432705061096
+    },
+    {
+      "measure": 68,
+      "step": 6,
+      "score": 0.2991678047485299
+    },
+    {
+      "measure": 68,
+      "step": 7,
+      "score": 0.6003074891725172
+    },
+    {
+      "measure": 68,
+      "step": 9,
+      "score": 1.124620096670523
+    },
+    {
+      "measure": 68,
+      "step": 11,
+      "score": 0.9177268239503578
+    },
+    {
+      "measure": 68,
+      "step": 15,
+      "score": 0.8894362170072729
+    },
+    {
+      "measure": 69,
+      "step": 0,
+      "score": 0.44345103116046247
+    },
+    {
+      "measure": 69,
+      "step": 8,
+      "score": 0.75294450476808
+    },
+    {
+      "measure": 69,
+      "step": 12,
+      "score": 0.45398847618249727
+    },
+    {
+      "measure": 69,
+      "step": 13,
+      "score": 0.3652931368526706
+    },
+    {
+      "measure": 69,
+      "step": 14,
+      "score": 0.5730522567110715
+    },
+    {
+      "measure": 69,
+      "step": 15,
+      "score": 0.6353633901837625
+    },
+    {
+      "measure": 70,
+      "step": 0,
+      "score": 0.751600235203376
+    },
+    {
+      "measure": 70,
+      "step": 1,
+      "score": 0.9279917943151021
+    },
+    {
+      "measure": 70,
+      "step": 2,
+      "score": 0.598029147437522
+    },
+    {
+      "measure": 70,
+      "step": 4,
+      "score": 0.30546631212060954
+    },
+    {
+      "measure": 70,
+      "step": 5,
+      "score": 0.3609627615587472
+    },
+    {
+      "measure": 70,
+      "step": 6,
+      "score": 0.43863673470403386
+    },
+    {
+      "measure": 70,
+      "step": 7,
+      "score": 0.4876535747647691
+    },
+    {
+      "measure": 70,
+      "step": 8,
+      "score": 0.4446527302476465
+    },
+    {
+      "measure": 70,
+      "step": 9,
+      "score": 0.6185584657359456
+    },
+    {
+      "measure": 70,
+      "step": 10,
+      "score": 0.6541445896492019
+    },
+    {
+      "measure": 70,
+      "step": 11,
+      "score": 0.7691446223565155
+    },
+    {
+      "measure": 70,
+      "step": 12,
+      "score": 0.8260311293602705
+    },
+    {
+      "measure": 70,
+      "step": 13,
+      "score": 0.7720872608210234
+    },
+    {
+      "measure": 70,
+      "step": 14,
+      "score": 0.6286267534231106
+    },
+    {
+      "measure": 70,
+      "step": 15,
+      "score": 0.7662409575417035
+    },
+    {
+      "measure": 71,
+      "step": 0,
+      "score": 0.670523960814531
+    },
+    {
+      "measure": 71,
+      "step": 1,
+      "score": 0.8237534772395836
+    },
+    {
+      "measure": 71,
+      "step": 2,
+      "score": 0.4302354370605047
+    },
+    {
+      "measure": 71,
+      "step": 3,
+      "score": 0.9227641863453995
+    },
+    {
+      "measure": 71,
+      "step": 4,
+      "score": 0.4341236559608179
+    },
+    {
+      "measure": 71,
+      "step": 7,
+      "score": 0.6893049219571206
+    },
+    {
+      "measure": 71,
+      "step": 8,
+      "score": 0.44941349264719477
+    },
+    {
+      "measure": 71,
+      "step": 9,
+      "score": 0.6666574961657161
+    },
+    {
+      "measure": 71,
+      "step": 10,
+      "score": 0.4005002531562959
+    },
+    {
+      "measure": 71,
+      "step": 11,
+      "score": 0.8091217736112577
+    },
+    {
+      "measure": 71,
+      "step": 14,
+      "score": 0.9461052999352683
+    },
+    {
+      "measure": 72,
+      "step": 0,
+      "score": 0.40621221260519436
+    },
+    {
+      "measure": 72,
+      "step": 1,
+      "score": 0.5078763331900107
+    },
+    {
+      "measure": 72,
+      "step": 2,
+      "score": 1.1217246282276054
+    },
+    {
+      "measure": 72,
+      "step": 8,
+      "score": 0.5203883526566934
+    },
+    {
+      "measure": 72,
+      "step": 9,
+      "score": 0.4642156712801415
+    },
+    {
+      "measure": 72,
+      "step": 11,
+      "score": 0.9587135556937669
+    },
+    {
+      "measure": 72,
+      "step": 12,
+      "score": 0.3908493899778229
+    },
+    {
+      "measure": 72,
+      "step": 14,
+      "score": 0.7221483874435185
+    },
+    {
+      "measure": 72,
+      "step": 15,
+      "score": 0.5880052416587289
+    },
+    {
+      "measure": 73,
+      "step": 0,
+      "score": 0.602316987418966
+    },
+    {
+      "measure": 73,
+      "step": 1,
+      "score": 1.200272041326153
+    },
+    {
+      "measure": 73,
+      "step": 3,
+      "score": 1.2153023637681888
+    },
+    {
+      "measure": 73,
+      "step": 5,
+      "score": 0.780807702130722
+    },
+    {
+      "measure": 73,
+      "step": 6,
+      "score": 0.41455789482293426
+    },
+    {
+      "measure": 73,
+      "step": 7,
+      "score": 0.5776068649296793
+    },
+    {
+      "measure": 73,
+      "step": 8,
+      "score": 0.3691132821618178
+    },
+    {
+      "measure": 73,
+      "step": 10,
+      "score": 0.6412888152666326
+    },
+    {
+      "measure": 73,
+      "step": 12,
+      "score": 0.9977042140543796
+    },
+    {
+      "measure": 73,
+      "step": 14,
+      "score": 0.865293478217647
+    },
+    {
+      "measure": 73,
+      "step": 15,
+      "score": 0.5170325632858579
+    },
+    {
+      "measure": 74,
+      "step": 0,
+      "score": 0.6760606993083274
+    },
+    {
+      "measure": 74,
+      "step": 3,
+      "score": 1.9380996104889197
+    },
+    {
+      "measure": 74,
+      "step": 5,
+      "score": 0.6292945878036046
+    },
+    {
+      "measure": 74,
+      "step": 7,
+      "score": 0.3183887246627787
+    },
+    {
+      "measure": 74,
+      "step": 8,
+      "score": 0.6081287541487587
+    },
+    {
+      "measure": 74,
+      "step": 9,
+      "score": 1.1750043711640052
+    },
+    {
+      "measure": 74,
+      "step": 10,
+      "score": 0.5010610372405411
+    },
+    {
+      "measure": 74,
+      "step": 11,
+      "score": 1.3874504613615923
+    },
+    {
+      "measure": 74,
+      "step": 12,
+      "score": 1.7433418341344709
+    },
+    {
+      "measure": 74,
+      "step": 14,
+      "score": 0.7601974933182095
+    },
+    {
+      "measure": 74,
+      "step": 15,
+      "score": 0.6198488755344396
+    },
+    {
+      "measure": 75,
+      "step": 0,
+      "score": 0.6868289522154672
+    },
+    {
+      "measure": 75,
+      "step": 1,
+      "score": 2.2276538674831254
+    },
+    {
+      "measure": 75,
+      "step": 3,
+      "score": 1.1871827598049676
+    },
+    {
+      "measure": 75,
+      "step": 4,
+      "score": 0.609480503517558
+    },
+    {
+      "measure": 75,
+      "step": 5,
+      "score": 0.4529902319940776
+    },
+    {
+      "measure": 75,
+      "step": 10,
+      "score": 0.47256501896727
+    },
+    {
+      "measure": 75,
+      "step": 12,
+      "score": 1.6647319583030549
+    },
+    {
+      "measure": 75,
+      "step": 13,
+      "score": 0.6319509560364899
+    },
+    {
+      "measure": 75,
+      "step": 14,
+      "score": 0.6739844196376615
+    },
+    {
+      "measure": 76,
+      "step": 0,
+      "score": 0.4430302999907097
+    },
+    {
+      "measure": 76,
+      "step": 3,
+      "score": 0.466113348974629
+    },
+    {
+      "measure": 76,
+      "step": 9,
+      "score": 1.0608841545269136
+    },
+    {
+      "measure": 76,
+      "step": 11,
+      "score": 1.7093548851594884
+    },
+    {
+      "measure": 76,
+      "step": 12,
+      "score": 0.3663628722759387
+    },
+    {
+      "measure": 76,
+      "step": 13,
+      "score": 1.1617693538150382
+    },
+    {
+      "measure": 76,
+      "step": 15,
+      "score": 1.0029677036368814
+    },
+    {
+      "measure": 77,
+      "step": 0,
+      "score": 0.7164908869473265
+    },
+    {
+      "measure": 77,
+      "step": 1,
+      "score": 0.8669830860876903
+    },
+    {
+      "measure": 77,
+      "step": 3,
+      "score": 0.9647874116898265
+    },
+    {
+      "measure": 77,
+      "step": 4,
+      "score": 1.1928074624681397
+    },
+    {
+      "measure": 77,
+      "step": 5,
+      "score": 0.3921034181090688
+    },
+    {
+      "measure": 77,
+      "step": 6,
+      "score": 0.295836475822865
+    },
+    {
+      "measure": 77,
+      "step": 12,
+      "score": 0.6956533846838742
+    },
+    {
+      "measure": 77,
+      "step": 13,
+      "score": 0.468554333617574
+    },
+    {
+      "measure": 77,
+      "step": 14,
+      "score": 0.542551917893277
+    },
+    {
+      "measure": 77,
+      "step": 15,
+      "score": 0.8372870205845357
+    },
+    {
+      "measure": 78,
+      "step": 0,
+      "score": 1.0575807023979193
+    },
+    {
+      "measure": 78,
+      "step": 2,
+      "score": 0.31660322602196667
+    },
+    {
+      "measure": 78,
+      "step": 3,
+      "score": 1.421152919847567
+    },
+    {
+      "measure": 78,
+      "step": 4,
+      "score": 2.666701348934682
+    },
+    {
+      "measure": 78,
+      "step": 9,
+      "score": 2.674248413686377
+    },
+    {
+      "measure": 78,
+      "step": 10,
+      "score": 0.9623525051201611
+    },
+    {
+      "measure": 78,
+      "step": 12,
+      "score": 2.351674747816062
+    },
+    {
+      "measure": 78,
+      "step": 14,
+      "score": 0.7918644354803773
+    },
+    {
+      "measure": 78,
+      "step": 15,
+      "score": 0.6943910703871834
+    },
+    {
+      "measure": 79,
+      "step": 1,
+      "score": 1.3148371812985529
+    },
+    {
+      "measure": 79,
+      "step": 3,
+      "score": 0.8463301119384574
+    },
+    {
+      "measure": 79,
+      "step": 4,
+      "score": 1.1633365401307525
+    },
+    {
+      "measure": 79,
+      "step": 7,
+      "score": 0.4478395310259402
+    },
+    {
+      "measure": 79,
+      "step": 8,
+      "score": 0.30930418383498576
+    },
+    {
+      "measure": 79,
+      "step": 10,
+      "score": 0.5374796349331792
+    },
+    {
+      "measure": 79,
+      "step": 11,
+      "score": 0.6109959153299178
+    },
+    {
+      "measure": 79,
+      "step": 12,
+      "score": 0.5052436166962451
+    },
+    {
+      "measure": 79,
+      "step": 14,
+      "score": 0.7070102707567637
+    },
+    {
+      "measure": 79,
+      "step": 15,
+      "score": 0.8785120627369614
+    },
+    {
+      "measure": 80,
+      "step": 3,
+      "score": 0.6437762310325852
+    },
+    {
+      "measure": 80,
+      "step": 4,
+      "score": 0.5655576821556395
+    },
+    {
+      "measure": 80,
+      "step": 6,
+      "score": 0.49946276705832165
+    },
+    {
+      "measure": 80,
+      "step": 7,
+      "score": 0.5229906265323662
+    },
+    {
+      "measure": 80,
+      "step": 10,
+      "score": 0.40952156067061896
+    },
+    {
+      "measure": 80,
+      "step": 12,
+      "score": 0.7162738354288586
+    },
+    {
+      "measure": 80,
+      "step": 13,
+      "score": 0.5618818253780479
+    },
+    {
+      "measure": 80,
+      "step": 14,
+      "score": 0.7655353736459779
+    }
+  ],
+  "predictionsFrozenBeforeReferenceOpen": true,
+  "productionModified": false
+}
