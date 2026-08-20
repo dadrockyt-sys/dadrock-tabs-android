@@ -1,0 +1,50 @@
+{
+  "name": "V143 fixed-count reranker final rejection",
+  "measureRange": "17-96",
+  "referenceCount": 431,
+  "reserveMeasuresOpened": false,
+  "incumbent": {
+    "model": "base selector threshold 0.27",
+    "predicted": 765,
+    "tp": 301,
+    "fp": 464,
+    "fn": 130,
+    "precision": 0.393464,
+    "recall": 0.698376,
+    "f1": 0.503344
+  },
+  "candidate": {
+    "model": "correlation-safe fixed-count reranker",
+    "predicted": 765,
+    "tp": 252,
+    "fp": 513,
+    "fn": 179,
+    "precision": 0.329412,
+    "recall": 0.584687,
+    "f1": 0.421405
+  },
+  "deltaVsIncumbent": {
+    "tp": -49,
+    "fp": 49,
+    "fn": 49,
+    "precision": -0.064052,
+    "recall": -0.113689,
+    "f1": -0.081939
+  },
+  "bandF1": {
+    "17-32": {"base": 0.517928, "candidate": 0.462151, "delta": -0.055777},
+    "33-48": {"base": 0.541353, "candidate": 0.488722, "delta": -0.052631},
+    "49-64": {"base": 0.605809, "candidate": 0.414938, "delta": -0.190871},
+    "65-80": {"base": 0.355769, "candidate": 0.298077, "delta": -0.057692},
+    "81-96": {"base": 0.469565, "candidate": 0.417391, "delta": -0.052174}
+  },
+  "decision": {
+    "status": "rejected",
+    "reason": "Candidate loses 49 true positives at identical event count and has lower F1 in every 16-measure band.",
+    "promote": false,
+    "productionModified": false,
+    "continueFixedCountRerankerFamily": false,
+    "retainIncumbent": "base selector threshold 0.27"
+  },
+  "nextReserve": "97-113"
+}
