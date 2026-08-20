@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "freeze": "v143-contextual-prune-before-reserve",
+  "developmentMeasures": "17-96",
+  "reserveMeasures": "97-113",
+  "selectedParameters": {
+    "l2": 0.1,
+    "pruneFraction": 0.15
+  },
+  "predictionsFrozenBeforeReserveGrading": true,
+  "targetReserveReferenceOpened": false,
+  "measures97To113Opened": false,
+  "reservePayloadOpened": false,
+  "developmentReferenceUsed": true,
+  "productionModified": false,
+  "fingerprints": {
+    "nestedLoboReportSha256": "21f099bcf58f190c6155a6b6c21f123716232068896849e4213354563eb4c414",
+    "contextualSourceSha256": "4b9d9f7cbb01107520c350ba18666ebc56f7952da857197c797d2063658d0581",
+    "baseModelSha256": "00ab23fc7059137df6dddc92534f23881c0f780fcc1c93b8322ca255e378df24",
+    "sequenceModelSha256": "46c16e1ab5bbaafad08060e55ee2e98d2a11faefd50e4f9bd333727f7b23fd3e",
+    "frozenModelSha256": "3e30fb28fb98febdd73d832d3bb31093488895820554064ab72afc9e75b2940c",
+    "frozenDevelopmentEventsSha256": "5658952ef54ff3e05c6a9bbc388e60b101728adc1df1d1231ff84a9d4f2eba00"
+  },
+  "counts": {
+    "developmentReference": 431,
+    "baseEvents17To96": 765,
+    "contextualEvents17To96": 651
+  },
+  "developmentMetrics": {
+    "base": {
+      "predicted": 765,
+      "reference": 431,
+      "tp": 301,
+      "fp": 464,
+      "fn": 130,
+      "precision": 0.3934640522875817,
+      "recall": 0.6983758700696056,
+      "f1": 0.5033444816053512
+    },
+    "candidate": {
+      "predicted": 651,
+      "reference": 431,
+      "tp": 293,
+      "fp": 358,
+      "fn": 138,
+      "precision": 0.4500768049155146,
+      "recall": 0.679814385150812,
+      "f1": 0.5415896487985212
+    },
+    "f1Delta": 0.03824516719317006
+  }
+}
