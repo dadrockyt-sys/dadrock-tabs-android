@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 2,
+  "gate": "v143-contextual-prune-reference-free-reserve-runtime-replay",
+  "development": {
+    "measures": "17-96",
+    "frozenCandidateEventCount": 651,
+    "frozenCandidateSha256": "5658952ef54ff3e05c6a9bbc388e60b101728adc1df1d1231ff84a9d4f2eba00",
+    "frozenCandidateFingerprintMatched": true,
+    "runtimeReplay": "not-reconstructed-in-github-actions",
+    "reason": "fresh-verse1-reference-free-cache.json used by the historical 17-96 research replay was never committed; refusing to fabricate or substitute that input"
+  },
+  "reserve": {
+    "measures": "97-113",
+    "contextMeasures": "81-113",
+    "baseEventCount": 180,
+    "candidateEventCount": 153,
+    "prunedEventCount": 27,
+    "exactBaseReplay": true,
+    "exactCandidateReplay": true,
+    "frozenBaseSha256": "3f4a421149b34f5952aa45c85f128c6ef41d30f9f44fe58ebb1ec28cf9a0cdab",
+    "frozenCandidateSha256": "7b2696bcdbe9bc42b7ac4b529fa19eb894fc832f37afa39850ef4a4e7dce356d"
+  },
+  "runtime": {
+    "baseThreshold": 0.27,
+    "pruneFraction": 0.15,
+    "candidateAddsEvents": false,
+    "candidateRelocatesEvents": false,
+    "professionalReferenceRequiredAtRuntime": false
+  },
+  "invariants": {
+    "professionalReferenceOpenedByReplay": false,
+    "reserveLabelsUsedByReplay": false,
+    "frozenPredictionsModified": false,
+    "developmentFrozenArtifactModified": false,
+    "productionModified": false
+  },
+  "gatePassed": true
+}
