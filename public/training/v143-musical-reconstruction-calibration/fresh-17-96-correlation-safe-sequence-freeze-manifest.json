@@ -1,0 +1,11 @@
+{
+  "name": "V143 frozen sequence prediction freeze",
+  "measureRange": "17-96",
+  "candidateChosenBeforeGrading": true,
+  "sequenceModelModified": false,
+  "baseModelModified": false,
+  "professionalReferenceOpened": false,
+  "measures97To112ReferenceOpened": false,
+  "productionModified": false,
+  "predictionFile": "public/training/v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-sequence-frozen-events.json"
+}

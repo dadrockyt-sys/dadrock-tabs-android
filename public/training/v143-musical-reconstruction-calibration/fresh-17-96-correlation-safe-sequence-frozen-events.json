@@ -1,0 +1,6339 @@
+{
+  "model": "v143-correlation-safe-sequence-event-model",
+  "measureRange": "17-96",
+  "referenceFree": true,
+  "historicalSequenceFeatureBaseThreshold": 0.45,
+  "currentBaseSelectorThreshold": 0.27,
+  "sequenceThreshold": 0.35,
+  "eventCount": 1051,
+  "blockCounts": {
+    "17-32": {
+      "base027Count": 136,
+      "sequenceCount": 211
+    },
+    "33-48": {
+      "base027Count": 173,
+      "sequenceCount": 222
+    },
+    "49-64": {
+      "base027Count": 134,
+      "sequenceCount": 215
+    },
+    "65-80": {
+      "base027Count": 157,
+      "sequenceCount": 199
+    },
+    "81-96": {
+      "base027Count": 165,
+      "sequenceCount": 204
+    }
+  },
+  "events": [
+    {
+      "measure": 17,
+      "step": 0,
+      "sequenceScore": 1.0398941163736468,
+      "timeSeconds": 29.675102040816327
+    },
+    {
+      "measure": 17,
+      "step": 2,
+      "sequenceScore": 0.9478098036305183,
+      "timeSeconds": 29.889886621315192
+    },
+    {
+      "measure": 17,
+      "step": 3,
+      "sequenceScore": 0.35357281861373224,
+      "timeSeconds": 29.997278911564628
+    },
+    {
+      "measure": 17,
+      "step": 4,
+      "sequenceScore": 1.1308581667237783,
+      "timeSeconds": 30.10467120181406
+    },
+    {
+      "measure": 17,
+      "step": 6,
+      "sequenceScore": 0.7132336504735043,
+      "timeSeconds": 30.33687074829932
+    },
+    {
+      "measure": 17,
+      "step": 8,
+      "sequenceScore": 0.5442391749718809,
+      "timeSeconds": 30.56907029478458
+    },
+    {
+      "measure": 17,
+      "step": 9,
+      "sequenceScore": 0.519727214822307,
+      "timeSeconds": 30.68517006802721
+    },
+    {
+      "measure": 17,
+      "step": 10,
+      "sequenceScore": 0.8814701865103272,
+      "timeSeconds": 30.801269841269843
+    },
+    {
+      "measure": 17,
+      "step": 11,
+      "sequenceScore": 0.5845100654831344,
+      "timeSeconds": 30.91736961451247
+    },
+    {
+      "measure": 17,
+      "step": 12,
+      "sequenceScore": 0.9003717745722026,
+      "timeSeconds": 31.0334693877551
+    },
+    {
+      "measure": 17,
+      "step": 13,
+      "sequenceScore": 0.9165313621725415,
+      "timeSeconds": 31.152471655328796
+    },
+    {
+      "measure": 17,
+      "step": 14,
+      "sequenceScore": 0.8586578092016708,
+      "timeSeconds": 31.271473922902494
+    },
+    {
+      "measure": 17,
+      "step": 15,
+      "sequenceScore": 0.7939106414911654,
+      "timeSeconds": 31.390476190476193
+    },
+    {
+      "measure": 18,
+      "step": 0,
+      "sequenceScore": 0.8982401922353032,
+      "timeSeconds": 31.509478458049887
+    },
+    {
+      "measure": 18,
+      "step": 2,
+      "sequenceScore": 1.0478699796121576,
+      "timeSeconds": 31.75328798185941
+    },
+    {
+      "measure": 18,
+      "step": 3,
+      "sequenceScore": 0.4181090393077915,
+      "timeSeconds": 31.87519274376417
+    },
+    {
+      "measure": 18,
+      "step": 4,
+      "sequenceScore": 1.4486617069299748,
+      "timeSeconds": 31.997097505668933
+    },
+    {
+      "measure": 18,
+      "step": 6,
+      "sequenceScore": 0.6270150625056993,
+      "timeSeconds": 32.21768707482993
+    },
+    {
+      "measure": 18,
+      "step": 8,
+      "sequenceScore": 0.674135979047735,
+      "timeSeconds": 32.43827664399093
+    },
+    {
+      "measure": 18,
+      "step": 9,
+      "sequenceScore": 0.6984123212815442,
+      "timeSeconds": 32.55437641723356
+    },
+    {
+      "measure": 18,
+      "step": 10,
+      "sequenceScore": 1.022994073031676,
+      "timeSeconds": 32.670476190476194
+    },
+    {
+      "measure": 18,
+      "step": 11,
+      "sequenceScore": 0.6484253607774948,
+      "timeSeconds": 32.78657596371882
+    },
+    {
+      "measure": 18,
+      "step": 12,
+      "sequenceScore": 1.2936142265766617,
+      "timeSeconds": 32.90267573696145
+    },
+    {
+      "measure": 18,
+      "step": 13,
+      "sequenceScore": 0.6472165403134698,
+      "timeSeconds": 33.01877551020408
+    },
+    {
+      "measure": 18,
+      "step": 14,
+      "sequenceScore": 0.8030300629675386,
+      "timeSeconds": 33.13487528344671
+    },
+    {
+      "measure": 18,
+      "step": 15,
+      "sequenceScore": 0.7800240855710235,
+      "timeSeconds": 33.25097505668934
+    },
+    {
+      "measure": 19,
+      "step": 0,
+      "sequenceScore": 0.9297116694420524,
+      "timeSeconds": 33.36707482993197
+    },
+    {
+      "measure": 19,
+      "step": 2,
+      "sequenceScore": 1.1913027804862641,
+      "timeSeconds": 33.599274376417235
+    },
+    {
+      "measure": 19,
+      "step": 3,
+      "sequenceScore": 0.40256729673388303,
+      "timeSeconds": 33.715374149659866
+    },
+    {
+      "measure": 19,
+      "step": 4,
+      "sequenceScore": 1.2758010602014362,
+      "timeSeconds": 33.8314739229025
+    },
+    {
+      "measure": 19,
+      "step": 6,
+      "sequenceScore": 0.915346847570694,
+      "timeSeconds": 34.06367346938775
+    },
+    {
+      "measure": 19,
+      "step": 8,
+      "sequenceScore": 0.7450850502742308,
+      "timeSeconds": 34.29587301587301
+    },
+    {
+      "measure": 19,
+      "step": 9,
+      "sequenceScore": 0.4564938655069369,
+      "timeSeconds": 34.411972789115644
+    },
+    {
+      "measure": 19,
+      "step": 10,
+      "sequenceScore": 0.9416233791020149,
+      "timeSeconds": 34.528072562358275
+    },
+    {
+      "measure": 19,
+      "step": 11,
+      "sequenceScore": 0.5919958981410285,
+      "timeSeconds": 34.644172335600906
+    },
+    {
+      "measure": 19,
+      "step": 12,
+      "sequenceScore": 1.2171144859283813,
+      "timeSeconds": 34.76027210884354
+    },
+    {
+      "measure": 19,
+      "step": 13,
+      "sequenceScore": 0.8695673580135841,
+      "timeSeconds": 34.879274376417236
+    },
+    {
+      "measure": 19,
+      "step": 14,
+      "sequenceScore": 0.8403641558441092,
+      "timeSeconds": 34.998276643990934
+    },
+    {
+      "measure": 19,
+      "step": 15,
+      "sequenceScore": 0.6928337282760384,
+      "timeSeconds": 35.117278911564625
+    },
+    {
+      "measure": 20,
+      "step": 0,
+      "sequenceScore": 1.0181778820019172,
+      "timeSeconds": 35.236281179138324
+    },
+    {
+      "measure": 20,
+      "step": 2,
+      "sequenceScore": 1.0754389140106886,
+      "timeSeconds": 35.46267573696145
+    },
+    {
+      "measure": 20,
+      "step": 3,
+      "sequenceScore": 0.4258869165420295,
+      "timeSeconds": 35.575873015873015
+    },
+    {
+      "measure": 20,
+      "step": 4,
+      "sequenceScore": 1.3351057479080373,
+      "timeSeconds": 35.68907029478458
+    },
+    {
+      "measure": 20,
+      "step": 6,
+      "sequenceScore": 0.8297957415285321,
+      "timeSeconds": 35.92126984126984
+    },
+    {
+      "measure": 20,
+      "step": 8,
+      "sequenceScore": 0.7031231086166849,
+      "timeSeconds": 36.1534693877551
+    },
+    {
+      "measure": 20,
+      "step": 10,
+      "sequenceScore": 0.9594197668992613,
+      "timeSeconds": 36.39147392290249
+    },
+    {
+      "measure": 20,
+      "step": 11,
+      "sequenceScore": 0.5809665202221374,
+      "timeSeconds": 36.51047619047619
+    },
+    {
+      "measure": 20,
+      "step": 12,
+      "sequenceScore": 1.076320677848022,
+      "timeSeconds": 36.62947845804989
+    },
+    {
+      "measure": 20,
+      "step": 13,
+      "sequenceScore": 0.7884038562242357,
+      "timeSeconds": 36.74267573696145
+    },
+    {
+      "measure": 20,
+      "step": 14,
+      "sequenceScore": 1.216026372700437,
+      "timeSeconds": 36.855873015873016
+    },
+    {
+      "measure": 20,
+      "step": 15,
+      "sequenceScore": 0.6893302952944306,
+      "timeSeconds": 36.96907029478458
+    },
+    {
+      "measure": 21,
+      "step": 0,
+      "sequenceScore": 0.9592694401991392,
+      "timeSeconds": 37.08226757369614
+    },
+    {
+      "measure": 21,
+      "step": 1,
+      "sequenceScore": 0.37216879001396896,
+      "timeSeconds": 37.19546485260771
+    },
+    {
+      "measure": 21,
+      "step": 2,
+      "sequenceScore": 1.1605747990148723,
+      "timeSeconds": 37.30866213151927
+    },
+    {
+      "measure": 21,
+      "step": 4,
+      "sequenceScore": 1.2010798749265608,
+      "timeSeconds": 37.535056689342404
+    },
+    {
+      "measure": 21,
+      "step": 6,
+      "sequenceScore": 0.8345130904429598,
+      "timeSeconds": 37.767256235827666
+    },
+    {
+      "measure": 21,
+      "step": 8,
+      "sequenceScore": 0.49317171153843337,
+      "timeSeconds": 37.99945578231293
+    },
+    {
+      "measure": 21,
+      "step": 9,
+      "sequenceScore": 0.7013924849533095,
+      "timeSeconds": 38.11555555555556
+    },
+    {
+      "measure": 21,
+      "step": 10,
+      "sequenceScore": 0.9514561589464802,
+      "timeSeconds": 38.23165532879818
+    },
+    {
+      "measure": 21,
+      "step": 11,
+      "sequenceScore": 0.36477939310820623,
+      "timeSeconds": 38.347755102040814
+    },
+    {
+      "measure": 21,
+      "step": 12,
+      "sequenceScore": 1.0456186257019138,
+      "timeSeconds": 38.463854875283445
+    },
+    {
+      "measure": 21,
+      "step": 13,
+      "sequenceScore": 0.9104776409281017,
+      "timeSeconds": 38.582857142857144
+    },
+    {
+      "measure": 21,
+      "step": 14,
+      "sequenceScore": 1.1369710490809128,
+      "timeSeconds": 38.70185941043084
+    },
+    {
+      "measure": 21,
+      "step": 15,
+      "sequenceScore": 0.7828455525530513,
+      "timeSeconds": 38.82086167800453
+    },
+    {
+      "measure": 22,
+      "step": 0,
+      "sequenceScore": 1.0073400998634454,
+      "timeSeconds": 38.93986394557823
+    },
+    {
+      "measure": 22,
+      "step": 2,
+      "sequenceScore": 1.0061444657185012,
+      "timeSeconds": 39.166258503401366
+    },
+    {
+      "measure": 22,
+      "step": 3,
+      "sequenceScore": 0.40254891097243,
+      "timeSeconds": 39.27945578231293
+    },
+    {
+      "measure": 22,
+      "step": 4,
+      "sequenceScore": 1.4234287534017007,
+      "timeSeconds": 39.39265306122449
+    },
+    {
+      "measure": 22,
+      "step": 6,
+      "sequenceScore": 0.7909110249010224,
+      "timeSeconds": 39.624852607709755
+    },
+    {
+      "measure": 22,
+      "step": 8,
+      "sequenceScore": 0.6751712366284218,
+      "timeSeconds": 39.85705215419501
+    },
+    {
+      "measure": 22,
+      "step": 9,
+      "sequenceScore": 0.9082358346320077,
+      "timeSeconds": 39.97315192743764
+    },
+    {
+      "measure": 22,
+      "step": 10,
+      "sequenceScore": 0.9007526653581759,
+      "timeSeconds": 40.08925170068027
+    },
+    {
+      "measure": 22,
+      "step": 11,
+      "sequenceScore": 0.7442189625598731,
+      "timeSeconds": 40.2053514739229
+    },
+    {
+      "measure": 22,
+      "step": 12,
+      "sequenceScore": 1.0331636660282983,
+      "timeSeconds": 40.321451247165534
+    },
+    {
+      "measure": 22,
+      "step": 13,
+      "sequenceScore": 0.7811791562950094,
+      "timeSeconds": 40.44045351473923
+    },
+    {
+      "measure": 22,
+      "step": 14,
+      "sequenceScore": 0.8827790708748708,
+      "timeSeconds": 40.559455782312924
+    },
+    {
+      "measure": 22,
+      "step": 15,
+      "sequenceScore": 0.854474430964663,
+      "timeSeconds": 40.67845804988662
+    },
+    {
+      "measure": 23,
+      "step": 0,
+      "sequenceScore": 0.8327335889719695,
+      "timeSeconds": 40.79746031746032
+    },
+    {
+      "measure": 23,
+      "step": 1,
+      "sequenceScore": 0.4041916499671259,
+      "timeSeconds": 40.91356009070295
+    },
+    {
+      "measure": 23,
+      "step": 2,
+      "sequenceScore": 1.1156577408936275,
+      "timeSeconds": 41.02965986394558
+    },
+    {
+      "measure": 23,
+      "step": 4,
+      "sequenceScore": 1.3093449515925872,
+      "timeSeconds": 41.26185941043084
+    },
+    {
+      "measure": 23,
+      "step": 6,
+      "sequenceScore": 1.041326698424454,
+      "timeSeconds": 41.4940589569161
+    },
+    {
+      "measure": 23,
+      "step": 8,
+      "sequenceScore": 0.773747582202323,
+      "timeSeconds": 41.72625850340136
+    },
+    {
+      "measure": 23,
+      "step": 9,
+      "sequenceScore": 0.544887456604211,
+      "timeSeconds": 41.84526077097506
+    },
+    {
+      "measure": 23,
+      "step": 10,
+      "sequenceScore": 1.0619345025087936,
+      "timeSeconds": 41.96426303854875
+    },
+    {
+      "measure": 23,
+      "step": 11,
+      "sequenceScore": 0.5294118644485072,
+      "timeSeconds": 42.08326530612245
+    },
+    {
+      "measure": 23,
+      "step": 12,
+      "sequenceScore": 1.1052400261721278,
+      "timeSeconds": 42.20226757369615
+    },
+    {
+      "measure": 23,
+      "step": 13,
+      "sequenceScore": 0.9324499952163375,
+      "timeSeconds": 42.31836734693878
+    },
+    {
+      "measure": 23,
+      "step": 14,
+      "sequenceScore": 1.0135952025984958,
+      "timeSeconds": 42.43446712018141
+    },
+    {
+      "measure": 23,
+      "step": 15,
+      "sequenceScore": 0.9122783651110963,
+      "timeSeconds": 42.55056689342403
+    },
+    {
+      "measure": 24,
+      "step": 0,
+      "sequenceScore": 0.9426397276187422,
+      "timeSeconds": 42.666666666666664
+    },
+    {
+      "measure": 24,
+      "step": 1,
+      "sequenceScore": 0.3938784809174612,
+      "timeSeconds": 42.782766439909295
+    },
+    {
+      "measure": 24,
+      "step": 2,
+      "sequenceScore": 1.047989176193314,
+      "timeSeconds": 42.898866213151926
+    },
+    {
+      "measure": 24,
+      "step": 4,
+      "sequenceScore": 1.3549490567938667,
+      "timeSeconds": 43.13106575963719
+    },
+    {
+      "measure": 24,
+      "step": 6,
+      "sequenceScore": 0.9522438109280968,
+      "timeSeconds": 43.36326530612245
+    },
+    {
+      "measure": 24,
+      "step": 8,
+      "sequenceScore": 0.6577770120016077,
+      "timeSeconds": 43.59546485260771
+    },
+    {
+      "measure": 24,
+      "step": 9,
+      "sequenceScore": 0.5984526755009216,
+      "timeSeconds": 43.71156462585034
+    },
+    {
+      "measure": 24,
+      "step": 10,
+      "sequenceScore": 0.9523736456566343,
+      "timeSeconds": 43.82766439909297
+    },
+    {
+      "measure": 24,
+      "step": 11,
+      "sequenceScore": 0.49322940690629097,
+      "timeSeconds": 43.9437641723356
+    },
+    {
+      "measure": 24,
+      "step": 12,
+      "sequenceScore": 1.1022532012988935,
+      "timeSeconds": 44.05986394557823
+    },
+    {
+      "measure": 24,
+      "step": 13,
+      "sequenceScore": 0.9549624538612637,
+      "timeSeconds": 44.17596371882086
+    },
+    {
+      "measure": 24,
+      "step": 14,
+      "sequenceScore": 1.0209386229479387,
+      "timeSeconds": 44.29206349206349
+    },
+    {
+      "measure": 24,
+      "step": 15,
+      "sequenceScore": 0.8507844286914991,
+      "timeSeconds": 44.40816326530612
+    },
+    {
+      "measure": 25,
+      "step": 0,
+      "sequenceScore": 0.71646980690291,
+      "timeSeconds": 44.52426303854875
+    },
+    {
+      "measure": 25,
+      "step": 1,
+      "sequenceScore": 0.5735992266765862,
+      "timeSeconds": 44.640362811791384
+    },
+    {
+      "measure": 25,
+      "step": 2,
+      "sequenceScore": 1.031121908012879,
+      "timeSeconds": 44.756462585034015
+    },
+    {
+      "measure": 25,
+      "step": 3,
+      "sequenceScore": 0.41690496244896835,
+      "timeSeconds": 44.872562358276646
+    },
+    {
+      "measure": 25,
+      "step": 4,
+      "sequenceScore": 1.2649607067266184,
+      "timeSeconds": 44.98866213151928
+    },
+    {
+      "measure": 25,
+      "step": 6,
+      "sequenceScore": 0.9595863320424581,
+      "timeSeconds": 45.215056689342404
+    },
+    {
+      "measure": 25,
+      "step": 8,
+      "sequenceScore": 0.5696547246914785,
+      "timeSeconds": 45.44145124716553
+    },
+    {
+      "measure": 25,
+      "step": 9,
+      "sequenceScore": 0.5632948862844716,
+      "timeSeconds": 45.56045351473923
+    },
+    {
+      "measure": 25,
+      "step": 10,
+      "sequenceScore": 0.9808085162605366,
+      "timeSeconds": 45.67945578231293
+    },
+    {
+      "measure": 25,
+      "step": 11,
+      "sequenceScore": 0.41721372399831247,
+      "timeSeconds": 45.79845804988662
+    },
+    {
+      "measure": 25,
+      "step": 12,
+      "sequenceScore": 1.1747876678681746,
+      "timeSeconds": 45.91746031746032
+    },
+    {
+      "measure": 25,
+      "step": 13,
+      "sequenceScore": 0.8587362417941676,
+      "timeSeconds": 46.03065759637188
+    },
+    {
+      "measure": 25,
+      "step": 14,
+      "sequenceScore": 0.9379715901157941,
+      "timeSeconds": 46.14385487528345
+    },
+    {
+      "measure": 25,
+      "step": 15,
+      "sequenceScore": 0.7130254604184425,
+      "timeSeconds": 46.257052154195016
+    },
+    {
+      "measure": 26,
+      "step": 0,
+      "sequenceScore": 0.8152012807132958,
+      "timeSeconds": 46.37024943310658
+    },
+    {
+      "measure": 26,
+      "step": 1,
+      "sequenceScore": 0.3540991672368072,
+      "timeSeconds": 46.48634920634921
+    },
+    {
+      "measure": 26,
+      "step": 2,
+      "sequenceScore": 0.9227033258265245,
+      "timeSeconds": 46.60244897959184
+    },
+    {
+      "measure": 26,
+      "step": 3,
+      "sequenceScore": 0.5176439990636645,
+      "timeSeconds": 46.718548752834465
+    },
+    {
+      "measure": 26,
+      "step": 4,
+      "sequenceScore": 1.436658444472188,
+      "timeSeconds": 46.834648526077096
+    },
+    {
+      "measure": 26,
+      "step": 6,
+      "sequenceScore": 0.9316725312579756,
+      "timeSeconds": 47.06684807256236
+    },
+    {
+      "measure": 26,
+      "step": 8,
+      "sequenceScore": 0.5744423197307462,
+      "timeSeconds": 47.29904761904762
+    },
+    {
+      "measure": 26,
+      "step": 9,
+      "sequenceScore": 0.6561140244752168,
+      "timeSeconds": 47.41804988662132
+    },
+    {
+      "measure": 26,
+      "step": 10,
+      "sequenceScore": 0.8911405531337261,
+      "timeSeconds": 47.53705215419501
+    },
+    {
+      "measure": 26,
+      "step": 11,
+      "sequenceScore": 0.5621032434014629,
+      "timeSeconds": 47.65605442176871
+    },
+    {
+      "measure": 26,
+      "step": 12,
+      "sequenceScore": 1.29468666379556,
+      "timeSeconds": 47.77505668934241
+    },
+    {
+      "measure": 26,
+      "step": 13,
+      "sequenceScore": 0.7264013400741525,
+      "timeSeconds": 47.89115646258504
+    },
+    {
+      "measure": 26,
+      "step": 14,
+      "sequenceScore": 0.7720535129100377,
+      "timeSeconds": 48.00725623582767
+    },
+    {
+      "measure": 26,
+      "step": 15,
+      "sequenceScore": 0.7870599045825096,
+      "timeSeconds": 48.12335600907029
+    },
+    {
+      "measure": 27,
+      "step": 0,
+      "sequenceScore": 1.0242372114317484,
+      "timeSeconds": 48.23945578231292
+    },
+    {
+      "measure": 27,
+      "step": 1,
+      "sequenceScore": 0.45943436890824624,
+      "timeSeconds": 48.35265306122449
+    },
+    {
+      "measure": 27,
+      "step": 2,
+      "sequenceScore": 0.963508186871545,
+      "timeSeconds": 48.46585034013606
+    },
+    {
+      "measure": 27,
+      "step": 3,
+      "sequenceScore": 0.3784782283406609,
+      "timeSeconds": 48.57904761904762
+    },
+    {
+      "measure": 27,
+      "step": 4,
+      "sequenceScore": 1.2552437885837469,
+      "timeSeconds": 48.692244897959185
+    },
+    {
+      "measure": 27,
+      "step": 6,
+      "sequenceScore": 0.9281733039854362,
+      "timeSeconds": 48.92444444444445
+    },
+    {
+      "measure": 27,
+      "step": 8,
+      "sequenceScore": 0.4148096275695761,
+      "timeSeconds": 49.1566439909297
+    },
+    {
+      "measure": 27,
+      "step": 10,
+      "sequenceScore": 0.8425541147952629,
+      "timeSeconds": 49.400453514739226
+    },
+    {
+      "measure": 27,
+      "step": 11,
+      "sequenceScore": 0.3967767239467873,
+      "timeSeconds": 49.522358276643985
+    },
+    {
+      "measure": 27,
+      "step": 12,
+      "sequenceScore": 1.1061428453790716,
+      "timeSeconds": 49.64426303854875
+    },
+    {
+      "measure": 27,
+      "step": 13,
+      "sequenceScore": 0.5627145560444888,
+      "timeSeconds": 49.76036281179138
+    },
+    {
+      "measure": 27,
+      "step": 14,
+      "sequenceScore": 0.7569159646214139,
+      "timeSeconds": 49.87646258503401
+    },
+    {
+      "measure": 27,
+      "step": 15,
+      "sequenceScore": 0.6914087391475746,
+      "timeSeconds": 49.99256235827664
+    },
+    {
+      "measure": 28,
+      "step": 0,
+      "sequenceScore": 0.9241096756196906,
+      "timeSeconds": 50.108662131519274
+    },
+    {
+      "measure": 28,
+      "step": 1,
+      "sequenceScore": 0.3587731447023159,
+      "timeSeconds": 50.22185941043084
+    },
+    {
+      "measure": 28,
+      "step": 2,
+      "sequenceScore": 0.9056302802839229,
+      "timeSeconds": 50.33505668934241
+    },
+    {
+      "measure": 28,
+      "step": 4,
+      "sequenceScore": 1.5192458812717475,
+      "timeSeconds": 50.561451247165536
+    },
+    {
+      "measure": 28,
+      "step": 6,
+      "sequenceScore": 0.9548438610204841,
+      "timeSeconds": 50.799455782312926
+    },
+    {
+      "measure": 28,
+      "step": 8,
+      "sequenceScore": 0.6585022882604591,
+      "timeSeconds": 51.037460317460315
+    },
+    {
+      "measure": 28,
+      "step": 9,
+      "sequenceScore": 0.5916528235518246,
+      "timeSeconds": 51.153560090702946
+    },
+    {
+      "measure": 28,
+      "step": 10,
+      "sequenceScore": 0.7666320523020884,
+      "timeSeconds": 51.26965986394558
+    },
+    {
+      "measure": 28,
+      "step": 11,
+      "sequenceScore": 0.7052102964441327,
+      "timeSeconds": 51.38575963718821
+    },
+    {
+      "measure": 28,
+      "step": 12,
+      "sequenceScore": 1.1971349412746082,
+      "timeSeconds": 51.50185941043084
+    },
+    {
+      "measure": 28,
+      "step": 13,
+      "sequenceScore": 1.029499152181182,
+      "timeSeconds": 51.62086167800454
+    },
+    {
+      "measure": 28,
+      "step": 14,
+      "sequenceScore": 0.8611142836694592,
+      "timeSeconds": 51.739863945578236
+    },
+    {
+      "measure": 28,
+      "step": 15,
+      "sequenceScore": 0.7766430308812113,
+      "timeSeconds": 51.85886621315193
+    },
+    {
+      "measure": 29,
+      "step": 0,
+      "sequenceScore": 0.969324151148241,
+      "timeSeconds": 51.977868480725625
+    },
+    {
+      "measure": 29,
+      "step": 1,
+      "sequenceScore": 0.4009839341001455,
+      "timeSeconds": 52.06204081632653
+    },
+    {
+      "measure": 29,
+      "step": 2,
+      "sequenceScore": 0.8984917112330596,
+      "timeSeconds": 52.14621315192744
+    },
+    {
+      "measure": 29,
+      "step": 4,
+      "sequenceScore": 1.0861351847144067,
+      "timeSeconds": 52.31455782312925
+    },
+    {
+      "measure": 29,
+      "step": 6,
+      "sequenceScore": 0.5987132244318468,
+      "timeSeconds": 52.482902494331064
+    },
+    {
+      "measure": 29,
+      "step": 8,
+      "sequenceScore": 0.45011272761201193,
+      "timeSeconds": 52.65124716553288
+    },
+    {
+      "measure": 29,
+      "step": 9,
+      "sequenceScore": 0.6802482813983711,
+      "timeSeconds": 52.73832199546485
+    },
+    {
+      "measure": 29,
+      "step": 10,
+      "sequenceScore": 0.8223560284222426,
+      "timeSeconds": 52.82539682539682
+    },
+    {
+      "measure": 29,
+      "step": 11,
+      "sequenceScore": 0.4322589624598977,
+      "timeSeconds": 52.9124716553288
+    },
+    {
+      "measure": 29,
+      "step": 12,
+      "sequenceScore": 1.096483702010749,
+      "timeSeconds": 52.99954648526077
+    },
+    {
+      "measure": 29,
+      "step": 13,
+      "sequenceScore": 0.8354916791829987,
+      "timeSeconds": 53.08371882086168
+    },
+    {
+      "measure": 29,
+      "step": 14,
+      "sequenceScore": 0.9782795855751023,
+      "timeSeconds": 53.16789115646259
+    },
+    {
+      "measure": 29,
+      "step": 15,
+      "sequenceScore": 0.6363748704914216,
+      "timeSeconds": 53.25206349206349
+    },
+    {
+      "measure": 30,
+      "step": 0,
+      "sequenceScore": 0.5810124003414769,
+      "timeSeconds": 53.336235827664396
+    },
+    {
+      "measure": 30,
+      "step": 2,
+      "sequenceScore": 0.6317591040456297,
+      "timeSeconds": 53.57424036281179
+    },
+    {
+      "measure": 30,
+      "step": 3,
+      "sequenceScore": 0.5313488002401708,
+      "timeSeconds": 53.693242630385484
+    },
+    {
+      "measure": 30,
+      "step": 4,
+      "sequenceScore": 1.472827052531853,
+      "timeSeconds": 53.81224489795918
+    },
+    {
+      "measure": 30,
+      "step": 6,
+      "sequenceScore": 0.8408427246155592,
+      "timeSeconds": 54.044444444444444
+    },
+    {
+      "measure": 30,
+      "step": 8,
+      "sequenceScore": 0.6561661250656928,
+      "timeSeconds": 54.276643990929706
+    },
+    {
+      "measure": 30,
+      "step": 9,
+      "sequenceScore": 0.8657930339340062,
+      "timeSeconds": 54.38984126984127
+    },
+    {
+      "measure": 30,
+      "step": 10,
+      "sequenceScore": 0.9272937783749962,
+      "timeSeconds": 54.50303854875283
+    },
+    {
+      "measure": 30,
+      "step": 11,
+      "sequenceScore": 0.6263066207782206,
+      "timeSeconds": 54.6162358276644
+    },
+    {
+      "measure": 30,
+      "step": 12,
+      "sequenceScore": 1.3154510229592933,
+      "timeSeconds": 54.72943310657596
+    },
+    {
+      "measure": 30,
+      "step": 13,
+      "sequenceScore": 0.6769497835727061,
+      "timeSeconds": 54.84553287981859
+    },
+    {
+      "measure": 30,
+      "step": 14,
+      "sequenceScore": 1.2453208008923287,
+      "timeSeconds": 54.96163265306122
+    },
+    {
+      "measure": 30,
+      "step": 15,
+      "sequenceScore": 0.7971367388315412,
+      "timeSeconds": 55.077732426303854
+    },
+    {
+      "measure": 31,
+      "step": 0,
+      "sequenceScore": 0.6905676525980691,
+      "timeSeconds": 55.193832199546485
+    },
+    {
+      "measure": 31,
+      "step": 1,
+      "sequenceScore": 0.5719872530532932,
+      "timeSeconds": 55.30702947845805
+    },
+    {
+      "measure": 31,
+      "step": 2,
+      "sequenceScore": 0.9162384703855244,
+      "timeSeconds": 55.42022675736962
+    },
+    {
+      "measure": 31,
+      "step": 3,
+      "sequenceScore": 0.4217720156872632,
+      "timeSeconds": 55.53342403628118
+    },
+    {
+      "measure": 31,
+      "step": 4,
+      "sequenceScore": 1.2452136206525974,
+      "timeSeconds": 55.646621315192746
+    },
+    {
+      "measure": 31,
+      "step": 6,
+      "sequenceScore": 0.9706112746660077,
+      "timeSeconds": 55.87882086167801
+    },
+    {
+      "measure": 31,
+      "step": 8,
+      "sequenceScore": 0.784736235441966,
+      "timeSeconds": 56.11102040816326
+    },
+    {
+      "measure": 31,
+      "step": 9,
+      "sequenceScore": 0.5040535167131162,
+      "timeSeconds": 56.227120181405894
+    },
+    {
+      "measure": 31,
+      "step": 10,
+      "sequenceScore": 0.9948969600312307,
+      "timeSeconds": 56.343219954648525
+    },
+    {
+      "measure": 31,
+      "step": 11,
+      "sequenceScore": 0.4020229596669207,
+      "timeSeconds": 56.459319727891156
+    },
+    {
+      "measure": 31,
+      "step": 12,
+      "sequenceScore": 1.273017928788935,
+      "timeSeconds": 56.57541950113379
+    },
+    {
+      "measure": 31,
+      "step": 13,
+      "sequenceScore": 0.662746382519687,
+      "timeSeconds": 56.69151927437642
+    },
+    {
+      "measure": 31,
+      "step": 14,
+      "sequenceScore": 1.3438571144161655,
+      "timeSeconds": 56.80761904761905
+    },
+    {
+      "measure": 31,
+      "step": 15,
+      "sequenceScore": 0.7329981041997842,
+      "timeSeconds": 56.92371882086168
+    },
+    {
+      "measure": 32,
+      "step": 0,
+      "sequenceScore": 0.6607367847271028,
+      "timeSeconds": 57.03981859410431
+    },
+    {
+      "measure": 32,
+      "step": 1,
+      "sequenceScore": 0.6221351824945764,
+      "timeSeconds": 57.15591836734694
+    },
+    {
+      "measure": 32,
+      "step": 2,
+      "sequenceScore": 0.7180976884139124,
+      "timeSeconds": 57.272018140589566
+    },
+    {
+      "measure": 32,
+      "step": 3,
+      "sequenceScore": 0.5299432465447167,
+      "timeSeconds": 57.3881179138322
+    },
+    {
+      "measure": 32,
+      "step": 4,
+      "sequenceScore": 1.0206083689558392,
+      "timeSeconds": 57.50421768707483
+    },
+    {
+      "measure": 32,
+      "step": 6,
+      "sequenceScore": 0.9230085222746657,
+      "timeSeconds": 57.742222222222225
+    },
+    {
+      "measure": 32,
+      "step": 8,
+      "sequenceScore": 0.7164726225495051,
+      "timeSeconds": 57.980226757369614
+    },
+    {
+      "measure": 32,
+      "step": 9,
+      "sequenceScore": 0.46944023312959005,
+      "timeSeconds": 58.09342403628118
+    },
+    {
+      "measure": 32,
+      "step": 10,
+      "sequenceScore": 0.9788578401512246,
+      "timeSeconds": 58.20662131519275
+    },
+    {
+      "measure": 32,
+      "step": 11,
+      "sequenceScore": 0.627355502455136,
+      "timeSeconds": 58.31981859410431
+    },
+    {
+      "measure": 32,
+      "step": 12,
+      "sequenceScore": 1.1837844259776822,
+      "timeSeconds": 58.433015873015876
+    },
+    {
+      "measure": 32,
+      "step": 13,
+      "sequenceScore": 0.7266651417301286,
+      "timeSeconds": 58.55201814058957
+    },
+    {
+      "measure": 32,
+      "step": 14,
+      "sequenceScore": 1.3733984298696853,
+      "timeSeconds": 58.671020408163265
+    },
+    {
+      "measure": 32,
+      "step": 15,
+      "sequenceScore": 0.8658342544950807,
+      "timeSeconds": 58.790022675736964
+    },
+    {
+      "measure": 33,
+      "step": 0,
+      "sequenceScore": 0.7127371601000426,
+      "timeSeconds": 58.909024943310655
+    },
+    {
+      "measure": 33,
+      "step": 1,
+      "sequenceScore": 0.46493824242725373,
+      "timeSeconds": 59.02222222222222
+    },
+    {
+      "measure": 33,
+      "step": 2,
+      "sequenceScore": 0.8971065170821716,
+      "timeSeconds": 59.13541950113378
+    },
+    {
+      "measure": 33,
+      "step": 3,
+      "sequenceScore": 0.502166362050047,
+      "timeSeconds": 59.24861678004535
+    },
+    {
+      "measure": 33,
+      "step": 4,
+      "sequenceScore": 1.1456177370397358,
+      "timeSeconds": 59.36181405895692
+    },
+    {
+      "measure": 33,
+      "step": 6,
+      "sequenceScore": 0.9435112686730817,
+      "timeSeconds": 59.58820861678005
+    },
+    {
+      "measure": 33,
+      "step": 8,
+      "sequenceScore": 0.7091135810247137,
+      "timeSeconds": 59.81460317460318
+    },
+    {
+      "measure": 33,
+      "step": 9,
+      "sequenceScore": 0.549871571081046,
+      "timeSeconds": 59.92780045351474
+    },
+    {
+      "measure": 33,
+      "step": 10,
+      "sequenceScore": 0.9753705940954644,
+      "timeSeconds": 60.040997732426305
+    },
+    {
+      "measure": 33,
+      "step": 11,
+      "sequenceScore": 0.4690142017013558,
+      "timeSeconds": 60.15419501133787
+    },
+    {
+      "measure": 33,
+      "step": 12,
+      "sequenceScore": 1.028250992645181,
+      "timeSeconds": 60.26739229024943
+    },
+    {
+      "measure": 33,
+      "step": 13,
+      "sequenceScore": 0.9823710159961376,
+      "timeSeconds": 60.38349206349206
+    },
+    {
+      "measure": 33,
+      "step": 14,
+      "sequenceScore": 1.0767765633195485,
+      "timeSeconds": 60.499591836734695
+    },
+    {
+      "measure": 33,
+      "step": 15,
+      "sequenceScore": 1.0364681934060154,
+      "timeSeconds": 60.615691609977326
+    },
+    {
+      "measure": 34,
+      "step": 0,
+      "sequenceScore": 0.788210914729705,
+      "timeSeconds": 60.73179138321996
+    },
+    {
+      "measure": 34,
+      "step": 1,
+      "sequenceScore": 0.539485340743086,
+      "timeSeconds": 60.85079365079365
+    },
+    {
+      "measure": 34,
+      "step": 2,
+      "sequenceScore": 0.7345678932820137,
+      "timeSeconds": 60.969795918367346
+    },
+    {
+      "measure": 34,
+      "step": 3,
+      "sequenceScore": 0.6646385468979662,
+      "timeSeconds": 61.088798185941044
+    },
+    {
+      "measure": 34,
+      "step": 4,
+      "sequenceScore": 1.2536453176039641,
+      "timeSeconds": 61.207800453514736
+    },
+    {
+      "measure": 34,
+      "step": 6,
+      "sequenceScore": 0.593463471610009,
+      "timeSeconds": 61.44
+    },
+    {
+      "measure": 34,
+      "step": 7,
+      "sequenceScore": 0.4444894785598488,
+      "timeSeconds": 61.55609977324263
+    },
+    {
+      "measure": 34,
+      "step": 9,
+      "sequenceScore": 0.9597639906046859,
+      "timeSeconds": 61.79120181405896
+    },
+    {
+      "measure": 34,
+      "step": 10,
+      "sequenceScore": 0.6734817607052864,
+      "timeSeconds": 61.910204081632656
+    },
+    {
+      "measure": 34,
+      "step": 11,
+      "sequenceScore": 0.8230119579671537,
+      "timeSeconds": 62.02920634920635
+    },
+    {
+      "measure": 34,
+      "step": 12,
+      "sequenceScore": 1.1753077318030571,
+      "timeSeconds": 62.148208616780046
+    },
+    {
+      "measure": 34,
+      "step": 13,
+      "sequenceScore": 0.869542647173538,
+      "timeSeconds": 62.26430839002268
+    },
+    {
+      "measure": 34,
+      "step": 14,
+      "sequenceScore": 1.1917435430437362,
+      "timeSeconds": 62.38040816326531
+    },
+    {
+      "measure": 34,
+      "step": 15,
+      "sequenceScore": 0.8409643779014869,
+      "timeSeconds": 62.49650793650794
+    },
+    {
+      "measure": 35,
+      "step": 0,
+      "sequenceScore": 0.7566214892215235,
+      "timeSeconds": 62.61260770975057
+    },
+    {
+      "measure": 35,
+      "step": 1,
+      "sequenceScore": 0.6364045393511107,
+      "timeSeconds": 62.725804988662134
+    },
+    {
+      "measure": 35,
+      "step": 2,
+      "sequenceScore": 0.8654659155635996,
+      "timeSeconds": 62.8390022675737
+    },
+    {
+      "measure": 35,
+      "step": 3,
+      "sequenceScore": 0.5907363987716255,
+      "timeSeconds": 62.95219954648526
+    },
+    {
+      "measure": 35,
+      "step": 4,
+      "sequenceScore": 1.1252608873333176,
+      "timeSeconds": 63.065396825396824
+    },
+    {
+      "measure": 35,
+      "step": 6,
+      "sequenceScore": 0.6951836832394606,
+      "timeSeconds": 63.297596371882086
+    },
+    {
+      "measure": 35,
+      "step": 8,
+      "sequenceScore": 0.5115707641890763,
+      "timeSeconds": 63.52979591836735
+    },
+    {
+      "measure": 35,
+      "step": 9,
+      "sequenceScore": 0.9235129715685341,
+      "timeSeconds": 63.64589569160998
+    },
+    {
+      "measure": 35,
+      "step": 10,
+      "sequenceScore": 0.7283560949372376,
+      "timeSeconds": 63.7619954648526
+    },
+    {
+      "measure": 35,
+      "step": 11,
+      "sequenceScore": 0.8570740725939408,
+      "timeSeconds": 63.878095238095234
+    },
+    {
+      "measure": 35,
+      "step": 12,
+      "sequenceScore": 0.9835022155699333,
+      "timeSeconds": 63.994195011337865
+    },
+    {
+      "measure": 35,
+      "step": 13,
+      "sequenceScore": 1.1910658174535658,
+      "timeSeconds": 64.10739229024944
+    },
+    {
+      "measure": 35,
+      "step": 14,
+      "sequenceScore": 1.116830712636734,
+      "timeSeconds": 64.220589569161
+    },
+    {
+      "measure": 35,
+      "step": 15,
+      "sequenceScore": 0.8366210782601443,
+      "timeSeconds": 64.33378684807256
+    },
+    {
+      "measure": 36,
+      "step": 0,
+      "sequenceScore": 0.7391586678431263,
+      "timeSeconds": 64.44698412698413
+    },
+    {
+      "measure": 36,
+      "step": 1,
+      "sequenceScore": 0.6479347647163716,
+      "timeSeconds": 64.56308390022676
+    },
+    {
+      "measure": 36,
+      "step": 2,
+      "sequenceScore": 0.6480592589100511,
+      "timeSeconds": 64.6791836734694
+    },
+    {
+      "measure": 36,
+      "step": 3,
+      "sequenceScore": 0.6401833830077345,
+      "timeSeconds": 64.79528344671202
+    },
+    {
+      "measure": 36,
+      "step": 4,
+      "sequenceScore": 1.1448002891001592,
+      "timeSeconds": 64.91138321995464
+    },
+    {
+      "measure": 36,
+      "step": 6,
+      "sequenceScore": 0.6884414736645219,
+      "timeSeconds": 65.13777777777779
+    },
+    {
+      "measure": 36,
+      "step": 8,
+      "sequenceScore": 0.4769150866539336,
+      "timeSeconds": 65.36417233560091
+    },
+    {
+      "measure": 36,
+      "step": 9,
+      "sequenceScore": 0.7823758955248479,
+      "timeSeconds": 65.48607709750567
+    },
+    {
+      "measure": 36,
+      "step": 10,
+      "sequenceScore": 0.40788807901414337,
+      "timeSeconds": 65.60798185941044
+    },
+    {
+      "measure": 36,
+      "step": 11,
+      "sequenceScore": 0.7453010636075227,
+      "timeSeconds": 65.7298866213152
+    },
+    {
+      "measure": 36,
+      "step": 13,
+      "sequenceScore": 0.8201536257596787,
+      "timeSeconds": 65.96498866213153
+    },
+    {
+      "measure": 36,
+      "step": 14,
+      "sequenceScore": 0.529131834144738,
+      "timeSeconds": 66.07818594104309
+    },
+    {
+      "measure": 36,
+      "step": 15,
+      "sequenceScore": 0.7328124907647103,
+      "timeSeconds": 66.19138321995464
+    },
+    {
+      "measure": 37,
+      "step": 0,
+      "sequenceScore": 0.7181548325832385,
+      "timeSeconds": 66.30458049886622
+    },
+    {
+      "measure": 37,
+      "step": 1,
+      "sequenceScore": 0.7509951448471905,
+      "timeSeconds": 66.42648526077097
+    },
+    {
+      "measure": 37,
+      "step": 2,
+      "sequenceScore": 0.5693928925784292,
+      "timeSeconds": 66.54839002267573
+    },
+    {
+      "measure": 37,
+      "step": 3,
+      "sequenceScore": 0.5837416867905035,
+      "timeSeconds": 66.6702947845805
+    },
+    {
+      "measure": 37,
+      "step": 4,
+      "sequenceScore": 1.085299458471936,
+      "timeSeconds": 66.79219954648526
+    },
+    {
+      "measure": 37,
+      "step": 6,
+      "sequenceScore": 0.8615417639547726,
+      "timeSeconds": 67.01278911564626
+    },
+    {
+      "measure": 37,
+      "step": 8,
+      "sequenceScore": 0.4214159284415334,
+      "timeSeconds": 67.23337868480725
+    },
+    {
+      "measure": 37,
+      "step": 9,
+      "sequenceScore": 0.7066748694197962,
+      "timeSeconds": 67.34947845804987
+    },
+    {
+      "measure": 37,
+      "step": 10,
+      "sequenceScore": 0.6434309341609078,
+      "timeSeconds": 67.46557823129251
+    },
+    {
+      "measure": 37,
+      "step": 11,
+      "sequenceScore": 0.4308227986957675,
+      "timeSeconds": 67.58167800453515
+    },
+    {
+      "measure": 37,
+      "step": 12,
+      "sequenceScore": 0.7997348427530437,
+      "timeSeconds": 67.69777777777777
+    },
+    {
+      "measure": 37,
+      "step": 13,
+      "sequenceScore": 0.9023780783917796,
+      "timeSeconds": 67.8138775510204
+    },
+    {
+      "measure": 37,
+      "step": 14,
+      "sequenceScore": 0.7544334178506603,
+      "timeSeconds": 67.92997732426304
+    },
+    {
+      "measure": 37,
+      "step": 15,
+      "sequenceScore": 0.8331868952597494,
+      "timeSeconds": 68.04607709750567
+    },
+    {
+      "measure": 38,
+      "step": 0,
+      "sequenceScore": 0.6767848349654484,
+      "timeSeconds": 68.1621768707483
+    },
+    {
+      "measure": 38,
+      "step": 1,
+      "sequenceScore": 0.6305584131455821,
+      "timeSeconds": 68.28408163265306
+    },
+    {
+      "measure": 38,
+      "step": 2,
+      "sequenceScore": 0.5901040253234439,
+      "timeSeconds": 68.40598639455783
+    },
+    {
+      "measure": 38,
+      "step": 3,
+      "sequenceScore": 0.526644192754422,
+      "timeSeconds": 68.52789115646259
+    },
+    {
+      "measure": 38,
+      "step": 4,
+      "sequenceScore": 1.4382061742218206,
+      "timeSeconds": 68.64979591836735
+    },
+    {
+      "measure": 38,
+      "step": 6,
+      "sequenceScore": 0.7930635460040821,
+      "timeSeconds": 68.88780045351473
+    },
+    {
+      "measure": 38,
+      "step": 8,
+      "sequenceScore": 0.668610640472104,
+      "timeSeconds": 69.12580498866213
+    },
+    {
+      "measure": 38,
+      "step": 9,
+      "sequenceScore": 0.9373212369311833,
+      "timeSeconds": 69.1954648526077
+    },
+    {
+      "measure": 38,
+      "step": 10,
+      "sequenceScore": 0.716866591801977,
+      "timeSeconds": 69.26512471655329
+    },
+    {
+      "measure": 38,
+      "step": 11,
+      "sequenceScore": 0.8273430781709541,
+      "timeSeconds": 69.33478458049888
+    },
+    {
+      "measure": 38,
+      "step": 12,
+      "sequenceScore": 1.2948815418789974,
+      "timeSeconds": 69.40444444444445
+    },
+    {
+      "measure": 38,
+      "step": 13,
+      "sequenceScore": 1.0888780525436939,
+      "timeSeconds": 69.50603174603175
+    },
+    {
+      "measure": 38,
+      "step": 14,
+      "sequenceScore": 0.7965973105193423,
+      "timeSeconds": 69.60761904761905
+    },
+    {
+      "measure": 39,
+      "step": 0,
+      "sequenceScore": 0.837759595966486,
+      "timeSeconds": 69.81079365079366
+    },
+    {
+      "measure": 39,
+      "step": 1,
+      "sequenceScore": 0.5825052241975626,
+      "timeSeconds": 69.93560090702948
+    },
+    {
+      "measure": 39,
+      "step": 2,
+      "sequenceScore": 0.8039376441137696,
+      "timeSeconds": 70.06040816326531
+    },
+    {
+      "measure": 39,
+      "step": 3,
+      "sequenceScore": 0.5614647782005038,
+      "timeSeconds": 70.18521541950113
+    },
+    {
+      "measure": 39,
+      "step": 4,
+      "sequenceScore": 1.1384170855830673,
+      "timeSeconds": 70.31002267573696
+    },
+    {
+      "measure": 39,
+      "step": 6,
+      "sequenceScore": 0.8211567015433865,
+      "timeSeconds": 70.45514739229026
+    },
+    {
+      "measure": 39,
+      "step": 8,
+      "sequenceScore": 0.6186260291064679,
+      "timeSeconds": 70.60027210884354
+    },
+    {
+      "measure": 39,
+      "step": 9,
+      "sequenceScore": 0.6871748113638622,
+      "timeSeconds": 70.71056689342404
+    },
+    {
+      "measure": 39,
+      "step": 10,
+      "sequenceScore": 0.8822422437409572,
+      "timeSeconds": 70.82086167800455
+    },
+    {
+      "measure": 39,
+      "step": 11,
+      "sequenceScore": 0.6271525177755218,
+      "timeSeconds": 70.93115646258504
+    },
+    {
+      "measure": 39,
+      "step": 12,
+      "sequenceScore": 1.154017373937984,
+      "timeSeconds": 71.04145124716554
+    },
+    {
+      "measure": 39,
+      "step": 13,
+      "sequenceScore": 1.1483099050883314,
+      "timeSeconds": 71.16625850340137
+    },
+    {
+      "measure": 39,
+      "step": 14,
+      "sequenceScore": 1.1396859286408259,
+      "timeSeconds": 71.29106575963719
+    },
+    {
+      "measure": 39,
+      "step": 15,
+      "sequenceScore": 0.8047393718163792,
+      "timeSeconds": 71.41587301587302
+    },
+    {
+      "measure": 40,
+      "step": 0,
+      "sequenceScore": 1.0413157309253602,
+      "timeSeconds": 71.54068027210884
+    },
+    {
+      "measure": 40,
+      "step": 1,
+      "sequenceScore": 0.5120594675316203,
+      "timeSeconds": 71.65678004535147
+    },
+    {
+      "measure": 40,
+      "step": 2,
+      "sequenceScore": 0.9012698956632852,
+      "timeSeconds": 71.7728798185941
+    },
+    {
+      "measure": 40,
+      "step": 3,
+      "sequenceScore": 0.5120782260277185,
+      "timeSeconds": 71.88897959183674
+    },
+    {
+      "measure": 40,
+      "step": 4,
+      "sequenceScore": 1.3861653472406368,
+      "timeSeconds": 72.00507936507937
+    },
+    {
+      "measure": 40,
+      "step": 6,
+      "sequenceScore": 0.9168778053222131,
+      "timeSeconds": 72.23727891156463
+    },
+    {
+      "measure": 40,
+      "step": 8,
+      "sequenceScore": 0.6350937311315455,
+      "timeSeconds": 72.46947845804989
+    },
+    {
+      "measure": 40,
+      "step": 9,
+      "sequenceScore": 0.5561754198502662,
+      "timeSeconds": 72.58848072562358
+    },
+    {
+      "measure": 40,
+      "step": 10,
+      "sequenceScore": 1.0025778844777762,
+      "timeSeconds": 72.70748299319729
+    },
+    {
+      "measure": 40,
+      "step": 11,
+      "sequenceScore": 0.6618300029877423,
+      "timeSeconds": 72.82648526077098
+    },
+    {
+      "measure": 40,
+      "step": 12,
+      "sequenceScore": 1.2099836873876,
+      "timeSeconds": 72.94548752834467
+    },
+    {
+      "measure": 40,
+      "step": 13,
+      "sequenceScore": 1.0297325991872783,
+      "timeSeconds": 73.06739229024943
+    },
+    {
+      "measure": 40,
+      "step": 14,
+      "sequenceScore": 1.2927638394736143,
+      "timeSeconds": 73.18929705215419
+    },
+    {
+      "measure": 40,
+      "step": 15,
+      "sequenceScore": 0.8201217695799474,
+      "timeSeconds": 73.31120181405896
+    },
+    {
+      "measure": 41,
+      "step": 0,
+      "sequenceScore": 0.7985523885086004,
+      "timeSeconds": 73.43310657596372
+    },
+    {
+      "measure": 41,
+      "step": 1,
+      "sequenceScore": 0.5174497573411285,
+      "timeSeconds": 73.55210884353741
+    },
+    {
+      "measure": 41,
+      "step": 2,
+      "sequenceScore": 0.855964717498685,
+      "timeSeconds": 73.67111111111112
+    },
+    {
+      "measure": 41,
+      "step": 3,
+      "sequenceScore": 0.6711930577905332,
+      "timeSeconds": 73.79011337868481
+    },
+    {
+      "measure": 41,
+      "step": 4,
+      "sequenceScore": 1.0893229395265425,
+      "timeSeconds": 73.9091156462585
+    },
+    {
+      "measure": 41,
+      "step": 6,
+      "sequenceScore": 0.8900059304452577,
+      "timeSeconds": 74.1471201814059
+    },
+    {
+      "measure": 41,
+      "step": 8,
+      "sequenceScore": 0.7218541539746605,
+      "timeSeconds": 74.38512471655329
+    },
+    {
+      "measure": 41,
+      "step": 9,
+      "sequenceScore": 0.5884034624277622,
+      "timeSeconds": 74.50122448979593
+    },
+    {
+      "measure": 41,
+      "step": 10,
+      "sequenceScore": 1.0349302730999923,
+      "timeSeconds": 74.61732426303855
+    },
+    {
+      "measure": 41,
+      "step": 11,
+      "sequenceScore": 0.44985218742557276,
+      "timeSeconds": 74.73342403628118
+    },
+    {
+      "measure": 41,
+      "step": 12,
+      "sequenceScore": 1.1455826875276283,
+      "timeSeconds": 74.84952380952382
+    },
+    {
+      "measure": 41,
+      "step": 13,
+      "sequenceScore": 0.9800493957511748,
+      "timeSeconds": 74.96852607709751
+    },
+    {
+      "measure": 41,
+      "step": 14,
+      "sequenceScore": 1.3462890205215938,
+      "timeSeconds": 75.0875283446712
+    },
+    {
+      "measure": 41,
+      "step": 15,
+      "sequenceScore": 0.6247036074559755,
+      "timeSeconds": 75.2065306122449
+    },
+    {
+      "measure": 42,
+      "step": 0,
+      "sequenceScore": 0.659781004294977,
+      "timeSeconds": 75.3255328798186
+    },
+    {
+      "measure": 42,
+      "step": 1,
+      "sequenceScore": 0.599984946606962,
+      "timeSeconds": 75.44453514739229
+    },
+    {
+      "measure": 42,
+      "step": 2,
+      "sequenceScore": 0.6355463344327507,
+      "timeSeconds": 75.56353741496599
+    },
+    {
+      "measure": 42,
+      "step": 3,
+      "sequenceScore": 0.5908531380838721,
+      "timeSeconds": 75.68253968253968
+    },
+    {
+      "measure": 42,
+      "step": 4,
+      "sequenceScore": 1.2309712872577538,
+      "timeSeconds": 75.80154195011337
+    },
+    {
+      "measure": 42,
+      "step": 6,
+      "sequenceScore": 0.6781888082001981,
+      "timeSeconds": 76.03374149659864
+    },
+    {
+      "measure": 42,
+      "step": 8,
+      "sequenceScore": 0.7147294638422027,
+      "timeSeconds": 76.2659410430839
+    },
+    {
+      "measure": 42,
+      "step": 9,
+      "sequenceScore": 0.7068259350696309,
+      "timeSeconds": 76.37913832199547
+    },
+    {
+      "measure": 42,
+      "step": 10,
+      "sequenceScore": 1.0207346376420603,
+      "timeSeconds": 76.49233560090703
+    },
+    {
+      "measure": 42,
+      "step": 11,
+      "sequenceScore": 0.7002461185515032,
+      "timeSeconds": 76.60553287981858
+    },
+    {
+      "measure": 42,
+      "step": 12,
+      "sequenceScore": 1.2788294648741545,
+      "timeSeconds": 76.71873015873015
+    },
+    {
+      "measure": 42,
+      "step": 13,
+      "sequenceScore": 0.9779790689250828,
+      "timeSeconds": 76.84063492063491
+    },
+    {
+      "measure": 42,
+      "step": 14,
+      "sequenceScore": 1.2220636962302058,
+      "timeSeconds": 76.96253968253967
+    },
+    {
+      "measure": 42,
+      "step": 15,
+      "sequenceScore": 0.7349248327134973,
+      "timeSeconds": 77.08444444444444
+    },
+    {
+      "measure": 43,
+      "step": 0,
+      "sequenceScore": 0.7424095015010872,
+      "timeSeconds": 77.2063492063492
+    },
+    {
+      "measure": 43,
+      "step": 1,
+      "sequenceScore": 0.6303877634566143,
+      "timeSeconds": 77.31954648526077
+    },
+    {
+      "measure": 43,
+      "step": 2,
+      "sequenceScore": 0.9680345129879437,
+      "timeSeconds": 77.43274376417233
+    },
+    {
+      "measure": 43,
+      "step": 3,
+      "sequenceScore": 0.6294588495508818,
+      "timeSeconds": 77.5459410430839
+    },
+    {
+      "measure": 43,
+      "step": 4,
+      "sequenceScore": 1.0518691922122303,
+      "timeSeconds": 77.65913832199547
+    },
+    {
+      "measure": 43,
+      "step": 6,
+      "sequenceScore": 0.8019931946055556,
+      "timeSeconds": 77.87972789115646
+    },
+    {
+      "measure": 43,
+      "step": 8,
+      "sequenceScore": 0.768298094373754,
+      "timeSeconds": 78.10031746031746
+    },
+    {
+      "measure": 43,
+      "step": 9,
+      "sequenceScore": 0.6199175823841726,
+      "timeSeconds": 78.2164172335601
+    },
+    {
+      "measure": 43,
+      "step": 10,
+      "sequenceScore": 1.1493338090848049,
+      "timeSeconds": 78.33251700680272
+    },
+    {
+      "measure": 43,
+      "step": 11,
+      "sequenceScore": 0.4060315314451056,
+      "timeSeconds": 78.44861678004534
+    },
+    {
+      "measure": 43,
+      "step": 12,
+      "sequenceScore": 1.2194799676105543,
+      "timeSeconds": 78.56471655328798
+    },
+    {
+      "measure": 43,
+      "step": 13,
+      "sequenceScore": 0.6925566248094551,
+      "timeSeconds": 78.67501133786848
+    },
+    {
+      "measure": 43,
+      "step": 14,
+      "sequenceScore": 1.254397801089903,
+      "timeSeconds": 78.78530612244899
+    },
+    {
+      "measure": 43,
+      "step": 15,
+      "sequenceScore": 0.506810566882037,
+      "timeSeconds": 78.89560090702948
+    },
+    {
+      "measure": 44,
+      "step": 0,
+      "sequenceScore": 0.7415212904832774,
+      "timeSeconds": 79.00589569160998
+    },
+    {
+      "measure": 44,
+      "step": 1,
+      "sequenceScore": 0.4714405103089985,
+      "timeSeconds": 79.1219954648526
+    },
+    {
+      "measure": 44,
+      "step": 2,
+      "sequenceScore": 0.6546759698717701,
+      "timeSeconds": 79.23809523809524
+    },
+    {
+      "measure": 44,
+      "step": 3,
+      "sequenceScore": 0.4863147558025577,
+      "timeSeconds": 79.35419501133788
+    },
+    {
+      "measure": 44,
+      "step": 4,
+      "sequenceScore": 1.1608350551694195,
+      "timeSeconds": 79.4702947845805
+    },
+    {
+      "measure": 44,
+      "step": 6,
+      "sequenceScore": 0.6025910342419863,
+      "timeSeconds": 79.7082993197279
+    },
+    {
+      "measure": 44,
+      "step": 8,
+      "sequenceScore": 0.5619088199171162,
+      "timeSeconds": 79.94630385487528
+    },
+    {
+      "measure": 44,
+      "step": 9,
+      "sequenceScore": 0.7305778503617871,
+      "timeSeconds": 80.06240362811792
+    },
+    {
+      "measure": 44,
+      "step": 10,
+      "sequenceScore": 0.929500066312483,
+      "timeSeconds": 80.17850340136054
+    },
+    {
+      "measure": 44,
+      "step": 11,
+      "sequenceScore": 0.6261549648417433,
+      "timeSeconds": 80.29460317460317
+    },
+    {
+      "measure": 44,
+      "step": 12,
+      "sequenceScore": 1.435345246111605,
+      "timeSeconds": 80.4107029478458
+    },
+    {
+      "measure": 44,
+      "step": 13,
+      "sequenceScore": 0.8536732593975652,
+      "timeSeconds": 80.52680272108844
+    },
+    {
+      "measure": 44,
+      "step": 14,
+      "sequenceScore": 1.2267231760052646,
+      "timeSeconds": 80.64290249433107
+    },
+    {
+      "measure": 44,
+      "step": 15,
+      "sequenceScore": 0.7104743466481913,
+      "timeSeconds": 80.75900226757369
+    },
+    {
+      "measure": 45,
+      "step": 0,
+      "sequenceScore": 0.6743687870808077,
+      "timeSeconds": 80.87510204081633
+    },
+    {
+      "measure": 45,
+      "step": 1,
+      "sequenceScore": 0.5325229143706565,
+      "timeSeconds": 80.99120181405897
+    },
+    {
+      "measure": 45,
+      "step": 2,
+      "sequenceScore": 0.8151663977094779,
+      "timeSeconds": 81.10730158730159
+    },
+    {
+      "measure": 45,
+      "step": 3,
+      "sequenceScore": 0.541755429719447,
+      "timeSeconds": 81.22340136054422
+    },
+    {
+      "measure": 45,
+      "step": 4,
+      "sequenceScore": 1.1740047217656449,
+      "timeSeconds": 81.33950113378685
+    },
+    {
+      "measure": 45,
+      "step": 6,
+      "sequenceScore": 0.7976624060103116,
+      "timeSeconds": 81.57750566893424
+    },
+    {
+      "measure": 45,
+      "step": 8,
+      "sequenceScore": 0.6827212551866805,
+      "timeSeconds": 81.81551020408163
+    },
+    {
+      "measure": 45,
+      "step": 9,
+      "sequenceScore": 0.4766018400286752,
+      "timeSeconds": 81.93160997732426
+    },
+    {
+      "measure": 45,
+      "step": 10,
+      "sequenceScore": 1.1142886808306338,
+      "timeSeconds": 82.0477097505669
+    },
+    {
+      "measure": 45,
+      "step": 11,
+      "sequenceScore": 0.46985615620009585,
+      "timeSeconds": 82.16380952380953
+    },
+    {
+      "measure": 45,
+      "step": 12,
+      "sequenceScore": 1.2366862747237408,
+      "timeSeconds": 82.27990929705216
+    },
+    {
+      "measure": 45,
+      "step": 13,
+      "sequenceScore": 0.8641257872704159,
+      "timeSeconds": 82.39891156462585
+    },
+    {
+      "measure": 45,
+      "step": 14,
+      "sequenceScore": 1.203057158700257,
+      "timeSeconds": 82.51791383219955
+    },
+    {
+      "measure": 45,
+      "step": 15,
+      "sequenceScore": 0.7620427874262021,
+      "timeSeconds": 82.63691609977325
+    },
+    {
+      "measure": 46,
+      "step": 0,
+      "sequenceScore": 0.8209201500616247,
+      "timeSeconds": 82.75591836734694
+    },
+    {
+      "measure": 46,
+      "step": 1,
+      "sequenceScore": 0.47012017408647233,
+      "timeSeconds": 82.87492063492064
+    },
+    {
+      "measure": 46,
+      "step": 2,
+      "sequenceScore": 0.6917925575398707,
+      "timeSeconds": 82.99392290249433
+    },
+    {
+      "measure": 46,
+      "step": 3,
+      "sequenceScore": 0.6840564294669321,
+      "timeSeconds": 83.11292517006802
+    },
+    {
+      "measure": 46,
+      "step": 4,
+      "sequenceScore": 1.1190068771772173,
+      "timeSeconds": 83.23192743764173
+    },
+    {
+      "measure": 46,
+      "step": 6,
+      "sequenceScore": 0.7193698097000775,
+      "timeSeconds": 83.46412698412698
+    },
+    {
+      "measure": 46,
+      "step": 8,
+      "sequenceScore": 0.6320399766193201,
+      "timeSeconds": 83.69632653061224
+    },
+    {
+      "measure": 46,
+      "step": 9,
+      "sequenceScore": 0.8774372054173983,
+      "timeSeconds": 83.81532879818593
+    },
+    {
+      "measure": 46,
+      "step": 10,
+      "sequenceScore": 0.9569538391024285,
+      "timeSeconds": 83.93433106575964
+    },
+    {
+      "measure": 46,
+      "step": 11,
+      "sequenceScore": 0.7124026129079892,
+      "timeSeconds": 84.05333333333334
+    },
+    {
+      "measure": 46,
+      "step": 12,
+      "sequenceScore": 1.3961710071028335,
+      "timeSeconds": 84.17233560090703
+    },
+    {
+      "measure": 46,
+      "step": 13,
+      "sequenceScore": 0.7235848587521894,
+      "timeSeconds": 84.29133786848072
+    },
+    {
+      "measure": 46,
+      "step": 14,
+      "sequenceScore": 1.2304870672957284,
+      "timeSeconds": 84.41034013605443
+    },
+    {
+      "measure": 46,
+      "step": 15,
+      "sequenceScore": 0.7591084517786092,
+      "timeSeconds": 84.52934240362812
+    },
+    {
+      "measure": 47,
+      "step": 0,
+      "sequenceScore": 0.9756150441019508,
+      "timeSeconds": 84.64834467120181
+    },
+    {
+      "measure": 47,
+      "step": 1,
+      "sequenceScore": 0.5972837517364021,
+      "timeSeconds": 84.76444444444445
+    },
+    {
+      "measure": 47,
+      "step": 2,
+      "sequenceScore": 0.8474766115075094,
+      "timeSeconds": 84.88054421768707
+    },
+    {
+      "measure": 47,
+      "step": 3,
+      "sequenceScore": 0.5606549822541951,
+      "timeSeconds": 84.9966439909297
+    },
+    {
+      "measure": 47,
+      "step": 4,
+      "sequenceScore": 1.0952538663184066,
+      "timeSeconds": 85.11274376417234
+    },
+    {
+      "measure": 47,
+      "step": 6,
+      "sequenceScore": 0.8510766066150979,
+      "timeSeconds": 85.3449433106576
+    },
+    {
+      "measure": 47,
+      "step": 8,
+      "sequenceScore": 0.8372399431927119,
+      "timeSeconds": 85.57714285714286
+    },
+    {
+      "measure": 47,
+      "step": 9,
+      "sequenceScore": 0.3678702356543781,
+      "timeSeconds": 85.6932426303855
+    },
+    {
+      "measure": 47,
+      "step": 10,
+      "sequenceScore": 1.1012829162727054,
+      "timeSeconds": 85.80934240362812
+    },
+    {
+      "measure": 47,
+      "step": 11,
+      "sequenceScore": 0.3554007081472192,
+      "timeSeconds": 85.92544217687075
+    },
+    {
+      "measure": 47,
+      "step": 12,
+      "sequenceScore": 1.379885126093705,
+      "timeSeconds": 86.04154195011338
+    },
+    {
+      "measure": 47,
+      "step": 13,
+      "sequenceScore": 0.627270463100358,
+      "timeSeconds": 86.15473922902495
+    },
+    {
+      "measure": 47,
+      "step": 14,
+      "sequenceScore": 1.2784835785612936,
+      "timeSeconds": 86.26793650793651
+    },
+    {
+      "measure": 47,
+      "step": 15,
+      "sequenceScore": 0.6160646812025095,
+      "timeSeconds": 86.38113378684807
+    },
+    {
+      "measure": 48,
+      "step": 0,
+      "sequenceScore": 0.9844366561860756,
+      "timeSeconds": 86.49433106575964
+    },
+    {
+      "measure": 48,
+      "step": 1,
+      "sequenceScore": 0.38755130870070603,
+      "timeSeconds": 86.60752834467121
+    },
+    {
+      "measure": 48,
+      "step": 2,
+      "sequenceScore": 0.8422114374266738,
+      "timeSeconds": 86.72072562358277
+    },
+    {
+      "measure": 48,
+      "step": 3,
+      "sequenceScore": 0.49651428201990966,
+      "timeSeconds": 86.83392290249432
+    },
+    {
+      "measure": 48,
+      "step": 4,
+      "sequenceScore": 1.246436924963787,
+      "timeSeconds": 86.9471201814059
+    },
+    {
+      "measure": 48,
+      "step": 6,
+      "sequenceScore": 0.667856665659714,
+      "timeSeconds": 87.19092970521541
+    },
+    {
+      "measure": 48,
+      "step": 8,
+      "sequenceScore": 0.7247503725521316,
+      "timeSeconds": 87.43473922902494
+    },
+    {
+      "measure": 48,
+      "step": 9,
+      "sequenceScore": 0.5243552311019251,
+      "timeSeconds": 87.55083900226757
+    },
+    {
+      "measure": 48,
+      "step": 10,
+      "sequenceScore": 1.0325360943897959,
+      "timeSeconds": 87.6669387755102
+    },
+    {
+      "measure": 48,
+      "step": 11,
+      "sequenceScore": 0.5342418059308364,
+      "timeSeconds": 87.78303854875284
+    },
+    {
+      "measure": 48,
+      "step": 12,
+      "sequenceScore": 1.2965586068134543,
+      "timeSeconds": 87.89913832199547
+    },
+    {
+      "measure": 48,
+      "step": 13,
+      "sequenceScore": 0.7494299313029201,
+      "timeSeconds": 88.01233560090702
+    },
+    {
+      "measure": 48,
+      "step": 14,
+      "sequenceScore": 1.201988311930567,
+      "timeSeconds": 88.12553287981859
+    },
+    {
+      "measure": 48,
+      "step": 15,
+      "sequenceScore": 0.6180879833403621,
+      "timeSeconds": 88.23873015873016
+    },
+    {
+      "measure": 49,
+      "step": 0,
+      "sequenceScore": 0.7431688724270147,
+      "timeSeconds": 88.35192743764172
+    },
+    {
+      "measure": 49,
+      "step": 1,
+      "sequenceScore": 0.4686280050426847,
+      "timeSeconds": 88.47092970521541
+    },
+    {
+      "measure": 49,
+      "step": 2,
+      "sequenceScore": 0.9605687526802263,
+      "timeSeconds": 88.58993197278912
+    },
+    {
+      "measure": 49,
+      "step": 3,
+      "sequenceScore": 0.542541634539242,
+      "timeSeconds": 88.70893424036282
+    },
+    {
+      "measure": 49,
+      "step": 4,
+      "sequenceScore": 1.1145673938402685,
+      "timeSeconds": 88.82793650793651
+    },
+    {
+      "measure": 49,
+      "step": 6,
+      "sequenceScore": 0.735789900557014,
+      "timeSeconds": 89.06594104308391
+    },
+    {
+      "measure": 49,
+      "step": 8,
+      "sequenceScore": 0.6485533758377953,
+      "timeSeconds": 89.30394557823129
+    },
+    {
+      "measure": 49,
+      "step": 9,
+      "sequenceScore": 0.4769444011518356,
+      "timeSeconds": 89.41714285714286
+    },
+    {
+      "measure": 49,
+      "step": 10,
+      "sequenceScore": 1.1054685221097125,
+      "timeSeconds": 89.53034013605442
+    },
+    {
+      "measure": 49,
+      "step": 11,
+      "sequenceScore": 0.36817359047582127,
+      "timeSeconds": 89.64353741496598
+    },
+    {
+      "measure": 49,
+      "step": 12,
+      "sequenceScore": 1.2435777807686086,
+      "timeSeconds": 89.75673469387755
+    },
+    {
+      "measure": 49,
+      "step": 13,
+      "sequenceScore": 0.7138212657739066,
+      "timeSeconds": 89.87283446712019
+    },
+    {
+      "measure": 49,
+      "step": 14,
+      "sequenceScore": 1.2104343879789576,
+      "timeSeconds": 89.98893424036281
+    },
+    {
+      "measure": 49,
+      "step": 15,
+      "sequenceScore": 0.6534344118242255,
+      "timeSeconds": 90.10503401360543
+    },
+    {
+      "measure": 50,
+      "step": 0,
+      "sequenceScore": 0.7450587246819217,
+      "timeSeconds": 90.22113378684807
+    },
+    {
+      "measure": 50,
+      "step": 2,
+      "sequenceScore": 0.9901844409384143,
+      "timeSeconds": 90.45913832199545
+    },
+    {
+      "measure": 50,
+      "step": 3,
+      "sequenceScore": 0.5919780663710428,
+      "timeSeconds": 90.57814058956916
+    },
+    {
+      "measure": 50,
+      "step": 4,
+      "sequenceScore": 1.302694738304711,
+      "timeSeconds": 90.69714285714285
+    },
+    {
+      "measure": 50,
+      "step": 6,
+      "sequenceScore": 0.532549142265149,
+      "timeSeconds": 90.92934240362811
+    },
+    {
+      "measure": 50,
+      "step": 8,
+      "sequenceScore": 0.632958793436326,
+      "timeSeconds": 91.16154195011337
+    },
+    {
+      "measure": 50,
+      "step": 9,
+      "sequenceScore": 0.6151250463526456,
+      "timeSeconds": 91.28054421768707
+    },
+    {
+      "measure": 50,
+      "step": 10,
+      "sequenceScore": 1.1362213026272119,
+      "timeSeconds": 91.39954648526077
+    },
+    {
+      "measure": 50,
+      "step": 11,
+      "sequenceScore": 0.5549518525592608,
+      "timeSeconds": 91.51854875283448
+    },
+    {
+      "measure": 50,
+      "step": 12,
+      "sequenceScore": 1.4242800406053997,
+      "timeSeconds": 91.63755102040817
+    },
+    {
+      "measure": 50,
+      "step": 13,
+      "sequenceScore": 0.45294100356812883,
+      "timeSeconds": 91.75365079365079
+    },
+    {
+      "measure": 50,
+      "step": 14,
+      "sequenceScore": 1.1734915467835543,
+      "timeSeconds": 91.86975056689343
+    },
+    {
+      "measure": 50,
+      "step": 15,
+      "sequenceScore": 0.5558828793519013,
+      "timeSeconds": 91.98585034013607
+    },
+    {
+      "measure": 51,
+      "step": 0,
+      "sequenceScore": 0.7357096432388514,
+      "timeSeconds": 92.10195011337869
+    },
+    {
+      "measure": 51,
+      "step": 1,
+      "sequenceScore": 0.6038815666385731,
+      "timeSeconds": 92.21514739229025
+    },
+    {
+      "measure": 51,
+      "step": 2,
+      "sequenceScore": 1.0274768483029708,
+      "timeSeconds": 92.32834467120182
+    },
+    {
+      "measure": 51,
+      "step": 3,
+      "sequenceScore": 0.6091167779523389,
+      "timeSeconds": 92.44154195011339
+    },
+    {
+      "measure": 51,
+      "step": 4,
+      "sequenceScore": 0.9777949108540247,
+      "timeSeconds": 92.55473922902495
+    },
+    {
+      "measure": 51,
+      "step": 6,
+      "sequenceScore": 0.6367236374490504,
+      "timeSeconds": 92.78113378684807
+    },
+    {
+      "measure": 51,
+      "step": 9,
+      "sequenceScore": 0.40366237140882116,
+      "timeSeconds": 93.12653061224489
+    },
+    {
+      "measure": 51,
+      "step": 10,
+      "sequenceScore": 1.2486528854452754,
+      "timeSeconds": 93.2455328798186
+    },
+    {
+      "measure": 51,
+      "step": 11,
+      "sequenceScore": 0.35661481369732206,
+      "timeSeconds": 93.36453514739229
+    },
+    {
+      "measure": 51,
+      "step": 12,
+      "sequenceScore": 1.290124845640433,
+      "timeSeconds": 93.48353741496598
+    },
+    {
+      "measure": 51,
+      "step": 13,
+      "sequenceScore": 0.5279355440650758,
+      "timeSeconds": 93.59673469387755
+    },
+    {
+      "measure": 51,
+      "step": 14,
+      "sequenceScore": 1.2029534157276336,
+      "timeSeconds": 93.70993197278912
+    },
+    {
+      "measure": 51,
+      "step": 15,
+      "sequenceScore": 0.6785275479996278,
+      "timeSeconds": 93.82312925170068
+    },
+    {
+      "measure": 52,
+      "step": 0,
+      "sequenceScore": 0.62020974998808,
+      "timeSeconds": 93.93632653061225
+    },
+    {
+      "measure": 52,
+      "step": 1,
+      "sequenceScore": 0.44740445994814226,
+      "timeSeconds": 94.05532879818594
+    },
+    {
+      "measure": 52,
+      "step": 2,
+      "sequenceScore": 0.9024868766032487,
+      "timeSeconds": 94.17433106575965
+    },
+    {
+      "measure": 52,
+      "step": 3,
+      "sequenceScore": 0.5862250815736759,
+      "timeSeconds": 94.29333333333334
+    },
+    {
+      "measure": 52,
+      "step": 4,
+      "sequenceScore": 1.1084152734108896,
+      "timeSeconds": 94.41233560090703
+    },
+    {
+      "measure": 52,
+      "step": 6,
+      "sequenceScore": 0.6836994271491249,
+      "timeSeconds": 94.64453514739229
+    },
+    {
+      "measure": 52,
+      "step": 8,
+      "sequenceScore": 0.635879550543381,
+      "timeSeconds": 94.87673469387755
+    },
+    {
+      "measure": 52,
+      "step": 9,
+      "sequenceScore": 0.6189485654328317,
+      "timeSeconds": 94.99573696145124
+    },
+    {
+      "measure": 52,
+      "step": 10,
+      "sequenceScore": 1.0266731689244117,
+      "timeSeconds": 95.11473922902493
+    },
+    {
+      "measure": 52,
+      "step": 11,
+      "sequenceScore": 0.6027774409903733,
+      "timeSeconds": 95.23374149659864
+    },
+    {
+      "measure": 52,
+      "step": 12,
+      "sequenceScore": 1.309226465341155,
+      "timeSeconds": 95.35274376417233
+    },
+    {
+      "measure": 52,
+      "step": 13,
+      "sequenceScore": 0.591642593207667,
+      "timeSeconds": 95.4659410430839
+    },
+    {
+      "measure": 52,
+      "step": 14,
+      "sequenceScore": 1.2754367082513114,
+      "timeSeconds": 95.57913832199546
+    },
+    {
+      "measure": 52,
+      "step": 15,
+      "sequenceScore": 0.8445213091987006,
+      "timeSeconds": 95.69233560090703
+    },
+    {
+      "measure": 53,
+      "step": 0,
+      "sequenceScore": 0.3629052820408213,
+      "timeSeconds": 95.8055328798186
+    },
+    {
+      "measure": 53,
+      "step": 1,
+      "sequenceScore": 0.5812829620865753,
+      "timeSeconds": 95.91873015873017
+    },
+    {
+      "measure": 53,
+      "step": 2,
+      "sequenceScore": 1.010832304945739,
+      "timeSeconds": 96.03192743764173
+    },
+    {
+      "measure": 53,
+      "step": 3,
+      "sequenceScore": 0.5404534369903191,
+      "timeSeconds": 96.14512471655328
+    },
+    {
+      "measure": 53,
+      "step": 4,
+      "sequenceScore": 1.080317934661314,
+      "timeSeconds": 96.25832199546485
+    },
+    {
+      "measure": 53,
+      "step": 6,
+      "sequenceScore": 0.8348297347467334,
+      "timeSeconds": 96.49052154195012
+    },
+    {
+      "measure": 53,
+      "step": 8,
+      "sequenceScore": 0.6905214963088979,
+      "timeSeconds": 96.72272108843538
+    },
+    {
+      "measure": 53,
+      "step": 9,
+      "sequenceScore": 0.5637000588500628,
+      "timeSeconds": 96.84462585034014
+    },
+    {
+      "measure": 53,
+      "step": 10,
+      "sequenceScore": 1.1670095956114968,
+      "timeSeconds": 96.9665306122449
+    },
+    {
+      "measure": 53,
+      "step": 12,
+      "sequenceScore": 1.212259270140858,
+      "timeSeconds": 97.21034013605443
+    },
+    {
+      "measure": 53,
+      "step": 13,
+      "sequenceScore": 0.7854258858554147,
+      "timeSeconds": 97.32353741496598
+    },
+    {
+      "measure": 53,
+      "step": 14,
+      "sequenceScore": 1.3261091038851929,
+      "timeSeconds": 97.43673469387755
+    },
+    {
+      "measure": 53,
+      "step": 15,
+      "sequenceScore": 0.7827806648603449,
+      "timeSeconds": 97.54993197278912
+    },
+    {
+      "measure": 54,
+      "step": 0,
+      "sequenceScore": 0.7962956485044842,
+      "timeSeconds": 97.66312925170068
+    },
+    {
+      "measure": 54,
+      "step": 1,
+      "sequenceScore": 0.4445654597851821,
+      "timeSeconds": 97.7792290249433
+    },
+    {
+      "measure": 54,
+      "step": 2,
+      "sequenceScore": 0.9728792902053275,
+      "timeSeconds": 97.89532879818594
+    },
+    {
+      "measure": 54,
+      "step": 3,
+      "sequenceScore": 0.6139083460840543,
+      "timeSeconds": 98.01142857142858
+    },
+    {
+      "measure": 54,
+      "step": 4,
+      "sequenceScore": 1.2441662910832327,
+      "timeSeconds": 98.1275283446712
+    },
+    {
+      "measure": 54,
+      "step": 6,
+      "sequenceScore": 0.706635609350618,
+      "timeSeconds": 98.3655328798186
+    },
+    {
+      "measure": 54,
+      "step": 8,
+      "sequenceScore": 0.6695393429191431,
+      "timeSeconds": 98.60353741496598
+    },
+    {
+      "measure": 54,
+      "step": 9,
+      "sequenceScore": 0.7324639792667146,
+      "timeSeconds": 98.71963718820862
+    },
+    {
+      "measure": 54,
+      "step": 10,
+      "sequenceScore": 1.0762648499936465,
+      "timeSeconds": 98.83573696145125
+    },
+    {
+      "measure": 54,
+      "step": 11,
+      "sequenceScore": 0.4859012367409935,
+      "timeSeconds": 98.95183673469387
+    },
+    {
+      "measure": 54,
+      "step": 12,
+      "sequenceScore": 1.4447468145580655,
+      "timeSeconds": 99.06793650793651
+    },
+    {
+      "measure": 54,
+      "step": 13,
+      "sequenceScore": 0.6061033211651536,
+      "timeSeconds": 99.18403628117915
+    },
+    {
+      "measure": 54,
+      "step": 14,
+      "sequenceScore": 1.2747649954472218,
+      "timeSeconds": 99.30013605442177
+    },
+    {
+      "measure": 54,
+      "step": 15,
+      "sequenceScore": 0.8388087272862083,
+      "timeSeconds": 99.4162358276644
+    },
+    {
+      "measure": 55,
+      "step": 0,
+      "sequenceScore": 0.5548614488549972,
+      "timeSeconds": 99.53233560090703
+    },
+    {
+      "measure": 55,
+      "step": 1,
+      "sequenceScore": 0.5254635206733649,
+      "timeSeconds": 99.65133786848072
+    },
+    {
+      "measure": 55,
+      "step": 2,
+      "sequenceScore": 1.0240851068884,
+      "timeSeconds": 99.77034013605441
+    },
+    {
+      "measure": 55,
+      "step": 3,
+      "sequenceScore": 0.4341167249400888,
+      "timeSeconds": 99.88934240362812
+    },
+    {
+      "measure": 55,
+      "step": 4,
+      "sequenceScore": 1.105439251213256,
+      "timeSeconds": 100.00834467120181
+    },
+    {
+      "measure": 55,
+      "step": 6,
+      "sequenceScore": 0.7925660623695318,
+      "timeSeconds": 100.23473922902494
+    },
+    {
+      "measure": 55,
+      "step": 8,
+      "sequenceScore": 0.7028134996103578,
+      "timeSeconds": 100.46113378684807
+    },
+    {
+      "measure": 55,
+      "step": 9,
+      "sequenceScore": 0.5948882973433217,
+      "timeSeconds": 100.57723356009069
+    },
+    {
+      "measure": 55,
+      "step": 10,
+      "sequenceScore": 1.0379420515721465,
+      "timeSeconds": 100.69333333333333
+    },
+    {
+      "measure": 55,
+      "step": 11,
+      "sequenceScore": 0.3580980712651879,
+      "timeSeconds": 100.80943310657597
+    },
+    {
+      "measure": 55,
+      "step": 12,
+      "sequenceScore": 1.4128135949481209,
+      "timeSeconds": 100.92553287981859
+    },
+    {
+      "measure": 55,
+      "step": 13,
+      "sequenceScore": 0.6915377300069443,
+      "timeSeconds": 101.04163265306121
+    },
+    {
+      "measure": 55,
+      "step": 14,
+      "sequenceScore": 1.2716437199038344,
+      "timeSeconds": 101.15773242630385
+    },
+    {
+      "measure": 55,
+      "step": 15,
+      "sequenceScore": 0.8001083978728474,
+      "timeSeconds": 101.27383219954649
+    },
+    {
+      "measure": 56,
+      "step": 0,
+      "sequenceScore": 0.9165644332781717,
+      "timeSeconds": 101.38993197278911
+    },
+    {
+      "measure": 56,
+      "step": 1,
+      "sequenceScore": 0.3669415038713347,
+      "timeSeconds": 101.50312925170067
+    },
+    {
+      "measure": 56,
+      "step": 2,
+      "sequenceScore": 1.1066927169919023,
+      "timeSeconds": 101.61632653061224
+    },
+    {
+      "measure": 56,
+      "step": 3,
+      "sequenceScore": 0.539194116079846,
+      "timeSeconds": 101.72952380952381
+    },
+    {
+      "measure": 56,
+      "step": 4,
+      "sequenceScore": 1.2521612879241357,
+      "timeSeconds": 101.84272108843537
+    },
+    {
+      "measure": 56,
+      "step": 6,
+      "sequenceScore": 0.42428614906687,
+      "timeSeconds": 102.07492063492063
+    },
+    {
+      "measure": 56,
+      "step": 8,
+      "sequenceScore": 0.520812954880828,
+      "timeSeconds": 102.30712018140589
+    },
+    {
+      "measure": 56,
+      "step": 9,
+      "sequenceScore": 0.6908713895460438,
+      "timeSeconds": 102.42612244897958
+    },
+    {
+      "measure": 56,
+      "step": 10,
+      "sequenceScore": 1.013382778047523,
+      "timeSeconds": 102.54512471655329
+    },
+    {
+      "measure": 56,
+      "step": 11,
+      "sequenceScore": 0.552141071447753,
+      "timeSeconds": 102.664126984127
+    },
+    {
+      "measure": 56,
+      "step": 12,
+      "sequenceScore": 1.4761185749265109,
+      "timeSeconds": 102.78312925170069
+    },
+    {
+      "measure": 56,
+      "step": 13,
+      "sequenceScore": 0.5388174374831616,
+      "timeSeconds": 102.89632653061224
+    },
+    {
+      "measure": 56,
+      "step": 14,
+      "sequenceScore": 1.4204171566610464,
+      "timeSeconds": 103.00952380952381
+    },
+    {
+      "measure": 56,
+      "step": 15,
+      "sequenceScore": 0.5999357650599211,
+      "timeSeconds": 103.12272108843538
+    },
+    {
+      "measure": 57,
+      "step": 0,
+      "sequenceScore": 0.7515224242197662,
+      "timeSeconds": 103.23591836734694
+    },
+    {
+      "measure": 57,
+      "step": 2,
+      "sequenceScore": 0.9515164637941068,
+      "timeSeconds": 103.47392290249434
+    },
+    {
+      "measure": 57,
+      "step": 4,
+      "sequenceScore": 1.044251897240803,
+      "timeSeconds": 103.71192743764172
+    },
+    {
+      "measure": 57,
+      "step": 6,
+      "sequenceScore": 0.6606301010355874,
+      "timeSeconds": 103.94412698412698
+    },
+    {
+      "measure": 57,
+      "step": 8,
+      "sequenceScore": 0.7221229257797569,
+      "timeSeconds": 104.17632653061224
+    },
+    {
+      "measure": 57,
+      "step": 9,
+      "sequenceScore": 0.36402425916406667,
+      "timeSeconds": 104.28952380952381
+    },
+    {
+      "measure": 57,
+      "step": 10,
+      "sequenceScore": 1.194800674493977,
+      "timeSeconds": 104.40272108843537
+    },
+    {
+      "measure": 57,
+      "step": 12,
+      "sequenceScore": 1.3099175826050746,
+      "timeSeconds": 104.6291156462585
+    },
+    {
+      "measure": 57,
+      "step": 13,
+      "sequenceScore": 0.7036470714680894,
+      "timeSeconds": 104.7481179138322
+    },
+    {
+      "measure": 57,
+      "step": 14,
+      "sequenceScore": 1.2773700146125808,
+      "timeSeconds": 104.8671201814059
+    },
+    {
+      "measure": 58,
+      "step": 0,
+      "sequenceScore": 0.8491653284030714,
+      "timeSeconds": 105.10512471655329
+    },
+    {
+      "measure": 58,
+      "step": 2,
+      "sequenceScore": 0.7218406401055387,
+      "timeSeconds": 105.33732426303855
+    },
+    {
+      "measure": 58,
+      "step": 3,
+      "sequenceScore": 0.6912951678033409,
+      "timeSeconds": 105.45342403628118
+    },
+    {
+      "measure": 58,
+      "step": 4,
+      "sequenceScore": 1.3078553068961283,
+      "timeSeconds": 105.56952380952382
+    },
+    {
+      "measure": 58,
+      "step": 6,
+      "sequenceScore": 0.5035372353359052,
+      "timeSeconds": 105.79591836734694
+    },
+    {
+      "measure": 58,
+      "step": 8,
+      "sequenceScore": 0.7393119527220258,
+      "timeSeconds": 106.02231292517007
+    },
+    {
+      "measure": 58,
+      "step": 9,
+      "sequenceScore": 0.4575131855547499,
+      "timeSeconds": 106.10648526077098
+    },
+    {
+      "measure": 58,
+      "step": 10,
+      "sequenceScore": 0.8506614654726691,
+      "timeSeconds": 106.19065759637189
+    },
+    {
+      "measure": 58,
+      "step": 11,
+      "sequenceScore": 0.6848124667028354,
+      "timeSeconds": 106.27482993197279
+    },
+    {
+      "measure": 58,
+      "step": 12,
+      "sequenceScore": 1.3044342636353228,
+      "timeSeconds": 106.3590022675737
+    },
+    {
+      "measure": 58,
+      "step": 13,
+      "sequenceScore": 0.5938498168696522,
+      "timeSeconds": 106.44897959183675
+    },
+    {
+      "measure": 58,
+      "step": 14,
+      "sequenceScore": 1.1155445871370113,
+      "timeSeconds": 106.53895691609978
+    },
+    {
+      "measure": 58,
+      "step": 15,
+      "sequenceScore": 0.6503457442716428,
+      "timeSeconds": 106.62893424036281
+    },
+    {
+      "measure": 59,
+      "step": 0,
+      "sequenceScore": 0.818334728598617,
+      "timeSeconds": 106.71891156462586
+    },
+    {
+      "measure": 59,
+      "step": 1,
+      "sequenceScore": 0.5759248582302182,
+      "timeSeconds": 106.79727891156463
+    },
+    {
+      "measure": 59,
+      "step": 2,
+      "sequenceScore": 0.86226612215409,
+      "timeSeconds": 106.8756462585034
+    },
+    {
+      "measure": 59,
+      "step": 3,
+      "sequenceScore": 0.35867513696607495,
+      "timeSeconds": 106.95401360544217
+    },
+    {
+      "measure": 59,
+      "step": 4,
+      "sequenceScore": 1.0748955810529932,
+      "timeSeconds": 107.03238095238095
+    },
+    {
+      "measure": 59,
+      "step": 6,
+      "sequenceScore": 0.4915681203821775,
+      "timeSeconds": 107.2065306122449
+    },
+    {
+      "measure": 59,
+      "step": 8,
+      "sequenceScore": 0.6085805907170251,
+      "timeSeconds": 107.38068027210885
+    },
+    {
+      "measure": 59,
+      "step": 9,
+      "sequenceScore": 0.7435103192655776,
+      "timeSeconds": 107.46485260770976
+    },
+    {
+      "measure": 59,
+      "step": 10,
+      "sequenceScore": 0.7996472193216501,
+      "timeSeconds": 107.54902494331066
+    },
+    {
+      "measure": 59,
+      "step": 11,
+      "sequenceScore": 0.682904115713097,
+      "timeSeconds": 107.63319727891157
+    },
+    {
+      "measure": 59,
+      "step": 12,
+      "sequenceScore": 0.9567910446613785,
+      "timeSeconds": 107.71736961451248
+    },
+    {
+      "measure": 59,
+      "step": 13,
+      "sequenceScore": 0.9794112717263754,
+      "timeSeconds": 107.79863945578232
+    },
+    {
+      "measure": 59,
+      "step": 14,
+      "sequenceScore": 1.151104545503354,
+      "timeSeconds": 107.87990929705217
+    },
+    {
+      "measure": 59,
+      "step": 15,
+      "sequenceScore": 0.7921633537045376,
+      "timeSeconds": 107.961179138322
+    },
+    {
+      "measure": 60,
+      "step": 0,
+      "sequenceScore": 0.7154662663788124,
+      "timeSeconds": 108.04244897959184
+    },
+    {
+      "measure": 60,
+      "step": 1,
+      "sequenceScore": 0.7111724082323171,
+      "timeSeconds": 108.12952380952382
+    },
+    {
+      "measure": 60,
+      "step": 2,
+      "sequenceScore": 0.7860660474700181,
+      "timeSeconds": 108.21659863945578
+    },
+    {
+      "measure": 60,
+      "step": 3,
+      "sequenceScore": 0.7421380313460234,
+      "timeSeconds": 108.30367346938775
+    },
+    {
+      "measure": 60,
+      "step": 4,
+      "sequenceScore": 1.1013034120172271,
+      "timeSeconds": 108.39074829931972
+    },
+    {
+      "measure": 60,
+      "step": 6,
+      "sequenceScore": 0.748197379307313,
+      "timeSeconds": 108.54748299319728
+    },
+    {
+      "measure": 60,
+      "step": 8,
+      "sequenceScore": 0.5447940988043072,
+      "timeSeconds": 108.70421768707483
+    },
+    {
+      "measure": 60,
+      "step": 9,
+      "sequenceScore": 0.7414207674239994,
+      "timeSeconds": 108.81160997732427
+    },
+    {
+      "measure": 60,
+      "step": 10,
+      "sequenceScore": 0.7272172444351345,
+      "timeSeconds": 108.91900226757369
+    },
+    {
+      "measure": 60,
+      "step": 11,
+      "sequenceScore": 0.6364790444203765,
+      "timeSeconds": 109.02639455782312
+    },
+    {
+      "measure": 60,
+      "step": 12,
+      "sequenceScore": 1.1377904117566582,
+      "timeSeconds": 109.13378684807256
+    },
+    {
+      "measure": 60,
+      "step": 13,
+      "sequenceScore": 0.8978777736544516,
+      "timeSeconds": 109.25278911564627
+    },
+    {
+      "measure": 60,
+      "step": 14,
+      "sequenceScore": 1.2784923870274543,
+      "timeSeconds": 109.37179138321996
+    },
+    {
+      "measure": 60,
+      "step": 15,
+      "sequenceScore": 0.43126688611336583,
+      "timeSeconds": 109.49079365079365
+    },
+    {
+      "measure": 61,
+      "step": 0,
+      "sequenceScore": 0.8612470909607932,
+      "timeSeconds": 109.60979591836735
+    },
+    {
+      "measure": 61,
+      "step": 1,
+      "sequenceScore": 0.5943546148662456,
+      "timeSeconds": 109.72299319727892
+    },
+    {
+      "measure": 61,
+      "step": 2,
+      "sequenceScore": 0.9460624897268716,
+      "timeSeconds": 109.83619047619048
+    },
+    {
+      "measure": 61,
+      "step": 3,
+      "sequenceScore": 0.5751715602539922,
+      "timeSeconds": 109.94938775510204
+    },
+    {
+      "measure": 61,
+      "step": 4,
+      "sequenceScore": 1.1278585828127916,
+      "timeSeconds": 110.06258503401361
+    },
+    {
+      "measure": 61,
+      "step": 6,
+      "sequenceScore": 0.7921156511805881,
+      "timeSeconds": 110.29478458049887
+    },
+    {
+      "measure": 61,
+      "step": 8,
+      "sequenceScore": 0.6344350832248998,
+      "timeSeconds": 110.52698412698413
+    },
+    {
+      "measure": 61,
+      "step": 9,
+      "sequenceScore": 0.7078931966647534,
+      "timeSeconds": 110.6401814058957
+    },
+    {
+      "measure": 61,
+      "step": 10,
+      "sequenceScore": 1.0158689047458835,
+      "timeSeconds": 110.75337868480726
+    },
+    {
+      "measure": 61,
+      "step": 11,
+      "sequenceScore": 0.5756783531601728,
+      "timeSeconds": 110.86657596371882
+    },
+    {
+      "measure": 61,
+      "step": 12,
+      "sequenceScore": 1.0008106495908753,
+      "timeSeconds": 110.97977324263039
+    },
+    {
+      "measure": 61,
+      "step": 13,
+      "sequenceScore": 0.9322898690789777,
+      "timeSeconds": 111.09587301587302
+    },
+    {
+      "measure": 61,
+      "step": 14,
+      "sequenceScore": 1.0436259747460872,
+      "timeSeconds": 111.21197278911565
+    },
+    {
+      "measure": 61,
+      "step": 15,
+      "sequenceScore": 0.8481498772251012,
+      "timeSeconds": 111.32807256235827
+    },
+    {
+      "measure": 62,
+      "step": 0,
+      "sequenceScore": 0.8814134826758779,
+      "timeSeconds": 111.44417233560091
+    },
+    {
+      "measure": 62,
+      "step": 2,
+      "sequenceScore": 1.001564716004632,
+      "timeSeconds": 111.67637188208617
+    },
+    {
+      "measure": 62,
+      "step": 3,
+      "sequenceScore": 0.5298052918228012,
+      "timeSeconds": 111.7924716553288
+    },
+    {
+      "measure": 62,
+      "step": 4,
+      "sequenceScore": 1.4715613838462815,
+      "timeSeconds": 111.90857142857143
+    },
+    {
+      "measure": 62,
+      "step": 6,
+      "sequenceScore": 0.8721973570175978,
+      "timeSeconds": 112.14077097505668
+    },
+    {
+      "measure": 62,
+      "step": 8,
+      "sequenceScore": 0.7737084777827515,
+      "timeSeconds": 112.37297052154194
+    },
+    {
+      "measure": 62,
+      "step": 9,
+      "sequenceScore": 0.8102793220109933,
+      "timeSeconds": 112.49197278911564
+    },
+    {
+      "measure": 62,
+      "step": 10,
+      "sequenceScore": 1.123312969271525,
+      "timeSeconds": 112.61097505668934
+    },
+    {
+      "measure": 62,
+      "step": 11,
+      "sequenceScore": 0.4846557453179534,
+      "timeSeconds": 112.72997732426305
+    },
+    {
+      "measure": 62,
+      "step": 12,
+      "sequenceScore": 1.470304879396937,
+      "timeSeconds": 112.84897959183674
+    },
+    {
+      "measure": 62,
+      "step": 13,
+      "sequenceScore": 0.6290697980104879,
+      "timeSeconds": 112.96507936507936
+    },
+    {
+      "measure": 62,
+      "step": 14,
+      "sequenceScore": 1.2635574079030072,
+      "timeSeconds": 113.081179138322
+    },
+    {
+      "measure": 62,
+      "step": 15,
+      "sequenceScore": 0.7783621236787244,
+      "timeSeconds": 113.19727891156464
+    },
+    {
+      "measure": 63,
+      "step": 0,
+      "sequenceScore": 0.9697588055429992,
+      "timeSeconds": 113.31337868480726
+    },
+    {
+      "measure": 63,
+      "step": 1,
+      "sequenceScore": 0.4738929662754673,
+      "timeSeconds": 113.42947845804989
+    },
+    {
+      "measure": 63,
+      "step": 2,
+      "sequenceScore": 1.1019240423152397,
+      "timeSeconds": 113.54557823129252
+    },
+    {
+      "measure": 63,
+      "step": 3,
+      "sequenceScore": 0.4248126452083527,
+      "timeSeconds": 113.66167800453515
+    },
+    {
+      "measure": 63,
+      "step": 4,
+      "sequenceScore": 1.2213153898468965,
+      "timeSeconds": 113.77777777777777
+    },
+    {
+      "measure": 63,
+      "step": 6,
+      "sequenceScore": 0.9191237914258553,
+      "timeSeconds": 114.01578231292517
+    },
+    {
+      "measure": 63,
+      "step": 8,
+      "sequenceScore": 0.7515394549822879,
+      "timeSeconds": 114.25378684807256
+    },
+    {
+      "measure": 63,
+      "step": 9,
+      "sequenceScore": 0.6336726128999445,
+      "timeSeconds": 114.36698412698414
+    },
+    {
+      "measure": 63,
+      "step": 10,
+      "sequenceScore": 1.0001348431410664,
+      "timeSeconds": 114.48018140589569
+    },
+    {
+      "measure": 63,
+      "step": 11,
+      "sequenceScore": 0.5538529539929535,
+      "timeSeconds": 114.59337868480725
+    },
+    {
+      "measure": 63,
+      "step": 12,
+      "sequenceScore": 1.1418626543834334,
+      "timeSeconds": 114.70657596371882
+    },
+    {
+      "measure": 63,
+      "step": 13,
+      "sequenceScore": 0.8843831313856578,
+      "timeSeconds": 114.82557823129251
+    },
+    {
+      "measure": 63,
+      "step": 14,
+      "sequenceScore": 1.2891538407859857,
+      "timeSeconds": 114.9445804988662
+    },
+    {
+      "measure": 63,
+      "step": 15,
+      "sequenceScore": 0.68790553373076,
+      "timeSeconds": 115.06358276643991
+    },
+    {
+      "measure": 64,
+      "step": 0,
+      "sequenceScore": 0.9250141385671786,
+      "timeSeconds": 115.1825850340136
+    },
+    {
+      "measure": 64,
+      "step": 1,
+      "sequenceScore": 0.44836797045741045,
+      "timeSeconds": 115.29868480725622
+    },
+    {
+      "measure": 64,
+      "step": 2,
+      "sequenceScore": 1.0464761091773338,
+      "timeSeconds": 115.41478458049886
+    },
+    {
+      "measure": 64,
+      "step": 3,
+      "sequenceScore": 0.5721697900370599,
+      "timeSeconds": 115.5308843537415
+    },
+    {
+      "measure": 64,
+      "step": 4,
+      "sequenceScore": 1.2901009213400436,
+      "timeSeconds": 115.64698412698412
+    },
+    {
+      "measure": 64,
+      "step": 6,
+      "sequenceScore": 0.718401752641277,
+      "timeSeconds": 115.87918367346938
+    },
+    {
+      "measure": 64,
+      "step": 8,
+      "sequenceScore": 0.6257468238067617,
+      "timeSeconds": 116.11138321995465
+    },
+    {
+      "measure": 64,
+      "step": 9,
+      "sequenceScore": 0.7630833977943317,
+      "timeSeconds": 116.22748299319727
+    },
+    {
+      "measure": 64,
+      "step": 10,
+      "sequenceScore": 0.7969170750963587,
+      "timeSeconds": 116.34358276643991
+    },
+    {
+      "measure": 64,
+      "step": 11,
+      "sequenceScore": 0.7497181020247172,
+      "timeSeconds": 116.45968253968255
+    },
+    {
+      "measure": 64,
+      "step": 12,
+      "sequenceScore": 1.080831460888163,
+      "timeSeconds": 116.57578231292517
+    },
+    {
+      "measure": 64,
+      "step": 13,
+      "sequenceScore": 0.979097447586574,
+      "timeSeconds": 116.69478458049886
+    },
+    {
+      "measure": 64,
+      "step": 14,
+      "sequenceScore": 1.2492667605736805,
+      "timeSeconds": 116.81378684807257
+    },
+    {
+      "measure": 64,
+      "step": 15,
+      "sequenceScore": 0.8602197109317506,
+      "timeSeconds": 116.93278911564626
+    },
+    {
+      "measure": 65,
+      "step": 0,
+      "sequenceScore": 0.8883842746910388,
+      "timeSeconds": 117.05179138321995
+    },
+    {
+      "measure": 65,
+      "step": 1,
+      "sequenceScore": 0.41591277699854384,
+      "timeSeconds": 117.16789115646259
+    },
+    {
+      "measure": 65,
+      "step": 2,
+      "sequenceScore": 0.8223550596137493,
+      "timeSeconds": 117.28399092970521
+    },
+    {
+      "measure": 65,
+      "step": 3,
+      "sequenceScore": 0.6659611722808025,
+      "timeSeconds": 117.40009070294784
+    },
+    {
+      "measure": 65,
+      "step": 4,
+      "sequenceScore": 1.126066372295494,
+      "timeSeconds": 117.51619047619047
+    },
+    {
+      "measure": 65,
+      "step": 6,
+      "sequenceScore": 0.8248200797385704,
+      "timeSeconds": 117.74839002267574
+    },
+    {
+      "measure": 65,
+      "step": 8,
+      "sequenceScore": 0.4855463183156507,
+      "timeSeconds": 117.980589569161
+    },
+    {
+      "measure": 65,
+      "step": 9,
+      "sequenceScore": 0.709236920027142,
+      "timeSeconds": 118.09378684807257
+    },
+    {
+      "measure": 65,
+      "step": 10,
+      "sequenceScore": 0.9925436160960012,
+      "timeSeconds": 118.20698412698412
+    },
+    {
+      "measure": 65,
+      "step": 11,
+      "sequenceScore": 0.4024119773144487,
+      "timeSeconds": 118.32018140589568
+    },
+    {
+      "measure": 65,
+      "step": 12,
+      "sequenceScore": 1.0241715962645799,
+      "timeSeconds": 118.43337868480725
+    },
+    {
+      "measure": 65,
+      "step": 13,
+      "sequenceScore": 0.9936506723965842,
+      "timeSeconds": 118.54947845804989
+    },
+    {
+      "measure": 65,
+      "step": 14,
+      "sequenceScore": 1.015340364389088,
+      "timeSeconds": 118.66557823129251
+    },
+    {
+      "measure": 65,
+      "step": 15,
+      "sequenceScore": 0.8015259750933025,
+      "timeSeconds": 118.78167800453514
+    },
+    {
+      "measure": 66,
+      "step": 0,
+      "sequenceScore": 0.6959653447658054,
+      "timeSeconds": 118.89777777777778
+    },
+    {
+      "measure": 66,
+      "step": 2,
+      "sequenceScore": 0.7765715259296916,
+      "timeSeconds": 119.1241723356009
+    },
+    {
+      "measure": 66,
+      "step": 3,
+      "sequenceScore": 0.6574122878835055,
+      "timeSeconds": 119.23736961451246
+    },
+    {
+      "measure": 66,
+      "step": 4,
+      "sequenceScore": 1.195167532159909,
+      "timeSeconds": 119.35056689342403
+    },
+    {
+      "measure": 66,
+      "step": 6,
+      "sequenceScore": 0.6151188062525291,
+      "timeSeconds": 119.58276643990929
+    },
+    {
+      "measure": 66,
+      "step": 7,
+      "sequenceScore": 0.5048269120505962,
+      "timeSeconds": 119.69886621315192
+    },
+    {
+      "measure": 66,
+      "step": 8,
+      "sequenceScore": 0.39461538645893895,
+      "timeSeconds": 119.81496598639455
+    },
+    {
+      "measure": 66,
+      "step": 9,
+      "sequenceScore": 1.0869548326104024,
+      "timeSeconds": 119.92816326530613
+    },
+    {
+      "measure": 66,
+      "step": 10,
+      "sequenceScore": 0.6927573001355253,
+      "timeSeconds": 120.0413605442177
+    },
+    {
+      "measure": 66,
+      "step": 11,
+      "sequenceScore": 0.6782601451806023,
+      "timeSeconds": 120.15455782312925
+    },
+    {
+      "measure": 66,
+      "step": 12,
+      "sequenceScore": 1.1855983629726676,
+      "timeSeconds": 120.26775510204082
+    },
+    {
+      "measure": 66,
+      "step": 13,
+      "sequenceScore": 0.7831264636731858,
+      "timeSeconds": 120.38385487528345
+    },
+    {
+      "measure": 66,
+      "step": 14,
+      "sequenceScore": 1.141584490053762,
+      "timeSeconds": 120.49995464852609
+    },
+    {
+      "measure": 66,
+      "step": 15,
+      "sequenceScore": 0.9521290276238383,
+      "timeSeconds": 120.61605442176871
+    },
+    {
+      "measure": 67,
+      "step": 0,
+      "sequenceScore": 0.7740039014594898,
+      "timeSeconds": 120.73215419501133
+    },
+    {
+      "measure": 67,
+      "step": 1,
+      "sequenceScore": 0.5755844406700591,
+      "timeSeconds": 120.84825396825397
+    },
+    {
+      "measure": 67,
+      "step": 2,
+      "sequenceScore": 0.7949928294606576,
+      "timeSeconds": 120.9643537414966
+    },
+    {
+      "measure": 67,
+      "step": 3,
+      "sequenceScore": 0.6722827548642261,
+      "timeSeconds": 121.08045351473922
+    },
+    {
+      "measure": 67,
+      "step": 4,
+      "sequenceScore": 1.0834990334852992,
+      "timeSeconds": 121.19655328798186
+    },
+    {
+      "measure": 67,
+      "step": 6,
+      "sequenceScore": 0.555987962236705,
+      "timeSeconds": 121.42875283446712
+    },
+    {
+      "measure": 67,
+      "step": 9,
+      "sequenceScore": 0.3661332004300547,
+      "timeSeconds": 121.77995464852607
+    },
+    {
+      "measure": 67,
+      "step": 12,
+      "sequenceScore": 1.1397163640784347,
+      "timeSeconds": 122.13696145124716
+    },
+    {
+      "measure": 67,
+      "step": 13,
+      "sequenceScore": 0.8371799885508887,
+      "timeSeconds": 122.25015873015873
+    },
+    {
+      "measure": 67,
+      "step": 14,
+      "sequenceScore": 1.1859438261294566,
+      "timeSeconds": 122.36335600907029
+    },
+    {
+      "measure": 67,
+      "step": 15,
+      "sequenceScore": 0.871332736091595,
+      "timeSeconds": 122.47655328798186
+    },
+    {
+      "measure": 68,
+      "step": 0,
+      "sequenceScore": 0.8811250610566308,
+      "timeSeconds": 122.58975056689343
+    },
+    {
+      "measure": 68,
+      "step": 1,
+      "sequenceScore": 0.3887661726422564,
+      "timeSeconds": 122.70585034013607
+    },
+    {
+      "measure": 68,
+      "step": 2,
+      "sequenceScore": 0.8793388796765401,
+      "timeSeconds": 122.82195011337869
+    },
+    {
+      "measure": 68,
+      "step": 3,
+      "sequenceScore": 0.43912811530169743,
+      "timeSeconds": 122.93804988662131
+    },
+    {
+      "measure": 68,
+      "step": 4,
+      "sequenceScore": 1.2443274334745398,
+      "timeSeconds": 123.05414965986395
+    },
+    {
+      "measure": 68,
+      "step": 6,
+      "sequenceScore": 0.512147516952235,
+      "timeSeconds": 123.28054421768708
+    },
+    {
+      "measure": 68,
+      "step": 7,
+      "sequenceScore": 0.3558680276969087,
+      "timeSeconds": 123.39374149659864
+    },
+    {
+      "measure": 68,
+      "step": 9,
+      "sequenceScore": 0.5875934793956915,
+      "timeSeconds": 123.62303854875285
+    },
+    {
+      "measure": 68,
+      "step": 11,
+      "sequenceScore": 0.9490967317271697,
+      "timeSeconds": 123.8552380952381
+    },
+    {
+      "measure": 68,
+      "step": 12,
+      "sequenceScore": 0.6032948423777309,
+      "timeSeconds": 123.97133786848073
+    },
+    {
+      "measure": 68,
+      "step": 13,
+      "sequenceScore": 1.0692927560113068,
+      "timeSeconds": 124.09034013605442
+    },
+    {
+      "measure": 68,
+      "step": 14,
+      "sequenceScore": 0.9856615513401477,
+      "timeSeconds": 124.20934240362811
+    },
+    {
+      "measure": 68,
+      "step": 15,
+      "sequenceScore": 0.9648837119214229,
+      "timeSeconds": 124.32834467120182
+    },
+    {
+      "measure": 69,
+      "step": 0,
+      "sequenceScore": 0.7309215069461038,
+      "timeSeconds": 124.44734693877551
+    },
+    {
+      "measure": 69,
+      "step": 1,
+      "sequenceScore": 0.6792254102744196,
+      "timeSeconds": 124.56344671201813
+    },
+    {
+      "measure": 69,
+      "step": 2,
+      "sequenceScore": 0.7857119194547789,
+      "timeSeconds": 124.67954648526077
+    },
+    {
+      "measure": 69,
+      "step": 3,
+      "sequenceScore": 0.6972116486952469,
+      "timeSeconds": 124.79564625850341
+    },
+    {
+      "measure": 69,
+      "step": 4,
+      "sequenceScore": 0.925954696355401,
+      "timeSeconds": 124.91174603174603
+    },
+    {
+      "measure": 69,
+      "step": 6,
+      "sequenceScore": 0.6436772536307749,
+      "timeSeconds": 125.1439455782313
+    },
+    {
+      "measure": 69,
+      "step": 9,
+      "sequenceScore": 0.8057163537392635,
+      "timeSeconds": 125.42839002267574
+    },
+    {
+      "measure": 69,
+      "step": 10,
+      "sequenceScore": 0.515864716967968,
+      "timeSeconds": 125.48063492063491
+    },
+    {
+      "measure": 69,
+      "step": 11,
+      "sequenceScore": 0.38312500580122993,
+      "timeSeconds": 125.5328798185941
+    },
+    {
+      "measure": 69,
+      "step": 12,
+      "sequenceScore": 0.8253463028481166,
+      "timeSeconds": 125.58512471655328
+    },
+    {
+      "measure": 69,
+      "step": 13,
+      "sequenceScore": 1.0652946332519928,
+      "timeSeconds": 125.70993197278911
+    },
+    {
+      "measure": 69,
+      "step": 14,
+      "sequenceScore": 1.1581763912240064,
+      "timeSeconds": 125.83473922902493
+    },
+    {
+      "measure": 69,
+      "step": 15,
+      "sequenceScore": 0.9315833046109757,
+      "timeSeconds": 125.95954648526077
+    },
+    {
+      "measure": 70,
+      "step": 0,
+      "sequenceScore": 0.8574027343188729,
+      "timeSeconds": 126.0843537414966
+    },
+    {
+      "measure": 70,
+      "step": 1,
+      "sequenceScore": 0.6478295878958031,
+      "timeSeconds": 126.17433106575965
+    },
+    {
+      "measure": 70,
+      "step": 2,
+      "sequenceScore": 0.7813941659062016,
+      "timeSeconds": 126.26430839002268
+    },
+    {
+      "measure": 70,
+      "step": 3,
+      "sequenceScore": 0.5641078960882737,
+      "timeSeconds": 126.35428571428571
+    },
+    {
+      "measure": 70,
+      "step": 4,
+      "sequenceScore": 1.210754298948289,
+      "timeSeconds": 126.44426303854875
+    },
+    {
+      "measure": 70,
+      "step": 6,
+      "sequenceScore": 0.6618720663139855,
+      "timeSeconds": 126.67646258503402
+    },
+    {
+      "measure": 70,
+      "step": 7,
+      "sequenceScore": 0.37006903175468137,
+      "timeSeconds": 126.79256235827665
+    },
+    {
+      "measure": 70,
+      "step": 8,
+      "sequenceScore": 0.5606632954287608,
+      "timeSeconds": 126.90866213151928
+    },
+    {
+      "measure": 70,
+      "step": 9,
+      "sequenceScore": 1.0479938867250922,
+      "timeSeconds": 127.01315192743765
+    },
+    {
+      "measure": 70,
+      "step": 10,
+      "sequenceScore": 0.6479129560604602,
+      "timeSeconds": 127.117641723356
+    },
+    {
+      "measure": 70,
+      "step": 11,
+      "sequenceScore": 0.8224585074698948,
+      "timeSeconds": 127.22213151927437
+    },
+    {
+      "measure": 70,
+      "step": 12,
+      "sequenceScore": 1.1869344380091134,
+      "timeSeconds": 127.32662131519274
+    },
+    {
+      "measure": 70,
+      "step": 13,
+      "sequenceScore": 0.8140592242768732,
+      "timeSeconds": 127.44272108843538
+    },
+    {
+      "measure": 70,
+      "step": 14,
+      "sequenceScore": 0.7453169079245199,
+      "timeSeconds": 127.558820861678
+    },
+    {
+      "measure": 70,
+      "step": 15,
+      "sequenceScore": 0.8918600337222644,
+      "timeSeconds": 127.67492063492062
+    },
+    {
+      "measure": 71,
+      "step": 0,
+      "sequenceScore": 0.5238473100969565,
+      "timeSeconds": 127.79102040816326
+    },
+    {
+      "measure": 71,
+      "step": 1,
+      "sequenceScore": 0.7630517045880583,
+      "timeSeconds": 127.9071201814059
+    },
+    {
+      "measure": 71,
+      "step": 2,
+      "sequenceScore": 0.5828974481322369,
+      "timeSeconds": 128.02321995464854
+    },
+    {
+      "measure": 71,
+      "step": 3,
+      "sequenceScore": 0.7046192442687419,
+      "timeSeconds": 128.13931972789115
+    },
+    {
+      "measure": 71,
+      "step": 4,
+      "sequenceScore": 0.7121512020767635,
+      "timeSeconds": 128.2554195011338
+    },
+    {
+      "measure": 71,
+      "step": 9,
+      "sequenceScore": 0.7293297387543621,
+      "timeSeconds": 128.83591836734695
+    },
+    {
+      "measure": 71,
+      "step": 10,
+      "sequenceScore": 0.48086244708954884,
+      "timeSeconds": 128.9520181405896
+    },
+    {
+      "measure": 71,
+      "step": 11,
+      "sequenceScore": 0.518365722315883,
+      "timeSeconds": 129.0681179138322
+    },
+    {
+      "measure": 71,
+      "step": 12,
+      "sequenceScore": 0.7275218644531493,
+      "timeSeconds": 129.18421768707483
+    },
+    {
+      "measure": 71,
+      "step": 13,
+      "sequenceScore": 0.639467381984788,
+      "timeSeconds": 129.31482993197278
+    },
+    {
+      "measure": 71,
+      "step": 14,
+      "sequenceScore": 0.7178668124581281,
+      "timeSeconds": 129.44544217687076
+    },
+    {
+      "measure": 72,
+      "step": 0,
+      "sequenceScore": 0.6711478264687357,
+      "timeSeconds": 129.70666666666668
+    },
+    {
+      "measure": 72,
+      "step": 1,
+      "sequenceScore": 0.5650611664180434,
+      "timeSeconds": 129.82566893424035
+    },
+    {
+      "measure": 72,
+      "step": 2,
+      "sequenceScore": 0.8106494561580735,
+      "timeSeconds": 129.94467120181406
+    },
+    {
+      "measure": 72,
+      "step": 3,
+      "sequenceScore": 0.4501629536786704,
+      "timeSeconds": 130.06367346938777
+    },
+    {
+      "measure": 72,
+      "step": 4,
+      "sequenceScore": 1.0524941352976802,
+      "timeSeconds": 130.18267573696144
+    },
+    {
+      "measure": 72,
+      "step": 6,
+      "sequenceScore": 0.6440431932640838,
+      "timeSeconds": 130.42068027210883
+    },
+    {
+      "measure": 72,
+      "step": 9,
+      "sequenceScore": 1.0005246182217584,
+      "timeSeconds": 130.7718820861678
+    },
+    {
+      "measure": 72,
+      "step": 11,
+      "sequenceScore": 0.5231283126006807,
+      "timeSeconds": 130.99827664399092
+    },
+    {
+      "measure": 72,
+      "step": 12,
+      "sequenceScore": 0.8021544207142293,
+      "timeSeconds": 131.1114739229025
+    },
+    {
+      "measure": 72,
+      "step": 13,
+      "sequenceScore": 0.4882735527544057,
+      "timeSeconds": 131.23337868480726
+    },
+    {
+      "measure": 72,
+      "step": 14,
+      "sequenceScore": 1.2618389961381018,
+      "timeSeconds": 131.355283446712
+    },
+    {
+      "measure": 72,
+      "step": 15,
+      "sequenceScore": 0.7881709442644212,
+      "timeSeconds": 131.47718820861678
+    },
+    {
+      "measure": 73,
+      "step": 1,
+      "sequenceScore": 0.5776407503441545,
+      "timeSeconds": 131.71229024943312
+    },
+    {
+      "measure": 73,
+      "step": 3,
+      "sequenceScore": 0.8667913150285529,
+      "timeSeconds": 131.93868480725624
+    },
+    {
+      "measure": 73,
+      "step": 5,
+      "sequenceScore": 0.5548915839717777,
+      "timeSeconds": 132.17088435374149
+    },
+    {
+      "measure": 73,
+      "step": 6,
+      "sequenceScore": 0.48774309483209377,
+      "timeSeconds": 132.2898866213152
+    },
+    {
+      "measure": 73,
+      "step": 7,
+      "sequenceScore": 0.3513457128871007,
+      "timeSeconds": 132.4088888888889
+    },
+    {
+      "measure": 73,
+      "step": 8,
+      "sequenceScore": 0.7362306912109653,
+      "timeSeconds": 132.52789115646257
+    },
+    {
+      "measure": 73,
+      "step": 9,
+      "sequenceScore": 0.7375590912019941,
+      "timeSeconds": 132.64689342403628
+    },
+    {
+      "measure": 73,
+      "step": 10,
+      "sequenceScore": 0.9919772228139356,
+      "timeSeconds": 132.76589569160996
+    },
+    {
+      "measure": 73,
+      "step": 11,
+      "sequenceScore": 0.4578174179023639,
+      "timeSeconds": 132.88489795918366
+    },
+    {
+      "measure": 73,
+      "step": 12,
+      "sequenceScore": 1.296817429729699,
+      "timeSeconds": 133.00390022675737
+    },
+    {
+      "measure": 73,
+      "step": 13,
+      "sequenceScore": 0.7231591220642798,
+      "timeSeconds": 133.11709750566894
+    },
+    {
+      "measure": 73,
+      "step": 14,
+      "sequenceScore": 1.1713288685130596,
+      "timeSeconds": 133.2302947845805
+    },
+    {
+      "measure": 73,
+      "step": 15,
+      "sequenceScore": 0.8315570388772477,
+      "timeSeconds": 133.34349206349205
+    },
+    {
+      "measure": 74,
+      "step": 0,
+      "sequenceScore": 0.6236411295270633,
+      "timeSeconds": 133.45668934240362
+    },
+    {
+      "measure": 74,
+      "step": 1,
+      "sequenceScore": 0.7044248529482025,
+      "timeSeconds": 133.57569160997733
+    },
+    {
+      "measure": 74,
+      "step": 3,
+      "sequenceScore": 0.7557639806831322,
+      "timeSeconds": 133.8136961451247
+    },
+    {
+      "measure": 74,
+      "step": 5,
+      "sequenceScore": 0.7319247827298834,
+      "timeSeconds": 134.05170068027212
+    },
+    {
+      "measure": 74,
+      "step": 7,
+      "sequenceScore": 0.40649136695007926,
+      "timeSeconds": 134.2897052154195
+    },
+    {
+      "measure": 74,
+      "step": 9,
+      "sequenceScore": 0.8445413098648273,
+      "timeSeconds": 134.52190476190478
+    },
+    {
+      "measure": 74,
+      "step": 10,
+      "sequenceScore": 0.4971694707558422,
+      "timeSeconds": 134.63510204081632
+    },
+    {
+      "measure": 74,
+      "step": 12,
+      "sequenceScore": 0.9255879654073182,
+      "timeSeconds": 134.86149659863946
+    },
+    {
+      "measure": 74,
+      "step": 13,
+      "sequenceScore": 0.5149257135124663,
+      "timeSeconds": 134.9775963718821
+    },
+    {
+      "measure": 74,
+      "step": 14,
+      "sequenceScore": 1.366986294208099,
+      "timeSeconds": 135.09369614512474
+    },
+    {
+      "measure": 74,
+      "step": 15,
+      "sequenceScore": 0.6248803884723277,
+      "timeSeconds": 135.20979591836735
+    },
+    {
+      "measure": 75,
+      "step": 1,
+      "sequenceScore": 0.8664762278649054,
+      "timeSeconds": 135.44489795918366
+    },
+    {
+      "measure": 75,
+      "step": 3,
+      "sequenceScore": 1.0587174653388831,
+      "timeSeconds": 135.68290249433107
+    },
+    {
+      "measure": 75,
+      "step": 5,
+      "sequenceScore": 0.6100579830588453,
+      "timeSeconds": 135.9180045351474
+    },
+    {
+      "measure": 75,
+      "step": 6,
+      "sequenceScore": 0.5984279250488477,
+      "timeSeconds": 136.03410430839
+    },
+    {
+      "measure": 75,
+      "step": 8,
+      "sequenceScore": 0.5169841768638602,
+      "timeSeconds": 136.26630385487528
+    },
+    {
+      "measure": 75,
+      "step": 9,
+      "sequenceScore": 0.687896950583731,
+      "timeSeconds": 136.3824036281179
+    },
+    {
+      "measure": 75,
+      "step": 10,
+      "sequenceScore": 0.9080769828393184,
+      "timeSeconds": 136.49850340136055
+    },
+    {
+      "measure": 75,
+      "step": 11,
+      "sequenceScore": 0.49741814113736327,
+      "timeSeconds": 136.61460317460316
+    },
+    {
+      "measure": 75,
+      "step": 12,
+      "sequenceScore": 1.396684213488926,
+      "timeSeconds": 136.7307029478458
+    },
+    {
+      "measure": 75,
+      "step": 13,
+      "sequenceScore": 0.7235229856857118,
+      "timeSeconds": 136.84390022675737
+    },
+    {
+      "measure": 75,
+      "step": 14,
+      "sequenceScore": 1.0840471092616768,
+      "timeSeconds": 136.9570975056689
+    },
+    {
+      "measure": 75,
+      "step": 15,
+      "sequenceScore": 0.5756107996871298,
+      "timeSeconds": 137.07029478458048
+    },
+    {
+      "measure": 76,
+      "step": 0,
+      "sequenceScore": 0.7386213795485626,
+      "timeSeconds": 137.18349206349205
+    },
+    {
+      "measure": 76,
+      "step": 1,
+      "sequenceScore": 0.5844587385532093,
+      "timeSeconds": 137.2995918367347
+    },
+    {
+      "measure": 76,
+      "step": 2,
+      "sequenceScore": 0.5745679613470904,
+      "timeSeconds": 137.41569160997733
+    },
+    {
+      "measure": 76,
+      "step": 3,
+      "sequenceScore": 0.5469091074983232,
+      "timeSeconds": 137.53179138321994
+    },
+    {
+      "measure": 76,
+      "step": 4,
+      "sequenceScore": 0.7201847939923631,
+      "timeSeconds": 137.64789115646258
+    },
+    {
+      "measure": 76,
+      "step": 5,
+      "sequenceScore": 0.48195191769919027,
+      "timeSeconds": 137.76689342403628
+    },
+    {
+      "measure": 76,
+      "step": 6,
+      "sequenceScore": 0.4625417437588596,
+      "timeSeconds": 137.88589569160996
+    },
+    {
+      "measure": 76,
+      "step": 9,
+      "sequenceScore": 0.9117886124106072,
+      "timeSeconds": 138.23709750566894
+    },
+    {
+      "measure": 76,
+      "step": 11,
+      "sequenceScore": 0.8836675794274277,
+      "timeSeconds": 138.46349206349205
+    },
+    {
+      "measure": 76,
+      "step": 12,
+      "sequenceScore": 0.7716745382156592,
+      "timeSeconds": 138.57668934240363
+    },
+    {
+      "measure": 76,
+      "step": 13,
+      "sequenceScore": 1.4191941167788706,
+      "timeSeconds": 138.69569160997733
+    },
+    {
+      "measure": 76,
+      "step": 14,
+      "sequenceScore": 0.7696355423512954,
+      "timeSeconds": 138.814693877551
+    },
+    {
+      "measure": 76,
+      "step": 15,
+      "sequenceScore": 1.017673642508069,
+      "timeSeconds": 138.9336961451247
+    },
+    {
+      "measure": 77,
+      "step": 0,
+      "sequenceScore": 0.4303969653467272,
+      "timeSeconds": 139.05269841269842
+    },
+    {
+      "measure": 77,
+      "step": 1,
+      "sequenceScore": 0.5064442813729001,
+      "timeSeconds": 139.16589569161
+    },
+    {
+      "measure": 77,
+      "step": 3,
+      "sequenceScore": 0.8103710553357809,
+      "timeSeconds": 139.3922902494331
+    },
+    {
+      "measure": 77,
+      "step": 4,
+      "sequenceScore": 0.5620342364956248,
+      "timeSeconds": 139.50548752834467
+    },
+    {
+      "measure": 77,
+      "step": 6,
+      "sequenceScore": 0.7157361286818266,
+      "timeSeconds": 139.7492970521542
+    },
+    {
+      "measure": 77,
+      "step": 8,
+      "sequenceScore": 0.4907508116750212,
+      "timeSeconds": 139.9931065759637
+    },
+    {
+      "measure": 77,
+      "step": 9,
+      "sequenceScore": 0.8149782686772409,
+      "timeSeconds": 140.10630385487528
+    },
+    {
+      "measure": 77,
+      "step": 10,
+      "sequenceScore": 0.8551539665170789,
+      "timeSeconds": 140.21950113378685
+    },
+    {
+      "measure": 77,
+      "step": 11,
+      "sequenceScore": 0.46719485262822924,
+      "timeSeconds": 140.33269841269842
+    },
+    {
+      "measure": 77,
+      "step": 12,
+      "sequenceScore": 1.1697518498604171,
+      "timeSeconds": 140.44589569161
+    },
+    {
+      "measure": 77,
+      "step": 13,
+      "sequenceScore": 1.0481736916496138,
+      "timeSeconds": 140.55909297052156
+    },
+    {
+      "measure": 77,
+      "step": 14,
+      "sequenceScore": 1.13369631365457,
+      "timeSeconds": 140.6722902494331
+    },
+    {
+      "measure": 77,
+      "step": 15,
+      "sequenceScore": 0.9942856055659746,
+      "timeSeconds": 140.78548752834467
+    },
+    {
+      "measure": 78,
+      "step": 0,
+      "sequenceScore": 0.6853948963385227,
+      "timeSeconds": 140.89868480725625
+    },
+    {
+      "measure": 78,
+      "step": 3,
+      "sequenceScore": 0.4260578349176857,
+      "timeSeconds": 141.24698412698413
+    },
+    {
+      "measure": 78,
+      "step": 4,
+      "sequenceScore": 0.8494778582082957,
+      "timeSeconds": 141.36308390022677
+    },
+    {
+      "measure": 78,
+      "step": 6,
+      "sequenceScore": 0.6195221552552846,
+      "timeSeconds": 141.59528344671202
+    },
+    {
+      "measure": 78,
+      "step": 9,
+      "sequenceScore": 0.583208246799457,
+      "timeSeconds": 141.9435827664399
+    },
+    {
+      "measure": 78,
+      "step": 12,
+      "sequenceScore": 0.967098682069777,
+      "timeSeconds": 142.2918820861678
+    },
+    {
+      "measure": 78,
+      "step": 13,
+      "sequenceScore": 0.8051346053814739,
+      "timeSeconds": 142.4108843537415
+    },
+    {
+      "measure": 78,
+      "step": 14,
+      "sequenceScore": 1.3088996865635723,
+      "timeSeconds": 142.5298866213152
+    },
+    {
+      "measure": 78,
+      "step": 15,
+      "sequenceScore": 0.6476053371751584,
+      "timeSeconds": 142.64888888888888
+    },
+    {
+      "measure": 79,
+      "step": 1,
+      "sequenceScore": 0.6480068624104424,
+      "timeSeconds": 142.88399092970522
+    },
+    {
+      "measure": 79,
+      "step": 3,
+      "sequenceScore": 0.8524268554040307,
+      "timeSeconds": 143.11619047619047
+    },
+    {
+      "measure": 79,
+      "step": 4,
+      "sequenceScore": 0.9168361036302932,
+      "timeSeconds": 143.2322902494331
+    },
+    {
+      "measure": 79,
+      "step": 6,
+      "sequenceScore": 0.7281167542381222,
+      "timeSeconds": 143.40643990929703
+    },
+    {
+      "measure": 79,
+      "step": 8,
+      "sequenceScore": 0.5662586402494982,
+      "timeSeconds": 143.580589569161
+    },
+    {
+      "measure": 79,
+      "step": 9,
+      "sequenceScore": 0.6449040930988648,
+      "timeSeconds": 143.66476190476192
+    },
+    {
+      "measure": 79,
+      "step": 10,
+      "sequenceScore": 1.0026717055709589,
+      "timeSeconds": 143.74893424036281
+    },
+    {
+      "measure": 79,
+      "step": 11,
+      "sequenceScore": 0.41817695122577114,
+      "timeSeconds": 143.8331065759637
+    },
+    {
+      "measure": 79,
+      "step": 12,
+      "sequenceScore": 1.120416170702681,
+      "timeSeconds": 143.91727891156464
+    },
+    {
+      "measure": 79,
+      "step": 13,
+      "sequenceScore": 0.7985724491171587,
+      "timeSeconds": 144.00145124716553
+    },
+    {
+      "measure": 79,
+      "step": 14,
+      "sequenceScore": 0.9742463098925693,
+      "timeSeconds": 144.08562358276646
+    },
+    {
+      "measure": 79,
+      "step": 15,
+      "sequenceScore": 0.7900725212057742,
+      "timeSeconds": 144.16979591836736
+    },
+    {
+      "measure": 80,
+      "step": 0,
+      "sequenceScore": 0.6198379819547516,
+      "timeSeconds": 144.25396825396825
+    },
+    {
+      "measure": 80,
+      "step": 1,
+      "sequenceScore": 0.61441149033195,
+      "timeSeconds": 144.34394557823128
+    },
+    {
+      "measure": 80,
+      "step": 2,
+      "sequenceScore": 0.6309706929251632,
+      "timeSeconds": 144.43392290249432
+    },
+    {
+      "measure": 80,
+      "step": 3,
+      "sequenceScore": 0.7230143993012863,
+      "timeSeconds": 144.52390022675738
+    },
+    {
+      "measure": 80,
+      "step": 4,
+      "sequenceScore": 1.2755607507487643,
+      "timeSeconds": 144.6138775510204
+    },
+    {
+      "measure": 80,
+      "step": 6,
+      "sequenceScore": 0.5824214618770001,
+      "timeSeconds": 144.84027210884352
+    },
+    {
+      "measure": 80,
+      "step": 9,
+      "sequenceScore": 0.6367350525638299,
+      "timeSeconds": 145.1827664399093
+    },
+    {
+      "measure": 80,
+      "step": 10,
+      "sequenceScore": 0.7467374116250305,
+      "timeSeconds": 145.29886621315194
+    },
+    {
+      "measure": 80,
+      "step": 11,
+      "sequenceScore": 0.4922736664366565,
+      "timeSeconds": 145.41496598639455
+    },
+    {
+      "measure": 80,
+      "step": 12,
+      "sequenceScore": 1.1756824172730282,
+      "timeSeconds": 145.5310657596372
+    },
+    {
+      "measure": 80,
+      "step": 13,
+      "sequenceScore": 0.5940235633395018,
+      "timeSeconds": 145.64426303854876
+    },
+    {
+      "measure": 80,
+      "step": 14,
+      "sequenceScore": 1.184504404651438,
+      "timeSeconds": 145.7574603174603
+    },
+    {
+      "measure": 80,
+      "step": 15,
+      "sequenceScore": 0.3833613067563778,
+      "timeSeconds": 145.87065759637187
+    },
+    {
+      "measure": 81,
+      "step": 0,
+      "sequenceScore": 0.5985378483568151,
+      "timeSeconds": 145.98385487528344
+    },
+    {
+      "measure": 81,
+      "step": 2,
+      "sequenceScore": 0.7618558199756997,
+      "timeSeconds": 146.22185941043085
+    },
+    {
+      "measure": 81,
+      "step": 3,
+      "sequenceScore": 0.47084510827628245,
+      "timeSeconds": 146.34086167800453
+    },
+    {
+      "measure": 81,
+      "step": 4,
+      "sequenceScore": 1.2986107646030973,
+      "timeSeconds": 146.45986394557823
+    },
+    {
+      "measure": 81,
+      "step": 6,
+      "sequenceScore": 0.8063752497760348,
+      "timeSeconds": 146.69206349206348
+    },
+    {
+      "measure": 81,
+      "step": 8,
+      "sequenceScore": 0.607723031513042,
+      "timeSeconds": 146.92426303854876
+    },
+    {
+      "measure": 81,
+      "step": 10,
+      "sequenceScore": 0.9890625118655977,
+      "timeSeconds": 147.16226757369614
+    },
+    {
+      "measure": 81,
+      "step": 11,
+      "sequenceScore": 0.40442865999539,
+      "timeSeconds": 147.28126984126982
+    },
+    {
+      "measure": 81,
+      "step": 12,
+      "sequenceScore": 1.1750160704733377,
+      "timeSeconds": 147.40027210884352
+    },
+    {
+      "measure": 81,
+      "step": 13,
+      "sequenceScore": 1.0419182162308915,
+      "timeSeconds": 147.5134693877551
+    },
+    {
+      "measure": 81,
+      "step": 14,
+      "sequenceScore": 1.143586508269635,
+      "timeSeconds": 147.62666666666667
+    },
+    {
+      "measure": 81,
+      "step": 15,
+      "sequenceScore": 0.8632615113406713,
+      "timeSeconds": 147.73986394557824
+    },
+    {
+      "measure": 82,
+      "step": 0,
+      "sequenceScore": 0.9640530354730484,
+      "timeSeconds": 147.8530612244898
+    },
+    {
+      "measure": 82,
+      "step": 1,
+      "sequenceScore": 0.4415104292280501,
+      "timeSeconds": 147.9720634920635
+    },
+    {
+      "measure": 82,
+      "step": 2,
+      "sequenceScore": 0.9049466117742859,
+      "timeSeconds": 148.0910657596372
+    },
+    {
+      "measure": 82,
+      "step": 3,
+      "sequenceScore": 0.6152438582507475,
+      "timeSeconds": 148.21006802721087
+    },
+    {
+      "measure": 82,
+      "step": 4,
+      "sequenceScore": 1.3618910137809648,
+      "timeSeconds": 148.32907029478457
+    },
+    {
+      "measure": 82,
+      "step": 6,
+      "sequenceScore": 0.906855103915083,
+      "timeSeconds": 148.5554648526077
+    },
+    {
+      "measure": 82,
+      "step": 8,
+      "sequenceScore": 0.7482332928309703,
+      "timeSeconds": 148.78185941043083
+    },
+    {
+      "measure": 82,
+      "step": 10,
+      "sequenceScore": 0.9877165855293011,
+      "timeSeconds": 149.0198639455782
+    },
+    {
+      "measure": 82,
+      "step": 11,
+      "sequenceScore": 0.665708591051145,
+      "timeSeconds": 149.1388662131519
+    },
+    {
+      "measure": 82,
+      "step": 12,
+      "sequenceScore": 1.185184935962107,
+      "timeSeconds": 149.25786848072562
+    },
+    {
+      "measure": 82,
+      "step": 13,
+      "sequenceScore": 0.9737260816358196,
+      "timeSeconds": 149.37687074829932
+    },
+    {
+      "measure": 82,
+      "step": 14,
+      "sequenceScore": 0.9806381816602474,
+      "timeSeconds": 149.49587301587303
+    },
+    {
+      "measure": 82,
+      "step": 15,
+      "sequenceScore": 0.9068251887718116,
+      "timeSeconds": 149.6148752834467
+    },
+    {
+      "measure": 83,
+      "step": 0,
+      "sequenceScore": 0.9610773326704894,
+      "timeSeconds": 149.7338775510204
+    },
+    {
+      "measure": 83,
+      "step": 1,
+      "sequenceScore": 0.3905631263179746,
+      "timeSeconds": 149.85287981859412
+    },
+    {
+      "measure": 83,
+      "step": 2,
+      "sequenceScore": 0.9905896867507296,
+      "timeSeconds": 149.9718820861678
+    },
+    {
+      "measure": 83,
+      "step": 3,
+      "sequenceScore": 0.47045480329373796,
+      "timeSeconds": 150.0908843537415
+    },
+    {
+      "measure": 83,
+      "step": 4,
+      "sequenceScore": 1.1964360788889372,
+      "timeSeconds": 150.2098866213152
+    },
+    {
+      "measure": 83,
+      "step": 6,
+      "sequenceScore": 1.025439197333808,
+      "timeSeconds": 150.44208616780045
+    },
+    {
+      "measure": 83,
+      "step": 8,
+      "sequenceScore": 0.6639407695794624,
+      "timeSeconds": 150.6742857142857
+    },
+    {
+      "measure": 83,
+      "step": 9,
+      "sequenceScore": 0.5084819639712865,
+      "timeSeconds": 150.79038548752834
+    },
+    {
+      "measure": 83,
+      "step": 10,
+      "sequenceScore": 0.8963021918670236,
+      "timeSeconds": 150.90648526077098
+    },
+    {
+      "measure": 83,
+      "step": 11,
+      "sequenceScore": 0.6857021496675919,
+      "timeSeconds": 151.0225850340136
+    },
+    {
+      "measure": 83,
+      "step": 12,
+      "sequenceScore": 1.2696294185983423,
+      "timeSeconds": 151.13868480725623
+    },
+    {
+      "measure": 83,
+      "step": 13,
+      "sequenceScore": 0.9504644732950905,
+      "timeSeconds": 151.25478458049886
+    },
+    {
+      "measure": 83,
+      "step": 14,
+      "sequenceScore": 1.1951720108233619,
+      "timeSeconds": 151.37088435374147
+    },
+    {
+      "measure": 83,
+      "step": 15,
+      "sequenceScore": 0.9185215356653039,
+      "timeSeconds": 151.4869841269841
+    },
+    {
+      "measure": 84,
+      "step": 0,
+      "sequenceScore": 0.9815625911882881,
+      "timeSeconds": 151.60308390022675
+    },
+    {
+      "measure": 84,
+      "step": 1,
+      "sequenceScore": 0.48152854616827984,
+      "timeSeconds": 151.71628117913832
+    },
+    {
+      "measure": 84,
+      "step": 2,
+      "sequenceScore": 0.8937679185701484,
+      "timeSeconds": 151.8294784580499
+    },
+    {
+      "measure": 84,
+      "step": 3,
+      "sequenceScore": 0.5607353248262802,
+      "timeSeconds": 151.94267573696143
+    },
+    {
+      "measure": 84,
+      "step": 4,
+      "sequenceScore": 1.2063213074702772,
+      "timeSeconds": 152.055873015873
+    },
+    {
+      "measure": 84,
+      "step": 6,
+      "sequenceScore": 0.8228126944267525,
+      "timeSeconds": 152.28226757369615
+    },
+    {
+      "measure": 84,
+      "step": 7,
+      "sequenceScore": 0.4962014618749461,
+      "timeSeconds": 152.39546485260772
+    },
+    {
+      "measure": 84,
+      "step": 9,
+      "sequenceScore": 0.6521579585477033,
+      "timeSeconds": 152.6247619047619
+    },
+    {
+      "measure": 84,
+      "step": 10,
+      "sequenceScore": 0.724903332048372,
+      "timeSeconds": 152.74086167800453
+    },
+    {
+      "measure": 84,
+      "step": 11,
+      "sequenceScore": 0.8202252349271598,
+      "timeSeconds": 152.85696145124717
+    },
+    {
+      "measure": 84,
+      "step": 12,
+      "sequenceScore": 1.3266856893450805,
+      "timeSeconds": 152.97306122448978
+    },
+    {
+      "measure": 84,
+      "step": 13,
+      "sequenceScore": 0.8568742965087285,
+      "timeSeconds": 153.08916099773242
+    },
+    {
+      "measure": 84,
+      "step": 14,
+      "sequenceScore": 1.2296604376663247,
+      "timeSeconds": 153.20526077097503
+    },
+    {
+      "measure": 84,
+      "step": 15,
+      "sequenceScore": 0.4923159052224219,
+      "timeSeconds": 153.32136054421767
+    },
+    {
+      "measure": 85,
+      "step": 0,
+      "sequenceScore": 0.7246561340186021,
+      "timeSeconds": 153.4374603174603
+    },
+    {
+      "measure": 85,
+      "step": 2,
+      "sequenceScore": 0.9602966731751797,
+      "timeSeconds": 153.67546485260772
+    },
+    {
+      "measure": 85,
+      "step": 3,
+      "sequenceScore": 0.40015985143831506,
+      "timeSeconds": 153.7944671201814
+    },
+    {
+      "measure": 85,
+      "step": 4,
+      "sequenceScore": 1.091198553426825,
+      "timeSeconds": 153.9134693877551
+    },
+    {
+      "measure": 85,
+      "step": 6,
+      "sequenceScore": 0.915169473542007,
+      "timeSeconds": 154.1398639455782
+    },
+    {
+      "measure": 85,
+      "step": 8,
+      "sequenceScore": 0.48233779443502617,
+      "timeSeconds": 154.36625850340135
+    },
+    {
+      "measure": 85,
+      "step": 9,
+      "sequenceScore": 0.6242039803109088,
+      "timeSeconds": 154.482358276644
+    },
+    {
+      "measure": 85,
+      "step": 10,
+      "sequenceScore": 0.6653679896654787,
+      "timeSeconds": 154.59845804988663
+    },
+    {
+      "measure": 85,
+      "step": 11,
+      "sequenceScore": 0.7831924616083069,
+      "timeSeconds": 154.71455782312924
+    },
+    {
+      "measure": 85,
+      "step": 12,
+      "sequenceScore": 0.9042845389764333,
+      "timeSeconds": 154.83065759637188
+    },
+    {
+      "measure": 85,
+      "step": 13,
+      "sequenceScore": 1.1922254225520938,
+      "timeSeconds": 154.94385487528345
+    },
+    {
+      "measure": 85,
+      "step": 14,
+      "sequenceScore": 0.8597769360950355,
+      "timeSeconds": 155.057052154195
+    },
+    {
+      "measure": 85,
+      "step": 15,
+      "sequenceScore": 0.979508715860516,
+      "timeSeconds": 155.17024943310656
+    },
+    {
+      "measure": 86,
+      "step": 0,
+      "sequenceScore": 0.8646941193089517,
+      "timeSeconds": 155.28344671201813
+    },
+    {
+      "measure": 86,
+      "step": 1,
+      "sequenceScore": 0.3926983609522806,
+      "timeSeconds": 155.39954648526077
+    },
+    {
+      "measure": 86,
+      "step": 2,
+      "sequenceScore": 0.8032605455699334,
+      "timeSeconds": 155.5156462585034
+    },
+    {
+      "measure": 86,
+      "step": 3,
+      "sequenceScore": 0.7391238451813398,
+      "timeSeconds": 155.63174603174602
+    },
+    {
+      "measure": 86,
+      "step": 4,
+      "sequenceScore": 1.2296882322401796,
+      "timeSeconds": 155.74784580498866
+    },
+    {
+      "measure": 86,
+      "step": 6,
+      "sequenceScore": 0.6047651655807673,
+      "timeSeconds": 155.97424036281177
+    },
+    {
+      "measure": 86,
+      "step": 7,
+      "sequenceScore": 0.4614159015958621,
+      "timeSeconds": 156.08743764172334
+    },
+    {
+      "measure": 86,
+      "step": 9,
+      "sequenceScore": 0.7326113531545113,
+      "timeSeconds": 156.31673469387755
+    },
+    {
+      "measure": 86,
+      "step": 10,
+      "sequenceScore": 0.6488269638976281,
+      "timeSeconds": 156.4328344671202
+    },
+    {
+      "measure": 86,
+      "step": 11,
+      "sequenceScore": 0.6446847371652688,
+      "timeSeconds": 156.5489342403628
+    },
+    {
+      "measure": 86,
+      "step": 12,
+      "sequenceScore": 1.2227812003529084,
+      "timeSeconds": 156.66503401360544
+    },
+    {
+      "measure": 86,
+      "step": 13,
+      "sequenceScore": 0.9891696278558835,
+      "timeSeconds": 156.778231292517
+    },
+    {
+      "measure": 86,
+      "step": 14,
+      "sequenceScore": 0.7467954320437773,
+      "timeSeconds": 156.89142857142855
+    },
+    {
+      "measure": 86,
+      "step": 15,
+      "sequenceScore": 0.8819745482209748,
+      "timeSeconds": 157.00462585034012
+    },
+    {
+      "measure": 87,
+      "step": 0,
+      "sequenceScore": 0.5660574657868358,
+      "timeSeconds": 157.1178231292517
+    },
+    {
+      "measure": 87,
+      "step": 2,
+      "sequenceScore": 0.8503393480521572,
+      "timeSeconds": 157.35002267573697
+    },
+    {
+      "measure": 87,
+      "step": 4,
+      "sequenceScore": 1.1973334751120095,
+      "timeSeconds": 157.5822222222222
+    },
+    {
+      "measure": 87,
+      "step": 6,
+      "sequenceScore": 1.0674720685284276,
+      "timeSeconds": 157.80861678004533
+    },
+    {
+      "measure": 87,
+      "step": 8,
+      "sequenceScore": 0.7609028070579112,
+      "timeSeconds": 158.03501133786847
+    },
+    {
+      "measure": 87,
+      "step": 10,
+      "sequenceScore": 0.9248010295804552,
+      "timeSeconds": 158.26721088435374
+    },
+    {
+      "measure": 87,
+      "step": 12,
+      "sequenceScore": 1.2793199746876294,
+      "timeSeconds": 158.499410430839
+    },
+    {
+      "measure": 87,
+      "step": 13,
+      "sequenceScore": 0.9238838006074187,
+      "timeSeconds": 158.61551020408163
+    },
+    {
+      "measure": 87,
+      "step": 14,
+      "sequenceScore": 1.2013451064822374,
+      "timeSeconds": 158.73160997732424
+    },
+    {
+      "measure": 87,
+      "step": 15,
+      "sequenceScore": 0.7207098425758396,
+      "timeSeconds": 158.84770975056688
+    },
+    {
+      "measure": 88,
+      "step": 0,
+      "sequenceScore": 0.7992474647808746,
+      "timeSeconds": 158.96380952380952
+    },
+    {
+      "measure": 88,
+      "step": 1,
+      "sequenceScore": 0.37586778298757695,
+      "timeSeconds": 159.07990929705215
+    },
+    {
+      "measure": 88,
+      "step": 2,
+      "sequenceScore": 0.8558339737907266,
+      "timeSeconds": 159.1960090702948
+    },
+    {
+      "measure": 88,
+      "step": 3,
+      "sequenceScore": 0.4477918827894838,
+      "timeSeconds": 159.3121088435374
+    },
+    {
+      "measure": 88,
+      "step": 4,
+      "sequenceScore": 1.2764681487015925,
+      "timeSeconds": 159.42820861678004
+    },
+    {
+      "measure": 88,
+      "step": 6,
+      "sequenceScore": 0.8049237446781959,
+      "timeSeconds": 159.65460317460315
+    },
+    {
+      "measure": 88,
+      "step": 8,
+      "sequenceScore": 0.5520035111799336,
+      "timeSeconds": 159.8809977324263
+    },
+    {
+      "measure": 88,
+      "step": 9,
+      "sequenceScore": 0.4138210531118824,
+      "timeSeconds": 160.0
+    },
+    {
+      "measure": 88,
+      "step": 10,
+      "sequenceScore": 0.8621304273182553,
+      "timeSeconds": 160.1190022675737
+    },
+    {
+      "measure": 88,
+      "step": 12,
+      "sequenceScore": 1.292454180678797,
+      "timeSeconds": 160.3570068027211
+    },
+    {
+      "measure": 88,
+      "step": 13,
+      "sequenceScore": 0.6100356592013433,
+      "timeSeconds": 160.4673015873016
+    },
+    {
+      "measure": 88,
+      "step": 14,
+      "sequenceScore": 0.9131100143725392,
+      "timeSeconds": 160.57759637188207
+    },
+    {
+      "measure": 88,
+      "step": 15,
+      "sequenceScore": 0.4770812411363048,
+      "timeSeconds": 160.68789115646257
+    },
+    {
+      "measure": 89,
+      "step": 0,
+      "sequenceScore": 0.617470638735037,
+      "timeSeconds": 160.79818594104307
+    },
+    {
+      "measure": 89,
+      "step": 2,
+      "sequenceScore": 0.5702308519967662,
+      "timeSeconds": 160.92009070294785
+    },
+    {
+      "measure": 89,
+      "step": 4,
+      "sequenceScore": 0.9761583886748887,
+      "timeSeconds": 161.04199546485262
+    },
+    {
+      "measure": 89,
+      "step": 6,
+      "sequenceScore": 0.7133913558491715,
+      "timeSeconds": 161.25097505668936
+    },
+    {
+      "measure": 89,
+      "step": 9,
+      "sequenceScore": 0.6066539775924104,
+      "timeSeconds": 161.52961451247165
+    },
+    {
+      "measure": 89,
+      "step": 10,
+      "sequenceScore": 0.7713791385037418,
+      "timeSeconds": 161.5992743764172
+    },
+    {
+      "measure": 89,
+      "step": 11,
+      "sequenceScore": 0.5031703627515126,
+      "timeSeconds": 161.6689342403628
+    },
+    {
+      "measure": 89,
+      "step": 12,
+      "sequenceScore": 1.1113130651835972,
+      "timeSeconds": 161.7385941043084
+    },
+    {
+      "measure": 89,
+      "step": 13,
+      "sequenceScore": 0.7233742848868505,
+      "timeSeconds": 161.8575963718821
+    },
+    {
+      "measure": 89,
+      "step": 14,
+      "sequenceScore": 1.1735147481291688,
+      "timeSeconds": 161.9765986394558
+    },
+    {
+      "measure": 89,
+      "step": 15,
+      "sequenceScore": 0.6178974809942357,
+      "timeSeconds": 162.09560090702948
+    },
+    {
+      "measure": 90,
+      "step": 0,
+      "sequenceScore": 0.8835085564364964,
+      "timeSeconds": 162.21460317460318
+    },
+    {
+      "measure": 90,
+      "step": 1,
+      "sequenceScore": 0.4488816011137728,
+      "timeSeconds": 162.32780045351475
+    },
+    {
+      "measure": 90,
+      "step": 2,
+      "sequenceScore": 0.9007325778831322,
+      "timeSeconds": 162.4409977324263
+    },
+    {
+      "measure": 90,
+      "step": 3,
+      "sequenceScore": 0.4061787889104238,
+      "timeSeconds": 162.55419501133787
+    },
+    {
+      "measure": 90,
+      "step": 4,
+      "sequenceScore": 1.5277937545262636,
+      "timeSeconds": 162.66739229024944
+    },
+    {
+      "measure": 90,
+      "step": 6,
+      "sequenceScore": 0.8967656019745442,
+      "timeSeconds": 162.89959183673471
+    },
+    {
+      "measure": 90,
+      "step": 8,
+      "sequenceScore": 0.7828392857735476,
+      "timeSeconds": 163.13179138321996
+    },
+    {
+      "measure": 90,
+      "step": 9,
+      "sequenceScore": 0.84006632648165,
+      "timeSeconds": 163.24498866213153
+    },
+    {
+      "measure": 90,
+      "step": 10,
+      "sequenceScore": 0.9509391786314638,
+      "timeSeconds": 163.35818594104308
+    },
+    {
+      "measure": 90,
+      "step": 12,
+      "sequenceScore": 1.6030187319540379,
+      "timeSeconds": 163.58458049886622
+    },
+    {
+      "measure": 90,
+      "step": 14,
+      "sequenceScore": 1.3897948839211745,
+      "timeSeconds": 163.82258503401363
+    },
+    {
+      "measure": 90,
+      "step": 15,
+      "sequenceScore": 0.6183243226586884,
+      "timeSeconds": 163.9415873015873
+    },
+    {
+      "measure": 91,
+      "step": 0,
+      "sequenceScore": 0.8043951857642972,
+      "timeSeconds": 164.060589569161
+    },
+    {
+      "measure": 91,
+      "step": 2,
+      "sequenceScore": 1.1147287408788855,
+      "timeSeconds": 164.28698412698412
+    },
+    {
+      "measure": 91,
+      "step": 4,
+      "sequenceScore": 1.2464229168392633,
+      "timeSeconds": 164.51337868480726
+    },
+    {
+      "measure": 91,
+      "step": 6,
+      "sequenceScore": 0.9510631461606577,
+      "timeSeconds": 164.75138321995465
+    },
+    {
+      "measure": 91,
+      "step": 8,
+      "sequenceScore": 0.5740048731713419,
+      "timeSeconds": 164.98938775510203
+    },
+    {
+      "measure": 91,
+      "step": 9,
+      "sequenceScore": 0.534105000910206,
+      "timeSeconds": 165.1025850340136
+    },
+    {
+      "measure": 91,
+      "step": 10,
+      "sequenceScore": 1.0294817010492245,
+      "timeSeconds": 165.21578231292517
+    },
+    {
+      "measure": 91,
+      "step": 11,
+      "sequenceScore": 0.36968322155988076,
+      "timeSeconds": 165.32897959183674
+    },
+    {
+      "measure": 91,
+      "step": 12,
+      "sequenceScore": 1.1331986501521358,
+      "timeSeconds": 165.4421768707483
+    },
+    {
+      "measure": 91,
+      "step": 13,
+      "sequenceScore": 0.5704173231872862,
+      "timeSeconds": 165.56117913832202
+    },
+    {
+      "measure": 91,
+      "step": 14,
+      "sequenceScore": 1.2425926044594091,
+      "timeSeconds": 165.6801814058957
+    },
+    {
+      "measure": 91,
+      "step": 15,
+      "sequenceScore": 0.8521555041334825,
+      "timeSeconds": 165.79918367346937
+    },
+    {
+      "measure": 92,
+      "step": 0,
+      "sequenceScore": 1.019867879751379,
+      "timeSeconds": 165.91818594104308
+    },
+    {
+      "measure": 92,
+      "step": 1,
+      "sequenceScore": 0.4378526136403869,
+      "timeSeconds": 166.03138321995465
+    },
+    {
+      "measure": 92,
+      "step": 2,
+      "sequenceScore": 0.9504019971333397,
+      "timeSeconds": 166.14458049886622
+    },
+    {
+      "measure": 92,
+      "step": 3,
+      "sequenceScore": 0.42632947030329216,
+      "timeSeconds": 166.25777777777776
+    },
+    {
+      "measure": 92,
+      "step": 4,
+      "sequenceScore": 1.3005217923683472,
+      "timeSeconds": 166.37097505668933
+    },
+    {
+      "measure": 92,
+      "step": 6,
+      "sequenceScore": 0.7518894196211031,
+      "timeSeconds": 166.60897959183671
+    },
+    {
+      "measure": 92,
+      "step": 8,
+      "sequenceScore": 0.42289922178610406,
+      "timeSeconds": 166.84698412698413
+    },
+    {
+      "measure": 92,
+      "step": 9,
+      "sequenceScore": 0.9089116078380463,
+      "timeSeconds": 166.9601814058957
+    },
+    {
+      "measure": 92,
+      "step": 10,
+      "sequenceScore": 0.7736025171142089,
+      "timeSeconds": 167.07337868480727
+    },
+    {
+      "measure": 92,
+      "step": 11,
+      "sequenceScore": 0.7794485337590737,
+      "timeSeconds": 167.1865759637188
+    },
+    {
+      "measure": 92,
+      "step": 12,
+      "sequenceScore": 1.2223792148772472,
+      "timeSeconds": 167.29977324263038
+    },
+    {
+      "measure": 92,
+      "step": 14,
+      "sequenceScore": 1.46745054139765,
+      "timeSeconds": 167.53197278911563
+    },
+    {
+      "measure": 92,
+      "step": 15,
+      "sequenceScore": 0.6755988132519507,
+      "timeSeconds": 167.64807256235827
+    },
+    {
+      "measure": 93,
+      "step": 0,
+      "sequenceScore": 0.6826288733046059,
+      "timeSeconds": 167.7641723356009
+    },
+    {
+      "measure": 93,
+      "step": 1,
+      "sequenceScore": 0.5081604573231185,
+      "timeSeconds": 167.8744671201814
+    },
+    {
+      "measure": 93,
+      "step": 2,
+      "sequenceScore": 0.5072946846444135,
+      "timeSeconds": 167.9847619047619
+    },
+    {
+      "measure": 93,
+      "step": 3,
+      "sequenceScore": 0.43998328498699435,
+      "timeSeconds": 168.09505668934239
+    },
+    {
+      "measure": 93,
+      "step": 4,
+      "sequenceScore": 0.8118266480833136,
+      "timeSeconds": 168.2053514739229
+    },
+    {
+      "measure": 93,
+      "step": 6,
+      "sequenceScore": 0.910314020459927,
+      "timeSeconds": 168.43755102040814
+    },
+    {
+      "measure": 93,
+      "step": 8,
+      "sequenceScore": 0.686665118171252,
+      "timeSeconds": 168.6697505668934
+    },
+    {
+      "measure": 93,
+      "step": 9,
+      "sequenceScore": 0.36056752836269995,
+      "timeSeconds": 168.78585034013605
+    },
+    {
+      "measure": 93,
+      "step": 10,
+      "sequenceScore": 0.9371738963274783,
+      "timeSeconds": 168.9019501133787
+    },
+    {
+      "measure": 93,
+      "step": 12,
+      "sequenceScore": 1.0429821043819503,
+      "timeSeconds": 169.13414965986394
+    },
+    {
+      "measure": 93,
+      "step": 13,
+      "sequenceScore": 0.5273452057455816,
+      "timeSeconds": 169.25024943310657
+    },
+    {
+      "measure": 93,
+      "step": 14,
+      "sequenceScore": 1.036213050753732,
+      "timeSeconds": 169.36634920634918
+    },
+    {
+      "measure": 93,
+      "step": 15,
+      "sequenceScore": 0.8753412075941575,
+      "timeSeconds": 169.48244897959182
+    },
+    {
+      "measure": 94,
+      "step": 0,
+      "sequenceScore": 0.8274952475225829,
+      "timeSeconds": 169.59854875283446
+    },
+    {
+      "measure": 94,
+      "step": 1,
+      "sequenceScore": 0.5118576015379629,
+      "timeSeconds": 169.71174603174603
+    },
+    {
+      "measure": 94,
+      "step": 2,
+      "sequenceScore": 0.7459590052617142,
+      "timeSeconds": 169.8249433106576
+    },
+    {
+      "measure": 94,
+      "step": 3,
+      "sequenceScore": 0.7549218548844645,
+      "timeSeconds": 169.93814058956914
+    },
+    {
+      "measure": 94,
+      "step": 4,
+      "sequenceScore": 1.252866067879755,
+      "timeSeconds": 170.05133786848072
+    },
+    {
+      "measure": 94,
+      "step": 6,
+      "sequenceScore": 0.5099646323960069,
+      "timeSeconds": 170.27773242630386
+    },
+    {
+      "measure": 94,
+      "step": 8,
+      "sequenceScore": 0.5009836759212553,
+      "timeSeconds": 170.504126984127
+    },
+    {
+      "measure": 94,
+      "step": 9,
+      "sequenceScore": 0.9377264947382914,
+      "timeSeconds": 170.6202267573696
+    },
+    {
+      "measure": 94,
+      "step": 10,
+      "sequenceScore": 0.7761904401342267,
+      "timeSeconds": 170.73632653061225
+    },
+    {
+      "measure": 94,
+      "step": 11,
+      "sequenceScore": 0.8576222899467554,
+      "timeSeconds": 170.85242630385488
+    },
+    {
+      "measure": 94,
+      "step": 12,
+      "sequenceScore": 1.264236996304087,
+      "timeSeconds": 170.9685260770975
+    },
+    {
+      "measure": 94,
+      "step": 13,
+      "sequenceScore": 0.6163598989819996,
+      "timeSeconds": 171.08462585034013
+    },
+    {
+      "measure": 94,
+      "step": 14,
+      "sequenceScore": 1.2154070845498612,
+      "timeSeconds": 171.20072562358274
+    },
+    {
+      "measure": 94,
+      "step": 15,
+      "sequenceScore": 0.7510951605538244,
+      "timeSeconds": 171.31682539682538
+    },
+    {
+      "measure": 95,
+      "step": 0,
+      "sequenceScore": 0.6228574976083424,
+      "timeSeconds": 171.43292517006802
+    },
+    {
+      "measure": 95,
+      "step": 2,
+      "sequenceScore": 0.9205378243758602,
+      "timeSeconds": 171.65351473922902
+    },
+    {
+      "measure": 95,
+      "step": 3,
+      "sequenceScore": 0.3647040033429924,
+      "timeSeconds": 171.76380952380953
+    },
+    {
+      "measure": 95,
+      "step": 4,
+      "sequenceScore": 0.7208442023967029,
+      "timeSeconds": 171.87410430839003
+    },
+    {
+      "measure": 95,
+      "step": 6,
+      "sequenceScore": 0.37048024764032256,
+      "timeSeconds": 171.9960090702948
+    },
+    {
+      "measure": 95,
+      "step": 9,
+      "sequenceScore": 0.639620570126915,
+      "timeSeconds": 172.18467120181407
+    },
+    {
+      "measure": 95,
+      "step": 10,
+      "sequenceScore": 0.7447854298746928,
+      "timeSeconds": 172.25142857142856
+    },
+    {
+      "measure": 95,
+      "step": 11,
+      "sequenceScore": 0.6020695020978684,
+      "timeSeconds": 172.31818594104308
+    },
+    {
+      "measure": 95,
+      "step": 12,
+      "sequenceScore": 0.9066931030171886,
+      "timeSeconds": 172.3849433106576
+    },
+    {
+      "measure": 95,
+      "step": 13,
+      "sequenceScore": 0.8846391996471618,
+      "timeSeconds": 172.49814058956918
+    },
+    {
+      "measure": 95,
+      "step": 14,
+      "sequenceScore": 1.0950266564089555,
+      "timeSeconds": 172.61133786848075
+    },
+    {
+      "measure": 95,
+      "step": 15,
+      "sequenceScore": 0.7813219629814088,
+      "timeSeconds": 172.7245351473923
+    },
+    {
+      "measure": 96,
+      "step": 0,
+      "sequenceScore": 0.8422102539249686,
+      "timeSeconds": 172.83773242630386
+    },
+    {
+      "measure": 96,
+      "step": 1,
+      "sequenceScore": 0.46441615463315844,
+      "timeSeconds": 172.93351473922903
+    },
+    {
+      "measure": 96,
+      "step": 2,
+      "sequenceScore": 0.7447177938739203,
+      "timeSeconds": 173.0292970521542
+    },
+    {
+      "measure": 96,
+      "step": 3,
+      "sequenceScore": 0.677101160249676,
+      "timeSeconds": 173.12507936507936
+    },
+    {
+      "measure": 96,
+      "step": 4,
+      "sequenceScore": 1.0038821653421366,
+      "timeSeconds": 173.22086167800452
+    },
+    {
+      "measure": 96,
+      "step": 6,
+      "sequenceScore": 0.5282764876899216,
+      "timeSeconds": 173.44145124716553
+    },
+    {
+      "measure": 96,
+      "step": 8,
+      "sequenceScore": 0.46885609048065435,
+      "timeSeconds": 173.66204081632654
+    },
+    {
+      "measure": 96,
+      "step": 9,
+      "sequenceScore": 0.7473303867261398,
+      "timeSeconds": 173.78684807256235
+    },
+    {
+      "measure": 96,
+      "step": 10,
+      "sequenceScore": 0.6359722518864764,
+      "timeSeconds": 173.9116553287982
+    },
+    {
+      "measure": 96,
+      "step": 11,
+      "sequenceScore": 0.704925989627685,
+      "timeSeconds": 174.03646258503403
+    },
+    {
+      "measure": 96,
+      "step": 12,
+      "sequenceScore": 1.1305590723736303,
+      "timeSeconds": 174.16126984126984
+    },
+    {
+      "measure": 96,
+      "step": 13,
+      "sequenceScore": 0.8868778235551139,
+      "timeSeconds": 174.28607709750565
+    },
+    {
+      "measure": 96,
+      "step": 14,
+      "sequenceScore": 1.191207134356672,
+      "timeSeconds": 174.4108843537415
+    },
+    {
+      "measure": 96,
+      "step": 15,
+      "sequenceScore": 0.7371600777815506,
+      "timeSeconds": 174.53569160997733
+    }
+  ]
+}
