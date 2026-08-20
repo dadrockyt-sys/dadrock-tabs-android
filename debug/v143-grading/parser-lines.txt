@@ -1,0 +1,33 @@
+12: reference_path = Path(
+13:     "public/gomyway-professional-rhythm-reference-17-113.json"
+16: candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
+19:     (int(event["measure"]), int(event["step"]))
+23: # Read reference only through measure 96.
+24: # Stop immediately when the measure-97 header is encountered.
+25: ref = set()
+26: current_measure = None
+27: hit_reserve_boundary = False
+29: with reference_path.open("r", encoding="utf-8") as fh:
+31:         match_measure = re.search(
+32:             r'"measureNumber"\s*:\s*(\d+)',
+36:         if match_measure:
+37:             current_measure = int(match_measure.group(1))
+39:             if current_measure >= 97:
+40:                 hit_reserve_boundary = True
+50:             and current_measure is not None
+51:             and 17 <= current_measure <= 96
+53:             ref.add(
+55:                     current_measure,
+65: if len(ref) != 433:
+67:         f"Reference parser mismatch: {len(ref)} != 433"
+70: if not hit_reserve_boundary:
+72:         "Did not encounter measure-97 boundary; refusing grade"
+75: def metrics(predicted, reference):
+76:     tp = len(predicted & reference)
+77:     fp = len(predicted - reference)
+78:     fn = len(reference - predicted)
+100: print("Reference events:", len(ref))
+106:     r = {x for x in ref if lo <= x[0] <= hi}
+117:         f"N={len(p)} REF={len(r)} "
+123: tp, fp, fn, precision, recall, f1 = metrics(pred, ref)
+136:     f"FIXED COUNT N={len(pred)} REF={len(ref)} "
