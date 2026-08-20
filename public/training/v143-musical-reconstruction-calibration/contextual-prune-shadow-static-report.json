@@ -1,9 +1,27 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gate": "v143-contextual-prune-isolated-shadow-static",
   "carrierConstantsMatchedResearch": true,
   "fourHistoricalWideRecallSweepsRequired": true,
   "wholeOnsetCqtWindowsMatchedResearch": true,
+  "historicalResearchNormalizationLocked": true,
+  "historicalResearchNormalization": {
+    "audioStream": "0:a:0",
+    "sampleRate": 44100,
+    "channels": 2,
+    "codec": "pcm_s16le"
+  },
+  "section5ReferenceFreeCalibrationCache": {
+    "sha256": "7f13a0c5586126d428658be4c8a764297cb1741e82897c383e2e376a3770bdad",
+    "measures": "81-96",
+    "gridCount": 256,
+    "rawEventCount": 20685,
+    "candidateClusterCount": 6539,
+    "onsetGroupCount": 753,
+    "referenceFree": true,
+    "professionalReferenceUsedByAnalyzer": false
+  },
+  "section5AudioCarrierReplayPrepared": true,
   "frozenContextualModelSha256": "3e30fb28fb98febdd73d832d3bb31093488895820554064ab72afc9e75b2940c",
   "frozenContextualModelFingerprintMatched": true,
   "shadowAppIsolated": true,
