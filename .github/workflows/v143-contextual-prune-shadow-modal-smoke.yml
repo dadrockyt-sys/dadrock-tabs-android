@@ -1,0 +1,147 @@
+name: V143 Contextual Prune Shadow Modal Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-shadow-modal-smoke.yml
+      - analyzer/v143_contextual_prune_shadow_modal.py
+      - analyzer/v143_contextual_prune_reference_free_carrier.py
+      - analyzer/v143_contextual_prune_runtime.py
+      - analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py
+      - analyzer/v143_intro_sequence_event_model.py
+      - analyzer/v143_intro_learned_grid_event_selector.py
+      - analyzer/v143_intro_learned_onset_spectral_set_model.py
+      - analyzer/v143_intro_raw_attack_temporal_diagnostic.py
+      - analyzer/v143_intro_repetition_recovery_event_selector.py
+      - analyzer/v143_intro_supervised_temporal_assignment.py
+      - analyzer/v143_candidate_timing_adapter.py
+      - analyzer/v143_reference_free_timing.py
+      - analyzer/v143_deterministic_separator.py
+      - analyzer/v143_seeded_separator.py
+      - analyzer/v143_production_separator.py
+      - analyzer/v143_seeded_audio_separator_cli.py
+      - public/training/v143-musical-reconstruction-calibration/contextual-prune-frozen-model.json
+      - public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-model.json
+      - public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-sequence-event-model.json
+      - public/training/v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-sequence-frozen-events.json
+
+permissions:
+  contents: write
+
+jobs:
+  modal-smoke:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run ephemeral Modal dependency smoke when credentials exist
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=debug/v143-contextual-prune/shadow-modal-smoke.log
+          diagnostic=debug/v143-contextual-prune/shadow-modal-smoke.json
+
+          : > "$log"
+          echo "commit=$GITHUB_SHA" >> "$log"
+          echo "actor=$GITHUB_ACTOR" >> "$log"
+
+          token_available=false
+          smoke_attempted=false
+          smoke_status=99
+
+          if [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            token_available=true
+            smoke_attempted=true
+            python -m pip install --disable-pip-version-check modal >> "$log" 2>&1
+            install_status=$?
+            if [ "$install_status" -eq 0 ]; then
+              python -m modal run analyzer/v143_contextual_prune_shadow_modal.py::smoke >> "$log" 2>&1
+              smoke_status=$?
+            else
+              smoke_status=$install_status
+            fi
+          else
+            echo "Modal GitHub credentials are not configured; ephemeral smoke not attempted." >> "$log"
+          fi
+
+          TOKEN_AVAILABLE="$token_available" \
+          SMOKE_ATTEMPTED="$smoke_attempted" \
+          SMOKE_STATUS="$smoke_status" \
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          log_path = Path("debug/v143-contextual-prune/shadow-modal-smoke.log")
+          output = Path("debug/v143-contextual-prune/shadow-modal-smoke.json")
+          token_available = os.environ["TOKEN_AVAILABLE"] == "true"
+          attempted = os.environ["SMOKE_ATTEMPTED"] == "true"
+          status = int(os.environ["SMOKE_STATUS"])
+          lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-contextual-prune-shadow-modal-dependency-smoke",
+              "modalCredentialsAvailableInGitHubActions": token_available,
+              "smokeAttempted": attempted,
+              "smokeExitCode": status if attempted else None,
+              "smokePassed": attempted and status == 0,
+              "logTail": lines[-160:],
+              "liveEndpointDeployedOrModified": False,
+              "productionModified": False,
+          }
+          output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          exit 0
+
+      - name: Commit Modal smoke diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/shadow-modal-smoke.log \
+            debug/v143-contextual-prune/shadow-modal-smoke.json
+
+          if git diff --cached --quiet; then
+            echo "No Modal smoke diagnostic changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 contextual prune Modal smoke"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Report gate state
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("debug/v143-contextual-prune/shadow-modal-smoke.json").read_text(encoding="utf-8")
+          )
+          if data.get("smokePassed") is True:
+              print("V143 contextual-prune ephemeral Modal smoke passed")
+          elif data.get("modalCredentialsAvailableInGitHubActions") is not True:
+              print("V143 Modal smoke is credential-blocked in GitHub Actions; no production change was made")
+          else:
+              raise SystemExit("V143 contextual-prune Modal smoke failed; inspect committed diagnostic")
+          PY
