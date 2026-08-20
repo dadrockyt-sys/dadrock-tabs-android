@@ -1,0 +1,48 @@
+{
+  "change": "Promote correlation-safe grid selector threshold from 0.45 to 0.27",
+  "incumbentThreshold": 0.45,
+  "promotedThreshold": 0.27,
+  "candidateFreezeCommit": "e23b0f5f",
+  "blindPredictionFreezeCommit": "570084d6",
+  "blindHoldoutGradeCommit": "b76ac540",
+  "candidateSelectedBeforeFinalHoldout": true,
+  "finalHoldoutMeasures": "65-80",
+  "blindHoldoutIncumbent": {
+    "predicted": 118,
+    "reference": 51,
+    "tp": 25,
+    "fp": 93,
+    "fn": 26,
+    "precision": 0.211864406779661,
+    "recall": 0.49019607843137253,
+    "f1": 0.2958579881656805
+  },
+  "blindHoldoutCandidate": {
+    "predicted": 157,
+    "reference": 51,
+    "tp": 37,
+    "fp": 120,
+    "fn": 14,
+    "precision": 0.2356687898089172,
+    "recall": 0.7254901960784313,
+    "f1": 0.3557692307692308
+  },
+  "blindHoldoutCandidateDeltas": {
+    "f1": 0.059911242603550297,
+    "precision": 0.023804383029256193,
+    "recall": 0.23529411764705882,
+    "tp": 12,
+    "fp": 27,
+    "fn": -12
+  },
+  "winnerByBlindHoldoutF1": "candidate-0.27",
+  "modelWeightsChanged": false,
+  "featureScalingChanged": false,
+  "windowChanged": false,
+  "onlyThresholdChanged": true,
+  "incumbentBackup": "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-threshold045-incumbent.json",
+  "candidateArtifactRetained": "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-threshold027-candidate.json",
+  "activeModel": "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-model.json",
+  "frozenPredictionsModified": false,
+  "productionModified": false
+}
