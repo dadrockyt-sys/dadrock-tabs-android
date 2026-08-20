@@ -46,23 +46,95 @@ jobs:
       - name: Install runtime dependency
         run: python -m pip install --disable-pip-version-check numpy
 
-      - name: Compile reference-free runtime
-        run: python -m py_compile analyzer/v143_contextual_prune_runtime.py analyzer/v143_contextual_prune_runtime_replay.py
+      - name: Run replay and capture diagnostic
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=debug/v143-contextual-prune/runtime-replay-action.log
+          diagnostic=debug/v143-contextual-prune/runtime-replay-action.json
+          report=public/training/v143-musical-reconstruction-calibration/contextual-prune-runtime-replay-report.json
 
-      - name: Replay frozen development and reserve predictions
-        run: python analyzer/v143_contextual_prune_runtime_replay.py
+          : > "$log"
+          echo "commit=$GITHUB_SHA" >> "$log"
+          echo "actor=$GITHUB_ACTOR" >> "$log"
+          echo "python=$(python --version 2>&1)" >> "$log"
 
-      - name: Commit replay report
+          python -m py_compile \
+            analyzer/v143_contextual_prune_runtime.py \
+            analyzer/v143_contextual_prune_runtime_replay.py \
+            >> "$log" 2>&1
+          compile_status=$?
+
+          replay_status=99
+          if [ "$compile_status" -eq 0 ]; then
+            python analyzer/v143_contextual_prune_runtime_replay.py >> "$log" 2>&1
+            replay_status=$?
+          fi
+
+          COMPILE_STATUS="$compile_status" \
+          REPLAY_STATUS="$replay_status" \
+          REPORT_EXISTS="$([ -s "$report" ] && echo true || echo false)" \
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          log_path = Path("debug/v143-contextual-prune/runtime-replay-action.log")
+          diagnostic_path = Path("debug/v143-contextual-prune/runtime-replay-action.json")
+          lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-contextual-prune-runtime-replay-action",
+              "compileExitCode": int(os.environ["COMPILE_STATUS"]),
+              "replayExitCode": int(os.environ["REPLAY_STATUS"]),
+              "reportExists": os.environ["REPORT_EXISTS"] == "true",
+              "logTail": lines[-120:],
+              "productionModified": False,
+          }
+          diagnostic_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          # Do not fail before the diagnostic is committed.
+          exit 0
+
+      - name: Commit replay report or diagnostic
         shell: bash
         run: |
           set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/runtime-replay-action.log \
+            debug/v143-contextual-prune/runtime-replay-action.json
+
           report=public/training/v143-musical-reconstruction-calibration/contextual-prune-runtime-replay-report.json
-          git add -- "$report"
+          if [ -s "$report" ]; then
+            git add -- "$report"
+          fi
+
           if git diff --cached --quiet; then
-            echo "No replay report changes to commit."
+            echo "No replay artifacts changed."
             exit 0
           fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Record V143 contextual prune runtime replay"
+          git commit -m "Record V143 contextual prune runtime replay diagnostic"
           git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce replay success
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("debug/v143-contextual-prune/runtime-replay-action.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+          if int(data.get("compileExitCode", 1)) != 0:
+              raise SystemExit("V143 runtime replay compile gate failed")
+          if int(data.get("replayExitCode", 1)) != 0:
+              raise SystemExit("V143 runtime replay execution gate failed")
+          if data.get("reportExists") is not True:
+              raise SystemExit("V143 runtime replay produced no report")
+          print("V143 contextual prune runtime replay gate passed")
+          PY
