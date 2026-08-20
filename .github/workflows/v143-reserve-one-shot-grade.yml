@@ -1,0 +1,51 @@
+name: V143 Reserve One-Shot Grade
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-reserve-one-shot-grade.yml
+      - analyzer/v143_reserve_one_shot_grade.py
+      - public/training/v143-musical-reconstruction-calibration/reserve-97-113-base027-frozen-events.json
+      - public/training/v143-musical-reconstruction-calibration/reserve-97-113-contextual-prune-frozen-events.json
+      - public/training/v143-musical-reconstruction-calibration/reserve-97-113-contextual-prune-prediction-manifest.json
+      - public/training/v143-musical-reconstruction-calibration/contextual-prune-freeze-manifest.json
+      - public/gomyway-professional-rhythm-reference-17-113.json
+
+permissions:
+  contents: write
+
+jobs:
+  grade:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out sealed branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run one-shot reserve grade
+        run: python analyzer/v143_reserve_one_shot_grade.py
+
+      - name: Commit one-shot grade report
+        shell: bash
+        run: |
+          set -euo pipefail
+          report=public/training/v143-musical-reconstruction-calibration/reserve-97-113-contextual-prune-one-shot-grade.json
+          git add -- "$report"
+          if git diff --cached --quiet; then
+            echo "No grade report changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 reserve one-shot grade"
+          git push origin HEAD:v143-contextual-prune-lobo
