@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "v143-contextual-prune-post-reserve-promotion-audit",
+  "branch": "v143-contextual-prune-lobo",
+  "reserveGatePassed": true,
+  "development": {
+    "measures": "17-96",
+    "baseF1": 0.503344,
+    "candidateF1": 0.54159,
+    "f1Delta": 0.038245,
+    "basePrecision": 0.393464,
+    "candidatePrecision": 0.450077,
+    "precisionDelta": 0.056613
+  },
+  "reserve": {
+    "measures": "97-113",
+    "referenceEventCount": 65,
+    "baseEventCount": 180,
+    "candidateEventCount": 153,
+    "baseF1": 0.391837,
+    "candidateF1": 0.412844,
+    "f1Delta": 0.021007,
+    "basePrecision": 0.266667,
+    "candidatePrecision": 0.294118,
+    "precisionDelta": 0.027451,
+    "removedEvents": 27,
+    "removedFalsePositives": 24,
+    "removedTruePositives": 3
+  },
+  "frozenModel": {
+    "name": "v143-contextual-prune",
+    "baseThreshold": 0.27,
+    "l2": 0.1,
+    "pruneFraction": 0.15,
+    "candidateAddsEvents": false,
+    "candidateRelocatesEvents": false,
+    "professionalReferenceRequiredAtRuntime": false,
+    "sha256": "3e30fb28fb98febdd73d832d3bb31093488895820554064ab72afc9e75b2940c"
+  },
+  "frozenReservePredictions": {
+    "baseSha256": "3f4a421149b34f5952aa45c85f128c6ef41d30f9f44fe58ebb1ec28cf9a0cdab",
+    "candidateSha256": "7b2696bcdbe9bc42b7ac4b529fa19eb894fc832f37afa39850ef4a4e7dce356d"
+  },
+  "productionIntegrationAudit": {
+    "liveEntry": "analyzer/v143_modal_live_endpoint.py",
+    "liveRouter": "analyzer/v143_modal_rhythm_router.py",
+    "livePipeline": "analyzer/v143_reference_free_rhythm_pipeline.py",
+    "liveRanker": "analyzer/v143_rhythm_runtime.py + analyzer/v143_production_engine.py",
+    "liveCandidatePolicy": "single widest Basic Pitch production sweep followed by the existing 148-feature V143 production ranker",
+    "validatedContextualPolicy": "four historical wide-recall sweeps plus whole-onset CQT context feeding the base-0.27 grid selector, correlation-safe sequence scorer, and frozen 15-feature contextual prune",
+    "directDropInEquivalent": false,
+    "reason": "The reserve-validated contextual prune was graded on a different reference-free event universe and feature carrier than the currently deployed V143 selected-row ranker. Applying it directly to current v143Selected rows would not reproduce the tested intervention.",
+    "safePromotionPath": [
+      "extract a reference-free reusable contextual-prune runtime from the frozen research scripts",
+      "prove exact replay against the frozen 17-96 and 97-113 prediction fingerprints",
+      "build an isolated shadow/canary audio adapter using the same four-sweep + CQT feature carrier used during validation",
+      "compare the canary output to frozen calibration artifacts without changing live Rhythm output",
+      "only then wire the proven selector into a Rhythm-only opt-in canary"
+    ]
+  },
+  "invariants": {
+    "reserveUsedForTraining": false,
+    "predictionsModifiedAfterReserveOpen": false,
+    "professionalReferenceRequiredAtRuntime": false,
+    "leadChanged": false,
+    "bassChanged": false,
+    "productionModified": false
+  },
+  "nextGate": "reference-free runtime extraction and exact frozen replay"
+}
