@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-contextual-prune-shadow-modal-dependency-smoke",
+  "modalCredentialsAvailableInGitHubActions": false,
+  "smokeAttempted": false,
+  "smokeExitCode": null,
+  "smokePassed": false,
+  "logTail": [
+    "commit=46c28a0d46aef4b4490eac30716b002bf8ce2e08",
+    "actor=dadrockyt-sys",
+    "Modal GitHub credentials are not configured; ephemeral smoke not attempted."
+  ],
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false
+}
