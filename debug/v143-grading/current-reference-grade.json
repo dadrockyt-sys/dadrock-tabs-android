@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "grade": "v143-current-committed-reference",
+  "measureRange": "17-96",
+  "referencePath": "public/gomyway-professional-rhythm-reference-17-113.json",
+  "referenceCount": 431,
+  "reserveBoundaryEncountered": true,
+  "reservePayloadOpened": false,
+  "referenceBandCounts": {
+    "17-32": 115,
+    "33-48": 93,
+    "49-64": 107,
+    "65-80": 51,
+    "81-96": 65
+  },
+  "oldStaleReferenceBandCounts": {
+    "17-32": 115,
+    "33-48": 93,
+    "49-64": 110,
+    "65-80": 50,
+    "81-96": 65
+  },
+  "referenceDriftVsOldBenchmark": {
+    "17-32": 0,
+    "33-48": 0,
+    "49-64": -3,
+    "65-80": 1,
+    "81-96": 0
+  },
+  "frozenCandidate": {
+    "path": "public/training/v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-fixed-count-reranker-frozen-events.json",
+    "sha256": "bf3b80fe40cae4edec7e383c3e68ffd7efd4fe4314008cabf027c4a01597e022",
+    "count": 765
+  },
+  "base027": {
+    "predicted": 765,
+    "reference": 431,
+    "tp": 301,
+    "fp": 464,
+    "fn": 130,
+    "precision": 0.393464,
+    "recall": 0.698376,
+    "f1": 0.503344
+  },
+  "fixedCountReranker": {
+    "predicted": 765,
+    "reference": 431,
+    "tp": 252,
+    "fp": 513,
+    "fn": 179,
+    "precision": 0.329412,
+    "recall": 0.584687,
+    "f1": 0.421405
+  },
+  "deltaVsBase": {
+    "tp": -49,
+    "fp": 49,
+    "fn": 49,
+    "precision": -0.064052,
+    "recall": -0.113689,
+    "f1": -0.081939
+  },
+  "bands": {
+    "17-32": {
+      "referenceCount": 115,
+      "oldStaleReferenceCount": 115,
+      "referenceCountDeltaVsOld": 0,
+      "base027": {
+        "predicted": 136,
+        "reference": 115,
+        "tp": 65,
+        "fp": 71,
+        "fn": 50,
+        "precision": 0.477941,
+        "recall": 0.565217,
+        "f1": 0.517928
+      },
+      "fixedCountReranker": {
+        "predicted": 136,
+        "reference": 115,
+        "tp": 58,
+        "fp": 78,
+        "fn": 57,
+        "precision": 0.426471,
+        "recall": 0.504348,
+        "f1": 0.462151
+      }
+    },
+    "33-48": {
+      "referenceCount": 93,
+      "oldStaleReferenceCount": 93,
+      "referenceCountDeltaVsOld": 0,
+      "base027": {
+        "predicted": 173,
+        "reference": 93,
+        "tp": 72,
+        "fp": 101,
+        "fn": 21,
+        "precision": 0.416185,
+        "recall": 0.774194,
+        "f1": 0.541353
+      },
+      "fixedCountReranker": {
+        "predicted": 173,
+        "reference": 93,
+        "tp": 65,
+        "fp": 108,
+        "fn": 28,
+        "precision": 0.375723,
+        "recall": 0.698925,
+        "f1": 0.488722
+      }
+    },
+    "49-64": {
+      "referenceCount": 107,
+      "oldStaleReferenceCount": 110,
+      "referenceCountDeltaVsOld": -3,
+      "base027": {
+        "predicted": 134,
+        "reference": 107,
+        "tp": 73,
+        "fp": 61,
+        "fn": 34,
+        "precision": 0.544776,
+        "recall": 0.682243,
+        "f1": 0.605809
+      },
+      "fixedCountReranker": {
+        "predicted": 134,
+        "reference": 107,
+        "tp": 50,
+        "fp": 84,
+        "fn": 57,
+        "precision": 0.373134,
+        "recall": 0.46729,
+        "f1": 0.414938
+      }
+    },
+    "65-80": {
+      "referenceCount": 51,
+      "oldStaleReferenceCount": 50,
+      "referenceCountDeltaVsOld": 1,
+      "base027": {
+        "predicted": 157,
+        "reference": 51,
+        "tp": 37,
+        "fp": 120,
+        "fn": 14,
+        "precision": 0.235669,
+        "recall": 0.72549,
+        "f1": 0.355769
+      },
+      "fixedCountReranker": {
+        "predicted": 157,
+        "reference": 51,
+        "tp": 31,
+        "fp": 126,
+        "fn": 20,
+        "precision": 0.197452,
+        "recall": 0.607843,
+        "f1": 0.298077
+      }
+    },
+    "81-96": {
+      "referenceCount": 65,
+      "oldStaleReferenceCount": 65,
+      "referenceCountDeltaVsOld": 0,
+      "base027": {
+        "predicted": 165,
+        "reference": 65,
+        "tp": 54,
+        "fp": 111,
+        "fn": 11,
+        "precision": 0.327273,
+        "recall": 0.830769,
+        "f1": 0.469565
+      },
+      "fixedCountReranker": {
+        "predicted": 165,
+        "reference": 65,
+        "tp": 48,
+        "fp": 117,
+        "fn": 17,
+        "precision": 0.290909,
+        "recall": 0.738462,
+        "f1": 0.417391
+      }
+    }
+  },
+  "invariants": {
+    "predictionsFrozenBeforeGrading": true,
+    "candidateFingerprintMatchedFreezeManifest": true,
+    "candidateCountPreserved": true,
+    "professionalReferenceUsedForBaseReplay": false,
+    "measures97To113Opened": false,
+    "productionModified": false
+  }
+}
