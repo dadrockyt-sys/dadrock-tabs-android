@@ -1,0 +1,1397 @@
+{
+  "schemaVersion": 1,
+  "artifact": "v143-reserve-97-113-contextual-prune-frozen-events",
+  "measures": "97-113",
+  "contextMeasures": "81-113",
+  "baseThreshold": 0.27,
+  "pruneFraction": 0.15,
+  "baseEventCount": 180,
+  "prunedEventCount": 27,
+  "eventCount": 153,
+  "events": [
+    {
+      "measure": 97,
+      "quantizedStep": 0,
+      "baseScore": 0.3995238911067434,
+      "baseEvidence": true,
+      "sequenceScore": 0.5054214075453176,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9506536983087402
+    },
+    {
+      "measure": 97,
+      "quantizedStep": 1,
+      "baseScore": 0.47589743445684096,
+      "baseEvidence": true,
+      "sequenceScore": 0.14312420466900008,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.23317839449963806
+    },
+    {
+      "measure": 97,
+      "quantizedStep": 2,
+      "baseScore": 0.4853083100412849,
+      "baseEvidence": true,
+      "sequenceScore": 0.5728667368119199,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.17583970190366663
+    },
+    {
+      "measure": 97,
+      "quantizedStep": 5,
+      "baseScore": 0.3634881395159386,
+      "baseEvidence": true,
+      "sequenceScore": 0.1635772920363779,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.2978160612278553
+    },
+    {
+      "measure": 97,
+      "quantizedStep": 7,
+      "baseScore": 0.3273195277652496,
+      "baseEvidence": true,
+      "sequenceScore": 0.38355676523210797,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.14086629737675285
+    },
+    {
+      "measure": 97,
+      "quantizedStep": 8,
+      "baseScore": 0.4020118633634304,
+      "baseEvidence": true,
+      "sequenceScore": 0.5693683211445871,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8774624461493269
+    },
+    {
+      "measure": 97,
+      "quantizedStep": 9,
+      "baseScore": 0.46324465590873554,
+      "baseEvidence": true,
+      "sequenceScore": 0.3262535500882118,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.24283288971416542
+    },
+    {
+      "measure": 97,
+      "quantizedStep": 10,
+      "baseScore": 0.6423324073864952,
+      "baseEvidence": true,
+      "sequenceScore": 0.6262428859468393,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.229177886717385
+    },
+    {
+      "measure": 97,
+      "quantizedStep": 11,
+      "baseScore": 0.5004915240549502,
+      "baseEvidence": true,
+      "sequenceScore": 0.35976242150026544,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.2941501080143677
+    },
+    {
+      "measure": 97,
+      "quantizedStep": 12,
+      "baseScore": 0.8547509892829519,
+      "baseEvidence": true,
+      "sequenceScore": 1.013959607444917,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9316030397951889
+    },
+    {
+      "measure": 97,
+      "quantizedStep": 14,
+      "baseScore": 0.5827844840572952,
+      "baseEvidence": true,
+      "sequenceScore": 1.0496040021725073,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.27183947576975487
+    },
+    {
+      "measure": 97,
+      "quantizedStep": 15,
+      "baseScore": 0.5601412537529294,
+      "baseEvidence": true,
+      "sequenceScore": 0.7230006065373318,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.2298787574491015
+    },
+    {
+      "measure": 98,
+      "quantizedStep": 3,
+      "baseScore": 0.3715767960811131,
+      "baseEvidence": true,
+      "sequenceScore": 0.2443592510280513,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.20638387450206522
+    },
+    {
+      "measure": 98,
+      "quantizedStep": 4,
+      "baseScore": 0.3938017888338773,
+      "baseEvidence": true,
+      "sequenceScore": 0.8241320165937163,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.6618650260632337
+    },
+    {
+      "measure": 98,
+      "quantizedStep": 6,
+      "baseScore": 0.726355920952085,
+      "baseEvidence": true,
+      "sequenceScore": 0.9868874534065586,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.12318948596513793
+    },
+    {
+      "measure": 98,
+      "quantizedStep": 8,
+      "baseScore": 0.8180628644980413,
+      "baseEvidence": true,
+      "sequenceScore": 0.8928484927793783,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9082260277268106
+    },
+    {
+      "measure": 98,
+      "quantizedStep": 10,
+      "baseScore": 0.6968372306743278,
+      "baseEvidence": true,
+      "sequenceScore": 0.671883481537119,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.5754004933846409
+    },
+    {
+      "measure": 98,
+      "quantizedStep": 12,
+      "baseScore": 0.7395773239323016,
+      "baseEvidence": true,
+      "sequenceScore": 1.3586524014025376,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8514247430095456
+    },
+    {
+      "measure": 98,
+      "quantizedStep": 14,
+      "baseScore": 0.7626532833948049,
+      "baseEvidence": true,
+      "sequenceScore": 1.2797738892812751,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.17408602843712354
+    },
+    {
+      "measure": 99,
+      "quantizedStep": 0,
+      "baseScore": 0.6885803149522902,
+      "baseEvidence": true,
+      "sequenceScore": 0.6742784522560762,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9507873375307285
+    },
+    {
+      "measure": 99,
+      "quantizedStep": 4,
+      "baseScore": 0.7149882804246028,
+      "baseEvidence": true,
+      "sequenceScore": 0.8390744207149178,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8028459860299115
+    },
+    {
+      "measure": 99,
+      "quantizedStep": 8,
+      "baseScore": 0.41601943680843195,
+      "baseEvidence": true,
+      "sequenceScore": 0.5254600142992826,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8273299056829316
+    },
+    {
+      "measure": 99,
+      "quantizedStep": 9,
+      "baseScore": 0.5367871420840872,
+      "baseEvidence": true,
+      "sequenceScore": 0.2768180614077413,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.3459226982031189
+    },
+    {
+      "measure": 99,
+      "quantizedStep": 11,
+      "baseScore": 0.38683642279411323,
+      "baseEvidence": true,
+      "sequenceScore": 0.5228527514605937,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.5035742683175474
+    },
+    {
+      "measure": 99,
+      "quantizedStep": 12,
+      "baseScore": 0.31969010936756503,
+      "baseEvidence": true,
+      "sequenceScore": 0.8048276975566365,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8765359625328708
+    },
+    {
+      "measure": 99,
+      "quantizedStep": 14,
+      "baseScore": 0.6737398587566182,
+      "baseEvidence": true,
+      "sequenceScore": 1.1158685115920928,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.11039798582521305
+    },
+    {
+      "measure": 99,
+      "quantizedStep": 15,
+      "baseScore": 0.5211792425427706,
+      "baseEvidence": true,
+      "sequenceScore": 1.0909660824464722,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.09705294244609672
+    },
+    {
+      "measure": 100,
+      "quantizedStep": 0,
+      "baseScore": 0.3576710551376331,
+      "baseEvidence": true,
+      "sequenceScore": 0.5243722471322534,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.972028280564944
+    },
+    {
+      "measure": 100,
+      "quantizedStep": 4,
+      "baseScore": 0.567810907802696,
+      "baseEvidence": true,
+      "sequenceScore": 0.8145880323426465,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.843701511731635
+    },
+    {
+      "measure": 100,
+      "quantizedStep": 7,
+      "baseScore": 0.3578733061637576,
+      "baseEvidence": true,
+      "sequenceScore": 0.459975660619498,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.14699181309502832
+    },
+    {
+      "measure": 100,
+      "quantizedStep": 10,
+      "baseScore": 0.6985724471042225,
+      "baseEvidence": true,
+      "sequenceScore": 0.5561148083531771,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.3358859994995009
+    },
+    {
+      "measure": 100,
+      "quantizedStep": 11,
+      "baseScore": 0.6205279382830459,
+      "baseEvidence": true,
+      "sequenceScore": 0.4446460822583585,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.15864648719826907
+    },
+    {
+      "measure": 100,
+      "quantizedStep": 12,
+      "baseScore": 0.7069716842744534,
+      "baseEvidence": true,
+      "sequenceScore": 1.3140584825795354,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8617695542246914
+    },
+    {
+      "measure": 100,
+      "quantizedStep": 14,
+      "baseScore": 1.0177701980757525,
+      "baseEvidence": true,
+      "sequenceScore": 1.3029953812501238,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.2658087980983259
+    },
+    {
+      "measure": 100,
+      "quantizedStep": 15,
+      "baseScore": 0.473901405354673,
+      "baseEvidence": true,
+      "sequenceScore": 0.7972313353024076,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.14059144236376983
+    },
+    {
+      "measure": 101,
+      "quantizedStep": 0,
+      "baseScore": 0.7131224025654034,
+      "baseEvidence": true,
+      "sequenceScore": 0.651643873908523,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9157078288142011
+    },
+    {
+      "measure": 101,
+      "quantizedStep": 1,
+      "baseScore": 0.33832936163340566,
+      "baseEvidence": true,
+      "sequenceScore": 0.19612348006030805,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.44174987283431816
+    },
+    {
+      "measure": 101,
+      "quantizedStep": 7,
+      "baseScore": 0.5165325569503518,
+      "baseEvidence": true,
+      "sequenceScore": 0.3360064608351278,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.12126323914083775
+    },
+    {
+      "measure": 101,
+      "quantizedStep": 8,
+      "baseScore": 0.5423434710026326,
+      "baseEvidence": true,
+      "sequenceScore": 0.45286383865700286,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8043922871720777
+    },
+    {
+      "measure": 101,
+      "quantizedStep": 9,
+      "baseScore": 0.46394013793059496,
+      "baseEvidence": true,
+      "sequenceScore": 0.46192578669579926,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.3297851852485333
+    },
+    {
+      "measure": 101,
+      "quantizedStep": 11,
+      "baseScore": 0.4728338617627257,
+      "baseEvidence": true,
+      "sequenceScore": 0.36351132545158715,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.5867801762968243
+    },
+    {
+      "measure": 101,
+      "quantizedStep": 12,
+      "baseScore": 0.3142385988975294,
+      "baseEvidence": true,
+      "sequenceScore": 0.6557431826379369,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9222002303952955
+    },
+    {
+      "measure": 101,
+      "quantizedStep": 14,
+      "baseScore": 0.6918815122555003,
+      "baseEvidence": true,
+      "sequenceScore": 0.9796972737014039,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.14108986163195628
+    },
+    {
+      "measure": 101,
+      "quantizedStep": 15,
+      "baseScore": 0.876861993900788,
+      "baseEvidence": true,
+      "sequenceScore": 0.9711924147305208,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.22925188159809437
+    },
+    {
+      "measure": 102,
+      "quantizedStep": 0,
+      "baseScore": 0.4468880373532493,
+      "baseEvidence": true,
+      "sequenceScore": 0.5937902588618487,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9138506857858637
+    },
+    {
+      "measure": 102,
+      "quantizedStep": 1,
+      "baseScore": 0.3304997579911658,
+      "baseEvidence": true,
+      "sequenceScore": 0.3523585311822501,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.16015975471022595
+    },
+    {
+      "measure": 102,
+      "quantizedStep": 4,
+      "baseScore": 0.7928693859398239,
+      "baseEvidence": true,
+      "sequenceScore": 0.8632728459478229,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.6449882232715344
+    },
+    {
+      "measure": 102,
+      "quantizedStep": 8,
+      "baseScore": 0.8422436686177688,
+      "baseEvidence": true,
+      "sequenceScore": 0.746840005343371,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9398529357274711
+    },
+    {
+      "measure": 102,
+      "quantizedStep": 10,
+      "baseScore": 0.7096710803139702,
+      "baseEvidence": true,
+      "sequenceScore": 0.81380487734531,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.5474616836457596
+    },
+    {
+      "measure": 102,
+      "quantizedStep": 12,
+      "baseScore": 0.7201589029115065,
+      "baseEvidence": true,
+      "sequenceScore": 1.3851443769166722,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9377533088326758
+    },
+    {
+      "measure": 102,
+      "quantizedStep": 14,
+      "baseScore": 0.5896524322999549,
+      "baseEvidence": true,
+      "sequenceScore": 1.125071114112037,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.20164488881023426
+    },
+    {
+      "measure": 102,
+      "quantizedStep": 15,
+      "baseScore": 0.6210755863954833,
+      "baseEvidence": true,
+      "sequenceScore": 0.7501497010506961,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.161686064251145
+    },
+    {
+      "measure": 103,
+      "quantizedStep": 0,
+      "baseScore": 0.30194305012845174,
+      "baseEvidence": true,
+      "sequenceScore": 0.5762171792115471,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9708987511612104
+    },
+    {
+      "measure": 103,
+      "quantizedStep": 4,
+      "baseScore": 0.5442947855967444,
+      "baseEvidence": true,
+      "sequenceScore": 0.8095234300913808,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.7895561985655785
+    },
+    {
+      "measure": 103,
+      "quantizedStep": 7,
+      "baseScore": 0.44208302600452637,
+      "baseEvidence": true,
+      "sequenceScore": 0.22572546998080495,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.23264467722655446
+    },
+    {
+      "measure": 103,
+      "quantizedStep": 8,
+      "baseScore": 0.7310065821681089,
+      "baseEvidence": true,
+      "sequenceScore": 0.6853269901762206,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.870540785416203
+    },
+    {
+      "measure": 103,
+      "quantizedStep": 10,
+      "baseScore": 0.7987767537380048,
+      "baseEvidence": true,
+      "sequenceScore": 0.8188704979411359,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.24757754123427878
+    },
+    {
+      "measure": 103,
+      "quantizedStep": 11,
+      "baseScore": 0.3900263342829759,
+      "baseEvidence": true,
+      "sequenceScore": 0.3283383838553826,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.24355445964831485
+    },
+    {
+      "measure": 103,
+      "quantizedStep": 12,
+      "baseScore": 0.9199752976499412,
+      "baseEvidence": true,
+      "sequenceScore": 1.0554027243377182,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9249100522123143
+    },
+    {
+      "measure": 103,
+      "quantizedStep": 14,
+      "baseScore": 0.48946789336777696,
+      "baseEvidence": true,
+      "sequenceScore": 1.1132857693952256,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.17602797400361145
+    },
+    {
+      "measure": 103,
+      "quantizedStep": 15,
+      "baseScore": 0.3863330793233423,
+      "baseEvidence": true,
+      "sequenceScore": 0.9060190054175696,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.11778041930554006
+    },
+    {
+      "measure": 104,
+      "quantizedStep": 0,
+      "baseScore": 0.5202036187439252,
+      "baseEvidence": true,
+      "sequenceScore": 0.5935195077080955,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.959501681677169
+    },
+    {
+      "measure": 104,
+      "quantizedStep": 2,
+      "baseScore": 0.5183619863734239,
+      "baseEvidence": true,
+      "sequenceScore": 0.7413978075145904,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.22616457362995235
+    },
+    {
+      "measure": 104,
+      "quantizedStep": 4,
+      "baseScore": 0.9262494972116062,
+      "baseEvidence": true,
+      "sequenceScore": 0.935982316077393,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8486466744470282
+    },
+    {
+      "measure": 104,
+      "quantizedStep": 8,
+      "baseScore": 0.753192405250406,
+      "baseEvidence": true,
+      "sequenceScore": 0.5584204536520748,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9202617780898829
+    },
+    {
+      "measure": 104,
+      "quantizedStep": 10,
+      "baseScore": 0.8147394949279475,
+      "baseEvidence": true,
+      "sequenceScore": 0.9013072571715993,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.44667899298253416
+    },
+    {
+      "measure": 104,
+      "quantizedStep": 12,
+      "baseScore": 1.1767118209461542,
+      "baseEvidence": true,
+      "sequenceScore": 1.5452158222219972,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9722739352901564
+    },
+    {
+      "measure": 104,
+      "quantizedStep": 14,
+      "baseScore": 0.519831825707999,
+      "baseEvidence": true,
+      "sequenceScore": 1.2557683728463092,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.24648783609880395
+    },
+    {
+      "measure": 105,
+      "quantizedStep": 0,
+      "baseScore": 0.45085779083118865,
+      "baseEvidence": true,
+      "sequenceScore": 0.6031423713592428,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9660805903848454
+    },
+    {
+      "measure": 105,
+      "quantizedStep": 2,
+      "baseScore": 0.455463472234668,
+      "baseEvidence": true,
+      "sequenceScore": 0.7420992247438872,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.23316519864483787
+    },
+    {
+      "measure": 105,
+      "quantizedStep": 4,
+      "baseScore": 0.5211979819229524,
+      "baseEvidence": true,
+      "sequenceScore": 0.8980949562398814,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.739095431280471
+    },
+    {
+      "measure": 105,
+      "quantizedStep": 6,
+      "baseScore": 0.3166372704196133,
+      "baseEvidence": true,
+      "sequenceScore": 1.0135094894990009,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.09869719990113687
+    },
+    {
+      "measure": 105,
+      "quantizedStep": 10,
+      "baseScore": 0.5753940172886197,
+      "baseEvidence": true,
+      "sequenceScore": 0.7307974859914107,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.5477241134387083
+    },
+    {
+      "measure": 105,
+      "quantizedStep": 12,
+      "baseScore": 0.4139102873726712,
+      "baseEvidence": true,
+      "sequenceScore": 0.9322705893676666,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.916418093290714
+    },
+    {
+      "measure": 105,
+      "quantizedStep": 13,
+      "baseScore": 0.44324342440355957,
+      "baseEvidence": true,
+      "sequenceScore": 0.8685488894060438,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.10351579988420012
+    },
+    {
+      "measure": 105,
+      "quantizedStep": 14,
+      "baseScore": 0.6786331373806815,
+      "baseEvidence": true,
+      "sequenceScore": 1.0726955006017282,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.10481143170931213
+    },
+    {
+      "measure": 105,
+      "quantizedStep": 15,
+      "baseScore": 0.9205673312514772,
+      "baseEvidence": true,
+      "sequenceScore": 1.0599225386508724,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.11018164660096112
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 0,
+      "baseScore": 0.4928117593498309,
+      "baseEvidence": true,
+      "sequenceScore": 0.7162824598432413,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9271045221458722
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 1,
+      "baseScore": 0.3081069175644789,
+      "baseEvidence": true,
+      "sequenceScore": 0.397836608397781,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.21033607741533086
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 2,
+      "baseScore": 0.5473367228390463,
+      "baseEvidence": true,
+      "sequenceScore": 0.6156258131352303,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.1168233141793316
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 4,
+      "baseScore": 0.39134292283074823,
+      "baseEvidence": true,
+      "sequenceScore": 0.6382729781643899,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.7042849422650509
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 5,
+      "baseScore": 0.5380356320870285,
+      "baseEvidence": true,
+      "sequenceScore": 0.4131760335215858,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.13646675841369232
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 7,
+      "baseScore": 0.704021118463296,
+      "baseEvidence": true,
+      "sequenceScore": 0.574630363606181,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.14535069357059338
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 8,
+      "baseScore": 0.6099769824694391,
+      "baseEvidence": true,
+      "sequenceScore": 0.4963989456483264,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8672308885790534
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 9,
+      "baseScore": 0.6211650910731676,
+      "baseEvidence": true,
+      "sequenceScore": 0.3073587741844303,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.179235528959006
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 10,
+      "baseScore": 0.6680091287488112,
+      "baseEvidence": true,
+      "sequenceScore": 0.6029553508469477,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.2768627518953645
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 11,
+      "baseScore": 0.6977269152946264,
+      "baseEvidence": true,
+      "sequenceScore": 0.5483353035053582,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.17048984764860814
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 12,
+      "baseScore": 0.8629694386206503,
+      "baseEvidence": true,
+      "sequenceScore": 1.2093298251657882,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8591273457734667
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 13,
+      "baseScore": 0.8939048781307707,
+      "baseEvidence": true,
+      "sequenceScore": 0.9753052396316713,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.1509264280575335
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 14,
+      "baseScore": 0.5885689680885302,
+      "baseEvidence": true,
+      "sequenceScore": 1.0321919391502992,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.15456054801937133
+    },
+    {
+      "measure": 106,
+      "quantizedStep": 15,
+      "baseScore": 0.9131829979046582,
+      "baseEvidence": true,
+      "sequenceScore": 1.0093876415483962,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.20291237061075024
+    },
+    {
+      "measure": 107,
+      "quantizedStep": 0,
+      "baseScore": 1.0859910061791043,
+      "baseEvidence": true,
+      "sequenceScore": 0.8797824800056785,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.891005775472429
+    },
+    {
+      "measure": 107,
+      "quantizedStep": 1,
+      "baseScore": 0.46357873435448943,
+      "baseEvidence": true,
+      "sequenceScore": 0.06076280758669725,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.2873596507780602
+    },
+    {
+      "measure": 107,
+      "quantizedStep": 2,
+      "baseScore": 0.5288314880748637,
+      "baseEvidence": true,
+      "sequenceScore": 0.8741764340779993,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.10335137916649534
+    },
+    {
+      "measure": 107,
+      "quantizedStep": 5,
+      "baseScore": 0.4575142525100617,
+      "baseEvidence": true,
+      "sequenceScore": 0.13182001643595898,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.30615064563020666
+    },
+    {
+      "measure": 107,
+      "quantizedStep": 7,
+      "baseScore": 0.5790492645006409,
+      "baseEvidence": true,
+      "sequenceScore": 0.42980021937098595,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.10664582698153997
+    },
+    {
+      "measure": 107,
+      "quantizedStep": 8,
+      "baseScore": 0.3230585192982278,
+      "baseEvidence": true,
+      "sequenceScore": 0.5167881246930458,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8700363007108017
+    },
+    {
+      "measure": 107,
+      "quantizedStep": 9,
+      "baseScore": 0.43287579131592563,
+      "baseEvidence": true,
+      "sequenceScore": 0.3283807719354203,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.23985156055190548
+    },
+    {
+      "measure": 107,
+      "quantizedStep": 10,
+      "baseScore": 0.5267098380218199,
+      "baseEvidence": true,
+      "sequenceScore": 0.6415268006229286,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.3982173850186155
+    },
+    {
+      "measure": 107,
+      "quantizedStep": 12,
+      "baseScore": 0.8350812944693532,
+      "baseEvidence": true,
+      "sequenceScore": 0.9705258291344732,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9341927094816758
+    },
+    {
+      "measure": 107,
+      "quantizedStep": 15,
+      "baseScore": 0.8185826142778908,
+      "baseEvidence": true,
+      "sequenceScore": 1.1556228376379718,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.16619067558512637
+    },
+    {
+      "measure": 108,
+      "quantizedStep": 0,
+      "baseScore": 0.8753738319650658,
+      "baseEvidence": true,
+      "sequenceScore": 0.7759980921135362,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8866872724097475
+    },
+    {
+      "measure": 108,
+      "quantizedStep": 1,
+      "baseScore": 0.7251850250492491,
+      "baseEvidence": true,
+      "sequenceScore": 0.2784608947254454,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.13176987013648003
+    },
+    {
+      "measure": 108,
+      "quantizedStep": 2,
+      "baseScore": 0.5517562703477364,
+      "baseEvidence": true,
+      "sequenceScore": 0.683732423785403,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.10359548014686598
+    },
+    {
+      "measure": 108,
+      "quantizedStep": 4,
+      "baseScore": 0.5518349993324528,
+      "baseEvidence": true,
+      "sequenceScore": 0.8175694774928115,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.498438845377568
+    },
+    {
+      "measure": 108,
+      "quantizedStep": 7,
+      "baseScore": 0.306759854765245,
+      "baseEvidence": true,
+      "sequenceScore": 0.5365596122961989,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.0979068288412805
+    },
+    {
+      "measure": 108,
+      "quantizedStep": 8,
+      "baseScore": 0.550067691679011,
+      "baseEvidence": true,
+      "sequenceScore": 0.2798804467000105,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.96528192986689
+    },
+    {
+      "measure": 108,
+      "quantizedStep": 11,
+      "baseScore": 0.9216674696978668,
+      "baseEvidence": true,
+      "sequenceScore": 0.43548527094678147,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.31931048272093704
+    },
+    {
+      "measure": 108,
+      "quantizedStep": 12,
+      "baseScore": 0.4690232195974598,
+      "baseEvidence": true,
+      "sequenceScore": 1.060449611764308,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8371072419896911
+    },
+    {
+      "measure": 108,
+      "quantizedStep": 13,
+      "baseScore": 0.40996915357180735,
+      "baseEvidence": true,
+      "sequenceScore": 0.8310414246904343,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.12318467048358443
+    },
+    {
+      "measure": 108,
+      "quantizedStep": 14,
+      "baseScore": 0.810531533782605,
+      "baseEvidence": true,
+      "sequenceScore": 1.1110686994499035,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.15497652235230563
+    },
+    {
+      "measure": 108,
+      "quantizedStep": 15,
+      "baseScore": 0.562941025940912,
+      "baseEvidence": true,
+      "sequenceScore": 0.8530118891282754,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.18801835782956033
+    },
+    {
+      "measure": 109,
+      "quantizedStep": 0,
+      "baseScore": 0.4926065163797562,
+      "baseEvidence": true,
+      "sequenceScore": 0.49928067143638627,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9563949512345774
+    },
+    {
+      "measure": 109,
+      "quantizedStep": 1,
+      "baseScore": 0.5855245241294601,
+      "baseEvidence": true,
+      "sequenceScore": 0.2720380410606088,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.13110287588884187
+    },
+    {
+      "measure": 109,
+      "quantizedStep": 3,
+      "baseScore": 0.4359534148826613,
+      "baseEvidence": true,
+      "sequenceScore": 0.39177280971097483,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.15690501835078896
+    },
+    {
+      "measure": 109,
+      "quantizedStep": 5,
+      "baseScore": 0.5043591299816991,
+      "baseEvidence": true,
+      "sequenceScore": 0.4249926106539196,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.10863924719714792
+    },
+    {
+      "measure": 109,
+      "quantizedStep": 6,
+      "baseScore": 0.4163098176651451,
+      "baseEvidence": true,
+      "sequenceScore": 0.8391719944512954,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.1356401102736399
+    },
+    {
+      "measure": 109,
+      "quantizedStep": 9,
+      "baseScore": 0.5412144281054991,
+      "baseEvidence": true,
+      "sequenceScore": 0.2585429317512791,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.30036713140321686
+    },
+    {
+      "measure": 109,
+      "quantizedStep": 10,
+      "baseScore": 0.7519988619906356,
+      "baseEvidence": true,
+      "sequenceScore": 0.60331160584865,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.16334916394161672
+    },
+    {
+      "measure": 109,
+      "quantizedStep": 11,
+      "baseScore": 0.6099013224053159,
+      "baseEvidence": true,
+      "sequenceScore": 0.48618788359882403,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.21055039474445425
+    },
+    {
+      "measure": 109,
+      "quantizedStep": 12,
+      "baseScore": 0.8995704755650347,
+      "baseEvidence": true,
+      "sequenceScore": 0.9513284927541578,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.839904519181079
+    },
+    {
+      "measure": 109,
+      "quantizedStep": 13,
+      "baseScore": 0.3730412859947972,
+      "baseEvidence": true,
+      "sequenceScore": 0.8645896653334286,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.12757753458695978
+    },
+    {
+      "measure": 109,
+      "quantizedStep": 14,
+      "baseScore": 0.7923509808121164,
+      "baseEvidence": true,
+      "sequenceScore": 1.3593140317736137,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.19769218433781136
+    },
+    {
+      "measure": 110,
+      "quantizedStep": 0,
+      "baseScore": 0.7721226109008257,
+      "baseEvidence": true,
+      "sequenceScore": 0.6134819517839635,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8851871425936143
+    },
+    {
+      "measure": 110,
+      "quantizedStep": 1,
+      "baseScore": 0.5545922028342175,
+      "baseEvidence": true,
+      "sequenceScore": 0.23944756941933168,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.30276162578853444
+    },
+    {
+      "measure": 110,
+      "quantizedStep": 3,
+      "baseScore": 0.567260463456615,
+      "baseEvidence": true,
+      "sequenceScore": 0.31609796668998746,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.16885460687078382
+    },
+    {
+      "measure": 110,
+      "quantizedStep": 4,
+      "baseScore": 0.47674529006768673,
+      "baseEvidence": true,
+      "sequenceScore": 0.7323684009689503,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.7399190608015821
+    },
+    {
+      "measure": 110,
+      "quantizedStep": 7,
+      "baseScore": 0.5047453880752298,
+      "baseEvidence": true,
+      "sequenceScore": 0.3090109170439197,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.09653079071788834
+    },
+    {
+      "measure": 110,
+      "quantizedStep": 8,
+      "baseScore": 0.4663419190329201,
+      "baseEvidence": true,
+      "sequenceScore": 0.6815859732712094,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8919434641023394
+    },
+    {
+      "measure": 110,
+      "quantizedStep": 10,
+      "baseScore": 0.5054267880413111,
+      "baseEvidence": true,
+      "sequenceScore": 0.5210130559254587,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.48865264740701186
+    },
+    {
+      "measure": 110,
+      "quantizedStep": 11,
+      "baseScore": 0.761525561597109,
+      "baseEvidence": true,
+      "sequenceScore": 0.38379990360017857,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.2565970037248267
+    },
+    {
+      "measure": 110,
+      "quantizedStep": 12,
+      "baseScore": 1.2421831775452334,
+      "baseEvidence": true,
+      "sequenceScore": 0.795819022314829,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8717434241589987
+    },
+    {
+      "measure": 110,
+      "quantizedStep": 13,
+      "baseScore": 0.643901386421248,
+      "baseEvidence": true,
+      "sequenceScore": 0.19283577907855584,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.36855183045856393
+    },
+    {
+      "measure": 110,
+      "quantizedStep": 14,
+      "baseScore": 1.3280035095844662,
+      "baseEvidence": true,
+      "sequenceScore": 0.7257647461438157,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.31310974557209226
+    },
+    {
+      "measure": 111,
+      "quantizedStep": 0,
+      "baseScore": 0.3819227662984311,
+      "baseEvidence": true,
+      "sequenceScore": 0.6089881360329862,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9012834976589525
+    },
+    {
+      "measure": 111,
+      "quantizedStep": 1,
+      "baseScore": 0.5652215589074018,
+      "baseEvidence": true,
+      "sequenceScore": 0.20938998098975622,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.2748689040299671
+    },
+    {
+      "measure": 111,
+      "quantizedStep": 4,
+      "baseScore": 0.4411126491073758,
+      "baseEvidence": true,
+      "sequenceScore": 0.7051377461054689,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8344726411508787
+    },
+    {
+      "measure": 111,
+      "quantizedStep": 8,
+      "baseScore": 0.28539284150475036,
+      "baseEvidence": true,
+      "sequenceScore": 0.46515863537301205,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.9306912552774722
+    },
+    {
+      "measure": 111,
+      "quantizedStep": 11,
+      "baseScore": 0.5849946393131015,
+      "baseEvidence": true,
+      "sequenceScore": 0.5038812534917253,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.4994846317599491
+    },
+    {
+      "measure": 111,
+      "quantizedStep": 13,
+      "baseScore": 1.999973517821721,
+      "baseEvidence": true,
+      "sequenceScore": 0.9376672160723741,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.48922244272595733
+    },
+    {
+      "measure": 112,
+      "quantizedStep": 1,
+      "baseScore": 0.3248266167659763,
+      "baseEvidence": true,
+      "sequenceScore": 0.3928854613230048,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.31405777784309313
+    },
+    {
+      "measure": 112,
+      "quantizedStep": 2,
+      "baseScore": 0.372756052816141,
+      "baseEvidence": true,
+      "sequenceScore": 0.546865817640308,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.0915505785374647
+    },
+    {
+      "measure": 112,
+      "quantizedStep": 4,
+      "baseScore": 0.4765626938204722,
+      "baseEvidence": true,
+      "sequenceScore": 0.8519339148892441,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.49099072715355435
+    },
+    {
+      "measure": 112,
+      "quantizedStep": 7,
+      "baseScore": 0.6697619970572588,
+      "baseEvidence": true,
+      "sequenceScore": 0.7141373218584401,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.11859411986451326
+    },
+    {
+      "measure": 112,
+      "quantizedStep": 8,
+      "baseScore": 0.3365800381346696,
+      "baseEvidence": true,
+      "sequenceScore": 0.45127470701793315,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8819524956514719
+    },
+    {
+      "measure": 112,
+      "quantizedStep": 9,
+      "baseScore": 0.6758219940434779,
+      "baseEvidence": true,
+      "sequenceScore": 0.34196722100118765,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.10043591340157801
+    },
+    {
+      "measure": 112,
+      "quantizedStep": 10,
+      "baseScore": 0.4936776911363969,
+      "baseEvidence": true,
+      "sequenceScore": 0.5309101344615259,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.39108617731328565
+    },
+    {
+      "measure": 112,
+      "quantizedStep": 12,
+      "baseScore": 0.833628847193615,
+      "baseEvidence": true,
+      "sequenceScore": 1.2012973132001281,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.947577684180074
+    },
+    {
+      "measure": 112,
+      "quantizedStep": 15,
+      "baseScore": 0.7234710259500926,
+      "baseEvidence": true,
+      "sequenceScore": 0.5780043269961064,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.4123456513812975
+    },
+    {
+      "measure": 113,
+      "quantizedStep": 0,
+      "baseScore": 0.9327123098334306,
+      "baseEvidence": true,
+      "sequenceScore": 0.5689445108136452,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.8382868923829844
+    },
+    {
+      "measure": 113,
+      "quantizedStep": 1,
+      "baseScore": 0.6542327896899152,
+      "baseEvidence": true,
+      "sequenceScore": 0.2256685366550585,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.09398112933791808
+    },
+    {
+      "measure": 113,
+      "quantizedStep": 3,
+      "baseScore": 0.28502951957475825,
+      "baseEvidence": true,
+      "sequenceScore": 0.29334711174453265,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.09786229961906946
+    },
+    {
+      "measure": 113,
+      "quantizedStep": 4,
+      "baseScore": 0.28453936527235874,
+      "baseEvidence": true,
+      "sequenceScore": 0.7293247901950034,
+      "sequenceEvidence": true,
+      "contextualKeepProbability": 0.4321728380026815
+    }
+  ],
+  "candidateAddsEvents": false,
+  "candidateRelocatesEvents": false,
+  "predictionFrozenBeforeReserveGrading": true,
+  "professionalReferenceUsedForPrediction": false,
+  "targetReserveReferenceOpened": false,
+  "reservePayloadOpened": false,
+  "productionModified": false
+}

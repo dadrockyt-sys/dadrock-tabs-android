@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "freeze": "v143-contextual-prune-reserve-predictions-before-grading",
+  "developmentMeasures": "17-96",
+  "contextMeasures": "81-113",
+  "reserveMeasures": "97-113",
+  "contextPolicy": "Use frozen reference-free section-5 features as left context plus the sealed reserve reference-free cache; no reserve labels or professional reference are opened.",
+  "frozenParameters": {
+    "baseThreshold": 0.27,
+    "l2": 0.1,
+    "pruneFraction": 0.15
+  },
+  "invariants": {
+    "developmentPredictionsFrozenBeforeReserveGrading": true,
+    "section5BaseReplayMatchedHistoricalFreeze": true,
+    "reserveCacheReferenceFree": true,
+    "professionalReferenceUsedForPrediction": false,
+    "targetReserveReferenceOpened": false,
+    "reservePayloadOpened": false,
+    "candidateAddsEvents": false,
+    "candidateRelocatesEvents": false,
+    "productionModified": false
+  },
+  "counts": {
+    "section5HistoricalBaseEvents": 165,
+    "section5ReplayedBaseEvents": 165,
+    "reserveBaseEvents": 180,
+    "reservePrunedEvents": 27,
+    "reserveContextualEvents": 153
+  },
+  "fingerprints": {
+    "section5ReferenceFreeCacheSha256": "7f13a0c5586126d428658be4c8a764297cb1741e82897c383e2e376a3770bdad",
+    "reserveReferenceFreeCacheSha256": "ef7f73791f79ede83962788b8f5f64972d1e0706f3e9e363e1890e91fbbc48e0",
+    "section5HistoricalBaseFreezeSha256": "c155aaa01eb3c6832b36ec91f790fec9c0d2d5d5a981f5204941f2ad17443eb5",
+    "developmentFreezeManifestSha256": "4653c4be2a658b05cb15619ddc5f46db02ea51d4e040ae869ac789def15dc88b",
+    "frozenContextualModelSha256": "3e30fb28fb98febdd73d832d3bb31093488895820554064ab72afc9e75b2940c",
+    "baseModelSha256": "00ab23fc7059137df6dddc92534f23881c0f780fcc1c93b8322ca255e378df24",
+    "sequenceModelSha256": "46c16e1ab5bbaafad08060e55ee2e98d2a11faefd50e4f9bd333727f7b23fd3e",
+    "frozenBaseReserveEventsSha256": "3f4a421149b34f5952aa45c85f128c6ef41d30f9f44fe58ebb1ec28cf9a0cdab",
+    "frozenContextualReserveEventsSha256": "7b2696bcdbe9bc42b7ac4b529fa19eb894fc832f37afa39850ef4a4e7dce356d"
+  }
+}
