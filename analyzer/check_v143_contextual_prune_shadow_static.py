@@ -18,6 +18,7 @@ CARRIER_PATH = ANALYZER / "v143_contextual_prune_reference_free_carrier.py"
 SHADOW_PATH = ANALYZER / "v143_contextual_prune_shadow_modal.py"
 RUNTIME_PATH = ANALYZER / "v143_contextual_prune_runtime.py"
 RESEARCH_CAPTURE_PATH = ANALYZER / "v143_fresh_section5_reference_free_capture.py"
+SECTION5_CACHE_PATH = CAL / "fresh-section5-reference-free-cache.json"
 
 EXPECTED_LIVE_BLOBS = {
     "analyzer/v143_modal_live_endpoint.py": "3ae481bbc2a7b482a1ce50e0cfe30313bee9a850",
@@ -42,6 +43,16 @@ EXPECTED_CARRIER_CONSTANTS = {
 }
 
 EXPECTED_MODEL_SHA256 = "3e30fb28fb98febdd73d832d3bb31093488895820554064ab72afc9e75b2940c"
+EXPECTED_SECTION5_COUNTS = {
+    "rawEventCount": 20685,
+    "candidateClusterCount": 6539,
+    "onsetGroupCount": 753,
+    "candidateStemCount": 2,
+}
+EXPECTED_SECTION5_STEM_COUNTS = {
+    "stem0:direct-demucs6s-guitar.wav": 10375,
+    "stem1:bsroformer-demucs6s-guitar.wav": 10310,
+}
 
 
 def file_sha256(path: Path) -> str:
@@ -87,9 +98,16 @@ def require(condition: bool, message: str) -> None:
 
 
 def main() -> None:
-    for path in (CARRIER_PATH, SHADOW_PATH, RUNTIME_PATH, RESEARCH_CAPTURE_PATH):
+    for path in (
+        CARRIER_PATH,
+        SHADOW_PATH,
+        RUNTIME_PATH,
+        RESEARCH_CAPTURE_PATH,
+        SECTION5_CACHE_PATH,
+    ):
         require(path.exists() and path.stat().st_size > 0, f"Missing static-gate source: {path}")
-        ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        if path.suffix == ".py":
+            ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
 
     carrier_text = CARRIER_PATH.read_text(encoding="utf-8")
     shadow_text = SHADOW_PATH.read_text(encoding="utf-8")
@@ -126,6 +144,28 @@ def main() -> None:
         "Carrier sweep loop changed",
     )
 
+    # Exact pre-separator normalization used by every historical fresh-section
+    # capture: first audio stream, 44.1 kHz, stereo, signed 16-bit PCM WAV.
+    for fragment in (
+        '"-map",',
+        '"0:a:0",',
+        '"-ar",',
+        '"44100",',
+        '"-ac",',
+        '"2",',
+        '"pcm_s16le",',
+        "_research_normalize_audio(source, normalized)",
+    ):
+        require(fragment in shadow_text, f"Historical research normalization drifted: {fragment}")
+    require(
+        '"fresh-section5-reference-free-cache.json"' in shadow_text,
+        "Shadow no longer packages the label-free Section-5 calibration carrier",
+    )
+    require(
+        "replay_section5_reference_free_carrier" in shadow_text,
+        "Shadow lost the Section-5 audio-carrier replay gate",
+    )
+
     carrier_values = literal_assignments(CARRIER_PATH)
     research_values = literal_assignments(RESEARCH_CAPTURE_PATH)
     for name, expected in EXPECTED_CARRIER_CONSTANTS.items():
@@ -149,6 +189,30 @@ def main() -> None:
     model_path = CAL / "contextual-prune-frozen-model.json"
     require(file_sha256(model_path) == EXPECTED_MODEL_SHA256, "Frozen contextual model fingerprint changed")
 
+    section5 = json.loads(SECTION5_CACHE_PATH.read_text(encoding="utf-8"))
+    require(isinstance(section5, dict), "Section-5 calibration cache is not a JSON object")
+    require(section5.get("referenceFree") is True, "Section-5 calibration cache is not reference-free")
+    require(
+        section5.get("professionalReferenceUsedByAnalyzer") is False,
+        "Section-5 calibration cache unexpectedly used professional reference",
+    )
+    section = dict(section5.get("section") or {})
+    require(
+        int(section.get("startMeasure", -1)) == 81 and int(section.get("endMeasure", -1)) == 96,
+        f"Section-5 calibration range changed: {section}",
+    )
+    for key, expected in EXPECTED_SECTION5_COUNTS.items():
+        require(
+            int(section5.get(key, -1)) == expected,
+            f"Section-5 calibration count changed: {key}={section5.get(key)!r} expected {expected}",
+        )
+    require(
+        dict(section5.get("stemEventCounts") or {}) == EXPECTED_SECTION5_STEM_COUNTS,
+        "Section-5 calibration stem counts changed",
+    )
+    require(len(section5.get("grid") or []) == 256, "Section-5 calibration grid count changed")
+    require(len(section5.get("rows") or []) == 753, "Section-5 calibration row count changed")
+
     live_blobs: dict[str, str] = {}
     for relative, expected_blob in EXPECTED_LIVE_BLOBS.items():
         path = ROOT / relative
@@ -159,8 +223,8 @@ def main() -> None:
             f"Protected live V143 file changed during shadow gate: {relative} {actual_blob} != {expected_blob}",
         )
 
-    # Import graph guard: the shadow may package research scoring helpers but must
-    # never package the professional reference JSON itself.
+    # Import graph guard: the shadow may package research scoring helpers and the
+    # label-free cache, but never the professional reference JSON itself.
     require(
         "professionalReferenceUsed" in shadow_text,
         "Shadow output lost explicit reference-use invariant",
@@ -171,11 +235,29 @@ def main() -> None:
     )
 
     report = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "gate": "v143-contextual-prune-isolated-shadow-static",
         "carrierConstantsMatchedResearch": True,
         "fourHistoricalWideRecallSweepsRequired": True,
         "wholeOnsetCqtWindowsMatchedResearch": True,
+        "historicalResearchNormalizationLocked": True,
+        "historicalResearchNormalization": {
+            "audioStream": "0:a:0",
+            "sampleRate": 44100,
+            "channels": 2,
+            "codec": "pcm_s16le",
+        },
+        "section5ReferenceFreeCalibrationCache": {
+            "sha256": file_sha256(SECTION5_CACHE_PATH),
+            "measures": "81-96",
+            "gridCount": len(section5["grid"]),
+            "rawEventCount": int(section5["rawEventCount"]),
+            "candidateClusterCount": int(section5["candidateClusterCount"]),
+            "onsetGroupCount": int(section5["onsetGroupCount"]),
+            "referenceFree": True,
+            "professionalReferenceUsedByAnalyzer": False,
+        },
+        "section5AudioCarrierReplayPrepared": True,
         "frozenContextualModelSha256": file_sha256(model_path),
         "frozenContextualModelFingerprintMatched": True,
         "shadowAppIsolated": True,
@@ -192,6 +274,9 @@ def main() -> None:
     print("CARRIER_CONSTANTS_MATCH_RESEARCH", True)
     print("FOUR_WIDE_RECALL_SWEEPS", True)
     print("CQT_WINDOWS_MATCH_RESEARCH", True)
+    print("RESEARCH_NORMALIZATION_LOCKED", True)
+    print("SECTION5_REFERENCE_FREE_CACHE_LOCKED", True)
+    print("SECTION5_AUDIO_CARRIER_REPLAY_PREPARED", True)
     print("MODEL_FINGERPRINT_MATCHED", True)
     print("SHADOW_APP_ISOLATED", True)
     print("LIVE_V143_FILES_UNCHANGED", True)
