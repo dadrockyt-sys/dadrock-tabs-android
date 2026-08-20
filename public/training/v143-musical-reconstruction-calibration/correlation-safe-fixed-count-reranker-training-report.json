@@ -1,0 +1,1829 @@
+{
+  "model": "v143-correlation-safe-fixed-count-reranker",
+  "purpose": "Use current correlation-safe sequence evidence to replace weak base-0.27 locations while preserving the exact base event count per measure.",
+  "featureNames": [
+    "baseScore",
+    "sequenceScore",
+    "baseMargin",
+    "sequenceMargin",
+    "baseEvidence",
+    "sequenceWideEvidence",
+    "baseActive",
+    "sequenceActive",
+    "baseMeasurePercentile",
+    "sequenceMeasurePercentile",
+    "baseGlobalPercentile",
+    "sequenceGlobalPercentile",
+    "sequenceMinusBase",
+    "measureRankAgreement",
+    "measureRankMax",
+    "measureRankMin"
+  ],
+  "selectionPolicy": "per-measure-exact-base-count",
+  "countMultiplier": 1.0,
+  "trainingMeasures": "1-8",
+  "validationMeasures": "9-12",
+  "targetMeasures": "17-96",
+  "baseValidation": {
+    "predicted": 45,
+    "reference": 32,
+    "tp": 30,
+    "fp": 15,
+    "fn": 2,
+    "precision": 0.666667,
+    "recall": 0.9375,
+    "f1": 0.779221
+  },
+  "bestValidationConfiguration": {
+    "l2": 0.01,
+    "positiveWeight": 1.0,
+    "pooled": {
+      "predicted": 45,
+      "reference": 32,
+      "tp": 32,
+      "fp": 13,
+      "fn": 0,
+      "precision": 0.711111,
+      "recall": 1.0,
+      "f1": 0.831169
+    },
+    "perMeasure": {
+      "9": {
+        "base": {
+          "predicted": 11,
+          "reference": 7,
+          "tp": 7,
+          "fp": 4,
+          "fn": 0,
+          "precision": 0.636364,
+          "recall": 1.0,
+          "f1": 0.777778
+        },
+        "candidate": {
+          "predicted": 11,
+          "reference": 7,
+          "tp": 7,
+          "fp": 4,
+          "fn": 0,
+          "precision": 0.636364,
+          "recall": 1.0,
+          "f1": 0.777778
+        },
+        "f1Delta": 0.0
+      },
+      "10": {
+        "base": {
+          "predicted": 12,
+          "reference": 9,
+          "tp": 8,
+          "fp": 4,
+          "fn": 1,
+          "precision": 0.666667,
+          "recall": 0.888889,
+          "f1": 0.761905
+        },
+        "candidate": {
+          "predicted": 12,
+          "reference": 9,
+          "tp": 9,
+          "fp": 3,
+          "fn": 0,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.857143
+        },
+        "f1Delta": 0.095238
+      },
+      "11": {
+        "base": {
+          "predicted": 10,
+          "reference": 7,
+          "tp": 7,
+          "fp": 3,
+          "fn": 0,
+          "precision": 0.7,
+          "recall": 1.0,
+          "f1": 0.823529
+        },
+        "candidate": {
+          "predicted": 10,
+          "reference": 7,
+          "tp": 7,
+          "fp": 3,
+          "fn": 0,
+          "precision": 0.7,
+          "recall": 1.0,
+          "f1": 0.823529
+        },
+        "f1Delta": 0.0
+      },
+      "12": {
+        "base": {
+          "predicted": 12,
+          "reference": 9,
+          "tp": 8,
+          "fp": 4,
+          "fn": 1,
+          "precision": 0.666667,
+          "recall": 0.888889,
+          "f1": 0.761905
+        },
+        "candidate": {
+          "predicted": 12,
+          "reference": 9,
+          "tp": 9,
+          "fp": 3,
+          "fn": 0,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.857143
+        },
+        "f1Delta": 0.095238
+      }
+    },
+    "worsenedMeasures": 0,
+    "meanMeasureF1Delta": 0.047619,
+    "worstMeasureF1Delta": 0.0
+  },
+  "validationTpGain": 2,
+  "validationF1Delta": 0.051948,
+  "validationGate": {
+    "requiresTpGain": true,
+    "requiresPositivePooledF1Delta": true,
+    "maximumWorsenedMeasures": 1,
+    "passed": true
+  },
+  "allValidationConfigurations": [
+    {
+      "l2": 0.01,
+      "positiveWeight": 1.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 0.01,
+      "positiveWeight": 2.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 0.01,
+      "positiveWeight": 4.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 0.1,
+      "positiveWeight": 1.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 0.1,
+      "positiveWeight": 2.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 0.1,
+      "positiveWeight": 4.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 1.0,
+      "positiveWeight": 1.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 1.0,
+      "positiveWeight": 2.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 1.0,
+      "positiveWeight": 4.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 10.0,
+      "positiveWeight": 1.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 10.0,
+      "positiveWeight": 2.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 10.0,
+      "positiveWeight": 4.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 100.0,
+      "positiveWeight": 1.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 100.0,
+      "positiveWeight": 2.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    },
+    {
+      "l2": 100.0,
+      "positiveWeight": 4.0,
+      "pooled": {
+        "predicted": 45,
+        "reference": 32,
+        "tp": 32,
+        "fp": 13,
+        "fn": 0,
+        "precision": 0.711111,
+        "recall": 1.0,
+        "f1": 0.831169
+      },
+      "perMeasure": {
+        "9": {
+          "base": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "candidate": {
+            "predicted": 11,
+            "reference": 7,
+            "tp": 7,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.636364,
+            "recall": 1.0,
+            "f1": 0.777778
+          },
+          "f1Delta": 0.0
+        },
+        "10": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        },
+        "11": {
+          "base": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "candidate": {
+            "predicted": 10,
+            "reference": 7,
+            "tp": 7,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.823529
+          },
+          "f1Delta": 0.0
+        },
+        "12": {
+          "base": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 8,
+            "fp": 4,
+            "fn": 1,
+            "precision": 0.666667,
+            "recall": 0.888889,
+            "f1": 0.761905
+          },
+          "candidate": {
+            "predicted": 12,
+            "reference": 9,
+            "tp": 9,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.857143
+          },
+          "f1Delta": 0.095238
+        }
+      },
+      "worsenedMeasures": 0,
+      "meanMeasureF1Delta": 0.047619,
+      "worstMeasureF1Delta": 0.0
+    }
+  ],
+  "correlationSafeSequenceReplayExactBeforeTraining": true,
+  "targetProfessionalReferenceOpened": false,
+  "measures97To113Opened": false,
+  "professionalReferenceRequiredAtRuntime": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false
+}

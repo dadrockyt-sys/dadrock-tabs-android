@@ -173,7 +173,11 @@ def _sequence_scores(
         context_measures,
         base_scores,
         base_evidence,
-        float(base_model["threshold"]),
+        float(
+            _load_json(FROZEN_SEQUENCE_17_96_PATH)[
+                "historicalSequenceFeatureBaseThreshold"
+            ]
+        ),
     )
     X = _neutralize_sequence_grid_columns(ds["X"], base_model, sequence_model)
     mean = np.asarray(sequence_model["featureMean"], dtype=np.float64)

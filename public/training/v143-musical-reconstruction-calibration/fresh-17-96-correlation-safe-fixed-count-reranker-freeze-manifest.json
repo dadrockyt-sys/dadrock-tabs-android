@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "experiment": "v143-correlation-safe-fixed-count-reranker",
+  "measureRange": "17-96",
+  "candidateSelectedUsingOnlyHistoricalMeasures1To12": true,
+  "sequenceReplayMatchedPreviouslyFrozen17To96Predictions": true,
+  "predictionsFrozenBeforeGrading": true,
+  "targetProfessionalReferenceOpened": false,
+  "measures97To113Opened": false,
+  "productionModified": false,
+  "fingerprints": {
+    "baseSelector": {
+      "path": "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-model.json",
+      "sha256": "00ab23fc7059137df6dddc92534f23881c0f780fcc1c93b8322ca255e378df24"
+    },
+    "sequenceModel": {
+      "path": "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-sequence-event-model.json",
+      "sha256": "46c16e1ab5bbaafad08060e55ee2e98d2a11faefd50e4f9bd333727f7b23fd3e"
+    },
+    "rerankerModel": {
+      "path": "public/training/v143-musical-reconstruction-calibration/correlation-safe-fixed-count-reranker-model.json",
+      "sha256": "767dedfe1080bdd0e28029505fbfa4261549679fcac49590aa0dd831085663bb"
+    },
+    "frozenPredictions": {
+      "path": "public/training/v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-fixed-count-reranker-frozen-events.json",
+      "sha256": "bf3b80fe40cae4edec7e383c3e68ffd7efd4fe4314008cabf027c4a01597e022"
+    },
+    "historicalFrozenSequence": {
+      "path": "public/training/v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-sequence-frozen-events.json",
+      "sha256": "dccfd11acad35d5786ec2c9d10276ffcb1b254ce4fae5b509828296abeb775e9"
+    },
+    "freshCaches": [
+      {
+        "path": "public/training/v143-musical-reconstruction-calibration/fresh-verse1-reference-free-cache.json",
+        "sha256": "fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15"
+      },
+      {
+        "path": "public/training/v143-musical-reconstruction-calibration/fresh-section2-reference-free-cache.json",
+        "sha256": "72597273abc4bb61e106a920e4b1aa8dc277b8e67242e3dbe516bea1bd902668"
+      },
+      {
+        "path": "public/training/v143-musical-reconstruction-calibration/fresh-section3-reference-free-cache.json",
+        "sha256": "03da3c6856cd5983bcae4077a7d3f39f8f082cb7eeb193af3861a84df81d8fcd"
+      },
+      {
+        "path": "public/training/v143-musical-reconstruction-calibration/fresh-section4-reference-free-cache.json",
+        "sha256": "8876696cd9f02f56e7639ba6e7e4940fe4e729e73d77f1fd9a31bd221aa73e5a"
+      },
+      {
+        "path": "public/training/v143-musical-reconstruction-calibration/fresh-section5-reference-free-cache.json",
+        "sha256": "7f13a0c5586126d428658be4c8a764297cb1741e82897c383e2e376a3770bdad"
+      }
+    ]
+  }
+}
