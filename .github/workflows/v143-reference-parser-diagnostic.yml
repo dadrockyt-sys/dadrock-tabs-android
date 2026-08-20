@@ -1,0 +1,21 @@
+name: V143 Reference Parser Diagnostic
+
+on:
+  push:
+    branches:
+      - v143-musical-reconstruction-calibration
+    paths:
+      - "debug/v143-grading/diagnose_reference_parser.py"
+      - ".github/workflows/v143-reference-parser-diagnostic.yml"
+      - "public/gomyway-professional-rhythm-reference-17-113.json"
+  workflow_dispatch:
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run blind-safe reference parser diagnostic
+        run: python debug/v143-grading/diagnose_reference_parser.py
