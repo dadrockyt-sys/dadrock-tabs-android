@@ -1,0 +1,61 @@
+{
+  "model": "v143-repetition-recovery-base027-robust-candidate",
+  "baseThreshold": 0.27,
+  "margin": 0.4,
+  "minimumRecurrenceSupport": 0.75,
+  "phaseModulus": 1,
+  "selectionMeasures": "17-64",
+  "finalBlindMeasuresUsedForSelection": false,
+  "selectionMethod": "robust three-block search followed by leave-one-block-out validation",
+  "robustSearch": {
+    "configurationsSearched": 90,
+    "eligibleNonNegativeAllBlocks": 7,
+    "winner": {
+      "margin": 0.4,
+      "minimumRecurrenceSupport": 0.75,
+      "phaseModulus": 1,
+      "blockF1": {
+        "17-32": 0.5978,
+        "33-48": 0.5535,
+        "49-64": 0.6204
+      },
+      "blockF1DeltaVsBase027": {
+        "17-32": 0.0799,
+        "33-48": 0.0122,
+        "49-64": 0.0146
+      },
+      "worstDelta": 0.0122,
+      "meanDelta": 0.0355,
+      "pooledF1": 0.5896
+    }
+  },
+  "leaveOneBlockOutValidation": {
+    "17-32": {
+      "heldOutDelta": 0.0799,
+      "selectedMargin": 0.4,
+      "selectedSupport": 0.75,
+      "selectedPhaseModulus": 1
+    },
+    "33-48": {
+      "heldOutDelta": 0.0088,
+      "selectedMargin": 0.3,
+      "selectedSupport": 0.75,
+      "selectedPhaseModulus": 1
+    },
+    "49-64": {
+      "heldOutDelta": 0.0146,
+      "selectedMargin": 0.4,
+      "selectedSupport": 0.75,
+      "selectedPhaseModulus": 1
+    },
+    "worstHeldOutDelta": 0.0088,
+    "meanHeldOutDelta": 0.0344,
+    "allHeldOutNonNegative": true
+  },
+  "candidateChosenBeforeNextBlindHoldout": true,
+  "modelWeightsModified": false,
+  "baseSelectorModified": false,
+  "existingRecoveryModelModified": false,
+  "frozenPredictionsModified": false,
+  "productionModified": false
+}
