@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-contextual-prune-runtime-replay-action",
+  "compileExitCode": 0,
+  "replayExitCode": 1,
+  "reportExists": false,
+  "logTail": [
+    "commit=92ef3aa3d4c4b84b4de7073a0b01561b9ed70779",
+    "actor=dadrockyt-sys",
+    "python=Python 3.11.16",
+    "Traceback (most recent call last):",
+    "  File \"/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143_contextual_prune_runtime_replay.py\", line 205, in <module>",
+    "    main()",
+    "  File \"/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143_contextual_prune_runtime_replay.py\", line 102, in main",
+    "    dev_rows, dev_grid = freeze._merge_fresh_caches()",
+    "                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "  File \"/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py\", line 401, in _merge_fresh_caches",
+    "    cache = _load_json(path)",
+    "            ^^^^^^^^^^^^^^^^",
+    "  File \"/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py\", line 74, in _load_json",
+    "    raise RuntimeError(f\"Missing required artifact: {path}\")",
+    "RuntimeError: Missing required artifact: /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/public/training/v143-musical-reconstruction-calibration/fresh-verse1-reference-free-cache.json"
+  ],
+  "productionModified": false
+}
