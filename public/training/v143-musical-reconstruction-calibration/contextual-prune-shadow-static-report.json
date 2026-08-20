@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-contextual-prune-isolated-shadow-static",
+  "carrierConstantsMatchedResearch": true,
+  "fourHistoricalWideRecallSweepsRequired": true,
+  "wholeOnsetCqtWindowsMatchedResearch": true,
+  "frozenContextualModelSha256": "3e30fb28fb98febdd73d832d3bb31093488895820554064ab72afc9e75b2940c",
+  "frozenContextualModelFingerprintMatched": true,
+  "shadowAppIsolated": true,
+  "shadowHttpEndpointExposed": false,
+  "liveV143ProtectedBlobShas": {
+    "analyzer/v143_modal_live_endpoint.py": "3ae481bbc2a7b482a1ce50e0cfe30313bee9a850",
+    "analyzer/v143_modal_rhythm_router.py": "7849f33cd3b849283ccebfda9f721cc40704231e",
+    "analyzer/v143_reference_free_rhythm_pipeline.py": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+    "analyzer/v143_rhythm_runtime.py": "3f530da2c50c6b8c967a607a860c54135ee504af",
+    "analyzer/v143_production_engine.py": "9201f8bb5671183051322b1ee739717336be762c",
+    "analyzer/v143_candidate_timing_adapter.py": "99b90aaee4520dcde8acfad3b110d726262008cf"
+  },
+  "liveV143FilesUnchanged": true,
+  "professionalReferencePathPresentInNewRuntimeSources": false,
+  "productionModified": false,
+  "gatePassed": true
+}
