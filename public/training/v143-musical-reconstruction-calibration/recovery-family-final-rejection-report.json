@@ -1,0 +1,35 @@
+{
+  "name": "V143 recovery family final rejection",
+  "baseSelectorThreshold": 0.27,
+  "developmentMeasures": "17-96",
+  "measures97PlusUsedForDevelopment": false,
+  "globalRecovery": {
+    "status": "rejected",
+    "reason": "Frozen recovery candidate failed untouched Section 5 blind holdout 81-96.",
+    "blindHoldoutF1Delta": -0.006
+  },
+  "contextualRecovery": {
+    "status": "rejected",
+    "method": "one-pass contextual recurrence with local score floor, nearest rhythm-pattern peers, and leave-one-16-measure-block-out validation",
+    "heldOutDeltas": {
+      "17-32": 0.0262,
+      "33-48": -0.0195,
+      "49-64": 0.0,
+      "65-80": 0.0061,
+      "81-96": -0.008
+    },
+    "worstHeldOutDelta": -0.0195,
+    "meanHeldOutDelta": 0.0003,
+    "allHeldOutNonNegative": false,
+    "robustConfigurationsNonNegativeAllFiveBlocks": 0,
+    "conclusion": "No contextual recovery configuration generalizes safely across all consumed development blocks."
+  },
+  "finalDecision": {
+    "recoveryEnabled": false,
+    "incumbent": "base selector threshold 0.27",
+    "continueRecoveryParameterSearch": false
+  },
+  "nextBlindMeasuresReserved": "97-112",
+  "modelWeightsModified": false,
+  "productionModified": false
+}
