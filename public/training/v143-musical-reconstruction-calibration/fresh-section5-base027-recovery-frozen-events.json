@@ -1,0 +1,1192 @@
+{
+  "name": "V143 Section 5 blind base+recovery predictions",
+  "measureRange": "81-96",
+  "baseThreshold": 0.27,
+  "margin": 0.4,
+  "minimumRecurrenceSupport": 0.75,
+  "phaseModulus": 1,
+  "candidateFrozenBeforeSection5ReferenceOpen": true,
+  "referenceOpenedBeforePrediction": false,
+  "referenceUsedForPrediction": false,
+  "baseSelectedCount": 165,
+  "recoveryAdditionCount": 3,
+  "selectedCount": 168,
+  "events": [
+    {
+      "measure": 81,
+      "step": 0,
+      "score": 0.4924882723563311,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 81,
+      "step": 2,
+      "score": 0.5156236324431585,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 81,
+      "step": 3,
+      "score": 0.5857552253883928,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 81,
+      "step": 4,
+      "score": 1.1005793054693116,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 81,
+      "step": 5,
+      "score": 0.28828732269681845,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 81,
+      "step": 6,
+      "score": 0.37056977160741644,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 81,
+      "step": 10,
+      "score": 0.5225432150694266,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 81,
+      "step": 11,
+      "score": 0.37272911666701386,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 81,
+      "step": 12,
+      "score": 0.5961736620507897,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 81,
+      "step": 13,
+      "score": 0.7020278602119969,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 81,
+      "step": 14,
+      "score": 0.5766209497362854,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 81,
+      "step": 15,
+      "score": 0.7389285196341118,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 82,
+      "step": 0,
+      "score": 1.11919406404058,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 82,
+      "step": 1,
+      "score": 0.3335478290031554,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 82,
+      "step": 2,
+      "score": 0.37431906987165253,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 82,
+      "step": 4,
+      "score": 0.4697253679411617,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 82,
+      "step": 6,
+      "score": 0.8014842712454178,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 82,
+      "step": 8,
+      "score": 0.8382660291023551,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 82,
+      "step": 10,
+      "score": 0.2773546080799274,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 82,
+      "step": 11,
+      "score": 0.7053976900151284,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 82,
+      "step": 12,
+      "score": 1.255864988527564,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 82,
+      "step": 13,
+      "score": 0.6692787602567454,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 82,
+      "step": 15,
+      "score": 0.7907173320426031,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 0,
+      "score": 1.1065574065815584,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 2,
+      "score": 0.278037693106904,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 4,
+      "score": 0.44553574439129195,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 6,
+      "score": 0.8971792235643632,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 7,
+      "score": 0.3808357561424762,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 8,
+      "score": 0.6665475721531217,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 10,
+      "score": 0.5312921533041574,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 11,
+      "score": 0.6335636308353498,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 12,
+      "score": 0.8623913788074598,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 13,
+      "score": 0.5554105867390668,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 14,
+      "score": 0.7607434327997374,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 83,
+      "step": 15,
+      "score": 0.8405556473773863,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 84,
+      "step": 0,
+      "score": 0.9369543123430615,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 84,
+      "step": 1,
+      "score": 0.37564700118953687,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 84,
+      "step": 2,
+      "score": 0.5410671123442011,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 84,
+      "step": 3,
+      "score": 0.4444171728960336,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 84,
+      "step": 4,
+      "score": 0.6492166621759912,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 84,
+      "step": 6,
+      "score": 0.6297011566445123,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 84,
+      "step": 7,
+      "score": 0.5544239242137241,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 84,
+      "step": 10,
+      "score": 0.36249981341919646,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 84,
+      "step": 11,
+      "score": 0.9350591415939704,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 84,
+      "step": 12,
+      "score": 0.9844268748663119,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 84,
+      "step": 14,
+      "score": 0.3291022358497234,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 85,
+      "step": 0,
+      "score": 0.8940609172913504,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 85,
+      "step": 2,
+      "score": 0.22864723949643018,
+      "evidence": true,
+      "source": "recovery-addition"
+    },
+    {
+      "measure": 85,
+      "step": 3,
+      "score": 0.44256277168725305,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 85,
+      "step": 4,
+      "score": 0.6288468915518186,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 85,
+      "step": 6,
+      "score": 0.7213961548115722,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 85,
+      "step": 8,
+      "score": 0.4801187755680725,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 85,
+      "step": 9,
+      "score": 0.3339489214596727,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 85,
+      "step": 11,
+      "score": 0.8454204231229807,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 85,
+      "step": 12,
+      "score": 0.39696435761542626,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 85,
+      "step": 13,
+      "score": 0.6613621425513823,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 85,
+      "step": 14,
+      "score": 0.6777461035324609,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 85,
+      "step": 15,
+      "score": 0.7594290689752845,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 86,
+      "step": 0,
+      "score": 0.5926150012228811,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 86,
+      "step": 1,
+      "score": 0.27495841138600763,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 86,
+      "step": 2,
+      "score": 0.3207377346793071,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 86,
+      "step": 3,
+      "score": 0.40958237772789546,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 86,
+      "step": 7,
+      "score": 0.7821993299615058,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 86,
+      "step": 12,
+      "score": 1.252224604991144,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 86,
+      "step": 13,
+      "score": 0.8279500384092164,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 86,
+      "step": 15,
+      "score": 0.6846705621132012,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 87,
+      "step": 0,
+      "score": 0.2858144490059877,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 87,
+      "step": 2,
+      "score": 0.5231646132421681,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 87,
+      "step": 3,
+      "score": 0.31382156539620515,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 87,
+      "step": 4,
+      "score": 0.851332415818962,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 87,
+      "step": 6,
+      "score": 1.3730251038346026,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 87,
+      "step": 10,
+      "score": 0.5058701169551845,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 87,
+      "step": 11,
+      "score": 0.39730013652009255,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 87,
+      "step": 12,
+      "score": 0.7918181180804408,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 87,
+      "step": 13,
+      "score": 0.35369602524072086,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 87,
+      "step": 14,
+      "score": 0.7707565648042815,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 87,
+      "step": 15,
+      "score": 0.4698615991690526,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 88,
+      "step": 0,
+      "score": 0.7129496834242552,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 88,
+      "step": 2,
+      "score": 0.5226789170876316,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 88,
+      "step": 4,
+      "score": 0.40851211498783524,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 88,
+      "step": 5,
+      "score": 0.3655957797002438,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 88,
+      "step": 8,
+      "score": 0.38797097222047805,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 88,
+      "step": 10,
+      "score": 0.5327482468926243,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 88,
+      "step": 12,
+      "score": 1.5472244564054933,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 88,
+      "step": 13,
+      "score": 1.0654369752550525,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 88,
+      "step": 14,
+      "score": 0.7786399198031427,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 89,
+      "step": 0,
+      "score": 0.4326832181414767,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 89,
+      "step": 6,
+      "score": 0.4107786034935781,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 89,
+      "step": 8,
+      "score": 0.32306776071455684,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 89,
+      "step": 9,
+      "score": 0.84881764726787,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 89,
+      "step": 14,
+      "score": 0.8255816118968607,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 89,
+      "step": 15,
+      "score": 0.39893607320155194,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 0,
+      "score": 0.7288921545109667,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 1,
+      "score": 0.3772404389470432,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 2,
+      "score": 0.44720885545772104,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 4,
+      "score": 0.6795729642856023,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 6,
+      "score": 0.48634369634385993,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 7,
+      "score": 0.30267576044989886,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 8,
+      "score": 0.7930085749646476,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 9,
+      "score": 0.45101545146241984,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 10,
+      "score": 0.3297483712061329,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 12,
+      "score": 0.48080266581621217,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 14,
+      "score": 0.67588100199978,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 90,
+      "step": 15,
+      "score": 0.002462382878160335,
+      "evidence": true,
+      "source": "recovery-addition"
+    },
+    {
+      "measure": 91,
+      "step": 0,
+      "score": 0.6066583584790686,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 91,
+      "step": 2,
+      "score": 1.1946316609157963,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 91,
+      "step": 4,
+      "score": 0.8059072883427258,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 91,
+      "step": 6,
+      "score": 0.31044615982552975,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 91,
+      "step": 7,
+      "score": 0.5741241855906922,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 91,
+      "step": 8,
+      "score": 0.6891446477193042,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 91,
+      "step": 10,
+      "score": 0.6589601499309232,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 91,
+      "step": 11,
+      "score": 0.41584057001770486,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 91,
+      "step": 12,
+      "score": 0.6339268294178607,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 91,
+      "step": 14,
+      "score": 0.49854976803347817,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 91,
+      "step": 15,
+      "score": 0.9190734964631713,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 0,
+      "score": 0.9204825194093966,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 1,
+      "score": 0.3625299352747922,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 2,
+      "score": 0.5179465418542365,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 3,
+      "score": 0.33530740111741125,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 4,
+      "score": 0.5214827430000865,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 6,
+      "score": 0.4575921890813844,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 9,
+      "score": 0.4842448218606036,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 10,
+      "score": 0.5347123908571972,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 11,
+      "score": 0.9402878213458674,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 12,
+      "score": 0.9257425064237078,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 14,
+      "score": 0.9059682711361196,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 92,
+      "step": 15,
+      "score": 0.6872408700521935,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 93,
+      "step": 0,
+      "score": 0.8878176087327458,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 93,
+      "step": 1,
+      "score": 0.5855498869107977,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 93,
+      "step": 3,
+      "score": 0.41673251194005595,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 93,
+      "step": 6,
+      "score": 0.665234371312192,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 93,
+      "step": 8,
+      "score": 0.430553150562716,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 93,
+      "step": 10,
+      "score": 0.9157209381662513,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 93,
+      "step": 12,
+      "score": -0.05035537688411316,
+      "evidence": true,
+      "source": "recovery-addition"
+    },
+    {
+      "measure": 93,
+      "step": 14,
+      "score": 0.35929694032484794,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 93,
+      "step": 15,
+      "score": 0.908216187025463,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 94,
+      "step": 0,
+      "score": 0.3407276323845142,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 94,
+      "step": 1,
+      "score": 0.34064648564422567,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 94,
+      "step": 2,
+      "score": 0.4431649138518994,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 94,
+      "step": 8,
+      "score": 0.3815575205430506,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 94,
+      "step": 9,
+      "score": 0.37728612067411404,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 94,
+      "step": 11,
+      "score": 0.8370767028442738,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 94,
+      "step": 12,
+      "score": 0.3433025514671716,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 94,
+      "step": 14,
+      "score": 0.6433352766096464,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 94,
+      "step": 15,
+      "score": 0.412335451455582,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 95,
+      "step": 0,
+      "score": 0.6111077824710671,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 95,
+      "step": 2,
+      "score": 0.7461936135613024,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 95,
+      "step": 8,
+      "score": 0.361102068461494,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 95,
+      "step": 11,
+      "score": 0.7551241393056853,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 95,
+      "step": 12,
+      "score": 0.4798211598299031,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 95,
+      "step": 13,
+      "score": 0.5934226818655112,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 95,
+      "step": 14,
+      "score": 0.8297853243328476,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 95,
+      "step": 15,
+      "score": 0.7290305934996941,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 0,
+      "score": 0.7800390462149344,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 1,
+      "score": 0.5054824561852397,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 2,
+      "score": 0.43289141456625535,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 3,
+      "score": 0.5461927316193078,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 4,
+      "score": 0.7607906941593771,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 5,
+      "score": 0.7459418278181988,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 7,
+      "score": 0.31958013217020786,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 8,
+      "score": 0.5653493072973627,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 9,
+      "score": 0.35573393050718705,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 10,
+      "score": 0.43886744850344905,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 11,
+      "score": 0.4778535158912857,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 12,
+      "score": 0.7992856906601234,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 13,
+      "score": 0.7472270966545708,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 14,
+      "score": 0.6606576868080539,
+      "evidence": true,
+      "source": "base027"
+    },
+    {
+      "measure": 96,
+      "step": 15,
+      "score": 0.36015519128792883,
+      "evidence": true,
+      "source": "base027"
+    }
+  ]
+}

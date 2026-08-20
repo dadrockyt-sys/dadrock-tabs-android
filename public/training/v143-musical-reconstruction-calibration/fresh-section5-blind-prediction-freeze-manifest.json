@@ -1,0 +1,36 @@
+{
+  "name": "V143 Section 5 blind prediction freeze manifest",
+  "measureRange": "81-96",
+  "cache": {
+    "path": "public/training/v143-musical-reconstruction-calibration/fresh-section5-reference-free-cache.json",
+    "sha256": "7f13a0c5586126d428658be4c8a764297cb1741e82897c383e2e376a3770bdad",
+    "referenceFree": true
+  },
+  "baseModel": {
+    "path": "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-model.json",
+    "sha256": "00ab23fc7059137df6dddc92534f23881c0f780fcc1c93b8322ca255e378df24",
+    "threshold": 0.27
+  },
+  "recoveryCandidate": {
+    "path": "public/training/v143-musical-reconstruction-calibration/intro-repetition-recovery-base027-robust-candidate.json",
+    "sha256": "1a4656eb8f103078537576ebdb57707255ab50b356afc6c935e647e15dba33d3",
+    "margin": 0.4,
+    "minimumRecurrenceSupport": 0.75,
+    "phaseModulus": 1
+  },
+  "outputs": {
+    "base": "public/training/v143-musical-reconstruction-calibration/fresh-section5-base027-frozen-events.json",
+    "basePlusRecovery": "public/training/v143-musical-reconstruction-calibration/fresh-section5-base027-recovery-frozen-events.json"
+  },
+  "counts": {
+    "base": 165,
+    "recoveryAdditions": 3,
+    "basePlusRecovery": 168
+  },
+  "professionalReferenceOpened": false,
+  "professionalReferenceUsed": false,
+  "predictionsFrozenBeforeReferenceOpen": true,
+  "modelWeightsModified": false,
+  "recoveryParametersModified": false,
+  "productionModified": false
+}
