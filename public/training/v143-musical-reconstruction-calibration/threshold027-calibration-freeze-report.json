@@ -1,0 +1,41 @@
+{
+  "candidateThreshold": 0.27,
+  "incumbentThreshold": 0.45,
+  "selectionMaterial": "exposed measures 13-64 only",
+  "finalHoldoutMeasures": "65-80",
+  "finalHoldoutOpened": false,
+  "selectionObjective": {
+    "macroF1": 0.6177,
+    "worstSectionF1": 0.5179,
+    "pooledF1": 0.5759,
+    "worstF1Delta": -0.0278
+  },
+  "sections": {
+    "13-16": {
+      "f1": 0.8056,
+      "precision": 0.725,
+      "recall": 0.9062,
+      "f1DeltaVs045": -0.0278
+    },
+    "17-32": {
+      "f1": 0.5179,
+      "precision": 0.4779,
+      "recall": 0.5652,
+      "f1DeltaVs045": 0.063
+    },
+    "33-48": {
+      "f1": 0.5414,
+      "precision": 0.4162,
+      "recall": 0.7742,
+      "f1DeltaVs045": 0.051
+    },
+    "49-64": {
+      "f1": 0.6058,
+      "precision": 0.5448,
+      "recall": 0.6822,
+      "f1DeltaVs045": 0.0958
+    }
+  },
+  "productionModified": false,
+  "originalModelModified": false
+}
