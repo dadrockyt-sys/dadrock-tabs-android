@@ -1,0 +1,68 @@
+name: V143 Contextual Prune Runtime Replay
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-runtime-replay.yml
+      - analyzer/v143_contextual_prune_runtime.py
+      - analyzer/v143_contextual_prune_runtime_replay.py
+      - analyzer/v143_reserve_contextual_prune_predict_partial_tail.py
+      - analyzer/v143_reserve_contextual_prune_predict.py
+      - analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py
+      - public/training/v143-musical-reconstruction-calibration/contextual-prune-frozen-model.json
+      - public/training/v143-musical-reconstruction-calibration/contextual-prune-17-96-frozen-events.json
+      - public/training/v143-musical-reconstruction-calibration/contextual-prune-freeze-manifest.json
+      - public/training/v143-musical-reconstruction-calibration/reserve-97-113-reference-free-cache.json
+      - public/training/v143-musical-reconstruction-calibration/reserve-97-113-base027-frozen-events.json
+      - public/training/v143-musical-reconstruction-calibration/reserve-97-113-contextual-prune-frozen-events.json
+      - public/training/v143-musical-reconstruction-calibration/reserve-97-113-contextual-prune-prediction-manifest.json
+      - public/training/v143-musical-reconstruction-calibration/fresh-verse1-reference-free-cache.json
+      - public/training/v143-musical-reconstruction-calibration/fresh-section2-reference-free-cache.json
+      - public/training/v143-musical-reconstruction-calibration/fresh-section3-reference-free-cache.json
+      - public/training/v143-musical-reconstruction-calibration/fresh-section4-reference-free-cache.json
+      - public/training/v143-musical-reconstruction-calibration/fresh-section5-reference-free-cache.json
+
+permissions:
+  contents: write
+
+jobs:
+  replay:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out sealed branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install runtime dependency
+        run: python -m pip install --disable-pip-version-check numpy
+
+      - name: Compile reference-free runtime
+        run: python -m py_compile analyzer/v143_contextual_prune_runtime.py analyzer/v143_contextual_prune_runtime_replay.py
+
+      - name: Replay frozen development and reserve predictions
+        run: python analyzer/v143_contextual_prune_runtime_replay.py
+
+      - name: Commit replay report
+        shell: bash
+        run: |
+          set -euo pipefail
+          report=public/training/v143-musical-reconstruction-calibration/contextual-prune-runtime-replay-report.json
+          git add -- "$report"
+          if git diff --cached --quiet; then
+            echo "No replay report changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 contextual prune runtime replay"
+          git push origin HEAD:v143-contextual-prune-lobo
