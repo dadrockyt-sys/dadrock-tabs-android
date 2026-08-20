@@ -409,7 +409,7 @@ def capture_reserve_97_113(audio_path: str = str(DEFAULT_AUDIO_PATH)) -> None:
 
     print()
     print("=== V143 RESERVE 97-113 CACHE CAPTURED ===")
-    print("measureRange: 65..80")
+    print("measureRange: 97..113")
     print("rawEventCount:", result.get("rawEventCount"))
     print("candidateClusterCount:", result.get("candidateClusterCount"))
     print("onsetGroupCount:", result.get("onsetGroupCount"))
