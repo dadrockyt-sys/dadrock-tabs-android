@@ -6,7 +6,7 @@
   "smokeExitCode": null,
   "smokePassed": false,
   "logTail": [
-    "commit=46c28a0d46aef4b4490eac30716b002bf8ce2e08",
+    "commit=d8b288e5fae8e99c64eeeb4a69afd614eeb6d257",
     "actor=dadrockyt-sys",
     "Modal GitHub credentials are not configured; ephemeral smoke not attempted."
   ],
