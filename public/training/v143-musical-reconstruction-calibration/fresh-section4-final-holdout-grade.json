@@ -1,0 +1,137 @@
+{
+  "experiment": "V143 final untouched holdout",
+  "measureRange": "65..80",
+  "predictionsFrozenCommit": "570084d6",
+  "incumbentThreshold": 0.45,
+  "candidateThreshold": 0.27,
+  "candidateSelectedBeforeHoldout": true,
+  "referenceOpenedOnlyAfterPredictionFreeze": true,
+  "incumbent": {
+    "predicted": 118,
+    "reference": 51,
+    "tp": 25,
+    "fp": 93,
+    "fn": 26,
+    "precision": 0.211864406779661,
+    "recall": 0.49019607843137253,
+    "f1": 0.2958579881656805
+  },
+  "candidate": {
+    "predicted": 157,
+    "reference": 51,
+    "tp": 37,
+    "fp": 120,
+    "fn": 14,
+    "precision": 0.2356687898089172,
+    "recall": 0.7254901960784313,
+    "f1": 0.3557692307692308
+  },
+  "candidateDeltas": {
+    "f1": 0.059911242603550297,
+    "precision": 0.023804383029256193,
+    "recall": 0.23529411764705882,
+    "tp": 12,
+    "fp": 27,
+    "fn": -12
+  },
+  "fourMeasureBlocks": [
+    {
+      "range": "65-68",
+      "incumbent": {
+        "predicted": 25,
+        "reference": 15,
+        "tp": 6,
+        "fp": 19,
+        "fn": 9,
+        "precision": 0.24,
+        "recall": 0.4,
+        "f1": 0.3
+      },
+      "candidate": {
+        "predicted": 41,
+        "reference": 15,
+        "tp": 10,
+        "fp": 31,
+        "fn": 5,
+        "precision": 0.24390243902439024,
+        "recall": 0.6666666666666666,
+        "f1": 0.35714285714285715
+      },
+      "f1Delta": 0.05714285714285716
+    },
+    {
+      "range": "69-72",
+      "incumbent": {
+        "predicted": 29,
+        "reference": 12,
+        "tp": 5,
+        "fp": 24,
+        "fn": 7,
+        "precision": 0.1724137931034483,
+        "recall": 0.4166666666666667,
+        "f1": 0.2439024390243903
+      },
+      "candidate": {
+        "predicted": 41,
+        "reference": 12,
+        "tp": 10,
+        "fp": 31,
+        "fn": 2,
+        "precision": 0.24390243902439024,
+        "recall": 0.8333333333333334,
+        "f1": 0.37735849056603776
+      },
+      "f1Delta": 0.13345605154164747
+    },
+    {
+      "range": "73-76",
+      "incumbent": {
+        "predicted": 33,
+        "reference": 12,
+        "tp": 7,
+        "fp": 26,
+        "fn": 5,
+        "precision": 0.21212121212121213,
+        "recall": 0.5833333333333334,
+        "f1": 0.3111111111111111
+      },
+      "candidate": {
+        "predicted": 38,
+        "reference": 12,
+        "tp": 9,
+        "fp": 29,
+        "fn": 3,
+        "precision": 0.23684210526315788,
+        "recall": 0.75,
+        "f1": 0.36
+      },
+      "f1Delta": 0.04888888888888887
+    },
+    {
+      "range": "77-80",
+      "incumbent": {
+        "predicted": 31,
+        "reference": 12,
+        "tp": 7,
+        "fp": 24,
+        "fn": 5,
+        "precision": 0.22580645161290322,
+        "recall": 0.5833333333333334,
+        "f1": 0.3255813953488372
+      },
+      "candidate": {
+        "predicted": 37,
+        "reference": 12,
+        "tp": 8,
+        "fp": 29,
+        "fn": 4,
+        "precision": 0.21621621621621623,
+        "recall": 0.6666666666666666,
+        "f1": 0.326530612244898
+      },
+      "f1Delta": 0.0009492168960608116
+    }
+  ],
+  "winnerByF1": "candidate-0.27",
+  "productionModified": false
+}
