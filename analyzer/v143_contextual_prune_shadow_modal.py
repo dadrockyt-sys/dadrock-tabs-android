@@ -29,6 +29,7 @@ CALIBRATION_FILES = MODEL_FILES + (
 SECTION5_CACHE_PATH = CAL / "fresh-section5-reference-free-cache.json"
 
 SHADOW_MODULES = (
+    "v143_ai_tab_gpu_worker",
     "v143_candidate_timing_adapter",
     "v143_reference_free_timing",
     "v143_contextual_prune_reference_free_carrier",
