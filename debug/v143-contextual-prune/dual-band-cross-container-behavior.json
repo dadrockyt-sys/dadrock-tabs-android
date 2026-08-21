@@ -1,0 +1,677 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-contextual-prune-dual-band-cross-container-behavior-action",
+  "modalCredentialsAvailableInGitHubActions": true,
+  "diagnosticAttempted": true,
+  "modalCommandExitCode": 0,
+  "diagnosticResultFound": true,
+  "diagnosticResult": {
+    "schemaVersion": 1,
+    "gate": "v143-contextual-prune-dual-band-cross-container-behavior",
+    "executionStrategy": "three-independent-l4-workers-one-separation-per-worker-two-exact-band-carriers-frozen-runtime",
+    "workerCount": 3,
+    "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "workers": [
+      {
+        "worker": 1,
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0HDBW9YM5ZDW02370PAV75R"
+        },
+        "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "separator": {
+          "deterministicFlag": true,
+          "referenceFree": true,
+          "directFileSha256": "afd1037bc7d62572ac9b99644d13d95b8593e25b4f442aa4a8f85c1111d97c78",
+          "cascadeFileSha256": "44e0fe8874b07bcd4bca7e28f4a512b61214061f6bbf8771426c1b1237ffa201",
+          "directPcm": {
+            "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "cascadePcm": {
+            "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          }
+        },
+        "section2": {
+          "carrier": {
+            "semanticSha256": "f4234f7e8b9167976817be395813283fea0fe6db66758488a466609e53220f00",
+            "exactHistoricalReplay": true,
+            "toleranceHistoricalReplay": true,
+            "firstMismatch": null,
+            "rawEventCount": 21288,
+            "candidateClusterCount": 7794,
+            "rowCount": 804,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10791,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10497
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12187,
+              "o020_f012": 4718,
+              "o025_f015": 2702,
+              "o030_f020": 1681
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3",
+            "decisionSha256": "1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3",
+            "decisionSetExactToHistorical": true,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            }
+          }
+        },
+        "section3": {
+          "carrier": {
+            "semanticSha256": "dfd0ec804ecf7da338c3245eb8c2cd6f7bb1d187962b7081c725d7160360631f",
+            "exactHistoricalReplay": false,
+            "toleranceHistoricalReplay": false,
+            "firstMismatch": {
+              "path": "$.rows",
+              "expectedLength": 802,
+              "actualLength": 804
+            },
+            "rawEventCount": 20836,
+            "candidateClusterCount": 9049,
+            "rowCount": 804,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10625,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10211
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12212,
+              "o020_f012": 4540,
+              "o025_f015": 2542,
+              "o030_f020": 1542
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSetExactToHistorical": true,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.4662265964573295,
+              "at": {
+                "measure": 58,
+                "step": 3
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.4834748304898178,
+              "at": {
+                "measure": 58,
+                "step": 3
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.052588236160807544,
+              "at": {
+                "measure": 51,
+                "step": 3
+              },
+              "keySetExact": true
+            }
+          }
+        },
+        "predictionCache": {
+          "entryCount": 8,
+          "misses": 8,
+          "hits": 8,
+          "expectedUniquePredictions": 8,
+          "singleLoadedBasicPitchModel": true,
+          "storesNoteEventsOnly": true
+        }
+      },
+      {
+        "worker": 2,
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0HDBVTDA9V878P4T48KP6PR"
+        },
+        "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "separator": {
+          "deterministicFlag": true,
+          "referenceFree": true,
+          "directFileSha256": "a19d90e123714f0273f359a8ec51cc1d603806878abe3f244d65ae5d44495f1b",
+          "cascadeFileSha256": "6dac205fcd4bc9217a294cb9cb8279efb3b6a66a5846da90e539b00105c8ae9c",
+          "directPcm": {
+            "sha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "cascadePcm": {
+            "sha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          }
+        },
+        "section2": {
+          "carrier": {
+            "semanticSha256": "ea70ebd020b0ea6417fa2061ad6939534499c2f4b683eb2aea10ea1e0f51f8da",
+            "exactHistoricalReplay": false,
+            "toleranceHistoricalReplay": false,
+            "firstMismatch": {
+              "path": "$.rows[0].onsetTime",
+              "expected": 58.865324018,
+              "actual": 58.864909987
+            },
+            "rawEventCount": 21290,
+            "candidateClusterCount": 7800,
+            "rowCount": 804,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10803,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10487
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12182,
+              "o020_f012": 4725,
+              "o025_f015": 2702,
+              "o030_f020": 1681
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3",
+            "decisionSha256": "f3f5fcd89747bb3b2154355e4597e61976c3e5efc696b3c1703a884ce943d73c",
+            "decisionSetExactToHistorical": false,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.32369019726032533,
+              "at": {
+                "measure": 35,
+                "step": 11
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.2943805430297864,
+              "at": {
+                "measure": 40,
+                "step": 8
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.08757307604606465,
+              "at": {
+                "measure": 35,
+                "step": 11
+              },
+              "keySetExact": false
+            }
+          }
+        },
+        "section3": {
+          "carrier": {
+            "semanticSha256": "dc3b34c83638379d92ff28ab22aaa2c079e3de56cf2d7f393002459f498abc5b",
+            "exactHistoricalReplay": true,
+            "toleranceHistoricalReplay": true,
+            "firstMismatch": null,
+            "rawEventCount": 20830,
+            "candidateClusterCount": 9048,
+            "rowCount": 802,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10625,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10205
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12211,
+              "o020_f012": 4539,
+              "o025_f015": 2540,
+              "o030_f020": 1540
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSetExactToHistorical": true,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 49,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 49,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 49,
+                "step": 0
+              },
+              "keySetExact": true
+            }
+          }
+        },
+        "predictionCache": {
+          "entryCount": 8,
+          "misses": 8,
+          "hits": 8,
+          "expectedUniquePredictions": 8,
+          "singleLoadedBasicPitchModel": true,
+          "storesNoteEventsOnly": true
+        }
+      },
+      {
+        "worker": 3,
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0HDC30X52AZAPE6V4CAJDQR"
+        },
+        "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "separator": {
+          "deterministicFlag": true,
+          "referenceFree": true,
+          "directFileSha256": "afd1037bc7d62572ac9b99644d13d95b8593e25b4f442aa4a8f85c1111d97c78",
+          "cascadeFileSha256": "44e0fe8874b07bcd4bca7e28f4a512b61214061f6bbf8771426c1b1237ffa201",
+          "directPcm": {
+            "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "cascadePcm": {
+            "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          }
+        },
+        "section2": {
+          "carrier": {
+            "semanticSha256": "f4234f7e8b9167976817be395813283fea0fe6db66758488a466609e53220f00",
+            "exactHistoricalReplay": true,
+            "toleranceHistoricalReplay": true,
+            "firstMismatch": null,
+            "rawEventCount": 21288,
+            "candidateClusterCount": 7794,
+            "rowCount": 804,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10791,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10497
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12187,
+              "o020_f012": 4718,
+              "o025_f015": 2702,
+              "o030_f020": 1681
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3",
+            "decisionSha256": "1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3",
+            "decisionSetExactToHistorical": true,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            }
+          }
+        },
+        "section3": {
+          "carrier": {
+            "semanticSha256": "dfd0ec804ecf7da338c3245eb8c2cd6f7bb1d187962b7081c725d7160360631f",
+            "exactHistoricalReplay": false,
+            "toleranceHistoricalReplay": false,
+            "firstMismatch": {
+              "path": "$.rows",
+              "expectedLength": 802,
+              "actualLength": 804
+            },
+            "rawEventCount": 20836,
+            "candidateClusterCount": 9049,
+            "rowCount": 804,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10625,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10211
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12212,
+              "o020_f012": 4540,
+              "o025_f015": 2542,
+              "o030_f020": 1542
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSetExactToHistorical": true,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.4662265964573295,
+              "at": {
+                "measure": 58,
+                "step": 3
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.4834748304898178,
+              "at": {
+                "measure": 58,
+                "step": 3
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.052588236160807544,
+              "at": {
+                "measure": 51,
+                "step": 3
+              },
+              "keySetExact": true
+            }
+          }
+        },
+        "predictionCache": {
+          "entryCount": 8,
+          "misses": 8,
+          "hits": 8,
+          "expectedUniquePredictions": 8,
+          "singleLoadedBasicPitchModel": true,
+          "storesNoteEventsOnly": true
+        }
+      }
+    ],
+    "separatorRepeatability": {
+      "directStemPcmExactAcrossWorkers": false,
+      "cascadeStemPcmExactAcrossWorkers": false
+    },
+    "section2": {
+      "carrierSemanticExactAcrossWorkers": false,
+      "downstreamDecisionExactAcrossWorkers": false,
+      "historicalCarrierExactReplayCount": 2,
+      "historicalDecisionExactCount": 2
+    },
+    "section3": {
+      "carrierSemanticExactAcrossWorkers": false,
+      "downstreamDecisionExactAcrossWorkers": true,
+      "historicalCarrierExactReplayCount": 1,
+      "historicalDecisionExactCount": 3
+    },
+    "allHistoricalDecisionsExact": false,
+    "invariants": {
+      "professionalReferenceOpened": false,
+      "runtimeLabelsRequired": false,
+      "frozenModelModified": false,
+      "frozenPredictionsModified": false,
+      "thresholdsModified": false,
+      "liveEndpointDeployedOrModified": false,
+      "productionModified": false
+    }
+  },
+  "logTail": [
+    "          \"candidateClusterCount\": 9048,",
+    "          \"rowCount\": 802,",
+    "          \"stemEventCounts\": {",
+    "            \"stem0:direct-demucs6s-guitar.wav\": 10625,",
+    "            \"stem1:bsroformer-demucs6s-guitar.wav\": 10205",
+    "          },",
+    "          \"sweepEventCounts\": {",
+    "            \"o015_f010\": 12211,",
+    "            \"o020_f012\": 4539,",
+    "            \"o025_f015\": 2540,",
+    "            \"o030_f020\": 1540",
+    "          }",
+    "        },",
+    "        \"downstream\": {",
+    "          \"historicalDecisionSha256\": \"806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc\",",
+    "          \"decisionSha256\": \"806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc\",",
+    "          \"decisionSetExactToHistorical\": true,",
+    "          \"baseScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.0,",
+    "            \"at\": {",
+    "              \"measure\": 49,",
+    "              \"step\": 0",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"sequenceScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.0,",
+    "            \"at\": {",
+    "              \"measure\": 49,",
+    "              \"step\": 0",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"keepProbabilityDelta\": {",
+    "            \"maxAbsDelta\": 0.0,",
+    "            \"at\": {",
+    "              \"measure\": 49,",
+    "              \"step\": 0",
+    "            },",
+    "            \"keySetExact\": true",
+    "          }",
+    "        }",
+    "      },",
+    "      \"predictionCache\": {",
+    "        \"entryCount\": 8,",
+    "        \"misses\": 8,",
+    "        \"hits\": 8,",
+    "        \"expectedUniquePredictions\": 8,",
+    "        \"singleLoadedBasicPitchModel\": true,",
+    "        \"storesNoteEventsOnly\": true",
+    "      }",
+    "    },",
+    "    {",
+    "      \"worker\": 3,",
+    "      \"runtimeIdentity\": {",
+    "        \"modalTaskId\": \"ta-01M0HDC30X52AZAPE6V4CAJDQR\"",
+    "      },",
+    "      \"normalizedSha256\": \"ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f\",",
+    "      \"separator\": {",
+    "        \"deterministicFlag\": true,",
+    "        \"referenceFree\": true,",
+    "        \"directFileSha256\": \"afd1037bc7d62572ac9b99644d13d95b8593e25b4f442aa4a8f85c1111d97c78\",",
+    "        \"cascadeFileSha256\": \"44e0fe8874b07bcd4bca7e28f4a512b61214061f6bbf8771426c1b1237ffa201\",",
+    "        \"directPcm\": {",
+    "          \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
+    "          \"sampleRate\": 44100,",
+    "          \"frames\": 9324544,",
+    "          \"channels\": 2",
+    "        },",
+    "        \"cascadePcm\": {",
+    "          \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "          \"sampleRate\": 44100,",
+    "          \"frames\": 9324544,",
+    "          \"channels\": 2",
+    "        }",
+    "      },",
+    "      \"section2\": {",
+    "        \"carrier\": {",
+    "          \"semanticSha256\": \"f4234f7e8b9167976817be395813283fea0fe6db66758488a466609e53220f00\",",
+    "          \"exactHistoricalReplay\": true,",
+    "          \"toleranceHistoricalReplay\": true,",
+    "          \"firstMismatch\": null,",
+    "          \"rawEventCount\": 21288,",
+    "          \"candidateClusterCount\": 7794,",
+    "          \"rowCount\": 804,",
+    "          \"stemEventCounts\": {",
+    "            \"stem0:direct-demucs6s-guitar.wav\": 10791,",
+    "            \"stem1:bsroformer-demucs6s-guitar.wav\": 10497",
+    "          },",
+    "          \"sweepEventCounts\": {",
+    "            \"o015_f010\": 12187,",
+    "            \"o020_f012\": 4718,",
+    "            \"o025_f015\": 2702,",
+    "            \"o030_f020\": 1681",
+    "          }",
+    "        },",
+    "        \"downstream\": {",
+    "          \"historicalDecisionSha256\": \"1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3\",",
+    "          \"decisionSha256\": \"1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3\",",
+    "          \"decisionSetExactToHistorical\": true,",
+    "          \"baseScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.0,",
+    "            \"at\": {",
+    "              \"measure\": 33,",
+    "              \"step\": 0",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"sequenceScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.0,",
+    "            \"at\": {",
+    "              \"measure\": 33,",
+    "              \"step\": 0",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"keepProbabilityDelta\": {",
+    "            \"maxAbsDelta\": 0.0,",
+    "            \"at\": {",
+    "              \"measure\": 33,",
+    "              \"step\": 0",
+    "            },",
+    "            \"keySetExact\": true",
+    "          }",
+    "        }",
+    "      },",
+    "      \"section3\": {",
+    "        \"carrier\": {",
+    "          \"semanticSha256\": \"dfd0ec804ecf7da338c3245eb8c2cd6f7bb1d187962b7081c725d7160360631f\",",
+    "          \"exactHistoricalReplay\": false,",
+    "          \"toleranceHistoricalReplay\": false,",
+    "          \"firstMismatch\": {",
+    "            \"path\": \"$.rows\",",
+    "            \"expectedLength\": 802,",
+    "            \"actualLength\": 804",
+    "          },",
+    "          \"rawEventCount\": 20836,",
+    "          \"candidateClusterCount\": 9049,",
+    "          \"rowCount\": 804,",
+    "          \"stemEventCounts\": {",
+    "            \"stem0:direct-demucs6s-guitar.wav\": 10625,",
+    "            \"stem1:bsroformer-demucs6s-guitar.wav\": 10211",
+    "          },",
+    "          \"sweepEventCounts\": {",
+    "            \"o015_f010\": 12212,",
+    "            \"o020_f012\": 4540,",
+    "            \"o025_f015\": 2542,",
+    "            \"o030_f020\": 1542",
+    "          }",
+    "        },",
+    "        \"downstream\": {",
+    "          \"historicalDecisionSha256\": \"806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc\",",
+    "          \"decisionSha256\": \"806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc\",",
+    "          \"decisionSetExactToHistorical\": true,",
+    "          \"baseScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.4662265964573295,",
+    "            \"at\": {",
+    "              \"measure\": 58,",
+    "              \"step\": 3",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"sequenceScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.4834748304898178,",
+    "            \"at\": {",
+    "              \"measure\": 58,",
+    "              \"step\": 3",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"keepProbabilityDelta\": {",
+    "            \"maxAbsDelta\": 0.052588236160807544,",
+    "            \"at\": {",
+    "              \"measure\": 51,",
+    "              \"step\": 3",
+    "            },",
+    "            \"keySetExact\": true",
+    "          }",
+    "        }",
+    "      },",
+    "      \"predictionCache\": {",
+    "        \"entryCount\": 8,",
+    "        \"misses\": 8,",
+    "        \"hits\": 8,",
+    "        \"expectedUniquePredictions\": 8,",
+    "        \"singleLoadedBasicPitchModel\": true,",
+    "        \"storesNoteEventsOnly\": true",
+    "      }",
+    "    }",
+    "  ],",
+    "  \"separatorRepeatability\": {",
+    "    \"directStemPcmExactAcrossWorkers\": false,",
+    "    \"cascadeStemPcmExactAcrossWorkers\": false",
+    "  },",
+    "  \"section2\": {",
+    "    \"carrierSemanticExactAcrossWorkers\": false,",
+    "    \"downstreamDecisionExactAcrossWorkers\": false,",
+    "    \"historicalCarrierExactReplayCount\": 2,",
+    "    \"historicalDecisionExactCount\": 2",
+    "  },",
+    "  \"section3\": {",
+    "    \"carrierSemanticExactAcrossWorkers\": false,",
+    "    \"downstreamDecisionExactAcrossWorkers\": true,",
+    "    \"historicalCarrierExactReplayCount\": 1,",
+    "    \"historicalDecisionExactCount\": 3",
+    "  },",
+    "  \"allHistoricalDecisionsExact\": false,",
+    "  \"invariants\": {",
+    "    \"professionalReferenceOpened\": false,",
+    "    \"runtimeLabelsRequired\": false,",
+    "    \"frozenModelModified\": false,",
+    "    \"frozenPredictionsModified\": false,",
+    "    \"thresholdsModified\": false,",
+    "    \"liveEndpointDeployedOrModified\": false,",
+    "    \"productionModified\": false",
+    "  }",
+    "}",
+    "Stopping app - local entrypoint completed.",
+    "\u2713 App completed. View run at ",
+    "https://modal.com/apps/dadrockyt/main/ap-gdlVciVw1fFvASiBre11Ex"
+  ],
+  "productionModified": false
+}
