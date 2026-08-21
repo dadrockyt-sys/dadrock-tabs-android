@@ -35,6 +35,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Rerun marker: startup PYTHONHASHSEED=143 separator validation passed.
           test -s public/gomywayfullaitest.m4a
           test -s public/training/v143-musical-reconstruction-calibration/contextual-prune-17-96-frozen-events.json
           test -s public/training/v143-musical-reconstruction-calibration/contextual-prune-frozen-model.json
