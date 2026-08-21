@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "artifact": "v143-contextual-prune-measure-17-32-evidence-gap-resolution",
+  "date": "2026-08-21",
+  "status": "passed",
+  "claimScope": "research-only historical/reference-free provenance closure for measures 17-32",
+  "supersedes": {
+    "path": "debug/v143-contextual-prune/measure-17-32-evidence-gap.json",
+    "checkpointPath": "analyzer/V143_CONTEXTUAL_PRUNE_17_32_EVIDENCE_GAP_CHECKPOINT.md",
+    "reason": "The original evidence gap was valid for the then-inspected branch state. It is superseded only because genuinely new authoritative historical evidence was recovered from the old calibration branch/commit snapshot, exactly as the checkpoint resume directive allowed."
+  },
+  "historicalEvidence": {
+    "archiveCommit": "b25820ecde37dc87447a9366894bd8e4f7f21792",
+    "measureBoundary": {
+      "start": 17,
+      "end": 32,
+      "source": "analyzer/v143_fresh_verse1_reference_free_capture.py"
+    },
+    "generatorBlobSha": "c8ea8eca33819fb506f06105f87075dadd133214",
+    "generatorHistoricalAndCurrentBlobExact": true,
+    "carrierLineage": [
+      "direct Demucs6s Guitar",
+      "BS-RoFormer Instrumental -> Demucs6s Guitar"
+    ],
+    "deterministicSeparator": {
+      "demucsShifts": 1,
+      "demucsOverlap": 0.1,
+      "demucsSegmentSize": 6,
+      "deterministicSeed": 143
+    },
+    "historicalVerse1CacheSha256": "fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15",
+    "regeneratedVerse1CacheExactSha256Match": true
+  },
+  "frozenScoringReplay": {
+    "historicalScoringCoreBlobSha": "ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe",
+    "historicalAndCurrentScoringCoreBlobExact": true,
+    "historicalTargetSequenceReplayExact": true,
+    "historicalTargetSequenceReplayEventCount": 1051,
+    "sealedContextualRuntimeBaseEventCount": 765,
+    "sealedContextualRuntimeCandidateEventCount": 651,
+    "sealedContextualRuntimeDiscreteEventKeysExact": true,
+    "baseSequenceEvidenceExactForEveryFrozenCandidateEvent": true,
+    "baseThreshold": 0.27,
+    "pruneFraction": 0.15,
+    "thresholdsModified": false,
+    "modelModified": false,
+    "predictedEventSetModified": false,
+    "comparisonToleranceFallbackUsed": false
+  },
+  "floatingPointReproducibilityDisclosure": {
+    "fullFrozenJsonByteExact": false,
+    "decisionImpact": false,
+    "keepProbabilityFieldsCompared": 651,
+    "keepProbabilityFieldsBitExact": 649,
+    "keepProbabilityMismatchCount": 2,
+    "maxUlpDistance": 3,
+    "mismatches": [
+      {
+        "measure": 96,
+        "quantizedStep": 14,
+        "frozen": 0.10314110104888881,
+        "replayed": 0.10314110104888885,
+        "ulpDistance": 3
+      },
+      {
+        "measure": 96,
+        "quantizedStep": 15,
+        "frozen": 0.2609129927730226,
+        "replayed": 0.26091299277302255,
+        "ulpDistance": 1
+      }
+    ],
+    "interpretation": "These are platform/arithmetic bit-pattern differences in retained probability metadata only. No tolerance was introduced or used to make the gate pass. The selected event set, base scores, sequence scores, sequence-evidence flags, model parameters, and frozen scoring semantics replay exactly. This resolution does not claim byte-identical JSON serialization."
+  },
+  "supportingArtifacts": [
+    "debug/v143-contextual-prune/measure-17-32-historical-replay.json",
+    "debug/v143-contextual-prune/measure-17-32-historical-replay-v2.json",
+    "debug/v143-contextual-prune/measure-17-32-frozen-runtime-closure.json",
+    "debug/v143-contextual-prune/contextual-numeric-repro-diagnostic.json"
+  ],
+  "resolutionRule": {
+    "authoritativeHistoricalBoundaryRecovered": true,
+    "authoritativeHistoricalCarrierLineageRecovered": true,
+    "historicalCarrierRegeneratedByteIdentically": true,
+    "unchangedFrozenScoringSemanticsReplayed": true,
+    "referenceFreeConstraintsPreserved": true,
+    "satisfied": true
+  },
+  "invariants": {
+    "professionalReferenceOpenedByResolutionReplay": false,
+    "runtimeLabelsRequired": false,
+    "genericNewCarrierAcceptedAsHistoricalProof": false,
+    "thresholdsModified": false,
+    "comparisonTolerancesWeakened": false,
+    "frozenModelModified": false,
+    "frozenPredictedEventSetModified": false,
+    "liveEndpointDeployedOrModified": false,
+    "productionModified": false,
+    "productionPromotionAllowed": false
+  }
+}
