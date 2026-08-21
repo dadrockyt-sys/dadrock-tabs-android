@@ -147,10 +147,9 @@ def _first_mismatch(expected: Any, actual: Any, path: str = "$") -> dict[str, An
 
 
 def _normalize_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    # Historical captures restart onsetGroupId within each 16-measure band while
-    # a combined carrier increments it continuously. The ID is only a stable
-    # local ordering key; it is not analyzer evidence. Remove it for semantic
-    # carrier comparison while retaining every feature consumed by scoring.
+    # Historical captures restart onsetGroupId inside each 16-measure cache,
+    # whereas one combined carrier increments it continuously. The ID is an
+    # ordering artifact only; none of the frozen scorers consume it as evidence.
     out: list[dict[str, Any]] = []
     for raw in rows:
         row = dict(raw)
@@ -159,7 +158,17 @@ def _normalize_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return out
 
 
-def _expected_payload(cache: dict[str, Any], start: int, end: int) -> dict[str, Any]:
+def _timing_payload(timing: Any) -> dict[str, Any]:
+    return {
+        "tempoBpm": float(timing.tempo_bpm),
+        "firstBeatInMeasure": int(timing.first_beat_in_measure),
+        "downbeatIndexMod4": int(timing.downbeat_index_mod4),
+        "beatConfidence": float(timing.beat_confidence),
+        "barConfidence": float(timing.bar_confidence),
+    }
+
+
+def _expected_semantics(cache: dict[str, Any], start: int, end: int) -> dict[str, Any]:
     if cache.get("referenceFree") is not True:
         raise RuntimeError("Historical cache lost referenceFree=true")
     if cache.get("professionalReferenceUsedByAnalyzer") is not False:
@@ -172,12 +181,6 @@ def _expected_payload(cache: dict[str, Any], start: int, end: int) -> dict[str, 
         "timing": dict(cache.get("timing") or {}),
         "grid": [dict(row) for row in cache.get("grid", []) or []],
         "rows": _normalize_rows([dict(row) for row in cache.get("rows", []) or []]),
-        "rawEventCount": int(cache.get("rawEventCount", -1)),
-        "candidateClusterCount": int(cache.get("candidateClusterCount", -1)),
-        "onsetGroupCount": int(cache.get("onsetGroupCount", -1)),
-        "sweepEventCounts": dict(cache.get("sweepEventCounts") or {}),
-        "stemEventCounts": dict(cache.get("stemEventCounts") or {}),
-        "candidateStemCount": int(cache.get("candidateStemCount", -1)),
         "targetSampleRate": int(cache.get("targetSampleRate", -1)),
         "hopLength": int(cache.get("hopLength", -1)),
         "binsPerOctave": int(cache.get("binsPerOctave", -1)),
@@ -190,23 +193,21 @@ def _expected_payload(cache: dict[str, Any], start: int, end: int) -> dict[str, 
     }
 
 
-def _generated_payload(carrier: Any) -> dict[str, Any]:
+def _generated_semantics(carrier: Any, start: int, end: int) -> dict[str, Any]:
+    grid = [
+        dict(row)
+        for row in carrier.grid_rows
+        if start <= int(row.get("measure") or 0) <= end
+    ]
+    rows = [
+        dict(row)
+        for row in carrier.rows
+        if start <= int(row.get("measure") or 0) <= end
+    ]
     return {
-        "timing": {
-            "tempoBpm": float(carrier.timing.tempo_bpm),
-            "firstBeatInMeasure": int(carrier.timing.first_beat_in_measure),
-            "downbeatIndexMod4": int(carrier.timing.downbeat_index_mod4),
-            "beatConfidence": float(carrier.timing.beat_confidence),
-            "barConfidence": float(carrier.timing.bar_confidence),
-        },
-        "grid": [dict(row) for row in carrier.grid_rows],
-        "rows": _normalize_rows([dict(row) for row in carrier.rows]),
-        "rawEventCount": int(carrier.raw_event_count),
-        "candidateClusterCount": int(carrier.candidate_cluster_count),
-        "onsetGroupCount": len(carrier.rows),
-        "sweepEventCounts": dict(carrier.sweep_event_counts),
-        "stemEventCounts": dict(carrier.stem_event_counts),
-        "candidateStemCount": len(carrier.stem_event_counts),
+        "timing": _timing_payload(carrier.timing),
+        "grid": grid,
+        "rows": _normalize_rows(rows),
         "targetSampleRate": 22050,
         "hopLength": 128,
         "binsPerOctave": 36,
@@ -220,12 +221,15 @@ def _generated_payload(carrier: Any) -> dict[str, Any]:
 
 
 def _band_result(label: str, cache: dict[str, Any], carrier: Any, start: int, end: int) -> dict[str, Any]:
-    expected = _expected_payload(cache, start, end)
-    generated = _generated_payload(carrier)
+    expected = _expected_semantics(cache, start, end)
+    generated = _generated_semantics(carrier, start, end)
     mismatch = _first_mismatch(expected, generated)
+    expected_rows = expected["rows"]
+    generated_rows = generated["rows"]
     return {
         "label": label,
         "measures": f"{start}-{end}",
+        "comparisonScope": "scoring-relevant-carrier-semantics",
         "expectedSemanticSha256": _canonical_sha256(expected),
         "generatedSemanticSha256": _canonical_sha256(generated),
         "exactSemanticReplayPassed": expected == generated,
@@ -233,27 +237,30 @@ def _band_result(label: str, cache: dict[str, Any], carrier: Any, start: int, en
         "firstMismatch": mismatch,
         "expected": {
             "gridCount": len(expected["grid"]),
-            "rowCount": len(expected["rows"]),
-            "rawEventCount": expected["rawEventCount"],
-            "candidateClusterCount": expected["candidateClusterCount"],
-            "onsetGroupCount": expected["onsetGroupCount"],
-            "sweepEventCounts": expected["sweepEventCounts"],
-            "stemEventCounts": expected["stemEventCounts"],
+            "rowCount": len(expected_rows),
+            "rawEventCount": int(cache.get("rawEventCount", -1)),
+            "candidateClusterCount": int(cache.get("candidateClusterCount", -1)),
+            "onsetGroupCount": int(cache.get("onsetGroupCount", -1)),
+            "sweepEventCounts": dict(cache.get("sweepEventCounts") or {}),
+            "stemEventCounts": dict(cache.get("stemEventCounts") or {}),
         },
         "generated": {
             "gridCount": len(generated["grid"]),
-            "rowCount": len(generated["rows"]),
-            "rawEventCount": generated["rawEventCount"],
-            "candidateClusterCount": generated["candidateClusterCount"],
-            "onsetGroupCount": generated["onsetGroupCount"],
-            "sweepEventCounts": generated["sweepEventCounts"],
-            "stemEventCounts": generated["stemEventCounts"],
+            "rowCount": len(generated_rows),
+            "onsetGroupCount": len(generated_rows),
         },
     }
 
 
 @app.function(image=diagnostic_image, gpu="L4", timeout=1800, memory=12288)
 def diagnose_sections_2_and_3(source_audio: bytes, suffix: str = ".audio") -> dict[str, Any]:
+    """Replay measures 33-64 once, then compare the two historical band slices.
+
+    The earlier diagnostic rebuilt the full-track Basic Pitch sweeps twice, once
+    per band. That duplicated the expensive inference and could exceed the Modal
+    timeout. This version performs one carrier build and slices only the
+    scoring-relevant rows/grid for comparison. It remains fully label-blind.
+    """
     if not source_audio:
         raise ValueError("source_audio is empty")
     if len(source_audio) > 50 * 1024 * 1024:
@@ -274,25 +281,36 @@ def diagnose_sections_2_and_3(source_audio: bytes, suffix: str = ".audio") -> di
         _research_normalize_audio(source, normalized)
         stems, direct, cascade = _build_shadow_stems(normalized, root / "stems")
 
-        carrier2 = build_contextual_prune_reference_free_carrier(
-            normalized, (direct, cascade), measure_start=33, measure_end=48
-        )
-        carrier3 = build_contextual_prune_reference_free_carrier(
-            normalized, (direct, cascade), measure_start=49, measure_end=64
+        combined = build_contextual_prune_reference_free_carrier(
+            normalized,
+            (direct, cascade),
+            measure_start=33,
+            measure_end=64,
         )
 
-        result2 = _band_result("section2", section2, carrier2, 33, 48)
-        result3 = _band_result("section3", section3, carrier3, 49, 64)
+        result2 = _band_result("section2", section2, combined, 33, 48)
+        result3 = _band_result("section3", section3, combined, 49, 64)
 
         return {
-            "schemaVersion": 1,
+            "schemaVersion": 2,
             "gate": "v143-contextual-prune-historical-band-carrier-diagnostic",
+            "executionStrategy": "single-carrier-33-64-sliced-by-historical-band",
             "sourceSha256": hashlib.sha256(source_audio).hexdigest(),
             "researchNormalizedSha256": _sha256(normalized),
             "section2CacheSha256": _sha256(SECTION2_CACHE),
             "section3CacheSha256": _sha256(SECTION3_CACHE),
             "section2": result2,
             "section3": result3,
+            "combinedCarrier": {
+                "measureStart": int(combined.measure_start),
+                "measureEnd": int(combined.measure_end),
+                "gridCount": len(combined.grid_rows),
+                "rowCount": len(combined.rows),
+                "rawEventCount": int(combined.raw_event_count),
+                "candidateClusterCount": int(combined.candidate_cluster_count),
+                "sweepEventCounts": dict(combined.sweep_event_counts),
+                "stemEventCounts": dict(combined.stem_event_counts),
+            },
             "allHistoricalBandsReplayedWithinTolerance": (
                 result2["toleranceSemanticReplayPassed"] is True
                 and result3["toleranceSemanticReplayPassed"] is True
@@ -306,6 +324,8 @@ def diagnose_sections_2_and_3(source_audio: bytes, suffix: str = ".audio") -> di
             "invariants": {
                 "professionalReferenceOpened": False,
                 "runtimeLabelsRequired": False,
+                "frozenModelModified": False,
+                "frozenPredictionsModified": False,
                 "liveEndpointDeployedOrModified": False,
                 "productionModified": False,
             },
