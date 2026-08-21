@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "artifact": "v143-contextual-prune-research-evidence-closure-17-113",
+  "date": "2026-08-21",
+  "status": "passed",
+  "claimScope": "research-only historical/reference-free evidence closure for measures 17-113",
+  "sections": [
+    {
+      "measures": "17-32",
+      "status": "passed",
+      "basis": "New authoritative historical branch evidence recovered the original Verse1 boundary and carrier lineage; regenerated historical cache SHA-256 is exact; unchanged frozen scoring semantics reproduce the exact target sequence/event decisions without tolerance fallback.",
+      "resolutionArtifact": "debug/v143-contextual-prune/measure-17-32-evidence-gap-resolution.json"
+    },
+    {
+      "measures": "33-113",
+      "status": "passed",
+      "basis": "Previously closed strict reference-free replay/freeze gates for 33-96 plus one-shot reserve gate for 97-113.",
+      "priorClosureArtifact": "debug/v143-contextual-prune/research-evidence-closure.json"
+    }
+  ],
+  "historical17To32": {
+    "archiveCommit": "b25820ecde37dc87447a9366894bd8e4f7f21792",
+    "historicalGeneratorBlobSha": "c8ea8eca33819fb506f06105f87075dadd133214",
+    "historicalScoringCoreBlobSha": "ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe",
+    "historicalVerse1CacheSha256": "fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15",
+    "regeneratedCacheExact": true,
+    "targetSequenceReplayExact": true,
+    "sealedContextualDiscreteEventsExact": true,
+    "baseSequenceEvidenceExact": true,
+    "probabilityMetadataBitExactCount": 649,
+    "probabilityMetadataFieldCount": 651,
+    "probabilityMetadataMaxUlpDrift": 3,
+    "probabilityMetadataDecisionImpact": false,
+    "byteIdenticalFrozenJsonClaimed": false,
+    "toleranceFallbackUsed": false
+  },
+  "frozenParameters": {
+    "baseThreshold": 0.27,
+    "pruneFraction": 0.15,
+    "modified": false
+  },
+  "referenceFree": {
+    "professionalReferenceOpenedByReplay": false,
+    "runtimeLabelsRequired": false
+  },
+  "claimBoundaries": {
+    "measures17To113ResearchProvenanceClosed": true,
+    "measures1To16IncludedInThisClosure": false,
+    "productionPromotionReady": false,
+    "reasonProductionStillDisabled": "Research provenance closure does not supersede the existing contextual-prune promotion checkpoint or its requirement for a separate shadow/canary integration path."
+  },
+  "nextAuthorizedResearchStep": "Construct a continuous research-only 1-113 execution/replay harness that preserves the frozen historical roles and semantics of measures 1-16, joins them to the now-closed 17-113 chain, and explicitly validates every section handoff without retraining or production modification.",
+  "invariants": {
+    "thresholdsModified": false,
+    "comparisonTolerancesWeakened": false,
+    "frozenModelModified": false,
+    "frozenPredictedEventSetModified": false,
+    "liveEndpointDeployedOrModified": false,
+    "productionModified": false,
+    "productionPromotionAllowed": false
+  }
+}
