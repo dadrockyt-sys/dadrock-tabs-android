@@ -4,7 +4,9 @@ import concurrent.futures
 import hashlib
 import json
 import os
+import subprocess
 import tempfile
+from importlib import metadata as importlib_metadata
 from pathlib import Path
 from typing import Any
 
@@ -37,6 +39,79 @@ worker_image = diagnostic_image.add_local_python_source(
 )
 
 WORKER_COUNT = 3
+
+
+def _package_version(name: str) -> str | None:
+    try:
+        return importlib_metadata.version(name)
+    except importlib_metadata.PackageNotFoundError:
+        return None
+
+
+def _post_inference_runtime_fingerprint() -> dict[str, Any]:
+    """Capture read-only runtime identity after all scoring-relevant work is done.
+
+    This deliberately runs after separator, Basic Pitch, carrier construction, and
+    frozen contextual-prune scoring so the fingerprint cannot perturb the path
+    being measured.
+    """
+    import torch
+
+    gpu: dict[str, Any] = {
+        "available": bool(torch.cuda.is_available()),
+        "deviceCount": int(torch.cuda.device_count()),
+    }
+    if torch.cuda.is_available():
+        index = int(torch.cuda.current_device())
+        properties = torch.cuda.get_device_properties(index)
+        gpu.update(
+            {
+                "currentDevice": index,
+                "name": str(properties.name),
+                "computeCapability": [int(properties.major), int(properties.minor)],
+                "totalMemory": int(properties.total_memory),
+            }
+        )
+
+    nvidia_smi: dict[str, Any] | None = None
+    try:
+        completed = subprocess.run(
+            [
+                "nvidia-smi",
+                "--query-gpu=uuid,name,driver_version,pci.bus_id",
+                "--format=csv,noheader,nounits",
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=10,
+        )
+        nvidia_smi = {
+            "returnCode": int(completed.returncode),
+            "rows": [line.strip() for line in completed.stdout.splitlines() if line.strip()],
+            "stderrTail": (completed.stderr or "")[-1000:],
+        }
+    except Exception as exc:
+        nvidia_smi = {"error": f"{type(exc).__name__}: {exc}"}
+
+    return {
+        "packages": {
+            "torch": str(torch.__version__),
+            "audioSeparator": _package_version("audio-separator"),
+            "basicPitch": _package_version("basic-pitch"),
+        },
+        "cuda": {
+            "torchCudaVersion": str(torch.version.cuda) if torch.version.cuda is not None else None,
+            "cudnnVersion": int(torch.backends.cudnn.version()) if torch.backends.cudnn.version() is not None else None,
+            "deterministicAlgorithmsEnabled": bool(torch.are_deterministic_algorithms_enabled()),
+            "cudnnDeterministic": bool(torch.backends.cudnn.deterministic),
+            "cudnnBenchmark": bool(torch.backends.cudnn.benchmark),
+            "cudaMatmulAllowTf32": bool(torch.backends.cuda.matmul.allow_tf32),
+            "cudnnAllowTf32": bool(torch.backends.cudnn.allow_tf32),
+        },
+        "gpu": gpu,
+        "nvidiaSmi": nvidia_smi,
+    }
 
 
 @app.function(image=worker_image, gpu="L4", timeout=1800, memory=12288)
@@ -111,12 +186,17 @@ def rebuild_worker(source_audio: bytes, suffix: str, worker_index: int) -> dict[
         )
         fresh_decision = _decision_payload(fresh_runtime)
 
+        # Read runtime identity only after all scoring-relevant computation has
+        # completed. This metadata is diagnostic evidence, never an input.
+        runtime_fingerprint = _post_inference_runtime_fingerprint()
+
         return {
             "worker": int(worker_index),
             "runtimeIdentity": {
                 "hostname": os.environ.get("HOSTNAME"),
                 "modalTaskId": os.environ.get("MODAL_TASK_ID"),
                 "modalContainerId": os.environ.get("MODAL_CONTAINER_ID"),
+                "fingerprint": runtime_fingerprint,
             },
             "normalizedSha256": _sha256(normalized),
             "separator": {
@@ -173,9 +253,9 @@ def diagnose(audio_path: str = "public/gomywayfullaitest.m4a") -> None:
     decision_hashes = [row["downstream"]["decisionSha256"] for row in workers]
 
     result = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "gate": "v143-contextual-prune-section3-cross-container-repeatability",
-        "executionStrategy": "three-concurrent-independent-l4-workers-each-full-separator-basic-pitch-carrier-runtime",
+        "executionStrategy": "three-concurrent-independent-l4-workers-each-full-separator-basic-pitch-carrier-runtime-with-post-inference-runtime-fingerprint",
         "workerCount": WORKER_COUNT,
         "sourceSha256": hashlib.sha256(payload).hexdigest(),
         "workers": workers,
@@ -188,6 +268,8 @@ def diagnose(audio_path: str = "public/gomywayfullaitest.m4a") -> None:
             "historicalDecisionExactCount": sum(row["downstream"]["decisionSetExactToHistorical"] is True for row in workers),
         },
         "invariants": {
+            "runtimeFingerprintCollectedPostInference": True,
+            "runtimeFingerprintUsedAsInput": False,
             "professionalReferenceOpened": False,
             "runtimeLabelsRequired": False,
             "frozenModelModified": False,
