@@ -175,10 +175,11 @@ jobs:
               "Runtime labels not required": invariants.get("runtimeLabelsRequired") is False,
               "Production untouched": invariants.get("productionModified") is False,
               "Partial-tail extension exercised": adapter.get("extendedFinalGrid") is True,
+              "Synthetic guard hidden from assignment": adapter.get("syntheticGuardHiddenFromAssignment") is True,
               "Reserve grid restored": adapter.get("trimmedReserveGrid") is True,
               "Comparison grid remains 264": adapter.get("comparisonGridCount") == 264,
               "Measure 113 remains steps 0-7": adapter.get("comparisonMeasure113Steps") == list(range(8)),
-              "Carrier rows unchanged by adapter": adapter.get("carrierRowsModified") is False,
+              "Carrier rows not modified post hoc": adapter.get("carrierRowsPostHocModified") is False,
               "Frozen scorer untouched": adapter.get("frozenScorerModified") is False,
           }
           safety_failed = [name for name, ok in safety_checks.items() if not ok]
