@@ -1,0 +1,284 @@
+name: V143 Contextual Prune 17-96 End-to-End Modal Replay
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-17-96-end-to-end-modal-replay.yml
+
+permissions:
+  contents: write
+
+jobs:
+  end-to-end-shadow-replay:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify sealed replay inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s public/gomywayfullaitest.m4a
+          test -s public/training/v143-musical-reconstruction-calibration/contextual-prune-17-96-frozen-events.json
+          test -s public/training/v143-musical-reconstruction-calibration/contextual-prune-frozen-model.json
+          test -s analyzer/v143_contextual_prune_shadow_modal.py
+          echo "17-96 end-to-end replay inputs are present."
+
+      - name: Run isolated 17-96 audio-to-selector replay on Modal
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=debug/v143-contextual-prune/end-to-end-17-96-modal-replay.log
+          diagnostic=debug/v143-contextual-prune/end-to-end-17-96-modal-replay.json
+
+          : > "$log"
+          echo "commit=$GITHUB_SHA" >> "$log"
+          echo "actor=$GITHUB_ACTOR" >> "$log"
+
+          token_available=false
+          replay_attempted=false
+          replay_status=99
+
+          if [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            token_available=true
+            python -m pip install --disable-pip-version-check modal >> "$log" 2>&1
+            install_status=$?
+            if [ "$install_status" -eq 0 ]; then
+              replay_attempted=true
+              python -m modal run analyzer/v143_contextual_prune_shadow_modal.py::shadow_file \
+                --audio-path public/gomywayfullaitest.m4a \
+                --measure-start 17 \
+                --measure-end 96 >> "$log" 2>&1
+              replay_status=$?
+            else
+              replay_status=$install_status
+            fi
+          else
+            echo "Modal GitHub credentials are unavailable; replay not attempted." >> "$log"
+          fi
+
+          TOKEN_AVAILABLE="$token_available" \
+          REPLAY_ATTEMPTED="$replay_attempted" \
+          REPLAY_STATUS="$replay_status" \
+          python - <<'PY'
+          import hashlib
+          import json
+          import math
+          import os
+          from pathlib import Path
+
+          root = Path(".")
+          log_path = root / "debug/v143-contextual-prune/end-to-end-17-96-modal-replay.log"
+          diagnostic_path = root / "debug/v143-contextual-prune/end-to-end-17-96-modal-replay.json"
+          frozen_path = root / "public/training/v143-musical-reconstruction-calibration/contextual-prune-17-96-frozen-events.json"
+          model_path = root / "public/training/v143-musical-reconstruction-calibration/contextual-prune-frozen-model.json"
+
+          text = log_path.read_text(encoding="utf-8", errors="replace")
+          decoder = json.JSONDecoder()
+          shadow_result = None
+          for index, char in enumerate(text):
+              if char != "{":
+                  continue
+              try:
+                  value, _ = decoder.raw_decode(text[index:])
+              except json.JSONDecodeError:
+                  continue
+              if isinstance(value, dict) and value.get("mode") == "v143-contextual-prune-isolated-shadow":
+                  shadow_result = value
+
+          frozen = json.loads(frozen_path.read_text(encoding="utf-8"))
+          expected_events = list(frozen.get("events") or [])
+          generated_events = list((shadow_result or {}).get("candidateEvents") or [])
+
+          def event_key(row):
+              return (int(row.get("measure", -1)), int(row.get("quantizedStep", -1)))
+
+          expected_by_key = {event_key(row): row for row in expected_events}
+          generated_by_key = {event_key(row): row for row in generated_events}
+          expected_keys = set(expected_by_key)
+          generated_keys = set(generated_by_key)
+
+          first_mismatch = None
+          if expected_keys != generated_keys:
+              first_mismatch = {
+                  "kind": "event-key-set",
+                  "missingFromGenerated": [list(k) for k in sorted(expected_keys - generated_keys)[:20]],
+                  "unexpectedInGenerated": [list(k) for k in sorted(generated_keys - expected_keys)[:20]],
+              }
+          else:
+              float_fields = (
+                  "baseScore",
+                  "sequenceScore",
+                  "contextualKeepProbability",
+              )
+              for key in sorted(expected_keys):
+                  expected = expected_by_key[key]
+                  generated = generated_by_key[key]
+                  if bool(expected.get("sequenceEvidence")) != bool(generated.get("sequenceEvidence")):
+                      first_mismatch = {
+                          "kind": "sequenceEvidence",
+                          "event": list(key),
+                          "expected": bool(expected.get("sequenceEvidence")),
+                          "generated": bool(generated.get("sequenceEvidence")),
+                      }
+                      break
+                  for field in float_fields:
+                      a = float(expected.get(field, 0.0))
+                      b = float(generated.get(field, 0.0))
+                      if not math.isclose(a, b, rel_tol=1e-12, abs_tol=1e-12):
+                          first_mismatch = {
+                              "kind": "numeric-field",
+                              "event": list(key),
+                              "field": field,
+                              "expected": a,
+                              "generated": b,
+                              "absoluteDelta": abs(a - b),
+                          }
+                          break
+                  if first_mismatch is not None:
+                      break
+
+          exact_events_equal = expected_events == generated_events
+          tolerance_events_equal = first_mismatch is None
+
+          def sha256(path: Path) -> str:
+              h = hashlib.sha256()
+              with path.open("rb") as handle:
+                  for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          carrier = dict((shadow_result or {}).get("carrier") or {})
+          selector = dict((shadow_result or {}).get("selector") or {})
+          invariants = dict((shadow_result or {}).get("invariants") or {})
+          separator = dict((shadow_result or {}).get("separator") or {})
+          lines = text.splitlines()
+
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-contextual-prune-17-96-end-to-end-audio-shadow-replay",
+              "modalCredentialsAvailableInGitHubActions": os.environ["TOKEN_AVAILABLE"] == "true",
+              "replayAttempted": os.environ["REPLAY_ATTEMPTED"] == "true",
+              "modalCommandExitCode": int(os.environ["REPLAY_STATUS"]) if os.environ["REPLAY_ATTEMPTED"] == "true" else None,
+              "shadowResultFound": shadow_result is not None,
+              "measures": "17-96",
+              "expectedEventCount": len(expected_events),
+              "generatedEventCount": len(generated_events),
+              "exactFrozenEventReplayPassed": exact_events_equal,
+              "toleranceFrozenEventReplayPassed": tolerance_events_equal,
+              "firstMismatch": first_mismatch,
+              "frozenEventArtifactSha256": sha256(frozen_path),
+              "frozenModelSha256": sha256(model_path),
+              "shadowContextualModelSha256": (shadow_result or {}).get("contextualModelSha256"),
+              "carrier": carrier,
+              "selector": selector,
+              "separator": separator,
+              "invariants": invariants,
+              "logTail": lines[-160:],
+              "liveEndpointDeployedOrModified": False,
+              "productionModified": False,
+          }
+          diagnostic_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          exit 0
+
+      - name: Preserve full end-to-end replay log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-contextual-prune-17-96-end-to-end-modal-replay-log
+          path: debug/v143-contextual-prune/end-to-end-17-96-modal-replay.log
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Commit compact end-to-end replay diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/end-to-end-17-96-modal-replay.json
+
+          if git diff --cached --quiet; then
+            echo "No 17-96 end-to-end replay diagnostic changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 17-96 end-to-end shadow replay"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce end-to-end shadow replay gate
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("debug/v143-contextual-prune/end-to-end-17-96-modal-replay.json").read_text(encoding="utf-8")
+          )
+          carrier = data.get("carrier") or {}
+          selector = data.get("selector") or {}
+          separator = data.get("separator") or {}
+          invariants = data.get("invariants") or {}
+
+          checks = {
+              "Modal credentials available": data.get("modalCredentialsAvailableInGitHubActions") is True,
+              "Replay attempted": data.get("replayAttempted") is True,
+              "Modal command exited zero": data.get("modalCommandExitCode") == 0,
+              "Shadow result found": data.get("shadowResultFound") is True,
+              "Frozen candidate count reproduced": data.get("expectedEventCount") == 651 and data.get("generatedEventCount") == 651,
+              "Frozen candidate replay within tolerance": data.get("toleranceFrozenEventReplayPassed") is True,
+              "Model fingerprint reproduced": data.get("shadowContextualModelSha256") == data.get("frozenModelSha256"),
+              "Carrier is reference-free": carrier.get("referenceFree") is True,
+              "Carrier used no professional reference": carrier.get("professionalReferenceUsedByAnalyzer") is False,
+              "Carrier requires no professional reference": carrier.get("professionalReferenceRequiredAtRuntime") is False,
+              "Selector remains subset": selector.get("candidateSubsetOfBase") is True,
+              "Separator deterministic": separator.get("deterministic") is True,
+              "Separator reference-free": separator.get("referenceFree") is True,
+              "Professional reference not used": invariants.get("professionalReferenceUsed") is False,
+              "Runtime labels not required": invariants.get("runtimeLabelsRequired") is False,
+              "Candidate adds no events": invariants.get("candidateAddsEvents") is False,
+              "Candidate relocates no events": invariants.get("candidateRelocatesEvents") is False,
+              "Lead unchanged": invariants.get("leadChanged") is False,
+              "Bass unchanged": invariants.get("bassChanged") is False,
+              "Live Rhythm unchanged": invariants.get("liveRhythmOutputChanged") is False,
+              "Production not modified": invariants.get("productionModified") is False,
+          }
+
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              print(json.dumps({
+                  "failedChecks": failed,
+                  "firstMismatch": data.get("firstMismatch"),
+                  "expectedEventCount": data.get("expectedEventCount"),
+                  "generatedEventCount": data.get("generatedEventCount"),
+                  "carrier": carrier,
+                  "selector": selector,
+              }, indent=2))
+              raise SystemExit("V143 17-96 end-to-end shadow replay gate failed")
+
+          print("V143 17-96 end-to-end audio shadow replay PASSED")
+          print("EXACT_FROZEN_EVENT_REPLAY", data.get("exactFrozenEventReplayPassed"))
+          print("TOLERANCE_FROZEN_EVENT_REPLAY", data.get("toleranceFrozenEventReplayPassed"))
+          print("PRODUCTION_MODIFIED", False)
+          PY
