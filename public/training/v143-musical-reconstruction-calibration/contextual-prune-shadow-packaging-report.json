@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-contextual-prune-shadow-modal-local-dependency-closure",
+  "shadowModuleCount": 16,
+  "shadowModules": [
+    "v143_ai_tab_gpu_worker",
+    "v143_candidate_timing_adapter",
+    "v143_reference_free_timing",
+    "v143_contextual_prune_reference_free_carrier",
+    "v143_contextual_prune_runtime",
+    "v143_correlation_safe_fixed_count_reranker_freeze",
+    "v143_intro_sequence_event_model",
+    "v143_intro_learned_grid_event_selector",
+    "v143_intro_learned_onset_spectral_set_model",
+    "v143_intro_raw_attack_temporal_diagnostic",
+    "v143_intro_repetition_recovery_event_selector",
+    "v143_intro_supervised_temporal_assignment",
+    "v143_deterministic_separator",
+    "v143_seeded_separator",
+    "v143_production_separator",
+    "v143_seeded_audio_separator_cli"
+  ],
+  "shadowLocalImports": [
+    "v143_ai_tab_gpu_worker",
+    "v143_contextual_prune_reference_free_carrier",
+    "v143_contextual_prune_runtime",
+    "v143_deterministic_separator"
+  ],
+  "gpuWorkerDependencyPackaged": true,
+  "allPackagedModuleFilesPresent": true,
+  "allLocalImportsPackaged": true,
+  "protectedLiveModulesPackaged": false,
+  "dependencyGraph": {
+    "v143_ai_tab_gpu_worker": [],
+    "v143_candidate_timing_adapter": [],
+    "v143_reference_free_timing": [],
+    "v143_contextual_prune_reference_free_carrier": [
+      "v143_candidate_timing_adapter",
+      "v143_reference_free_timing"
+    ],
+    "v143_contextual_prune_runtime": [
+      "v143_correlation_safe_fixed_count_reranker_freeze"
+    ],
+    "v143_correlation_safe_fixed_count_reranker_freeze": [
+      "v143_intro_learned_grid_event_selector",
+      "v143_intro_raw_attack_temporal_diagnostic",
+      "v143_intro_repetition_recovery_event_selector",
+      "v143_intro_sequence_event_model",
+      "v143_intro_supervised_temporal_assignment"
+    ],
+    "v143_intro_sequence_event_model": [
+      "v143_intro_learned_grid_event_selector",
+      "v143_intro_raw_attack_temporal_diagnostic",
+      "v143_intro_repetition_recovery_event_selector",
+      "v143_intro_supervised_temporal_assignment"
+    ],
+    "v143_intro_learned_grid_event_selector": [
+      "v143_intro_learned_onset_spectral_set_model",
+      "v143_intro_raw_attack_temporal_diagnostic",
+      "v143_intro_supervised_temporal_assignment"
+    ],
+    "v143_intro_learned_onset_spectral_set_model": [
+      "v143_intro_raw_attack_temporal_diagnostic",
+      "v143_intro_supervised_temporal_assignment"
+    ],
+    "v143_intro_raw_attack_temporal_diagnostic": [],
+    "v143_intro_repetition_recovery_event_selector": [
+      "v143_intro_learned_grid_event_selector",
+      "v143_intro_raw_attack_temporal_diagnostic",
+      "v143_intro_supervised_temporal_assignment"
+    ],
+    "v143_intro_supervised_temporal_assignment": [],
+    "v143_deterministic_separator": [
+      "v143_seeded_separator"
+    ],
+    "v143_seeded_separator": [
+      "v143_production_separator"
+    ],
+    "v143_production_separator": [],
+    "v143_seeded_audio_separator_cli": []
+  },
+  "professionalReferenceOpened": false,
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false,
+  "gatePassed": true
+}
