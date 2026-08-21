@@ -1,0 +1,181 @@
+name: V143 Section 3 Repeatability
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-section3-repeatability.yml
+      - analyzer/v143_contextual_prune_section3_repeatability_modal.py
+
+permissions:
+  contents: write
+
+jobs:
+  section3-repeatability:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify label-free repeatability inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s public/gomywayfullaitest.m4a
+          test -s public/training/v143-musical-reconstruction-calibration/fresh-section3-reference-free-cache.json
+          test -s analyzer/v143_contextual_prune_section3_repeatability_modal.py
+          echo "Section 3 repeatability inputs are present."
+
+      - name: Run three independent Section 3 rebuilds on Modal
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=debug/v143-contextual-prune/section3-repeatability.log
+          diagnostic=debug/v143-contextual-prune/section3-repeatability.json
+
+          : > "$log"
+          echo "commit=$GITHUB_SHA" >> "$log"
+          echo "actor=$GITHUB_ACTOR" >> "$log"
+
+          token_available=false
+          attempted=false
+          status=99
+
+          if [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            token_available=true
+            python -m pip install --disable-pip-version-check modal >> "$log" 2>&1
+            install_status=$?
+            if [ "$install_status" -eq 0 ]; then
+              attempted=true
+              python -m modal run analyzer/v143_contextual_prune_section3_repeatability_modal.py::diagnose >> "$log" 2>&1
+              status=$?
+            else
+              status=$install_status
+            fi
+          else
+            echo "Modal GitHub credentials are unavailable; diagnostic not attempted." >> "$log"
+          fi
+
+          TOKEN_AVAILABLE="$token_available" \
+          ATTEMPTED="$attempted" \
+          STATUS="$status" \
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          log_path = Path("debug/v143-contextual-prune/section3-repeatability.log")
+          output = Path("debug/v143-contextual-prune/section3-repeatability.json")
+          text = log_path.read_text(encoding="utf-8", errors="replace")
+          target_gate = "v143-contextual-prune-section3-repeatability"
+          result = None
+          decoder = json.JSONDecoder()
+          for index, char in enumerate(text):
+              if char != "{":
+                  continue
+              try:
+                  value, _ = decoder.raw_decode(text[index:])
+              except json.JSONDecodeError:
+                  continue
+              if isinstance(value, dict) and value.get("gate") == target_gate:
+                  result = value
+
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-contextual-prune-section3-repeatability-action",
+              "modalCredentialsAvailableInGitHubActions": os.environ["TOKEN_AVAILABLE"] == "true",
+              "diagnosticAttempted": os.environ["ATTEMPTED"] == "true",
+              "modalCommandExitCode": int(os.environ["STATUS"]) if os.environ["ATTEMPTED"] == "true" else None,
+              "diagnosticResultFound": result is not None,
+              "diagnosticResult": result,
+              "logTail": text.splitlines()[-180:],
+              "liveEndpointDeployedOrModified": False,
+              "productionModified": False,
+          }
+          output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          exit 0
+
+      - name: Preserve full repeatability log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-contextual-prune-section3-repeatability-log
+          path: debug/v143-contextual-prune/section3-repeatability.log
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Commit compact repeatability diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/section3-repeatability.json
+
+          if git diff --cached --quiet; then
+            echo "No Section 3 repeatability diagnostic changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 Section 3 repeatability"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Report repeatability state
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("debug/v143-contextual-prune/section3-repeatability.json").read_text(encoding="utf-8")
+          )
+          result = data.get("diagnosticResult") or {}
+          invariants = result.get("invariants") or {}
+          repeatability = result.get("repeatability") or {}
+
+          checks = {
+              "Modal credentials available": data.get("modalCredentialsAvailableInGitHubActions") is True,
+              "Diagnostic attempted": data.get("diagnosticAttempted") is True,
+              "Modal command exited zero": data.get("modalCommandExitCode") == 0,
+              "Diagnostic result found": data.get("diagnosticResultFound") is True,
+              "Three repeats completed": result.get("repeatCount") == 3 and len(result.get("repeats") or []) == 3,
+              "Professional reference not opened": invariants.get("professionalReferenceOpened") is False,
+              "Runtime labels not required": invariants.get("runtimeLabelsRequired") is False,
+              "Frozen model untouched": invariants.get("frozenModelModified") is False,
+              "Frozen predictions untouched": invariants.get("frozenPredictionsModified") is False,
+              "Thresholds untouched": invariants.get("thresholdsModified") is False,
+              "Live endpoint untouched": invariants.get("liveEndpointDeployedOrModified") is False,
+              "Production untouched": invariants.get("productionModified") is False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              raise SystemExit("Section 3 repeatability execution failed: " + ", ".join(failed))
+
+          print("CLASSIFICATION", repeatability.get("classification"))
+          print("DIRECT_STEM_PCM_EXACT", repeatability.get("directStemPcmExactAcrossRepeats"))
+          print("CASCADE_STEM_PCM_EXACT", repeatability.get("cascadeStemPcmExactAcrossRepeats"))
+          print("CARRIER_SEMANTIC_EXACT", repeatability.get("carrierSemanticExactAcrossRepeats"))
+          print("DECISIONS_EXACT", repeatability.get("downstreamDecisionExactAcrossRepeats"))
+          print("HISTORICAL_CARRIER_EXACT_COUNT", repeatability.get("historicalCarrierExactReplayCount"))
+          print("HISTORICAL_DECISION_EXACT_COUNT", repeatability.get("historicalDecisionExactCount"))
+          print("PRODUCTION_MODIFIED", False)
+          PY
