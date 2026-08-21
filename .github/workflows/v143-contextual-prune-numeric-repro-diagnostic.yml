@@ -1,0 +1,254 @@
+name: V143 Contextual Numeric Repro Diagnostic
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-numeric-repro-diagnostic.yml
+
+permissions:
+  contents: write
+
+jobs:
+  numeric-repro:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install isolated replay dependencies
+        run: python -m pip install --disable-pip-version-check modal numpy
+
+      - name: Regenerate exact historical Verse1 carrier
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m modal run analyzer/v143_fresh_verse1_reference_free_capture.py::capture_fresh_verse1
+          actual=$(sha256sum public/training/v143-musical-reconstruction-calibration/fresh-verse1-reference-free-cache.json | awk '{print $1}')
+          expected=fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15
+          test "$actual" = "$expected"
+
+      - name: Probe exact arithmetic representations without tolerances
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=analyzer python - <<'PY'
+          import hashlib
+          import json
+          import math
+          import struct
+          from pathlib import Path
+          import numpy as np
+
+          import v143_correlation_safe_fixed_count_reranker_freeze as freeze
+          import v143_contextual_prune_runtime as runtime
+
+          CAL = Path('public/training/v143-musical-reconstruction-calibration')
+          FROZEN = CAL / 'contextual-prune-17-96-frozen-events.json'
+          MODEL = CAL / 'contextual-prune-frozen-model.json'
+          OUT = Path('debug/v143-contextual-prune/contextual-numeric-repro-diagnostic.json')
+          OUT.parent.mkdir(parents=True, exist_ok=True)
+          TARGETS = set(range(17, 97))
+
+          def sha_bytes(data: bytes) -> str:
+              return hashlib.sha256(data).hexdigest()
+
+          def ulp_distance(a: float, b: float) -> int:
+              ai = struct.unpack('>Q', struct.pack('>d', float(a)))[0]
+              bi = struct.unpack('>Q', struct.pack('>d', float(b)))[0]
+              return abs(int(ai) - int(bi))
+
+          frozen_bytes = FROZEN.read_bytes()
+          frozen = json.loads(frozen_bytes)
+          frozen_by_key = {
+              (int(x['measure']), int(x['quantizedStep'])): x
+              for x in frozen['events']
+          }
+          frozen_keys = set(frozen_by_key)
+
+          rows, grid = freeze._merge_fresh_caches()
+          result = runtime.run_contextual_prune(rows, grid, TARGETS)
+          base_keys = sorted(result.base_events)
+          candidate_keys = set(result.candidate_events)
+
+          if candidate_keys != frozen_keys:
+              raise RuntimeError('Discrete contextual event selection changed')
+          if len(result.base_events) != 765 or len(candidate_keys) != 651:
+              raise RuntimeError('Frozen event counts changed')
+          if result.base_threshold != 0.27 or result.prune_fraction != 0.15:
+              raise RuntimeError('Frozen selector parameters changed')
+
+          # Core score/evidence identity is exact; keep-probability metadata is
+          # investigated separately because BLAS reduction order can affect its
+          # last IEEE-754 bits without changing ranking or selected events.
+          core_mismatches = []
+          prob_diffs = []
+          for key in sorted(frozen_keys):
+              exp = frozen_by_key[key]
+              core = {
+                  'baseScore': float(result.base_scores[key]),
+                  'sequenceScore': float(result.sequence_scores[key]),
+                  'sequenceEvidence': bool(result.sequence_evidence[key]),
+              }
+              for field, actual in core.items():
+                  if actual != exp[field]:
+                      core_mismatches.append({'key': list(key), 'field': field, 'expected': exp[field], 'actual': actual})
+              actual_prob = float(result.keep_probabilities[key])
+              expected_prob = float(exp['contextualKeepProbability'])
+              if actual_prob != expected_prob:
+                  prob_diffs.append({
+                      'key': list(key),
+                      'expected': expected_prob,
+                      'actual': actual_prob,
+                      'ulpDistance': ulp_distance(expected_prob, actual_prob),
+                  })
+
+          if core_mismatches:
+              raise RuntimeError(f'Core frozen score/evidence mismatch: {core_mismatches[:3]}')
+
+          model = json.loads(MODEL.read_text())
+          features = runtime._build_features(
+              set(result.base_events),
+              result.base_scores,
+              result.sequence_scores,
+              result.sequence_evidence,
+          )
+          x = np.asarray([features[key] for key in base_keys], dtype=np.float64)
+          mean = np.asarray(model['featureMean'], dtype=np.float64)
+          std = np.asarray(model['featureStd'], dtype=np.float64)
+          weights = np.asarray(model['weights'], dtype=np.float64)
+          z = (x - mean) / std
+          design = np.column_stack([np.ones(len(z), dtype=np.float64), z])
+
+          def np_sigmoid(logits):
+              logits = np.asarray(logits, dtype=np.float64)
+              return 1.0 / (1.0 + np.exp(-np.clip(logits, -35.0, 35.0)))
+
+          def py_sigmoid(v):
+              v = max(-35.0, min(35.0, float(v)))
+              return 1.0 / (1.0 + math.exp(-v))
+
+          methods = {
+              'numpy_matmul_numpy_sigmoid': np_sigmoid(design @ weights),
+              'numpy_dot_rows_numpy_sigmoid': np_sigmoid(np.asarray([np.dot(row, weights) for row in design], dtype=np.float64)),
+              'numpy_einsum_numpy_sigmoid': np_sigmoid(np.einsum('ij,j->i', design, weights)),
+              'python_left_sum_python_sigmoid': np.asarray([
+                  py_sigmoid(sum(float(row[i]) * float(weights[i]) for i in range(len(weights))))
+                  for row in design
+              ], dtype=np.float64),
+              'python_fsum_python_sigmoid': np.asarray([
+                  py_sigmoid(math.fsum(float(row[i]) * float(weights[i]) for i in range(len(weights))))
+                  for row in design
+              ], dtype=np.float64),
+              'python_left_sum_numpy_sigmoid': np_sigmoid(np.asarray([
+                  sum(float(row[i]) * float(weights[i]) for i in range(len(weights)))
+                  for row in design
+              ], dtype=np.float64)),
+              'python_fsum_numpy_sigmoid': np_sigmoid(np.asarray([
+                  math.fsum(float(row[i]) * float(weights[i]) for i in range(len(weights)))
+                  for row in design
+              ], dtype=np.float64)),
+          }
+
+          method_reports = {}
+          prune_count = int(math.floor(len(base_keys) * 0.15))
+          for name, values in methods.items():
+              probs = {key: float(value) for key, value in zip(base_keys, values)}
+              ranked = sorted(base_keys, key=lambda key: (probs[key], key[0], key[1]))
+              candidate = set(base_keys) - set(ranked[:prune_count])
+              replay = {
+                  'schemaVersion': 1,
+                  'artifact': 'v143-contextual-prune-17-96-frozen-events',
+                  'measures': '17-96',
+                  'eventCount': len(candidate),
+                  'events': [
+                      {
+                          'measure': int(m),
+                          'quantizedStep': int(s),
+                          'baseScore': float(result.base_scores[(m, s)]),
+                          'sequenceScore': float(result.sequence_scores[(m, s)]),
+                          'sequenceEvidence': bool(result.sequence_evidence[(m, s)]),
+                          'contextualKeepProbability': float(probs[(m, s)]),
+                      }
+                      for m, s in sorted(candidate)
+                  ],
+                  'reserveMeasures97To113Opened': False,
+                  'productionModified': False,
+              }
+              replay_bytes = (json.dumps(replay, indent=2) + '\n').encode()
+              exact_prob_matches = 0
+              differing = []
+              if candidate == frozen_keys:
+                  for key in sorted(frozen_keys):
+                      exp = float(frozen_by_key[key]['contextualKeepProbability'])
+                      act = float(probs[key])
+                      if exp == act:
+                          exact_prob_matches += 1
+                      else:
+                          differing.append(ulp_distance(exp, act))
+              method_reports[name] = {
+                  'candidateKeysExact': candidate == frozen_keys,
+                  'candidateCount': len(candidate),
+                  'exactProbabilityMatchesOf651': exact_prob_matches,
+                  'probabilityMismatchCount': len(differing),
+                  'maxUlpDistance': max(differing) if differing else 0,
+                  'replaySha256': sha_bytes(replay_bytes),
+                  'frozenArtifactByteExact': replay_bytes == frozen_bytes,
+              }
+
+          payload = {
+              'schemaVersion': 1,
+              'diagnostic': 'v143-contextual-floating-point-reproducibility',
+              'historicalVerse1CacheExact': True,
+              'frozenArtifactSha256': sha_bytes(frozen_bytes),
+              'runtimeDiscreteEventKeysExact': candidate_keys == frozen_keys,
+              'runtimeBaseEventCount': len(result.base_events),
+              'runtimeContextualEventCount': len(candidate_keys),
+              'coreBaseSequenceEvidenceExactForAllFrozenEvents': not core_mismatches,
+              'runtimeKeepProbabilityMismatchCount': len(prob_diffs),
+              'runtimeKeepProbabilityMaxUlpDistance': max((x['ulpDistance'] for x in prob_diffs), default=0),
+              'runtimeKeepProbabilityFirstDifferences': prob_diffs[:10],
+              'arithmeticMethods': method_reports,
+              'noToleranceFallbackUsed': True,
+              'thresholdsModified': False,
+              'modelModified': False,
+              'professionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAllowed': False,
+          }
+          OUT.write_text(json.dumps(payload, indent=2) + '\n')
+          print(json.dumps(payload, indent=2))
+          PY
+
+      - name: Remove generated historical cache
+        if: always()
+        run: rm -f public/training/v143-musical-reconstruction-calibration/fresh-verse1-reference-free-cache.json
+
+      - name: Commit compact diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/contextual-numeric-repro-diagnostic.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 contextual numeric reproducibility"
+          git push origin HEAD:v143-contextual-prune-lobo
