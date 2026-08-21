@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "v143-contextual-prune-shadow-modal-retry-ready",
+  "failedAttempt": {
+    "entrypoint": "analyzer/v143_contextual_prune_shadow_modal.py::section5_replay",
+    "failureClass": "ModuleNotFoundError",
+    "missingModule": "v143_ai_tab_gpu_worker",
+    "modelOrCarrierFailure": false,
+    "professionalReferenceOpened": false,
+    "productionModified": false
+  },
+  "fix": {
+    "commit": "cc6bb41ee11573f24294d69117a9ff9d10c9c299",
+    "change": "Package v143_ai_tab_gpu_worker in SHADOW_MODULES for the isolated Modal shadow image",
+    "verifiedInBranchSource": true
+  },
+  "nextRetry": {
+    "requiresCodespaceOnlyForAuthenticatedModalCLI": true,
+    "command": "modal run analyzer/v143_contextual_prune_shadow_modal.py::section5_replay",
+    "expectedGate": "exact/tolerance replay of the reference-free 81-96 audio carrier"
+  },
+  "invariants": {
+    "reserveModelFrozen": true,
+    "reserveGradeAlreadyFinal": true,
+    "professionalReferenceRequiredForRetry": false,
+    "leadChanged": false,
+    "bassChanged": false,
+    "liveRhythmOutputChanged": false,
+    "productionModified": false
+  }
+}
