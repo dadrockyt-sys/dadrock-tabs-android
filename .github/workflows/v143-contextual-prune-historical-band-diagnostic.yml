@@ -8,6 +8,7 @@ on:
     paths:
       - .github/workflows/v143-contextual-prune-historical-band-diagnostic.yml
       - analyzer/v143_contextual_prune_historical_band_diagnostic_modal.py
+      - analyzer/v143_contextual_prune_surviving_band_provenance_modal.py
 
 permissions:
   contents: write
@@ -175,4 +176,170 @@ jobs:
           print("SECTION3_TOLERANCE", s3.get("toleranceSemanticReplayPassed"))
           print("SECTION3_FIRST_MISMATCH", json.dumps(s3.get("firstMismatch"), sort_keys=True))
           print("PRODUCTION_MODIFIED", False)
+          PY
+
+  surviving-band-provenance:
+    if: github.actor != 'github-actions[bot]'
+    needs: historical-band-diagnostic
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out latest isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run surviving-band provenance gate on Modal
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=debug/v143-contextual-prune/surviving-band-provenance.log
+          output=debug/v143-contextual-prune/surviving-band-provenance.json
+
+          : > "$log"
+          echo "bootstrap_workflow=historical-band-diagnostic" >> "$log"
+          echo "commit=$GITHUB_SHA" >> "$log"
+          echo "actor=$GITHUB_ACTOR" >> "$log"
+
+          token_available=false
+          attempted=false
+          status=99
+
+          if [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            token_available=true
+            python -m pip install --disable-pip-version-check modal >> "$log" 2>&1
+            install_status=$?
+            if [ "$install_status" -eq 0 ]; then
+              attempted=true
+              python -m modal run analyzer/v143_contextual_prune_surviving_band_provenance_modal.py::diagnose >> "$log" 2>&1
+              status=$?
+            else
+              status=$install_status
+            fi
+          else
+            echo "Modal GitHub credentials are unavailable; provenance gate not attempted." >> "$log"
+          fi
+
+          TOKEN_AVAILABLE="$token_available" \
+          ATTEMPTED="$attempted" \
+          STATUS="$status" \
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          log_path = Path("debug/v143-contextual-prune/surviving-band-provenance.log")
+          output = Path("debug/v143-contextual-prune/surviving-band-provenance.json")
+          text = log_path.read_text(encoding="utf-8", errors="replace")
+          target_gate = "v143-contextual-prune-surviving-band-provenance"
+          result = None
+          decoder = json.JSONDecoder()
+          for index, char in enumerate(text):
+              if char != "{":
+                  continue
+              try:
+                  value, _ = decoder.raw_decode(text[index:])
+              except json.JSONDecodeError:
+                  continue
+              if isinstance(value, dict) and value.get("gate") == target_gate:
+                  result = value
+
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-contextual-prune-surviving-band-provenance-action",
+              "bootstrapWorkflow": "v143-contextual-prune-historical-band-diagnostic",
+              "modalCredentialsAvailableInGitHubActions": os.environ["TOKEN_AVAILABLE"] == "true",
+              "diagnosticAttempted": os.environ["ATTEMPTED"] == "true",
+              "modalCommandExitCode": int(os.environ["STATUS"]) if os.environ["ATTEMPTED"] == "true" else None,
+              "diagnosticResultFound": result is not None,
+              "diagnosticResult": result,
+              "logTail": text.splitlines()[-220:],
+              "liveEndpointDeployedOrModified": False,
+              "productionModified": False,
+          }
+          output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          exit 0
+
+      - name: Preserve full provenance log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-contextual-prune-surviving-band-provenance-bootstrap-log
+          path: debug/v143-contextual-prune/surviving-band-provenance.log
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Commit compact provenance result
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/surviving-band-provenance.json
+          if git diff --cached --quiet; then
+            echo "No surviving-band provenance result changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 surviving-band provenance gate"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Report provenance state
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("debug/v143-contextual-prune/surviving-band-provenance.json").read_text(encoding="utf-8")
+          )
+          result = data.get("diagnosticResult") or {}
+          invariants = result.get("invariants") or {}
+          checks = {
+              "Modal credentials available": data.get("modalCredentialsAvailableInGitHubActions") is True,
+              "Diagnostic attempted": data.get("diagnosticAttempted") is True,
+              "Modal command exited zero": data.get("modalCommandExitCode") == 0,
+              "Diagnostic result found": data.get("diagnosticResultFound") is True,
+              "Original band boundaries preserved": invariants.get("originalBandBoundariesPreserved") is True,
+              "No monolithic carrier used": invariants.get("monolithicCarrierUsed") is False,
+              "17-32 not claimed": invariants.get("measures17To32Claimed") is False,
+              "Professional reference not opened": invariants.get("professionalReferenceOpened") is False,
+              "Runtime labels not required": invariants.get("runtimeLabelsRequired") is False,
+              "Production untouched": invariants.get("productionModified") is False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              raise SystemExit("Surviving-band provenance execution failed: " + ", ".join(failed))
+
+          for label in ("section2", "section3", "section4", "section5", "reserve"):
+              band = (result.get("bands") or {}).get(label) or {}
+              print(label.upper(), "PROVENANCE", band.get("provenanceReplayPassed"))
+              print(label.upper(), "SEMANTIC_MISMATCH", json.dumps(band.get("semanticFirstMismatch"), sort_keys=True))
+              print(label.upper(), "CAPTURE_MISMATCH", json.dumps(band.get("captureDiagnosticsFirstMismatch"), sort_keys=True))
+
+          reserve = result.get("reserveScoring") or {}
+          print("RESERVE_PARTIAL_TAIL", (reserve.get("context") or {}).get("partialTailInvariantPassed"))
+          print("SECTION5_BASE_REPLAY", reserve.get("section5BaseReplayPassed"))
+          print("SECTION5_BASE_SCORE_REPLAY", reserve.get("section5BaseScoreReplayPassed"))
+          print("RESERVE_BASE_REPLAY", reserve.get("reserveBaseReplayPassed"))
+          print("RESERVE_CANDIDATE_REPLAY", reserve.get("reserveCandidateReplayPassed"))
+          print("RESERVE_SCORE_REPLAY", reserve.get("reserveScoreReplayPassed"))
+          print("ALL_CARRIER_PROVENANCE", result.get("allCarrierProvenancePassed"))
+          print("ALL_SURVIVING_BANDS_PROVENANCE", result.get("allSurvivingBandsProvenancePassed"))
+          print("PRODUCTION_MODIFIED", False)
+
+          if result.get("allSurvivingBandsProvenancePassed") is not True:
+              raise SystemExit("Authoritative surviving-band provenance gate did not pass.")
           PY
