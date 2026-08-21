@@ -171,3 +171,5 @@ jobs:
           print("HISTORICAL_DECISION_EXACT_COUNT", repeat.get("historicalDecisionExactCount"))
           print("PRODUCTION_MODIFIED", False)
           PY
+
+# Focused Section 3 repeatability rerun trigger — research branch only.
