@@ -1,0 +1,509 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-contextual-prune-section3-strict-cross-container-action",
+  "modalCredentialsAvailableInGitHubActions": true,
+  "diagnosticAttempted": true,
+  "modalCommandExitCode": 0,
+  "diagnosticResultFound": true,
+  "diagnosticResult": {
+    "schemaVersion": 1,
+    "gate": "v143-contextual-prune-section3-strict-cross-container",
+    "executionStrategy": "three-concurrent-l4-workers-strict-cuda-determinism",
+    "workerCount": 3,
+    "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "workers": [
+      {
+        "worker": 1,
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0HCY9E5NMDBCTS2PBADG55R"
+        },
+        "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "separator": {
+          "strictCudaDeterminism": true,
+          "referenceFree": true,
+          "directFileSha256": "8e306fc78c24514512b721eec3a46dd5fd601ceb37982cbabece9e980b04eca9",
+          "cascadeFileSha256": "97d1d6d9984883db6ac7109db518f02b818aeef5192a1623708823320a9831c7",
+          "directPcm": {
+            "sha256": "f2dd49b83a0316d789395f63d7702369b47aa421f7d725819c9a4fe1ef51eb9d",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "cascadePcm": {
+            "sha256": "cc239d941e0196c54abd8fa9dc3ca5ad3e517c181751e5dfc1547fc2d8e8100c",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "settings": {
+            "demucsSingleStem": "Guitar",
+            "demucsShifts": 1,
+            "demucsOverlap": 0.1,
+            "demucsSegmentSize": 6,
+            "roformerSingleStem": "Instrumental",
+            "roformerBatchSize": 1,
+            "deterministicSeed": 143,
+            "cublasWorkspaceConfig": ":4096:8",
+            "torchDeterministicAlgorithms": true,
+            "cudnnBenchmark": false,
+            "cudnnDeterministic": true,
+            "tf32Disabled": true
+          }
+        },
+        "carrier": {
+          "semanticSha256": "6ca1ed3ed441484c3e7ba62dcfdd9930327aba312581318296ac7b2ebde15b73",
+          "exactHistoricalReplay": false,
+          "toleranceHistoricalReplay": false,
+          "firstMismatch": {
+            "path": "$.rows",
+            "expectedLength": 802,
+            "actualLength": 805
+          },
+          "rawEventCount": 20849,
+          "candidateClusterCount": 9059,
+          "rowCount": 805,
+          "stemEventCounts": {
+            "stem0:direct-demucs6s-guitar.wav": 10637,
+            "stem1:bsroformer-demucs6s-guitar.wav": 10212
+          }
+        },
+        "downstream": {
+          "decisionSha256": "99bb2570e051333029d93c4f742762631d9b21091f47cbf3fba23e14b2446ce5",
+          "decisionSetExactToHistorical": false,
+          "baseScoreDelta": {
+            "maxAbsDelta": 0.4656788401596382,
+            "at": {
+              "measure": 58,
+              "step": 3
+            },
+            "keySetExact": true
+          },
+          "sequenceScoreDelta": {
+            "maxAbsDelta": 0.48511728468169674,
+            "at": {
+              "measure": 58,
+              "step": 3
+            },
+            "keySetExact": true
+          },
+          "keepProbabilityDelta": {
+            "maxAbsDelta": 0.3486527009289499,
+            "at": {
+              "measure": 64,
+              "step": 7
+            },
+            "keySetExact": false
+          }
+        }
+      },
+      {
+        "worker": 2,
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0HCYDDF6K5CRQNS2HGEVKYR"
+        },
+        "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "separator": {
+          "strictCudaDeterminism": true,
+          "referenceFree": true,
+          "directFileSha256": "9a29aee0e5e599bfe145f37a0a607f54be7c16af358ec215f15c0d862ac7e344",
+          "cascadeFileSha256": "cb1751e25ec1966a41f9b8f48f57303899e297041adf38f25f0244b595e561cf",
+          "directPcm": {
+            "sha256": "2c94957eba17d6c2da27603d07896e641653d603e7004199ed1ed2e1065be882",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "cascadePcm": {
+            "sha256": "14f8124b02d1194a397ea966e3e1fc9ab0b74e79b52322ccf092471c0b974d87",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "settings": {
+            "demucsSingleStem": "Guitar",
+            "demucsShifts": 1,
+            "demucsOverlap": 0.1,
+            "demucsSegmentSize": 6,
+            "roformerSingleStem": "Instrumental",
+            "roformerBatchSize": 1,
+            "deterministicSeed": 143,
+            "cublasWorkspaceConfig": ":4096:8",
+            "torchDeterministicAlgorithms": true,
+            "cudnnBenchmark": false,
+            "cudnnDeterministic": true,
+            "tf32Disabled": true
+          }
+        },
+        "carrier": {
+          "semanticSha256": "5c7d2b7e56bcbc5d4e67bc8145e76efd247e2fd3ca0f25bb25619b263d5dfa34",
+          "exactHistoricalReplay": false,
+          "toleranceHistoricalReplay": false,
+          "firstMismatch": {
+            "path": "$.rows",
+            "expectedLength": 802,
+            "actualLength": 805
+          },
+          "rawEventCount": 20851,
+          "candidateClusterCount": 9061,
+          "rowCount": 805,
+          "stemEventCounts": {
+            "stem0:direct-demucs6s-guitar.wav": 10637,
+            "stem1:bsroformer-demucs6s-guitar.wav": 10214
+          }
+        },
+        "downstream": {
+          "decisionSha256": "99bb2570e051333029d93c4f742762631d9b21091f47cbf3fba23e14b2446ce5",
+          "decisionSetExactToHistorical": false,
+          "baseScoreDelta": {
+            "maxAbsDelta": 0.4656792512848426,
+            "at": {
+              "measure": 58,
+              "step": 3
+            },
+            "keySetExact": true
+          },
+          "sequenceScoreDelta": {
+            "maxAbsDelta": 0.4852463882714399,
+            "at": {
+              "measure": 58,
+              "step": 3
+            },
+            "keySetExact": true
+          },
+          "keepProbabilityDelta": {
+            "maxAbsDelta": 0.34675514332906276,
+            "at": {
+              "measure": 64,
+              "step": 7
+            },
+            "keySetExact": false
+          }
+        }
+      },
+      {
+        "worker": 3,
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0HCY921CPZJZEFF1D583ABR"
+        },
+        "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "separator": {
+          "strictCudaDeterminism": true,
+          "referenceFree": true,
+          "directFileSha256": "9a29aee0e5e599bfe145f37a0a607f54be7c16af358ec215f15c0d862ac7e344",
+          "cascadeFileSha256": "cb1751e25ec1966a41f9b8f48f57303899e297041adf38f25f0244b595e561cf",
+          "directPcm": {
+            "sha256": "2c94957eba17d6c2da27603d07896e641653d603e7004199ed1ed2e1065be882",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "cascadePcm": {
+            "sha256": "14f8124b02d1194a397ea966e3e1fc9ab0b74e79b52322ccf092471c0b974d87",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "settings": {
+            "demucsSingleStem": "Guitar",
+            "demucsShifts": 1,
+            "demucsOverlap": 0.1,
+            "demucsSegmentSize": 6,
+            "roformerSingleStem": "Instrumental",
+            "roformerBatchSize": 1,
+            "deterministicSeed": 143,
+            "cublasWorkspaceConfig": ":4096:8",
+            "torchDeterministicAlgorithms": true,
+            "cudnnBenchmark": false,
+            "cudnnDeterministic": true,
+            "tf32Disabled": true
+          }
+        },
+        "carrier": {
+          "semanticSha256": "5c7d2b7e56bcbc5d4e67bc8145e76efd247e2fd3ca0f25bb25619b263d5dfa34",
+          "exactHistoricalReplay": false,
+          "toleranceHistoricalReplay": false,
+          "firstMismatch": {
+            "path": "$.rows",
+            "expectedLength": 802,
+            "actualLength": 805
+          },
+          "rawEventCount": 20851,
+          "candidateClusterCount": 9061,
+          "rowCount": 805,
+          "stemEventCounts": {
+            "stem0:direct-demucs6s-guitar.wav": 10637,
+            "stem1:bsroformer-demucs6s-guitar.wav": 10214
+          }
+        },
+        "downstream": {
+          "decisionSha256": "99bb2570e051333029d93c4f742762631d9b21091f47cbf3fba23e14b2446ce5",
+          "decisionSetExactToHistorical": false,
+          "baseScoreDelta": {
+            "maxAbsDelta": 0.4656792512848426,
+            "at": {
+              "measure": 58,
+              "step": 3
+            },
+            "keySetExact": true
+          },
+          "sequenceScoreDelta": {
+            "maxAbsDelta": 0.4852463882714399,
+            "at": {
+              "measure": 58,
+              "step": 3
+            },
+            "keySetExact": true
+          },
+          "keepProbabilityDelta": {
+            "maxAbsDelta": 0.34675514332906276,
+            "at": {
+              "measure": 64,
+              "step": 7
+            },
+            "keySetExact": false
+          }
+        }
+      }
+    ],
+    "crossContainerRepeatability": {
+      "directStemPcmExactAcrossWorkers": false,
+      "cascadeStemPcmExactAcrossWorkers": false,
+      "carrierSemanticExactAcrossWorkers": false,
+      "downstreamDecisionExactAcrossWorkers": true,
+      "historicalCarrierExactReplayCount": 0,
+      "historicalDecisionExactCount": 0
+    },
+    "invariants": {
+      "professionalReferenceOpened": false,
+      "runtimeLabelsRequired": false,
+      "frozenModelModified": false,
+      "frozenPredictionsModified": false,
+      "thresholdsModified": false,
+      "liveEndpointDeployedOrModified": false,
+      "productionModified": false
+    }
+  },
+  "logTail": [
+    "      },",
+    "      \"downstream\": {",
+    "        \"decisionSha256\": \"99bb2570e051333029d93c4f742762631d9b21091f47cbf3fba23e14b2446ce5\",",
+    "        \"decisionSetExactToHistorical\": false,",
+    "        \"baseScoreDelta\": {",
+    "          \"maxAbsDelta\": 0.4656788401596382,",
+    "          \"at\": {",
+    "            \"measure\": 58,",
+    "            \"step\": 3",
+    "          },",
+    "          \"keySetExact\": true",
+    "        },",
+    "        \"sequenceScoreDelta\": {",
+    "          \"maxAbsDelta\": 0.48511728468169674,",
+    "          \"at\": {",
+    "            \"measure\": 58,",
+    "            \"step\": 3",
+    "          },",
+    "          \"keySetExact\": true",
+    "        },",
+    "        \"keepProbabilityDelta\": {",
+    "          \"maxAbsDelta\": 0.3486527009289499,",
+    "          \"at\": {",
+    "            \"measure\": 64,",
+    "            \"step\": 7",
+    "          },",
+    "          \"keySetExact\": false",
+    "        }",
+    "      }",
+    "    },",
+    "    {",
+    "      \"worker\": 2,",
+    "      \"runtimeIdentity\": {",
+    "        \"modalTaskId\": \"ta-01M0HCYDDF6K5CRQNS2HGEVKYR\"",
+    "      },",
+    "      \"normalizedSha256\": \"ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f\",",
+    "      \"separator\": {",
+    "        \"strictCudaDeterminism\": true,",
+    "        \"referenceFree\": true,",
+    "        \"directFileSha256\": \"9a29aee0e5e599bfe145f37a0a607f54be7c16af358ec215f15c0d862ac7e344\",",
+    "        \"cascadeFileSha256\": \"cb1751e25ec1966a41f9b8f48f57303899e297041adf38f25f0244b595e561cf\",",
+    "        \"directPcm\": {",
+    "          \"sha256\": \"2c94957eba17d6c2da27603d07896e641653d603e7004199ed1ed2e1065be882\",",
+    "          \"sampleRate\": 44100,",
+    "          \"frames\": 9324544,",
+    "          \"channels\": 2",
+    "        },",
+    "        \"cascadePcm\": {",
+    "          \"sha256\": \"14f8124b02d1194a397ea966e3e1fc9ab0b74e79b52322ccf092471c0b974d87\",",
+    "          \"sampleRate\": 44100,",
+    "          \"frames\": 9324544,",
+    "          \"channels\": 2",
+    "        },",
+    "        \"settings\": {",
+    "          \"demucsSingleStem\": \"Guitar\",",
+    "          \"demucsShifts\": 1,",
+    "          \"demucsOverlap\": 0.1,",
+    "          \"demucsSegmentSize\": 6,",
+    "          \"roformerSingleStem\": \"Instrumental\",",
+    "          \"roformerBatchSize\": 1,",
+    "          \"deterministicSeed\": 143,",
+    "          \"cublasWorkspaceConfig\": \":4096:8\",",
+    "          \"torchDeterministicAlgorithms\": true,",
+    "          \"cudnnBenchmark\": false,",
+    "          \"cudnnDeterministic\": true,",
+    "          \"tf32Disabled\": true",
+    "        }",
+    "      },",
+    "      \"carrier\": {",
+    "        \"semanticSha256\": \"5c7d2b7e56bcbc5d4e67bc8145e76efd247e2fd3ca0f25bb25619b263d5dfa34\",",
+    "        \"exactHistoricalReplay\": false,",
+    "        \"toleranceHistoricalReplay\": false,",
+    "        \"firstMismatch\": {",
+    "          \"path\": \"$.rows\",",
+    "          \"expectedLength\": 802,",
+    "          \"actualLength\": 805",
+    "        },",
+    "        \"rawEventCount\": 20851,",
+    "        \"candidateClusterCount\": 9061,",
+    "        \"rowCount\": 805,",
+    "        \"stemEventCounts\": {",
+    "          \"stem0:direct-demucs6s-guitar.wav\": 10637,",
+    "          \"stem1:bsroformer-demucs6s-guitar.wav\": 10214",
+    "        }",
+    "      },",
+    "      \"downstream\": {",
+    "        \"decisionSha256\": \"99bb2570e051333029d93c4f742762631d9b21091f47cbf3fba23e14b2446ce5\",",
+    "        \"decisionSetExactToHistorical\": false,",
+    "        \"baseScoreDelta\": {",
+    "          \"maxAbsDelta\": 0.4656792512848426,",
+    "          \"at\": {",
+    "            \"measure\": 58,",
+    "            \"step\": 3",
+    "          },",
+    "          \"keySetExact\": true",
+    "        },",
+    "        \"sequenceScoreDelta\": {",
+    "          \"maxAbsDelta\": 0.4852463882714399,",
+    "          \"at\": {",
+    "            \"measure\": 58,",
+    "            \"step\": 3",
+    "          },",
+    "          \"keySetExact\": true",
+    "        },",
+    "        \"keepProbabilityDelta\": {",
+    "          \"maxAbsDelta\": 0.34675514332906276,",
+    "          \"at\": {",
+    "            \"measure\": 64,",
+    "            \"step\": 7",
+    "          },",
+    "          \"keySetExact\": false",
+    "        }",
+    "      }",
+    "    },",
+    "    {",
+    "      \"worker\": 3,",
+    "      \"runtimeIdentity\": {",
+    "        \"modalTaskId\": \"ta-01M0HCY921CPZJZEFF1D583ABR\"",
+    "      },",
+    "      \"normalizedSha256\": \"ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f\",",
+    "      \"separator\": {",
+    "        \"strictCudaDeterminism\": true,",
+    "        \"referenceFree\": true,",
+    "        \"directFileSha256\": \"9a29aee0e5e599bfe145f37a0a607f54be7c16af358ec215f15c0d862ac7e344\",",
+    "        \"cascadeFileSha256\": \"cb1751e25ec1966a41f9b8f48f57303899e297041adf38f25f0244b595e561cf\",",
+    "        \"directPcm\": {",
+    "          \"sha256\": \"2c94957eba17d6c2da27603d07896e641653d603e7004199ed1ed2e1065be882\",",
+    "          \"sampleRate\": 44100,",
+    "          \"frames\": 9324544,",
+    "          \"channels\": 2",
+    "        },",
+    "        \"cascadePcm\": {",
+    "          \"sha256\": \"14f8124b02d1194a397ea966e3e1fc9ab0b74e79b52322ccf092471c0b974d87\",",
+    "          \"sampleRate\": 44100,",
+    "          \"frames\": 9324544,",
+    "          \"channels\": 2",
+    "        },",
+    "        \"settings\": {",
+    "          \"demucsSingleStem\": \"Guitar\",",
+    "          \"demucsShifts\": 1,",
+    "          \"demucsOverlap\": 0.1,",
+    "          \"demucsSegmentSize\": 6,",
+    "          \"roformerSingleStem\": \"Instrumental\",",
+    "          \"roformerBatchSize\": 1,",
+    "          \"deterministicSeed\": 143,",
+    "          \"cublasWorkspaceConfig\": \":4096:8\",",
+    "          \"torchDeterministicAlgorithms\": true,",
+    "          \"cudnnBenchmark\": false,",
+    "          \"cudnnDeterministic\": true,",
+    "          \"tf32Disabled\": true",
+    "        }",
+    "      },",
+    "      \"carrier\": {",
+    "        \"semanticSha256\": \"5c7d2b7e56bcbc5d4e67bc8145e76efd247e2fd3ca0f25bb25619b263d5dfa34\",",
+    "        \"exactHistoricalReplay\": false,",
+    "        \"toleranceHistoricalReplay\": false,",
+    "        \"firstMismatch\": {",
+    "          \"path\": \"$.rows\",",
+    "          \"expectedLength\": 802,",
+    "          \"actualLength\": 805",
+    "        },",
+    "        \"rawEventCount\": 20851,",
+    "        \"candidateClusterCount\": 9061,",
+    "        \"rowCount\": 805,",
+    "        \"stemEventCounts\": {",
+    "          \"stem0:direct-demucs6s-guitar.wav\": 10637,",
+    "          \"stem1:bsroformer-demucs6s-guitar.wav\": 10214",
+    "        }",
+    "      },",
+    "      \"downstream\": {",
+    "        \"decisionSha256\": \"99bb2570e051333029d93c4f742762631d9b21091f47cbf3fba23e14b2446ce5\",",
+    "        \"decisionSetExactToHistorical\": false,",
+    "        \"baseScoreDelta\": {",
+    "          \"maxAbsDelta\": 0.4656792512848426,",
+    "          \"at\": {",
+    "            \"measure\": 58,",
+    "            \"step\": 3",
+    "          },",
+    "          \"keySetExact\": true",
+    "        },",
+    "        \"sequenceScoreDelta\": {",
+    "          \"maxAbsDelta\": 0.4852463882714399,",
+    "          \"at\": {",
+    "            \"measure\": 58,",
+    "            \"step\": 3",
+    "          },",
+    "          \"keySetExact\": true",
+    "        },",
+    "        \"keepProbabilityDelta\": {",
+    "          \"maxAbsDelta\": 0.34675514332906276,",
+    "          \"at\": {",
+    "            \"measure\": 64,",
+    "            \"step\": 7",
+    "          },",
+    "          \"keySetExact\": false",
+    "        }",
+    "      }",
+    "    }",
+    "  ],",
+    "  \"crossContainerRepeatability\": {",
+    "    \"directStemPcmExactAcrossWorkers\": false,",
+    "    \"cascadeStemPcmExactAcrossWorkers\": false,",
+    "    \"carrierSemanticExactAcrossWorkers\": false,",
+    "    \"downstreamDecisionExactAcrossWorkers\": true,",
+    "    \"historicalCarrierExactReplayCount\": 0,",
+    "    \"historicalDecisionExactCount\": 0",
+    "  },",
+    "  \"invariants\": {",
+    "    \"professionalReferenceOpened\": false,",
+    "    \"runtimeLabelsRequired\": false,",
+    "    \"frozenModelModified\": false,",
+    "    \"frozenPredictionsModified\": false,",
+    "    \"thresholdsModified\": false,",
+    "    \"liveEndpointDeployedOrModified\": false,",
+    "    \"productionModified\": false",
+    "  }",
+    "}",
+    "Stopping app - local entrypoint completed.",
+    "\u2713 App completed. View run at ",
+    "https://modal.com/apps/dadrockyt/main/ap-TGt1cPN3ZTSHG4bLajmJ7D"
+  ],
+  "productionModified": false
+}
