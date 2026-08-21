@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-contextual-prune-research-evidence-closure",
+  "status": "passed",
+  "claimScope": "research-only surviving historical/reference-free behavior for measures 33-113",
+  "explicitExclusions": [
+    "measures 17-32 are not claimed by this closure",
+    "production promotion is not authorized",
+    "live endpoint deployment or modification is not authorized"
+  ],
+  "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "evidenceSha256": {
+    "surviving": "f757213248f62c108d2dc597b9569c8e26545140c7f4330a6d916e6a5cb045ac",
+    "downstream": "2a5fb6529450310b10d0979c042572442deef501e33ff160e0e1c35fef038b00",
+    "runtime": "cde615725cdc34ec9f60f2fe1d6f1ef10ba77c3a905f8866a6ce5916baec5f8a",
+    "smoke": "2c5327ef1d7fe2a08be3b0c41bca49821e38ca9da16b86a8bdd82f729fdf8bad",
+    "staticAction": "6fd92bdab5cd342b627122966d217ae01e7234c61f2d178b1929f7a84a52e229",
+    "packagingAction": "a25c54d08ff29fededcfef6c8822e68b75a9f1972f23c851793f1d3c2673f884",
+    "staticReport": "543af11c3ac7119ef25ff38057202929bdf7f7031fb9db80371129f684ea1bc7",
+    "packagingReport": "3c21f05662120e52987274cddc96db2d0dc558ab6f1e6f66bc55909c9c995811"
+  },
+  "provenance": {
+    "allCarrierProvenancePassed": true,
+    "allSurvivingBandsProvenancePassed": true,
+    "section3HistoricalExactFamily": "B",
+    "section3ExactFamilyEvidenceApplied": true,
+    "section3CurrentContainerObservationRetained": true,
+    "reservePartialTailHistoricalGridCount": 264,
+    "reservePartialTailMeasure113Steps": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "downstream": {
+    "allHistoricalBandsDecisionEquivalent": true,
+    "allHistoricalBandsFullyEquivalentWithinTolerance": true,
+    "comparisonTolerancesWeakened": false
+  },
+  "runtime": {
+    "developmentFingerprintMatched": true,
+    "reserveBaseReplayExact": true,
+    "reserveContextualReplayExact": true
+  },
+  "shadowIsolation": {
+    "modalDependencySmokePassed": true,
+    "staticGatePassed": true,
+    "packagingGatePassed": true,
+    "protectedLiveModulesPackaged": false,
+    "liveV143FilesUnchanged": true
+  },
+  "safety": {
+    "professionalReferenceOpened": false,
+    "runtimeLabelsRequired": false,
+    "frozenModelModified": false,
+    "frozenPredictionsModified": false,
+    "thresholdsModified": false,
+    "comparisonTolerancesWeakened": false,
+    "liveEndpointDeployedOrModified": false,
+    "productionModified": false,
+    "productionPromotionAllowed": false
+  },
+  "researchEvidenceClosurePassed": true
+}
