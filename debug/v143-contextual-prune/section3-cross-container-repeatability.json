@@ -6,9 +6,9 @@
   "modalCommandExitCode": 0,
   "diagnosticResultFound": true,
   "diagnosticResult": {
-    "schemaVersion": 1,
+    "schemaVersion": 2,
     "gate": "v143-contextual-prune-section3-cross-container-repeatability",
-    "executionStrategy": "three-concurrent-independent-l4-workers-each-full-separator-basic-pitch-carrier-runtime",
+    "executionStrategy": "three-concurrent-independent-l4-workers-each-full-separator-basic-pitch-carrier-runtime-with-post-inference-runtime-fingerprint",
     "workerCount": 3,
     "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
     "workers": [
@@ -16,8 +16,42 @@
         "worker": 1,
         "runtimeIdentity": {
           "hostname": null,
-          "modalTaskId": "ta-01M0JGGV141YYHZ6WY52ZFHMHR",
-          "modalContainerId": null
+          "modalTaskId": "ta-01M0JGX0W54BW68HWW8YP2Z4XR",
+          "modalContainerId": null,
+          "fingerprint": {
+            "packages": {
+              "torch": "2.13.0+cu130",
+              "audioSeparator": "0.44.5",
+              "basicPitch": "0.4.0"
+            },
+            "cuda": {
+              "torchCudaVersion": "13.0",
+              "cudnnVersion": 92000,
+              "deterministicAlgorithmsEnabled": false,
+              "cudnnDeterministic": false,
+              "cudnnBenchmark": false,
+              "cudaMatmulAllowTf32": false,
+              "cudnnAllowTf32": true
+            },
+            "gpu": {
+              "available": true,
+              "deviceCount": 1,
+              "currentDevice": 0,
+              "name": "NVIDIA L4",
+              "computeCapability": [
+                8,
+                9
+              ],
+              "totalMemory": 23659151360
+            },
+            "nvidiaSmi": {
+              "returnCode": 0,
+              "rows": [
+                "GPU-d4d00637-cf2c-6472-b87b-91230112988d, NVIDIA L4, 580.95.05, [Unknown Error]"
+              ],
+              "stderrTail": ""
+            }
+          }
         },
         "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
         "separator": {
@@ -99,8 +133,42 @@
         "worker": 2,
         "runtimeIdentity": {
           "hostname": null,
-          "modalTaskId": "ta-01M0JGGRB5P75ZTFS8ET6R53SR",
-          "modalContainerId": null
+          "modalTaskId": "ta-01M0JGWZMY26GH41GND00W3FSR",
+          "modalContainerId": null,
+          "fingerprint": {
+            "packages": {
+              "torch": "2.13.0+cu130",
+              "audioSeparator": "0.44.5",
+              "basicPitch": "0.4.0"
+            },
+            "cuda": {
+              "torchCudaVersion": "13.0",
+              "cudnnVersion": 92000,
+              "deterministicAlgorithmsEnabled": false,
+              "cudnnDeterministic": false,
+              "cudnnBenchmark": false,
+              "cudaMatmulAllowTf32": false,
+              "cudnnAllowTf32": true
+            },
+            "gpu": {
+              "available": true,
+              "deviceCount": 1,
+              "currentDevice": 0,
+              "name": "NVIDIA L4",
+              "computeCapability": [
+                8,
+                9
+              ],
+              "totalMemory": 23659151360
+            },
+            "nvidiaSmi": {
+              "returnCode": 0,
+              "rows": [
+                "GPU-aacff72a-626a-fb6e-2a14-fa84344ab1e7, NVIDIA L4, 580.95.05, [Unknown Error]"
+              ],
+              "stderrTail": ""
+            }
+          }
         },
         "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
         "separator": {
@@ -182,8 +250,42 @@
         "worker": 3,
         "runtimeIdentity": {
           "hostname": null,
-          "modalTaskId": "ta-01M0JGGPWP0GT5XEWBFWB1S1PR",
-          "modalContainerId": null
+          "modalTaskId": "ta-01M0JGX24FFKRG3CRDRBEX6GZR",
+          "modalContainerId": null,
+          "fingerprint": {
+            "packages": {
+              "torch": "2.13.0+cu130",
+              "audioSeparator": "0.44.5",
+              "basicPitch": "0.4.0"
+            },
+            "cuda": {
+              "torchCudaVersion": "13.0",
+              "cudnnVersion": 92000,
+              "deterministicAlgorithmsEnabled": false,
+              "cudnnDeterministic": false,
+              "cudnnBenchmark": false,
+              "cudaMatmulAllowTf32": false,
+              "cudnnAllowTf32": true
+            },
+            "gpu": {
+              "available": true,
+              "deviceCount": 1,
+              "currentDevice": 0,
+              "name": "NVIDIA L4",
+              "computeCapability": [
+                8,
+                9
+              ],
+              "totalMemory": 23659151360
+            },
+            "nvidiaSmi": {
+              "returnCode": 0,
+              "rows": [
+                "GPU-5507233c-87ba-989e-1f2b-f4087c6c5dca, NVIDIA L4, 580.95.05, [Unknown Error]"
+              ],
+              "stderrTail": ""
+            }
+          }
         },
         "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
         "separator": {
@@ -271,6 +373,8 @@
       "historicalDecisionExactCount": 3
     },
     "invariants": {
+      "runtimeFingerprintCollectedPostInference": true,
+      "runtimeFingerprintUsedAsInput": false,
       "professionalReferenceOpened": false,
       "runtimeLabelsRequired": false,
       "frozenModelModified": false,
@@ -281,42 +385,6 @@
     }
   },
   "logTail": [
-    "      \"separator\": {",
-    "        \"deterministicFlag\": true,",
-    "        \"referenceFree\": true,",
-    "        \"directFileSha256\": \"afd1037bc7d62572ac9b99644d13d95b8593e25b4f442aa4a8f85c1111d97c78\",",
-    "        \"cascadeFileSha256\": \"44e0fe8874b07bcd4bca7e28f4a512b61214061f6bbf8771426c1b1237ffa201\",",
-    "        \"directPcm\": {",
-    "          \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
-    "          \"sampleRate\": 44100,",
-    "          \"frames\": 9324544,",
-    "          \"channels\": 2",
-    "        },",
-    "        \"cascadePcm\": {",
-    "          \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
-    "          \"sampleRate\": 44100,",
-    "          \"frames\": 9324544,",
-    "          \"channels\": 2",
-    "        }",
-    "      },",
-    "      \"carrier\": {",
-    "        \"semanticSha256\": \"dfd0ec804ecf7da338c3245eb8c2cd6f7bb1d187962b7081c725d7160360631f\",",
-    "        \"exactHistoricalReplay\": false,",
-    "        \"toleranceHistoricalReplay\": false,",
-    "        \"firstMismatch\": {",
-    "          \"path\": \"$.rows\",",
-    "          \"expectedLength\": 802,",
-    "          \"actualLength\": 804",
-    "        },",
-    "        \"rawEventCount\": 20836,",
-    "        \"candidateClusterCount\": 9049,",
-    "        \"rowCount\": 804,",
-    "        \"stemEventCounts\": {",
-    "          \"stem0:direct-demucs6s-guitar.wav\": 10625,",
-    "          \"stem1:bsroformer-demucs6s-guitar.wav\": 10211",
-    "        },",
-    "        \"sweepEventCounts\": {",
-    "          \"o015_f010\": 12212,",
     "          \"o020_f012\": 4540,",
     "          \"o025_f015\": 2542,",
     "          \"o030_f020\": 1542",
@@ -360,8 +428,42 @@
     "      \"worker\": 3,",
     "      \"runtimeIdentity\": {",
     "        \"hostname\": null,",
-    "        \"modalTaskId\": \"ta-01M0JGGPWP0GT5XEWBFWB1S1PR\",",
-    "        \"modalContainerId\": null",
+    "        \"modalTaskId\": \"ta-01M0JGX24FFKRG3CRDRBEX6GZR\",",
+    "        \"modalContainerId\": null,",
+    "        \"fingerprint\": {",
+    "          \"packages\": {",
+    "            \"torch\": \"2.13.0+cu130\",",
+    "            \"audioSeparator\": \"0.44.5\",",
+    "            \"basicPitch\": \"0.4.0\"",
+    "          },",
+    "          \"cuda\": {",
+    "            \"torchCudaVersion\": \"13.0\",",
+    "            \"cudnnVersion\": 92000,",
+    "            \"deterministicAlgorithmsEnabled\": false,",
+    "            \"cudnnDeterministic\": false,",
+    "            \"cudnnBenchmark\": false,",
+    "            \"cudaMatmulAllowTf32\": false,",
+    "            \"cudnnAllowTf32\": true",
+    "          },",
+    "          \"gpu\": {",
+    "            \"available\": true,",
+    "            \"deviceCount\": 1,",
+    "            \"currentDevice\": 0,",
+    "            \"name\": \"NVIDIA L4\",",
+    "            \"computeCapability\": [",
+    "              8,",
+    "              9",
+    "            ],",
+    "            \"totalMemory\": 23659151360",
+    "          },",
+    "          \"nvidiaSmi\": {",
+    "            \"returnCode\": 0,",
+    "            \"rows\": [",
+    "              \"GPU-5507233c-87ba-989e-1f2b-f4087c6c5dca, NVIDIA L4, 580.95.05, [Unknown Error]\"",
+    "            ],",
+    "            \"stderrTail\": \"\"",
+    "          }",
+    "        }",
     "      },",
     "      \"normalizedSha256\": \"ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f\",",
     "      \"separator\": {",
@@ -449,6 +551,8 @@
     "    \"historicalDecisionExactCount\": 3",
     "  },",
     "  \"invariants\": {",
+    "    \"runtimeFingerprintCollectedPostInference\": true,",
+    "    \"runtimeFingerprintUsedAsInput\": false,",
     "    \"professionalReferenceOpened\": false,",
     "    \"runtimeLabelsRequired\": false,",
     "    \"frozenModelModified\": false,",
@@ -460,7 +564,7 @@
     "}",
     "Stopping app - local entrypoint completed.",
     "\u2713 App completed. View run at ",
-    "https://modal.com/apps/dadrockyt/main/ap-eGWhLJ7tqf0DzXGf9f5o2i"
+    "https://modal.com/apps/dadrockyt/main/ap-EUJhV8TlJPHhRbynuPWqcZ"
   ],
   "liveEndpointDeployedOrModified": false,
   "productionModified": false
