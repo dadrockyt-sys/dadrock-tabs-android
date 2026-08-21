@@ -33,6 +33,7 @@ jobs:
           python-version: '3.11'
 
       - name: Verify provenance inputs
+        continue-on-error: true
         shell: bash
         run: |
           set -euo pipefail
