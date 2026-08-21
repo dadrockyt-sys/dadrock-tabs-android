@@ -24,7 +24,9 @@ survey_image = diagnostic_image.add_local_python_source(
     "v143_contextual_prune_historical_band_diagnostic_modal"
 )
 
-WORKER_COUNT = 8
+BATCH_SIZE = 8
+MAX_BATCHES = 4
+MAX_WORKERS = BATCH_SIZE * MAX_BATCHES
 CLEAR_BITS = tuple(range(0, 9))
 
 # Previously observed raw PCM families from independent seeded L4 workers.
@@ -53,9 +55,8 @@ def _quantized_pcm_hashes(path: Path) -> dict[str, Any]:
             quantized = (base & mask).astype(np.int16)
         hashes[str(bits)] = hashlib.sha256(quantized.tobytes()).hexdigest()
 
-    raw_hash = hashes["0"]
     return {
-        "sha256": raw_hash,
+        "sha256": hashes["0"],
         "sampleRate": int(sample_rate),
         "frames": int(audio.shape[0]),
         "channels": int(audio.shape[1]),
@@ -99,8 +100,10 @@ def survey_worker(source_audio: bytes, suffix: str, worker_index: int) -> dict[s
                 {
                     "torchVersion": str(torch.__version__),
                     "cudaVersion": str(torch.version.cuda),
+                    "cudnnVersion": int(torch.backends.cudnn.version()) if torch.backends.cudnn.is_available() else None,
                     "deviceName": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
                     "deviceCapability": list(torch.cuda.get_device_capability(0)) if torch.cuda.is_available() else None,
+                    "deviceProperties": str(torch.cuda.get_device_properties(0)) if torch.cuda.is_available() else None,
                 }
             )
         except Exception as exc:
@@ -129,10 +132,7 @@ def _survey(rows: list[dict[str, Any]], stem: str) -> dict[str, Any]:
     first_exact: int | None = None
     for bits in CLEAR_BITS:
         key = str(bits)
-        values = [
-            row["separator"][stem]["clearLowBitsSha256"][key]
-            for row in rows
-        ]
+        values = [row["separator"][stem]["clearLowBitsSha256"][key] for row in rows]
         hashes_by_bits[key] = values
         count = len(set(values))
         unique_counts[key] = count
@@ -149,43 +149,59 @@ def _counts(values: list[str]) -> dict[str, int]:
     return {value: values.count(value) for value in sorted(set(values))}
 
 
+def _capture_state(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    direct_families = [row["separator"]["directFamily"] for row in rows]
+    cascade_families = [row["separator"]["cascadeFamily"] for row in rows]
+    observed_known_direct = sorted(set(direct_families) & set(KNOWN_DIRECT_FAMILIES))
+    observed_known_cascade = sorted(set(cascade_families) & set(KNOWN_CASCADE_FAMILIES))
+    return {
+        "directCounts": _counts(direct_families),
+        "cascadeCounts": _counts(cascade_families),
+        "bothKnownDirectFamiliesObserved": observed_known_direct == ["A", "B"],
+        "bothKnownCascadeFamiliesObserved": observed_known_cascade == ["A", "B"],
+    }
+
+
 @app.local_entrypoint(name="diagnose")
 def diagnose(audio_path: str = "public/gomywayfullaitest.m4a") -> None:
     source = Path(audio_path)
     if not source.exists() or source.stat().st_size <= 0:
         raise RuntimeError(f"Calibration audio missing or empty: {source}")
     payload = source.read_bytes()
+    workers: list[dict[str, Any]] = []
+    batches_run = 0
 
-    def invoke(index: int) -> dict[str, Any]:
-        return survey_worker.remote(payload, source.suffix, index)
+    for batch in range(MAX_BATCHES):
+        start_index = batch * BATCH_SIZE + 1
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=WORKER_COUNT) as pool:
-        workers = list(pool.map(invoke, range(1, WORKER_COUNT + 1)))
+        def invoke(offset: int) -> dict[str, Any]:
+            return survey_worker.remote(payload, source.suffix, start_index + offset)
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=BATCH_SIZE) as pool:
+            batch_rows = list(pool.map(invoke, range(BATCH_SIZE)))
+        workers.extend(batch_rows)
+        batches_run += 1
+        state = _capture_state(workers)
+        if state["bothKnownDirectFamiliesObserved"] and state["bothKnownCascadeFamiliesObserved"]:
+            break
+
     workers.sort(key=lambda row: int(row["worker"]))
-
-    direct_families = [row["separator"]["directFamily"] for row in workers]
-    cascade_families = [row["separator"]["cascadeFamily"] for row in workers]
-    observed_known_direct = sorted(set(direct_families) & set(KNOWN_DIRECT_FAMILIES))
-    observed_known_cascade = sorted(set(cascade_families) & set(KNOWN_CASCADE_FAMILIES))
+    capture = _capture_state(workers)
 
     result = {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "gate": "v143-section2-pcm-stabilization-survey",
-        "executionStrategy": "eight-independent-l4-separations-known-family-capture-int16-low-bit-clearing-hash-survey",
-        "workerCount": WORKER_COUNT,
+        "executionStrategy": "adaptive-batches-of-eight-independent-l4-separations-stop-after-known-a-b-family-capture",
+        "batchSize": BATCH_SIZE,
+        "maxBatches": MAX_BATCHES,
+        "batchesRun": batches_run,
+        "workerCount": len(workers),
+        "maxWorkers": MAX_WORKERS,
         "clearLowBitsTested": list(CLEAR_BITS),
         "sourceSha256": hashlib.sha256(payload).hexdigest(),
-        "knownFamilies": {
-            "direct": KNOWN_DIRECT_FAMILIES,
-            "cascade": KNOWN_CASCADE_FAMILIES,
-        },
+        "knownFamilies": {"direct": KNOWN_DIRECT_FAMILIES, "cascade": KNOWN_CASCADE_FAMILIES},
         "workers": workers,
-        "familyCapture": {
-            "directCounts": _counts(direct_families),
-            "cascadeCounts": _counts(cascade_families),
-            "bothKnownDirectFamiliesObserved": observed_known_direct == ["A", "B"],
-            "bothKnownCascadeFamiliesObserved": observed_known_cascade == ["A", "B"],
-        },
+        "familyCapture": capture,
         "directPcmSurvey": _survey(workers, "directPcm"),
         "cascadePcmSurvey": _survey(workers, "cascadePcm"),
         "invariants": {
