@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import shutil
 import sys
 from pathlib import Path
@@ -14,6 +15,9 @@ from v143_production_separator import (
 )
 
 
+SEPARATOR_SEED = "143"
+
+
 def seeded_audio_separator_cli() -> list[str]:
     return [sys.executable, "-m", "v143_seeded_audio_separator_cli"]
 
@@ -24,9 +28,15 @@ def build_seeded_v143_stems(
 ) -> dict[str, Any]:
     """Run the frozen V143 separator graph through a seeded CLI wrapper.
 
-    This is diagnostic-only until repeatability is proven. The model choices and
-    production parameters remain exactly the frozen V143 values: Demucs6s Guitar,
-    shifts=1, overlap=.10, segment=6, plus BS-RoFormer Instrumental -> Demucs6s.
+    The model choices and production parameters remain exactly the frozen V143
+    values: Demucs6s Guitar, shifts=1, overlap=.10, segment=6, plus
+    BS-RoFormer Instrumental -> Demucs6s.
+
+    PYTHONHASHSEED must be inherited by each child interpreter at process
+    startup; setting it inside v143_seeded_audio_separator_cli.py is too late to
+    affect Python's hash randomization. This parent boundary therefore exports
+    only startup RNG environment values while leaving all frozen separator math
+    and model parameters unchanged.
     """
     input_path = Path(input_audio)
     root = Path(output_dir)
@@ -42,21 +52,35 @@ def build_seeded_v143_stems(
         work / "normalized",
     )
 
-    direct = separate_demucs_guitar(
-        cli,
-        normalized_input,
-        work / "direct",
-    )
-    roformer = separate_roformer_instrumental(
-        cli,
-        normalized_input,
-        work / "roformer",
-    )
-    cascade = separate_demucs_guitar(
-        cli,
-        Path(roformer["path"]),
-        work / "cascade",
-    )
+    previous_hash_seed = os.environ.get("PYTHONHASHSEED")
+    previous_separator_seed = os.environ.get("V143_SEPARATOR_SEED")
+    os.environ["PYTHONHASHSEED"] = SEPARATOR_SEED
+    os.environ["V143_SEPARATOR_SEED"] = SEPARATOR_SEED
+    try:
+        direct = separate_demucs_guitar(
+            cli,
+            normalized_input,
+            work / "direct",
+        )
+        roformer = separate_roformer_instrumental(
+            cli,
+            normalized_input,
+            work / "roformer",
+        )
+        cascade = separate_demucs_guitar(
+            cli,
+            Path(roformer["path"]),
+            work / "cascade",
+        )
+    finally:
+        if previous_hash_seed is None:
+            os.environ.pop("PYTHONHASHSEED", None)
+        else:
+            os.environ["PYTHONHASHSEED"] = previous_hash_seed
+        if previous_separator_seed is None:
+            os.environ.pop("V143_SEPARATOR_SEED", None)
+        else:
+            os.environ["V143_SEPARATOR_SEED"] = previous_separator_seed
 
     direct_out = root / "direct-demucs6s-guitar.wav"
     cascade_out = root / "bsroformer-demucs6s-guitar.wav"
@@ -87,6 +111,7 @@ def build_seeded_v143_stems(
             "roformerBatchSize": 1,
             "useSoundfile": True,
             "deterministicSeed": 143,
+            "pythonHashSeedAtChildStartup": 143,
         },
         "referenceFree": True,
         "diagnosticOnly": True,
