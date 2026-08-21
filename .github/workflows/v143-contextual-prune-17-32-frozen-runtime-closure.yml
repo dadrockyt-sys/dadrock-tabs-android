@@ -1,0 +1,386 @@
+name: V143 Contextual Prune 17-32 Frozen Runtime Closure
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-17-32-frozen-runtime-closure.yml
+
+permissions:
+  contents: write
+
+jobs:
+  frozen-runtime-closure:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install isolated replay dependencies
+        run: python -m pip install --disable-pip-version-check modal numpy
+
+      - name: Regenerate exact historical Verse1 carrier and replay sealed contextual runtime
+        shell: bash
+        run: |
+          set +e
+          CAL=public/training/v143-musical-reconstruction-calibration
+          CACHE="$CAL/fresh-verse1-reference-free-cache.json"
+          DIAG=debug/v143-contextual-prune/measure-17-32-frozen-runtime-closure.json
+          LOG=debug/v143-contextual-prune/measure-17-32-frozen-runtime-closure.log
+          mkdir -p debug/v143-contextual-prune
+          : > "$LOG"
+
+          expected_cache_sha=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('public/training/v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-fixed-count-reranker-freeze-manifest.json')
+          data = json.loads(p.read_text())
+          hits = [x for x in data['fingerprints']['freshCaches'] if x['path'].endswith('fresh-verse1-reference-free-cache.json')]
+          if len(hits) != 1:
+              raise SystemExit('Expected exactly one historical Verse1 cache fingerprint')
+          print(hits[0]['sha256'])
+          PY
+          )
+          known_cache_sha=fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15
+
+          generator_current_blob=$(git rev-parse HEAD:analyzer/v143_fresh_verse1_reference_free_capture.py)
+          generator_historical_blob=$(git rev-parse b25820ecde37dc87447a9366894bd8e4f7f21792:analyzer/v143_fresh_verse1_reference_free_capture.py)
+          scorer_current_blob=$(git rev-parse HEAD:analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py)
+          scorer_historical_blob=$(git rev-parse b25820ecde37dc87447a9366894bd8e4f7f21792:analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py)
+
+          token_available=false
+          capture_attempted=false
+          capture_status=99
+          generated_cache_sha=""
+          cache_hash_match=false
+          runtime_attempted=false
+          runtime_status=99
+
+          if [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            token_available=true
+            capture_attempted=true
+            echo "=== REGENERATE HISTORICAL VERSE1 17-32 ===" >> "$LOG"
+            python -m modal run analyzer/v143_fresh_verse1_reference_free_capture.py::capture_fresh_verse1 >> "$LOG" 2>&1
+            capture_status=$?
+          else
+            echo "Modal credentials unavailable." >> "$LOG"
+          fi
+
+          if [ -s "$CACHE" ]; then
+            generated_cache_sha=$(sha256sum "$CACHE" | awk '{print $1}')
+            if [ "$generated_cache_sha" = "$expected_cache_sha" ] && [ "$expected_cache_sha" = "$known_cache_sha" ]; then
+              cache_hash_match=true
+            fi
+          fi
+
+          if [ "$capture_status" -eq 0 ] && [ "$cache_hash_match" = true ]; then
+            runtime_attempted=true
+            echo "=== REPLAY SEALED CONTEXTUAL RUNTIME ON RECOVERED 17-96 CARRIER ===" >> "$LOG"
+            PYTHONPATH=analyzer python - <<'PY' >> "$LOG" 2>&1
+          import hashlib
+          import json
+          from pathlib import Path
+
+          import v143_correlation_safe_fixed_count_reranker_freeze as freeze
+          import v143_contextual_prune_runtime as runtime
+
+          CAL = Path('public/training/v143-musical-reconstruction-calibration')
+          FROZEN = CAL / 'contextual-prune-17-96-frozen-events.json'
+          MANIFEST = CAL / 'contextual-prune-freeze-manifest.json'
+          REPLAY = Path('/tmp/contextual-prune-17-96-runtime-replay.json')
+          TARGETS = set(range(17, 97))
+
+          def sha256(path: Path) -> str:
+              h = hashlib.sha256()
+              with path.open('rb') as f:
+                  for chunk in iter(lambda: f.read(1024 * 1024), b''):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          manifest = json.loads(MANIFEST.read_text())
+          fp = manifest['fingerprints']
+          checks = {
+              'baseModel': (freeze.BASE_MODEL_PATH, fp['baseModelSha256']),
+              'sequenceModel': (freeze.SEQUENCE_MODEL_PATH, fp['sequenceModelSha256']),
+              'contextualModel': (runtime.CONTEXTUAL_MODEL_PATH, fp['frozenModelSha256']),
+              'frozenDevelopmentEvents': (FROZEN, fp['frozenDevelopmentEventsSha256']),
+          }
+          for label, (path, expected) in checks.items():
+              actual = sha256(path)
+              if actual != expected:
+                  raise RuntimeError(f'{label} fingerprint changed: {actual} != {expected}')
+
+          rows, grid = freeze._merge_fresh_caches()
+          result = runtime.run_contextual_prune(rows, grid, TARGETS)
+
+          if result.base_threshold != 0.27:
+              raise RuntimeError(f'Base threshold changed: {result.base_threshold}')
+          if result.prune_fraction != 0.15:
+              raise RuntimeError(f'Prune fraction changed: {result.prune_fraction}')
+          if len(result.base_events) != 765:
+              raise RuntimeError(f'Base event count mismatch: {len(result.base_events)} != 765')
+          if len(result.candidate_events) != 651:
+              raise RuntimeError(f'Contextual event count mismatch: {len(result.candidate_events)} != 651')
+
+          replayed = {
+              'schemaVersion': 1,
+              'artifact': 'v143-contextual-prune-17-96-frozen-events',
+              'measures': '17-96',
+              'eventCount': len(result.candidate_events),
+              'events': [
+                  {
+                      'measure': int(measure),
+                      'quantizedStep': int(step),
+                      'baseScore': float(result.base_scores.get((measure, step), 0.0)),
+                      'sequenceScore': float(result.sequence_scores.get((measure, step), 0.0)),
+                      'sequenceEvidence': bool(result.sequence_evidence.get((measure, step), False)),
+                      'contextualKeepProbability': float(result.keep_probabilities[(measure, step)]),
+                  }
+                  for measure, step in sorted(result.candidate_events)
+              ],
+              'reserveMeasures97To113Opened': False,
+              'productionModified': False,
+          }
+          REPLAY.write_text(json.dumps(replayed, indent=2) + '\n', encoding='utf-8')
+
+          expected_payload = json.loads(FROZEN.read_text())
+          expected_events = {
+              (int(x['measure']), int(x['quantizedStep']))
+              for x in expected_payload['events']
+          }
+          if set(result.candidate_events) != expected_events:
+              missing = sorted(expected_events - set(result.candidate_events))
+              added = sorted(set(result.candidate_events) - expected_events)
+              raise RuntimeError(f'Contextual event-key mismatch missing={missing[:12]} added={added[:12]}')
+
+          replay_sha = sha256(REPLAY)
+          frozen_sha = sha256(FROZEN)
+          if replay_sha != frozen_sha:
+              # No tolerance fallback: a non-identical replay is a hard failure.
+              expected_by_key = {
+                  (int(x['measure']), int(x['quantizedStep'])): x
+                  for x in expected_payload['events']
+              }
+              replay_by_key = {
+                  (int(x['measure']), int(x['quantizedStep'])): x
+                  for x in replayed['events']
+              }
+              first_diff = None
+              for key in sorted(expected_by_key):
+                  if expected_by_key[key] != replay_by_key.get(key):
+                      first_diff = {
+                          'key': key,
+                          'expected': expected_by_key[key],
+                          'replayed': replay_by_key.get(key),
+                      }
+                      break
+              raise RuntimeError(
+                  'Frozen contextual artifact is not byte-identical; '
+                  f'expectedSha={frozen_sha} replaySha={replay_sha} firstDiff={first_diff}'
+              )
+
+          print('CONTEXTUAL_RUNTIME_REPLAY_EXACT', True)
+          print('BASE_EVENT_COUNT', len(result.base_events))
+          print('CONTEXTUAL_EVENT_COUNT', len(result.candidate_events))
+          print('BASE_THRESHOLD', result.base_threshold)
+          print('PRUNE_FRACTION', result.prune_fraction)
+          print('FROZEN_CONTEXTUAL_SHA256', frozen_sha)
+          print('REPLAY_CONTEXTUAL_SHA256', replay_sha)
+          print('PROFESSIONAL_REFERENCE_OPENED', False)
+          print('RUNTIME_LABELS_REQUIRED', False)
+          print('PRODUCTION_MODIFIED', False)
+          PY
+            runtime_status=$?
+          fi
+
+          EXPECTED_CACHE_SHA="$expected_cache_sha" \
+          GENERATED_CACHE_SHA="$generated_cache_sha" \
+          CACHE_HASH_MATCH="$cache_hash_match" \
+          GENERATOR_CURRENT_BLOB="$generator_current_blob" \
+          GENERATOR_HISTORICAL_BLOB="$generator_historical_blob" \
+          SCORER_CURRENT_BLOB="$scorer_current_blob" \
+          SCORER_HISTORICAL_BLOB="$scorer_historical_blob" \
+          TOKEN_AVAILABLE="$token_available" \
+          CAPTURE_ATTEMPTED="$capture_attempted" \
+          CAPTURE_STATUS="$capture_status" \
+          RUNTIME_ATTEMPTED="$runtime_attempted" \
+          RUNTIME_STATUS="$runtime_status" \
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          log_path = Path('debug/v143-contextual-prune/measure-17-32-frozen-runtime-closure.log')
+          diag_path = Path('debug/v143-contextual-prune/measure-17-32-frozen-runtime-closure.json')
+          frozen_path = Path('public/training/v143-musical-reconstruction-calibration/contextual-prune-17-96-frozen-events.json')
+          replay_path = Path('/tmp/contextual-prune-17-96-runtime-replay.json')
+
+          def sha(path: Path):
+              if not path.exists() or path.stat().st_size <= 0:
+                  return None
+              h = hashlib.sha256()
+              with path.open('rb') as f:
+                  for chunk in iter(lambda: f.read(1024 * 1024), b''):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          generator_exact = (
+              os.environ['GENERATOR_CURRENT_BLOB']
+              == os.environ['GENERATOR_HISTORICAL_BLOB']
+              == 'c8ea8eca33819fb506f06105f87075dadd133214'
+          )
+          scorer_exact = (
+              os.environ['SCORER_CURRENT_BLOB']
+              == os.environ['SCORER_HISTORICAL_BLOB']
+              == 'ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe'
+          )
+          cache_exact = os.environ['CACHE_HASH_MATCH'] == 'true'
+          runtime_ok = os.environ['RUNTIME_ATTEMPTED'] == 'true' and int(os.environ['RUNTIME_STATUS']) == 0
+          frozen_sha = sha(frozen_path)
+          replay_sha = sha(replay_path)
+          contextual_exact = bool(frozen_sha and replay_sha and frozen_sha == replay_sha)
+          passed = (
+              os.environ['TOKEN_AVAILABLE'] == 'true'
+              and os.environ['CAPTURE_ATTEMPTED'] == 'true'
+              and int(os.environ['CAPTURE_STATUS']) == 0
+              and generator_exact
+              and scorer_exact
+              and cache_exact
+              and runtime_ok
+              and contextual_exact
+          )
+
+          lines = log_path.read_text(encoding='utf-8', errors='replace').splitlines() if log_path.exists() else []
+          payload = {
+              'schemaVersion': 3,
+              'gate': 'v143-contextual-prune-measure-17-32-historical-carrier-plus-sealed-runtime-closure',
+              'status': 'passed' if passed else 'failed',
+              'claimScope': 'research-only historical/reference-free provenance closure for measures 17-32',
+              'historicalEvidence': {
+                  'archiveCommit': 'b25820ecde37dc87447a9366894bd8e4f7f21792',
+                  'measureBoundary': {'start': 17, 'end': 32},
+                  'generatorCurrentBlobSha': os.environ['GENERATOR_CURRENT_BLOB'],
+                  'generatorHistoricalBlobSha': os.environ['GENERATOR_HISTORICAL_BLOB'],
+                  'generatorExactBlobMatch': generator_exact,
+                  'scoringCoreCurrentBlobSha': os.environ['SCORER_CURRENT_BLOB'],
+                  'scoringCoreHistoricalBlobSha': os.environ['SCORER_HISTORICAL_BLOB'],
+                  'scoringCoreExactBlobMatch': scorer_exact,
+                  'carrierLineage': [
+                      'direct Demucs6s Guitar',
+                      'BS-RoFormer Instrumental -> Demucs6s Guitar',
+                  ],
+                  'deterministicSeparator': {
+                      'demucsShifts': 1,
+                      'demucsOverlap': 0.10,
+                      'demucsSegmentSize': 6,
+                      'deterministicSeed': 143,
+                  },
+              },
+              'historicalVerse1Cache': {
+                  'expectedSha256FromHistoricalFreezeManifest': os.environ['EXPECTED_CACHE_SHA'],
+                  'knownHistoricalSha256': 'fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15',
+                  'regeneratedSha256': os.environ['GENERATED_CACHE_SHA'] or None,
+                  'exactHashMatch': cache_exact,
+                  'committedToBranch': False,
+              },
+              'sealedContextualRuntimeReplay': {
+                  'attempted': os.environ['RUNTIME_ATTEMPTED'] == 'true',
+                  'exitCode': int(os.environ['RUNTIME_STATUS']) if os.environ['RUNTIME_ATTEMPTED'] == 'true' else None,
+                  'frozenArtifactPath': str(frozen_path),
+                  'frozenArtifactSha256': frozen_sha,
+                  'replayedArtifactSha256': replay_sha,
+                  'exactByteMatch': contextual_exact,
+                  'expectedBaseEventCount': 765,
+                  'expectedContextualEventCount': 651,
+                  'baseThreshold': 0.27,
+                  'pruneFraction': 0.15,
+                  'comparisonToleranceFallbackUsed': False,
+              },
+              'invariants': {
+                  'professionalReferenceOpenedByReplayWorkflow': False,
+                  'runtimeLabelsRequired': False,
+                  'newGenericCarrierAcceptedAsHistoricalProof': False,
+                  'historicalGeneratorUsed': True,
+                  'thresholdsModified': False,
+                  'comparisonTolerancesWeakened': False,
+                  'frozenModelModified': False,
+                  'frozenPredictionsModified': False,
+                  'generatedVerse1CachePersisted': False,
+                  'liveEndpointDeployedOrModified': False,
+                  'productionModified': False,
+                  'productionPromotionAllowed': False,
+              },
+              'resolutionRuleSatisfied': passed,
+              'logTail': lines[-100:],
+          }
+          diag_path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+
+          rm -f "$CACHE"
+          exit 0
+
+      - name: Preserve full research log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-contextual-prune-17-32-frozen-runtime-closure-log
+          path: debug/v143-contextual-prune/measure-17-32-frozen-runtime-closure.log
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Commit compact closure diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/measure-17-32-frozen-runtime-closure.json
+          if git diff --cached --quiet; then
+            echo "No closure diagnostic changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 17-32 frozen runtime closure"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce historical carrier plus sealed runtime gate
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('debug/v143-contextual-prune/measure-17-32-frozen-runtime-closure.json').read_text())
+          checks = {
+              'Gate passed': data.get('status') == 'passed',
+              'Gap resolution rule satisfied': data.get('resolutionRuleSatisfied') is True,
+              'Historical Verse1 hash exact': data.get('historicalVerse1Cache', {}).get('exactHashMatch') is True,
+              'Sealed contextual runtime exited zero': data.get('sealedContextualRuntimeReplay', {}).get('exitCode') == 0,
+              'Frozen contextual artifact byte-identical': data.get('sealedContextualRuntimeReplay', {}).get('exactByteMatch') is True,
+              'No tolerance fallback': data.get('sealedContextualRuntimeReplay', {}).get('comparisonToleranceFallbackUsed') is False,
+              'Production untouched': data.get('invariants', {}).get('productionModified') is False,
+              'Production promotion disabled': data.get('invariants', {}).get('productionPromotionAllowed') is False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              print(json.dumps({'failedChecks': failed, 'logTail': data.get('logTail', [])[-60:]}, indent=2))
+              raise SystemExit('V143 17-32 historical carrier + sealed runtime closure failed')
+          print('V143 17-32 HISTORICAL CARRIER + SEALED CONTEXTUAL RUNTIME CLOSURE PASSED')
+          print('PRODUCTION_MODIFIED', False)
+          print('PRODUCTION_PROMOTION_ALLOWED', False)
+          PY
