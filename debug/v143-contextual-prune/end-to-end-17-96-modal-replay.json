@@ -116,7 +116,8 @@
       "roformerSingleStem": "Instrumental",
       "roformerBatchSize": 1,
       "useSoundfile": true,
-      "deterministicSeed": 143
+      "deterministicSeed": 143,
+      "pythonHashSeedAtChildStartup": 143
     },
     "models": {
       "demucs": "htdemucs_6s.yaml",
@@ -134,7 +135,6 @@
     "productionModified": false
   },
   "logTail": [
-    "    {",
     "      \"measure\": 81,",
     "      \"quantizedStep\": 3,",
     "      \"contextualKeepProbability\": 0.04851924959917048",
@@ -267,7 +267,8 @@
     "      \"roformerSingleStem\": \"Instrumental\",",
     "      \"roformerBatchSize\": 1,",
     "      \"useSoundfile\": true,",
-    "      \"deterministicSeed\": 143",
+    "      \"deterministicSeed\": 143,",
+    "      \"pythonHashSeedAtChildStartup\": 143",
     "    },",
     "    \"models\": {",
     "      \"demucs\": \"htdemucs_6s.yaml\",",
@@ -293,7 +294,7 @@
     "}",
     "Stopping app - local entrypoint completed.",
     "\u2713 App completed. View run at ",
-    "https://modal.com/apps/dadrockyt/main/ap-QA2zwl9CAXHC8oVo3Vu26S"
+    "https://modal.com/apps/dadrockyt/main/ap-d56JEt6ahyLEL8xB3CPgC5"
   ],
   "liveEndpointDeployedOrModified": false,
   "productionModified": false
