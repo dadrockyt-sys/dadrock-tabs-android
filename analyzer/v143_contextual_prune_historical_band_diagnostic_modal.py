@@ -263,16 +263,17 @@ def diagnose_sections_2_and_3(source_audio: bytes, suffix: str = ".audio") -> di
     because the carrier's whole-onset CQT crop ends shortly after the last onset
     in that range; building one 33-64 carrier and slicing it can change edge CQT
     evidence near measure 48. Basic Pitch prediction is the expensive repeated
-    operation, so this diagnostic memoizes the predictor across both band builds.
-    Timing estimation is also computed once and reused. The comparison remains
-    fully reference-free and label-blind.
+    operation, so this diagnostic loads the model once, memoizes compact note
+    events across both band builds, and reuses the same reference-free timing.
+    The comparison remains fully reference-free and label-blind.
     """
     if not source_audio:
         raise ValueError("source_audio is empty")
     if len(source_audio) > 50 * 1024 * 1024:
         raise ValueError("Diagnostic audio cannot exceed 50 MB")
 
-    from basic_pitch.inference import predict as basic_pitch_predict
+    from basic_pitch import ICASSP_2022_MODEL_PATH
+    from basic_pitch.inference import Model, predict as basic_pitch_predict
     from v143_contextual_prune_reference_free_carrier import (
         build_contextual_prune_reference_free_carrier,
     )
@@ -290,7 +291,8 @@ def diagnose_sections_2_and_3(source_audio: bytes, suffix: str = ".audio") -> di
         stems, direct, cascade = _build_shadow_stems(normalized, root / "stems")
 
         timing = estimate_reference_free_timing(normalized)
-        prediction_cache: dict[Any, Any] = {}
+        basic_pitch_model = Model(ICASSP_2022_MODEL_PATH)
+        prediction_cache: dict[Any, tuple[Any, ...]] = {}
         cache_hits = 0
         cache_misses = 0
 
@@ -303,11 +305,22 @@ def diagnose_sections_2_and_3(source_audio: bytes, suffix: str = ".audio") -> di
             )
             if key in prediction_cache:
                 cache_hits += 1
-                return prediction_cache[key]
-            result = basic_pitch_predict(audio_path, *args, **kwargs)
-            prediction_cache[key] = result
+                return (None, None, prediction_cache[key])
+
+            result = basic_pitch_predict(
+                audio_path,
+                basic_pitch_model,
+                *args,
+                **kwargs,
+            )
+            if not isinstance(result, tuple) or len(result) < 3:
+                raise RuntimeError(
+                    f"Unexpected Basic Pitch return shape for {audio_path}"
+                )
+            note_events = tuple(result[2] or ())
+            prediction_cache[key] = note_events
             cache_misses += 1
-            return result
+            return (None, None, note_events)
 
         def fixed_timing(_path: str | Path) -> Any:
             return timing
@@ -333,9 +346,9 @@ def diagnose_sections_2_and_3(source_audio: bytes, suffix: str = ".audio") -> di
         result3 = _band_result("section3", section3, carrier3, 49, 64)
 
         return {
-            "schemaVersion": 3,
+            "schemaVersion": 4,
             "gate": "v143-contextual-prune-historical-band-carrier-diagnostic",
-            "executionStrategy": "dual-band-carriers-shared-basic-pitch-cache",
+            "executionStrategy": "dual-band-carriers-single-loaded-model-compact-note-cache",
             "sourceSha256": hashlib.sha256(source_audio).hexdigest(),
             "researchNormalizedSha256": _sha256(normalized),
             "section2CacheSha256": _sha256(SECTION2_CACHE),
@@ -348,6 +361,8 @@ def diagnose_sections_2_and_3(source_audio: bytes, suffix: str = ".audio") -> di
                 "hits": int(cache_hits),
                 "expectedUniquePredictions": 8,
                 "reusedForSecondBand": cache_hits >= 8,
+                "storesNoteEventsOnly": True,
+                "singleLoadedBasicPitchModel": True,
             },
             "allHistoricalBandsReplayedWithinTolerance": (
                 result2["toleranceSemanticReplayPassed"] is True
