@@ -1,0 +1,881 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-section3-exact-family-provenance-capture-action",
+  "modalCredentialsAvailableInGitHubActions": true,
+  "diagnosticAttempted": true,
+  "modalCommandExitCode": 0,
+  "diagnosticResultFound": true,
+  "diagnosticResult": {
+    "schemaVersion": 1,
+    "gate": "v143-section3-exact-family-provenance-capture",
+    "claimScope": "Section 3 measures 49-64 only; exact historical Family-B carrier and frozen scorer evidence",
+    "executionStrategy": "adaptive independent L4 workers; classify exact separator PCM family; build carrier/scorer only for historical Family B",
+    "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "batchSize": 4,
+    "maxBatches": 3,
+    "batchesRun": 3,
+    "workerCount": 12,
+    "knownHistoricalFamily": {
+      "label": "B",
+      "directPcmSha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+      "cascadePcmSha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3"
+    },
+    "workers": [
+      {
+        "worker": 1,
+        "modalTaskId": "ta-01M0JK7RSN5CGRQCH3CZ0ZMYRR",
+        "directFamily": "B",
+        "cascadeFamily": "B",
+        "familyLockstep": true,
+        "historicalFamilyPair": true,
+        "directPcm": {
+          "sha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": true,
+        "carrier": {
+          "provenanceReplayPassed": null,
+          "exactSemanticReplayPassed": true,
+          "captureDiagnosticsReplayPassed": null,
+          "semanticFirstMismatch": null,
+          "captureDiagnosticsFirstMismatch": null,
+          "rowCount": 802,
+          "rawEventCount": 20830,
+          "candidateClusterCount": 9048,
+          "stemEventCounts": {
+            "stem0:input-normalized_(Guitar)_htdemucs_6s.wav": 10625,
+            "stem1:input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12_(Guitar)_htdemucs_6s.wav": 10205
+          },
+          "sweepEventCounts": {
+            "o015_f010": 12211,
+            "o020_f012": 4539,
+            "o025_f015": 2540,
+            "o030_f020": 1540
+          }
+        },
+        "scoring": {
+          "decisionSetExact": true,
+          "baseScoresExact": true,
+          "sequenceScoresExact": true,
+          "keepProbabilitiesExact": true
+        },
+        "predictionCache": {
+          "entryCount": 8,
+          "singleLoadedBasicPitchModel": true,
+          "storesNoteEventsOnly": true
+        },
+        "exactHistoricalCarrierAndScores": false
+      },
+      {
+        "worker": 2,
+        "modalTaskId": "ta-01M0JK7VHYSFBFRR4FKS6AG75R",
+        "directFamily": "B",
+        "cascadeFamily": "B",
+        "familyLockstep": true,
+        "historicalFamilyPair": true,
+        "directPcm": {
+          "sha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": true,
+        "carrier": {
+          "provenanceReplayPassed": null,
+          "exactSemanticReplayPassed": true,
+          "captureDiagnosticsReplayPassed": null,
+          "semanticFirstMismatch": null,
+          "captureDiagnosticsFirstMismatch": null,
+          "rowCount": 802,
+          "rawEventCount": 20830,
+          "candidateClusterCount": 9048,
+          "stemEventCounts": {
+            "stem0:input-normalized_(Guitar)_htdemucs_6s.wav": 10625,
+            "stem1:input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12_(Guitar)_htdemucs_6s.wav": 10205
+          },
+          "sweepEventCounts": {
+            "o015_f010": 12211,
+            "o020_f012": 4539,
+            "o025_f015": 2540,
+            "o030_f020": 1540
+          }
+        },
+        "scoring": {
+          "decisionSetExact": true,
+          "baseScoresExact": true,
+          "sequenceScoresExact": true,
+          "keepProbabilitiesExact": true
+        },
+        "predictionCache": {
+          "entryCount": 8,
+          "singleLoadedBasicPitchModel": true,
+          "storesNoteEventsOnly": true
+        },
+        "exactHistoricalCarrierAndScores": false
+      },
+      {
+        "worker": 3,
+        "modalTaskId": "ta-01M0JK7S0ZT6R2T3MYQFM3WQNR",
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "historicalFamilyPair": false,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": false,
+        "exactHistoricalCarrierAndScores": false,
+        "reason": "separator PCM pair is not historical Family B"
+      },
+      {
+        "worker": 4,
+        "modalTaskId": "ta-01M0JK7S8F9KE083K0N2A9S7JR",
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "historicalFamilyPair": false,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": false,
+        "exactHistoricalCarrierAndScores": false,
+        "reason": "separator PCM pair is not historical Family B"
+      },
+      {
+        "worker": 5,
+        "modalTaskId": "ta-01M0JKERTSVC6P90CFJ3QSS25R",
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "historicalFamilyPair": false,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": false,
+        "exactHistoricalCarrierAndScores": false,
+        "reason": "separator PCM pair is not historical Family B"
+      },
+      {
+        "worker": 6,
+        "modalTaskId": "ta-01M0JKETWV493970T9FNGA6M8R",
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "historicalFamilyPair": false,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": false,
+        "exactHistoricalCarrierAndScores": false,
+        "reason": "separator PCM pair is not historical Family B"
+      },
+      {
+        "worker": 7,
+        "modalTaskId": "ta-01M0JK7RSN5CGRQCH3CZ0ZMYRR",
+        "directFamily": "B",
+        "cascadeFamily": "B",
+        "familyLockstep": true,
+        "historicalFamilyPair": true,
+        "directPcm": {
+          "sha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": true,
+        "carrier": {
+          "provenanceReplayPassed": null,
+          "exactSemanticReplayPassed": true,
+          "captureDiagnosticsReplayPassed": null,
+          "semanticFirstMismatch": null,
+          "captureDiagnosticsFirstMismatch": null,
+          "rowCount": 802,
+          "rawEventCount": 20830,
+          "candidateClusterCount": 9048,
+          "stemEventCounts": {
+            "stem0:input-normalized_(Guitar)_htdemucs_6s.wav": 10625,
+            "stem1:input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12_(Guitar)_htdemucs_6s.wav": 10205
+          },
+          "sweepEventCounts": {
+            "o015_f010": 12211,
+            "o020_f012": 4539,
+            "o025_f015": 2540,
+            "o030_f020": 1540
+          }
+        },
+        "scoring": {
+          "decisionSetExact": true,
+          "baseScoresExact": true,
+          "sequenceScoresExact": true,
+          "keepProbabilitiesExact": true
+        },
+        "predictionCache": {
+          "entryCount": 8,
+          "singleLoadedBasicPitchModel": true,
+          "storesNoteEventsOnly": true
+        },
+        "exactHistoricalCarrierAndScores": false
+      },
+      {
+        "worker": 8,
+        "modalTaskId": "ta-01M0JK7S0ZT6R2T3MYQFM3WQNR",
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "historicalFamilyPair": false,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": false,
+        "exactHistoricalCarrierAndScores": false,
+        "reason": "separator PCM pair is not historical Family B"
+      },
+      {
+        "worker": 9,
+        "modalTaskId": "ta-01M0JK7RSN5CGRQCH3CZ0ZMYRR",
+        "directFamily": "B",
+        "cascadeFamily": "B",
+        "familyLockstep": true,
+        "historicalFamilyPair": true,
+        "directPcm": {
+          "sha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": true,
+        "carrier": {
+          "provenanceReplayPassed": null,
+          "exactSemanticReplayPassed": true,
+          "captureDiagnosticsReplayPassed": null,
+          "semanticFirstMismatch": null,
+          "captureDiagnosticsFirstMismatch": null,
+          "rowCount": 802,
+          "rawEventCount": 20830,
+          "candidateClusterCount": 9048,
+          "stemEventCounts": {
+            "stem0:input-normalized_(Guitar)_htdemucs_6s.wav": 10625,
+            "stem1:input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12_(Guitar)_htdemucs_6s.wav": 10205
+          },
+          "sweepEventCounts": {
+            "o015_f010": 12211,
+            "o020_f012": 4539,
+            "o025_f015": 2540,
+            "o030_f020": 1540
+          }
+        },
+        "scoring": {
+          "decisionSetExact": true,
+          "baseScoresExact": true,
+          "sequenceScoresExact": true,
+          "keepProbabilitiesExact": true
+        },
+        "predictionCache": {
+          "entryCount": 8,
+          "singleLoadedBasicPitchModel": true,
+          "storesNoteEventsOnly": true
+        },
+        "exactHistoricalCarrierAndScores": false
+      },
+      {
+        "worker": 10,
+        "modalTaskId": "ta-01M0JK7S0ZT6R2T3MYQFM3WQNR",
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "historicalFamilyPair": false,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": false,
+        "exactHistoricalCarrierAndScores": false,
+        "reason": "separator PCM pair is not historical Family B"
+      },
+      {
+        "worker": 11,
+        "modalTaskId": "ta-01M0JKERTSVC6P90CFJ3QSS25R",
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "historicalFamilyPair": false,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": false,
+        "exactHistoricalCarrierAndScores": false,
+        "reason": "separator PCM pair is not historical Family B"
+      },
+      {
+        "worker": 12,
+        "modalTaskId": "ta-01M0JKMZ09D4RTRE8ZE2QEYK9R",
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "historicalFamilyPair": false,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ],
+        "shiftTraceExpectedBounds": [
+          0,
+          22050
+        ],
+        "carrierBuilt": false,
+        "exactHistoricalCarrierAndScores": false,
+        "reason": "separator PCM pair is not historical Family B"
+      }
+    ],
+    "summary": {
+      "historicalFamilyWorkerCount": 4,
+      "exactHistoricalCarrierAndScoreCount": 0,
+      "allHistoricalFamilyWorkersExact": false,
+      "section3ExactProvenanceCaptured": false
+    },
+    "invariants": {
+      "originalBandBoundaryPreserved": true,
+      "strictExactSemanticComparison": true,
+      "strictExactCaptureDiagnosticsComparison": true,
+      "strictExactDecisionComparison": true,
+      "strictExactScoreComparison": true,
+      "comparisonTolerancesWeakened": false,
+      "traceWrapperReturnsOriginalRandintValueUnchanged": true,
+      "professionalReferenceOpened": false,
+      "runtimeLabelsRequired": false,
+      "measures17To32Claimed": false,
+      "frozenModelModified": false,
+      "frozenPredictionsModified": false,
+      "thresholdsModified": false,
+      "liveEndpointDeployedOrModified": false,
+      "productionModified": false
+    }
+  },
+  "logTail": [
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"cascadeShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"shiftTraceExpectedBounds\": [",
+    "        0,",
+    "        22050",
+    "      ],",
+    "      \"carrierBuilt\": false,",
+    "      \"exactHistoricalCarrierAndScores\": false,",
+    "      \"reason\": \"separator PCM pair is not historical Family B\"",
+    "    },",
+    "    {",
+    "      \"worker\": 9,",
+    "      \"modalTaskId\": \"ta-01M0JK7RSN5CGRQCH3CZ0ZMYRR\",",
+    "      \"directFamily\": \"B\",",
+    "      \"cascadeFamily\": \"B\",",
+    "      \"familyLockstep\": true,",
+    "      \"historicalFamilyPair\": true,",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"cascadeShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"shiftTraceExpectedBounds\": [",
+    "        0,",
+    "        22050",
+    "      ],",
+    "      \"carrierBuilt\": true,",
+    "      \"carrier\": {",
+    "        \"provenanceReplayPassed\": null,",
+    "        \"exactSemanticReplayPassed\": true,",
+    "        \"captureDiagnosticsReplayPassed\": null,",
+    "        \"semanticFirstMismatch\": null,",
+    "        \"captureDiagnosticsFirstMismatch\": null,",
+    "        \"rowCount\": 802,",
+    "        \"rawEventCount\": 20830,",
+    "        \"candidateClusterCount\": 9048,",
+    "        \"stemEventCounts\": {",
+    "          \"stem0:input-normalized_(Guitar)_htdemucs_6s.wav\": 10625,",
+    "          \"stem1:input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12_(Guitar)_htdemucs_6s.wav\": 10205",
+    "        },",
+    "        \"sweepEventCounts\": {",
+    "          \"o015_f010\": 12211,",
+    "          \"o020_f012\": 4539,",
+    "          \"o025_f015\": 2540,",
+    "          \"o030_f020\": 1540",
+    "        }",
+    "      },",
+    "      \"scoring\": {",
+    "        \"decisionSetExact\": true,",
+    "        \"baseScoresExact\": true,",
+    "        \"sequenceScoresExact\": true,",
+    "        \"keepProbabilitiesExact\": true",
+    "      },",
+    "      \"predictionCache\": {",
+    "        \"entryCount\": 8,",
+    "        \"singleLoadedBasicPitchModel\": true,",
+    "        \"storesNoteEventsOnly\": true",
+    "      },",
+    "      \"exactHistoricalCarrierAndScores\": false",
+    "    },",
+    "    {",
+    "      \"worker\": 10,",
+    "      \"modalTaskId\": \"ta-01M0JK7S0ZT6R2T3MYQFM3WQNR\",",
+    "      \"directFamily\": \"A\",",
+    "      \"cascadeFamily\": \"A\",",
+    "      \"familyLockstep\": true,",
+    "      \"historicalFamilyPair\": false,",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"cascadeShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"shiftTraceExpectedBounds\": [",
+    "        0,",
+    "        22050",
+    "      ],",
+    "      \"carrierBuilt\": false,",
+    "      \"exactHistoricalCarrierAndScores\": false,",
+    "      \"reason\": \"separator PCM pair is not historical Family B\"",
+    "    },",
+    "    {",
+    "      \"worker\": 11,",
+    "      \"modalTaskId\": \"ta-01M0JKERTSVC6P90CFJ3QSS25R\",",
+    "      \"directFamily\": \"A\",",
+    "      \"cascadeFamily\": \"A\",",
+    "      \"familyLockstep\": true,",
+    "      \"historicalFamilyPair\": false,",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"cascadeShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"shiftTraceExpectedBounds\": [",
+    "        0,",
+    "        22050",
+    "      ],",
+    "      \"carrierBuilt\": false,",
+    "      \"exactHistoricalCarrierAndScores\": false,",
+    "      \"reason\": \"separator PCM pair is not historical Family B\"",
+    "    },",
+    "    {",
+    "      \"worker\": 12,",
+    "      \"modalTaskId\": \"ta-01M0JKMZ09D4RTRE8ZE2QEYK9R\",",
+    "      \"directFamily\": \"A\",",
+    "      \"cascadeFamily\": \"A\",",
+    "      \"familyLockstep\": true,",
+    "      \"historicalFamilyPair\": false,",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"cascadeShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"shiftTraceExpectedBounds\": [",
+    "        0,",
+    "        22050",
+    "      ],",
+    "      \"carrierBuilt\": false,",
+    "      \"exactHistoricalCarrierAndScores\": false,",
+    "      \"reason\": \"separator PCM pair is not historical Family B\"",
+    "    }",
+    "  ],",
+    "  \"summary\": {",
+    "    \"historicalFamilyWorkerCount\": 4,",
+    "    \"exactHistoricalCarrierAndScoreCount\": 0,",
+    "    \"allHistoricalFamilyWorkersExact\": false,",
+    "    \"section3ExactProvenanceCaptured\": false",
+    "  },",
+    "  \"invariants\": {",
+    "    \"originalBandBoundaryPreserved\": true,",
+    "    \"strictExactSemanticComparison\": true,",
+    "    \"strictExactCaptureDiagnosticsComparison\": true,",
+    "    \"strictExactDecisionComparison\": true,",
+    "    \"strictExactScoreComparison\": true,",
+    "    \"comparisonTolerancesWeakened\": false,",
+    "    \"traceWrapperReturnsOriginalRandintValueUnchanged\": true,",
+    "    \"professionalReferenceOpened\": false,",
+    "    \"runtimeLabelsRequired\": false,",
+    "    \"measures17To32Claimed\": false,",
+    "    \"frozenModelModified\": false,",
+    "    \"frozenPredictionsModified\": false,",
+    "    \"thresholdsModified\": false,",
+    "    \"liveEndpointDeployedOrModified\": false,",
+    "    \"productionModified\": false",
+    "  }",
+    "}",
+    "Stopping app - local entrypoint completed.",
+    "\u2713 App completed. View run at ",
+    "https://modal.com/apps/dadrockyt/main/ap-eJ5xoRnXCVZmE8AnScmZE3"
+  ],
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false
+}
