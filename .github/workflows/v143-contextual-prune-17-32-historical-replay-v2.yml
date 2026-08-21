@@ -1,0 +1,271 @@
+name: V143 Contextual Prune 17-32 Historical Replay V2
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-17-32-historical-replay-v2.yml
+
+permissions:
+  contents: write
+
+jobs:
+  historical-replay-v2:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out isolated research branch with history
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install isolated replay dependencies
+        run: python -m pip install --disable-pip-version-check modal numpy
+
+      - name: Run exact historical-snapshot replay
+        shell: bash
+        run: |
+          set +e
+          HIST_COMMIT=b25820ecde37dc87447a9366894bd8e4f7f21792
+          CAL=public/training/v143-musical-reconstruction-calibration
+          CACHE="$CAL/fresh-verse1-reference-free-cache.json"
+          HIST=/tmp/v143-historical-snapshot
+          LOG=debug/v143-contextual-prune/measure-17-32-historical-replay-v2.log
+          DIAG=debug/v143-contextual-prune/measure-17-32-historical-replay-v2.json
+          mkdir -p debug/v143-contextual-prune
+          : > "$LOG"
+
+          expected_cache_sha=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('public/training/v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-fixed-count-reranker-freeze-manifest.json')
+          data = json.loads(p.read_text())
+          hits = [x for x in data['fingerprints']['freshCaches'] if x['path'].endswith('fresh-verse1-reference-free-cache.json')]
+          if len(hits) != 1:
+              raise SystemExit('Expected exactly one historical Verse1 cache fingerprint')
+          print(hits[0]['sha256'])
+          PY
+          )
+          known_cache_sha=fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15
+
+          generator_blob=$(git rev-parse HEAD:analyzer/v143_fresh_verse1_reference_free_capture.py)
+          historical_generator_blob=$(git rev-parse "$HIST_COMMIT":analyzer/v143_fresh_verse1_reference_free_capture.py)
+          scorer_blob=$(git rev-parse "$HIST_COMMIT":analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py)
+
+          token_available=false
+          capture_attempted=false
+          capture_status=99
+          generated_cache_sha=""
+          cache_hash_match=false
+          historical_scorer_attempted=false
+          historical_scorer_status=99
+
+          if [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            token_available=true
+            capture_attempted=true
+            echo "=== REGENERATE VERSE1 WITH BYTE-IDENTICAL HISTORICAL GENERATOR ===" >> "$LOG"
+            python -m modal run analyzer/v143_fresh_verse1_reference_free_capture.py::capture_fresh_verse1 >> "$LOG" 2>&1
+            capture_status=$?
+          else
+            echo "Modal credentials unavailable." >> "$LOG"
+          fi
+
+          if [ -s "$CACHE" ]; then
+            generated_cache_sha=$(sha256sum "$CACHE" | awk '{print $1}')
+            if [ "$generated_cache_sha" = "$expected_cache_sha" ] && [ "$expected_cache_sha" = "$known_cache_sha" ]; then
+              cache_hash_match=true
+            fi
+          fi
+
+          rm -rf "$HIST"
+          git worktree add --detach "$HIST" "$HIST_COMMIT" >> "$LOG" 2>&1
+          worktree_status=$?
+
+          if [ "$worktree_status" -eq 0 ] && [ "$capture_status" -eq 0 ] && [ "$cache_hash_match" = true ]; then
+            mkdir -p "$HIST/public/training/v143-musical-reconstruction-calibration"
+            cp "$CACHE" "$HIST/public/training/v143-musical-reconstruction-calibration/fresh-verse1-reference-free-cache.json"
+            historical_scorer_attempted=true
+            echo "=== RUN EXACT HISTORICAL SCORER SNAPSHOT $HIST_COMMIT ===" >> "$LOG"
+            (cd "$HIST" && PYTHONPATH=analyzer python analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py) >> "$LOG" 2>&1
+            historical_scorer_status=$?
+          else
+            echo "Historical scorer skipped because exact cache/worktree prerequisites failed." >> "$LOG"
+          fi
+
+          TOKEN_AVAILABLE="$token_available" \
+          CAPTURE_ATTEMPTED="$capture_attempted" \
+          CAPTURE_STATUS="$capture_status" \
+          EXPECTED_CACHE_SHA="$expected_cache_sha" \
+          GENERATED_CACHE_SHA="$generated_cache_sha" \
+          CACHE_HASH_MATCH="$cache_hash_match" \
+          GENERATOR_BLOB="$generator_blob" \
+          HISTORICAL_GENERATOR_BLOB="$historical_generator_blob" \
+          SCORER_BLOB="$scorer_blob" \
+          HISTORICAL_SCORER_ATTEMPTED="$historical_scorer_attempted" \
+          HISTORICAL_SCORER_STATUS="$historical_scorer_status" \
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          current_cal = Path('public/training/v143-musical-reconstruction-calibration')
+          hist_cal = Path('/tmp/v143-historical-snapshot/public/training/v143-musical-reconstruction-calibration')
+          log_path = Path('debug/v143-contextual-prune/measure-17-32-historical-replay-v2.log')
+          diag_path = Path('debug/v143-contextual-prune/measure-17-32-historical-replay-v2.json')
+
+          def sha(path: Path):
+              if not path.exists() or path.stat().st_size <= 0:
+                  return None
+              h = hashlib.sha256()
+              with path.open('rb') as f:
+                  for chunk in iter(lambda: f.read(1024 * 1024), b''):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          names = {
+              'rerankerModel': 'correlation-safe-fixed-count-reranker-model.json',
+              'trainingReport': 'correlation-safe-fixed-count-reranker-training-report.json',
+              'frozenPredictions': 'fresh-17-96-correlation-safe-fixed-count-reranker-frozen-events.json',
+              'freezeManifest': 'fresh-17-96-correlation-safe-fixed-count-reranker-freeze-manifest.json',
+          }
+          comparisons = {}
+          for label, filename in names.items():
+              preserved = sha(current_cal / filename)
+              replayed = sha(hist_cal / filename)
+              comparisons[label] = {
+                  'preservedSha256': preserved,
+                  'historicalSnapshotReplaySha256': replayed,
+                  'exactByteMatch': bool(preserved and replayed and preserved == replayed),
+              }
+
+          text = log_path.read_text(encoding='utf-8', errors='replace') if log_path.exists() else ''
+          lines = text.splitlines()
+          cache_exact = os.environ['CACHE_HASH_MATCH'] == 'true'
+          generator_exact = (
+              os.environ['GENERATOR_BLOB'] == os.environ['HISTORICAL_GENERATOR_BLOB']
+              == 'c8ea8eca33819fb506f06105f87075dadd133214'
+          )
+          scorer_exact = os.environ['SCORER_BLOB'] == 'ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe'
+          scorer_ok = (
+              os.environ['HISTORICAL_SCORER_ATTEMPTED'] == 'true'
+              and int(os.environ['HISTORICAL_SCORER_STATUS']) == 0
+          )
+          outputs_exact = all(v['exactByteMatch'] for v in comparisons.values())
+          passed = (
+              os.environ['TOKEN_AVAILABLE'] == 'true'
+              and os.environ['CAPTURE_ATTEMPTED'] == 'true'
+              and int(os.environ['CAPTURE_STATUS']) == 0
+              and cache_exact
+              and generator_exact
+              and scorer_exact
+              and scorer_ok
+              and outputs_exact
+          )
+
+          payload = {
+              'schemaVersion': 2,
+              'gate': 'v143-contextual-prune-measure-17-32-exact-historical-snapshot-replay',
+              'status': 'passed' if passed else 'failed',
+              'claimScope': 'research-only historical/reference-free provenance closure for measures 17-32',
+              'historicalArchiveCommit': 'b25820ecde37dc87447a9366894bd8e4f7f21792',
+              'historicalBoundary': {'measureStart': 17, 'measureEnd': 32},
+              'generatorIdentity': {
+                  'currentBlobSha': os.environ['GENERATOR_BLOB'],
+                  'historicalArchiveBlobSha': os.environ['HISTORICAL_GENERATOR_BLOB'],
+                  'exactBlobMatch': generator_exact,
+              },
+              'historicalVerse1Cache': {
+                  'expectedSha256FromHistoricalFreezeManifest': os.environ['EXPECTED_CACHE_SHA'],
+                  'regeneratedSha256': os.environ['GENERATED_CACHE_SHA'] or None,
+                  'exactHashMatch': cache_exact,
+              },
+              'historicalSnapshotScorer': {
+                  'blobSha': os.environ['SCORER_BLOB'],
+                  'expectedBlobSha': 'ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe',
+                  'exactBlobMatch': scorer_exact,
+                  'attempted': os.environ['HISTORICAL_SCORER_ATTEMPTED'] == 'true',
+                  'exitCode': int(os.environ['HISTORICAL_SCORER_STATUS']) if os.environ['HISTORICAL_SCORER_ATTEMPTED'] == 'true' else None,
+                  'artifactComparisons': comparisons,
+                  'allArtifactsExactByteMatch': outputs_exact,
+              },
+              'logTail': lines[-220:],
+              'invariants': {
+                  'professionalReferenceOpenedByReplayWorkflow': False,
+                  'runtimeLabelsRequired': False,
+                  'thresholdsModified': False,
+                  'comparisonTolerancesWeakened': False,
+                  'generatedVerse1CacheCommitted': False,
+                  'liveEndpointDeployedOrModified': False,
+                  'productionModified': False,
+                  'productionPromotionAllowed': False,
+              },
+              'resolutionRuleSatisfied': passed,
+          }
+          diag_path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+
+          rm -f "$CACHE"
+          git worktree remove --force "$HIST" >> "$LOG" 2>&1
+          exit 0
+
+      - name: Preserve replay log and regenerated cache diagnostic context
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-contextual-prune-17-32-historical-replay-v2-log
+          path: debug/v143-contextual-prune/measure-17-32-historical-replay-v2.log
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Commit compact V2 diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/measure-17-32-historical-replay-v2.json
+          if git diff --cached --quiet; then
+            echo "No V2 diagnostic changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 17-32 historical replay V2"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce exact historical-snapshot gate
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('debug/v143-contextual-prune/measure-17-32-historical-replay-v2.json').read_text())
+          checks = {
+              'Gate passed': data.get('status') == 'passed',
+              'Resolution rule satisfied': data.get('resolutionRuleSatisfied') is True,
+              'Verse1 cache exact hash': data.get('historicalVerse1Cache', {}).get('exactHashMatch') is True,
+              'Historical scorer exited zero': data.get('historicalSnapshotScorer', {}).get('exitCode') == 0,
+              'All historical replay artifacts exact': data.get('historicalSnapshotScorer', {}).get('allArtifactsExactByteMatch') is True,
+              'Production untouched': data.get('invariants', {}).get('productionModified') is False,
+              'Production promotion disabled': data.get('invariants', {}).get('productionPromotionAllowed') is False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              print(json.dumps({'failedChecks': failed, 'logTail': data.get('logTail', [])[-80:]}, indent=2))
+              raise SystemExit('V143 17-32 exact historical-snapshot gate failed')
+          print('V143 17-32 EXACT HISTORICAL-SNAPSHOT REPLAY PASSED')
+          print('PRODUCTION_MODIFIED', False)
+          print('PRODUCTION_PROMOTION_ALLOWED', False)
+          PY
