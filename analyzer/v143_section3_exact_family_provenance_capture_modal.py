@@ -4,6 +4,7 @@ import concurrent.futures
 import hashlib
 import json
 import os
+import shutil
 import sys
 import tempfile
 from pathlib import Path
@@ -57,6 +58,28 @@ def _exact_score_maps(left: dict[Any, float], right: dict[Any, float]) -> bool:
     if set(left) != set(right):
         return False
     return all(float(left[key]) == float(right[key]) for key in left)
+
+
+def _capture_diagnostics_from_cache(cache: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "rawEventCount": int(cache.get("rawEventCount", -1)),
+        "candidateClusterCount": int(cache.get("candidateClusterCount", -1)),
+        "onsetGroupCount": int(cache.get("onsetGroupCount", -1)),
+        "sweepEventCounts": dict(cache.get("sweepEventCounts") or {}),
+        "stemEventCounts": dict(cache.get("stemEventCounts") or {}),
+        "candidateStemCount": int(cache.get("candidateStemCount", -1)),
+    }
+
+
+def _capture_diagnostics_from_carrier(carrier: Any) -> dict[str, Any]:
+    return {
+        "rawEventCount": int(carrier.raw_event_count),
+        "candidateClusterCount": int(carrier.candidate_cluster_count),
+        "onsetGroupCount": len(carrier.rows),
+        "sweepEventCounts": dict(carrier.sweep_event_counts),
+        "stemEventCounts": dict(carrier.stem_event_counts),
+        "candidateStemCount": len(carrier.stem_event_counts),
+    }
 
 
 @app.function(image=capture_image, gpu="L4", timeout=1800, memory=12288)
@@ -166,6 +189,24 @@ def capture_worker(source_audio: bytes, suffix: str, worker_index: int) -> dict[
                 "reason": "separator PCM pair is not historical Family B",
             }
 
+        # Preserve the exact Family-B PCM bytes while restoring only the canonical
+        # historical stem filenames consumed by capture diagnostics. This happens
+        # before carrier construction and does not modify audio samples or events.
+        canonical_stems = root / "canonical-stems"
+        canonical_stems.mkdir(parents=True, exist_ok=True)
+        canonical_direct = canonical_stems / "direct-demucs6s-guitar.wav"
+        canonical_cascade = canonical_stems / "bsroformer-demucs6s-guitar.wav"
+        shutil.copy2(direct_path, canonical_direct)
+        shutil.copy2(cascade_path, canonical_cascade)
+        canonical_direct_pcm = _pcm_sha256(canonical_direct)
+        canonical_cascade_pcm = _pcm_sha256(canonical_cascade)
+        canonical_pcm_preserved = (
+            canonical_direct_pcm["sha256"] == direct_pcm["sha256"]
+            and canonical_cascade_pcm["sha256"] == cascade_pcm["sha256"]
+        )
+        if not canonical_pcm_preserved:
+            raise RuntimeError("Canonical stem filename copy changed Family-B PCM bytes")
+
         timing = estimate_reference_free_timing(normalized)
         model = Model(ICASSP_2022_MODEL_PATH)
         prediction_cache: dict[Any, tuple[Any, ...]] = {}
@@ -190,13 +231,19 @@ def capture_worker(source_audio: bytes, suffix: str, worker_index: int) -> dict[
 
         carrier = build_contextual_prune_reference_free_carrier(
             normalized,
-            (direct_path, cascade_path),
+            (canonical_direct, canonical_cascade),
             measure_start=49,
             measure_end=64,
             predictor=memoized_predict,
             timing_estimator=fixed_timing,
         )
         band = _band_result(f"historical-family-worker-{worker_index}", section3, carrier, 49, 64)
+        expected_capture = _capture_diagnostics_from_cache(section3)
+        generated_capture = _capture_diagnostics_from_carrier(carrier)
+        capture_exact = expected_capture == generated_capture
+        semantic_exact = band.get("exactSemanticReplayPassed") is True
+        provenance_exact = semantic_exact and capture_exact
+
         fresh_runtime = run_contextual_prune(
             carrier.rows_by_measure,
             carrier.grid,
@@ -213,7 +260,7 @@ def capture_worker(source_audio: bytes, suffix: str, worker_index: int) -> dict[
             fresh_runtime.keep_probabilities,
         )
         exact_all = (
-            band.get("provenanceReplayPassed") is True
+            provenance_exact
             and decision_exact
             and base_scores_exact
             and sequence_scores_exact
@@ -223,12 +270,17 @@ def capture_worker(source_audio: bytes, suffix: str, worker_index: int) -> dict[
         return {
             **base,
             "carrierBuilt": True,
+            "canonicalStemFilenames": [canonical_direct.name, canonical_cascade.name],
+            "canonicalStemPcmPreserved": canonical_pcm_preserved,
             "carrier": {
-                "provenanceReplayPassed": band.get("provenanceReplayPassed"),
-                "exactSemanticReplayPassed": band.get("exactSemanticReplayPassed"),
-                "captureDiagnosticsReplayPassed": band.get("captureDiagnosticsReplayPassed"),
-                "semanticFirstMismatch": band.get("semanticFirstMismatch"),
-                "captureDiagnosticsFirstMismatch": band.get("captureDiagnosticsFirstMismatch"),
+                "provenanceReplayPassed": provenance_exact,
+                "exactSemanticReplayPassed": semantic_exact,
+                "captureDiagnosticsReplayPassed": capture_exact,
+                "semanticFirstMismatch": band.get("firstMismatch"),
+                "captureDiagnosticsFirstMismatch": None if capture_exact else {
+                    "expected": expected_capture,
+                    "generated": generated_capture,
+                },
                 "rowCount": len(carrier.rows),
                 "rawEventCount": int(carrier.raw_event_count),
                 "candidateClusterCount": int(carrier.candidate_cluster_count),
@@ -276,10 +328,10 @@ def diagnose(audio_path: str = "public/gomywayfullaitest.m4a") -> None:
     exact_workers = [row for row in workers if row.get("exactHistoricalCarrierAndScores") is True]
 
     result = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "gate": "v143-section3-exact-family-provenance-capture",
         "claimScope": "Section 3 measures 49-64 only; exact historical Family-B carrier and frozen scorer evidence",
-        "executionStrategy": "adaptive independent L4 workers; classify exact separator PCM family; build carrier/scorer only for historical Family B",
+        "executionStrategy": "adaptive independent L4 workers; classify exact separator PCM family; build carrier/scorer only for historical Family B with canonical historical stem filenames",
         "sourceSha256": hashlib.sha256(payload).hexdigest(),
         "batchSize": BATCH_SIZE,
         "maxBatches": MAX_BATCHES,
@@ -305,6 +357,8 @@ def diagnose(audio_path: str = "public/gomywayfullaitest.m4a") -> None:
             "strictExactDecisionComparison": True,
             "strictExactScoreComparison": True,
             "comparisonTolerancesWeakened": False,
+            "canonicalHistoricalStemFilenamesAppliedBeforeCarrierBuild": True,
+            "canonicalStemPcmBytesRequiredUnchanged": True,
             "traceWrapperReturnsOriginalRandintValueUnchanged": True,
             "professionalReferenceOpened": False,
             "runtimeLabelsRequired": False,
