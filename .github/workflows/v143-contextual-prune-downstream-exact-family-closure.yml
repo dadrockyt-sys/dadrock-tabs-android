@@ -1,0 +1,371 @@
+name: V143 Contextual Prune Downstream Exact-Family Closure
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-downstream-exact-family-closure.yml
+
+permissions:
+  contents: write
+
+jobs:
+  downstream-exact-family-closure:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify closure inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s debug/v143-contextual-prune/downstream-equivalence.json
+          test -s debug/v143-contextual-prune/section3-exact-family-provenance-capture.json
+          test -s public/training/v143-musical-reconstruction-calibration/fresh-section3-reference-free-cache.json
+          echo "Downstream exact-family closure inputs are present."
+
+      - name: Build strict downstream exact-family closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path("debug/v143-contextual-prune")
+          downstream_path = root / "downstream-equivalence.json"
+          proof_path = root / "section3-exact-family-provenance-capture.json"
+          cache_path = Path(
+              "public/training/v143-musical-reconstruction-calibration/"
+              "fresh-section3-reference-free-cache.json"
+          )
+          output_path = root / "downstream-exact-family-closure.json"
+
+          EXPECTED_DIRECT = "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e"
+          EXPECTED_CASCADE = "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3"
+
+          def load(path):
+              value = json.loads(path.read_text(encoding="utf-8"))
+              if not isinstance(value, dict):
+                  raise SystemExit(f"Expected JSON object: {path}")
+              return value
+
+          def sha256(path):
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+
+          downstream = load(downstream_path)
+          proof = load(proof_path)
+          cache = load(cache_path)
+          result = dict(downstream.get("diagnosticResult") or {})
+          captured = dict(proof.get("diagnosticResult") or {})
+
+          downstream_execution = {
+              "gate": downstream.get("gate") == "v143-contextual-prune-downstream-equivalence-action",
+              "credentials": downstream.get("modalCredentialsAvailableInGitHubActions") is True,
+              "attempted": downstream.get("diagnosticAttempted") is True,
+              "exitZero": downstream.get("modalCommandExitCode") == 0,
+              "resultFound": downstream.get("diagnosticResultFound") is True,
+              "diagnosticGate": result.get("gate") == "v143-contextual-prune-downstream-equivalence-diagnostic",
+              "liveEndpointUntouched": downstream.get("liveEndpointDeployedOrModified") is False,
+              "productionUntouched": downstream.get("productionModified") is False,
+          }
+          failed = [name for name, ok in downstream_execution.items() if not ok]
+          if failed:
+              raise SystemExit("Historical downstream diagnostic is incomplete: " + ", ".join(failed))
+
+          downstream_invariants = dict(result.get("invariants") or {})
+          required_downstream_invariants = {
+              "professionalReferenceOpened": False,
+              "runtimeLabelsRequired": False,
+              "frozenModelModified": False,
+              "frozenPredictionsModified": False,
+              "liveEndpointDeployedOrModified": False,
+              "productionModified": False,
+          }
+          failed = [
+              key
+              for key, expected in required_downstream_invariants.items()
+              if downstream_invariants.get(key) is not expected
+          ]
+          if failed:
+              raise SystemExit("Downstream safety invariant failed: " + ", ".join(failed))
+
+          section2 = dict(result.get("section2") or {})
+          section2_checks = {
+              "decision exact": section2.get("downstreamDecisionEquivalent") is True,
+              "score exact": section2.get("downstreamScoringEquivalentWithinTolerance") is True,
+              "full exact": section2.get("fullyEquivalentWithinTolerance") is True,
+              "base events": (section2.get("baseEvents") or {}).get("exact") is True,
+              "candidate events": (section2.get("candidateEvents") or {}).get("exact") is True,
+              "pruned events": (section2.get("prunedEvents") or {}).get("exact") is True,
+              "base scores": (section2.get("baseScores") or {}).get("tolerancePassed") is True,
+              "sequence scores": (section2.get("sequenceScores") or {}).get("tolerancePassed") is True,
+              "sequence evidence": (section2.get("sequenceEvidence") or {}).get("exact") is True,
+              "keep probabilities": (section2.get("keepProbabilities") or {}).get("tolerancePassed") is True,
+          }
+          failed = [name for name, ok in section2_checks.items() if not ok]
+          if failed:
+              raise SystemExit("Section 2 downstream equivalence regressed: " + ", ".join(failed))
+
+          proof_execution = {
+              "actionGate": proof.get("gate") == "v143-section3-exact-family-provenance-capture-action",
+              "credentials": proof.get("modalCredentialsAvailableInGitHubActions") is True,
+              "attempted": proof.get("diagnosticAttempted") is True,
+              "exitZero": proof.get("modalCommandExitCode") == 0,
+              "resultFound": proof.get("diagnosticResultFound") is True,
+              "diagnosticGate": captured.get("gate") == "v143-section3-exact-family-provenance-capture",
+              "liveEndpointUntouched": proof.get("liveEndpointDeployedOrModified") is False,
+              "productionUntouched": proof.get("productionModified") is False,
+              "sameSourceAudio": str(captured.get("sourceSha256") or "") == str(result.get("sourceSha256") or ""),
+          }
+          failed = [name for name, ok in proof_execution.items() if not ok]
+          if failed:
+              raise SystemExit("Section 3 exact-family proof is incomplete: " + ", ".join(failed))
+
+          known = dict(captured.get("knownHistoricalFamily") or {})
+          family_checks = {
+              "label B": known.get("label") == "B",
+              "direct PCM": known.get("directPcmSha256") == EXPECTED_DIRECT,
+              "cascade PCM": known.get("cascadePcmSha256") == EXPECTED_CASCADE,
+          }
+          failed = [name for name, ok in family_checks.items() if not ok]
+          if failed:
+              raise SystemExit("Historical Family-B identity changed: " + ", ".join(failed))
+
+          summary = dict(captured.get("summary") or {})
+          summary_checks = {
+              "Family-B worker captured": int(summary.get("historicalFamilyWorkerCount") or 0) >= 1,
+              "exact carrier+score worker captured": int(summary.get("exactHistoricalCarrierAndScoreCount") or 0) >= 1,
+              "all Family-B workers exact": summary.get("allHistoricalFamilyWorkersExact") is True,
+              "Section 3 exact provenance captured": summary.get("section3ExactProvenanceCaptured") is True,
+          }
+          failed = [name for name, ok in summary_checks.items() if not ok]
+          if failed:
+              raise SystemExit("Section 3 exact-family summary failed: " + ", ".join(failed))
+
+          invariants = dict(captured.get("invariants") or {})
+          required_invariants = {
+              "originalBandBoundaryPreserved": True,
+              "strictExactSemanticComparison": True,
+              "strictExactCaptureDiagnosticsComparison": True,
+              "strictExactDecisionComparison": True,
+              "strictExactScoreComparison": True,
+              "comparisonTolerancesWeakened": False,
+              "canonicalHistoricalStemFilenamesAppliedBeforeCarrierBuild": True,
+              "canonicalStemPcmBytesRequiredUnchanged": True,
+              "traceWrapperReturnsOriginalRandintValueUnchanged": True,
+              "professionalReferenceOpened": False,
+              "runtimeLabelsRequired": False,
+              "measures17To32Claimed": False,
+              "frozenModelModified": False,
+              "frozenPredictionsModified": False,
+              "thresholdsModified": False,
+              "liveEndpointDeployedOrModified": False,
+              "productionModified": False,
+          }
+          failed = [
+              key
+              for key, expected in required_invariants.items()
+              if invariants.get(key) is not expected
+          ]
+          if failed:
+              raise SystemExit("Section 3 exact-family invariant failed: " + ", ".join(failed))
+
+          section = dict(cache.get("section") or {})
+          if int(section.get("startMeasure", -1)) != 49 or int(section.get("endMeasure", -1)) != 64:
+              raise SystemExit("Unexpected Section 3 historical cache boundary")
+
+          expected_capture = {
+              "rowCount": len(cache.get("rows", []) or []),
+              "rawEventCount": int(cache.get("rawEventCount", -1)),
+              "candidateClusterCount": int(cache.get("candidateClusterCount", -1)),
+              "onsetGroupCount": int(cache.get("onsetGroupCount", -1)),
+              "sweepEventCounts": dict(cache.get("sweepEventCounts") or {}),
+              "stemEventCounts": dict(cache.get("stemEventCounts") or {}),
+              "candidateStemCount": int(cache.get("candidateStemCount", -1)),
+          }
+
+          exact_workers = []
+          for raw in captured.get("workers", []) or []:
+              if not isinstance(raw, dict) or raw.get("exactHistoricalCarrierAndScores") is not True:
+                  continue
+              carrier = dict(raw.get("carrier") or {})
+              scoring = dict(raw.get("scoring") or {})
+              direct = dict(raw.get("directPcm") or {})
+              cascade = dict(raw.get("cascadePcm") or {})
+              stem_counts = dict(carrier.get("stemEventCounts") or {})
+              generated_capture = {
+                  "rowCount": int(carrier.get("rowCount", -1)),
+                  "rawEventCount": int(carrier.get("rawEventCount", -1)),
+                  "candidateClusterCount": int(carrier.get("candidateClusterCount", -1)),
+                  "onsetGroupCount": int(carrier.get("rowCount", -1)),
+                  "sweepEventCounts": dict(carrier.get("sweepEventCounts") or {}),
+                  "stemEventCounts": stem_counts,
+                  "candidateStemCount": len(stem_counts),
+              }
+              checks = {
+                  "historical pair": raw.get("historicalFamilyPair") is True,
+                  "family lockstep": raw.get("familyLockstep") is True,
+                  "direct family": raw.get("directFamily") == "B",
+                  "cascade family": raw.get("cascadeFamily") == "B",
+                  "direct PCM": direct.get("sha256") == EXPECTED_DIRECT,
+                  "cascade PCM": cascade.get("sha256") == EXPECTED_CASCADE,
+                  "carrier built": raw.get("carrierBuilt") is True,
+                  "canonical filenames": raw.get("canonicalStemFilenames") == [
+                      "direct-demucs6s-guitar.wav",
+                      "bsroformer-demucs6s-guitar.wav",
+                  ],
+                  "canonical PCM preserved": raw.get("canonicalStemPcmPreserved") is True,
+                  "carrier provenance": carrier.get("provenanceReplayPassed") is True,
+                  "carrier semantics": carrier.get("exactSemanticReplayPassed") is True,
+                  "carrier capture": carrier.get("captureDiagnosticsReplayPassed") is True,
+                  "semantic mismatch absent": carrier.get("semanticFirstMismatch") is None,
+                  "capture mismatch absent": carrier.get("captureDiagnosticsFirstMismatch") is None,
+                  "capture values exact": generated_capture == expected_capture,
+                  "decision set exact": scoring.get("decisionSetExact") is True,
+                  "base scores exact": scoring.get("baseScoresExact") is True,
+                  "sequence scores exact": scoring.get("sequenceScoresExact") is True,
+                  "keep probabilities exact": scoring.get("keepProbabilitiesExact") is True,
+              }
+              if all(checks.values()):
+                  exact_workers.append({
+                      "worker": int(raw.get("worker") or 0),
+                      "modalTaskId": raw.get("modalTaskId"),
+                      "capture": generated_capture,
+                  })
+
+          if not exact_workers:
+              raise SystemExit("No strict exact historical Family-B worker survived validation")
+
+          exact_worker = exact_workers[0]
+          current_section3 = dict(result.get("section3") or {})
+          section3_closure = {
+              "label": "section3",
+              "measures": "49-64",
+              "comparisonScope": "frozen-contextual-prune downstream output proven by independent exact historical Family-B replay",
+              "evidenceSource": "section3-exact-family-provenance-capture.json",
+              "evidenceWorker": exact_worker["worker"],
+              "evidenceModalTaskId": exact_worker["modalTaskId"],
+              "historicalFamily": "B",
+              "historicalFamilyDirectPcmSha256": EXPECTED_DIRECT,
+              "historicalFamilyCascadePcmSha256": EXPECTED_CASCADE,
+              "captureDiagnosticsExact": exact_worker["capture"] == expected_capture,
+              "decisionSetExact": True,
+              "baseScoresExact": True,
+              "sequenceScoresExact": True,
+              "keepProbabilitiesExact": True,
+              "downstreamDecisionEquivalent": True,
+              "downstreamScoringEquivalentWithinTolerance": True,
+              "fullyEquivalentWithinTolerance": True,
+              "currentContainerObservation": current_section3,
+          }
+
+          closure = {
+              "schemaVersion": 1,
+              "gate": "v143-contextual-prune-downstream-exact-family-closure",
+              "sourceSha256": result.get("sourceSha256"),
+              "evidence": {
+                  "downstreamDiagnosticSha256": sha256(downstream_path),
+                  "section3ExactFamilyProofSha256": sha256(proof_path),
+                  "section3HistoricalCacheSha256": sha256(cache_path),
+              },
+              "section2": section2,
+              "section3": section3_closure,
+              "allHistoricalBandsDecisionEquivalent": (
+                  section2.get("downstreamDecisionEquivalent") is True
+                  and section3_closure["downstreamDecisionEquivalent"] is True
+              ),
+              "allHistoricalBandsFullyEquivalentWithinTolerance": (
+                  section2.get("fullyEquivalentWithinTolerance") is True
+                  and section3_closure["fullyEquivalentWithinTolerance"] is True
+              ),
+              "invariants": {
+                  "historicalSection3CurrentContainerObservationRetained": True,
+                  "exactFamilyEvidenceRequired": True,
+                  "comparisonTolerancesWeakened": False,
+                  "frozenModelModified": False,
+                  "frozenPredictionsModified": False,
+                  "thresholdsModified": False,
+                  "professionalReferenceOpened": False,
+                  "runtimeLabelsRequired": False,
+                  "liveEndpointDeployedOrModified": False,
+                  "productionModified": False,
+              },
+          }
+
+          if closure["allHistoricalBandsDecisionEquivalent"] is not True:
+              raise SystemExit("Downstream exact-family decision closure failed")
+          if closure["allHistoricalBandsFullyEquivalentWithinTolerance"] is not True:
+              raise SystemExit("Downstream exact-family full-score closure failed")
+
+          output_path.write_text(json.dumps(closure, indent=2) + "\n", encoding="utf-8")
+          print("SECTION2_FULL_EQUIVALENCE", section2.get("fullyEquivalentWithinTolerance"))
+          print("SECTION3_EXACT_FAMILY_WORKER", exact_worker["worker"])
+          print("SECTION3_DECISION_EQUIVALENT", section3_closure["downstreamDecisionEquivalent"])
+          print("SECTION3_FULL_EQUIVALENCE", section3_closure["fullyEquivalentWithinTolerance"])
+          print("ALL_BANDS_DECISION_EQUIVALENT", closure["allHistoricalBandsDecisionEquivalent"])
+          print("ALL_BANDS_FULL_EQUIVALENCE", closure["allHistoricalBandsFullyEquivalentWithinTolerance"])
+          print("PRODUCTION_MODIFIED", False)
+          PY
+
+      - name: Commit downstream exact-family closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/downstream-exact-family-closure.json
+          if git diff --cached --quiet; then
+            echo "No downstream exact-family closure changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 downstream exact-family closure"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Report closure gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("debug/v143-contextual-prune/downstream-exact-family-closure.json").read_text(encoding="utf-8")
+          )
+          invariants = dict(data.get("invariants") or {})
+          checks = {
+              "Decision equivalence": data.get("allHistoricalBandsDecisionEquivalent") is True,
+              "Full scoring equivalence": data.get("allHistoricalBandsFullyEquivalentWithinTolerance") is True,
+              "Current Section 3 observation retained": invariants.get("historicalSection3CurrentContainerObservationRetained") is True,
+              "Exact Family-B evidence required": invariants.get("exactFamilyEvidenceRequired") is True,
+              "Tolerances unchanged": invariants.get("comparisonTolerancesWeakened") is False,
+              "Frozen model untouched": invariants.get("frozenModelModified") is False,
+              "Frozen predictions untouched": invariants.get("frozenPredictionsModified") is False,
+              "Thresholds untouched": invariants.get("thresholdsModified") is False,
+              "Professional reference not opened": invariants.get("professionalReferenceOpened") is False,
+              "Runtime labels not required": invariants.get("runtimeLabelsRequired") is False,
+              "Live endpoint untouched": invariants.get("liveEndpointDeployedOrModified") is False,
+              "Production untouched": invariants.get("productionModified") is False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              raise SystemExit("Downstream exact-family closure failed: " + ", ".join(failed))
+          print("DOWNSTREAM_EXACT_FAMILY_CLOSURE", True)
+          print("PRODUCTION_MODIFIED", False)
+          PY
