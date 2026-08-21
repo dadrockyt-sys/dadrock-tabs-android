@@ -8,6 +8,7 @@ on:
     paths:
       - .github/workflows/v143-contextual-prune-dual-band-cross-container-behavior.yml
       - analyzer/v143_contextual_prune_dual_band_cross_container_behavior_modal.py
+      - analyzer/v143_seeded_separator.py
 
 permissions:
   contents: write
@@ -41,6 +42,7 @@ jobs:
           test -s public/training/v143-musical-reconstruction-calibration/fresh-section3-reference-free-cache.json
           test -s public/training/v143-musical-reconstruction-calibration/contextual-prune-frozen-model.json
           test -s analyzer/v143_contextual_prune_dual_band_cross_container_behavior_modal.py
+          test -s analyzer/v143_seeded_separator.py
 
       - name: Run dual-band cross-container behavior diagnostic on Modal
         shell: bash
