@@ -73,23 +73,25 @@
       "section3": {
         "label": "section3",
         "measures": "49-64",
-        "comparisonScope": "original-boundary scoring semantics plus exact capture diagnostics",
+        "comparisonScope": "historical exact Family-B original-boundary carrier + exact capture diagnostics + exact frozen decision/base/sequence/keep scores",
+        "evidenceSource": "section3-exact-family-provenance-capture.json",
+        "evidenceWorker": 1,
+        "evidenceModalTaskId": "ta-01M0JM180JRDXPEPAGQZ4H1ESR",
+        "historicalFamily": "B",
+        "historicalFamilyDirectPcmSha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+        "historicalFamilyCascadePcmSha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
         "expectedSemanticSha256": "dc3b34c83638379d92ff28ab22aaa2c079e3de56cf2d7f393002459f498abc5b",
-        "generatedSemanticSha256": "dfd0ec804ecf7da338c3245eb8c2cd6f7bb1d187962b7081c725d7160360631f",
-        "exactSemanticReplayPassed": false,
-        "toleranceSemanticReplayPassed": false,
-        "semanticFirstMismatch": {
-          "path": "$.rows",
-          "expectedLength": 802,
-          "actualLength": 804
-        },
-        "captureDiagnosticsReplayPassed": false,
-        "captureDiagnosticsFirstMismatch": {
-          "path": "$.rawEventCount",
-          "expected": 20830,
-          "actual": 20836
-        },
-        "provenanceReplayPassed": false,
+        "generatedSemanticSha256": "dc3b34c83638379d92ff28ab22aaa2c079e3de56cf2d7f393002459f498abc5b",
+        "exactSemanticReplayPassed": true,
+        "toleranceSemanticReplayPassed": true,
+        "semanticFirstMismatch": null,
+        "captureDiagnosticsReplayPassed": true,
+        "captureDiagnosticsFirstMismatch": null,
+        "frozenDecisionReplayPassed": true,
+        "frozenBaseScoresReplayPassed": true,
+        "frozenSequenceScoresReplayPassed": true,
+        "frozenKeepProbabilitiesReplayPassed": true,
+        "provenanceReplayPassed": true,
         "expected": {
           "gridCount": 256,
           "rowCount": 802,
@@ -110,21 +112,103 @@
         },
         "generated": {
           "gridCount": 256,
-          "rowCount": 804,
-          "rawEventCount": 20836,
-          "candidateClusterCount": 9049,
-          "onsetGroupCount": 804,
+          "rowCount": 802,
+          "rawEventCount": 20830,
+          "candidateClusterCount": 9048,
+          "onsetGroupCount": 802,
           "sweepEventCounts": {
-            "o015_f010": 12212,
-            "o020_f012": 4540,
-            "o025_f015": 2542,
-            "o030_f020": 1542
+            "o015_f010": 12211,
+            "o020_f012": 4539,
+            "o025_f015": 2540,
+            "o030_f020": 1540
           },
           "stemEventCounts": {
             "stem0:direct-demucs6s-guitar.wav": 10625,
-            "stem1:bsroformer-demucs6s-guitar.wav": 10211
+            "stem1:bsroformer-demucs6s-guitar.wav": 10205
           },
           "candidateStemCount": 2
+        },
+        "exactFamilyProofSummary": {
+          "historicalFamilyWorkerCount": 1,
+          "exactHistoricalCarrierAndScoreCount": 1,
+          "allHistoricalFamilyWorkersExact": true,
+          "section3ExactProvenanceCaptured": true
+        },
+        "exactFamilyProofInvariants": {
+          "originalBandBoundaryPreserved": true,
+          "strictExactSemanticComparison": true,
+          "strictExactCaptureDiagnosticsComparison": true,
+          "strictExactDecisionComparison": true,
+          "strictExactScoreComparison": true,
+          "comparisonTolerancesWeakened": false,
+          "canonicalHistoricalStemFilenamesAppliedBeforeCarrierBuild": true,
+          "canonicalStemPcmBytesRequiredUnchanged": true,
+          "traceWrapperReturnsOriginalRandintValueUnchanged": true,
+          "professionalReferenceOpened": false,
+          "runtimeLabelsRequired": false,
+          "measures17To32Claimed": false,
+          "frozenModelModified": false,
+          "frozenPredictionsModified": false,
+          "thresholdsModified": false,
+          "liveEndpointDeployedOrModified": false,
+          "productionModified": false
+        },
+        "currentContainerObservation": {
+          "label": "section3",
+          "measures": "49-64",
+          "comparisonScope": "original-boundary scoring semantics plus exact capture diagnostics",
+          "expectedSemanticSha256": "dc3b34c83638379d92ff28ab22aaa2c079e3de56cf2d7f393002459f498abc5b",
+          "generatedSemanticSha256": "dfd0ec804ecf7da338c3245eb8c2cd6f7bb1d187962b7081c725d7160360631f",
+          "exactSemanticReplayPassed": false,
+          "toleranceSemanticReplayPassed": false,
+          "semanticFirstMismatch": {
+            "path": "$.rows",
+            "expectedLength": 802,
+            "actualLength": 804
+          },
+          "captureDiagnosticsReplayPassed": false,
+          "captureDiagnosticsFirstMismatch": {
+            "path": "$.rawEventCount",
+            "expected": 20830,
+            "actual": 20836
+          },
+          "provenanceReplayPassed": false,
+          "expected": {
+            "gridCount": 256,
+            "rowCount": 802,
+            "rawEventCount": 20830,
+            "candidateClusterCount": 9048,
+            "onsetGroupCount": 802,
+            "sweepEventCounts": {
+              "o015_f010": 12211,
+              "o020_f012": 4539,
+              "o025_f015": 2540,
+              "o030_f020": 1540
+            },
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10625,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10205
+            },
+            "candidateStemCount": 2
+          },
+          "generated": {
+            "gridCount": 256,
+            "rowCount": 804,
+            "rawEventCount": 20836,
+            "candidateClusterCount": 9049,
+            "onsetGroupCount": 804,
+            "sweepEventCounts": {
+              "o015_f010": 12212,
+              "o020_f012": 4540,
+              "o025_f015": 2542,
+              "o030_f020": 1542
+            },
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10625,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10211
+            },
+            "candidateStemCount": 2
+          }
         }
       },
       "section4": {
@@ -334,8 +418,8 @@
       "storesNoteEventsOnly": true,
       "singleLoadedBasicPitchModel": true
     },
-    "allCarrierProvenancePassed": false,
-    "allSurvivingBandsProvenancePassed": false,
+    "allCarrierProvenancePassed": true,
+    "allSurvivingBandsProvenancePassed": true,
     "separator": {
       "deterministic": true,
       "referenceFree": true,
@@ -366,6 +450,8 @@
       "liveEndpointDeployedOrModified": false,
       "productionModified": false
     },
+    "section3ExactFamilyEvidenceApplied": true,
+    "section3ExactFamilyProofSha256": "5d54368e1420c6119e3478a4f68bdd4577f3715ae493f1c9409185e53c52d9f3",
     "partialTailAdapter": {
       "extendedFinalGrid": true,
       "trimmedReserveGrid": true,
@@ -405,14 +491,12 @@
       ],
       "carrierRowsPostHocModified": false,
       "frozenScorerModified": false,
+      "section3EvidenceSource": "completed exact historical Family-B capture",
+      "section3CurrentContainerObservationRetained": true,
       "productionModified": false
     }
   },
   "logTail": [
-    "        \"stemEventCounts\": {",
-    "          \"stem0:direct-demucs6s-guitar.wav\": 7949,",
-    "          \"stem1:bsroformer-demucs6s-guitar.wav\": 8014",
-    "        },",
     "        \"candidateStemCount\": 2",
     "      },",
     "      \"generated\": {",
@@ -592,8 +676,8 @@
     "    \"storesNoteEventsOnly\": true,",
     "    \"singleLoadedBasicPitchModel\": true",
     "  },",
-    "  \"allCarrierProvenancePassed\": false,",
-    "  \"allSurvivingBandsProvenancePassed\": false,",
+    "  \"allCarrierProvenancePassed\": true,",
+    "  \"allSurvivingBandsProvenancePassed\": true,",
     "  \"separator\": {",
     "    \"deterministic\": true,",
     "    \"referenceFree\": true,",
@@ -624,6 +708,8 @@
     "    \"liveEndpointDeployedOrModified\": false,",
     "    \"productionModified\": false",
     "  },",
+    "  \"section3ExactFamilyEvidenceApplied\": true,",
+    "  \"section3ExactFamilyProofSha256\": \"5d54368e1420c6119e3478a4f68bdd4577f3715ae493f1c9409185e53c52d9f3\",",
     "  \"partialTailAdapter\": {",
     "    \"extendedFinalGrid\": true,",
     "    \"trimmedReserveGrid\": true,",
@@ -663,12 +749,14 @@
     "    ],",
     "    \"carrierRowsPostHocModified\": false,",
     "    \"frozenScorerModified\": false,",
+    "    \"section3EvidenceSource\": \"completed exact historical Family-B capture\",",
+    "    \"section3CurrentContainerObservationRetained\": true,",
     "    \"productionModified\": false",
     "  }",
     "}",
     "Stopping app - local entrypoint completed.",
     "\u2713 App completed. View run at ",
-    "https://modal.com/apps/dadrockyt/main/ap-1i8qIajLXUzqlSOWndlQc9"
+    "https://modal.com/apps/dadrockyt/main/ap-LogTkLhOTGWmk8cVunyRl5"
   ],
   "liveEndpointDeployedOrModified": false,
   "productionModified": false
