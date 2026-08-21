@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "diagnostic": "v143-contextual-floating-point-reproducibility",
+  "historicalVerse1CacheExact": true,
+  "frozenArtifactSha256": "5658952ef54ff3e05c6a9bbc388e60b101728adc1df1d1231ff84a9d4f2eba00",
+  "runtimeDiscreteEventKeysExact": true,
+  "runtimeBaseEventCount": 765,
+  "runtimeContextualEventCount": 651,
+  "coreBaseSequenceEvidenceExactForAllFrozenEvents": true,
+  "runtimeKeepProbabilityMismatchCount": 2,
+  "runtimeKeepProbabilityMaxUlpDistance": 3,
+  "runtimeKeepProbabilityFirstDifferences": [
+    {
+      "key": [
+        96,
+        14
+      ],
+      "expected": 0.10314110104888881,
+      "actual": 0.10314110104888885,
+      "ulpDistance": 3
+    },
+    {
+      "key": [
+        96,
+        15
+      ],
+      "expected": 0.2609129927730226,
+      "actual": 0.26091299277302255,
+      "ulpDistance": 1
+    }
+  ],
+  "arithmeticMethods": {
+    "numpy_matmul_numpy_sigmoid": {
+      "candidateKeysExact": true,
+      "candidateCount": 651,
+      "exactProbabilityMatchesOf651": 649,
+      "probabilityMismatchCount": 2,
+      "maxUlpDistance": 3,
+      "replaySha256": "7a5f318da2a54b78efdd07074d6ae1f51b3116e9edc95df200a816a11b35bcb0",
+      "frozenArtifactByteExact": false
+    },
+    "numpy_dot_rows_numpy_sigmoid": {
+      "candidateKeysExact": true,
+      "candidateCount": 651,
+      "exactProbabilityMatchesOf651": 407,
+      "probabilityMismatchCount": 244,
+      "maxUlpDistance": 7,
+      "replaySha256": "5746be3988faf9be32a6e8d31ffbbeb6a72c440e01f0d572c9c6277c3f05afa8",
+      "frozenArtifactByteExact": false
+    },
+    "numpy_einsum_numpy_sigmoid": {
+      "candidateKeysExact": true,
+      "candidateCount": 651,
+      "exactProbabilityMatchesOf651": 396,
+      "probabilityMismatchCount": 255,
+      "maxUlpDistance": 7,
+      "replaySha256": "8486e1e6eb5e36bc56ab8fe6d6d617bb07fbfbc368d3975483c514e20a70647d",
+      "frozenArtifactByteExact": false
+    },
+    "python_left_sum_python_sigmoid": {
+      "candidateKeysExact": true,
+      "candidateCount": 651,
+      "exactProbabilityMatchesOf651": 343,
+      "probabilityMismatchCount": 308,
+      "maxUlpDistance": 13,
+      "replaySha256": "253ec811f2edb4fb1d9da0199b52ace7ab126744fef432f4a80107f67d1bcfdd",
+      "frozenArtifactByteExact": false
+    },
+    "python_fsum_python_sigmoid": {
+      "candidateKeysExact": true,
+      "candidateCount": 651,
+      "exactProbabilityMatchesOf651": 439,
+      "probabilityMismatchCount": 212,
+      "maxUlpDistance": 6,
+      "replaySha256": "b695a0012209001862f05202c9e842a20e6c2981e5349ef7f908943fd8ff2264",
+      "frozenArtifactByteExact": false
+    },
+    "python_left_sum_numpy_sigmoid": {
+      "candidateKeysExact": true,
+      "candidateCount": 651,
+      "exactProbabilityMatchesOf651": 343,
+      "probabilityMismatchCount": 308,
+      "maxUlpDistance": 13,
+      "replaySha256": "253ec811f2edb4fb1d9da0199b52ace7ab126744fef432f4a80107f67d1bcfdd",
+      "frozenArtifactByteExact": false
+    },
+    "python_fsum_numpy_sigmoid": {
+      "candidateKeysExact": true,
+      "candidateCount": 651,
+      "exactProbabilityMatchesOf651": 439,
+      "probabilityMismatchCount": 212,
+      "maxUlpDistance": 6,
+      "replaySha256": "b695a0012209001862f05202c9e842a20e6c2981e5349ef7f908943fd8ff2264",
+      "frozenArtifactByteExact": false
+    }
+  },
+  "noToleranceFallbackUsed": true,
+  "thresholdsModified": false,
+  "modelModified": false,
+  "professionalReferenceOpened": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false
+}
