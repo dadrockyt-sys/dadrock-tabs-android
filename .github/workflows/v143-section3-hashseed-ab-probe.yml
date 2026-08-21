@@ -1,0 +1,182 @@
+name: V143 Section 3 Hash-Seed A/B Probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-section3-hashseed-ab-probe.yml
+      - analyzer/v143_section3_hashseed_ab_probe_modal.py
+
+permissions:
+  contents: write
+
+jobs:
+  section3-hashseed-ab-probe:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify probe inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s public/gomywayfullaitest.m4a
+          test -s analyzer/v143_section3_hashseed_ab_probe_modal.py
+          test -s analyzer/v143_seeded_audio_separator_cli.py
+          test -s analyzer/v143_production_separator.py
+          echo "Hash-seed A/B probe inputs are present."
+
+      - name: Run controlled legacy-vs-fixed probe on Modal
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=debug/v143-contextual-prune/section3-hashseed-ab-probe.log
+          output=debug/v143-contextual-prune/section3-hashseed-ab-probe.json
+
+          : > "$log"
+          echo "commit=$GITHUB_SHA" >> "$log"
+          echo "actor=$GITHUB_ACTOR" >> "$log"
+
+          token_available=false
+          attempted=false
+          status=99
+
+          if [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            token_available=true
+            python -m pip install --disable-pip-version-check modal >> "$log" 2>&1
+            install_status=$?
+            if [ "$install_status" -eq 0 ]; then
+              attempted=true
+              python -m modal run analyzer/v143_section3_hashseed_ab_probe_modal.py::diagnose >> "$log" 2>&1
+              status=$?
+            else
+              status=$install_status
+            fi
+          else
+            echo "Modal GitHub credentials are unavailable; probe not attempted." >> "$log"
+          fi
+
+          TOKEN_AVAILABLE="$token_available" ATTEMPTED="$attempted" STATUS="$status" python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          log_path = Path("debug/v143-contextual-prune/section3-hashseed-ab-probe.log")
+          output = Path("debug/v143-contextual-prune/section3-hashseed-ab-probe.json")
+          text = log_path.read_text(encoding="utf-8", errors="replace")
+          target_gate = "v143-section3-hashseed-ab-probe"
+          result = None
+          decoder = json.JSONDecoder()
+          for index, char in enumerate(text):
+              if char != "{":
+                  continue
+              try:
+                  value, _ = decoder.raw_decode(text[index:])
+              except json.JSONDecodeError:
+                  continue
+              if isinstance(value, dict) and value.get("gate") == target_gate:
+                  result = value
+
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-section3-hashseed-ab-probe-action",
+              "modalCredentialsAvailableInGitHubActions": os.environ["TOKEN_AVAILABLE"] == "true",
+              "diagnosticAttempted": os.environ["ATTEMPTED"] == "true",
+              "modalCommandExitCode": int(os.environ["STATUS"]) if os.environ["ATTEMPTED"] == "true" else None,
+              "diagnosticResultFound": result is not None,
+              "diagnosticResult": result,
+              "logTail": text.splitlines()[-220:],
+              "liveEndpointDeployedOrModified": False,
+              "productionModified": False,
+          }
+          output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          exit 0
+
+      - name: Preserve full probe log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-section3-hashseed-ab-probe-log
+          path: debug/v143-contextual-prune/section3-hashseed-ab-probe.log
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Commit compact probe result
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/section3-hashseed-ab-probe.json
+          if git diff --cached --quiet; then
+            echo "No hash-seed probe result changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 Section 3 hash-seed A/B probe"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Report controlled probe state
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("debug/v143-contextual-prune/section3-hashseed-ab-probe.json").read_text(encoding="utf-8"))
+          result = data.get("diagnosticResult") or {}
+          legacy = result.get("legacyUnset") or {}
+          fixed = result.get("fixed143") or {}
+          inference = result.get("inference") or {}
+          invariants = result.get("invariants") or {}
+
+          checks = {
+              "Modal credentials available": data.get("modalCredentialsAvailableInGitHubActions") is True,
+              "Diagnostic attempted": data.get("diagnosticAttempted") is True,
+              "Modal command exited zero": data.get("modalCommandExitCode") == 0,
+              "Diagnostic result found": data.get("diagnosticResultFound") is True,
+              "Fixed control worker count": fixed.get("workerCount") == 2,
+              "Fixed controls remain alternate family A": fixed.get("alternatePcmPairCount") == 2,
+              "Separator seed preserved": invariants.get("separatorSeed") == 143,
+              "Frozen model untouched": invariants.get("frozenModelModified") is False,
+              "Frozen predictions untouched": invariants.get("frozenPredictionsModified") is False,
+              "Thresholds untouched": invariants.get("thresholdsModified") is False,
+              "Live endpoint untouched": invariants.get("liveEndpointDeployedOrModified") is False,
+              "Production untouched": invariants.get("productionModified") is False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              raise SystemExit("Hash-seed A/B probe execution failed: " + ", ".join(failed))
+
+          print("LEGACY_DIRECT_FAMILIES", json.dumps(legacy.get("directFamilies"), sort_keys=True))
+          print("LEGACY_CASCADE_FAMILIES", json.dumps(legacy.get("cascadeFamilies"), sort_keys=True))
+          print("LEGACY_HISTORICAL_PAIR_COUNT", legacy.get("historicalPcmPairCount"))
+          print("LEGACY_ALTERNATE_PAIR_COUNT", legacy.get("alternatePcmPairCount"))
+          print("LEGACY_UNIQUE_ROFORMER_PCM", len(legacy.get("uniqueRoformerPcm") or []))
+          print("FIXED_DIRECT_FAMILIES", json.dumps(fixed.get("directFamilies"), sort_keys=True))
+          print("FIXED_CASCADE_FAMILIES", json.dumps(fixed.get("cascadeFamilies"), sort_keys=True))
+          print("FIXED_HISTORICAL_PAIR_COUNT", fixed.get("historicalPcmPairCount"))
+          print("FIXED_ALTERNATE_PAIR_COUNT", fixed.get("alternatePcmPairCount"))
+          print("FIXED_UNIQUE_ROFORMER_PCM", len(fixed.get("uniqueRoformerPcm") or []))
+          print("HISTORICAL_UNDER_LEGACY", inference.get("historicalFamilyObservedUnderLegacyUnset"))
+          print("HISTORICAL_UNDER_FIXED143", inference.get("historicalFamilyObservedUnderFixed143"))
+          print("PRODUCTION_MODIFIED", False)
+          PY
