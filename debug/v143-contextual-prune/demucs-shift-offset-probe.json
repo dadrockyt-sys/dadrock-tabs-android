@@ -1,0 +1,550 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-demucs-shift-offset-probe-action",
+  "modalCredentialsAvailableInGitHubActions": true,
+  "diagnosticAttempted": true,
+  "modalCommandExitCode": 0,
+  "diagnosticResultFound": true,
+  "diagnosticResult": {
+    "schemaVersion": 1,
+    "gate": "v143-demucs-shift-offset-probe",
+    "executionStrategy": "adaptive-fixed-143-exact-demucs-randint-trace-with-unchanged-return-values",
+    "batchSize": 4,
+    "maxBatches": 3,
+    "batchesRun": 1,
+    "workerCount": 4,
+    "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "knownFamilies": {
+      "direct": {
+        "A": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+        "B": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e"
+      },
+      "cascade": {
+        "A": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+        "B": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3"
+      }
+    },
+    "workers": [
+      {
+        "worker": 1,
+        "modalTaskId": "ta-01M0JJQE203EGMAHN8A6KNHG6R",
+        "directFamily": "B",
+        "cascadeFamily": "B",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directTrace": [
+          {
+            "a": 0,
+            "b": 22050,
+            "call": 1,
+            "stage": "direct",
+            "value": 6026
+          }
+        ],
+        "cascadeTrace": [
+          {
+            "a": 0,
+            "b": 22050,
+            "call": 1,
+            "stage": "cascade",
+            "value": 6026
+          }
+        ],
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ]
+      },
+      {
+        "worker": 2,
+        "modalTaskId": "ta-01M0JJQGFJW58PPY4EFVX35M1R",
+        "directFamily": "B",
+        "cascadeFamily": "B",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directTrace": [
+          {
+            "a": 0,
+            "b": 22050,
+            "call": 1,
+            "stage": "direct",
+            "value": 6026
+          }
+        ],
+        "cascadeTrace": [
+          {
+            "a": 0,
+            "b": 22050,
+            "call": 1,
+            "stage": "cascade",
+            "value": 6026
+          }
+        ],
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ]
+      },
+      {
+        "worker": 3,
+        "modalTaskId": "ta-01M0JJQJTT72CJ0GP8NWEJJQ6R",
+        "directFamily": "B",
+        "cascadeFamily": "B",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directTrace": [
+          {
+            "a": 0,
+            "b": 22050,
+            "call": 1,
+            "stage": "direct",
+            "value": 6026
+          }
+        ],
+        "cascadeTrace": [
+          {
+            "a": 0,
+            "b": 22050,
+            "call": 1,
+            "stage": "cascade",
+            "value": 6026
+          }
+        ],
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ]
+      },
+      {
+        "worker": 4,
+        "modalTaskId": "ta-01M0JJQF63CE47ENPFJ8X7Q5VR",
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directTrace": [
+          {
+            "a": 0,
+            "b": 22050,
+            "call": 1,
+            "stage": "direct",
+            "value": 6026
+          }
+        ],
+        "cascadeTrace": [
+          {
+            "a": 0,
+            "b": 22050,
+            "call": 1,
+            "stage": "cascade",
+            "value": 6026
+          }
+        ],
+        "directShiftValues": [
+          6026
+        ],
+        "cascadeShiftValues": [
+          6026
+        ]
+      }
+    ],
+    "summary": {
+      "directFamilyCounts": {
+        "A": 1,
+        "B": 3
+      },
+      "cascadeFamilyCounts": {
+        "A": 1,
+        "B": 3
+      },
+      "allDirectCascadeFamiliesLockstep": true,
+      "bothKnownFamiliesObserved": true,
+      "roformerPcmExactAcrossWorkers": true,
+      "directShiftSequencesByFamily": {
+        "A": [
+          [
+            6026
+          ]
+        ],
+        "B": [
+          [
+            6026
+          ]
+        ]
+      },
+      "cascadeShiftSequencesByFamily": {
+        "A": [
+          [
+            6026
+          ]
+        ],
+        "B": [
+          [
+            6026
+          ]
+        ]
+      },
+      "sameDirectShiftSequencesAcrossFamilies": true,
+      "sameCascadeShiftSequencesAcrossFamilies": true
+    },
+    "inferenceGuide": {
+      "differentShiftSequencesAcrossFamilies": "Python-random state consumed before Demucs shift selection is sufficient to explain the family split.",
+      "sameShiftSequencesAcrossFamilies": "The family split occurs after shift selection; investigate GPU/kernel-level nondeterminism next.",
+      "onlyOneFamilyObserved": "Inconclusive for family causality; rerun later without changing production."
+    },
+    "invariants": {
+      "traceWrapperReturnsOriginalRandintValueUnchanged": true,
+      "pythonHashSeedAtChildStartup": 143,
+      "separatorSeed": 143,
+      "demucsShifts": 1,
+      "demucsOverlap": 0.1,
+      "demucsSegmentSize": 6,
+      "roformerBatchSize": 1,
+      "professionalReferenceOpened": false,
+      "runtimeLabelsRequired": false,
+      "frozenModelModified": false,
+      "frozenPredictionsModified": false,
+      "thresholdsModified": false,
+      "liveEndpointDeployedOrModified": false,
+      "productionModified": false
+    }
+  },
+  "logTail": [
+    "      \"worker\": 1,",
+    "      \"modalTaskId\": \"ta-01M0JJQE203EGMAHN8A6KNHG6R\",",
+    "      \"directFamily\": \"B\",",
+    "      \"cascadeFamily\": \"B\",",
+    "      \"familyLockstep\": true,",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directTrace\": [",
+    "        {",
+    "          \"a\": 0,",
+    "          \"b\": 22050,",
+    "          \"call\": 1,",
+    "          \"stage\": \"direct\",",
+    "          \"value\": 6026",
+    "        }",
+    "      ],",
+    "      \"cascadeTrace\": [",
+    "        {",
+    "          \"a\": 0,",
+    "          \"b\": 22050,",
+    "          \"call\": 1,",
+    "          \"stage\": \"cascade\",",
+    "          \"value\": 6026",
+    "        }",
+    "      ],",
+    "      \"directShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"cascadeShiftValues\": [",
+    "        6026",
+    "      ]",
+    "    },",
+    "    {",
+    "      \"worker\": 2,",
+    "      \"modalTaskId\": \"ta-01M0JJQGFJW58PPY4EFVX35M1R\",",
+    "      \"directFamily\": \"B\",",
+    "      \"cascadeFamily\": \"B\",",
+    "      \"familyLockstep\": true,",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directTrace\": [",
+    "        {",
+    "          \"a\": 0,",
+    "          \"b\": 22050,",
+    "          \"call\": 1,",
+    "          \"stage\": \"direct\",",
+    "          \"value\": 6026",
+    "        }",
+    "      ],",
+    "      \"cascadeTrace\": [",
+    "        {",
+    "          \"a\": 0,",
+    "          \"b\": 22050,",
+    "          \"call\": 1,",
+    "          \"stage\": \"cascade\",",
+    "          \"value\": 6026",
+    "        }",
+    "      ],",
+    "      \"directShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"cascadeShiftValues\": [",
+    "        6026",
+    "      ]",
+    "    },",
+    "    {",
+    "      \"worker\": 3,",
+    "      \"modalTaskId\": \"ta-01M0JJQJTT72CJ0GP8NWEJJQ6R\",",
+    "      \"directFamily\": \"B\",",
+    "      \"cascadeFamily\": \"B\",",
+    "      \"familyLockstep\": true,",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directTrace\": [",
+    "        {",
+    "          \"a\": 0,",
+    "          \"b\": 22050,",
+    "          \"call\": 1,",
+    "          \"stage\": \"direct\",",
+    "          \"value\": 6026",
+    "        }",
+    "      ],",
+    "      \"cascadeTrace\": [",
+    "        {",
+    "          \"a\": 0,",
+    "          \"b\": 22050,",
+    "          \"call\": 1,",
+    "          \"stage\": \"cascade\",",
+    "          \"value\": 6026",
+    "        }",
+    "      ],",
+    "      \"directShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"cascadeShiftValues\": [",
+    "        6026",
+    "      ]",
+    "    },",
+    "    {",
+    "      \"worker\": 4,",
+    "      \"modalTaskId\": \"ta-01M0JJQF63CE47ENPFJ8X7Q5VR\",",
+    "      \"directFamily\": \"A\",",
+    "      \"cascadeFamily\": \"A\",",
+    "      \"familyLockstep\": true,",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directTrace\": [",
+    "        {",
+    "          \"a\": 0,",
+    "          \"b\": 22050,",
+    "          \"call\": 1,",
+    "          \"stage\": \"direct\",",
+    "          \"value\": 6026",
+    "        }",
+    "      ],",
+    "      \"cascadeTrace\": [",
+    "        {",
+    "          \"a\": 0,",
+    "          \"b\": 22050,",
+    "          \"call\": 1,",
+    "          \"stage\": \"cascade\",",
+    "          \"value\": 6026",
+    "        }",
+    "      ],",
+    "      \"directShiftValues\": [",
+    "        6026",
+    "      ],",
+    "      \"cascadeShiftValues\": [",
+    "        6026",
+    "      ]",
+    "    }",
+    "  ],",
+    "  \"summary\": {",
+    "    \"directFamilyCounts\": {",
+    "      \"A\": 1,",
+    "      \"B\": 3",
+    "    },",
+    "    \"cascadeFamilyCounts\": {",
+    "      \"A\": 1,",
+    "      \"B\": 3",
+    "    },",
+    "    \"allDirectCascadeFamiliesLockstep\": true,",
+    "    \"bothKnownFamiliesObserved\": true,",
+    "    \"roformerPcmExactAcrossWorkers\": true,",
+    "    \"directShiftSequencesByFamily\": {",
+    "      \"A\": [",
+    "        [",
+    "          6026",
+    "        ]",
+    "      ],",
+    "      \"B\": [",
+    "        [",
+    "          6026",
+    "        ]",
+    "      ]",
+    "    },",
+    "    \"cascadeShiftSequencesByFamily\": {",
+    "      \"A\": [",
+    "        [",
+    "          6026",
+    "        ]",
+    "      ],",
+    "      \"B\": [",
+    "        [",
+    "          6026",
+    "        ]",
+    "      ]",
+    "    },",
+    "    \"sameDirectShiftSequencesAcrossFamilies\": true,",
+    "    \"sameCascadeShiftSequencesAcrossFamilies\": true",
+    "  },",
+    "  \"inferenceGuide\": {",
+    "    \"differentShiftSequencesAcrossFamilies\": \"Python-random state consumed before Demucs shift selection is sufficient to explain the family split.\",",
+    "    \"sameShiftSequencesAcrossFamilies\": \"The family split occurs after shift selection; investigate GPU/kernel-level nondeterminism next.\",",
+    "    \"onlyOneFamilyObserved\": \"Inconclusive for family causality; rerun later without changing production.\"",
+    "  },",
+    "  \"invariants\": {",
+    "    \"traceWrapperReturnsOriginalRandintValueUnchanged\": true,",
+    "    \"pythonHashSeedAtChildStartup\": 143,",
+    "    \"separatorSeed\": 143,",
+    "    \"demucsShifts\": 1,",
+    "    \"demucsOverlap\": 0.1,",
+    "    \"demucsSegmentSize\": 6,",
+    "    \"roformerBatchSize\": 1,",
+    "    \"professionalReferenceOpened\": false,",
+    "    \"runtimeLabelsRequired\": false,",
+    "    \"frozenModelModified\": false,",
+    "    \"frozenPredictionsModified\": false,",
+    "    \"thresholdsModified\": false,",
+    "    \"liveEndpointDeployedOrModified\": false,",
+    "    \"productionModified\": false",
+    "  }",
+    "}",
+    "Stopping app - local entrypoint completed.",
+    "\u2713 App completed. View run at ",
+    "https://modal.com/apps/dadrockyt/main/ap-FqYJSwwofF98L3WOE7FdrS"
+  ],
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false
+}
