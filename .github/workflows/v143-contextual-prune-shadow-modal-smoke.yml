@@ -1,3 +1,4 @@
+# Triggered after configuring Modal GitHub Actions credentials.
 name: V143 Contextual Prune Shadow Modal Smoke
 
 on:
