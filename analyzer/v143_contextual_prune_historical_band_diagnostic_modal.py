@@ -20,7 +20,11 @@ SECTION3_CACHE = CAL / "fresh-section3-reference-free-cache.json"
 
 app = modal.App("dadrock-v143-contextual-prune-band-diagnostic")
 
-diagnostic_image = shadow_image
+# The remote function module imports v143_contextual_prune_shadow_modal at
+# container startup, so the module itself must be mounted into the image.
+diagnostic_image = shadow_image.add_local_python_source(
+    "v143_contextual_prune_shadow_modal"
+)
 for filename in (
     "fresh-section2-reference-free-cache.json",
     "fresh-section3-reference-free-cache.json",
