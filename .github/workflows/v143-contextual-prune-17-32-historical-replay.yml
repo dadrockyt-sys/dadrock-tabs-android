@@ -1,0 +1,343 @@
+name: V143 Contextual Prune 17-32 Historical Replay
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-17-32-historical-replay.yml
+
+permissions:
+  contents: write
+
+jobs:
+  historical-replay:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify immutable historical inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s public/gomywayfullaitest.m4a
+          test -s analyzer/v143_fresh_verse1_reference_free_capture.py
+          test -s analyzer/v143_rhythm_deterministic_stem_provider.py
+          test -s analyzer/v143_rhythm_stem_provider.py
+          test -s analyzer/v143_deterministic_separator.py
+          test -s analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py
+          test -s public/training/v143-musical-reconstruction-calibration/fresh-section2-reference-free-cache.json
+          test -s public/training/v143-musical-reconstruction-calibration/fresh-section3-reference-free-cache.json
+          test -s public/training/v143-musical-reconstruction-calibration/fresh-section4-reference-free-cache.json
+          test -s public/training/v143-musical-reconstruction-calibration/fresh-section5-reference-free-cache.json
+          test -s public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-model.json
+          test -s public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-sequence-event-model.json
+          test -s public/training/v143-musical-reconstruction-calibration/correlation-safe-fixed-count-reranker-model.json
+          test -s public/training/v143-musical-reconstruction-calibration/correlation-safe-fixed-count-reranker-training-report.json
+          test -s public/training/v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-fixed-count-reranker-frozen-events.json
+          test -s public/training/v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-fixed-count-reranker-freeze-manifest.json
+
+          test "$(git rev-parse HEAD:analyzer/v143_fresh_verse1_reference_free_capture.py)" = "c8ea8eca33819fb506f06105f87075dadd133214"
+          test "$(git rev-parse HEAD:analyzer/v143_rhythm_deterministic_stem_provider.py)" = "3c6dcf9b8e7360ba1dd886810f3c14c05ac0579b"
+          test "$(git rev-parse HEAD:analyzer/v143_rhythm_stem_provider.py)" = "cd180bfb35e8110f031504035af5f11e502c3dc6"
+          test "$(git rev-parse HEAD:analyzer/v143_deterministic_separator.py)" = "28b3e6fe0eb761178b142cf7dcbda533f0bf918d"
+          test "$(git rev-parse HEAD:analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py)" = "ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe"
+
+          echo "Historical generator, carrier providers, deterministic separator, and frozen scorer are byte-identical to the calibration archive."
+
+      - name: Install isolated replay dependencies
+        run: python -m pip install --disable-pip-version-check modal numpy
+
+      - name: Regenerate historical Verse1 carrier and replay frozen scorer
+        id: replay
+        shell: bash
+        run: |
+          set +e
+          CAL=public/training/v143-musical-reconstruction-calibration
+          CACHE="$CAL/fresh-verse1-reference-free-cache.json"
+          LOG=debug/v143-contextual-prune/measure-17-32-historical-replay.log
+          DIAG=debug/v143-contextual-prune/measure-17-32-historical-replay.json
+          BACKUP=/tmp/v143-17-32-historical
+          mkdir -p debug/v143-contextual-prune "$BACKUP"
+          : > "$LOG"
+
+          echo "workflow_commit=$GITHUB_SHA" >> "$LOG"
+          echo "actor=$GITHUB_ACTOR" >> "$LOG"
+
+          cp "$CAL/correlation-safe-fixed-count-reranker-model.json" "$BACKUP/model.json"
+          cp "$CAL/correlation-safe-fixed-count-reranker-training-report.json" "$BACKUP/report.json"
+          cp "$CAL/fresh-17-96-correlation-safe-fixed-count-reranker-frozen-events.json" "$BACKUP/frozen.json"
+          cp "$CAL/fresh-17-96-correlation-safe-fixed-count-reranker-freeze-manifest.json" "$BACKUP/manifest.json"
+
+          expected_cache_sha=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('public/training/v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-fixed-count-reranker-freeze-manifest.json')
+          data = json.loads(p.read_text())
+          hits = [x for x in data['fingerprints']['freshCaches'] if x['path'].endswith('fresh-verse1-reference-free-cache.json')]
+          if len(hits) != 1:
+              raise SystemExit('Expected exactly one historical Verse1 cache fingerprint')
+          print(hits[0]['sha256'])
+          PY
+          )
+          echo "expected_cache_sha=$expected_cache_sha" >> "$LOG"
+
+          known_cache_sha=fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15
+          manifest_fingerprint_matches_known=false
+          if [ "$expected_cache_sha" = "$known_cache_sha" ]; then
+            manifest_fingerprint_matches_known=true
+          fi
+
+          token_available=false
+          capture_attempted=false
+          capture_status=99
+          generated_cache_sha=""
+          cache_hash_match=false
+          scorer_attempted=false
+          scorer_status=99
+
+          if [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            token_available=true
+            capture_attempted=true
+            python -m modal run analyzer/v143_fresh_verse1_reference_free_capture.py::capture_fresh_verse1 >> "$LOG" 2>&1
+            capture_status=$?
+          else
+            echo "Modal GitHub credentials are unavailable; capture not attempted." >> "$LOG"
+          fi
+
+          if [ -s "$CACHE" ]; then
+            generated_cache_sha=$(sha256sum "$CACHE" | awk '{print $1}')
+            echo "generated_cache_sha=$generated_cache_sha" >> "$LOG"
+            if [ "$generated_cache_sha" = "$expected_cache_sha" ]; then
+              cache_hash_match=true
+            fi
+          fi
+
+          if [ "$capture_status" -eq 0 ] && [ "$cache_hash_match" = true ] && [ "$manifest_fingerprint_matches_known" = true ]; then
+            scorer_attempted=true
+            PYTHONPATH=analyzer python analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py >> "$LOG" 2>&1
+            scorer_status=$?
+          else
+            echo "Frozen scorer not run because exact historical Verse1 identity was not established." >> "$LOG"
+          fi
+
+          TOKEN_AVAILABLE="$token_available" \
+          CAPTURE_ATTEMPTED="$capture_attempted" \
+          CAPTURE_STATUS="$capture_status" \
+          EXPECTED_CACHE_SHA="$expected_cache_sha" \
+          GENERATED_CACHE_SHA="$generated_cache_sha" \
+          CACHE_HASH_MATCH="$cache_hash_match" \
+          MANIFEST_FINGERPRINT_MATCHES_KNOWN="$manifest_fingerprint_matches_known" \
+          SCORER_ATTEMPTED="$scorer_attempted" \
+          SCORER_STATUS="$scorer_status" \
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+          cal = Path('public/training/v143-musical-reconstruction-calibration')
+          backup = Path('/tmp/v143-17-32-historical')
+          diag = Path('debug/v143-contextual-prune/measure-17-32-historical-replay.json')
+
+          def sha(path: Path):
+              if not path.exists() or path.stat().st_size <= 0:
+                  return None
+              h = hashlib.sha256()
+              with path.open('rb') as f:
+                  for chunk in iter(lambda: f.read(1024 * 1024), b''):
+                      h.update(chunk)
+              return h.hexdigest()
+
+          comparisons = {}
+          for name, current_name, backup_name in [
+              ('rerankerModel', 'correlation-safe-fixed-count-reranker-model.json', 'model.json'),
+              ('trainingReport', 'correlation-safe-fixed-count-reranker-training-report.json', 'report.json'),
+              ('frozenPredictions', 'fresh-17-96-correlation-safe-fixed-count-reranker-frozen-events.json', 'frozen.json'),
+              ('freezeManifest', 'fresh-17-96-correlation-safe-fixed-count-reranker-freeze-manifest.json', 'manifest.json'),
+          ]:
+              historical_sha = sha(backup / backup_name)
+              replay_sha = sha(cal / current_name)
+              comparisons[name] = {
+                  'historicalSha256': historical_sha,
+                  'replaySha256': replay_sha,
+                  'exactByteMatch': bool(historical_sha and replay_sha and historical_sha == replay_sha),
+              }
+
+          def blob(path: str):
+              return subprocess.check_output(['git', 'rev-parse', f'HEAD:{path}'], text=True).strip()
+
+          code_identity = {
+              'verse1CaptureGenerator': {
+                  'path': 'analyzer/v143_fresh_verse1_reference_free_capture.py',
+                  'historicalArchiveBlobSha': 'c8ea8eca33819fb506f06105f87075dadd133214',
+                  'currentBlobSha': blob('analyzer/v143_fresh_verse1_reference_free_capture.py'),
+              },
+              'deterministicRhythmStemProvider': {
+                  'path': 'analyzer/v143_rhythm_deterministic_stem_provider.py',
+                  'historicalArchiveBlobSha': '3c6dcf9b8e7360ba1dd886810f3c14c05ac0579b',
+                  'currentBlobSha': blob('analyzer/v143_rhythm_deterministic_stem_provider.py'),
+              },
+              'rhythmStemProvider': {
+                  'path': 'analyzer/v143_rhythm_stem_provider.py',
+                  'historicalArchiveBlobSha': 'cd180bfb35e8110f031504035af5f11e502c3dc6',
+                  'currentBlobSha': blob('analyzer/v143_rhythm_stem_provider.py'),
+              },
+              'deterministicSeparator': {
+                  'path': 'analyzer/v143_deterministic_separator.py',
+                  'historicalArchiveBlobSha': '28b3e6fe0eb761178b142cf7dcbda533f0bf918d',
+                  'currentBlobSha': blob('analyzer/v143_deterministic_separator.py'),
+              },
+              'frozenScorer': {
+                  'path': 'analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py',
+                  'historicalArchiveBlobSha': 'ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe',
+                  'currentBlobSha': blob('analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py'),
+              },
+          }
+          for value in code_identity.values():
+              value['exactBlobMatch'] = value['historicalArchiveBlobSha'] == value['currentBlobSha']
+
+          cache_hash_match = os.environ['CACHE_HASH_MATCH'] == 'true'
+          scorer_ok = os.environ['SCORER_ATTEMPTED'] == 'true' and int(os.environ['SCORER_STATUS']) == 0
+          outputs_exact = all(value['exactByteMatch'] for value in comparisons.values())
+          code_exact = all(value['exactBlobMatch'] for value in code_identity.values())
+          passed = (
+              os.environ['TOKEN_AVAILABLE'] == 'true'
+              and os.environ['CAPTURE_ATTEMPTED'] == 'true'
+              and int(os.environ['CAPTURE_STATUS']) == 0
+              and os.environ['MANIFEST_FINGERPRINT_MATCHES_KNOWN'] == 'true'
+              and cache_hash_match
+              and scorer_ok
+              and outputs_exact
+              and code_exact
+          )
+
+          payload = {
+              'schemaVersion': 1,
+              'gate': 'v143-contextual-prune-measure-17-32-historical-provenance-and-frozen-scorer-replay',
+              'status': 'passed' if passed else 'failed',
+              'claimScope': 'research-only historical/reference-free provenance closure for measures 17-32',
+              'historicalArchiveCommit': 'b25820ecde37dc87447a9366894bd8e4f7f21792',
+              'historicalBoundary': {'measureStart': 17, 'measureEnd': 32, 'source': 'byte-identical historical Verse1 capture generator'},
+              'historicalCarrierLineage': {
+                  'sourceAudio': 'public/gomywayfullaitest.m4a',
+                  'candidateViews': [
+                      'direct Demucs6s Guitar',
+                      'BS-RoFormer Instrumental -> Demucs6s Guitar',
+                  ],
+                  'deterministicSeparatorSettings': {
+                      'demucsShifts': 1,
+                      'demucsOverlap': 0.10,
+                      'demucsSegmentSize': 6,
+                      'deterministicSeed': 143,
+                  },
+              },
+              'codeIdentity': code_identity,
+              'historicalVerse1Cache': {
+                  'path': 'public/training/v143-musical-reconstruction-calibration/fresh-verse1-reference-free-cache.json',
+                  'expectedSha256FromHistoricalFreezeManifest': os.environ['EXPECTED_CACHE_SHA'],
+                  'knownHistoricalSha256': 'fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15',
+                  'manifestFingerprintMatchesKnownHistoricalSha256': os.environ['MANIFEST_FINGERPRINT_MATCHES_KNOWN'] == 'true',
+                  'regeneratedSha256': os.environ['GENERATED_CACHE_SHA'] or None,
+                  'exactHashMatch': cache_hash_match,
+              },
+              'frozenScorerReplay': {
+                  'attempted': os.environ['SCORER_ATTEMPTED'] == 'true',
+                  'exitCode': int(os.environ['SCORER_STATUS']) if os.environ['SCORER_ATTEMPTED'] == 'true' else None,
+                  'preservedArtifactComparisons': comparisons,
+                  'allPreservedArtifactsExactByteMatch': outputs_exact,
+              },
+              'invariants': {
+                  'professionalReferenceOpenedByReplayWorkflow': False,
+                  'runtimeLabelsRequired': False,
+                  'newGenericCarrierAcceptedAsHistoricalProof': False,
+                  'historicalGeneratorUsed': True,
+                  'thresholdsModified': False,
+                  'comparisonTolerancesWeakened': False,
+                  'frozenModelPersistentlyModified': False,
+                  'frozenPredictionsPersistentlyModified': False,
+                  'liveEndpointDeployedOrModified': False,
+                  'productionModified': False,
+                  'productionPromotionAllowed': False,
+              },
+              'resolutionRuleSatisfied': passed,
+          }
+          diag.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+
+          cp "$BACKUP/model.json" "$CAL/correlation-safe-fixed-count-reranker-model.json"
+          cp "$BACKUP/report.json" "$CAL/correlation-safe-fixed-count-reranker-training-report.json"
+          cp "$BACKUP/frozen.json" "$CAL/fresh-17-96-correlation-safe-fixed-count-reranker-frozen-events.json"
+          cp "$BACKUP/manifest.json" "$CAL/fresh-17-96-correlation-safe-fixed-count-reranker-freeze-manifest.json"
+          rm -f "$CACHE"
+
+          echo "Research replay complete; preserved historical artifacts restored and generated Verse1 cache removed from the working tree." >> "$LOG"
+          exit 0
+
+      - name: Preserve full research replay log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-contextual-prune-17-32-historical-replay-log
+          path: debug/v143-contextual-prune/measure-17-32-historical-replay.log
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Commit compact research diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/measure-17-32-historical-replay.json
+
+          if git diff --cached --quiet; then
+            echo "No historical replay diagnostic changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 17-32 historical replay"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce historical provenance replay gate
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('debug/v143-contextual-prune/measure-17-32-historical-replay.json')
+          data = json.loads(path.read_text())
+          checks = {
+              'Gate passed': data.get('status') == 'passed',
+              'Resolution rule satisfied': data.get('resolutionRuleSatisfied') is True,
+              'Historical Verse1 cache hash exact': data.get('historicalVerse1Cache', {}).get('exactHashMatch') is True,
+              'Frozen scorer artifacts byte-identical': data.get('frozenScorerReplay', {}).get('allPreservedArtifactsExactByteMatch') is True,
+              'Production unmodified': data.get('invariants', {}).get('productionModified') is False,
+              'Production promotion disabled': data.get('invariants', {}).get('productionPromotionAllowed') is False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              print(json.dumps({'failedChecks': failed, 'diagnostic': data}, indent=2))
+              raise SystemExit('V143 17-32 historical provenance replay gate failed')
+          print('V143 17-32 HISTORICAL PROVENANCE + FROZEN SCORER REPLAY PASSED')
+          print('PRODUCTION_MODIFIED', False)
+          print('PRODUCTION_PROMOTION_ALLOWED', False)
+          PY
