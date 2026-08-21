@@ -1,0 +1,1520 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-demucs-family-identity-probe-action",
+  "modalCredentialsAvailableInGitHubActions": true,
+  "diagnosticAttempted": true,
+  "modalCommandExitCode": 0,
+  "diagnosticResultFound": true,
+  "diagnosticResult": {
+    "schemaVersion": 1,
+    "gate": "v143-demucs-family-identity-probe",
+    "executionStrategy": "adaptive-fixed-143-demucs-family-capture-with-post-separation-runtime-and-model-identity",
+    "batchSize": 4,
+    "maxBatches": 3,
+    "batchesRun": 3,
+    "workerCount": 12,
+    "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "workers": [
+      {
+        "worker": 1,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHV5DKEGEDHM3JSDAAMWER",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=2b23acca-78fc-67a3-c633-4c876430673f, pci_bus_id=58, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-2b23acca-78fc-67a3-c633-4c876430673f, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:20:15,712 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:20:15,712 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:20:15,713 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:20:15,713 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:20:15,713 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:20:15,713 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:20:15,713 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:20:15,882 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:20:15,883 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:20:15,911 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:20:15,911 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "3081e38554c06d28eb26c04d1659f647b68b3de8b750f0c8126b6b9385d9b22b"
+      },
+      {
+        "worker": 2,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHV7Y6NFG46E5TQECV40GR",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=f546e35a-59c6-4deb-c50e-926bc9d4f896, pci_bus_id=58, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-f546e35a-59c6-4deb-c50e-926bc9d4f896, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:20:21,514 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:20:21,514 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:20:21,514 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:20:21,514 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:20:21,514 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:20:21,515 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:20:21,515 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:20:21,692 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:20:21,694 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:20:21,720 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:20:21,720 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "4c8cb18879e61fc41508a9e8196aedde7f1560ad773b5258db3c129114795587"
+      },
+      {
+        "worker": 3,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHVAJWE39MNWT2PZQT4PZR",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=0154b81a-1fdc-a58c-0343-a20405688142, pci_bus_id=58, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-0154b81a-1fdc-a58c-0343-a20405688142, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:20:26,093 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:20:26,093 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:20:26,093 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:20:26,093 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:20:26,093 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:20:26,093 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:20:26,094 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:20:26,266 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:20:26,268 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:20:26,298 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:20:26,298 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "e0adef55878d116141377ea1a5afd076733247dc3ca11241a0575a6545c2daea"
+      },
+      {
+        "worker": 4,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHV6075X6S4898477SD94R",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=56819071-99ea-f07a-dc5e-6d574b4d60e7, pci_bus_id=56, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-56819071-99ea-f07a-dc5e-6d574b4d60e7, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:20:38,101 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:20:38,101 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:20:38,101 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:20:38,102 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:20:38,102 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:20:38,102 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:20:38,102 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:20:38,324 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:20:38,328 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:20:38,363 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:20:38,363 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "fc93777bf4badcb751a4a42dbf1b6a4a5094c72c92c324a273897cf178cd7ce1"
+      },
+      {
+        "worker": 5,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHV6075X6S4898477SD94R",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=56819071-99ea-f07a-dc5e-6d574b4d60e7, pci_bus_id=56, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-56819071-99ea-f07a-dc5e-6d574b4d60e7, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:22:15,850 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:22:15,851 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:22:15,852 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:22:15,853 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:22:15,853 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:22:15,853 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:22:15,854 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:22:16,166 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:22:16,169 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:22:16,206 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:22:16,206 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "3d6efcda57832a79dc9d9c97269d57866df978eae546bc1cabcb47ddbdc82686"
+      },
+      {
+        "worker": 6,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHV5DKEGEDHM3JSDAAMWER",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=2b23acca-78fc-67a3-c633-4c876430673f, pci_bus_id=58, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-2b23acca-78fc-67a3-c633-4c876430673f, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:22:01,548 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:22:01,548 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:22:01,548 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:22:01,548 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:22:01,548 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:22:01,548 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:22:01,548 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:22:01,711 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:22:01,713 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:22:01,738 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:22:01,738 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "d8c67405a30d2df79b12a2c3c1f151fd62c296dedef7c557be8bb1f350ffd2ee"
+      },
+      {
+        "worker": 7,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHVAJWE39MNWT2PZQT4PZR",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=0154b81a-1fdc-a58c-0343-a20405688142, pci_bus_id=58, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-0154b81a-1fdc-a58c-0343-a20405688142, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:22:06,475 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:22:06,475 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:22:06,476 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:22:06,476 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:22:06,476 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:22:06,476 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:22:06,476 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:22:06,650 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:22:06,652 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:22:06,678 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:22:06,678 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "bdc08bfc46fedb06b94125da4b70a316fd8aa9e91ee40d9eee8b8df42ca54e42"
+      },
+      {
+        "worker": 8,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHV7Y6NFG46E5TQECV40GR",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=f546e35a-59c6-4deb-c50e-926bc9d4f896, pci_bus_id=58, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-f546e35a-59c6-4deb-c50e-926bc9d4f896, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:22:04,293 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:22:04,293 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:22:04,293 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:22:04,294 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:22:04,294 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:22:04,294 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:22:04,294 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:22:04,454 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:22:04,456 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:22:04,511 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:22:04,511 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "8e41efa636467f00c8d0ac26a9d030f5c31297e032d30a13dfe53acbe65d0a8a"
+      },
+      {
+        "worker": 9,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHV6075X6S4898477SD94R",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=56819071-99ea-f07a-dc5e-6d574b4d60e7, pci_bus_id=56, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-56819071-99ea-f07a-dc5e-6d574b4d60e7, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:23:50,792 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:23:50,792 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:23:50,792 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:23:50,792 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:23:50,792 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:23:50,793 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:23:50,793 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:23:51,018 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:23:51,020 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:23:51,052 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:23:51,052 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "594b2e54579792359c4592cda98ad53b5982eb8d78e6eba2de32bfbe63f1a257"
+      },
+      {
+        "worker": 10,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHVAJWE39MNWT2PZQT4PZR",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=0154b81a-1fdc-a58c-0343-a20405688142, pci_bus_id=58, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-0154b81a-1fdc-a58c-0343-a20405688142, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:23:44,711 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:23:44,711 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:23:44,711 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:23:44,712 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:23:44,712 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:23:44,712 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:23:44,712 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:23:44,884 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:23:44,886 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:23:44,911 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:23:44,911 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "dd7badcce03c03d2799ce0abaeb00ad835b09ad94d09529ba28d5b640a896ab8"
+      },
+      {
+        "worker": 11,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHV7Y6NFG46E5TQECV40GR",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=f546e35a-59c6-4deb-c50e-926bc9d4f896, pci_bus_id=58, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-f546e35a-59c6-4deb-c50e-926bc9d4f896, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:23:42,001 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:23:42,001 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:23:42,001 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:23:42,001 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:23:42,001 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:23:42,001 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:23:42,002 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:23:42,174 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:23:42,176 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:23:42,201 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:23:42,202 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "46b33d35324f057c8791a6e7059bb1f1b1480a928644c9e9abad9e73b05dba3f"
+      },
+      {
+        "worker": 12,
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "familyLockstep": true,
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHV5DKEGEDHM3JSDAAMWER",
+          "packages": {
+            "torch": "2.13.0+cu130",
+            "audioSeparator": "0.44.5",
+            "demucs": null,
+            "basicPitch": "0.4.0"
+          },
+          "cuda": {
+            "torchCudaVersion": "13.0",
+            "cudnnVersion": 92000,
+            "deterministicAlgorithmsEnabled": false,
+            "cudnnDeterministic": false,
+            "cudnnBenchmark": false,
+            "cudaMatmulAllowTf32": false,
+            "cudnnAllowTf32": true
+          },
+          "gpu": {
+            "available": true,
+            "deviceCount": 1,
+            "name": "NVIDIA L4",
+            "computeCapability": [
+              8,
+              9
+            ],
+            "totalMemory": 23659151360,
+            "properties": "_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=2b23acca-78fc-67a3-c633-4c876430673f, pci_bus_id=58, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)"
+          },
+          "nvidiaSmi": {
+            "returnCode": 0,
+            "rows": [
+              "GPU-2b23acca-78fc-67a3-c633-4c876430673f, NVIDIA L4, 580.95.05, [Unknown Error]"
+            ],
+            "stderrTail": ""
+          },
+          "audioSeparatorEnvInfo": {
+            "returnCode": 0,
+            "stdoutTail": "",
+            "stderrTail": "2026-08-21 16:23:40,427 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\n2026-08-21 16:23:40,427 - INFO - separator - Output directory not specified. Using current working directory.\n2026-08-21 16:23:40,427 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\n2026-08-21 16:23:40,427 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\n2026-08-21 16:23:40,427 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \n2026-08-21 16:23:40,427 - INFO - separator - Python Version: 3.11.12\n2026-08-21 16:23:40,427 - INFO - separator - PyTorch Version: 2.13.0+cu130\n2026-08-21 16:23:40,577 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\n2026-08-21 16:23:40,579 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\n2026-08-21 16:23:40,606 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\n2026-08-21 16:23:40,607 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\n"
+          },
+          "relevantEnvironment": {
+            "TORCH_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "modelInventory": [
+          {
+            "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+            "size": 54996327,
+            "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+          },
+          {
+            "path": "/tmp/audio-separator-models/download_checks.json",
+            "size": 28267,
+            "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+          },
+          {
+            "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+            "size": 21,
+            "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+            "size": 639331213,
+            "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+          },
+          {
+            "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+            "size": 2273,
+            "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+          }
+        ],
+        "modelInventorySha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "softwarePayloadSha256": "6eba81c366ef5aaa3fed9eeeb44b8cd3f438f577c167e85cbf391b9081d051bc"
+      }
+    ],
+    "summary": {
+      "directFamilyCounts": {
+        "A": 12
+      },
+      "cascadeFamilyCounts": {
+        "A": 12
+      },
+      "allDirectCascadeFamiliesLockstep": true,
+      "bothKnownFamiliesObserved": false,
+      "roformerPcmExactAcrossWorkers": true,
+      "modelInventoryExactAcrossWorkers": true,
+      "softwarePayloadExactAcrossWorkers": false,
+      "modelInventoryHashes": [
+        "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637"
+      ],
+      "softwarePayloadHashes": [
+        "3081e38554c06d28eb26c04d1659f647b68b3de8b750f0c8126b6b9385d9b22b",
+        "3d6efcda57832a79dc9d9c97269d57866df978eae546bc1cabcb47ddbdc82686",
+        "46b33d35324f057c8791a6e7059bb1f1b1480a928644c9e9abad9e73b05dba3f",
+        "4c8cb18879e61fc41508a9e8196aedde7f1560ad773b5258db3c129114795587",
+        "594b2e54579792359c4592cda98ad53b5982eb8d78e6eba2de32bfbe63f1a257",
+        "6eba81c366ef5aaa3fed9eeeb44b8cd3f438f577c167e85cbf391b9081d051bc",
+        "8e41efa636467f00c8d0ac26a9d030f5c31297e032d30a13dfe53acbe65d0a8a",
+        "bdc08bfc46fedb06b94125da4b70a316fd8aa9e91ee40d9eee8b8df42ca54e42",
+        "d8c67405a30d2df79b12a2c3c1f151fd62c296dedef7c557be8bb1f350ffd2ee",
+        "dd7badcce03c03d2799ce0abaeb00ad835b09ad94d09529ba28d5b640a896ab8",
+        "e0adef55878d116141377ea1a5afd076733247dc3ca11241a0575a6545c2daea",
+        "fc93777bf4badcb751a4a42dbf1b6a4a5094c72c92c324a273897cf178cd7ce1"
+      ],
+      "roformerPcmHashes": [
+        "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd"
+      ]
+    },
+    "invariants": {
+      "pythonHashSeedAtChildStartup": 143,
+      "separatorSeed": 143,
+      "demucsShifts": 1,
+      "demucsOverlap": 0.1,
+      "demucsSegmentSize": 6,
+      "roformerBatchSize": 1,
+      "professionalReferenceOpened": false,
+      "runtimeLabelsRequired": false,
+      "frozenModelModified": false,
+      "frozenPredictionsModified": false,
+      "thresholdsModified": false,
+      "liveEndpointDeployedOrModified": false,
+      "productionModified": false
+    }
+  },
+  "logTail": [
+    "        {",
+    "          \"path\": \"/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml\",",
+    "          \"size\": 2273,",
+    "          \"sha256\": \"2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f\"",
+    "        }",
+    "      ],",
+    "      \"modelInventorySha256\": \"78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637\",",
+    "      \"softwarePayloadSha256\": \"dd7badcce03c03d2799ce0abaeb00ad835b09ad94d09529ba28d5b640a896ab8\"",
+    "    },",
+    "    {",
+    "      \"worker\": 11,",
+    "      \"directFamily\": \"A\",",
+    "      \"cascadeFamily\": \"A\",",
+    "      \"familyLockstep\": true,",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"runtimeIdentity\": {",
+    "        \"modalTaskId\": \"ta-01M0JHV7Y6NFG46E5TQECV40GR\",",
+    "        \"packages\": {",
+    "          \"torch\": \"2.13.0+cu130\",",
+    "          \"audioSeparator\": \"0.44.5\",",
+    "          \"demucs\": null,",
+    "          \"basicPitch\": \"0.4.0\"",
+    "        },",
+    "        \"cuda\": {",
+    "          \"torchCudaVersion\": \"13.0\",",
+    "          \"cudnnVersion\": 92000,",
+    "          \"deterministicAlgorithmsEnabled\": false,",
+    "          \"cudnnDeterministic\": false,",
+    "          \"cudnnBenchmark\": false,",
+    "          \"cudaMatmulAllowTf32\": false,",
+    "          \"cudnnAllowTf32\": true",
+    "        },",
+    "        \"gpu\": {",
+    "          \"available\": true,",
+    "          \"deviceCount\": 1,",
+    "          \"name\": \"NVIDIA L4\",",
+    "          \"computeCapability\": [",
+    "            8,",
+    "            9",
+    "          ],",
+    "          \"totalMemory\": 23659151360,",
+    "          \"properties\": \"_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=f546e35a-59c6-4deb-c50e-926bc9d4f896, pci_bus_id=58, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)\"",
+    "        },",
+    "        \"nvidiaSmi\": {",
+    "          \"returnCode\": 0,",
+    "          \"rows\": [",
+    "            \"GPU-f546e35a-59c6-4deb-c50e-926bc9d4f896, NVIDIA L4, 580.95.05, [Unknown Error]\"",
+    "          ],",
+    "          \"stderrTail\": \"\"",
+    "        },",
+    "        \"audioSeparatorEnvInfo\": {",
+    "          \"returnCode\": 0,",
+    "          \"stdoutTail\": \"\",",
+    "          \"stderrTail\": \"2026-08-21 16:23:42,001 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\\n2026-08-21 16:23:42,001 - INFO - separator - Output directory not specified. Using current working directory.\\n2026-08-21 16:23:42,001 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\\n2026-08-21 16:23:42,001 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\\n2026-08-21 16:23:42,001 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \\n2026-08-21 16:23:42,001 - INFO - separator - Python Version: 3.11.12\\n2026-08-21 16:23:42,002 - INFO - separator - PyTorch Version: 2.13.0+cu130\\n2026-08-21 16:23:42,174 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\\n2026-08-21 16:23:42,176 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\\n2026-08-21 16:23:42,201 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\\n2026-08-21 16:23:42,202 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\\n\"",
+    "        },",
+    "        \"relevantEnvironment\": {",
+    "          \"TORCH_HOME\": null,",
+    "          \"XDG_CACHE_HOME\": null,",
+    "          \"CUBLAS_WORKSPACE_CONFIG\": null",
+    "        }",
+    "      },",
+    "      \"modelInventory\": [",
+    "        {",
+    "          \"path\": \"/tmp/audio-separator-models/5c90dfd2-34c22ccb.th\",",
+    "          \"size\": 54996327,",
+    "          \"sha256\": \"34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd\"",
+    "        },",
+    "        {",
+    "          \"path\": \"/tmp/audio-separator-models/download_checks.json\",",
+    "          \"size\": 28267,",
+    "          \"sha256\": \"d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151\"",
+    "        },",
+    "        {",
+    "          \"path\": \"/tmp/audio-separator-models/htdemucs_6s.yaml\",",
+    "          \"size\": 21,",
+    "          \"sha256\": \"207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58\"",
+    "        },",
+    "        {",
+    "          \"path\": \"/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt\",",
+    "          \"size\": 639331213,",
+    "          \"sha256\": \"5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa\"",
+    "        },",
+    "        {",
+    "          \"path\": \"/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml\",",
+    "          \"size\": 2273,",
+    "          \"sha256\": \"2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f\"",
+    "        }",
+    "      ],",
+    "      \"modelInventorySha256\": \"78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637\",",
+    "      \"softwarePayloadSha256\": \"46b33d35324f057c8791a6e7059bb1f1b1480a928644c9e9abad9e73b05dba3f\"",
+    "    },",
+    "    {",
+    "      \"worker\": 12,",
+    "      \"directFamily\": \"A\",",
+    "      \"cascadeFamily\": \"A\",",
+    "      \"familyLockstep\": true,",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"runtimeIdentity\": {",
+    "        \"modalTaskId\": \"ta-01M0JHV5DKEGEDHM3JSDAAMWER\",",
+    "        \"packages\": {",
+    "          \"torch\": \"2.13.0+cu130\",",
+    "          \"audioSeparator\": \"0.44.5\",",
+    "          \"demucs\": null,",
+    "          \"basicPitch\": \"0.4.0\"",
+    "        },",
+    "        \"cuda\": {",
+    "          \"torchCudaVersion\": \"13.0\",",
+    "          \"cudnnVersion\": 92000,",
+    "          \"deterministicAlgorithmsEnabled\": false,",
+    "          \"cudnnDeterministic\": false,",
+    "          \"cudnnBenchmark\": false,",
+    "          \"cudaMatmulAllowTf32\": false,",
+    "          \"cudnnAllowTf32\": true",
+    "        },",
+    "        \"gpu\": {",
+    "          \"available\": true,",
+    "          \"deviceCount\": 1,",
+    "          \"name\": \"NVIDIA L4\",",
+    "          \"computeCapability\": [",
+    "            8,",
+    "            9",
+    "          ],",
+    "          \"totalMemory\": 23659151360,",
+    "          \"properties\": \"_CudaDeviceProperties(name='NVIDIA L4', major=8, minor=9, total_memory=22563MB, multi_processor_count=58, uuid=2b23acca-78fc-67a3-c633-4c876430673f, pci_bus_id=58, pci_device_id=0, pci_domain_id=0, L2_cache_size=48MB)\"",
+    "        },",
+    "        \"nvidiaSmi\": {",
+    "          \"returnCode\": 0,",
+    "          \"rows\": [",
+    "            \"GPU-2b23acca-78fc-67a3-c633-4c876430673f, NVIDIA L4, 580.95.05, [Unknown Error]\"",
+    "          ],",
+    "          \"stderrTail\": \"\"",
+    "        },",
+    "        \"audioSeparatorEnvInfo\": {",
+    "          \"returnCode\": 0,",
+    "          \"stdoutTail\": \"\",",
+    "          \"stderrTail\": \"2026-08-21 16:23:40,427 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: None, output_format: WAV\\n2026-08-21 16:23:40,427 - INFO - separator - Output directory not specified. Using current working directory.\\n2026-08-21 16:23:40,427 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/\\n2026-08-21 16:23:40,427 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016\\n2026-08-21 16:23:40,427 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: \\n2026-08-21 16:23:40,427 - INFO - separator - Python Version: 3.11.12\\n2026-08-21 16:23:40,427 - INFO - separator - PyTorch Version: 2.13.0+cu130\\n2026-08-21 16:23:40,577 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\\n2026-08-21 16:23:40,579 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0\\n2026-08-21 16:23:40,606 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA\\n2026-08-21 16:23:40,607 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration\\n\"",
+    "        },",
+    "        \"relevantEnvironment\": {",
+    "          \"TORCH_HOME\": null,",
+    "          \"XDG_CACHE_HOME\": null,",
+    "          \"CUBLAS_WORKSPACE_CONFIG\": null",
+    "        }",
+    "      },",
+    "      \"modelInventory\": [",
+    "        {",
+    "          \"path\": \"/tmp/audio-separator-models/5c90dfd2-34c22ccb.th\",",
+    "          \"size\": 54996327,",
+    "          \"sha256\": \"34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd\"",
+    "        },",
+    "        {",
+    "          \"path\": \"/tmp/audio-separator-models/download_checks.json\",",
+    "          \"size\": 28267,",
+    "          \"sha256\": \"d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151\"",
+    "        },",
+    "        {",
+    "          \"path\": \"/tmp/audio-separator-models/htdemucs_6s.yaml\",",
+    "          \"size\": 21,",
+    "          \"sha256\": \"207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58\"",
+    "        },",
+    "        {",
+    "          \"path\": \"/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt\",",
+    "          \"size\": 639331213,",
+    "          \"sha256\": \"5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa\"",
+    "        },",
+    "        {",
+    "          \"path\": \"/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml\",",
+    "          \"size\": 2273,",
+    "          \"sha256\": \"2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f\"",
+    "        }",
+    "      ],",
+    "      \"modelInventorySha256\": \"78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637\",",
+    "      \"softwarePayloadSha256\": \"6eba81c366ef5aaa3fed9eeeb44b8cd3f438f577c167e85cbf391b9081d051bc\"",
+    "    }",
+    "  ],",
+    "  \"summary\": {",
+    "    \"directFamilyCounts\": {",
+    "      \"A\": 12",
+    "    },",
+    "    \"cascadeFamilyCounts\": {",
+    "      \"A\": 12",
+    "    },",
+    "    \"allDirectCascadeFamiliesLockstep\": true,",
+    "    \"bothKnownFamiliesObserved\": false,",
+    "    \"roformerPcmExactAcrossWorkers\": true,",
+    "    \"modelInventoryExactAcrossWorkers\": true,",
+    "    \"softwarePayloadExactAcrossWorkers\": false,",
+    "    \"modelInventoryHashes\": [",
+    "      \"78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637\"",
+    "    ],",
+    "    \"softwarePayloadHashes\": [",
+    "      \"3081e38554c06d28eb26c04d1659f647b68b3de8b750f0c8126b6b9385d9b22b\",",
+    "      \"3d6efcda57832a79dc9d9c97269d57866df978eae546bc1cabcb47ddbdc82686\",",
+    "      \"46b33d35324f057c8791a6e7059bb1f1b1480a928644c9e9abad9e73b05dba3f\",",
+    "      \"4c8cb18879e61fc41508a9e8196aedde7f1560ad773b5258db3c129114795587\",",
+    "      \"594b2e54579792359c4592cda98ad53b5982eb8d78e6eba2de32bfbe63f1a257\",",
+    "      \"6eba81c366ef5aaa3fed9eeeb44b8cd3f438f577c167e85cbf391b9081d051bc\",",
+    "      \"8e41efa636467f00c8d0ac26a9d030f5c31297e032d30a13dfe53acbe65d0a8a\",",
+    "      \"bdc08bfc46fedb06b94125da4b70a316fd8aa9e91ee40d9eee8b8df42ca54e42\",",
+    "      \"d8c67405a30d2df79b12a2c3c1f151fd62c296dedef7c557be8bb1f350ffd2ee\",",
+    "      \"dd7badcce03c03d2799ce0abaeb00ad835b09ad94d09529ba28d5b640a896ab8\",",
+    "      \"e0adef55878d116141377ea1a5afd076733247dc3ca11241a0575a6545c2daea\",",
+    "      \"fc93777bf4badcb751a4a42dbf1b6a4a5094c72c92c324a273897cf178cd7ce1\"",
+    "    ],",
+    "    \"roformerPcmHashes\": [",
+    "      \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\"",
+    "    ]",
+    "  },",
+    "  \"invariants\": {",
+    "    \"pythonHashSeedAtChildStartup\": 143,",
+    "    \"separatorSeed\": 143,",
+    "    \"demucsShifts\": 1,",
+    "    \"demucsOverlap\": 0.1,",
+    "    \"demucsSegmentSize\": 6,",
+    "    \"roformerBatchSize\": 1,",
+    "    \"professionalReferenceOpened\": false,",
+    "    \"runtimeLabelsRequired\": false,",
+    "    \"frozenModelModified\": false,",
+    "    \"frozenPredictionsModified\": false,",
+    "    \"thresholdsModified\": false,",
+    "    \"liveEndpointDeployedOrModified\": false,",
+    "    \"productionModified\": false",
+    "  }",
+    "}",
+    "Stopping app - local entrypoint completed.",
+    "\u2713 App completed. View run at ",
+    "https://modal.com/apps/dadrockyt/main/ap-Yh6xQpTwrEwgaprxw6epuv"
+  ],
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false
+}
