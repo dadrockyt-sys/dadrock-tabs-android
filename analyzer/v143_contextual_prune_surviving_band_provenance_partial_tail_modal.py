@@ -30,10 +30,11 @@ def diagnose_surviving_band_provenance_partial_tail(
 
     The shared research carrier intentionally requires complete 16-step measures.
     The calibration audio historically ends after step 7 of measure 113, so the
-    reserve carrier has 264 legitimate grid rows, not 272. This adapter extends
-    only the final timing-grid guard to steps 8-15, lets the unchanged carrier
-    builder finish, then removes those synthetic guard-only rows before any
-    provenance or frozen-score comparison is performed.
+    reserve carrier has 264 legitimate grid rows, not 272. This adapter adds
+    synthetic steps 8-15 only so the unchanged carrier's final completeness guard
+    can execute. Candidate assignment is explicitly restricted to the original
+    historical grid throughout construction, and the synthetic rows are removed
+    before provenance or frozen-score comparison.
     """
     if not source_audio:
         raise ValueError("source_audio is empty")
@@ -41,6 +42,7 @@ def diagnose_surviving_band_provenance_partial_tail(
     import v143_contextual_prune_reference_free_carrier as carrier_module
 
     original_grid_builder = carrier_module.build_subdivision_grid
+    original_nearest_timing_slot = carrier_module.nearest_timing_slot
     original_carrier_builder = (
         carrier_module.build_contextual_prune_reference_free_carrier
     )
@@ -48,6 +50,8 @@ def diagnose_surviving_band_provenance_partial_tail(
     adapter_state: dict[str, Any] = {
         "extendedFinalGrid": False,
         "trimmedReserveGrid": False,
+        "syntheticGuardHiddenFromAssignment": False,
+        "filteredNearestSlotCalls": 0,
         "historicalMeasure113Steps": list(range(8)),
         "syntheticGuardSteps": list(range(8, 16)),
     }
@@ -89,6 +93,35 @@ def diagnose_surviving_band_provenance_partial_tail(
             )
 
         return slots
+
+    def historical_nearest_timing_slot(
+        onset_time: float,
+        slots: Any,
+        *args: Any,
+        **kwargs: Any,
+    ) -> Any:
+        # The historical reserve carrier never had measure-113 steps 8-15.
+        # Keep those synthetic guard rows invisible to candidate assignment so
+        # nearest-slot behavior is exactly the original 264-row behavior.
+        historical_slots = [
+            slot
+            for slot in slots
+            if not (
+                int(slot.measure) == 113
+                and int(slot.step) >= 8
+            )
+        ]
+        if len(historical_slots) != len(slots):
+            adapter_state["syntheticGuardHiddenFromAssignment"] = True
+            adapter_state["filteredNearestSlotCalls"] = int(
+                adapter_state["filteredNearestSlotCalls"]
+            ) + 1
+        return original_nearest_timing_slot(
+            onset_time,
+            historical_slots,
+            *args,
+            **kwargs,
+        )
 
     def partial_tail_carrier_builder(*args: Any, **kwargs: Any) -> Any:
         measure_start = int(kwargs.get("measure_start", 1))
@@ -143,6 +176,7 @@ def diagnose_surviving_band_provenance_partial_tail(
         )
 
     carrier_module.build_subdivision_grid = extended_grid_builder
+    carrier_module.nearest_timing_slot = historical_nearest_timing_slot
     carrier_module.build_contextual_prune_reference_free_carrier = (
         partial_tail_carrier_builder
     )
@@ -152,21 +186,24 @@ def diagnose_surviving_band_provenance_partial_tail(
         result = raw_gate(source_audio, suffix)
     finally:
         carrier_module.build_subdivision_grid = original_grid_builder
+        carrier_module.nearest_timing_slot = original_nearest_timing_slot
         carrier_module.build_contextual_prune_reference_free_carrier = (
             original_carrier_builder
         )
 
     if adapter_state["extendedFinalGrid"] is not True:
         raise RuntimeError("Historical partial-tail grid extension was not exercised")
+    if adapter_state["syntheticGuardHiddenFromAssignment"] is not True:
+        raise RuntimeError("Synthetic partial-tail guard rows leaked into assignment")
     if adapter_state["trimmedReserveGrid"] is not True:
         raise RuntimeError("Historical reserve grid was not restored to 264 rows")
 
     result["partialTailAdapter"] = {
         **adapter_state,
-        "scope": "measure 113 timing-grid completeness guard only",
+        "scope": "measure 113 completeness guard; synthetic rows hidden from nearest-slot assignment",
         "comparisonGridCount": 264,
         "comparisonMeasure113Steps": list(range(8)),
-        "carrierRowsModified": False,
+        "carrierRowsPostHocModified": False,
         "frozenScorerModified": False,
         "productionModified": False,
     }
