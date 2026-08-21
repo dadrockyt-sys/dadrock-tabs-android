@@ -3,230 +3,675 @@
   "gate": "v143-contextual-prune-dual-band-cross-container-behavior-action",
   "modalCredentialsAvailableInGitHubActions": true,
   "diagnosticAttempted": true,
-  "modalCommandExitCode": 1,
-  "diagnosticResultFound": false,
-  "diagnosticResult": null,
+  "modalCommandExitCode": 0,
+  "diagnosticResultFound": true,
+  "diagnosticResult": {
+    "schemaVersion": 1,
+    "gate": "v143-contextual-prune-dual-band-cross-container-behavior",
+    "executionStrategy": "three-independent-l4-workers-one-separation-per-worker-two-exact-band-carriers-frozen-runtime",
+    "workerCount": 3,
+    "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "workers": [
+      {
+        "worker": 1,
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0HG271K91W21GP7CTNZM63R"
+        },
+        "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "separator": {
+          "deterministicFlag": true,
+          "referenceFree": true,
+          "directFileSha256": "afd1037bc7d62572ac9b99644d13d95b8593e25b4f442aa4a8f85c1111d97c78",
+          "cascadeFileSha256": "44e0fe8874b07bcd4bca7e28f4a512b61214061f6bbf8771426c1b1237ffa201",
+          "directPcm": {
+            "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "cascadePcm": {
+            "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          }
+        },
+        "section2": {
+          "carrier": {
+            "semanticSha256": "f4234f7e8b9167976817be395813283fea0fe6db66758488a466609e53220f00",
+            "exactHistoricalReplay": true,
+            "toleranceHistoricalReplay": true,
+            "firstMismatch": null,
+            "rawEventCount": 21288,
+            "candidateClusterCount": 7794,
+            "rowCount": 804,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10791,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10497
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12187,
+              "o020_f012": 4718,
+              "o025_f015": 2702,
+              "o030_f020": 1681
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3",
+            "decisionSha256": "1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3",
+            "decisionSetExactToHistorical": true,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            }
+          }
+        },
+        "section3": {
+          "carrier": {
+            "semanticSha256": "dfd0ec804ecf7da338c3245eb8c2cd6f7bb1d187962b7081c725d7160360631f",
+            "exactHistoricalReplay": false,
+            "toleranceHistoricalReplay": false,
+            "firstMismatch": {
+              "path": "$.rows",
+              "expectedLength": 802,
+              "actualLength": 804
+            },
+            "rawEventCount": 20836,
+            "candidateClusterCount": 9049,
+            "rowCount": 804,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10625,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10211
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12212,
+              "o020_f012": 4540,
+              "o025_f015": 2542,
+              "o030_f020": 1542
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSetExactToHistorical": true,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.4662265964573295,
+              "at": {
+                "measure": 58,
+                "step": 3
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.4834748304898178,
+              "at": {
+                "measure": 58,
+                "step": 3
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.052588236160807544,
+              "at": {
+                "measure": 51,
+                "step": 3
+              },
+              "keySetExact": true
+            }
+          }
+        },
+        "predictionCache": {
+          "entryCount": 8,
+          "misses": 8,
+          "hits": 8,
+          "expectedUniquePredictions": 8,
+          "singleLoadedBasicPitchModel": true,
+          "storesNoteEventsOnly": true
+        }
+      },
+      {
+        "worker": 2,
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0HG29W93S8AAJBXM80NX24R"
+        },
+        "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "separator": {
+          "deterministicFlag": true,
+          "referenceFree": true,
+          "directFileSha256": "afd1037bc7d62572ac9b99644d13d95b8593e25b4f442aa4a8f85c1111d97c78",
+          "cascadeFileSha256": "44e0fe8874b07bcd4bca7e28f4a512b61214061f6bbf8771426c1b1237ffa201",
+          "directPcm": {
+            "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "cascadePcm": {
+            "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          }
+        },
+        "section2": {
+          "carrier": {
+            "semanticSha256": "f4234f7e8b9167976817be395813283fea0fe6db66758488a466609e53220f00",
+            "exactHistoricalReplay": true,
+            "toleranceHistoricalReplay": true,
+            "firstMismatch": null,
+            "rawEventCount": 21288,
+            "candidateClusterCount": 7794,
+            "rowCount": 804,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10791,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10497
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12187,
+              "o020_f012": 4718,
+              "o025_f015": 2702,
+              "o030_f020": 1681
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3",
+            "decisionSha256": "1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3",
+            "decisionSetExactToHistorical": true,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            }
+          }
+        },
+        "section3": {
+          "carrier": {
+            "semanticSha256": "dfd0ec804ecf7da338c3245eb8c2cd6f7bb1d187962b7081c725d7160360631f",
+            "exactHistoricalReplay": false,
+            "toleranceHistoricalReplay": false,
+            "firstMismatch": {
+              "path": "$.rows",
+              "expectedLength": 802,
+              "actualLength": 804
+            },
+            "rawEventCount": 20836,
+            "candidateClusterCount": 9049,
+            "rowCount": 804,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10625,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10211
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12212,
+              "o020_f012": 4540,
+              "o025_f015": 2542,
+              "o030_f020": 1542
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSetExactToHistorical": true,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.4662265964573295,
+              "at": {
+                "measure": 58,
+                "step": 3
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.4834748304898178,
+              "at": {
+                "measure": 58,
+                "step": 3
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.052588236160807544,
+              "at": {
+                "measure": 51,
+                "step": 3
+              },
+              "keySetExact": true
+            }
+          }
+        },
+        "predictionCache": {
+          "entryCount": 8,
+          "misses": 8,
+          "hits": 8,
+          "expectedUniquePredictions": 8,
+          "singleLoadedBasicPitchModel": true,
+          "storesNoteEventsOnly": true
+        }
+      },
+      {
+        "worker": 3,
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0HG26S64K69E78WPET3ZR5R"
+        },
+        "normalizedSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "separator": {
+          "deterministicFlag": true,
+          "referenceFree": true,
+          "directFileSha256": "afd1037bc7d62572ac9b99644d13d95b8593e25b4f442aa4a8f85c1111d97c78",
+          "cascadeFileSha256": "44e0fe8874b07bcd4bca7e28f4a512b61214061f6bbf8771426c1b1237ffa201",
+          "directPcm": {
+            "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          },
+          "cascadePcm": {
+            "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+            "sampleRate": 44100,
+            "frames": 9324544,
+            "channels": 2
+          }
+        },
+        "section2": {
+          "carrier": {
+            "semanticSha256": "f4234f7e8b9167976817be395813283fea0fe6db66758488a466609e53220f00",
+            "exactHistoricalReplay": true,
+            "toleranceHistoricalReplay": true,
+            "firstMismatch": null,
+            "rawEventCount": 21288,
+            "candidateClusterCount": 7794,
+            "rowCount": 804,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10791,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10497
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12187,
+              "o020_f012": 4718,
+              "o025_f015": 2702,
+              "o030_f020": 1681
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3",
+            "decisionSha256": "1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3",
+            "decisionSetExactToHistorical": true,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.0,
+              "at": {
+                "measure": 33,
+                "step": 0
+              },
+              "keySetExact": true
+            }
+          }
+        },
+        "section3": {
+          "carrier": {
+            "semanticSha256": "dfd0ec804ecf7da338c3245eb8c2cd6f7bb1d187962b7081c725d7160360631f",
+            "exactHistoricalReplay": false,
+            "toleranceHistoricalReplay": false,
+            "firstMismatch": {
+              "path": "$.rows",
+              "expectedLength": 802,
+              "actualLength": 804
+            },
+            "rawEventCount": 20836,
+            "candidateClusterCount": 9049,
+            "rowCount": 804,
+            "stemEventCounts": {
+              "stem0:direct-demucs6s-guitar.wav": 10625,
+              "stem1:bsroformer-demucs6s-guitar.wav": 10211
+            },
+            "sweepEventCounts": {
+              "o015_f010": 12212,
+              "o020_f012": 4540,
+              "o025_f015": 2542,
+              "o030_f020": 1542
+            }
+          },
+          "downstream": {
+            "historicalDecisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSha256": "806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc",
+            "decisionSetExactToHistorical": true,
+            "baseScoreDelta": {
+              "maxAbsDelta": 0.4662265964573295,
+              "at": {
+                "measure": 58,
+                "step": 3
+              },
+              "keySetExact": true
+            },
+            "sequenceScoreDelta": {
+              "maxAbsDelta": 0.4834748304898178,
+              "at": {
+                "measure": 58,
+                "step": 3
+              },
+              "keySetExact": true
+            },
+            "keepProbabilityDelta": {
+              "maxAbsDelta": 0.052588236160807544,
+              "at": {
+                "measure": 51,
+                "step": 3
+              },
+              "keySetExact": true
+            }
+          }
+        },
+        "predictionCache": {
+          "entryCount": 8,
+          "misses": 8,
+          "hits": 8,
+          "expectedUniquePredictions": 8,
+          "singleLoadedBasicPitchModel": true,
+          "storesNoteEventsOnly": true
+        }
+      }
+    ],
+    "separatorRepeatability": {
+      "directStemPcmExactAcrossWorkers": true,
+      "cascadeStemPcmExactAcrossWorkers": true
+    },
+    "section2": {
+      "carrierSemanticExactAcrossWorkers": true,
+      "downstreamDecisionExactAcrossWorkers": true,
+      "historicalCarrierExactReplayCount": 3,
+      "historicalDecisionExactCount": 3
+    },
+    "section3": {
+      "carrierSemanticExactAcrossWorkers": true,
+      "downstreamDecisionExactAcrossWorkers": true,
+      "historicalCarrierExactReplayCount": 0,
+      "historicalDecisionExactCount": 3
+    },
+    "allHistoricalDecisionsExact": true,
+    "invariants": {
+      "professionalReferenceOpened": false,
+      "runtimeLabelsRequired": false,
+      "frozenModelModified": false,
+      "frozenPredictionsModified": false,
+      "thresholdsModified": false,
+      "liveEndpointDeployedOrModified": false,
+      "productionModified": false
+    }
+  },
   "logTail": [
-    "\u001b[1A 26%|\u2588\u2588\u258c       | 7/27 [00:11<00:32,  1.64s/it]",
-    "\u001b[1A 48%|\u2588\u2588\u2588\u2588\u258a     | 13/27 [00:21<00:22,  1.63s/it]",
-    "\u001b[1A 41%|\u2588\u2588\u2588\u2588      | 11/27 [00:18<00:26,  1.63s/it]",
-    "\u001b[1A 30%|\u2588\u2588\u2589       | 8/27 [00:13<00:30,  1.63s/it]",
-    "\u001b[1A 52%|\u2588\u2588\u2588\u2588\u2588\u258f    | 14/27 [00:23<00:21,  1.63s/it]",
-    "\u001b[1A 44%|\u2588\u2588\u2588\u2588\u258d     | 12/27 [00:20<00:24,  1.63s/it]",
-    "\u001b[1A 33%|\u2588\u2588\u2588\u258e      | 9/27 [00:15<00:29,  1.63s/it]",
-    "\u001b[1A 56%|\u2588\u2588\u2588\u2588\u2588\u258c    | 15/27 [00:24<00:19,  1.63s/it]",
-    "\u001b[1A 48%|\u2588\u2588\u2588\u2588\u258a     | 13/27 [00:21<00:22,  1.63s/it]",
-    "\u001b[1A 37%|\u2588\u2588\u2588\u258b      | 10/27 [00:16<00:27,  1.62s/it]",
-    "\u001b[1A 59%|\u2588\u2588\u2588\u2588\u2588\u2589    | 16/27 [00:26<00:17,  1.63s/it]",
-    "\u001b[1A 52%|\u2588\u2588\u2588\u2588\u2588\u258f    | 14/27 [00:23<00:21,  1.63s/it]",
-    "\u001b[1A 41%|\u2588\u2588\u2588\u2588      | 11/27 [00:18<00:25,  1.62s/it]",
-    "\u001b[1A 63%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 17/27 [00:28<00:16,  1.63s/it]",
-    "\u001b[1A 56%|\u2588\u2588\u2588\u2588\u2588\u258c    | 15/27 [00:24<00:19,  1.63s/it]",
-    "\u001b[1A 44%|\u2588\u2588\u2588\u2588\u258d     | 12/27 [00:19<00:24,  1.63s/it]",
-    "\u001b[1A 67%|\u2588\u2588\u2588\u2588\u2588\u2588\u258b   | 18/27 [00:29<00:14,  1.63s/it]",
-    "\u001b[1A 44%|\u2588\u2588\u2588\u2588\u258d     | 12/27 [00:19<00:24,  1.66s/it]",
-    "Traceback (most recent call last):",
-    "  File \"<frozen runpy>\", line 198, in _run_module_as_main",
-    "  File \"<frozen runpy>\", line 88, in _run_code",
-    "  File \"/root/v143_seeded_audio_separator_cli.py\", line 42, in <module>",
-    "    main()",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/utils/cli.py\", line 298, in main",
-    "    output_files = separator.separate(audio_files, custom_output_names=args.custom_output_names)",
-    "                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/separator.py\", line 992, in separate",
-    "    files_output = self._separate_file(path, custom_output_names)",
-    "                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/separator.py\", line 1038, in _separate_file",
-    "    output_files = self.model_instance.separate(audio_file_path, custom_output_names)",
-    "                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/architectures/mdxc_separator.py\", line 205, in separate",
-    "    source = self.demix(mix=mix)",
-    "             ^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/architectures/mdxc_separator.py\", line 381, in demix",
-    "    x = self.model_run(part.unsqueeze(0))[0]",
-    "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1778, in _wrapped_call_impl",
-    "    return self._call_impl(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1789, in _call_impl",
-    "    return forward_call(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/uvr_lib_v5/roformer/bs_roformer.py\", line 497, in forward",
-    "    stft_repr = rearrange(stft_repr, \"b s f t c -> b (f s) t c\")  # merge stereo / mono into the frequency, with frequency leading dimension, for band splitting",
-    "                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/einops/einops.py\", line 616, in rearrange",
-    "    return reduce(tensor, pattern, reduction=\"rearrange\", **axes_lengths)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/einops/einops.py\", line 540, in reduce",
-    "    return _apply_recipe(",
-    "           ^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/einops/einops.py\", line 251, in _apply_recipe",
-    "    tensor = backend.reshape(tensor, final_shapes)",
-    "             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/einops/_backends.py\", line 96, in reshape",
-    "    return x.reshape(shape)",
-    "           ^^^^^^^^^^^^^^^^",
-    "KeyboardInterrupt",
-    "",
-    "\u001b[1A 59%|\u2588\u2588\u2588\u2588\u2588\u2589    | 16/27 [00:26<00:17,  1.63s/it]",
-    "\u001b[1A 67%|\u2588\u2588\u2588\u2588\u2588\u2588\u258b   | 18/27 [00:30<00:15,  1.69s/it]",
-    "Traceback (most recent call last):",
-    "  File \"<frozen runpy>\", line 198, in _run_module_as_main",
-    "  File \"<frozen runpy>\", line 88, in _run_code",
-    "  File \"/root/v143_seeded_audio_separator_cli.py\", line 42, in <module>",
-    "    main()",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/utils/cli.py\", line 298, in main",
-    "    output_files = separator.separate(audio_files, custom_output_names=args.custom_output_names)",
-    "                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/separator.py\", line 992, in separate",
-    "    files_output = self._separate_file(path, custom_output_names)",
-    "                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/separator.py\", line 1038, in _separate_file",
-    "    output_files = self.model_instance.separate(audio_file_path, custom_output_names)",
-    "                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/architectures/mdxc_separator.py\", line 205, in separate",
-    "    source = self.demix(mix=mix)",
-    "             ^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/architectures/mdxc_separator.py\", line 381, in demix",
-    "    x = self.model_run(part.unsqueeze(0))[0]",
-    "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1778, in _wrapped_call_impl",
-    "    return self._call_impl(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1789, in _call_impl",
-    "    return forward_call(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/uvr_lib_v5/roformer/bs_roformer.py\", line 531, in forward",
-    "    mask = torch.stack([fn(x) for fn in self.mask_estimators], dim=1)",
-    "                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/uvr_lib_v5/roformer/bs_roformer.py\", line 531, in <listcomp>",
-    "    mask = torch.stack([fn(x) for fn in self.mask_estimators], dim=1)",
-    "                        ^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1778, in _wrapped_call_impl",
-    "    return self._call_impl(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1789, in _call_impl",
-    "    return forward_call(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/audio_separator/separator/uvr_lib_v5/roformer/bs_roformer.py\", line 257, in forward",
-    "    freq_out = mlp(band_features)",
-    "               ^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1778, in _wrapped_call_impl",
-    "    return self._call_impl(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1789, in _call_impl",
-    "    return forward_call(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/container.py\", line 253, in forward",
-    "    input = module(input)",
-    "            ^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1778, in _wrapped_call_impl",
-    "    return self._call_impl(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1789, in _call_impl",
-    "    return forward_call(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/container.py\", line 253, in forward",
-    "    input = module(input)",
-    "            ^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1778, in _wrapped_call_impl",
-    "    return self._call_impl(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1789, in _call_impl",
-    "    return forward_call(*args, **kwargs)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "  File \"/usr/local/lib/python3.11/site-packages/torch/nn/modules/linear.py\", line 134, in forward",
-    "    return F.linear(input, self.weight, self.bias)",
-    "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-    "KeyboardInterrupt",
-    "",
-    "Stopping app - uncaught exception raised locally: ConflictError('workspace ac-dBr3jRIaWxX1FJpYKEGTQi is disabled').",
-    "\u001b[1A 63%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 17/27 [00:28<00:16,  1.63s/it]\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Traceback (most recent call last) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
-    "\u2502 /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143_co \u2502",
-    "\u2502 ntextual_prune_dual_band_cross_container_behavior_modal.py:242 in diagnose   \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502   241 \u2502   with concurrent.futures.ThreadPoolExecutor(max_workers=WORKER_COUN \u2502",
-    "\u2502 \u2771 242 \u2502   \u2502   workers = list(pool.map(invoke, range(1, WORKER_COUNT + 1)))   \u2502",
-    "\u2502   243 \u2502   workers.sort(key=lambda row: int(row[\"worker\"]))                   \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502 /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/concurrent/futures/_b \u2502",
-    "\u2502 ase.py:619 in result_iterator                                                \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502   618 \u2502   \u2502   \u2502   \u2502   \u2502   if timeout is None:                                \u2502",
-    "\u2502 \u2771 619 \u2502   \u2502   \u2502   \u2502   \u2502   \u2502   yield _result_or_cancel(fs.pop())              \u2502",
-    "\u2502   620 \u2502   \u2502   \u2502   \u2502   \u2502   else:                                              \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502 /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/concurrent/futures/_b \u2502",
-    "\u2502 ase.py:317 in _result_or_cancel                                              \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502   316 \u2502   \u2502   try:                                                           \u2502",
-    "\u2502 \u2771 317 \u2502   \u2502   \u2502   return fut.result(timeout)                                 \u2502",
-    "\u2502   318 \u2502   \u2502   finally:                                                       \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502 /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/concurrent/futures/_b \u2502",
-    "\u2502 ase.py:456 in result                                                         \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502   455 \u2502   \u2502   \u2502   \u2502   elif self._state == FINISHED:                          \u2502",
-    "\u2502 \u2771 456 \u2502   \u2502   \u2502   \u2502   \u2502   return self.__get_result()                         \u2502",
-    "\u2502   457 \u2502   \u2502   \u2502   \u2502   else:                                                  \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502 /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/concurrent/futures/_b \u2502",
-    "\u2502 ase.py:401 in __get_result                                                   \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502   400 \u2502   \u2502   \u2502   try:                                                       \u2502",
-    "\u2502 \u2771 401 \u2502   \u2502   \u2502   \u2502   raise self._exception                                  \u2502",
-    "\u2502   402 \u2502   \u2502   \u2502   finally:                                                   \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502 /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/concurrent/futures/th \u2502",
-    "\u2502 read.py:58 in run                                                            \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502    57 \u2502   \u2502   try:                                                           \u2502",
-    "\u2502 \u2771  58 \u2502   \u2502   \u2502   result = self.fn(*self.args, **self.kwargs)                \u2502",
-    "\u2502    59 \u2502   \u2502   except BaseException as exc:                                   \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502 /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143_co \u2502",
-    "\u2502 ntextual_prune_dual_band_cross_container_behavior_modal.py:239 in invoke     \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502   238 \u2502   def invoke(index: int) -> dict[str, Any]:                          \u2502",
-    "\u2502 \u2771 239 \u2502   \u2502   return behavior_worker.remote(payload, source.suffix, index)   \u2502",
-    "\u2502   240                                                                        \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502 /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/modal/_ \u2502",
-    "\u2502 object.py:46 in wrapped                                                      \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502    45 \u2502   \u2502   await self.hydrate()                                           \u2502",
-    "\u2502 \u2771  46 \u2502   \u2502   return await method(self, *args, **kwargs)                     \u2502",
-    "\u2502    47                                                                        \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502 /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/modal/_ \u2502",
-    "\u2502 functions.py:1841 in remote                                                  \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502   1840 \u2502   \u2502                                                                 \u2502",
-    "\u2502 \u2771 1841 \u2502   \u2502   return await self._call_function(args, kwargs)                \u2502",
-    "\u2502   1842                                                                       \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502 /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/modal/_ \u2502",
-    "\u2502 functions.py:1778 in _call_function                                          \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502   1777 \u2502   \u2502                                                                 \u2502",
-    "\u2502 \u2771 1778 \u2502   \u2502   return await invocation.run_function()                        \u2502",
-    "\u2502   1779                                                                       \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502 /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/modal/_ \u2502",
-    "\u2502 functions.py:493 in run_function                                             \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502    492 \u2502   \u2502   \u2502   \u2502   \u2502   # We immediately retry internal failures and the  \u2502",
-    "\u2502 \u2771  493 \u2502   \u2502   \u2502   \u2502   \u2502   self.attempt_token = await self._retry_input(meta \u2502",
-    "\u2502    494 \u2502   \u2502   \u2502   \u2502   \u2502   continue                                          \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502 /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/modal/_ \u2502",
-    "\u2502 functions.py:513 in _retry_input                                             \u2502",
-    "\u2502                                                                              \u2502",
-    "\u2502    512 \u2502   \u2502   )                                                             \u2502",
-    "\u2502 \u2771  513 \u2502   \u2502   retry_response = await self.stub.AttemptRetry(retry_request,  \u2502",
-    "\u2502    514 \u2502   \u2502   return retry_response.attempt_token                           \u2502",
-    "\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f",
-    "ConflictError: workspace ac-dBr3jRIaWxX1FJpYKEGTQi is disabled"
+    "          \"candidateClusterCount\": 9049,",
+    "          \"rowCount\": 804,",
+    "          \"stemEventCounts\": {",
+    "            \"stem0:direct-demucs6s-guitar.wav\": 10625,",
+    "            \"stem1:bsroformer-demucs6s-guitar.wav\": 10211",
+    "          },",
+    "          \"sweepEventCounts\": {",
+    "            \"o015_f010\": 12212,",
+    "            \"o020_f012\": 4540,",
+    "            \"o025_f015\": 2542,",
+    "            \"o030_f020\": 1542",
+    "          }",
+    "        },",
+    "        \"downstream\": {",
+    "          \"historicalDecisionSha256\": \"806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc\",",
+    "          \"decisionSha256\": \"806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc\",",
+    "          \"decisionSetExactToHistorical\": true,",
+    "          \"baseScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.4662265964573295,",
+    "            \"at\": {",
+    "              \"measure\": 58,",
+    "              \"step\": 3",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"sequenceScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.4834748304898178,",
+    "            \"at\": {",
+    "              \"measure\": 58,",
+    "              \"step\": 3",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"keepProbabilityDelta\": {",
+    "            \"maxAbsDelta\": 0.052588236160807544,",
+    "            \"at\": {",
+    "              \"measure\": 51,",
+    "              \"step\": 3",
+    "            },",
+    "            \"keySetExact\": true",
+    "          }",
+    "        }",
+    "      },",
+    "      \"predictionCache\": {",
+    "        \"entryCount\": 8,",
+    "        \"misses\": 8,",
+    "        \"hits\": 8,",
+    "        \"expectedUniquePredictions\": 8,",
+    "        \"singleLoadedBasicPitchModel\": true,",
+    "        \"storesNoteEventsOnly\": true",
+    "      }",
+    "    },",
+    "    {",
+    "      \"worker\": 3,",
+    "      \"runtimeIdentity\": {",
+    "        \"modalTaskId\": \"ta-01M0HG26S64K69E78WPET3ZR5R\"",
+    "      },",
+    "      \"normalizedSha256\": \"ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f\",",
+    "      \"separator\": {",
+    "        \"deterministicFlag\": true,",
+    "        \"referenceFree\": true,",
+    "        \"directFileSha256\": \"afd1037bc7d62572ac9b99644d13d95b8593e25b4f442aa4a8f85c1111d97c78\",",
+    "        \"cascadeFileSha256\": \"44e0fe8874b07bcd4bca7e28f4a512b61214061f6bbf8771426c1b1237ffa201\",",
+    "        \"directPcm\": {",
+    "          \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
+    "          \"sampleRate\": 44100,",
+    "          \"frames\": 9324544,",
+    "          \"channels\": 2",
+    "        },",
+    "        \"cascadePcm\": {",
+    "          \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "          \"sampleRate\": 44100,",
+    "          \"frames\": 9324544,",
+    "          \"channels\": 2",
+    "        }",
+    "      },",
+    "      \"section2\": {",
+    "        \"carrier\": {",
+    "          \"semanticSha256\": \"f4234f7e8b9167976817be395813283fea0fe6db66758488a466609e53220f00\",",
+    "          \"exactHistoricalReplay\": true,",
+    "          \"toleranceHistoricalReplay\": true,",
+    "          \"firstMismatch\": null,",
+    "          \"rawEventCount\": 21288,",
+    "          \"candidateClusterCount\": 7794,",
+    "          \"rowCount\": 804,",
+    "          \"stemEventCounts\": {",
+    "            \"stem0:direct-demucs6s-guitar.wav\": 10791,",
+    "            \"stem1:bsroformer-demucs6s-guitar.wav\": 10497",
+    "          },",
+    "          \"sweepEventCounts\": {",
+    "            \"o015_f010\": 12187,",
+    "            \"o020_f012\": 4718,",
+    "            \"o025_f015\": 2702,",
+    "            \"o030_f020\": 1681",
+    "          }",
+    "        },",
+    "        \"downstream\": {",
+    "          \"historicalDecisionSha256\": \"1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3\",",
+    "          \"decisionSha256\": \"1598a5591c84876b1fe412c76344d0d25268fc96d77252cfdc2518930c5dcbf3\",",
+    "          \"decisionSetExactToHistorical\": true,",
+    "          \"baseScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.0,",
+    "            \"at\": {",
+    "              \"measure\": 33,",
+    "              \"step\": 0",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"sequenceScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.0,",
+    "            \"at\": {",
+    "              \"measure\": 33,",
+    "              \"step\": 0",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"keepProbabilityDelta\": {",
+    "            \"maxAbsDelta\": 0.0,",
+    "            \"at\": {",
+    "              \"measure\": 33,",
+    "              \"step\": 0",
+    "            },",
+    "            \"keySetExact\": true",
+    "          }",
+    "        }",
+    "      },",
+    "      \"section3\": {",
+    "        \"carrier\": {",
+    "          \"semanticSha256\": \"dfd0ec804ecf7da338c3245eb8c2cd6f7bb1d187962b7081c725d7160360631f\",",
+    "          \"exactHistoricalReplay\": false,",
+    "          \"toleranceHistoricalReplay\": false,",
+    "          \"firstMismatch\": {",
+    "            \"path\": \"$.rows\",",
+    "            \"expectedLength\": 802,",
+    "            \"actualLength\": 804",
+    "          },",
+    "          \"rawEventCount\": 20836,",
+    "          \"candidateClusterCount\": 9049,",
+    "          \"rowCount\": 804,",
+    "          \"stemEventCounts\": {",
+    "            \"stem0:direct-demucs6s-guitar.wav\": 10625,",
+    "            \"stem1:bsroformer-demucs6s-guitar.wav\": 10211",
+    "          },",
+    "          \"sweepEventCounts\": {",
+    "            \"o015_f010\": 12212,",
+    "            \"o020_f012\": 4540,",
+    "            \"o025_f015\": 2542,",
+    "            \"o030_f020\": 1542",
+    "          }",
+    "        },",
+    "        \"downstream\": {",
+    "          \"historicalDecisionSha256\": \"806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc\",",
+    "          \"decisionSha256\": \"806c005d5a79c04aa6afa71a6fd036c7c06f92c3b77128412d2525c323f8c7fc\",",
+    "          \"decisionSetExactToHistorical\": true,",
+    "          \"baseScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.4662265964573295,",
+    "            \"at\": {",
+    "              \"measure\": 58,",
+    "              \"step\": 3",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"sequenceScoreDelta\": {",
+    "            \"maxAbsDelta\": 0.4834748304898178,",
+    "            \"at\": {",
+    "              \"measure\": 58,",
+    "              \"step\": 3",
+    "            },",
+    "            \"keySetExact\": true",
+    "          },",
+    "          \"keepProbabilityDelta\": {",
+    "            \"maxAbsDelta\": 0.052588236160807544,",
+    "            \"at\": {",
+    "              \"measure\": 51,",
+    "              \"step\": 3",
+    "            },",
+    "            \"keySetExact\": true",
+    "          }",
+    "        }",
+    "      },",
+    "      \"predictionCache\": {",
+    "        \"entryCount\": 8,",
+    "        \"misses\": 8,",
+    "        \"hits\": 8,",
+    "        \"expectedUniquePredictions\": 8,",
+    "        \"singleLoadedBasicPitchModel\": true,",
+    "        \"storesNoteEventsOnly\": true",
+    "      }",
+    "    }",
+    "  ],",
+    "  \"separatorRepeatability\": {",
+    "    \"directStemPcmExactAcrossWorkers\": true,",
+    "    \"cascadeStemPcmExactAcrossWorkers\": true",
+    "  },",
+    "  \"section2\": {",
+    "    \"carrierSemanticExactAcrossWorkers\": true,",
+    "    \"downstreamDecisionExactAcrossWorkers\": true,",
+    "    \"historicalCarrierExactReplayCount\": 3,",
+    "    \"historicalDecisionExactCount\": 3",
+    "  },",
+    "  \"section3\": {",
+    "    \"carrierSemanticExactAcrossWorkers\": true,",
+    "    \"downstreamDecisionExactAcrossWorkers\": true,",
+    "    \"historicalCarrierExactReplayCount\": 0,",
+    "    \"historicalDecisionExactCount\": 3",
+    "  },",
+    "  \"allHistoricalDecisionsExact\": true,",
+    "  \"invariants\": {",
+    "    \"professionalReferenceOpened\": false,",
+    "    \"runtimeLabelsRequired\": false,",
+    "    \"frozenModelModified\": false,",
+    "    \"frozenPredictionsModified\": false,",
+    "    \"thresholdsModified\": false,",
+    "    \"liveEndpointDeployedOrModified\": false,",
+    "    \"productionModified\": false",
+    "  }",
+    "}",
+    "Stopping app - local entrypoint completed.",
+    "\u2713 App completed. View run at ",
+    "https://modal.com/apps/dadrockyt/main/ap-LFiqC0LTJ752O0DW4y9PpI"
   ],
   "productionModified": false
 }
