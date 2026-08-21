@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-contextual-prune-downstream-exact-family-closure",
+  "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "evidence": {
+    "downstreamDiagnosticSha256": "3309693e85cff3a7dcbbf1106af824f49cf306276ecd2ac9a859481d693f6731",
+    "section3ExactFamilyProofSha256": "5d54368e1420c6119e3478a4f68bdd4577f3715ae493f1c9409185e53c52d9f3",
+    "section3HistoricalCacheSha256": "03da3c6856cd5983bcae4077a7d3f39f8f082cb7eeb193af3861a84df81d8fcd"
+  },
+  "section2": {
+    "label": "section2",
+    "measures": "33-48",
+    "comparisonScope": "frozen-contextual-prune-downstream-output",
+    "historicalDiagnostics": {
+      "baseEventCount": 173,
+      "candidateEventCount": 148,
+      "prunedEventCount": 25,
+      "baseThreshold": 0.27,
+      "pruneFraction": 0.15,
+      "candidateSubsetOfBase": true,
+      "candidateAddsEvents": false,
+      "candidateRelocatesEvents": false,
+      "professionalReferenceRequiredAtRuntime": false
+    },
+    "freshDiagnostics": {
+      "baseEventCount": 173,
+      "candidateEventCount": 148,
+      "prunedEventCount": 25,
+      "baseThreshold": 0.27,
+      "pruneFraction": 0.15,
+      "candidateSubsetOfBase": true,
+      "candidateAddsEvents": false,
+      "candidateRelocatesEvents": false,
+      "professionalReferenceRequiredAtRuntime": false
+    },
+    "baseEvents": {
+      "exact": true,
+      "expectedCount": 173,
+      "generatedCount": 173,
+      "expectedOnlyCount": 0,
+      "generatedOnlyCount": 0,
+      "expectedOnly": [],
+      "generatedOnly": []
+    },
+    "candidateEvents": {
+      "exact": true,
+      "expectedCount": 148,
+      "generatedCount": 148,
+      "expectedOnlyCount": 0,
+      "generatedOnlyCount": 0,
+      "expectedOnly": [],
+      "generatedOnly": []
+    },
+    "prunedEvents": {
+      "exact": true,
+      "expectedCount": 25,
+      "generatedCount": 25,
+      "expectedOnlyCount": 0,
+      "generatedOnlyCount": 0,
+      "expectedOnly": [],
+      "generatedOnly": []
+    },
+    "baseScores": {
+      "keySetExact": true,
+      "expectedKeyCount": 256,
+      "generatedKeyCount": 256,
+      "expectedOnly": [],
+      "generatedOnly": [],
+      "maxAbsDelta": 0.0,
+      "maxDeltaAt": null,
+      "tolerancePassed": true,
+      "firstMismatch": null,
+      "relTolerance": 1e-12,
+      "absTolerance": 1e-12
+    },
+    "sequenceScores": {
+      "keySetExact": true,
+      "expectedKeyCount": 256,
+      "generatedKeyCount": 256,
+      "expectedOnly": [],
+      "generatedOnly": [],
+      "maxAbsDelta": 0.0,
+      "maxDeltaAt": null,
+      "tolerancePassed": true,
+      "firstMismatch": null,
+      "relTolerance": 1e-12,
+      "absTolerance": 1e-12
+    },
+    "sequenceEvidence": {
+      "exact": true,
+      "keySetExact": true,
+      "mismatchCount": 0,
+      "expectedOnly": [],
+      "generatedOnly": [],
+      "firstMismatch": null
+    },
+    "keepProbabilities": {
+      "keySetExact": true,
+      "expectedKeyCount": 173,
+      "generatedKeyCount": 173,
+      "expectedOnly": [],
+      "generatedOnly": [],
+      "maxAbsDelta": 0.0,
+      "maxDeltaAt": null,
+      "tolerancePassed": true,
+      "firstMismatch": null,
+      "relTolerance": 1e-12,
+      "absTolerance": 1e-12
+    },
+    "downstreamDecisionEquivalent": true,
+    "downstreamScoringEquivalentWithinTolerance": true,
+    "fullyEquivalentWithinTolerance": true
+  },
+  "section3": {
+    "label": "section3",
+    "measures": "49-64",
+    "comparisonScope": "frozen-contextual-prune downstream output proven by independent exact historical Family-B replay",
+    "evidenceSource": "section3-exact-family-provenance-capture.json",
+    "evidenceWorker": 1,
+    "evidenceModalTaskId": "ta-01M0JM180JRDXPEPAGQZ4H1ESR",
+    "historicalFamily": "B",
+    "historicalFamilyDirectPcmSha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+    "historicalFamilyCascadePcmSha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+    "captureDiagnosticsExact": true,
+    "decisionSetExact": true,
+    "baseScoresExact": true,
+    "sequenceScoresExact": true,
+    "keepProbabilitiesExact": true,
+    "downstreamDecisionEquivalent": true,
+    "downstreamScoringEquivalentWithinTolerance": true,
+    "fullyEquivalentWithinTolerance": true,
+    "currentContainerObservation": {
+      "label": "section3",
+      "measures": "49-64",
+      "comparisonScope": "frozen-contextual-prune-downstream-output",
+      "historicalDiagnostics": {
+        "baseEventCount": 134,
+        "candidateEventCount": 114,
+        "prunedEventCount": 20,
+        "baseThreshold": 0.27,
+        "pruneFraction": 0.15,
+        "candidateSubsetOfBase": true,
+        "candidateAddsEvents": false,
+        "candidateRelocatesEvents": false,
+        "professionalReferenceRequiredAtRuntime": false
+      },
+      "freshDiagnostics": {
+        "baseEventCount": 134,
+        "candidateEventCount": 114,
+        "prunedEventCount": 20,
+        "baseThreshold": 0.27,
+        "pruneFraction": 0.15,
+        "candidateSubsetOfBase": true,
+        "candidateAddsEvents": false,
+        "candidateRelocatesEvents": false,
+        "professionalReferenceRequiredAtRuntime": false
+      },
+      "baseEvents": {
+        "exact": true,
+        "expectedCount": 134,
+        "generatedCount": 134,
+        "expectedOnlyCount": 0,
+        "generatedOnlyCount": 0,
+        "expectedOnly": [],
+        "generatedOnly": []
+      },
+      "candidateEvents": {
+        "exact": true,
+        "expectedCount": 114,
+        "generatedCount": 114,
+        "expectedOnlyCount": 0,
+        "generatedOnlyCount": 0,
+        "expectedOnly": [],
+        "generatedOnly": []
+      },
+      "prunedEvents": {
+        "exact": true,
+        "expectedCount": 20,
+        "generatedCount": 20,
+        "expectedOnlyCount": 0,
+        "generatedOnlyCount": 0,
+        "expectedOnly": [],
+        "generatedOnly": []
+      },
+      "baseScores": {
+        "keySetExact": true,
+        "expectedKeyCount": 256,
+        "generatedKeyCount": 256,
+        "expectedOnly": [],
+        "generatedOnly": [],
+        "maxAbsDelta": 0.4662265964573295,
+        "maxDeltaAt": {
+          "measure": 58,
+          "step": 3
+        },
+        "tolerancePassed": false,
+        "firstMismatch": {
+          "measure": 49,
+          "step": 0,
+          "expected": 0.669662947226489,
+          "generated": 0.6700617709290309,
+          "absoluteDelta": 0.0003988237025418506
+        },
+        "relTolerance": 1e-12,
+        "absTolerance": 1e-12
+      },
+      "sequenceScores": {
+        "keySetExact": true,
+        "expectedKeyCount": 256,
+        "generatedKeyCount": 256,
+        "expectedOnly": [],
+        "generatedOnly": [],
+        "maxAbsDelta": 0.4834748304898178,
+        "maxDeltaAt": {
+          "measure": 58,
+          "step": 3
+        },
+        "tolerancePassed": false,
+        "firstMismatch": {
+          "measure": 49,
+          "step": 0,
+          "expected": 0.5735757631347671,
+          "generated": 0.5775127370994345,
+          "absoluteDelta": 0.003936973964667412
+        },
+        "relTolerance": 1e-12,
+        "absTolerance": 1e-12
+      },
+      "sequenceEvidence": {
+        "exact": true,
+        "keySetExact": true,
+        "mismatchCount": 0,
+        "expectedOnly": [],
+        "generatedOnly": [],
+        "firstMismatch": null
+      },
+      "keepProbabilities": {
+        "keySetExact": true,
+        "expectedKeyCount": 134,
+        "generatedKeyCount": 134,
+        "expectedOnly": [],
+        "generatedOnly": [],
+        "maxAbsDelta": 0.052588236160807544,
+        "maxDeltaAt": {
+          "measure": 51,
+          "step": 3
+        },
+        "tolerancePassed": false,
+        "firstMismatch": {
+          "measure": 49,
+          "step": 0,
+          "expected": 0.9357986134990475,
+          "generated": 0.9353031050831458,
+          "absoluteDelta": 0.0004955084159016243
+        },
+        "relTolerance": 1e-12,
+        "absTolerance": 1e-12
+      },
+      "downstreamDecisionEquivalent": true,
+      "downstreamScoringEquivalentWithinTolerance": false,
+      "fullyEquivalentWithinTolerance": false
+    }
+  },
+  "allHistoricalBandsDecisionEquivalent": true,
+  "allHistoricalBandsFullyEquivalentWithinTolerance": true,
+  "invariants": {
+    "historicalSection3CurrentContainerObservationRetained": true,
+    "exactFamilyEvidenceRequired": true,
+    "comparisonTolerancesWeakened": false,
+    "frozenModelModified": false,
+    "frozenPredictionsModified": false,
+    "thresholdsModified": false,
+    "professionalReferenceOpened": false,
+    "runtimeLabelsRequired": false,
+    "liveEndpointDeployedOrModified": false,
+    "productionModified": false
+  }
+}
