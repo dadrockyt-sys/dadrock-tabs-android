@@ -1,0 +1,188 @@
+name: V143 Contextual Prune Section-5 Modal Replay
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-section5-modal-replay.yml
+
+permissions:
+  contents: write
+
+jobs:
+  section5-modal-replay:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify sealed replay inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s public/gomywayfullaitest.m4a
+          test -s public/training/v143-musical-reconstruction-calibration/fresh-section5-reference-free-cache.json
+          test -s public/training/v143-musical-reconstruction-calibration/contextual-prune-frozen-model.json
+          test -s analyzer/v143_contextual_prune_shadow_modal.py
+          echo "Section-5 replay inputs are present."
+
+      - name: Run isolated Section-5 replay on Modal
+        id: replay
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=debug/v143-contextual-prune/section5-modal-replay.log
+          diagnostic=debug/v143-contextual-prune/section5-modal-replay.json
+
+          : > "$log"
+          echo "commit=$GITHUB_SHA" >> "$log"
+          echo "actor=$GITHUB_ACTOR" >> "$log"
+
+          token_available=false
+          replay_attempted=false
+          replay_status=99
+
+          if [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            token_available=true
+            python -m pip install --disable-pip-version-check modal >> "$log" 2>&1
+            install_status=$?
+            if [ "$install_status" -eq 0 ]; then
+              replay_attempted=true
+              python -m modal run analyzer/v143_contextual_prune_shadow_modal.py::section5_replay >> "$log" 2>&1
+              replay_status=$?
+            else
+              replay_status=$install_status
+            fi
+          else
+            echo "Modal GitHub credentials are unavailable; replay not attempted." >> "$log"
+          fi
+
+          TOKEN_AVAILABLE="$token_available" \
+          REPLAY_ATTEMPTED="$replay_attempted" \
+          REPLAY_STATUS="$replay_status" \
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          log_path = Path("debug/v143-contextual-prune/section5-modal-replay.log")
+          diagnostic_path = Path("debug/v143-contextual-prune/section5-modal-replay.json")
+          text = log_path.read_text(encoding="utf-8", errors="replace")
+
+          target_gate = "v143-contextual-prune-section5-reference-free-audio-carrier-replay"
+          replay_result = None
+          decoder = json.JSONDecoder()
+          for index, char in enumerate(text):
+              if char != "{":
+                  continue
+              try:
+                  value, _ = decoder.raw_decode(text[index:])
+              except json.JSONDecodeError:
+                  continue
+              if isinstance(value, dict) and value.get("gate") == target_gate:
+                  replay_result = value
+
+          lines = text.splitlines()
+          token_available = os.environ["TOKEN_AVAILABLE"] == "true"
+          replay_attempted = os.environ["REPLAY_ATTEMPTED"] == "true"
+          replay_status = int(os.environ["REPLAY_STATUS"])
+
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-contextual-prune-section5-modal-replay-action",
+              "modalCredentialsAvailableInGitHubActions": token_available,
+              "replayAttempted": replay_attempted,
+              "modalCommandExitCode": replay_status if replay_attempted else None,
+              "replayResultFound": replay_result is not None,
+              "replayResult": replay_result,
+              "logTail": lines[-180:],
+              "liveEndpointDeployedOrModified": False,
+              "productionModified": False,
+          }
+          diagnostic_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          exit 0
+
+      - name: Preserve full Modal replay log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-contextual-prune-section5-modal-replay-log
+          path: debug/v143-contextual-prune/section5-modal-replay.log
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Commit compact replay diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/section5-modal-replay.json
+
+          if git diff --cached --quiet; then
+            echo "No Section-5 Modal replay diagnostic changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 Section-5 Modal replay"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce Section-5 replay gate
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("debug/v143-contextual-prune/section5-modal-replay.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+          result = data.get("replayResult") or {}
+          invariants = result.get("invariants") or {}
+
+          checks = {
+              "Modal credentials available": data.get("modalCredentialsAvailableInGitHubActions") is True,
+              "Replay attempted": data.get("replayAttempted") is True,
+              "Modal command exited zero": data.get("modalCommandExitCode") == 0,
+              "Replay result found": data.get("replayResultFound") is True,
+              "Tolerance replay passed": result.get("toleranceReplayPassed") is True,
+              "Calibration carrier is reference-free": invariants.get("calibrationCacheReferenceFree") is True,
+              "Professional reference not used by calibration cache": invariants.get("professionalReferenceUsedByCalibrationCache") is False,
+              "Professional reference not opened": invariants.get("professionalReferenceOpened") is False,
+              "Runtime labels not required": invariants.get("runtimeLabelsRequired") is False,
+              "Live endpoint not deployed or modified": invariants.get("liveEndpointDeployedOrModified") is False,
+              "Production not modified": invariants.get("productionModified") is False,
+          }
+
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              print(json.dumps({
+                  "failedChecks": failed,
+                  "firstMismatch": result.get("firstMismatch"),
+                  "expected": result.get("expected"),
+                  "generated": result.get("generated"),
+              }, indent=2))
+              raise SystemExit("V143 Section-5 Modal replay gate failed")
+
+          print("V143 Section-5 reference-free audio-carrier replay PASSED")
+          print("EXACT_REPLAY", result.get("exactReplayPassed"))
+          print("TOLERANCE_REPLAY", result.get("toleranceReplayPassed"))
+          print("PRODUCTION_MODIFIED", False)
+          PY
