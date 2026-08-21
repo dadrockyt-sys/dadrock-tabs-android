@@ -147,9 +147,8 @@ def _first_mismatch(expected: Any, actual: Any, path: str = "$") -> dict[str, An
 
 
 def _normalize_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    # Historical captures restart onsetGroupId inside each 16-measure cache,
-    # whereas one combined carrier increments it continuously. The ID is an
-    # ordering artifact only; none of the frozen scorers consume it as evidence.
+    # Historical captures restart onsetGroupId inside each 16-measure cache.
+    # The ID is an ordering artifact only; none of the frozen scorers consume it.
     out: list[dict[str, Any]] = []
     for raw in rows:
         row = dict(raw)
@@ -193,21 +192,11 @@ def _expected_semantics(cache: dict[str, Any], start: int, end: int) -> dict[str
     }
 
 
-def _generated_semantics(carrier: Any, start: int, end: int) -> dict[str, Any]:
-    grid = [
-        dict(row)
-        for row in carrier.grid_rows
-        if start <= int(row.get("measure") or 0) <= end
-    ]
-    rows = [
-        dict(row)
-        for row in carrier.rows
-        if start <= int(row.get("measure") or 0) <= end
-    ]
+def _generated_semantics(carrier: Any) -> dict[str, Any]:
     return {
         "timing": _timing_payload(carrier.timing),
-        "grid": grid,
-        "rows": _normalize_rows(rows),
+        "grid": [dict(row) for row in carrier.grid_rows],
+        "rows": _normalize_rows([dict(row) for row in carrier.rows]),
         "targetSampleRate": 22050,
         "hopLength": 128,
         "binsPerOctave": 36,
@@ -222,10 +211,8 @@ def _generated_semantics(carrier: Any, start: int, end: int) -> dict[str, Any]:
 
 def _band_result(label: str, cache: dict[str, Any], carrier: Any, start: int, end: int) -> dict[str, Any]:
     expected = _expected_semantics(cache, start, end)
-    generated = _generated_semantics(carrier, start, end)
+    generated = _generated_semantics(carrier)
     mismatch = _first_mismatch(expected, generated)
-    expected_rows = expected["rows"]
-    generated_rows = generated["rows"]
     return {
         "label": label,
         "measures": f"{start}-{end}",
@@ -237,7 +224,7 @@ def _band_result(label: str, cache: dict[str, Any], carrier: Any, start: int, en
         "firstMismatch": mismatch,
         "expected": {
             "gridCount": len(expected["grid"]),
-            "rowCount": len(expected_rows),
+            "rowCount": len(expected["rows"]),
             "rawEventCount": int(cache.get("rawEventCount", -1)),
             "candidateClusterCount": int(cache.get("candidateClusterCount", -1)),
             "onsetGroupCount": int(cache.get("onsetGroupCount", -1)),
@@ -246,29 +233,50 @@ def _band_result(label: str, cache: dict[str, Any], carrier: Any, start: int, en
         },
         "generated": {
             "gridCount": len(generated["grid"]),
-            "rowCount": len(generated_rows),
-            "onsetGroupCount": len(generated_rows),
+            "rowCount": len(generated["rows"]),
+            "rawEventCount": int(carrier.raw_event_count),
+            "candidateClusterCount": int(carrier.candidate_cluster_count),
+            "onsetGroupCount": len(carrier.rows),
+            "sweepEventCounts": dict(carrier.sweep_event_counts),
+            "stemEventCounts": dict(carrier.stem_event_counts),
         },
     }
 
 
+def _freeze_cache_value(value: Any) -> Any:
+    if value is None or isinstance(value, (bool, int, float, str)):
+        return value
+    if isinstance(value, (tuple, list)):
+        return tuple(_freeze_cache_value(item) for item in value)
+    if isinstance(value, dict):
+        return tuple(
+            sorted((str(key), _freeze_cache_value(item)) for key, item in value.items())
+        )
+    return repr(value)
+
+
 @app.function(image=diagnostic_image, gpu="L4", timeout=1800, memory=12288)
 def diagnose_sections_2_and_3(source_audio: bytes, suffix: str = ".audio") -> dict[str, Any]:
-    """Replay measures 33-64 once, then compare the two historical band slices.
+    """Replay each historical band exactly while sharing expensive inference.
 
-    The earlier diagnostic rebuilt the full-track Basic Pitch sweeps twice, once
-    per band. That duplicated the expensive inference and could exceed the Modal
-    timeout. This version performs one carrier build and slices only the
-    scoring-relevant rows/grid for comparison. It remains fully label-blind.
+    Each carrier keeps its original band-specific measure range. That matters
+    because the carrier's whole-onset CQT crop ends shortly after the last onset
+    in that range; building one 33-64 carrier and slicing it can change edge CQT
+    evidence near measure 48. Basic Pitch prediction is the expensive repeated
+    operation, so this diagnostic memoizes the predictor across both band builds.
+    Timing estimation is also computed once and reused. The comparison remains
+    fully reference-free and label-blind.
     """
     if not source_audio:
         raise ValueError("source_audio is empty")
     if len(source_audio) > 50 * 1024 * 1024:
         raise ValueError("Diagnostic audio cannot exceed 50 MB")
 
+    from basic_pitch.inference import predict as basic_pitch_predict
     from v143_contextual_prune_reference_free_carrier import (
         build_contextual_prune_reference_free_carrier,
     )
+    from v143_reference_free_timing import estimate_reference_free_timing
 
     section2 = json.loads(SECTION2_CACHE.read_text(encoding="utf-8"))
     section3 = json.loads(SECTION3_CACHE.read_text(encoding="utf-8"))
@@ -281,35 +289,65 @@ def diagnose_sections_2_and_3(source_audio: bytes, suffix: str = ".audio") -> di
         _research_normalize_audio(source, normalized)
         stems, direct, cascade = _build_shadow_stems(normalized, root / "stems")
 
-        combined = build_contextual_prune_reference_free_carrier(
+        timing = estimate_reference_free_timing(normalized)
+        prediction_cache: dict[Any, Any] = {}
+        cache_hits = 0
+        cache_misses = 0
+
+        def memoized_predict(audio_path: str, *args: Any, **kwargs: Any) -> Any:
+            nonlocal cache_hits, cache_misses
+            key = (
+                str(Path(audio_path).resolve()),
+                _freeze_cache_value(args),
+                _freeze_cache_value(kwargs),
+            )
+            if key in prediction_cache:
+                cache_hits += 1
+                return prediction_cache[key]
+            result = basic_pitch_predict(audio_path, *args, **kwargs)
+            prediction_cache[key] = result
+            cache_misses += 1
+            return result
+
+        def fixed_timing(_path: str | Path) -> Any:
+            return timing
+
+        carrier2 = build_contextual_prune_reference_free_carrier(
             normalized,
             (direct, cascade),
             measure_start=33,
+            measure_end=48,
+            predictor=memoized_predict,
+            timing_estimator=fixed_timing,
+        )
+        carrier3 = build_contextual_prune_reference_free_carrier(
+            normalized,
+            (direct, cascade),
+            measure_start=49,
             measure_end=64,
+            predictor=memoized_predict,
+            timing_estimator=fixed_timing,
         )
 
-        result2 = _band_result("section2", section2, combined, 33, 48)
-        result3 = _band_result("section3", section3, combined, 49, 64)
+        result2 = _band_result("section2", section2, carrier2, 33, 48)
+        result3 = _band_result("section3", section3, carrier3, 49, 64)
 
         return {
-            "schemaVersion": 2,
+            "schemaVersion": 3,
             "gate": "v143-contextual-prune-historical-band-carrier-diagnostic",
-            "executionStrategy": "single-carrier-33-64-sliced-by-historical-band",
+            "executionStrategy": "dual-band-carriers-shared-basic-pitch-cache",
             "sourceSha256": hashlib.sha256(source_audio).hexdigest(),
             "researchNormalizedSha256": _sha256(normalized),
             "section2CacheSha256": _sha256(SECTION2_CACHE),
             "section3CacheSha256": _sha256(SECTION3_CACHE),
             "section2": result2,
             "section3": result3,
-            "combinedCarrier": {
-                "measureStart": int(combined.measure_start),
-                "measureEnd": int(combined.measure_end),
-                "gridCount": len(combined.grid_rows),
-                "rowCount": len(combined.rows),
-                "rawEventCount": int(combined.raw_event_count),
-                "candidateClusterCount": int(combined.candidate_cluster_count),
-                "sweepEventCounts": dict(combined.sweep_event_counts),
-                "stemEventCounts": dict(combined.stem_event_counts),
+            "predictionCache": {
+                "entryCount": len(prediction_cache),
+                "misses": int(cache_misses),
+                "hits": int(cache_hits),
+                "expectedUniquePredictions": 8,
+                "reusedForSecondBand": cache_hits >= 8,
             },
             "allHistoricalBandsReplayedWithinTolerance": (
                 result2["toleranceSemanticReplayPassed"] is True
