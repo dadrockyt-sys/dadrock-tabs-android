@@ -1,0 +1,322 @@
+name: V143 Contextual Prune Research Evidence Closure
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-research-evidence-closure.yml
+
+permissions:
+  contents: write
+
+jobs:
+  research-evidence-closure:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify closure inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          files=(
+            debug/v143-contextual-prune/surviving-band-provenance.json
+            debug/v143-contextual-prune/downstream-exact-family-closure.json
+            debug/v143-contextual-prune/runtime-replay-action.json
+            debug/v143-contextual-prune/shadow-modal-smoke.json
+            debug/v143-contextual-prune/shadow-static-action.json
+            debug/v143-contextual-prune/shadow-packaging-action.json
+            public/training/v143-musical-reconstruction-calibration/contextual-prune-shadow-static-report.json
+            public/training/v143-musical-reconstruction-calibration/contextual-prune-shadow-packaging-report.json
+          )
+          for path in "${files[@]}"; do
+            test -s "$path"
+          done
+          echo "All V143 research evidence closure inputs are present."
+
+      - name: Build strict research evidence closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          ROOT = Path("debug/v143-contextual-prune")
+          CAL = Path("public/training/v143-musical-reconstruction-calibration")
+          paths = {
+              "surviving": ROOT / "surviving-band-provenance.json",
+              "downstream": ROOT / "downstream-exact-family-closure.json",
+              "runtime": ROOT / "runtime-replay-action.json",
+              "smoke": ROOT / "shadow-modal-smoke.json",
+              "staticAction": ROOT / "shadow-static-action.json",
+              "packagingAction": ROOT / "shadow-packaging-action.json",
+              "staticReport": CAL / "contextual-prune-shadow-static-report.json",
+              "packagingReport": CAL / "contextual-prune-shadow-packaging-report.json",
+          }
+          output = ROOT / "research-evidence-closure.json"
+
+          def load(path: Path):
+              value = json.loads(path.read_text(encoding="utf-8"))
+              if not isinstance(value, dict):
+                  raise SystemExit(f"Expected JSON object: {path}")
+              return value
+
+          def sha(path: Path):
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+
+          def require(group: str, checks: dict[str, bool]):
+              failed = [name for name, ok in checks.items() if ok is not True]
+              if failed:
+                  raise SystemExit(f"{group} failed: " + ", ".join(failed))
+
+          surviving = load(paths["surviving"])
+          surviving_result = dict(surviving.get("diagnosticResult") or {})
+          surviving_bands = dict(surviving_result.get("bands") or {})
+          section3 = dict(surviving_bands.get("section3") or {})
+          reserve = dict(surviving_bands.get("reserve") or {})
+          reserve_scoring = dict(surviving_result.get("reserveScoring") or {})
+          partial_tail = dict(surviving_result.get("partialTailAdapter") or {})
+          surviving_invariants = dict(surviving_result.get("invariants") or {})
+
+          require("surviving-band wrapper", {
+              "action gate": surviving.get("gate") == "v143-contextual-prune-surviving-band-provenance-action",
+              "credentials available": surviving.get("modalCredentialsAvailableInGitHubActions") is True,
+              "diagnostic attempted": surviving.get("diagnosticAttempted") is True,
+              "exit zero": surviving.get("modalCommandExitCode") == 0,
+              "result found": surviving.get("diagnosticResultFound") is True,
+              "production untouched": surviving.get("productionModified") is False,
+          })
+          require("surviving-band result", {
+              "diagnostic gate": surviving_result.get("gate") == "v143-contextual-prune-surviving-band-provenance",
+              "claim excludes 17-32": "17-32 explicitly excluded" in str(surviving_result.get("claimScope") or ""),
+              "all carrier provenance": surviving_result.get("allCarrierProvenancePassed") is True,
+              "all surviving provenance": surviving_result.get("allSurvivingBandsProvenancePassed") is True,
+              "Section 3 exact-family evidence": surviving_result.get("section3ExactFamilyEvidenceApplied") is True,
+              "Section 3 provenance": section3.get("provenanceReplayPassed") is True,
+              "Section 3 decision": section3.get("frozenDecisionReplayPassed") is True,
+              "Section 3 base scores": section3.get("frozenBaseScoresReplayPassed") is True,
+              "Section 3 sequence scores": section3.get("frozenSequenceScoresReplayPassed") is True,
+              "Section 3 keep probabilities": section3.get("frozenKeepProbabilitiesReplayPassed") is True,
+              "Section 3 current observation retained": isinstance(section3.get("currentContainerObservation"), dict),
+              "reserve provenance": reserve.get("provenanceReplayPassed") is True,
+              "reserve scoring": reserve_scoring.get("reserveScoringReplayPassed") is True,
+              "partial tail extended": partial_tail.get("extendedFinalGrid") is True,
+              "partial tail restored": partial_tail.get("trimmedReserveGrid") is True,
+              "synthetic guard hidden": partial_tail.get("syntheticGuardHiddenFromAssignment") is True,
+              "historical reserve grid count": int(partial_tail.get("comparisonGridCount") or -1) == 264,
+              "historical measure 113 steps": partial_tail.get("comparisonMeasure113Steps") == list(range(8)),
+              "carrier rows not post-hoc modified": partial_tail.get("carrierRowsPostHocModified") is False,
+              "frozen scorer untouched": partial_tail.get("frozenScorerModified") is False,
+              "partial-tail production untouched": partial_tail.get("productionModified") is False,
+          })
+          require("surviving-band invariants", {
+              "professional reference unopened": surviving_invariants.get("professionalReferenceOpened") is False,
+              "runtime labels not required": surviving_invariants.get("runtimeLabelsRequired") is False,
+              "frozen model untouched": surviving_invariants.get("frozenModelModified") is False,
+              "frozen predictions untouched": surviving_invariants.get("frozenPredictionsModified") is False,
+              "thresholds untouched": surviving_invariants.get("thresholdsModified") is False,
+              "live endpoint untouched": surviving_invariants.get("liveEndpointDeployedOrModified") is False,
+              "production untouched": surviving_invariants.get("productionModified") is False,
+          })
+
+          downstream = load(paths["downstream"])
+          downstream_invariants = dict(downstream.get("invariants") or {})
+          require("downstream exact-family closure", {
+              "gate": downstream.get("gate") == "v143-contextual-prune-downstream-exact-family-closure",
+              "same source": str(downstream.get("sourceSha256") or "") == str(surviving_result.get("sourceSha256") or ""),
+              "all decisions equivalent": downstream.get("allHistoricalBandsDecisionEquivalent") is True,
+              "all scores equivalent": downstream.get("allHistoricalBandsFullyEquivalentWithinTolerance") is True,
+              "Section 3 current observation retained": downstream_invariants.get("historicalSection3CurrentContainerObservationRetained") is True,
+              "exact family required": downstream_invariants.get("exactFamilyEvidenceRequired") is True,
+              "tolerances not weakened": downstream_invariants.get("comparisonTolerancesWeakened") is False,
+              "frozen model untouched": downstream_invariants.get("frozenModelModified") is False,
+              "frozen predictions untouched": downstream_invariants.get("frozenPredictionsModified") is False,
+              "thresholds untouched": downstream_invariants.get("thresholdsModified") is False,
+              "professional reference unopened": downstream_invariants.get("professionalReferenceOpened") is False,
+              "runtime labels not required": downstream_invariants.get("runtimeLabelsRequired") is False,
+              "live endpoint untouched": downstream_invariants.get("liveEndpointDeployedOrModified") is False,
+              "production untouched": downstream_invariants.get("productionModified") is False,
+          })
+
+          runtime = load(paths["runtime"])
+          runtime_log = "\n".join(str(line) for line in runtime.get("logTail", []) or [])
+          require("frozen runtime replay", {
+              "gate": runtime.get("gate") == "v143-contextual-prune-runtime-replay-action",
+              "compile zero": runtime.get("compileExitCode") == 0,
+              "replay zero": runtime.get("replayExitCode") == 0,
+              "report exists": runtime.get("reportExists") is True,
+              "dev fingerprint exact": "DEV_FINGERPRINT_MATCHED True" in runtime_log,
+              "reserve base exact": "EXACT_RESERVE_BASE_REPLAY True" in runtime_log,
+              "reserve contextual exact": "EXACT_RESERVE_CONTEXTUAL_REPLAY True" in runtime_log,
+              "professional reference unopened": "PROFESSIONAL_REFERENCE_OPENED False" in runtime_log,
+              "production untouched": runtime.get("productionModified") is False and "PRODUCTION_MODIFIED False" in runtime_log,
+          })
+
+          smoke = load(paths["smoke"])
+          require("Modal dependency smoke", {
+              "gate": smoke.get("gate") == "v143-contextual-prune-shadow-modal-dependency-smoke",
+              "credentials available": smoke.get("modalCredentialsAvailableInGitHubActions") is True,
+              "attempted": smoke.get("smokeAttempted") is True,
+              "exit zero": smoke.get("smokeExitCode") == 0,
+              "passed": smoke.get("smokePassed") is True,
+              "production untouched": smoke.get("productionModified") is False,
+          })
+
+          static_action = load(paths["staticAction"])
+          static_report = load(paths["staticReport"])
+          require("shadow static action", {
+              "gate": static_action.get("gate") == "v143-contextual-prune-shadow-static-action",
+              "exit zero": static_action.get("exitCode") == 0,
+              "report exists": static_action.get("reportExists") is True,
+              "production untouched": static_action.get("productionModified") is False,
+          })
+          require("shadow static report", {
+              "gate": static_report.get("gate") == "v143-contextual-prune-isolated-shadow-static",
+              "research constants": static_report.get("carrierConstantsMatchedResearch") is True,
+              "four recall sweeps": static_report.get("fourHistoricalWideRecallSweepsRequired") is True,
+              "CQT windows": static_report.get("wholeOnsetCqtWindowsMatchedResearch") is True,
+              "normalization locked": static_report.get("historicalResearchNormalizationLocked") is True,
+              "Section 5 replay prepared": static_report.get("section5AudioCarrierReplayPrepared") is True,
+              "model fingerprint": static_report.get("frozenContextualModelFingerprintMatched") is True,
+              "shadow isolated": static_report.get("shadowAppIsolated") is True,
+              "no HTTP endpoint": static_report.get("shadowHttpEndpointExposed") is False,
+              "live files unchanged": static_report.get("liveV143FilesUnchanged") is True,
+              "professional reference absent": static_report.get("professionalReferencePathPresentInNewRuntimeSources") is False,
+              "production untouched": static_report.get("productionModified") is False,
+              "gate passed": static_report.get("gatePassed") is True,
+          })
+
+          packaging_action = load(paths["packagingAction"])
+          packaging_report = load(paths["packagingReport"])
+          require("shadow packaging action", {
+              "gate": packaging_action.get("gate") == "v143-contextual-prune-shadow-packaging-action",
+              "exit zero": packaging_action.get("exitCode") == 0,
+              "report exists": packaging_action.get("reportExists") is True,
+              "production untouched": packaging_action.get("productionModified") is False,
+          })
+          require("shadow packaging report", {
+              "gate": packaging_report.get("gate") == "v143-contextual-prune-shadow-modal-local-dependency-closure",
+              "GPU worker packaged": packaging_report.get("gpuWorkerDependencyPackaged") is True,
+              "module files present": packaging_report.get("allPackagedModuleFilesPresent") is True,
+              "imports packaged": packaging_report.get("allLocalImportsPackaged") is True,
+              "protected live modules excluded": packaging_report.get("protectedLiveModulesPackaged") is False,
+              "professional reference unopened": packaging_report.get("professionalReferenceOpened") is False,
+              "live endpoint untouched": packaging_report.get("liveEndpointDeployedOrModified") is False,
+              "production untouched": packaging_report.get("productionModified") is False,
+              "gate passed": packaging_report.get("gatePassed") is True,
+          })
+
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-contextual-prune-research-evidence-closure",
+              "status": "passed",
+              "claimScope": "research-only surviving historical/reference-free behavior for measures 33-113",
+              "explicitExclusions": [
+                  "measures 17-32 are not claimed by this closure",
+                  "production promotion is not authorized",
+                  "live endpoint deployment or modification is not authorized",
+              ],
+              "sourceSha256": surviving_result.get("sourceSha256"),
+              "evidenceSha256": {name: sha(path) for name, path in paths.items()},
+              "provenance": {
+                  "allCarrierProvenancePassed": True,
+                  "allSurvivingBandsProvenancePassed": True,
+                  "section3HistoricalExactFamily": "B",
+                  "section3ExactFamilyEvidenceApplied": True,
+                  "section3CurrentContainerObservationRetained": True,
+                  "reservePartialTailHistoricalGridCount": 264,
+                  "reservePartialTailMeasure113Steps": list(range(8)),
+              },
+              "downstream": {
+                  "allHistoricalBandsDecisionEquivalent": True,
+                  "allHistoricalBandsFullyEquivalentWithinTolerance": True,
+                  "comparisonTolerancesWeakened": False,
+              },
+              "runtime": {
+                  "developmentFingerprintMatched": True,
+                  "reserveBaseReplayExact": True,
+                  "reserveContextualReplayExact": True,
+              },
+              "shadowIsolation": {
+                  "modalDependencySmokePassed": True,
+                  "staticGatePassed": True,
+                  "packagingGatePassed": True,
+                  "protectedLiveModulesPackaged": False,
+                  "liveV143FilesUnchanged": True,
+              },
+              "safety": {
+                  "professionalReferenceOpened": False,
+                  "runtimeLabelsRequired": False,
+                  "frozenModelModified": False,
+                  "frozenPredictionsModified": False,
+                  "thresholdsModified": False,
+                  "comparisonTolerancesWeakened": False,
+                  "liveEndpointDeployedOrModified": False,
+                  "productionModified": False,
+                  "productionPromotionAllowed": False,
+              },
+              "researchEvidenceClosurePassed": True,
+          }
+          output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          print("RESEARCH_EVIDENCE_CLOSURE", True)
+          print("CLAIM_SCOPE", payload["claimScope"])
+          print("MEASURES_17_32_CLAIMED", False)
+          print("PRODUCTION_PROMOTION_ALLOWED", False)
+          print("PRODUCTION_MODIFIED", False)
+          PY
+
+      - name: Commit research evidence closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/research-evidence-closure.json
+          if git diff --cached --quiet; then
+            echo "No research evidence closure changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 research evidence closure"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce research-only closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("debug/v143-contextual-prune/research-evidence-closure.json").read_text(encoding="utf-8")
+          )
+          safety = dict(data.get("safety") or {})
+          checks = {
+              "closure passed": data.get("researchEvidenceClosurePassed") is True,
+              "research-only scope": data.get("claimScope") == "research-only surviving historical/reference-free behavior for measures 33-113",
+              "production promotion denied": safety.get("productionPromotionAllowed") is False,
+              "production untouched": safety.get("productionModified") is False,
+              "live endpoint untouched": safety.get("liveEndpointDeployedOrModified") is False,
+              "tolerances unchanged": safety.get("comparisonTolerancesWeakened") is False,
+              "thresholds unchanged": safety.get("thresholdsModified") is False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              raise SystemExit("Research evidence closure enforcement failed: " + ", ".join(failed))
+          print("V143 research evidence closure passed; production remains untouched and unauthorized.")
+          PY
