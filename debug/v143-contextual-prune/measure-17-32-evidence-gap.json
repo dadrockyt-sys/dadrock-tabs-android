@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "artifact": "v143-contextual-prune-measure-17-32-evidence-gap",
+  "status": "evidence_gap",
+  "claimScope": "research-only historical/reference-free carrier provenance investigation for measures 17-32",
+  "repository": "dadrockyt-sys/dadrock-tabs-android",
+  "branch": "v143-contextual-prune-lobo",
+  "searchedFromHead": "cd4190c6e6c318daf0f4b2e2aa5098b75e3c0bbc",
+  "targetRange": {
+    "measureStart": 17,
+    "measureEnd": 32
+  },
+  "conclusion": {
+    "exactHistoricalCarrierProvenanceReconstructed": false,
+    "originalHistoricalBoundaryIndependentlyRecovered": false,
+    "measures17To32ProvenanceClaimed": false,
+    "consolidatedMeasures17To113ClosureAllowed": false,
+    "productionPromotionAllowed": false
+  },
+  "evidencePresent": {
+    "frozenDevelopmentOutputs": {
+      "path": "public/training/v143-musical-reconstruction-calibration/contextual-prune-17-96-frozen-events.json",
+      "scope": "measures 17-96",
+      "eventCount": 651,
+      "whatItEstablishes": "frozen output expectations including baseScore, sequenceScore, sequenceEvidence, and contextualKeepProbability",
+      "whatItDoesNotEstablish": "independent raw carrier lineage or original historical band boundaries for measures 17-32"
+    },
+    "monolithicReferenceFreeReplay": {
+      "path": "debug/v143-contextual-prune/end-to-end-17-96-modal-replay.json",
+      "scope": "one monolithic measures 17-96 carrier",
+      "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+      "supportingObservation": "the recorded final event-key differences occur at measure 33 step 2 and measure 58 step 11, with no recorded final event-key mismatch in measures 17-32",
+      "whatItEstablishes": "supporting output-level reference-free replay evidence and a deterministic extraction recipe",
+      "whatItDoesNotEstablish": "the original historical raw carrier capture or original band boundary for measures 17-32"
+    },
+    "genericReferenceFreeCarrierMachinery": {
+      "path": "analyzer/v143_contextual_prune_reference_free_carrier.py",
+      "supportsArbitraryMeasureRanges": true,
+      "whatItEstablishes": "a current deterministic mechanism can generate reference-free carriers for a requested measure range",
+      "whatItDoesNotEstablish": "that a newly generated 17-32 carrier is the exact historical carrier used when the frozen development predictions were created"
+    },
+    "introArtifacts": {
+      "paths": [
+        "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-report.json",
+        "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-model.json"
+      ],
+      "historicalScopeObserved": "measures 1-16",
+      "relevance": "these artifacts do not define or prove the missing measures 17-32 carrier"
+    },
+    "survivingBandCaches": {
+      "firstDedicatedCache": "public/training/v143-musical-reconstruction-calibration/fresh-section2-reference-free-cache.json",
+      "firstDedicatedHistoricalBand": "measures 33-48",
+      "otherDedicatedCachesObserved": [
+        "fresh-section3-reference-free-cache.json",
+        "fresh-section4-reference-free-cache.json",
+        "fresh-section5-reference-free-cache.json",
+        "reserve-97-113-reference-free-cache.json"
+      ]
+    }
+  },
+  "missingEvidence": [
+    "No dedicated historical/reference-free raw carrier cache for measures 17-32 was found in the current calibration artifacts or debug evidence inventory.",
+    "No independent historical raw carrier hash, raw-row capture, or equivalent authoritative carrier snapshot for measures 17-32 was found.",
+    "No artifact independently establishing the original historical band boundary for the unresolved 17-32 target was found; the target range must not be promoted from adjacency or naming inference alone.",
+    "No independently demonstrated separator/stem lineage specifically tying a historical 17-32 carrier capture to the frozen development outputs was found."
+  ],
+  "searchedEvidence": [
+    "analyzer/V143_CONTEXTUAL_PRUNE_RECOVERY_CHECKPOINT.md",
+    "debug/v143-contextual-prune/research-evidence-closure.json",
+    "debug/v143-contextual-prune/surviving-band-provenance.json",
+    "debug/v143-contextual-prune/downstream-exact-family-closure.json",
+    "debug/v143-contextual-prune/historical-band-diagnostic.json",
+    "debug/v143-contextual-prune/end-to-end-17-96-modal-replay.json",
+    "public/training/v143-musical-reconstruction-calibration/contextual-prune-17-96-frozen-events.json",
+    "public/training/v143-musical-reconstruction-calibration/contextual-prune-freeze-manifest.json",
+    "public/training/v143-musical-reconstruction-calibration/contextual-prune-promotion-checkpoint.json",
+    "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-report.json",
+    "public/training/v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-selector-model.json",
+    "public/training/v143-musical-reconstruction-calibration/fresh-section2-reference-free-cache.json",
+    ".github/workflows/v143-contextual-prune-historical-band-diagnostic.yml",
+    ".github/workflows/v143-contextual-prune-17-96-end-to-end-modal-replay.yml",
+    "analyzer/v143_contextual_prune_historical_band_diagnostic_modal.py",
+    "analyzer/v143_contextual_prune_reference_free_carrier.py",
+    "current branch-local debug/v143-contextual-prune artifact inventory",
+    "current branch-local calibration artifact inventory"
+  ],
+  "whyOutputLevelEquivalenceIsInsufficient": [
+    "A monolithic 17-96 carrier can reproduce nearly all frozen final outputs without proving that its raw rows came from the original historical 17-32 carrier lineage.",
+    "Output agreement does not independently establish original historical band boundaries.",
+    "Regenerating measures 17-32 today with generic arbitrary-range carrier code would create new evidence, not recover the missing historical provenance.",
+    "Using adjacency to the known 33-48 band or the fact that current intro artifacts end at measure 16 would infer the missing boundary rather than demonstrate it."
+  ],
+  "explicitlyExcludedClaims": [
+    "exact historical carrier provenance for measures 17-32",
+    "historical/reference-free closure for measures 17-113",
+    "production promotion",
+    "live endpoint deployment or modification"
+  ],
+  "invariants": {
+    "professionalReferenceOpened": false,
+    "runtimeLabelsRequired": false,
+    "frozenModelModified": false,
+    "frozenPredictionsModified": false,
+    "thresholdsModified": false,
+    "comparisonTolerancesWeakened": false,
+    "monolithicCarrierAcceptedAsHistorical17To32Provenance": false,
+    "newCarrierGenerationAcceptedAsHistoricalProof": false,
+    "liveEndpointDeployedOrModified": false,
+    "productionModified": false,
+    "productionPromotionAllowed": false
+  },
+  "resolutionRule": "This gap may be closed only by independently recovering authoritative historical evidence for the original measures 17-32 carrier boundary and lineage, then replaying the frozen scorer without changing thresholds, tolerances, model, predictions, or reference-free constraints."
+}
