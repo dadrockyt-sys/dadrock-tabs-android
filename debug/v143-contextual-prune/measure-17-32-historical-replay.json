@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-contextual-prune-measure-17-32-historical-provenance-and-frozen-scorer-replay",
+  "status": "failed",
+  "claimScope": "research-only historical/reference-free provenance closure for measures 17-32",
+  "historicalArchiveCommit": "b25820ecde37dc87447a9366894bd8e4f7f21792",
+  "historicalBoundary": {
+    "measureStart": 17,
+    "measureEnd": 32,
+    "source": "byte-identical historical Verse1 capture generator"
+  },
+  "historicalCarrierLineage": {
+    "sourceAudio": "public/gomywayfullaitest.m4a",
+    "candidateViews": [
+      "direct Demucs6s Guitar",
+      "BS-RoFormer Instrumental -> Demucs6s Guitar"
+    ],
+    "deterministicSeparatorSettings": {
+      "demucsShifts": 1,
+      "demucsOverlap": 0.1,
+      "demucsSegmentSize": 6,
+      "deterministicSeed": 143
+    }
+  },
+  "codeIdentity": {
+    "verse1CaptureGenerator": {
+      "path": "analyzer/v143_fresh_verse1_reference_free_capture.py",
+      "historicalArchiveBlobSha": "c8ea8eca33819fb506f06105f87075dadd133214",
+      "currentBlobSha": "c8ea8eca33819fb506f06105f87075dadd133214",
+      "exactBlobMatch": true
+    },
+    "deterministicRhythmStemProvider": {
+      "path": "analyzer/v143_rhythm_deterministic_stem_provider.py",
+      "historicalArchiveBlobSha": "3c6dcf9b8e7360ba1dd886810f3c14c05ac0579b",
+      "currentBlobSha": "3c6dcf9b8e7360ba1dd886810f3c14c05ac0579b",
+      "exactBlobMatch": true
+    },
+    "rhythmStemProvider": {
+      "path": "analyzer/v143_rhythm_stem_provider.py",
+      "historicalArchiveBlobSha": "cd180bfb35e8110f031504035af5f11e502c3dc6",
+      "currentBlobSha": "cd180bfb35e8110f031504035af5f11e502c3dc6",
+      "exactBlobMatch": true
+    },
+    "deterministicSeparator": {
+      "path": "analyzer/v143_deterministic_separator.py",
+      "historicalArchiveBlobSha": "28b3e6fe0eb761178b142cf7dcbda533f0bf918d",
+      "currentBlobSha": "28b3e6fe0eb761178b142cf7dcbda533f0bf918d",
+      "exactBlobMatch": true
+    },
+    "frozenScorer": {
+      "path": "analyzer/v143_correlation_safe_fixed_count_reranker_freeze.py",
+      "historicalArchiveBlobSha": "ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe",
+      "currentBlobSha": "ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe",
+      "exactBlobMatch": true
+    }
+  },
+  "historicalVerse1Cache": {
+    "path": "public/training/v143-musical-reconstruction-calibration/fresh-verse1-reference-free-cache.json",
+    "expectedSha256FromHistoricalFreezeManifest": "fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15",
+    "knownHistoricalSha256": "fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15",
+    "manifestFingerprintMatchesKnownHistoricalSha256": true,
+    "regeneratedSha256": "fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15",
+    "exactHashMatch": true
+  },
+  "frozenScorerReplay": {
+    "attempted": true,
+    "exitCode": 1,
+    "preservedArtifactComparisons": {
+      "rerankerModel": {
+        "historicalSha256": "767dedfe1080bdd0e28029505fbfa4261549679fcac49590aa0dd831085663bb",
+        "replaySha256": "767dedfe1080bdd0e28029505fbfa4261549679fcac49590aa0dd831085663bb",
+        "exactByteMatch": true
+      },
+      "trainingReport": {
+        "historicalSha256": "e833963459e15d549448644772c53f583a9673611ecf2ccee79b0aa6cb3e5d89",
+        "replaySha256": "e833963459e15d549448644772c53f583a9673611ecf2ccee79b0aa6cb3e5d89",
+        "exactByteMatch": true
+      },
+      "frozenPredictions": {
+        "historicalSha256": "bf3b80fe40cae4edec7e383c3e68ffd7efd4fe4314008cabf027c4a01597e022",
+        "replaySha256": "bf3b80fe40cae4edec7e383c3e68ffd7efd4fe4314008cabf027c4a01597e022",
+        "exactByteMatch": true
+      },
+      "freezeManifest": {
+        "historicalSha256": "06454495f083e02eb25a12b7d8859dbba37656d81026727dce2bb2d061f9d516",
+        "replaySha256": "06454495f083e02eb25a12b7d8859dbba37656d81026727dce2bb2d061f9d516",
+        "exactByteMatch": true
+      }
+    },
+    "allPreservedArtifactsExactByteMatch": true
+  },
+  "invariants": {
+    "professionalReferenceOpenedByReplayWorkflow": false,
+    "runtimeLabelsRequired": false,
+    "newGenericCarrierAcceptedAsHistoricalProof": false,
+    "historicalGeneratorUsed": true,
+    "thresholdsModified": false,
+    "comparisonTolerancesWeakened": false,
+    "frozenModelPersistentlyModified": false,
+    "frozenPredictionsPersistentlyModified": false,
+    "liveEndpointDeployedOrModified": false,
+    "productionModified": false,
+    "productionPromotionAllowed": false
+  },
+  "resolutionRuleSatisfied": false
+}
