@@ -1,0 +1,547 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-section3-hashseed-ab-probe-action",
+  "modalCredentialsAvailableInGitHubActions": true,
+  "diagnosticAttempted": true,
+  "modalCommandExitCode": 0,
+  "diagnosticResultFound": true,
+  "diagnosticResult": {
+    "schemaVersion": 1,
+    "gate": "v143-section3-hashseed-ab-probe",
+    "executionStrategy": "controlled-legacy-unset-vs-fixed-143-child-startup-hash-with-three-stage-pcm-fingerprints",
+    "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "knownFamilies": {
+      "direct": {
+        "A": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+        "B": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e"
+      },
+      "cascade": {
+        "A": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+        "B": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3"
+      }
+    },
+    "workers": [
+      {
+        "worker": 1,
+        "mode": "fixed-143",
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHERB3RVWN59Z2KZPYX3TR",
+          "mode": "fixed-143",
+          "torch": "2.13.0+cu130",
+          "torchCuda": "13.0",
+          "cudnn": 92000,
+          "deviceName": "NVIDIA L4",
+          "deviceCapability": [
+            8,
+            9
+          ]
+        },
+        "directPcm": {
+          "sha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directFamily": "B",
+        "cascadeFamily": "B",
+        "historicalPcmPair": true,
+        "alternatePcmPair": false
+      },
+      {
+        "worker": 2,
+        "mode": "fixed-143",
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHENZQVV6ZFRMMMABA1QPR",
+          "mode": "fixed-143",
+          "torch": "2.13.0+cu130",
+          "torchCuda": "13.0",
+          "cudnn": 92000,
+          "deviceName": "NVIDIA L4",
+          "deviceCapability": [
+            8,
+            9
+          ]
+        },
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "historicalPcmPair": false,
+        "alternatePcmPair": true
+      },
+      {
+        "worker": 1,
+        "mode": "legacy-unset",
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHEPFN9YABE2TCE24QWMSR",
+          "mode": "legacy-unset",
+          "torch": "2.13.0+cu130",
+          "torchCuda": "13.0",
+          "cudnn": 92000,
+          "deviceName": "NVIDIA L4",
+          "deviceCapability": [
+            8,
+            9
+          ]
+        },
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "historicalPcmPair": false,
+        "alternatePcmPair": true
+      },
+      {
+        "worker": 2,
+        "mode": "legacy-unset",
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHETB310ZJ3HZCK782ZRQR",
+          "mode": "legacy-unset",
+          "torch": "2.13.0+cu130",
+          "torchCuda": "13.0",
+          "cudnn": 92000,
+          "deviceName": "NVIDIA L4",
+          "deviceCapability": [
+            8,
+            9
+          ]
+        },
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "historicalPcmPair": false,
+        "alternatePcmPair": true
+      },
+      {
+        "worker": 3,
+        "mode": "legacy-unset",
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHEPXJDFVDEHHA788EMKXR",
+          "mode": "legacy-unset",
+          "torch": "2.13.0+cu130",
+          "torchCuda": "13.0",
+          "cudnn": 92000,
+          "deviceName": "NVIDIA L4",
+          "deviceCapability": [
+            8,
+            9
+          ]
+        },
+        "directPcm": {
+          "sha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directFamily": "A",
+        "cascadeFamily": "A",
+        "historicalPcmPair": false,
+        "alternatePcmPair": true
+      },
+      {
+        "worker": 4,
+        "mode": "legacy-unset",
+        "runtimeIdentity": {
+          "modalTaskId": "ta-01M0JHET20XRA92B707H9ZKJHR",
+          "mode": "legacy-unset",
+          "torch": "2.13.0+cu130",
+          "torchCuda": "13.0",
+          "cudnn": 92000,
+          "deviceName": "NVIDIA L4",
+          "deviceCapability": [
+            8,
+            9
+          ]
+        },
+        "directPcm": {
+          "sha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "roformerPcm": {
+          "sha256": "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "cascadePcm": {
+          "sha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+          "sampleRate": 44100,
+          "frames": 9324544,
+          "channels": 2
+        },
+        "directFamily": "B",
+        "cascadeFamily": "B",
+        "historicalPcmPair": true,
+        "alternatePcmPair": false
+      }
+    ],
+    "legacyUnset": {
+      "workerCount": 4,
+      "directFamilies": {
+        "A": 3,
+        "B": 1
+      },
+      "cascadeFamilies": {
+        "A": 3,
+        "B": 1
+      },
+      "historicalPcmPairCount": 1,
+      "alternatePcmPairCount": 3,
+      "uniqueDirectPcm": [
+        "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+        "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8"
+      ],
+      "uniqueRoformerPcm": [
+        "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd"
+      ],
+      "uniqueCascadePcm": [
+        "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+        "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3"
+      ]
+    },
+    "fixed143": {
+      "workerCount": 2,
+      "directFamilies": {
+        "A": 1,
+        "B": 1
+      },
+      "cascadeFamilies": {
+        "A": 1,
+        "B": 1
+      },
+      "historicalPcmPairCount": 1,
+      "alternatePcmPairCount": 1,
+      "uniqueDirectPcm": [
+        "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+        "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8"
+      ],
+      "uniqueRoformerPcm": [
+        "16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd"
+      ],
+      "uniqueCascadePcm": [
+        "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+        "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3"
+      ]
+    },
+    "inference": {
+      "historicalFamilyObservedUnderLegacyUnset": true,
+      "historicalFamilyObservedUnderFixed143": true,
+      "alternateFamilyObservedUnderLegacyUnset": true,
+      "alternateFamilyObservedUnderFixed143": true,
+      "onlyManipulatedSeparatorVariable": "PYTHONHASHSEED presence/value at child interpreter startup"
+    },
+    "invariants": {
+      "separatorSeed": 143,
+      "demucsShifts": 1,
+      "demucsOverlap": 0.1,
+      "demucsSegmentSize": 6,
+      "roformerBatchSize": 1,
+      "professionalReferenceOpened": false,
+      "runtimeLabelsRequired": false,
+      "frozenModelModified": false,
+      "frozenPredictionsModified": false,
+      "thresholdsModified": false,
+      "liveEndpointDeployedOrModified": false,
+      "productionModified": false
+    }
+  },
+  "logTail": [
+    "        \"torch\": \"2.13.0+cu130\",",
+    "        \"torchCuda\": \"13.0\",",
+    "        \"cudnn\": 92000,",
+    "        \"deviceName\": \"NVIDIA L4\",",
+    "        \"deviceCapability\": [",
+    "          8,",
+    "          9",
+    "        ]",
+    "      },",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directFamily\": \"A\",",
+    "      \"cascadeFamily\": \"A\",",
+    "      \"historicalPcmPair\": false,",
+    "      \"alternatePcmPair\": true",
+    "    },",
+    "    {",
+    "      \"worker\": 2,",
+    "      \"mode\": \"legacy-unset\",",
+    "      \"runtimeIdentity\": {",
+    "        \"modalTaskId\": \"ta-01M0JHETB310ZJ3HZCK782ZRQR\",",
+    "        \"mode\": \"legacy-unset\",",
+    "        \"torch\": \"2.13.0+cu130\",",
+    "        \"torchCuda\": \"13.0\",",
+    "        \"cudnn\": 92000,",
+    "        \"deviceName\": \"NVIDIA L4\",",
+    "        \"deviceCapability\": [",
+    "          8,",
+    "          9",
+    "        ]",
+    "      },",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directFamily\": \"A\",",
+    "      \"cascadeFamily\": \"A\",",
+    "      \"historicalPcmPair\": false,",
+    "      \"alternatePcmPair\": true",
+    "    },",
+    "    {",
+    "      \"worker\": 3,",
+    "      \"mode\": \"legacy-unset\",",
+    "      \"runtimeIdentity\": {",
+    "        \"modalTaskId\": \"ta-01M0JHEPXJDFVDEHHA788EMKXR\",",
+    "        \"mode\": \"legacy-unset\",",
+    "        \"torch\": \"2.13.0+cu130\",",
+    "        \"torchCuda\": \"13.0\",",
+    "        \"cudnn\": 92000,",
+    "        \"deviceName\": \"NVIDIA L4\",",
+    "        \"deviceCapability\": [",
+    "          8,",
+    "          9",
+    "        ]",
+    "      },",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directFamily\": \"A\",",
+    "      \"cascadeFamily\": \"A\",",
+    "      \"historicalPcmPair\": false,",
+    "      \"alternatePcmPair\": true",
+    "    },",
+    "    {",
+    "      \"worker\": 4,",
+    "      \"mode\": \"legacy-unset\",",
+    "      \"runtimeIdentity\": {",
+    "        \"modalTaskId\": \"ta-01M0JHET20XRA92B707H9ZKJHR\",",
+    "        \"mode\": \"legacy-unset\",",
+    "        \"torch\": \"2.13.0+cu130\",",
+    "        \"torchCuda\": \"13.0\",",
+    "        \"cudnn\": 92000,",
+    "        \"deviceName\": \"NVIDIA L4\",",
+    "        \"deviceCapability\": [",
+    "          8,",
+    "          9",
+    "        ]",
+    "      },",
+    "      \"directPcm\": {",
+    "        \"sha256\": \"1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"roformerPcm\": {",
+    "        \"sha256\": \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"cascadePcm\": {",
+    "        \"sha256\": \"e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3\",",
+    "        \"sampleRate\": 44100,",
+    "        \"frames\": 9324544,",
+    "        \"channels\": 2",
+    "      },",
+    "      \"directFamily\": \"B\",",
+    "      \"cascadeFamily\": \"B\",",
+    "      \"historicalPcmPair\": true,",
+    "      \"alternatePcmPair\": false",
+    "    }",
+    "  ],",
+    "  \"legacyUnset\": {",
+    "    \"workerCount\": 4,",
+    "    \"directFamilies\": {",
+    "      \"A\": 3,",
+    "      \"B\": 1",
+    "    },",
+    "    \"cascadeFamilies\": {",
+    "      \"A\": 3,",
+    "      \"B\": 1",
+    "    },",
+    "    \"historicalPcmPairCount\": 1,",
+    "    \"alternatePcmPairCount\": 3,",
+    "    \"uniqueDirectPcm\": [",
+    "      \"1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e\",",
+    "      \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\"",
+    "    ],",
+    "    \"uniqueRoformerPcm\": [",
+    "      \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\"",
+    "    ],",
+    "    \"uniqueCascadePcm\": [",
+    "      \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "      \"e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3\"",
+    "    ]",
+    "  },",
+    "  \"fixed143\": {",
+    "    \"workerCount\": 2,",
+    "    \"directFamilies\": {",
+    "      \"A\": 1,",
+    "      \"B\": 1",
+    "    },",
+    "    \"cascadeFamilies\": {",
+    "      \"A\": 1,",
+    "      \"B\": 1",
+    "    },",
+    "    \"historicalPcmPairCount\": 1,",
+    "    \"alternatePcmPairCount\": 1,",
+    "    \"uniqueDirectPcm\": [",
+    "      \"1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e\",",
+    "      \"30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8\"",
+    "    ],",
+    "    \"uniqueRoformerPcm\": [",
+    "      \"16e0a16a54ab1b007d15647d293900ecfbfabceccfa886f004a86162d4a454dd\"",
+    "    ],",
+    "    \"uniqueCascadePcm\": [",
+    "      \"68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56\",",
+    "      \"e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3\"",
+    "    ]",
+    "  },",
+    "  \"inference\": {",
+    "    \"historicalFamilyObservedUnderLegacyUnset\": true,",
+    "    \"historicalFamilyObservedUnderFixed143\": true,",
+    "    \"alternateFamilyObservedUnderLegacyUnset\": true,",
+    "    \"alternateFamilyObservedUnderFixed143\": true,",
+    "    \"onlyManipulatedSeparatorVariable\": \"PYTHONHASHSEED presence/value at child interpreter startup\"",
+    "  },",
+    "  \"invariants\": {",
+    "    \"separatorSeed\": 143,",
+    "    \"demucsShifts\": 1,",
+    "    \"demucsOverlap\": 0.1,",
+    "    \"demucsSegmentSize\": 6,",
+    "    \"roformerBatchSize\": 1,",
+    "    \"professionalReferenceOpened\": false,",
+    "    \"runtimeLabelsRequired\": false,",
+    "    \"frozenModelModified\": false,",
+    "    \"frozenPredictionsModified\": false,",
+    "    \"thresholdsModified\": false,",
+    "    \"liveEndpointDeployedOrModified\": false,",
+    "    \"productionModified\": false",
+    "  }",
+    "}",
+    "Stopping app - local entrypoint completed.",
+    "\u2713 App completed. View run at ",
+    "https://modal.com/apps/dadrockyt/main/ap-hJdYKIvdsQkBnAdVO6q97z"
+  ],
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false
+}
