@@ -7,7 +7,7 @@ from typing import Any, Callable
 
 import modal
 
-from v143_modal_live_endpoint import rhythm_image
+from v143_modal_live_endpoint import rhythm_image as live_rhythm_image
 
 
 app = modal.App("dadrock-v143-ai-tab-product-canary")
@@ -15,9 +15,18 @@ app = modal.App("dadrock-v143-ai-tab-product-canary")
 APPROVED_FIXTURE = "public/gomywayfullaitest.m4a"
 MAX_CANARY_AUDIO_BYTES = 50 * 1024 * 1024
 
+# Reuse the exact live Rhythm image, while explicitly packaging the module from
+# which that image is imported. This avoids relying on implicit local-source
+# discovery when Modal reloads this canary module inside the worker. It does not
+# deploy or modify the live endpoint; it only makes the canary import closure
+# explicit and reproducible.
+canary_image = live_rhythm_image.add_local_python_source(
+    "v143_modal_live_endpoint"
+)
+
 
 @app.function(
-    image=rhythm_image,
+    image=canary_image,
     gpu="L4",
     timeout=1200,
     memory=8192,
