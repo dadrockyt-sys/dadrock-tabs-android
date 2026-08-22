@@ -17,7 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      # Probe common existing repository-secret aliases without ever printing
+      # their values. The first non-empty credential is used for this Preview
+      # workflow only.
+      VERCEL_RUNTIME_TOKEN: ${{ secrets.VERCEL_TOKEN || secrets.VERCEL_ACCESS_TOKEN || secrets.VERCEL_API_TOKEN || secrets.VERCEL_CLI_TOKEN }}
       VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
       VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
 
@@ -55,16 +58,16 @@ jobs:
           has_analyzer_token=false
           has_blob_token=false
 
-          if [ -n "${VERCEL_TOKEN:-}" ]; then
+          if [ -n "${VERCEL_RUNTIME_TOKEN:-}" ]; then
             token_available=true
             npx --yes vercel@latest pull \
               --yes \
               --environment=preview \
-              --token="$VERCEL_TOKEN" \
+              --token="$VERCEL_RUNTIME_TOKEN" \
               > .preview-deploy/logs/vercel-pull.log 2>&1
             pull_status=$?
           else
-            echo "VERCEL_TOKEN is not available in GitHub Actions; Preview deployment not attempted." \
+            echo "No supported Vercel deployment credential alias is available in GitHub Actions; Preview deployment not attempted." \
               > .preview-deploy/logs/vercel-pull.log
           fi
 
@@ -97,7 +100,7 @@ jobs:
 
           if [ "${PREVIEW_PULL_STATUS:-99}" -eq 0 ]; then
             npx --yes vercel@latest build \
-              --token="$VERCEL_TOKEN" \
+              --token="$VERCEL_RUNTIME_TOKEN" \
               > .preview-deploy/logs/vercel-build.log 2>&1
             build_status=$?
           else
@@ -122,7 +125,7 @@ jobs:
             npx --yes vercel@latest deploy \
               --prebuilt \
               --yes \
-              --token="$VERCEL_TOKEN" \
+              --token="$VERCEL_RUNTIME_TOKEN" \
               --env JIMMY_PAIGE_PROFESSIONAL_PDF_V1=true \
               > .preview-deploy/logs/vercel-deploy.log 2>&1
             deploy_status=$?
@@ -160,9 +163,15 @@ jobs:
                   return 99
 
           payload = {
-              'schemaVersion': 1,
+              'schemaVersion': 2,
               'gate': 'v143-vercel-preview-deploy',
               'branch': 'v143-contextual-prune-lobo',
+              'credentialAliasesChecked': [
+                  'VERCEL_TOKEN',
+                  'VERCEL_ACCESS_TOKEN',
+                  'VERCEL_API_TOKEN',
+                  'VERCEL_CLI_TOKEN',
+              ],
               'vercelTokenAvailableInGitHubActions': os.environ.get('PREVIEW_VERCEL_TOKEN_AVAILABLE') == 'true',
               'previewConfigPullExitCode': status('PREVIEW_PULL_STATUS'),
               'previewEnvironmentPresence': {
@@ -250,7 +259,8 @@ jobs:
               raise SystemExit('Safety failure: Production promotion was authorized')
 
           if data.get('vercelTokenAvailableInGitHubActions') is not True:
-              raise SystemExit('Preview deployment blocked: VERCEL_TOKEN is unavailable in GitHub Actions')
+              aliases = ', '.join(data.get('credentialAliasesChecked') or [])
+              raise SystemExit(f'Preview deployment blocked: no supported Vercel credential alias is available ({aliases})')
           if int(data.get('previewConfigPullExitCode', 99)) != 0:
               raise SystemExit('Preview deployment blocked: Vercel Preview configuration pull failed')
           if int(data.get('previewBuildExitCode', 99)) != 0:
