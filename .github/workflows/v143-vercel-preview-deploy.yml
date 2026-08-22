@@ -1,4 +1,5 @@
 name: V143 Vercel Preview Deploy
+# 2026-08-22 safe credential re-probe; Preview-only, never Production.
 
 on:
   workflow_dispatch:
