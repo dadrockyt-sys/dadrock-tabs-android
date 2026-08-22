@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-ai-tab-branch-build",
+  "branch": "v143-contextual-prune-lobo",
+  "nodeVersion": "24",
+  "analyzerQualityVerifierExitCode": 9,
+  "previewFeatureVerifierExitCode": 9,
+  "nextBuildExitCode": 0,
+  "analyzerQualityVerifierPassed": false,
+  "previewFeatureVerifierPassed": false,
+  "nextBuildPassed": true,
+  "passed": false,
+  "liveEndpointDeployedOrModified": false,
+  "vercelDeploymentAttempted": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "paidPurchaseAttempted": false,
+  "customerTokenRedeemed": false,
+  "customerEmailSent": false
+}
