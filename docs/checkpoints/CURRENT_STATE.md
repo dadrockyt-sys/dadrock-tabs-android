@@ -2,7 +2,7 @@
 
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
-Branch HEAD before this checkpoint update: `a4555426ed3b7b16dfe68ffde50d2f7a8cfce9f9`
+Branch HEAD before this checkpoint update: `8c6a30ff1005ea16f4a9c4d701d241b606f98901`
 
 ## Resume directive
 
@@ -14,7 +14,7 @@ Active product goal:
 
 Keep this file updated after meaningful progress. Do not rely on chat history as the only recovery record.
 
-Do **not** modify `main`, modify/deploy the live V143 Modal endpoint, or enable Production automatically.
+Do **not** modify `main`, modify/deploy the live V143 Modal endpoint, merge the research branch, or enable/promote Production automatically.
 
 Historical compatibility research remains sealed. Do not launch another historical separator/GPU compatibility capture. Historical conclusions remain:
 
@@ -33,6 +33,14 @@ productionPromotionAllowed: false
 `app/ai-tab/page.js` uploads permitted user audio to private Vercel Blob storage and calls `/api/analyze-audio-tab`.
 
 `app/api/analyze-audio-tab/route.js` preserves legacy Lead/Bass behavior and uses the separate V143 analyzer URL for Rhythm when configured.
+
+Required runtime keys for a real uploaded-audio V143 Rhythm request are:
+
+```text
+ANALYZER_API_URL_V143
+ANALYZER_API_TOKEN
+BLOB_READ_WRITE_TOKEN
+```
 
 V143 identity remains fail-closed on:
 
@@ -56,11 +64,7 @@ No browser/PDF layer may manufacture missing measure/step placement.
 
 # 2. Analyzer quality gate
 
-File:
-
-`lib/v143AnalyzerQuality.js`
-
-Current conservative eligibility floor:
+`lib/v143AnalyzerQuality.js` defines the current conservative eligibility floor:
 
 ```text
 minimum valid render events: 4
@@ -70,13 +74,13 @@ minimum measure/step coverage: 70%
 minimum pitch coverage: 70%
 ```
 
-`lib/jimmyPaigeAnalysisPayload.js` exposes the report and only assigns:
+`lib/jimmyPaigeAnalysisPayload.js` exposes the report and assigns:
 
 ```text
 analysisEngine = v143-reference-free-rhythm
 ```
 
-when:
+only when:
 
 ```text
 referenceFree === true
@@ -90,7 +94,7 @@ Otherwise V143 is labeled:
 analysisEngine = v143-reference-free-rhythm-fallback
 ```
 
-so it can still use the safe polished/text fallback but cannot silently enter structured engraving.
+so safe polished/text fallback remains available while weak V143 output cannot silently enter structured engraving.
 
 Every quality report keeps:
 
@@ -103,12 +107,12 @@ Important commits:
 - `4542a9f15b09f0b6b9ce6980a908c7075b59a624` — quality report.
 - `5250c7629d428dcee3797ce946e81c68ffa2a4b6` — expose quality metrics.
 - `5655f0c6ddea6570c09dbe79e185fffdb65ab168` — gate structured engine on quality.
-- `490d64e8bc842f1ff48447f86a638c9dff2bc6dd` — regression verifier.
-- `a5b3ceb4998de7e96d62fa70ed11ef8e80cd749a` — quality CI workflow.
+- `490d64e8bc842f1ff48447f86a638c9dff2bc6dd` — analyzer-quality regression verifier.
+- `a5b3ceb4998de7e96d62fa70ed11ef8e80cd749a` — analyzer-quality CI workflow.
 
 ---
 
-# 3. Structured PDF renderer fixture passed
+# 3. Structured renderer fixture passed
 
 Evidence:
 
@@ -128,7 +132,7 @@ fullPageCount: 2
 previewPageCount: 2
 ```
 
-The fixture retained all tested technique classes and passed structural/text/raster checks.
+The synthetic fixture retained all tested technique classes and passed structural/text/raster checks.
 
 ---
 
@@ -145,7 +149,7 @@ Product canary components:
 - `analyzer/render_v143_real_audio_canary_pdf.mjs`
 - `.github/workflows/v143-ai-tab-real-audio-canary.yml`
 
-The canary uses the same V143 Rhythm product image/pipeline but bypasses private Blob networking by feeding the approved repository fixture bytes directly into the request adapter. It does not use a private Blob token and does not deploy/modify the live endpoint.
+The canary uses the same V143 Rhythm product image/pipeline but bypasses private Blob networking by feeding approved fixture bytes directly into the request adapter. It uses no private Blob token and does not deploy/modify the live endpoint.
 
 Bot evidence commit:
 
@@ -230,41 +234,19 @@ productionModified: false
 productionPromotionAuthorized: false
 ```
 
-The previous real-analyzer/PDF blocker is therefore closed for this approved canary input.
+The previous real-analyzer/PDF blocker is closed for this approved canary input.
 
 ---
 
-# 5. Vercel audit completed
+# 5. Preview-only professional renderer gate implemented
 
-Connected Vercel project:
-
-```text
-project: dadrock-tabs-android
-framework: Next.js
-node: 24.x
-```
-
-Read-only deployment inspection on 2026-08-22 found the recent deployment history to be Production/main deployments only. The latest surfaced deployment was READY and targeted Production from `main`.
-
-No existing deployment for `v143-contextual-prune-lobo` was present in the recent Vercel deployment list.
-
-There was also no existing GitHub PR for `v143-contextual-prune-lobo`.
-
-The connected Vercel tool surface available in this chat does not expose environment-variable mutation, so no Vercel environment setting was changed.
-
-**Production remains untouched.**
-
----
-
-# 6. Preview-only professional renderer activation implemented
-
-Rather than mutate any Production/Preview environment variable, this branch now contains a self-limiting feature-state helper:
+Helper:
 
 `lib/jimmyPaigeProfessionalPdfFeature.js`
 
 Commit:
 
-`ef91510f92e34292e86200edc7f319f5c10dc838` — `Add Preview-only Jimmy PAIge renderer gate`
+`ef91510f92e34292e86200edc7f319f5c10dc838`
 
 The helper preserves the existing explicit flag:
 
@@ -272,7 +254,7 @@ The helper preserves the existing explicit flag:
 JIMMY_PAIGE_PROFESSIONAL_PDF_V1=true
 ```
 
-but also enables the professional renderer automatically only when **both** are true:
+and also auto-enables only when both are true:
 
 ```text
 VERCEL_ENV === preview
@@ -284,41 +266,26 @@ Therefore:
 - Production on this branch does not auto-enable it;
 - other Preview branches do not auto-enable it;
 - this exact branch Preview does enable it;
-- the existing explicit environment flag behavior remains intact;
+- explicit env-flag behavior remains intact;
 - `productionPromotionAuthorized` remains false.
 
-The helper is now used by both:
+Used by:
 
 - `app/api/generate-tab-preview/route.js`
 - `app/api/generate-tab-pdf/route.js`
 
-Commits:
+Route commits:
 
-- `54fc2da9d7181ad55752d81dffc4a690778f6e7f` — Preview PDF route uses branch Preview gate and returns `X-Jimmy-PAIge-PDF-Feature` header.
-- `a51dba8d773f4939bec1d50b9b41dd229913f43a` — final PDF route uses the same gate.
+- `54fc2da9d7181ad55752d81dffc4a690778f6e7f` — preview route uses feature helper and returns `X-Jimmy-PAIge-PDF-Feature`.
+- `a51dba8d773f4939bec1d50b9b41dd229913f43a` — final PDF route uses same helper.
 
-No payment/email test has been performed and none should be performed automatically.
-
----
-
-# 7. Preview gate regression verification added
-
-Verifier:
+Preview gate verifier:
 
 `analyzer/verify_jimmy_paige_preview_feature_gate.mjs`
 
 Commit:
 
 `4651a0f5cd7c5ffc0b909d0480de2308713d7773`
-
-It asserts:
-
-- default disabled;
-- Production + canary branch remains disabled;
-- Preview + wrong branch remains disabled;
-- Preview + exact canary branch enables professional renderer;
-- existing explicit flag still works;
-- production promotion remains unauthorized.
 
 Workflow:
 
@@ -328,60 +295,180 @@ Commit:
 
 `a4555426ed3b7b16dfe68ffde50d2f7a8cfce9f9`
 
-Do not claim this verifier passed until a concrete workflow result/evidence is surfaced.
+Do not claim that workflow passed until concrete execution evidence is surfaced.
 
-These changes do not match the real-audio GPU workflow path filter, so they should not retrigger the expensive real-audio transcription canary.
+No payment, customer-token redemption, or customer-email test has been performed.
+
+---
+
+# 6. Vercel Preview audit and deployment attempts
+
+Connected Vercel project:
+
+```text
+project: dadrock-tabs-android
+projectId: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+teamId: team_qJrw8Cuze5bCEg9M3Q67XMWt
+framework: Next.js
+node: 24.x
+```
+
+Read-only deployment inspection on 2026-08-22 showed recent deployments were Production/main only. No `v143-contextual-prune-lobo` Preview deployment appeared after ordinary branch pushes.
+
+The connected Vercel tool can list/inspect deployments and logs, but its direct deploy action does not accept a source ref/branch. **Do not use that action for this canary because the exact source branch cannot be guaranteed.**
+
+The connected Vercel tool surface exposed here also does not expose environment-variable writes or an env-list action, so project envs were not changed.
+
+Production remains untouched.
+
+---
+
+# 7. Draft PR Preview experiment was safely closed
+
+Draft PR #19 was created only to test whether native Git→Vercel Preview integration would react:
+
+`V143 /ai-tab professional PDF Preview canary`
+
+It was explicitly marked DO NOT MERGE.
+
+Vercel did not surface a Preview deployment from the PR.
+
+The PR was also an unsuitable merge vehicle because the long-lived research branch is enormous relative to current `main` (thousands of changed files and thousands of commits).
+
+PR #19 was therefore closed unmerged on 2026-08-22 after it failed to trigger a Preview.
+
+Current PR state:
+
+```text
+state: closed
+draft: true
+merged: false
+```
+
+Do not reopen it merely to obtain a Preview unless the Git integration behavior changes and a specific need is proven.
+
+---
+
+# 8. Explicit GitHub Actions Vercel Preview workflow is ready, but blocked by missing VERCEL_TOKEN
+
+Workflow:
+
+`.github/workflows/v143-vercel-preview-deploy.yml`
+
+Commit:
+
+`7a5c5f0b4aac01d0bf28f326fdf7313473fac84f` — `Add isolated V143 Vercel Preview deploy workflow`
+
+The workflow is branch-only and fail-closed. It is designed to:
+
+1. check whether `VERCEL_TOKEN` exists without printing it;
+2. target the known project/team IDs;
+3. run `vercel pull --environment=preview`;
+4. check only the presence (never values) of:
+   - `ANALYZER_API_URL_V143`
+   - `ANALYZER_API_TOKEN`
+   - `BLOB_READ_WRITE_TOKEN`;
+5. run `vercel build`;
+6. deploy the prebuilt output with **no `--prod`**;
+7. set `JIMMY_PAIGE_PROFESSIONAL_PDF_V1=true` only via deployment-scoped `--env`;
+8. commit only compact non-secret evidence;
+9. never perform payment/token/email actions.
+
+Bot diagnostic commit:
+
+`8c6a30ff1005ea16f4a9c4d701d241b606f98901` — `Record V143 Vercel Preview deployment`
+
+Evidence:
+
+`debug/v143-contextual-prune/vercel-preview-deploy-action.json`
+
+Actual result:
+
+```text
+vercelTokenAvailableInGitHubActions: false
+previewConfigPullExitCode: 99
+previewBuildExitCode: 99
+previewDeployExitCode: 99
+deploymentUrl: null
+deploymentRequestedAsPreview: true
+productionDeployFlagUsed: false
+professionalRendererDeploymentScoped: true
+projectEnvironmentMutated: false
+productionModified: false
+productionPromotionAuthorized: false
+paidPurchaseAttempted: false
+customerTokenRedeemed: false
+customerEmailSent: false
+```
+
+The Preview environment-presence booleans are false only because Preview configuration could not be pulled without `VERCEL_TOKEN`; they do **not** prove those Vercel project env vars are actually absent.
+
+## Precise current external blocker
+
+GitHub Actions does not currently have a repository secret named:
+
+```text
+VERCEL_TOKEN
+```
+
+Without that token, the branch can neither pull the Vercel Preview configuration nor create a CLI Preview deployment from CI.
+
+No unsafe fallback was used. No Production change occurred.
 
 ---
 
 # Current boundary
 
-The next task is to create a Vercel Preview deployment for this branch without touching Production.
+The core V143 product path is already proven with real audio and exact-response professional PDFs.
 
-The normal Git integration has not created a branch Preview from branch pushes alone. There is currently no PR for this branch.
+The only unresolved validation boundary is the real Vercel/Next.js Preview application wiring.
 
-The preferred next move is a **draft PR** from:
-
-```text
-v143-contextual-prune-lobo -> main
-```
-
-for Preview generation/testing only. Do not merge it automatically.
+That boundary is currently blocked by deployment authentication, **not** by the analyzer, render contract, PDF renderer, or V143 event quality.
 
 ---
 
-# Next steps — execute automatically in this order
+# Next steps — execute automatically when the deployment credential boundary is available
 
-1. Inspect the Preview gate CI result if it surfaces; fix only genuine gate/build issues.
+1. If a `VERCEL_TOKEN` repository secret becomes available, rerun `.github/workflows/v143-vercel-preview-deploy.yml` without changing its Preview-only safety invariants.
 
-2. Open a **draft PR** from `v143-contextual-prune-lobo` to `main` with explicit wording that it is a Preview canary and must not be merged during validation.
-
-3. Inspect Vercel deployments until a deployment appears with:
+2. Require the deployment diagnostic to show:
 
 ```text
-githubCommitRef = v143-contextual-prune-lobo
-target = preview
+vercelTokenAvailableInGitHubActions: true
+previewConfigPullExitCode: 0
+previewBuildExitCode: 0
+previewDeployExitCode: 0
+deploymentUrl: non-null
+productionDeployFlagUsed: false
+productionModified: false
 ```
 
-4. Verify Preview build health/logs. If Vercel does not create a PR Preview automatically, investigate Git integration/build-ignore settings before using any manual deployment mechanism.
+3. Inspect the resulting deployment through the connected Vercel app and independently confirm target/environment is Preview before sending application requests.
 
-5. Verify the Preview page `/ai-tab` loads.
+4. Verify `/ai-tab` loads on that Preview.
 
-6. Verify server-safe Preview PDF behavior without purchase/email:
-   - POST the preview endpoint only;
-   - confirm `X-Jimmy-PAIge-PDF-Feature = v143-branch-preview-canary`;
-   - confirm valid V143 events select `v143-structured-rhythm`;
-   - confirm legacy/failed structured data falls back safely.
+5. POST only `/api/generate-tab-preview` for renderer routing validation; do not use `/api/generate-tab-pdf` because that path performs payment/free-token verification and can send email.
 
-7. Prefer using already-preserved fixture/analyzer evidence for route-level renderer testing; do not rerun the GPU analyzer unless actual uploaded-audio browser routing must be verified and no cheaper exact-contract path is sufficient.
+6. For a passing structured route test, use already-approved synthetic/fixture V143 render events. Do not rerun the GPU analyzer merely to test the Preview PDF route.
 
-8. Do not make a PayPal purchase, redeem a customer token, or send customer email during automated Preview testing.
+7. Confirm Preview response headers:
 
-9. Record compact Preview evidence under `debug/v143-contextual-prune/` and refresh this checkpoint.
+```text
+X-Jimmy-PAIge-PDF-Feature: enabled source
+X-Jimmy-PAIge-PDF-Renderer: v143-structured-rhythm
+```
 
-10. Only after Preview application wiring passes should a separate explicit Production-promotion decision be made.
+8. Send a legacy/invalid-structured preview request and require safe polished fallback.
 
-11. Do **not** enable or promote Production automatically.
+9. Only if route-level testing passes and the Preview has the required V143/Blob runtime keys should an actual browser upload test using `public/gomywayfullaitest.m4a` be considered.
+
+10. Do not make a PayPal purchase, redeem a customer token, or send customer email during automated Preview testing.
+
+11. Record compact Preview evidence under `debug/v143-contextual-prune/` and refresh this checkpoint.
+
+12. Only after Preview application wiring passes should a separate explicit Production-promotion decision be made.
+
+13. Do **not** enable or promote Production automatically.
 
 ---
 
@@ -390,7 +477,8 @@ target = preview
 - Work only on `v143-contextual-prune-lobo`.
 - Keep this checkpoint current after meaningful progress.
 - Do not modify `main`.
-- Do not merge the Preview-canary PR automatically.
+- Do not merge the long-lived research branch into `main`.
+- Do not deploy an unspecified Vercel source just to obtain a Preview URL.
 - Do not deploy/modify the live V143 Modal endpoint during Preview validation unless a separate explicit need is proven.
 - Do not rerun historical compatibility captures.
 - Do not overwrite/delete preserved compatibility evidence.
@@ -399,5 +487,5 @@ target = preview
 - Do not weaken analyzer-quality thresholds merely to produce a pass.
 - Keep legacy Lead/Bass behavior unchanged.
 - Keep polished PDF rendering as the safe fallback.
-- Any automatic professional renderer activation before Production approval must remain Preview-only and branch-scoped.
+- Any automatic professional renderer activation before Production approval must remain Preview-only and branch/deployment-scoped.
 - Keep Production promotion disabled until a separate explicit decision.
