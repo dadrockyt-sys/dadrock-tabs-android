@@ -1,0 +1,32 @@
+name: V143 Analyzer Quality Gate
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - 'lib/v143AnalyzerQuality.js'
+      - 'lib/jimmyPaigeAnalysisPayload.js'
+      - 'lib/v143RenderContract.js'
+      - 'analyzer/verify_v143_analyzer_quality_gate.mjs'
+      - '.github/workflows/v143-analyzer-quality-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify V143 analyzer quality gate
+        run: node --experimental-default-type=module analyzer/verify_v143_analyzer_quality_gate.mjs
