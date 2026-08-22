@@ -14,7 +14,9 @@ Recover and source-prove the deterministic historical V143 measures 1–16 refer
 
 The source/artifact/feature/model chain is now statically source-proven and the repository-side equivalence verifier is PASSING.
 
-A fresh raw-audio GPU replay is **not yet authorized**. The remaining blocker is external runtime closure: the historical first-party Python graph is archived and checksum-manifested, but the exact resolved third-party environment and pretrained separator model payload bytes used by the historical Modal run have not yet been authenticated strongly enough to claim bit-identical regeneration.
+The source-audio cross-ref gate is also closed: `public/gomywayfullaitest.m4a` at historical baseline `4d735846fbd834cc4c722f2cb48727e4629647f1` and on `v143-contextual-prune-lobo` resolves to the same Git blob SHA, `5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`. Because Git blob identities are content-addressed, this proves the historical and current research refs contain byte-for-byte identical input audio. Changed source audio is therefore ruled out as the cause of any historical/current separator replay difference.
+
+A fresh raw-audio GPU replay is **not yet authorized as a bit-exact historical reproduction**. The remaining blocker is external runtime closure: the historical first-party Python graph is archived and checksum-manifested, but the exact resolved third-party environment and pretrained separator model payload bytes used by the historical Modal run were not preserved strongly enough to authenticate bit-identical regeneration.
 
 No production files were edited. No analyzer retraining, threshold tuning, model replacement, deployment, or reference-label runtime dependency was introduced.
 
@@ -161,7 +163,9 @@ Historical separator model names observed in source:
 - `model_bs_roformer_ep_317_sdr_12.9755.ckpt`
 - `htdemucs_6s.yaml`
 
-These names are source-proven; the exact historical external model payload bytes are not yet independently archived/authenticated.
+These names are source-proven; the exact historical external model payload bytes are not independently archived/authenticated.
+
+The grading/benchmark archaeology also identifies the historical best GPU path as the two-stage `bsroformer-then-demucs6s` stem. This identifies the intended algorithmic path but does not authenticate the downloaded model payload bytes.
 
 ## Historical onset-spectrum producer chain
 
@@ -261,45 +265,73 @@ Examples explicitly present in the source manifest include:
 
 Therefore the local Python source side is sufficiently preserved for archaeology.
 
-### Partially closed: top-level separator package
+### Partially closed: top-level separator package and historical Modal image recipe
 
 Historical Modal source directly pins:
 
 `audio-separator[gpu]==0.44.5`
 
-However, the runtime image does not preserve a complete resolved lock/freeze. Important packages required underneath the worker/separator stack can therefore resolve through transitive/floating dependencies on a fresh build.
+The archived GPU worker/image source establishes the following historical execution contract:
 
-No preserved `pip freeze`, complete package lock, CUDA/runtime inventory or immutable Modal image digest has yet been recovered from the Codespace snapshot.
+- Modal `debian_slim` base;
+- Python 3.11;
+- `audio-separator[gpu]==0.44.5`;
+- `ffmpeg` installed in the image;
+- NVIDIA L4 GPU target;
+- 8 GB memory allocation.
+
+The historical smoke function was explicitly designed to capture device/package details including CUDA/Torch/ONNX/runtime information, but the preserved smoke record reports that the smoke was not actually executed (`smokeAttempted=false`). Therefore those intended diagnostics cannot be treated as a captured runtime fingerprint.
+
+A historical GitHub-side replay log reports Python `3.11.16`, but that run verified preserved artifacts rather than regenerating the separator stem from raw audio. It therefore does not establish that `3.11.16` was the exact Python patch version inside the original Modal separator execution.
+
+The runtime image does not preserve a complete resolved lock/freeze. Important packages required underneath the worker/separator stack could resolve through transitive/floating dependencies on a fresh build.
+
+No preserved `pip freeze`, complete package lock, exact Torch/CUDA/ONNX inventory or immutable Modal image digest has been recovered.
 
 ### Open blocker: external pretrained model bytes
 
-The historical source names the BS-RoFormer and Demucs model/config identifiers, but the corresponding pretrained payload bytes were not copied into the historical source archive and no historical SHA-256 for those model files has yet been recovered.
+The historical source names the BS-RoFormer and Demucs model/config identifiers, but the corresponding pretrained payload bytes were not copied into the historical source archive and no historical SHA-256 for those model files has been recovered.
+
+Repository archaeology found no tracked copy of the relevant pretrained model payloads and no preserved model-download hash record sufficient to authenticate them.
 
 Do not substitute a current public mirror hash and call it historical provenance. A modern mirror may be useful for comparison later, but it is not evidence that the historical `audio-separator==0.44.5` download produced identical bytes.
 
 The separator can dynamically obtain models/metadata, so model filename alone is not a bit-exact replay guarantee.
 
-### Historical logs checked
+### Historical logs and generated benchmark artifacts checked
 
-A historical `debug/v143-contextual-prune/` runtime-replay action log and Modal smoke log were found at/around the historical commit lineage.
+Historical runtime-replay and Modal smoke records were inspected along with the preserved evidence bundle and checkpoint lineage.
 
-Important finding:
+Important findings:
 
 - the historical runtime replay represented artifact-level replay/verification rather than a newly captured raw-audio separator regeneration;
 - the Modal smoke path was skipped because required credentials were unavailable;
-- therefore those logs do **not** provide the missing separator-model download hashes or a resolved GPU environment fingerprint.
+- therefore those logs do **not** provide the missing separator-model download hashes or a resolved GPU environment fingerprint;
+- the generated GPU benchmark report expected by the grader is not preserved on the current branch;
+- the current branch retains grading/consumer logic identifying the `bsroformer-then-demucs6s` winner, but does not retain enough generated benchmark output to infer immutable external dependency bytes;
+- the preserved Codespace snapshot contains analyzer caches/models/reports plus provenance/checksums, but no complete environment freeze or separator download log has been found.
 
-The preserved Codespace snapshot likewise contains analyzer caches/models/reports plus provenance/checksums, but no complete environment freeze or separator download log has been found.
-
-## Source audio provenance
+## Source audio provenance — PASS
 
 Historical producer source references:
 
 `public/gomywayfullaitest.m4a`
 
-The file path exists in the historical repository tree and is therefore Git-tracked historical input rather than an undocumented local-only path.
+Historical baseline:
 
-A final cross-ref Git-blob identity comparison between historical commit `4d735846...` and the current research branch should still be recorded explicitly before raw-audio replay, so the exact input-byte identity is part of the replay gate rather than assumed.
+`4d735846fbd834cc4c722f2cb48727e4629647f1`
+
+Current research branch:
+
+`v143-contextual-prune-lobo`
+
+Git blob at both refs:
+
+`5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`
+
+The same Git blob SHA is returned at both refs. Git blob IDs are content-addressed over the blob contents, so matching blob IDs prove byte-for-byte identity of the source audio even though the byte size was not separately surfaced by the connector during this audit.
+
+This closes the input-audio identity gate and rules out changed source bytes as the cause of any historical/current replay divergence.
 
 ## Replay readiness matrix
 
@@ -311,12 +343,14 @@ A final cross-ref Git-blob identity comparison between historical commit `4d7358
 | Static source/artifact dimensions | PASS | verifier result above |
 | Runtime professional/reference dependency | PASS | none in replay carrier |
 | Historical source audio path | PASS | Git-tracked historical path |
-| Cross-ref source-audio blob identity | PENDING | record historical/current Git blob SHA + size |
+| Cross-ref source-audio blob identity | PASS | same Git blob `5e34fb55fbd011c55b56bc40cc5d062735b3fcd0` at historical/current refs |
 | Top-level `audio-separator` version | PASS | pinned to `0.44.5` in historical Modal source |
-| Fully resolved Python/CUDA runtime | BLOCKED | no complete historical freeze/image digest recovered |
+| Historical Modal execution recipe | PARTIAL | Python 3.11 / Debian slim / ffmpeg / L4 / 8 GB recovered; immutable image + resolved transitive packages missing |
+| Fully resolved Python/CUDA runtime | BLOCKED | no complete historical freeze/image digest; historical GPU smoke was not executed |
 | BS-RoFormer historical payload hash | BLOCKED | filename known; historical bytes/hash not proven |
 | Demucs historical payload hash/config closure | BLOCKED | identifier known; historical bytes/hash not proven |
-| Fresh raw-audio GPU replay | DEFERRED | fail closed until blockers above are resolved or explicitly accepted as non-bit-exact |
+| Fresh raw-audio GPU replay as bit-exact historical reproduction | DEFERRED | fail closed while runtime/model byte provenance remains incomplete |
+| Controlled compatibility comparator | ALLOWED TO PLAN | may be designed as new evidence only, with complete fresh provenance capture and isolated outputs; must not be labelled historical equivalence |
 
 ## Hard constraints
 
@@ -329,20 +363,38 @@ A final cross-ref Git-blob identity comparison between historical commit `4d7358
 - Preserve median-onset historical behavior; do not silently substitute the later weighted carrier behavior.
 - Treat current/mirrored third-party model files as unproven until historical provenance is established.
 - Do not claim bit-exact raw-audio replay while external runtime/model closure is incomplete.
+- Do not disturb the statically proven measures 1–16 producer/feature chain merely to manufacture replay agreement.
 - Codespace is not required for the current archaeology path and should remain unnecessary unless a specific unrecoverable evidence gap demands it.
 
 ## Next safe steps
 
-1. Record the Git blob SHA and byte size for `public/gomywayfullaitest.m4a` at historical commit `4d735846...` and at `v143-contextual-prune-lobo`; prove identical input bytes if the blob IDs match.
-2. Continue searching historical commits/artifacts/logs for separator model MD5/SHA values, `audio-separator` download messages, resolved package versions, CUDA/torch versions, or an immutable Modal image identity.
-3. If exact historical model/runtime provenance cannot be recovered, keep the bit-exact raw-audio replay gate blocked and distinguish any future compatibility replay from historical equivalence.
-4. If dependency closure becomes sufficient, write a replay plan first: exact command, immutable inputs, isolated research-only outputs, expected structural/hash invariants and fail/abort conditions.
-5. Only after that checkpointed plan should a GPU replay be considered. Never retrain, retune or modify production as part of replay validation.
+1. Continue historical repository/action/artifact archaeology only if a new plausible source of model hashes, `audio-separator` download metadata, resolved package versions, CUDA/Torch/ONNX versions or immutable Modal image identity is identified; do not repeatedly search already exhausted evidence without a new lead.
+2. Treat exact historical separator recreation as **unproven** unless the missing external payload/runtime evidence is recovered.
+3. If runtime comparison is still useful, write a controlled compatibility-comparator plan first. It must capture fresh model payload checksums, full environment/package inventory, CUDA/Torch/ONNX details, input blob SHA, separator command/config, seed/deterministic controls and output hashes.
+4. Any such comparator must write only isolated research artifacts and be explicitly labelled **new compatibility evidence**, not a bit-exact historical reproduction.
+5. Compare newly generated outputs against the preserved historical caches using frozen boundaries, thresholds, tolerances and model inputs. Never retrain, retune or modify production to improve agreement.
+6. Keep promotion disabled unless the evidence gates required by the research checkpoint are genuinely closed.
+
+## Runtime provenance continuation — 2026-08-22
+
+The latest provenance pass established the following concrete points:
+
+1. **Source input identity is closed.** Historical and current refs resolve `public/gomywayfullaitest.m4a` to Git blob `5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`.
+2. **Historical algorithmic separator path is identified.** The benchmark/grading code identifies `bsroformer-then-demucs6s` as the historical best GPU stem path.
+3. **Historical first-party separator code is archived and checksum-anchored.** The evidence manifest includes the relevant seeded separator, production separator, Modal endpoint and GPU worker sources.
+4. **The top-level separator dependency is pinned.** Historical Modal source specifies `audio-separator[gpu]==0.44.5`.
+5. **The historical execution class is recovered.** The archived Modal worker used a Debian slim / Python 3.11 image recipe with FFmpeg, NVIDIA L4 and 8 GB RAM.
+6. **The intended runtime fingerprint hook did not execute.** The preserved smoke evidence shows `smokeAttempted=false`; therefore exact Torch/CUDA/ONNX/transitive package versions were not captured by that mechanism.
+7. **The pretrained model payload bytes are not preserved.** Model/config names are known, but no historical payload SHA-256 or immutable downloaded-file copy has been recovered.
+8. **Historical GitHub replay evidence is not separator regeneration evidence.** Python `3.11.16` appears in an artifact-level replay context and must not be promoted to an exact historical Modal GPU fingerprint.
+9. **No GPU replay was launched during this provenance pass.** The statically proven measures 1–16 producer chain and preserved historical artifacts remain untouched.
+
+Conclusion: changed source audio is ruled out, while exact third-party model/runtime provenance remains genuinely unresolved. A future GPU execution may be useful only as a fully fingerprinted compatibility comparator unless stronger historical external-dependency evidence is recovered.
 
 ## Resume directive
 
 Continue GitHub-only on `v143-contextual-prune-lobo`.
 
-The source/artifact/feature/model structural chain is PASSING and no further reconstruction of the 36/260/15 feature widths is needed unless new contradictory evidence appears.
+The source/artifact/feature/model structural chain is PASSING and the source-audio Git-blob identity gate is now PASSING. No further reconstruction of the 36/260/15 feature widths or input-audio identity is needed unless contradictory evidence appears.
 
-The active task is now **runtime replay closure**, beginning with source-audio Git-blob identity and then historical third-party environment/model provenance. Fail closed: do not execute or describe a fresh separator run as bit-identical historical replay until those dependencies are authenticated.
+The active task is now **external separator/runtime provenance closure or, if that remains unrecoverable, design of a strictly labelled controlled compatibility comparator**. Fail closed: do not execute or describe a fresh separator run as bit-identical historical replay until the missing third-party environment/model payload evidence is authenticated.
