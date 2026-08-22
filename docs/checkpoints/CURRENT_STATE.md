@@ -2,7 +2,7 @@
 
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
-Branch HEAD before this checkpoint update: `19683ef4251c7b2b7143c7ab59aa754d183044fd`
+Branch HEAD before this checkpoint update: `4f2b637ce5f2b69c4dfff07d26cac9f68fcc59d1`
 
 ## Resume directive
 
@@ -60,32 +60,13 @@ MIDI pitch
 
 No browser/PDF layer may manufacture missing measure/step placement.
 
-## Browser metadata transport verified
-
-Read-only review on 2026-08-22 confirmed the browser clears old `analysisMetadata` at the start of every new generation, stores the fresh analyzer response, and sends that same response's:
-
-```text
-analysisEngine
-renderEvents
-measureGrid
-tuning
-tempo
-timeSignature
-keySignature
-techniques
-confidence
-difficulty
-```
-
-to both `/api/generate-tab-preview` and the unlocked `/api/generate-tab-pdf` path.
-
-There is no ordinary stale prior-analysis UI state path masquerading as a new V143 result.
+Browser metadata transport has been reviewed and verified: the browser clears stale `analysisMetadata` at the start of each new generation, stores the fresh analyzer response, and transports that same response's engine/render/grid/tuning/tempo/meter/key/technique/confidence/difficulty metadata to preview and unlocked full-PDF routes.
 
 ---
 
 # 2. Analyzer quality gate
 
-`lib/v143AnalyzerQuality.js` defines the current conservative eligibility floor:
+`lib/v143AnalyzerQuality.js` currently requires:
 
 ```text
 minimum valid render events: 4
@@ -95,7 +76,7 @@ minimum measure/step coverage: 70%
 minimum pitch coverage: 70%
 ```
 
-`lib/jimmyPaigeAnalysisPayload.js` assigns:
+`lib/jimmyPaigeAnalysisPayload.js` exposes:
 
 ```text
 analysisEngine = v143-reference-free-rhythm
@@ -109,13 +90,13 @@ analysisQuality.passed === true
 renderEvents.length > 0
 ```
 
-Otherwise V143 is labeled:
+Otherwise the response is labeled:
 
 ```text
 analysisEngine = v143-reference-free-rhythm-fallback
 ```
 
-so safe polished/text fallback remains available while weak V143 output cannot silently enter structured engraving.
+so polished/text fallback remains safe while weak V143 output cannot silently enter structured engraving.
 
 Every quality report keeps:
 
@@ -157,7 +138,7 @@ The synthetic fixture retained all tested technique classes and passed structura
 
 ---
 
-# 4. REAL-AUDIO V143 PRODUCT CANARY PASSED
+# 4. Real-audio V143 product canary passed
 
 Approved fixture:
 
@@ -170,13 +151,11 @@ Product-canary components:
 - `analyzer/render_v143_real_audio_canary_pdf.mjs`
 - `.github/workflows/v143-ai-tab-real-audio-canary.yml`
 
-The canary uses the same V143 Rhythm product image/pipeline but bypasses private Blob networking by feeding approved fixture bytes directly into the request adapter. It uses no private Blob token and does not deploy/modify the live endpoint.
-
 Bot evidence commit:
 
 `9f52bf83597e921da12887874bace0df0ffe6d47` — `Record V143 AI tab real-audio canary`
 
-## Analyzer evidence
+Analyzer evidence:
 
 `debug/v143-contextual-prune/ai-tab-real-audio-canary.json`
 
@@ -218,13 +197,9 @@ slide-down
 slide-up
 ```
 
-All analyzer-quality failures are empty.
-
-## Exact-response PDF evidence
+Exact-response PDF evidence:
 
 `debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json`
-
-The exact same 358 returned render events were passed to `createV143RhythmPdf`.
 
 ```text
 attempted: true
@@ -237,9 +212,7 @@ fullPdfBytes: 1,686,104
 previewPdfBytes: 1,678,626
 ```
 
-All PDF structural checks, text extraction checks and page-one raster checks passed.
-
-## Workflow evidence
+Workflow evidence:
 
 `debug/v143-contextual-prune/ai-tab-real-audio-canary-action.json`
 
@@ -259,17 +232,13 @@ The real-analyzer + exact-response PDF blocker is closed for this approved canar
 
 ---
 
-# 5. Preview-only professional renderer gate implemented AND CI-PROVEN
+# 5. Preview-only professional renderer gate implemented and CI-proven
 
 Helper:
 
 `lib/jimmyPaigeProfessionalPdfFeature.js`
 
-Initial helper commit:
-
-`ef91510f92e34292e86200edc7f319f5c10dc838`
-
-The helper preserves the existing explicit flag:
+The helper preserves the explicit flag:
 
 ```text
 JIMMY_PAIGE_PROFESSIONAL_PDF_V1=true
@@ -287,28 +256,13 @@ Used by:
 - `app/api/generate-tab-preview/route.js`
 - `app/api/generate-tab-pdf/route.js`
 
-Route commits:
-
-- `54fc2da9d7181ad55752d81dffc4a690778f6e7f` — preview route uses feature helper and returns `X-Jimmy-PAIge-PDF-Feature`.
-- `a51dba8d773f4939bec1d50b9b41dd229913f43a` — final PDF route uses same helper.
-
-Verifier:
-
-`analyzer/verify_jimmy_paige_preview_feature_gate.mjs`
-
-Evidence-persisting workflow change:
-
-`d8cbc03ab077e5ed7fe8d7d1b9ec6cad73a29524` — `Persist V143 Preview feature gate evidence`
-
-Bot evidence commit:
-
-`f52bbb71b41f06b864b705b041ce3d2696246519` — `Record V143 Preview PDF feature gate`
-
 Evidence:
 
 `debug/v143-contextual-prune/preview-pdf-feature-gate.json`
 
-Concrete result:
+Bot evidence commit:
+
+`f52bbb71b41f06b864b705b041ce3d2696246519` — `Record V143 Preview PDF feature gate`
 
 ```text
 verifierExitCode: 0
@@ -322,13 +276,63 @@ productionPromotionAuthorized: false
 productionModified: false
 ```
 
-This closes the feature-gate logic question: Preview activation is isolated and Production remains disabled by default.
-
 No payment, customer-token redemption, or customer-email test has been performed.
 
 ---
 
-# 6. Vercel Preview audit
+# 6. Full isolated branch build gate passed
+
+Workflow:
+
+`.github/workflows/v143-ai-tab-branch-build-gate.yml`
+
+Purpose: verify the two V143 safety regressions and compile the complete Next.js application without touching Vercel, the live analyzer, payments, email, or Production.
+
+Initial workflow commit:
+
+`22ca4ce01d2d78b1b7131bfd1aa1ceafb0e5ad5b` — `Add V143 AI tab full branch build gate`
+
+The first run produced exit code `9` for both standalone verifier invocations while the full Next.js Node 24 build itself passed. Node exit code 9 is an invalid CLI argument condition; this was a harness/runtime compatibility issue, not a product regression.
+
+Runtime-split fix:
+
+`a48538b3fd121e7d525047edc8841ef436ace51c` — `Fix V143 branch build verifier runtime split`
+
+The workflow now runs the existing ESM verifier harness under Node 22 and performs the actual application build under Node 24, matching the Vercel project runtime for the build.
+
+Passing bot evidence commit:
+
+`4f2b637ce5f2b69c4dfff07d26cac9f68fcc59d1` — `Record V143 AI tab branch build gate`
+
+Evidence:
+
+`debug/v143-contextual-prune/ai-tab-branch-build-gate.json`
+
+```text
+schemaVersion: 2
+verifierNodeVersion: 22
+buildNodeVersion: 24
+analyzerQualityVerifierExitCode: 0
+previewFeatureVerifierExitCode: 0
+nextBuildExitCode: 0
+analyzerQualityVerifierPassed: true
+previewFeatureVerifierPassed: true
+nextBuildPassed: true
+passed: true
+liveEndpointDeployedOrModified: false
+vercelDeploymentAttempted: false
+productionModified: false
+productionPromotionAuthorized: false
+paidPurchaseAttempted: false
+customerTokenRedeemed: false
+customerEmailSent: false
+```
+
+This closes the isolated branch compile/regression boundary. The branch is buildable under Node 24 and its current V143 quality/Preview feature invariants are green.
+
+---
+
+# 7. Vercel Preview audit and deployment-auth blocker
 
 Connected Vercel project:
 
@@ -340,112 +344,33 @@ framework: Next.js
 node: 24.x
 ```
 
-Read-only Vercel inspection on 2026-08-22 showed recent deployments were Production/main only. No `v143-contextual-prune-lobo` Preview deployment appeared after ordinary branch pushes.
+Connected Vercel inspection on 2026-08-22 still shows no `v143-contextual-prune-lobo` Preview deployment. The latest visible deployment is a READY Production/main deployment from 2026-08-20.
 
-The connected Vercel app can list/inspect deployments and logs, but its direct `deploy_to_vercel` action does not accept a source ref/branch. Do not use that action for this canary because the exact source branch cannot be guaranteed.
+The connected Vercel deploy action does not accept a source ref/branch. Do not use it for this canary because the exact source branch cannot be guaranteed.
 
-The exposed Vercel connector also does not provide project-env writes or environment-name listing.
+Native Git Preview experiments remain exhausted and cleaned up:
 
-Production remains untouched.
+- Draft PR #19 was closed unmerged after it failed to produce a Preview.
+- Explicit `vercel.json → git.deploymentEnabled` branch experiment also failed to produce a Preview and was removed in `19683ef4251c7b2b7143c7ab59aa754d183044fd`.
+- `vercel.json` is restored to its original cron/header configuration.
 
-## Tokenless native Git deployment experiments exhausted and cleaned up
-
-### Draft PR experiment
-
-Draft PR #19 (`V143 /ai-tab professional PDF Preview canary`) was created only to test native Git→Vercel Preview behavior and was explicitly marked DO NOT MERGE.
-
-No Preview appeared. Because the long-lived research branch is also an enormous/unsuitable merge vehicle, PR #19 was closed unmerged.
-
-```text
-state: closed
-draft: true
-merged: false
-```
-
-### Explicit branch deploymentEnabled experiment
-
-Vercel documentation states `vercel.json → git.deploymentEnabled` can explicitly control branch Git deployments.
-
-Experiment commit:
-
-`bf32abbc73d90ddea21cac20dead4d767e10f4e8` — `Explicitly enable V143 canary Git deployments`
-
-The branch was explicitly set to deployment enabled and still produced:
-
-```text
-no Vercel Preview deployment
-no Vercel commit status
-```
-
-This proved repository-side `deploymentEnabled` was not enough to overcome the current native Git Preview suppression.
-
-The experimental setting was then removed in cleanup commit:
-
-`19683ef4251c7b2b7143c7ab59aa754d183044fd` — `Remove ineffective V143 Git deployment nudge`
-
-`vercel.json` is now restored to its original cron/header configuration. No experimental Git deployment rule remains enabled.
-
-The remaining suppression is project/integration-side or otherwise external to this branch.
-
----
-
-# 7. Explicit GitHub Actions Vercel Preview workflow is ready, but no Vercel deployment credential exists
-
-Workflow:
+Explicit Preview workflow:
 
 `.github/workflows/v143-vercel-preview-deploy.yml`
 
-Initial workflow commit:
+It is branch-only and fail-closed. It checks the presence, never values, of Preview runtime keys, builds prebuilt output, deploys without `--prod`, scopes the professional-renderer flag to that deployment, and records only compact non-secret evidence.
 
-`7a5c5f0b4aac01d0bf28f326fdf7313473fac84f`
-
-The workflow is branch-only and fail-closed. It is designed to:
-
-1. authenticate to the exact known Vercel team/project;
-2. run `vercel pull --environment=preview`;
-3. inspect only the presence, never values, of:
-   - `ANALYZER_API_URL_V143`
-   - `ANALYZER_API_TOKEN`
-   - `BLOB_READ_WRITE_TOKEN`;
-4. run `vercel build`;
-5. deploy prebuilt output with **no `--prod`**;
-6. set `JIMMY_PAIGE_PROFESSIONAL_PDF_V1=true` only via deployment-scoped `--env`;
-7. commit only compact non-secret evidence;
-8. never perform payment/token/email actions.
-
-First diagnostic commit:
-
-`8c6a30ff1005ea16f4a9c4d701d241b606f98901`
-
-showed `VERCEL_TOKEN` absent.
-
-## Common credential aliases were then probed safely
-
-Workflow commit:
-
-`7a5412da88b9f4c7640370b2cc73052306e6c300` — `Probe existing Vercel credential aliases safely`
-
-It checks the following repository-secret aliases by presence only and would use the first available value:
-
-```text
-VERCEL_TOKEN
-VERCEL_ACCESS_TOKEN
-VERCEL_API_TOKEN
-VERCEL_CLI_TOKEN
-```
-
-Bot evidence commit:
-
-`d96852a67fed555c5d1200c0e28b3bf310b4e1b8` — `Record V143 Vercel Preview deployment`
-
-Evidence:
+Latest credential evidence remains:
 
 `debug/v143-contextual-prune/vercel-preview-deploy-action.json`
 
-Definitive result:
-
 ```text
 schemaVersion: 2
+credentialAliasesChecked:
+  - VERCEL_TOKEN
+  - VERCEL_ACCESS_TOKEN
+  - VERCEL_API_TOKEN
+  - VERCEL_CLI_TOKEN
 vercelTokenAvailableInGitHubActions: false
 previewConfigPullExitCode: 99
 previewBuildExitCode: 99
@@ -462,17 +387,17 @@ customerTokenRedeemed: false
 customerEmailSent: false
 ```
 
-The Preview environment-presence booleans are false only because Preview configuration could not be pulled. They do not prove the Vercel project env values themselves are absent.
+The Preview environment-presence booleans in that diagnostic are false only because Preview configuration could not be pulled. They do not prove the project env values themselves are absent.
 
 ## Current external blocker
 
-No usable Vercel CLI deployment credential exists in GitHub Actions under any of the four conventional aliases above.
+No usable Vercel CLI deployment credential has yet been proven available in GitHub Actions under the four supported aliases.
 
-Vercel OIDC documentation was also checked. GitHub OIDC can authenticate requests **to an already-created protected Vercel deployment**, but it does not replace the Vercel CLI authorization token required to run `vercel pull/build/deploy` from GitHub Actions.
+Vercel OIDC does not replace the CLI authorization token required for `vercel pull/build/deploy` from GitHub Actions.
 
-No safe automated deployment-auth path remains available from the current connected tools without a Vercel deployment credential.
+No safe automated deployment-auth path is currently available from the connected tools without either a branch-guaranteed native Preview or a Vercel deployment credential.
 
-No unsafe fallback was used and no Production change occurred.
+No unsafe fallback was used and Production remains untouched.
 
 ---
 
@@ -485,11 +410,14 @@ The following are proven:
 - exact-response professional full/preview PDFs;
 - PDF structural/text/raster quality;
 - browser transport of fresh analyzer metadata to PDF routes;
-- Preview-only/Production-off professional-renderer feature logic.
+- Preview-only/Production-off professional-renderer feature logic;
+- analyzer-quality regression verification;
+- Preview feature-gate regression verification;
+- full isolated Next.js branch build under Node 24.
 
 The only unresolved validation boundary is the **actual deployed Vercel/Next.js Preview application wiring**.
 
-That boundary is blocked solely by deployment authentication/native Preview suppression, not by V143 analysis, event quality, browser state handling, render eligibility, or PDF generation.
+That boundary remains blocked by deployment authentication/native Preview suppression, not by V143 analysis, event quality, browser state handling, render eligibility, PDF generation, feature-gate logic, or Next.js compilation.
 
 ---
 
