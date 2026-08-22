@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-preview-pdf-feature-gate",
+  "verifierExitCode": 0,
+  "passed": true,
+  "expectedInvariants": {
+    "defaultDisabled": true,
+    "productionSameBranchDisabled": true,
+    "otherPreviewBranchDisabled": true,
+    "exactCanaryPreviewEnabled": true,
+    "explicitEnvironmentFlagPreserved": true,
+    "productionPromotionAuthorized": false
+  },
+  "productionModified": false,
+  "productionPromotionAuthorized": false
+}
