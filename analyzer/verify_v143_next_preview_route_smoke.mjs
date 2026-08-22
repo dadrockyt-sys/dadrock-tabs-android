@@ -11,6 +11,8 @@ const resultPath =
   'debug/v143-contextual-prune/next-preview-route-smoke.json';
 
 const expectedFeature = 'v143-branch-preview-canary';
+const smokeUserAgent =
+  'Mozilla/5.0 (compatible; DadRock-V143-Preview-Smoke/1.0)';
 
 function generatedTab() {
   return [
@@ -64,6 +66,7 @@ async function postPreview(payload) {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
+      'user-agent': smokeUserAgent,
     },
     body: JSON.stringify(payload),
   });
@@ -134,7 +137,12 @@ async function persistEvidence() {
 }
 
 try {
-  const pageResponse = await fetch(`${baseUrl}/ai-tab`, { redirect: 'manual' });
+  const pageResponse = await fetch(`${baseUrl}/ai-tab`, {
+    redirect: 'manual',
+    headers: {
+      'user-agent': smokeUserAgent,
+    },
+  });
   evidence.aiTabPageStatus = pageResponse.status;
   assert.equal(pageResponse.status, 200, '/ai-tab should load from the built server');
 
@@ -200,7 +208,10 @@ try {
 
   const invalidResponse = await fetch(`${baseUrl}/api/generate-tab-preview`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      'user-agent': smokeUserAgent,
+    },
     body: JSON.stringify({
       song: 'Missing Tab Smoke',
       artist: 'DadRock QA',
