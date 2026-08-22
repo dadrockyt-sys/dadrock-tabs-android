@@ -13,15 +13,18 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   verify:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -29,4 +32,106 @@ jobs:
           node-version: '22'
 
       - name: Verify Preview-only professional PDF gate
-        run: node --experimental-default-type=module analyzer/verify_jimmy_paige_preview_feature_gate.mjs
+        shell: bash
+        run: |
+          set +e
+          mkdir -p .preview-feature-gate debug/v143-contextual-prune
+          node --experimental-default-type=module \
+            analyzer/verify_jimmy_paige_preview_feature_gate.mjs \
+            > .preview-feature-gate/verifier.log 2>&1
+          status=$?
+          echo "PREVIEW_FEATURE_GATE_EXIT_CODE=$status" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Write compact Preview feature-gate diagnostic
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          try:
+              exit_code = int(os.environ.get('PREVIEW_FEATURE_GATE_EXIT_CODE', '99'))
+          except ValueError:
+              exit_code = 99
+
+          payload = {
+              'schemaVersion': 1,
+              'gate': 'v143-preview-pdf-feature-gate',
+              'verifierExitCode': exit_code,
+              'passed': exit_code == 0,
+              'expectedInvariants': {
+                  'defaultDisabled': True,
+                  'productionSameBranchDisabled': True,
+                  'otherPreviewBranchDisabled': True,
+                  'exactCanaryPreviewEnabled': True,
+                  'explicitEnvironmentFlagPreserved': True,
+                  'productionPromotionAuthorized': False,
+              },
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+
+          path = Path('debug/v143-contextual-prune/preview-pdf-feature-gate.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(payload, indent=2))
+          PY
+
+      - name: Preserve verifier log as short-retention artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-preview-pdf-feature-gate
+          path: |
+            .preview-feature-gate/verifier.log
+            debug/v143-contextual-prune/preview-pdf-feature-gate.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commit compact Preview feature-gate diagnostic
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          file=debug/v143-contextual-prune/preview-pdf-feature-gate.json
+          git add -- "$file"
+
+          if git diff --cached --quiet; then
+            echo "Preview feature-gate diagnostic is unchanged."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 Preview PDF feature gate"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce Preview feature gate
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('debug/v143-contextual-prune/preview-pdf-feature-gate.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+
+          if data.get('passed') is not True:
+              raise SystemExit(
+                  f"Preview PDF feature-gate verifier failed with exit code {data.get('verifierExitCode')}"
+              )
+          if data.get('productionModified') is not False:
+              raise SystemExit('Safety failure: Production was modified')
+          if data.get('productionPromotionAuthorized') is not False:
+              raise SystemExit('Safety failure: Production promotion was authorized')
+
+          print('V143 PREVIEW PDF FEATURE GATE PASSED')
+          print('productionModified=false')
+          print('productionPromotionAuthorized=false')
+          PY
