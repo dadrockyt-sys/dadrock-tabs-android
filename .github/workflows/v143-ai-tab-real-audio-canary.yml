@@ -1,0 +1,393 @@
+name: V143 AI Tab Real Audio Product Canary
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-ai-tab-real-audio-canary.yml'
+      - 'analyzer/v143_ai_tab_product_canary_modal.py'
+      - 'analyzer/evaluate_v143_real_audio_canary.mjs'
+      - 'analyzer/render_v143_real_audio_canary_pdf.mjs'
+      - 'lib/v143AnalyzerQuality.js'
+      - 'lib/jimmyPaigeAnalysisPayload.js'
+      - 'lib/v143RenderContract.js'
+      - 'lib/createV143RhythmPdf.js'
+
+permissions:
+  contents: write
+
+jobs:
+  real-audio-product-canary:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked Node dependencies and Modal CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts
+          python -m pip install --disable-pip-version-check modal
+
+      - name: Prepare standalone ESM canary evaluators
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .tmp-v143-ai-tab-canary
+          mkdir -p .tmp-v143-ai-tab-canary
+
+          cp lib/v143RenderContract.js \
+            .tmp-v143-ai-tab-canary/v143RenderContract.mjs
+
+          sed \
+            "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
+            lib/v143AnalyzerQuality.js \
+            > .tmp-v143-ai-tab-canary/v143AnalyzerQuality.mjs
+
+          sed \
+            -e "s#'./v143AnalyzerQuality.js'#'./v143AnalyzerQuality.mjs'#" \
+            -e "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
+            lib/jimmyPaigeAnalysisPayload.js \
+            > .tmp-v143-ai-tab-canary/jimmyPaigeAnalysisPayload.mjs
+
+          sed \
+            "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" \
+            lib/createV143RhythmPdf.js \
+            > .tmp-v143-ai-tab-canary/createV143RhythmPdf.mjs
+
+          sed \
+            "s#../lib/jimmyPaigeAnalysisPayload.js#./jimmyPaigeAnalysisPayload.mjs#" \
+            analyzer/evaluate_v143_real_audio_canary.mjs \
+            > .tmp-v143-ai-tab-canary/evaluate.mjs
+
+          sed \
+            -e "s#../lib/jimmyPaigeAnalysisPayload.js#./jimmyPaigeAnalysisPayload.mjs#" \
+            -e "s#../lib/createV143RhythmPdf.js#./createV143RhythmPdf.mjs#" \
+            analyzer/render_v143_real_audio_canary_pdf.mjs \
+            > .tmp-v143-ai-tab-canary/render-pdf.mjs
+
+          node --check .tmp-v143-ai-tab-canary/v143RenderContract.mjs
+          node --check .tmp-v143-ai-tab-canary/v143AnalyzerQuality.mjs
+          node --check .tmp-v143-ai-tab-canary/jimmyPaigeAnalysisPayload.mjs
+          node --check .tmp-v143-ai-tab-canary/createV143RhythmPdf.mjs
+          node --check .tmp-v143-ai-tab-canary/evaluate.mjs
+          node --check .tmp-v143-ai-tab-canary/render-pdf.mjs
+
+      - name: Run isolated V143 product canary and quality evaluator
+        shell: bash
+        run: |
+          set +e
+          mkdir -p .canary/logs debug/v143-contextual-prune
+
+          credentials_available=false
+          modal_status=99
+          evaluator_status=99
+
+          if [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            credentials_available=true
+            python -m modal run \
+              analyzer/v143_ai_tab_product_canary_modal.py::run \
+              --audio-path public/gomywayfullaitest.m4a \
+              --output-path .canary/v143-product-output.json \
+              > .canary/logs/modal-product-canary.log 2>&1
+            modal_status=$?
+          else
+            echo "Modal GitHub credentials unavailable; product canary not attempted." \
+              > .canary/logs/modal-product-canary.log
+          fi
+
+          if [ "$modal_status" -eq 0 ] && [ -s .canary/v143-product-output.json ]; then
+            node .tmp-v143-ai-tab-canary/evaluate.mjs \
+              .canary/v143-product-output.json \
+              debug/v143-contextual-prune/ai-tab-real-audio-canary.json \
+              > .canary/logs/quality-evaluator.log 2>&1
+            evaluator_status=$?
+          else
+            echo "Quality evaluator skipped because raw product output is unavailable." \
+              > .canary/logs/quality-evaluator.log
+          fi
+
+          echo "CANARY_CREDENTIALS_AVAILABLE=$credentials_available" >> "$GITHUB_ENV"
+          echo "CANARY_MODAL_STATUS=$modal_status" >> "$GITHUB_ENV"
+          echo "CANARY_EVALUATOR_STATUS=$evaluator_status" >> "$GITHUB_ENV"
+
+          exit 0
+
+      - name: Render the exact real-audio response when quality passes
+        shell: bash
+        run: |
+          set +e
+          render_status=99
+
+          if [ "${CANARY_EVALUATOR_STATUS:-99}" -eq 0 ] && \
+             [ -s .canary/v143-product-output.json ]; then
+            node .tmp-v143-ai-tab-canary/render-pdf.mjs \
+              .canary/v143-product-output.json \
+              .canary/ai-tab-real-audio-pdf \
+              debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json \
+              > .canary/logs/pdf-render.log 2>&1
+            render_status=$?
+          else
+            echo "Exact-response PDF render skipped because analyzer evaluation did not complete." \
+              > .canary/logs/pdf-render.log
+          fi
+
+          echo "CANARY_RENDER_STATUS=$render_status" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Inspect real-audio PDFs when rendered
+        shell: bash
+        run: |
+          set +e
+          inspect_status=99
+          validation=debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json
+          full=.canary/ai-tab-real-audio-pdf/full-real-audio-canary.pdf
+          preview=.canary/ai-tab-real-audio-pdf/preview-real-audio-canary.pdf
+
+          attempted=false
+          if [ -s "$validation" ]; then
+            attempted=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json').read_text(encoding='utf-8'))
+          print('true' if data.get('attempted') is True else 'false')
+          PY
+            )
+          fi
+
+          if [ "$attempted" = "true" ] && [ -s "$full" ] && [ -s "$preview" ]; then
+            if ! command -v pdftotext >/dev/null 2>&1 || ! command -v pdftoppm >/dev/null 2>&1; then
+              sudo apt-get update -qq
+              sudo apt-get install -y poppler-utils >/dev/null
+            fi
+
+            pdftotext -layout "$full" .canary/ai-tab-real-audio-pdf/full-real-audio-canary.txt
+            pdftotext -layout "$preview" .canary/ai-tab-real-audio-pdf/preview-real-audio-canary.txt
+
+            pdftoppm -f 1 -singlefile -png -r 110 \
+              "$full" .canary/ai-tab-real-audio-pdf/full-page-1 >/dev/null 2>&1
+            pdftoppm -f 1 -singlefile -png -r 110 \
+              "$preview" .canary/ai-tab-real-audio-pdf/preview-page-1 >/dev/null 2>&1
+
+            python - <<'PY'
+          import json
+          import struct
+          from pathlib import Path
+
+          validation_path = Path('debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json')
+          root = Path('.canary/ai-tab-real-audio-pdf')
+          data = json.loads(validation_path.read_text(encoding='utf-8'))
+
+          full_text = (root / 'full-real-audio-canary.txt').read_text(encoding='utf-8', errors='replace')
+          preview_text = (root / 'preview-real-audio-canary.txt').read_text(encoding='utf-8', errors='replace')
+
+          def png_size(path: Path):
+              raw = path.read_bytes()
+              if raw[:8] != b'\x89PNG\r\n\x1a\n':
+                  raise RuntimeError(f'Invalid PNG header: {path}')
+              width, height = struct.unpack('>II', raw[16:24])
+              return width, height, len(raw)
+
+          full_w, full_h, full_png_bytes = png_size(root / 'full-page-1.png')
+          preview_w, preview_h, preview_png_bytes = png_size(root / 'preview-page-1.png')
+
+          text_checks = {
+              'titleExtracted': 'V143 AI Tab Real Audio Canary' in full_text,
+              'dadRockBrandExtracted': 'DadRock Tabs' in full_text,
+              'generatorLabelExtracted': 'DIY Guitar & Bass TAB Generator' in full_text,
+              'previewLockTextExtracted': 'FULL TAB LOCKED' in preview_text,
+          }
+          raster_checks = {
+              'fullPageRasterized': full_w >= 800 and full_h >= 1000 and full_png_bytes > 10000,
+              'previewPageRasterized': preview_w >= 800 and preview_h >= 1000 and preview_png_bytes > 10000,
+          }
+
+          data['textExtractionChecks'] = text_checks
+          data['rasterChecks'] = raster_checks
+          data['fullPageOnePng'] = {
+              'width': full_w,
+              'height': full_h,
+              'bytes': full_png_bytes,
+          }
+          data['previewPageOnePng'] = {
+              'width': preview_w,
+              'height': preview_h,
+              'bytes': preview_png_bytes,
+          }
+          data['passed'] = bool(
+              data.get('passed')
+              and all(text_checks.values())
+              and all(raster_checks.values())
+          )
+          validation_path.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
+          if not data['passed']:
+              raise SystemExit(1)
+          PY
+            inspect_status=$?
+          else
+            echo "PDF text/raster inspection skipped because analyzer quality did not authorize structured rendering." \
+              > .canary/logs/pdf-inspection.log
+          fi
+
+          echo "CANARY_INSPECT_STATUS=$inspect_status" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Write compact canary action diagnostic
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path('debug/v143-contextual-prune')
+          root.mkdir(parents=True, exist_ok=True)
+          quality = root / 'ai-tab-real-audio-canary.json'
+          pdf = root / 'ai-tab-real-audio-pdf-validation.json'
+          raw = Path('.canary/v143-product-output.json')
+
+          payload = {
+              'schemaVersion': 1,
+              'gate': 'v143-ai-tab-real-audio-product-canary-action',
+              'modalCredentialsAvailableInGitHubActions': os.environ.get('CANARY_CREDENTIALS_AVAILABLE') == 'true',
+              'modalExitCode': int(os.environ.get('CANARY_MODAL_STATUS', '99')),
+              'rawAnalyzerOutputPresent': raw.exists() and raw.stat().st_size > 0,
+              'qualityEvaluatorExitCode': int(os.environ.get('CANARY_EVALUATOR_STATUS', '99')),
+              'qualityReportPresent': quality.exists() and quality.stat().st_size > 0,
+              'pdfRendererExitCode': int(os.environ.get('CANARY_RENDER_STATUS', '99')),
+              'pdfValidationPresent': pdf.exists() and pdf.stat().st_size > 0,
+              'pdfInspectionExitCode': int(os.environ.get('CANARY_INSPECT_STATUS', '99')),
+              'approvedFixture': 'public/gomywayfullaitest.m4a',
+              'privateBlobTokenUsed': False,
+              'liveEndpointDeployedOrModified': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          (root / 'ai-tab-real-audio-canary-action.json').write_text(
+              json.dumps(payload, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps(payload, indent=2))
+          PY
+
+      - name: Preserve full canary evidence as short-retention artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-ai-tab-real-audio-product-canary
+          path: |
+            .canary/v143-product-output.json
+            .canary/logs/
+            .canary/ai-tab-real-audio-pdf/
+            debug/v143-contextual-prune/ai-tab-real-audio-canary.json
+            debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json
+            debug/v143-contextual-prune/ai-tab-real-audio-canary-action.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commit compact sanitized validation only
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for file in \
+            debug/v143-contextual-prune/ai-tab-real-audio-canary.json \
+            debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json \
+            debug/v143-contextual-prune/ai-tab-real-audio-canary-action.json
+          do
+            if [ -s "$file" ]; then
+              git add -- "$file"
+            fi
+          done
+
+          if git diff --cached --quiet; then
+            echo "No compact canary validation files were produced." >&2
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 AI tab real-audio canary"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce real-audio product gate
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('debug/v143-contextual-prune')
+          action = json.loads((root / 'ai-tab-real-audio-canary-action.json').read_text(encoding='utf-8'))
+
+          if action.get('modalCredentialsAvailableInGitHubActions') is not True:
+              raise SystemExit('V143 AI tab canary blocked: Modal credentials unavailable')
+          if int(action.get('modalExitCode', 99)) != 0:
+              raise SystemExit('V143 AI tab canary Modal product run failed')
+          if int(action.get('qualityEvaluatorExitCode', 99)) != 0:
+              raise SystemExit('V143 AI tab canary quality evaluator failed')
+
+          quality_path = root / 'ai-tab-real-audio-canary.json'
+          if not quality_path.exists():
+              raise SystemExit('V143 AI tab canary quality report missing')
+          quality = json.loads(quality_path.read_text(encoding='utf-8'))
+          if quality.get('passed') is not True:
+              failures = quality.get('failedChecks') or []
+              reasons = ((quality.get('quality') or {}).get('failures') or [])
+              raise SystemExit(
+                  'Real V143 analyzer quality gate failed; '
+                  f'checks={failures}; reasons={reasons}'
+              )
+
+          pdf_path = root / 'ai-tab-real-audio-pdf-validation.json'
+          if not pdf_path.exists():
+              raise SystemExit('Exact-response V143 PDF validation missing')
+          pdf = json.loads(pdf_path.read_text(encoding='utf-8'))
+          if pdf.get('attempted') is not True or pdf.get('passed') is not True:
+              raise SystemExit(
+                  'Exact-response V143 PDF quality gate failed; '
+                  f"reason={pdf.get('reason')}; failedChecks={pdf.get('failedChecks')}"
+              )
+
+          if action.get('productionModified') is not False:
+              raise SystemExit('Safety invariant failed: productionModified')
+          if action.get('liveEndpointDeployedOrModified') is not False:
+              raise SystemExit('Safety invariant failed: live endpoint modified')
+          if action.get('productionPromotionAuthorized') is not False:
+              raise SystemExit('Safety invariant failed: production promotion authorized')
+
+          print('V143 AI TAB REAL AUDIO PRODUCT CANARY PASSED')
+          print(f"renderEvents={quality['productOutput']['renderEventCount']}")
+          print(f"survivalPercent={quality['quality']['metrics']['renderEventSurvivalPercent']}")
+          print(f"measureRange={quality['quality']['metrics']['measureRange']}")
+          print(f"techniques={quality['quality']['metrics']['techniqueCoverage']['types']}")
+          print(f"fullPdfPages={pdf['fullPageCount']}")
+          print('productionPromotionAuthorized=false')
+          PY
