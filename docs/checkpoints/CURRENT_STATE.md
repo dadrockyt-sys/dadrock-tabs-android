@@ -2,7 +2,7 @@
 
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
-Branch HEAD before this checkpoint update: `4f2b637ce5f2b69c4dfff07d26cac9f68fcc59d1`
+Branch HEAD before this checkpoint update: `7dd4da52f4f3f7508c3372643803c0d63bd38fff`
 
 ## Resume directive
 
@@ -12,7 +12,7 @@ Active product goal:
 
 > `dadrocktabs.com/ai-tab` uploaded user audio → Jimmy PAIge / V143 reference-free Rhythm analysis → authenticated musical events → professional structured tab PDF.
 
-Keep this file updated after meaningful progress. Do not rely on chat history as the only recovery record.
+Do **not** modify `main`, modify/deploy the live V143 Modal endpoint, merge the long-lived research branch, or enable/promote Production automatically.
 
 ### Mandatory continuous checkpoint maintenance
 
@@ -20,7 +20,7 @@ Treat this file as the live recovery record for the branch, not as an end-of-ses
 
 While working, update `docs/checkpoints/CURRENT_STATE.md` **continuously and as often as practical**. Prefer several small checkpoint refreshes over waiting until a large block of work is finished.
 
-After every meaningful action, test, commit, workflow result, discovery, decision, blocker change, or change of direction, record enough current state that a brand-new chat can resume without reconstructing work from conversation history. In particular, keep these items current:
+After every meaningful action, test, commit, workflow result, discovery, decision, blocker change, or change of direction, record enough current state that a brand-new chat can resume without reconstructing work from conversation history. Keep these items current:
 
 - the exact **current step being worked on**;
 - what was just attempted or changed;
@@ -34,17 +34,87 @@ Refresh the checkpoint before and after risky or multi-step work, before changin
 
 Do not leave stale “next step” instructions in place after they have been completed or superseded; replace them with the new current step and next step promptly.
 
-Do **not** modify `main`, modify/deploy the live V143 Modal endpoint, merge the long-lived research branch, or enable/promote Production automatically.
+---
 
-Historical compatibility research remains sealed. Do not launch another historical separator/GPU compatibility capture. Historical conclusions remain:
+# LIVE WORKING STATE
+
+## Current step — built Next.js Preview-mode route smoke is pending
+
+The Vercel deployment-auth blocker remains external, so the current safe step is to close as much application-wiring uncertainty as possible **without claiming this is an actual Vercel Preview deployment**.
+
+Two branch-only files were just added:
+
+- `analyzer/verify_v143_next_preview_route_smoke.mjs`
+  - commit `31f8788fa6248cfdec6e094002119dfbb5c9955a`
+- `.github/workflows/v143-next-preview-route-smoke.yml`
+  - commit `7dd4da52f4f3f7508c3372643803c0d63bd38fff`
+
+The workflow builds the complete Next.js app with Node 24, starts the built server locally with only these simulated Vercel Preview identity values:
 
 ```text
-INTRO_CACHE_EXACT_COMPATIBLE
-CURRENT_RESEARCH_FAMILY_A_COMPATIBLE
-historicalProvenanceClosed: false
-historicalIntroFamilyAuthenticated: false
-productionPromotionAllowed: false
+VERCEL_ENV=preview
+VERCEL_GIT_COMMIT_REF=v143-contextual-prune-lobo
 ```
+
+It then exercises the **real HTTP application path**:
+
+1. GET `/ai-tab` and require HTTP 200.
+2. POST a valid structured Rhythm payload to `/api/generate-tab-preview` and require:
+
+```text
+Content-Type: application/pdf
+X-Jimmy-PAIge-PDF-Feature: v143-branch-preview-canary
+X-Jimmy-PAIge-PDF-Renderer: v143-structured-rhythm
+```
+
+3. POST a fallback-labeled/invalid-structured Rhythm payload and require:
+
+```text
+Content-Type: application/pdf
+X-Jimmy-PAIge-PDF-Feature: v143-branch-preview-canary
+X-Jimmy-PAIge-PDF-Renderer: polished-safe-fallback
+```
+
+4. POST a malformed request missing generated tab and require HTTP 400.
+
+The workflow explicitly records:
+
+```text
+localNextPreviewSimulation: true
+actualVercelPreviewDeployment: false
+vercelDeploymentAttempted: false
+liveEndpointDeployedOrModified: false
+productionModified: false
+productionPromotionAuthorized: false
+paidPurchaseAttempted: false
+customerTokenRedeemed: false
+customerEmailSent: false
+```
+
+Expected evidence path:
+
+`debug/v143-contextual-prune/next-preview-route-smoke.json`
+
+### Status
+
+```text
+workflow file committed: true
+smoke result: pending
+actual Vercel Preview deployment: false
+Production modified: false
+```
+
+### Immediate next step
+
+Inspect `debug/v143-contextual-prune/next-preview-route-smoke.json` and the branch head for the bot evidence commit `Record V143 built Preview route smoke`.
+
+If `passed: true`, record the result here and narrow the remaining unresolved boundary to **Vercel-specific deployment/environment wiring only**.
+
+### Fallback step if the smoke fails
+
+Inspect the workflow artifact/server log and the compact JSON failure reason, fix only the specific local Next.js route/build issue on `v143-contextual-prune-lobo`, rerun the smoke, and keep Production untouched.
+
+Do not bypass a real failure by weakening the structured/fallback assertions.
 
 ---
 
@@ -110,13 +180,11 @@ analysisQuality.passed === true
 renderEvents.length > 0
 ```
 
-Otherwise the response is labeled:
+Otherwise:
 
 ```text
 analysisEngine = v143-reference-free-rhythm-fallback
 ```
-
-so polished/text fallback remains safe while weak V143 output cannot silently enter structured engraving.
 
 Every quality report keeps:
 
@@ -144,8 +212,6 @@ Commit:
 
 `b40df94d76af3c6e432da0b8c20c723c298635a1`
 
-Result:
-
 ```text
 passed: true
 raw/projected events: 40 / 40
@@ -163,13 +229,6 @@ The synthetic fixture retained all tested technique classes and passed structura
 Approved fixture:
 
 `public/gomywayfullaitest.m4a`
-
-Product-canary components:
-
-- `analyzer/v143_ai_tab_product_canary_modal.py`
-- `analyzer/evaluate_v143_real_audio_canary.mjs`
-- `analyzer/render_v143_real_audio_canary_pdf.mjs`
-- `.github/workflows/v143-ai-tab-real-audio-canary.yml`
 
 Bot evidence commit:
 
@@ -248,8 +307,6 @@ productionModified: false
 productionPromotionAuthorized: false
 ```
 
-The real-analyzer + exact-response PDF blocker is closed for this approved canary input.
-
 ---
 
 # 5. Preview-only professional renderer gate implemented and CI-proven
@@ -258,23 +315,18 @@ Helper:
 
 `lib/jimmyPaigeProfessionalPdfFeature.js`
 
-The helper preserves the explicit flag:
+It preserves:
 
 ```text
 JIMMY_PAIGE_PROFESSIONAL_PDF_V1=true
 ```
 
-and also auto-enables only when both are true:
+and auto-enables only when both are true:
 
 ```text
 VERCEL_ENV === preview
 VERCEL_GIT_COMMIT_REF === v143-contextual-prune-lobo
 ```
-
-Used by:
-
-- `app/api/generate-tab-preview/route.js`
-- `app/api/generate-tab-pdf/route.js`
 
 Evidence:
 
@@ -296,8 +348,6 @@ productionPromotionAuthorized: false
 productionModified: false
 ```
 
-No payment, customer-token redemption, or customer-email test has been performed.
-
 ---
 
 # 6. Full isolated branch build gate passed
@@ -305,20 +355,6 @@ No payment, customer-token redemption, or customer-email test has been performed
 Workflow:
 
 `.github/workflows/v143-ai-tab-branch-build-gate.yml`
-
-Purpose: verify the two V143 safety regressions and compile the complete Next.js application without touching Vercel, the live analyzer, payments, email, or Production.
-
-Initial workflow commit:
-
-`22ca4ce01d2d78b1b7131bfd1aa1ceafb0e5ad5b` — `Add V143 AI tab full branch build gate`
-
-The first run produced exit code `9` for both standalone verifier invocations while the full Next.js Node 24 build itself passed. Node exit code 9 is an invalid CLI argument condition; this was a harness/runtime compatibility issue, not a product regression.
-
-Runtime-split fix:
-
-`a48538b3fd121e7d525047edc8841ef436ace51c` — `Fix V143 branch build verifier runtime split`
-
-The workflow now runs the existing ESM verifier harness under Node 22 and performs the actual application build under Node 24, matching the Vercel project runtime for the build.
 
 Passing bot evidence commit:
 
@@ -348,7 +384,7 @@ customerTokenRedeemed: false
 customerEmailSent: false
 ```
 
-This closes the isolated branch compile/regression boundary. The branch is buildable under Node 24 and its current V143 quality/Preview feature invariants are green.
+This proves the branch compiles under the Vercel project's Node 24 runtime while the existing V143 quality/Preview feature invariants remain green.
 
 ---
 
@@ -364,28 +400,13 @@ framework: Next.js
 node: 24.x
 ```
 
-Connected Vercel inspection on 2026-08-22 still shows no `v143-contextual-prune-lobo` Preview deployment. The latest visible deployment is a READY Production/main deployment from 2026-08-20.
-
-The connected Vercel deploy action does not accept a source ref/branch. Do not use it for this canary because the exact source branch cannot be guaranteed.
-
-Native Git Preview experiments remain exhausted and cleaned up:
-
-- Draft PR #19 was closed unmerged after it failed to produce a Preview.
-- Explicit `vercel.json → git.deploymentEnabled` branch experiment also failed to produce a Preview and was removed in `19683ef4251c7b2b7143c7ab59aa754d183044fd`.
-- `vercel.json` is restored to its original cron/header configuration.
-
-Explicit Preview workflow:
-
-`.github/workflows/v143-vercel-preview-deploy.yml`
-
-It is branch-only and fail-closed. It checks the presence, never values, of Preview runtime keys, builds prebuilt output, deploys without `--prod`, scopes the professional-renderer flag to that deployment, and records only compact non-secret evidence.
+Read-only Vercel inspection on 2026-08-22 still shows no `v143-contextual-prune-lobo` Preview deployment. A re-probe after commit `49741a8db076d61696747877af2e6577bbc4a160` also produced no Vercel deployment.
 
 Latest credential evidence remains:
 
 `debug/v143-contextual-prune/vercel-preview-deploy-action.json`
 
 ```text
-schemaVersion: 2
 credentialAliasesChecked:
   - VERCEL_TOKEN
   - VERCEL_ACCESS_TOKEN
@@ -402,28 +423,23 @@ professionalRendererDeploymentScoped: true
 projectEnvironmentMutated: false
 productionModified: false
 productionPromotionAuthorized: false
-paidPurchaseAttempted: false
-customerTokenRedeemed: false
-customerEmailSent: false
 ```
 
-The Preview environment-presence booleans in that diagnostic are false only because Preview configuration could not be pulled. They do not prove the project env values themselves are absent.
+Fresh Vercel documentation check on 2026-08-22 reconfirmed:
 
-## Current external blocker
+- GitHub Actions OIDC can authenticate requests **to an already-created protected Vercel deployment**.
+- Vercel CLI commands still require Vercel authorization (`--token` / `VERCEL_TOKEN`) to perform `vercel pull/build/deploy` from external CI.
+- Generating a project OIDC token also requires an authenticated Vercel API/CLI context; it does not bootstrap unauthenticated CI deployment.
 
-No usable Vercel CLI deployment credential has yet been proven available in GitHub Actions under the four supported aliases.
+The connected GitHub tool does not expose repository-secret name/value enumeration, so no further safe secret discovery is available through the current connector.
 
-Vercel OIDC does not replace the CLI authorization token required for `vercel pull/build/deploy` from GitHub Actions.
-
-No safe automated deployment-auth path is currently available from the connected tools without either a branch-guaranteed native Preview or a Vercel deployment credential.
-
-No unsafe fallback was used and Production remains untouched.
+The connected Vercel deploy action still does not expose an exact branch/source-ref selection in the available tool schema, so do not use it for this canary.
 
 ---
 
-# Current boundary
+# Current proven boundary
 
-The following are proven:
+Proven:
 
 - real V143 analyzer output quality on approved real audio;
 - 358/358 event survival through the structured render contract;
@@ -435,60 +451,30 @@ The following are proven:
 - Preview feature-gate regression verification;
 - full isolated Next.js branch build under Node 24.
 
-The only unresolved validation boundary is the **actual deployed Vercel/Next.js Preview application wiring**.
+Pending right now:
 
-That boundary remains blocked by deployment authentication/native Preview suppression, not by V143 analysis, event quality, browser state handling, render eligibility, PDF generation, feature-gate logic, or Next.js compilation.
+- built Next.js local Preview-mode HTTP smoke (`next-preview-route-smoke.json`).
+
+Still unresolved regardless of that local result:
+
+- **actual deployed Vercel/Next.js Preview environment wiring**, because no branch-guaranteed deployment path is authenticated yet.
 
 ---
 
-# Next steps — resume automatically when deployment authentication is available
+# Next steps after the current smoke
 
-1. Preferred prerequisite: make a GitHub Actions repository secret available under one of the already-supported aliases, preferably:
+If the built Next.js smoke passes:
 
-```text
-VERCEL_TOKEN
-```
-
-2. Rerun `.github/workflows/v143-vercel-preview-deploy.yml` without weakening its Preview-only safety invariants.
-
-3. Require the diagnostic to show:
-
-```text
-vercelTokenAvailableInGitHubActions: true
-previewConfigPullExitCode: 0
-previewBuildExitCode: 0
-previewDeployExitCode: 0
-deploymentUrl: non-null
-productionDeployFlagUsed: false
-productionModified: false
-```
-
-4. Independently inspect the resulting deployment through the connected Vercel app and confirm target/environment is Preview before sending application requests.
-
-5. Verify `/ai-tab` loads.
-
-6. POST only `/api/generate-tab-preview` for renderer routing validation. Do not call `/api/generate-tab-pdf` during automated Preview testing because that route performs unlock verification and can send email.
-
-7. Use existing approved synthetic/fixture V143 events for the first structured route test; do not rerun the GPU analyzer merely to test the Preview PDF route.
-
-8. Require a passing structured request to return:
-
-```text
-X-Jimmy-PAIge-PDF-Feature: enabled source
-X-Jimmy-PAIge-PDF-Renderer: v143-structured-rhythm
-```
-
-9. Send a legacy/invalid-structured preview request and require safe polished fallback.
-
-10. Only if route-level testing passes and Preview has the required V143/Blob runtime keys should an actual browser upload test using `public/gomywayfullaitest.m4a` be considered.
-
-11. Do not make a PayPal purchase, redeem a customer token, or send customer email during automated Preview testing.
-
-12. Record compact Preview evidence under `debug/v143-contextual-prune/` and refresh this checkpoint.
-
-13. Only after deployed Preview application wiring passes should a separate explicit Production-promotion decision be made.
-
-14. Do **not** enable or promote Production automatically.
+1. Record the evidence in this checkpoint.
+2. Treat local built-server application wiring as closed.
+3. Keep the remaining blocker strictly scoped to Vercel deployment/environment integration.
+4. When a Vercel CLI token becomes available under a supported GitHub secret alias, rerun `.github/workflows/v143-vercel-preview-deploy.yml`.
+5. Independently confirm the created deployment target is Preview before sending requests.
+6. Verify `/ai-tab` and POST only `/api/generate-tab-preview` first.
+7. Require structured and polished-fallback headers to match the local smoke.
+8. Only after route-level Preview validation and required Preview runtime-key presence should an actual browser upload using `public/gomywayfullaitest.m4a` be considered.
+9. Do not call `/api/generate-tab-pdf` during automated Preview validation because that route performs unlock verification and can send email.
+10. Do not enable/promote Production automatically.
 
 ---
 
