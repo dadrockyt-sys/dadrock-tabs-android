@@ -1,0 +1,185 @@
+{
+  "artifact": "v143-intro-compatibility-comparator-design",
+  "schemaVersion": 1,
+  "date": "2026-08-22",
+  "branch": "v143-contextual-prune-lobo",
+  "status": "DESIGN_ONLY",
+  "purpose": "Define a future research-only compatibility comparison for measures 1-16 after historical separator-family archaeology reached a preserved evidence gap. This contract must never reinterpret fresh compatibility evidence as recovered historical provenance.",
+  "provenanceBoundary": {
+    "historicalEvidenceGapArtifact": "debug/v143-contextual-prune/intro-separator-family-evidence-gap.json",
+    "historicalFamilyForIntroAuthenticated": false,
+    "freshRunMayCloseHistoricalGap": false,
+    "freshRunMayProvideCompatibilityEvidence": true,
+    "productionPromotionAuthorized": false,
+    "liveEndpointModificationAuthorized": false,
+    "professionalReferenceAllowedAtRuntime": false
+  },
+  "historicalReadOnlyBaseline": {
+    "sourceAudio": {
+      "path": "public/gomywayfullaitest.m4a",
+      "gitBlobSha": "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0"
+    },
+    "introRawAttackCache": {
+      "path": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-raw-attack-cache.json",
+      "sha256": "698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9",
+      "rawEventCount": 22270,
+      "stemEventCounts": {
+        "direct-demucs6s-guitar.wav": 11164,
+        "bsroformer-demucs6s-guitar.wav": 11106
+      },
+      "sweepEventCounts": {
+        "o015_f010": 12776,
+        "o020_f012": 4979,
+        "o025_f015": 2830,
+        "o030_f020": 1685
+      }
+    },
+    "separatorRecipe": {
+      "seed": 143,
+      "demucsShifts": 1,
+      "demucsOverlap": 0.1,
+      "demucsSegmentSize": 6,
+      "roformerBatchSize": 1,
+      "bsRoformerModelIdentifier": "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+      "demucsModelIdentifier": "htdemucs_6s.yaml",
+      "audioSeparatorVersion": "0.44.5"
+    },
+    "historicalDirectBenchmarkWavSha256": "5b77a0a5a074256a6538d15fc37487441c574a252c1d759c12e5231c56fdb4b5"
+  },
+  "freshCaptureRequiredFields": {
+    "captureIdentity": [
+      "captureId",
+      "createdAtUtc",
+      "gitCommit",
+      "sourceAudioGitBlobSha",
+      "sourceAudioSha256"
+    ],
+    "runtimeIdentity": [
+      "modalImageIdOrDigest",
+      "pythonVersion",
+      "audioSeparatorVersion",
+      "torchVersion",
+      "torchCudaVersion",
+      "cudnnVersion",
+      "onnxRuntimeVersion",
+      "onnxProviders",
+      "gpuName",
+      "gpuComputeCapability",
+      "nvidiaDriverVersion",
+      "torchDeterministicAlgorithms",
+      "cudnnDeterministic",
+      "cudnnBenchmark",
+      "cudaMatmulTf32",
+      "cudnnTf32"
+    ],
+    "resolvedDependencyIdentity": [
+      "installedPackageInventorySha256",
+      "installedPackageInventory"
+    ],
+    "modelPayloadIdentity": [
+      "bsRoformerModelIdentifier",
+      "bsRoformerPayloadSha256",
+      "demucsModelIdentifier",
+      "demucsPayloadSha256"
+    ],
+    "separatorInvocation": [
+      "seed",
+      "demucsShifts",
+      "demucsOverlap",
+      "demucsSegmentSize",
+      "roformerBatchSize",
+      "directCommand",
+      "cascadeCommands"
+    ],
+    "stemIdentity": [
+      "directWavSha256",
+      "directDecodedPcmSha256",
+      "cascadeWavSha256",
+      "cascadeDecodedPcmSha256",
+      "directDecodedSampleCount",
+      "cascadeDecodedSampleCount"
+    ],
+    "introFingerprint": [
+      "rawAttackCacheSha256",
+      "rawEventCount",
+      "directStemEventCount",
+      "cascadeStemEventCount",
+      "sweepEventCounts"
+    ],
+    "downstreamFrozenReplay": [
+      "gridRowCount",
+      "onsetCount",
+      "onsetVectorCount",
+      "gridFeatureCount",
+      "sequenceFeatureCount",
+      "contextualCarrierCount",
+      "frozenDecisionDigest",
+      "frozenScoreDigest"
+    ]
+  },
+  "comparisonStages": [
+    {
+      "stage": 1,
+      "name": "capture-completeness",
+      "passCondition": "Every required fresh-capture identity field exists; missing model/runtime hashes make the capture incomplete rather than equivalent."
+    },
+    {
+      "stage": 2,
+      "name": "source-and-recipe-lock",
+      "passCondition": "Source-audio Git blob and frozen separator recipe exactly match the read-only historical baseline."
+    },
+    {
+      "stage": 3,
+      "name": "fresh-stem-identity",
+      "passCondition": "Record fresh WAV and decoded-PCM hashes without comparing them to an unauthenticated historical intro family. Family A/B may be reported only as a current research classification when an exact known decoded-PCM hash matches a separately proven research family."
+    },
+    {
+      "stage": 4,
+      "name": "intro-fingerprint-compatibility",
+      "passCondition": "Compare fresh measures 1-16 raw-event total, per-stem counts, sweep counts and cache digest against the preserved historical fingerprint. Exact cache digest is strongest; count-only agreement must be labelled weaker compatibility."
+    },
+    {
+      "stage": 5,
+      "name": "frozen-downstream-compatibility",
+      "passCondition": "Replay the unchanged historical grid/sequence/contextual-prune handoff and compare frozen decisions/scores with unchanged tolerances and historical band boundaries."
+    },
+    {
+      "stage": 6,
+      "name": "classification",
+      "passCondition": "Emit one of the allowed classifications below; never emit historical-provenance-closed from fresh execution alone."
+    }
+  ],
+  "allowedClassifications": {
+    "INCOMPLETE_CAPTURE": "Required runtime/model/stem identity evidence is missing.",
+    "INCOMPATIBLE": "One or more source/recipe/intro/downstream invariants fail.",
+    "COUNT_COMPATIBLE_ONLY": "Historical intro event counts agree but cache bytes and/or downstream identity are not exact.",
+    "INTRO_CACHE_EXACT_COMPATIBLE": "Fresh intro raw-attack cache digest and fingerprint exactly match the preserved historical cache; this is strong compatibility evidence but not proof of historical separator-family identity.",
+    "DOWNSTREAM_EXACT_COMPATIBLE": "Fresh capture also reproduces the frozen downstream decisions/scores under unchanged boundaries and tolerances; still not a substitute for missing historical external-output provenance.",
+    "CURRENT_RESEARCH_FAMILY_A_COMPATIBLE": "Fresh decoded-PCM hashes match the separately proven current/research Family A pair.",
+    "CURRENT_RESEARCH_FAMILY_B_COMPATIBLE": "Fresh decoded-PCM hashes match the separately proven current/research Family B pair. This label must not be shortened to 'historical intro Family B'."
+  },
+  "forbiddenConclusions": [
+    "historical-provenance-closed",
+    "historical-intro-family-A-proven",
+    "historical-intro-family-B-proven",
+    "bit-exact-historical-raw-audio-replay",
+    "production-ready-by-compatibility-alone"
+  ],
+  "implementationRules": [
+    "Comparator must be read-only with respect to preserved historical artifacts.",
+    "Comparator must not invoke or grade against a professional reference.",
+    "Comparator must not retrain or mutate frozen models/predictions.",
+    "Comparator must fail closed when required hashes/runtime identity are absent.",
+    "Comparator must preserve the original 244-row measures 1-16 grid and historical bar phase.",
+    "Comparator must preserve historical median-onset behavior and original band boundaries.",
+    "Comparator must emit both evidence strength and explicit excluded claims in every result.",
+    "Any future GPU workflow must save its full fresh-capture manifest before downstream analysis so provenance cannot be lost again."
+  ],
+  "recommendedFutureArtifacts": {
+    "captureManifest": "debug/v143-contextual-prune/intro-compatibility-fresh-capture.json",
+    "comparisonResult": "debug/v143-contextual-prune/intro-compatibility-comparison.json",
+    "fullLogArtifact": "v143-intro-compatibility-full-log",
+    "packageInventory": "debug/v143-contextual-prune/intro-compatibility-package-inventory.txt"
+  },
+  "nextImplementationStep": "Implement a pure read-only comparator that consumes a fresh-capture manifest and the preserved historical baseline, validates this contract, and emits a classification without running Modal itself."
+}
