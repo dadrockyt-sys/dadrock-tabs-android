@@ -41,49 +41,157 @@ jobs:
           node-version: '24'
           cache: npm
 
-      - name: Install locked dependencies
-        run: npm ci --ignore-scripts
-
-      - name: Build full Next.js application
-        run: npm run build
-
-      - name: Start built server in simulated Vercel Preview branch mode
+      - name: Prepare smoke workspace
         shell: bash
         run: |
           set -euo pipefail
           rm -rf .next-preview-smoke
           mkdir -p .next-preview-smoke debug/v143-contextual-prune
+          echo "PREVIEW_SMOKE_SOURCE_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
-          VERCEL_ENV=preview \
-          VERCEL_GIT_COMMIT_REF=v143-contextual-prune-lobo \
-          HOSTNAME=127.0.0.1 \
-          PORT=4310 \
-          npm start > .next-preview-smoke/server.log 2>&1 &
+      - name: Install locked dependencies
+        shell: bash
+        run: |
+          set +e
+          npm ci --ignore-scripts > .next-preview-smoke/npm-ci.log 2>&1
+          status=$?
+          echo "PREVIEW_SMOKE_INSTALL_STATUS=$status" >> "$GITHUB_ENV"
+          exit 0
 
-          echo $! > .next-preview-smoke/server.pid
+      - name: Build full Next.js application
+        shell: bash
+        run: |
+          set +e
+          status=99
+          if [ "${PREVIEW_SMOKE_INSTALL_STATUS:-99}" -eq 0 ]; then
+            npm run build > .next-preview-smoke/next-build.log 2>&1
+            status=$?
+          else
+            echo 'Build skipped because npm ci failed.' > .next-preview-smoke/next-build.log
+          fi
+          echo "PREVIEW_SMOKE_BUILD_STATUS=$status" >> "$GITHUB_ENV"
+          exit 0
 
+      - name: Start built server in simulated Vercel Preview branch mode
+        shell: bash
+        run: |
+          set +e
           ready=false
-          for attempt in $(seq 1 45); do
-            if curl --silent --show-error --fail \
-              http://127.0.0.1:4310/ai-tab \
-              > /dev/null 2>&1; then
-              ready=true
-              break
-            fi
-            sleep 1
-          done
 
-          if [ "$ready" != true ]; then
-            echo 'Built Next.js server did not become ready.' >&2
-            tail -n 200 .next-preview-smoke/server.log >&2 || true
-            exit 1
+          if [ "${PREVIEW_SMOKE_BUILD_STATUS:-99}" -eq 0 ]; then
+            VERCEL_ENV=preview \
+            VERCEL_GIT_COMMIT_REF=v143-contextual-prune-lobo \
+            HOSTNAME=127.0.0.1 \
+            PORT=4310 \
+            npm start > .next-preview-smoke/server.log 2>&1 &
+
+            echo $! > .next-preview-smoke/server.pid
+
+            for attempt in $(seq 1 45); do
+              if curl --silent --show-error --fail \
+                http://127.0.0.1:4310/ai-tab \
+                > /dev/null 2>&1; then
+                ready=true
+                break
+              fi
+              sleep 1
+            done
+          else
+            echo 'Server start skipped because Next.js build failed.' > .next-preview-smoke/server.log
           fi
 
+          echo "PREVIEW_SMOKE_SERVER_READY=$ready" >> "$GITHUB_ENV"
+          exit 0
+
       - name: Exercise real Preview route over HTTP
+        shell: bash
         env:
           V143_PREVIEW_SMOKE_BASE_URL: http://127.0.0.1:4310
           V143_PREVIEW_SMOKE_RESULT_PATH: debug/v143-contextual-prune/next-preview-route-smoke.json
-        run: node analyzer/verify_v143_next_preview_route_smoke.mjs
+        run: |
+          set +e
+          status=99
+          if [ "${PREVIEW_SMOKE_SERVER_READY:-false}" = true ]; then
+            node analyzer/verify_v143_next_preview_route_smoke.mjs \
+              > .next-preview-smoke/route-smoke.log 2>&1
+            status=$?
+          else
+            echo 'Route smoke skipped because built server was not ready.' \
+              > .next-preview-smoke/route-smoke.log
+          fi
+          echo "PREVIEW_SMOKE_ROUTE_STATUS=$status" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Write or augment compact smoke evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          path = Path('debug/v143-contextual-prune/next-preview-route-smoke.json')
+
+          def code(name):
+              try:
+                  return int(os.environ.get(name, '99'))
+              except ValueError:
+                  return 99
+
+          install = code('PREVIEW_SMOKE_INSTALL_STATUS')
+          build = code('PREVIEW_SMOKE_BUILD_STATUS')
+          route = code('PREVIEW_SMOKE_ROUTE_STATUS')
+          server_ready = os.environ.get('PREVIEW_SMOKE_SERVER_READY') == 'true'
+
+          if path.exists():
+              try:
+                  data = json.loads(path.read_text(encoding='utf-8'))
+              except Exception:
+                  data = {}
+          else:
+              data = {}
+
+          data.setdefault('schemaVersion', 2)
+          data['schemaVersion'] = 2
+          data['gate'] = 'v143-next-preview-route-smoke'
+          data['branch'] = 'v143-contextual-prune-lobo'
+          data['sourceCommit'] = os.environ.get('PREVIEW_SMOKE_SOURCE_COMMIT') or None
+          data['localNextPreviewSimulation'] = True
+          data['actualVercelPreviewDeployment'] = False
+          data['installExitCode'] = install
+          data['nextBuildExitCode'] = build
+          data['serverReady'] = server_ready
+          data['routeSmokeExitCode'] = route
+          data['vercelDeploymentAttempted'] = False
+          data['liveEndpointDeployedOrModified'] = False
+          data['productionModified'] = False
+          data['productionPromotionAuthorized'] = False
+          data['paidPurchaseAttempted'] = False
+          data['customerTokenRedeemed'] = False
+          data['customerEmailSent'] = False
+
+          pipeline_passed = install == 0 and build == 0 and server_ready and route == 0
+          route_passed = data.get('passed') is True
+          data['passed'] = pipeline_passed and route_passed
+
+          if not data['passed'] and not data.get('error'):
+              if install != 0:
+                  data['error'] = f'npm-ci-exit-{install}'
+              elif build != 0:
+                  data['error'] = f'next-build-exit-{build}'
+              elif not server_ready:
+                  data['error'] = 'built-next-server-not-ready'
+              elif route != 0:
+                  data['error'] = f'route-smoke-exit-{route}'
+              else:
+                  data['error'] = 'route-smoke-did-not-report-pass'
+
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(data, indent=2))
+          PY
 
       - name: Preserve smoke logs
         if: always()
@@ -117,6 +225,12 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m 'Record V143 built Preview route smoke'
+
+          # Branch checkpoint commits may land while this longer build runs.
+          # Rebase the evidence commit onto the latest isolated-branch head so
+          # evidence does not fail merely because the checkpoint advanced.
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
 
       - name: Enforce non-deployment safety and smoke result
@@ -153,6 +267,7 @@ jobs:
               raise SystemExit(f"V143 built Preview route smoke failed: {data.get('error')}")
 
           print('V143 BUILT NEXT PREVIEW ROUTE SMOKE PASSED')
+          print(f"sourceCommit={data.get('sourceCommit')}")
           print('actualVercelPreviewDeployment=false')
           print('productionModified=false')
           print('productionPromotionAuthorized=false')
