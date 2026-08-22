@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-ai-tab-real-audio-product-canary-action",
+  "modalCredentialsAvailableInGitHubActions": true,
+  "modalExitCode": 0,
+  "rawAnalyzerOutputPresent": true,
+  "qualityEvaluatorExitCode": 0,
+  "qualityReportPresent": true,
+  "pdfRendererExitCode": 0,
+  "pdfValidationPresent": true,
+  "pdfInspectionExitCode": 0,
+  "approvedFixture": "public/gomywayfullaitest.m4a",
+  "privateBlobTokenUsed": false,
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false
+}

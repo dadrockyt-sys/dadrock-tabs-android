@@ -1,0 +1,162 @@
+{
+  "artifact": "v143-ai-tab-real-audio-product-canary",
+  "schemaVersion": 1,
+  "passed": true,
+  "checks": {
+    "approvedFixture": true,
+    "referenceFreeIdentity": true,
+    "noProfessionalReference": true,
+    "noRuntimeLabels": true,
+    "deterministicSeparator": true,
+    "v143QualityPassed": true,
+    "structuredRenderEligible": true,
+    "structuredEngineSelected": true,
+    "renderEventsPresent": true,
+    "generatedTabPresent": true,
+    "productRhythmPipelinePreserved": true,
+    "productRhythmImagePreserved": true,
+    "privateBlobTokenNotUsed": true,
+    "productionUnmodified": true,
+    "productionPromotionUnauthorized": true
+  },
+  "failedChecks": [],
+  "analyzer": {
+    "analysisEngine": "v143-reference-free-rhythm",
+    "engineVersion": "v143-reference-free-rhythm-output-v2",
+    "referenceFree": true,
+    "liveV143Version": 4,
+    "modalGpu": "L4",
+    "separatorDeterministic": true,
+    "separatorSeed": 143,
+    "demucsShifts": 1,
+    "professionalReferenceUsed": false,
+    "runtimeLabelsRequired": false
+  },
+  "quality": {
+    "contract": {
+      "name": "v143-analyzer-output-quality",
+      "version": 1
+    },
+    "passed": true,
+    "failures": [],
+    "thresholds": {
+      "minimumRenderEvents": 4,
+      "minimumRenderSurvivalPercent": 70,
+      "minimumPlayableStringFretPercent": 70,
+      "minimumMusicalPlacementPercent": 70,
+      "minimumPitchValidityPercent": 70
+    },
+    "metrics": {
+      "referenceFreeIdentity": true,
+      "rawEventCount": 358,
+      "consideredRawEventCount": 358,
+      "validRenderEventCount": 358,
+      "renderEventSurvivalPercent": 100,
+      "playableStringFretCount": 358,
+      "playableStringFretPercent": 100,
+      "musicalPlacementCount": 358,
+      "musicalPlacementPercent": 100,
+      "pitchValidityCount": 358,
+      "pitchValidityPercent": 100,
+      "measureRange": {
+        "first": 1,
+        "last": 113,
+        "uniqueMeasureCount": 112
+      },
+      "stepCoverage": {
+        "uniqueSteps": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "uniqueStepCount": 16,
+        "sixteenthGridCoveragePercent": 100
+      },
+      "techniqueCoverage": {
+        "eventCount": 25,
+        "eventPercent": 7,
+        "types": [
+          "bend",
+          "bend-release",
+          "hammer-on",
+          "pull-off",
+          "slide-down",
+          "slide-up"
+        ]
+      },
+      "sustainCoverage": {
+        "eventCount": 358,
+        "eventPercent": 100
+      }
+    },
+    "productionPromotionAuthorized": false
+  },
+  "payloadContract": {
+    "name": "jimmy-paige-structured-analysis",
+    "version": 2,
+    "referenceFree": true,
+    "renderEventCount": 358,
+    "renderContractVersion": 1,
+    "analyzerQualityGatePassed": true,
+    "structuredRenderEligible": true,
+    "productionPromotionAuthorized": false
+  },
+  "productOutput": {
+    "candidateCount": 1788,
+    "selectedCount": 358,
+    "noteCount": 358,
+    "rawEventCount": 358,
+    "renderEventCount": 358,
+    "generatedTabPresent": true,
+    "generatedTabCharacterCount": 122306,
+    "tuning": "E Standard",
+    "tempo": 129.19921875,
+    "timeSignature": "4/4",
+    "techniqueTypes": [
+      "bend",
+      "bend-release",
+      "hammer-on",
+      "pull-off",
+      "slide-down",
+      "slide-up"
+    ]
+  },
+  "routing": {
+    "mode": "v143-reference-free-rhythm-only",
+    "requestedPart": "rhythm",
+    "legacyLeadChanged": false,
+    "legacyBassChanged": false,
+    "pairedCarrierStemContractPreserved": true,
+    "professionalReferenceUsed": false,
+    "runtimeLabelsRequired": false,
+    "privateBlobContractPreserved": true,
+    "normalizedBeforeRouting": true
+  },
+  "canary": {
+    "mode": "v143-ai-tab-approved-audio-product-canary",
+    "approvedFixture": true,
+    "approvedFixtureRepositoryPath": "public/gomywayfullaitest.m4a",
+    "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "sourceBytes": 3478611,
+    "privateBlobNetworkDownloadBypassed": true,
+    "privateBlobTokenUsed": false,
+    "sameProductRhythmPipeline": true,
+    "sameProductRhythmImage": true,
+    "liveEndpointDeployedOrModified": false,
+    "productionModified": false
+  },
+  "productionPromotionAuthorized": false
+}

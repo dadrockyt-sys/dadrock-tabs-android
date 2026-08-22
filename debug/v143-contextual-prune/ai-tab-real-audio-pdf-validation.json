@@ -1,0 +1,57 @@
+{
+  "artifact": "v143-ai-tab-real-audio-exact-response-pdf",
+  "schemaVersion": 1,
+  "attempted": true,
+  "passed": true,
+  "checks": {
+    "analyzerQualityPassed": true,
+    "structuredRenderEligible": true,
+    "structuredEngineSelected": true,
+    "exactReturnedRenderEventsUsed": true,
+    "maximumMeasureMatchesQualityReport": true,
+    "fullPdfHeaderValid": true,
+    "previewPdfHeaderValid": true,
+    "fullPdfHasUsefulSize": true,
+    "previewPdfHasUsefulSize": true,
+    "fullPdfHasAtLeastOnePage": true,
+    "previewPdfHasAtLeastOnePage": true,
+    "previewIsDistinctFromFull": true
+  },
+  "failedChecks": [],
+  "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "analysisEngine": "v143-reference-free-rhythm",
+  "analyzerQualityPassed": true,
+  "renderEventCount": 358,
+  "firstMeasure": 1,
+  "maximumMeasure": 113,
+  "fullPdfBytes": 1686104,
+  "previewPdfBytes": 1678626,
+  "fullPageCount": 4,
+  "previewPageCount": 4,
+  "fullPdfArtifactPath": ".canary/ai-tab-real-audio-pdf/full-real-audio-canary.pdf",
+  "previewPdfArtifactPath": ".canary/ai-tab-real-audio-pdf/preview-real-audio-canary.pdf",
+  "renderer": "createV143RhythmPdf",
+  "renderContract": "v143-render-contract-v1",
+  "productionPromotionAuthorized": false,
+  "productionModified": false,
+  "textExtractionChecks": {
+    "titleExtracted": true,
+    "dadRockBrandExtracted": true,
+    "generatorLabelExtracted": true,
+    "previewLockTextExtracted": true
+  },
+  "rasterChecks": {
+    "fullPageRasterized": true,
+    "previewPageRasterized": true
+  },
+  "fullPageOnePng": {
+    "width": 935,
+    "height": 1210,
+    "bytes": 105524
+  },
+  "previewPageOnePng": {
+    "width": 935,
+    "height": 1210,
+    "bytes": 134656
+  }
+}
