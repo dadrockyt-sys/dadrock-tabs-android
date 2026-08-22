@@ -1,0 +1,32 @@
+{
+  "audioSeparatorModelDir": "/tmp/audio-separator-models",
+  "modelCacheManifestSha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+  "modelPayloadCaptureComplete": true,
+  "files": [
+    {
+      "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+      "size": 54996327,
+      "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+    },
+    {
+      "path": "/tmp/audio-separator-models/download_checks.json",
+      "size": 28267,
+      "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+    },
+    {
+      "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+      "size": 21,
+      "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+    },
+    {
+      "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+      "size": 639331213,
+      "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+    },
+    {
+      "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+      "size": 2273,
+      "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+    }
+  ]
+}

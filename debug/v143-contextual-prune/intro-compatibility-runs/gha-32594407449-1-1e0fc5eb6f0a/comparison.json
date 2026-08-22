@@ -1,0 +1,256 @@
+{
+  "artifact": "v143-intro-compatibility-comparison",
+  "schemaVersion": 3,
+  "comparisonMode": "FRESH_COMPATIBILITY_EVIDENCE_ONLY",
+  "captureId": "gha-32594407449-1-1e0fc5eb6f0a",
+  "primaryClassification": "INTRO_CACHE_EXACT_COMPATIBLE",
+  "classificationReason": "Fresh intro raw-attack cache digest and all authenticated intro fingerprints exactly match.",
+  "compatibilityLabels": [
+    "CURRENT_RESEARCH_FAMILY_A_COMPATIBLE",
+    "INTRO_CACHE_EXACT_COMPATIBLE"
+  ],
+  "historicalProvenanceClosed": false,
+  "historicalIntroFamilyAuthenticated": false,
+  "productionPromotionAllowed": false,
+  "freshCaptureCompleteness": {
+    "passed": true,
+    "missingFields": []
+  },
+  "historicalBaselineIntegrity": {
+    "passed": true,
+    "checks": [
+      {
+        "field": "historicalRawCache.fileSha256",
+        "expected": "698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9",
+        "actual": "698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9",
+        "passed": true
+      },
+      {
+        "field": "SHA256SUMS.intro-raw-attack-cache.json",
+        "expected": "698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9",
+        "actual": "698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9",
+        "passed": true
+      },
+      {
+        "field": "evidenceGap.status",
+        "expected": "EVIDENCE_GAP*",
+        "actual": "EVIDENCE_GAP",
+        "passed": true
+      }
+    ]
+  },
+  "sourceRecipeCompatibility": {
+    "passed": true,
+    "checks": [
+      {
+        "field": "captureIdentity.sourceAudioGitBlobSha",
+        "expected": "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0",
+        "actual": "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0",
+        "passed": true
+      },
+      {
+        "field": "separatorInvocation.seed",
+        "expected": 143,
+        "actual": 143,
+        "passed": true
+      },
+      {
+        "field": "separatorInvocation.demucsShifts",
+        "expected": 1,
+        "actual": 1,
+        "passed": true
+      },
+      {
+        "field": "separatorInvocation.demucsOverlap",
+        "expected": 0.1,
+        "actual": 0.1,
+        "passed": true
+      },
+      {
+        "field": "separatorInvocation.demucsSegmentSize",
+        "expected": 6,
+        "actual": 6,
+        "passed": true
+      },
+      {
+        "field": "separatorInvocation.roformerBatchSize",
+        "expected": 1,
+        "actual": 1,
+        "passed": true
+      },
+      {
+        "field": "modelPayloadIdentity.bsRoformerModelIdentifier",
+        "expected": "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+        "actual": "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+        "passed": true
+      },
+      {
+        "field": "modelPayloadIdentity.demucsModelIdentifier",
+        "expected": "htdemucs_6s.yaml",
+        "actual": "htdemucs_6s.yaml",
+        "passed": true
+      },
+      {
+        "field": "runtimeIdentity.audioSeparatorVersion",
+        "expected": "0.44.5",
+        "actual": "0.44.5",
+        "passed": true
+      }
+    ]
+  },
+  "freshProvenanceDigestIntegrity": {
+    "passed": true,
+    "checks": [
+      {
+        "field": "resolvedDependencyIdentity.installedPackageInventorySha256",
+        "expected": "e65d3075d3c7cc93b5ee0b616495dadd84bdfcd4bc72e081e272ba651b002230",
+        "actual": "e65d3075d3c7cc93b5ee0b616495dadd84bdfcd4bc72e081e272ba651b002230",
+        "passed": true
+      },
+      {
+        "field": "runtimeIdentity.runtimeFingerprintSha256",
+        "expected": "eb86c72e209fe228dc36723053cb14ddc5819f87f92f1059001aa964529fc468",
+        "actual": "eb86c72e209fe228dc36723053cb14ddc5819f87f92f1059001aa964529fc468",
+        "passed": true
+      },
+      {
+        "field": "modelPayloadIdentity.modelCacheManifestSha256",
+        "expected": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "actual": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+        "passed": true
+      },
+      {
+        "field": "modelPayloadIdentity.modelPayloadCaptureComplete",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "field": "modelPayloadIdentity.requestedModelIdentifiersPresentInCacheManifest",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      }
+    ]
+  },
+  "decodedPcmHashConventionCompatibility": {
+    "passed": true,
+    "checks": [
+      {
+        "field": "stemIdentity.decodedPcmHashMethod",
+        "expected": "soundfile-int16-always2d-numpy-tobytes-sha256-v1",
+        "actual": "soundfile-int16-always2d-numpy-tobytes-sha256-v1",
+        "passed": true
+      }
+    ],
+    "provenance": {
+      "methodId": "soundfile-int16-always2d-numpy-tobytes-sha256-v1",
+      "sourceCommit": "c9e42ff8ec1da38799d66448cf52b2b3498b20d3",
+      "sourcePath": "analyzer/v143_contextual_prune_section3_repeatability_modal.py",
+      "sourceFunction": "_pcm_sha256",
+      "algorithm": "soundfile.read(str(path), dtype=\"int16\", always_2d=True), then hashlib.sha256(audio.tobytes()).hexdigest()",
+      "familyHashComparabilityRule": "Family A/B classification is allowed only when the fresh capture declares this exact methodId and records the decoded sample rate, frame count and channel count."
+    }
+  },
+  "safetyAttestations": {
+    "passed": true,
+    "checks": [
+      {
+        "field": "attestations.freshCompatibilityEvidenceOnly",
+        "expected": true,
+        "actual": true,
+        "passed": true
+      },
+      {
+        "field": "attestations.historicalProvenanceClaimed",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "field": "attestations.productionModified",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "field": "attestations.liveEndpointModified",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "field": "attestations.professionalReferenceUsedAtRuntime",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      },
+      {
+        "field": "attestations.historicalArtifactsOverwritten",
+        "expected": false,
+        "actual": false,
+        "passed": true
+      }
+    ]
+  },
+  "introCountCompatibility": {
+    "passed": true,
+    "checks": [
+      {
+        "field": "introFingerprint.rawEventCount",
+        "expected": 22270,
+        "actual": 22270,
+        "passed": true
+      },
+      {
+        "field": "introFingerprint.directStemEventCount",
+        "expected": 11164,
+        "actual": 11164,
+        "passed": true
+      },
+      {
+        "field": "introFingerprint.cascadeStemEventCount",
+        "expected": 11106,
+        "actual": 11106,
+        "passed": true
+      },
+      {
+        "field": "introFingerprint.sweepEventCounts",
+        "expected": {
+          "o015_f010": 12776,
+          "o020_f012": 4979,
+          "o025_f015": 2830,
+          "o030_f020": 1685
+        },
+        "actual": {
+          "o015_f010": 12776,
+          "o020_f012": 4979,
+          "o025_f015": 2830,
+          "o030_f020": 1685
+        },
+        "passed": true
+      }
+    ]
+  },
+  "introCacheExactCompatibility": {
+    "field": "introFingerprint.rawAttackCacheSha256",
+    "expected": "698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9",
+    "actual": "698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9",
+    "passed": true
+  },
+  "currentResearchFamilyClassification": "CURRENT_RESEARCH_FAMILY_A_COMPATIBLE",
+  "downstreamFrozenReplay": {
+    "provided": false,
+    "comparison": "NOT_EVALUATED_NO_AUTHENTICATED_HISTORICAL_DIGEST_BASELINE_IN_THIS_COMPARATOR",
+    "note": "Downstream fields are optional and retained only for audit. Exact downstream classification must not be enabled until expected historical digests are independently authenticated and pinned."
+  },
+  "explicitlyExcludedClaims": [
+    "historical-provenance-closed",
+    "historical-intro-family-A-proven",
+    "historical-intro-family-B-proven",
+    "bit-exact-historical-raw-audio-replay",
+    "production-ready-by-compatibility-alone"
+  ],
+  "evidenceGapStatusAtComparison": "EVIDENCE_GAP",
+  "evidenceGapConclusionAtComparison": "Historical Modal execution is not in doubt: Modal was launched from the Codespace before the later transition to GitHub-controlled workflows, and surviving Codespace screenshots directly show Modal remote execution and separator GPU benchmark completion. The remaining gap is narrower: the exact printed outputs from the historical V143 seeded/repeatability execution that would bind the measures 1-16 raw-attack cache to a known whole-song separator PCM family (A or B) have not been recovered. Bit-exact raw-audio-to-intro separator-family lineage therefore remains unauthenticated even though the underlying Codespace-to-Modal execution definitely occurred."
+}

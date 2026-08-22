@@ -1,0 +1,24 @@
+{
+  "runtimeFingerprintSha256": "eb86c72e209fe228dc36723053cb14ddc5819f87f92f1059001aa964529fc468",
+  "modalImageIdOrDigest": "im-gfKMGR4ShBHq6la6WIVpyU",
+  "pythonVersion": "3.11.12",
+  "platform": "Linux-4.19.0-gvisor-x86_64-with-glibc2.36",
+  "audioSeparatorVersion": "0.44.5",
+  "torchVersion": "2.13.0+cu130",
+  "torchCudaVersion": "13.0",
+  "cudnnVersion": 92000,
+  "onnxRuntimeVersion": "1.28.0",
+  "onnxProviders": [
+    "TensorrtExecutionProvider",
+    "CUDAExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "gpuName": "NVIDIA L4",
+  "gpuComputeCapability": "8.9",
+  "nvidiaDriverVersion": "580.95.05",
+  "torchDeterministicAlgorithmsEnabled": false,
+  "torchCudnnDeterministic": false,
+  "torchCudnnBenchmark": false,
+  "torchAllowTf32Matmul": false,
+  "torchAllowTf32Cudnn": true
+}

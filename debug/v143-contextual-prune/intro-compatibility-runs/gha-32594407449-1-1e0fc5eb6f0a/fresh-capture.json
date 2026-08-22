@@ -1,0 +1,703 @@
+{
+  "captureIdentity": {
+    "captureId": "gha-32594407449-1-1e0fc5eb6f0a",
+    "createdAtUtc": "2026-08-22T19:40:52.397404Z",
+    "gitBranch": "v143-contextual-prune-lobo",
+    "gitCommit": "1e0fc5eb6f0a4c98557769d37b5d0ba5233e8c75",
+    "sourceAudioGitBlobSha": "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0",
+    "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "runtimeIdentity": {
+    "runtimeFingerprintSha256": "eb86c72e209fe228dc36723053cb14ddc5819f87f92f1059001aa964529fc468",
+    "modalImageIdOrDigest": "im-gfKMGR4ShBHq6la6WIVpyU",
+    "pythonVersion": "3.11.12",
+    "platform": "Linux-4.19.0-gvisor-x86_64-with-glibc2.36",
+    "audioSeparatorVersion": "0.44.5",
+    "torchVersion": "2.13.0+cu130",
+    "torchCudaVersion": "13.0",
+    "cudnnVersion": 92000,
+    "onnxRuntimeVersion": "1.28.0",
+    "onnxProviders": [
+      "TensorrtExecutionProvider",
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "gpuName": "NVIDIA L4",
+    "gpuComputeCapability": "8.9",
+    "nvidiaDriverVersion": "580.95.05",
+    "torchDeterministicAlgorithmsEnabled": false,
+    "torchCudnnDeterministic": false,
+    "torchCudnnBenchmark": false,
+    "torchAllowTf32Matmul": false,
+    "torchAllowTf32Cudnn": true
+  },
+  "resolvedDependencyIdentity": {
+    "installedPackageInventorySha256": "e65d3075d3c7cc93b5ee0b616495dadd84bdfcd4bc72e081e272ba651b002230",
+    "installedPackageInventory": [
+      {
+        "name": "absl-py",
+        "version": "2.5.0"
+      },
+      {
+        "name": "aiohappyeyeballs",
+        "version": "2.6.1"
+      },
+      {
+        "name": "aiohttp",
+        "version": "3.12.7"
+      },
+      {
+        "name": "aiosignal",
+        "version": "1.3.2"
+      },
+      {
+        "name": "astunparse",
+        "version": "1.6.3"
+      },
+      {
+        "name": "attrs",
+        "version": "25.3.0"
+      },
+      {
+        "name": "audio-separator",
+        "version": "0.44.5"
+      },
+      {
+        "name": "audioread",
+        "version": "3.1.0"
+      },
+      {
+        "name": "basic-pitch",
+        "version": "0.4.0"
+      },
+      {
+        "name": "beartype",
+        "version": "0.18.5"
+      },
+      {
+        "name": "cbor2",
+        "version": "5.7.0"
+      },
+      {
+        "name": "certifi",
+        "version": "2025.4.26"
+      },
+      {
+        "name": "certifi",
+        "version": "2026.7.22"
+      },
+      {
+        "name": "cffi",
+        "version": "2.1.1"
+      },
+      {
+        "name": "charset-normalizer",
+        "version": "3.5.1"
+      },
+      {
+        "name": "cryptography",
+        "version": "50.0.0"
+      },
+      {
+        "name": "cuda-bindings",
+        "version": "13.3.1"
+      },
+      {
+        "name": "cuda-pathfinder",
+        "version": "1.6.0"
+      },
+      {
+        "name": "cuda-toolkit",
+        "version": "13.0.3.0"
+      },
+      {
+        "name": "Cython",
+        "version": "3.2.9"
+      },
+      {
+        "name": "decorator",
+        "version": "5.3.1"
+      },
+      {
+        "name": "diffq",
+        "version": "0.2.4"
+      },
+      {
+        "name": "einops",
+        "version": "0.8.2"
+      },
+      {
+        "name": "filelock",
+        "version": "3.32.3"
+      },
+      {
+        "name": "flatbuffers",
+        "version": "25.12.19"
+      },
+      {
+        "name": "frozenlist",
+        "version": "1.6.0"
+      },
+      {
+        "name": "fsspec",
+        "version": "2026.7.0"
+      },
+      {
+        "name": "gast",
+        "version": "0.7.0"
+      },
+      {
+        "name": "google-auth",
+        "version": "2.56.3"
+      },
+      {
+        "name": "google-auth-oauthlib",
+        "version": "1.4.0"
+      },
+      {
+        "name": "google-pasta",
+        "version": "0.2.0"
+      },
+      {
+        "name": "grpcio",
+        "version": "1.83.0"
+      },
+      {
+        "name": "grpclib",
+        "version": "0.4.8"
+      },
+      {
+        "name": "h2",
+        "version": "4.2.0"
+      },
+      {
+        "name": "h5py",
+        "version": "3.16.0"
+      },
+      {
+        "name": "hpack",
+        "version": "4.1.0"
+      },
+      {
+        "name": "hyperframe",
+        "version": "6.1.0"
+      },
+      {
+        "name": "idna",
+        "version": "3.10"
+      },
+      {
+        "name": "idna",
+        "version": "3.18"
+      },
+      {
+        "name": "importlib_resources",
+        "version": "7.1.0"
+      },
+      {
+        "name": "Jinja2",
+        "version": "3.1.6"
+      },
+      {
+        "name": "joblib",
+        "version": "1.5.3"
+      },
+      {
+        "name": "julius",
+        "version": "0.2.8"
+      },
+      {
+        "name": "keras",
+        "version": "2.15.0"
+      },
+      {
+        "name": "lazy-loader",
+        "version": "0.5"
+      },
+      {
+        "name": "libclang",
+        "version": "18.1.1"
+      },
+      {
+        "name": "librosa",
+        "version": "0.11.0"
+      },
+      {
+        "name": "llvmlite",
+        "version": "0.49.0"
+      },
+      {
+        "name": "Markdown",
+        "version": "3.10.3"
+      },
+      {
+        "name": "MarkupSafe",
+        "version": "3.0.3"
+      },
+      {
+        "name": "mido",
+        "version": "1.3.3"
+      },
+      {
+        "name": "mir_eval",
+        "version": "0.8.2"
+      },
+      {
+        "name": "ml_collections",
+        "version": "1.1.0"
+      },
+      {
+        "name": "ml-dtypes",
+        "version": "0.2.0"
+      },
+      {
+        "name": "mpmath",
+        "version": "1.3.0"
+      },
+      {
+        "name": "msgpack",
+        "version": "1.2.1"
+      },
+      {
+        "name": "multidict",
+        "version": "6.4.4"
+      },
+      {
+        "name": "narwhals",
+        "version": "2.24.0"
+      },
+      {
+        "name": "networkx",
+        "version": "3.6.1"
+      },
+      {
+        "name": "numba",
+        "version": "0.67.0"
+      },
+      {
+        "name": "numpy",
+        "version": "1.26.4"
+      },
+      {
+        "name": "nvidia-cublas",
+        "version": "13.1.1.3"
+      },
+      {
+        "name": "nvidia-cuda-cupti",
+        "version": "13.0.85"
+      },
+      {
+        "name": "nvidia-cuda-nvrtc",
+        "version": "13.0.88"
+      },
+      {
+        "name": "nvidia-cuda-runtime",
+        "version": "13.0.96"
+      },
+      {
+        "name": "nvidia-cudnn-cu13",
+        "version": "9.20.0.48"
+      },
+      {
+        "name": "nvidia-cufft",
+        "version": "12.0.0.61"
+      },
+      {
+        "name": "nvidia-cufile",
+        "version": "1.15.1.6"
+      },
+      {
+        "name": "nvidia-curand",
+        "version": "10.4.0.35"
+      },
+      {
+        "name": "nvidia-cusolver",
+        "version": "12.0.4.66"
+      },
+      {
+        "name": "nvidia-cusparse",
+        "version": "12.6.3.3"
+      },
+      {
+        "name": "nvidia-cusparselt-cu13",
+        "version": "0.8.1"
+      },
+      {
+        "name": "nvidia-nccl-cu13",
+        "version": "2.29.7"
+      },
+      {
+        "name": "nvidia-nvjitlink",
+        "version": "13.3.33"
+      },
+      {
+        "name": "nvidia-nvshmem-cu13",
+        "version": "3.4.5"
+      },
+      {
+        "name": "nvidia-nvtx",
+        "version": "13.0.85"
+      },
+      {
+        "name": "oauthlib",
+        "version": "3.3.1"
+      },
+      {
+        "name": "onnx-weekly",
+        "version": "1.23.0.dev20260805"
+      },
+      {
+        "name": "onnx2torch-py313",
+        "version": "1.6.0"
+      },
+      {
+        "name": "onnxruntime-gpu",
+        "version": "1.28.0"
+      },
+      {
+        "name": "opt_einsum",
+        "version": "3.4.0"
+      },
+      {
+        "name": "packaging",
+        "version": "26.3"
+      },
+      {
+        "name": "pillow",
+        "version": "12.3.0"
+      },
+      {
+        "name": "pip",
+        "version": "25.2"
+      },
+      {
+        "name": "platformdirs",
+        "version": "4.11.3"
+      },
+      {
+        "name": "pooch",
+        "version": "1.9.0"
+      },
+      {
+        "name": "pretty_midi",
+        "version": "0.2.11.post0"
+      },
+      {
+        "name": "propcache",
+        "version": "0.3.1"
+      },
+      {
+        "name": "protobuf",
+        "version": "4.25.9"
+      },
+      {
+        "name": "protobuf",
+        "version": "6.31.1"
+      },
+      {
+        "name": "pyasn1",
+        "version": "0.6.4"
+      },
+      {
+        "name": "pyasn1_modules",
+        "version": "0.4.2"
+      },
+      {
+        "name": "pycparser",
+        "version": "3.0"
+      },
+      {
+        "name": "pydub",
+        "version": "0.25.1"
+      },
+      {
+        "name": "PyYAML",
+        "version": "6.0.3"
+      },
+      {
+        "name": "requests",
+        "version": "2.34.2"
+      },
+      {
+        "name": "requests-oauthlib",
+        "version": "2.0.0"
+      },
+      {
+        "name": "resampy",
+        "version": "0.4.2"
+      },
+      {
+        "name": "rotary-embedding-torch",
+        "version": "0.6.5"
+      },
+      {
+        "name": "samplerate",
+        "version": "0.1.0"
+      },
+      {
+        "name": "scikit-learn",
+        "version": "1.9.0"
+      },
+      {
+        "name": "scipy",
+        "version": "1.17.1"
+      },
+      {
+        "name": "setuptools",
+        "version": "81.0.0"
+      },
+      {
+        "name": "six",
+        "version": "1.17.0"
+      },
+      {
+        "name": "soundfile",
+        "version": "0.14.0"
+      },
+      {
+        "name": "soxr",
+        "version": "1.1.0"
+      },
+      {
+        "name": "sympy",
+        "version": "1.14.0"
+      },
+      {
+        "name": "tensorboard",
+        "version": "2.15.2"
+      },
+      {
+        "name": "tensorboard-data-server",
+        "version": "0.7.2"
+      },
+      {
+        "name": "tensorflow",
+        "version": "2.15.0.post1"
+      },
+      {
+        "name": "tensorflow-estimator",
+        "version": "2.15.0"
+      },
+      {
+        "name": "tensorflow-io-gcs-filesystem",
+        "version": "0.37.1"
+      },
+      {
+        "name": "termcolor",
+        "version": "3.3.0"
+      },
+      {
+        "name": "threadpoolctl",
+        "version": "3.6.0"
+      },
+      {
+        "name": "torch",
+        "version": "2.13.0"
+      },
+      {
+        "name": "torchvision",
+        "version": "0.28.0"
+      },
+      {
+        "name": "tqdm",
+        "version": "4.70.0"
+      },
+      {
+        "name": "triton",
+        "version": "3.7.1"
+      },
+      {
+        "name": "typing_extensions",
+        "version": "4.13.2"
+      },
+      {
+        "name": "typing_extensions",
+        "version": "4.16.0"
+      },
+      {
+        "name": "urllib3",
+        "version": "2.7.0"
+      },
+      {
+        "name": "uv",
+        "version": "0.8.17"
+      },
+      {
+        "name": "Werkzeug",
+        "version": "3.1.8"
+      },
+      {
+        "name": "wheel",
+        "version": "0.45.1"
+      },
+      {
+        "name": "wrapt",
+        "version": "1.14.2"
+      },
+      {
+        "name": "yarl",
+        "version": "1.20.0"
+      }
+    ]
+  },
+  "modelPayloadIdentity": {
+    "bsRoformerModelIdentifier": "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+    "demucsModelIdentifier": "htdemucs_6s.yaml",
+    "audioSeparatorModelDir": "/tmp/audio-separator-models",
+    "modelCacheManifestSha256": "78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637",
+    "modelCacheFiles": [
+      {
+        "path": "/tmp/audio-separator-models/5c90dfd2-34c22ccb.th",
+        "size": 54996327,
+        "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd"
+      },
+      {
+        "path": "/tmp/audio-separator-models/download_checks.json",
+        "size": 28267,
+        "sha256": "d3622e1fa19c161d3cf704927711b453d593a3f1eb0f2e0838c3136907935151"
+      },
+      {
+        "path": "/tmp/audio-separator-models/htdemucs_6s.yaml",
+        "size": 21,
+        "sha256": "207405151270af8fd81c2373c25d27950916682ac91dca7884a11ce13dad6f58"
+      },
+      {
+        "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+        "size": 639331213,
+        "sha256": "5b84f37e8d444c8cb30c79d77f613a41c05868ff9c9ac6c7049c00aefae115aa"
+      },
+      {
+        "path": "/tmp/audio-separator-models/model_bs_roformer_ep_317_sdr_12.9755.yaml",
+        "size": 2273,
+        "sha256": "2bfdd16c656bd9519aba757cc4f8834b7ede675eb1e00ec4772d74ae1c41af7f"
+      }
+    ],
+    "modelPayloadCaptureComplete": true,
+    "basicPitchModelPath": "/usr/local/lib/python3.11/site-packages/basic_pitch/saved_models/icassp_2022/nmp",
+    "basicPitchModelSha256": null
+  },
+  "separatorInvocation": {
+    "seed": 143,
+    "demucsShifts": 1,
+    "demucsOverlap": 0.1,
+    "demucsSegmentSize": 6,
+    "roformerBatchSize": 1,
+    "seededCliSourceSha256": "39c858e84346365e6104b5c5e860f8c4faee610e4a46e1d9d0431ab820977687",
+    "productionSeparatorSourceSha256": "4579b8cba40495cda280250bedf104376a3293a224c8f7d76245e0367605832e",
+    "directCommand": [
+      "/usr/local/bin/python",
+      "-m",
+      "v143_seeded_audio_separator_cli",
+      "/tmp/v143-intro-compatibility-ncq25i57/single-separator-pass/_work/normalized/input-normalized.wav",
+      "--model_filename",
+      "htdemucs_6s.yaml",
+      "--output_dir",
+      "/tmp/v143-intro-compatibility-ncq25i57/single-separator-pass/_work/direct",
+      "--output_format",
+      "WAV",
+      "--single_stem",
+      "Guitar",
+      "--demucs_shifts",
+      "1",
+      "--demucs_overlap",
+      "0.10",
+      "--demucs_segment_size",
+      "6",
+      "--use_soundfile"
+    ],
+    "cascadeCommands": [
+      [
+        "/usr/local/bin/python",
+        "-m",
+        "v143_seeded_audio_separator_cli",
+        "/tmp/v143-intro-compatibility-ncq25i57/single-separator-pass/_work/normalized/input-normalized.wav",
+        "--model_filename",
+        "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+        "--output_dir",
+        "/tmp/v143-intro-compatibility-ncq25i57/single-separator-pass/_work/roformer",
+        "--output_format",
+        "WAV",
+        "--single_stem",
+        "Instrumental",
+        "--mdxc_batch_size",
+        "1",
+        "--use_soundfile"
+      ],
+      [
+        "/usr/local/bin/python",
+        "-m",
+        "v143_seeded_audio_separator_cli",
+        "/tmp/v143-intro-compatibility-ncq25i57/single-separator-pass/_work/roformer/input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav",
+        "--model_filename",
+        "htdemucs_6s.yaml",
+        "--output_dir",
+        "/tmp/v143-intro-compatibility-ncq25i57/single-separator-pass/_work/cascade",
+        "--output_format",
+        "WAV",
+        "--single_stem",
+        "Guitar",
+        "--demucs_shifts",
+        "1",
+        "--demucs_overlap",
+        "0.10",
+        "--demucs_segment_size",
+        "6",
+        "--use_soundfile"
+      ]
+    ],
+    "singleSeparatorGraphExecution": true,
+    "commandCount": 3
+  },
+  "stemIdentity": {
+    "decodedPcmHashMethod": "soundfile-int16-always2d-numpy-tobytes-sha256-v1",
+    "directWavSha256": "afd1037bc7d62572ac9b99644d13d95b8593e25b4f442aa4a8f85c1111d97c78",
+    "directDecodedPcmSha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+    "directDecodedSampleRate": 44100,
+    "directDecodedFrames": 9324544,
+    "directDecodedChannels": 2,
+    "cascadeWavSha256": "44e0fe8874b07bcd4bca7e28f4a512b61214061f6bbf8771426c1b1237ffa201",
+    "cascadeDecodedPcmSha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+    "cascadeDecodedSampleRate": 44100,
+    "cascadeDecodedFrames": 9324544,
+    "cascadeDecodedChannels": 2
+  },
+  "introFingerprint": {
+    "rawAttackCacheSha256": "698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9",
+    "rawEventCount": 22270,
+    "directStemEventCount": 11164,
+    "cascadeStemEventCount": 11106,
+    "sweepEventCounts": {
+      "o015_f010": 12776,
+      "o020_f012": 4979,
+      "o025_f015": 2830,
+      "o030_f020": 1685
+    },
+    "gridRowCount": 244
+  },
+  "downstreamFrozenReplay": {
+    "gridRowCount": null,
+    "onsetCount": null,
+    "onsetVectorCount": null,
+    "gridFeatureCount": null,
+    "sequenceFeatureCount": null,
+    "contextualCarrierCount": null,
+    "frozenDecisionDigest": null,
+    "frozenScoreDigest": null
+  },
+  "attestations": {
+    "freshCompatibilityEvidenceOnly": true,
+    "historicalProvenanceClaimed": false,
+    "productionModified": false,
+    "liveEndpointModified": false,
+    "professionalReferenceUsedAtRuntime": false,
+    "historicalArtifactsOverwritten": false
+  },
+  "artifactPaths": {
+    "runDirectory": "debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a",
+    "captureManifest": "debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a/fresh-capture.json",
+    "rawAttackCache": "debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a/fresh-raw-attack-cache.json",
+    "packageInventory": "debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a/package-inventory.txt",
+    "runtimeFingerprint": "debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a/runtime-fingerprint.json",
+    "modelCacheManifest": "debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a/model-cache-manifest.json"
+  }
+}

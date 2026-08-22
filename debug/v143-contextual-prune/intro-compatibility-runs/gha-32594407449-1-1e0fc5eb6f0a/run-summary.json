@@ -1,0 +1,18 @@
+{
+  "captureId": "gha-32594407449-1-1e0fc5eb6f0a",
+  "gitCommit": "1e0fc5eb6f0a4c98557769d37b5d0ba5233e8c75",
+  "rawEventCount": 22270,
+  "rawAttackCacheSha256": "698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9",
+  "directDecodedPcmSha256": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
+  "cascadeDecodedPcmSha256": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
+  "modelPayloadCaptureComplete": true,
+  "primaryClassification": "INTRO_CACHE_EXACT_COMPATIBLE",
+  "compatibilityLabels": [
+    "CURRENT_RESEARCH_FAMILY_A_COMPATIBLE",
+    "INTRO_CACHE_EXACT_COMPATIBLE"
+  ],
+  "currentResearchFamilyClassification": "CURRENT_RESEARCH_FAMILY_A_COMPATIBLE",
+  "historicalProvenanceClosed": false,
+  "productionPromotionAllowed": false,
+  "comparatorExitCode": 0
+}
