@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-intro-separator-family-static-provenance",
+  "updated": "2026-08-22",
+  "branch": "v143-contextual-prune-lobo",
+  "claimScope": "Historical V143 measures 1-16 reference-free raw-attack producer; static surviving evidence only; no fresh Modal/GPU execution",
+  "status": "EVIDENCE_GAP",
+  "conclusion": "The measures 1-16 producer chain, source audio, output cache checksum, event fingerprint, first-party source graph, historical-era Modal smoke fingerprint and historical direct benchmark WAV identity are strongly preserved. However, no surviving static evidence recovered in the targeted archaeology directly binds the intro raw-attack cache to a known whole-song separator PCM family (A or B), and the historical seeded repeatability pass-1/pass-2 stem hashes were not recovered. Bit-exact raw-audio-to-intro separator-family lineage therefore remains unauthenticated and must not be inferred from later Section3 Family-B evidence.",
+  "preservedEvidence": {
+    "historicalSourceCommit": "4d735846fbd834cc4c722f2cb48727e4629647f1",
+    "sourceAudio": {
+      "path": "public/gomywayfullaitest.m4a",
+      "gitBlobShaAtHistoricalAndCurrentRefs": "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0",
+      "crossRefByteIdentityProven": true
+    },
+    "introRawAttackCache": {
+      "path": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-raw-attack-cache.json",
+      "sha256": "698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9",
+      "rawEventCount": 22270,
+      "stemEventCountsAfterIntroFiltering": {
+        "stem0:direct-demucs6s-guitar.wav": 11164,
+        "stem1:bsroformer-demucs6s-guitar.wav": 11106
+      },
+      "sweepEventCountsAfterIntroFiltering": {
+        "o015_f010": 12776,
+        "o020_f012": 4979,
+        "o025_f015": 2830,
+        "o030_f020": 1685
+      },
+      "candidateStemCount": 2,
+      "referenceFree": true,
+      "professionalReferenceUsedByAnalyzer": false
+    },
+    "historicalSeparatorContract": {
+      "seed": 143,
+      "demucsShifts": 1,
+      "demucsOverlap": 0.1,
+      "demucsSegmentSize": 6,
+      "roformerBatchSize": 1,
+      "directCanonicalName": "direct-demucs6s-guitar.wav",
+      "cascadeCanonicalName": "bsroformer-demucs6s-guitar.wav",
+      "demucsModelIdentifier": "htdemucs_6s.yaml",
+      "bsRoformerModelIdentifier": "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+      "audioSeparatorVersion": "0.44.5"
+    },
+    "aug16HistoricalEraModalSmoke": {
+      "executed": true,
+      "passed": true,
+      "torchVersion": "2.13.0+cu130",
+      "torchCudaVersion": "13.0",
+      "deviceName": "NVIDIA L4",
+      "deviceCount": 1,
+      "onnxProvidersObserved": [
+        "TensorRTExecutionProvider",
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "audioSeparatorCliExitCode": 0
+    },
+    "historicalDirectBenchmarkWav": {
+      "path": "public/separator-benchmark-v2/gomyway-demucs6s-direct-guitar.wav",
+      "sha256": "5b77a0a5a074256a6538d15fc37487441c574a252c1d759c12e5231c56fdb4b5",
+      "note": "WAV file-byte hash; not interchangeable with later decoded-PCM family hashes"
+    },
+    "laterSection3FamilyEvidence": {
+      "artifact": "debug/v143-contextual-prune/section3-exact-family-provenance-capture.json",
+      "historicalFamilyLabel": "B",
+      "directDecodedPcmSha256": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
+      "cascadeDecodedPcmSha256": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
+      "section3ExactCarrierAndFrozenScoresReproduced": true,
+      "applicabilityToIntro": "supporting separator-family evidence only; not a direct measures 1-16 lineage bridge"
+    }
+  },
+  "targetedSearchesPerformed": [
+    "Library semantic search for exact historical seeded-repeatability completion text",
+    "Library semantic search for carrierAExact/carrierBExact and stemHashes",
+    "Library semantic search for intro 11164/11106 stem counts paired with stem hashes or PCM-family identity",
+    "Library semantic search for intro-raw-attack-cache paired with directPcm/cascadePcm identity",
+    "Exact find within dadrock_v143_modal_separator_checkpoint_2026-08-16.txt for seeded, repeatability, carrierA and carrierB",
+    "GitHub repository archaeology for historical seeded/deterministic diagnostic source and preserved Codespace snapshot",
+    "GitHub review of later exact-family and cross-container provenance artifacts"
+  ],
+  "notRecovered": [
+    "Historical seeded repeatability pass-1 carrierA file SHA256",
+    "Historical seeded repeatability pass-1 carrierB file SHA256",
+    "Historical seeded repeatability pass-2 carrierA file SHA256",
+    "Historical seeded repeatability pass-2 carrierB file SHA256",
+    "Historical cascade benchmark WAV file SHA256 from public/separator-benchmark-v2/gomyway-bsroformer-demucs6s-guitar.wav",
+    "A historical intro capture record containing whole-song stem WAV or decoded-PCM hashes",
+    "An immutable original historical Modal image digest",
+    "Authenticated original downloaded BS-RoFormer model payload SHA256",
+    "Authenticated original downloaded Demucs model/config payload SHA256"
+  ],
+  "claimsExplicitlyExcluded": [
+    "Do not claim the measures 1-16 raw-attack cache was produced by separator Family B solely because Section3 historical Family B is proven.",
+    "Do not claim a fresh GPU run is a bit-exact historical reproduction.",
+    "Do not substitute a current public model mirror hash for historical payload provenance.",
+    "Do not weaken historical thresholds, score tolerances, band boundaries or frozen models to manufacture agreement."
+  ],
+  "safeClaims": [
+    "The measures 1-16 first-party producer/source/artifact/feature/model chain is statically source-proven.",
+    "The preserved measures 1-16 raw-attack cache is checksum-pinned and has an exact event fingerprint.",
+    "The source audio is byte-identical across historical and current research refs.",
+    "A historical-era Aug-16 Modal dependency smoke executed successfully with Torch 2.13.0+cu130, CUDA 13.0 and NVIDIA L4.",
+    "The historical direct benchmark WAV file SHA256 is recovered.",
+    "Later research can produce exact historical Section3 Family B under one nominally equivalent L4 worker while other workers produce Family A.",
+    "The remaining intro separator-family bridge is a provenance gap, not evidence of pipeline failure."
+  ],
+  "productionPromotionAllowed": false,
+  "productionModified": false,
+  "liveEndpointModified": false,
+  "professionalReferenceOpenedForThisArchaeology": false,
+  "runtimeLabelsRequired": false,
+  "freshGpuReplayPerformedForThisArchaeology": false,
+  "nextSafeStep": "Stop broad historical archaeology. If further runtime comparison is scientifically useful, design a separately labelled compatibility comparator that captures fresh model payload hashes, full runtime/package inventory, CUDA/cuDNN/Torch/ONNX details, input identity, separator config/seed/shift trace, output WAV and decoded-PCM hashes, intro Basic Pitch fingerprints and frozen downstream outputs without overwriting historical artifacts."
+}
