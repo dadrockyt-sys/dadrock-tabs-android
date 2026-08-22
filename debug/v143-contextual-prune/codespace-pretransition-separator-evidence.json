@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-codespace-pretransition-separator-evidence",
+  "updated": "2026-08-22",
+  "researchBranch": "v143-contextual-prune-lobo",
+  "status": "PRESERVED_SUPPORTING_EVIDENCE",
+  "scope": "Read-only archaeology of the Codespace-driven separator lineage that predates the transition to GitHub-controlled V143 workflows. No fresh Modal execution.",
+  "codespaceControlPlane": {
+    "confirmed": true,
+    "historicalBranch": "jimmy-paige-v8-targeted-rhythm-corrections",
+    "historicalBranchStillExists": true,
+    "historicalBranchCurrentHead": "0435f4ab8c219e8c8469717ae419922c4080f492",
+    "historicalBranchHeadMessage": "Validate V143 rhythm sustain champion on blind 11-mod-16 reserve",
+    "historicalBranchHeadTimestampUtc": "2026-08-16T05:12:56Z",
+    "interpretation": "This surviving branch terminates in the pre-transition Codespace era. V143 seeded/repeatability diagnostic files later observed in the Codespace were not tracked on this branch and therefore remain local/untracked historical state unless recovered elsewhere."
+  },
+  "visualExecutionEvidence": [
+    {
+      "libraryImageName": "1000116920.jpg",
+      "observed": [
+        "GitHub Codespaces terminal",
+        "modal run analyzer/modal_gomyway_separator_gpu_benchmark_v1.py",
+        "GPU L4",
+        "GPU separator benchmark passed: True",
+        "Stopping app - local entrypoint completed"
+      ],
+      "limitation": "The displayed GPU benchmark used an HQ 4/.25/12 recipe and proves Codespace-to-Modal execution existence, not the exact frozen V143 1/.10/6 producer."
+    },
+    {
+      "libraryImageName": "1000116927.jpg",
+      "observed": [
+        "Codespaces-launched Modal app completed",
+        "Modal run URL displayed"
+      ]
+    }
+  ],
+  "codespaceV2Benchmark": {
+    "sourceScript": "analyzer/benchmark_gomyway_separator_upgrade_v2_codespace.py",
+    "sourceScriptGitBlob": "b5d4601fe25d84e7aa3a20456409cf2abd4ee4a0",
+    "historicalExecutionScreenshot": "1000116888.jpg",
+    "screenshotObservedCommand": "python analyzer/benchmark_gomyway_separator_upgrade_v2_codespace.py",
+    "screenshotObservedCompletion": "GOMYWAY SEPARATOR UPGRADE BENCHMARK V2 COMPLETE",
+    "screenshotObservedPassed": true,
+    "inputAudio": "public/gomywayfullaitest.m4a",
+    "models": {
+      "demucs": "htdemucs_6s.yaml",
+      "bsRoformer": "model_bs_roformer_ep_317_sdr_12.9755.ckpt"
+    },
+    "directRecipe": {
+      "singleStem": "Guitar",
+      "demucsShifts": 1,
+      "demucsOverlap": 0.1,
+      "demucsSegmentSize": 6,
+      "useSoundfile": true
+    },
+    "cascadeRecipe": {
+      "firstStageSingleStem": "Instrumental",
+      "roformerBatchSize": 1,
+      "secondStageSingleStem": "Guitar",
+      "demucsShifts": 1,
+      "demucsOverlap": 0.1,
+      "demucsSegmentSize": 6,
+      "useSoundfile": true
+    },
+    "exportedStemPaths": {
+      "direct": "public/separator-benchmark-v2/gomyway-demucs6s-direct-guitar.wav",
+      "cascade": "public/separator-benchmark-v2/gomyway-bsroformer-demucs6s-guitar.wav"
+    },
+    "professionalReferenceUsedForSeparation": false,
+    "productionSeparatorChanged": false,
+    "productionPromotionAllowed": false,
+    "importantInterpretation": "This Codespace V2 benchmark source already uses the same Demucs 1/.10/6 and RoFormer batch-1 settings later frozen into V143. It establishes concrete artifact/recipe ancestry, but it does not by itself prove that later intro raw-attack capture reused these exact WAV bytes rather than regenerating stems."
+  },
+  "trackedBenchmarkWinnerCommit": {
+    "sha": "35e7cbbe5d319d9f8722d2af03cbc18f6fc31333",
+    "shortShaVisibleInScreenshot": "35e7cbb",
+    "message": "Record separator benchmark winner",
+    "timestampUtc": "2026-08-08T01:10:53Z",
+    "parent": "803f054999d01ec37c539a74a1b59a5df8a691a0",
+    "filesAdded": [
+      "public/gomyway-separator-benchmark-stem-grade-v2.json",
+      "public/gomyway-separator-benchmark-stem-grade-v2-manifest.json"
+    ],
+    "winner": "bsroformer-then-demucs6s",
+    "winnerPitchF1": 6.12,
+    "winnerImprovementVsControlPoints": 1.39,
+    "winnerBeatsControl": true,
+    "professionalReferenceUsedDuringDetection": false,
+    "productionSeparatorChanged": false,
+    "productionPromotionAllowed": false,
+    "directBenchmarkAnalysis": {
+      "audioPath": "public/separator-benchmark-v2/gomyway-demucs6s-direct-guitar.wav",
+      "basicPitchRawNoteCount": 1815,
+      "snappedPredictionCount": 1530,
+      "discardedOutsideGrid": 285,
+      "medianSnapDistanceSeconds": 0.026822,
+      "pitchF1": 6.01
+    },
+    "cascadeBenchmarkAnalysis": {
+      "audioPath": "public/separator-benchmark-v2/gomyway-bsroformer-demucs6s-guitar.wav",
+      "basicPitchRawNoteCount": 1798,
+      "snappedPredictionCount": 1519,
+      "discardedOutsideGrid": 279,
+      "medianSnapDistanceSeconds": 0.02727,
+      "pitchF1": 6.12
+    },
+    "importantInterpretation": "The benchmark WAVs themselves remained Codespace-local/untracked; the analyzer report and winner manifest were committed. This explains why the historical paths and downstream metrics survive in Git while the raw WAV bytes generally do not."
+  },
+  "historicalDirectWavIdentityRecoveredElsewhere": {
+    "path": "public/separator-benchmark-v2/gomyway-demucs6s-direct-guitar.wav",
+    "sha256": "5b77a0a5a074256a6538d15fc37487441c574a252c1d759c12e5231c56fdb4b5",
+    "hashType": "WAV file bytes",
+    "source": "Aug-16 V143 Modal separator checkpoint"
+  },
+  "stillMissing": [
+    "Historical WAV-file SHA256 for public/separator-benchmark-v2/gomyway-bsroformer-demucs6s-guitar.wav",
+    "Historical V143 seeded repeatability pass-1/pass-2 carrierA/carrierB SHA256 values",
+    "A direct retained record binding the measures 1-16 raw-attack cache to either later decoded-PCM Family A or Family B",
+    "Immutable original Modal image digest",
+    "Authenticated original downloaded separator model payload hashes"
+  ],
+  "safety": {
+    "freshModalRunPerformed": false,
+    "professionalReferenceOpenedForRuntimeProvenance": false,
+    "runtimeLabelsRequired": false,
+    "productionModified": false,
+    "liveEndpointModified": false,
+    "retraining": false,
+    "thresholdsModified": false
+  },
+  "nextTarget": "Continue only with retained-output recovery: inspect surviving Codespace screenshots/checkpoints for sha256sum output, the historical cascade WAV identity, or the V143 seeded repeatability JSON/terminal output. Do not infer missing hashes from later families and do not rerun Modal to manufacture historical evidence."
+}
