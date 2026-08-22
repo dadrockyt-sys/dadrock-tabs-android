@@ -1,0 +1,32 @@
+name: V143 Preview PDF Feature Gate
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - 'lib/jimmyPaigeProfessionalPdfFeature.js'
+      - 'app/api/generate-tab-preview/route.js'
+      - 'app/api/generate-tab-pdf/route.js'
+      - 'analyzer/verify_jimmy_paige_preview_feature_gate.mjs'
+      - '.github/workflows/v143-preview-pdf-feature-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify Preview-only professional PDF gate
+        run: node --experimental-default-type=module analyzer/verify_jimmy_paige_preview_feature_gate.mjs
