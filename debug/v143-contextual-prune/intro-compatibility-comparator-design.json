@@ -138,13 +138,21 @@
       "contextualCarrierCount",
       "frozenDecisionDigest",
       "frozenScoreDigest"
+    ],
+    "attestations": [
+      "freshCompatibilityEvidenceOnly",
+      "historicalProvenanceClaimed",
+      "productionModified",
+      "liveEndpointModified",
+      "professionalReferenceUsedAtRuntime",
+      "historicalArtifactsOverwritten"
     ]
   },
   "comparisonStages": [
     {
       "stage": 1,
       "name": "capture-completeness",
-      "passCondition": "Every required fresh-capture identity field exists; missing model/runtime hashes make the capture incomplete rather than equivalent."
+      "passCondition": "Every required fresh-capture identity field and safety attestation exists; missing model/runtime hashes make the capture incomplete rather than equivalent."
     },
     {
       "stage": 2,
@@ -174,7 +182,7 @@
   ],
   "allowedClassifications": {
     "INCOMPLETE_CAPTURE": "Required runtime/model/stem identity evidence is missing.",
-    "INCOMPATIBLE": "One or more source/recipe/intro invariants fail.",
+    "INCOMPATIBLE": "One or more source/recipe/intro/safety invariants fail.",
     "COUNT_COMPATIBLE_ONLY": "Historical intro event counts agree but cache bytes and/or downstream identity are not exact.",
     "INTRO_CACHE_EXACT_COMPATIBLE": "Fresh intro raw-attack cache digest and fingerprint exactly match the preserved historical cache; this is strong compatibility evidence but not proof of historical separator-family identity.",
     "DOWNSTREAM_EXACT_COMPATIBLE": "Fresh capture also reproduces the frozen downstream decisions/scores under unchanged boundaries and tolerances; still not a substitute for missing historical external-output provenance.",
@@ -194,6 +202,7 @@
     "Comparator must not retrain or mutate frozen models/predictions.",
     "Comparator must fail closed when required hashes/runtime identity are absent.",
     "Comparator must reject Family A/B classification unless decodedPcmHashMethod exactly equals soundfile-int16-always2d-numpy-tobytes-sha256-v1.",
+    "Comparator must require freshCompatibilityEvidenceOnly=true and all historical/production/reference/overwrite attestations=false.",
     "Comparator must preserve the original 244-row measures 1-16 grid and historical bar phase.",
     "Comparator must preserve historical median-onset behavior and original band boundaries.",
     "Comparator must emit both evidence strength and explicit excluded claims in every result.",
