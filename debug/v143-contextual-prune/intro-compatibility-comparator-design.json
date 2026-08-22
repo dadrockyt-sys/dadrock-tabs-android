@@ -1,6 +1,6 @@
 {
   "artifact": "v143-intro-compatibility-comparator-design",
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "date": "2026-08-22",
   "branch": "v143-contextual-prune-lobo",
   "status": "DESIGN_ONLY",
@@ -64,6 +64,12 @@
     },
     "historicalDirectBenchmarkWavSha256": "5b77a0a5a074256a6538d15fc37487441c574a252c1d759c12e5231c56fdb4b5"
   },
+  "freshDigestConventions": {
+    "canonicalJson": "json.dumps(value, sort_keys=True, separators=(\",\", \":\"), ensure_ascii=False).encode(\"utf-8\")",
+    "installedPackageInventorySha256": "SHA256 canonical JSON of installedPackageInventory sorted by normalized package name then version",
+    "runtimeFingerprintSha256": "SHA256 canonical JSON of runtimeIdentity without runtimeFingerprintSha256 plus installedPackageInventorySha256",
+    "modelCacheManifestSha256": "SHA256 canonical JSON of modelCacheFiles sorted by path; each row contains path, size and file sha256"
+  },
   "freshCaptureRequiredFields": {
     "captureIdentity": [
       "captureId",
@@ -73,8 +79,9 @@
       "sourceAudioSha256"
     ],
     "runtimeIdentity": [
-      "modalImageIdOrDigest",
+      "runtimeFingerprintSha256",
       "pythonVersion",
+      "platform",
       "audioSeparatorVersion",
       "torchVersion",
       "torchCudaVersion",
@@ -83,12 +90,7 @@
       "onnxProviders",
       "gpuName",
       "gpuComputeCapability",
-      "nvidiaDriverVersion",
-      "torchDeterministicAlgorithms",
-      "cudnnDeterministic",
-      "cudnnBenchmark",
-      "cudaMatmulTf32",
-      "cudnnTf32"
+      "nvidiaDriverVersion"
     ],
     "resolvedDependencyIdentity": [
       "installedPackageInventorySha256",
@@ -96,9 +98,11 @@
     ],
     "modelPayloadIdentity": [
       "bsRoformerModelIdentifier",
-      "bsRoformerPayloadSha256",
       "demucsModelIdentifier",
-      "demucsPayloadSha256"
+      "audioSeparatorModelDir",
+      "modelCacheManifestSha256",
+      "modelCacheFiles",
+      "modelPayloadCaptureComplete"
     ],
     "separatorInvocation": [
       "seed",
@@ -106,6 +110,8 @@
       "demucsOverlap",
       "demucsSegmentSize",
       "roformerBatchSize",
+      "seededCliSourceSha256",
+      "productionSeparatorSourceSha256",
       "directCommand",
       "cascadeCommands"
     ],
@@ -129,16 +135,6 @@
       "cascadeStemEventCount",
       "sweepEventCounts"
     ],
-    "downstreamFrozenReplay": [
-      "gridRowCount",
-      "onsetCount",
-      "onsetVectorCount",
-      "gridFeatureCount",
-      "sequenceFeatureCount",
-      "contextualCarrierCount",
-      "frozenDecisionDigest",
-      "frozenScoreDigest"
-    ],
     "attestations": [
       "freshCompatibilityEvidenceOnly",
       "historicalProvenanceClaimed",
@@ -148,31 +144,46 @@
       "historicalArtifactsOverwritten"
     ]
   },
+  "optionalFreshCaptureFields": {
+    "runtimeIdentity": [
+      "modalImageIdOrDigest"
+    ],
+    "downstreamFrozenReplay": [
+      "gridRowCount",
+      "onsetCount",
+      "onsetVectorCount",
+      "gridFeatureCount",
+      "sequenceFeatureCount",
+      "contextualCarrierCount",
+      "frozenDecisionDigest",
+      "frozenScoreDigest"
+    ]
+  },
   "comparisonStages": [
     {
       "stage": 1,
       "name": "capture-completeness",
-      "passCondition": "Every required fresh-capture identity field and safety attestation exists; missing model/runtime hashes make the capture incomplete rather than equivalent."
+      "passCondition": "Every required fresh-capture identity field and safety attestation exists; missing runtime/model hashes make the capture incomplete rather than equivalent. Downstream replay fields remain optional until an authenticated historical downstream digest baseline is pinned."
     },
     {
       "stage": 2,
       "name": "source-and-recipe-lock",
-      "passCondition": "Source-audio Git blob and frozen separator recipe exactly match the read-only historical baseline."
+      "passCondition": "Source-audio Git blob, frozen separator recipe and producer source hashes are recorded without changing the historical separator settings."
     },
     {
       "stage": 3,
+      "name": "fresh-runtime-and-model-identity",
+      "passCondition": "Package inventory, runtime fingerprint and the complete audio-separator model-cache manifest are internally checksum-consistent. The capture fails closed if the model cache is absent or requested model identifiers are not present."
+    },
+    {
+      "stage": 4,
       "name": "fresh-stem-identity",
       "passCondition": "Record fresh WAV and decoded-PCM hashes using the pinned Section3 SoundFile int16 convention. Family A/B may be reported only as a current research classification when the methodId is exact and both decoded-PCM hashes match a separately proven research family."
     },
     {
-      "stage": 4,
+      "stage": 5,
       "name": "intro-fingerprint-compatibility",
       "passCondition": "Compare fresh measures 1-16 raw-event total, per-stem counts, sweep counts and cache digest against the preserved historical fingerprint. Exact cache digest is strongest; count-only agreement must be labelled weaker compatibility."
-    },
-    {
-      "stage": 5,
-      "name": "frozen-downstream-compatibility",
-      "passCondition": "Replay the unchanged historical grid/sequence/contextual-prune handoff and compare frozen decisions/scores with unchanged tolerances and historical band boundaries."
     },
     {
       "stage": 6,
@@ -182,10 +193,9 @@
   ],
   "allowedClassifications": {
     "INCOMPLETE_CAPTURE": "Required runtime/model/stem identity evidence is missing.",
-    "INCOMPATIBLE": "One or more source/recipe/intro/safety invariants fail.",
+    "INCOMPATIBLE": "One or more source/recipe/runtime/model/intro/safety invariants fail.",
     "COUNT_COMPATIBLE_ONLY": "Historical intro event counts agree but cache bytes and/or downstream identity are not exact.",
     "INTRO_CACHE_EXACT_COMPATIBLE": "Fresh intro raw-attack cache digest and fingerprint exactly match the preserved historical cache; this is strong compatibility evidence but not proof of historical separator-family identity.",
-    "DOWNSTREAM_EXACT_COMPATIBLE": "Fresh capture also reproduces the frozen downstream decisions/scores under unchanged boundaries and tolerances; still not a substitute for missing historical external-output provenance.",
     "CURRENT_RESEARCH_FAMILY_A_COMPATIBLE": "Fresh decoded-PCM hashes match the separately proven current/research Family A pair under the pinned decoded-PCM hash convention.",
     "CURRENT_RESEARCH_FAMILY_B_COMPATIBLE": "Fresh decoded-PCM hashes match the separately proven current/research Family B pair under the pinned decoded-PCM hash convention. This label must not be shortened to 'historical intro Family B'."
   },
@@ -197,22 +207,26 @@
     "production-ready-by-compatibility-alone"
   ],
   "implementationRules": [
-    "Comparator must be read-only with respect to preserved historical artifacts.",
-    "Comparator must not invoke or grade against a professional reference.",
-    "Comparator must not retrain or mutate frozen models/predictions.",
-    "Comparator must fail closed when required hashes/runtime identity are absent.",
+    "Comparator and producer must be read-only with respect to preserved historical artifacts.",
+    "Producer output paths must remain under debug/v143-contextual-prune/ and must never write public/training or analyzer/v143-intro-1-16-evidence/codespace-snapshot.",
+    "Comparator and producer must not invoke or grade against a professional reference.",
+    "Comparator and producer must not retrain or mutate frozen models/predictions.",
+    "Comparator must fail closed when required hashes/runtime/model identity are absent.",
+    "Comparator must reject a model capture unless modelPayloadCaptureComplete=true and the package/runtime/model manifest digests recompute exactly.",
     "Comparator must reject Family A/B classification unless decodedPcmHashMethod exactly equals soundfile-int16-always2d-numpy-tobytes-sha256-v1.",
     "Comparator must require freshCompatibilityEvidenceOnly=true and all historical/production/reference/overwrite attestations=false.",
-    "Comparator must preserve the original 244-row measures 1-16 grid and historical bar phase.",
-    "Comparator must preserve historical median-onset behavior and original band boundaries.",
+    "Producer must use the same exact stem files for WAV/PCM identity and intro Basic Pitch evidence; it must not separate twice and compare across potentially different L4 families.",
+    "Producer must preserve the original 244-row measures 1-16 grid and historical bar phase.",
+    "Producer must preserve historical median-onset behavior, four wide-recall sweeps and original band boundaries.",
     "Comparator must emit both evidence strength and explicit excluded claims in every result.",
-    "Any future GPU workflow must save its full fresh-capture manifest before downstream analysis so provenance cannot be lost again."
+    "Any future GPU workflow must save its full fresh-capture manifest and raw cache together so provenance cannot be lost again."
   ],
   "recommendedFutureArtifacts": {
-    "captureManifest": "debug/v143-contextual-prune/intro-compatibility-fresh-capture.json",
-    "comparisonResult": "debug/v143-contextual-prune/intro-compatibility-comparison.json",
-    "fullLogArtifact": "v143-intro-compatibility-full-log",
-    "packageInventory": "debug/v143-contextual-prune/intro-compatibility-package-inventory.txt"
+    "runDirectory": "debug/v143-contextual-prune/intro-compatibility-runs/<captureId>/",
+    "captureManifest": "fresh-capture.json",
+    "rawAttackCache": "fresh-raw-attack-cache.json",
+    "comparisonResult": "comparison.json",
+    "fullLogArtifact": "v143-intro-compatibility-full-log"
   },
-  "nextImplementationStep": "Implement a new isolated research-only fresh-capture producer that records the complete manifest and pinned decoded-PCM convention without writing any historical cache path. Do not execute it until static write-path and provenance guards pass."
+  "nextImplementationStep": "Implement a new isolated research-only fresh-capture producer that records the complete manifest and raw cache from one separator pass without writing any historical cache path. Do not execute it until static write-path and provenance guards pass."
 }
