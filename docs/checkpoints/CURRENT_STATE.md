@@ -2,7 +2,7 @@
 
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
-Branch HEAD before this checkpoint update: `1666046a29b4e85d532dde3736a246c3a15c8a6d`
+Branch HEAD before this checkpoint update: `9f52bf83597e921da12887874bace0df0ffe6d47`
 
 ## Resume directive
 
@@ -28,7 +28,7 @@ productionPromotionAllowed: false
 
 ---
 
-## Stable `/ai-tab` path already in place
+## Stable `/ai-tab` path
 
 `app/ai-tab/page.js` uploads permitted user audio to private Vercel Blob storage and calls `/api/analyze-audio-tab`.
 
@@ -38,7 +38,7 @@ productionPromotionAllowed: false
 liveV143.referenceFree === true
 ```
 
-`lib/v143RenderContract.js` accepts only events that already contain valid musical placement and playable note information:
+`lib/v143RenderContract.js` accepts only events that already contain valid:
 
 ```text
 measure >= 1
@@ -50,25 +50,25 @@ MIDI pitch
 
 No browser/PDF code may manufacture missing measure/step placement.
 
-Preview and final purchased PDF routes already receive the analyzer metadata/render events. PayPal/free-token verification and Resend delivery are unchanged.
+Preview and final purchased PDF routes already receive analyzer metadata/render events. PayPal/free-token verification and Resend delivery remain unchanged.
 
-Professional renderer feature gate remains default-off:
+Professional renderer feature gate remains:
 
 ```text
 JIMMY_PAIGE_PROFESSIONAL_PDF_V1 === "true"
 ```
 
-No production environment variable has been enabled.
+Production remains unchanged and the flag has not been enabled in Production.
 
 ---
 
-## Structured renderer itself is already proven
+## Structured renderer fixture already passed
 
-Existing synthetic structured-PDF fixture:
+Existing synthetic fixture:
 
 `debug/v143-contextual-prune/jimmy-paige-pdf-fixture/validation.json`
 
-Validation commit:
+Commit:
 
 `b40df94d76af3c6e432da0b8c20c723c298635a1`
 
@@ -82,13 +82,11 @@ fullPageCount: 2
 previewPageCount: 2
 ```
 
-It retained all 17 tested technique classes and passed PDF header, pagination, text extraction and raster checks. Therefore the remaining product blocker is real analyzer output quality, not PDF mechanics.
+The synthetic fixture retained all tested technique classes and passed PDF header, pagination, text extraction and raster checks.
 
 ---
 
 ## V143 analyzer-output quality gate implemented
-
-### Quality report
 
 File:
 
@@ -97,20 +95,6 @@ File:
 Initial commit:
 
 `4542a9f15b09f0b6b9ce6980a908c7075b59a624`
-
-Metrics include:
-
-- reference-free identity;
-- raw/considered event count;
-- valid render-event count;
-- render-event survival percentage;
-- playable string/fret coverage;
-- authenticated measure/step coverage;
-- pitch validity coverage;
-- measure range;
-- 16th-step coverage;
-- technique coverage;
-- sustain coverage.
 
 Current conservative canary eligibility thresholds:
 
@@ -122,23 +106,25 @@ minimum measure/step coverage: 70%
 minimum pitch coverage: 70%
 ```
 
-These thresholds are a canary floor, not a claim of final musical quality. Do not weaken them merely to get a pass.
-
-Every report keeps:
+Every quality report keeps:
 
 ```text
 productionPromotionAuthorized: false
 ```
 
-### Quality gate exposed and enforced at analyzer boundary
-
-Commits:
+Analyzer-boundary enforcement commits:
 
 - `5250c7629d428dcee3797ce946e81c68ffa2a4b6` — expose V143 analyzer quality metrics.
-- `5655f0c6ddea6570c09dbe79e185fffdb65ab168` — gate structured engine identity on analyzer quality.
-- `cf423f20f309cae810f8566141ec7ca8d64329a5` / `249316e0d5b7cecf7f5354d6acab3088a33309b2` — make modules directly testable.
+- `5655f0c6ddea6570c09dbe79e185fffdb65ab168` — gate structured engine identity on quality.
+- `cf423f20f309cae810f8566141ec7ca8d64329a5` / `249316e0d5b7cecf7f5354d6acab3088a33309b2` — direct-testable imports.
 
-A V143 Rhythm response gets the structured engine identity only when:
+A V143 Rhythm response receives:
+
+```text
+analysisEngine = v143-reference-free-rhythm
+```
+
+only when:
 
 ```text
 referenceFree === true
@@ -146,280 +132,253 @@ analysisQuality.passed === true
 renderEvents.length > 0
 ```
 
-Passing:
-
-```text
-analysisEngine = v143-reference-free-rhythm
-```
-
-Insufficient/failing V143:
+Otherwise it is labeled:
 
 ```text
 analysisEngine = v143-reference-free-rhythm-fallback
 ```
 
-The existing professional PDF bridge requires the exact passing engine identity, so low-quality V143 output can still keep its generated text tab and use the polished fallback renderer but cannot silently enter structured engraving.
-
-### Regression verifier
-
-`analyzer/verify_v143_analyzer_quality_gate.mjs`
-
-Commit:
-
-`490d64e8bc842f1ff48447f86a638c9dff2bc6dd`
-
-Workflow:
-
-`.github/workflows/v143-analyzer-quality-gate.yml`
-
-Commit:
-
-`a5b3ceb4998de7e96d62fa70ed11ef8e80cd749a`
-
-Do not claim this new CI verifier passed until a concrete run/result is surfaced. Earlier connector status inspection did not expose the push-run result.
+which preserves safe polished/text fallback behavior while preventing weak V143 output from silently entering structured engraving.
 
 ---
 
-## Exact V143 product chain located on this branch
+## Exact V143 Rhythm product chain confirmed
 
-The branch contains the actual V143 Rhythm product modules even though ordinary code search initially missed some of them.
+The branch contains the actual V143 product path:
 
-### `analyzer/v143_reference_free_rhythm_pipeline.py`
+- `analyzer/v143_reference_free_rhythm_pipeline.py`
+- `analyzer/v143_modal_rhythm_router.py`
+- `analyzer/v143_rhythm_event_assembly.py`
+- `analyzer/v143_rhythm_guitar_note_mapper.py`
+- `analyzer/v143_rhythm_output_adapter.py`
+- `analyzer/v143_modal_live_endpoint.py`
 
-`analyze_reference_free_rhythm(...)`:
+The output adapter returns real events containing the exact render-contract fields (`measure`, `step`, `stringIndex`, `fret`, MIDI-compatible pitch). No evaluator field-name mismatch exists.
 
-- estimates timing from normalized full mix;
-- detects Rhythm candidates from selected separated stems;
-- preserves the paired carrier-stem contract;
-- runs frozen `V143ProductionEngine` scoring/selection;
-- requires `v143Score`, `v143Rank`, `v143Selected` on every runtime row.
+Lead/Bass remain delegated to legacy behavior.
 
-### `analyzer/v143_modal_rhythm_router.py`
-
-Routes only Rhythm to V143. Lead/Bass remain delegated to the legacy analyzer. Rhythm then passes through event assembly and the output adapter.
-
-### `analyzer/v143_rhythm_event_assembly.py`
-
-Downstream-only assembly preserves frozen V143:
-
-```text
-measure
-step
-timeSeconds
-dominantMidi
-pitchHypotheses
-v143Score
-v143Rank
-v143Selected
-```
-
-It then adds deterministic guitar mapping and evidence-derived sustain/technique metadata.
-
-### `analyzer/v143_rhythm_guitar_note_mapper.py`
-
-Analyzer-side deterministic standard-tuning mapping:
-
-```text
-stringIndex 0 = high e ... 5 = low E
-open MIDI = 64,59,55,50,45,40
-max fret = 24
-```
-
-It selects the lowest legal fret for the already-selected MIDI pitch. This is legitimate analyzer-side note mapping; it does not infer measure/step in the renderer.
-
-### `analyzer/v143_rhythm_output_adapter.py`
-
-Returns the product response with:
-
-```text
-generatedTab
-tuning
-tempo
-timeSignature
-techniques
-events
-noteCount
-candidateCount
-selectedCount
-engineVersion = v143-reference-free-rhythm-output-v2
-```
-
-Those events contain the exact fields needed by `v143RenderContract`.
-
-### `analyzer/v143_modal_live_endpoint.py`
-
-Contains the existing L4 `rhythm_v143_request(payload)` product function and packages the V143 model/dependencies. It adds the authoritative V143 identity metadata:
-
-```text
-liveV143.version = 4
-liveV143.modalGpu = L4
-liveV143.rhythmOnly = true
-liveV143.referenceFree = true
-liveV143.separatorDeterministic = true
-liveV143.separatorSeed = 143
-liveV143.demucsShifts = 1
-liveV143.professionalReferenceUsed = false
-liveV143.runtimeLabelsRequired = false
-```
-
-**Do not deploy or modify this live endpoint during the canary.**
+Do not deploy/modify `v143_modal_live_endpoint.py` during this phase.
 
 ---
 
-## Approved real-audio canary infrastructure discovered
+## Approved real-audio product canary
 
-Approved repository audio fixture already used by V143 tooling:
+Approved repository audio fixture:
 
 `public/gomywayfullaitest.m4a`
 
-Existing isolated Modal workflow:
+Existing GitHub→Modal credentials are proven available through `MODAL_TOKEN_ID` / `MODAL_TOKEN_SECRET`.
 
-`.github/workflows/v143-contextual-prune-shadow-modal-smoke.yml`
+Product-canary components:
 
-Existing diagnostic:
+- `analyzer/v143_ai_tab_product_canary_modal.py`
+- `analyzer/evaluate_v143_real_audio_canary.mjs`
+- `analyzer/render_v143_real_audio_canary_pdf.mjs`
+- `.github/workflows/v143-ai-tab-real-audio-canary.yml`
 
-`debug/v143-contextual-prune/shadow-modal-smoke.json`
+Important commits:
 
-Verified from that diagnostic:
+- `fc17f8e803e6dc15c00e3c9eeef89a75622e94c2` — isolated product canary.
+- `0aa205a10fb1e9c9229f9b27fd2cf3fbdcdcced6` — sanitized real-audio quality evaluator.
+- `1666046a29b4e85d532dde3736a246c3a15c8a6d` — exact-response PDF validator.
+- `29174d7dc7fce0931f9ed8b814dd000291fa3af0` — branch-only real-audio workflow.
+- `b00d4490b298720134f8957ba510744492cdceb4` — explicit Modal import closure.
 
-```text
-modalCredentialsAvailableInGitHubActions: true
-smokeAttempted: true
-smokeExitCode: 0
-smokePassed: true
-```
-
-Therefore branch GitHub Actions already has working `MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET`; no analyzer API token or private Blob token needs to be added for the product canary.
-
-The historical shadow app remains separate. Do not confuse its research carrier replay with this product canary.
+The canary bypasses private Blob networking by feeding the approved fixture bytes directly into the same request-adapter normalization/product pipeline. It does **not** use a private Blob token and does **not** deploy/modify the live endpoint.
 
 ---
 
-## New isolated real-audio product-canary code committed
+# REAL-AUDIO PRODUCT CANARY PASSED
 
-### 1. Modal product canary
+Bot evidence commit:
 
-File:
+`9f52bf83597e921da12887874bace0df0ffe6d47` — `Record V143 AI tab real-audio canary`
 
-`analyzer/v143_ai_tab_product_canary_modal.py`
+## Analyzer quality evidence
 
-Commit:
-
-`fc17f8e803e6dc15c00e3c9eeef89a75622e94c2` — `Add isolated V143 AI tab product canary`
-
-New Modal app name:
-
-`dadrock-v143-ai-tab-product-canary`
-
-It reuses `rhythm_image` from the existing live endpoint but does **not** deploy or modify the live endpoint.
-
-It is locked to:
-
-`public/gomywayfullaitest.m4a`
-
-It executes the same product chain:
-
-- `process_vercel_audio_request`;
-- legacy inspection/validation/normalization;
-- deterministic Rhythm stem provider;
-- `route_normalized_audio`;
-- strict bend consensus;
-- strict legato evidence;
-- event assembly/string-fret mapping;
-- V143 output adapter.
-
-The only deliberate substitution is the Blob download callback: approved fixture bytes are written directly into the request adapter's temporary file. No private Blob URL/token is required.
-
-The raw analyzer response is written only to ephemeral:
-
-`.canary/v143-product-output.json`
-
-and must **not** be committed.
-
-### 2. Sanitized real-audio quality evaluator
-
-File:
-
-`analyzer/evaluate_v143_real_audio_canary.mjs`
-
-Commit:
-
-`0aa205a10fb1e9c9229f9b27fd2cf3fbdcdcced6` — `Add real-audio V143 quality evaluator`
-
-It runs the raw product result through the exact web payload contract:
-
-`buildJimmyPaigeAnalysisPayload(... usingV143RhythmAnalyzer: true)`
-
-and writes only sanitized evidence to:
+Artifact:
 
 `debug/v143-contextual-prune/ai-tab-real-audio-canary.json`
 
-The report contains quality metrics/counts/identity/routing/source SHA but not the raw generated tab, raw events, tokens or private URLs.
+Result:
 
-### 3. Exact-response professional PDF validator
+```text
+passed: true
+analysisEngine: v143-reference-free-rhythm
+engineVersion: v143-reference-free-rhythm-output-v2
+referenceFree: true
+modalGpu: L4
+professionalReferenceUsed: false
+runtimeLabelsRequired: false
+```
 
-File:
+Real-audio counts:
 
-`analyzer/render_v143_real_audio_canary_pdf.mjs`
+```text
+candidateCount: 1788
+selectedCount: 358
+rawEventCount: 358
+validRenderEventCount: 358
+renderEventSurvivalPercent: 100%
+playableStringFretPercent: 100%
+musicalPlacementPercent: 100%
+pitchValidityPercent: 100%
+```
 
-Commit:
+Musical coverage:
 
-`1666046a29b4e85d532dde3736a246c3a15c8a6d` — `Add exact-response V143 canary PDF validator`
+```text
+first measure: 1
+last measure: 113
+unique measures: 112
+16th-step positions covered: all 0..15
+sixteenthGridCoveragePercent: 100%
+```
 
-If and only if the real analyzer quality gate passes, it sends the **same returned `renderEvents`** into `createV143RhythmPdf` for full and preview PDFs.
+Technique/sustain evidence:
 
-It writes PDF files only to ephemeral `.canary/` artifact storage and writes compact validation to:
+```text
+technique events: 25 / 358 (7%)
+techniques:
+- bend
+- bend-release
+- hammer-on
+- pull-off
+- slide-down
+- slide-up
+sustain coverage: 358 / 358 (100%)
+```
+
+Other output:
+
+```text
+tempo: 129.19921875
+meter: 4/4
+tuning: E Standard
+generatedTab present: true
+```
+
+All quality failures are empty.
+
+## Exact-response professional PDF evidence
+
+Artifact:
 
 `debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json`
 
-If analyzer quality fails, it records:
+The **same 358 returned render events** were passed into `createV143RhythmPdf`.
+
+Result:
 
 ```text
-attempted: false
-passed: false
-reason: analyzer-quality-gate-failed
+attempted: true
+passed: true
+renderEventCount: 358
+firstMeasure: 1
+maximumMeasure: 113
+fullPageCount: 4
+previewPageCount: 4
+fullPdfBytes: 1,686,104
+previewPdfBytes: 1,678,626
 ```
 
-rather than fabricating a structured PDF success.
+Structural checks all passed:
 
-The validator checks exact event count, maximum measure agreement, PDF headers, useful size, page count and full/preview distinction. Workflow-level text extraction/raster checks are still to be wired.
+- analyzer quality passed;
+- structured render eligible;
+- structured engine selected;
+- exact returned events used;
+- maximum measure matched quality report;
+- full/preview PDF headers valid;
+- both PDFs had useful size;
+- both PDFs had pages;
+- preview differed from full.
+
+Text extraction checks all passed:
+
+```text
+titleExtracted: true
+dadRockBrandExtracted: true
+generatorLabelExtracted: true
+previewLockTextExtracted: true
+```
+
+Raster checks all passed:
+
+```text
+fullPageRasterized: true
+previewPageRasterized: true
+page-1 raster size: 935 x 1210
+```
+
+## Workflow/infrastructure evidence
+
+Artifact:
+
+`debug/v143-contextual-prune/ai-tab-real-audio-canary-action.json`
+
+Result:
+
+```text
+modalCredentialsAvailableInGitHubActions: true
+modalExitCode: 0
+rawAnalyzerOutputPresent: true
+qualityEvaluatorExitCode: 0
+qualityReportPresent: true
+pdfRendererExitCode: 0
+pdfValidationPresent: true
+pdfInspectionExitCode: 0
+privateBlobTokenUsed: false
+liveEndpointDeployedOrModified: false
+productionModified: false
+productionPromotionAuthorized: false
+```
+
+This is now concrete evidence that the isolated real uploaded-audio V143 Rhythm product chain can produce a quality-gated structured event set and that the exact returned set can generate valid professional full/preview PDFs.
+
+This does **not** automatically authorize Production promotion.
 
 ---
 
-## Current state / blocker
+## Current boundary
 
-The instrumentation and isolated canary programs are now present, but the new product canary has **not yet been run**.
+The previous real-analyzer/PDF blocker is closed for this approved canary input.
 
-No claim of a real-audio V143 pass should be made yet.
+Next boundary is a browser/Vercel Preview canary of the actual `/ai-tab` application wiring.
 
-No live endpoint has been deployed/modified and no production flag has been changed.
+No Production change has been made.
 
 ---
 
 ## Next steps — execute automatically in this order
 
-1. **Add branch-only GitHub Actions workflow** `.github/workflows/v143-ai-tab-real-audio-canary.yml`.
-   - `workflow_dispatch` plus a one-time push trigger scoped to the new canary files/workflow;
-   - explicit checkout of `v143-contextual-prune-lobo`;
-   - use existing `MODAL_TOKEN_ID` / `MODAL_TOKEN_SECRET`;
-   - run the isolated product canary once on the approved audio fixture;
-   - evaluate sanitized analyzer quality;
-   - conditionally render exact-response full/preview PDFs without another GPU transcription run;
-   - run generic PDF text extraction/raster checks;
-   - upload raw analyzer/PDF/PNG evidence only as a short-retention Actions artifact;
-   - commit only compact sanitized JSON validations.
+1. **Inspect current Vercel project and Preview configuration** for the `v143-contextual-prune-lobo` branch.
+   - determine whether the branch already has a Preview deployment;
+   - inspect whether `ANALYZER_API_URL_V143` is available to Preview;
+   - inspect professional-renderer flag state by environment;
+   - do not expose secret values in checkpoint/logs.
 
-2. **Inspect the concrete workflow run/jobs/logs** and distinguish infrastructure failure from musical-quality failure.
+2. **If configuration is safe, enable `JIMMY_PAIGE_PROFESSIONAL_PDF_V1=true` for Preview only**, never Production.
+   - prefer branch-scoped Preview configuration if supported;
+   - keep safe fallback behavior intact;
+   - do not alter `main`.
 
-3. **If the analyzer gate passes**, require exact-response PDF structural/text/raster validation to pass before considering any preview renderer promotion.
+3. **Trigger/identify a Vercel Preview deployment** for `v143-contextual-prune-lobo` and verify build health.
 
-4. **If the analyzer gate fails**, diagnose the actual missing field/coverage from `analysisQuality.failures`; do not weaken thresholds merely to make it green.
+4. **Exercise the actual Preview `/ai-tab` browser/server path** far enough to verify:
+   - page loads;
+   - Rhythm requests route to V143;
+   - analyzer response remains quality-gated;
+   - preview PDF endpoint selects structured renderer only for passing V143;
+   - fallback remains available for failed/legacy cases.
 
-5. **After the bot commits compact evidence**, refresh this checkpoint with the exact run result and new branch HEAD.
+5. **Do not make a paid purchase or send customer email as part of automated testing.** Use preview/free/test-safe paths only.
 
-6. Only after real-audio analyzer + exact-response PDF validation both pass should a separate decision be made about enabling `JIMMY_PAIGE_PROFESSIONAL_PDF_V1` in a Vercel **preview/canary** environment.
+6. Record compact Preview-canary evidence under `debug/v143-contextual-prune/` and update this checkpoint.
 
-7. Do **not** enable production automatically.
+7. Only after Preview application wiring passes should a separate explicit Production-promotion decision be made.
+
+8. Do **not** enable Production automatically.
 
 ---
 
@@ -428,13 +387,13 @@ No live endpoint has been deployed/modified and no production flag has been chan
 - Work only on `v143-contextual-prune-lobo`.
 - Keep this checkpoint current after meaningful progress.
 - Do not modify `main`.
-- Do not deploy/modify `v143_modal_live_endpoint.py` during this canary.
+- Do not deploy/modify `v143_modal_live_endpoint.py` during Preview validation unless a separate explicit need is proven.
 - Do not run another historical fresh compatibility separator capture.
 - Do not overwrite/delete preserved historical compatibility evidence.
-- Do not retrain/replace frozen V143 merely to make the PDF gate pass.
+- Do not retrain/replace frozen V143 merely to make a gate pass.
 - Do not manufacture measure/step data in browser/PDF code.
 - Do not weaken analyzer-quality thresholds merely to produce a pass.
 - Keep legacy Lead/Bass behavior unchanged.
 - Keep polished PDF renderer as safe fallback.
-- Keep `JIMMY_PAIGE_PROFESSIONAL_PDF_V1` default-off until explicitly promoted after canary validation.
-- Keep production promotion disabled until a separate explicit decision.
+- Any professional-renderer flag change before Production approval must be Preview-only.
+- Keep Production promotion disabled until a separate explicit decision.
