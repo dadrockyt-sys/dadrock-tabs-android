@@ -1,81 +1,222 @@
-# CURRENT STATE — V143 contextual-prune / intro compatibility capture
+# CURRENT STATE — V143 contextual-prune / fresh intro compatibility producer
 
-Updated: 2026-08-22 02:30 CDT
+Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
-Branch HEAD immediately before this checkpoint update: `5e91ef46eb906c86ff3988a2f4a09b0d8e91a440`
+Producer implementation commit: `def3b90e28bc3c7585fe004d4a7c6750dcb1cb0e`
 Historical source commit: `4d735846fbd834cc4c722f2cb48727e4629647f1`
+Previous exhaustive compatibility checkpoint: this file at commit `4a8c6627aa88b953364beb4b8a433278ff87a1b4`
 
 ## Resume directive
 
 Resume **only** on `v143-contextual-prune-lobo`.
 
-The historical measures 1–16 archaeology has reached its safe stop condition. Do not restart broad searches and do not reinterpret a fresh GPU run as recovered historical provenance.
+The exact implementation task from the previous checkpoint is complete: the isolated fresh compatibility producer now exists, has been statically validated, and has been committed **without executing Modal/GPU**.
 
-The exact next implementation task is:
+Stop here unless a future turn explicitly continues into fresh GPU compatibility capture.
 
-> Create the isolated, research-only fresh compatibility producer `analyzer/v143_intro_compatibility_fresh_capture.py`, statically validate it, and checkpoint it **without executing Modal/GPU yet**.
-
-After that producer is reviewed and fail-closed, a later explicitly approved run may create new compatibility evidence. A fresh run can classify compatibility with known current/research separator families, but it cannot by itself close the missing historical intro-family provenance link.
-
----
-
-## Non-negotiable safety constraints
-
-- Work only on `v143-contextual-prune-lobo`.
-- Do not modify `main`.
-- Do not modify production code or production artifacts.
-- Do not deploy or modify live endpoints.
-- Do not retrain or replace the frozen V143 model.
-- Do not modify frozen predictions.
-- Do not weaken thresholds or score-comparison tolerances.
-- Do not introduce professional/reference labels into runtime or provenance replay.
-- Preserve historical median-onset behavior.
-- Preserve the original historical measures 1–16 boundary and the **244-row** grid; do not synthesize a 256-row rectangle.
-- Do not overwrite preserved historical caches or evidence files.
-- Do not call fresh/current separator output a “bit-exact historical replay.”
-- Do not call a fresh Family-B match “historical intro Family B.”
-- Do not run Modal merely to recreate missing historical evidence.
-- Codespaces are not required for the current path.
+A future fresh run is **compatibility evidence only**. It may classify against known current/research separator families, but it must never be described as recovered historical intro provenance or a bit-exact historical replay.
 
 Production promotion remains disabled.
 
 ---
 
-## Historical measures 1–16 evidence that is closed
+## Newly completed work
 
-### Historical source/artifact chain
+### Fresh compatibility producer
 
-The historical first-party measures 1–16 producer graph is archived and checksum-manifested under:
+Created:
 
-- `analyzer/v143-intro-1-16-evidence/historical-source-4d735846/`
-- `analyzer/v143-intro-1-16-evidence/codespace-snapshot/`
+`analyzer/v143_intro_compatibility_fresh_capture.py`
 
-Static source/artifact equivalence is PASSING.
+Producer SHA-256:
 
-Key historical dimensions:
+`320364c8955577dacafab9fd19afae1b960d76fd81654a2eb67beaba1a5c35eb`
+
+Implementation commit:
+
+`def3b90e28bc3c7585fe004d4a7c6750dcb1cb0e` — `Add V143 intro compatibility fresh-capture producer`
+
+The producer is research-only. It does not modify production routing, deployment behavior, frozen predictions, thresholds, or models.
+
+### Static safety validator
+
+Created:
+
+`analyzer/v143_intro_compatibility_fresh_capture_static_check.py`
+
+Committed validation result:
+
+`debug/v143-contextual-prune/intro-compatibility-fresh-capture-static-validation.json`
+
+Static result:
 
 ```text
-raw attack count:          22270
-intro grid rows:             244
-onset count:                 787
-onset vector count:         4722
-grid feature count:           36
-sequence feature count:      260
-contextual carrier count:     15
-runtime reference dependency: none
+passed: true
+staticOnly: true
+modalOrGpuExecuted: false
 ```
 
-Historical timing has `firstBeatInMeasure=3`, so measure 1 contains only steps 12–15.
+The source was also parsed/compiled locally without importing the producer or invoking Modal.
 
-### Source audio identity
+No Modal/GPU compatibility run was performed during this implementation phase.
 
-`public/gomywayfullaitest.m4a` has the same Git blob at the historical source ref and the current research branch:
+---
+
+## Producer provenance architecture
+
+### 1. Source and checkout identity are pinned
+
+The local entrypoint refuses to run unless the checkout branch is exactly:
+
+`v143-contextual-prune-lobo`
+
+It records the current Git commit and verifies the source bytes for:
+
+`public/gomywayfullaitest.m4a`
+
+against the pinned source Git blob:
 
 `5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`
 
-Changed source audio is therefore ruled out as an explanation for separator-family differences.
+It also records the source file SHA-256 and verifies that the same source bytes arrive remotely.
 
-### Preserved intro raw-attack cache
+### 2. Exactly one fresh separator graph is allowed
+
+The producer contains exactly one call to:
+
+`build_deterministic_v143_stems(...)`
+
+That single call runs the frozen seeded graph:
+
+```text
+seed 143
+Demucs Guitar shifts=1 overlap=.10 segment=6
+BS-RoFormer Instrumental batch=1
+then Demucs Guitar shifts=1 overlap=.10 segment=6
+```
+
+The three underlying CLI commands are intercepted and recorded for provenance.
+
+The canonical files returned by this **same one separator graph** are reused for both:
+
+- WAV and decoded-PCM stem identity capture; and
+- measures 1–16 Basic Pitch raw-attack evidence.
+
+There is no second separator build for the intro cache.
+
+### 3. Exact decoded-PCM convention is pinned
+
+The producer uses:
+
+```python
+audio, sample_rate = sf.read(str(path), dtype="int16", always_2d=True)
+pcm_sha256 = hashlib.sha256(audio.tobytes()).hexdigest()
+```
+
+Manifest method ID:
+
+`soundfile-int16-always2d-numpy-tobytes-sha256-v1`
+
+For direct and cascade stems it records:
+
+- WAV SHA-256;
+- decoded-PCM SHA-256;
+- sample rate;
+- frame count;
+- channel count.
+
+### 4. Historical measures 1–16 cache semantics are preserved
+
+The archived first-party producer was recovered from:
+
+`analyzer/v143-intro-1-16-evidence/historical-source-4d735846/v143_intro_capture_raw_attack_cache.py`
+
+The fresh producer reuses its ordering and semantics:
+
+- reference-free timing;
+- original bar phase;
+- measures 1–16 only;
+- exact **244-row** intro grid, with a fail-closed row-count guard;
+- guitar MIDI 40..88;
+- historical four wide-recall sweeps;
+- 0.30 s wide-grid acceptance;
+- 0.10 s production-grid annotation;
+- canonical direct/cascade stem ordering and names;
+- no professional reference;
+- historical event-field ordering;
+- historical JSON serialization using `json.dumps(..., indent=2) + "\n"`.
+
+The historical producer's `sourceDurationSeconds` lookup behavior is intentionally preserved: it queried `source_metadata.get("duration")`, while `modal_analyzer` exposes `durationSeconds`, so this field remains `null` as in the archived producer.
+
+### 5. Runtime/dependency/model identity is fail-closed
+
+The producer records:
+
+- Python/platform;
+- `audio-separator` version;
+- Torch/CUDA/cuDNN;
+- ONNX Runtime and providers;
+- GPU name and compute capability;
+- NVIDIA driver;
+- deterministic-algorithm/CuDNN flags;
+- TF32 flags;
+- complete installed package inventory and canonical digest;
+- runtime fingerprint and canonical digest;
+- `/tmp/audio-separator-models` file manifest with file size and SHA-256;
+- canonical model-cache manifest digest;
+- requested BS-RoFormer and Demucs model identifiers;
+- best-effort Basic Pitch model path/hash identity.
+
+`modelPayloadCaptureComplete` is set true only if both requested separator model identifiers are actually present in the captured model-cache manifest. Missing model identity is not guessed or filled in; it remains visibly incomplete and the comparator will fail closed.
+
+### 6. Output writes are isolated and no-overwrite
+
+Fresh artifacts may only be written under:
+
+`debug/v143-contextual-prune/intro-compatibility-runs/<captureId>/`
+
+The producer rejects path escape and rejects pre-existing run/artifact paths.
+
+A successful future run is designed to save:
+
+- `fresh-capture.json`
+- `fresh-raw-attack-cache.json`
+- `package-inventory.txt`
+- `runtime-fingerprint.json`
+- `model-cache-manifest.json`
+
+It does not write the historical Codespace snapshot, evidence-gap artifact, design contract, public training/calibration paths, or production artifacts.
+
+---
+
+## Static validation that passed
+
+The committed validator confirms, without importing Modal code or executing a separator:
+
+- branch pin is present;
+- decoded-PCM method is exact;
+- measures 1–16 boundary is exact;
+- 0.30/0.10 historical grid tolerances are unchanged;
+- exactly one `build_deterministic_v143_stems` call exists;
+- exactly one local-entrypoint `.remote` capture call exists;
+- the 244-row guard exists;
+- SoundFile int16/always-2D/tobytes hashing exists;
+- reference-free and comparator safety attestations are literal;
+- isolated debug/no-overwrite write guards exist;
+- forbidden historical/production write paths are absent;
+- professional-reference modules are not imported;
+- deploy/retrain/fit calls are absent;
+- historical Basic Pitch/timing helpers are reused;
+- historical cache byte serialization is preserved;
+- one-graph/three-command capture is guarded;
+- package/runtime/model provenance digests are captured;
+- the design still keeps the historical evidence gap open.
+
+Validation artifact producer SHA matches the committed producer SHA-256 above.
+
+---
+
+## Historical baseline remains unchanged
 
 Preserved cache:
 
@@ -85,11 +226,10 @@ SHA-256:
 
 `698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9`
 
-Historical measures 1–16 fingerprint:
+Fingerprint:
 
 ```text
 rawEventCount: 22270
-
 direct-demucs6s-guitar.wav:      11164
 bsroformer-demucs6s-guitar.wav:  11106
 
@@ -99,392 +239,107 @@ o025_f015:  2830
 o030_f020:  1685
 ```
 
-These per-stem counts are measured **after** Basic Pitch parsing, guitar-range filtering, wide-grid acceptance, and measures 1–16 filtering. They are not whole-song stem hashes.
+Historical timing has `firstBeatInMeasure=3`; measure 1 contains only steps 12–15 and the measures 1–16 grid has 244 rows.
 
-### Frozen historical separator recipe
-
-The source-proven two-view recipe is:
-
-1. direct Demucs6s Guitar;
-2. BS-RoFormer Instrumental -> Demucs6s Guitar.
-
-Frozen settings:
-
-```text
-seed: 143
-Demucs shifts: 1
-Demucs overlap: 0.10
-Demucs segment size: 6
-RoFormer batch size: 1
-Demucs model identifier: htdemucs_6s.yaml
-BS-RoFormer identifier: model_bs_roformer_ep_317_sdr_12.9755.ckpt
-audio-separator: 0.44.5
-```
-
-Canonical stem filenames:
-
-- `direct-demucs6s-guitar.wav`
-- `bsroformer-demucs6s-guitar.wav`
-
-The original historical downloaded model payload hashes remain unauthenticated.
-
-### Historical-era Modal execution existence
-
-Historical Modal execution is **not** in doubt. Preserved Aug-16 Codespace-era evidence confirms Modal remote execution and a successful L4 dependency smoke.
-
-Observed smoke fingerprint included:
-
-```text
-torch: 2.13.0+cu130
-torch CUDA: 13.0
-GPU: NVIDIA L4
-audio-separator CLI exit: 0
-ONNX providers included TensorRT, CUDA and CPU
-```
-
-The remaining evidence gap is not “did Modal run?”; it is the missing retained output identity that would bind the historical intro raw-attack cache to a whole-song separator PCM family.
-
----
-
-## Historical intro separator-family evidence gap — KEEP OPEN
+Historical separator-family provenance remains intentionally open because no surviving historical whole-song output identity binds this intro cache to Family A or Family B.
 
 Authoritative gap artifact:
 
 `debug/v143-contextual-prune/intro-separator-family-evidence-gap.json`
 
-Status remains `EVIDENCE_GAP`.
-
-Targeted archaeology did **not** recover:
-
-- historical seeded repeatability pass-1 `carrierA` / `carrierB` output hashes;
-- historical seeded repeatability pass-2 `carrierA` / `carrierB` output hashes;
-- the historical cascade benchmark WAV file SHA for `public/separator-benchmark-v2/gomyway-bsroformer-demucs6s-guitar.wav`;
-- a historical intro capture record containing the whole-song direct/cascade WAV or decoded-PCM hashes;
-- an immutable original historical Modal image digest;
-- authenticated original BS-RoFormer downloaded payload SHA-256;
-- authenticated original Demucs downloaded payload/config SHA-256.
-
-Therefore:
-
-- do **not** claim the intro cache was Family B because later Section3 was Family B;
-- do **not** claim historical intro Family A or Family B from a fresh run;
-- do **not** use output-level agreement alone as raw provenance closure.
-
-The broad archaeology is exhausted. Only a genuinely new surviving historical record would justify reopening it.
+Status remains `EVIDENCE_GAP*`.
 
 ---
 
-## Known research separator families
+## Known current/research separator families
 
-Later Section3 research proved two decoded-PCM families under nominally equivalent L4 execution.
-
-### Family A
+Family A decoded-PCM pair:
 
 ```text
-direct decoded PCM SHA-256:
-30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8
-
-cascade decoded PCM SHA-256:
-68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56
+direct:  30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8
+cascade: 68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56
 ```
 
-### Family B
+Family B decoded-PCM pair:
 
 ```text
-direct decoded PCM SHA-256:
-1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e
-
-cascade decoded PCM SHA-256:
-e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3
+direct:  1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e
+cascade: e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3
 ```
 
-Section3 exact Family-B evidence reproduced the historical 49–64 carrier and exact frozen decisions/scores. This is valid Section3 provenance evidence, not an intro lineage bridge.
+A future exact pair match may be labelled only:
 
-### Exact decoded-PCM hash convention — RECOVERED
+- `CURRENT_RESEARCH_FAMILY_A_COMPATIBLE`, or
+- `CURRENT_RESEARCH_FAMILY_B_COMPATIBLE`.
 
-The Family A/B hashes above were generated by:
-
-```python
-import hashlib
-import soundfile as sf
-
-audio, sample_rate = sf.read(
-    str(path),
-    dtype="int16",
-    always_2d=True,
-)
-pcm_sha256 = hashlib.sha256(audio.tobytes()).hexdigest()
-```
-
-This exact convention is now part of the intro compatibility contract.
-
-A fresh manifest must declare:
-
-`SOUNDFILE_INT16_ALWAYS_2D_TOBYTES_SHA256`
-
-The comparator must refuse Family A/B classification if the declared method differs.
+It must not be renamed to “historical intro Family A/B.”
 
 ---
 
-## Compatibility work completed on this branch
+## Existing comparator remains authoritative
 
-Historical provenance remains open, so all new work is explicitly labelled **fresh compatibility evidence only**.
-
-### Design contract
-
-File:
-
-`debug/v143-contextual-prune/intro-compatibility-comparator-design.json`
-
-The contract defines:
-
-- read-only historical baselines;
-- required fresh source/runtime/dependency/model/stem identities;
-- the recovered decoded-PCM hashing convention;
-- exact intro fingerprint comparison;
-- allowed compatibility labels;
-- forbidden historical conclusions;
-- production/reference-free invariants;
-- fail-closed behavior when required provenance is missing.
-
-Recent contract hardening commits include:
-
-- `5ce0e15cd4e817f4d33cdc2d391677a701ca3099`
-- `868adaed6dac29cd40429c7ac0a00fc2e664038a`
-
-### Offline comparator
-
-File:
+Offline comparator:
 
 `analyzer/v143_intro_compatibility_comparator.py`
 
-The comparator itself does **not** run Modal or a separator.
+Design contract:
 
-It consumes a fresh-capture manifest and checks only authenticated historical invariants.
+`debug/v143-contextual-prune/intro-compatibility-comparator-design.json`
 
-It now:
-
-- verifies preserved historical cache integrity;
-- verifies source Git blob and frozen recipe;
-- requires the exact decoded-PCM hashing method for Family classification;
-- verifies fresh safety attestations;
-- recomputes package inventory/runtime/model-cache manifest digests instead of blindly trusting manifest-provided hashes;
-- fails closed for missing required provenance;
-- never closes historical provenance from fresh compatibility evidence.
-
-Latest comparator hardening commit before this checkpoint:
-
-`5e91ef46eb906c86ff3988a2f4a09b0d8e91a440` — `Verify V143 runtime and model capture digests`
-
-Other recent comparator/safety commits:
-
-- `80440fa55a7bbfeaa4382f170abc620e2fe86056`
-- `93e3fca004e55e082e54ad4280fcf7507684033c`
-
-### Fresh-capture template
-
-File:
+Fresh template:
 
 `debug/v143-contextual-prune/intro-compatibility-fresh-capture.template.json`
 
-The template is intentionally incomplete/fail-closed until a producer supplies real captured evidence.
+The comparator:
 
-Latest template hardening commit:
+- does not run Modal;
+- verifies preserved baseline integrity;
+- verifies source/recipe identity;
+- recomputes package/runtime/model digests;
+- requires complete model payload capture;
+- requires the exact decoded-PCM hash convention for Family classification;
+- verifies intro counts/cache digest;
+- verifies safety attestations;
+- never closes historical provenance from fresh compatibility evidence.
 
-`3ac883269caf52d195dc6417da19dd2fa9f33d38`
-
-### Compatibility labels
-
-Permitted labels include:
+Allowed primary compatibility results remain:
 
 - `INCOMPLETE_CAPTURE`
 - `INCOMPATIBLE`
 - `COUNT_COMPATIBLE_ONLY`
 - `INTRO_CACHE_EXACT_COMPATIBLE`
-- `CURRENT_RESEARCH_FAMILY_A_COMPATIBLE`
-- `CURRENT_RESEARCH_FAMILY_B_COMPATIBLE`
 
-Downstream exact-compatibility classification remains disabled until expected historical downstream digests are independently authenticated and pinned.
-
-Forbidden conclusions include:
-
-- `historical-provenance-closed`
-- `historical-intro-family-A-proven`
-- `historical-intro-family-B-proven`
-- `bit-exact-historical-raw-audio-replay`
-- `production-ready-by-compatibility-alone`
+Current/research Family A/B labels may additionally be emitted when the exact decoded-PCM pair matches.
 
 ---
 
-## Current implementation state
+## Non-negotiable constraints for the next turn
 
-The compatibility **design**, **offline comparator**, and **fresh-capture template** are committed.
-
-The actual isolated producer is **not yet implemented**:
-
-`analyzer/v143_intro_compatibility_fresh_capture.py`
-
-No fresh compatibility GPU run has been performed in this phase.
-
-No Modal execution should occur until the producer exists and has been statically reviewed against the contract.
-
----
-
-## Exact next implementation steps
-
-### Step 1 — Create the isolated fresh-capture producer
-
-Create:
-
-`analyzer/v143_intro_compatibility_fresh_capture.py`
-
-The producer must be research-only and must not import or mutate production routing/deployment behavior.
-
-### Step 2 — Use one separator pass for all fresh identities
-
-One fresh separator execution must provide the canonical direct/cascade stems used for **both**:
-
-- stem WAV/decoded-PCM identity capture; and
-- the measures 1–16 Basic Pitch raw-attack cache.
-
-Do not run one separation for hashes and another separation for the intro fingerprint; that would break the provenance chain.
-
-Use the frozen seeded recipe:
-
-```text
-seed 143
-Demucs Guitar shifts=1 overlap=.10 segment=6
-BS-RoFormer Instrumental batch=1
-then Demucs Guitar shifts=1 overlap=.10 segment=6
-```
-
-### Step 3 — Capture source and execution identity before downstream analysis
-
-The fresh run must record at minimum:
-
-- capture ID and UTC timestamp;
-- branch/commit;
-- source Git blob SHA;
-- source file SHA-256;
-- Python version;
-- `audio-separator` version;
-- Torch / CUDA / cuDNN;
-- ONNX Runtime version and providers;
-- GPU name / compute capability / NVIDIA driver;
-- deterministic algorithm flags and TF32 flags;
-- complete installed package inventory plus independently recomputable inventory digest;
-- model-cache file manifest plus independently recomputable manifest digest;
-- detected BS-RoFormer and Demucs model/config payload hashes when identifiable;
-- exact separator command/config/seed values.
-
-The full fresh-capture manifest must be saved **before** any optional downstream comparison so provenance cannot be lost again.
-
-### Step 4 — Capture canonical stem identities
-
-For both canonical stems record:
-
-- WAV file SHA-256;
-- decoded-PCM SHA-256 using exactly `SOUNDFILE_INT16_ALWAYS_2D_TOBYTES_SHA256`;
-- sample rate;
-- frame count;
-- channel count;
-- decoded sample/value count as required by the manifest contract.
-
-Family A/B is only a current research classification from exact decoded-PCM pair equality.
-
-Never rewrite `CURRENT_RESEARCH_FAMILY_B_COMPATIBLE` as “historical intro Family B.”
-
-### Step 5 — Build the fresh intro cache from those exact stems
-
-Reuse the historical measures 1–16 producer semantics:
-
-- reference-free timing;
-- original bar phase;
-- exact 244-row intro grid;
-- historical wide-recall sweeps;
-- guitar MIDI 40..88;
-- 0.30 s wide-grid acceptance;
-- measures 1–16 filter;
-- 0.10 s production-grid annotation;
-- canonical direct/cascade stem names;
-- no professional reference.
-
-Record:
-
-- fresh raw-attack cache SHA-256;
-- raw event count;
-- direct/cascade stem event counts;
-- four sweep counts.
-
-### Step 6 — Write only to an isolated run directory
-
-Use a new run-specific directory such as:
-
-`debug/v143-contextual-prune/intro-compatibility-runs/<captureId>/`
-
-Recommended contents:
-
-- `fresh-capture.json`
-- `intro-raw-attack-cache.json`
-- `package-inventory.txt`
-- `runtime-fingerprint.json`
-- `model-cache-manifest.json`
-- optional full execution log
-
-Do not overwrite:
-
-- the historical Codespace snapshot;
-- the evidence-gap artifact;
-- the design contract;
-- historical training/calibration files.
-
-### Step 7 — Add static safety validation before any GPU execution
-
-Before Modal is run, validate that the producer:
-
-- writes only under the isolated compatibility run path;
-- has no production deployment/routing calls;
-- does not open a professional reference;
-- does not retrain models;
-- does not change thresholds/tolerances;
-- does not overwrite historical artifacts;
-- records the required attestations as false/true exactly as the comparator expects;
-- uses the recovered decoded-PCM hash convention.
-
-Commit this producer and static validation first.
-
-### Step 8 — Stop before execution unless explicitly continuing
-
-After implementation/static validation, checkpoint again.
-
-A future run may then be performed as **fresh compatibility evidence only**. Its result must be passed through `analyzer/v143_intro_compatibility_comparator.py` offline.
+- Work only on `v143-contextual-prune-lobo`.
+- Do not modify `main`.
+- Do not modify production code/artifacts or live endpoints.
+- Do not retrain/replace frozen V143 models.
+- Do not change frozen predictions, thresholds, tolerances, timing phase, or 244-row intro geometry.
+- Do not use a professional/reference transcription at runtime.
+- Do not overwrite preserved historical evidence.
+- Do not restart broad historical archaeology unless a genuinely new historical record appears.
+- Do not call a fresh result historical provenance closure.
 
 ---
 
-## What not to redo
+## Exact next safe action
 
-Do not restart work on:
+**STOP BEFORE GPU EXECUTION unless a future user turn explicitly continues.**
 
-- measures 33–113 provenance closure;
-- Section3 exact-family reconstruction;
-- source-audio identity;
-- the 36/260/15 feature-width proof;
-- whether Aug-16 Modal execution occurred;
-- broad Library searches for the seeded historical hashes;
-- broad Codespace archaeology.
+If explicitly continued, the next phase is:
 
-Those areas are already exhausted or closed.
+1. re-read this checkpoint and verify branch HEAD;
+2. re-run/inspect the committed static validator if desired;
+3. execute exactly one fresh compatibility capture with the committed producer;
+4. preserve the newly created isolated run directory unchanged;
+5. inspect `modelPayloadCaptureComplete` and all provenance fields before drawing conclusions;
+6. pass `fresh-capture.json` through `analyzer/v143_intro_compatibility_comparator.py` offline;
+7. report compatibility strength and any current/research Family A/B label while keeping historical intro provenance open;
+8. checkpoint again before any production consideration.
 
----
-
-## Current bottom line
-
-Measures 33–113 remain research-closed/green.
-
-Measures 1–16 have a source-proven, checksum-pinned first-party producer chain and exact preserved output fingerprint, but the final historical whole-song separator-family bridge is not recoverable from surviving evidence.
-
-That gap is now intentionally preserved rather than weakened.
-
-The branch has moved to a separate compatibility architecture: a read-only comparator plus a future fully fingerprinted fresh producer. The comparator is hardened; the producer is the next unfinished task.
-
-**Do not run Modal until `analyzer/v143_intro_compatibility_fresh_capture.py` has been implemented and statically validated.**
+No Modal/GPU execution has occurred in this checkpointed phase.
