@@ -14,6 +14,26 @@ Active product goal:
 
 Keep this file updated after meaningful progress. Do not rely on chat history as the only recovery record.
 
+### Mandatory continuous checkpoint maintenance
+
+Treat this file as the live recovery record for the branch, not as an end-of-session summary.
+
+While working, update `docs/checkpoints/CURRENT_STATE.md` **continuously and as often as practical**. Prefer several small checkpoint refreshes over waiting until a large block of work is finished.
+
+After every meaningful action, test, commit, workflow result, discovery, decision, blocker change, or change of direction, record enough current state that a brand-new chat can resume without reconstructing work from conversation history. In particular, keep these items current:
+
+- the exact **current step being worked on**;
+- what was just attempted or changed;
+- the latest relevant commit/run/evidence and its result;
+- whether the step passed, failed, is pending, or is externally blocked;
+- any safety boundary or assumption that must still be preserved;
+- the **immediate next step** to execute;
+- the next fallback step if the immediate step is blocked.
+
+Refresh the checkpoint before and after risky or multi-step work, before changing to a different investigation path, and whenever an interruption could make the current resumption point ambiguous. If work stops unexpectedly, this file should show the most recent completed action and the exact next action to take.
+
+Do not leave stale “next step” instructions in place after they have been completed or superseded; replace them with the new current step and next step promptly.
+
 Do **not** modify `main`, modify/deploy the live V143 Modal endpoint, merge the long-lived research branch, or enable/promote Production automatically.
 
 Historical compatibility research remains sealed. Do not launch another historical separator/GPU compatibility capture. Historical conclusions remain:
@@ -475,7 +495,7 @@ X-Jimmy-PAIge-PDF-Renderer: v143-structured-rhythm
 # Non-negotiable boundaries
 
 - Work only on `v143-contextual-prune-lobo`.
-- Keep this checkpoint current after meaningful progress.
+- Keep this checkpoint current after meaningful progress, and continuously record the current step and immediate next step as often as practical.
 - Do not modify `main`.
 - Do not merge the long-lived research branch into `main`.
 - Do not deploy an unspecified Vercel source merely to obtain a Preview URL.
