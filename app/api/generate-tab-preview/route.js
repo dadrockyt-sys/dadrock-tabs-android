@@ -93,6 +93,10 @@ export async function POST(request) {
           keySignature,
           preview: true,
           previewSystems,
+          renderEvents:
+            Array.isArray(body?.renderEvents)
+              ? body.renderEvents
+              : [],
           measureGrid:
             body?.measureGrid || null,
           analysisEngine:
