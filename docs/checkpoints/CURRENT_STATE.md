@@ -17,11 +17,13 @@ The upstream producer gap is now substantially source-proven. The historical Pyt
 
 The archive was rebased on top of the prior checkpoint and pushed successfully, allowing the Codespace to be shut down. GitHub-side source reads now work against the archived files.
 
+The source-to-artifact structural chain has now also been traced through the preserved 36-feature grid selector. The preserved raw/onset artifacts are checksum-pinned, the surviving historical whole-onset carrier reproduces the same schema/constants/windows, and the exact historical 36-feature assembler has been re-read directly from the archived source.
+
 No analyzer execution, retraining, threshold changes, production edits, or deployments were performed during this archaeology.
 
 ## Closed / solved
 
-- Historical 36-feature reconstruction layer: solved/preserved by the earlier checkpoint.
+- Historical 36-feature reconstruction layer: solved/preserved by the earlier checkpoint and re-confirmed directly from archived historical source.
 - Downstream assembler recovery: preserved by the earlier checkpoint lineage.
 - Historical 1–16 raw-attack cache writer: identified and source-inspected.
 - Historical 1–16 onset-spectrum cache writer: identified and source-inspected.
@@ -29,6 +31,9 @@ No analyzer execution, retraining, threshold changes, production edits, or deplo
 - Exact Basic Pitch candidate call parameters: recovered.
 - Deterministic two-view guitar stem contract: recovered.
 - Onset-spectrum CQT settings, windows, normalization, schema, and serialization: recovered.
+- Preserved raw/onset cache identities: SHA-256 pinned by the copied Codespace manifest.
+- Onset-spectrum row -> ordered 36-feature grid vector: source-proven from `v143_intro_learned_grid_event_selector.py`.
+- Frozen correlation-safe 36-feature model linkage: preserved model confirms 100 ms window, L2 10.0, threshold 0.27, and neutralized columns 19/26/33.
 
 ## Raw-attack cache producer
 
@@ -251,11 +256,91 @@ The local entrypoint serializes the remote result directly with:
 
 `OUTPUT_PATH.write_text(json.dumps(result, indent=2) + "\n")`
 
+## Source/artifact structural equivalence
+
+The preserved Codespace snapshot has an explicit provenance record identifying source HEAD `4d735846fbd834cc4c722f2cb48727e4629647f1` and stating that the files were copied unchanged with no retraining, threshold/model changes, or production edits.
+
+The snapshot SHA-256 manifest pins the two upstream artifacts as:
+
+- `intro-raw-attack-cache.json`: `698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9`
+- `intro-onset-spectrum-cache.json`: `eceb7468560ca8a967cf5d2de581cbab5932b9843941488e443dcfbf2b4eb1e7`
+
+The surviving `v143_contextual_prune_reference_free_carrier.py` independently expresses the same four-sweep raw-event capture, 30 ms pitch clustering, 30 ms physical-onset grouping, two-view CQT substrate, exact three spectral windows, and 16-step section grid. Its carrier summary also marks the path reference-free and production-unmodified.
+
+This closes structural/schema/parameter equivalence between the source-proven producer family and the preserved carrier lineage. It does **not** yet claim a byte-identical fresh regeneration of the two large caches; that remains a future deterministic replay gate.
+
+## Exact onset-spectrum -> 36-feature mapping
+
+The authoritative surviving assembler is:
+
+`analyzer/v143_intro_learned_grid_event_selector.py`
+
+Archived source blob:
+
+`f26e622f8277d68f3649191879789f87acd4f77e`
+
+For each `(measure, step)` grid location, `_grid_feature(...)` uses a 100 ms nearby-onset window in the frozen model configuration.
+
+When a nearby onset row exists, feature indices 0..12 are exactly:
+
+0. constant `1.0`
+1. nearest signed onset residual / window seconds
+2. nearest absolute onset residual / window seconds
+3. second-nearest absolute residual / window seconds; defaults to `1.0` normalized when only one row exists
+4. `min(nearby_row_count / 8, 2)`
+5. nearest `candidateCount / 49`
+6. nearest `sourceClusterCount / 16`
+7. nearest `stemSupportMax / 2`
+8. nearest `sweepSupportMax / 4`
+9. `min(nearest.detectionCountSum / 32, 2)`
+10. max nearby `stemSupportMax / 2`
+11. max nearby `sweepSupportMax / 4`
+12. `min(sum(nearby detectionCountSum) / 96, 2)`
+
+If there is no nearby onset row, indices 0..33 are zero.
+
+Indices 13..33 are three seven-value spectral summaries in this exact order:
+
+`attackMax`, then `earlyMean`, then `sustainMean`.
+
+For each window, `_spectral_summary(...)` clamps each view nonnegative, computes `mean_view = 0.5 * (viewA + viewB)`, and emits:
+
+1. mean of `mean_view`
+2. standard deviation of `mean_view`
+3. largest value (`top1`)
+4. `top1 - top2`
+5. L2 norm of nonnegative view A
+6. L2 norm of nonnegative view B
+7. cosine similarity between the two nonnegative views (`viewCorrelation`)
+
+Thus the three view-correlation columns are exactly 19, 26 and 33.
+
+Indices 34 and 35 are always:
+
+- `sin(2π * step / 16)`
+- `cos(2π * step / 16)`
+
+The preserved learned grid-event selector model contains 36 feature means and stds generated by this assembler. The preserved correlation-safe model keeps the same 36-column layout, uses `windowMs: 100`, `l2: 10.0`, `threshold: 0.27`, and explicitly neutralizes columns `[19, 26, 33]` named:
+
+- `attackMax:viewCorrelation`
+- `earlyMean:viewCorrelation`
+- `sustainMean:viewCorrelation`
+
+The corresponding frozen weights are zero, while the other feature statistics remain linked to the surviving 36-feature construction. This confirms the exact preserved carrier -> ordered feature vector -> frozen base-selector model handoff without inventing a replacement assembler.
+
 ## Important negative finding
 
 `v143_intro_capture_raw_attack_harmonic_cache.py` is downstream, not the original raw-attack producer. It already consumes `intro-raw-attack-cache.json` and uses cached onset times to capture additional harmonic evidence.
 
 Likewise the raw-attack temporal/ranking diagnostics and learned-grid selector are downstream consumers/evaluators, not the initial audio-to-cache writer.
+
+## Dependency audit status
+
+The first-party Python dependencies directly observed in the raw-attack/onset/carrier chain are present in the archived historical source inventory, including the Modal live endpoint, candidate timing adapter, reference-free timing module, deterministic stem provider/separator, seeded separator, `modal_analyzer`, onset diagnostic, learned spectral model and learned grid selector.
+
+One final replay-readiness question remains before execution: prove the frozen external runtime/model asset contract used by `rhythm_image` / the separator stack is reproducible from the repository/environment configuration. The historical source archive proves the Python graph, but source presence alone is not enough to promise byte-identical third-party model outputs.
+
+Therefore no deterministic runtime replay is authorized yet.
 
 ## Preserved evidence
 
@@ -271,9 +356,9 @@ The archive includes a manifest / checksum material created during preservation,
 
 ## Environment status
 
-The Codespace is no longer required for current source archaeology and can be stopped/deleted to avoid further compute charges.
+The Codespace is no longer required for current source archaeology and can remain stopped/deleted to avoid further compute charges.
 
-GitHub REST access previously hit intermittent 403 rate limits, but after the historical source archive was pushed the archived source became readable through the GitHub connector.
+GitHub REST access previously hit intermittent 403 rate limits, but the archived source is currently readable through the GitHub connector.
 
 ## Hard constraints
 
@@ -287,12 +372,12 @@ GitHub REST access previously hit intermittent 403 rate limits, but after the hi
 
 ## Next safe steps
 
-1. Compare the source-proven producer schema/parameters against the preserved `intro-raw-attack-cache.json` and `intro-onset-spectrum-cache.json` manifests/artifacts to verify structural compatibility and provenance.
-2. Trace the remaining downstream carrier assembly from onset-spectrum rows into the already-recovered 36-feature substrate, confirming exact field mapping and ordering against preserved artifacts.
-3. Confirm no unarchived dependency is required for deterministic replay.
-4. Only after source/artifact equivalence is established, plan a deterministic replay test; do not retrain or change thresholds.
-5. Update this checkpoint before any runtime replay.
+1. Inspect `v143_modal_live_endpoint.py` and the deterministic separator/image definitions to inventory exact external package/model/runtime assets required for byte-identical replay.
+2. Confirm those runtime assets are pinned or otherwise reproducible without reopening the Codespace.
+3. If the dependency contract closes, prepare a deterministic replay plan that writes only research comparison artifacts and never overwrites the preserved caches.
+4. Before any runtime replay, update this checkpoint with the exact proposed command, inputs, outputs, expected hashes/invariants and abort conditions.
+5. Only then consider executing a replay; do not retrain, retune, alter thresholds, or modify production.
 
 ## Resume directive
 
-Continue GitHub-only. The historical raw-attack and onset-spectrum cache producers are now source-proven, including exact Basic Pitch sweeps, deterministic stem contract, reference-free timing constants, CQT settings, spectral windows, normalization, and JSON serialization. Next prove source-to-preserved-artifact equivalence and the exact carrier-to-36-feature mapping before considering runtime replay.
+Continue GitHub-only. Upstream producer source, preserved artifact identities, structural carrier equivalence and the exact onset-spectrum -> 36-feature assembler/model handoff are now source-proven. The remaining pre-replay task is to prove the frozen external dependency/model-asset contract used by the historical Modal separator stack. Do not execute the analyzer until that dependency audit is closed and checkpointed.
