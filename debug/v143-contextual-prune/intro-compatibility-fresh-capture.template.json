@@ -1,0 +1,79 @@
+{
+  "captureIdentity": {
+    "captureId": null,
+    "createdAtUtc": null,
+    "gitCommit": null,
+    "sourceAudioGitBlobSha": "5e34fb55fbd011c55b56bc40cc5d062735b3fcd0",
+    "sourceAudioSha256": null
+  },
+  "runtimeIdentity": {
+    "modalImageIdOrDigest": null,
+    "pythonVersion": null,
+    "audioSeparatorVersion": "0.44.5",
+    "torchVersion": null,
+    "torchCudaVersion": null,
+    "cudnnVersion": null,
+    "onnxRuntimeVersion": null,
+    "onnxProviders": [],
+    "gpuName": null,
+    "gpuComputeCapability": null,
+    "nvidiaDriverVersion": null,
+    "torchDeterministicAlgorithms": null,
+    "cudnnDeterministic": null,
+    "cudnnBenchmark": null,
+    "cudaMatmulTf32": null,
+    "cudnnTf32": null
+  },
+  "resolvedDependencyIdentity": {
+    "installedPackageInventorySha256": null,
+    "installedPackageInventory": []
+  },
+  "modelPayloadIdentity": {
+    "bsRoformerModelIdentifier": "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+    "bsRoformerPayloadSha256": null,
+    "demucsModelIdentifier": "htdemucs_6s.yaml",
+    "demucsPayloadSha256": null
+  },
+  "separatorInvocation": {
+    "seed": 143,
+    "demucsShifts": 1,
+    "demucsOverlap": 0.1,
+    "demucsSegmentSize": 6,
+    "roformerBatchSize": 1,
+    "directCommand": null,
+    "cascadeCommands": []
+  },
+  "stemIdentity": {
+    "directWavSha256": null,
+    "directDecodedPcmSha256": null,
+    "cascadeWavSha256": null,
+    "cascadeDecodedPcmSha256": null,
+    "directDecodedSampleCount": null,
+    "cascadeDecodedSampleCount": null
+  },
+  "introFingerprint": {
+    "rawAttackCacheSha256": null,
+    "rawEventCount": null,
+    "directStemEventCount": null,
+    "cascadeStemEventCount": null,
+    "sweepEventCounts": {}
+  },
+  "downstreamFrozenReplay": {
+    "gridRowCount": null,
+    "onsetCount": null,
+    "onsetVectorCount": null,
+    "gridFeatureCount": null,
+    "sequenceFeatureCount": null,
+    "contextualCarrierCount": null,
+    "frozenDecisionDigest": null,
+    "frozenScoreDigest": null
+  },
+  "attestations": {
+    "freshCompatibilityEvidenceOnly": true,
+    "historicalProvenanceClaimed": false,
+    "productionModified": false,
+    "liveEndpointModified": false,
+    "professionalReferenceUsedAtRuntime": false,
+    "historicalArtifactsOverwritten": false
+  }
+}
