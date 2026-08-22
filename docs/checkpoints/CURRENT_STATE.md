@@ -2,7 +2,7 @@
 
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
-Branch HEAD before this checkpoint update: `08b3680d5ed120eab623bb44bfa37990ddad1afb`
+Branch HEAD before this checkpoint update: `e28bdfdc6659cd905063455cb6a6f79dcf00101c`
 
 ## Resume directive
 
@@ -38,59 +38,111 @@ Do not leave stale “next step” instructions in place after they have been co
 
 # LIVE WORKING STATE
 
-## Current step — built Next.js Preview-mode route smoke is pending
+## Current step — authoritative branch build + HTTP Preview-route gate is running
 
-The Vercel deployment-auth blocker remains external, so the current safe step is to close as much application-wiring uncertainty as possible **without claiming this is an actual Vercel Preview deployment**.
+The actual Vercel Preview deployment remains blocked by missing deployment authentication, so the current safe objective is to prove the **built Next.js application wiring over real HTTP** without deploying anything.
 
-### Files/commits added for this step
+### Smoke verifier
 
-- `analyzer/verify_v143_next_preview_route_smoke.mjs`
-  - `31f8788fa6248cfdec6e094002119dfbb5c9955a` — `Add V143 built Preview route smoke verifier`
-- `.github/workflows/v143-next-preview-route-smoke.yml`
-  - `7dd4da52f4f3f7508c3372643803c0d63bd38fff` — initial smoke workflow
-  - `08b3680d5ed120eab623bb44bfa37990ddad1afb` — `Persist every V143 Preview smoke outcome`
+`analyzer/verify_v143_next_preview_route_smoke.mjs`
 
-The workflow now records compact JSON even when npm install, Next.js build, built-server startup, or route verification fails. It also rebases its evidence commit onto the latest isolated-branch head before pushing so frequent checkpoint commits do not create a false non-fast-forward failure.
+Commit:
 
-### What the smoke does
+`31f8788fa6248cfdec6e094002119dfbb5c9955a` — `Add V143 built Preview route smoke verifier`
 
-Build the complete Next.js app under Node 24, then start the built server locally with:
+The verifier requires:
 
-```text
-VERCEL_ENV=preview
-VERCEL_GIT_COMMIT_REF=v143-contextual-prune-lobo
-```
-
-This is deliberately only a **local simulation of Vercel Preview identity**. It does not deploy to Vercel.
-
-It then exercises the real HTTP application path:
-
-1. GET `/ai-tab` → require HTTP 200.
-2. POST valid structured Rhythm data to `/api/generate-tab-preview` → require PDF plus:
+1. GET `/ai-tab` → HTTP 200.
+2. Structured Rhythm POST to `/api/generate-tab-preview` → PDF with:
 
 ```text
 X-Jimmy-PAIge-PDF-Feature: v143-branch-preview-canary
 X-Jimmy-PAIge-PDF-Renderer: v143-structured-rhythm
 ```
 
-3. POST fallback-labeled/invalid structured Rhythm data → require PDF plus:
+3. Fallback-labeled/invalid structured Rhythm POST → PDF with:
 
 ```text
 X-Jimmy-PAIge-PDF-Feature: v143-branch-preview-canary
 X-Jimmy-PAIge-PDF-Renderer: polished-safe-fallback
 ```
 
-4. POST malformed data missing generated tab → require HTTP 400.
+4. Missing generated tab → HTTP 400.
 
-Expected evidence:
+### First dedicated smoke workflow
+
+`.github/workflows/v143-next-preview-route-smoke.yml`
+
+Relevant commits:
+
+- `7dd4da52f4f3f7508c3372643803c0d63bd38fff` — initial smoke workflow.
+- `08b3680d5ed120eab623bb44bfa37990ddad1afb` — persist all pipeline failures.
+- `0b299b544590131f75126e93ba977032f08396d5` — add immediate smoke-start heartbeat.
+
+GitHub Actions proved this workflow actually started by committing:
+
+`6feca47e9cca7908ca0475ba4cecdf760bc353dd` — `Record V143 Preview smoke start`
+
+That heartbeat recorded:
+
+```text
+sourceCommit: 0b299b544590131f75126e93ba977032f08396d5
+phase: started
+localNextPreviewSimulation: true
+actualVercelPreviewDeployment: false
+productionModified: false
+productionPromotionAuthorized: false
+error: smoke-run-in-progress
+```
+
+### Authoritative smoke folded into the already-proven branch build gate
+
+To avoid relying on a newly-created workflow identity, the same real HTTP smoke has now also been folded into the existing proven workflow:
+
+`.github/workflows/v143-ai-tab-branch-build-gate.yml`
+
+Commit:
+
+`2a7ea8baac9c186a50e11e83a22a029c8e5dae94` — `Add built Preview route smoke to V143 branch gate`
+
+This upgraded gate now performs:
+
+```text
+Node 22 analyzer-quality verifier
+Node 22 Preview feature verifier
+npm ci
+Node 24 full Next.js build
+built Next.js server startup with:
+  VERCEL_ENV=preview
+  VERCEL_GIT_COMMIT_REF=v143-contextual-prune-lobo
+GET /ai-tab
+structured /api/generate-tab-preview POST
+safe-fallback /api/generate-tab-preview POST
+400 validation POST
+compact evidence persistence
+```
+
+It explicitly does **not** deploy to Vercel and does not touch the live analyzer, payment, customer token, customer email, or Production.
+
+GitHub Actions proved this authoritative gate started by committing:
+
+`e28bdfdc6659cd905063455cb6a6f79dcf00101c` — `Record V143 branch gate smoke start`
+
+Current evidence:
 
 `debug/v143-contextual-prune/next-preview-route-smoke.json`
 
-The compact evidence is required to contain pipeline exit codes plus:
-
 ```text
+schemaVersion: 3
+sourceCommit: 2a7ea8baac9c186a50e11e83a22a029c8e5dae94
+phase: started-by-branch-build-gate
 localNextPreviewSimulation: true
 actualVercelPreviewDeployment: false
+installExitCode: null
+nextBuildExitCode: null
+serverReady: false
+routeSmokeExitCode: null
+passed: false
 vercelDeploymentAttempted: false
 liveEndpointDeployedOrModified: false
 productionModified: false
@@ -98,29 +150,39 @@ productionPromotionAuthorized: false
 paidPurchaseAttempted: false
 customerTokenRedeemed: false
 customerEmailSent: false
+error: branch-build-gate-in-progress
 ```
-
-### Current status
-
-```text
-workflow hardened: true
-expected evidence file present on branch: false / pending
-actual Vercel Preview deployment: false
-Production modified: false
-```
-
-A direct local checkout fallback was attempted from the execution container, but that container cannot resolve `github.com`; therefore it cannot independently clone/run the repository. This is an execution-environment networking limitation, not a DadRock code failure.
 
 ### Immediate next step
 
-Fetch `debug/v143-contextual-prune/next-preview-route-smoke.json`.
+Fetch both:
 
-- If `passed: true`: record the concrete headers/PDF byte counts and mark local built-server application wiring closed.
-- If `passed: false`: use its `installExitCode`, `nextBuildExitCode`, `serverReady`, `routeSmokeExitCode`, and `error` to fix only the failing step, then rerun.
+- `debug/v143-contextual-prune/next-preview-route-smoke.json`
+- `debug/v143-contextual-prune/ai-tab-branch-build-gate.json`
 
-### Fallback if evidence still does not appear
+Require the final route smoke to change to a completed phase and report:
 
-The workflow definition itself is already written to guarantee a JSON result after checkout/setup-node succeeds. If no evidence commit appears, inspect GitHub Actions execution infrastructure rather than weakening the application assertions. Do not infer a product failure from absence of the evidence file alone.
+```text
+installExitCode: 0
+nextBuildExitCode: 0
+serverReady: true
+routeSmokeExitCode: 0
+passed: true
+```
+
+Also require the branch build gate to report all analyzer/feature/build/route checks passing.
+
+### Fallback if the gate fails
+
+Use only the compact failing field to select the next action:
+
+- analyzer verifier failure → inspect analyzer regression only;
+- Preview feature verifier failure → inspect feature helper only;
+- npm/build failure → inspect build logs/artifact;
+- `serverReady: false` → inspect built server log;
+- nonzero route smoke → inspect the HTTP verifier result and route log.
+
+Do not weaken the structured/fallback assertions merely to get a green result.
 
 ---
 
@@ -327,13 +389,11 @@ productionModified: false
 
 ---
 
-# 6. Full isolated branch build gate passed
+# 6. Full isolated branch build gate previously passed
 
-Workflow:
+Before the route smoke was added, the branch build gate passed with:
 
-`.github/workflows/v143-ai-tab-branch-build-gate.yml`
-
-Passing bot evidence commit:
+Bot evidence commit:
 
 `4f2b637ce5f2b69c4dfff07d26cac9f68fcc59d1` — `Record V143 AI tab branch build gate`
 
@@ -361,6 +421,8 @@ customerTokenRedeemed: false
 customerEmailSent: false
 ```
 
+The currently-running schemaVersion 3 gate supersedes this only after its final evidence lands.
+
 ---
 
 # 7. Vercel Preview audit and deployment-auth blocker
@@ -375,7 +437,7 @@ framework: Next.js
 node: 24.x
 ```
 
-Read-only Vercel inspection on 2026-08-22 still shows no `v143-contextual-prune-lobo` Preview deployment. A safe re-probe from commit `49741a8db076d61696747877af2e6577bbc4a160` also produced no Vercel deployment.
+Read-only Vercel inspection on 2026-08-22 still shows no `v143-contextual-prune-lobo` Preview deployment. A safe credential re-probe also produced no Vercel deployment.
 
 Latest credential evidence:
 
@@ -414,7 +476,7 @@ The connected Vercel deploy action does not expose an exact source branch/ref in
 
 # Current proven boundary
 
-Proven:
+Already proven:
 
 - real V143 analyzer output quality on approved real audio;
 - 358/358 event survival through the structured render contract;
@@ -426,9 +488,9 @@ Proven:
 - Preview feature-gate regression verification;
 - full isolated Next.js branch build under Node 24.
 
-Pending now:
+Currently executing:
 
-- built Next.js local Preview-mode HTTP smoke evidence.
+- built Next.js local Preview-mode HTTP route smoke inside the authoritative branch build gate.
 
 Still unresolved regardless of that local result:
 
@@ -436,11 +498,11 @@ Still unresolved regardless of that local result:
 
 ---
 
-# Next steps after the current smoke
+# Next steps after the current gate
 
-If the built Next.js smoke passes:
+If the branch build + route gate passes:
 
-1. Record the exact evidence here.
+1. Record final schemaVersion 3 evidence here.
 2. Mark local built-server application wiring closed.
 3. Keep the remaining blocker strictly scoped to Vercel deployment/environment integration.
 4. When a Vercel CLI token becomes available under a supported GitHub secret alias, rerun `.github/workflows/v143-vercel-preview-deploy.yml`.
