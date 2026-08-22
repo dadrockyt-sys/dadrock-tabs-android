@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "audit": "v143-intro-byte-replay-dependency-contract",
+  "historicalSourceCommit": "4d735846fbd834cc4c722f2cb48727e4629647f1",
+  "scope": "read-only source archaeology before any measures-1-16 deterministic replay",
+  "observedRuntimeImage": {
+    "base": "modal.Image.debian_slim(python_version=3.11)",
+    "apt": [
+      "ffmpeg"
+    ],
+    "pinnedPip": [
+      "audio-separator[gpu]==0.44.5",
+      "setuptools==81.0.0"
+    ],
+    "unpinnedPip": [
+      "basic-pitch",
+      "librosa",
+      "scipy",
+      "soundfile",
+      "requests"
+    ],
+    "gpu": "L4",
+    "memoryMiB": 8192
+  },
+  "separatorContract": {
+    "demucsModelDefault": "htdemucs_6s.yaml",
+    "bsRoformerModelDefault": "model_bs_roformer_ep_317_sdr_12.9755.ckpt",
+    "modelNamesCanBeOverriddenByEnvironment": true,
+    "modelWeightSha256PinnedInObservedSource": false,
+    "deterministicSeed": 143,
+    "demucsSingleStem": "Guitar",
+    "demucsShifts": 1,
+    "demucsOverlap": 0.10,
+    "demucsSegmentSize": 6,
+    "roformerSingleStem": "Instrumental",
+    "roformerBatchSize": 1,
+    "useSoundfile": true,
+    "normalizationCodec": "pcm_s16le"
+  },
+  "sourceGraph": {
+    "pythonFirstPartyArchived": true,
+    "rawWriterImports": [
+      "v143_modal_live_endpoint",
+      "modal_analyzer",
+      "v143_candidate_timing_adapter",
+      "v143_reference_free_timing",
+      "v143_rhythm_deterministic_stem_provider"
+    ],
+    "separatorSourceArchived": true,
+    "learned36FeatureAssemblerArchived": true
+  },
+  "replayReadiness": {
+    "structuralSourceArtifactEquivalence": true,
+    "ordered36FeatureHandoffProven": true,
+    "byteIdenticalReplayEnvironmentProvenFromSourceAlone": false,
+    "reason": [
+      "Several analysis packages are installed without exact version pins.",
+      "The Debian slim base image is not pinned by immutable digest in the observed source.",
+      "Separator model weights are referenced by filenames/environment variables without observed SHA-256 pins.",
+      "A fresh package/model resolution could therefore differ from the historical worker even with identical Python source and deterministic seed."
+    ]
+  },
+  "nextSafeAction": "Search GitHub-preserved historical replay/smoke/manifests for exact package versions, model-weight fingerprints, and separator-output fingerprints before authorizing any fresh execution.",
+  "invariants": {
+    "analyzerExecuted": false,
+    "retrainingPerformed": false,
+    "thresholdChanged": false,
+    "productionModified": false,
+    "codespaceRequired": false
+  }
+}
