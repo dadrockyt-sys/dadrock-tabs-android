@@ -24,15 +24,6 @@ DEFAULT_GAP = REPO_ROOT / "debug/v143-contextual-prune/intro-separator-family-ev
 DEFAULT_SUMS = REPO_ROOT / "analyzer/v143-intro-1-16-evidence/codespace-snapshot/SHA256SUMS.txt"
 DEFAULT_RAW_CACHE = REPO_ROOT / "analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-raw-attack-cache.json"
 
-FAMILY_A = {
-    "direct": "30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8",
-    "cascade": "68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56",
-}
-FAMILY_B = {
-    "direct": "1542856aca8275c727e6c77edd941588aa359b65b8b897c1b3ada2926f2d579e",
-    "cascade": "e26f7a430b835adcd7a284db8a18c3aa93632b81e1c1a653eeffa16c02a62bc3",
-}
-
 
 def load_json(path: Path) -> dict[str, Any]:
     with path.open("r", encoding="utf-8") as handle:
@@ -118,13 +109,21 @@ def all_passed(checks: list[dict[str, Any]]) -> bool:
     return all(bool(check.get("passed")) for check in checks)
 
 
-def classify_family(stem_identity: dict[str, Any]) -> str | None:
+def classify_family(stem_identity: dict[str, Any], expected: dict[str, Any]) -> str | None:
+    convention = dict(expected.get("decodedPcmHashConvention") or {})
+    if stem_identity.get("decodedPcmHashMethod") != convention.get("methodId"):
+        return None
+
     direct = stem_identity.get("directDecodedPcmSha256")
     cascade = stem_identity.get("cascadeDecodedPcmSha256")
-    if direct == FAMILY_A["direct"] and cascade == FAMILY_A["cascade"]:
-        return "CURRENT_RESEARCH_FAMILY_A_COMPATIBLE"
-    if direct == FAMILY_B["direct"] and cascade == FAMILY_B["cascade"]:
-        return "CURRENT_RESEARCH_FAMILY_B_COMPATIBLE"
+    families = dict(expected.get("currentResearchSeparatorFamilies") or {})
+    for label in ("A", "B"):
+        family = dict(families.get(label) or {})
+        if (
+            direct == family.get("directDecodedPcmSha256")
+            and cascade == family.get("cascadeDecodedPcmSha256")
+        ):
+            return f"CURRENT_RESEARCH_FAMILY_{label}_COMPATIBLE"
     return None
 
 
@@ -138,6 +137,7 @@ def build_result(
     expected = design["historicalReadOnlyBaseline"]
     expected_intro = expected["introRawAttackCache"]
     expected_recipe = expected["separatorRecipe"]
+    expected_pcm_method = expected["decodedPcmHashConvention"]["methodId"]
 
     manifest_raw_sha = checksum_manifest.get("intro-raw-attack-cache.json")
     baseline_integrity_checks = [
@@ -197,6 +197,27 @@ def build_result(
         "runtimeIdentity",
     )
 
+    stem_identity = capture.get("stemIdentity") or {}
+    pcm_method_checks = compare_fields(
+        stem_identity,
+        {"decodedPcmHashMethod": expected_pcm_method},
+        "stemIdentity",
+    )
+
+    attestations = capture.get("attestations") or {}
+    attestation_checks = compare_fields(
+        attestations,
+        {
+            "freshCompatibilityEvidenceOnly": True,
+            "historicalProvenanceClaimed": False,
+            "productionModified": False,
+            "liveEndpointModified": False,
+            "professionalReferenceUsedAtRuntime": False,
+            "historicalArtifactsOverwritten": False,
+        },
+        "attestations",
+    )
+
     intro = capture.get("introFingerprint") or {}
     intro_count_expected = {
         "rawEventCount": expected_intro["rawEventCount"],
@@ -213,11 +234,14 @@ def build_result(
     }
 
     baseline_ok = all_passed(baseline_integrity_checks)
-    source_recipe_ok = all_passed(source_checks + recipe_checks + model_identifier_checks + runtime_checks)
+    source_recipe_ok = all_passed(
+        source_checks + recipe_checks + model_identifier_checks + runtime_checks + pcm_method_checks
+    )
+    attestations_ok = all_passed(attestation_checks)
     intro_counts_ok = all_passed(intro_count_checks)
     intro_cache_exact = bool(intro_cache_check["passed"])
 
-    family_label = classify_family(capture.get("stemIdentity") or {})
+    family_label = classify_family(stem_identity, expected)
     compatibility_labels: list[str] = []
     if family_label:
         compatibility_labels.append(family_label)
@@ -228,9 +252,12 @@ def build_result(
     elif missing:
         primary = "INCOMPLETE_CAPTURE"
         reason = "Fresh capture is missing required provenance fields."
+    elif not attestations_ok:
+        primary = "INCOMPATIBLE"
+        reason = "Fresh capture safety attestations do not preserve the research-only provenance boundary."
     elif not source_recipe_ok or not intro_counts_ok:
         primary = "INCOMPATIBLE"
-        reason = "Fresh source/recipe/runtime identifiers or intro event fingerprints differ from the authenticated baseline."
+        reason = "Fresh source/recipe/runtime/PCM-method identifiers or intro event fingerprints differ from the authenticated baseline."
     elif intro_cache_exact:
         primary = "INTRO_CACHE_EXACT_COMPATIBLE"
         reason = "Fresh intro raw-attack cache digest and all authenticated intro fingerprints exactly match."
@@ -252,7 +279,7 @@ def build_result(
 
     return {
         "artifact": "v143-intro-compatibility-comparison",
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "comparisonMode": "FRESH_COMPATIBILITY_EVIDENCE_ONLY",
         "captureId": identity.get("captureId"),
         "primaryClassification": primary,
@@ -272,6 +299,15 @@ def build_result(
         "sourceRecipeCompatibility": {
             "passed": source_recipe_ok,
             "checks": source_checks + recipe_checks + model_identifier_checks + runtime_checks,
+        },
+        "decodedPcmHashConventionCompatibility": {
+            "passed": all_passed(pcm_method_checks),
+            "checks": pcm_method_checks,
+            "provenance": expected.get("decodedPcmHashConvention"),
+        },
+        "safetyAttestations": {
+            "passed": attestations_ok,
+            "checks": attestation_checks,
         },
         "introCountCompatibility": {
             "passed": intro_counts_ok,
