@@ -2,78 +2,112 @@
 
 Updated: 2026-08-21
 Branch: `v143-contextual-prune-lobo`
-Checkpoint base commit: `071ac6320a372f1f7b25f1593202cd72d43e67b2`
-Historical source commit under investigation: `4d735846fbd834cc4c722f2cb48727e4629647f1`
+Historical source commit: `4d735846fbd834cc4c722f2cb48727e4629647f1`
+Prior recovery checkpoint: `412208c946737e9902ab78a19db5fa48c439fdd7`
 
 ## Objective
 
 Recover and source-prove the deterministic historical pipeline that produced the preserved measures 1–16 reference-free raw/onset carrier caches, without retraining, changing thresholds, modifying production, or relying on professional/reference labels at runtime.
 
+## Current status
+
+The upstream producer gap is now substantially source-proven. The historical Python source has been archived onto this research branch under:
+
+`analyzer/v143-intro-1-16-evidence/historical-source-4d735846/`
+
+The archive was rebased on top of the prior checkpoint and pushed successfully, allowing the Codespace to be shut down. GitHub-side source reads now work against the archived files.
+
+No analyzer execution, retraining, threshold changes, production edits, or deployments were performed during this archaeology.
+
 ## Closed / solved
 
-- The historical 36-feature reconstruction layer is considered solved and preserved by the prior checkpoint.
-- The downstream assembler recovery is preserved at checkpoint base `071ac6320a372f1f7b25f1593202cd72d43e67b2`.
-- The remaining deterministic-replay gap is upstream: raw audio -> preserved measures 1–16 raw/onset-spectrum carrier caches.
-- Historical/source investigation is GitHub-first. Codespace use has been limited to read-only Git archaeology because GitHub API access has repeatedly hit 403 rate limits.
+- Historical 36-feature reconstruction layer: solved/preserved by the earlier checkpoint.
+- Downstream assembler recovery: preserved by the earlier checkpoint lineage.
+- Historical 1–16 raw-attack cache writer: identified and source-inspected.
+- Historical 1–16 onset-spectrum cache writer: identified and source-inspected.
+- Exact Basic Pitch wide-recall sweep table: recovered.
+- Exact Basic Pitch candidate call parameters: recovered.
+- Deterministic two-view guitar stem contract: recovered.
+- Onset-spectrum CQT settings, windows, normalization, schema, and serialization: recovered.
 
-## Historical files recovered from local Git history
+## Raw-attack cache producer
 
-The historical analyzer tree at `4d735846fbd834cc4c722f2cb48727e4629647f1` contains the relevant V143 intro family, including:
+Historical writer:
 
-- `analyzer/v143_intro_capture_raw_attack_cache.py`
-- `analyzer/v143_intro_capture_onset_spectrum_cache.py`
-- `analyzer/v143_intro_capture_raw_attack_harmonic_cache.py`
-- `analyzer/v143_intro_capture_spectral_pitch_cache.py`
-- `analyzer/v143_intro_raw_attack_temporal_diagnostic.py`
-- `analyzer/v143_intro_raw_attack_harmonic_rank_diagnostic.py`
-- `analyzer/v143_intro_learned_grid_event_selector.py`
-- `analyzer/v143_intro_learned_onset_spectral_set_model.py`
-- plus the other historical `v143_intro_*` diagnostics / selectors / decoders visible in the historical tree.
+`analyzer/v143_intro_capture_raw_attack_cache.py`
 
-## Producer identification
+Output:
 
-### Raw-attack cache
+`public/training/v143-musical-reconstruction-calibration/intro-raw-attack-cache.json`
 
-`analyzer/v143_intro_capture_raw_attack_cache.py` is the actual writer for:
+The local entrypoint reads the original audio bytes, sends them to `capture_raw_attack_evidence(...)`, and serializes the returned object directly with:
 
-- `intro-raw-attack-cache.json`
+`CACHE_PATH.write_text(json.dumps(result, indent=2) + "\n")`
 
-The script reads the original audio bytes, calls a Modal worker, and serializes the returned result directly with:
+The returned cache explicitly reports:
 
-- `CACHE_PATH.write_text(json.dumps(result, indent=2) + "\n")`
-
-The returned object explicitly identifies its scope as:
-
-- `professional-measures-1-16-raw-reference-free-attacks`
-
-and reports:
-
+- `scope: professional-measures-1-16-raw-reference-free-attacks`
 - `referenceFree: True`
 - `professionalReferenceUsedByAnalyzer: False`
 - `runtimeLabelsRequired: False`
 - `productionModified: False`
 
-### Proven raw-audio -> raw-attack chain
+### Source-proven raw-audio -> raw-attack chain
 
-Inside `capture_raw_attack_evidence(source_audio: bytes, suffix: str = ".m4a")` the historical source shows this chain:
+1. source audio bytes -> temporary uploaded audio file;
+2. `legacy.inspect_audio_file(...)`;
+3. `legacy.validate_audio_metadata(...)`;
+4. `legacy.normalize_audio_file(..., normalized.wav)`;
+5. `estimate_reference_free_timing(normalized)`;
+6. `build_subdivision_grid(**timing.candidate_adapter_kwargs())`;
+7. `build_deterministic_rhythm_stem_bundle(normalized).validate()`;
+8. each deterministic guitar view is processed across all historical wide-recall sweeps;
+9. Basic Pitch detection via `note_events_from_predict(...)`;
+10. each detection parsed by `parse_note_event(...)` into onset, offset, MIDI, amplitude;
+11. guitar-range filtering;
+12. wide-grid filtering at 0.30 s;
+13. measures 1–16 filtering;
+14. production-grid acceptance annotation at 0.10 s;
+15. direct JSON serialization to `intro-raw-attack-cache.json`.
 
-1. uploaded source audio bytes are written to a temporary source file;
-2. `legacy.inspect_audio_file(...)` inspects source metadata;
-3. `legacy.validate_audio_metadata(...)` validates it;
-4. `legacy.normalize_audio_file(..., normalized.wav)` creates normalized audio;
-5. `estimate_reference_free_timing(normalized)` obtains timing without professional reference data;
-6. `build_subdivision_grid(**timing.candidate_adapter_kwargs())` creates the timing grid;
-7. `build_deterministic_rhythm_stem_bundle(normalized).validate()` creates deterministic candidate rhythm stems;
-8. each candidate stem is processed across `HISTORICAL_WIDE_RECALL_SWEEPS`;
-9. detection is performed by:
-   `note_events_from_predict(stem, onset_threshold=float(onset_threshold), frame_threshold=float(frame_threshold))`;
-10. every detected raw note event is parsed by `parse_note_event(raw)` into:
-    `onset, offset, midi, amplitude`;
-11. events outside the configured guitar MIDI range are rejected;
-12. events are mapped to the nearest subdivision-grid slot and filtered first by the historical wide-grid tolerance, then annotated against the production-grid tolerance;
-13. accepted raw events are serialized into `intro-raw-attack-cache.json`.
+### Exact historical Basic Pitch sweep table
 
-Confirmed raw-event fields include at least:
+Recovered from `v143_candidate_timing_adapter.py`:
+
+```python
+HISTORICAL_WIDE_RECALL_SWEEPS = (
+    ("o030_f020", 0.30, 0.20),
+    ("o025_f015", 0.25, 0.15),
+    ("o020_f012", 0.20, 0.12),
+    ("o015_f010", 0.15, 0.10),
+)
+```
+
+`PRODUCTION_SWEEPS` uses only the widest/highest-recall final tuple:
+
+`("o015_f010", 0.15, 0.10)`
+
+### Exact Basic Pitch call contract
+
+`note_events_from_predict(...)` loads `basic_pitch.inference.predict` and calls it with:
+
+- caller-supplied onset threshold;
+- caller-supplied frame threshold;
+- minimum note length: 20 ms;
+- minimum frequency: 80 Hz;
+- maximum frequency: 1400 Hz.
+
+The adapter guitar MIDI range is 40..88.
+
+`parse_note_event(...)` accepts the historical dict/list event shapes and returns:
+
+`start_f, end_f, pitch_i, amp_f`
+
+or `None` for invalid/non-finite events.
+
+### Raw event schema
+
+Each stored event includes:
 
 - `eventId`
 - `stemIndex`
@@ -87,79 +121,178 @@ Confirmed raw-event fields include at least:
 - `onsetTime`
 - `offsetTime`
 - `duration`
-- nearest-grid / residual / production-grid acceptance metadata
+- `nearestMeasure`
+- `nearestStep`
+- `nearestGlobalStep`
+- `nearestGridTime`
+- `signedGridResidualSeconds`
+- `absoluteGridResidualSeconds`
+- `withinProductionGridTolerance`
 
-The returned cache also includes timing/grid metadata and counts such as `rawEventCount`, `productionAcceptedEventCount`, sweep/stem counts, tempo, source duration, and grid tolerance values.
+The cache also carries beat/grid metadata and raw/accepted/sweep/stem counts.
 
-### Exact dependency locations recovered
+## Deterministic guitar views
 
-At historical commit `4d735846...`, the raw-attack producer imports its core timing / note-event behavior from:
+`v143_rhythm_deterministic_stem_provider.py` delegates to the deterministic separator and returns exactly two independent guitar views:
 
-`analyzer/v143_candidate_timing_adapter.py`
+1. direct Demucs6s Guitar;
+2. BS-RoFormer Instrumental -> Demucs6s Guitar.
 
-Relevant definitions located by historical grep:
+`v143_deterministic_separator.py` enforces:
 
-- line ~21: `HISTORICAL_WIDE_RECALL_SWEEPS`
-- line ~117: `parse_note_event(...)`
-- line ~189: `note_events_from_predict(...)`
+- deterministic seed: 143;
+- Demucs shifts: 1;
+- Demucs overlap: 0.10;
+- Demucs segment size: 6.
 
-These definitions have been located but their complete source bodies / exact sweep values have not yet been captured into this checkpoint. That is the next raw-attack source-proof step.
+`v143_seeded_separator.py` confirms the frozen graph and output contract:
+
+- direct output: `direct-demucs6s-guitar.wav`;
+- cascade output: `bsroformer-demucs6s-guitar.wav`;
+- RoFormer single stem: Instrumental;
+- RoFormer batch size: 1;
+- soundfile enabled;
+- reference-free metadata.
+
+## Reference-free timing
+
+`v143_reference_free_timing.py` is now available in the archived source. Confirmed constants include:
+
+- analysis sample rate: 22050 Hz;
+- STFT window: 1024 samples;
+- STFT hop: 256 samples;
+- Hann window;
+- tempo search: 55–210 BPM;
+- 4/4 bar model.
+
+It derives timing from normalized full-mix audio without labels/professional reference data and exposes beat times plus first-beat/bar-phase metadata to the candidate adapter.
+
+## Raw-attack clustering used by onset-spectrum producer
+
+`v143_intro_raw_attack_temporal_diagnostic._cluster_events(...)` is reference-free for clustering. It groups raw events by `(measure, midi)` and merges detections within 30 ms onset proximity. Each resulting cluster carries median onset time plus independent stem/sweep support and amplitude statistics.
+
+The professional reference path present elsewhere in the diagnostic file is used for offline diagnostic evaluation, not by `_cluster_events(...)` itself and is not passed to the onset-spectrum remote capture worker.
+
+## Onset-spectrum cache producer
+
+Historical writer:
+
+`analyzer/v143_intro_capture_onset_spectrum_cache.py`
+
+Output:
+
+`public/training/v143-musical-reconstruction-calibration/intro-onset-spectrum-cache.json`
+
+This producer consumes:
+
+- original source audio bytes;
+- reference-free clusters derived from `intro-raw-attack-cache.json`;
+- the same deterministic two-view guitar stem bundle.
+
+It first converts same-measure candidate-pitch clusters into physical onset groups. Candidate clusters within 30 ms of the group's first attack are collapsed into one physical onset group while preserving the candidate MIDI set.
+
+### Exact onset-spectrum analysis settings
+
+Recovered constants:
+
+- target sample rate: 22050 Hz;
+- hop length: 128 samples;
+- bins per octave: 36;
+- CQT MIDI range: 28..112;
+- guitar MIDI range: 40..88;
+- onset grouping tolerance: 30 ms;
+- exactly two deterministic guitar views required.
+
+Each view is loaded, converted to mono when needed, cropped through last onset + 0.40 s, resampled to 22050 Hz if necessary, then transformed by `librosa.cqt(...)` with:
+
+- `hop_length=128`;
+- `fmin=midi_to_hz(28)`;
+- `n_bins=(112-28+1) * 3`;
+- `bins_per_octave=36`;
+- `filter_scale=0.75`.
+
+The stored spectral substrate is:
+
+`log(abs(CQT) + 1e-9)`
+
+### Exact spectral windows
+
+For each physical onset, each view stores three semitone vectors:
+
+- `attackMax`: onset - 0.020 s through onset + 0.045 s, max reducer;
+- `earlyMean`: onset + 0.020 s through onset + 0.095 s, mean reducer;
+- `sustainMean`: onset + 0.070 s through onset + 0.180 s, mean reducer.
+
+For each MIDI 28..112, the producer uses the center CQT bin plus/minus one bin (three bins total when available). The resulting 85-value semitone vector is normalized by subtracting that window's median spectral floor, then rounded to 6 decimals.
+
+Each onset row carries the reference-free onset-group metadata plus:
+
+- `viewA.attackMax`
+- `viewA.earlyMean`
+- `viewA.sustainMean`
+- `viewB.attackMax`
+- `viewB.earlyMean`
+- `viewB.sustainMean`
+
+The returned cache reports:
+
+- `cacheVersion: 1`
+- `scope: reference-free-physical-onset-whole-spectrum-cache`
+- sample-rate/hop/CQT metadata;
+- `candidateStemCount`;
+- `onsetGroupCount`;
+- `rows`;
+- `referenceFree: True`;
+- `professionalReferenceUsedByAnalyzer: False`;
+- `runtimeLabelsRequired: False`;
+- `productionModified: False`.
+
+The local entrypoint serializes the remote result directly with:
+
+`OUTPUT_PATH.write_text(json.dumps(result, indent=2) + "\n")`
 
 ## Important negative finding
 
-`analyzer/v143_intro_capture_raw_attack_harmonic_cache.py` is downstream, not the missing raw-attack producer. It already references `intro-raw-attack-cache.json` and uses cached onset times to capture candidate-specific harmonic evidence from the source audio. Do not treat it as the original raw-attack cache generator.
+`v143_intro_capture_raw_attack_harmonic_cache.py` is downstream, not the original raw-attack producer. It already consumes `intro-raw-attack-cache.json` and uses cached onset times to capture additional harmonic evidence.
 
-Likewise, `v143_intro_raw_attack_temporal_diagnostic.py` and the learned-grid / ranking scripts are consumers/diagnostics of the preserved carrier layer, not the initial raw-audio cache writer.
+Likewise the raw-attack temporal/ranking diagnostics and learned-grid selector are downstream consumers/evaluators, not the initial audio-to-cache writer.
 
-## Onset-spectrum cache
+## Preserved evidence
 
-Historical grep found the direct writer candidate:
-
-- `analyzer/v143_intro_capture_onset_spectrum_cache.py` -> `intro-onset-spectrum-cache.json`
-
-This file has been identified but its full producer body has NOT yet been source-inspected. Do not infer its FFT/window/hop/sample-rate/normalization settings from other scripts until this source is read directly.
-
-A separate historical audio-onset reference script, `analyzer/analyze_gomyway_chorus_35_step0_audio_onset_v1.py`, was previously inspected and uses FFmpeg decode, sample rate 22050, frame size 1024, hop 256, Hann window, `rfft`, magnitude spectra and L1 normalization. These values are reference evidence only and are NOT yet authoritative for `intro-onset-spectrum-cache.json`.
-
-## Preserved evidence / cache layer
-
-A prior evidence snapshot under:
+Existing preserved cache/evidence snapshot:
 
 `analyzer/v143-intro-1-16-evidence/codespace-snapshot/`
 
-contains the preserved intro JSON artifacts, including the raw-attack and onset-spectrum caches, with provenance / SHA-256 manifests from the earlier recovery work.
-
-A larger historical Python-source archive under:
+Historical Python source archive now pushed to this branch:
 
 `analyzer/v143-intro-1-16-evidence/historical-source-4d735846/`
 
-has been proposed so the remaining archaeology can continue GitHub-only and the Codespace can be shut down. As of this checkpoint, do NOT assume that archive has been committed unless it is independently visible on the branch.
+The archive includes a manifest / checksum material created during preservation, so the remaining work can proceed GitHub-only.
 
-## Current blockers / environment status
+## Environment status
 
-GitHub REST/core API access is currently intermittently blocked by `403 API rate limit exceeded` for the connected user. GitHub search endpoints have sometimes remained usable while fetch/content endpoints are blocked.
+The Codespace is no longer required for current source archaeology and can be stopped/deleted to avoid further compute charges.
 
-Because of that, the historical source was inspected through the already-open Codespace using only read-only commands such as `git log`, `git grep`, and `git show`. No analyzer execution, training, threshold changes, production edits, or deployments were performed during this archaeology.
+GitHub REST access previously hit intermittent 403 rate limits, but after the historical source archive was pushed the archived source became readable through the GitHub connector.
 
 ## Hard constraints
 
-- Branch work only on `v143-contextual-prune-lobo`.
+- Work only on `v143-contextual-prune-lobo`.
 - Do not modify `main` or production.
 - Do not retrain.
-- Do not alter historical thresholds merely to reproduce an expected answer.
+- Do not alter historical thresholds to force an expected result.
 - Do not use professional/reference labels at runtime.
-- Do not execute the analyzer merely to guess missing provenance while source history remains available.
-- Codespace should be used only when necessary for read-only historical recovery; move source evidence into GitHub and shut it down as soon as practical to avoid unnecessary Codespace cost.
-- Preserve evidence and exact historical behavior before proposing any new implementation.
+- Preserve historical source behavior before replaying or changing implementation.
+- Do not reopen Codespace unless a specific source/evidence gap cannot be resolved from the archived GitHub material.
 
 ## Next safe steps
 
-1. Inspect `analyzer/v143_candidate_timing_adapter.py` at `4d735846...`, specifically the exact `HISTORICAL_WIDE_RECALL_SWEEPS`, `parse_note_event`, and `note_events_from_predict` definitions.
-2. Inspect the complete historical `analyzer/v143_intro_capture_onset_spectrum_cache.py` source and prove its input path, audio preprocessing, frame/window/hop/FFT/normalization behavior, event/carrier schema, and serialization.
-3. Trace any dependencies used by that onset-spectrum producer until the raw-audio -> cache path is source-complete.
-4. Prefer committing a read-only historical Python-source snapshot under `analyzer/v143-intro-1-16-evidence/historical-source-4d735846/` with a manifest and SHA-256 list, so future work can proceed through GitHub without keeping Codespace running.
-5. Once both raw-attack and onset-spectrum producers are source-proven, update this checkpoint again before any deterministic replay attempt.
+1. Compare the source-proven producer schema/parameters against the preserved `intro-raw-attack-cache.json` and `intro-onset-spectrum-cache.json` manifests/artifacts to verify structural compatibility and provenance.
+2. Trace the remaining downstream carrier assembly from onset-spectrum rows into the already-recovered 36-feature substrate, confirming exact field mapping and ordering against preserved artifacts.
+3. Confirm no unarchived dependency is required for deterministic replay.
+4. Only after source/artifact equivalence is established, plan a deterministic replay test; do not retrain or change thresholds.
+5. Update this checkpoint before any runtime replay.
 
 ## Resume directive
 
-Resume from source archaeology, not from runtime experimentation. The raw-attack cache writer and its high-level producer chain are now identified. Finish the exact `v143_candidate_timing_adapter.py` definitions, then inspect `v143_intro_capture_onset_spectrum_cache.py`. Only after both historical producer paths are fully source-proven should deterministic replay be considered.
+Continue GitHub-only. The historical raw-attack and onset-spectrum cache producers are now source-proven, including exact Basic Pitch sweeps, deterministic stem contract, reference-free timing constants, CQT settings, spectral windows, normalization, and JSON serialization. Next prove source-to-preserved-artifact equivalence and the exact carrier-to-36-feature mapping before considering runtime replay.
