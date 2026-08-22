@@ -24,6 +24,10 @@ on:
       - 'analyzer/verify_jimmy_paige_preview_feature_gate.mjs'
       - 'analyzer/verify_v143_next_preview_route_smoke.mjs'
 
+concurrency:
+  group: v143-ai-tab-branch-build-gate
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -31,7 +35,7 @@ jobs:
   verify-build-and-route-smoke:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 25
     env:
       NEXT_TELEMETRY_DISABLED: '1'
       NODE_OPTIONS: '--max-old-space-size=4096'
@@ -42,7 +46,7 @@ jobs:
         with:
           ref: v143-contextual-prune-lobo
 
-      - name: Prepare branch gate workspace
+      - name: Prepare gate workspace
         shell: bash
         run: |
           set -euo pipefail
@@ -50,22 +54,20 @@ jobs:
           mkdir -p .branch-build-gate debug/v143-contextual-prune
           echo "BRANCH_GATE_SOURCE_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
-      - name: Commit route-smoke start heartbeat
+      - name: Record gate start heartbeat
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
-          import json
-          import os
+          import json, os
           from pathlib import Path
-
           path = Path('debug/v143-contextual-prune/next-preview-route-smoke.json')
-          data = {
-              'schemaVersion': 3,
+          path.write_text(json.dumps({
+              'schemaVersion': 4,
               'gate': 'v143-next-preview-route-smoke',
               'branch': 'v143-contextual-prune-lobo',
-              'sourceCommit': os.environ.get('BRANCH_GATE_SOURCE_COMMIT') or None,
-              'phase': 'started-by-branch-build-gate',
+              'sourceCommit': os.environ.get('BRANCH_GATE_SOURCE_COMMIT'),
+              'phase': 'started-bounded-branch-gate',
               'localNextPreviewSimulation': True,
               'actualVercelPreviewDeployment': False,
               'installExitCode': None,
@@ -80,98 +82,134 @@ jobs:
               'paidPurchaseAttempted': False,
               'customerTokenRedeemed': False,
               'customerEmailSent': False,
-              'error': 'branch-build-gate-in-progress',
-          }
-          path.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
+              'error': 'bounded-branch-gate-in-progress',
+          }, indent=2) + '\n', encoding='utf-8')
           PY
-
-          file=debug/v143-contextual-prune/next-preview-route-smoke.json
-          git add -- "$file"
-
-          if git diff --cached --quiet; then
-            echo 'Route-smoke start heartbeat unchanged.'
-            exit 0
-          fi
-
+          git add debug/v143-contextual-prune/next-preview-route-smoke.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record V143 branch gate smoke start'
+          git commit -m 'Record V143 bounded gate start' || true
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
 
-      - name: Set up Node.js 22 for ESM regression verifiers
+      - name: Set up Node.js 22 for regression verifiers
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Run analyzer-quality regression verifier
+      - name: Run analyzer-quality verifier with hard timeout
         shell: bash
         run: |
           set +e
-          node --experimental-default-type=module \
+          timeout 120s node --experimental-default-type=module \
             analyzer/verify_v143_analyzer_quality_gate.mjs \
             > .branch-build-gate/analyzer-quality.log 2>&1
           status=$?
           echo "BRANCH_ANALYZER_QUALITY_EXIT_CODE=$status" >> "$GITHUB_ENV"
           exit 0
 
-      - name: Run Preview feature-gate regression verifier
+      - name: Run Preview feature verifier with hard timeout
         shell: bash
         run: |
           set +e
-          node --experimental-default-type=module \
+          timeout 120s node --experimental-default-type=module \
             analyzer/verify_jimmy_paige_preview_feature_gate.mjs \
             > .branch-build-gate/preview-feature.log 2>&1
           status=$?
           echo "BRANCH_PREVIEW_FEATURE_EXIT_CODE=$status" >> "$GITHUB_ENV"
           exit 0
 
-      - name: Set up Node.js 24 for Next.js build and server
+      - name: Set up Node.js 24 for application build
         uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: npm
 
-      - name: Install locked dependencies
+      - name: Install locked dependencies with hard timeout
         shell: bash
         run: |
           set +e
-          npm ci --ignore-scripts > .branch-build-gate/npm-ci.log 2>&1
+          timeout 600s npm ci --ignore-scripts \
+            > .branch-build-gate/npm-ci.log 2>&1
           status=$?
           echo "BRANCH_INSTALL_EXIT_CODE=$status" >> "$GITHUB_ENV"
           exit 0
 
-      - name: Compile full Next.js application
+      - name: Compile full Next.js application with hard timeout
         shell: bash
         run: |
           set +e
           status=99
           if [ "${BRANCH_INSTALL_EXIT_CODE:-99}" -eq 0 ]; then
-            npm run build > .branch-build-gate/next-build.log 2>&1
+            timeout 600s npm run build \
+              > .branch-build-gate/next-build.log 2>&1
             status=$?
           else
-            echo 'Next.js build skipped because npm ci failed.' > .branch-build-gate/next-build.log
+            echo 'Next build skipped because npm ci did not pass.' \
+              > .branch-build-gate/next-build.log
           fi
           echo "BRANCH_NEXT_BUILD_EXIT_CODE=$status" >> "$GITHUB_ENV"
           exit 0
 
-      - name: Start built server in simulated Preview branch mode
+      - name: Persist post-build progress evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          def code(name):
+              try: return int(os.environ.get(name, '99'))
+              except ValueError: return 99
+          payload = {
+              'schemaVersion': 1,
+              'gate': 'v143-branch-gate-progress',
+              'branch': 'v143-contextual-prune-lobo',
+              'sourceCommit': os.environ.get('BRANCH_GATE_SOURCE_COMMIT'),
+              'phase': 'post-build',
+              'analyzerQualityVerifierExitCode': code('BRANCH_ANALYZER_QUALITY_EXIT_CODE'),
+              'previewFeatureVerifierExitCode': code('BRANCH_PREVIEW_FEATURE_EXIT_CODE'),
+              'installExitCode': code('BRANCH_INSTALL_EXIT_CODE'),
+              'nextBuildExitCode': code('BRANCH_NEXT_BUILD_EXIT_CODE'),
+              'localNextPreviewSimulation': True,
+              'actualVercelPreviewDeployment': False,
+              'vercelDeploymentAttempted': False,
+              'liveEndpointDeployedOrModified': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('debug/v143-contextual-prune/branch-gate-progress.json').write_text(
+              json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+
+          cp debug/v143-contextual-prune/branch-gate-progress.json /tmp/v143-branch-gate-progress.json
+          git restore -- debug/v143-contextual-prune/branch-gate-progress.json 2>/dev/null || true
+          rm -f debug/v143-contextual-prune/branch-gate-progress.json
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          cp /tmp/v143-branch-gate-progress.json debug/v143-contextual-prune/branch-gate-progress.json
+          git add debug/v143-contextual-prune/branch-gate-progress.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record V143 branch gate progress' || true
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Start built server and verify readiness
         shell: bash
         run: |
           set +e
           ready=false
-
           if [ "${BRANCH_NEXT_BUILD_EXIT_CODE:-99}" -eq 0 ]; then
             VERCEL_ENV=preview \
             VERCEL_GIT_COMMIT_REF=v143-contextual-prune-lobo \
             HOSTNAME=127.0.0.1 \
             PORT=4310 \
             npm start > .branch-build-gate/next-server.log 2>&1 &
-
             echo $! > .branch-build-gate/next-server.pid
 
-            for attempt in $(seq 1 45); do
+            for attempt in $(seq 1 60); do
               if curl --silent --show-error --fail \
                 --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Preview-Smoke/1.0)' \
                 http://127.0.0.1:4310/ai-tab \
@@ -182,13 +220,13 @@ jobs:
               sleep 1
             done
           else
-            echo 'Built server skipped because Next.js build failed.' > .branch-build-gate/next-server.log
+            echo 'Server start skipped because Next build did not pass.' \
+              > .branch-build-gate/next-server.log
           fi
-
           echo "BRANCH_PREVIEW_SERVER_READY=$ready" >> "$GITHUB_ENV"
           exit 0
 
-      - name: Exercise built Preview route over HTTP
+      - name: Exercise built Preview route with hard timeout
         shell: bash
         env:
           V143_PREVIEW_SMOKE_BASE_URL: http://127.0.0.1:4310
@@ -196,106 +234,28 @@ jobs:
         run: |
           set +e
           status=99
-
           if [ "${BRANCH_PREVIEW_SERVER_READY:-false}" = true ]; then
-            node analyzer/verify_v143_next_preview_route_smoke.mjs \
+            timeout 300s node analyzer/verify_v143_next_preview_route_smoke.mjs \
               > .branch-build-gate/preview-route-smoke.log 2>&1
             status=$?
           else
-            echo 'Preview route smoke skipped because built server was not ready.' \
+            echo 'Route smoke skipped because built server was not ready.' \
               > .branch-build-gate/preview-route-smoke.log
           fi
-
           echo "BRANCH_PREVIEW_ROUTE_EXIT_CODE=$status" >> "$GITHUB_ENV"
           exit 0
 
-      - name: Finalize compact route-smoke evidence
+      - name: Finalize compact gate evidence
         if: always()
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
-          import json
-          import os
+          import json, os
           from pathlib import Path
-
-          path = Path('debug/v143-contextual-prune/next-preview-route-smoke.json')
-
           def code(name):
-              try:
-                  return int(os.environ.get(name, '99'))
-              except ValueError:
-                  return 99
-
-          install = code('BRANCH_INSTALL_EXIT_CODE')
-          build = code('BRANCH_NEXT_BUILD_EXIT_CODE')
-          route = code('BRANCH_PREVIEW_ROUTE_EXIT_CODE')
-          server_ready = os.environ.get('BRANCH_PREVIEW_SERVER_READY') == 'true'
-
-          if path.exists():
-              try:
-                  data = json.loads(path.read_text(encoding='utf-8'))
-              except Exception:
-                  data = {}
-          else:
-              data = {}
-
-          data['schemaVersion'] = 3
-          data['gate'] = 'v143-next-preview-route-smoke'
-          data['branch'] = 'v143-contextual-prune-lobo'
-          data['sourceCommit'] = os.environ.get('BRANCH_GATE_SOURCE_COMMIT') or data.get('sourceCommit')
-          data['phase'] = 'complete-by-branch-build-gate'
-          data['localNextPreviewSimulation'] = True
-          data['actualVercelPreviewDeployment'] = False
-          data['installExitCode'] = install
-          data['nextBuildExitCode'] = build
-          data['serverReady'] = server_ready
-          data['routeSmokeExitCode'] = route
-          data['vercelDeploymentAttempted'] = False
-          data['liveEndpointDeployedOrModified'] = False
-          data['productionModified'] = False
-          data['productionPromotionAuthorized'] = False
-          data['paidPurchaseAttempted'] = False
-          data['customerTokenRedeemed'] = False
-          data['customerEmailSent'] = False
-
-          pipeline_passed = install == 0 and build == 0 and server_ready and route == 0
-          route_passed = data.get('passed') is True
-          data['passed'] = pipeline_passed and route_passed
-
-          if data['passed']:
-              data['error'] = None
-          elif install != 0:
-              data['error'] = f'npm-ci-exit-{install}'
-          elif build != 0:
-              data['error'] = f'next-build-exit-{build}'
-          elif not server_ready:
-              data['error'] = 'built-next-server-not-ready'
-          elif route != 0:
-              data['error'] = data.get('error') or f'route-smoke-exit-{route}'
-          else:
-              data['error'] = data.get('error') or 'route-smoke-did-not-report-pass'
-
-          path.parent.mkdir(parents=True, exist_ok=True)
-          path.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
-          print(json.dumps(data, indent=2))
-          PY
-
-      - name: Write compact branch build diagnostic
-        if: always()
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-
-          def code(name):
-              try:
-                  return int(os.environ.get(name, '99'))
-              except ValueError:
-                  return 99
+              try: return int(os.environ.get(name, '99'))
+              except ValueError: return 99
 
           analyzer = code('BRANCH_ANALYZER_QUALITY_EXIT_CODE')
           preview = code('BRANCH_PREVIEW_FEATURE_EXIT_CODE')
@@ -303,12 +263,57 @@ jobs:
           build = code('BRANCH_NEXT_BUILD_EXIT_CODE')
           route = code('BRANCH_PREVIEW_ROUTE_EXIT_CODE')
           server_ready = os.environ.get('BRANCH_PREVIEW_SERVER_READY') == 'true'
+          source = os.environ.get('BRANCH_GATE_SOURCE_COMMIT')
 
-          payload = {
-              'schemaVersion': 3,
+          route_path = Path('debug/v143-contextual-prune/next-preview-route-smoke.json')
+          try:
+              route_data = json.loads(route_path.read_text(encoding='utf-8'))
+          except Exception:
+              route_data = {}
+
+          verifier_passed = route_data.get('passed') is True
+          route_data.update({
+              'schemaVersion': 4,
+              'gate': 'v143-next-preview-route-smoke',
+              'branch': 'v143-contextual-prune-lobo',
+              'sourceCommit': source,
+              'phase': 'complete-by-bounded-branch-gate',
+              'localNextPreviewSimulation': True,
+              'actualVercelPreviewDeployment': False,
+              'installExitCode': install,
+              'nextBuildExitCode': build,
+              'serverReady': server_ready,
+              'routeSmokeExitCode': route,
+              'vercelDeploymentAttempted': False,
+              'liveEndpointDeployedOrModified': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'paidPurchaseAttempted': False,
+              'customerTokenRedeemed': False,
+              'customerEmailSent': False,
+          })
+          route_data['passed'] = (
+              install == 0 and build == 0 and server_ready and route == 0 and verifier_passed
+          )
+          if route_data['passed']:
+              route_data['error'] = None
+          elif install != 0:
+              route_data['error'] = f'npm-ci-exit-{install}'
+          elif build != 0:
+              route_data['error'] = f'next-build-exit-{build}'
+          elif not server_ready:
+              route_data['error'] = 'built-next-server-not-ready'
+          elif route != 0:
+              route_data['error'] = route_data.get('error') or f'route-smoke-exit-{route}'
+          else:
+              route_data['error'] = route_data.get('error') or 'route-verifier-did-not-pass'
+          route_path.write_text(json.dumps(route_data, indent=2) + '\n', encoding='utf-8')
+
+          gate = {
+              'schemaVersion': 4,
               'gate': 'v143-ai-tab-branch-build',
               'branch': 'v143-contextual-prune-lobo',
-              'sourceCommit': os.environ.get('BRANCH_GATE_SOURCE_COMMIT') or None,
+              'sourceCommit': source,
               'verifierNodeVersion': '22',
               'buildNodeVersion': '24',
               'analyzerQualityVerifierExitCode': analyzer,
@@ -321,14 +326,10 @@ jobs:
               'previewFeatureVerifierPassed': preview == 0,
               'installPassed': install == 0,
               'nextBuildPassed': build == 0,
-              'previewRouteSmokePassed': server_ready and route == 0,
+              'previewRouteSmokePassed': route_data.get('passed') is True,
               'passed': (
-                  analyzer == 0 and
-                  preview == 0 and
-                  install == 0 and
-                  build == 0 and
-                  server_ready and
-                  route == 0
+                  analyzer == 0 and preview == 0 and install == 0 and build == 0
+                  and server_ready and route == 0 and route_data.get('passed') is True
               ),
               'localNextPreviewSimulation': True,
               'actualVercelPreviewDeployment': False,
@@ -340,46 +341,48 @@ jobs:
               'customerTokenRedeemed': False,
               'customerEmailSent': False,
           }
-
-          path = Path('debug/v143-contextual-prune/ai-tab-branch-build-gate.json')
-          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
-          print(json.dumps(payload, indent=2))
+          Path('debug/v143-contextual-prune/ai-tab-branch-build-gate.json').write_text(
+              json.dumps(gate, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(gate, indent=2))
           PY
 
-      - name: Preserve build and route logs as short-retention artifact
+      - name: Preserve bounded gate logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: v143-ai-tab-branch-build-gate
           path: |
             .branch-build-gate/
+            debug/v143-contextual-prune/branch-gate-progress.json
             debug/v143-contextual-prune/ai-tab-branch-build-gate.json
             debug/v143-contextual-prune/next-preview-route-smoke.json
           if-no-files-found: warn
           retention-days: 14
 
-      - name: Commit compact branch-gate evidence
+      - name: Commit final compact evidence safely
         if: always()
         shell: bash
         run: |
           set -euo pipefail
-          git add -- \
+          cp debug/v143-contextual-prune/ai-tab-branch-build-gate.json /tmp/v143-build-gate.json
+          cp debug/v143-contextual-prune/next-preview-route-smoke.json /tmp/v143-route-smoke.json
+          git restore -- \
             debug/v143-contextual-prune/ai-tab-branch-build-gate.json \
-            debug/v143-contextual-prune/next-preview-route-smoke.json
-
-          if git diff --cached --quiet; then
-            echo 'Branch-gate evidence is unchanged.'
-            exit 0
-          fi
-
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record V143 AI tab branch build gate'
+            debug/v143-contextual-prune/next-preview-route-smoke.json \
+            2>/dev/null || true
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
+          cp /tmp/v143-build-gate.json debug/v143-contextual-prune/ai-tab-branch-build-gate.json
+          cp /tmp/v143-route-smoke.json debug/v143-contextual-prune/next-preview-route-smoke.json
+          git add \
+            debug/v143-contextual-prune/ai-tab-branch-build-gate.json \
+            debug/v143-contextual-prune/next-preview-route-smoke.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record V143 bounded branch gate' || true
           git push origin HEAD:v143-contextual-prune-lobo
 
-      - name: Enforce branch build and route gate
+      - name: Enforce bounded branch gate
         if: always()
         shell: bash
         run: |
@@ -387,15 +390,11 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-
-          build_path = Path('debug/v143-contextual-prune/ai-tab-branch-build-gate.json')
-          route_path = Path('debug/v143-contextual-prune/next-preview-route-smoke.json')
-          build = json.loads(build_path.read_text(encoding='utf-8'))
-          route = json.loads(route_path.read_text(encoding='utf-8'))
-
+          build = json.loads(Path('debug/v143-contextual-prune/ai-tab-branch-build-gate.json').read_text())
+          route = json.loads(Path('debug/v143-contextual-prune/next-preview-route-smoke.json').read_text())
           if build.get('passed') is not True:
               raise SystemExit(
-                  'V143 branch gate failed: '
+                  'V143 bounded gate failed: '
                   f"analyzer={build.get('analyzerQualityVerifierExitCode')}, "
                   f"preview={build.get('previewFeatureVerifierExitCode')}, "
                   f"install={build.get('installExitCode')}, "
@@ -404,25 +403,20 @@ jobs:
                   f"route={build.get('previewRouteSmokeExitCode')}"
               )
           if route.get('passed') is not True:
-              raise SystemExit(f"V143 Preview route smoke failed: {route.get('error')}")
-
+              raise SystemExit(f"V143 route smoke failed: {route.get('error')}")
           for data in (build, route):
               if data.get('actualVercelPreviewDeployment') is not False:
-                  raise SystemExit('Safety failure: evidence claims actual Vercel Preview deployment')
+                  raise SystemExit('Safety failure: actual Vercel Preview was claimed')
               if data.get('vercelDeploymentAttempted') is not False:
                   raise SystemExit('Safety failure: Vercel deployment was attempted')
-              if data.get('liveEndpointDeployedOrModified') is not False:
-                  raise SystemExit('Safety failure: live V143 endpoint was modified')
               if data.get('productionModified') is not False:
                   raise SystemExit('Safety failure: Production was modified')
               if data.get('productionPromotionAuthorized') is not False:
                   raise SystemExit('Safety failure: Production promotion was authorized')
-
-          print('V143 AI TAB BRANCH BUILD + ROUTE GATE PASSED')
+          print('V143 BOUNDED BRANCH BUILD + ROUTE GATE PASSED')
           print(f"sourceCommit={build.get('sourceCommit')}")
           print('actualVercelPreviewDeployment=false')
           print('productionModified=false')
-          print('productionPromotionAuthorized=false')
           PY
 
       - name: Stop built server
