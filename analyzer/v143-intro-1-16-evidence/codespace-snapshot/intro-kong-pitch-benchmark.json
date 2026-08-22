@@ -1,0 +1,234 @@
+{
+  "modelFamily": "Kong high-resolution onset-offset CRNN",
+  "checkpoint": "CRNN_note_F1=0.9677_pedal_F1=0.9186.pth",
+  "targetCount": 244,
+  "bestDevelopmentConfiguration": {
+    "sourceMode": "direct",
+    "eventMode": "active",
+    "toleranceSeconds": 0.16,
+    "developmentObjectivePercent": 4.352
+  },
+  "development": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 19,
+    "locationPrecisionPercent": 47.368,
+    "locationRecallPercent": 9.375,
+    "locationF1Percent": 15.652,
+    "referencePitchEventCount": 108,
+    "predictedPitchEventCount": 23,
+    "pitchPrecisionPercent": 4.348,
+    "pitchRecallPercent": 0.926,
+    "pitchF1Percent": 1.527,
+    "exactPitchSetPercent": 0.0
+  },
+  "holdout": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 15,
+    "locationPrecisionPercent": 53.333,
+    "locationRecallPercent": 25.0,
+    "locationF1Percent": 34.043,
+    "referencePitchEventCount": 36,
+    "predictedPitchEventCount": 18,
+    "pitchPrecisionPercent": 0.0,
+    "pitchRecallPercent": 0.0,
+    "pitchF1Percent": 0.0,
+    "exactPitchSetPercent": 0.0
+  },
+  "topDevelopmentConfigurations": [
+    {
+      "sourceMode": "direct",
+      "eventMode": "active",
+      "toleranceSeconds": 0.16,
+      "developmentObjectivePercent": 4.352,
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 19,
+        "locationPrecisionPercent": 47.368,
+        "locationRecallPercent": 9.375,
+        "locationF1Percent": 15.652,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 23,
+        "pitchPrecisionPercent": 4.348,
+        "pitchRecallPercent": 0.926,
+        "pitchF1Percent": 1.527,
+        "exactPitchSetPercent": 0.0
+      }
+    },
+    {
+      "sourceMode": "union",
+      "eventMode": "active",
+      "toleranceSeconds": 0.16,
+      "developmentObjectivePercent": 4.352,
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 19,
+        "locationPrecisionPercent": 47.368,
+        "locationRecallPercent": 9.375,
+        "locationF1Percent": 15.652,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 23,
+        "pitchPrecisionPercent": 4.348,
+        "pitchRecallPercent": 0.926,
+        "pitchF1Percent": 1.527,
+        "exactPitchSetPercent": 0.0
+      }
+    },
+    {
+      "sourceMode": "direct",
+      "eventMode": "active",
+      "toleranceSeconds": 0.12,
+      "developmentObjectivePercent": 4.072,
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 17,
+        "locationPrecisionPercent": 47.059,
+        "locationRecallPercent": 8.333,
+        "locationF1Percent": 14.159,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 21,
+        "pitchPrecisionPercent": 4.762,
+        "pitchRecallPercent": 0.926,
+        "pitchF1Percent": 1.55,
+        "exactPitchSetPercent": 0.0
+      }
+    },
+    {
+      "sourceMode": "union",
+      "eventMode": "active",
+      "toleranceSeconds": 0.12,
+      "developmentObjectivePercent": 4.072,
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 17,
+        "locationPrecisionPercent": 47.059,
+        "locationRecallPercent": 8.333,
+        "locationF1Percent": 14.159,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 21,
+        "pitchPrecisionPercent": 4.762,
+        "pitchRecallPercent": 0.926,
+        "pitchF1Percent": 1.55,
+        "exactPitchSetPercent": 0.0
+      }
+    },
+    {
+      "sourceMode": "cascade",
+      "eventMode": "active",
+      "toleranceSeconds": 0.16,
+      "developmentObjectivePercent": 4.037,
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 18,
+        "locationPrecisionPercent": 44.444,
+        "locationRecallPercent": 8.333,
+        "locationF1Percent": 14.035,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 22,
+        "pitchPrecisionPercent": 4.545,
+        "pitchRecallPercent": 0.926,
+        "pitchF1Percent": 1.538,
+        "exactPitchSetPercent": 0.0
+      }
+    },
+    {
+      "sourceMode": "intersection",
+      "eventMode": "active",
+      "toleranceSeconds": 0.16,
+      "developmentObjectivePercent": 4.037,
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 18,
+        "locationPrecisionPercent": 44.444,
+        "locationRecallPercent": 8.333,
+        "locationF1Percent": 14.035,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 22,
+        "pitchPrecisionPercent": 4.545,
+        "pitchRecallPercent": 0.926,
+        "pitchF1Percent": 1.538,
+        "exactPitchSetPercent": 0.0
+      }
+    },
+    {
+      "sourceMode": "direct",
+      "eventMode": "active",
+      "toleranceSeconds": 0.08,
+      "developmentObjectivePercent": 3.893,
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 12,
+        "locationPrecisionPercent": 58.333,
+        "locationRecallPercent": 7.292,
+        "locationF1Percent": 12.963,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 15,
+        "pitchPrecisionPercent": 6.667,
+        "pitchRecallPercent": 0.926,
+        "pitchF1Percent": 1.626,
+        "exactPitchSetPercent": 0.0
+      }
+    },
+    {
+      "sourceMode": "cascade",
+      "eventMode": "active",
+      "toleranceSeconds": 0.08,
+      "developmentObjectivePercent": 3.893,
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 12,
+        "locationPrecisionPercent": 58.333,
+        "locationRecallPercent": 7.292,
+        "locationF1Percent": 12.963,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 15,
+        "pitchPrecisionPercent": 6.667,
+        "pitchRecallPercent": 0.926,
+        "pitchF1Percent": 1.626,
+        "exactPitchSetPercent": 0.0
+      }
+    },
+    {
+      "sourceMode": "intersection",
+      "eventMode": "active",
+      "toleranceSeconds": 0.08,
+      "developmentObjectivePercent": 3.893,
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 12,
+        "locationPrecisionPercent": 58.333,
+        "locationRecallPercent": 7.292,
+        "locationF1Percent": 12.963,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 15,
+        "pitchPrecisionPercent": 6.667,
+        "pitchRecallPercent": 0.926,
+        "pitchF1Percent": 1.626,
+        "exactPitchSetPercent": 0.0
+      }
+    },
+    {
+      "sourceMode": "union",
+      "eventMode": "active",
+      "toleranceSeconds": 0.08,
+      "developmentObjectivePercent": 3.893,
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 12,
+        "locationPrecisionPercent": 58.333,
+        "locationRecallPercent": 7.292,
+        "locationF1Percent": 12.963,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 15,
+        "pitchPrecisionPercent": 6.667,
+        "pitchRecallPercent": 0.926,
+        "pitchF1Percent": 1.626,
+        "exactPitchSetPercent": 0.0
+      }
+    }
+  ],
+  "referenceFreeInference": true,
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceRequiredAtRuntime": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false
+}

@@ -1,0 +1,66 @@
+{
+  "model": "v143-multiscale-sequence-event-model",
+  "bestConfiguration": {
+    "pcaComponents": 24,
+    "l2": 0.001,
+    "threshold": 0.35,
+    "validationObjectivePercent": 96.875
+  },
+  "validationLocation": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 32,
+    "correctLocationCount": 31,
+    "locationPrecisionPercent": 96.875,
+    "locationRecallPercent": 96.875,
+    "locationF1Percent": 96.875
+  },
+  "developmentLocation": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 97,
+    "correctLocationCount": 90,
+    "locationPrecisionPercent": 92.784,
+    "locationRecallPercent": 93.75,
+    "locationF1Percent": 93.264
+  },
+  "developmentEndToEnd": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 97,
+    "correctLocationCount": 90,
+    "locationPrecisionPercent": 92.784,
+    "locationRecallPercent": 93.75,
+    "referencePitchEventCount": 108,
+    "predictedPitchEventCount": 116,
+    "correctPitchEventCount": 101,
+    "pitchPrecisionPercent": 87.069,
+    "pitchRecallPercent": 93.519,
+    "pitchF1Percent": 90.179,
+    "exactPitchSetPercent": 92.708
+  },
+  "diagnosticHoldoutLocation": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 32,
+    "correctLocationCount": 25,
+    "locationPrecisionPercent": 78.125,
+    "locationRecallPercent": 78.125,
+    "locationF1Percent": 78.125
+  },
+  "diagnosticHoldoutEndToEnd": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 32,
+    "correctLocationCount": 25,
+    "locationPrecisionPercent": 78.125,
+    "locationRecallPercent": 78.125,
+    "referencePitchEventCount": 36,
+    "predictedPitchEventCount": 38,
+    "correctPitchEventCount": 26,
+    "pitchPrecisionPercent": 68.421,
+    "pitchRecallPercent": 72.222,
+    "pitchF1Percent": 70.27,
+    "exactPitchSetPercent": 68.75
+  },
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceRequiredAtRuntime": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false,
+  "evaluationNote": "Measures 13-16 are diagnostic only because prior architecture iterations inspected them. Use a fresh song/section before production promotion."
+}

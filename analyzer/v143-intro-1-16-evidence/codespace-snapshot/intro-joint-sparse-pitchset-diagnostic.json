@@ -1,0 +1,47 @@
+{
+  "reportVersion": 1,
+  "scope": "offline-reference-location-joint-sparse-onset-pitchset-diagnostic",
+  "spectralConfigurationCount": 54,
+  "developmentConfigurationCount": 1296,
+  "bestDevelopmentConfiguration": {
+    "mix": "attack",
+    "viewMode": "mean",
+    "templateProfile": "fundamental",
+    "poolMode": "raw",
+    "windowMs": 50,
+    "secondGainRatio": 0.4,
+    "developmentObjectivePercent": 7.397
+  },
+  "development": {
+    "referenceLocationCount": 90,
+    "coveredLocationCount": 90,
+    "referenceLocationCoveragePercent": 100.0,
+    "referencePitchEventCount": 102,
+    "predictedPitchEventCount": 140,
+    "correctPitchEventCount": 10,
+    "candidatePitchAvailabilityRecallPercent": 32.353,
+    "pitchPrecisionPercent": 7.143,
+    "pitchRecallPercent": 9.804,
+    "pitchF1Percent": 8.264,
+    "exactPitchSetPercent": 5.556
+  },
+  "holdout": {
+    "referenceLocationCount": 32,
+    "coveredLocationCount": 32,
+    "referenceLocationCoveragePercent": 100.0,
+    "referencePitchEventCount": 36,
+    "predictedPitchEventCount": 50,
+    "correctPitchEventCount": 4,
+    "candidatePitchAvailabilityRecallPercent": 33.333,
+    "pitchPrecisionPercent": 8.0,
+    "pitchRecallPercent": 11.111,
+    "pitchF1Percent": 9.302,
+    "exactPitchSetPercent": 6.25
+  },
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceUsedForOfflineDevelopmentSelectionAndGrading": true,
+  "professionalReferenceRequiredAtRuntime": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false,
+  "diagnosis": "fixed-harmonic-dictionary-insufficient-use-learned-onset-level-spectral-set-model"
+}

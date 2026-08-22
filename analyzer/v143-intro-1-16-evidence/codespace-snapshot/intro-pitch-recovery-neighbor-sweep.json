@@ -1,0 +1,821 @@
+{
+  "sweepVersion": 1,
+  "scope": "professional-intro-measures-1-16",
+  "developmentMeasures": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "holdoutMeasures": [
+    13,
+    14,
+    15,
+    16
+  ],
+  "rawRowCount": 244,
+  "oraclePitchRecallPercent": {
+    "0": {
+      "development": 60.185,
+      "holdout": 69.444
+    },
+    "1": {
+      "development": 81.481,
+      "holdout": 94.444
+    },
+    "2": {
+      "development": 91.667,
+      "holdout": 100.0
+    }
+  },
+  "bestDevelopmentConfiguration": {
+    "configuration": {
+      "q": 1.0,
+      "radius": 2,
+      "topK": 2,
+      "secondRatio": 0.0,
+      "recurrenceWeight": 1.5,
+      "distancePenalty": 0.4,
+      "sourceWeight": 0.75,
+      "amplitudeWeight": 0.5
+    },
+    "development": {
+      "referenceLocationCount": 96,
+      "predictedLocationCount": 180,
+      "locationPrecisionPercent": 50.0,
+      "locationRecallPercent": 93.75,
+      "locationF1Percent": 65.217,
+      "referencePitchEventCount": 108,
+      "predictedPitchEventCount": 360,
+      "pitchPrecisionPercent": 3.889,
+      "pitchRecallPercent": 12.963,
+      "pitchF1Percent": 5.983
+    },
+    "holdout": {
+      "referenceLocationCount": 32,
+      "predictedLocationCount": 64,
+      "locationPrecisionPercent": 50.0,
+      "locationRecallPercent": 100.0,
+      "locationF1Percent": 66.667,
+      "referencePitchEventCount": 36,
+      "predictedPitchEventCount": 128,
+      "pitchPrecisionPercent": 3.125,
+      "pitchRecallPercent": 11.111,
+      "pitchF1Percent": 4.878
+    },
+    "developmentObjectivePercent": 22.569
+  },
+  "topDevelopmentRows": [
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.0,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.4,
+        "sourceWeight": 0.75,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.0,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.4,
+        "sourceWeight": 1.25,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.0,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.9,
+        "sourceWeight": 0.75,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.0,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.9,
+        "sourceWeight": 1.25,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.0,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 1.4,
+        "sourceWeight": 0.75,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.0,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 1.4,
+        "sourceWeight": 1.25,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.72,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.4,
+        "sourceWeight": 0.75,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.72,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.4,
+        "sourceWeight": 1.25,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.72,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.9,
+        "sourceWeight": 0.75,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.72,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.9,
+        "sourceWeight": 1.25,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.72,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 1.4,
+        "sourceWeight": 0.75,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.72,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 1.4,
+        "sourceWeight": 1.25,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.84,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.4,
+        "sourceWeight": 0.75,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.84,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.4,
+        "sourceWeight": 1.25,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.84,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.9,
+        "sourceWeight": 0.75,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.84,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.9,
+        "sourceWeight": 1.25,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.84,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 1.4,
+        "sourceWeight": 0.75,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 1.0,
+        "radius": 2,
+        "topK": 2,
+        "secondRatio": 0.84,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 1.4,
+        "sourceWeight": 1.25,
+        "amplitudeWeight": 0.5
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 180,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 93.75,
+        "locationF1Percent": 65.217,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 360,
+        "pitchPrecisionPercent": 3.889,
+        "pitchRecallPercent": 12.963,
+        "pitchF1Percent": 5.983
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 64,
+        "locationPrecisionPercent": 50.0,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 66.667,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 128,
+        "pitchPrecisionPercent": 3.125,
+        "pitchRecallPercent": 11.111,
+        "pitchF1Percent": 4.878
+      },
+      "developmentObjectivePercent": 22.569
+    },
+    {
+      "configuration": {
+        "q": 0.95,
+        "radius": 0,
+        "topK": 3,
+        "secondRatio": 0.84,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.4,
+        "sourceWeight": 0.75,
+        "amplitudeWeight": 1.0
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 169,
+        "locationPrecisionPercent": 50.888,
+        "locationRecallPercent": 89.583,
+        "locationF1Percent": 64.906,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 483,
+        "pitchPrecisionPercent": 3.727,
+        "pitchRecallPercent": 16.667,
+        "pitchF1Percent": 6.092
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 63,
+        "locationPrecisionPercent": 50.794,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 67.369,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 184,
+        "pitchPrecisionPercent": 3.261,
+        "pitchRecallPercent": 16.667,
+        "pitchF1Percent": 5.455
+      },
+      "developmentObjectivePercent": 22.56
+    },
+    {
+      "configuration": {
+        "q": 0.95,
+        "radius": 0,
+        "topK": 3,
+        "secondRatio": 0.84,
+        "recurrenceWeight": 1.5,
+        "distancePenalty": 0.9,
+        "sourceWeight": 0.75,
+        "amplitudeWeight": 1.0
+      },
+      "development": {
+        "referenceLocationCount": 96,
+        "predictedLocationCount": 169,
+        "locationPrecisionPercent": 50.888,
+        "locationRecallPercent": 89.583,
+        "locationF1Percent": 64.906,
+        "referencePitchEventCount": 108,
+        "predictedPitchEventCount": 483,
+        "pitchPrecisionPercent": 3.727,
+        "pitchRecallPercent": 16.667,
+        "pitchF1Percent": 6.092
+      },
+      "holdout": {
+        "referenceLocationCount": 32,
+        "predictedLocationCount": 63,
+        "locationPrecisionPercent": 50.794,
+        "locationRecallPercent": 100.0,
+        "locationF1Percent": 67.369,
+        "referencePitchEventCount": 36,
+        "predictedPitchEventCount": 184,
+        "pitchPrecisionPercent": 3.261,
+        "pitchRecallPercent": 16.667,
+        "pitchF1Percent": 5.455
+      },
+      "developmentObjectivePercent": 22.56
+    }
+  ],
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceUsedByOfflineDevelopmentGrader": true,
+  "productionModified": false
+}

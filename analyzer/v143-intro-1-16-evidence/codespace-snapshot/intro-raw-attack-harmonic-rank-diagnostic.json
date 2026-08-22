@@ -1,0 +1,1403 @@
+{
+  "reportVersion": 1,
+  "scope": "offline-reference-location-candidate-specific-harmonic-pitch-rank-diagnostic",
+  "developmentMeasures": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "holdoutMeasures": [
+    13,
+    14,
+    15,
+    16
+  ],
+  "physicalAttackClusterCount": 7113,
+  "harmonicEvidenceClusterCount": 7113,
+  "joinedClusterCount": 7113,
+  "windows": {
+    "50": {
+      "development": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 60.784,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 13.725,
+          "top5RecallPercent": 18.627,
+          "medianCorrectPitchRankWhenAvailable": 11.5,
+          "p90CorrectPitchRankWhenAvailable": 22,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 60.784,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 13.725,
+          "top5RecallPercent": 18.627,
+          "medianCorrectPitchRankWhenAvailable": 11.5,
+          "p90CorrectPitchRankWhenAvailable": 22,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 60.784,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 12.745,
+          "top5RecallPercent": 23.529,
+          "medianCorrectPitchRankWhenAvailable": 8.0,
+          "p90CorrectPitchRankWhenAvailable": 19,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 60.784,
+          "top1RecallPercent": 2.941,
+          "top3RecallPercent": 12.745,
+          "top5RecallPercent": 19.608,
+          "medianCorrectPitchRankWhenAvailable": 9.0,
+          "p90CorrectPitchRankWhenAvailable": 19,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 60.784,
+          "top1RecallPercent": 2.941,
+          "top3RecallPercent": 12.745,
+          "top5RecallPercent": 19.608,
+          "medianCorrectPitchRankWhenAvailable": 9.0,
+          "p90CorrectPitchRankWhenAvailable": 19,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 60.784,
+          "top1RecallPercent": 5.882,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 23.529,
+          "medianCorrectPitchRankWhenAvailable": 8.0,
+          "p90CorrectPitchRankWhenAvailable": 19,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 60.784,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 9.804,
+          "top5RecallPercent": 18.627,
+          "medianCorrectPitchRankWhenAvailable": 9.0,
+          "p90CorrectPitchRankWhenAvailable": 15,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "localPeak": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 60.784,
+          "top1RecallPercent": 8.824,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 21.569,
+          "medianCorrectPitchRankWhenAvailable": 10.5,
+          "p90CorrectPitchRankWhenAvailable": 19,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "crossView": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 60.784,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 18.627,
+          "top5RecallPercent": 21.569,
+          "medianCorrectPitchRankWhenAvailable": 9.5,
+          "p90CorrectPitchRankWhenAvailable": 19,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 60.784,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 19.608,
+          "top5RecallPercent": 24.51,
+          "medianCorrectPitchRankWhenAvailable": 8.0,
+          "p90CorrectPitchRankWhenAvailable": 18,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 60.784,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 19.608,
+          "top5RecallPercent": 24.51,
+          "medianCorrectPitchRankWhenAvailable": 8.0,
+          "p90CorrectPitchRankWhenAvailable": 19,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        }
+      },
+      "holdout": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 72.222,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 5.556,
+          "top5RecallPercent": 16.667,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 21,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 72.222,
+          "top1RecallPercent": 5.556,
+          "top3RecallPercent": 5.556,
+          "top5RecallPercent": 16.667,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 20,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 72.222,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 11.111,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 8.5,
+          "p90CorrectPitchRankWhenAvailable": 18,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 72.222,
+          "top1RecallPercent": 5.556,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 17,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 72.222,
+          "top1RecallPercent": 5.556,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 17,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 72.222,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 11.111,
+          "top5RecallPercent": 25.0,
+          "medianCorrectPitchRankWhenAvailable": 8.0,
+          "p90CorrectPitchRankWhenAvailable": 16,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 72.222,
+          "top1RecallPercent": 5.556,
+          "top3RecallPercent": 22.222,
+          "top5RecallPercent": 33.333,
+          "medianCorrectPitchRankWhenAvailable": 6.0,
+          "p90CorrectPitchRankWhenAvailable": 13,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "localPeak": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 72.222,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 22,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "crossView": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 72.222,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 11.111,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 9.5,
+          "p90CorrectPitchRankWhenAvailable": 20,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 72.222,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 25.0,
+          "medianCorrectPitchRankWhenAvailable": 9.5,
+          "p90CorrectPitchRankWhenAvailable": 17,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 72.222,
+          "top1RecallPercent": 5.556,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 25.0,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 18,
+          "medianCandidatePitchCountPerReferenceLocation": 22.0
+        }
+      }
+    },
+    "75": {
+      "development": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 71.569,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 12.745,
+          "top5RecallPercent": 18.627,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 24,
+          "medianCandidatePitchCountPerReferenceLocation": 27.0
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 71.569,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 12.745,
+          "top5RecallPercent": 18.627,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 24,
+          "medianCandidatePitchCountPerReferenceLocation": 27.0
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 71.569,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 15.686,
+          "top5RecallPercent": 23.529,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 25,
+          "medianCandidatePitchCountPerReferenceLocation": 27.0
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 71.569,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 13.725,
+          "top5RecallPercent": 19.608,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 20,
+          "medianCandidatePitchCountPerReferenceLocation": 27.0
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 71.569,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 13.725,
+          "top5RecallPercent": 19.608,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 20,
+          "medianCandidatePitchCountPerReferenceLocation": 27.0
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 71.569,
+          "top1RecallPercent": 6.863,
+          "top3RecallPercent": 15.686,
+          "top5RecallPercent": 25.49,
+          "medianCorrectPitchRankWhenAvailable": 9.0,
+          "p90CorrectPitchRankWhenAvailable": 22,
+          "medianCandidatePitchCountPerReferenceLocation": 27.0
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 71.569,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 12.745,
+          "top5RecallPercent": 19.608,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 18,
+          "medianCandidatePitchCountPerReferenceLocation": 27.0
+        },
+        "localPeak": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 71.569,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 18.627,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 21,
+          "medianCandidatePitchCountPerReferenceLocation": 27.0
+        },
+        "crossView": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 71.569,
+          "top1RecallPercent": 5.882,
+          "top3RecallPercent": 19.608,
+          "top5RecallPercent": 21.569,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 23,
+          "medianCandidatePitchCountPerReferenceLocation": 27.0
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 71.569,
+          "top1RecallPercent": 5.882,
+          "top3RecallPercent": 19.608,
+          "top5RecallPercent": 26.471,
+          "medianCorrectPitchRankWhenAvailable": 9.0,
+          "p90CorrectPitchRankWhenAvailable": 22,
+          "medianCandidatePitchCountPerReferenceLocation": 27.0
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 71.569,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 19.608,
+          "top5RecallPercent": 26.471,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 22,
+          "medianCandidatePitchCountPerReferenceLocation": 27.0
+        }
+      },
+      "holdout": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 77.778,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 11.111,
+          "top5RecallPercent": 11.111,
+          "medianCorrectPitchRankWhenAvailable": 15.0,
+          "p90CorrectPitchRankWhenAvailable": 24,
+          "medianCandidatePitchCountPerReferenceLocation": 27.5
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 77.778,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 11.111,
+          "top5RecallPercent": 11.111,
+          "medianCorrectPitchRankWhenAvailable": 15.0,
+          "p90CorrectPitchRankWhenAvailable": 24,
+          "medianCandidatePitchCountPerReferenceLocation": 27.5
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 77.778,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 5.556,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 10.5,
+          "p90CorrectPitchRankWhenAvailable": 21,
+          "medianCandidatePitchCountPerReferenceLocation": 27.5
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 77.778,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 11.5,
+          "p90CorrectPitchRankWhenAvailable": 21,
+          "medianCandidatePitchCountPerReferenceLocation": 27.5
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 77.778,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 11.5,
+          "p90CorrectPitchRankWhenAvailable": 21,
+          "medianCandidatePitchCountPerReferenceLocation": 27.5
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 77.778,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 21,
+          "medianCandidatePitchCountPerReferenceLocation": 27.5
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 77.778,
+          "top1RecallPercent": 5.556,
+          "top3RecallPercent": 19.444,
+          "top5RecallPercent": 27.778,
+          "medianCorrectPitchRankWhenAvailable": 8.0,
+          "p90CorrectPitchRankWhenAvailable": 15,
+          "medianCandidatePitchCountPerReferenceLocation": 27.5
+        },
+        "localPeak": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 77.778,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 29,
+          "medianCandidatePitchCountPerReferenceLocation": 27.5
+        },
+        "crossView": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 77.778,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 11.111,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 23,
+          "medianCandidatePitchCountPerReferenceLocation": 27.5
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 77.778,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 19.444,
+          "top5RecallPercent": 25.0,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 20,
+          "medianCandidatePitchCountPerReferenceLocation": 27.5
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 77.778,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 19.444,
+          "top5RecallPercent": 25.0,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 20,
+          "medianCandidatePitchCountPerReferenceLocation": 27.5
+        }
+      }
+    },
+    "100": {
+      "development": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 77.451,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 13.725,
+          "top5RecallPercent": 18.627,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 28,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 77.451,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 13.725,
+          "top5RecallPercent": 18.627,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 28,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 77.451,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 15.686,
+          "top5RecallPercent": 21.569,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 25,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 77.451,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 12.745,
+          "top5RecallPercent": 17.647,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 23,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 77.451,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 12.745,
+          "top5RecallPercent": 17.647,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 23,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 77.451,
+          "top1RecallPercent": 5.882,
+          "top3RecallPercent": 18.627,
+          "top5RecallPercent": 21.569,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 24,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 77.451,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 14.706,
+          "top5RecallPercent": 20.588,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 20,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "localPeak": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 77.451,
+          "top1RecallPercent": 6.863,
+          "top3RecallPercent": 15.686,
+          "top5RecallPercent": 19.608,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 24,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "crossView": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 77.451,
+          "top1RecallPercent": 6.863,
+          "top3RecallPercent": 20.588,
+          "top5RecallPercent": 20.588,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 26,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 77.451,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 19.608,
+          "top5RecallPercent": 23.529,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 24,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 77.451,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 19.608,
+          "top5RecallPercent": 25.49,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 25,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        }
+      },
+      "holdout": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 5.556,
+          "top5RecallPercent": 11.111,
+          "medianCorrectPitchRankWhenAvailable": 15.5,
+          "p90CorrectPitchRankWhenAvailable": 26,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 5.556,
+          "top5RecallPercent": 11.111,
+          "medianCorrectPitchRankWhenAvailable": 15.5,
+          "p90CorrectPitchRankWhenAvailable": 26,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 5.556,
+          "top5RecallPercent": 16.667,
+          "medianCorrectPitchRankWhenAvailable": 12.5,
+          "p90CorrectPitchRankWhenAvailable": 23,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 22,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 11.5,
+          "p90CorrectPitchRankWhenAvailable": 22,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 24,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 5.556,
+          "top3RecallPercent": 19.444,
+          "top5RecallPercent": 27.778,
+          "medianCorrectPitchRankWhenAvailable": 9.0,
+          "p90CorrectPitchRankWhenAvailable": 16,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "localPeak": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 29,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "crossView": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 16.667,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 27,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 12.5,
+          "p90CorrectPitchRankWhenAvailable": 23,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 22,
+          "medianCandidatePitchCountPerReferenceLocation": 31.0
+        }
+      }
+    },
+    "125": {
+      "development": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 80.392,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 11.765,
+          "top5RecallPercent": 16.667,
+          "medianCorrectPitchRankWhenAvailable": 14.5,
+          "p90CorrectPitchRankWhenAvailable": 29,
+          "medianCandidatePitchCountPerReferenceLocation": 34.0
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 80.392,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 11.765,
+          "top5RecallPercent": 16.667,
+          "medianCorrectPitchRankWhenAvailable": 14.5,
+          "p90CorrectPitchRankWhenAvailable": 29,
+          "medianCandidatePitchCountPerReferenceLocation": 34.0
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 80.392,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 14.706,
+          "top5RecallPercent": 22.549,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 28,
+          "medianCandidatePitchCountPerReferenceLocation": 34.0
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 80.392,
+          "top1RecallPercent": 1.961,
+          "top3RecallPercent": 10.784,
+          "top5RecallPercent": 20.588,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 24,
+          "medianCandidatePitchCountPerReferenceLocation": 34.0
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 80.392,
+          "top1RecallPercent": 1.961,
+          "top3RecallPercent": 10.784,
+          "top5RecallPercent": 20.588,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 24,
+          "medianCandidatePitchCountPerReferenceLocation": 34.0
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 80.392,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 17.647,
+          "top5RecallPercent": 22.549,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 25,
+          "medianCandidatePitchCountPerReferenceLocation": 34.0
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 80.392,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 12.745,
+          "top5RecallPercent": 19.608,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 21,
+          "medianCandidatePitchCountPerReferenceLocation": 34.0
+        },
+        "localPeak": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 80.392,
+          "top1RecallPercent": 7.843,
+          "top3RecallPercent": 14.706,
+          "top5RecallPercent": 17.647,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 24,
+          "medianCandidatePitchCountPerReferenceLocation": 34.0
+        },
+        "crossView": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 80.392,
+          "top1RecallPercent": 7.843,
+          "top3RecallPercent": 17.647,
+          "top5RecallPercent": 20.588,
+          "medianCorrectPitchRankWhenAvailable": 12.5,
+          "p90CorrectPitchRankWhenAvailable": 27,
+          "medianCandidatePitchCountPerReferenceLocation": 34.0
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 80.392,
+          "top1RecallPercent": 2.941,
+          "top3RecallPercent": 19.608,
+          "top5RecallPercent": 21.569,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 25,
+          "medianCandidatePitchCountPerReferenceLocation": 34.0
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 80.392,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 18.627,
+          "top5RecallPercent": 21.569,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 25,
+          "medianCandidatePitchCountPerReferenceLocation": 34.0
+        }
+      },
+      "holdout": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 86.111,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 2.778,
+          "top5RecallPercent": 11.111,
+          "medianCorrectPitchRankWhenAvailable": 18.0,
+          "p90CorrectPitchRankWhenAvailable": 30,
+          "medianCandidatePitchCountPerReferenceLocation": 33.5
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 86.111,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 2.778,
+          "top5RecallPercent": 11.111,
+          "medianCorrectPitchRankWhenAvailable": 18.0,
+          "p90CorrectPitchRankWhenAvailable": 30,
+          "medianCandidatePitchCountPerReferenceLocation": 33.5
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 86.111,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 5.556,
+          "top5RecallPercent": 16.667,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 25,
+          "medianCandidatePitchCountPerReferenceLocation": 33.5
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 86.111,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 25,
+          "medianCandidatePitchCountPerReferenceLocation": 33.5
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 86.111,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 25,
+          "medianCandidatePitchCountPerReferenceLocation": 33.5
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 86.111,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 27,
+          "medianCandidatePitchCountPerReferenceLocation": 33.5
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 86.111,
+          "top1RecallPercent": 8.333,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 27.778,
+          "medianCorrectPitchRankWhenAvailable": 10.0,
+          "p90CorrectPitchRankWhenAvailable": 20,
+          "medianCandidatePitchCountPerReferenceLocation": 33.5
+        },
+        "localPeak": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 86.111,
+          "top1RecallPercent": 8.333,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 34,
+          "medianCandidatePitchCountPerReferenceLocation": 33.5
+        },
+        "crossView": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 86.111,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 11.111,
+          "top5RecallPercent": 16.667,
+          "medianCorrectPitchRankWhenAvailable": 15.0,
+          "p90CorrectPitchRankWhenAvailable": 28,
+          "medianCandidatePitchCountPerReferenceLocation": 33.5
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 86.111,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 27,
+          "medianCandidatePitchCountPerReferenceLocation": 33.5
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 86.111,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 25,
+          "medianCandidatePitchCountPerReferenceLocation": 33.5
+        }
+      }
+    },
+    "150": {
+      "development": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 11.765,
+          "top5RecallPercent": 17.647,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 31,
+          "medianCandidatePitchCountPerReferenceLocation": 36.0
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 11.765,
+          "top5RecallPercent": 17.647,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 31,
+          "medianCandidatePitchCountPerReferenceLocation": 36.0
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 21.569,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 30,
+          "medianCandidatePitchCountPerReferenceLocation": 36.0
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 1.961,
+          "top3RecallPercent": 12.745,
+          "top5RecallPercent": 23.529,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 26,
+          "medianCandidatePitchCountPerReferenceLocation": 36.0
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 1.961,
+          "top3RecallPercent": 12.745,
+          "top5RecallPercent": 23.529,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 26,
+          "medianCandidatePitchCountPerReferenceLocation": 36.0
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 19.608,
+          "top5RecallPercent": 22.549,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 27,
+          "medianCandidatePitchCountPerReferenceLocation": 36.0
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 10.784,
+          "top5RecallPercent": 16.667,
+          "medianCorrectPitchRankWhenAvailable": 11.0,
+          "p90CorrectPitchRankWhenAvailable": 22,
+          "medianCandidatePitchCountPerReferenceLocation": 36.0
+        },
+        "localPeak": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 7.843,
+          "top3RecallPercent": 14.706,
+          "top5RecallPercent": 17.647,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 28,
+          "medianCandidatePitchCountPerReferenceLocation": 36.0
+        },
+        "crossView": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 7.843,
+          "top3RecallPercent": 17.647,
+          "top5RecallPercent": 21.569,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 30,
+          "medianCandidatePitchCountPerReferenceLocation": 36.0
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 18.627,
+          "top5RecallPercent": 22.549,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 28,
+          "medianCandidatePitchCountPerReferenceLocation": 36.0
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 83.333,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 19.608,
+          "top5RecallPercent": 21.569,
+          "medianCorrectPitchRankWhenAvailable": 12.0,
+          "p90CorrectPitchRankWhenAvailable": 27,
+          "medianCandidatePitchCountPerReferenceLocation": 36.0
+        }
+      },
+      "holdout": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 5.556,
+          "top5RecallPercent": 11.111,
+          "medianCorrectPitchRankWhenAvailable": 20.0,
+          "p90CorrectPitchRankWhenAvailable": 31,
+          "medianCandidatePitchCountPerReferenceLocation": 35.0
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 5.556,
+          "top5RecallPercent": 11.111,
+          "medianCorrectPitchRankWhenAvailable": 20.0,
+          "p90CorrectPitchRankWhenAvailable": 31,
+          "medianCandidatePitchCountPerReferenceLocation": 35.0
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 13.889,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 27,
+          "medianCandidatePitchCountPerReferenceLocation": 35.0
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 5.556,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 14.5,
+          "p90CorrectPitchRankWhenAvailable": 27,
+          "medianCandidatePitchCountPerReferenceLocation": 35.0
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 5.556,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 13.5,
+          "p90CorrectPitchRankWhenAvailable": 27,
+          "medianCandidatePitchCountPerReferenceLocation": 35.0
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 14.5,
+          "p90CorrectPitchRankWhenAvailable": 29,
+          "medianCandidatePitchCountPerReferenceLocation": 35.0
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 8.333,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 30.556,
+          "medianCorrectPitchRankWhenAvailable": 11.5,
+          "p90CorrectPitchRankWhenAvailable": 23,
+          "medianCandidatePitchCountPerReferenceLocation": 35.0
+        },
+        "localPeak": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 5.556,
+          "top3RecallPercent": 11.111,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 17.0,
+          "p90CorrectPitchRankWhenAvailable": 35,
+          "medianCandidatePitchCountPerReferenceLocation": 35.0
+        },
+        "crossView": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 19.444,
+          "medianCorrectPitchRankWhenAvailable": 18.0,
+          "p90CorrectPitchRankWhenAvailable": 32,
+          "medianCandidatePitchCountPerReferenceLocation": 35.0
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 19.444,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 15.0,
+          "p90CorrectPitchRankWhenAvailable": 29,
+          "medianCandidatePitchCountPerReferenceLocation": 35.0
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 22.222,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 15.5,
+          "p90CorrectPitchRankWhenAvailable": 27,
+          "medianCandidatePitchCountPerReferenceLocation": 35.0
+        }
+      }
+    },
+    "200": {
+      "development": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 89.216,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 10.784,
+          "top5RecallPercent": 17.647,
+          "medianCorrectPitchRankWhenAvailable": 16.0,
+          "p90CorrectPitchRankWhenAvailable": 35,
+          "medianCandidatePitchCountPerReferenceLocation": 39.5
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 89.216,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 10.784,
+          "top5RecallPercent": 17.647,
+          "medianCorrectPitchRankWhenAvailable": 16.0,
+          "p90CorrectPitchRankWhenAvailable": 35,
+          "medianCandidatePitchCountPerReferenceLocation": 39.5
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 89.216,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 17.647,
+          "top5RecallPercent": 21.569,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 33,
+          "medianCandidatePitchCountPerReferenceLocation": 39.5
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 89.216,
+          "top1RecallPercent": 2.941,
+          "top3RecallPercent": 15.686,
+          "top5RecallPercent": 23.529,
+          "medianCorrectPitchRankWhenAvailable": 16.0,
+          "p90CorrectPitchRankWhenAvailable": 30,
+          "medianCandidatePitchCountPerReferenceLocation": 39.5
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 89.216,
+          "top1RecallPercent": 2.941,
+          "top3RecallPercent": 15.686,
+          "top5RecallPercent": 23.529,
+          "medianCorrectPitchRankWhenAvailable": 16.0,
+          "p90CorrectPitchRankWhenAvailable": 30,
+          "medianCandidatePitchCountPerReferenceLocation": 39.5
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 89.216,
+          "top1RecallPercent": 2.941,
+          "top3RecallPercent": 18.627,
+          "top5RecallPercent": 22.549,
+          "medianCorrectPitchRankWhenAvailable": 15.0,
+          "p90CorrectPitchRankWhenAvailable": 31,
+          "medianCandidatePitchCountPerReferenceLocation": 39.5
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 89.216,
+          "top1RecallPercent": 4.902,
+          "top3RecallPercent": 8.824,
+          "top5RecallPercent": 17.647,
+          "medianCorrectPitchRankWhenAvailable": 13.0,
+          "p90CorrectPitchRankWhenAvailable": 27,
+          "medianCandidatePitchCountPerReferenceLocation": 39.5
+        },
+        "localPeak": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 89.216,
+          "top1RecallPercent": 6.863,
+          "top3RecallPercent": 11.765,
+          "top5RecallPercent": 18.627,
+          "medianCorrectPitchRankWhenAvailable": 16.0,
+          "p90CorrectPitchRankWhenAvailable": 31,
+          "medianCandidatePitchCountPerReferenceLocation": 39.5
+        },
+        "crossView": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 89.216,
+          "top1RecallPercent": 6.863,
+          "top3RecallPercent": 18.627,
+          "top5RecallPercent": 20.588,
+          "medianCorrectPitchRankWhenAvailable": 15.0,
+          "p90CorrectPitchRankWhenAvailable": 34,
+          "medianCandidatePitchCountPerReferenceLocation": 39.5
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 89.216,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 18.627,
+          "top5RecallPercent": 22.549,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 30,
+          "medianCandidatePitchCountPerReferenceLocation": 39.5
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 102,
+          "availabilityRecallPercent": 89.216,
+          "top1RecallPercent": 3.922,
+          "top3RecallPercent": 18.627,
+          "top5RecallPercent": 22.549,
+          "medianCorrectPitchRankWhenAvailable": 14.0,
+          "p90CorrectPitchRankWhenAvailable": 29,
+          "medianCandidatePitchCountPerReferenceLocation": 39.5
+        }
+      },
+      "holdout": {
+        "meanFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 5.556,
+          "top5RecallPercent": 8.333,
+          "medianCorrectPitchRankWhenAvailable": 20.0,
+          "p90CorrectPitchRankWhenAvailable": 29,
+          "medianCandidatePitchCountPerReferenceLocation": 39.0
+        },
+        "minFundAttack": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 5.556,
+          "top5RecallPercent": 8.333,
+          "medianCorrectPitchRankWhenAvailable": 20.0,
+          "p90CorrectPitchRankWhenAvailable": 29,
+          "medianCandidatePitchCountPerReferenceLocation": 39.0
+        },
+        "meanFundEarly": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 13.889,
+          "medianCorrectPitchRankWhenAvailable": 14.5,
+          "p90CorrectPitchRankWhenAvailable": 28,
+          "medianCandidatePitchCountPerReferenceLocation": 39.0
+        },
+        "meanHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 8.333,
+          "top3RecallPercent": 25.0,
+          "top5RecallPercent": 30.556,
+          "medianCorrectPitchRankWhenAvailable": 14.5,
+          "p90CorrectPitchRankWhenAvailable": 32,
+          "medianCandidatePitchCountPerReferenceLocation": 39.0
+        },
+        "minHarmonic": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 8.333,
+          "top3RecallPercent": 25.0,
+          "top5RecallPercent": 30.556,
+          "medianCorrectPitchRankWhenAvailable": 14.5,
+          "p90CorrectPitchRankWhenAvailable": 32,
+          "medianCandidatePitchCountPerReferenceLocation": 39.0
+        },
+        "harmonicPlusFund": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 19.444,
+          "top5RecallPercent": 25.0,
+          "medianCorrectPitchRankWhenAvailable": 15.0,
+          "p90CorrectPitchRankWhenAvailable": 30,
+          "medianCandidatePitchCountPerReferenceLocation": 39.0
+        },
+        "harmonicMinusSub": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 8.333,
+          "top3RecallPercent": 11.111,
+          "top5RecallPercent": 27.778,
+          "medianCorrectPitchRankWhenAvailable": 11.5,
+          "p90CorrectPitchRankWhenAvailable": 23,
+          "medianCandidatePitchCountPerReferenceLocation": 39.0
+        },
+        "localPeak": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 5.556,
+          "top3RecallPercent": 13.889,
+          "top5RecallPercent": 16.667,
+          "medianCorrectPitchRankWhenAvailable": 19.0,
+          "p90CorrectPitchRankWhenAvailable": 29,
+          "medianCandidatePitchCountPerReferenceLocation": 39.0
+        },
+        "crossView": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 0.0,
+          "top3RecallPercent": 16.667,
+          "top5RecallPercent": 22.222,
+          "medianCorrectPitchRankWhenAvailable": 18.0,
+          "p90CorrectPitchRankWhenAvailable": 30,
+          "medianCandidatePitchCountPerReferenceLocation": 39.0
+        },
+        "harmonicComposite": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 22.222,
+          "top5RecallPercent": 27.778,
+          "medianCorrectPitchRankWhenAvailable": 16.0,
+          "p90CorrectPitchRankWhenAvailable": 30,
+          "medianCandidatePitchCountPerReferenceLocation": 39.0
+        },
+        "harmonicTime": {
+          "referencePitchEventCount": 36,
+          "availabilityRecallPercent": 94.444,
+          "top1RecallPercent": 2.778,
+          "top3RecallPercent": 22.222,
+          "top5RecallPercent": 25.0,
+          "medianCorrectPitchRankWhenAvailable": 17.0,
+          "p90CorrectPitchRankWhenAvailable": 29,
+          "medianCandidatePitchCountPerReferenceLocation": 39.0
+        }
+      }
+    }
+  },
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceUsedForOfflineDiagnostic": true,
+  "professionalReferenceRequiredAtRuntime": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false,
+  "bestHoldoutDiagnostic": {
+    "windowMs": 200,
+    "ranker": "meanHarmonic",
+    "referencePitchEventCount": 36,
+    "availabilityRecallPercent": 94.444,
+    "top1RecallPercent": 8.333,
+    "top3RecallPercent": 25.0,
+    "top5RecallPercent": 30.556,
+    "medianCorrectPitchRankWhenAvailable": 14.5,
+    "p90CorrectPitchRankWhenAvailable": 32,
+    "medianCandidatePitchCountPerReferenceLocation": 39.0
+  },
+  "diagnosis": "single-candidate-cqt-harmonic-evidence-remains-insufficient"
+}

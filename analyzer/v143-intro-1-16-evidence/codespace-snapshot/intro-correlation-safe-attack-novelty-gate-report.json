@@ -1,0 +1,44 @@
+{
+  "validation": {
+    "selected": 33,
+    "referenceAttacks": 32,
+    "tp": 27,
+    "fp": 6,
+    "fn": 5,
+    "precision": 0.8181818181818182,
+    "recall": 0.84375,
+    "f1": 0.8307692307692308,
+    "sustainSlots": 20,
+    "sustainFalsePositive": 6,
+    "sustainRejection": 0.7
+  },
+  "development": {
+    "selected": 107,
+    "referenceAttacks": 90,
+    "tp": 80,
+    "fp": 27,
+    "fn": 10,
+    "precision": 0.7476635514018691,
+    "recall": 0.8888888888888888,
+    "f1": 0.8121827411167512,
+    "sustainSlots": 55,
+    "sustainFalsePositive": 17,
+    "sustainRejection": 0.6909090909090909
+  },
+  "diagnostic13to16": {
+    "selected": 34,
+    "referenceAttacks": 32,
+    "tp": 28,
+    "fp": 6,
+    "fn": 4,
+    "precision": 0.8235294117647058,
+    "recall": 0.875,
+    "f1": 0.8484848484848485,
+    "sustainSlots": 20,
+    "sustainFalsePositive": 3,
+    "sustainRejection": 0.85
+  },
+  "section2ReferenceUsedForTraining": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false
+}

@@ -1,0 +1,9 @@
+DadRock v1.43 — historical Codespace intro / measures 1-16 evidence
+
+Captured UTC: 2026-08-22T00:46:00Z
+Source branch: v143-contextual-prune-lobo
+Source HEAD: 4d735846fbd834cc4c722f2cb48727e4629647f1
+Source directory: public/training/v143-musical-reconstruction-calibration
+
+These files are copied unchanged from the historical Codespace.
+No retraining, threshold changes, model changes, or production edits were performed.

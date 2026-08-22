@@ -1,0 +1,190 @@
+{
+  "reportVersion": 1,
+  "scope": "professional-intro-dual-view-spectral-pitch-ranking",
+  "trialCount": 1080,
+  "rawSpectralBaselines": {
+    "development": {
+      "meanFund-top1": {
+        "precisionPercent": 5.556,
+        "recallPercent": 4.63,
+        "f1Percent": 5.051
+      },
+      "meanFund-top2": {
+        "precisionPercent": 4.444,
+        "recallPercent": 7.407,
+        "f1Percent": 5.556
+      },
+      "meanFund-top3": {
+        "precisionPercent": 4.074,
+        "recallPercent": 10.185,
+        "f1Percent": 5.82
+      },
+      "meanPeak-top1": {
+        "precisionPercent": 11.111,
+        "recallPercent": 9.259,
+        "f1Percent": 10.101
+      },
+      "meanPeak-top2": {
+        "precisionPercent": 7.778,
+        "recallPercent": 12.963,
+        "f1Percent": 9.722
+      },
+      "meanPeak-top3": {
+        "precisionPercent": 5.926,
+        "recallPercent": 14.815,
+        "f1Percent": 8.466
+      },
+      "meanHarmonic-top1": {
+        "precisionPercent": 8.889,
+        "recallPercent": 7.407,
+        "f1Percent": 8.081
+      },
+      "meanHarmonic-top2": {
+        "precisionPercent": 11.667,
+        "recallPercent": 19.444,
+        "f1Percent": 14.583
+      },
+      "meanHarmonic-top3": {
+        "precisionPercent": 8.519,
+        "recallPercent": 21.296,
+        "f1Percent": 12.169
+      }
+    },
+    "holdout": {
+      "meanFund-top1": {
+        "precisionPercent": 6.25,
+        "recallPercent": 5.556,
+        "f1Percent": 5.882
+      },
+      "meanFund-top2": {
+        "precisionPercent": 4.688,
+        "recallPercent": 8.333,
+        "f1Percent": 6.0
+      },
+      "meanFund-top3": {
+        "precisionPercent": 4.167,
+        "recallPercent": 11.111,
+        "f1Percent": 6.061
+      },
+      "meanPeak-top1": {
+        "precisionPercent": 15.625,
+        "recallPercent": 13.889,
+        "f1Percent": 14.706
+      },
+      "meanPeak-top2": {
+        "precisionPercent": 7.812,
+        "recallPercent": 13.889,
+        "f1Percent": 10.0
+      },
+      "meanPeak-top3": {
+        "precisionPercent": 5.208,
+        "recallPercent": 13.889,
+        "f1Percent": 7.576
+      },
+      "meanHarmonic-top1": {
+        "precisionPercent": 6.25,
+        "recallPercent": 5.556,
+        "f1Percent": 5.882
+      },
+      "meanHarmonic-top2": {
+        "precisionPercent": 7.812,
+        "recallPercent": 13.889,
+        "f1Percent": 10.0
+      },
+      "meanHarmonic-top3": {
+        "precisionPercent": 8.333,
+        "recallPercent": 22.222,
+        "f1Percent": 12.121
+      }
+    }
+  },
+  "bestConfiguration": {
+    "positiveClassWeight": 16.0,
+    "l2": 0.001,
+    "threshold": 0.35,
+    "topK": 3
+  },
+  "developmentObjectivePercent": 15.235,
+  "development": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 159,
+    "locationPrecisionPercent": 54.088,
+    "locationRecallPercent": 89.583,
+    "locationF1Percent": 67.451,
+    "referencePitchEventCount": 108,
+    "predictedPitchEventCount": 375,
+    "pitchPrecisionPercent": 6.667,
+    "pitchRecallPercent": 23.148,
+    "pitchF1Percent": 10.352,
+    "exactPitchSetPercent": 2.083
+  },
+  "holdout": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 47,
+    "locationPrecisionPercent": 53.191,
+    "locationRecallPercent": 78.125,
+    "locationF1Percent": 63.291,
+    "referencePitchEventCount": 36,
+    "predictedPitchEventCount": 99,
+    "pitchPrecisionPercent": 6.061,
+    "pitchRecallPercent": 16.667,
+    "pitchF1Percent": 8.889,
+    "exactPitchSetPercent": 0.0
+  },
+  "topCoefficients": [
+    {
+      "feature": "midi_normalized",
+      "weight": -1.136375
+    },
+    {
+      "feature": "bp_support_fraction",
+      "weight": 0.373975
+    },
+    {
+      "feature": "v143_selected",
+      "weight": 0.201197
+    },
+    {
+      "feature": "fund_minus_lower_octave",
+      "weight": -0.196055
+    },
+    {
+      "feature": "harmonic_rank_percentile",
+      "weight": 0.172764
+    },
+    {
+      "feature": "lower_octave_mean",
+      "weight": 0.163358
+    },
+    {
+      "feature": "mean_fund",
+      "weight": -0.142627
+    },
+    {
+      "feature": "min_fund",
+      "weight": -0.142515
+    },
+    {
+      "feature": "bp_exact",
+      "weight": 0.128302
+    },
+    {
+      "feature": "min_harmonic",
+      "weight": 0.123087
+    },
+    {
+      "feature": "mean_harmonic",
+      "weight": 0.122494
+    },
+    {
+      "feature": "peak_rank_percentile",
+      "weight": 0.097731
+    }
+  ],
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceUsedForOfflineTraining": true,
+  "professionalReferenceRequiredAtRuntime": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false
+}

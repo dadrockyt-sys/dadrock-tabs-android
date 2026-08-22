@@ -1,0 +1,91 @@
+{
+  "reportVersion": 1,
+  "scope": "professional-intro-pitch-ranking",
+  "oraclePitchRecallPercent": {
+    "development": 90.741,
+    "holdout": 100.0
+  },
+  "bestConfiguration": {
+    "radius": 2,
+    "positiveClassWeight": 8.0,
+    "l2": 0.05,
+    "threshold": 0.25,
+    "topK": 3,
+    "developmentObjectivePercent": 18.66
+  },
+  "development": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 149,
+    "locationPrecisionPercent": 54.362,
+    "locationRecallPercent": 84.375,
+    "locationF1Percent": 66.122,
+    "referencePitchEventCount": 108,
+    "predictedPitchEventCount": 238,
+    "pitchPrecisionPercent": 7.563,
+    "pitchRecallPercent": 16.667,
+    "pitchF1Percent": 10.405,
+    "exactPitchSetPercent": 9.375
+  },
+  "holdout": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 47,
+    "locationPrecisionPercent": 53.191,
+    "locationRecallPercent": 78.125,
+    "locationF1Percent": 63.291,
+    "referencePitchEventCount": 36,
+    "predictedPitchEventCount": 84,
+    "pitchPrecisionPercent": 8.333,
+    "pitchRecallPercent": 19.444,
+    "pitchF1Percent": 11.667,
+    "exactPitchSetPercent": 9.375
+  },
+  "topCoefficients": [
+    {
+      "feature": "distance_from_target_dominant",
+      "weight": -0.186294
+    },
+    {
+      "feature": "same_step_measure_recurrence",
+      "weight": 0.178585
+    },
+    {
+      "feature": "dominant_exact",
+      "weight": -0.141615
+    },
+    {
+      "feature": "v143_selected",
+      "weight": 0.136879
+    },
+    {
+      "feature": "mean_amplitude",
+      "weight": 0.133818
+    },
+    {
+      "feature": "max_amplitude",
+      "weight": 0.115374
+    },
+    {
+      "feature": "support_row_fraction",
+      "weight": 0.108978
+    },
+    {
+      "feature": "distance_weighted_support",
+      "weight": 0.089617
+    },
+    {
+      "feature": "dominant_support_fraction",
+      "weight": 0.088857
+    },
+    {
+      "feature": "max_duration",
+      "weight": 0.087482
+    }
+  ],
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceUsedForOfflineTraining": true,
+  "professionalReferenceRequiredAtRuntime": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false,
+  "modelPath": "public/training/v143-musical-reconstruction-calibration/intro-supervised-pitch-ranker-model.json"
+}

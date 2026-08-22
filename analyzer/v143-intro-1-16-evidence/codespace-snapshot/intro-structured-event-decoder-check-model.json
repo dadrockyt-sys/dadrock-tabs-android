@@ -1,0 +1,1 @@
+{"model":"v143-final-structured-event-decoder-check","countPolicy":"per-measure","countMultiplier":1.05,"sequenceWeight":1.0,"recurrenceWeight":1.0,"validationObjectivePercent":96.103,"assignWindowMs":200,"residualPenalty":2.0,"professionalReferenceRequiredAtRuntime":false}

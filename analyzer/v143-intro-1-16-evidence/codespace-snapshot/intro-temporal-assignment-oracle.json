@@ -1,0 +1,368 @@
+{
+  "referenceEventCount": 144,
+  "candidatePitchAtomCount": 5350,
+  "toleranceSweep": [
+    {
+      "toleranceSteps": 0,
+      "matchedReferenceEvents": 90,
+      "referenceEventCount": 144,
+      "collisionAwareRecallPercent": 62.5,
+      "offsetHistogram": {
+        "0": 90
+      }
+    },
+    {
+      "toleranceSteps": 1,
+      "matchedReferenceEvents": 122,
+      "referenceEventCount": 144,
+      "collisionAwareRecallPercent": 84.722,
+      "offsetHistogram": {
+        "-1": 27,
+        "0": 84,
+        "1": 11
+      }
+    },
+    {
+      "toleranceSteps": 2,
+      "matchedReferenceEvents": 135,
+      "referenceEventCount": 144,
+      "collisionAwareRecallPercent": 93.75,
+      "offsetHistogram": {
+        "-2": 10,
+        "-1": 21,
+        "0": 85,
+        "1": 12,
+        "2": 7
+      }
+    },
+    {
+      "toleranceSteps": 3,
+      "matchedReferenceEvents": 139,
+      "referenceEventCount": 144,
+      "collisionAwareRecallPercent": 96.528,
+      "offsetHistogram": {
+        "-3": 2,
+        "-2": 8,
+        "-1": 24,
+        "0": 86,
+        "1": 9,
+        "2": 8,
+        "3": 2
+      }
+    },
+    {
+      "toleranceSteps": 4,
+      "matchedReferenceEvents": 140,
+      "referenceEventCount": 144,
+      "collisionAwareRecallPercent": 97.222,
+      "offsetHistogram": {
+        "-3": 2,
+        "-2": 9,
+        "-1": 22,
+        "0": 87,
+        "1": 9,
+        "2": 8,
+        "3": 2,
+        "4": 1
+      }
+    }
+  ],
+  "bestGlobalPhaseShifts": [
+    {
+      "globalShiftSteps": -4,
+      "exactPitchHits": 101,
+      "recallPercent": 70.139
+    },
+    {
+      "globalShiftSteps": -3,
+      "exactPitchHits": 96,
+      "recallPercent": 66.667
+    },
+    {
+      "globalShiftSteps": -1,
+      "exactPitchHits": 92,
+      "recallPercent": 63.889
+    },
+    {
+      "globalShiftSteps": 0,
+      "exactPitchHits": 90,
+      "recallPercent": 62.5
+    },
+    {
+      "globalShiftSteps": -2,
+      "exactPitchHits": 88,
+      "recallPercent": 61.111
+    }
+  ],
+  "tolerance2MovedMatchExamples": [
+    {
+      "referenceMeasure": 1,
+      "referenceStep": 10,
+      "midi": 52,
+      "candidateMeasure": 1,
+      "candidateStep": 12,
+      "offsetSteps": 2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10425075143575668,
+      "minGridError": 0.023219954648525998
+    },
+    {
+      "referenceMeasure": 3,
+      "referenceStep": 6,
+      "midi": 45,
+      "candidateMeasure": 3,
+      "candidateStep": 7,
+      "offsetSteps": 1,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10237431526184082,
+      "minGridError": 0.03159274376417276
+    },
+    {
+      "referenceMeasure": 3,
+      "referenceStep": 10,
+      "midi": 52,
+      "candidateMeasure": 3,
+      "candidateStep": 12,
+      "offsetSteps": 2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.09856491535902023,
+      "minGridError": 0.0025678004535150123
+    },
+    {
+      "referenceMeasure": 4,
+      "referenceStep": 6,
+      "midi": 45,
+      "candidateMeasure": 4,
+      "candidateStep": 4,
+      "offsetSteps": -2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10246969014406204,
+      "minGridError": 0.05548208616780048
+    },
+    {
+      "referenceMeasure": 4,
+      "referenceStep": 8,
+      "midi": 50,
+      "candidateMeasure": 4,
+      "candidateStep": 10,
+      "offsetSteps": 2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10204097628593445,
+      "minGridError": 0.04839319727891134
+    },
+    {
+      "referenceMeasure": 5,
+      "referenceStep": 12,
+      "midi": 40,
+      "candidateMeasure": 5,
+      "candidateStep": 11,
+      "offsetSteps": -1,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10775893926620483,
+      "minGridError": 0.020986848072562125
+    },
+    {
+      "referenceMeasure": 6,
+      "referenceStep": 8,
+      "midi": 50,
+      "candidateMeasure": 6,
+      "candidateStep": 10,
+      "offsetSteps": 2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.14687107503414154,
+      "minGridError": 0.01099546485260916
+    },
+    {
+      "referenceMeasure": 7,
+      "referenceStep": 6,
+      "midi": 45,
+      "candidateMeasure": 7,
+      "candidateStep": 5,
+      "offsetSteps": -1,
+      "sourceCount": 2,
+      "maxAmplitude": 0.11036765575408936,
+      "minGridError": 0.037117913832199534
+    },
+    {
+      "referenceMeasure": 9,
+      "referenceStep": 2,
+      "midi": 55,
+      "candidateMeasure": 9,
+      "candidateStep": 3,
+      "offsetSteps": 1,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10494304448366165,
+      "minGridError": 0.008987301587300323
+    },
+    {
+      "referenceMeasure": 9,
+      "referenceStep": 10,
+      "midi": 52,
+      "candidateMeasure": 9,
+      "candidateStep": 8,
+      "offsetSteps": -2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.47355765104293823,
+      "minGridError": 0.014232653061224454
+    },
+    {
+      "referenceMeasure": 11,
+      "referenceStep": 12,
+      "midi": 40,
+      "candidateMeasure": 11,
+      "candidateStep": 14,
+      "offsetSteps": 2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.1009918823838234,
+      "minGridError": 0.036058956916100726
+    },
+    {
+      "referenceMeasure": 12,
+      "referenceStep": 8,
+      "midi": 50,
+      "candidateMeasure": 12,
+      "candidateStep": 7,
+      "offsetSteps": -1,
+      "sourceCount": 2,
+      "maxAmplitude": 0.1051551029086113,
+      "minGridError": 0.0389614512471681
+    },
+    {
+      "referenceMeasure": 13,
+      "referenceStep": 6,
+      "midi": 45,
+      "candidateMeasure": 13,
+      "candidateStep": 8,
+      "offsetSteps": 2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10151145607233047,
+      "minGridError": 0.03231700680272098
+    },
+    {
+      "referenceMeasure": 14,
+      "referenceStep": 6,
+      "midi": 45,
+      "candidateMeasure": 14,
+      "candidateStep": 4,
+      "offsetSteps": -2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10191381722688675,
+      "minGridError": 0.03103310657596481
+    },
+    {
+      "referenceMeasure": 16,
+      "referenceStep": 8,
+      "midi": 50,
+      "candidateMeasure": 16,
+      "candidateStep": 7,
+      "offsetSteps": -1,
+      "sourceCount": 1,
+      "maxAmplitude": 0.10044107586145401,
+      "minGridError": 0.019757823129253893
+    },
+    {
+      "referenceMeasure": 2,
+      "referenceStep": 14,
+      "midi": 62,
+      "candidateMeasure": 2,
+      "candidateStep": 15,
+      "offsetSteps": 1,
+      "sourceCount": 2,
+      "maxAmplitude": 0.13273398578166962,
+      "minGridError": 0.039016326530612044
+    },
+    {
+      "referenceMeasure": 3,
+      "referenceStep": 12,
+      "midi": 40,
+      "candidateMeasure": 3,
+      "candidateStep": 11,
+      "offsetSteps": -1,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10337100178003311,
+      "minGridError": 0.03739773242630395
+    },
+    {
+      "referenceMeasure": 5,
+      "referenceStep": 6,
+      "midi": 45,
+      "candidateMeasure": 5,
+      "candidateStep": 5,
+      "offsetSteps": -1,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10556002706289291,
+      "minGridError": 0.038681632653061904
+    },
+    {
+      "referenceMeasure": 5,
+      "referenceStep": 10,
+      "midi": 52,
+      "candidateMeasure": 5,
+      "candidateStep": 8,
+      "offsetSteps": -2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.1161750927567482,
+      "minGridError": 0.038681632653061904
+    },
+    {
+      "referenceMeasure": 6,
+      "referenceStep": 14,
+      "midi": 62,
+      "candidateMeasure": 6,
+      "candidateStep": 12,
+      "offsetSteps": -2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10625824332237244,
+      "minGridError": 0.04002040816326513
+    },
+    {
+      "referenceMeasure": 8,
+      "referenceStep": 8,
+      "midi": 50,
+      "candidateMeasure": 8,
+      "candidateStep": 6,
+      "offsetSteps": -2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.1048474907875061,
+      "minGridError": 0.044541496598638375
+    },
+    {
+      "referenceMeasure": 9,
+      "referenceStep": 6,
+      "midi": 45,
+      "candidateMeasure": 9,
+      "candidateStep": 8,
+      "offsetSteps": 2,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10404804348945618,
+      "minGridError": 0.03745260770974923
+    },
+    {
+      "referenceMeasure": 10,
+      "referenceStep": 14,
+      "midi": 58,
+      "candidateMeasure": 10,
+      "candidateStep": 13,
+      "offsetSteps": -1,
+      "sourceCount": 2,
+      "maxAmplitude": 0.14509113132953644,
+      "minGridError": 0.037787301587304256
+    },
+    {
+      "referenceMeasure": 11,
+      "referenceStep": 6,
+      "midi": 45,
+      "candidateMeasure": 11,
+      "candidateStep": 5,
+      "offsetSteps": -1,
+      "sourceCount": 2,
+      "maxAmplitude": 0.10237900167703629,
+      "minGridError": 0.0029573696145135386
+    }
+  ],
+  "diagnosis": "temporal-reassignment-is-primary-next-step",
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceUsedByOfflineOracle": true,
+  "productionModified": false,
+  "productionPromotionAllowed": false
+}

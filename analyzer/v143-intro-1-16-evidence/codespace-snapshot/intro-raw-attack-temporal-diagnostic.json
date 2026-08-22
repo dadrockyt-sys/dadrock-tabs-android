@@ -1,0 +1,547 @@
+{
+  "diagnosticVersion": 1,
+  "scope": "raw-unaggregated-attack-temporal-availability",
+  "clusterToleranceMs": 30,
+  "rawEventCount": 22270,
+  "physicalAttackClusterCount": 7113,
+  "development": {
+    "scope": "development-measures-1-12",
+    "referenceEventCount": 108,
+    "windows": {
+      "25": {
+        "windowMs": 25,
+        "anyCluster": {
+          "matches": 37,
+          "recallPercent": 34.259,
+          "medianSignedResidualMs": -9.042
+        },
+        "productionAccepted": {
+          "matches": 37,
+          "recallPercent": 34.259,
+          "medianSignedResidualMs": -9.042
+        },
+        "dualView": {
+          "matches": 37,
+          "recallPercent": 34.259,
+          "medianSignedResidualMs": -9.042
+        },
+        "multiSweep": {
+          "matches": 18,
+          "recallPercent": 16.667,
+          "medianSignedResidualMs": -11.945
+        },
+        "strictConsensus": {
+          "matches": 18,
+          "recallPercent": 16.667,
+          "medianSignedResidualMs": -11.945
+        }
+      },
+      "50": {
+        "windowMs": 50,
+        "anyCluster": {
+          "matches": 62,
+          "recallPercent": 57.407,
+          "medianSignedResidualMs": -10.968
+        },
+        "productionAccepted": {
+          "matches": 62,
+          "recallPercent": 57.407,
+          "medianSignedResidualMs": -10.968
+        },
+        "dualView": {
+          "matches": 61,
+          "recallPercent": 56.481,
+          "medianSignedResidualMs": -10.326
+        },
+        "multiSweep": {
+          "matches": 33,
+          "recallPercent": 30.556,
+          "medianSignedResidualMs": -15.517
+        },
+        "strictConsensus": {
+          "matches": 33,
+          "recallPercent": 30.556,
+          "medianSignedResidualMs": -15.517
+        }
+      },
+      "75": {
+        "windowMs": 75,
+        "anyCluster": {
+          "matches": 72,
+          "recallPercent": 66.667,
+          "medianSignedResidualMs": -10.968
+        },
+        "productionAccepted": {
+          "matches": 72,
+          "recallPercent": 66.667,
+          "medianSignedResidualMs": -10.968
+        },
+        "dualView": {
+          "matches": 70,
+          "recallPercent": 64.815,
+          "medianSignedResidualMs": -10.968
+        },
+        "multiSweep": {
+          "matches": 39,
+          "recallPercent": 36.111,
+          "medianSignedResidualMs": -20.652
+        },
+        "strictConsensus": {
+          "matches": 39,
+          "recallPercent": 36.111,
+          "medianSignedResidualMs": -20.652
+        }
+      },
+      "100": {
+        "windowMs": 100,
+        "anyCluster": {
+          "matches": 78,
+          "recallPercent": 72.222,
+          "medianSignedResidualMs": -12.279
+        },
+        "productionAccepted": {
+          "matches": 78,
+          "recallPercent": 72.222,
+          "medianSignedResidualMs": -12.279
+        },
+        "dualView": {
+          "matches": 77,
+          "recallPercent": 71.296,
+          "medianSignedResidualMs": -12.949
+        },
+        "multiSweep": {
+          "matches": 42,
+          "recallPercent": 38.889,
+          "medianSignedResidualMs": -21.294
+        },
+        "strictConsensus": {
+          "matches": 42,
+          "recallPercent": 38.889,
+          "medianSignedResidualMs": -21.294
+        }
+      },
+      "125": {
+        "windowMs": 125,
+        "anyCluster": {
+          "matches": 80,
+          "recallPercent": 74.074,
+          "medianSignedResidualMs": -13.256
+        },
+        "productionAccepted": {
+          "matches": 80,
+          "recallPercent": 74.074,
+          "medianSignedResidualMs": -13.256
+        },
+        "dualView": {
+          "matches": 80,
+          "recallPercent": 74.074,
+          "medianSignedResidualMs": -14.54
+        },
+        "multiSweep": {
+          "matches": 43,
+          "recallPercent": 39.815,
+          "medianSignedResidualMs": -20.652
+        },
+        "strictConsensus": {
+          "matches": 43,
+          "recallPercent": 39.815,
+          "medianSignedResidualMs": -20.652
+        }
+      },
+      "150": {
+        "windowMs": 150,
+        "anyCluster": {
+          "matches": 84,
+          "recallPercent": 77.778,
+          "medianSignedResidualMs": -15.517
+        },
+        "productionAccepted": {
+          "matches": 84,
+          "recallPercent": 77.778,
+          "medianSignedResidualMs": -15.517
+        },
+        "dualView": {
+          "matches": 83,
+          "recallPercent": 76.852,
+          "medianSignedResidualMs": -15.517
+        },
+        "multiSweep": {
+          "matches": 47,
+          "recallPercent": 43.519,
+          "medianSignedResidualMs": -21.991
+        },
+        "strictConsensus": {
+          "matches": 47,
+          "recallPercent": 43.519,
+          "medianSignedResidualMs": -21.991
+        }
+      },
+      "200": {
+        "windowMs": 200,
+        "anyCluster": {
+          "matches": 90,
+          "recallPercent": 83.333,
+          "medianSignedResidualMs": -13.256
+        },
+        "productionAccepted": {
+          "matches": 90,
+          "recallPercent": 83.333,
+          "medianSignedResidualMs": -13.256
+        },
+        "dualView": {
+          "matches": 89,
+          "recallPercent": 82.407,
+          "medianSignedResidualMs": -13.563
+        },
+        "multiSweep": {
+          "matches": 52,
+          "recallPercent": 48.148,
+          "medianSignedResidualMs": -22.605
+        },
+        "strictConsensus": {
+          "matches": 52,
+          "recallPercent": 48.148,
+          "medianSignedResidualMs": -22.605
+        }
+      },
+      "250": {
+        "windowMs": 250,
+        "anyCluster": {
+          "matches": 93,
+          "recallPercent": 86.111,
+          "medianSignedResidualMs": -12.949
+        },
+        "productionAccepted": {
+          "matches": 93,
+          "recallPercent": 86.111,
+          "medianSignedResidualMs": -12.949
+        },
+        "dualView": {
+          "matches": 93,
+          "recallPercent": 86.111,
+          "medianSignedResidualMs": -13.563
+        },
+        "multiSweep": {
+          "matches": 57,
+          "recallPercent": 52.778,
+          "medianSignedResidualMs": -21.936
+        },
+        "strictConsensus": {
+          "matches": 57,
+          "recallPercent": 52.778,
+          "medianSignedResidualMs": -21.936
+        }
+      },
+      "300": {
+        "windowMs": 300,
+        "anyCluster": {
+          "matches": 99,
+          "recallPercent": 91.667,
+          "medianSignedResidualMs": -12.949
+        },
+        "productionAccepted": {
+          "matches": 99,
+          "recallPercent": 91.667,
+          "medianSignedResidualMs": -12.949
+        },
+        "dualView": {
+          "matches": 99,
+          "recallPercent": 91.667,
+          "medianSignedResidualMs": -13.563
+        },
+        "multiSweep": {
+          "matches": 64,
+          "recallPercent": 59.259,
+          "medianSignedResidualMs": -21.294
+        },
+        "strictConsensus": {
+          "matches": 64,
+          "recallPercent": 59.259,
+          "medianSignedResidualMs": -21.294
+        }
+      }
+    },
+    "nearestSamePitchResiduals": {
+      "matchedReferenceEvents": 102,
+      "missingReferenceEvents": 6,
+      "medianSignedResidualMs": -10.019,
+      "medianAbsoluteResidualMs": 36.421,
+      "p75AbsoluteResidualMs": 77.251,
+      "p90AbsoluteResidualMs": 208.801,
+      "p95AbsoluteResidualMs": 276.006
+    }
+  },
+  "holdout": {
+    "scope": "holdout-measures-13-16",
+    "referenceEventCount": 36,
+    "windows": {
+      "25": {
+        "windowMs": 25,
+        "anyCluster": {
+          "matches": 15,
+          "recallPercent": 41.667,
+          "medianSignedResidualMs": -6.529
+        },
+        "productionAccepted": {
+          "matches": 15,
+          "recallPercent": 41.667,
+          "medianSignedResidualMs": -6.529
+        },
+        "dualView": {
+          "matches": 13,
+          "recallPercent": 36.111,
+          "medianSignedResidualMs": -6.529
+        },
+        "multiSweep": {
+          "matches": 8,
+          "recallPercent": 22.222,
+          "medianSignedResidualMs": -7.171
+        },
+        "strictConsensus": {
+          "matches": 8,
+          "recallPercent": 22.222,
+          "medianSignedResidualMs": -7.171
+        }
+      },
+      "50": {
+        "windowMs": 50,
+        "anyCluster": {
+          "matches": 26,
+          "recallPercent": 72.222,
+          "medianSignedResidualMs": -7.813
+        },
+        "productionAccepted": {
+          "matches": 26,
+          "recallPercent": 72.222,
+          "medianSignedResidualMs": -7.813
+        },
+        "dualView": {
+          "matches": 25,
+          "recallPercent": 69.444,
+          "medianSignedResidualMs": -7.813
+        },
+        "multiSweep": {
+          "matches": 15,
+          "recallPercent": 41.667,
+          "medianSignedResidualMs": -7.813
+        },
+        "strictConsensus": {
+          "matches": 15,
+          "recallPercent": 41.667,
+          "medianSignedResidualMs": -7.813
+        }
+      },
+      "75": {
+        "windowMs": 75,
+        "anyCluster": {
+          "matches": 28,
+          "recallPercent": 77.778,
+          "medianSignedResidualMs": -8.455
+        },
+        "productionAccepted": {
+          "matches": 28,
+          "recallPercent": 77.778,
+          "medianSignedResidualMs": -8.455
+        },
+        "dualView": {
+          "matches": 27,
+          "recallPercent": 75.0,
+          "medianSignedResidualMs": -9.097
+        },
+        "multiSweep": {
+          "matches": 16,
+          "recallPercent": 44.444,
+          "medianSignedResidualMs": -12.976
+        },
+        "strictConsensus": {
+          "matches": 16,
+          "recallPercent": 44.444,
+          "medianSignedResidualMs": -12.976
+        }
+      },
+      "100": {
+        "windowMs": 100,
+        "anyCluster": {
+          "matches": 30,
+          "recallPercent": 83.333,
+          "medianSignedResidualMs": -8.455
+        },
+        "productionAccepted": {
+          "matches": 30,
+          "recallPercent": 83.333,
+          "medianSignedResidualMs": -8.455
+        },
+        "dualView": {
+          "matches": 29,
+          "recallPercent": 80.556,
+          "medianSignedResidualMs": -9.097
+        },
+        "multiSweep": {
+          "matches": 19,
+          "recallPercent": 52.778,
+          "medianSignedResidualMs": -7.813
+        },
+        "strictConsensus": {
+          "matches": 19,
+          "recallPercent": 52.778,
+          "medianSignedResidualMs": -7.813
+        }
+      },
+      "125": {
+        "windowMs": 125,
+        "anyCluster": {
+          "matches": 31,
+          "recallPercent": 86.111,
+          "medianSignedResidualMs": -7.813
+        },
+        "productionAccepted": {
+          "matches": 31,
+          "recallPercent": 86.111,
+          "medianSignedResidualMs": -7.813
+        },
+        "dualView": {
+          "matches": 30,
+          "recallPercent": 83.333,
+          "medianSignedResidualMs": -8.455
+        },
+        "multiSweep": {
+          "matches": 20,
+          "recallPercent": 55.556,
+          "medianSignedResidualMs": -7.813
+        },
+        "strictConsensus": {
+          "matches": 20,
+          "recallPercent": 55.556,
+          "medianSignedResidualMs": -7.813
+        }
+      },
+      "150": {
+        "windowMs": 150,
+        "anyCluster": {
+          "matches": 33,
+          "recallPercent": 91.667,
+          "medianSignedResidualMs": -18.139
+        },
+        "productionAccepted": {
+          "matches": 33,
+          "recallPercent": 91.667,
+          "medianSignedResidualMs": -18.139
+        },
+        "dualView": {
+          "matches": 31,
+          "recallPercent": 86.111,
+          "medianSignedResidualMs": -18.139
+        },
+        "multiSweep": {
+          "matches": 21,
+          "recallPercent": 58.333,
+          "medianSignedResidualMs": -7.813
+        },
+        "strictConsensus": {
+          "matches": 21,
+          "recallPercent": 58.333,
+          "medianSignedResidualMs": -7.813
+        }
+      },
+      "200": {
+        "windowMs": 200,
+        "anyCluster": {
+          "matches": 34,
+          "recallPercent": 94.444,
+          "medianSignedResidualMs": -18.781
+        },
+        "productionAccepted": {
+          "matches": 34,
+          "recallPercent": 94.444,
+          "medianSignedResidualMs": -18.781
+        },
+        "dualView": {
+          "matches": 32,
+          "recallPercent": 88.889,
+          "medianSignedResidualMs": -18.781
+        },
+        "multiSweep": {
+          "matches": 22,
+          "recallPercent": 61.111,
+          "medianSignedResidualMs": -12.976
+        },
+        "strictConsensus": {
+          "matches": 22,
+          "recallPercent": 61.111,
+          "medianSignedResidualMs": -12.976
+        }
+      },
+      "250": {
+        "windowMs": 250,
+        "anyCluster": {
+          "matches": 35,
+          "recallPercent": 97.222,
+          "medianSignedResidualMs": -18.139
+        },
+        "productionAccepted": {
+          "matches": 35,
+          "recallPercent": 97.222,
+          "medianSignedResidualMs": -18.139
+        },
+        "dualView": {
+          "matches": 33,
+          "recallPercent": 91.667,
+          "medianSignedResidualMs": -18.139
+        },
+        "multiSweep": {
+          "matches": 23,
+          "recallPercent": 63.889,
+          "medianSignedResidualMs": -7.813
+        },
+        "strictConsensus": {
+          "matches": 23,
+          "recallPercent": 63.889,
+          "medianSignedResidualMs": -7.813
+        }
+      },
+      "300": {
+        "windowMs": 300,
+        "anyCluster": {
+          "matches": 36,
+          "recallPercent": 100.0,
+          "medianSignedResidualMs": -18.781
+        },
+        "productionAccepted": {
+          "matches": 36,
+          "recallPercent": 100.0,
+          "medianSignedResidualMs": -18.781
+        },
+        "dualView": {
+          "matches": 35,
+          "recallPercent": 97.222,
+          "medianSignedResidualMs": -19.423
+        },
+        "multiSweep": {
+          "matches": 24,
+          "recallPercent": 66.667,
+          "medianSignedResidualMs": -7.813
+        },
+        "strictConsensus": {
+          "matches": 24,
+          "recallPercent": 66.667,
+          "medianSignedResidualMs": -7.813
+        }
+      }
+    },
+    "nearestSamePitchResiduals": {
+      "matchedReferenceEvents": 36,
+      "missingReferenceEvents": 0,
+      "medianSignedResidualMs": -13.618,
+      "medianAbsoluteResidualMs": 33.294,
+      "p75AbsoluteResidualMs": 59.583,
+      "p90AbsoluteResidualMs": 140.044,
+      "p95AbsoluteResidualMs": 161.772
+    }
+  },
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceUsedForOfflineDiagnostic": true,
+  "professionalReferenceRequiredAtRuntime": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false,
+  "diagnosis": "continuous-raw-onset-evidence-is-strong-within-production-scale-window"
+}

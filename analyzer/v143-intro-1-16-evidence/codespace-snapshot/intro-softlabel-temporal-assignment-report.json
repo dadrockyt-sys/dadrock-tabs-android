@@ -1,0 +1,117 @@
+{
+  "reportVersion": 1,
+  "scope": "soft-label-supervised-temporal-candidate-reassignment",
+  "radiusSteps": 2,
+  "developmentMeasures": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "holdoutMeasures": [
+    13,
+    14,
+    15,
+    16
+  ],
+  "developmentOracleRecallPercent": 90.741,
+  "holdoutOracleRecallPercent": 100.0,
+  "developmentPositivePairsBeforeDownsample": 273,
+  "bestConfiguration": {
+    "positiveClassWeight": 16.0,
+    "l2": 0.001,
+    "threshold": 0.2,
+    "maxPolyphony": 3,
+    "developmentObjectivePercent": 9.479
+  },
+  "development": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 181,
+    "locationPrecisionPercent": 50.276,
+    "locationRecallPercent": 94.792,
+    "locationF1Percent": 65.704,
+    "referencePitchEventCount": 108,
+    "predictedPitchEventCount": 543,
+    "pitchPrecisionPercent": 3.499,
+    "pitchRecallPercent": 17.593,
+    "pitchF1Percent": 5.837,
+    "exactPitchSetPercent": 0.0
+  },
+  "holdout": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 64,
+    "locationPrecisionPercent": 50.0,
+    "locationRecallPercent": 100.0,
+    "locationF1Percent": 66.667,
+    "referencePitchEventCount": 36,
+    "predictedPitchEventCount": 192,
+    "pitchPrecisionPercent": 4.167,
+    "pitchRecallPercent": 22.222,
+    "pitchF1Percent": 7.018,
+    "exactPitchSetPercent": 0.0
+  },
+  "topCoefficients": [
+    {
+      "feature": "midi_norm",
+      "weight": -0.732061
+    },
+    {
+      "feature": "recurrence_tol1",
+      "weight": -0.401387
+    },
+    {
+      "feature": "target_competition",
+      "weight": 0.278371
+    },
+    {
+      "feature": "target_step_cos",
+      "weight": 0.244195
+    },
+    {
+      "feature": "recurrence_exact",
+      "weight": 0.225541
+    },
+    {
+      "feature": "pitch_class_sin",
+      "weight": 0.224262
+    },
+    {
+      "feature": "atom_relative_quality",
+      "weight": -0.197197
+    },
+    {
+      "feature": "pitch_class_cos",
+      "weight": -0.134962
+    },
+    {
+      "feature": "grid_accuracy",
+      "weight": -0.119223
+    },
+    {
+      "feature": "source_step_cos",
+      "weight": 0.111472
+    },
+    {
+      "feature": "source_step_sin",
+      "weight": -0.101949
+    },
+    {
+      "feature": "event_count",
+      "weight": -0.098121
+    }
+  ],
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceUsedForOfflineTemporalTraining": true,
+  "professionalReferenceRequiredAtRuntime": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false
+}

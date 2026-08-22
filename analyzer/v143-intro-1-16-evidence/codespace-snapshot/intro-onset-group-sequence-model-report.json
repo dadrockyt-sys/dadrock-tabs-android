@@ -1,0 +1,81 @@
+{
+  "model": "v143-onset-group-sequence-event-model",
+  "bestConfiguration": {
+    "pcaComponents": 64,
+    "l2": 10.0,
+    "threshold": 0.4,
+    "assignWindowMs": 75,
+    "validationObjectivePercent": 89.828
+  },
+  "validationLocation": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 42,
+    "correctLocationCount": 32,
+    "locationPrecisionPercent": 76.19,
+    "locationRecallPercent": 100.0,
+    "locationF1Percent": 86.486
+  },
+  "validationEndToEnd": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 42,
+    "correctLocationCount": 32,
+    "locationPrecisionPercent": 76.19,
+    "locationRecallPercent": 100.0,
+    "referencePitchEventCount": 36,
+    "predictedPitchEventCount": 49,
+    "correctPitchEventCount": 36,
+    "pitchPrecisionPercent": 73.469,
+    "pitchRecallPercent": 100.0,
+    "pitchF1Percent": 84.706,
+    "exactPitchSetPercent": 100.0
+  },
+  "developmentLocation": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 91,
+    "correctLocationCount": 88,
+    "locationPrecisionPercent": 96.703,
+    "locationRecallPercent": 91.667,
+    "locationF1Percent": 94.118
+  },
+  "developmentEndToEnd": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 91,
+    "correctLocationCount": 88,
+    "locationPrecisionPercent": 96.703,
+    "locationRecallPercent": 91.667,
+    "referencePitchEventCount": 108,
+    "predictedPitchEventCount": 102,
+    "correctPitchEventCount": 97,
+    "pitchPrecisionPercent": 95.098,
+    "pitchRecallPercent": 89.815,
+    "pitchF1Percent": 92.381,
+    "exactPitchSetPercent": 90.625
+  },
+  "holdoutLocation": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 50,
+    "correctLocationCount": 32,
+    "locationPrecisionPercent": 64.0,
+    "locationRecallPercent": 100.0,
+    "locationF1Percent": 78.049
+  },
+  "holdoutEndToEnd": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 50,
+    "correctLocationCount": 32,
+    "locationPrecisionPercent": 64.0,
+    "locationRecallPercent": 100.0,
+    "referencePitchEventCount": 36,
+    "predictedPitchEventCount": 61,
+    "correctPitchEventCount": 35,
+    "pitchPrecisionPercent": 57.377,
+    "pitchRecallPercent": 97.222,
+    "pitchF1Percent": 72.165,
+    "exactPitchSetPercent": 87.5
+  },
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceRequiredAtRuntime": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false,
+  "evaluationNote": "Measures 13-16 are diagnostic only because prior architecture iterations already inspected them. A fresh unseen song/section is required before production promotion."
+}

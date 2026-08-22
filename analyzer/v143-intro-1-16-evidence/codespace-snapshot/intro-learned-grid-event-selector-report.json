@@ -1,0 +1,65 @@
+{
+  "model": "v143-learned-reference-free-grid-event-selector",
+  "bestConfiguration": {
+    "windowMs": 100,
+    "l2": 10.0,
+    "threshold": 0.45,
+    "validationObjectivePercent": 83.871
+  },
+  "validationLocation": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 30,
+    "correctLocationCount": 26,
+    "locationPrecisionPercent": 86.667,
+    "locationRecallPercent": 81.25,
+    "locationF1Percent": 83.871
+  },
+  "developmentLocation": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 97,
+    "correctLocationCount": 77,
+    "locationPrecisionPercent": 79.381,
+    "locationRecallPercent": 80.208,
+    "locationF1Percent": 79.793
+  },
+  "holdoutLocation": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 19,
+    "correctLocationCount": 17,
+    "locationPrecisionPercent": 89.474,
+    "locationRecallPercent": 53.125,
+    "locationF1Percent": 66.667
+  },
+  "developmentEndToEnd": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 97,
+    "correctLocationCount": 77,
+    "locationPrecisionPercent": 79.381,
+    "locationRecallPercent": 80.208,
+    "referencePitchEventCount": 108,
+    "predictedPitchEventCount": 112,
+    "correctPitchEventCount": 84,
+    "pitchPrecisionPercent": 75.0,
+    "pitchRecallPercent": 77.778,
+    "pitchF1Percent": 76.364,
+    "exactPitchSetPercent": 79.167
+  },
+  "holdoutEndToEnd": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 19,
+    "correctLocationCount": 17,
+    "locationPrecisionPercent": 89.474,
+    "locationRecallPercent": 53.125,
+    "referencePitchEventCount": 36,
+    "predictedPitchEventCount": 20,
+    "correctPitchEventCount": 18,
+    "pitchPrecisionPercent": 90.0,
+    "pitchRecallPercent": 50.0,
+    "pitchF1Percent": 64.286,
+    "exactPitchSetPercent": 53.125
+  },
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceRequiredAtRuntime": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false
+}

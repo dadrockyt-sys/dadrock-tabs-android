@@ -1,0 +1,116 @@
+{
+  "reportVersion": 1,
+  "scope": "supervised-temporal-candidate-reassignment",
+  "radiusSteps": 2,
+  "developmentMeasures": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "holdoutMeasures": [
+    13,
+    14,
+    15,
+    16
+  ],
+  "developmentOracleRecallPercent": 90.741,
+  "holdoutOracleRecallPercent": 100.0,
+  "bestConfiguration": {
+    "positiveClassWeight": 8.0,
+    "l2": 0.001,
+    "threshold": 0.8,
+    "maxPolyphony": 3,
+    "developmentObjectivePercent": 4.987
+  },
+  "development": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 181,
+    "locationPrecisionPercent": 50.276,
+    "locationRecallPercent": 94.792,
+    "locationF1Percent": 65.704,
+    "referencePitchEventCount": 108,
+    "predictedPitchEventCount": 538,
+    "pitchPrecisionPercent": 0.929,
+    "pitchRecallPercent": 4.63,
+    "pitchF1Percent": 1.548,
+    "exactPitchSetPercent": 0.0
+  },
+  "holdout": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 64,
+    "locationPrecisionPercent": 50.0,
+    "locationRecallPercent": 100.0,
+    "locationF1Percent": 66.667,
+    "referencePitchEventCount": 36,
+    "predictedPitchEventCount": 190,
+    "pitchPrecisionPercent": 1.053,
+    "pitchRecallPercent": 5.556,
+    "pitchF1Percent": 1.77,
+    "exactPitchSetPercent": 0.0
+  },
+  "topCoefficients": [
+    {
+      "feature": "event_count",
+      "weight": -0.456229
+    },
+    {
+      "feature": "atom_relative_quality",
+      "weight": -0.45581
+    },
+    {
+      "feature": "midi_norm",
+      "weight": -0.28751
+    },
+    {
+      "feature": "delta_zero",
+      "weight": 0.231308
+    },
+    {
+      "feature": "mean_amplitude",
+      "weight": -0.22785
+    },
+    {
+      "feature": "recurrence_tol1",
+      "weight": -0.221678
+    },
+    {
+      "feature": "max_amplitude",
+      "weight": -0.203387
+    },
+    {
+      "feature": "abs_delta",
+      "weight": -0.169155
+    },
+    {
+      "feature": "duration",
+      "weight": 0.15492
+    },
+    {
+      "feature": "pitch_class_sin",
+      "weight": 0.11462
+    },
+    {
+      "feature": "delta_minus1",
+      "weight": -0.105705
+    },
+    {
+      "feature": "source_step_cos",
+      "weight": 0.093348
+    }
+  ],
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceUsedForOfflineTemporalTraining": true,
+  "professionalReferenceRequiredAtRuntime": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false
+}

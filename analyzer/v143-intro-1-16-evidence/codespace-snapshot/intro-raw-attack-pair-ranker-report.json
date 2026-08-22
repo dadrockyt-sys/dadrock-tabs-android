@@ -1,0 +1,134 @@
+{
+  "reportVersion": 1,
+  "scope": "raw-unaggregated-continuous-time-cluster-to-grid-ranking",
+  "developmentMeasures": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "holdoutMeasures": [
+    13,
+    14,
+    15,
+    16
+  ],
+  "featureNames": [
+    "abs_residual_200ms",
+    "signed_residual_200ms",
+    "gaussian_25ms",
+    "gaussian_50ms",
+    "gaussian_75ms",
+    "gaussian_100ms",
+    "stem_support",
+    "sweep_support",
+    "detection_count",
+    "max_amplitude",
+    "mean_amplitude",
+    "onset_spread_30ms",
+    "production_accepted",
+    "target_pitch_competition",
+    "target_cluster_density",
+    "midi_norm"
+  ],
+  "bestConfiguration": {
+    "windowMs": 100,
+    "positiveClassWeight": 12.0,
+    "l2": 0.05,
+    "threshold": 0.3,
+    "maxPolyphony": 1,
+    "developmentAvailabilityRecallPercent": 73.148,
+    "developmentObjectivePercent": 13.296
+  },
+  "development": {
+    "referenceLocationCount": 96,
+    "predictedLocationCount": 170,
+    "locationPrecisionPercent": 51.176,
+    "locationRecallPercent": 90.625,
+    "locationF1Percent": 65.414,
+    "referencePitchEventCount": 108,
+    "predictedPitchEventCount": 170,
+    "pitchPrecisionPercent": 8.235,
+    "pitchRecallPercent": 12.963,
+    "pitchF1Percent": 10.072,
+    "exactPitchSetPercent": 14.583
+  },
+  "holdoutAvailabilityRecallPercent": 83.333,
+  "holdout": {
+    "referenceLocationCount": 32,
+    "predictedLocationCount": 53,
+    "locationPrecisionPercent": 50.943,
+    "locationRecallPercent": 84.375,
+    "locationF1Percent": 63.529,
+    "referencePitchEventCount": 36,
+    "predictedPitchEventCount": 53,
+    "pitchPrecisionPercent": 7.547,
+    "pitchRecallPercent": 11.111,
+    "pitchF1Percent": 8.989,
+    "exactPitchSetPercent": 12.5
+  },
+  "topCoefficients": [
+    {
+      "feature": "midi_norm",
+      "weight": -0.507933
+    },
+    {
+      "feature": "target_pitch_competition",
+      "weight": 0.233163
+    },
+    {
+      "feature": "target_cluster_density",
+      "weight": 0.110383
+    },
+    {
+      "feature": "detection_count",
+      "weight": 0.100401
+    },
+    {
+      "feature": "sweep_support",
+      "weight": 0.09504
+    },
+    {
+      "feature": "signed_residual_200ms",
+      "weight": -0.083925
+    },
+    {
+      "feature": "onset_spread_30ms",
+      "weight": -0.078527
+    },
+    {
+      "feature": "stem_support",
+      "weight": -0.060054
+    },
+    {
+      "feature": "max_amplitude",
+      "weight": -0.034934
+    },
+    {
+      "feature": "gaussian_100ms",
+      "weight": -0.029589
+    },
+    {
+      "feature": "gaussian_75ms",
+      "weight": -0.02585
+    },
+    {
+      "feature": "abs_residual_200ms",
+      "weight": 0.022615
+    }
+  ],
+  "professionalReferenceUsedByAnalyzer": false,
+  "professionalReferenceUsedForOfflineTraining": true,
+  "professionalReferenceRequiredAtRuntime": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "productionPromotionAllowed": false
+}
