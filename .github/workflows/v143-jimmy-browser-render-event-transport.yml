@@ -1,0 +1,86 @@
+name: V143 Jimmy PAIge Render Event Browser Transport
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-jimmy-browser-render-event-transport.yml
+
+permissions:
+  contents: write
+
+jobs:
+  integrate-render-event-transport:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Apply idempotent browser transport patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/apply_jimmy_paige_upload_to_pdf_integration.py
+
+      - name: Validate structured upload-to-PDF path
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python -m py_compile \
+            analyzer/apply_jimmy_paige_upload_to_pdf_integration.py \
+            analyzer/check_jimmy_paige_upload_to_pdf_path.py
+          git diff --check
+          python analyzer/check_jimmy_paige_upload_to_pdf_path.py \
+            | tee debug/v143-contextual-prune/jimmy-paige-upload-to-professional-pdf-path-v2.json
+
+      - name: Enforce research branch safety boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('debug/v143-contextual-prune/jimmy-paige-upload-to-professional-pdf-path-v2.json')
+              .read_text(encoding='utf-8')
+          )
+          assert data['passed'] is True
+          assert data['featureGate'] == 'JIMMY_PAIGE_PROFESSIONAL_PDF_V1'
+          assert data['featureGateDefault'] == 'off'
+          assert data['structuredRhythmContract'] == 'v143-render-contract-v1'
+          assert data['mainModified'] is False
+          assert data['productionPromotionPerformed'] is False
+          assert data['nextRequiredStage'] == 'render-contract-fixture-and-pdf-quality-validation'
+          print('Jimmy PAIge V143 render-event transport PASSED')
+          PY
+
+      - name: Commit browser transport and validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            app/ai-tab/page.js \
+            debug/v143-contextual-prune/jimmy-paige-upload-to-professional-pdf-path-v2.json
+
+          if git diff --cached --quiet; then
+            echo "No browser transport changes to commit." >&2
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Wire V143 render events through Jimmy PAIge PDF flow"
+          git push origin HEAD:v143-contextual-prune-lobo
