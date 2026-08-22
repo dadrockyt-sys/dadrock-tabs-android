@@ -1,0 +1,266 @@
+name: V143 Vercel Preview Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-vercel-preview-deploy.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  preview-deploy:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: team_qJrw8Cuze5bCEg9M3Q67XMWt
+      VERCEL_PROJECT_ID: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
+
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install locked project dependencies
+        shell: bash
+        run: npm ci --ignore-scripts
+
+      - name: Prepare Preview deployment workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .preview-deploy
+          mkdir -p .preview-deploy/logs debug/v143-contextual-prune
+
+      - name: Pull Preview configuration and verify required key presence
+        shell: bash
+        run: |
+          set +e
+
+          token_available=false
+          pull_status=99
+          has_v143_url=false
+          has_analyzer_token=false
+          has_blob_token=false
+
+          if [ -n "${VERCEL_TOKEN:-}" ]; then
+            token_available=true
+            npx --yes vercel@latest pull \
+              --yes \
+              --environment=preview \
+              --token="$VERCEL_TOKEN" \
+              > .preview-deploy/logs/vercel-pull.log 2>&1
+            pull_status=$?
+          else
+            echo "VERCEL_TOKEN is not available in GitHub Actions; Preview deployment not attempted." \
+              > .preview-deploy/logs/vercel-pull.log
+          fi
+
+          env_file=.vercel/.env.preview.local
+          if [ "$pull_status" -eq 0 ] && [ -f "$env_file" ]; then
+            if grep -q '^ANALYZER_API_URL_V143=' "$env_file"; then
+              has_v143_url=true
+            fi
+            if grep -q '^ANALYZER_API_TOKEN=' "$env_file"; then
+              has_analyzer_token=true
+            fi
+            if grep -q '^BLOB_READ_WRITE_TOKEN=' "$env_file"; then
+              has_blob_token=true
+            fi
+          fi
+
+          echo "PREVIEW_VERCEL_TOKEN_AVAILABLE=$token_available" >> "$GITHUB_ENV"
+          echo "PREVIEW_PULL_STATUS=$pull_status" >> "$GITHUB_ENV"
+          echo "PREVIEW_HAS_V143_URL=$has_v143_url" >> "$GITHUB_ENV"
+          echo "PREVIEW_HAS_ANALYZER_TOKEN=$has_analyzer_token" >> "$GITHUB_ENV"
+          echo "PREVIEW_HAS_BLOB_TOKEN=$has_blob_token" >> "$GITHUB_ENV"
+
+          exit 0
+
+      - name: Build Vercel Preview locally
+        shell: bash
+        run: |
+          set +e
+          build_status=99
+
+          if [ "${PREVIEW_PULL_STATUS:-99}" -eq 0 ]; then
+            npx --yes vercel@latest build \
+              --token="$VERCEL_TOKEN" \
+              > .preview-deploy/logs/vercel-build.log 2>&1
+            build_status=$?
+          else
+            echo "Preview build skipped because Vercel Preview configuration was not pulled." \
+              > .preview-deploy/logs/vercel-build.log
+          fi
+
+          echo "PREVIEW_BUILD_STATUS=$build_status" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Deploy prebuilt output to Preview only
+        shell: bash
+        run: |
+          set +e
+          deploy_status=99
+          deployment_url=''
+
+          if [ "${PREVIEW_BUILD_STATUS:-99}" -eq 0 ]; then
+            # Intentionally no --prod. This creates a Preview deployment only.
+            # The renderer flag is scoped to this deployment via --env and does
+            # not mutate project-level Preview or Production environment values.
+            npx --yes vercel@latest deploy \
+              --prebuilt \
+              --yes \
+              --token="$VERCEL_TOKEN" \
+              --env JIMMY_PAIGE_PROFESSIONAL_PDF_V1=true \
+              > .preview-deploy/logs/vercel-deploy.log 2>&1
+            deploy_status=$?
+
+            if [ "$deploy_status" -eq 0 ]; then
+              deployment_url=$(grep -Eo 'https://[^[:space:]]+\.vercel\.app' \
+                .preview-deploy/logs/vercel-deploy.log | tail -n 1)
+            fi
+          else
+            echo "Preview deployment skipped because prebuilt Preview build did not pass." \
+              > .preview-deploy/logs/vercel-deploy.log
+          fi
+
+          echo "PREVIEW_DEPLOY_STATUS=$deploy_status" >> "$GITHUB_ENV"
+          echo "PREVIEW_DEPLOYMENT_URL=$deployment_url" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Write compact sanitized Preview deployment diagnostic
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path('debug/v143-contextual-prune')
+          root.mkdir(parents=True, exist_ok=True)
+
+          def status(name):
+              try:
+                  return int(os.environ.get(name, '99'))
+              except ValueError:
+                  return 99
+
+          payload = {
+              'schemaVersion': 1,
+              'gate': 'v143-vercel-preview-deploy',
+              'branch': 'v143-contextual-prune-lobo',
+              'vercelTokenAvailableInGitHubActions': os.environ.get('PREVIEW_VERCEL_TOKEN_AVAILABLE') == 'true',
+              'previewConfigPullExitCode': status('PREVIEW_PULL_STATUS'),
+              'previewEnvironmentPresence': {
+                  'analyzerApiUrlV143': os.environ.get('PREVIEW_HAS_V143_URL') == 'true',
+                  'analyzerApiToken': os.environ.get('PREVIEW_HAS_ANALYZER_TOKEN') == 'true',
+                  'blobReadWriteToken': os.environ.get('PREVIEW_HAS_BLOB_TOKEN') == 'true',
+              },
+              'previewBuildExitCode': status('PREVIEW_BUILD_STATUS'),
+              'previewDeployExitCode': status('PREVIEW_DEPLOY_STATUS'),
+              'deploymentUrl': os.environ.get('PREVIEW_DEPLOYMENT_URL') or None,
+              'deploymentRequestedAsPreview': True,
+              'productionDeployFlagUsed': False,
+              'professionalRendererDeploymentScoped': True,
+              'professionalRendererDeploymentValue': True,
+              'projectEnvironmentMutated': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'paidPurchaseAttempted': False,
+              'customerTokenRedeemed': False,
+              'customerEmailSent': False,
+          }
+
+          (root / 'vercel-preview-deploy-action.json').write_text(
+              json.dumps(payload, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps(payload, indent=2))
+          PY
+
+      - name: Preserve non-secret Preview deployment logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-vercel-preview-deploy
+          path: |
+            .preview-deploy/logs/
+            debug/v143-contextual-prune/vercel-preview-deploy-action.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commit compact Preview deployment diagnostic
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          file=debug/v143-contextual-prune/vercel-preview-deploy-action.json
+
+          if [ ! -s "$file" ]; then
+            echo "Preview deployment diagnostic was not produced." >&2
+            exit 0
+          fi
+
+          git add -- "$file"
+          if git diff --cached --quiet; then
+            echo "Preview deployment diagnostic is unchanged."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 Vercel Preview deployment"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce Preview-only deployment safety
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('debug/v143-contextual-prune/vercel-preview-deploy-action.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+
+          if data.get('deploymentRequestedAsPreview') is not True:
+              raise SystemExit('Safety failure: deployment was not requested as Preview')
+          if data.get('productionDeployFlagUsed') is not False:
+              raise SystemExit('Safety failure: Production deploy flag was used')
+          if data.get('projectEnvironmentMutated') is not False:
+              raise SystemExit('Safety failure: project environment was mutated')
+          if data.get('productionModified') is not False:
+              raise SystemExit('Safety failure: Production was modified')
+          if data.get('productionPromotionAuthorized') is not False:
+              raise SystemExit('Safety failure: Production promotion was authorized')
+
+          if data.get('vercelTokenAvailableInGitHubActions') is not True:
+              raise SystemExit('Preview deployment blocked: VERCEL_TOKEN is unavailable in GitHub Actions')
+          if int(data.get('previewConfigPullExitCode', 99)) != 0:
+              raise SystemExit('Preview deployment blocked: Vercel Preview configuration pull failed')
+          if int(data.get('previewBuildExitCode', 99)) != 0:
+              raise SystemExit('Preview deployment blocked: Vercel Preview build failed')
+          if int(data.get('previewDeployExitCode', 99)) != 0 or not data.get('deploymentUrl'):
+              raise SystemExit('Preview deployment blocked: Vercel Preview deploy failed')
+
+          print('V143 VERCEL PREVIEW DEPLOYMENT CREATED')
+          print(f"deploymentUrl={data['deploymentUrl']}")
+          print(f"previewEnvironmentPresence={data['previewEnvironmentPresence']}")
+          print('productionModified=false')
+          print('productionPromotionAuthorized=false')
+          PY
