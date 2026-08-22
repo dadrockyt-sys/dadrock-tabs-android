@@ -1,0 +1,313 @@
+name: V143 Intro Compatibility Fresh Capture Once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-intro-compatibility-fresh-capture-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-intro-compatibility-fresh-capture-once
+  cancel-in-progress: false
+
+jobs:
+  fresh-compatibility-capture:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      EXPECTED_BRANCH: v143-contextual-prune-lobo
+      EXPECTED_SOURCE_BLOB: 5e34fb55fbd011c55b56bc40cc5d062735b3fcd0
+      EXPECTED_HISTORICAL_CACHE_SHA256: 698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9
+      EXPECTED_PRODUCER_SHA256: 320364c8955577dacafab9fd19afae1b960d76fd81654a2eb67beaba1a5c35eb
+
+    steps:
+      - name: Check out isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Phase 1 — verify branch and authenticated baselines
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          branch="$(git branch --show-current)"
+          head="$(git rev-parse HEAD)"
+          echo "branch=$branch"
+          echo "capture_head=$head"
+
+          test "$branch" = "$EXPECTED_BRANCH"
+
+          required=(
+            analyzer/v143_intro_compatibility_fresh_capture.py
+            analyzer/v143_intro_compatibility_fresh_capture_static_check.py
+            analyzer/v143_intro_compatibility_comparator.py
+            debug/v143-contextual-prune/intro-compatibility-comparator-design.json
+            debug/v143-contextual-prune/intro-separator-family-evidence-gap.json
+            analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-raw-attack-cache.json
+            analyzer/v143-intro-1-16-evidence/codespace-snapshot/SHA256SUMS.txt
+            public/gomywayfullaitest.m4a
+          )
+          for path in "${required[@]}"; do
+            test -s "$path"
+          done
+
+          source_blob="$(git hash-object public/gomywayfullaitest.m4a)"
+          test "$source_blob" = "$EXPECTED_SOURCE_BLOB"
+
+          historical_sha="$(sha256sum analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-raw-attack-cache.json | awk '{print $1}')"
+          test "$historical_sha" = "$EXPECTED_HISTORICAL_CACHE_SHA256"
+
+          producer_sha="$(sha256sum analyzer/v143_intro_compatibility_fresh_capture.py | awk '{print $1}')"
+          test "$producer_sha" = "$EXPECTED_PRODUCER_SHA256"
+
+          if find debug/v143-contextual-prune/intro-compatibility-runs -type f -name fresh-capture.json -print -quit 2>/dev/null | grep -q .; then
+            echo "A prior fresh compatibility capture already exists; refusing a second separator pass." >&2
+            exit 1
+          fi
+
+          echo "Phase 1 baseline identity PASSED"
+
+      - name: Phase 2 — rerun static fail-closed validator
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/v143_intro_compatibility_fresh_capture_static_check.py --output /tmp/v143-intro-static-validation.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/v143-intro-static-validation.json').read_text(encoding='utf-8'))
+          checks = {
+              'passed': data.get('passed') is True,
+              'staticOnly': data.get('staticOnly') is True,
+              'modalOrGpuExecuted': data.get('modalOrGpuExecuted') is False,
+              'producerSha256': data.get('producerSha256') == '320364c8955577dacafab9fd19afae1b960d76fd81654a2eb67beaba1a5c35eb',
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              raise SystemExit(f'Static validation gate failed: {failed}')
+          print('Phase 2 static validation PASSED')
+          PY
+
+      - name: Phase 3 — explicit producer invariant preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+
+          path = Path('analyzer/v143_intro_compatibility_fresh_capture.py')
+          source = path.read_text(encoding='utf-8')
+          tree = ast.parse(source)
+
+          calls = []
+          for node in ast.walk(tree):
+              if not isinstance(node, ast.Call):
+                  continue
+              target = node.func
+              if isinstance(target, ast.Name):
+                  calls.append(target.id)
+              elif isinstance(target, ast.Attribute):
+                  calls.append(target.attr)
+
+          literal_checks = {
+              'seed 143': '"seed": 143' in source,
+              'Demucs shifts=1': '"demucsShifts": 1' in source,
+              'Demucs overlap=.10': '"demucsOverlap": 0.10' in source,
+              'Demucs segment=6': '"demucsSegmentSize": 6' in source,
+              'RoFormer batch=1': '"roformerBatchSize": 1' in source,
+              'PCM convention': 'soundfile-int16-always2d-numpy-tobytes-sha256-v1' in source,
+              'measures 1-16': 'INTRO_FIRST_MEASURE = 1' in source and 'INTRO_LAST_MEASURE = 16' in source,
+              '244-row guard': 'len(intro_grid) != 244' in source,
+              'wide tolerance .30': 'WIDE_GRID_TOLERANCE_SECONDS = 0.30' in source,
+              'production tolerance .10': 'PRODUCTION_GRID_TOLERANCE_SECONDS = 0.10' in source,
+              'MIDI helper reuse': 'GUITAR_MIDI_MIN' in source and 'GUITAR_MIDI_MAX' in source,
+              'professional reference runtime false': '"professionalReferenceUsedAtRuntime": False' in source,
+              'isolated run root': 'intro-compatibility-runs' in source,
+              'no-overwrite guard': 'Refusing to overwrite existing compatibility run' in source,
+          }
+          separator_calls = source.count('build_deterministic_v143_stems(normalized, stems_dir)')
+          literal_checks['exactly one separator build call'] = separator_calls == 1
+
+          failed = [name for name, ok in literal_checks.items() if not ok]
+          if failed:
+              raise SystemExit(f'Producer invariant preflight failed: {failed}')
+          print('Phase 3 producer invariant preflight PASSED')
+          PY
+
+      - name: Prepare unique capture identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          capture_id="gha-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${GITHUB_SHA:0:12}"
+          run_dir="debug/v143-contextual-prune/intro-compatibility-runs/${capture_id}"
+          echo "CAPTURE_ID=$capture_id" >> "$GITHUB_ENV"
+          echo "RUN_DIR=$run_dir" >> "$GITHUB_ENV"
+          echo "capture_id=$capture_id"
+          echo "run_dir=$run_dir"
+
+      - name: Verify Modal credentials before GPU execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${MODAL_TOKEN_ID:-}"
+          test -n "${MODAL_TOKEN_SECRET:-}"
+          echo "Modal credentials are available in GitHub Actions."
+
+      - name: Install Modal CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check modal
+
+      - name: Phase 4 — execute exactly one fresh compatibility capture
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e "$RUN_DIR"
+          : > /tmp/v143-intro-fresh-capture-modal.log
+          python -m modal run analyzer/v143_intro_compatibility_fresh_capture.py::capture --capture-id "$CAPTURE_ID" 2>&1 | tee /tmp/v143-intro-fresh-capture-modal.log
+
+          test -s "$RUN_DIR/fresh-capture.json"
+          test -s "$RUN_DIR/fresh-raw-attack-cache.json"
+          test -s "$RUN_DIR/package-inventory.txt"
+          test -s "$RUN_DIR/runtime-fingerprint.json"
+          test -s "$RUN_DIR/model-cache-manifest.json"
+          echo "Phase 4 single fresh Modal capture PASSED"
+
+      - name: Phase 5 — inventory fresh artifacts before interpretation
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum \
+            "$RUN_DIR/fresh-capture.json" \
+            "$RUN_DIR/fresh-raw-attack-cache.json" \
+            "$RUN_DIR/package-inventory.txt" \
+            "$RUN_DIR/runtime-fingerprint.json" \
+            "$RUN_DIR/model-cache-manifest.json" \
+            > "$RUN_DIR/SHA256SUMS.txt"
+          cat "$RUN_DIR/SHA256SUMS.txt"
+
+      - name: Phase 6 — run authoritative offline comparator
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +e
+          python analyzer/v143_intro_compatibility_comparator.py \
+            --capture "$RUN_DIR/fresh-capture.json" \
+            --output "$RUN_DIR/comparison.json" \
+            > /tmp/v143-intro-comparator.stdout.json
+          comparator_rc=$?
+          set -e
+
+          echo "COMPARATOR_RC=$comparator_rc" >> "$GITHUB_ENV"
+          cat /tmp/v143-intro-comparator.stdout.json
+
+          if [ "$comparator_rc" -eq 2 ]; then
+            echo "Comparator could not complete." >&2
+            exit 2
+          fi
+          if [ "$comparator_rc" -ne 0 ] && [ "$comparator_rc" -ne 1 ]; then
+            echo "Unexpected comparator exit code: $comparator_rc" >&2
+            exit 2
+          fi
+          test -s "$RUN_DIR/comparison.json"
+
+      - name: Summarize compatibility without closing historical provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          run_dir = Path(os.environ['RUN_DIR'])
+          capture = json.loads((run_dir / 'fresh-capture.json').read_text(encoding='utf-8'))
+          comparison = json.loads((run_dir / 'comparison.json').read_text(encoding='utf-8'))
+
+          summary = {
+              'captureId': capture.get('captureIdentity', {}).get('captureId'),
+              'gitCommit': capture.get('captureIdentity', {}).get('gitCommit'),
+              'rawEventCount': capture.get('introFingerprint', {}).get('rawEventCount'),
+              'rawAttackCacheSha256': capture.get('introFingerprint', {}).get('rawAttackCacheSha256'),
+              'directDecodedPcmSha256': capture.get('stemIdentity', {}).get('directDecodedPcmSha256'),
+              'cascadeDecodedPcmSha256': capture.get('stemIdentity', {}).get('cascadeDecodedPcmSha256'),
+              'modelPayloadCaptureComplete': capture.get('modelPayloadIdentity', {}).get('modelPayloadCaptureComplete'),
+              'primaryClassification': comparison.get('primaryClassification'),
+              'compatibilityLabels': comparison.get('compatibilityLabels'),
+              'currentResearchFamilyClassification': comparison.get('currentResearchFamilyClassification'),
+              'historicalProvenanceClosed': comparison.get('historicalProvenanceClosed'),
+              'productionPromotionAllowed': comparison.get('productionPromotionAllowed'),
+              'comparatorExitCode': int(os.environ['COMPARATOR_RC']),
+          }
+          (run_dir / 'run-summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2))
+
+          if summary['historicalProvenanceClosed'] is not False:
+              raise SystemExit('Fresh compatibility run attempted to close historical provenance')
+          if summary['productionPromotionAllowed'] is not False:
+              raise SystemExit('Fresh compatibility run attempted to authorize production promotion')
+          PY
+
+      - name: Preserve complete run and Modal log as workflow artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-intro-compatibility-fresh-capture-${{ github.run_id }}
+          path: |
+            debug/v143-contextual-prune/intro-compatibility-runs/
+            /tmp/v143-intro-fresh-capture-modal.log
+            /tmp/v143-intro-static-validation.json
+            /tmp/v143-intro-comparator.stdout.json
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Commit preserved research-only fresh run
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- "$RUN_DIR"
+          if git diff --cached --quiet; then
+            echo "No fresh compatibility artifacts to commit." >&2
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 intro fresh compatibility capture"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Final research boundary check
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          summary = json.loads((Path(os.environ['RUN_DIR']) / 'run-summary.json').read_text(encoding='utf-8'))
+          print('PRIMARY_CLASSIFICATION', summary.get('primaryClassification'))
+          print('COMPATIBILITY_LABELS', summary.get('compatibilityLabels'))
+          print('CURRENT_RESEARCH_FAMILY', summary.get('currentResearchFamilyClassification'))
+          print('HISTORICAL_PROVENANCE_CLOSED', summary.get('historicalProvenanceClosed'))
+          print('PRODUCTION_PROMOTION_ALLOWED', summary.get('productionPromotionAllowed'))
+          assert summary.get('historicalProvenanceClosed') is False
+          assert summary.get('productionPromotionAllowed') is False
+          PY
