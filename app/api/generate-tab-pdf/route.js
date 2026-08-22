@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { resend } from '@/lib/resend';
 import { createTabPdf } from '@/lib/createTabPdfPolished';
+import { createJimmyPaigeProfessionalPdf } from '@/lib/createJimmyPaigeProfessionalPdf';
 import { getDb } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
@@ -218,6 +219,7 @@ export async function POST(request) {
     const timeSignature =
       cleanText(body?.timeSignature, 20) || '4/4';
     const keySignature = cleanText(body?.keySignature, 40);
+    const analysisEngine = cleanText(body?.analysisEngine, 80);
 
     const emailIsValid =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail);
@@ -290,17 +292,52 @@ export async function POST(request) {
       });
     }
 
-    const pdfBytes = await createTabPdf({
-      song,
-      artist,
-      transcriptionType,
-      generatedTab,
-      tuning,
-      tempo,
-      timeSignature,
-      keySignature,
-      preview: false,
-    });
+    const useProfessionalRenderer =
+      process.env.JIMMY_PAIGE_PROFESSIONAL_PDF_V1 === 'true';
+
+    let pdfBytes;
+
+    if (useProfessionalRenderer) {
+      const result = await createJimmyPaigeProfessionalPdf({
+        song,
+        artist,
+        transcriptionType,
+        generatedTab,
+        tuning,
+        tempo,
+        timeSignature,
+        keySignature,
+        analysisEngine,
+        renderEvents:
+          Array.isArray(body?.renderEvents)
+            ? body.renderEvents
+            : [],
+        measureGrid:
+          body?.measureGrid || null,
+        confidence:
+          body?.confidence ?? null,
+        difficulty:
+          body?.difficulty || null,
+        techniques:
+          Array.isArray(body?.techniques)
+            ? body.techniques
+            : [],
+        preview: false,
+      });
+      pdfBytes = result.pdfBytes;
+    } else {
+      pdfBytes = await createTabPdf({
+        song,
+        artist,
+        transcriptionType,
+        generatedTab,
+        tuning,
+        tempo,
+        timeSignature,
+        keySignature,
+        preview: false,
+      });
+    }
 
     const fileName = createSafeFileName({
       song,
