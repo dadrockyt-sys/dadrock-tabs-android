@@ -3,6 +3,8 @@
 > **Purpose:** durable recovery record for ChatGPT/session continuity. This file is the first thing to read when a chat crashes, closes, branches, or becomes too large.
 >
 > **Rule:** GitHub evidence and commit history are authoritative. Chat history is supporting context only.
+>
+> **Checkpoint discipline:** after every major unit of work on `v143-contextual-prune-lobo`, update and commit this `docs/checkpoints/CURRENT_STATE.md` record before proceeding to the next major unit. Record what was established, the evidence/commit involved, what remains unresolved, and the next exact objective.
 
 ## Quick recovery
 
@@ -191,7 +193,7 @@ Do not require the user to reopen Codespaces merely to inspect the 52 archived i
 
 To avoid losing hours when a long chat crashes:
 
-1. At each meaningful research milestone, update this file in the same research branch.
+1. **After every major work unit, commit an updated `docs/checkpoints/CURRENT_STATE.md` on `v143-contextual-prune-lobo` before beginning the next major work unit.**
 2. Include the latest evidence commit(s), conclusion, unresolved question, and next exact objective.
 3. Start a fresh chat when the UI becomes heavy rather than waiting for a crash.
 4. In the new chat, say only:
@@ -217,4 +219,4 @@ Never delete old provenance merely because a later conclusion is cleaner. Record
 
 ---
 
-_Last created as a continuity checkpoint on 2026-08-21 (user local date)._
+_Last updated on 2026-08-21 (user local date) to make the major-work checkpoint discipline explicit._
