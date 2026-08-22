@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "artifact": "v143-intro-36-feature-assembler-recovery",
+  "date": "2026-08-21",
+  "status": "passed_historical_36_feature_assembler_recovered",
+  "claimScope": "research-only historical recovery of the ordered 36-feature construction used by the frozen intro grid-event selector lineage",
+  "historicalSource": {
+    "path": "analyzer/v143_intro_learned_grid_event_selector.py",
+    "historicalSourceHead": "4d735846fbd834cc4c722f2cb48727e4629647f1",
+    "gitBlobSha": "f26e6afb9f6335231271378dec48d18a43d60fea",
+    "historicalAndCurrentBlobExact": true,
+    "reconstructedOrReimplemented": false
+  },
+  "featureVector": {
+    "featureCount": 36,
+    "constructionFunction": "_grid_feature",
+    "baseFeatureCount": 13,
+    "spectralFeatureCount": 21,
+    "phaseFeatureCount": 2,
+    "orderedFeatures": [
+      {"index":0,"formula":"1.0"},
+      {"index":1,"formula":"signedGridResidualSeconds / window_seconds"},
+      {"index":2,"formula":"absoluteGridResidualSeconds / window_seconds"},
+      {"index":3,"formula":"duration"},
+      {"index":4,"formula":"detectionCount / 8.0"},
+      {"index":5,"formula":"maxAmplitude"},
+      {"index":6,"formula":"step / 16.0"},
+      {"index":7,"formula":"stemSupport / 2.0"},
+      {"index":8,"formula":"sweepSupport / 3.0"},
+      {"index":9,"formula":"(step % 4) / 3.0"},
+      {"index":10,"formula":"1.0 if step % 4 == 0 else 0.0"},
+      {"index":11,"formula":"1.0 if step % 2 == 0 else 0.0"},
+      {"index":12,"formula":"candidateCount"},
+      {"index":13,"name":"attackMax:localPeakMinusViewFloor"},
+      {"index":14,"name":"attackMax:localMeanMinusViewFloor"},
+      {"index":15,"name":"attackMax:harmonicMaxMinusViewFloor"},
+      {"index":16,"name":"attackMax:peakMargin"},
+      {"index":17,"name":"attackMax:viewFloor"},
+      {"index":18,"name":"attackMax:globalPeakMinusViewFloor"},
+      {"index":19,"name":"attackMax:viewCorrelation"},
+      {"index":20,"name":"earlyMean:localPeakMinusViewFloor"},
+      {"index":21,"name":"earlyMean:localMeanMinusViewFloor"},
+      {"index":22,"name":"earlyMean:harmonicMaxMinusViewFloor"},
+      {"index":23,"name":"earlyMean:peakMargin"},
+      {"index":24,"name":"earlyMean:viewFloor"},
+      {"index":25,"name":"earlyMean:globalPeakMinusViewFloor"},
+      {"index":26,"name":"earlyMean:viewCorrelation"},
+      {"index":27,"name":"sustainMean:localPeakMinusViewFloor"},
+      {"index":28,"name":"sustainMean:localMeanMinusViewFloor"},
+      {"index":29,"name":"sustainMean:harmonicMaxMinusViewFloor"},
+      {"index":30,"name":"sustainMean:peakMargin"},
+      {"index":31,"name":"sustainMean:viewFloor"},
+      {"index":32,"name":"sustainMean:globalPeakMinusViewFloor"},
+      {"index":33,"name":"sustainMean:viewCorrelation"},
+      {"index":34,"formula":"sin(2*pi*(step % 16)/16)"},
+      {"index":35,"formula":"cos(2*pi*(step % 16)/16)"}
+    ],
+    "spectralSummaryOrderPerWindow": [
+      "local_peak - view_floor",
+      "local_mean - view_floor",
+      "harmonic_max - view_floor",
+      "peak_margin",
+      "view_floor",
+      "global_peak - view_floor",
+      "viewCorrelation"
+    ],
+    "spectralWindowOrder": ["attackMax","earlyMean","sustainMean"]
+  },
+  "correlationSafeFrozenModelLinkage": {
+    "frozenModelPath": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-correlation-safe-grid-event-selector-model.json",
+    "learnedModelPath": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-learned-grid-event-selector-model.json",
+    "windowMs": 100,
+    "l2": 10.0,
+    "activeFrozenThreshold": 0.27,
+    "neutralizedFeatureColumns": [19,26,33],
+    "neutralizedFeatureNames": [
+      "attackMax:viewCorrelation",
+      "earlyMean:viewCorrelation",
+      "sustainMean:viewCorrelation"
+    ],
+    "neutralizedRawValue": 1.0,
+    "featureMeanDifferenceIndicesLearnedVsCorrelationSafe": [19,26,33],
+    "featureStdDifferenceIndicesLearnedVsCorrelationSafe": [19,26,33],
+    "nonNeutralizedFeatureMeanEntriesExact": 33,
+    "nonNeutralizedFeatureStdEntriesExact": 33,
+    "neutralizedFinalModelWeightsZero": true,
+    "interpretation": "The frozen correlation-safe selector is structurally linked to this exact historical 36-feature assembler: the learned and correlation-safe models retain identical feature statistics at every non-neutralized column, while exactly the three assembler positions carrying viewCorrelation are neutralized and have zero final weights. No substitute feature ordering is required."
+  },
+  "replayConsequence": {
+    "preservedCacheToOrdered36FeatureVectorDeterministicallySpecified": true,
+    "ordered36FeatureVectorToFrozenSelectorScoreDeterministicallySpecified": true,
+    "missingLate36FeatureAssemblerGapResolved": true,
+    "completeRawAudioToIntroCacheRegenerationProven": false,
+    "completeRawAudioToPredictionReplay1To16Closed": false,
+    "completeDeterministicRawAudioReplay1To113Closed": false,
+    "remainingGap": "Authoritative historical raw-audio-to-intro-carrier/cache generation source is not yet fully recovered. The checkpoint-referenced WINDOWS_ONE_SHOT_INTRO_TIMING.ps1 remains absent from preserved GitHub evidence, so byte-exact regeneration of the intro raw/onset-spectrum caches from raw audio is not yet proven."
+  },
+  "codespaceRecoveryEvidence": {
+    "modalReplayDirectory": "public/v143-modal-replay/",
+    "modalReplayDirectoryFound": true,
+    "modalReplayFiles": [
+      "gomyway-modal-cpu-historical-command-guitar.wav",
+      "gomyway-modal-l4-direct-guitar.wav",
+      "gomyway-modal-l4-historical-defaults-guitar.wav",
+      "gomyway-modal-l4-seed143-a.wav",
+      "gomyway-modal-l4-seed143-b.wav"
+    ],
+    "modalReplayContainsAssemblerSource": false,
+    "workspaceRecoveredHistoricalAssemblerSource": "analyzer/v143_intro_learned_grid_event_selector.py",
+    "compiledEvidenceAlsoObserved": [
+      "analyzer/__pycache__/v143_intro_learned_grid_event_selector.cpython-311.pyc",
+      "analyzer/__pycache__/v143_intro_repetition_recovery_event_selector.cpython-311.pyc"
+    ]
+  },
+  "invariants": {
+    "professionalReferenceUsedForRecovery": false,
+    "retrainingPerformed": false,
+    "thresholdModified": false,
+    "toleranceModified": false,
+    "frozenModelModified": false,
+    "productionModified": false,
+    "productionPromotionAllowed": false
+  }
+}
