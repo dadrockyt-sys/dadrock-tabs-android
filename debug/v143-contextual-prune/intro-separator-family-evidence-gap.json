@@ -1,11 +1,33 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gate": "v143-intro-separator-family-static-provenance",
   "updated": "2026-08-22",
   "branch": "v143-contextual-prune-lobo",
-  "claimScope": "Historical V143 measures 1-16 reference-free raw-attack producer; static surviving evidence only; no fresh Modal/GPU execution",
+  "claimScope": "Historical V143 measures 1-16 reference-free raw-attack producer; surviving static evidence plus preserved Codespace-era execution screenshots; no new Modal/GPU execution during this archaeology",
   "status": "EVIDENCE_GAP",
-  "conclusion": "The measures 1-16 producer chain, source audio, output cache checksum, event fingerprint, first-party source graph, historical-era Modal smoke fingerprint and historical direct benchmark WAV identity are strongly preserved. However, no surviving static evidence recovered in the targeted archaeology directly binds the intro raw-attack cache to a known whole-song separator PCM family (A or B), and the historical seeded repeatability pass-1/pass-2 stem hashes were not recovered. Bit-exact raw-audio-to-intro separator-family lineage therefore remains unauthenticated and must not be inferred from later Section3 Family-B evidence.",
+  "conclusion": "Historical Modal execution is not in doubt: Modal was launched from the Codespace before the later transition to GitHub-controlled workflows, and surviving Codespace screenshots directly show Modal remote execution and separator GPU benchmark completion. The remaining gap is narrower: the exact printed outputs from the historical V143 seeded/repeatability execution that would bind the measures 1-16 raw-attack cache to a known whole-song separator PCM family (A or B) have not been recovered. Bit-exact raw-audio-to-intro separator-family lineage therefore remains unauthenticated even though the underlying Codespace-to-Modal execution definitely occurred.",
+  "historicalExecutionExistence": {
+    "codespaceLaunchedModalExecutionOccurred": true,
+    "evidenceType": [
+      "preserved Codespace-era project checkpoint",
+      "preserved ChatGPT Library screenshots of the Codespaces terminal"
+    ],
+    "examples": [
+      {
+        "libraryImageName": "1000116920.jpg",
+        "observedCommand": "modal run analyzer/modal_gomyway_separator_gpu_benchmark_v1.py",
+        "observedGpu": "L4",
+        "observedResult": "GPU separator benchmark passed: True",
+        "note": "This screenshot proves Codespace -> Modal separator execution existed. Its shown HQ 4/.25/12 benchmark settings are not the frozen V143 1/.10/6 producer and must not be substituted for it."
+      },
+      {
+        "libraryImageName": "1000116927.jpg",
+        "observedResult": "Stopping app - local entrypoint completed; App completed; Modal run URL displayed",
+        "note": "Independent visual confirmation that Codespaces was actively launching and completing remote Modal work before the GitHub workflow transition."
+      }
+    ],
+    "interpretation": "Do not describe the provenance problem as uncertainty over whether Modal ran. Modal ran. The unresolved question is preservation/authentication of the exact V143 seeded/repeatability output identities from those Codespace-launched executions."
+  },
   "preservedEvidence": {
     "historicalSourceCommit": "4d735846fbd834cc4c722f2cb48727e4629647f1",
     "sourceAudio": {
@@ -77,6 +99,7 @@
     "Library semantic search for intro 11164/11106 stem counts paired with stem hashes or PCM-family identity",
     "Library semantic search for intro-raw-attack-cache paired with directPcm/cascadePcm identity",
     "Exact find within dadrock_v143_modal_separator_checkpoint_2026-08-16.txt for seeded, repeatability, carrierA and carrierB",
+    "Library image search for Codespaces/Modal execution screenshots and direct visual inspection of relevant images",
     "GitHub repository archaeology for historical seeded/deterministic diagnostic source and preserved Codespace snapshot",
     "GitHub review of later exact-family and cross-container provenance artifacts"
   ],
@@ -98,13 +121,14 @@
     "Do not weaken historical thresholds, score tolerances, band boundaries or frozen models to manufacture agreement."
   ],
   "safeClaims": [
+    "Modal was run remotely from the Codespace before the transition to GitHub-controlled workflows.",
     "The measures 1-16 first-party producer/source/artifact/feature/model chain is statically source-proven.",
     "The preserved measures 1-16 raw-attack cache is checksum-pinned and has an exact event fingerprint.",
     "The source audio is byte-identical across historical and current research refs.",
     "A historical-era Aug-16 Modal dependency smoke executed successfully with Torch 2.13.0+cu130, CUDA 13.0 and NVIDIA L4.",
     "The historical direct benchmark WAV file SHA256 is recovered.",
     "Later research can produce exact historical Section3 Family B under one nominally equivalent L4 worker while other workers produce Family A.",
-    "The remaining intro separator-family bridge is a provenance gap, not evidence of pipeline failure."
+    "The remaining intro separator-family bridge is a missing retained-output provenance link, not evidence that the historical Modal execution failed to occur."
   ],
   "productionPromotionAllowed": false,
   "productionModified": false,
@@ -112,5 +136,5 @@
   "professionalReferenceOpenedForThisArchaeology": false,
   "runtimeLabelsRequired": false,
   "freshGpuReplayPerformedForThisArchaeology": false,
-  "nextSafeStep": "Stop broad historical archaeology. If further runtime comparison is scientifically useful, design a separately labelled compatibility comparator that captures fresh model payload hashes, full runtime/package inventory, CUDA/cuDNN/Torch/ONNX details, input identity, separator config/seed/shift trace, output WAV and decoded-PCM hashes, intro Basic Pitch fingerprints and frozen downstream outputs without overwriting historical artifacts."
+  "nextSafeStep": "Continue only targeted recovery of retained Codespace-era V143 deterministic/repeatability outputs. Search surviving screenshots/checkpoints for the exact seeded pass hashes and cascade benchmark WAV identity. Do not rerun Modal merely to recreate missing historical evidence. If those outputs cannot be recovered, preserve the gap and design any future run as separately labelled compatibility evidence."
 }
