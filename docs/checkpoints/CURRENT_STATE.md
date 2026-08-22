@@ -2,7 +2,7 @@
 
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
-Branch HEAD before this checkpoint update: `d96852a67fed555c5d1200c0e28b3bf310b4e1b8`
+Branch HEAD before this checkpoint update: `19683ef4251c7b2b7143c7ab59aa754d183044fd`
 
 ## Resume directive
 
@@ -348,7 +348,7 @@ The exposed Vercel connector also does not provide project-env writes or environ
 
 Production remains untouched.
 
-## Tokenless native Git deployment experiments exhausted
+## Tokenless native Git deployment experiments exhausted and cleaned up
 
 ### Draft PR experiment
 
@@ -366,30 +366,26 @@ merged: false
 
 Vercel documentation states `vercel.json → git.deploymentEnabled` can explicitly control branch Git deployments.
 
-Commit:
+Experiment commit:
 
 `bf32abbc73d90ddea21cac20dead4d767e10f4e8` — `Explicitly enable V143 canary Git deployments`
 
-The branch now explicitly contains:
-
-```json
-"git": {
-  "deploymentEnabled": {
-    "v143-contextual-prune-lobo": true
-  }
-}
-```
-
-while preserving existing cron/header configuration.
-
-This push still produced:
+The branch was explicitly set to deployment enabled and still produced:
 
 ```text
 no Vercel Preview deployment
 no Vercel commit status
 ```
 
-Therefore repository-side `deploymentEnabled` is not sufficient to overcome the current native Git Preview suppression. The remaining suppression is project/integration-side or otherwise external to this branch.
+This proved repository-side `deploymentEnabled` was not enough to overcome the current native Git Preview suppression.
+
+The experimental setting was then removed in cleanup commit:
+
+`19683ef4251c7b2b7143c7ab59aa754d183044fd` — `Remove ineffective V143 Git deployment nudge`
+
+`vercel.json` is now restored to its original cron/header configuration. No experimental Git deployment rule remains enabled.
+
+The remaining suppression is project/integration-side or otherwise external to this branch.
 
 ---
 
@@ -450,11 +446,6 @@ Definitive result:
 
 ```text
 schemaVersion: 2
-credentialAliasesChecked:
-- VERCEL_TOKEN
-- VERCEL_ACCESS_TOKEN
-- VERCEL_API_TOKEN
-- VERCEL_CLI_TOKEN
 vercelTokenAvailableInGitHubActions: false
 previewConfigPullExitCode: 99
 previewBuildExitCode: 99
