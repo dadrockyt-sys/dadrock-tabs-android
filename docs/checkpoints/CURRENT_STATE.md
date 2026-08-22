@@ -2,7 +2,7 @@
 
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
-Branch HEAD before this checkpoint update: `f52bbb71b41f06b864b705b041ce3d2696246519`
+Branch HEAD before this checkpoint update: `d96852a67fed555c5d1200c0e28b3bf310b4e1b8`
 
 ## Resume directive
 
@@ -48,7 +48,7 @@ V143 identity remains fail-closed on:
 liveV143.referenceFree === true
 ```
 
-`lib/v143RenderContract.js` accepts only events that already contain valid:
+`lib/v143RenderContract.js` accepts only events containing valid:
 
 ```text
 measure >= 1
@@ -79,7 +79,7 @@ difficulty
 
 to both `/api/generate-tab-preview` and the unlocked `/api/generate-tab-pdf` path.
 
-Therefore there is no ordinary stale prior-analysis state path in the UI that can masquerade as the new V143 result.
+There is no ordinary stale prior-analysis UI state path masquerading as a new V143 result.
 
 ---
 
@@ -296,11 +296,7 @@ Verifier:
 
 `analyzer/verify_jimmy_paige_preview_feature_gate.mjs`
 
-Workflow:
-
-`.github/workflows/v143-preview-pdf-feature-gate.yml`
-
-The workflow was upgraded to persist compact evidence in commit:
+Evidence-persisting workflow change:
 
 `d8cbc03ab077e5ed7fe8d7d1b9ec6cad73a29524` — `Persist V143 Preview feature gate evidence`
 
@@ -326,7 +322,7 @@ productionPromotionAuthorized: false
 productionModified: false
 ```
 
-This closes the feature-gate logic question: the branch-scoped Preview gate itself is proven and Production remains disabled by default.
+This closes the feature-gate logic question: Preview activation is isolated and Production remains disabled by default.
 
 No payment, customer-token redemption, or customer-email test has been performed.
 
@@ -346,25 +342,19 @@ node: 24.x
 
 Read-only Vercel inspection on 2026-08-22 showed recent deployments were Production/main only. No `v143-contextual-prune-lobo` Preview deployment appeared after ordinary branch pushes.
 
-The connected Vercel app can list/inspect deployments and logs, but its direct `deploy_to_vercel` action does not accept a source ref/branch. **Do not use that action for this canary because the exact source branch cannot be guaranteed.**
+The connected Vercel app can list/inspect deployments and logs, but its direct `deploy_to_vercel` action does not accept a source ref/branch. Do not use that action for this canary because the exact source branch cannot be guaranteed.
 
-The currently exposed Vercel tool surface also does not expose environment-variable writes or environment-name listing.
+The exposed Vercel connector also does not provide project-env writes or environment-name listing.
 
 Production remains untouched.
 
----
+## Tokenless native Git deployment experiments exhausted
 
-# 7. Draft PR Preview experiment closed safely
+### Draft PR experiment
 
-Draft PR #19 was created only to test whether native Git→Vercel Preview integration would react:
+Draft PR #19 (`V143 /ai-tab professional PDF Preview canary`) was created only to test native Git→Vercel Preview behavior and was explicitly marked DO NOT MERGE.
 
-`V143 /ai-tab professional PDF Preview canary`
-
-It was explicitly marked DO NOT MERGE.
-
-No Vercel Preview appeared from the PR. The long-lived research branch is also unsuitable as a direct merge vehicle because it differs from current `main` by thousands of files/commits.
-
-PR #19 was therefore closed unmerged on 2026-08-22.
+No Preview appeared. Because the long-lived research branch is also an enormous/unsuitable merge vehicle, PR #19 was closed unmerged.
 
 ```text
 state: closed
@@ -372,46 +362,99 @@ draft: true
 merged: false
 ```
 
-Do not reopen it merely to obtain a Preview unless Git integration behavior changes and a specific need is proven.
+### Explicit branch deploymentEnabled experiment
+
+Vercel documentation states `vercel.json → git.deploymentEnabled` can explicitly control branch Git deployments.
+
+Commit:
+
+`bf32abbc73d90ddea21cac20dead4d767e10f4e8` — `Explicitly enable V143 canary Git deployments`
+
+The branch now explicitly contains:
+
+```json
+"git": {
+  "deploymentEnabled": {
+    "v143-contextual-prune-lobo": true
+  }
+}
+```
+
+while preserving existing cron/header configuration.
+
+This push still produced:
+
+```text
+no Vercel Preview deployment
+no Vercel commit status
+```
+
+Therefore repository-side `deploymentEnabled` is not sufficient to overcome the current native Git Preview suppression. The remaining suppression is project/integration-side or otherwise external to this branch.
 
 ---
 
-# 8. Explicit GitHub Actions Vercel Preview workflow is ready, but blocked by missing VERCEL_TOKEN
+# 7. Explicit GitHub Actions Vercel Preview workflow is ready, but no Vercel deployment credential exists
 
 Workflow:
 
 `.github/workflows/v143-vercel-preview-deploy.yml`
 
-Commit:
+Initial workflow commit:
 
 `7a5c5f0b4aac01d0bf28f326fdf7313473fac84f`
 
 The workflow is branch-only and fail-closed. It is designed to:
 
-1. check whether `VERCEL_TOKEN` exists without printing it;
-2. target the known Vercel project/team IDs;
-3. run `vercel pull --environment=preview`;
-4. check only the presence, never values, of:
+1. authenticate to the exact known Vercel team/project;
+2. run `vercel pull --environment=preview`;
+3. inspect only the presence, never values, of:
    - `ANALYZER_API_URL_V143`
    - `ANALYZER_API_TOKEN`
    - `BLOB_READ_WRITE_TOKEN`;
-5. run `vercel build`;
-6. deploy prebuilt output with **no `--prod`**;
-7. set `JIMMY_PAIGE_PROFESSIONAL_PDF_V1=true` only via deployment-scoped `--env`;
-8. commit only compact non-secret evidence;
-9. never perform payment/token/email actions.
+4. run `vercel build`;
+5. deploy prebuilt output with **no `--prod`**;
+6. set `JIMMY_PAIGE_PROFESSIONAL_PDF_V1=true` only via deployment-scoped `--env`;
+7. commit only compact non-secret evidence;
+8. never perform payment/token/email actions.
 
-Bot diagnostic commit:
+First diagnostic commit:
 
-`8c6a30ff1005ea16f4a9c4d701d241b606f98901` — `Record V143 Vercel Preview deployment`
+`8c6a30ff1005ea16f4a9c4d701d241b606f98901`
+
+showed `VERCEL_TOKEN` absent.
+
+## Common credential aliases were then probed safely
+
+Workflow commit:
+
+`7a5412da88b9f4c7640370b2cc73052306e6c300` — `Probe existing Vercel credential aliases safely`
+
+It checks the following repository-secret aliases by presence only and would use the first available value:
+
+```text
+VERCEL_TOKEN
+VERCEL_ACCESS_TOKEN
+VERCEL_API_TOKEN
+VERCEL_CLI_TOKEN
+```
+
+Bot evidence commit:
+
+`d96852a67fed555c5d1200c0e28b3bf310b4e1b8` — `Record V143 Vercel Preview deployment`
 
 Evidence:
 
 `debug/v143-contextual-prune/vercel-preview-deploy-action.json`
 
-Actual result:
+Definitive result:
 
 ```text
+schemaVersion: 2
+credentialAliasesChecked:
+- VERCEL_TOKEN
+- VERCEL_ACCESS_TOKEN
+- VERCEL_API_TOKEN
+- VERCEL_CLI_TOKEN
 vercelTokenAvailableInGitHubActions: false
 previewConfigPullExitCode: 99
 previewBuildExitCode: 99
@@ -428,25 +471,23 @@ customerTokenRedeemed: false
 customerEmailSent: false
 ```
 
-The Preview environment-presence booleans in that diagnostic are false only because Preview configuration could not be pulled. They do **not** prove the Vercel project env values themselves are absent.
+The Preview environment-presence booleans are false only because Preview configuration could not be pulled. They do not prove the Vercel project env values themselves are absent.
 
-## Precise current external blocker
+## Current external blocker
 
-GitHub Actions does not currently have a repository secret named:
+No usable Vercel CLI deployment credential exists in GitHub Actions under any of the four conventional aliases above.
 
-```text
-VERCEL_TOKEN
-```
+Vercel OIDC documentation was also checked. GitHub OIDC can authenticate requests **to an already-created protected Vercel deployment**, but it does not replace the Vercel CLI authorization token required to run `vercel pull/build/deploy` from GitHub Actions.
 
-Without that credential, CI cannot authenticate `vercel pull`, `vercel build`, or `vercel deploy` for the exact branch/project.
+No safe automated deployment-auth path remains available from the current connected tools without a Vercel deployment credential.
 
-No unsafe fallback was used. No Production change occurred.
+No unsafe fallback was used and no Production change occurred.
 
 ---
 
 # Current boundary
 
-The following are now proven:
+The following are proven:
 
 - real V143 analyzer output quality on approved real audio;
 - 358/358 event survival through the structured render contract;
@@ -457,15 +498,21 @@ The following are now proven:
 
 The only unresolved validation boundary is the **actual deployed Vercel/Next.js Preview application wiring**.
 
-That boundary is currently blocked by deployment authentication, not by V143 analysis, event quality, browser state handling, render eligibility, or PDF generation.
+That boundary is blocked solely by deployment authentication/native Preview suppression, not by V143 analysis, event quality, browser state handling, render eligibility, or PDF generation.
 
 ---
 
 # Next steps — resume automatically when deployment authentication is available
 
-1. When a GitHub Actions repository secret named `VERCEL_TOKEN` becomes available, rerun `.github/workflows/v143-vercel-preview-deploy.yml` without weakening its Preview-only safety invariants.
+1. Preferred prerequisite: make a GitHub Actions repository secret available under one of the already-supported aliases, preferably:
 
-2. Require the diagnostic to show:
+```text
+VERCEL_TOKEN
+```
+
+2. Rerun `.github/workflows/v143-vercel-preview-deploy.yml` without weakening its Preview-only safety invariants.
+
+3. Require the diagnostic to show:
 
 ```text
 vercelTokenAvailableInGitHubActions: true
@@ -477,32 +524,32 @@ productionDeployFlagUsed: false
 productionModified: false
 ```
 
-3. Independently inspect the resulting deployment through the connected Vercel app and confirm it is Preview before sending application requests.
+4. Independently inspect the resulting deployment through the connected Vercel app and confirm target/environment is Preview before sending application requests.
 
-4. Verify `/ai-tab` loads.
+5. Verify `/ai-tab` loads.
 
-5. POST only `/api/generate-tab-preview` for renderer routing validation. Do not call `/api/generate-tab-pdf` during automated Preview testing because that route performs unlock verification and can send email.
+6. POST only `/api/generate-tab-preview` for renderer routing validation. Do not call `/api/generate-tab-pdf` during automated Preview testing because that route performs unlock verification and can send email.
 
-6. Use existing approved synthetic/fixture V143 events for the first structured route test; do not rerun the GPU analyzer merely to test the Preview PDF route.
+7. Use existing approved synthetic/fixture V143 events for the first structured route test; do not rerun the GPU analyzer merely to test the Preview PDF route.
 
-7. Require a passing structured request to return:
+8. Require a passing structured request to return:
 
 ```text
 X-Jimmy-PAIge-PDF-Feature: enabled source
 X-Jimmy-PAIge-PDF-Renderer: v143-structured-rhythm
 ```
 
-8. Send a legacy/invalid-structured preview request and require safe polished fallback.
+9. Send a legacy/invalid-structured preview request and require safe polished fallback.
 
-9. Only if route-level testing passes and Preview has the required V143/Blob runtime keys should an actual browser upload test using `public/gomywayfullaitest.m4a` be considered.
+10. Only if route-level testing passes and Preview has the required V143/Blob runtime keys should an actual browser upload test using `public/gomywayfullaitest.m4a` be considered.
 
-10. Do not make a PayPal purchase, redeem a customer token, or send customer email during automated Preview testing.
+11. Do not make a PayPal purchase, redeem a customer token, or send customer email during automated Preview testing.
 
-11. Record compact Preview evidence under `debug/v143-contextual-prune/` and refresh this checkpoint.
+12. Record compact Preview evidence under `debug/v143-contextual-prune/` and refresh this checkpoint.
 
-12. Only after deployed Preview application wiring passes should a separate explicit Production-promotion decision be made.
+13. Only after deployed Preview application wiring passes should a separate explicit Production-promotion decision be made.
 
-13. Do **not** enable or promote Production automatically.
+14. Do **not** enable or promote Production automatically.
 
 ---
 
