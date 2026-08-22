@@ -1,7 +1,42 @@
-# CURRENT STATE — DadRock `/ai-tab` V143 Preview canary
+# CURRENT STATE — DadRock `/ai-tab` End-to-End Construction — V143 Preview canary
 
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
+
+# PROJECT FOCUS — `dadrocktabs.com/ai-tab` end-to-end construction
+
+The primary project is the complete customer-facing construction and validation of `dadrocktabs.com/ai-tab`, from uploaded audio to a professional-grade tablature PDF.
+
+The intended end-to-end product flow is:
+
+1. **User uploads audio** they possess and have permission to analyze.
+2. **User selects the transcription target:**
+   - Bass Guitar
+   - Lead Guitar
+   - Rhythm Guitar
+3. **`app/ai-tab/page.js` drives the customer workflow** — upload, selection, analysis request, progress/state handling, preview generation, and the unlock/full-PDF path.
+4. **Audio processing/separation isolates the requested musical part** as needed for the selected Bass, Lead, or Rhythm transcription path.
+5. **Musical analysis extracts the information required for real tablature**, including as applicable:
+   - notes / pitch;
+   - playable string and fret placement;
+   - note attacks and durations;
+   - timing, beat, measure, and subdivision placement;
+   - rhythm/sustain information;
+   - guitar/bass techniques such as bends, releases, slides, hammer-ons, pull-offs, vibrato, muting, harmonics, and related articulations;
+   - tempo;
+   - meter / time signature;
+   - tuning;
+   - key / tonal metadata;
+   - confidence, difficulty, and other useful analysis metadata.
+6. **The analysis is converted into authenticated structured musical events** suitable for professional engraving. Missing timing or musical placement must not be invented later by browser/PDF code merely to make rendering succeed.
+7. **The user receives a professional-grade TAB PDF preview** generated from the analyzed musical content.
+8. **After purchase/unlock, the user receives the professional-grade full TAB PDF**, preserving the same authenticated analysis while revealing the complete transcription.
+
+The finished product must operate as one coherent pipeline:
+
+> **User audio → instrument choice (Bass / Lead / Rhythm) → page workflow → audio separation/processing → notes + techniques + timing + metadata → authenticated musical events → professional TAB preview PDF → purchased/unlocked professional full PDF.**
+
+Current V143 work is the reference-free **Rhythm** implementation and validation track inside this larger `/ai-tab` end-to-end product. Existing Lead/Bass behavior must remain intact while the complete product is brought to professional production quality.
 
 ## Resume directive
 
@@ -9,7 +44,7 @@ Resume **only** on `v143-contextual-prune-lobo`.
 
 Product goal:
 
-> `dadrocktabs.com/ai-tab` uploaded user audio → Jimmy PAIge / V143 reference-free Rhythm analysis → authenticated musical events → professional structured tab PDF.
+> `dadrocktabs.com/ai-tab` uploaded user audio → Bass / Lead / Rhythm selection → analysis and separation → authenticated notes, techniques, timing and metadata → professional structured preview TAB PDF → purchased/unlocked professional full TAB PDF.
 
 Never modify `main`, merge this research branch into `main`, deploy/modify the live V143 Modal endpoint, promote/enable Production automatically, make a payment, redeem a customer token, or send customer email during automated validation.
 
