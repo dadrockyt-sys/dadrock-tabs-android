@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/run_source_artifact_equivalence_verifier.py", line 26, in <module>
+    exec(compile(source, str(VERIFIER), "exec"), namespace, namespace)
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/verify_source_artifact_equivalence.py", line 685, in <module>
+    main()
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/verify_source_artifact_equivalence.py", line 646, in main
+    raw_report = verify_raw_cache(raw)
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/verify_source_artifact_equivalence.py", line 321, in verify_raw_cache
+    require(grid_keys == expected_grid_keys, f"raw grid keys differ from exact 16x16 contract; missing={sorted(expected_grid_keys-grid_keys)[:8]} extra={sorted(grid_keys-expected_grid_keys)[:8]}")
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/verify_source_artifact_equivalence.py", line 150, in require
+    fail(message)
+  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/verify_source_artifact_equivalence.py", line 145, in fail
+    raise AssertionError(message)
+AssertionError: raw grid keys differ from exact 16x16 contract; missing=[(1, 0), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7)] extra=[]
