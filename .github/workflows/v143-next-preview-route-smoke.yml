@@ -1,0 +1,167 @@
+name: V143 Built Next Preview Route Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-next-preview-route-smoke.yml'
+      - 'analyzer/verify_v143_next_preview_route_smoke.mjs'
+      - 'app/ai-tab/**'
+      - 'app/api/generate-tab-preview/**'
+      - 'lib/jimmyPaigeProfessionalPdfFeature.js'
+      - 'lib/createJimmyPaigeProfessionalPdf.js'
+      - 'lib/jimmyPaigeProfessionalPdfContract.js'
+      - 'lib/v143RenderContract.js'
+      - 'lib/createAiTabPdf.js'
+      - 'lib/createTabPdfPolishedV7.js'
+
+permissions:
+  contents: write
+
+jobs:
+  built-next-preview-smoke:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      NODE_OPTIONS: '--max-old-space-size=4096'
+
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Build full Next.js application
+        run: npm run build
+
+      - name: Start built server in simulated Vercel Preview branch mode
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .next-preview-smoke
+          mkdir -p .next-preview-smoke debug/v143-contextual-prune
+
+          VERCEL_ENV=preview \
+          VERCEL_GIT_COMMIT_REF=v143-contextual-prune-lobo \
+          HOSTNAME=127.0.0.1 \
+          PORT=4310 \
+          npm start > .next-preview-smoke/server.log 2>&1 &
+
+          echo $! > .next-preview-smoke/server.pid
+
+          ready=false
+          for attempt in $(seq 1 45); do
+            if curl --silent --show-error --fail \
+              http://127.0.0.1:4310/ai-tab \
+              > /dev/null 2>&1; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$ready" != true ]; then
+            echo 'Built Next.js server did not become ready.' >&2
+            tail -n 200 .next-preview-smoke/server.log >&2 || true
+            exit 1
+          fi
+
+      - name: Exercise real Preview route over HTTP
+        env:
+          V143_PREVIEW_SMOKE_BASE_URL: http://127.0.0.1:4310
+          V143_PREVIEW_SMOKE_RESULT_PATH: debug/v143-contextual-prune/next-preview-route-smoke.json
+        run: node analyzer/verify_v143_next_preview_route_smoke.mjs
+
+      - name: Preserve smoke logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-next-preview-route-smoke
+          path: |
+            .next-preview-smoke/
+            debug/v143-contextual-prune/next-preview-route-smoke.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commit compact smoke evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          file=debug/v143-contextual-prune/next-preview-route-smoke.json
+
+          if [ ! -s "$file" ]; then
+            echo 'Smoke evidence was not produced.' >&2
+            exit 1
+          fi
+
+          git add -- "$file"
+          if git diff --cached --quiet; then
+            echo 'Smoke evidence is unchanged.'
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record V143 built Preview route smoke'
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce non-deployment safety and smoke result
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('debug/v143-contextual-prune/next-preview-route-smoke.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+
+          if data.get('localNextPreviewSimulation') is not True:
+              raise SystemExit('Smoke result did not identify itself as local Preview simulation')
+          if data.get('actualVercelPreviewDeployment') is not False:
+              raise SystemExit('Smoke result incorrectly claims an actual Vercel Preview deployment')
+          if data.get('vercelDeploymentAttempted') is not False:
+              raise SystemExit('Safety failure: Vercel deployment was attempted')
+          if data.get('liveEndpointDeployedOrModified') is not False:
+              raise SystemExit('Safety failure: live V143 endpoint was modified')
+          if data.get('productionModified') is not False:
+              raise SystemExit('Safety failure: Production was modified')
+          if data.get('productionPromotionAuthorized') is not False:
+              raise SystemExit('Safety failure: Production promotion was authorized')
+          if data.get('paidPurchaseAttempted') is not False:
+              raise SystemExit('Safety failure: paid purchase was attempted')
+          if data.get('customerTokenRedeemed') is not False:
+              raise SystemExit('Safety failure: customer token was redeemed')
+          if data.get('customerEmailSent') is not False:
+              raise SystemExit('Safety failure: customer email was sent')
+          if data.get('passed') is not True:
+              raise SystemExit(f"V143 built Preview route smoke failed: {data.get('error')}")
+
+          print('V143 BUILT NEXT PREVIEW ROUTE SMOKE PASSED')
+          print('actualVercelPreviewDeployment=false')
+          print('productionModified=false')
+          print('productionPromotionAuthorized=false')
+          PY
+
+      - name: Stop built server
+        if: always()
+        shell: bash
+        run: |
+          if [ -f .next-preview-smoke/server.pid ]; then
+            kill "$(cat .next-preview-smoke/server.pid)" 2>/dev/null || true
+          fi
