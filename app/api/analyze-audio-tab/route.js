@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { buildJimmyPaigeAnalysisPayload } from '@/lib/jimmyPaigeAnalysisPayload';
 
 export const runtime = 'nodejs';
 export const maxDuration = 150;
@@ -179,20 +180,6 @@ export async function POST(request) {
       );
     }
 
-    const generatedTab = String(
-      analyzerData?.generatedTab || ''
-    ).trim();
-
-    if (!generatedTab) {
-      return NextResponse.json(
-        {
-          error:
-            'The analyzer returned no tablature.',
-        },
-        { status: 502 }
-      );
-    }
-
     // During the Rhythm canary, require the new endpoint to identify itself.
     // If the wrong Modal target is configured, fail closed instead of silently
     // presenting legacy output as a successful V143 result.
@@ -213,35 +200,17 @@ export async function POST(request) {
       );
     }
 
+    const structuredPayload =
+      buildJimmyPaigeAnalysisPayload(
+        analyzerData,
+        {
+          transcriptionType,
+          usingV143RhythmAnalyzer,
+        }
+      );
+
     return NextResponse.json({
-      generatedTab,
-      tuning:
-        analyzerData?.tuning || null,
-      tempo:
-        analyzerData?.tempo || null,
-      timeSignature:
-        analyzerData?.timeSignature ||
-        null,
-      keySignature:
-        analyzerData?.keySignature ||
-        null,
-      difficulty:
-        analyzerData?.difficulty ||
-        null,
-      techniques: Array.isArray(
-        analyzerData?.techniques
-      )
-        ? analyzerData.techniques
-        : [],
-      confidence:
-        analyzerData?.confidence ??
-        null,
-      noteCount:
-        analyzerData?.noteCount ?? 0,
-      analysisEngine:
-        analyzerData?.liveV143?.referenceFree === true
-          ? 'v143-reference-free-rhythm'
-          : 'legacy',
+      ...structuredPayload,
       rhythmCanaryActive:
         usingV143RhythmAnalyzer,
     });
