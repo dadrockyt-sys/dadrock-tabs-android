@@ -1,0 +1,186 @@
+name: V143 Jimmy PAIge Structured PDF Quality Fixture
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-jimmy-structured-pdf-quality-fixture.yml
+
+permissions:
+  contents: write
+
+jobs:
+  structured-pdf-quality-fixture:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts
+
+      - name: Prepare standalone ESM renderer fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .tmp-jimmy-pdf-fixture
+          mkdir -p .tmp-jimmy-pdf-fixture
+
+          cp lib/v143RenderContract.js \
+            .tmp-jimmy-pdf-fixture/v143RenderContract.mjs
+
+          sed \
+            "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" \
+            lib/createV143RhythmPdf.js \
+            > .tmp-jimmy-pdf-fixture/createV143RhythmPdf.mjs
+
+          sed \
+            -e "s#../lib/v143RenderContract.js#./v143RenderContract.mjs#" \
+            -e "s#../lib/createV143RhythmPdf.js#./createV143RhythmPdf.mjs#" \
+            analyzer/run_jimmy_paige_v143_pdf_fixture.mjs \
+            > .tmp-jimmy-pdf-fixture/run-fixture.mjs
+
+          node --check .tmp-jimmy-pdf-fixture/v143RenderContract.mjs
+          node --check .tmp-jimmy-pdf-fixture/createV143RhythmPdf.mjs
+          node --check .tmp-jimmy-pdf-fixture/run-fixture.mjs
+
+      - name: Generate full and preview structured PDFs
+        shell: bash
+        run: |
+          set -euo pipefail
+          node .tmp-jimmy-pdf-fixture/run-fixture.mjs \
+            | tee /tmp/jimmy-v143-pdf-fixture.log
+
+      - name: Render and inspect generated PDFs
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v pdftotext >/dev/null 2>&1 || ! command -v pdftoppm >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y poppler-utils >/dev/null
+          fi
+
+          fixture=debug/v143-contextual-prune/jimmy-paige-pdf-fixture
+          full="$fixture/full-structured-fixture.pdf"
+          preview="$fixture/preview-structured-fixture.pdf"
+
+          pdftotext -layout "$full" "$fixture/full-structured-fixture.txt"
+          pdftotext -layout "$preview" "$fixture/preview-structured-fixture.txt"
+
+          grep -Fq "Jimmy PAIge Structured PDF Quality Fixture" \
+            "$fixture/full-structured-fixture.txt"
+          grep -Fq "DadRock Tabs" "$fixture/full-structured-fixture.txt"
+          grep -Fq "P.M." "$fixture/full-structured-fixture.txt"
+          grep -Fq "10b12r10" "$fixture/full-structured-fixture.txt"
+          grep -Fq "<12>" "$fixture/full-structured-fixture.txt"
+          grep -Fq "FULL TAB LOCKED" "$fixture/preview-structured-fixture.txt"
+
+          pdftoppm -f 1 -singlefile -png -r 110 \
+            "$full" "$fixture/full-page-1" >/dev/null 2>&1
+          pdftoppm -f 1 -singlefile -png -r 110 \
+            "$preview" "$fixture/preview-page-1" >/dev/null 2>&1
+
+          python - <<'PY'
+          import json
+          import struct
+          from pathlib import Path
+
+          root = Path('debug/v143-contextual-prune/jimmy-paige-pdf-fixture')
+          validation_path = root / 'validation.json'
+          data = json.loads(validation_path.read_text(encoding='utf-8'))
+
+          def png_size(path: Path):
+              raw = path.read_bytes()
+              assert raw[:8] == b'\x89PNG\r\n\x1a\n'
+              width, height = struct.unpack('>II', raw[16:24])
+              return width, height, len(raw)
+
+          full_png = root / 'full-page-1.png'
+          preview_png = root / 'preview-page-1.png'
+          full_w, full_h, full_png_bytes = png_size(full_png)
+          prev_w, prev_h, preview_png_bytes = png_size(preview_png)
+
+          text_checks = {
+              'titleExtracted': 'Jimmy PAIge Structured PDF Quality Fixture' in (root / 'full-structured-fixture.txt').read_text(encoding='utf-8'),
+              'brandExtracted': 'DadRock Tabs' in (root / 'full-structured-fixture.txt').read_text(encoding='utf-8'),
+              'palmMuteExtracted': 'P.M.' in (root / 'full-structured-fixture.txt').read_text(encoding='utf-8'),
+              'bendReleaseTokenExtracted': '10b12r10' in (root / 'full-structured-fixture.txt').read_text(encoding='utf-8'),
+              'naturalHarmonicTokenExtracted': '<12>' in (root / 'full-structured-fixture.txt').read_text(encoding='utf-8'),
+              'previewLockTextExtracted': 'FULL TAB LOCKED' in (root / 'preview-structured-fixture.txt').read_text(encoding='utf-8'),
+          }
+          image_checks = {
+              'fullPageRasterized': full_w >= 800 and full_h >= 1000 and full_png_bytes > 10000,
+              'previewPageRasterized': prev_w >= 800 and prev_h >= 1000 and preview_png_bytes > 10000,
+          }
+
+          data['textExtractionChecks'] = text_checks
+          data['rasterChecks'] = image_checks
+          data['fullPageOnePng'] = {
+              'width': full_w,
+              'height': full_h,
+              'bytes': full_png_bytes,
+          }
+          data['previewPageOnePng'] = {
+              'width': prev_w,
+              'height': prev_h,
+              'bytes': preview_png_bytes,
+          }
+          data['passed'] = bool(
+              data.get('passed')
+              and all(text_checks.values())
+              and all(image_checks.values())
+          )
+          validation_path.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
+
+          if not data['passed']:
+              raise SystemExit('Structured PDF quality fixture failed')
+          print(json.dumps(data, indent=2))
+          PY
+
+      - name: Preserve visual quality evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jimmy-paige-v143-structured-pdf-quality-fixture
+          path: |
+            debug/v143-contextual-prune/jimmy-paige-pdf-fixture/full-structured-fixture.pdf
+            debug/v143-contextual-prune/jimmy-paige-pdf-fixture/preview-structured-fixture.pdf
+            debug/v143-contextual-prune/jimmy-paige-pdf-fixture/full-page-1.png
+            debug/v143-contextual-prune/jimmy-paige-pdf-fixture/preview-page-1.png
+            debug/v143-contextual-prune/jimmy-paige-pdf-fixture/full-structured-fixture.txt
+            debug/v143-contextual-prune/jimmy-paige-pdf-fixture/preview-structured-fixture.txt
+            debug/v143-contextual-prune/jimmy-paige-pdf-fixture/validation.json
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Commit compact quality validation only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/jimmy-paige-pdf-fixture/validation.json
+
+          if git diff --cached --quiet; then
+            echo "No structured PDF validation changes." >&2
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record Jimmy PAIge structured PDF quality validation"
+          git push origin HEAD:v143-contextual-prune-lobo
