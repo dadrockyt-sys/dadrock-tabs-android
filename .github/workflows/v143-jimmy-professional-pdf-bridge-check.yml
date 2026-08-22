@@ -1,0 +1,81 @@
+name: V143 Jimmy PAIge Professional PDF Bridge Check
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-jimmy-professional-pdf-bridge-check.yml
+
+permissions:
+  contents: write
+
+jobs:
+  professional-pdf-bridge-check:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Parse bridge JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check lib/jimmyPaigeProfessionalPdfContract.js
+          node --check lib/createJimmyPaigeProfessionalPdf.js
+          node --check lib/createTabPdfPolishedV7.js
+          node --check lib/v7MeasureGridOverlay.js
+
+      - name: Run professional PDF bridge guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python analyzer/check_jimmy_paige_professional_pdf_bridge.py \
+            | tee debug/v143-contextual-prune/jimmy-paige-professional-pdf-bridge-check.json
+
+      - name: Verify guard artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('debug/v143-contextual-prune/jimmy-paige-professional-pdf-bridge-check.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          assert data.get('passed') is True
+          assert data.get('productionModified') is False
+          assert data.get('liveRoutePromotionPerformed') is False
+          assert data.get('nextRequiredStage') == 'structured-analyzer-payload-and-metadata-preservation'
+          print('Jimmy PAIge professional PDF bridge validation PASSED')
+          PY
+
+      - name: Commit compact validation artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/jimmy-paige-professional-pdf-bridge-check.json
+          if git diff --cached --quiet; then
+            echo "No validation artifact changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record Jimmy PAIge professional PDF bridge validation"
+          git push origin HEAD:v143-contextual-prune-lobo
