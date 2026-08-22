@@ -1,0 +1,162 @@
+name: V143 Jimmy PAIge Upload To Professional PDF Integration
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-jimmy-upload-to-professional-pdf-integration.yml
+
+permissions:
+  contents: write
+
+jobs:
+  integrate-upload-to-pdf:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out isolated research branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Patch browser metadata preservation and gated final renderer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected exactly one match, found {count}')
+              return text.replace(old, new, 1)
+
+          page_path = Path('app/ai-tab/page.js')
+          page = page_path.read_text(encoding='utf-8')
+
+          page = replace_once(
+              page,
+              """  const [\n    generatedTab,\n    setGeneratedTab,\n  ] = useState('');\n""",
+              """  const [\n    generatedTab,\n    setGeneratedTab,\n  ] = useState('');\n\n  const [\n    analysisMetadata,\n    setAnalysisMetadata,\n  ] = useState(null);\n""",
+              'analysis metadata state',
+          )
+
+          page = replace_once(
+              page,
+              """    setGeneratedTab('');\n    setPreviewReady(false);\n""",
+              """    setGeneratedTab('');\n    setAnalysisMetadata(null);\n    setPreviewReady(false);\n""",
+              'reset analysis metadata',
+          )
+
+          page = replace_once(
+              page,
+              """      setGeneratedTab('');\n      setPreviewReady(false);\n""",
+              """      setGeneratedTab('');\n      setAnalysisMetadata(null);\n      setPreviewReady(false);\n""",
+              'generation start analysis reset',
+          )
+
+          page = replace_once(
+              page,
+              """        setGeneratedTab(\n          tabContent\n        );\n\n        await requestPreviewPdf(\n""",
+              """        setGeneratedTab(\n          tabContent\n        );\n\n        setAnalysisMetadata(\n          analyzerData\n        );\n\n        await requestPreviewPdf(\n""",
+              'preserve analyzer result',
+          )
+
+          page = replace_once(
+              page,
+              """  keySignature:\n    analysisMetadata.keySignature || '',\n\n            previewSystems: 4,\n""",
+              """  keySignature:\n    analysisMetadata.keySignature || '',\n\n  measureGrid:\n    analysisMetadata.measureGrid || null,\n\n  analysisEngine:\n    analysisMetadata.analysisEngine || '',\n\n  confidence:\n    analysisMetadata.confidence ?? null,\n\n  difficulty:\n    analysisMetadata.difficulty || null,\n\n  techniques:\n    Array.isArray(analysisMetadata.techniques)\n      ? analysisMetadata.techniques\n      : [],\n\n            previewSystems: 4,\n""",
+              'preview structured metadata',
+          )
+
+          page = replace_once(
+              page,
+              """              generatedTab,\n\n              sourceType,\n""",
+              """              generatedTab,\n\n              tuning:\n                analysisMetadata?.tuning || 'Standard Tuning',\n\n              tempo:\n                analysisMetadata?.tempo || 120,\n\n              timeSignature:\n                analysisMetadata?.timeSignature || '4/4',\n\n              keySignature:\n                analysisMetadata?.keySignature || '',\n\n              measureGrid:\n                analysisMetadata?.measureGrid || null,\n\n              analysisEngine:\n                analysisMetadata?.analysisEngine || '',\n\n              confidence:\n                analysisMetadata?.confidence ?? null,\n\n              difficulty:\n                analysisMetadata?.difficulty || null,\n\n              techniques:\n                Array.isArray(analysisMetadata?.techniques)\n                  ? analysisMetadata.techniques\n                  : [],\n\n              sourceType,\n""",
+              'finished PDF structured metadata',
+          )
+
+          page_path.write_text(page, encoding='utf-8')
+
+          final_path = Path('app/api/generate-tab-pdf/route.js')
+          final = final_path.read_text(encoding='utf-8')
+
+          final = replace_once(
+              final,
+              """import { createTabPdf } from '@/lib/createTabPdfPolished';\n""",
+              """import { createTabPdf } from '@/lib/createTabPdfPolished';\nimport { createJimmyPaigeProfessionalPdf } from '@/lib/createJimmyPaigeProfessionalPdf';\n""",
+              'final route professional bridge import',
+          )
+
+          final = replace_once(
+              final,
+              """    const pdfBytes = await createTabPdf({\n      song,\n      artist,\n      transcriptionType,\n      generatedTab,\n      tuning,\n      tempo,\n      timeSignature,\n      keySignature,\n      preview: false,\n    });\n""",
+              """    const useProfessionalRenderer =\n      process.env.JIMMY_PAIGE_PROFESSIONAL_PDF_V1 === 'true';\n\n    let pdfBytes;\n\n    if (useProfessionalRenderer) {\n      const result =\n        await createJimmyPaigeProfessionalPdf({\n          song,\n          artist,\n          transcriptionType,\n          generatedTab,\n          tuning,\n          tempo,\n          timeSignature,\n          keySignature,\n          preview: false,\n          measureGrid:\n            body?.measureGrid || null,\n          analysisEngine:\n            body?.analysisEngine || '',\n          confidence:\n            body?.confidence ?? null,\n          difficulty:\n            body?.difficulty || null,\n          techniques:\n            Array.isArray(body?.techniques)\n              ? body.techniques\n              : [],\n        });\n\n      pdfBytes = result.pdfBytes;\n    } else {\n      pdfBytes = await createTabPdf({\n        song,\n        artist,\n        transcriptionType,\n        generatedTab,\n        tuning,\n        tempo,\n        timeSignature,\n        keySignature,\n        preview: false,\n      });\n    }\n""",
+              'feature-gated final renderer',
+          )
+
+          final_path.write_text(final, encoding='utf-8')
+          PY
+
+      - name: Validate JavaScript modules and upload-to-PDF contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check lib/jimmyPaigeAnalysisPayload.js
+          node --check lib/jimmyPaigeProfessionalPdfContract.js
+          node --check lib/createJimmyPaigeProfessionalPdf.js
+          node --check app/api/analyze-audio-tab/route.js
+          node --check app/api/generate-tab-preview/route.js
+          node --check app/api/generate-tab-pdf/route.js
+          python analyzer/check_jimmy_paige_professional_pdf_bridge.py > /tmp/bridge.json
+          python analyzer/check_jimmy_paige_upload_to_pdf_path.py \
+            | tee debug/v143-contextual-prune/jimmy-paige-upload-to-professional-pdf-path.json
+
+      - name: Verify integration remains gated and non-production
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('debug/v143-contextual-prune/jimmy-paige-upload-to-professional-pdf-path.json')
+              .read_text(encoding='utf-8')
+          )
+          assert data['passed'] is True
+          assert data['featureGate'] == 'JIMMY_PAIGE_PROFESSIONAL_PDF_V1'
+          assert data['featureGateDefault'] == 'off'
+          assert data['mainModified'] is False
+          assert data['productionPromotionPerformed'] is False
+          assert data['nextRequiredStage'] == 'measure-grid-production-from-reference-free-timing'
+          print('Jimmy PAIge upload-to-professional-PDF integration PASSED')
+          PY
+
+      - name: Commit gated upload-to-PDF integration
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            app/ai-tab/page.js \
+            app/api/generate-tab-pdf/route.js \
+            debug/v143-contextual-prune/jimmy-paige-upload-to-professional-pdf-path.json
+
+          if git diff --cached --quiet; then
+            echo "No integration changes to commit." >&2
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Wire Jimmy PAIge analysis into gated professional PDF path"
+          git push origin HEAD:v143-contextual-prune-lobo
