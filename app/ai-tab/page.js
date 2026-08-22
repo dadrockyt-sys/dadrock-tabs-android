@@ -213,6 +213,11 @@ function AiTabGeneratorContent() {
   ] = useState('');
 
   const [
+    analysisMetadata,
+    setAnalysisMetadata,
+  ] = useState(null);
+
+  const [
     previewReady,
     setPreviewReady,
   ] = useState(false);
@@ -370,6 +375,7 @@ const [tokenUsesRemaining, setTokenUsesRemaining] =
     clearPreviewPdfUrl();
 
     setGeneratedTab('');
+    setAnalysisMetadata(null);
     setPreviewReady(false);
     setPreviewUnlocked(false);
     setPaymentCompleted(false);
@@ -782,6 +788,28 @@ const [tokenUsesRemaining, setTokenUsesRemaining] =
   keySignature:
     analysisMetadata.keySignature || '',
 
+  analysisEngine:
+    analysisMetadata.analysisEngine || '',
+
+  techniques:
+    Array.isArray(analysisMetadata.techniques)
+      ? analysisMetadata.techniques
+      : [],
+
+  renderEvents:
+    Array.isArray(analysisMetadata.renderEvents)
+      ? analysisMetadata.renderEvents
+      : [],
+
+  measureGrid:
+    analysisMetadata.measureGrid || null,
+
+  confidence:
+    analysisMetadata.confidence ?? null,
+
+  difficulty:
+    analysisMetadata.difficulty || null,
+
             previewSystems: 4,
 
             watermark:
@@ -880,6 +908,7 @@ const [tokenUsesRemaining, setTokenUsesRemaining] =
 
       setIsGenerating(true);
       setGeneratedTab('');
+      setAnalysisMetadata(null);
       setPreviewReady(false);
       setPreviewUnlocked(false);
       setPaymentCompleted(false);
@@ -923,6 +952,9 @@ const [tokenUsesRemaining, setTokenUsesRemaining] =
         setGeneratedTab(
           tabContent
         );
+        setAnalysisMetadata(
+          analyzerData
+        );
 
         await requestPreviewPdf(
           tabContent,
@@ -952,6 +984,7 @@ const [tokenUsesRemaining, setTokenUsesRemaining] =
         );
 
         setGeneratedTab('');
+        setAnalysisMetadata(null);
         setPreviewReady(false);
         clearPreviewPdfUrl();
 
@@ -1310,6 +1343,40 @@ setTokenError('');
                 customerEmail.trim(),
 
               generatedTab,
+
+              tuning:
+                analysisMetadata?.tuning || 'Standard Tuning',
+
+              tempo:
+                analysisMetadata?.tempo || 120,
+
+              timeSignature:
+                analysisMetadata?.timeSignature || '4/4',
+
+              keySignature:
+                analysisMetadata?.keySignature || '',
+
+              analysisEngine:
+                analysisMetadata?.analysisEngine || '',
+
+              techniques:
+                Array.isArray(analysisMetadata?.techniques)
+                  ? analysisMetadata.techniques
+                  : [],
+
+              renderEvents:
+                Array.isArray(analysisMetadata?.renderEvents)
+                  ? analysisMetadata.renderEvents
+                  : [],
+
+              measureGrid:
+                analysisMetadata?.measureGrid || null,
+
+              confidence:
+                analysisMetadata?.confidence ?? null,
+
+              difficulty:
+                analysisMetadata?.difficulty || null,
 
               sourceType,
             }),
