@@ -1,355 +1,294 @@
-# CURRENT STATE — V143 contextual-prune / exact fresh intro compatibility
+# CURRENT STATE — Jimmy PAIge uploaded-audio → professional PDF path
 
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
+Branch HEAD before this checkpoint update: `b40df94d76af3c6e432da0b8c20c723c298635a1`
 
 ## Resume directive
 
 Resume **only** on `v143-contextual-prune-lobo`.
 
-The single authorized fresh intro compatibility capture has now been completed and preserved. **Do not run another separator/GPU compatibility capture.** The one-shot evidence is auditable and must remain unchanged.
+The active product goal is now:
 
-The fresh capture achieved the strongest result allowed by the committed compatibility contract:
+> uploaded user audio → Jimmy PAIge / V143 reference-free analysis → musically placed render events → branded professional tab PDF.
+
+Do not modify `main` or enable production flags until the remaining analyzer-output quality gate has been validated.
+
+The historical compatibility experiment remains complete and sealed. **Do not run another separator/GPU compatibility capture.** Its exact result remains:
 
 ```text
 INTRO_CACHE_EXACT_COMPATIBLE
 CURRENT_RESEARCH_FAMILY_A_COMPATIBLE
-```
-
-This means the fresh measures 1–16 raw-attack cache bytes and every authenticated intro fingerprint exactly match the preserved historical cache, and the fresh direct/cascade decoded-PCM pair exactly matches known current/research Family A.
-
-It **does not** authenticate which separator family generated the historical intro cache because the missing historical whole-song output identity has still not been recovered.
-
-Therefore these remain explicit and non-negotiable:
-
-```text
 historicalProvenanceClosed: false
 historicalIntroFamilyAuthenticated: false
 productionPromotionAllowed: false
 ```
 
-Production promotion remains disabled. No production code, live endpoint, frozen V143 model, threshold, prediction, tolerance, timing phase, or professional-reference behavior was modified by this work.
+The product work below does not change those provenance conclusions.
 
 ---
 
-## One-shot execution record
+## What is now implemented on this branch
 
-One-shot GitHub Actions harness:
+### 1. Existing upload path preserved
 
-`.github/workflows/v143-intro-compatibility-fresh-capture-once.yml`
+`app/ai-tab/page.js` still uploads user audio to private Vercel Blob storage and calls:
 
-Harness commit / capture branch HEAD:
+`/api/analyze-audio-tab`
 
-`1e0fc5eb6f0a4c98557769d37b5d0ba5233e8c75` — `Add one-shot V143 intro compatibility capture workflow`
+The UI now also preserves the analyzer response as `analysisMetadata` so the preview and purchased PDF receive the same musical evidence rather than only the flattened `generatedTab` string.
 
-Preserved research-artifact commit:
+### 2. Structured analyzer payload
 
-`b72f8939ea93d10c50e08e731dfb8c59311410c1` — `Record V143 intro fresh compatibility capture`
+Added:
 
-Capture ID:
+`lib/jimmyPaigeAnalysisPayload.js`
 
-`gha-32594407449-1-1e0fc5eb6f0a`
+`app/api/analyze-audio-tab/route.js` now uses this contract.
 
-Run directory:
+The payload:
 
-`debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a/`
+- preserves the legacy `generatedTab` text path;
+- bounds/sanitizes generic note events;
+- preserves tuning, tempo, time signature, key, difficulty, confidence and techniques when supplied;
+- keeps the V143 Rhythm identity check fail-closed (`liveV143.referenceFree === true`);
+- projects reference-free V143 events through the established `v143RenderContract`;
+- returns `renderEvents` and `renderContractVersion` when valid structured events are available;
+- never invents measure/step placement in the browser or PDF layer;
+- never authorizes production promotion.
 
-The one-shot harness performed, in order:
+### 3. Established V143 render contract reused
 
-1. branch/source/historical-baseline identity checks;
-2. committed static fail-closed validation;
-3. explicit producer invariant preflight;
-4. exactly one Modal fresh compatibility capture;
-5. artifact inventory and SHA-256 preservation;
-6. the committed offline comparator;
-7. research-boundary assertions;
-8. preservation of the complete fresh run on this branch.
+The professional path converged on the already-existing DadRock structured representation instead of creating a parallel notation format:
 
-No second separator graph was launched. No run or comparator failure occurred.
+- `lib/v143RenderContract.js`
+- `lib/createAiTabPdf.js`
+- `lib/createV143RhythmPdf.js`
+
+A V143 structured render event must already contain valid:
+
+```text
+measure >= 1
+step 0..15
+stringIndex 0..5
+fret 0..36
+MIDI pitch
+```
+
+The renderer therefore consumes authenticated musical placement instead of deriving bar positions from PDF layout guesses.
+
+### 4. Jimmy PAIge professional PDF bridge
+
+Added:
+
+- `lib/jimmyPaigeProfessionalPdfContract.js`
+- `lib/createJimmyPaigeProfessionalPdf.js`
+
+For reference-free Rhythm output with non-empty valid `renderEvents`, the bridge selects:
+
+`v143-structured-rhythm`
+
+and uses `createAiTabPdf` / `createV143RhythmPdf`.
+
+For unsupported/incomplete structured evidence it falls back to the existing polished renderer rather than fabricating notation.
+
+### 5. Preview and final purchased PDF carry the same evidence
+
+The browser now sends structured analyzer metadata to both:
+
+- `/api/generate-tab-preview`
+- `/api/generate-tab-pdf`
+
+including `analysisEngine`, `renderEvents`, tuning, tempo, time signature, key signature, techniques and other safe metadata.
+
+The finished PDF route keeps existing PayPal/free-token verification and Resend attachment delivery unchanged.
+
+### 6. Professional renderer remains feature-gated
+
+Feature gate:
+
+`JIMMY_PAIGE_PROFESSIONAL_PDF_V1`
+
+Activation condition:
+
+```text
+JIMMY_PAIGE_PROFESSIONAL_PDF_V1 === "true"
+```
+
+Default with the variable absent or any other value:
+
+**current polished renderer**.
+
+No production environment variable was enabled in this work.
+
+No production promotion was performed.
 
 ---
 
-## Capture artifact integrity
+## Upload-to-PDF transport validation
 
-Fresh capture manifest:
+Validation artifact:
 
-`debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a/fresh-capture.json`
+`debug/v143-contextual-prune/jimmy-paige-upload-to-professional-pdf-path-v2.json`
 
-SHA-256:
+Validation commit:
 
-`d1526bc90f177096d5546e7a13d66dd98cbd4d00e4cb468eadad951277ac9f87`
+`fbf00e56c0054d0f833e0bf3597a1f0142f9ea68` — `Wire V143 render events through Jimmy PAIge PDF flow`
 
-Fresh raw-attack cache:
-
-`debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a/fresh-raw-attack-cache.json`
-
-SHA-256:
-
-`698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9`
-
-That raw-cache SHA-256 is **exactly identical** to the preserved historical measures 1–16 cache SHA-256.
-
-Additional fresh artifact SHA-256 values:
-
-```text
-package-inventory.txt      032d25321a46843d3abcfaee1fe8cb4e8ea0a158eceb02bbf9dc9586d1e265ca
-runtime-fingerprint.json   13b5fccf1e104cd8088b6de3dfd7f640346a00f0c7f79a809381380b07398b8b
-model-cache-manifest.json  7066977959954628bc3f614c1f7c6ee33ef11a0ff78331593ad1ac7586bd9cc0
-```
-
-Run inventory:
-
-`debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a/SHA256SUMS.txt`
-
----
-
-## Fresh runtime and provenance identity
-
-Source audio Git blob remained pinned and matched:
-
-`5e34fb55fbd011c55b56bc40cc5d062735b3fcd0`
-
-Source audio SHA-256:
-
-`215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
-
-Runtime fingerprint digest:
-
-`eb86c72e209fe228dc36723053cb14ddc5819f87f92f1059001aa964529fc468`
-
-Installed-package inventory digest:
-
-`e65d3075d3c7cc93b5ee0b616495dadd84bdfcd4bc72e081e272ba651b002230`
-
-Model-cache manifest canonical digest:
-
-`78805bcba2b5f2b97d047b416af93d7f2bd7b07938eca0a9a2145c3beb967637`
-
-Model payload capture:
-
-```text
-modelPayloadCaptureComplete: true
-requested model identifiers present: true
-```
-
-Requested separator model identities were captured in the manifest:
-
-```text
-model_bs_roformer_ep_317_sdr_12.9755.ckpt
-htdemucs_6s.yaml
-```
-
-Comparator package/runtime/model provenance digest integrity result:
+Result:
 
 ```text
 passed: true
+failedChecks: []
+featureGate: JIMMY_PAIGE_PROFESSIONAL_PDF_V1
+featureGateDefault: off
+structuredRhythmContract: v143-render-contract-v1
+mainModified: false
+productionPromotionPerformed: false
 ```
 
-Fresh runtime included:
+The guard confirms all of the following:
 
-```text
-Python 3.11.12
-audio-separator 0.44.5
-NVIDIA L4
-CUDA 13.0
-ONNX Runtime 1.28.0
-```
-
-The exact runtime fingerprint is preserved in the run directory; do not generalize those versions into a historical-runtime claim.
+- private audio upload remains intact;
+- analyzer request remains intact;
+- structured analyzer payload is used;
+- V143 reference-free identity still fails closed;
+- V143 render contract validates measure/step/string/fret;
+- analyzer result survives in browser state;
+- preview receives `renderEvents`;
+- purchased PDF receives `renderEvents` and musical metadata;
+- both professional renderer paths remain feature-gated;
+- current polished PDF remains the fallback;
+- structured Rhythm selects V143 only for reference-free Rhythm with usable events.
 
 ---
 
-## Fresh separator identity
+## Actual structured PDF quality fixture — PASSED
 
-The producer executed the frozen seeded graph exactly once:
+Fixture producer:
 
-```text
-seed 143
-Demucs Guitar shifts=1 overlap=.10 segment=6
-BS-RoFormer Instrumental batch=1
-then Demucs Guitar shifts=1 overlap=.10 segment=6
-```
+`analyzer/run_jimmy_paige_v143_pdf_fixture.mjs`
 
-Recorded graph command count:
+Workflow:
 
-`3`
+`.github/workflows/v143-jimmy-structured-pdf-quality-fixture.yml`
 
-Decoded-PCM convention:
+Validation artifact:
 
-`soundfile-int16-always2d-numpy-tobytes-sha256-v1`
+`debug/v143-contextual-prune/jimmy-paige-pdf-fixture/validation.json`
 
-Direct stem:
+Validation commit:
 
-```text
-WAV SHA-256:
-afd1037bc7d62572ac9b99644d13d95b8593e25b4f442aa4a8f85c1111d97c78
+`b40df94d76af3c6e432da0b8c20c723c298635a1` — `Record Jimmy PAIge structured PDF quality validation`
 
-Decoded PCM SHA-256:
-30cffcc2e472abe6d613b3853295c47b71ae8c4318f8709c8c9d45d69d9351f8
-
-sample rate: 44100
-frames: 9324544
-channels: 2
-```
-
-Cascade stem:
+The fixture exercised 40 valid render events through 28 measures and tested these technique classes:
 
 ```text
-WAV SHA-256:
-44e0fe8874b07bcd4bca7e28f4a512b61214061f6bbf8771426c1b1237ffa201
-
-Decoded PCM SHA-256:
-68a1c75e59bf45fbae340938e580575c043e7a94a70e7be2361e4c2d4621cb56
-
-sample rate: 44100
-frames: 9324544
-channels: 2
+bend
+bend-release
+dead-note
+hammer-on
+let-ring
+muted-strum
+natural-harmonic
+palm-mute
+pinch-harmonic
+pre-bend
+pull-off
+slide-down
+slide-up
+sustain-tie
+tap
+trill
+vibrato
 ```
 
-The decoded-PCM pair is an exact match for the previously authenticated **current/research Family A** pair. The permitted label is therefore only:
+All 40 events survived projection and all 17 technique classes survived the V143 render contract.
 
-`CURRENT_RESEARCH_FAMILY_A_COMPATIBLE`
+Actual PDF validation result:
 
-Do not rename this to “historical Family A,” “historical intro Family A,” or equivalent.
+```text
+passed: true
+fullPdfBytes: 1,669,512
+previewPdfBytes: 1,669,709
+fullPageCount: 2
+previewPageCount: 2
+```
+
+The validation also confirmed:
+
+- valid `%PDF-` headers;
+- real multi-page pagination;
+- full and preview PDFs are distinct;
+- title and DadRock branding are extractable;
+- visible `P.M.` palm-mute notation is present;
+- a bend-release token (`10b12r10`) is present;
+- natural harmonic notation (`<12>`) is present;
+- preview lock text (`FULL TAB LOCKED`) is present;
+- both full and preview page 1 rasterize successfully at `935 × 1210` pixels.
+
+The workflow stored visual/PDF evidence as a GitHub Actions artifact and committed only the compact validation JSON to the repository.
+
+This establishes that the **structured renderer itself can produce a real, branded, paginated professional-style PDF from valid V143 musical events**.
 
 ---
 
-## Exact measures 1–16 intro result
+## What is still unproven / current product blocker
 
-Fresh raw-cache SHA-256:
+The remaining blocker is no longer PDF generation or browser transport.
 
-`698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9`
+It is the quality/completeness of the **real V143 analyzer output for arbitrary uploaded audio**.
 
-Preserved historical raw-cache SHA-256:
-
-`698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9`
-
-Exact equality: **yes**.
-
-Fresh fingerprint:
+A professional result requires the analyzer to supply enough valid reference-free events carrying:
 
 ```text
-rawEventCount: 22270
-directStemEventCount: 11164
-cascadeStemEventCount: 11106
-
-o015_f010: 12776
-o020_f012: 4979
-o025_f015: 2830
-o030_f020: 1685
-
-gridRowCount: 244
+measure
+16th-step position
+string/fret fingering
+pitch
+technique/sustain information when detected
 ```
 
-Every count above exactly equals the preserved historical fingerprint.
+The PDF layer must not infer missing musical placement.
 
-The fresh raw-attack cache bytes themselves also exactly match, so this is stronger than count compatibility alone.
+Therefore the next validation target is:
+
+> take a real uploaded-audio V143 Rhythm response, project its raw events through `v143RenderContract`, measure render-event coverage/validity/technique retention, and render that exact response through the same professional PDF path.
+
+This should be treated as a **product canary**, not a historical compatibility replay.
+
+Do not retrain, alter frozen V143 predictions, weaken thresholds, or launch another historical separator-family compatibility run to accomplish it.
 
 ---
 
-## Authoritative comparator result
+## Recommended next sequence
 
-Comparator output:
-
-`debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a/comparison.json`
-
-Run summary:
-
-`debug/v143-contextual-prune/intro-compatibility-runs/gha-32594407449-1-1e0fc5eb6f0a/run-summary.json`
-
-Comparator exit code:
-
-`0`
-
-Primary classification:
-
-`INTRO_CACHE_EXACT_COMPATIBLE`
-
-Compatibility labels:
-
-```text
-CURRENT_RESEARCH_FAMILY_A_COMPATIBLE
-INTRO_CACHE_EXACT_COMPATIBLE
-```
-
-Comparator gates:
-
-```text
-freshCaptureCompleteness.passed: true
-historicalBaselineIntegrity.passed: true
-sourceRecipeCompatibility.passed: true
-freshProvenanceDigestIntegrity.passed: true
-decodedPcmHashConventionCompatibility.passed: true
-safetyAttestations.passed: true
-introCountCompatibility.passed: true
-introCacheExactCompatibility.passed: true
-```
-
-Explicit comparator boundary:
-
-```text
-historicalProvenanceClosed: false
-historicalIntroFamilyAuthenticated: false
-productionPromotionAllowed: false
-```
+1. Verify the branch remains `v143-contextual-prune-lobo`.
+2. Inspect the current V143 Rhythm endpoint response contract and existing canary verification harness.
+3. Build a fail-closed analyzer-output quality report for a real audio request:
+   - raw event count;
+   - valid render-event count;
+   - percentage surviving `v143RenderContract`;
+   - measure range;
+   - step coverage;
+   - playable string/fret validity;
+   - technique/sustain coverage;
+   - reference-free identity.
+4. Render the exact returned `renderEvents` through `createV143RhythmPdf` and validate the PDF using the same structural/text/raster gates that just passed the fixture.
+5. Only after a real-audio canary passes should a separate decision be made about enabling `JIMMY_PAIGE_PROFESSIONAL_PDF_V1` in a preview/canary environment.
+6. Do not enable the production flag automatically.
 
 ---
 
-## Historical evidence gap remains open
+## Non-negotiable boundaries
 
-The authoritative evidence-gap artifact remains:
-
-`debug/v143-contextual-prune/intro-separator-family-evidence-gap.json`
-
-Status remains:
-
-`EVIDENCE_GAP`
-
-The new exact fresh result is powerful compatibility evidence, but it is not a surviving historical whole-song separator identity. Therefore it cannot close the missing lineage link by itself.
-
-In particular, the following inference remains forbidden:
-
-> “Because the fresh Family A run reproduced the historical intro cache exactly, the historical intro must have been generated by Family A.”
-
-That would exceed the evidence. A historical Family A attribution would require a genuinely surviving historical record that independently binds the historical intro cache to the historical whole-song Family A output identity.
-
-Do not restart broad historical archaeology unless a genuinely new historical record appears.
-
----
-
-## Production boundary remains closed
-
-This compatibility result does **not** authorize production promotion.
-
-Do not:
-
-- modify `main`;
-- deploy or change a live endpoint;
-- retrain or replace frozen V143 models;
-- change frozen predictions, thresholds, tolerances, timing phase, or the 244-row intro geometry;
-- use a professional/reference transcription at runtime;
-- rewrite or delete the fresh run because of its conclusion;
-- run another fresh separator compatibility capture;
-- treat current/research Family A compatibility as authenticated historical Family A provenance;
-- treat intro compatibility as production authorization.
-
-Any future production consideration requires a separate explicit checkpoint and decision.
-
----
-
-## Current stop point / next-turn directive
-
-The planned one-shot fresh compatibility experiment is **complete**.
-
-There is no remaining GPU task in this compatibility plan. Do not rerun the capture for confirmation; doing so would violate the one-shot evidence contract.
-
-On the next turn, first re-read this file and verify the branch is still `v143-contextual-prune-lobo`.
-
-Then:
-
-- preserve the completed run unchanged;
-- keep the historical separator-family gap open unless genuinely new historical evidence is found;
-- keep production promotion disabled unless the user explicitly starts a separate production-readiness/promotion decision;
-- prefer offline/auditable follow-up work over any new separator execution.
-
-If the user simply says “continue” with no new scope, the safest useful next step is to evaluate what additional **offline evidence or validation** can be extracted from the now-exact compatibility result without reopening the separator run, changing production, or claiming historical provenance.
+- Work only on `v143-contextual-prune-lobo`.
+- Do not modify `main` during this research/product-canary phase.
+- Do not run another historical fresh compatibility separator capture.
+- Do not overwrite/delete the preserved compatibility run.
+- Do not close historical separator-family provenance from fresh compatibility evidence.
+- Do not retrain or replace frozen V143 models merely to make the PDF gate pass.
+- Do not manufacture measure/step data in the browser/PDF renderer.
+- Keep the legacy polished renderer as a fail-safe fallback.
+- Keep `JIMMY_PAIGE_PROFESSIONAL_PDF_V1` default-off until explicitly promoted after canary validation.
+- Keep production promotion disabled until a separate explicit decision.
