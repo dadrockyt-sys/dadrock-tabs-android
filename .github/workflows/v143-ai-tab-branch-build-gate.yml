@@ -39,22 +39,17 @@ jobs:
         with:
           ref: v143-contextual-prune-lobo
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          cache: npm
-
-      - name: Install locked dependencies
-        shell: bash
-        run: npm ci --ignore-scripts
-
       - name: Prepare branch build evidence workspace
         shell: bash
         run: |
           set -euo pipefail
           rm -rf .branch-build-gate
           mkdir -p .branch-build-gate debug/v143-contextual-prune
+
+      - name: Set up Node.js 22 for ESM regression verifiers
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
       - name: Run analyzer-quality regression verifier
         shell: bash
@@ -77,6 +72,16 @@ jobs:
           status=$?
           echo "BRANCH_PREVIEW_FEATURE_EXIT_CODE=$status" >> "$GITHUB_ENV"
           exit 0
+
+      - name: Set up Node.js 24 for Next.js build
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install locked dependencies
+        shell: bash
+        run: npm ci --ignore-scripts
 
       - name: Compile full Next.js application
         shell: bash
@@ -108,10 +113,11 @@ jobs:
           build = code('BRANCH_NEXT_BUILD_EXIT_CODE')
 
           payload = {
-              'schemaVersion': 1,
+              'schemaVersion': 2,
               'gate': 'v143-ai-tab-branch-build',
               'branch': 'v143-contextual-prune-lobo',
-              'nodeVersion': '24',
+              'verifierNodeVersion': '22',
+              'buildNodeVersion': '24',
               'analyzerQualityVerifierExitCode': analyzer,
               'previewFeatureVerifierExitCode': preview,
               'nextBuildExitCode': build,
