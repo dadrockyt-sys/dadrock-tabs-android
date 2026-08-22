@@ -28,7 +28,9 @@ The assistant should then:
 - Intro archive commit: `9b0f417f8f927e6d5102e4c8bf6c42e3f6a4c10d`
 - Closed 17–113 checkpoint: `fd8905d34175f9f20d9973807fed18c1e23c737a`
 - Historical Codespace intro source HEAD recorded by provenance: `4d735846fbd834cc4c722f2cb48727e4629647f1`
-- Previous continuity-rule checkpoint: `4e80db2498727a06aa0ddd29e298338b59d0b907`
+- Continuity-rule checkpoint: `4e80db2498727a06aa0ddd29e298338b59d0b907`
+- Phase A intro-carrier audit checkpoint: `200fc992b44556837897ecb1192044e5e9547a86`
+- Phase B 16→17 boundary-proof artifact commit: `f547866fb0cda873b8e9125fdabc0f21d1683489`
 
 **Important:** always fetch the current branch tip before writing. Do not assume any older checkpoint SHA remains HEAD.
 
@@ -46,6 +48,7 @@ Unless the user explicitly changes them:
 - Current work should be read-only / forensic wherever possible.
 - Historical use of Codespaces is part of provenance; **measures 1–16 were trained in Codespaces**.
 - Do not require new Codespaces work when GitHub evidence is sufficient.
+- Do not invent the missing late intro 36-feature assembler or substitute an older feature ordering for it.
 
 ---
 
@@ -57,9 +60,9 @@ Measures **17–113 are formally closed as one research/provenance chain** at:
 
 `fd8905d34175f9f20d9973807fed18c1e23c737a` — `Checkpoint V143 17-113 research closure`
 
-The recovered 17–32 evidence is especially important for the future 16→17 proof:
+The recovered 17–32 evidence remains authoritative:
 
-- authoritative historical generator: `analyzer/v143_fresh_verse1_reference_free_capture.py`;
+- historical generator: `analyzer/v143_fresh_verse1_reference_free_capture.py`;
 - historical/current generator blob exact: `c8ea8eca33819fb506f06105f87075dadd133214`;
 - target boundary explicitly starts at measure **17** and ends at 32;
 - carrier lineage: direct Demucs6s Guitar plus BS-RoFormer Instrumental → Demucs6s Guitar;
@@ -74,7 +77,7 @@ The 17–32 evidence-gap resolution is preserved at:
 
 `debug/v143-contextual-prune/measure-17-32-evidence-gap-resolution.json`
 
-Known research structure from the closed chain:
+Known research structure:
 
 - 17–96: closed development/research chain.
 - 97–113: closed reserve.
@@ -158,7 +161,7 @@ Therefore the 0.955 number must never be used as evidence that the active frozen
 
 ### What `intro-onset-spectrum-cache.json` proves
 
-The archived onset-spectrum cache is explicitly a reference-free physical-onset whole-spectrum carrier. It records, among other things:
+The archived onset-spectrum cache is explicitly a reference-free physical-onset whole-spectrum carrier. It records:
 
 - sample rate 22050;
 - hop length 128;
@@ -176,9 +179,9 @@ Those window names line up directly with the three correlation-derived selector 
 
 However, **do not overclaim the dependency**: the archive does not preserve enough executable source to prove that this cache file itself was opened at runtime by the final selector rather than being an intermediate from which the final 36-vector carrier was assembled.
 
-### Deterministic replay limitation now established
+### Deterministic replay limitation established
 
-The historical checkpoint at source HEAD `4d735846...` references the generator/script:
+The historical checkpoint at source HEAD `4d735846...` references:
 
 `analyzer/WINDOWS_ONE_SHOT_INTRO_TIMING.ps1`
 
@@ -199,15 +202,83 @@ Do not reconstruct missing late feature semantics from guesswork and label them 
 
 ---
 
+## Phase B 16→17 boundary proof — completed
+
+Boundary artifact:
+
+`debug/v143-contextual-prune/intro-16-to-17-boundary-proof.json`
+
+Artifact commit:
+
+`f547866fb0cda873b8e9125fdabc0f21d1683489` — `Prove V143 intro 16-17 carrier boundary`
+
+Status recorded in the artifact:
+
+`passed_with_disclosed_intro_replay_source_gap`
+
+### What is proven
+
+The historically supported common seam is the **reference-free physical-onset / two-view whole-spectrum carrier**, not a guessed late 36-feature vector.
+
+The intro side is authoritatively bounded through measure 16 by the preserved raw-attack cache scope:
+
+`professional-measures-1-16-raw-reference-free-attacks`
+
+The recovered historical Verse1 generator explicitly begins at measure 17 and ends at 32.
+
+The two sides share the following directly evidenced carrier contract:
+
+- target sample rate: **22050 Hz**;
+- hop length: **128**;
+- bins per octave: **36**;
+- spectrum/CQT MIDI range: **28–112**;
+- guitar MIDI range: **40–88**;
+- physical-onset grouping tolerance: **30 ms**;
+- candidate stem views: **2**;
+- physical onset-group rows with measure/onset/candidate/support concepts;
+- two spectral views named `viewA` and `viewB`;
+- spectral window names `attackMax`, `earlyMean`, and `sustainMean`.
+
+The recovered measure-17 generator also explicitly states that it uses the **same frozen V143 deterministic separator and reference-free timing stack used by the intro calibration work** while writing a separate fresh-section cache.
+
+The measure-17 side has stronger replay evidence than the intro side: the historical/current generator blob is exact and regenerates the historical Verse1 cache SHA-256 exactly.
+
+No carrier-format discontinuity requiring retraining, threshold changes, tolerance changes, model changes, or production changes was found at 16→17.
+
+### Exact Verse1 spectral windows recovered
+
+For the recovered historical measure-17 generator, the exact spectral windows are:
+
+- `attackMax`: onset −0.020 s to +0.045 s, max reducer;
+- `earlyMean`: onset +0.020 s to +0.095 s, mean reducer;
+- `sustainMean`: onset +0.070 s to +0.180 s, mean reducer.
+
+**Important limitation:** the intro cache directly proves those three window names and resulting carrier structure, but the missing intro generator prevents an independent claim that the same numeric offsets are recovered from intro executable source. Do not upgrade the common contract beyond the evidence.
+
+### What Phase B does not prove
+
+The boundary artifact explicitly does **not** claim:
+
+- byte-identical regeneration of the complete 1–16 onset-spectrum cache from raw audio;
+- complete raw-audio-to-final-36-feature-vector deterministic replay for the intro selector;
+- recovery of the exact historical late intro 36-feature ordering/assembly executable;
+- that any stateful learned feature should flow across 16→17;
+- that the same classifier must be used on both sides;
+- independently recovered numeric intro spectral-window offsets from the missing intro generator.
+
+**Phase B conclusion:** carrier/schema continuity at 16→17 is proven at the strongest level the surviving historical evidence supports. The missing intro assembler remains a disclosed source gap and was not invented or bypassed.
+
+---
+
 ## Current forensic question
 
-Phase A has narrowed the remaining problem.
+Phase A and Phase B are complete.
 
-The next question is no longer simply whether `intro-onset-spectrum-cache.json` existed in the inference lineage; it demonstrably did. The unresolved issue is:
+The remaining question is now:
 
-> Can the preserved intro carrier be joined to the independently recovered measure-17 carrier at a historically justified common boundary/schema **without inventing the missing late 36-feature assembly logic**?
+> What is the strongest defensible final 1–113 research statement that joins the archived frozen intro, the proven 16→17 carrier seam, and the independently closed 17–113 chain without falsely claiming a complete raw-audio deterministic replay for measures 1–16?
 
-The 17-side generator is unusually useful here because it emits the same broad reference-free onset-spectrum concepts (`viewA`/`viewB`, `attackMax`, `earlyMean`, `sustainMean`) under a deterministic historical carrier that was regenerated byte-identically.
+The answer must distinguish **research provenance/carrier closure** from **complete deterministic raw-audio replay closure**.
 
 ---
 
@@ -223,34 +294,24 @@ Do not relabel 13–16 as a new untouched holdout. Do not use later sequence-mod
 
 ## Next objective
 
-Proceed with **Phase B — research-only 16→17 boundary proof**.
+Proceed with **Phase C — maximal truthful 1–113 provenance closure**.
 
-1. Read the end of the preserved intro onset-spectrum carrier (measure 16) and the recovered historical Verse1 generator contract (measure 17).
-2. Compare carrier schema and invariants at the boundary, including:
-   - sample rate;
-   - hop length;
-   - bins per octave and MIDI range;
-   - two-view stem lineage;
-   - onset grouping behavior;
-   - `attackMax` / `earlyMean` / `sustainMean` windows;
-   - timing/grid fields and measure numbering.
-3. Determine whether a common research carrier boundary can be proven independently of the missing intro 36-feature assembler.
-4. If the boundary can be proven, create a research-only boundary artifact documenting exactly what is proven and what is not.
-5. If it cannot be proven, record the irreducible source gap rather than changing either side.
-6. **Before any Phase C work, update and commit this checkpoint again.**
+1. Verify that no existing final 1–113 closure artifact would be overwritten.
+2. Create a research-only final provenance artifact that joins:
 
-### Phase C — only if Phase B passes
+   `1–16 archived frozen intro evidence/carrier → proven 16→17 carrier seam → 17–96 closed development chain → 97–113 closed reserve`
 
-Only after the boundary proof is valid may the final provenance artifact join:
+3. The final artifact may close the **research provenance/carrier chain** if all inherited evidence remains consistent.
+4. It must **not** claim complete raw-audio deterministic replay across 1–113 because the late historical intro 36-feature assembler remains missing.
+5. Preserve the exact split, frozen threshold/window/model, 17–113 closure, boundary-proof scope, and all no-retraining/no-production invariants.
+6. Explicitly label the unresolved intro source gap as a limitation of replay completeness, not as a reason to rewrite or retrain the frozen model.
+7. After creating the final artifact, **update and commit this checkpoint again before any further work**.
 
-`1–16 frozen intro → 17–96 closed development chain → 97–113 closed reserve`
+A suitable strongest status, if the evidence remains consistent, is conceptually:
 
-A final 1–113 claim must clearly distinguish:
+**closed 1–113 research provenance/carrier chain with the intro deterministic-replay source gap explicitly disclosed**.
 
-- frozen model preservation;
-- carrier/schema continuity;
-- deterministic replay coverage;
-- any historical source gap that remains.
+Do not call it a complete deterministic 1–113 raw-audio replay closure.
 
 ---
 
@@ -264,28 +325,36 @@ A final 1–113 claim must clearly distinguish:
 - Reopening 17–113 to make the intro fit.
 - Calling `intro-onset-spectrum-cache.json` a proven direct runtime file dependency without consumer-source evidence.
 - Inventing missing generator semantics and presenting them as recovered history.
+- Claiming that Phase B recovered the missing intro assembler.
+- Claiming numeric intro spectral-window offsets were independently recovered when only the window names/carrier are directly preserved.
+- Calling the final chain a complete raw-audio deterministic 1–113 replay unless new authoritative intro source is recovered.
 - Production modification or promotion during this research closure.
 
 ---
 
 ## Important new commits / artifacts
 
-Evidence consulted in this Phase A audit includes:
+Phase A evidence/checkpoint:
+
+- `200fc992b44556837897ecb1192044e5e9547a86` — `Checkpoint V143 intro carrier audit`.
+
+Phase B artifact:
+
+- `f547866fb0cda873b8e9125fdabc0f21d1683489` — `Prove V143 intro 16-17 carrier boundary`;
+- `debug/v143-contextual-prune/intro-16-to-17-boundary-proof.json`.
+
+Foundational evidence retained:
 
 - `9b0f417f8f927e6d5102e4c8bf6c42e3f6a4c10d` — archived historical intro evidence;
 - source provenance HEAD `4d735846fbd834cc4c722f2cb48727e4629647f1`;
 - `fd8905d34175f9f20d9973807fed18c1e23c737a` — closed 17–113 research chain;
-- `analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-correlation-safe-grid-event-selector-model.json`;
-- `.../intro-correlation-safe-grid-event-selector-report.json`;
-- `.../intro-correlation-safe-grid-event-selector-threshold027-candidate.json`;
-- `.../intro-correlation-safe-grid-event-selector-threshold045-incumbent.json`;
-- `.../intro-correlation-safe-sequence-event-model-report.json`;
-- `.../intro-onset-spectrum-cache.json`;
-- `.../PROVENANCE.txt`;
 - `debug/v143-contextual-prune/measure-17-32-evidence-gap-resolution.json`;
-- `analyzer/v143_fresh_verse1_reference_free_capture.py`.
+- `analyzer/v143_fresh_verse1_reference_free_capture.py` blob `c8ea8eca33819fb506f06105f87075dadd133214`;
+- intro onset-spectrum-cache blob `4651f14ed15df3f9e596f9cd4fa3f8afe8a9b45d`;
+- intro raw-attack-cache blob `b58275e5fa846fe655747cd26bbd8139025d5072`;
+- active frozen intro selector blob `2540c428333aeef8d1f4bb470ab3d02e99cb6b4d`.
 
-No runtime or production code was changed during this audit. This checkpoint update is the only write authorized by the continuity rule.
+No runtime or production code was changed during Phase A or Phase B. The only writes were research evidence/checkpoint documentation.
 
 ---
 
@@ -293,7 +362,7 @@ No runtime or production code was changed during this audit. This checkpoint upd
 
 The historical Codespace remains part of provenance, but the copied GitHub archive is the durable first source for current forensics. Do not ask the user to reopen Codespaces merely to inspect preserved intro JSON evidence.
 
-If some future independent source recovers the missing historical late feature assembler or omitted grid-event intermediates, verify hashes/provenance first and then append that evidence; do not rewrite this source-gap finding retroactively.
+If some future independent source recovers the missing historical late feature assembler or omitted grid-event intermediates, verify hashes/provenance first and then append that evidence; do not rewrite the current source-gap finding retroactively.
 
 ---
 
@@ -325,4 +394,4 @@ Never delete old provenance merely because a later conclusion is cleaner. Record
 
 ---
 
-_Last updated on 2026-08-21 (user local date) after the Phase A frozen-intro carrier audit; next authorized work is the 16→17 boundary proof._
+_Last updated on 2026-08-21 (user local date) after the Phase B 16→17 carrier-boundary proof; next authorized work is the maximal truthful 1–113 provenance closure._
