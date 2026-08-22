@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "artifact": "v143-intro-16-to-17-carrier-boundary-proof",
+  "date": "2026-08-21",
+  "status": "passed_with_disclosed_intro_replay_source_gap",
+  "claimScope": "research-only carrier/schema continuity proof for the measure 16 to measure 17 boundary",
+  "claimLimit": "This proves a historically supported common reference-free physical-onset/spectral carrier seam. It does not claim complete raw-audio-to-final-intro-selector deterministic replay because the late historical intro 36-feature assembler is not preserved in the available GitHub evidence.",
+  "introEvidence": {
+    "archiveCommit": "9b0f417f8f927e6d5102e4c8bf6c42e3f6a4c10d",
+    "historicalSourceHead": "4d735846fbd834cc4c722f2cb48727e4629647f1",
+    "provenancePath": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/PROVENANCE.txt",
+    "rawAttackCache": {
+      "path": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-raw-attack-cache.json",
+      "gitBlobSha": "b58275e5fa846fe655747cd26bbd8139025d5072",
+      "scope": "professional-measures-1-16-raw-reference-free-attacks",
+      "measureBoundaryEnd": 16
+    },
+    "onsetSpectrumCache": {
+      "path": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-onset-spectrum-cache.json",
+      "gitBlobSha": "4651f14ed15df3f9e596f9cd4fa3f8afe8a9b45d",
+      "cacheVersion": 1,
+      "scope": "reference-free-physical-onset-whole-spectrum-cache",
+      "targetSampleRate": 22050,
+      "hopLength": 128,
+      "binsPerOctave": 36,
+      "spectrumMidiMin": 28,
+      "spectrumMidiMax": 112,
+      "guitarMidiMin": 40,
+      "guitarMidiMax": 88,
+      "onsetGroupingToleranceMs": 30.0,
+      "candidateStemCount": 2,
+      "observedRowFields": [
+        "onsetGroupId",
+        "measure",
+        "onsetTime",
+        "candidateMidis",
+        "candidateCount",
+        "sourceClusterCount",
+        "stemSupportMax",
+        "sweepSupportMax",
+        "detectionCountSum",
+        "viewA",
+        "viewB"
+      ],
+      "observedSpectralWindowNames": [
+        "attackMax",
+        "earlyMean",
+        "sustainMean"
+      ]
+    },
+    "frozenBaseSelector": {
+      "path": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-correlation-safe-grid-event-selector-model.json",
+      "gitBlobSha": "2540c428333aeef8d1f4bb470ab3d02e99cb6b4d",
+      "windowMs": 100,
+      "threshold": 0.27,
+      "trainingMeasures": "1-8",
+      "validationMeasures": "9-12",
+      "diagnosticMeasures": "13-16",
+      "professionalReferenceRequiredAtRuntime": false,
+      "neutralizedFeatureNames": [
+        "attackMax:viewCorrelation",
+        "earlyMean:viewCorrelation",
+        "sustainMean:viewCorrelation"
+      ]
+    }
+  },
+  "measure17Evidence": {
+    "closedChainCommit": "fd8905d34175f9f20d9973807fed18c1e23c737a",
+    "gapResolutionPath": "debug/v143-contextual-prune/measure-17-32-evidence-gap-resolution.json",
+    "historicalGenerator": {
+      "path": "analyzer/v143_fresh_verse1_reference_free_capture.py",
+      "gitBlobSha": "c8ea8eca33819fb506f06105f87075dadd133214",
+      "historicalAndCurrentBlobExact": true,
+      "firstMeasure": 17,
+      "lastMeasure": 32,
+      "targetSampleRate": 22050,
+      "hopLength": 128,
+      "binsPerOctave": 36,
+      "cqtMidiMin": 28,
+      "cqtMidiMax": 112,
+      "guitarMidiMin": 40,
+      "guitarMidiMax": 88,
+      "candidateStemCountRequired": 2,
+      "clusterToleranceMs": 30.0,
+      "onsetGroupToleranceMs": 30.0,
+      "spectralWindows": {
+        "attackMax": {
+          "startSecondsRelativeToOnset": -0.02,
+          "endSecondsRelativeToOnset": 0.045,
+          "reducer": "max"
+        },
+        "earlyMean": {
+          "startSecondsRelativeToOnset": 0.02,
+          "endSecondsRelativeToOnset": 0.095,
+          "reducer": "mean"
+        },
+        "sustainMean": {
+          "startSecondsRelativeToOnset": 0.07,
+          "endSecondsRelativeToOnset": 0.18,
+          "reducer": "mean"
+        }
+      },
+      "emittedGridFields": [
+        "globalStep",
+        "measure",
+        "step",
+        "timeSeconds"
+      ],
+      "generatorStatement": "Uses the same frozen V143 deterministic separator and reference-free timing stack used by the intro calibration work, while writing a separate fresh-section cache."
+    },
+    "carrierRecovery": {
+      "historicalVerse1CacheSha256": "fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15",
+      "regeneratedVerse1CacheExactSha256Match": true,
+      "carrierLineage": [
+        "direct Demucs6s Guitar",
+        "BS-RoFormer Instrumental -> Demucs6s Guitar"
+      ],
+      "deterministicSeparator": {
+        "demucsShifts": 1,
+        "demucsOverlap": 0.1,
+        "demucsSegmentSize": 6,
+        "deterministicSeed": 143
+      }
+    }
+  },
+  "commonCarrierContract": {
+    "measureAdjacency": {
+      "introEvidenceEndsAtMeasure": 16,
+      "verse1HistoricalGeneratorStartsAtMeasure": 17,
+      "adjacent": true
+    },
+    "exactSharedMetadata": {
+      "targetSampleRate": 22050,
+      "hopLength": 128,
+      "binsPerOctave": 36,
+      "spectrumMidiMin": 28,
+      "spectrumMidiMax": 112,
+      "guitarMidiMin": 40,
+      "guitarMidiMax": 88,
+      "onsetGroupingToleranceMs": 30.0,
+      "candidateStemCount": 2
+    },
+    "sharedRowConcepts": [
+      "physical onset groups",
+      "measure-numbered onset rows",
+      "candidateMidis",
+      "candidateCount",
+      "sourceClusterCount",
+      "stemSupportMax",
+      "sweepSupportMax",
+      "detectionCountSum",
+      "two spectral views named viewA and viewB",
+      "attackMax spectral window",
+      "earlyMean spectral window",
+      "sustainMean spectral window"
+    ],
+    "historicalStackLink": "The recovered measure-17 generator explicitly states that it uses the same frozen V143 deterministic separator and reference-free timing stack used by intro calibration.",
+    "formatDiscontinuityFound": false,
+    "retrainingRequiredForBoundary": false,
+    "thresholdChangeRequiredForBoundary": false,
+    "productionModificationRequiredForBoundary": false
+  },
+  "boundaryFinding": {
+    "commonResearchCarrierBoundary": "reference-free physical-onset / two-view whole-spectrum carrier",
+    "measure16To17CarrierSchemaContinuity": true,
+    "measure17HistoricalCarrierIndependentlyReproduced": true,
+    "closed17To113ChainRemainsUntouched": true,
+    "boundaryProofSatisfied": true,
+    "interpretation": "The historically preserved intro carrier and the independently recovered measure-17 carrier meet at a compatible reference-free physical-onset/spectral schema. This is sufficient to establish a research carrier seam at 16->17 without retraining, threshold changes, tolerance changes, or modification of either closed side. The seam is intentionally proven below the missing intro late 36-feature assembly layer."
+  },
+  "notProven": [
+    "A byte-identical regeneration of the complete 1-16 onset-spectrum cache from raw audio.",
+    "A complete raw-audio-to-final-36-feature-vector deterministic replay for the frozen intro base selector.",
+    "The exact historical executable ordering/assembly of the late intro 36-feature selector input.",
+    "That any stateful learned feature should flow across the 16->17 boundary.",
+    "That the same classifier must or should be applied on both sides of the boundary.",
+    "That the exact numeric time offsets of the three intro spectral windows are independently recovered from the missing intro generator; only their names and resulting carrier structure are directly preserved on the intro side."
+  ],
+  "unresolvedHistoricalSourceGap": {
+    "missingExecutable": "analyzer/WINDOWS_ONE_SHOT_INTRO_TIMING.ps1",
+    "missingReferencedIntermediates": [
+      "intro-correlation-safe-grid-events-1-12.json",
+      "intro-correlation-safe-grid-events-13-16.json",
+      "intro-onset-rhythm-cache.json",
+      "ARTIFACTS.md"
+    ],
+    "impact": "Prevents upgrading the intro side to a complete raw-audio deterministic replay claim. It does not invalidate the preserved frozen model or the carrier/schema boundary proof."
+  },
+  "proofRule": {
+    "introBoundaryEndAuthoritativelyScoped": true,
+    "measure17HistoricalStartAuthoritativelyScoped": true,
+    "sharedReferenceFreeCarrierSchemaEstablished": true,
+    "measure17CarrierHistoricallyReproduced": true,
+    "missingIntroAssemblerNotInvented": true,
+    "satisfied": true
+  },
+  "invariants": {
+    "professionalReferenceRequiredAtRuntime": false,
+    "retrainingPerformed": false,
+    "thresholdsModified": false,
+    "comparisonTolerancesWeakened": false,
+    "frozenIntroModelModified": false,
+    "closed17To113EvidenceModified": false,
+    "liveEndpointDeployedOrModified": false,
+    "productionModified": false,
+    "productionPromotionAllowed": false
+  }
+}
