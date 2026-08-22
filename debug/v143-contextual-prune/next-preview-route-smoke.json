@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 3,
+  "gate": "v143-next-preview-route-smoke",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceCommit": "0b299b544590131f75126e93ba977032f08396d5",
+  "phase": "started",
+  "localNextPreviewSimulation": true,
+  "actualVercelPreviewDeployment": false,
+  "installExitCode": null,
+  "nextBuildExitCode": null,
+  "serverReady": false,
+  "routeSmokeExitCode": null,
+  "passed": false,
+  "vercelDeploymentAttempted": false,
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "paidPurchaseAttempted": false,
+  "customerTokenRedeemed": false,
+  "customerEmailSent": false,
+  "error": "smoke-run-in-progress"
+}
