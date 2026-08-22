@@ -1,0 +1,31 @@
+name: V143 contextual-prune source-artifact equivalence
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143-intro-1-16-evidence/**
+      - public/training/v143-musical-reconstruction-calibration/contextual-prune-frozen-model.json
+      - .github/workflows/v143-contextual-prune-equivalence.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify preserved measures 1-16 carrier
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out research branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify source/artifact equivalence
+        run: python analyzer/v143-intro-1-16-evidence/verify_source_artifact_equivalence.py
