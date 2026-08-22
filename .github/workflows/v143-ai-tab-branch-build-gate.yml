@@ -173,6 +173,7 @@ jobs:
 
             for attempt in $(seq 1 45); do
               if curl --silent --show-error --fail \
+                --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Preview-Smoke/1.0)' \
                 http://127.0.0.1:4310/ai-tab \
                 > /dev/null 2>&1; then
                 ready=true
