@@ -1,0 +1,49 @@
+{
+  "artifact": "jimmy-paige-professional-pdf-bridge-guard",
+  "schemaVersion": 1,
+  "passed": true,
+  "checks": {
+    "contractExists": true,
+    "contractSupportsLeadRhythmBass": true,
+    "contractPreservesTuning": true,
+    "contractPreservesTempo": true,
+    "contractPreservesTimeSignature": true,
+    "contractPreservesKeySignature": true,
+    "contractValidatesMeasureGridVersion": true,
+    "contractValidatesSixMeasureLayout": true,
+    "contractRequiresReadOnlyNotes": true,
+    "contractRequiresMusicallyFilteredNotes": true,
+    "contractRequiresReadOnlyFragments": true,
+    "contractFailsSafeToPolishedRenderer": true,
+    "contractDoesNotAuthorizeProduction": true,
+    "bridgeCallsStructuredPolishedRenderer": true,
+    "bridgeUsesContract": true,
+    "structuredRendererStillOptIn": true,
+    "structuredRendererFallsBackToPolishedBytes": true,
+    "allProfessionalMarkerTypesSupported": true,
+    "previewRouteStillProtectedCurrentRenderer": true,
+    "finalRouteStillProtectedCurrentRenderer": true,
+    "liveRoutesNotPromotedToJimmyBridge": true,
+    "analyzerRouteStillExplicitCanary": true,
+    "uploadUiStillUsesPrivateBlob": true,
+    "uploadUiStillCallsAnalyzerRoute": true
+  },
+  "markerTypes": {
+    "bend-release": true,
+    "chord-label": true,
+    "palm-mute-span": true,
+    "slide": true,
+    "muted-attack": true,
+    "rest": true
+  },
+  "knownIntegrationGaps": {
+    "analysisApiPassesStructuredMeasureGrid": false,
+    "analysisApiPassesRawEvents": false,
+    "finalDownloadPreservesAnalyzerMetadata": false,
+    "previewRouteUsesJimmyBridge": false,
+    "finalRouteUsesJimmyBridge": false
+  },
+  "nextRequiredStage": "structured-analyzer-payload-and-metadata-preservation",
+  "productionModified": false,
+  "liveRoutePromotionPerformed": false
+}
