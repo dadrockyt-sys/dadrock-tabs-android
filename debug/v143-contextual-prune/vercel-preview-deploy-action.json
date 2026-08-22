@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-vercel-preview-deploy",
+  "branch": "v143-contextual-prune-lobo",
+  "vercelTokenAvailableInGitHubActions": false,
+  "previewConfigPullExitCode": 99,
+  "previewEnvironmentPresence": {
+    "analyzerApiUrlV143": false,
+    "analyzerApiToken": false,
+    "blobReadWriteToken": false
+  },
+  "previewBuildExitCode": 99,
+  "previewDeployExitCode": 99,
+  "deploymentUrl": null,
+  "deploymentRequestedAsPreview": true,
+  "productionDeployFlagUsed": false,
+  "professionalRendererDeploymentScoped": true,
+  "professionalRendererDeploymentValue": true,
+  "projectEnvironmentMutated": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "paidPurchaseAttempted": false,
+  "customerTokenRedeemed": false,
+  "customerEmailSent": false
+}
