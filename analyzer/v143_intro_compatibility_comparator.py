@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -39,6 +40,19 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def canonical_json_bytes(value: Any) -> bytes:
+    return json.dumps(
+        value,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+    ).encode("utf-8")
+
+
+def canonical_sha256(value: Any) -> str:
+    return hashlib.sha256(canonical_json_bytes(value)).hexdigest()
 
 
 def parse_sha256sums(path: Path) -> dict[str, str]:
@@ -107,6 +121,100 @@ def compare_fields(actual: dict[str, Any], expected: dict[str, Any], prefix: str
 
 def all_passed(checks: list[dict[str, Any]]) -> bool:
     return all(bool(check.get("passed")) for check in checks)
+
+
+def normalized_package_name(value: Any) -> str:
+    return re.sub(r"[-_.]+", "-", str(value or "").strip().lower())
+
+
+def sorted_package_inventory(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, list):
+        return []
+    rows = [dict(row) for row in value if isinstance(row, dict)]
+    rows.sort(
+        key=lambda row: (
+            normalized_package_name(row.get("name")),
+            str(row.get("version") or ""),
+        )
+    )
+    return rows
+
+
+def sorted_model_cache_files(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, list):
+        return []
+    rows = [dict(row) for row in value if isinstance(row, dict)]
+    rows.sort(key=lambda row: str(row.get("path") or ""))
+    return rows
+
+
+def provenance_digest_checks(capture: dict[str, Any]) -> list[dict[str, Any]]:
+    runtime = dict(capture.get("runtimeIdentity") or {})
+    dependencies = dict(capture.get("resolvedDependencyIdentity") or {})
+    model_payload = dict(capture.get("modelPayloadIdentity") or {})
+
+    inventory = sorted_package_inventory(dependencies.get("installedPackageInventory"))
+    inventory_actual = dependencies.get("installedPackageInventorySha256")
+    inventory_expected = canonical_sha256(inventory) if inventory else None
+
+    runtime_for_digest = dict(runtime)
+    runtime_actual = runtime_for_digest.pop("runtimeFingerprintSha256", None)
+    runtime_expected = canonical_sha256(
+        {
+            "runtimeIdentity": runtime_for_digest,
+            "installedPackageInventorySha256": inventory_actual,
+        }
+    ) if runtime_for_digest and is_present(inventory_actual) else None
+
+    model_files = sorted_model_cache_files(model_payload.get("modelCacheFiles"))
+    model_actual = model_payload.get("modelCacheManifestSha256")
+    model_expected = canonical_sha256(model_files) if model_files else None
+
+    requested_names = {
+        str(model_payload.get("bsRoformerModelIdentifier") or ""),
+        str(model_payload.get("demucsModelIdentifier") or ""),
+    }
+    captured_names = {
+        Path(str(row.get("path") or "")).name
+        for row in model_files
+        if str(row.get("path") or "")
+    }
+    identifiers_present = bool(requested_names) and all(
+        name and name in captured_names for name in requested_names
+    )
+
+    return [
+        {
+            "field": "resolvedDependencyIdentity.installedPackageInventorySha256",
+            "expected": inventory_expected,
+            "actual": inventory_actual,
+            "passed": inventory_expected is not None and inventory_actual == inventory_expected,
+        },
+        {
+            "field": "runtimeIdentity.runtimeFingerprintSha256",
+            "expected": runtime_expected,
+            "actual": runtime_actual,
+            "passed": runtime_expected is not None and runtime_actual == runtime_expected,
+        },
+        {
+            "field": "modelPayloadIdentity.modelCacheManifestSha256",
+            "expected": model_expected,
+            "actual": model_actual,
+            "passed": model_expected is not None and model_actual == model_expected,
+        },
+        {
+            "field": "modelPayloadIdentity.modelPayloadCaptureComplete",
+            "expected": True,
+            "actual": model_payload.get("modelPayloadCaptureComplete"),
+            "passed": model_payload.get("modelPayloadCaptureComplete") is True,
+        },
+        {
+            "field": "modelPayloadIdentity.requestedModelIdentifiersPresentInCacheManifest",
+            "expected": True,
+            "actual": identifiers_present,
+            "passed": identifiers_present,
+        },
+    ]
 
 
 def classify_family(stem_identity: dict[str, Any], expected: dict[str, Any]) -> str | None:
@@ -204,9 +312,8 @@ def build_result(
         "stemIdentity",
     )
 
-    attestations = capture.get("attestations") or {}
     attestation_checks = compare_fields(
-        attestations,
+        capture.get("attestations") or {},
         {
             "freshCompatibilityEvidenceOnly": True,
             "historicalProvenanceClaimed": False,
@@ -217,6 +324,8 @@ def build_result(
         },
         "attestations",
     )
+
+    digest_checks = provenance_digest_checks(capture)
 
     intro = capture.get("introFingerprint") or {}
     intro_count_expected = {
@@ -238,10 +347,15 @@ def build_result(
         source_checks + recipe_checks + model_identifier_checks + runtime_checks + pcm_method_checks
     )
     attestations_ok = all_passed(attestation_checks)
+    provenance_digests_ok = all_passed(digest_checks)
     intro_counts_ok = all_passed(intro_count_checks)
     intro_cache_exact = bool(intro_cache_check["passed"])
 
-    family_label = classify_family(stem_identity, expected)
+    family_label = (
+        classify_family(stem_identity, expected)
+        if provenance_digests_ok and all_passed(pcm_method_checks)
+        else None
+    )
     compatibility_labels: list[str] = []
     if family_label:
         compatibility_labels.append(family_label)
@@ -255,6 +369,9 @@ def build_result(
     elif not attestations_ok:
         primary = "INCOMPATIBLE"
         reason = "Fresh capture safety attestations do not preserve the research-only provenance boundary."
+    elif not provenance_digests_ok:
+        primary = "INCOMPATIBLE"
+        reason = "Fresh package/runtime/model provenance digests are incomplete or internally inconsistent."
     elif not source_recipe_ok or not intro_counts_ok:
         primary = "INCOMPATIBLE"
         reason = "Fresh source/recipe/runtime/PCM-method identifiers or intro event fingerprints differ from the authenticated baseline."
@@ -272,14 +389,14 @@ def build_result(
 
     downstream = capture.get("downstreamFrozenReplay") or {}
     downstream_status = {
-        "provided": isinstance(downstream, dict) and bool(downstream),
+        "provided": isinstance(downstream, dict) and any(is_present(value) for value in downstream.values()),
         "comparison": "NOT_EVALUATED_NO_AUTHENTICATED_HISTORICAL_DIGEST_BASELINE_IN_THIS_COMPARATOR",
-        "note": "Downstream fields are retained in the capture for audit. Exact downstream classification must only be enabled after its expected historical digests are independently authenticated and pinned.",
+        "note": "Downstream fields are optional and retained only for audit. Exact downstream classification must not be enabled until expected historical digests are independently authenticated and pinned.",
     }
 
     return {
         "artifact": "v143-intro-compatibility-comparison",
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "comparisonMode": "FRESH_COMPATIBILITY_EVIDENCE_ONLY",
         "captureId": identity.get("captureId"),
         "primaryClassification": primary,
@@ -299,6 +416,10 @@ def build_result(
         "sourceRecipeCompatibility": {
             "passed": source_recipe_ok,
             "checks": source_checks + recipe_checks + model_identifier_checks + runtime_checks,
+        },
+        "freshProvenanceDigestIntegrity": {
+            "passed": provenance_digests_ok,
+            "checks": digest_checks,
         },
         "decodedPcmHashConventionCompatibility": {
             "passed": all_passed(pcm_method_checks),
