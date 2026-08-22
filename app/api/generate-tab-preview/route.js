@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createTabPdf } from '@/lib/createTabPdfPolished';
 import { createJimmyPaigeProfessionalPdf } from '@/lib/createJimmyPaigeProfessionalPdf';
+import { getJimmyPaigeProfessionalPdfFeatureState } from '@/lib/jimmyPaigeProfessionalPdfFeature';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -74,8 +75,10 @@ export async function POST(request) {
       );
     }
 
+    const professionalPdfFeature =
+      getJimmyPaigeProfessionalPdfFeatureState();
     const useProfessionalRenderer =
-      process.env.JIMMY_PAIGE_PROFESSIONAL_PDF_V1 === 'true';
+      professionalPdfFeature.enabled;
 
     let pdfBytes;
     let rendererMode = 'polished-current';
@@ -138,6 +141,8 @@ export async function POST(request) {
           'inline; filename="dadrock-tab-preview.pdf"',
         'Cache-Control': 'no-store, max-age=0',
         'X-Jimmy-PAIge-PDF-Renderer': rendererMode,
+        'X-Jimmy-PAIge-PDF-Feature':
+          professionalPdfFeature.source,
       },
     });
   } catch (error) {
