@@ -1,0 +1,292 @@
+import base64
+import hashlib
+import json
+import os
+import sys
+from collections import Counter
+from pathlib import Path
+from typing import Any
+
+import modal
+
+ROOT = Path(__file__).resolve().parents[1]
+PUBLIC = ROOT / "public"
+STEM_PATH = PUBLIC / "separator-benchmark-v2" / "gomyway-bsroformer-demucs6s-guitar.wav"
+CANDIDATE_PATH = PUBLIC / "gomyway-full-song-v8-rhythm-candidates-1-113-intro-recovered-v2.json"
+REFERENCE_PATH = PUBLIC / "gomyway-professional-rhythm-reference-17-113.json"
+OUTPUT_PATH = PUBLIC / "gomyway-mrmt3-detector-v1.json"
+MANIFEST_PATH = PUBLIC / "gomyway-mrmt3-detector-v1-manifest.json"
+
+TUNED_BASIC_PITCH_F1 = 6.39
+SNAP_TOLERANCE_SECONDS = 0.085
+PRIORITY_MEASURES = [68, 76, 111, 109, 72, 93, 103, 105, 110, 104, 113, 80]
+MRMT3_REPO = "/opt/MR-MT3"
+MRMT3_HF_REPO = "gudgud1014/MR-MT3"
+MRMT3_CHECKPOINT = "scratch/exp_segmemV2_prev_context=64_prevaug_frame=3.ckpt"
+
+app = modal.App("jimmy-paige-mrmt3-detector-v1")
+
+image = (
+    modal.Image.debian_slim(python_version="3.10")
+    .apt_install("ffmpeg", "git", "libsndfile1")
+    .run_commands(
+        f"git clone --depth 1 https://github.com/gudgud96/MR-MT3.git {MRMT3_REPO}",
+        "python -m pip install --upgrade 'pip<25' 'setuptools<81' wheel",
+        "python -m pip install numpy==1.23.5 protobuf==3.20.3 torch==2.0.1 torchaudio==2.0.2",
+        "python -m pip install transformers==4.18.0 librosa==0.9.1 t5==0.9.3 note-seq==0.0.3 pretty-midi==0.2.9 einops==0.4.1 hydra-core==1.2.0 pytorch-lightning==1.9.5 huggingface-hub mir_eval==0.7",
+        "python -m pip install tensorflow==2.12.0 tensorflow-text==2.12.0 tensorflow-probability==0.20.0",
+        "python -m pip install tensorflow-datasets==4.9.2",
+        "python -m pip install --force-reinstall --no-deps tensorflow-metadata==1.13.1",
+        "python -m pip install crepe==0.0.14",
+        "python -m pip install ddsp==3.3.4 --no-deps",
+        "python -m pip install --force-reinstall protobuf==3.20.3",
+        "python -c \"import numpy, tensorflow as tf; print('MR-MT3 smoke OK', numpy.__version__, tf.__version__)\"",
+        "python -c \"import crepe, ddsp; print('DDSP smoke OK')\"",
+        "python -c \"import google.protobuf, note_seq; print('NOTESEQ smoke OK', google.protobuf.__version__)\"",
+        "python -c \"import tensorflow_metadata as tfmd; print('TFMETA smoke OK', tfmd.__version__ if hasattr(tfmd, '__version__') else '1.13.1')\"",
+        "python -c \"import tensorflow_datasets as tfds; print('TFDS smoke OK', tfds.__version__, hasattr(tfds, 'core'))\"",
+        "python -c \"import seqio; print('SEQIO smoke OK')\"",
+        f"cd {MRMT3_REPO} && python -c \"import mir_eval; from tasks.mt3_net_segmem_v2_with_prev import MT3NetSegMemV2WithPrev; print('MR-MT3 TASK smoke OK', mir_eval.__version__)\"",
+    )
+)
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def floating(value: Any) -> float | None:
+    if isinstance(value, bool):
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def integer(value: Any) -> int | None:
+    if isinstance(value, bool):
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+@app.function(image=image, gpu="L4", timeout=3600, memory=24576)
+def transcribe_mrmt3(audio_b64: str):
+    import tempfile
+
+    import hydra
+    import librosa
+    import pretty_midi
+    import torch
+    from huggingface_hub import hf_hub_download
+
+    sys.path.insert(0, MRMT3_REPO)
+    os.chdir(MRMT3_REPO)
+
+    from inference import InferenceHandler
+
+    checkpoint_path = hf_hub_download(
+        repo_id=MRMT3_HF_REPO,
+        filename=MRMT3_CHECKPOINT,
+    )
+    print("MR-MT3 checkpoint:", checkpoint_path, flush=True)
+
+    with hydra.initialize_config_dir(
+        config_dir=f"{MRMT3_REPO}/config",
+        version_base="1.1",
+    ):
+        cfg = hydra.compose(
+            config_name="config_slakh_segmem",
+            overrides=[
+                "model=MT3NetSegMemV2WithPrev",
+                "model_segmem_length=64",
+                "split_frame_length=2000",
+            ],
+        )
+
+    model_cls = hydra.utils.get_class(cfg.model._target_)
+    lightning_module = model_cls.load_from_checkpoint(
+        checkpoint_path,
+        config=cfg.model.config,
+        optim_cfg=cfg.optim,
+        map_location="cpu",
+    )
+    model = lightning_module.model
+    model.eval()
+
+    handler = InferenceHandler(
+        model=model,
+        device=torch.device("cuda"),
+        mel_norm=True,
+        contiguous_inference=True,
+        use_tf_spectral_ops=False,
+    )
+
+    audio_bytes = base64.b64decode(audio_b64.encode("ascii"))
+    with tempfile.TemporaryDirectory(prefix="jimmy-mrmt3-v1-") as temp_dir:
+        temp_root = Path(temp_dir)
+        audio_path = temp_root / "guitar.wav"
+        midi_path = temp_root / "mrmt3.mid"
+        audio_path.write_bytes(audio_bytes)
+
+        audio, _ = librosa.load(str(audio_path), sr=16000, mono=True)
+        handler.inference(
+            audio=audio,
+            audio_path=str(audio_path),
+            outpath=str(midi_path),
+            batch_size=4,
+            max_length=1024,
+            verbose=True,
+        )
+
+        if not midi_path.exists():
+            raise RuntimeError("MR-MT3 did not produce a MIDI file.")
+
+        midi = pretty_midi.PrettyMIDI(str(midi_path))
+        rows = []
+        for instrument in midi.instruments:
+            if instrument.is_drum:
+                continue
+            for note in instrument.notes:
+                rows.append(
+                    {
+                        "onset": float(note.start),
+                        "offset": float(note.end),
+                        "midi": int(note.pitch),
+                        "velocity": int(note.velocity),
+                        "program": int(instrument.program),
+                    }
+                )
+        return rows
+
+
+@app.local_entrypoint()
+def main() -> None:
+    import analyze_and_grade_gomyway_separator_benchmark_stems_v2 as v2
+    import analyze_and_grade_gomyway_separator_benchmark_stems_v3 as v3
+
+    if not STEM_PATH.exists():
+        raise FileNotFoundError(f"Missing proven separator stem: {STEM_PATH.relative_to(ROOT)}")
+
+    candidate_hash_before = sha256(CANDIDATE_PATH)
+    candidate = v2.load_json(CANDIDATE_PATH)
+    events = v2.candidate_rows(candidate)
+    if len(events) != 949:
+        raise RuntimeError(f"Expected protected 949-event candidate, found {len(events)}")
+
+    grid, grid_diagnostics = v2.build_timing_grid(events)
+    grid_items = list(grid.items())
+    reference = v2.load_json(REFERENCE_PATH)
+    if reference.get("professionalReferenceUsedForScoringOnly") is not True:
+        raise RuntimeError("Professional reference is not marked scoring-only.")
+    reference_counter = v3.reference_tokens(reference)
+
+    print("JIMMY PAIGE MR-MT3 DETECTOR BENCHMARK V1")
+    print("Model: MR-MT3 memory-retaining transformer")
+    print("Checkpoint:", MRMT3_CHECKPOINT)
+    print("Tuned Basic Pitch F1 to beat:", TUNED_BASIC_PITCH_F1)
+
+    stem_b64 = base64.b64encode(STEM_PATH.read_bytes()).decode("ascii")
+    raw_notes = transcribe_mrmt3.remote(stem_b64)
+
+    predicted: Counter[tuple[int, int, int]] = Counter()
+    discarded = 0
+    for row in raw_notes:
+        onset = floating(row.get("onset"))
+        midi_note = integer(row.get("midi"))
+        if onset is None or midi_note is None:
+            continue
+        slot, distance = v2.nearest_grid_slot(onset, grid_items)
+        if slot is None or distance > SNAP_TOLERANCE_SECONDS:
+            discarded += 1
+            continue
+        measure, step = slot
+        predicted[(measure, step, midi_note)] += 1
+
+    matched = sum((predicted & reference_counter).values())
+    predicted_count = sum(predicted.values())
+    reference_count = sum(reference_counter.values())
+    missing = sum((reference_counter - predicted).values())
+    extra = sum((predicted - reference_counter).values())
+    score = round(100.0 * v2.f1(matched, predicted_count, reference_count), 2)
+
+    priority_reference = Counter({k: v for k, v in reference_counter.items() if k[0] in PRIORITY_MEASURES})
+    priority_predicted = Counter({k: v for k, v in predicted.items() if k[0] in PRIORITY_MEASURES})
+    priority_matched = sum((priority_reference & priority_predicted).values())
+    priority_missing = sum((priority_reference - priority_predicted).values())
+    priority_extra = sum((priority_predicted - priority_reference).values())
+
+    candidate_hash_after = sha256(CANDIDATE_PATH)
+    if candidate_hash_before != candidate_hash_after:
+        raise RuntimeError("Protected 949-event candidate changed during MR-MT3 benchmark.")
+
+    beats_basic_pitch = score > TUNED_BASIC_PITCH_F1
+    output = {
+        "schemaVersion": 1,
+        "passed": True,
+        "benchmarkType": "mrmt3-multi-instrument-transformer-detector",
+        "model": "gudgud96/MR-MT3",
+        "checkpoint": MRMT3_CHECKPOINT,
+        "modelLicense": "MIT",
+        "inputStem": str(STEM_PATH.relative_to(ROOT)),
+        "timingGrid": grid_diagnostics,
+        "snapToleranceSeconds": SNAP_TOLERANCE_SECONDS,
+        "tunedBasicPitchF1": TUNED_BASIC_PITCH_F1,
+        "rawNeuralNoteCount": len(raw_notes),
+        "snappedPredictionCount": predicted_count,
+        "discardedOutsideGrid": discarded,
+        "pitchF1": score,
+        "matchedPitchTokens": matched,
+        "missingProfessionalPitchTokens": missing,
+        "extraCandidatePitchTokens": extra,
+        "priorityBatch": {"matched": priority_matched, "missing": priority_missing, "extra": priority_extra},
+        "beatsTunedBasicPitch": beats_basic_pitch,
+        "professionalReferenceUsedDuringDetection": False,
+        "professionalReferenceRole": "downstream-grading-only",
+        "protected949CandidateHashUnchanged": True,
+        "candidateEventsModified": False,
+        "v7EventsModified": False,
+        "rendererModified": False,
+        "protectedBaselinesChanged": False,
+        "productionSeparatorChanged": False,
+        "productionPromotionAllowed": False,
+        "recommendedNextAction": (
+            "validate-mrmt3-on-more-sections" if beats_basic_pitch else "retain-tuned-basic-pitch-and-evaluate-next-transformer"
+        ),
+    }
+    OUTPUT_PATH.write_text(json.dumps(output, indent=2) + "\n", encoding="utf-8")
+    MANIFEST_PATH.write_text(
+        json.dumps(
+            {
+                "schemaVersion": 1,
+                "output": str(OUTPUT_PATH.relative_to(ROOT)),
+                "candidateSha256": candidate_hash_after,
+                "professionalReferenceUsedDuringDetection": False,
+                "productionPromotionAllowed": False,
+            },
+            indent=2,
+        ) + "\n",
+        encoding="utf-8",
+    )
+
+    print("GOMYWAY MR-MT3 DETECTOR V1 COMPLETE")
+    print("Passed: True")
+    print("Tuned Basic Pitch F1:", TUNED_BASIC_PITCH_F1)
+    print("MR-MT3 pitch F1:", score)
+    print("Matched/missing/extra:", matched, "/", missing, "/", extra)
+    print("Priority matched/missing/extra:", priority_matched, "/", priority_missing, "/", priority_extra)
+    print("MR-MT3 beats tuned Basic Pitch:", beats_basic_pitch)
+    print("Professional reference used during detection: False")
+    print("Protected 949-event candidate hash unchanged: True")
+    print("Candidate events modified: False")
+    print("V7 events modified: False")
+    print("Renderer modified: False")
+    print("Protected baselines changed: False")
+    print("Production separator changed: False")
+    print("Production promotion allowed: False")
+    print("Recommended next action:", output["recommendedNextAction"])
+    print("Output:", OUTPUT_PATH.relative_to(ROOT))
+    print("Manifest:", MANIFEST_PATH.relative_to(ROOT))

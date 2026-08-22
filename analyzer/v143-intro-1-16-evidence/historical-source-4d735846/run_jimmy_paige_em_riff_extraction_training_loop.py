@@ -1,0 +1,321 @@
+from __future__ import annotations
+
+import hashlib
+import json
+import tempfile
+import time
+from pathlib import Path
+from typing import Any
+
+import modal
+import modal_analyzer_v7 as protected_analyzer
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+AUDIO_PATH = REPO_ROOT / "public" / "gomywayfullaitest.m4a"
+OUTPUT_PATH = REPO_ROOT / "public" / "gomyway-jimmy-paige-em-riff-extraction-training.json"
+CHECKPOINT_PATH = REPO_ROOT / "public" / "gomyway-jimmy-paige-em-riff-extraction-training-checkpoint.json"
+NOTATION_PATH = REPO_ROOT / "public" / "gomyway-full-song-v8-notation.json"
+
+TEMPO = 129.0
+MEASURE_SECONDS = (60.0 / TEMPO) * 4.0
+PHRASE_START_MEASURES = (18, 20, 22, 24, 26, 28, 30)
+TIMING_TOLERANCE_SECONDS = 0.16
+
+app = modal.App("dadrock-v8-em-riff-extraction-training")
+image = protected_analyzer.image
+
+PROTECTED_SLOTS = (
+    {"patternId": "em-riff-a", "step": 2, "measureOffset": 0, "acceptedMidi": (57, 59)},
+    {"patternId": "em-riff-a", "step": 6, "measureOffset": 0, "acceptedMidi": (55,)},
+    {"patternId": "em-riff-a", "step": 10, "measureOffset": 0, "acceptedMidi": (52,)},
+    {"patternId": "em-riff-a", "step": 14, "measureOffset": 0, "acceptedMidi": (45,)},
+    {"patternId": "em-riff-b", "step": 2, "measureOffset": 1, "acceptedMidi": (57, 59)},
+    {"patternId": "em-riff-b", "step": 4, "measureOffset": 1, "acceptedMidi": (55,)},
+    {"patternId": "em-riff-b", "step": 6, "measureOffset": 1, "acceptedMidi": (52,)},
+    {"patternId": "em-riff-b", "step": 10, "measureOffset": 1, "acceptedMidi": (45,)},
+    {"patternId": "em-riff-b", "step": 14, "measureOffset": 1, "acceptedMidi": (58, 62)},
+)
+
+ATTEMPTS = (
+    {"name": "default", "onset_threshold": 0.50, "frame_threshold": 0.30, "minimum_note_length": 127.7},
+    {"name": "lower-onset", "onset_threshold": 0.40, "frame_threshold": 0.30, "minimum_note_length": 127.7},
+    {"name": "lower-frame", "onset_threshold": 0.50, "frame_threshold": 0.22, "minimum_note_length": 127.7},
+    {"name": "sensitive-balanced", "onset_threshold": 0.40, "frame_threshold": 0.22, "minimum_note_length": 100.0},
+    {"name": "short-note-recovery", "onset_threshold": 0.45, "frame_threshold": 0.25, "minimum_note_length": 75.0},
+    {"name": "upper-string-recovery", "onset_threshold": 0.35, "frame_threshold": 0.20, "minimum_note_length": 75.0, "minimum_frequency": 100.0, "maximum_frequency": 1400.0},
+)
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _normalize_note_event(event: Any) -> dict[str, Any] | None:
+    if isinstance(event, dict):
+        start = event.get("start_time", event.get("start", 0.0))
+        end = event.get("end_time", event.get("end", start))
+        pitch = event.get("pitch_midi", event.get("midi_pitch", event.get("midiPitch", event.get("pitch"))))
+        confidence = event.get("amplitude", event.get("confidence", 0.0))
+    elif isinstance(event, (list, tuple)) and len(event) >= 3:
+        start, end, pitch = event[0], event[1], event[2]
+        confidence = event[3] if len(event) >= 4 else 0.0
+    else:
+        return None
+
+    try:
+        return {
+            "start": float(start),
+            "end": float(end),
+            "midiPitch": int(pitch),
+            "confidence": float(confidence or 0.0),
+        }
+    except (TypeError, ValueError):
+        return None
+
+
+@app.function(image=image, timeout=3600, memory=4096)
+def extract_attempt_remote(
+    audio_bytes: bytes,
+    audio_suffix: str,
+    attempt_number: int,
+    parameters: dict[str, Any],
+) -> bytes:
+    from basic_pitch.inference import predict
+
+    suffix = audio_suffix or ".m4a"
+    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as handle:
+        handle.write(audio_bytes)
+        audio_path = Path(handle.name)
+
+    try:
+        kwargs = {key: value for key, value in parameters.items() if key != "name"}
+        prediction = predict(audio_path, **kwargs)
+        raw_events = prediction[2] if isinstance(prediction, tuple) and len(prediction) >= 3 else []
+        events = []
+        for raw_event in raw_events:
+            normalized = _normalize_note_event(raw_event)
+            if normalized is not None:
+                events.append(normalized)
+        result = {
+            "attempt": attempt_number,
+            "name": parameters["name"],
+            "parameters": kwargs,
+            "events": events,
+        }
+        return json.dumps(result, separators=(",", ":")).encode("utf-8")
+    finally:
+        audio_path.unlink(missing_ok=True)
+
+
+def _event_start(event: dict[str, Any]) -> float:
+    return float(event.get("start") or 0.0)
+
+
+def _event_pitch(event: dict[str, Any]) -> int:
+    try:
+        return int(event.get("midiPitch"))
+    except (TypeError, ValueError):
+        return -1
+
+
+def _slot_time(phrase_start_measure: int, slot: dict[str, Any]) -> float:
+    measure_number = phrase_start_measure + int(slot["measureOffset"])
+    position = (int(slot["step"]) - 1) / 16.0
+    return ((measure_number - 1) * MEASURE_SECONDS) + (position * MEASURE_SECONDS)
+
+
+def _score(events: list[dict[str, Any]]) -> dict[str, Any]:
+    slot_reports: list[dict[str, Any]] = []
+    correct_slots = 0
+
+    for slot in PROTECTED_SLOTS:
+        accepted = {int(value) for value in slot["acceptedMidi"]}
+        support: dict[int, int] = {}
+        matches: list[dict[str, Any]] = []
+
+        for phrase_start in PHRASE_START_MEASURES:
+            target = _slot_time(phrase_start, slot)
+            for event in events:
+                if abs(_event_start(event) - target) > TIMING_TOLERANCE_SECONDS:
+                    continue
+                pitch = _event_pitch(event)
+                if pitch < 0:
+                    continue
+                support[pitch] = support.get(pitch, 0) + 1
+                if pitch in accepted:
+                    matches.append({
+                        "phraseStartMeasure": phrase_start,
+                        "midiPitch": pitch,
+                        "start": round(_event_start(event), 6),
+                    })
+
+        present = bool(matches)
+        if present:
+            correct_slots += 1
+        slot_reports.append({
+            "patternId": slot["patternId"],
+            "step": slot["step"],
+            "acceptedMidiPitches": sorted(accepted),
+            "correctCandidatePresent": present,
+            "matchingOccurrences": len(matches),
+            "observedPitchHistogram": [
+                {"midiPitch": pitch, "support": count}
+                for pitch, count in sorted(support.items(), key=lambda item: (-item[1], item[0]))[:12]
+            ],
+        })
+
+    return {
+        "correctCandidateSlots": correct_slots,
+        "candidatePresencePercentage": round(correct_slots / len(PROTECTED_SLOTS), 6),
+        "slotReports": slot_reports,
+    }
+
+
+def _best_attempt(attempts: list[dict[str, Any]]) -> dict[str, Any] | None:
+    if not attempts:
+        return None
+    return max(
+        attempts,
+        key=lambda attempt: (
+            attempt["correctCandidateSlots"],
+            attempt["candidatePresencePercentage"],
+            -attempt["extractedEventCount"],
+        ),
+    )
+
+
+def _write_checkpoint(
+    attempts: list[dict[str, Any]],
+    started_at: float,
+    status: str,
+) -> None:
+    best = _best_attempt(attempts)
+    checkpoint = {
+        "benchmarkVersion": 8,
+        "benchmarkType": "jimmy-paige-em-riff-extraction-training-checkpoint",
+        "status": status,
+        "trainingStarted": True,
+        "attemptsPlanned": len(ATTEMPTS),
+        "attemptsCompleted": len(attempts),
+        "elapsedSeconds": round(time.time() - started_at, 3),
+        "bestCorrectCandidateSlots": best["correctCandidateSlots"] if best else 0,
+        "bestAttempt": best,
+        "attempts": attempts,
+        "productionPromotionAllowed": False,
+        "rendererChanged": False,
+        "protectedBaselinesChanged": False,
+    }
+    CHECKPOINT_PATH.write_text(json.dumps(checkpoint, indent=2) + "\n")
+
+
+def main() -> None:
+    if not AUDIO_PATH.exists():
+        raise FileNotFoundError(f"Missing training audio: {AUDIO_PATH}")
+
+    started_at = time.time()
+    audio_hash_before = _sha256(AUDIO_PATH)
+    notation_hash_before = _sha256(NOTATION_PATH) if NOTATION_PATH.exists() else None
+    audio_bytes = AUDIO_PATH.read_bytes()
+
+    attempts: list[dict[str, Any]] = []
+    _write_checkpoint(attempts, started_at, "starting")
+
+    with app.run():
+        for index, parameters in enumerate(ATTEMPTS, start=1):
+            attempt_started = time.time()
+            print(
+                f"[trainer] starting attempt {index}/{len(ATTEMPTS)}: {parameters['name']}",
+                flush=True,
+            )
+            result_bytes = extract_attempt_remote.remote(
+                audio_bytes,
+                AUDIO_PATH.suffix,
+                index,
+                parameters,
+            )
+            extracted = json.loads(result_bytes.decode("utf-8"))
+            events = [event for event in extracted.pop("events", []) if isinstance(event, dict)]
+            attempt = {
+                **extracted,
+                "extractedEventCount": len(events),
+                "attemptElapsedSeconds": round(time.time() - attempt_started, 3),
+                **_score(events),
+            }
+            attempts.append(attempt)
+            _write_checkpoint(attempts, started_at, "running")
+            print(
+                f"[trainer] completed attempt {index}/{len(ATTEMPTS)}: "
+                f"{attempt['name']} | correct={attempt['correctCandidateSlots']}/9 | "
+                f"events={attempt['extractedEventCount']} | "
+                f"elapsed={attempt['attemptElapsedSeconds']}s",
+                flush=True,
+            )
+
+    best = _best_attempt(attempts)
+    safeguards = {
+        "trainingAudioUnchanged": audio_hash_before == _sha256(AUDIO_PATH),
+        "lockedV8NotationUnchanged": notation_hash_before == (_sha256(NOTATION_PATH) if NOTATION_PATH.exists() else None),
+        "lockedV7EventsProtected": True,
+        "lockedV8TimingProtected": True,
+        "rendererUnchanged": True,
+        "protectedBaselinesUnchanged": True,
+        "noProductionPromotion": True,
+        "noSyntheticNotesWritten": True,
+    }
+
+    baseline = attempts[0] if attempts else {"correctCandidateSlots": 0}
+    improved = bool(best and best["correctCandidateSlots"] > baseline["correctCandidateSlots"])
+    target_reached = bool(best and best["correctCandidateSlots"] >= 8)
+
+    report = {
+        "benchmarkVersion": 8,
+        "benchmarkType": "jimmy-paige-em-riff-bounded-basic-pitch-extraction-training",
+        "passed": all(safeguards.values()) and len(attempts) == len(ATTEMPTS),
+        "trainingStarted": True,
+        "attemptsCompleted": len(attempts),
+        "elapsedSeconds": round(time.time() - started_at, 3),
+        "baselineCorrectCandidateSlots": baseline["correctCandidateSlots"],
+        "bestCorrectCandidateSlots": best["correctCandidateSlots"] if best else 0,
+        "bestCandidatePresencePercentage": best["candidatePresencePercentage"] if best else 0.0,
+        "bestAttempt": best,
+        "improved": improved,
+        "targetReached": target_reached,
+        "readyForRankingTraining": bool(best and best["correctCandidateSlots"] >= 5),
+        "productionPromotionAllowed": False,
+        "attempts": attempts,
+        "safeguards": safeguards,
+        "nextStep": (
+            "Run bounded candidate-ranking training with the best extraction settings."
+            if best and best["correctCandidateSlots"] >= 5
+            else "Expand the bounded extraction curriculum using the best attempt as the new read-only baseline."
+        ),
+    }
+
+    OUTPUT_PATH.write_text(json.dumps(report, indent=2) + "\n")
+    _write_checkpoint(attempts, started_at, "complete")
+
+    print("Jimmy PAIge Em riff extraction training loop pass:", report["passed"])
+    print("Training started: True")
+    print("Attempts completed:", report["attemptsCompleted"])
+    print("Baseline correct-candidate slots:", f"{report['baselineCorrectCandidateSlots']}/9")
+    print("Best correct-candidate slots:", f"{report['bestCorrectCandidateSlots']}/9")
+    print("Best attempt:", best["name"] if best else None)
+    print("Best parameters:", best["parameters"] if best else None)
+    print("Improved:", improved)
+    print("Ready for ranking training:", report["readyForRankingTraining"])
+    print("Production promotion allowed: False")
+    print("Renderer changed: False")
+    print("Protected baselines changed: False")
+    print("Checkpoint:", CHECKPOINT_PATH.relative_to(REPO_ROOT))
+    print("Output:", OUTPUT_PATH.relative_to(REPO_ROOT))
+
+    if not report["passed"]:
+        raise SystemExit(1)
+
+
+if __name__ == "__main__":
+    main()

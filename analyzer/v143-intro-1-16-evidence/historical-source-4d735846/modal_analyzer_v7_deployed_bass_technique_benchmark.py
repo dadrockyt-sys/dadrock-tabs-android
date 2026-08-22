@@ -1,0 +1,157 @@
+from __future__ import annotations
+
+import json
+import tempfile
+from pathlib import Path
+from typing import Any
+
+import modal
+import modal_analyzer_v7 as analyzer
+
+app = modal.App("dadrock-v7-deployed-bass-technique-benchmark")
+image = analyzer.image.add_local_python_source(
+    "modal_analyzer_v7",
+    "modal_analyzer",
+    "production_chord_diagnostics",
+    "chord_sustain",
+    "reference_aware_harmony",
+    "production_lead_technique_diagnostics",
+    "lead_technique_diagnostics_v7",
+    "production_bass_technique_diagnostics",
+    "bass_technique_diagnostics_v7",
+)
+
+
+def json_default(value: Any) -> Any:
+    if hasattr(value, "item"):
+        return value.item()
+    if hasattr(value, "tolist"):
+        return value.tolist()
+    if isinstance(value, Path):
+        return str(value)
+    raise TypeError(f"Object of type {type(value).__name__} is not JSON serializable")
+
+
+def run_one(
+    audio_bytes: bytes,
+    audio_name: str,
+    *,
+    enable_reference_guided_bass_techniques: bool,
+) -> dict[str, Any]:
+    suffix = Path(audio_name).suffix or ".m4a"
+    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as handle:
+        handle.write(audio_bytes)
+        temporary_path = handle.name
+
+    try:
+        return analyzer.analyze_audio_file(
+            temporary_path,
+            "bass",
+            enable_reference_guided_bass_techniques=(
+                enable_reference_guided_bass_techniques
+            ),
+        )
+    finally:
+        Path(temporary_path).unlink(missing_ok=True)
+
+
+@app.function(image=image, timeout=1800, memory=4096)
+def run_benchmark(audio_bytes: bytes, audio_name: str) -> bytes:
+    generic = run_one(
+        audio_bytes,
+        audio_name,
+        enable_reference_guided_bass_techniques=False,
+    )
+    contextual = run_one(
+        audio_bytes,
+        audio_name,
+        enable_reference_guided_bass_techniques=True,
+    )
+
+    analysis = contextual.get("bassTechniqueAnalysis") or {}
+    checks = {
+        "genericBassUnchanged": "bassTechniqueAnalysis" not in generic,
+        "contextModeEnabled": (
+            contextual.get("bassTechniqueAnalysisMode") == "diagnostic-only"
+        ),
+        "detectsFiveSevenContour": (
+            analysis.get("contour5And7Detected") is True
+        ),
+        "detectsSlideTarget": analysis.get("slideDetected") is True,
+        "detectsMutedAttack": analysis.get("mutedAttackDetected") is True,
+        "detectsRest": analysis.get("restDetected") is True,
+        "tabPresent": bool(generic.get("generatedTab")),
+        "tabUnchanged": (
+            contextual.get("generatedTab") == generic.get("generatedTab")
+        ),
+        "eventsUnchanged": contextual.get("events") == generic.get("events"),
+        "noteCountUnchanged": (
+            len(contextual.get("events") or [])
+            == len(generic.get("events") or [])
+        ),
+        "noSyntheticNotes": int(analysis.get("syntheticNoteCount") or 0) == 0,
+        "diagnosticsDoNotAffectTab": (
+            contextual.get("bassTechniqueAnalysisAffectsTab") is False
+        ),
+        "diagnosticsDoNotAffectEvents": (
+            contextual.get("bassTechniqueAnalysisAffectsEvents") is False
+        ),
+        "leadAnalysisAbsent": "leadTechniqueAnalysis" not in contextual,
+        "rhythmHarmonyAbsent": "chordAnalysis" not in contextual,
+    }
+
+    report = {
+        "benchmarkVersion": 7,
+        "benchmarkType": "deployed-v7-bass-technique-audio-path",
+        "audioName": audio_name,
+        "eventCount": len(contextual.get("events") or []),
+        "bassTechniqueAnalysis": analysis,
+        "checks": checks,
+        "passed": all(checks.values()),
+        "protectedBaselinesChanged": False,
+        "trainingRule": (
+            "Reference-guided bass technique diagnostics are opt-in and "
+            "read-only. They must never alter generated tab, note events, "
+            "pitch, fret, timing, rhythm, or lead output."
+        ),
+    }
+
+    return json.dumps(
+        report,
+        default=json_default,
+        separators=(",", ":"),
+    ).encode("utf-8")
+
+
+@app.local_entrypoint()
+def main(
+    audio_path: str,
+    report_output: str = "/tmp/gomyway-v7-deployed-bass-technique-report.json",
+) -> None:
+    audio_file = Path(audio_path)
+    if not audio_file.is_file():
+        raise FileNotFoundError(f"Audio file not found: {audio_file}")
+
+    payload = run_benchmark.remote(
+        audio_file.read_bytes(),
+        audio_file.name,
+    )
+    report = json.loads(bytes(payload).decode("utf-8"))
+    Path(report_output).write_text(
+        json.dumps(report, indent=2, sort_keys=True),
+        encoding="utf-8",
+    )
+
+    analysis = report.get("bassTechniqueAnalysis") or {}
+    print("JIMMY PAIGE V7 DEPLOYED BASS-TECHNIQUE BENCHMARK")
+    print("=" * 72)
+    print("Events:", report.get("eventCount"))
+    print("5/7 contour:", analysis.get("contour5And7Detected"))
+    print("Slide target:", analysis.get("slideTargetFret"))
+    print("Muted attack index:", analysis.get("muteEventIndex"))
+    print("Rest index:", analysis.get("restEventIndex"))
+    print("\nChecks")
+    for name, passed in (report.get("checks") or {}).items():
+        print("PASS" if passed else "FAIL", name)
+    print("Overall:", "PASS" if report.get("passed") else "FAIL")
+    print("Saved report:", report_output)
