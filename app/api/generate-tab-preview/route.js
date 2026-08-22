@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createTabPdf } from '@/lib/createTabPdfPolished';
+import { createJimmyPaigeProfessionalPdf } from '@/lib/createJimmyPaigeProfessionalPdf';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -73,18 +74,57 @@ export async function POST(request) {
       );
     }
 
-    const pdfBytes = await createTabPdf({
-      song,
-      artist,
-      transcriptionType,
-      generatedTab,
-      tuning,
-      tempo,
-      timeSignature,
-      keySignature,
-      preview: true,
-      previewSystems,
-    });
+    const useProfessionalRenderer =
+      process.env.JIMMY_PAIGE_PROFESSIONAL_PDF_V1 === 'true';
+
+    let pdfBytes;
+    let rendererMode = 'polished-current';
+
+    if (useProfessionalRenderer) {
+      const result =
+        await createJimmyPaigeProfessionalPdf({
+          song,
+          artist,
+          transcriptionType,
+          generatedTab,
+          tuning,
+          tempo,
+          timeSignature,
+          keySignature,
+          preview: true,
+          previewSystems,
+          measureGrid:
+            body?.measureGrid || null,
+          analysisEngine:
+            body?.analysisEngine || '',
+          confidence:
+            body?.confidence ?? null,
+          difficulty:
+            body?.difficulty || null,
+          techniques:
+            Array.isArray(body?.techniques)
+              ? body.techniques
+              : [],
+        });
+
+      pdfBytes = result.pdfBytes;
+      rendererMode =
+        result.rendererContract?.mode ||
+        'polished-safe-fallback';
+    } else {
+      pdfBytes = await createTabPdf({
+        song,
+        artist,
+        transcriptionType,
+        generatedTab,
+        tuning,
+        tempo,
+        timeSignature,
+        keySignature,
+        preview: true,
+        previewSystems,
+      });
+    }
 
     return new NextResponse(Buffer.from(pdfBytes), {
       status: 200,
@@ -93,6 +133,7 @@ export async function POST(request) {
         'Content-Disposition':
           'inline; filename="dadrock-tab-preview.pdf"',
         'Cache-Control': 'no-store, max-age=0',
+        'X-Jimmy-PAIge-PDF-Renderer': rendererMode,
       },
     });
   } catch (error) {
