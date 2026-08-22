@@ -44,12 +44,17 @@
     "cascadeCommands": []
   },
   "stemIdentity": {
+    "decodedPcmHashMethod": "soundfile-int16-always2d-numpy-tobytes-sha256-v1",
     "directWavSha256": null,
     "directDecodedPcmSha256": null,
+    "directDecodedSampleRate": null,
+    "directDecodedFrames": null,
+    "directDecodedChannels": null,
     "cascadeWavSha256": null,
     "cascadeDecodedPcmSha256": null,
-    "directDecodedSampleCount": null,
-    "cascadeDecodedSampleCount": null
+    "cascadeDecodedSampleRate": null,
+    "cascadeDecodedFrames": null,
+    "cascadeDecodedChannels": null
   },
   "introFingerprint": {
     "rawAttackCacheSha256": null,
