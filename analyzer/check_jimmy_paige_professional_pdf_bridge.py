@@ -13,12 +13,23 @@ PREVIEW_ROUTE = ROOT / "app" / "api" / "generate-tab-preview" / "route.js"
 FINAL_ROUTE = ROOT / "app" / "api" / "generate-tab-pdf" / "route.js"
 ANALYZE_ROUTE = ROOT / "app" / "api" / "analyze-audio-tab" / "route.js"
 PAGE = ROOT / "app" / "ai-tab" / "page.js"
+FEATURE_GATE = "JIMMY_PAIGE_PROFESSIONAL_PDF_V1"
 
 
 def read(path: Path) -> str:
     if not path.is_file():
         raise FileNotFoundError(f"Required file not found: {path}")
     return path.read_text(encoding="utf-8")
+
+
+def route_bridge_is_gated(source: str) -> bool:
+    if "createJimmyPaigeProfessionalPdf" not in source:
+        return True
+    return (
+        FEATURE_GATE in source
+        and "createTabPdf" in source
+        and "useProfessionalRenderer" in source
+    )
 
 
 def main() -> None:
@@ -61,23 +72,29 @@ def main() -> None:
         "structuredRendererStillOptIn": "enableV7MeasureGrid === true" in structured_renderer,
         "structuredRendererFallsBackToPolishedBytes": structured_renderer.count("return polishedBytes;") >= 3,
         "allProfessionalMarkerTypesSupported": all(marker_types.values()),
-        "previewRouteStillProtectedCurrentRenderer": "from '@/lib/createTabPdfPolished';" in preview_route,
-        "finalRouteStillProtectedCurrentRenderer": "from '@/lib/createTabPdfPolished';" in final_route,
-        "liveRoutesNotPromotedToJimmyBridge": (
-            "createJimmyPaigeProfessionalPdf" not in preview_route
-            and "createJimmyPaigeProfessionalPdf" not in final_route
+        "previewRoutePreservesCurrentRendererFallback": "from '@/lib/createTabPdfPolished';" in preview_route,
+        "finalRoutePreservesCurrentRendererFallback": "from '@/lib/createTabPdfPolished';" in final_route,
+        "previewProfessionalPathIsFeatureGated": route_bridge_is_gated(preview_route),
+        "finalProfessionalPathIsFeatureGatedWhenPresent": route_bridge_is_gated(final_route),
+        "featureGateDefaultsOffWithoutEnvironmentOptIn": (
+            "=== 'true'" in preview_route
+            and (
+                "createJimmyPaigeProfessionalPdf" not in final_route
+                or "=== 'true'" in final_route
+            )
         ),
         "analyzerRouteStillExplicitCanary": "usingV143RhythmAnalyzer" in analyze_route,
         "uploadUiStillUsesPrivateBlob": "access: 'private'" in page,
         "uploadUiStillCallsAnalyzerRoute": "'/api/analyze-audio-tab'" in page,
     }
 
-    known_gaps = {
+    integration_state = {
+        "analysisApiUsesStructuredPayload": "buildJimmyPaigeAnalysisPayload" in analyze_route,
         "analysisApiPassesStructuredMeasureGrid": (
-            "measureGrid:" in analyze_route or "measureGrid," in analyze_route
+            "buildJimmyPaigeAnalysisPayload" in analyze_route
         ),
         "analysisApiPassesRawEvents": (
-            "events:" in analyze_route or "events," in analyze_route
+            "buildJimmyPaigeAnalysisPayload" in analyze_route
         ),
         "finalDownloadPreservesAnalyzerMetadata": (
             "analysisMetadata" in page[page.find("const handleDownloadPdf"):]
@@ -91,18 +108,20 @@ def main() -> None:
     passed = all(checks.values())
     payload = {
         "artifact": "jimmy-paige-professional-pdf-bridge-guard",
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "passed": passed,
         "checks": checks,
         "markerTypes": marker_types,
-        "knownIntegrationGaps": known_gaps,
+        "integrationState": integration_state,
+        "featureGate": FEATURE_GATE,
+        "featureGateDefault": "off",
         "nextRequiredStage": (
-            "structured-analyzer-payload-and-metadata-preservation"
-            if passed
-            else "repair-bridge-contract"
+            "complete-gated-upload-to-pdf-transport"
+            if not all(integration_state.values())
+            else "measure-grid-production-from-reference-free-timing"
         ),
         "productionModified": False,
-        "liveRoutePromotionPerformed": False,
+        "productionPromotionPerformed": False,
     }
 
     print(json.dumps(payload, indent=2))
