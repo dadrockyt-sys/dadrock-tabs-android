@@ -1,0 +1,89 @@
+{
+  "artifact": "jimmy-paige-v143-structured-pdf-quality-fixture",
+  "schemaVersion": 1,
+  "passed": true,
+  "checks": {
+    "allRawEventsProjected": true,
+    "allTechniqueClassesProjected": true,
+    "fullPdfHeaderValid": true,
+    "previewPdfHeaderValid": true,
+    "fullPdfHasUsefulSize": true,
+    "previewPdfHasUsefulSize": true,
+    "fullPdfPaginates": true,
+    "previewPdfPaginates": true,
+    "previewIsDistinctFromFull": true,
+    "maximumMeasureIs28": true
+  },
+  "failedChecks": [],
+  "rawEventCount": 40,
+  "projectedRenderEventCount": 40,
+  "expectedTechniques": [
+    "bend",
+    "bend-release",
+    "dead-note",
+    "hammer-on",
+    "let-ring",
+    "muted-strum",
+    "natural-harmonic",
+    "palm-mute",
+    "pinch-harmonic",
+    "pre-bend",
+    "pull-off",
+    "slide-down",
+    "slide-up",
+    "sustain-tie",
+    "tap",
+    "trill",
+    "vibrato"
+  ],
+  "projectedTechniques": [
+    "bend",
+    "bend-release",
+    "dead-note",
+    "hammer-on",
+    "let-ring",
+    "muted-strum",
+    "natural-harmonic",
+    "palm-mute",
+    "pinch-harmonic",
+    "pre-bend",
+    "pull-off",
+    "slide-down",
+    "slide-up",
+    "sustain-tie",
+    "tap",
+    "trill",
+    "vibrato"
+  ],
+  "fullPdfBytes": 1669512,
+  "previewPdfBytes": 1669709,
+  "fullPageCount": 2,
+  "previewPageCount": 2,
+  "fullPdfPath": "debug/v143-contextual-prune/jimmy-paige-pdf-fixture/full-structured-fixture.pdf",
+  "previewPdfPath": "debug/v143-contextual-prune/jimmy-paige-pdf-fixture/preview-structured-fixture.pdf",
+  "renderer": "createV143RhythmPdf",
+  "renderContract": "v143-render-contract-v1",
+  "productionPromotionPerformed": false,
+  "textExtractionChecks": {
+    "titleExtracted": true,
+    "brandExtracted": true,
+    "palmMuteExtracted": true,
+    "bendReleaseTokenExtracted": true,
+    "naturalHarmonicTokenExtracted": true,
+    "previewLockTextExtracted": true
+  },
+  "rasterChecks": {
+    "fullPageRasterized": true,
+    "previewPageRasterized": true
+  },
+  "fullPageOnePng": {
+    "width": 935,
+    "height": 1210,
+    "bytes": 108957
+  },
+  "previewPageOnePng": {
+    "width": 935,
+    "height": 1210,
+    "bytes": 139814
+  }
+}
