@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "artifact": "v143-research-evidence-closure-1-113",
+  "date": "2026-08-21",
+  "status": "closed_research_provenance_carrier_chain_with_intro_deterministic_replay_source_gap_disclosed",
+  "claimScope": "research-only provenance and carrier continuity closure for measures 1-113",
+  "claimBoundary": "This closure joins preserved frozen intro evidence for measures 1-16, the proven reference-free carrier/schema seam at 16->17, and the independently closed 17-113 research chain. It is not a claim of complete raw-audio deterministic replay across measures 1-113 because the late historical intro 36-feature assembly executable is not preserved in the available evidence.",
+  "chain": [
+    {
+      "segment": "1-16",
+      "role": "frozen historical intro evidence and reference-free carrier",
+      "status": "preserved_with_replay_source_gap",
+      "archiveCommit": "9b0f417f8f927e6d5102e4c8bf6c42e3f6a4c10d",
+      "historicalSourceHead": "4d735846fbd834cc4c722f2cb48727e4629647f1",
+      "archivePath": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/",
+      "historicalSplit": {
+        "trainingMeasures": "1-8",
+        "validationMeasures": "9-12",
+        "diagnosticMeasures": "13-16"
+      },
+      "frozenBaseSelector": {
+        "path": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-correlation-safe-grid-event-selector-model.json",
+        "gitBlobSha": "2540c428333aeef8d1f4bb470ab3d02e99cb6b4d",
+        "model": "v143-correlation-safe-grid-event-selector",
+        "windowMs": 100,
+        "l2": 10.0,
+        "threshold": 0.27,
+        "featureCount": 36,
+        "neutralizedFeatureColumns": [19, 26, 33],
+        "neutralizedFeatureNames": [
+          "attackMax:viewCorrelation",
+          "earlyMean:viewCorrelation",
+          "sustainMean:viewCorrelation"
+        ],
+        "professionalReferenceRequiredAtRuntime": false,
+        "productionModified": false
+      },
+      "carrierEvidence": {
+        "rawAttackCache": {
+          "path": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-raw-attack-cache.json",
+          "gitBlobSha": "b58275e5fa846fe655747cd26bbd8139025d5072",
+          "scope": "professional-measures-1-16-raw-reference-free-attacks"
+        },
+        "onsetSpectrumCache": {
+          "path": "analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-onset-spectrum-cache.json",
+          "gitBlobSha": "4651f14ed15df3f9e596f9cd4fa3f8afe8a9b45d",
+          "scope": "reference-free-physical-onset-whole-spectrum-cache",
+          "targetSampleRate": 22050,
+          "hopLength": 128,
+          "binsPerOctave": 36,
+          "spectrumMidiMin": 28,
+          "spectrumMidiMax": 112,
+          "guitarMidiMin": 40,
+          "guitarMidiMax": 88,
+          "onsetGroupingToleranceMs": 30.0,
+          "candidateStemCount": 2,
+          "spectralWindowNames": [
+            "attackMax",
+            "earlyMean",
+            "sustainMean"
+          ]
+        }
+      },
+      "replayDisclosure": {
+        "completeRawAudioToFinalPredictionReplayProven": false,
+        "reason": "The late historical executable that assembled the final ordered 36-feature intro selector input is not preserved in available GitHub evidence.",
+        "missingHistoricalItems": [
+          "analyzer/WINDOWS_ONE_SHOT_INTRO_TIMING.ps1",
+          "intro-correlation-safe-grid-events-1-12.json",
+          "intro-correlation-safe-grid-events-13-16.json",
+          "intro-onset-rhythm-cache.json",
+          "ARTIFACTS.md"
+        ],
+        "frozenModelPreservationAffected": false,
+        "carrierEvidencePreservationAffected": false
+      }
+    },
+    {
+      "segment": "16->17",
+      "role": "research carrier/schema seam",
+      "status": "passed_with_disclosed_intro_replay_source_gap",
+      "proofPath": "debug/v143-contextual-prune/intro-16-to-17-boundary-proof.json",
+      "proofCommit": "f547866fb0cda873b8e9125fdabc0f21d1683489",
+      "commonBoundary": "reference-free physical-onset / two-view whole-spectrum carrier",
+      "sharedContract": {
+        "targetSampleRate": 22050,
+        "hopLength": 128,
+        "binsPerOctave": 36,
+        "spectrumMidiMin": 28,
+        "spectrumMidiMax": 112,
+        "guitarMidiMin": 40,
+        "guitarMidiMax": 88,
+        "onsetGroupingToleranceMs": 30.0,
+        "candidateStemCount": 2,
+        "spectralWindowNames": [
+          "attackMax",
+          "earlyMean",
+          "sustainMean"
+        ],
+        "twoSpectralViews": [
+          "viewA",
+          "viewB"
+        ]
+      },
+      "measureAdjacency": {
+        "introEndsAtMeasure": 16,
+        "nextHistoricalGeneratorStartsAtMeasure": 17,
+        "adjacent": true
+      },
+      "formatDiscontinuityFound": false,
+      "retrainingRequired": false,
+      "thresholdChangeRequired": false,
+      "productionModificationRequired": false
+    },
+    {
+      "segment": "17-96",
+      "role": "closed development/research chain",
+      "status": "closed",
+      "closureCommit": "fd8905d34175f9f20d9973807fed18c1e23c737a",
+      "measure17To32HistoricalResolution": {
+        "path": "debug/v143-contextual-prune/measure-17-32-evidence-gap-resolution.json",
+        "historicalGeneratorPath": "analyzer/v143_fresh_verse1_reference_free_capture.py",
+        "historicalGeneratorBlobSha": "c8ea8eca33819fb506f06105f87075dadd133214",
+        "historicalAndCurrentGeneratorBlobExact": true,
+        "historicalVerse1CacheSha256": "fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15",
+        "regeneratedVerse1CacheExactSha256Match": true,
+        "historicalScoringCoreBlobSha": "ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe",
+        "historicalAndCurrentScoringCoreBlobExact": true,
+        "historicalTargetSequenceReplayExact": true,
+        "historicalTargetSequenceReplayEventCount": 1051,
+        "sealedContextualRuntimeBaseEventCount": 765,
+        "sealedContextualRuntimeCandidateEventCount": 651,
+        "sealedContextualRuntimeDiscreteEventKeysExact": true,
+        "baseThreshold": 0.27,
+        "pruneFraction": 0.15
+      }
+    },
+    {
+      "segment": "97-113",
+      "role": "closed reserve",
+      "status": "closed",
+      "closureCommit": "fd8905d34175f9f20d9973807fed18c1e23c737a"
+    }
+  ],
+  "historicalCorrectionsPreserved": {
+    "frozenIntroWindowMs": 100,
+    "not10ms": true,
+    "activeIntroThreshold": 0.27,
+    "earlierSelectorReportThreshold": 0.45,
+    "interpretation": "The earlier 0.45 validation report and later active 0.27 selector are preserved as historical progression rather than rewritten into one event.",
+    "diagnosticF1Approx0955BelongsTo": "intro-correlation-safe-sequence-event-model-report.json",
+    "diagnosticF1Approx0955IsFrozenBaseSelectorScore": false,
+    "sequenceDiagnosticProductionPromotionAllowed": false
+  },
+  "closureFinding": {
+    "researchProvenanceChain1To113Closed": true,
+    "referenceFreeCarrierContinuity16To17Closed": true,
+    "closed17To113ChainInheritedWithoutModification": true,
+    "frozenIntroModelPreservedWithoutModification": true,
+    "completeDeterministicRawAudioReplay1To113Closed": false,
+    "reasonCompleteReplayNotClosed": "The historical intro late 36-feature assembler remains missing, so a stronger raw-audio-to-prediction replay statement would exceed the surviving evidence.",
+    "strongestDefensibleStatement": "Measures 1-113 now form a closed research provenance/carrier chain: measures 1-16 retain their archived frozen intro model and reference-free carrier evidence; the 16->17 reference-free physical-onset/two-view spectral carrier seam is proven; and measures 17-113 retain their independently closed historical/replay chain. The unresolved intro assembler source gap remains explicitly disclosed and prevents a claim of complete deterministic raw-audio replay across the entire 1-113 range."
+  },
+  "whyNoRetrainingIsNeededOrAllowed": {
+    "introModelBytesPreserved": true,
+    "boundaryCarrierSchemaCompatible": true,
+    "measure17To113ChainAlreadyClosed": true,
+    "retrainingWouldRewriteHistoricalTruth": true,
+    "decision": "Do not retrain or retune to erase the intro replay-source gap. Preserve the gap as provenance."
+  },
+  "futureUpgradeRule": {
+    "currentClosureMayBeStrengthenedIf": "A genuinely authoritative historical source recovers the missing late intro feature assembler or omitted intermediate carrier artifacts with verifiable provenance.",
+    "requiredAction": "Verify source provenance/hashes and replay the frozen intro without retraining or threshold changes.",
+    "prohibitedAction": "Do not infer, reimplement, or tune a replacement and call it historical recovery."
+  },
+  "invariants": {
+    "professionalReferenceOpenedByClosureWork": false,
+    "runtimeLabelsRequired": false,
+    "retrainingPerformed": false,
+    "thresholdsModified": false,
+    "comparisonTolerancesWeakened": false,
+    "frozenIntroModelModified": false,
+    "frozen17To113ModelOrPredictionsModified": false,
+    "closed17To113EvidenceRewritten": false,
+    "liveEndpointDeployedOrModified": false,
+    "productionModified": false,
+    "productionPromotionAllowed": false
+  }
+}
