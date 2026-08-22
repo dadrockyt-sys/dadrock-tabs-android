@@ -1,9 +1,4 @@
 {
-  "git": {
-    "deploymentEnabled": {
-      "v143-contextual-prune-lobo": true
-    }
-  },
   "crons": [
     {
       "path": "/api/cron/daily-sync",
