@@ -1,15 +1,174 @@
-Traceback (most recent call last):
-  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/run_source_artifact_equivalence_verifier.py", line 26, in <module>
-    exec(compile(source, str(VERIFIER), "exec"), namespace, namespace)
-  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/verify_source_artifact_equivalence.py", line 685, in <module>
-    main()
-  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/verify_source_artifact_equivalence.py", line 646, in main
-    raw_report = verify_raw_cache(raw)
-                 ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/verify_source_artifact_equivalence.py", line 321, in verify_raw_cache
-    require(grid_keys == expected_grid_keys, f"raw grid keys differ from exact 16x16 contract; missing={sorted(expected_grid_keys-grid_keys)[:8]} extra={sorted(grid_keys-expected_grid_keys)[:8]}")
-  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/verify_source_artifact_equivalence.py", line 150, in require
-    fail(message)
-  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143-intro-1-16-evidence/verify_source_artifact_equivalence.py", line 145, in fail
-    raise AssertionError(message)
-AssertionError: raw grid keys differ from exact 16x16 contract; missing=[(1, 0), (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7)] extra=[]
+{
+  "carrier": {
+    "baseThreshold": 0.27,
+    "contextualFeatureNames": [
+      "baseScore",
+      "sequenceScore",
+      "sequenceEvidence",
+      "stepSin",
+      "stepCos",
+      "strongBeat",
+      "eighthGrid",
+      "measureBaseCount",
+      "neighborStepCount1",
+      "neighborStepCount2",
+      "sameStepAdjacentMeasures",
+      "sameStepTwoMeasures",
+      "sameStepFourMeasures",
+      "sameStepWindow4Count",
+      "baseSequenceInteraction"
+    ],
+    "contextualFeatureWidth": 15,
+    "contextualPruneFraction": 0.15,
+    "gridFeatureNames": [
+      "hasNearbyOnset",
+      "signedResidualOverWindow",
+      "absoluteResidualOverWindow",
+      "secondNearestAbsoluteResidualOverWindow",
+      "nearbyCountScaled",
+      "candidateCountScaled",
+      "sourceClusterCountScaled",
+      "nearestStemSupportScaled",
+      "nearestSweepSupportScaled",
+      "nearestDetectionCountScaled",
+      "nearbyMaxStemSupportScaled",
+      "nearbyMaxSweepSupportScaled",
+      "nearbyDetectionCountSumScaled",
+      "attackMax:meanViewMean",
+      "attackMax:meanViewStd",
+      "attackMax:top1",
+      "attackMax:top1MinusTop2",
+      "attackMax:normA",
+      "attackMax:normB",
+      "attackMax:viewCorrelation",
+      "earlyMean:meanViewMean",
+      "earlyMean:meanViewStd",
+      "earlyMean:top1",
+      "earlyMean:top1MinusTop2",
+      "earlyMean:normA",
+      "earlyMean:normB",
+      "earlyMean:viewCorrelation",
+      "sustainMean:meanViewMean",
+      "sustainMean:meanViewStd",
+      "sustainMean:top1",
+      "sustainMean:top1MinusTop2",
+      "sustainMean:normA",
+      "sustainMean:normB",
+      "sustainMean:viewCorrelation",
+      "stepSin",
+      "stepCos"
+    ],
+    "gridFeatureWidth": 36,
+    "sequenceAbsoluteNeutralizedColumns": [
+      19,
+      26,
+      33,
+      55,
+      62,
+      69,
+      91,
+      98,
+      105,
+      127,
+      134,
+      141,
+      163,
+      170,
+      177,
+      199,
+      206,
+      213
+    ],
+    "sequencePcaComponents": 24,
+    "sequenceRawFeatureWidth": 260,
+    "sequenceWindowCount": 6,
+    "viewCorrelationColumns": [
+      19,
+      26,
+      33
+    ]
+  },
+  "onsetSpectrumCache": {
+    "historicalGroupMetadataExact": true,
+    "onsetGroupCount": 787,
+    "physicalAttackClusterCount": 7113,
+    "spectralVectorLength": 85,
+    "spectralVectorsVerified": 4722
+  },
+  "productionModified": false,
+  "professionalReferenceRequiredAtRuntime": false,
+  "rawCache": {
+    "gridCount": 244,
+    "productionAcceptedEventCount": 22257,
+    "rawEventCount": 22270,
+    "stemEventCounts": {
+      "stem0:direct-demucs6s-guitar.wav": 11164,
+      "stem1:bsroformer-demucs6s-guitar.wav": 11106
+    },
+    "sweepEventCounts": {
+      "o015_f010": 12776,
+      "o020_f012": 4979,
+      "o025_f015": 2830,
+      "o030_f020": 1685
+    }
+  },
+  "referenceFreeRuntimeContract": true,
+  "replayGuard": {
+    "consolidatedReferenceFreeCarrierIsBitExactForHistoricalClusterOnset": false,
+    "note": "The later consolidated carrier uses an amplitude-weighted candidate-cluster onset while the preserved measures 1-16 onset cache was produced from the historical median-onset clustering function. Do not use the consolidated carrier as a bit-exact historical cache replay path without reconciling that policy difference.",
+    "useHistoricalMedianClusterChainForPreservedCacheReplay": true
+  },
+  "retrained": false,
+  "runtimeLabelsRequired": false,
+  "runtimeReplayPerformed": false,
+  "scope": "measures-1-16 preserved raw/onset carrier plus frozen 36-feature/sequence/contextual model contracts",
+  "snapshotChecksumsVerified": {
+    "intro-correlation-safe-grid-event-selector-model.json": "00ab23fc7059137df6dddc92534f23881c0f780fcc1c93b8322ca255e378df24",
+    "intro-correlation-safe-sequence-event-model.json": "46c16e1ab5bbaafad08060e55ee2e98d2a11faefd50e4f9bd333727f7b23fd3e",
+    "intro-onset-spectrum-cache.json": "eceb7468560ca8a967cf5d2de581cbab5932b9843941488e443dcfbf2b4eb1e7",
+    "intro-raw-attack-cache.json": "698a57b57b47944b61516a6807a0eeb4b13e8096741d0fd6b2c44386e7ac72a9"
+  },
+  "sourceArchive": "historical-source-4d735846",
+  "sourceChecksumsVerified": {
+    "v143_contextual_prune_reference_free_carrier.py": "040f8cdf0d558f713aa69bbf8fdd14148a6e8b58256d5945e2d43da0a367db00",
+    "v143_contextual_prune_runtime.py": "dca9ced22399ed7efab44ebb2dd4512a7cc85efa9a306d9bc9a36fd3975c4c7b",
+    "v143_correlation_safe_fixed_count_reranker_freeze.py": "7715b0519d242c46e7add7f93691d9b81f0dd1fc6ef6a15183ef4c38aaba91f7",
+    "v143_intro_capture_onset_spectrum_cache.py": "26e10e9de23687cc8a92ab20159927b6b5ded8f76cec2a0846aab665aaf1b70a",
+    "v143_intro_capture_raw_attack_cache.py": "a1932b40829a385805ab109d9875c3f3ffac8a2bab67cbb98c9d68f5d6da8d54",
+    "v143_intro_learned_grid_event_selector.py": "0f86f1b97b478c004434c33027784337e45591fe599970f9cc17ea75b0d1b62d",
+    "v143_intro_raw_attack_temporal_diagnostic.py": "c177b91ab9d391f7530396106bb97e9a20219905d7bd2e40e4b5f0a6411101b8",
+    "v143_intro_sequence_event_model.py": "85837f1ed5e39e670553f5ff6b42fe89a3788442bc6a6f1ae7d8d8a694c612e9"
+  },
+  "sourceContract": {
+    "consolidatedCarrierUsesHistoricalMedianClusterOnset": false,
+    "consolidatedCarrierUsesWeightedClusterOnset": true,
+    "contextualFeatureCount": 15,
+    "gridFeatureCount": 36,
+    "historicalClusterOnsetPolicy": "median",
+    "onsetConstants": {
+      "BINS_PER_OCTAVE": 36,
+      "CQT_MIDI_MAX": 112,
+      "CQT_MIDI_MIN": 28,
+      "GUITAR_MIDI_MAX": 88,
+      "GUITAR_MIDI_MIN": 40,
+      "HOP_LENGTH": 128,
+      "ONSET_GROUP_TOLERANCE_SECONDS": 0.03,
+      "TARGET_SR": 22050
+    },
+    "rawProductionGridToleranceSeconds": 0.1,
+    "rawWideGridToleranceSeconds": 0.3,
+    "sequenceWindowsMs": [
+      50,
+      75,
+      100,
+      125,
+      150,
+      200
+    ]
+  },
+  "status": "PASS",
+  "verification": "v143-static-source-artifact-equivalence"
+}
+V143 STATIC SOURCE/ARTIFACT EQUIVALENCE: PASS
+RUNTIME REPLAY PERFORMED: False
+PRODUCTION MODIFIED: False
