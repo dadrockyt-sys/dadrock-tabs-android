@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { resend } from '@/lib/resend';
 import { createTabPdf } from '@/lib/createTabPdfPolished';
 import { createJimmyPaigeProfessionalPdf } from '@/lib/createJimmyPaigeProfessionalPdf';
+import { getJimmyPaigeProfessionalPdfFeatureState } from '@/lib/jimmyPaigeProfessionalPdfFeature';
 import { getDb } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
@@ -292,8 +293,10 @@ export async function POST(request) {
       });
     }
 
+    const professionalPdfFeature =
+      getJimmyPaigeProfessionalPdfFeatureState();
     const useProfessionalRenderer =
-      process.env.JIMMY_PAIGE_PROFESSIONAL_PDF_V1 === 'true';
+      professionalPdfFeature.enabled;
 
     let pdfBytes;
 
