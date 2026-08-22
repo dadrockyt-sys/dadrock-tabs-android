@@ -2,19 +2,21 @@
 
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
-Branch HEAD before this checkpoint update: `b40df94d76af3c6e432da0b8c20c723c298635a1`
+Branch HEAD before this checkpoint update: `5250c7629d428dcee3797ce946e81c68ffa2a4b6`
 
 ## Resume directive
 
 Resume **only** on `v143-contextual-prune-lobo`.
 
-The active product goal is now:
+Active product goal:
 
-> uploaded user audio → Jimmy PAIge / V143 reference-free analysis → musically placed render events → branded professional tab PDF.
+> `dadrocktabs.com/ai-tab` uploaded user audio → Jimmy PAIge / V143 reference-free analysis → musically placed render events → branded professional tab PDF.
 
-Do not modify `main` or enable production flags until the remaining analyzer-output quality gate has been validated.
+Keep this file updated as work advances so a new chat can resume directly from the repository state.
 
-The historical compatibility experiment remains complete and sealed. **Do not run another separator/GPU compatibility capture.** Its exact result remains:
+Do not modify `main` or enable production flags until the real uploaded-audio analyzer quality gate has been validated.
+
+The historical compatibility experiment remains complete and sealed. **Do not run another separator/GPU compatibility capture.** Its exact conclusion remains:
 
 ```text
 INTRO_CACHE_EXACT_COMPATIBLE
@@ -28,44 +30,32 @@ The product work below does not change those provenance conclusions.
 
 ---
 
-## What is now implemented on this branch
+## Stable product path already implemented
 
-### 1. Existing upload path preserved
+### Upload and analysis
 
-`app/ai-tab/page.js` still uploads user audio to private Vercel Blob storage and calls:
+`app/ai-tab/page.js` uploads permitted user audio to private Vercel Blob storage and calls:
 
 `/api/analyze-audio-tab`
 
-The UI now also preserves the analyzer response as `analysisMetadata` so the preview and purchased PDF receive the same musical evidence rather than only the flattened `generatedTab` string.
+The browser keeps the complete safe analyzer response in `analysisMetadata` so preview and purchased PDFs can receive the same evidence rather than only a flattened `generatedTab` string.
 
-### 2. Structured analyzer payload
+### Structured analyzer payload
 
-Added:
+`lib/jimmyPaigeAnalysisPayload.js`:
 
-`lib/jimmyPaigeAnalysisPayload.js`
-
-`app/api/analyze-audio-tab/route.js` now uses this contract.
-
-The payload:
-
-- preserves the legacy `generatedTab` text path;
+- preserves legacy `generatedTab`;
 - bounds/sanitizes generic note events;
 - preserves tuning, tempo, time signature, key, difficulty, confidence and techniques when supplied;
-- keeps the V143 Rhythm identity check fail-closed (`liveV143.referenceFree === true`);
-- projects reference-free V143 events through the established `v143RenderContract`;
-- returns `renderEvents` and `renderContractVersion` when valid structured events are available;
-- never invents measure/step placement in the browser or PDF layer;
+- requires V143 Rhythm identity to be reference-free (`liveV143.referenceFree === true`);
+- projects V143 raw events through `lib/v143RenderContract.js`;
+- returns `renderEvents` only from events that already contain authenticated musical placement;
+- does not infer missing measure/step placement in the browser or PDF layer;
 - never authorizes production promotion.
 
-### 3. Established V143 render contract reused
+### Established V143 structured render contract
 
-The professional path converged on the already-existing DadRock structured representation instead of creating a parallel notation format:
-
-- `lib/v143RenderContract.js`
-- `lib/createAiTabPdf.js`
-- `lib/createV143RhythmPdf.js`
-
-A V143 structured render event must already contain valid:
+A renderable event must already contain valid:
 
 ```text
 measure >= 1
@@ -75,103 +65,39 @@ fret 0..36
 MIDI pitch
 ```
 
-The renderer therefore consumes authenticated musical placement instead of deriving bar positions from PDF layout guesses.
+The renderer consumes this representation through:
 
-### 4. Jimmy PAIge professional PDF bridge
-
-Added:
-
-- `lib/jimmyPaigeProfessionalPdfContract.js`
+- `lib/v143RenderContract.js`
+- `lib/createAiTabPdf.js`
+- `lib/createV143RhythmPdf.js`
 - `lib/createJimmyPaigeProfessionalPdf.js`
 
-For reference-free Rhythm output with non-empty valid `renderEvents`, the bridge selects:
+### Preview and purchased PDF transport
 
-`v143-structured-rhythm`
-
-and uses `createAiTabPdf` / `createV143RhythmPdf`.
-
-For unsupported/incomplete structured evidence it falls back to the existing polished renderer rather than fabricating notation.
-
-### 5. Preview and final purchased PDF carry the same evidence
-
-The browser now sends structured analyzer metadata to both:
+Structured analyzer metadata already travels through both:
 
 - `/api/generate-tab-preview`
 - `/api/generate-tab-pdf`
 
-including `analysisEngine`, `renderEvents`, tuning, tempo, time signature, key signature, techniques and other safe metadata.
+PayPal/free-token verification and Resend delivery remain unchanged.
 
-The finished PDF route keeps existing PayPal/free-token verification and Resend attachment delivery unchanged.
+### Feature gate remains default-off
 
-### 6. Professional renderer remains feature-gated
-
-Feature gate:
-
-`JIMMY_PAIGE_PROFESSIONAL_PDF_V1`
-
-Activation condition:
+Professional renderer gate:
 
 ```text
 JIMMY_PAIGE_PROFESSIONAL_PDF_V1 === "true"
 ```
 
-Default with the variable absent or any other value:
+If absent/false, the current polished renderer remains active.
 
-**current polished renderer**.
-
-No production environment variable was enabled in this work.
-
-No production promotion was performed.
+No production environment variable has been enabled and no production promotion has been performed.
 
 ---
 
-## Upload-to-PDF transport validation
+## Previously validated renderer quality
 
-Validation artifact:
-
-`debug/v143-contextual-prune/jimmy-paige-upload-to-professional-pdf-path-v2.json`
-
-Validation commit:
-
-`fbf00e56c0054d0f833e0bf3597a1f0142f9ea68` — `Wire V143 render events through Jimmy PAIge PDF flow`
-
-Result:
-
-```text
-passed: true
-failedChecks: []
-featureGate: JIMMY_PAIGE_PROFESSIONAL_PDF_V1
-featureGateDefault: off
-structuredRhythmContract: v143-render-contract-v1
-mainModified: false
-productionPromotionPerformed: false
-```
-
-The guard confirms all of the following:
-
-- private audio upload remains intact;
-- analyzer request remains intact;
-- structured analyzer payload is used;
-- V143 reference-free identity still fails closed;
-- V143 render contract validates measure/step/string/fret;
-- analyzer result survives in browser state;
-- preview receives `renderEvents`;
-- purchased PDF receives `renderEvents` and musical metadata;
-- both professional renderer paths remain feature-gated;
-- current polished PDF remains the fallback;
-- structured Rhythm selects V143 only for reference-free Rhythm with usable events.
-
----
-
-## Actual structured PDF quality fixture — PASSED
-
-Fixture producer:
-
-`analyzer/run_jimmy_paige_v143_pdf_fixture.mjs`
-
-Workflow:
-
-`.github/workflows/v143-jimmy-structured-pdf-quality-fixture.yml`
+The synthetic/fixture structured renderer validation has already passed.
 
 Validation artifact:
 
@@ -179,33 +105,9 @@ Validation artifact:
 
 Validation commit:
 
-`b40df94d76af3c6e432da0b8c20c723c298635a1` — `Record Jimmy PAIge structured PDF quality validation`
+`b40df94d76af3c6e432da0b8c20c723c298635a1`
 
-The fixture exercised 40 valid render events through 28 measures and tested these technique classes:
-
-```text
-bend
-bend-release
-dead-note
-hammer-on
-let-ring
-muted-strum
-natural-harmonic
-palm-mute
-pinch-harmonic
-pre-bend
-pull-off
-slide-down
-slide-up
-sustain-tie
-tap
-trill
-vibrato
-```
-
-All 40 events survived projection and all 17 technique classes survived the V143 render contract.
-
-Actual PDF validation result:
+Fixture result:
 
 ```text
 passed: true
@@ -215,80 +117,133 @@ fullPageCount: 2
 previewPageCount: 2
 ```
 
-The validation also confirmed:
+The fixture exercised 40 valid events through 28 measures and retained all tested technique classes, including bend/bend-release, palm mute, slides, hammer-on, pull-off, harmonics, sustain, tap, trill and vibrato.
 
-- valid `%PDF-` headers;
-- real multi-page pagination;
-- full and preview PDFs are distinct;
-- title and DadRock branding are extractable;
-- visible `P.M.` palm-mute notation is present;
-- a bend-release token (`10b12r10`) is present;
-- natural harmonic notation (`<12>`) is present;
-- preview lock text (`FULL TAB LOCKED`) is present;
-- both full and preview page 1 rasterize successfully at `935 × 1210` pixels.
-
-The workflow stored visual/PDF evidence as a GitHub Actions artifact and committed only the compact validation JSON to the repository.
-
-This establishes that the **structured renderer itself can produce a real, branded, paginated professional-style PDF from valid V143 musical events**.
+This proves the structured PDF renderer works when valid musical events are supplied. The remaining blocker is real analyzer output quality.
 
 ---
 
-## What is still unproven / current product blocker
+## New work completed after the prior checkpoint
 
-The remaining blocker is no longer PDF generation or browser transport.
+### 1. Analyzer-output quality report added
 
-It is the quality/completeness of the **real V143 analyzer output for arbitrary uploaded audio**.
+New file:
 
-A professional result requires the analyzer to supply enough valid reference-free events carrying:
+`lib/v143AnalyzerQuality.js`
+
+Commit:
+
+`4542a9f15b09f0b6b9ce6980a908c7075b59a624` — `Add V143 analyzer output quality report`
+
+The report is deterministic and observational. It measures the V143 response without altering predictions or inventing notation.
+
+Metrics now calculated include:
+
+- reference-free identity;
+- raw event count;
+- raw events considered by the render contract;
+- valid render-event count;
+- render-event survival percentage;
+- playable string/fret coverage;
+- authenticated measure/16th-step placement coverage;
+- valid pitch coverage;
+- measure range and unique-measure count;
+- 16th-step coverage;
+- technique event/type coverage;
+- sustain coverage.
+
+Current conservative eligibility thresholds:
 
 ```text
-measure
-16th-step position
-string/fret fingering
-pitch
-technique/sustain information when detected
+minimum valid render events: 4
+minimum render-event survival: 70%
+minimum playable string/fret coverage: 70%
+minimum measure/step coverage: 70%
+minimum pitch coverage: 70%
 ```
 
-The PDF layer must not infer missing musical placement.
+These thresholds are **not** a production-quality claim. They are an initial fail-closed canary eligibility floor and must not be weakened merely to obtain a pass.
 
-Therefore the next validation target is:
+The report always contains:
 
-> take a real uploaded-audio V143 Rhythm response, project its raw events through `v143RenderContract`, measure render-event coverage/validity/technique retention, and render that exact response through the same professional PDF path.
+```text
+productionPromotionAuthorized: false
+```
 
-This should be treated as a **product canary**, not a historical compatibility replay.
+### 2. Quality report exposed by analyzer API payload
 
-Do not retrain, alter frozen V143 predictions, weaken thresholds, or launch another historical separator-family compatibility run to accomplish it.
+Commit:
+
+`5250c7629d428dcee3797ce946e81c68ffa2a4b6` — `Expose V143 analyzer quality metrics`
+
+`lib/jimmyPaigeAnalysisPayload.js` now returns:
+
+```text
+analysisQuality
+payloadContract.analyzerQualityGatePassed
+```
+
+for reference-free V143 responses.
+
+Legacy Lead/Bass behavior is unchanged.
+
+Important current state: the quality report is now visible, but the professional PDF bridge still qualifies V143 structured Rhythm primarily from `analysisEngine` plus non-empty `renderEvents`. The next code step is to make the renderer require the quality result as well.
 
 ---
 
-## Recommended next sequence
+## Current product blocker
 
-1. Verify the branch remains `v143-contextual-prune-lobo`.
-2. Inspect the current V143 Rhythm endpoint response contract and existing canary verification harness.
-3. Build a fail-closed analyzer-output quality report for a real audio request:
-   - raw event count;
-   - valid render-event count;
-   - percentage surviving `v143RenderContract`;
-   - measure range;
-   - step coverage;
-   - playable string/fret validity;
+The unresolved question is still:
+
+> Does the **real V143 Rhythm endpoint**, when driven by an arbitrary uploaded audio request through `/ai-tab`, produce enough valid reference-free events to create a trustworthy professional structured tab?
+
+The API now has the instrumentation needed to answer this objectively.
+
+No real-audio canary pass has yet been recorded in this checkpoint.
+
+---
+
+## Next steps — execute in this order
+
+1. **Wire analyzer quality into renderer eligibility.**
+   - carry `analysisQuality` from `app/ai-tab/page.js` to both preview and purchased-PDF routes;
+   - pass it into `createJimmyPaigeProfessionalPdf`;
+   - require `analysisQuality.passed === true` before selecting `v143-structured-rhythm`;
+   - otherwise fall back to the polished renderer rather than failing the user request.
+
+2. **Add regression verification for the quality gate.**
+   - valid fixture events must qualify;
+   - sparse/invalid V143 events must not qualify;
+   - legacy Lead/Bass must remain unaffected;
+   - production promotion must remain disabled.
+
+3. **Exercise a real V143 uploaded-audio canary.**
+   Capture the exact `/api/analyze-audio-tab` response metrics for a real Rhythm request and preserve a compact non-secret evidence artifact containing:
+   - quality result/failures;
+   - event survival and validity coverage;
+   - measure/step coverage;
    - technique/sustain coverage;
-   - reference-free identity.
-4. Render the exact returned `renderEvents` through `createV143RhythmPdf` and validate the PDF using the same structural/text/raster gates that just passed the fixture.
-5. Only after a real-audio canary passes should a separate decision be made about enabling `JIMMY_PAIGE_PROFESSIONAL_PDF_V1` in a preview/canary environment.
-6. Do not enable the production flag automatically.
+   - analyzer identity.
+
+4. **If the real analyzer quality gate passes, render that exact returned event set through the professional PDF path** and run the same PDF structural/text/raster checks already proven by the fixture.
+
+5. **Only after both real analyzer quality and exact-response PDF validation pass** should a separate decision be made about enabling `JIMMY_PAIGE_PROFESSIONAL_PDF_V1` in a Vercel preview/canary environment.
+
+6. Do **not** enable the production flag automatically.
 
 ---
 
 ## Non-negotiable boundaries
 
 - Work only on `v143-contextual-prune-lobo`.
+- Keep `docs/checkpoints/CURRENT_STATE.md` updated as meaningful steps complete.
 - Do not modify `main` during this research/product-canary phase.
 - Do not run another historical fresh compatibility separator capture.
 - Do not overwrite/delete the preserved compatibility run.
 - Do not close historical separator-family provenance from fresh compatibility evidence.
 - Do not retrain or replace frozen V143 models merely to make the PDF gate pass.
 - Do not manufacture measure/step data in the browser/PDF renderer.
-- Keep the legacy polished renderer as a fail-safe fallback.
+- Do not weaken analyzer-quality thresholds merely to produce a passing canary.
+- Keep the polished renderer as the safe fallback.
 - Keep `JIMMY_PAIGE_PROFESSIONAL_PDF_V1` default-off until explicitly promoted after canary validation.
 - Keep production promotion disabled until a separate explicit decision.
