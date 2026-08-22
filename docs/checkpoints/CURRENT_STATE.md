@@ -25,10 +25,12 @@ The assistant should then:
 
 - Repository: `dadrockyt-sys/dadrock-tabs-android`
 - Active research branch: `v143-contextual-prune-lobo`
-- Checkpoint parent / evidence head at creation: `9b0f417f8f927e6d5102e4c8bf6c42e3f6a4c10d`
-- Previous closed 17–113 checkpoint: `fd8905d34175f9f20d9973807fed18c1e23c737a`
+- Intro archive commit: `9b0f417f8f927e6d5102e4c8bf6c42e3f6a4c10d`
+- Closed 17–113 checkpoint: `fd8905d34175f9f20d9973807fed18c1e23c737a`
+- Historical Codespace intro source HEAD recorded by provenance: `4d735846fbd834cc4c722f2cb48727e4629647f1`
+- Previous continuity-rule checkpoint: `4e80db2498727a06aa0ddd29e298338b59d0b907`
 
-**Important:** the branch tip will move when this file or later research artifacts are committed. Always fetch the current branch tip instead of assuming `9b0f417f...` remains HEAD.
+**Important:** always fetch the current branch tip before writing. Do not assume any older checkpoint SHA remains HEAD.
 
 ---
 
@@ -42,7 +44,8 @@ Unless the user explicitly changes them:
 - Preserve historical evidence rather than rewriting contradictory or incomplete records.
 - Treat the closed 17–113 chain as immutable research evidence unless new evidence proves a factual error.
 - Current work should be read-only / forensic wherever possible.
-- Historical use of Codespaces is part of provenance; **measures 1–16 were trained in Codespaces**. The current "no Codespaces" preference means do not depend on Codespaces for new reconstruction work when GitHub evidence is sufficient.
+- Historical use of Codespaces is part of provenance; **measures 1–16 were trained in Codespaces**.
+- Do not require new Codespaces work when GitHub evidence is sufficient.
 
 ---
 
@@ -50,124 +53,204 @@ Unless the user explicitly changes them:
 
 ### Measures 17–113
 
-Measures **17–113 are formally closed as one research/provenance chain** at commit:
+Measures **17–113 are formally closed as one research/provenance chain** at:
 
 `fd8905d34175f9f20d9973807fed18c1e23c737a` — `Checkpoint V143 17-113 research closure`
 
-That closure includes the recovered historical 17–32 evidence and preserves the historical gap record rather than rewriting it.
+The recovered 17–32 evidence is especially important for the future 16→17 proof:
+
+- authoritative historical generator: `analyzer/v143_fresh_verse1_reference_free_capture.py`;
+- historical/current generator blob exact: `c8ea8eca33819fb506f06105f87075dadd133214`;
+- target boundary explicitly starts at measure **17** and ends at 32;
+- carrier lineage: direct Demucs6s Guitar plus BS-RoFormer Instrumental → Demucs6s Guitar;
+- deterministic separator: shifts 1, overlap 0.10, segment size 6, seed 143;
+- old uncommitted Verse1 carrier SHA-256: `fbb2c6ca28e1e142ea5fdbc8e55dd7b67d1a55009c179fe4e8e3ec3a02251e15`;
+- recovered generator reproduced that carrier SHA-256 exactly;
+- historical/current scoring core is blob-identical at SHA-256 `ee62a86adc5f60119d00b5b57a25ee8f0b06f4fe`;
+- historical target sequence replay was exact for 1051 events;
+- sealed contextual replay retained the frozen base threshold 0.27 and exact discrete selected-event keys.
+
+The 17–32 evidence-gap resolution is preserved at:
+
+`debug/v143-contextual-prune/measure-17-32-evidence-gap-resolution.json`
 
 Known research structure from the closed chain:
 
 - 17–96: closed development/research chain.
 - 97–113: closed reserve.
-- Historical evidence for 17–32 was recovered and incorporated into the provenance record.
+- 17–113: consolidated research provenance closure.
 
-Do not reopen 17–113 merely to make the 1–16 front end fit it.
+Do not reopen or modify 17–113 merely to make the intro fit.
 
 ---
 
-## Measures 1–16: historical truth now established
+## Measures 1–16: historical truth and archive
 
 - Measures **1–16 were historically trained in GitHub Codespaces**.
-- The original Codespace retained substantial intro-model evidence that was not previously present on the research branch.
-- A forensic snapshot was copied unchanged from the Codespace and archived on GitHub.
-- No retraining, model changes, threshold changes, or production edits were performed during archival.
+- A forensic snapshot was copied unchanged from the historical Codespace and archived on GitHub.
+- Archive commit: `9b0f417f8f927e6d5102e4c8bf6c42e3f6a4c10d`.
+- Archive location: `analyzer/v143-intro-1-16-evidence/codespace-snapshot/`.
+- `PROVENANCE.txt` records source HEAD `4d735846fbd834cc4c722f2cb48727e4629647f1` and states no retraining, threshold changes, model changes, or production edits were performed during capture.
+- The archive contains 52 historical `intro*.json` artifacts plus hashes/provenance.
 
-Archive commit:
+Important preserved caches/models include:
 
-`9b0f417f8f927e6d5102e4c8bf6c42e3f6a4c10d` — `Archive historical Codespace intro 1-16 evidence`
-
-Archive location:
-
-`analyzer/v143-intro-1-16-evidence/codespace-snapshot/`
-
-The archive contains:
-
-- 52 historical `intro*.json` artifacts.
-- `PROVENANCE.txt` describing the source branch/HEAD and capture context.
-- `SHA256SUMS.txt` containing SHA-256 hashes for the copied JSON evidence.
-
-The snapshot was safety-checked before commit for obvious secret-like JSON keys and GitHub file-size problems. The largest visible file was about 17.8 MB, below GitHub's normal single-file limit.
+- `intro-analysis-cache.json`
+- `intro-onset-spectrum-cache.json`
+- `intro-spectral-pitch-cache.json`
+- `intro-raw-attack-cache.json`
+- `intro-raw-attack-harmonic-cache.json`
+- `intro-correlation-safe-grid-event-selector-model.json`
+- `intro-correlation-safe-grid-event-selector-report.json`
+- the 0.27 candidate and 0.45 incumbent selector files
+- sequence-model artifacts
+- temporal-assignment, pitch-ranking, structured-event, repetition-recovery, and diagnostic artifacts.
 
 ---
 
-## Important 1–16 artifacts now preserved
+## Phase A carrier audit — completed forensic finding
 
-The snapshot includes historically significant artifacts such as:
+### Frozen base selector identified
 
-- `intro-sequence-event-model.json`
-- `intro-onset-group-sequence-model.json`
-- `intro-learned-onset-spectral-set-model.json`
-- `intro-onset-spectrum-cache.json`
-- `intro-spectral-pitch-cache.json`
-- `intro-analysis-cache.json`
-- `intro-raw-attack-cache.json`
-- `intro-raw-attack-harmonic-cache.json`
-- supervised temporal-assignment model/report artifacts
-- supervised pitch-ranker model/report artifacts
-- structured-event decoder model/report artifacts
-- repetition-recovery artifacts
-- multiple stage, harmonic-rank, raw-attack, sequence, selector, and diagnostic reports
+The archived active base selector is:
 
-This list is illustrative, not exhaustive. Use the archived directory as the authoritative inventory.
+`intro-correlation-safe-grid-event-selector-model.json`
+
+Its preserved contract is:
+
+- model: `v143-correlation-safe-grid-event-selector`;
+- training measures: **1–8**;
+- validation measures: **9–12**;
+- development measures: **1–12**;
+- diagnostic measures: **13–16**;
+- window: **100 ms**;
+- L2: **10.0**;
+- active decision threshold: **0.27**;
+- feature normalization arrays: **36 feature means + 36 feature standard deviations**;
+- linear weight vector: bias plus the 36 normalized feature inputs;
+- neutralized feature columns: **19, 26, 33**;
+- neutralized feature names:
+  - `attackMax:viewCorrelation`
+  - `earlyMean:viewCorrelation`
+  - `sustainMean:viewCorrelation`
+- neutralized raw value: 1.0;
+- professional reference required at runtime: false;
+- Verse1 reference used for training: false;
+- production modified: false.
+
+**Correction preserved:** the frozen window is **100 ms**, not 10 ms.
+
+The active selector file and `intro-correlation-safe-grid-event-selector-threshold027-candidate.json` have the same Git blob SHA (`2540c428333aeef8d1f4bb470ab3d02e99cb6b4d`), proving that the archived active model is literally the preserved 0.27 candidate. The 0.45 incumbent is a different blob.
+
+The selector report records 0.45 as the earlier best validation configuration, while later preserved repetition-recovery evidence explicitly refers to a **validated 0.27 base selector**. Preserve this as historical progression; do not rewrite the earlier report.
+
+### Diagnostic-value correction
+
+The previously cited **F1 ≈ 0.955 with 100% recall on measures 13–16** is verified, but it belongs to:
+
+`intro-correlation-safe-sequence-event-model-report.json`
+
+That sequence experiment reports diagnostic F1 `0.955223880597015`, recall `1.0`, and `productionPromotionAllowed: false`.
+
+It is **not** the diagnostic score of the frozen 0.27 base grid selector. The base correlation-safe selector report gives measures 13–16 diagnostic location F1 `0.8333333333333334` at its recorded earlier report configuration.
+
+Therefore the 0.955 number must never be used as evidence that the active frozen base selector itself achieved that diagnostic score.
+
+### What `intro-onset-spectrum-cache.json` proves
+
+The archived onset-spectrum cache is explicitly a reference-free physical-onset whole-spectrum carrier. It records, among other things:
+
+- sample rate 22050;
+- hop length 128;
+- 36 bins/octave;
+- MIDI spectrum range 28–112;
+- guitar MIDI range 40–88;
+- onset grouping tolerance 30 ms;
+- two candidate stem views;
+- per-onset `viewA` and `viewB` spectra for the windows:
+  - `attackMax`
+  - `earlyMean`
+  - `sustainMean`.
+
+Those window names line up directly with the three correlation-derived selector features that were neutralized in the frozen model. This establishes that the cache belongs to the historical frozen selector's feature lineage.
+
+However, **do not overclaim the dependency**: the archive does not preserve enough executable source to prove that this cache file itself was opened at runtime by the final selector rather than being an intermediate from which the final 36-vector carrier was assembled.
+
+### Deterministic replay limitation now established
+
+The historical checkpoint at source HEAD `4d735846...` references the generator/script:
+
+`analyzer/WINDOWS_ONE_SHOT_INTRO_TIMING.ps1`
+
+but that file is not present at the recorded source HEAD, is not in the copied Codespace snapshot, and repository searches have not recovered the late feature-assembly implementation.
+
+The copied snapshot also does **not** contain the checkpoint-referenced intermediates:
+
+- `intro-correlation-safe-grid-events-1-12.json`
+- `intro-correlation-safe-grid-events-13-16.json`
+- `intro-onset-rhythm-cache.json`
+- the referenced `ARTIFACTS.md` manifest.
+
+The earlier public historical selector at source HEAD is useful provenance, but it is an older stage (`intro-correlation-safe-grid-event-selector-v1`, threshold 0.45) and its flat named 36-feature ordering must **not** be silently substituted for the later active frozen selector's input assembly.
+
+**Phase A conclusion:** the final model bytes, 100 ms window, normalization, weights, neutralizations, threshold 0.27, split, and substantial reference-free carrier evidence are preserved. But the exact historical executable that transforms the raw/cache evidence into the final ordered 36-feature input vector is not currently preserved in GitHub evidence. Therefore the 52-file intro snapshot is **not, by itself, a complete raw-audio-to-prediction deterministic replay carrier**.
+
+Do not reconstruct missing late feature semantics from guesswork and label them historical truth.
 
 ---
 
 ## Current forensic question
 
-The remaining structural problem before claiming a clean **1–113 end-to-end research chain** is the **1–16 frozen inference/replay path and the 16→17 boundary**.
+Phase A has narrowed the remaining problem.
 
-The key question is:
+The next question is no longer simply whether `intro-onset-spectrum-cache.json` existed in the inference lineage; it demonstrably did. The unresolved issue is:
 
-> Was `intro-onset-spectrum-cache.json` only a historical Codespaces training/reference artifact, or was it required by the frozen 1–16 inference path?
+> Can the preserved intro carrier be joined to the independently recovered measure-17 carrier at a historically justified common boundary/schema **without inventing the missing late 36-feature assembly logic**?
 
-Do **not** infer the answer from the filename. Trace actual consumers, models, reports, and replay scripts.
+The 17-side generator is unusually useful here because it emits the same broad reference-free onset-spectrum concepts (`viewA`/`viewB`, `attackMax`, `earlyMean`, `sustainMean`) under a deterministic historical carrier that was regenerated byte-identically.
 
 ---
 
 ## Historical split to preserve
 
-The historical intro separation must remain intact while investigating:
-
 - **1–8:** training
 - **9–12:** validation
-- **13–16:** independent diagnostic
+- **13–16:** diagnostic only
 
-Earlier independent diagnostics for 13–16 were reported as approximately **F1 ≈ 0.955 with 100% recall**. Treat that as a claim to verify against preserved artifacts, not as a value to tune toward.
+Do not relabel 13–16 as a new untouched holdout. Do not use later sequence-model diagnostic success to rewrite the frozen base-selector history.
 
 ---
 
 ## Next objective
 
-Proceed with **GitHub-only, read-only forensics** unless a write artifact is explicitly needed for documentation.
+Proceed with **Phase B — research-only 16→17 boundary proof**.
 
-### Phase A — trace the frozen 1–16 carrier
+1. Read the end of the preserved intro onset-spectrum carrier (measure 16) and the recovered historical Verse1 generator contract (measure 17).
+2. Compare carrier schema and invariants at the boundary, including:
+   - sample rate;
+   - hop length;
+   - bins per octave and MIDI range;
+   - two-view stem lineage;
+   - onset grouping behavior;
+   - `attackMax` / `earlyMean` / `sustainMean` windows;
+   - timing/grid fields and measure numbering.
+3. Determine whether a common research carrier boundary can be proven independently of the missing intro 36-feature assembler.
+4. If the boundary can be proven, create a research-only boundary artifact documenting exactly what is proven and what is not.
+5. If it cannot be proven, record the irreducible source gap rather than changing either side.
+6. **Before any Phase C work, update and commit this checkpoint again.**
 
-1. Inventory the archived 1–16 artifacts and identify model/config/report relationships.
-2. Search repository history and scripts for all consumers/producers of:
-   - `intro-onset-spectrum-cache.json`
-   - `intro-sequence-event-model.json`
-   - `intro-onset-group-sequence-model.json`
-   - `intro-learned-onset-spectral-set-model.json`
-   - `intro-spectral-pitch-cache.json`
-   - related temporal-assignment / structured-event / pitch-ranking models.
-3. Determine the exact data required for **frozen inference**, distinguishing it from training-only/reference-only inputs.
-4. Verify the historical 1–8 / 9–12 / 13–16 split and diagnostic outputs from preserved evidence.
-5. Identify the exact prediction/inference carrier that can replay measures 1–16 without retraining.
+### Phase C — only if Phase B passes
 
-### Phase B — prove the boundary
-
-6. Compare the frozen measure-16 output/carrier with the established measure-17 entry conditions.
-7. Build a research-only boundary proof for **16→17**.
-8. Do not alter either side simply to make the handoff pass.
-
-### Phase C — close 1–113
-
-9. Only after independent 1–16 replay and the 16→17 boundary are proven, create the final provenance artifact joining:
+Only after the boundary proof is valid may the final provenance artifact join:
 
 `1–16 frozen intro → 17–96 closed development chain → 97–113 closed reserve`
 
-10. Update this file immediately after that milestone.
+A final 1–113 claim must clearly distinguish:
+
+- frozen model preservation;
+- carrier/schema continuity;
+- deterministic replay coverage;
+- any historical source gap that remains.
 
 ---
 
@@ -175,31 +258,54 @@ Proceed with **GitHub-only, read-only forensics** unless a write artifact is exp
 
 - Retraining 1–16 to reproduce later behavior.
 - Adjusting thresholds/tolerances to make 1–16 and 17–113 agree.
+- Substituting the older public v1 36-feature ordering for the missing later assembler.
+- Treating the sequence-model F1≈0.955 diagnostic as the frozen base selector's score.
 - Force-pushing over the 17–113 closure.
-- Treating the old Codespace as the only surviving source of truth now that its intro evidence has been archived on GitHub.
-- Assuming `intro-onset-spectrum-cache.json` is an inference dependency merely because it exists.
+- Reopening 17–113 to make the intro fit.
+- Calling `intro-onset-spectrum-cache.json` a proven direct runtime file dependency without consumer-source evidence.
+- Inventing missing generator semantics and presenting them as recovered history.
+- Production modification or promotion during this research closure.
+
+---
+
+## Important new commits / artifacts
+
+Evidence consulted in this Phase A audit includes:
+
+- `9b0f417f8f927e6d5102e4c8bf6c42e3f6a4c10d` — archived historical intro evidence;
+- source provenance HEAD `4d735846fbd834cc4c722f2cb48727e4629647f1`;
+- `fd8905d34175f9f20d9973807fed18c1e23c737a` — closed 17–113 research chain;
+- `analyzer/v143-intro-1-16-evidence/codespace-snapshot/intro-correlation-safe-grid-event-selector-model.json`;
+- `.../intro-correlation-safe-grid-event-selector-report.json`;
+- `.../intro-correlation-safe-grid-event-selector-threshold027-candidate.json`;
+- `.../intro-correlation-safe-grid-event-selector-threshold045-incumbent.json`;
+- `.../intro-correlation-safe-sequence-event-model-report.json`;
+- `.../intro-onset-spectrum-cache.json`;
+- `.../PROVENANCE.txt`;
+- `debug/v143-contextual-prune/measure-17-32-evidence-gap-resolution.json`;
+- `analyzer/v143_fresh_verse1_reference_free_capture.py`.
+
+No runtime or production code was changed during this audit. This checkpoint update is the only write authorized by the continuity rule.
 
 ---
 
 ## Codespace preservation note
 
-During the archive transfer, local Codespace working changes were intentionally preserved rather than destroyed, and the historical untracked training artifacts were not deleted. The GitHub archive is now the durable copy needed for current forensics.
+The historical Codespace remains part of provenance, but the copied GitHub archive is the durable first source for current forensics. Do not ask the user to reopen Codespaces merely to inspect preserved intro JSON evidence.
 
-Do not require the user to reopen Codespaces merely to inspect the 52 archived intro artifacts; read them from GitHub first.
+If some future independent source recovers the missing historical late feature assembler or omitted grid-event intermediates, verify hashes/provenance first and then append that evidence; do not rewrite this source-gap finding retroactively.
 
 ---
 
 ## Chat continuity workflow
 
-To avoid losing hours when a long chat crashes:
-
 1. **After every major work unit, commit an updated `docs/checkpoints/CURRENT_STATE.md` on `v143-contextual-prune-lobo` before beginning the next major work unit.**
-2. Include the latest evidence commit(s), conclusion, unresolved question, and next exact objective.
+2. Include latest evidence commit(s), conclusions, unresolved questions, and the next exact objective.
 3. Start a fresh chat when the UI becomes heavy rather than waiting for a crash.
-4. In the new chat, say only:
+4. In the new chat say:
    **`Continue DadRock from docs/checkpoints/CURRENT_STATE.md on branch v143-contextual-prune-lobo.`**
-5. The assistant should verify GitHub and continue directly from the checkpoint.
-6. Screenshots are secondary evidence once their underlying files/results have been preserved in GitHub.
+5. Verify GitHub and continue directly from the checkpoint.
+6. Screenshots are secondary evidence once their underlying repository evidence is preserved.
 
 ---
 
@@ -219,4 +325,4 @@ Never delete old provenance merely because a later conclusion is cleaner. Record
 
 ---
 
-_Last updated on 2026-08-21 (user local date) to make the major-work checkpoint discipline explicit._
+_Last updated on 2026-08-21 (user local date) after the Phase A frozen-intro carrier audit; next authorized work is the 16→17 boundary proof._
