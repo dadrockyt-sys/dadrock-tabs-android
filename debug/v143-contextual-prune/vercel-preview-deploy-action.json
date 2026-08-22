@@ -1,7 +1,13 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gate": "v143-vercel-preview-deploy",
   "branch": "v143-contextual-prune-lobo",
+  "credentialAliasesChecked": [
+    "VERCEL_TOKEN",
+    "VERCEL_ACCESS_TOKEN",
+    "VERCEL_API_TOKEN",
+    "VERCEL_CLI_TOKEN"
+  ],
   "vercelTokenAvailableInGitHubActions": false,
   "previewConfigPullExitCode": 99,
   "previewEnvironmentPresence": {
