@@ -1,144 +1,167 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 — LIVE PRIORITY: finish Rhythm end-to-end against a clean professional human holdout before Bass/Lead
+Updated: 2026-08-22 — LIVE PRIORITY: complete Rhythm end-to-end before Bass/Lead
 Branch: `v143-contextual-prune-lobo`
 
-## Safety / immutable rules
+## Immutable safety / product contract
 
-Resume **only** on `v143-contextual-prune-lobo`. Never modify `main`, merge this branch, alter/deploy live V143 Modal, promote Production, make payment, redeem customer token, send customer email, weaken quality thresholds, or relabel legacy Lead/Bass as professional structured output.
+Resume **only** on `v143-contextual-prune-lobo`. Never modify `main`, merge this branch, deploy/alter live V143 Modal, promote Production, make payments, redeem customer tokens, send customer emails, weaken quality thresholds, or relabel legacy Bass/Lead as professional structured output without separate authorization.
 
-Product contract: user-uploaded audio → selected instrument → reference-free analysis → authenticated structured events → professional preview/full PDF. Preview/full PDFs must derive from the exact same authenticated event stream; renderer/browser may not invent musical placement.
+Required product path:
+`user-uploaded audio → Rhythm selection → reference-free analysis → authenticated structured events → professional preview/full PDF → isolated post-freeze professional-human scoring`
+
+Preview/full PDF must derive from the exact frozen event stream. Renderer/browser may not invent musical placement.
+
+Professional human reference is scorer-only holdout material. Analyzer may never read/train/tune/select/infer from it. Every improvement after scoring must be general/reference-free and requires a fresh audio run from scratch before rescoring.
 
 Save this checkpoint frequently.
 
-## Completion order / packaging
+## Required completion order / finalized folders
 
-1. Rhythm first. Complete only after fresh uploaded-audio-equivalent analysis is frozen reference-free, exact PDF event fidelity is 100%, and isolated post-hoc scoring against the professionally human-written Rhythm TAB is near 100% with no critical musical mismatches. Then package as **`Final Rhythm Pipeline`**.
-2. Bass second. Use finalized Rhythm architecture as the mold; adapt instrument-specific separation/range/tuning/string mapping/techniques/scoring/rendering. User will provide Bass professional holdout when scoring is ready. Then package **`Final Bass Pipeline`**.
-3. Lead third. Again mold from finalized Rhythm architecture. User will provide Lead professional holdout when scoring is ready. Then package **`Final Lead Pipeline`**.
+1. Rhythm: near-100 professional human agreement, zero critical mismatches, exact PDF-event fidelity 1.0 → package **`Final Rhythm Pipeline`**.
+2. Bass: mold from finalized Rhythm architecture; user supplies Bass professional reference when scoring is ready → package **`Final Bass Pipeline`**.
+3. Lead: mold from finalized Rhythm architecture; user supplies Lead professional reference when scoring is ready → package **`Final Lead Pipeline`**.
 
-Do not ask for Bass/Lead references early.
+Bass remains paused until Rhythm is truly complete.
 
-Professional references are benchmark-only holdouts. Analyzer must never read/train/tune/select/infer from them. Human reference may be opened only after analyzer output and exact PDF-driving events are frozen. Scorer diagnostics may guide later general/reference-free algorithm changes, but each rescore requires a fresh audio run from scratch.
-
-## Rhythm structural/product baseline — GREEN, final human score OPEN
+## Rhythm real-audio structural baseline — GREEN, musical holdout score still OPEN
 
 Approved audio fixture: `public/gomywayfullaitest.m4a`.
 
-Existing real-audio evidence:
-- analyzer `v143-reference-free-rhythm`, version `v143-reference-free-rhythm-output-v2`
-- reference-free, deterministic separator seed 143, professional reference not used
+Existing real-audio proof:
+- engine `v143-reference-free-rhythm`, output version `v143-reference-free-rhythm-output-v2`
+- reference-free; deterministic separator seed 143; professional reference not used
 - 358 valid render events
-- 112 unique measures, measures 1..113, all 16 grid steps represented
+- measures 1..113, 112 unique measures, all 16 grid steps represented
 - 25 technique events
 - sustain coverage 358/358
 - tempo 129.19921875, 4/4, E Standard
-- exact-response full/preview PDFs rendered, 4 pages each
-- compact PDF report says `exactReturnedRenderEventsUsed:true`
+- prior exact-response preview/full PDFs rendered from those 358 events
 
 Evidence:
 - `debug/v143-contextual-prune/ai-tab-real-audio-canary.json`
 - `debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json`
 - `.github/workflows/v143-ai-tab-real-audio-canary.yml`
-- raw product payload lives only in short-retention artifact `.canary/v143-product-output.json`
 
-Structural consistency is not completion; musical accuracy against the clean professional holdout remains unproven.
+Structural consistency is not final musical correctness.
 
-## Human-reference inventory — IN PROGRESS / DO NOT FINAL-SCORE YET
+## Human professional Rhythm reference — CLEAN HOLDOUT NOT YET COMPLETE
 
-Confirmed:
-- emailed `ds-music-are-you-gonna-go-my-way-remastered-2025-lenny-kravitz-rhythm-tab.pdf` is generated DadRock output, **not** holdout ground truth
-- Library image `1000116180.jpg` is a different dark-theme professional tablature source for *Are You Gonna Go My Way*, showing Chorus measures 33–35, labels including `G6`, `A(tp2)`, `E`, `D`, exact string/fret stacks, rhythm notation and lyrics; treat as holdout material only
-- Library images `1000116132.jpg`, `1000116183.jpg`, and `1000116184.jpg` are DadRock/Jimmy PAIge generated/development proof material, not clean human holdout ground truth
-- Library search around the professional screenshot surfaced historical Chorus 33–35 development screenshots/scripts explicitly stating professional-reference scoring/development usage; therefore those historical Chorus artifacts are contaminated and cannot become the clean final completion holdout
-- complete professional human source has not yet been reconstructed/inventoried event-by-event; partial screenshots cannot authorize final score
+Accessible clean material currently confirmed:
+- Library `1000116180.jpg`: dark-theme professional human tablature, Chorus measures 33–35, labels `G6`, `A(tp2)`, `E`, `D`, exact fret stacks/rhythm/lyrics.
 
-Formal provenance inventory:
+Explicitly **not** clean final holdout:
+- DadRock/Jimmy generated/development images `1000116132.jpg`, `1000116183.jpg`, `1000116184.jpg`
+- emailed DadRock generated Rhythm PDFs
+- historical coarse fixtures/benchmarks
+- old Chorus 33–35 development artifacts that explicitly used professional reference for scoring/development
+- contextual-prune development material where `developmentReferenceUsed:true`
+
+Formal inventory:
 - `7ee4aedae7f506eb7c7e2df7eb29403fd64e42dc` — `validation/rhythm_holdout/reference/reference-inventory.json`
-- sets `completeReferenceAvailable:false`, `finalScoringAuthorized:false`
-- forbids runtime access, training, tuning and candidate selection from the human reference; scoring post-freeze only
+- `completeReferenceAvailable:false`
+- `finalScoringAuthorized:false`
 
-Strict source/reference completeness protection added:
-- `10ae14101cff959a7b90822b33c44df229ad0b61` — strengthened `validation/rhythm_holdout/reference/reference.schema.json`
-- final reference must now explicitly assert `transcribedFromCompleteSource:true`, `source.completeSource:true`, source `pageCount`, source SHA-256, and a contiguous `measureRange`
-- `4169e44522815539cdc4a299730a9ca8e32d53da` — `validation/rhythm_holdout/verify_reference_completeness.py`
-- verifier checks freeze/PDF safety **before opening the reference**, then rejects partial/non-contiguous references, duplicate onset objects, duplicate note identities, invalid string/fret/MIDI mappings, incomplete source provenance, or inconsistent measure counts
-- this new completeness verifier still needs to be wired into the synthetic self-test/final scoring orchestration before the holdout harness is considered fully closed
+Some earlier uploads may no longer be loadable. If the complete clean professional source cannot be recovered, it will need to be re-uploaded when final scoring is ready. Do not block reference-free pipeline work on that yet.
 
-Historical/contaminated diagnostics are not final holdout authority:
-- `analyzer/fixtures/gomyway2_full_tab_reference.json`
-- `public/training/v143-musical-reconstruction-calibration/contextual-prune-freeze-manifest.json` (`developmentReferenceUsed:true` historically)
-- `analyzer/modal_analyzer_v7_human_reference_benchmark.py`
-- `analyzer/modal_analyzer_v7_full_song_timeline_benchmark.py`
-- `analyzer/fixtures/gomyway_full_chord_sustain_reference.json`
+## Holdout architecture — STRICT SELF-TEST GREEN
 
-Some previously uploaded files may no longer be loadable. If the complete professional human Rhythm source cannot be recovered from accessible Library/history, it will need to be re-uploaded when final scoring is ready. Do not block current reference-free pipeline work on that yet.
-
-## Isolated Rhythm holdout harness — CORE SELF-TEST GREEN; STRICT COMPLETENESS TEST UPDATE PENDING
-
-Scorer-only files:
-- `validation/rhythm_holdout/README.md`
+Core files:
 - `validation/rhythm_holdout/canonical.py`
 - `validation/rhythm_holdout/freeze_rhythm_analysis.py`
 - `validation/rhythm_holdout/verify_pdf_event_fidelity.py`
 - `validation/rhythm_holdout/verify_runtime_isolation.py`
 - `validation/rhythm_holdout/verify_reference_completeness.py`
-- `validation/rhythm_holdout/reference/reference.schema.json`
 - `validation/rhythm_holdout/score_rhythm_holdout.py`
-- `.github/workflows/rhythm-professional-holdout-self-test.yml`
+- `validation/rhythm_holdout/run_final_holdout_gate.py`
+- `validation/rhythm_holdout/reference/reference.schema.json`
+- `validation/rhythm_holdout/reference/reference-inventory.json`
+- `validation/rhythm_holdout/reference/.gitignore`
 
-Existing observed synthetic self-test bot evidence `cec658a32ecfd952ced917ba270fece6f1f1007b` passed the original core harness:
+Important commits:
+- `10ae14101cff959a7b90822b33c44df229ad0b61` — reference schema now requires complete-source provenance, page count, source SHA-256, `transcribedFromCompleteSource:true`, contiguous measure range.
+- `4169e44522815539cdc4a299730a9ca8e32d53da` — strict reference completeness verifier. It validates frozen/PDF safety **before opening the reference**, then rejects partial/non-contiguous/duplicate/inconsistent ground truth.
+- `ac0fd9f2587ab4f5568c6ee3d4d980792478e4d2` — self-test updated to enforce completeness and prove partial references hard-fail.
+- bot evidence `7e5085c77aa4248890b652767f2784a7d881bebe` (later refreshed by bot) — strict self-test green.
+- `669f4445d6b98391754de25276cd6cb1ed54b7cf` — `reference/.gitignore` prevents real professional source/event transcription being committed; only schema/inventory/policy remain in repo.
+- `4f9c0d83686f56853a5b6ba2edb1035ed323a542` — mandatory final wrapper `run_final_holdout_gate.py` binds completeness + scorer + frozen/PDF hashes into one fail-closed final result.
+- `21c4e08eaa4dae8c798a65a3a23f37b0925ea40c` — README updated with exact final sequence/storage policy.
+
+Latest observed strict synthetic evidence (`debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json`):
 ```text
+schemaVersion: 2
 runtimeIsolationPassed: true
+syntheticReferenceCompletenessPassed: true
+syntheticReferenceComplete: true
+syntheticSourceComplete: true
+syntheticContiguousMeasureCoverage: true
+referenceOpenedOnlyAfterFreezeValidation: true
 syntheticPerfectScorePassed: true
 syntheticPdfEventFidelity: 1.0
 syntheticCriticalMismatchCount: 0
+partialReferenceHardFailurePassed: true
 negativeSafetyTestsPassed: true
-usesSyntheticReferenceOnly: true
 realProfessionalReferenceOpened: false
 passed: true
 ```
 
-Next harness task: update the synthetic fixture to satisfy the stricter complete-source schema and run `verify_reference_completeness.py` before `score_rhythm_holdout.py`.
+This proves holdout machinery only, not real transcription accuracy.
 
-## Exact structured-event → PDF identity — DIRECT PROOF GREEN
+## Exact authenticated event → PDF identity — DIRECT PROOF GREEN
 
-Fixes:
-- `36d7815bce80571176b5a09fa507d5493af60461` — real-audio canary records `referenceRuntimeInputUsed:false`
-- `2f7e35f26905b082ef9e7571b539794838def96f` — render projection idempotent; authenticated `eventIndex` preserved
-- `5892a8b8a6c976d50e94438fb8149a02a4e5e39a` — `createAiTabPdf` fail-closes on validated authenticated Rhythm events
-- `d50adfe58db499ae1eb3c9d470108b1765731ef3` — direct identity verifier
-- `23909503afa0de7337d43aa419779627075fbbfe` — committed direct proof `debug/v143-contextual-prune/rhythm-render-contract-idempotence.json`
+Bug fixed: a second projection could previously compact/reset `eventIndex`, risking broken legato connector identities despite equal event counts.
 
-Verified `[0,2,4]` gapped identities, legato target/continuation identity, exact second projection equality, exact validation equality, `passed:true`, Production unchanged.
+Key commits:
+- `2f7e35f26905b082ef9e7571b539794838def96f` — projection is idempotent and preserves existing authenticated event IDs.
+- `5892a8b8a6c976d50e94438fb8149a02a4e5e39a` — `createAiTabPdf` fail-closes on validated authenticated Rhythm events.
+- `23909503afa0de7337d43aa419779627075fbbfe` — direct proof `debug/v143-contextual-prune/rhythm-render-contract-idempotence.json`.
 
-## Fresh real-audio pre-holdout gate — IMPLEMENTED, RESULT PENDING
+Verified gapped IDs `[0,2,4]`, legato source/target identity, exact second-projection equality and exact validation equality. Production unchanged.
 
-Files/commits:
-- `32b538fc2b7b1a23a3f47aa66bbaa6c528d0faa8` — prepare exact structured freeze payload
-- `a185760b134e38b548711d928b24e559530f9b40` — render professional preview/full PDF from frozen events only
-- `16bc56a5885802c194a77864553681b7634b7112` — freeze records source-audio SHA-256/bytes
-- `8066dd24494ba7c550c3c0481d4932cf6e45470c` — `.github/workflows/rhythm-professional-preholdout-real-audio.yml`
+## Fresh real-audio pre-holdout freeze/PDF gate — CODED, authoritative result still pending
 
-Workflow order: runtime isolation → fresh reference-free Modal audio analysis → structured payload → freeze/hash exact events → render preview/full from frozen events → prove PDF event hash equals frozen hash exactly → preserve evidence. Human reference is never opened in this workflow.
+Committed machinery:
+- `32b538fc2b7b1a23a3f47aa66bbaa6c528d0faa8` — raw product response → structured freeze input only after explicit no-reference safety checks.
+- `a185760b134e38b548711d928b24e559530f9b40` — render preview/full professional PDFs from frozen events only.
+- `16bc56a5885802c194a77864553681b7634b7112` — freeze records source-audio SHA-256/bytes.
+- `8066dd24494ba7c550c3c0481d4932cf6e45470c` — `.github/workflows/rhythm-professional-preholdout-real-audio.yml`.
 
-Expected compact evidence `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` is still not present at last check. Do not launch duplicate expensive canaries until the existing attempt is diagnosed/observed.
+Required proof from this gate:
+1. fresh approved user-upload-equivalent audio analysis
+2. `referenceFree:true`
+3. `professionalReferenceUsed:false`
+4. `referenceRuntimeInputUsed:false`
+5. exact frozen event hash
+6. professional preview/full PDF generated from frozen events
+7. PDF event hash exactly equals frozen hash; fidelity 1.0
+8. human reference remains sealed/unopened
 
-## Immediate Rhythm actions
+Expected compact evidence `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` is still absent. Do not call this gate green yet.
 
-1. Wire strict reference completeness validation into the synthetic self-test and make that gate green.
-2. Observe/diagnose the existing fresh real-audio pre-holdout workflow without starting duplicate GPU work.
-3. Continue checkpointing frequently.
-4. Finish recovering the complete clean professional Rhythm source when possible; never substitute contaminated historical Chorus labels or DadRock-generated PDFs.
-5. When complete source is available: fresh audio → analyzer → freeze/hash → exact PDF → reference completeness verifier → isolated scorer.
-6. If below 0.99 or any critical mismatch, improve only general/reference-free algorithms, rerun audio from scratch, refreeze, regenerate PDF, rescore.
-7. Only after near-100 + zero critical mismatches + exact PDF fidelity create **`Final Rhythm Pipeline`**.
+## Static preflight diagnostic — RUNNING / NOT YET GREEN
+
+A CPU-only preflight was added to exercise the exact raw-response → structured payload → freeze → professional PDF → hash-fidelity glue before spending another GPU run:
+- `e89b206a0d8b7dcfea2a86804bd973f902330c0a` — initial static workflow.
+- `92d66619cfdb2864d573f7c64c57dc5bd391ea46` — self-diagnosing version with per-stage outcomes and 400 synthetic authenticated events.
+- workflow `.github/workflows/rhythm-preholdout-static-preflight.yml`.
+
+Expected diagnostic `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json` has not appeared yet. Continue observing/diagnosing this CPU gate before retriggering expensive real-audio GPU work.
+
+## Immediate next actions
+
+1. Get `rhythm-preholdout-static-preflight` to emit a diagnostic and pass.
+2. Then diagnose/retrigger exactly one fresh real-audio pre-holdout GPU run if necessary; require frozen audio/event hashes + exact professional PDF fidelity 1.0 and no-reference flags.
+3. Keep saving this checkpoint frequently.
+4. Recover/re-supply a **clean complete** professional Rhythm source only when the reference-free freeze/PDF evidence is safely locked.
+5. Run: freeze/PDF proof → reference completeness verifier → isolated professional scorer → `run_final_holdout_gate.py`.
+6. If score <0.99 or any critical mismatch, change only general/reference-free algorithms; rerun audio from scratch and rescore.
+7. Only after the real gate passes create **`Final Rhythm Pipeline`**.
 
 ## Bass — GREEN DIAGNOSTICS, PAUSED
 
 No new Bass capability work before Rhythm completion.
-- separation/pitch run `32611529763` passed
-- note/timing/playability run `32611818648` passed
-- conservative techniques run `32612166508` passed
-- harmonic run `32613012696` passed safe abstention; harmonic remains unproven
-- structured integration run `32613450912` source `8a668f9a4af966b8abf14034b975a36d6ed7d587` completed success
+- separation/pitch `32611529763` passed
+- note/timing/playability `32611818648` passed
+- conservative techniques `32612166508` passed
+- harmonic `32613012696` passed safe abstention; harmonic remains unproven
+- structured integration `32613450912` at `8a668f9a4af966b8abf14034b975a36d6ed7d587` completed success
