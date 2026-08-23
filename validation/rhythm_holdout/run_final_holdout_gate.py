@@ -93,6 +93,8 @@ def main() -> int:
         "sourceComplete": completeness.get("sourceComplete") is True,
         "contiguousMeasureCoverage": completeness.get("contiguousMeasureCoverage") is True,
         "referenceOpenedOnlyAfterFreezeValidation": completeness.get("referenceOpenedOnlyAfterFreezeValidation") is True,
+        "v143RuntimeSafetyVerified": completeness.get("v143RuntimeSafetyVerified") is True,
+        "runtimeLabelsNotRequired": completeness.get("runtimeLabelsRequired") is False,
         "professionalScorePassed": score.get("rhythmComplete") is True,
         "near100ProfessionalGatePassed": score.get("near100ProfessionalGatePassed") is True,
         "zeroCriticalMismatches": int(score.get("criticalMismatchCount") or 0) == 0,
@@ -106,7 +108,7 @@ def main() -> int:
     failed = [name for name, passed in checks.items() if not passed]
 
     report = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "instrument": "rhythm",
         "gate": "rhythm-final-professional-holdout",
         "minimumProfessionalScore": args.minimum,
