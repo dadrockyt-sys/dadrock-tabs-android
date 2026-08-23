@@ -192,6 +192,11 @@ jobs:
           if [ -s "$RESULT_PATH" ]; then cp "$RESULT_PATH" /tmp/bass-canary-evidence/result.json; fi
           if [ -s "$START_PATH" ]; then cp "$START_PATH" /tmp/bass-canary-evidence/start.json; fi
 
+          # Generated action/result evidence modifies the checkout. Preserve it
+          # in /tmp, restore a clean Git worktree, then rebase safely onto any
+          # concurrent checkpoint-only branch commits before restoring evidence.
+          git reset --hard HEAD
+          git clean -f -- "$ACTION_PATH" "$RESULT_PATH"
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
 
