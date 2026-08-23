@@ -1,0 +1,192 @@
+name: Rhythm Pre-Holdout Static Preflight V2
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - 'validation/rhythm_holdout/**'
+      - 'app/ai-tab/page.js'
+      - 'app/api/analyze-audio-tab/route.js'
+      - 'app/api/generate-tab-preview/route.js'
+      - 'app/api/generate-tab-pdf/route.js'
+      - 'lib/v143RenderContract.js'
+      - 'lib/v143AnalyzerQuality.js'
+      - 'lib/jimmyPaigeAnalysisPayload.js'
+      - 'lib/createJimmyPaigeProfessionalPdf.js'
+      - 'lib/createAiTabPdf.js'
+      - 'lib/createV143RhythmPdf.js'
+      - '.github/workflows/rhythm-preholdout-static-preflight-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rhythm-preholdout-static-v2-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  static-preflight-v2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out exact triggering revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install locked dependencies
+        id: install
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          mkdir -p .preholdout-static-v2
+          npm ci --ignore-scripts 2>&1 | tee .preholdout-static-v2/install.log
+
+      - name: Run authoritative static pre-holdout runner
+        id: preflight
+        if: ${{ steps.install.outcome == 'success' }}
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          # The workflow owns persistence. Disable the runner's internal
+          # best-effort CI git push to avoid cross-path evidence races.
+          GITHUB_ACTIONS=false bash validation/rhythm_holdout/run_static_preholdout_preflight.sh \
+            "$GITHUB_WORKSPACE/.preholdout-static-v2" \
+            2>&1 | tee .preholdout-static-v2/preflight.log
+
+      - name: Persist canonical schema-v7 evidence and run identity
+        if: ${{ always() }}
+        env:
+          INSTALL_OUTCOME: ${{ steps.install.outcome }}
+          PREFLIGHT_OUTCOME: ${{ steps.preflight.outcome }}
+        run: |
+          set -euo pipefail
+          mkdir -p .preholdout-static-v2 debug/v143-contextual-prune
+
+          if [ "$INSTALL_OUTCOME" != 'success' ]; then
+            python - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+
+          log_path = Path('.preholdout-static-v2/install.log')
+          lines = log_path.read_text(encoding='utf-8', errors='replace').splitlines()[-24:] if log_path.exists() else []
+          clean = []
+          for line in lines:
+              line = re.sub(r'(?i)(token|secret|authorization|password)(\s*[:=]\s*)\S+', r'\1\2[REDACTED]', line)
+              clean.append(line[:500])
+          report = {
+              'schemaVersion': 7,
+              'gate': 'rhythm-preholdout-static-preflight',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'passed': False,
+              'failedStage': 'install-locked-dependencies',
+              'exitStatus': 1,
+              'failureLogTail': clean,
+              'usesSyntheticAudioResponseOnly': True,
+              'realProfessionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('.preholdout-static-v2/report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          PY
+          elif [ ! -s .preholdout-static-v2/report.json ]; then
+            python - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+
+          log_path = Path('.preholdout-static-v2/preflight.log')
+          lines = log_path.read_text(encoding='utf-8', errors='replace').splitlines()[-24:] if log_path.exists() else []
+          clean = []
+          for line in lines:
+              line = re.sub(r'(?i)(token|secret|authorization|password)(\s*[:=]\s*)\S+', r'\1\2[REDACTED]', line)
+              clean.append(line[:500])
+          report = {
+              'schemaVersion': 7,
+              'gate': 'rhythm-preholdout-static-preflight',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'passed': False,
+              'failedStage': 'static-runner-missing-report',
+              'exitStatus': 1,
+              'failureLogTail': clean,
+              'usesSyntheticAudioResponseOnly': True,
+              'realProfessionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('.preholdout-static-v2/report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          PY
+          fi
+
+          cp .preholdout-static-v2/report.json \
+            debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json
+
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads(Path('.preholdout-static-v2/report.json').read_text(encoding='utf-8'))
+          run = {
+              'schemaVersion': 1,
+              'gate': 'rhythm-preholdout-static-preflight-v2-run',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'runId': os.environ.get('GITHUB_RUN_ID'),
+              'runAttempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+              'actor': os.environ.get('GITHUB_ACTOR'),
+              'eventName': os.environ.get('GITHUB_EVENT_NAME'),
+              'ref': os.environ.get('GITHUB_REF'),
+              'installOutcome': os.environ.get('INSTALL_OUTCOME'),
+              'preflightOutcome': os.environ.get('PREFLIGHT_OUTCOME'),
+              'reportPassed': report.get('passed') is True,
+              'failedStage': report.get('failedStage'),
+              'reportSchemaVersion': report.get('schemaVersion'),
+              'realProfessionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('debug/v143-contextual-prune/rhythm-preholdout-static-v2-run.json').write_text(
+              json.dumps(run, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(run, indent=2))
+          PY
+
+          git add \
+            debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json \
+            debug/v143-contextual-prune/rhythm-preholdout-static-v2-run.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record fresh Rhythm static preflight evidence'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce green canonical report
+        if: ${{ always() }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('.preholdout-static-v2/report.json').read_text(encoding='utf-8'))
+          if report.get('schemaVersion') != 7 or report.get('passed') is not True:
+              raise SystemExit(
+                  f"Static preflight failed: stage={report.get('failedStage')} schema={report.get('schemaVersion')}"
+              )
+          print('Fresh Rhythm static preflight PASSED')
+          PY
