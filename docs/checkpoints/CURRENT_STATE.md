@@ -4,7 +4,7 @@ Updated: 2026-08-23
 Branch: `v143-contextual-prune-lobo`
 Priority: **complete Rhythm end-to-end before Bass/Lead**.
 Latest functional commit under test: `400edb3febfa32626f7830d641f641c9325a93bf` — `Verify AI PDF router rejects invalid V143 fallback`.
-Latest workflow-stability commit: `741a8bf7512a4b2e4c49f461301b0fce1cc98dcd` — `Stabilize Rhythm static workflow revision and concurrency`.
+Latest workflow-stability commit: `8f00a6be802f2d0ff9ce3de69ba85b3ab7b617ac` — `Persist early Rhythm static dependency failures`.
 
 ## Absolute rules
 
@@ -105,14 +105,15 @@ Recent synthetic fixture repair: `126a2e5256742a9970bdc62a4db47122dc40e5d3` adde
 
 ### Latest CPU observation and workflow repair
 
-The user reported the CPU workflows had completed, but the repository still exposed only stale static schema v4 and self-test schema v3 evidence. Because the current workflow checked out the mutable branch head instead of the exact triggering revision, repeated rapid commits/workflow overlap could test a different tree than `GITHUB_SHA` and race evidence writes.
+The user reported the CPU workflows had completed, but the repository still exposed only stale static schema v4 and self-test schema v3 evidence. Because the prior static workflow checked out the mutable branch head instead of the exact triggering revision, repeated rapid commits/workflow overlap could test a different tree than `GITHUB_SHA` and race evidence writes.
 
-`741a8bf7512a4b2e4c49f461301b0fce1cc98dcd` fixes the standalone static gate orchestration only:
-- checkout is now exactly `${{ github.sha }}`;
-- a branch-scoped concurrency group cancels older overlapping static runs;
-- renderer/test behavior, safety thresholds, production, Modal and professional reference handling were not changed.
+`741a8bf7512a4b2e4c49f461301b0fce1cc98dcd` changed the standalone static gate to exact `${{ github.sha }}` checkout and added branch-scoped concurrency cancellation for older overlapping static runs.
 
-A fresh CPU static run from this exact revision is now the next authoritative evidence. Do not use the stale schema v4 file to diagnose the renderer.
+`8f00a6be802f2d0ff9ce3de69ba85b3ab7b617ac` adds fail-closed dependency-install evidence: `npm ci --ignore-scripts` is tee'd to a local log, and if dependency installation fails before the main runner starts, a sanitized schema-v7 `install-locked-dependencies` diagnostic is committed. This closes the earlier evidence blind spot where a workflow could finish before the runner without updating the proof file.
+
+Neither orchestration change modifies renderer behavior, musical thresholds, Modal/Production, payment paths, or professional-reference access.
+
+A fresh CPU static run from `8f00a6be...` is now the next authoritative evidence. Do not use the stale schema-v4 file to diagnose the renderer.
 
 ## Fresh real-audio pre-holdout workflow
 
@@ -123,7 +124,7 @@ After CPU turns green, strengthen that workflow's compact report with explicit r
 
 ## Immediate next steps
 
-1. Poll the static evidence generated from `741a8bf...`; require schema v7 and inspect `passed`/`failedStage`/`failureLogTail`.
+1. Poll the static evidence generated from `8f00a6be...`; require schema v7 and inspect `passed`/`failedStage`/`failureLogTail`.
 2. If static is red, fix only the concrete current diagnostic; do not weaken product/scoring contracts.
 3. If static is green, stabilize/re-run the consolidated self-test so schema v6 is produced without overlapping evidence-write races.
 4. Save this file after each meaningful result.
