@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 20:47 local
+Updated: 2026-08-22 20:56 local
 Branch: `v143-contextual-prune-lobo`
 
 ## Product contract
@@ -62,30 +62,36 @@ Quality thresholds remain fail-closed: minimum 4 valid render events and 70% min
 
 Historical `bass_technique_diagnostics_v7.py` is reference-guided and must **not** be reused as the reference-free professional Bass engine.
 
-## LIVE STEP — isolated Bass real-audio canary ACTIVE
+## LIVE STEP — isolated Bass real-audio canary harness fixed; rerun active
 
-Canary files:
+Run `32610329984` completed failure, but the failure was a harness/import failure and **did not evaluate Bass musical quality**.
 
-- `analyzer/bass_real_audio_canary_modal.py`
-- `analyzer/verify_bass_real_audio_canary.py`
-- `.github/workflows/bass-real-audio-canary.yml`
+Saved evidence:
 
-Initial trigger commit `9b50bb6c6049f16febfc75d9b2f70c089700ce72` produced no visible branch evidence after the bounded workflow window, so the workflow was safely retriggered with an early heartbeat in commit:
+- `debug/v143-contextual-prune/bass-real-audio-canary-action.json`
+- `debug/v143-contextual-prune/bass-real-audio-canary-failure-diagnostic.json`
 
-- `751a30f0bb4b5310921d202a8026fcd9114aa652` — `Retrigger Bass canary with early run heartbeat`
+Exact diagnosis from the workflow artifact/log:
 
-Heartbeat evidence is committed:
+- Modal credentials were available.
+- The remote function repeatedly failed during module hydration with `ModuleNotFoundError: No module named 'v143_modal_live_endpoint'` while importing `bass_real_audio_canary_modal.py`.
+- The local Modal command then hit the explicit 1500-second timeout (`modalExitCode:124`), so no raw canary output existed and the verifier was correctly skipped (`verifierExitCode:99`).
+- The compact evidence commit also failed because generated evidence left the checkout dirty before `git rebase` (`cannot rebase: You have unstaged changes`).
+- No quality thresholds were changed and all training/routing/identity/PDF/live/Production/payment/token/email safety flags remained false.
 
-- `debug/v143-contextual-prune/bass-real-audio-canary-start.json`
-- GitHub Actions run ID: `32610329984`
-- job ID: `97122230041`
-- run attempt: `1`
-- source commit: `751a30f0bb4b5310921d202a8026fcd9114aa652`
-- started UTC: `2026-08-23T01:26:27.264028+00:00`
+Harness fixes committed:
 
-Latest direct job inspection at about 20:47 local: run `32610329984` remains `in_progress`. Checkout, heartbeat, Python setup, and Modal CLI install all passed. The active step is still `Run isolated real-audio Bass separator canary`; verifier/evidence/fail-closed enforcement remain pending. This is roughly 21 minutes into the run and still inside the 25-minute Modal command timeout / 35-minute job timeout. Do **not** infer pass/fail yet.
+- `885b90a741d922143bfd83e8d0c376d13a0c4582` — mounts `v143_modal_live_endpoint` in the ephemeral Bass canary image so the remote function module can hydrate.
+- `9973e30af77f0c8bbccbc9ec9960ccd858f895aa` — preserves generated evidence in `/tmp`, restores a clean Git checkout before rebase, then restores/commits evidence after rebase.
 
-The canary is locked to `public/gomywayfullaitest.m4a` and evaluates only:
+Current superseding canary run:
+
+- run ID: `32611529763`
+- source commit: `9973e30af77f0c8bbccbc9ec9960ccd858f895aa`
+- heartbeat started UTC: `2026-08-23T01:55:48.802605+00:00`
+- heartbeat evidence: `debug/v143-contextual-prune/bass-real-audio-canary-start.json`
+
+The canary remains locked to `public/gomywayfullaitest.m4a` and evaluates only:
 
 - direct: audio → Demucs6s `Bass`
 - cascade: audio → BS-RoFormer `Instrumental` → Demucs6s `Bass`
@@ -103,9 +109,8 @@ A next-stage Bass candidate/timing design has been inspected but **no candidate-
 
 ## Immediate next action
 
-1. Poll GitHub Actions run `32610329984` / job `97122230041` until the current Modal separator step finishes.
-2. Fetch `bass-real-audio-canary-action.json` and `bass-real-audio-canary.json` immediately when committed.
-3. If green, close only the Bass separation + pitch boundary.
-4. Then implement one isolated reference-free Bass candidate/note/timing boundary using Bass-specific playable range and the existing four-string contract. Keep training/routing/identity/PDF disabled.
-5. If canary fails, diagnose only the exact failing harness/metric without weakening thresholds or safety.
-6. Exact-branch Vercel Preview remains an external blocker.
+1. Poll run `32611529763` through completion.
+2. Fetch committed action/result evidence immediately when available.
+3. If green, close only Bass separation + pitch and advance one boundary to isolated Bass candidate/note/timing analysis.
+4. If it fails, inspect the exact new artifact/log and fix only that harness/metric; do not weaken thresholds or safety.
+5. Exact-branch Vercel Preview remains an external blocker.
