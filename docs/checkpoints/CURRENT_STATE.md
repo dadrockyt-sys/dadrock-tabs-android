@@ -1,10 +1,10 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22
+Updated: 2026-08-23
 Branch: `v143-contextual-prune-lobo`
 Priority: **complete Rhythm end-to-end before Bass/Lead**.
 Latest functional commit under test: `400edb3febfa32626f7830d641f641c9325a93bf` — `Verify AI PDF router rejects invalid V143 fallback`.
-Latest observed branch head: `00432397b81bd835c8d668f7bf1ab0040d00fee9` — `Checkpoint full V143 PDF fail-closed chain`.
+Latest workflow-stability commit: `741a8bf7512a4b2e4c49f461301b0fce1cc98dcd` — `Stabilize Rhythm static workflow revision and concurrency`.
 
 ## Absolute rules
 
@@ -91,7 +91,7 @@ while preserving page.js preview/full wiring, analyzer runtime safety, DadRock b
 
 This is the current PDF integrity endpoint. Do not add speculative PDF changes now; wait for CPU evidence unless a concrete diagnostic identifies a new defect.
 
-## CPU proof target — WAIT FOR REFRESH, DO NOT USE STALE FILE
+## CPU proof target — CURRENT ORCHESTRATION REPAIR IN FLIGHT
 
 Authoritative targets:
 - `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json` → schema **7**, `passed:true`
@@ -103,9 +103,16 @@ Current CPU gate checks runtime isolation, page.js preview/full contract, runtim
 
 Recent synthetic fixture repair: `126a2e5256742a9970bdc62a4db47122dc40e5d3` added renderer safety metadata required by the strengthened PDF-fidelity verifier. Wrong-PDF fixture carries valid safety metadata so it fails for event mismatch, not metadata absence.
 
-### Latest CPU observation
+### Latest CPU observation and workflow repair
 
-Repeated branch/evidence polls after `00432397...` still show the same stale static schema v4 file and stale consolidated self-test schema v3 file. No new schema v7/v6 result or current failure diagnostic has landed yet. The branch head remained `00432397...` during these polls. Do **not** infer a renderer failure from the stale v4 file and do not add speculative product/PDF changes while the current CPU jobs are unresolved.
+The user reported the CPU workflows had completed, but the repository still exposed only stale static schema v4 and self-test schema v3 evidence. Because the current workflow checked out the mutable branch head instead of the exact triggering revision, repeated rapid commits/workflow overlap could test a different tree than `GITHUB_SHA` and race evidence writes.
+
+`741a8bf7512a4b2e4c49f461301b0fce1cc98dcd` fixes the standalone static gate orchestration only:
+- checkout is now exactly `${{ github.sha }}`;
+- a branch-scoped concurrency group cancels older overlapping static runs;
+- renderer/test behavior, safety thresholds, production, Modal and professional reference handling were not changed.
+
+A fresh CPU static run from this exact revision is now the next authoritative evidence. Do not use the stale schema v4 file to diagnose the renderer.
 
 ## Fresh real-audio pre-holdout workflow
 
@@ -116,11 +123,11 @@ After CPU turns green, strengthen that workflow's compact report with explicit r
 
 ## Immediate next steps
 
-1. Poll refreshed CPU evidence; ignore stale schema v4/v3 evidence.
-2. Require static v7 green + consolidated self-test v6 green for `400edb3...` or a descendant containing it.
-3. If red, use current `failedStage` + sanitized `failureLogTail`; fix only the concrete issue and do not weaken product/scoring contracts.
-4. Save this file after the result.
-5. Once CPU green, make the one intentional real-audio workflow hardening edit and allow exactly one GPU run.
+1. Poll the static evidence generated from `741a8bf...`; require schema v7 and inspect `passed`/`failedStage`/`failureLogTail`.
+2. If static is red, fix only the concrete current diagnostic; do not weaken product/scoring contracts.
+3. If static is green, stabilize/re-run the consolidated self-test so schema v6 is produced without overlapping evidence-write races.
+4. Save this file after each meaningful result.
+5. Only after CPU schema v7 + self-test v6 are both green, make the one intentional real-audio workflow hardening edit and allow exactly one GPU run.
 6. Require fresh approved-audio hash, full runtime safety, positive frozen event count, polished preview/full PDF, exact event/hash equality, fidelity 1.0, reference sealed, Production unchanged.
 7. Only then recover/re-supply the clean complete Rhythm professional source if needed.
 8. Run completeness → isolated scorer → final wrapper. If <0.99 or critical mismatches >0, improve only general/reference-free logic and rerun audio from scratch.
