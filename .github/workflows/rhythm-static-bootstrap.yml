@@ -17,7 +17,7 @@ concurrency:
 jobs:
   bootstrap:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,15 +34,30 @@ jobs:
       - name: Run and persist authoritative static diagnostic
         run: |
           set -u
+          rm -rf .rhythm-static-bootstrap
           mkdir -p .rhythm-static-bootstrap debug/v143-contextual-prune
 
-          timeout 300s npm ci --ignore-scripts --no-audit --no-fund \
+          # The static contract uses only pdf-lib at runtime. Install that exact
+          # dependency in the parent of the isolated ESM workspace so Node's
+          # normal parent-directory resolution can find it without installing
+          # the full Next.js application dependency graph.
+          cat > .rhythm-static-bootstrap/package.json <<'JSON'
+          {
+            "private": true,
+            "dependencies": {
+              "pdf-lib": "1.17.1"
+            }
+          }
+          JSON
+
+          timeout 180s npm install --prefix .rhythm-static-bootstrap \
+            --ignore-scripts --no-audit --no-fund --package-lock=false \
             > .rhythm-static-bootstrap/install.log 2>&1
           install_status=$?
           preflight_status=99
 
           if [ "$install_status" -eq 0 ]; then
-            timeout 420s env GITHUB_ACTIONS=false \
+            timeout 360s env GITHUB_ACTIONS=false \
               bash validation/rhythm_holdout/run_static_preholdout_preflight.sh \
               "$GITHUB_WORKSPACE/.rhythm-static-bootstrap/work" \
               > .rhythm-static-bootstrap/preflight.log 2>&1
@@ -65,7 +80,7 @@ jobs:
               'gate': 'rhythm-preholdout-static-preflight',
               'sourceCommit': os.environ.get('GITHUB_SHA'),
               'passed': False,
-              'failedStage': 'install-locked-dependencies-timeout' if status == 124 else 'install-locked-dependencies',
+              'failedStage': 'install-minimal-pdf-dependency-timeout' if status == 124 else 'install-minimal-pdf-dependency',
               'exitStatus': status,
               'failureLogTail': clean,
               'usesSyntheticAudioResponseOnly': True,
@@ -113,12 +128,13 @@ jobs:
           from pathlib import Path
           report = json.loads(Path('.rhythm-static-bootstrap/report.json').read_text())
           run = {
-              'schemaVersion': 3,
+              'schemaVersion': 4,
               'gate': 'rhythm-static-bootstrap',
               'sourceCommit': os.environ.get('GITHUB_SHA'),
               'runId': os.environ.get('GITHUB_RUN_ID'),
               'actor': os.environ.get('GITHUB_ACTOR'),
               'eventName': os.environ.get('GITHUB_EVENT_NAME'),
+              'dependencyMode': 'isolated-pdf-lib-1.17.1',
               'installStatus': int(os.environ.get('INSTALL_STATUS') or 0),
               'preflightStatus': int(os.environ.get('PREFLIGHT_STATUS') or 0),
               'reportSchemaVersion': report.get('schemaVersion'),
@@ -137,7 +153,7 @@ jobs:
             debug/v143-contextual-prune/rhythm-static-bootstrap-preflight.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record bounded Rhythm static bootstrap proof'
+          git commit -m 'Record minimal-dependency Rhythm static proof'
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
