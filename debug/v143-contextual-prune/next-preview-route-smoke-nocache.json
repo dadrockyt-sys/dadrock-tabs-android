@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-next-preview-route-smoke",
+  "branch": "v143-contextual-prune-lobo",
+  "baseUrl": "http://127.0.0.1:4310",
+  "localNextPreviewSimulation": true,
+  "actualVercelPreviewDeployment": false,
+  "aiTabPageStatus": 200,
+  "structured": {
+    "status": 200,
+    "feature": "v143-branch-preview-canary",
+    "renderer": "v143-structured-rhythm",
+    "pdfBytes": 1665323,
+    "passed": true
+  },
+  "fallback": {
+    "status": 200,
+    "feature": "v143-branch-preview-canary",
+    "renderer": "polished-safe-fallback",
+    "pdfBytes": 3329113,
+    "passed": true
+  },
+  "validation400Passed": true,
+  "passed": true,
+  "vercelDeploymentAttempted": false,
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "paidPurchaseAttempted": false,
+  "customerTokenRedeemed": false,
+  "customerEmailSent": false,
+  "error": null
+}
