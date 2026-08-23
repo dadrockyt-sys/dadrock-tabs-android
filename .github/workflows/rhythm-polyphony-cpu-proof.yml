@@ -1,0 +1,93 @@
+name: Rhythm Polyphony CPU Proof
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - 'analyzer/v143_rhythm_guitar_note_mapper.py'
+      - 'analyzer/v143_rhythm_event_assembly.py'
+      - 'analyzer/v143_rhythm_sustain_technique_enricher.py'
+      - 'validation/rhythm_holdout/verify_reference_free_polyphonic_mapper.py'
+      - '.github/workflows/rhythm-polyphony-cpu-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rhythm-polyphony-cpu-proof-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  polyphony-cpu-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact triggering revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify reference-free polyphonic mapper
+        id: verify
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          python validation/rhythm_holdout/verify_reference_free_polyphonic_mapper.py
+
+      - name: Persist CPU proof
+        if: ${{ always() }}
+        env:
+          VERIFY_OUTCOME: ${{ steps.verify.outcome }}
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          passed = os.environ.get('VERIFY_OUTCOME') == 'success'
+          report = {
+              'schemaVersion': 1,
+              'gate': 'rhythm-reference-free-polyphony-cpu-proof',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'runId': os.environ.get('GITHUB_RUN_ID'),
+              'runAttempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+              'eventName': os.environ.get('GITHUB_EVENT_NAME'),
+              'ref': os.environ.get('GITHUB_REF'),
+              'passed': passed,
+              'verifyOutcome': os.environ.get('VERIFY_OUTCOME'),
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('debug/v143-contextual-prune/rhythm-polyphony-cpu-proof.json').write_text(
+              json.dumps(report, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(report, indent=2))
+          PY
+
+          git add debug/v143-contextual-prune/rhythm-polyphony-cpu-proof.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Rhythm polyphony CPU proof'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce green CPU proof
+        if: ${{ always() }}
+        env:
+          VERIFY_OUTCOME: ${{ steps.verify.outcome }}
+        run: |
+          test "$VERIFY_OUTCOME" = 'success'
