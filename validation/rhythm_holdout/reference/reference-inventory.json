@@ -3,14 +3,48 @@
   "instrument": "rhythm",
   "song": "Are You Gonna Go My Way",
   "artist": "Lenny Kravitz",
-  "completeReferenceAvailable": false,
+  "completeReferenceAvailable": true,
+  "completeReferenceTranscriptionReady": false,
   "finalScoringAuthorized": false,
+  "finalScoringBlockedReason": "Complete clean professional-human source is now recovered and verified, but scorer-only event-level transcription into reference.schema.json is still pending.",
   "cleanHoldoutPolicy": {
     "runtimeAccessAllowed": false,
     "analyzerTrainingAllowed": false,
     "analyzerTuningAllowed": false,
     "candidateSelectionAllowed": false,
     "postFreezeScoringOnly": true
+  },
+  "completeCleanReferenceSource": {
+    "kind": "professional-human-tab-screenshot-composite",
+    "repository": "dadrockyt-sys/dadrock-tabs-android",
+    "immutableCommit": "e0f91e74c815b9ecdf0a72fae6d1523414b34577",
+    "path": "public/Professionalexample.jpg",
+    "sourceSha256": "aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9",
+    "sourceBytes": 979815,
+    "imageWidth": 2160,
+    "imageHeight": 3840,
+    "stitchedPanelCount": 9,
+    "titleVisible": "Are You Gonna Go My Way",
+    "artistVisible": "Lenny Kravitz",
+    "revisionVisible": "2026-07-12",
+    "partVisible": "Rhythm Guitar",
+    "performerVisible": "Craig Ross",
+    "instrumentVisible": "1953 Gibson Les Paul Goldtop",
+    "coverage": "complete whole-song professional rhythm source, measures 1-113 across nine stitched Songsterr panels",
+    "completeWholeSongReference": true,
+    "eligibleAsFinalScorerSource": true,
+    "eventTranscriptionStillRequired": true,
+    "referenceModified": false
+  },
+  "sourceRecoveryProof": {
+    "workflow": ".github/workflows/rhythm-professional-reference-recovery.yml",
+    "workflowSourceCommit": "d07b3a714133703e77b233ec1dd9a978c4b2cfb3",
+    "runId": "32624327056",
+    "artifactId": "9489261810",
+    "artifactDigest": "c99d243520f274adfa9e817ec0b143617d9c95f50eb7817551049f3727e3207a",
+    "debugReport": "debug/v143-contextual-prune/rhythm-professional-reference-recovery.json",
+    "visualCoverageVerifiedAfterFreshFreeze": true,
+    "referenceOpenedOnlyInScorerPhase": true
   },
   "survivingCleanReferenceMaterial": [
     {
@@ -19,7 +53,8 @@
       "coverage": "chorus measures 33-35 only",
       "visibleLabels": ["G6", "A(tp2)", "E", "D"],
       "completeWholeSongReference": false,
-      "eligibleForFinalWholeSongScore": false
+      "eligibleForFinalWholeSongScore": false,
+      "corroboratesCompleteSource": true
     }
   ],
   "explicitlyExcludedFromFinalHoldout": [
@@ -56,7 +91,7 @@
       "reason": "DadRock generated customer/product PDF, not human holdout ground truth"
     }
   ],
-  "historicalContaminationWarning": "Historical Chorus 33-35 development screenshots and scripts explicitly used the professional reference for scoring and/or development diagnostics. They must never be promoted to the clean final completion holdout.",
-  "nextRequiredReferenceAction": "Recover or re-supply the complete professionally human-written Rhythm TAB and transcribe it into the scorer-only completeReference schema after the fresh reference-free output has been frozen.",
+  "historicalContaminationWarning": "Historical Chorus 33-35 development screenshots and scripts explicitly used the professional reference for scoring and/or development diagnostics. They must never be promoted to the clean final completion holdout. The final scorer reference must be freshly transcribed scorer-side from the immutable complete source identified above after the fresh reference-free freeze.",
+  "nextRequiredReferenceAction": "Transcribe the immutable complete professional-human source scorer-side into the complete reference schema, validate measure/event completeness, then authorize and run the final isolated score against locked run 32623173615 without rerunning the analyzer.",
   "rhythmComplete": false
 }
