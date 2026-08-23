@@ -1,8 +1,11 @@
 {
   "schemaVersion": 1,
   "gate": "bass-real-audio-canary-action",
-  "modalCredentialsAvailableInGitHubActions": false,
-  "modalExitCode": 99,
+  "runId": "32610329984",
+  "runAttempt": "1",
+  "sourceCommit": "751a30f0bb4b5310921d202a8026fcd9114aa652",
+  "modalCredentialsAvailableInGitHubActions": true,
+  "modalExitCode": 124,
   "rawCanaryOutputPresent": false,
   "verifierExitCode": 99,
   "canaryEvidencePresent": false,
