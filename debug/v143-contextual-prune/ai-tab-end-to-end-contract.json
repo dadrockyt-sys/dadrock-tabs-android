@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "gate": "ai-tab-end-to-end-contract",
+  "product": "dadrocktabs.com/ai-tab",
+  "instrumentChoices": [
+    "lead",
+    "rhythm",
+    "bass"
+  ],
+  "userAudioUploadWired": true,
+  "copyrightGateWired": true,
+  "analyzerRequestWired": true,
+  "previewPdfWired": true,
+  "fullPdfUnlockWired": true,
+  "analysisMetadataTransportWired": true,
+  "rhythmDedicatedV143RouteFailClosed": true,
+  "rhythmStructuredProfessionalRendererFailClosed": true,
+  "leadLegacyPreserved": true,
+  "bassLegacyPreserved": true,
+  "leadStructuredProfessionalIdentityPresent": false,
+  "bassStructuredProfessionalIdentityPresent": false,
+  "missingPlacementManufacturedForLegacy": false,
+  "paymentAttempted": false,
+  "tokenRedeemed": false,
+  "customerEmailSent": false,
+  "vercelDeploymentAttempted": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "passed": true
+}
