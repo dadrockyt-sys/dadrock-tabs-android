@@ -35,7 +35,7 @@ Required exact Git blob:
 Restore commit:
 `4ff233346b8dc7b80d8f4316fe1317338b5be718`
 
-Current correction CPU gate again proves this blob is unchanged and Production is unmodified.
+Current correction, semantic-guard, and sustain CPU gates prove this blob is unchanged and Production is unmodified.
 
 ## Approved audio / old frozen identity
 
@@ -121,9 +121,7 @@ Files:
 - `.github/workflows/v143-contextual-prune-shadow-correction-cpu.yml`
 - `.github/workflows/v143-contextual-prune-shadow-correction-approved-audio.yml`
 
-The earlier empty-measure-only rescue was too conservative for the general under-selection class. It is now expanded, still reference-free, to rescue **strict local physical onset peaks in already-populated measures too**.
-
-Current generic rescue requirements:
+Generic rescue requirements:
 - observed carrier/grid slot only
 - two separated guitar-view support
 - >=3 historical detector sweeps
@@ -138,7 +136,7 @@ Current generic rescue requirements:
 
 Secondary pitch suppression remains based only on two-view attack/body CQT support relative to the locally strongest pitch. No hard song-specific chord templates exist.
 
-Latest GitHub CPU/static diagnostic:
+CPU/static diagnostic:
 `debug/v143-contextual-prune/shadow-correction-cpu.json`
 
 PASSED:
@@ -153,40 +151,18 @@ PASSED:
 - reference token scan passed
 - Production modified false
 
-The exact approved-audio Modal correction report is still pending at:
+Approved-audio correction report is still absent:
 `debug/v143-contextual-prune/shadow-correction-approved-audio-action.json`
 
 Do not claim approved-audio musical success until that file exists and its invariants pass.
 
-## Professional PDF semantic bug investigation
+## Professional PDF semantic ownership bug
 
-Important correction to an earlier assumption: the old raw/frozen candidate is **not** technique-empty.
+The old raw/frozen candidate is not technique-empty. Recovered old raw output contains 82 rendered events with audio-derived technique annotations, including bend, bend-release, slide, hammer-on and pull-off. Duration evidence is also present.
 
-Recovered old raw product output contains:
-- 82 rendered events with audio-derived technique annotations
-- technique counts:
-  - bend 41
-  - bend-release 27
-  - slide-down 18
-  - slide-up 16
-  - hammer-on 4
-  - pull-off 3
-- duration evidence is also present; most notes are short, but some quantize beyond one step
+General ownership bug: `analyzer/v143_rhythm_guitar_note_mapper.py` marks each polyphonic mapped note with `noteMapping.primaryTechniqueNote`, but post-selection bend/legato enrichers had been able to annotate secondary chord tones.
 
-The renderer and freeze contract already carry technique and sustain fields. Therefore the central PDF bug is upstream musical semantics/ownership, not drawing alone.
-
-### Concrete general semantic ownership bug found
-
-`analyzer/v143_rhythm_guitar_note_mapper.py` explicitly marks each polyphonic mapped note with:
-`noteMapping.primaryTechniqueNote`
-
-The mapper also intentionally clears inherited attack-level technique fields from secondary chord tones.
-
-However the post-selection audio bend and legato enrichers currently iterate over **all rendered polyphonic notes**. The recovered raw output confirms audio-derived bends can be applied to a note where `primaryTechniqueNote` is false. Harmonic/secondary chord tones can therefore be misread as bend/legato semantics.
-
-This is a general bug independent of the professional reference.
-
-New isolated guard files:
+Isolated guard files:
 - `analyzer/v143_rhythm_semantic_primary_note_guard.py`
 - `analyzer/check_v143_rhythm_semantic_primary_note_guard.py`
 - `.github/workflows/v143-rhythm-semantic-primary-note-guard.yml`
@@ -196,35 +172,97 @@ Guard behavior:
 - preserves attack timing, MIDI, string and fret
 - preserves valid primary-note audio semantics
 - strips audio-derived bend/legato annotations from secondary chord tones
-- removes primary legato links whose target is a secondary chord tone instead of silently redirecting them
+- removes primary legato links whose target is a secondary chord tone
 - removes orphan legato continuation markers
 - preserves unrelated explicit primary technique evidence
 - no labels/reference input
 - Production unchanged
 
-The semantic guard CPU workflow result is pending. Do not integrate it into live/product routing until its safety gate is green and a new approved-audio shadow validates it.
+### Semantic guard CPU gate — PASSED
 
-## Existing production semantic path discovered
+Committed report:
+`debug/v143-contextual-prune/rhythm-semantic-primary-note-guard.json`
+
+Result:
+- `passed=true`
+- reference token scan passed
+- protected pipeline blob exact `7f72...`
+- event count/timing/pitch/string/fret unchanged
+- synthetic proof stripped 1 secondary bend, 1 secondary legato, 1 invalid primary legato and 2 audio technique labels
+- Production modified false
+
+Do not integrate into product routing until approved-audio shadow also validates it.
+
+## Sustain/duration shadow
+
+Files:
+- `analyzer/v143_rhythm_sustain_consensus_shadow.py`
+- `analyzer/check_v143_rhythm_sustain_consensus_shadow.py`
+- `.github/workflows/v143-rhythm-sustain-consensus-shadow.yml`
+
+Design:
+- isolated two-view reference-free harmonic persistence after each authenticated note
+- bounded by next authenticated attack on the same string and a max sustain window
+- annotates only `rhythmSustainShadow`
+- does not overwrite production `rhythmSustain`
+- does not move attacks or invent pitch
+- does not infer tie/let-ring labels
+
+### Sustain CPU gate — PASSED
+
+Committed report:
+`debug/v143-contextual-prune/rhythm-sustain-consensus-shadow.json`
+
+Result:
+- `passed=true`
+- two-view proof annotates physical sustain longer than the short detector duration
+- event count, attack timing and pitch unchanged
+- no tie/let-ring inference
+- reference token scan passed
+- protected pipeline blob exact `7f72...`
+- Production modified false
+
+## Approved-audio semantics + sustain shadow
+
+Modal runner added:
+`analyzer/v143_rhythm_semantics_sustain_approved_shadow_modal.py`
+
+Commit:
+`cd0fec62bdd3b4da9ce7645db4d3582d528a2164`
+
+It runs the current reference-free rhythm assembly on the approved fixture, then bend + legato enrichment, semantic primary-note guard, and two-view sustain shadow. It records before/after technique counts and sustain histograms while requiring core event identity to remain unchanged.
+
+New GitHub Actions workflow added:
+`.github/workflows/v143-rhythm-semantics-sustain-approved-shadow.yml`
+
+Workflow commit:
+`c4077eff19e1e720719fc0147c1625df49c5c32a`
+
+The workflow:
+- SHA-gates the exact approved fixture
+- uses existing Modal GitHub secrets only when available
+- runs the isolated Modal shadow
+- commits action/report diagnostics back to this branch
+- enforces reference-free, event-identity, semantic-guard and sustain invariants
+- does not deploy or modify the live endpoint/Production
+
+Expected outputs:
+- `debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow-action.json`
+- `debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow.json`
+
+These approved-audio outputs are **pending**. Do not integrate semantics or sustain into product routing until they exist and are green.
+
+## Existing production semantic path
 
 `analyzer/v143_modal_live_endpoint.py` already injects post-selection enrichers:
 1. `enrich_router_assembly_with_consensus_bends`
 2. `enrich_router_assembly_with_legato`
 
-So semantic enrichment was not disabled in the old run.
-
-Current bend logic uses two-view harmonic CQT contour consensus. Current legato logic uses two-view pitch-path plus re-attack evidence. The next semantic work should improve their **general evidence/ownership**, not add song-specific markings.
-
-## Sustain/duration issue
-
-`analyzer/v143_rhythm_sustain_technique_enricher.py` derives duration mainly from Basic Pitch `bestOnsetTime/bestOffsetTime` or `maxDuration`, then quantizes at four subdivisions per beat.
-
-On the old raw output these detector durations are mostly very short. A professional tab needs sustain evidence that can survive detector note fragmentation.
-
-Next safe design: an isolated two-view reference-free sustain shadow using persistent harmonic energy after each authenticated note, bounded by subsequent authenticated attacks/measure structure. It may annotate duration only; it must never move an attack or invent pitch. Tie/let-ring labels must require explicit physical continuity evidence and must not be inferred merely because a duration is long.
+Semantic enrichment was therefore not disabled in the old run. Current bend logic uses two-view harmonic CQT contour consensus. Current legato logic uses two-view pitch-path plus re-attack evidence. Any improvements must remain general/reference-free.
 
 ## Timing issue
 
-The old run tempo is `129.19921875`, very close to source tempo 129, so tempo alone is not the main failure.
+The old run tempo is `129.19921875`, close to source tempo 129, so tempo alone is not the main failure.
 
 Current timing pipeline:
 - full-mix reference-free onset envelope
@@ -234,16 +272,16 @@ Current timing pipeline:
 - 16-step subdivision grid
 - Basic Pitch attacks mapped to nearest grid slot
 
-Professional timing F1 remains very poor, but that metric is also strongly affected by incorrect pitch/attack selection. Do not tune bar phase against the human reference.
+Professional timing F1 remains poor, but the metric is also strongly affected by incorrect pitch/attack selection. Do not tune bar phase against the human reference.
 
-Next safe timing work: isolated label-free diagnostics for cross-stem onset residuals, four-way bar-phase confidence, repeated-structure consistency, and grid ambiguity. Any phase correction must be selected from audio/structural evidence only.
+Next safe timing work remains isolated label-free diagnostics for cross-stem onset residuals, four-way bar-phase confidence, repeated-structure consistency, and grid ambiguity. Any phase correction must be selected from audio/structural evidence only.
 
 ## Immediate next steps
 
-1. Wait for/read exact approved-audio correction shadow report and semantic-primary-note CPU report.
-2. If attack correction invariants pass, evaluate only label-free counts/coverage/strict-evidence behavior; do not score against the human reference yet.
-3. Build isolated two-view sustain/duration diagnostics and primary-note technique ownership validation on approved audio.
-4. Build label-free timing phase/residual diagnostics; do not use the human reference to select phase or thresholds.
+1. Read the new approved-audio semantics/sustain action/report as soon as the workflow commits them.
+2. Continue checking for the still-missing approved-audio attack-correction action/report.
+3. If approved-audio invariants pass, evaluate only label-free counts/coverage/evidence behavior; do not score against the human reference yet.
+4. Build/finish label-free timing phase/residual diagnostics; do not use the human reference to select phase or thresholds.
 5. Only after general corrections are independently accepted, integrate them on this branch and create a **brand-new** approved-audio analysis/freeze/PDF identity.
 6. Then, and only then, open the professional scorer reference and run a new holdout.
 7. Add only clearly visible/high-confidence professional technique/duration/tie markings to the scorer-only human reference; never invent uncertain semantics and never commit it.
