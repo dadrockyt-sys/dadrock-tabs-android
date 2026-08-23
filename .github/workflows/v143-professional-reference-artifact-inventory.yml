@@ -1,0 +1,110 @@
+name: V143 Professional Reference Artifact Inventory
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-professional-reference-artifact-inventory.yml
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: v143-professional-reference-artifact-inventory
+  cancel-in-progress: true
+
+jobs:
+  inventory:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Inventory historical reference-related artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          TRIGGER_SHA: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json, os, urllib.request
+          from pathlib import Path
+
+          repo = os.environ['REPO']
+          token = os.environ['GH_TOKEN']
+          trigger = os.environ['TRIGGER_SHA']
+          needles = ('reference','holdout','professional','rhythm','chunk','gomyway','gomway')
+          matches = []
+          scanned = 0
+          for page in range(1, 21):
+              url = f'https://api.github.com/repos/{repo}/actions/artifacts?per_page=100&page={page}'
+              req = urllib.request.Request(url, headers={
+                  'Authorization': f'Bearer {token}',
+                  'Accept': 'application/vnd.github+json',
+                  'X-GitHub-Api-Version': '2022-11-28',
+                  'User-Agent': 'dadrock-v143-artifact-inventory',
+              })
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  payload = json.load(r)
+              items = payload.get('artifacts') or []
+              if not items:
+                  break
+              scanned += len(items)
+              for a in items:
+                  name = str(a.get('name') or '')
+                  if not any(n in name.lower() for n in needles):
+                      continue
+                  wr = a.get('workflow_run') or {}
+                  matches.append({
+                      'id': a.get('id'),
+                      'name': name,
+                      'sizeInBytes': a.get('size_in_bytes'),
+                      'expired': a.get('expired'),
+                      'createdAt': a.get('created_at'),
+                      'updatedAt': a.get('updated_at'),
+                      'expiresAt': a.get('expires_at'),
+                      'digest': a.get('digest'),
+                      'workflowRun': {
+                          'id': wr.get('id'),
+                          'headBranch': wr.get('head_branch'),
+                          'headSha': wr.get('head_sha'),
+                      },
+                  })
+              if len(items) < 100:
+                  break
+          matches.sort(key=lambda x: (x.get('createdAt') or '', int(x.get('id') or 0)), reverse=True)
+          out = {
+              'schemaVersion': 1,
+              'gate': 'v143-professional-reference-artifact-inventory',
+              'triggerSha': trigger,
+              'artifactsScanned': scanned,
+              'matchingArtifacts': matches,
+              'matchingArtifactCount': len(matches),
+              'referencePayloadOpened': False,
+              'runtimeLabelsRequired': False,
+              'productionModified': False,
+          }
+          Path('debug/v143-contextual-prune/professional-reference-artifact-inventory.json').write_text(json.dumps(out, indent=2) + '\n')
+          PY
+
+      - name: Commit artifact inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/professional-reference-artifact-inventory.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record professional reference artifact inventory'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
