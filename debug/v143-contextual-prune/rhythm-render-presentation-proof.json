@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "0932a76b0e427368f95a2bbacc81bdfb51358548",
+  "eventCount": 124,
+  "presentation": {
+    "eventCount": 124,
+    "uniqueMeasureCount": 12,
+    "uniqueOnsetCount": 63,
+    "averageNotesPerMeasure": 10.333333333333334,
+    "minimumNotesPerPopulatedMeasure": 8,
+    "maximumNotesPerPopulatedMeasure": 13,
+    "maximumChordSize": 3,
+    "multiNoteOnsetCount": 60,
+    "techniqueEventCount": 3,
+    "techniqueTypes": [
+      "bend",
+      "bend-release",
+      "slide-up",
+      "vibrato"
+    ],
+    "sectionCount": 3,
+    "sections": [
+      {
+        "index": 0,
+        "cluster": 0,
+        "label": "SECTION A",
+        "startMeasure": 1,
+        "endMeasure": 4,
+        "blockCount": 1,
+        "source": "reference-free-render-event-self-similarity",
+        "referenceFree": true,
+        "professionalReferenceUsed": false,
+        "runtimeLabelsRequired": false
+      },
+      {
+        "index": 1,
+        "cluster": 1,
+        "label": "SECTION B",
+        "startMeasure": 5,
+        "endMeasure": 8,
+        "blockCount": 1,
+        "source": "reference-free-render-event-self-similarity",
+        "referenceFree": true,
+        "professionalReferenceUsed": false,
+        "runtimeLabelsRequired": false
+      },
+      {
+        "index": 2,
+        "cluster": 2,
+        "label": "SECTION C",
+        "startMeasure": 9,
+        "endMeasure": 12,
+        "blockCount": 1,
+        "source": "reference-free-render-event-self-similarity",
+        "referenceFree": true,
+        "professionalReferenceUsed": false,
+        "runtimeLabelsRequired": false
+      }
+    ],
+    "oneNotePerMeasureCollapseDetected": false,
+    "referenceFree": true,
+    "professionalReferenceUsed": false,
+    "runtimeLabelsRequired": false
+  },
+  "sections": [
+    {
+      "index": 0,
+      "cluster": 0,
+      "label": "SECTION A",
+      "startMeasure": 1,
+      "endMeasure": 4,
+      "blockCount": 1,
+      "source": "reference-free-render-event-self-similarity",
+      "referenceFree": true,
+      "professionalReferenceUsed": false,
+      "runtimeLabelsRequired": false
+    },
+    {
+      "index": 1,
+      "cluster": 1,
+      "label": "SECTION B",
+      "startMeasure": 5,
+      "endMeasure": 8,
+      "blockCount": 1,
+      "source": "reference-free-render-event-self-similarity",
+      "referenceFree": true,
+      "professionalReferenceUsed": false,
+      "runtimeLabelsRequired": false
+    },
+    {
+      "index": 2,
+      "cluster": 2,
+      "label": "SECTION C",
+      "startMeasure": 9,
+      "endMeasure": 12,
+      "blockCount": 1,
+      "source": "reference-free-render-event-self-similarity",
+      "referenceFree": true,
+      "professionalReferenceUsed": false,
+      "runtimeLabelsRequired": false
+    }
+  ],
+  "pdfBytes": 1672857,
+  "timingGridRequired": true,
+  "techniqueDisplayRequired": true,
+  "sectionDisplayRequired": true,
+  "oneNotePerMeasureCollapseGuard": true,
+  "referenceFree": true,
+  "professionalReferenceUsed": false,
+  "runtimeLabelsRequired": false,
+  "checks": {
+    "pdfRendered": true,
+    "timingLegendDisplayed": true,
+    "sectionLabelsDisplayed": true,
+    "bendNotationDisplayed": true,
+    "pageCountPositive": true,
+    "multiNoteDensityPreserved": true,
+    "polyphonicOnsetsPreserved": true,
+    "oneNotePerMeasureCollapseGuard": true,
+    "referenceFree": true,
+    "professionalReferenceNotUsed": true,
+    "runtimeLabelsNotRequired": true
+  },
+  "failedChecks": [],
+  "pageCount": 1,
+  "passed": true
+}
