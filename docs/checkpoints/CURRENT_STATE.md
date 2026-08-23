@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 — Bass harmonic canary queued
+Updated: 2026-08-22 — Bass harmonic canary running
 Branch: `v143-contextual-prune-lobo`
 
 ## Safety / product contract
@@ -109,7 +109,23 @@ The helper considers only common standard-Bass open-string natural-harmonic soun
 
 The verifier is fail-closed: base→subset and subset→harmonic identity must remain 100%; the five already-proven subset families must remain proven; only `harmonic` may be newly added; every harmonic label must have two-view reference-free evidence; all quality gates must remain green; all production/customer flags remain false. At least one harmonic event is required to prove this boundary.
 
-Workflow `Bass Real Audio Harmonics` was created and should auto-trigger from commit `01d71399a14f706152fdf8b3353e59b781cf3e5d`. Heartbeat file is expected at `debug/v143-contextual-prune/bass-real-audio-harmonic-start.json`; it was not present on the first immediate poll after workflow creation.
+Current workflow heartbeat:
+
+```text
+workflow: Bass Real Audio Harmonics
+runId: 32612695589
+sourceCommit: 01d71399a14f706152fdf8b3353e59b781cf3e5d
+startedAtUtc: 2026-08-23T02:22:40.870754+00:00
+status: in_progress
+currentStep: Run isolated Bass harmonic canary
+```
+
+Heartbeat: `debug/v143-contextual-prune/bass-real-audio-harmonic-start.json`.
+
+Expected final evidence:
+
+- `debug/v143-contextual-prune/bass-real-audio-harmonic-action.json`
+- `debug/v143-contextual-prune/bass-real-audio-harmonic.json`
 
 This detector is **not proven yet**. If the approved fixture yields absent or ambiguous harmonic evidence, keep `harmonic` unproven rather than weakening thresholds.
 
@@ -117,9 +133,8 @@ High-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven. Prof
 
 ## Immediate next action
 
-1. Poll for `debug/v143-contextual-prune/bass-real-audio-harmonic-start.json` and capture run id.
-2. Poll that run through completion.
-3. Inspect `debug/v143-contextual-prune/bass-real-audio-harmonic-action.json` and `debug/v143-contextual-prune/bass-real-audio-harmonic.json` plus artifact/logs if red.
-4. If harmonic evidence is absent/ambiguous or any identity/safety gate fails, keep harmonic explicitly unproven and do not weaken thresholds.
-5. Save this checkpoint again after the run/result.
-6. Professional Bass PDF/routing/identity remain disabled. Exact-branch Vercel Preview remains an external blocker.
+1. Poll run `32612695589` through completion.
+2. Inspect final harmonic action/evidence plus artifact/logs if red.
+3. If harmonic evidence is absent/ambiguous or any identity/safety gate fails, keep harmonic explicitly unproven and do not weaken thresholds.
+4. Save this checkpoint again after the run/result.
+5. Professional Bass PDF/routing/identity remain disabled. Exact-branch Vercel Preview remains an external blocker.
