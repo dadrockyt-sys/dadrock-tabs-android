@@ -31,6 +31,8 @@ def require_pre_reference_gate(freeze_dir: Path) -> Mapping[str, Any]:
         "referenceFree": True,
         "professionalReferenceUsed": False,
         "referenceRuntimeInputUsed": False,
+        "runtimeLabelsRequired": False,
+        "v143RuntimeSafetyVerified": True,
         "referenceOpenedDuringFreeze": False,
         "pdfFidelityVerified": True,
     }
@@ -171,7 +173,7 @@ def validate_reference(reference: Any) -> dict[str, Any]:
         raise ValueError("complete professional reference contains no playable notes")
 
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "instrument": "rhythm",
         "referenceComplete": True,
         "sourceComplete": True,
@@ -220,6 +222,8 @@ def main() -> int:
             "pdfEventFidelity": manifest["pdfEventFidelity"],
             "professionalReferenceUsedByAnalyzer": False,
             "referenceRuntimeInputUsed": False,
+            "runtimeLabelsRequired": False,
+            "v143RuntimeSafetyVerified": True,
         }
     )
 
