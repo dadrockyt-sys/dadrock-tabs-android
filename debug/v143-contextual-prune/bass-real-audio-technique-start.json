@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "gate": "bass-real-audio-technique-start",
+  "runId": "32612166508",
+  "runAttempt": "1",
+  "sourceCommit": "1b94d42a5d5ae8e3704f479c259499fa6c2c214e",
+  "branch": "v143-contextual-prune-lobo",
+  "workflow": "Bass Real Audio Techniques",
+  "actor": "dadrockyt-sys",
+  "startedAtUtc": "2026-08-23T02:10:23.674406+00:00",
+  "diagnosticOnly": true,
+  "trainingRunAuthorized": false,
+  "analyzerRoutingEnabled": false,
+  "professionalStructuredIdentityEnabled": false,
+  "pdfRendererEnabled": false,
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false
+}
