@@ -1,0 +1,276 @@
+name: Rhythm Final Pre-Holdout Artifact Lock
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - 'debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json'
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: rhythm-final-preholdout-lock-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lock-final-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact compact-proof commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Validate final presentation proof before artifact access
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json')
+          d = json.loads(p.read_text(encoding='utf-8'))
+          required = {
+              'passed': d.get('passed') is True,
+              'schema3': int(d.get('schemaVersion') or 0) >= 3,
+              'referenceFree': d.get('referenceFree') is True,
+              'professionalReferenceNotUsed': d.get('professionalReferenceUsed') is False,
+              'referenceRuntimeInputNotUsed': d.get('referenceRuntimeInputUsed') is False,
+              'runtimeLabelsNotRequired': d.get('runtimeLabelsRequired') is False,
+              'v143RuntimeSafetyVerified': d.get('v143RuntimeSafetyVerified') is True,
+              'pdfEventFidelityExact': d.get('pdfEventFidelity') == 1.0,
+              'polyphonicExpansion': d.get('checks', {}).get('polyphonicExpansion') is True,
+              'renderNotesExceedSelectedAttacks': d.get('checks', {}).get('renderNotesExceedSelectedAttacks') is True,
+              'oneNotePerMeasureCollapseAbsent': d.get('checks', {}).get('oneNotePerMeasureCollapseAbsent') is True,
+              'timingDisplayVerified': d.get('checks', {}).get('timingDisplayVerified') is True,
+              'techniqueDisplayVerified': d.get('checks', {}).get('techniqueDisplayVerified') is True,
+              'sectionDisplayVerified': d.get('checks', {}).get('sectionDisplayVerified') is True,
+              'humanReferenceStillSealed': d.get('checks', {}).get('humanReferenceStillSealed') is True,
+              'productionUnmodified': d.get('productionModified') is False,
+          }
+          failed = [k for k,v in required.items() if not v]
+          if failed:
+              raise SystemExit('final compact proof not lockable: ' + ', '.join(failed))
+          run_id = str(d.get('workflowRunId') or '')
+          source = str(d.get('sourceCommit') or '')
+          if not run_id.isdigit() or len(source) != 40:
+              raise SystemExit('final compact proof missing run/source identity')
+          Path('.lock-run-id').write_text(run_id, encoding='utf-8')
+          Path('.lock-source-commit').write_text(source, encoding='utf-8')
+          PY
+
+      - name: Fetch exact workflow artifact metadata and ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_id=$(cat .lock-run-id)
+          source_commit=$(cat .lock-source-commit)
+          mkdir -p .final-lock/artifact
+
+          gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}" > .final-lock/run.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          run = json.loads(Path('.final-lock/run.json').read_text(encoding='utf-8'))
+          expected = Path('.lock-source-commit').read_text(encoding='utf-8').strip()
+          if run.get('status') != 'completed' or run.get('conclusion') != 'success':
+              raise SystemExit('source workflow run is not completed/success')
+          if run.get('head_sha') != expected:
+              raise SystemExit('source workflow head SHA does not match compact proof')
+          PY
+
+          gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/artifacts?per_page=100" > .final-lock/artifacts.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('.final-lock/artifacts.json').read_text(encoding='utf-8'))
+          matches = [a for a in data.get('artifacts', []) if a.get('name') == 'rhythm-professional-preholdout-real-audio' and not a.get('expired')]
+          if len(matches) != 1:
+              raise SystemExit(f'expected exactly one final Rhythm artifact, got {len(matches)}')
+          artifact = matches[0]
+          Path('.lock-artifact-id').write_text(str(artifact['id']), encoding='utf-8')
+          Path('.lock-artifact-digest').write_text(str(artifact.get('digest') or ''), encoding='utf-8')
+          PY
+
+          artifact_id=$(cat .lock-artifact-id)
+          gh api -H 'Accept: application/vnd.github+json' \
+            "repos/${GITHUB_REPOSITORY}/actions/artifacts/${artifact_id}/zip" \
+            > .final-lock/artifact.zip
+          unzip -q .final-lock/artifact.zip -d .final-lock/artifact
+
+      - name: Verify and write permanent final lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, statistics
+          from collections import Counter, defaultdict
+          from pathlib import Path
+
+          root = Path('.final-lock/artifact')
+          compact_repo = json.loads(Path('debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json').read_text(encoding='utf-8'))
+
+          def locate(rel):
+              matches = list(root.rglob(rel))
+              if len(matches) != 1:
+                  raise SystemExit(f'expected one {rel}, got {len(matches)}')
+              return matches[0]
+
+          paths = {
+              'rawProductOutput': locate('raw-product-output.json'),
+              'freezeInput': locate('rhythm-freeze-input.json'),
+              'frozenAnalysis': locate('rhythm-frozen-analysis.json'),
+              'freezeManifest': locate('rhythm-freeze-manifest.json'),
+              'pdfFidelity': locate('rhythm-pdf-event-fidelity.json'),
+              'pdfEventEvidence': locate('pdf-event-evidence.json'),
+              'renderPresentation': locate('rhythm-render-presentation.json'),
+              'renderTextProof': locate('rhythm-render-text-proof.json'),
+              'compactProof': locate('rhythm-professional-preholdout-real-audio.json'),
+              'fullPdf': locate('full-frozen-rhythm.pdf'),
+              'previewPdf': locate('preview-frozen-rhythm.pdf'),
+          }
+          def sha(path):
+              h=hashlib.sha256(); h.update(path.read_bytes()); return h.hexdigest()
+
+          compact_artifact = json.loads(paths['compactProof'].read_text(encoding='utf-8'))
+          if compact_artifact != compact_repo:
+              raise SystemExit('artifact compact proof differs from repository compact proof')
+          if compact_repo.get('passed') is not True or compact_repo.get('pdfEventFidelity') != 1.0:
+              raise SystemExit('compact proof is not final-pass eligible')
+
+          raw = json.loads(paths['rawProductOutput'].read_text(encoding='utf-8'))
+          frozen = json.loads(paths['frozenAnalysis'].read_text(encoding='utf-8'))
+          manifest = json.loads(paths['freezeManifest'].read_text(encoding='utf-8'))
+          presentation_report = json.loads(paths['renderPresentation'].read_text(encoding='utf-8'))
+          text_report = json.loads(paths['renderTextProof'].read_text(encoding='utf-8'))
+          events = frozen.get('renderEvents') or []
+          raw_events = raw.get('events') or []
+          assembly = raw.get('assembly') or {}
+          present = presentation_report.get('presentation') or {}
+
+          if len(events) != int(manifest.get('eventCount') or -1):
+              raise SystemExit('frozen event count mismatch')
+          if compact_repo.get('frozenEventSha256') != manifest.get('eventSha256'):
+              raise SystemExit('compact/freeze event SHA mismatch')
+          if compact_repo.get('pdfEventSha256') != manifest.get('eventSha256'):
+              raise SystemExit('compact PDF/freeze SHA mismatch')
+          if presentation_report.get('passed') is not True or text_report.get('passed') is not True:
+              raise SystemExit('presentation proofs are not green')
+
+          by_attack = defaultdict(list)
+          for event in events:
+              by_attack[(int(event['measure']), int(event['step']))].append(event)
+          counts = sorted(len(v) for v in by_attack.values())
+          distribution = Counter(counts)
+          attack_locations = len(by_attack)
+          polyphonic = sum(1 for c in counts if c > 1)
+
+          original_hypotheses = {}
+          for e in raw_events:
+              if not isinstance(e, dict): continue
+              key=(int(e.get('measure') or 0), int(e.get('step') or 0))
+              hypotheses={int(h.get('midi')) for h in (e.get('pitchHypotheses') or []) if isinstance(h,dict) and h.get('midi') is not None}
+              original_hypotheses[key]=hypotheses
+
+          traceable = all(int(e['midi']) in original_hypotheses.get((int(e['measure']),int(e['step'])), set()) for e in events)
+          unique_occupancy = len({(int(e['measure']),int(e['step']),int(e['stringIndex'])) for e in events}) == len(events)
+
+          zip_sha = sha(Path('.final-lock/artifact.zip'))
+          declared_digest = Path('.lock-artifact-digest').read_text(encoding='utf-8').strip()
+          if declared_digest and declared_digest != f'sha256:{zip_sha}':
+              raise SystemExit('downloaded artifact ZIP digest mismatch')
+
+          full_sha = sha(paths['fullPdf'])
+          preview_sha = sha(paths['previewPdf'])
+          source_commit = Path('.lock-source-commit').read_text(encoding='utf-8').strip()
+          run_id = Path('.lock-run-id').read_text(encoding='utf-8').strip()
+          artifact_id = int(Path('.lock-artifact-id').read_text(encoding='utf-8').strip())
+
+          lock = {
+              'schemaVersion': 3,
+              'gate': 'rhythm-professional-preholdout-artifact-lock',
+              'workflowRunId': run_id,
+              'artifactId': artifact_id,
+              'artifactName': 'rhythm-professional-preholdout-real-audio',
+              'artifactDigest': declared_digest or f'sha256:{zip_sha}',
+              'artifactZipSha256': zip_sha,
+              'headCommit': source_commit,
+              'sourceAudioSha256': compact_repo.get('sourceAudioSha256'),
+              'sourceAudioBytes': compact_repo.get('sourceAudioBytes'),
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'v143RuntimeSafetyVerified': True,
+              'referenceOpenedDuringFreeze': False,
+              'selectedAttackCount': int(assembly.get('selectedAttackCount') or compact_repo.get('selectedAttackCount') or 0),
+              'eventCount': len(events),
+              'attackLocationCount': attack_locations,
+              'polyphonicAttackCount': polyphonic,
+              'singleNoteAttackCount': attack_locations - polyphonic,
+              'maxNotesAtAttack': max(counts) if counts else 0,
+              'medianNotesAtAttack': statistics.median(counts) if counts else 0,
+              'notesPerAttackDistribution': {str(k): v for k,v in sorted(distribution.items())},
+              'allRenderedMidisTraceToFrozenPitchHypotheses': traceable,
+              'uniqueMeasureStepStringOccupancy': unique_occupancy,
+              'assembly': assembly,
+              'uniqueMeasureCount': int(manifest.get('uniqueMeasureCount') or 0),
+              'firstMeasure': min((int(e['measure']) for e in events), default=None),
+              'lastMeasure': max((int(e['measure']) for e in events), default=None),
+              'presentation': present,
+              'timingDisplayVerified': text_report.get('checks', {}).get('timingGridLegendVisible') is True,
+              'techniqueDisplayVerified': all(text_report.get('checks', {}).get(k) is True for k in ['techniqueLegendHammerOnVisible','techniqueLegendPullOffVisible','techniqueLegendSlideVisible']),
+              'sectionDisplayVerified': text_report.get('checks', {}).get('sectionLabelsVisible') is True,
+              'oneNotePerMeasureCollapseDetected': present.get('oneNotePerMeasureCollapseDetected'),
+              'frozenEventSha256': manifest.get('eventSha256'),
+              'pdfEventSha256': compact_repo.get('pdfEventSha256'),
+              'pdfEventFidelity': compact_repo.get('pdfEventFidelity'),
+              'fullPdf': {'bytes': paths['fullPdf'].stat().st_size, 'pages': compact_repo.get('fullPageCount'), 'sha256': full_sha},
+              'previewPdf': {'bytes': paths['previewPdf'].stat().st_size, 'pages': compact_repo.get('previewPageCount'), 'sha256': preview_sha},
+              'fileSha256': {k: sha(v) for k,v in paths.items() if k not in ['fullPdf','previewPdf']},
+              'liveEndpointModified': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'professionalHumanScoreRun': False,
+              'locked': True,
+              'passed': all([
+                  traceable,
+                  unique_occupancy,
+                  assembly.get('polyphonicExpansion') is True,
+                  int(assembly.get('renderNoteCount') or 0) > int(assembly.get('selectedAttackCount') or 0),
+                  present.get('oneNotePerMeasureCollapseDetected') is False,
+                  float(present.get('averageNotesPerMeasure') or 0) > 2,
+                  int(present.get('multiNoteOnsetCount') or 0) > 0,
+                  compact_repo.get('pdfEventFidelity') == 1.0,
+                  compact_repo.get('checks', {}).get('timingDisplayVerified') is True,
+                  compact_repo.get('checks', {}).get('techniqueDisplayVerified') is True,
+                  compact_repo.get('checks', {}).get('sectionDisplayVerified') is True,
+              ]),
+          }
+          if not lock['passed']:
+              raise SystemExit('final lock invariant failed')
+          Path('debug/v143-contextual-prune/rhythm-professional-preholdout-artifact-lock.json').write_text(json.dumps(lock, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps({k: lock[k] for k in ['workflowRunId','artifactId','headCommit','eventCount','attackLocationCount','pdfEventFidelity','timingDisplayVerified','techniqueDisplayVerified','sectionDisplayVerified','passed']}, indent=2))
+          PY
+
+      - name: Commit permanent final candidate lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add debug/v143-contextual-prune/rhythm-professional-preholdout-artifact-lock.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m 'Lock final-presented Rhythm preholdout artifact'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
