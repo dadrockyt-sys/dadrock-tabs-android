@@ -36,19 +36,21 @@ jobs:
           set -u
           mkdir -p .rhythm-static-bootstrap debug/v143-contextual-prune
 
-          npm ci --ignore-scripts > .rhythm-static-bootstrap/install.log 2>&1
+          timeout 300s npm ci --ignore-scripts --no-audit --no-fund \
+            > .rhythm-static-bootstrap/install.log 2>&1
           install_status=$?
           preflight_status=99
 
           if [ "$install_status" -eq 0 ]; then
-            GITHUB_ACTIONS=false bash validation/rhythm_holdout/run_static_preholdout_preflight.sh \
+            timeout 420s env GITHUB_ACTIONS=false \
+              bash validation/rhythm_holdout/run_static_preholdout_preflight.sh \
               "$GITHUB_WORKSPACE/.rhythm-static-bootstrap/work" \
               > .rhythm-static-bootstrap/preflight.log 2>&1
             preflight_status=$?
           fi
 
           if [ "$install_status" -ne 0 ]; then
-            python - <<'PY'
+            INSTALL_STATUS="$install_status" python - <<'PY'
           import json, os, re
           from pathlib import Path
           p = Path('.rhythm-static-bootstrap/install.log')
@@ -57,13 +59,14 @@ jobs:
           for line in lines:
               line = re.sub(r'(?i)(token|secret|authorization|password)(\s*[:=]\s*)\S+', r'\1\2[REDACTED]', line)
               clean.append(line[:500])
+          status = int(os.environ.get('INSTALL_STATUS') or 1)
           report = {
               'schemaVersion': 7,
               'gate': 'rhythm-preholdout-static-preflight',
               'sourceCommit': os.environ.get('GITHUB_SHA'),
               'passed': False,
-              'failedStage': 'install-locked-dependencies',
-              'exitStatus': 1,
+              'failedStage': 'install-locked-dependencies-timeout' if status == 124 else 'install-locked-dependencies',
+              'exitStatus': status,
               'failureLogTail': clean,
               'usesSyntheticAudioResponseOnly': True,
               'realProfessionalReferenceOpened': False,
@@ -84,13 +87,14 @@ jobs:
           for line in lines:
               line = re.sub(r'(?i)(token|secret|authorization|password)(\s*[:=]\s*)\S+', r'\1\2[REDACTED]', line)
               clean.append(line[:500])
+          status = int(os.environ.get('PREFLIGHT_STATUS') or 1)
           report = {
               'schemaVersion': 7,
               'gate': 'rhythm-preholdout-static-preflight',
               'sourceCommit': os.environ.get('GITHUB_SHA'),
               'passed': False,
-              'failedStage': 'static-runner-missing-report',
-              'exitStatus': int(os.environ.get('PREFLIGHT_STATUS') or 1),
+              'failedStage': 'static-runner-timeout' if status == 124 else 'static-runner-missing-report',
+              'exitStatus': status,
               'failureLogTail': clean,
               'usesSyntheticAudioResponseOnly': True,
               'realProfessionalReferenceOpened': False,
@@ -109,7 +113,7 @@ jobs:
           from pathlib import Path
           report = json.loads(Path('.rhythm-static-bootstrap/report.json').read_text())
           run = {
-              'schemaVersion': 2,
+              'schemaVersion': 3,
               'gate': 'rhythm-static-bootstrap',
               'sourceCommit': os.environ.get('GITHUB_SHA'),
               'runId': os.environ.get('GITHUB_RUN_ID'),
@@ -133,7 +137,7 @@ jobs:
             debug/v143-contextual-prune/rhythm-static-bootstrap-preflight.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record authoritative Rhythm static bootstrap proof'
+          git commit -m 'Record bounded Rhythm static bootstrap proof'
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
