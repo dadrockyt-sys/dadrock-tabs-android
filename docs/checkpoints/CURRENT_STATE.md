@@ -77,21 +77,42 @@ commit `61424df2afecf99d1179cdc328915f795f26662c` — `Lock fresh Rhythm prehold
 
 The downloaded artifact was independently inspected. Fresh full/preview PDFs have clean DadRock branding, readable professional TAB systems, no observed clipping/overlap on inspected pages, and the preview lock/watermark behaves as intended. Musical correctness is intentionally not inferred from appearance.
 
-## Professional scorer phase — NOW AUTHORIZED, COMPLETE SOURCE STILL REQUIRED
+## Professional scorer phase — COMPLETE CLEAN SOURCE RECOVERED
 
-The pre-holdout isolation/freeze/PDF prerequisite is fully green and locked, so recovery/opening of a professional HUMAN-written reference is now allowed strictly scorer-side.
+The fresh reference-free freeze/PDF prerequisite was green before any professional source recovery.
 
-`validation/rhythm_holdout/reference/reference-inventory.json` still correctly says `completeReferenceAvailable:false` and `finalScoringAuthorized:false` until a complete clean whole-song human source is identified and verified.
+The user identified `main/public/Professionalexample.jpg`. It was recovered scorer-side from immutable commit `e0f91e74c815b9ecdf0a72fae6d1523414b34577` without modifying `main` or Production.
 
-Known surviving clean human material is only Library `1000116180.jpg`, Chorus measures 33–35, labels `G6`, `A(tp2)`, `E`, `D`; it is not sufficient for the final whole-song score.
+Recovery workflow:
+- `.github/workflows/rhythm-professional-reference-recovery.yml`
+- workflow creation commit `d07b3a714133703e77b233ec1dd9a978c4b2cfb3`
+- Actions run `32624327056`
+- report `debug/v143-contextual-prune/rhythm-professional-reference-recovery.json`, `passed:true`
+- scorer-only artifact ID `9489261810`
+- artifact digest `c99d243520f274adfa9e817ec0b143617d9c95f50eb7817551049f3727e3207a`
 
-Do not use DadRock-generated customer/product PDFs as ground truth. In particular the Resend/DadRock email attachments named `ds-music-are-you-gonna-go-my-way-remastered-2025-lenny-kravitz-rhythm-tab.pdf` and `lenny-kravitz-are-you-gonna-go-my-way-rhythm-tab.pdf` are generated product outputs, not the professional-human holdout.
+Immutable professional source proof:
+- path `public/Professionalexample.jpg` at immutable commit above
+- SHA256 `aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9`
+- 979,815 bytes
+- JPEG RGB, 2160×3840
+- exact 3×3 / nine-panel stitched professional source
+- visible title `Are You Gonna Go My Way`
+- visible artist `Lenny Kravitz`
+- revision `2026-07-12`
+- `Overdriven Guitar`
+- `Craig Ross | 1953 Gibson Les Paul Goldtop | Rhythm Guitar`
+- visual panel review covers the complete song from measure 1 through the final ending system after measure 112; the existing source-derived measure map identifies the complete range as measures 1–113 and nine source panels.
+- the clean Library screenshot `1000116180.jpg` independently matches the recovered Chorus source around measures 33–35.
+
+`validation/rhythm_holdout/reference/reference-inventory.json` is now updated to `completeReferenceAvailable:true`. `finalScoringAuthorized` remains false only because a fresh scorer-only event-level transcription of this immutable source is still required. Historical development references remain excluded and cannot be promoted as the final holdout.
 
 ## Immediate next steps
 
-1. Exhaust available Library/Gmail history for the complete clean professional HUMAN-written Rhythm source, now scorer-side access is permitted.
-2. If found: hash immutable source bytes, prove whole-song/instrument/measure completeness, then update scorer-only inventory/completeReference state.
-3. Score the already-locked fresh frozen stream from run `32623173615`; do NOT rerun analyzer merely to score.
-4. Run completeness → isolated scorer → final wrapper. Require professional score >=0.99, zero critical mismatches, fidelity 1.0.
-5. If score misses, change only general/reference-free musical logic; then a brand-new fresh real-audio run/freeze is mandatory before rescore.
-6. Once the real professional gate passes, verify DadRock `/ai-tab` user end-to-end and create `Final Rhythm Pipeline`.
+1. Freshly transcribe the immutable nine-panel professional-human source scorer-side into `reference.schema.json` format under the ignored reference area; do not use historical development event labels as final ground truth.
+2. Validate all measures 1–113, 16-step placement, string/fret/MIDI consistency, durations/techniques only where source evidence is explicit, and complete-source provenance/hash.
+3. Set `completeReferenceTranscriptionReady:true` and authorize final scoring only after that transcription passes completeness checks.
+4. Score the already-locked fresh frozen stream from run `32623173615`; do **not** rerun analyzer merely to score.
+5. Run completeness → isolated scorer → final wrapper. Require professional score >=0.99, zero critical mismatches, fidelity 1.0.
+6. If score misses, change only general/reference-free musical logic; then a brand-new fresh real-audio run/freeze is mandatory before rescore.
+7. Once the real professional gate passes, verify DadRock `/ai-tab` user end-to-end and create `Final Rhythm Pipeline`.
