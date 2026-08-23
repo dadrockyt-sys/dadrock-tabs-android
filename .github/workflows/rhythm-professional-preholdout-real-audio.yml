@@ -1,0 +1,250 @@
+name: Rhythm Professional Pre-Holdout Real Audio
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/rhythm-professional-preholdout-real-audio.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fresh-reference-free-freeze:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies and Modal CLI
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts
+          python -m pip install --disable-pip-version-check modal
+
+      - name: Verify holdout is isolated from runtime
+        run: |
+          set -euo pipefail
+          mkdir -p .preholdout/logs debug/v143-contextual-prune
+          python validation/rhythm_holdout/verify_runtime_isolation.py \
+            > .preholdout/logs/runtime-isolation.json
+          cat .preholdout/logs/runtime-isolation.json
+
+      - name: Prepare standalone ESM freeze and renderer tools
+        run: |
+          set -euo pipefail
+          mkdir -p .preholdout/esm
+
+          cp lib/v143RenderContract.js \
+            .preholdout/esm/v143RenderContract.mjs
+
+          sed \
+            "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
+            lib/v143AnalyzerQuality.js \
+            > .preholdout/esm/v143AnalyzerQuality.mjs
+
+          sed \
+            -e "s#'./v143AnalyzerQuality.js'#'./v143AnalyzerQuality.mjs'#" \
+            -e "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
+            lib/jimmyPaigeAnalysisPayload.js \
+            > .preholdout/esm/jimmyPaigeAnalysisPayload.mjs
+
+          sed \
+            "s#../../lib/jimmyPaigeAnalysisPayload.js#./jimmyPaigeAnalysisPayload.mjs#" \
+            validation/rhythm_holdout/prepare_rhythm_freeze_payload.mjs \
+            > .preholdout/esm/prepare-freeze.mjs
+
+          sed \
+            "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" \
+            lib/createV143RhythmPdf.js \
+            > .preholdout/esm/createV143RhythmPdf.mjs
+
+          sed \
+            "s#../../lib/v143RenderContract.js#./v143RenderContract.mjs#" \
+            validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs \
+            > .preholdout/esm/render-frozen.mjs
+
+          node --check .preholdout/esm/v143RenderContract.mjs
+          node --check .preholdout/esm/v143AnalyzerQuality.mjs
+          node --check .preholdout/esm/jimmyPaigeAnalysisPayload.mjs
+          node --check .preholdout/esm/prepare-freeze.mjs
+          node --check .preholdout/esm/createV143RhythmPdf.mjs
+          node --check .preholdout/esm/render-frozen.mjs
+          python -m py_compile \
+            validation/rhythm_holdout/canonical.py \
+            validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            validation/rhythm_holdout/verify_pdf_event_fidelity.py
+
+      - name: Run fresh isolated reference-free Rhythm product analysis
+        run: |
+          set -euo pipefail
+          if [ -z "${MODAL_TOKEN_ID:-}" ] || [ -z "${MODAL_TOKEN_SECRET:-}" ]; then
+            echo 'Modal credentials are required for the fresh real-audio pre-holdout gate.' >&2
+            exit 1
+          fi
+
+          python -m modal run \
+            analyzer/v143_ai_tab_product_canary_modal.py::run \
+            --audio-path public/gomywayfullaitest.m4a \
+            --output-path .preholdout/raw-product-output.json \
+            > .preholdout/logs/modal-analysis.log 2>&1
+
+          test -s .preholdout/raw-product-output.json
+
+      - name: Freeze exact structured events before any reference access
+        run: |
+          set -euo pipefail
+          node .preholdout/esm/prepare-freeze.mjs \
+            .preholdout/raw-product-output.json \
+            .preholdout/rhythm-freeze-input.json \
+            > .preholdout/logs/prepare-freeze.log 2>&1
+
+          checked_out_commit=$(git rev-parse HEAD)
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .preholdout/rhythm-freeze-input.json \
+            .preholdout/freeze \
+            --source-commit "$checked_out_commit" \
+            > .preholdout/logs/freeze.log 2>&1
+
+          test -s .preholdout/freeze/rhythm-frozen-analysis.json
+          test -s .preholdout/freeze/rhythm-freeze-manifest.json
+
+      - name: Render preview and full professional PDF from frozen events only
+        run: |
+          set -euo pipefail
+          node .preholdout/esm/render-frozen.mjs \
+            .preholdout/freeze/rhythm-frozen-analysis.json \
+            .preholdout/freeze/pdf \
+            .preholdout/esm/createV143RhythmPdf.mjs \
+            > .preholdout/logs/render-frozen-pdf.log 2>&1
+
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .preholdout/freeze \
+            .preholdout/freeze/pdf/pdf-event-evidence.json \
+            > .preholdout/logs/pdf-event-fidelity.log 2>&1
+
+          test -s .preholdout/freeze/pdf/full-frozen-rhythm.pdf
+          test -s .preholdout/freeze/pdf/preview-frozen-rhythm.pdf
+          test -s .preholdout/freeze/rhythm-pdf-event-fidelity.json
+
+      - name: Write compact pre-holdout proof
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          raw = json.loads(Path('.preholdout/raw-product-output.json').read_text(encoding='utf-8'))
+          manifest = json.loads(Path('.preholdout/freeze/rhythm-freeze-manifest.json').read_text(encoding='utf-8'))
+          pdf = json.loads(Path('.preholdout/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+          pdf_render = json.loads(Path('.preholdout/freeze/pdf/pdf-event-evidence.json').read_text(encoding='utf-8'))
+          isolation = json.loads(Path('.preholdout/logs/runtime-isolation.json').read_text(encoding='utf-8'))
+          live = raw.get('liveV143') or {}
+          canary = raw.get('canary') or {}
+
+          checks = {
+              'runtimeIsolationPassed': isolation.get('passed') is True,
+              'referenceFree': live.get('referenceFree') is True,
+              'professionalReferenceNotUsed': live.get('professionalReferenceUsed') is False,
+              'referenceRuntimeInputNotUsed': live.get('referenceRuntimeInputUsed') is False,
+              'sameProductRhythmPipeline': canary.get('sameProductRhythmPipeline') is True,
+              'sameProductRhythmImage': canary.get('sameProductRhythmImage') is True,
+              'frozenEventCountPositive': int(manifest.get('eventCount') or 0) > 0,
+              'sourceAudioHashPresent': bool(manifest.get('sourceAudioSha256')),
+              'pdfRendererProjectionExact': pdf_render.get('rendererProjectionExactlyEqual') is True,
+              'fullPdfRendered': int(pdf_render.get('fullPdfBytes') or 0) > 20000,
+              'previewPdfRendered': int(pdf_render.get('previewPdfBytes') or 0) > 20000,
+              'pdfEventFidelityExact': pdf.get('pdfEventFidelity') == 1.0,
+              'pdfHashMatchesFrozenHash': pdf.get('pdfEventSha256') == manifest.get('eventSha256'),
+              'humanReferenceStillSealed': True,
+              'productionUnmodified': canary.get('productionModified') is False,
+          }
+          failed = [name for name, passed in checks.items() if not passed]
+          report = {
+              'schemaVersion': 1,
+              'gate': 'rhythm-professional-preholdout-real-audio',
+              'workflowRunId': os.environ.get('GITHUB_RUN_ID'),
+              'eventTriggerCommit': os.environ.get('GITHUB_SHA'),
+              'sourceCommit': manifest.get('sourceCommit'),
+              'sourceAudioSha256': manifest.get('sourceAudioSha256'),
+              'sourceAudioBytes': manifest.get('sourceAudioBytes'),
+              'eventCount': manifest.get('eventCount'),
+              'uniqueMeasureCount': manifest.get('uniqueMeasureCount'),
+              'frozenEventSha256': manifest.get('eventSha256'),
+              'pdfEventSha256': manifest.get('pdfEventSha256'),
+              'pdfEventFidelity': manifest.get('pdfEventFidelity'),
+              'fullPdfBytes': pdf_render.get('fullPdfBytes'),
+              'previewPdfBytes': pdf_render.get('previewPdfBytes'),
+              'fullPageCount': pdf_render.get('fullPageCount'),
+              'previewPageCount': pdf_render.get('previewPageCount'),
+              'checks': checks,
+              'failedChecks': failed,
+              'realProfessionalReferenceOpened': False,
+              'professionalHumanScoreRun': False,
+              'rhythmComplete': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'passed': not failed,
+          }
+          output = Path('debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json')
+          output.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(report, indent=2))
+          if failed:
+              raise SystemExit('Pre-holdout proof failed: ' + ', '.join(failed))
+          PY
+
+      - name: Upload frozen pre-holdout evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhythm-professional-preholdout-real-audio
+          path: |
+            .preholdout/raw-product-output.json
+            .preholdout/rhythm-freeze-input.json
+            .preholdout/freeze/rhythm-frozen-analysis.json
+            .preholdout/freeze/rhythm-freeze-manifest.json
+            .preholdout/freeze/rhythm-pdf-event-fidelity.json
+            .preholdout/freeze/pdf/pdf-event-evidence.json
+            .preholdout/freeze/pdf/full-frozen-rhythm.pdf
+            .preholdout/freeze/pdf/preview-frozen-rhythm.pdf
+            .preholdout/logs/*.json
+            .preholdout/logs/*.log
+            debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json
+          retention-days: 14
+
+      - name: Commit compact pre-holdout proof to isolated branch
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json
+          if git diff --cached --quiet; then
+            echo 'Compact pre-holdout proof already current.'
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record fresh Rhythm professional pre-holdout proof'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
