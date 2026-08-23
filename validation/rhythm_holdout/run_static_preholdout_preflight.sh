@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-WORK="${1:-/tmp/rhythm-preholdout-static}"
+WORK="${1:-$ROOT/.preholdout-static}"
 SOURCE_COMMIT="${GITHUB_SHA:-unknown}"
 STAGE="initialization"
 
@@ -46,6 +46,7 @@ work.mkdir(parents=True, exist_ok=True)
 stage = os.environ.get("STAGE_VALUE")
 log_by_stage = {
     "runtime-isolation": work / "logs/runtime-isolation.json",
+    "ai-tab-pdf-product-contract": work / "logs/ai-tab-pdf-product-contract.json",
     "structured-freeze-payload": work / "logs/prepare-freeze.log",
     "freeze-analysis": work / "logs/freeze.log",
     "professional-pdf-render": work / "logs/render-frozen-pdf.log",
@@ -56,8 +57,6 @@ log_tail = []
 if log_path and log_path.exists():
     lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()[-24:]
     for line in lines:
-        # Keep only diagnostic text and redact token/secret-like assignments if any
-        # future command happens to echo one. Current static gate has no secrets.
         line = re.sub(
             r"(?i)(token|secret|authorization|password)(\s*[:=]\s*)\S+",
             r"\1\2[REDACTED]",
@@ -65,7 +64,7 @@ if log_path and log_path.exists():
         )
         log_tail.append(line[:500])
 report = {
-    "schemaVersion": 3,
+    "schemaVersion": 4,
     "gate": "rhythm-preholdout-static-preflight",
     "sourceCommit": os.environ.get("SOURCE_COMMIT_VALUE"),
     "passed": False,
@@ -93,6 +92,10 @@ mkdir -p "$WORK/esm" "$WORK/logs"
 STAGE="runtime-isolation"
 python validation/rhythm_holdout/verify_runtime_isolation.py \
   > "$WORK/logs/runtime-isolation.json"
+
+STAGE="ai-tab-pdf-product-contract"
+node validation/rhythm_holdout/verify_ai_tab_pdf_product_contract.mjs \
+  "$WORK/logs/ai-tab-pdf-product-contract.json"
 
 STAGE="standalone-esm-preparation"
 cp lib/v143RenderContract.js "$WORK/esm/v143RenderContract.mjs"
@@ -231,12 +234,16 @@ from pathlib import Path
 work = Path(sys.argv[1])
 source_commit = sys.argv[2]
 isolation = json.loads((work / "logs/runtime-isolation.json").read_text(encoding="utf-8"))
+product_contract = json.loads((work / "logs/ai-tab-pdf-product-contract.json").read_text(encoding="utf-8"))
 manifest = json.loads((work / "freeze/rhythm-freeze-manifest.json").read_text(encoding="utf-8"))
 pdf = json.loads((work / "freeze/rhythm-pdf-event-fidelity.json").read_text(encoding="utf-8"))
 render = json.loads((work / "freeze/pdf/pdf-event-evidence.json").read_text(encoding="utf-8"))
 
 checks = {
     "runtimeIsolationPassed": isolation.get("passed") is True,
+    "aiTabPdfProductContractPassed": product_contract.get("passed") is True,
+    "pageIsPdfContractSourceOfTruth": product_contract.get("sourceOfTruth") == "app/ai-tab/page.js",
+    "previewAndPurchasedBothCarryRenderEvents": product_contract.get("previewAndPurchasedBothCarryRenderEvents") is True,
     "syntheticEventCount400": manifest.get("eventCount") == 400,
     "syntheticMeasureCount100": manifest.get("uniqueMeasureCount") == 100,
     "sourceAudioHashPresent": bool(manifest.get("sourceAudioSha256")),
@@ -250,7 +257,7 @@ checks = {
 }
 failed = [name for name, passed in checks.items() if not passed]
 report = {
-    "schemaVersion": 3,
+    "schemaVersion": 4,
     "gate": "rhythm-preholdout-static-preflight",
     "sourceCommit": source_commit,
     "eventCount": manifest.get("eventCount"),
