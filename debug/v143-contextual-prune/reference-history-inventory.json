@@ -1,0 +1,1235 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-reference-history-inventory",
+  "branch": "v143-contextual-prune-lobo",
+  "commitsScanned": 1000,
+  "matches": [
+    {
+      "sha": "306fd8db73aa1c6f391b2a8f10f807187a18e0b6",
+      "message": "Record professional source revision scan",
+      "authorDate": "2026-08-23T23:41:27Z",
+      "committerDate": "2026-08-23T23:41:39Z"
+    },
+    {
+      "sha": "195d1a56f62727755e37134f07e6d124ce4fcceb",
+      "message": "Inventory branch history for professional scorer recovery",
+      "authorDate": "2026-08-23T23:41:22Z",
+      "committerDate": "2026-08-23T23:41:22Z"
+    },
+    {
+      "sha": "a47ab26bd522c6ed36532198ca394b8cddd3b65c",
+      "message": "Scan professional source revision counts scorer-only",
+      "authorDate": "2026-08-23T23:40:01Z",
+      "committerDate": "2026-08-23T23:40:01Z"
+    },
+    {
+      "sha": "e07e587805d4303d6d4d8ade749c1c2ca686f974",
+      "message": "Record professional reference artifact inventory",
+      "authorDate": "2026-08-23T23:38:17Z",
+      "committerDate": "2026-08-23T23:38:17Z"
+    },
+    {
+      "sha": "5a8457d7cb8888ec7d0ac376b11b1134632e9999",
+      "message": "Inventory historical scorer reference artifacts",
+      "authorDate": "2026-08-23T23:37:55Z",
+      "committerDate": "2026-08-23T23:37:55Z"
+    },
+    {
+      "sha": "921b0e61bd434207c7f930715f9080f6f42c06d1",
+      "message": "Record professional holdout source structure",
+      "authorDate": "2026-08-23T23:32:27Z",
+      "committerDate": "2026-08-23T23:32:27Z"
+    },
+    {
+      "sha": "8918a85580fb3c03c6f31cfc531c4d0a9456812e",
+      "message": "Record professional holdout source structure",
+      "authorDate": "2026-08-23T23:31:28Z",
+      "committerDate": "2026-08-23T23:31:28Z"
+    },
+    {
+      "sha": "ea4a5dec3cbe8e75eb89222284705811b7173709",
+      "message": "Expose scorer-only human track as temporary artifact",
+      "authorDate": "2026-08-23T23:31:06Z",
+      "committerDate": "2026-08-23T23:31:06Z"
+    },
+    {
+      "sha": "06ea0d278c813f26e3480572f4f58bd0b056119c",
+      "message": "Record professional holdout source structure",
+      "authorDate": "2026-08-23T23:29:57Z",
+      "committerDate": "2026-08-23T23:29:57Z"
+    },
+    {
+      "sha": "20f5a3e275addfedeb44e27cbaf59efa0303fc2c",
+      "message": "Add scorer-only professional source structure inspection",
+      "authorDate": "2026-08-23T23:29:35Z",
+      "committerDate": "2026-08-23T23:29:35Z"
+    },
+    {
+      "sha": "7d1480d9774c5ae79c6edb3e6a0e882789b8a2c0",
+      "message": "Record V143 corrected Rhythm candidate pre-holdout",
+      "authorDate": "2026-08-23T19:59:31Z",
+      "committerDate": "2026-08-23T19:59:43Z"
+    },
+    {
+      "sha": "5553479e2dffc75c58f260404e83dd1929d154b9",
+      "message": "Record corrected Rhythm freeze workflow run identity",
+      "authorDate": "2026-08-23T19:53:24Z",
+      "committerDate": "2026-08-23T19:53:24Z"
+    },
+    {
+      "sha": "e06e4c45b7b928c111c5cfda18108ab2b25557fd",
+      "message": "Checkpoint first green corrected professional PDF freeze",
+      "authorDate": "2026-08-23T19:52:45Z",
+      "committerDate": "2026-08-23T19:52:45Z"
+    },
+    {
+      "sha": "345cb4ed4d6d6f545e00c5642e6814ef1f8b3066",
+      "message": "Record V143 corrected Rhythm candidate pre-holdout",
+      "authorDate": "2026-08-23T19:50:15Z",
+      "committerDate": "2026-08-23T19:50:26Z"
+    },
+    {
+      "sha": "ec63baa13870ec357934f0530409bb04ccb4dc73",
+      "message": "Add corrected Rhythm candidate freeze and PDF gate",
+      "authorDate": "2026-08-23T19:43:50Z",
+      "committerDate": "2026-08-23T19:43:50Z"
+    },
+    {
+      "sha": "f32ef1bed14df69452aa2e3f037613936993dae7",
+      "message": "Record failed Rhythm pre-holdout static diagnostic",
+      "authorDate": "2026-08-23T19:43:47Z",
+      "committerDate": "2026-08-23T19:43:47Z"
+    },
+    {
+      "sha": "0565b16a649a490cc9ee34940f486696159055b7",
+      "message": "Add corrected candidate freeze payload preparation",
+      "authorDate": "2026-08-23T19:43:10Z",
+      "committerDate": "2026-08-23T19:43:10Z"
+    },
+    {
+      "sha": "9b0adba5cda329cccbee0b7eed58cd4f75277ee0",
+      "message": "Allow real partial timing measures at audio boundaries",
+      "authorDate": "2026-08-23T19:21:25Z",
+      "committerDate": "2026-08-23T19:21:25Z"
+    },
+    {
+      "sha": "68c13fb87b08b1eb949d4732650238d900e7fdfc",
+      "message": "Add reference-free approved shadow physical review",
+      "authorDate": "2026-08-23T19:15:54Z",
+      "committerDate": "2026-08-23T19:15:54Z"
+    },
+    {
+      "sha": "2774a0421bc7f6781b5263d355f852c6dcf0f411",
+      "message": "Add reference-free timing hypothesis shadow",
+      "authorDate": "2026-08-23T19:01:56Z",
+      "committerDate": "2026-08-23T19:01:56Z"
+    },
+    {
+      "sha": "6c51e7d2792b92741934f27787e2871ae3c52381",
+      "message": "Add reference-free timing consistency shadow",
+      "authorDate": "2026-08-23T18:42:27Z",
+      "committerDate": "2026-08-23T18:42:27Z"
+    },
+    {
+      "sha": "d0437852ad125db1882eccee4d98943f6989f06f",
+      "message": "Add reference-free sustain consensus shadow",
+      "authorDate": "2026-08-23T18:40:16Z",
+      "committerDate": "2026-08-23T18:40:16Z"
+    },
+    {
+      "sha": "e4fc786ba4e87995647ce438ef56ad69bbbbfb87",
+      "message": "Prove local peak rescue in populated measures",
+      "authorDate": "2026-08-23T18:36:18Z",
+      "committerDate": "2026-08-23T18:36:18Z"
+    },
+    {
+      "sha": "c130ab3cb360ea69623eefd15aad5393aefe1b38",
+      "message": "Expand reference-free shadow attack rescue",
+      "authorDate": "2026-08-23T18:36:00Z",
+      "committerDate": "2026-08-23T18:36:00Z"
+    },
+    {
+      "sha": "10b01750c83154329d9348c4cc2d3417b470e8ab",
+      "message": "Add isolated reference-free rhythm shadow correction",
+      "authorDate": "2026-08-23T17:58:59Z",
+      "committerDate": "2026-08-23T17:58:59Z"
+    },
+    {
+      "sha": "79d17f5da16997e51beabb27e97d9441019cf921",
+      "message": "Checkpoint real professional holdout failure",
+      "authorDate": "2026-08-23T17:41:05Z",
+      "committerDate": "2026-08-23T17:41:05Z"
+    },
+    {
+      "sha": "42fe860758ae54acba5727c9485c2e6d77d4db1f",
+      "message": "Checkpoint scorer recovery and transcription progress",
+      "authorDate": "2026-08-23T17:30:07Z",
+      "committerDate": "2026-08-23T17:30:07Z"
+    },
+    {
+      "sha": "69d0177ae356a629f3302b5b25171008b45405ee",
+      "message": "Checkpoint scorer source and shadow safety",
+      "authorDate": "2026-08-23T17:19:37Z",
+      "committerDate": "2026-08-23T17:19:37Z"
+    },
+    {
+      "sha": "c91a865c8f904bf0f6857b9693bafc2e8cf5a13d",
+      "message": "Add reference-free precision evidence and contextual attack rescue",
+      "authorDate": "2026-08-23T16:49:16Z",
+      "committerDate": "2026-08-23T16:49:16Z"
+    },
+    {
+      "sha": "838f3c02e02733cef9ad620826d0efa66da25456",
+      "message": "Refine reference-free Rhythm section boundaries",
+      "authorDate": "2026-08-23T14:08:08Z",
+      "committerDate": "2026-08-23T14:08:08Z"
+    },
+    {
+      "sha": "b511d53fc2b7c32efd266e26674ee81f6817cf78",
+      "message": "Record final-presented Rhythm pre-holdout proof",
+      "authorDate": "2026-08-23T14:03:10Z",
+      "committerDate": "2026-08-23T14:03:29Z"
+    },
+    {
+      "sha": "e03de2fe916baa7a91b45719cdc0910b8b456ee5",
+      "message": "Add automatic final Rhythm freeze lock",
+      "authorDate": "2026-08-23T14:02:56Z",
+      "committerDate": "2026-08-23T14:02:56Z"
+    },
+    {
+      "sha": "b23bdfb476bc26af5f353b7862465af3f2abc485",
+      "message": "Run final-presented Rhythm preholdout freeze",
+      "authorDate": "2026-08-23T13:58:18Z",
+      "committerDate": "2026-08-23T13:58:18Z"
+    },
+    {
+      "sha": "c776722069ec7859278309fc8ef1f2d9ecde8005",
+      "message": "Add reference-free Rhythm presentation contract",
+      "authorDate": "2026-08-23T13:54:08Z",
+      "committerDate": "2026-08-23T13:54:08Z"
+    },
+    {
+      "sha": "2846003e70a3949ebbb434bad680d2c9fb5a4c7e",
+      "message": "Checkpoint fresh post-polyphony freeze lock",
+      "authorDate": "2026-08-23T13:35:54Z",
+      "committerDate": "2026-08-23T13:35:54Z"
+    },
+    {
+      "sha": "4feabad8764a3a74e81d3209978cbee3a63eeed2",
+      "message": "Record fresh Rhythm professional pre-holdout proof",
+      "authorDate": "2026-08-23T13:31:16Z",
+      "committerDate": "2026-08-23T13:31:37Z"
+    },
+    {
+      "sha": "580550c7cfa6d7a2204aac70052c4c5ab88aa130",
+      "message": "Fix pre-GPU ESM rewrite and retrigger Rhythm freeze",
+      "authorDate": "2026-08-23T13:26:03Z",
+      "committerDate": "2026-08-23T13:26:03Z"
+    },
+    {
+      "sha": "ebbaf7f30cf96f5e084d7122765bf9fac076b60e",
+      "message": "Trigger fresh post-polyphony Rhythm audio freeze",
+      "authorDate": "2026-08-23T13:16:05Z",
+      "committerDate": "2026-08-23T13:16:05Z"
+    },
+    {
+      "sha": "eda1ee735ab32b55e9b5b363f31b61672c0ddc17",
+      "message": "Checkpoint reference-free Rhythm polyphony work",
+      "authorDate": "2026-08-23T13:06:31Z",
+      "committerDate": "2026-08-23T13:06:31Z"
+    },
+    {
+      "sha": "f015715a291ff3f9c2a9da9f633f1b5bef63352a",
+      "message": "Add CPU gate for reference-free Rhythm polyphony",
+      "authorDate": "2026-08-23T13:05:39Z",
+      "committerDate": "2026-08-23T13:05:39Z"
+    },
+    {
+      "sha": "e6820f0782eba3d79854b9a140851ffc1d99afb0",
+      "message": "Add CPU proof for reference-free Rhythm polyphony",
+      "authorDate": "2026-08-23T13:05:18Z",
+      "committerDate": "2026-08-23T13:05:18Z"
+    },
+    {
+      "sha": "cc56e64589fcc9bae3032b55133e8b73ba5fd956",
+      "message": "Add reference-free polyphonic Rhythm note mapping",
+      "authorDate": "2026-08-23T13:04:23Z",
+      "committerDate": "2026-08-23T13:04:23Z"
+    },
+    {
+      "sha": "af04fd4c289e6eaddbcd6e9326b47d897ca9a321",
+      "message": "Checkpoint recovered complete Rhythm holdout source",
+      "authorDate": "2026-08-23T07:03:48Z",
+      "committerDate": "2026-08-23T07:03:48Z"
+    },
+    {
+      "sha": "8d584fa5ece608b799c92953d9a404d4b56c5fab",
+      "message": "Record complete immutable Rhythm holdout source",
+      "authorDate": "2026-08-23T07:03:22Z",
+      "committerDate": "2026-08-23T07:03:22Z"
+    },
+    {
+      "sha": "ba7a748055f8126c7ad753a0952d9e6f1c609beb",
+      "message": "Record Rhythm professional reference recovery",
+      "authorDate": "2026-08-23T06:58:56Z",
+      "committerDate": "2026-08-23T06:58:56Z"
+    },
+    {
+      "sha": "d07b3a714133703e77b233ec1dd9a978c4b2cfb3",
+      "message": "Recover immutable Rhythm professional reference",
+      "authorDate": "2026-08-23T06:58:36Z",
+      "committerDate": "2026-08-23T06:58:36Z"
+    },
+    {
+      "sha": "bb243441a64f9eb4914d165a8c8378d4747eedc2",
+      "message": "Checkpoint fresh Rhythm preholdout green lock",
+      "authorDate": "2026-08-23T06:41:20Z",
+      "committerDate": "2026-08-23T06:41:20Z"
+    },
+    {
+      "sha": "61424df2afecf99d1179cdc328915f795f26662c",
+      "message": "Lock fresh Rhythm preholdout artifact",
+      "authorDate": "2026-08-23T06:39:46Z",
+      "committerDate": "2026-08-23T06:39:46Z"
+    },
+    {
+      "sha": "875011c265de261253030ba2f25dd6744cddcb61",
+      "message": "Record fresh Rhythm professional pre-holdout proof",
+      "authorDate": "2026-08-23T06:37:35Z",
+      "committerDate": "2026-08-23T06:37:55Z"
+    },
+    {
+      "sha": "1df4a6c55123ae1c4c4b37530f306d43da69bbdd",
+      "message": "Run locked fresh Rhythm real-audio preholdout",
+      "authorDate": "2026-08-23T06:31:59Z",
+      "committerDate": "2026-08-23T06:31:59Z"
+    },
+    {
+      "sha": "15d1e9e9e892f027c3a253fb461c46574e5c163f",
+      "message": "Record isolated Rhythm holdout self-test V2",
+      "authorDate": "2026-08-23T06:29:43Z",
+      "committerDate": "2026-08-23T06:30:02Z"
+    },
+    {
+      "sha": "1c64d91fff0fb13f4982c212267c22f2951061f7",
+      "message": "Add isolated Rhythm holdout self-test V2",
+      "authorDate": "2026-08-23T06:29:03Z",
+      "committerDate": "2026-08-23T06:29:03Z"
+    },
+    {
+      "sha": "e0c1cd7b5ac1571e9dcd401a81064972ef1b9c48",
+      "message": "Bind immutable professional reference hash across final score",
+      "authorDate": "2026-08-23T04:38:44Z",
+      "committerDate": "2026-08-23T04:38:44Z"
+    },
+    {
+      "sha": "126a2e5256742a9970bdc62a4db47122dc40e5d3",
+      "message": "Keep holdout self-test aligned with PDF safety proof",
+      "authorDate": "2026-08-23T04:32:27Z",
+      "committerDate": "2026-08-23T04:32:27Z"
+    },
+    {
+      "sha": "51f7d3e5c23180d5117fa1e3b3a9d4b5671a5246",
+      "message": "Bind complete V143 safety contract into final holdout gate",
+      "authorDate": "2026-08-23T04:27:44Z",
+      "committerDate": "2026-08-23T04:27:44Z"
+    },
+    {
+      "sha": "6a724bae55b3b3d8f40b94346535830567f4bdd7",
+      "message": "Carry complete V143 safety gate into holdout completeness",
+      "authorDate": "2026-08-23T04:27:26Z",
+      "committerDate": "2026-08-23T04:27:26Z"
+    },
+    {
+      "sha": "5d412df2e17fefb7e1b057c0b61bf2739e9f1cd9",
+      "message": "Consolidate V143 anti-leakage holdout proof",
+      "authorDate": "2026-08-23T04:26:40Z",
+      "committerDate": "2026-08-23T04:26:40Z"
+    },
+    {
+      "sha": "098622e0ebdc168e265f0ffe4a9f5b374ccd14b6",
+      "message": "Require complete V143 safety contract at freeze",
+      "authorDate": "2026-08-23T04:25:56Z",
+      "committerDate": "2026-08-23T04:25:56Z"
+    },
+    {
+      "sha": "7bcee069d1f15812ffaf7fc103ee87872328b165",
+      "message": "Require V143 runtime safety before Rhythm freeze",
+      "authorDate": "2026-08-23T04:25:24Z",
+      "committerDate": "2026-08-23T04:25:24Z"
+    },
+    {
+      "sha": "190b6a36c349c91b97b2f3a1b66781851927f16d",
+      "message": "Fail closed on V143 runtime reference leakage",
+      "authorDate": "2026-08-23T04:18:54Z",
+      "committerDate": "2026-08-23T04:18:54Z"
+    },
+    {
+      "sha": "b63f6d33d7b8a8a73d752e4f97e47aeda256260d",
+      "message": "Verify real-audio preholdout workflow contract",
+      "authorDate": "2026-08-23T04:08:52Z",
+      "committerDate": "2026-08-23T04:08:52Z"
+    },
+    {
+      "sha": "94d7e29381959a216253f572d1177782b0a5980a",
+      "message": "Record failed Rhythm pre-holdout static diagnostic",
+      "authorDate": "2026-08-23T03:57:23Z",
+      "committerDate": "2026-08-23T03:57:23Z"
+    },
+    {
+      "sha": "89ea57e9f95e66637850c6d1df807189aeb60934",
+      "message": "Record failed Rhythm pre-holdout static diagnostic",
+      "authorDate": "2026-08-23T03:47:04Z",
+      "committerDate": "2026-08-23T03:47:04Z"
+    },
+    {
+      "sha": "1d99690759a4d572d389bd3e7599cebd76d84b1b",
+      "message": "Consolidate Rhythm holdout and static preflight proof",
+      "authorDate": "2026-08-23T03:43:46Z",
+      "committerDate": "2026-08-23T03:43:46Z"
+    },
+    {
+      "sha": "c457ba3e8bb6f817357d5bef0c85f80277a1c37f",
+      "message": "Record final Rhythm holdout wrapper self-test",
+      "authorDate": "2026-08-23T03:42:32Z",
+      "committerDate": "2026-08-23T03:42:33Z"
+    },
+    {
+      "sha": "a1dac791e7266c04f09fe3efa267e6a978d1e667",
+      "message": "Simplify Rhythm pre-holdout static preflight",
+      "authorDate": "2026-08-23T03:42:23Z",
+      "committerDate": "2026-08-23T03:42:23Z"
+    },
+    {
+      "sha": "57a9955a6f4a2e799d3df92216409a81055712eb",
+      "message": "Add reusable Rhythm pre-holdout static preflight",
+      "authorDate": "2026-08-23T03:41:59Z",
+      "committerDate": "2026-08-23T03:41:59Z"
+    },
+    {
+      "sha": "5a8b99e00d50013a3f4f5bca39efc2556f502e37",
+      "message": "Record final Rhythm holdout wrapper self-test",
+      "authorDate": "2026-08-23T03:40:12Z",
+      "committerDate": "2026-08-23T03:40:12Z"
+    },
+    {
+      "sha": "10bc229a424dda3ad56a680fc7000d7286687a2f",
+      "message": "Exercise mandatory final Rhythm holdout wrapper",
+      "authorDate": "2026-08-23T03:39:42Z",
+      "committerDate": "2026-08-23T03:39:42Z"
+    },
+    {
+      "sha": "59cf00720e8b85232584daf72671a9f061a89f84",
+      "message": "checkpoint: strict Rhythm holdout gate green and final wrapper added",
+      "authorDate": "2026-08-23T03:38:14Z",
+      "committerDate": "2026-08-23T03:38:14Z"
+    },
+    {
+      "sha": "503cf7183ac4e947de4929daa4aec7329627663e",
+      "message": "Record strict Rhythm professional holdout self-test",
+      "authorDate": "2026-08-23T03:37:27Z",
+      "committerDate": "2026-08-23T03:37:27Z"
+    },
+    {
+      "sha": "21c4e08eaa4dae8c798a65a3a23f37b0925ea40c",
+      "message": "Document strict Rhythm holdout completion sequence",
+      "authorDate": "2026-08-23T03:36:57Z",
+      "committerDate": "2026-08-23T03:36:57Z"
+    },
+    {
+      "sha": "42177537727a59f76304c7159600189a722fe666",
+      "message": "Record strict Rhythm professional holdout self-test",
+      "authorDate": "2026-08-23T03:36:16Z",
+      "committerDate": "2026-08-23T03:36:17Z"
+    },
+    {
+      "sha": "4f9c0d83686f56853a5b6ba2edb1035ed323a542",
+      "message": "Add mandatory final Rhythm holdout gate wrapper",
+      "authorDate": "2026-08-23T03:36:02Z",
+      "committerDate": "2026-08-23T03:36:02Z"
+    },
+    {
+      "sha": "669f4445d6b98391754de25276cd6cb1ed54b7cf",
+      "message": "Keep professional Rhythm holdout source out of repository",
+      "authorDate": "2026-08-23T03:35:47Z",
+      "committerDate": "2026-08-23T03:35:47Z"
+    },
+    {
+      "sha": "92d66619cfdb2864d573f7c64c57dc5bd391ea46",
+      "message": "Make Rhythm pre-holdout preflight self-diagnosing",
+      "authorDate": "2026-08-23T03:33:59Z",
+      "committerDate": "2026-08-23T03:33:59Z"
+    },
+    {
+      "sha": "e89b206a0d8b7dcfea2a86804bd973f902330c0a",
+      "message": "Add Rhythm pre-holdout static preflight",
+      "authorDate": "2026-08-23T03:31:33Z",
+      "committerDate": "2026-08-23T03:31:33Z"
+    },
+    {
+      "sha": "7e5085c77aa4248890b652767f2784a7d881bebe",
+      "message": "Record strict Rhythm professional holdout self-test",
+      "authorDate": "2026-08-23T03:30:26Z",
+      "committerDate": "2026-08-23T03:30:26Z"
+    },
+    {
+      "sha": "ac0fd9f2587ab4f5568c6ee3d4d980792478e4d2",
+      "message": "Enforce complete Rhythm reference in holdout self-test",
+      "authorDate": "2026-08-23T03:29:57Z",
+      "committerDate": "2026-08-23T03:29:57Z"
+    },
+    {
+      "sha": "8a649a2452032ce423f55855f0f97d8b12625dfb",
+      "message": "checkpoint: record strict holdout completeness gate",
+      "authorDate": "2026-08-23T03:29:29Z",
+      "committerDate": "2026-08-23T03:29:29Z"
+    },
+    {
+      "sha": "c6e2c92e096b465afa8f610e0c69c9f318705956",
+      "message": "Record Rhythm professional holdout self-test",
+      "authorDate": "2026-08-23T03:28:52Z",
+      "committerDate": "2026-08-23T03:28:52Z"
+    },
+    {
+      "sha": "4169e44522815539cdc4a299730a9ca8e32d53da",
+      "message": "Add strict Rhythm holdout completeness verifier",
+      "authorDate": "2026-08-23T03:28:21Z",
+      "committerDate": "2026-08-23T03:28:21Z"
+    },
+    {
+      "sha": "61a28f8c8844c834a8ccfb2be67ca64755397a9e",
+      "message": "Record Rhythm professional holdout self-test",
+      "authorDate": "2026-08-23T03:28:18Z",
+      "committerDate": "2026-08-23T03:28:18Z"
+    },
+    {
+      "sha": "10ae14101cff959a7b90822b33c44df229ad0b61",
+      "message": "Require complete source provenance for Rhythm holdout",
+      "authorDate": "2026-08-23T03:27:48Z",
+      "committerDate": "2026-08-23T03:27:48Z"
+    },
+    {
+      "sha": "1a37aa51df621fc1bab4c17765b010595ed84b51",
+      "message": "checkpoint: record render identity proof and reference inventory",
+      "authorDate": "2026-08-23T03:26:30Z",
+      "committerDate": "2026-08-23T03:26:30Z"
+    },
+    {
+      "sha": "da0a182a677074d87fcb6a1b606e55df16241dfa",
+      "message": "Record Rhythm professional holdout self-test",
+      "authorDate": "2026-08-23T03:26:21Z",
+      "committerDate": "2026-08-23T03:26:21Z"
+    },
+    {
+      "sha": "7ee4aedae7f506eb7c7e2df7eb29403fd64e42dc",
+      "message": "Record Rhythm holdout reference provenance inventory",
+      "authorDate": "2026-08-23T03:25:52Z",
+      "committerDate": "2026-08-23T03:25:52Z"
+    },
+    {
+      "sha": "82b5a8c13af47d1ea556a53060dd76014b4e2be7",
+      "message": "checkpoint: save Rhythm pre-holdout workflow progress",
+      "authorDate": "2026-08-23T03:21:42Z",
+      "committerDate": "2026-08-23T03:21:42Z"
+    },
+    {
+      "sha": "8066dd24494ba7c550c3c0481d4932cf6e45470c",
+      "message": "Add fresh Rhythm pre-holdout freeze and PDF proof",
+      "authorDate": "2026-08-23T03:18:35Z",
+      "committerDate": "2026-08-23T03:18:35Z"
+    },
+    {
+      "sha": "9ba5b6bdb989200b78dec2bf241910fbed6da049",
+      "message": "Record Rhythm professional holdout self-test",
+      "authorDate": "2026-08-23T03:18:24Z",
+      "committerDate": "2026-08-23T03:18:24Z"
+    },
+    {
+      "sha": "16bc56a5885802c194a77864553681b7634b7112",
+      "message": "Record source audio provenance in Rhythm freeze",
+      "authorDate": "2026-08-23T03:17:56Z",
+      "committerDate": "2026-08-23T03:17:56Z"
+    },
+    {
+      "sha": "38ea92e31406ae4eb94b4f165c8cb59935bea2d8",
+      "message": "Record Rhythm professional holdout self-test",
+      "authorDate": "2026-08-23T03:17:37Z",
+      "committerDate": "2026-08-23T03:17:37Z"
+    },
+    {
+      "sha": "a185760b134e38b548711d928b24e559530f9b40",
+      "message": "Render professional Rhythm PDFs from frozen events only",
+      "authorDate": "2026-08-23T03:17:07Z",
+      "committerDate": "2026-08-23T03:17:07Z"
+    },
+    {
+      "sha": "f065cfce262f97b6d05e279aa5256987ea9fba4a",
+      "message": "checkpoint: record Rhythm holdout self-test and exact event identity fix",
+      "authorDate": "2026-08-23T03:15:51Z",
+      "committerDate": "2026-08-23T03:15:51Z"
+    },
+    {
+      "sha": "cec658a32ecfd952ced917ba270fece6f1f1007b",
+      "message": "Record Rhythm professional holdout self-test",
+      "authorDate": "2026-08-23T03:13:42Z",
+      "committerDate": "2026-08-23T03:13:42Z"
+    },
+    {
+      "sha": "a44198df5353b1690c4c532f8ff6838789339f70",
+      "message": "Align Rhythm holdout self-test with render contract",
+      "authorDate": "2026-08-23T03:13:13Z",
+      "committerDate": "2026-08-23T03:13:13Z"
+    },
+    {
+      "sha": "01c0644bf9b111920d40db96ae171360059ab714",
+      "message": "Align Rhythm holdout scorer with V143 render events",
+      "authorDate": "2026-08-23T03:12:40Z",
+      "committerDate": "2026-08-23T03:12:40Z"
+    },
+    {
+      "sha": "bd3da336c40a0c6396f6bc97b85bf168c1b006b2",
+      "message": "Align Rhythm holdout reference with renderer string indexing",
+      "authorDate": "2026-08-23T03:11:01Z",
+      "committerDate": "2026-08-23T03:11:01Z"
+    },
+    {
+      "sha": "20779870327370b204529a2582e1b6ec7d75c4ea",
+      "message": "Align Rhythm holdout canonical events with V143 render contract",
+      "authorDate": "2026-08-23T03:10:46Z",
+      "committerDate": "2026-08-23T03:10:46Z"
+    },
+    {
+      "sha": "36d7815bce80571176b5a09fa507d5493af60461",
+      "message": "Record explicit no-reference runtime input in Rhythm canary",
+      "authorDate": "2026-08-23T03:10:10Z",
+      "committerDate": "2026-08-23T03:10:10Z"
+    },
+    {
+      "sha": "28a87c81d5ede0b3262c6d1ede52e6b9b6b11d10",
+      "message": "checkpoint: record complete Rhythm holdout harness and real-audio evidence",
+      "authorDate": "2026-08-23T03:09:11Z",
+      "committerDate": "2026-08-23T03:09:11Z"
+    },
+    {
+      "sha": "d2154355f4e94aba77eb9b48d4374fdf011f6e4c",
+      "message": "Add Rhythm professional holdout self-test",
+      "authorDate": "2026-08-23T03:06:59Z",
+      "committerDate": "2026-08-23T03:06:59Z"
+    },
+    {
+      "sha": "e085296ac107f98dde2b67bc076bec3fbd240d57",
+      "message": "Add isolated professional Rhythm holdout scorer",
+      "authorDate": "2026-08-23T03:06:29Z",
+      "committerDate": "2026-08-23T03:06:29Z"
+    },
+    {
+      "sha": "62e435d7e128d38c129195bcfc735b70cccb190d",
+      "message": "Require complete song coverage for Rhythm holdout",
+      "authorDate": "2026-08-23T03:05:24Z",
+      "committerDate": "2026-08-23T03:05:24Z"
+    },
+    {
+      "sha": "067f593d27f76a08e4544754fb579353ae1ce268",
+      "message": "Add Rhythm holdout runtime isolation guard",
+      "authorDate": "2026-08-23T03:04:53Z",
+      "committerDate": "2026-08-23T03:04:53Z"
+    },
+    {
+      "sha": "34431d577c7734cba1eb0282e263608657ba37e1",
+      "message": "checkpoint: record Rhythm holdout freeze infrastructure",
+      "authorDate": "2026-08-23T03:04:07Z",
+      "committerDate": "2026-08-23T03:04:07Z"
+    },
+    {
+      "sha": "83a52eaceaa50fca069fd15320919b4c1811ce38",
+      "message": "Freeze reference-free Rhythm analysis before holdout scoring",
+      "authorDate": "2026-08-23T03:03:33Z",
+      "committerDate": "2026-08-23T03:03:33Z"
+    },
+    {
+      "sha": "d909df1a59f10969aa7862edf76ffd6b55bd1792",
+      "message": "Define complete Rhythm holdout reference schema",
+      "authorDate": "2026-08-23T03:02:50Z",
+      "committerDate": "2026-08-23T03:02:50Z"
+    },
+    {
+      "sha": "ade4cfeaf4d9e340cb06c9c6a11daf96f67ebad4",
+      "message": "Add isolated Rhythm professional holdout contract",
+      "authorDate": "2026-08-23T03:02:35Z",
+      "committerDate": "2026-08-23T03:02:35Z"
+    },
+    {
+      "sha": "d2894632a4d17ca0b0936563e3dc274097457254",
+      "message": "checkpoint: record Bass canary and Rhythm holdout inventory",
+      "authorDate": "2026-08-23T02:59:17Z",
+      "committerDate": "2026-08-23T02:59:17Z"
+    },
+    {
+      "sha": "812265864e30e2ac3cd56270f615f7d5fa540c27",
+      "message": "Add Bass reference-free candidate timing engine",
+      "authorDate": "2026-08-23T02:00:53Z",
+      "committerDate": "2026-08-23T02:00:53Z"
+    },
+    {
+      "sha": "4afc8e529f0098993f8a8e3fffa2c493eca747d7",
+      "message": "Record Bass professional quality scaffold",
+      "authorDate": "2026-08-23T00:22:12Z",
+      "committerDate": "2026-08-23T00:22:12Z"
+    },
+    {
+      "sha": "4b4a5da7305cc2eea065f843340e55de7e264b36",
+      "message": "Add Bass professional quality scaffold CI",
+      "authorDate": "2026-08-23T00:21:37Z",
+      "committerDate": "2026-08-23T00:21:37Z"
+    },
+    {
+      "sha": "ef7ac3dc0bd9027834e51487db42e16229442eaa",
+      "message": "Verify Bass professional quality scaffold",
+      "authorDate": "2026-08-23T00:21:24Z",
+      "committerDate": "2026-08-23T00:21:24Z"
+    },
+    {
+      "sha": "900853405d18df1c862bf0e592dcd44e60da97e1",
+      "message": "Scaffold Bass professional quality gate",
+      "authorDate": "2026-08-23T00:21:11Z",
+      "committerDate": "2026-08-23T00:21:11Z"
+    },
+    {
+      "sha": "4bd524c79feb621c497d8917128b36e971d85d1b",
+      "message": "Record Bass professional render scaffold",
+      "authorDate": "2026-08-23T00:18:12Z",
+      "committerDate": "2026-08-23T00:18:12Z"
+    },
+    {
+      "sha": "09dc04cb8d34e9e3035d353421896f417f30d27d",
+      "message": "Verify Bass professional render scaffold",
+      "authorDate": "2026-08-23T00:17:27Z",
+      "committerDate": "2026-08-23T00:17:27Z"
+    },
+    {
+      "sha": "b6f8f69662f19aaa81b9cfb550d72dc8c642ea7b",
+      "message": "Scaffold Bass professional render contract",
+      "authorDate": "2026-08-23T00:17:12Z",
+      "committerDate": "2026-08-23T00:17:12Z"
+    },
+    {
+      "sha": "70c5411d2e72f06923e88075e6f48f9555a8c0e5",
+      "message": "Record Bass professional separator scaffold",
+      "authorDate": "2026-08-23T00:09:02Z",
+      "committerDate": "2026-08-23T00:09:02Z"
+    },
+    {
+      "sha": "a51dba8d773f4939bec1d50b9b41dd229913f43a",
+      "message": "Use Preview-only professional PDF gate in final route",
+      "authorDate": "2026-08-22T23:05:41Z",
+      "committerDate": "2026-08-22T23:05:41Z"
+    },
+    {
+      "sha": "54fc2da9d7181ad55752d81dffc4a690778f6e7f",
+      "message": "Enable professional PDF on V143 branch Preview",
+      "authorDate": "2026-08-22T23:05:15Z",
+      "committerDate": "2026-08-22T23:05:15Z"
+    },
+    {
+      "sha": "f458928267dc67177883ec2e1211c97c92208908",
+      "message": "Checkpoint Jimmy PAIge professional PDF path",
+      "authorDate": "2026-08-22T20:14:42Z",
+      "committerDate": "2026-08-22T20:14:42Z"
+    },
+    {
+      "sha": "367030e8d3edbd230528770e32aa5f338cf1e01e",
+      "message": "Integrate Jimmy PAIge analysis through professional PDF path",
+      "authorDate": "2026-08-22T20:01:01Z",
+      "committerDate": "2026-08-22T20:01:01Z"
+    },
+    {
+      "sha": "b693191bb5896825fc183943a9b376ca68125684",
+      "message": "Gate Jimmy PAIge professional PDF preview path",
+      "authorDate": "2026-08-22T20:00:10Z",
+      "committerDate": "2026-08-22T20:00:10Z"
+    },
+    {
+      "sha": "33a0c3dd9703c8f3b60f9ed7d7a345de6198d644",
+      "message": "Record Jimmy PAIge professional PDF bridge validation",
+      "authorDate": "2026-08-22T19:57:20Z",
+      "committerDate": "2026-08-22T19:57:20Z"
+    },
+    {
+      "sha": "7d7253200f598aafec6c98772e7e991071ecd1b6",
+      "message": "Validate Jimmy PAIge professional PDF bridge",
+      "authorDate": "2026-08-22T19:56:49Z",
+      "committerDate": "2026-08-22T19:56:49Z"
+    },
+    {
+      "sha": "f8e7a432aec001a039dfaddde14955d8ed65fd59",
+      "message": "Add Jimmy PAIge professional PDF bridge guard",
+      "authorDate": "2026-08-22T19:56:36Z",
+      "committerDate": "2026-08-22T19:56:36Z"
+    },
+    {
+      "sha": "9e1876bb7f90aa96f27b31a408aaa5ae5cfba102",
+      "message": "Add Jimmy PAIge professional PDF renderer bridge",
+      "authorDate": "2026-08-22T19:55:52Z",
+      "committerDate": "2026-08-22T19:55:52Z"
+    },
+    {
+      "sha": "cdd6dd7a966fe1ca77cfa48de9f713ea141fc900",
+      "message": "Add Jimmy PAIge professional PDF contract",
+      "authorDate": "2026-08-22T19:55:48Z",
+      "committerDate": "2026-08-22T19:55:48Z"
+    },
+    {
+      "sha": "412208c946737e9902ab78a19db5fa48c439fdd7",
+      "message": "Checkpoint V143 measures 1-16 producer recovery state",
+      "authorDate": "2026-08-22T03:20:20Z",
+      "committerDate": "2026-08-22T03:20:20Z"
+    },
+    {
+      "sha": "6e5191c20049cea716d0e90722ad1e3f48d3670a",
+      "message": "Record V143 Section 3 score-drift attribution v2",
+      "authorDate": "2026-08-21T04:55:49Z",
+      "committerDate": "2026-08-21T04:55:49Z"
+    },
+    {
+      "sha": "1f280119bbc3f530babf005f2acced4881052bb1",
+      "message": "Record V143 Section 3 score-drift attribution",
+      "authorDate": "2026-08-21T04:48:16Z",
+      "committerDate": "2026-08-21T04:48:16Z"
+    },
+    {
+      "sha": "fc3e2098db57ff9760d2146c25dae8438a037880",
+      "message": "Run V143 Section 3 score-drift attribution",
+      "authorDate": "2026-08-21T04:44:29Z",
+      "committerDate": "2026-08-21T04:44:29Z"
+    },
+    {
+      "sha": "85d1a21b80c721099b904784f80c79480e627071",
+      "message": "Add V143 Section 3 score-drift attribution",
+      "authorDate": "2026-08-21T04:43:50Z",
+      "committerDate": "2026-08-21T04:43:50Z"
+    },
+    {
+      "sha": "fe13738d80cbe6181678ac4619f0b74acd596e2b",
+      "message": "Record V143 downstream scorer equivalence",
+      "authorDate": "2026-08-21T04:34:54Z",
+      "committerDate": "2026-08-21T04:34:54Z"
+    },
+    {
+      "sha": "2fdc492c82b2beef99905f9caba73daa39e5d609",
+      "message": "Run V143 downstream scorer equivalence gate",
+      "authorDate": "2026-08-21T04:30:57Z",
+      "committerDate": "2026-08-21T04:30:57Z"
+    },
+    {
+      "sha": "32551c71f67b89bdc8c40f84cb454e4ae1415577",
+      "message": "Add V143 downstream scorer equivalence diagnostic",
+      "authorDate": "2026-08-21T04:30:30Z",
+      "committerDate": "2026-08-21T04:30:30Z"
+    },
+    {
+      "sha": "ff279ddeebf2ae80a410a49aff1e4ebdb8e1963c",
+      "message": "Add V143 Section 5 reference-free replay gate",
+      "authorDate": "2026-08-21T00:19:54Z",
+      "committerDate": "2026-08-21T00:19:54Z"
+    },
+    {
+      "sha": "67071aa0db34786d7e8fc5bd7b96b17935ca69c2",
+      "message": "Extract V143 contextual prune reference-free audio carrier",
+      "authorDate": "2026-08-20T23:35:06Z",
+      "committerDate": "2026-08-20T23:35:06Z"
+    },
+    {
+      "sha": "f301440be6f059ea3d110bdcf4aaddc4baf4512d",
+      "message": "Extract reference-free V143 contextual prune runtime",
+      "authorDate": "2026-08-20T23:23:23Z",
+      "committerDate": "2026-08-20T23:23:23Z"
+    },
+    {
+      "sha": "de46050e8f0aed5d6767103b2ac6d501d4b84347",
+      "message": "Freeze V143 reserve one-shot grading gate",
+      "authorDate": "2026-08-20T23:10:58Z",
+      "committerDate": "2026-08-20T23:10:58Z"
+    },
+    {
+      "sha": "65b2439035d411c2d4391436468dbc82708a4008",
+      "message": "Handle sealed reserve partial final measure",
+      "authorDate": "2026-08-20T18:17:25Z",
+      "committerDate": "2026-08-20T18:17:25Z"
+    },
+    {
+      "sha": "cf91dcb3dfa451824033e4b6c7f9188f39ebc90d",
+      "message": "Capture sealed V143 reserve reference-free cache",
+      "authorDate": "2026-08-20T18:03:38Z",
+      "committerDate": "2026-08-20T18:03:38Z"
+    },
+    {
+      "sha": "4ebaab9bf5b22fe62ba2d29fbf4bb632da8314ac",
+      "message": "Fix V143 reserve capture measure range label",
+      "authorDate": "2026-08-20T17:47:37Z",
+      "committerDate": "2026-08-20T17:47:37Z"
+    },
+    {
+      "sha": "eaa74ebbd8f7b9305d7fbaf19dc702879e930941",
+      "message": "Add sealed V143 reserve reference-free capture",
+      "authorDate": "2026-08-20T17:39:44Z",
+      "committerDate": "2026-08-20T17:39:44Z"
+    },
+    {
+      "sha": "41d641871dc7a44dc0504dad8e5c0403115fdf15",
+      "message": "Freeze V143 contextual prune before reserve",
+      "authorDate": "2026-08-20T09:14:44Z",
+      "committerDate": "2026-08-20T09:14:44Z"
+    },
+    {
+      "sha": "31d8252f61f4d4799f4a3985cb2cd33f7e4abb45",
+      "message": "Add V143 contextual prune freeze step",
+      "authorDate": "2026-08-20T09:10:17Z",
+      "committerDate": "2026-08-20T09:10:17Z"
+    },
+    {
+      "sha": "262cbc4ad1db4f57ca139064c6abb9d762c0f8b4",
+      "message": "Record v143 current-reference grade",
+      "authorDate": "2026-08-20T08:18:41Z",
+      "committerDate": "2026-08-20T08:18:41Z"
+    },
+    {
+      "sha": "0adeddbc04e7d37ab98ae021291b07b4f8069b40",
+      "message": "Automate v143 current-reference grade report",
+      "authorDate": "2026-08-20T08:15:41Z",
+      "committerDate": "2026-08-20T08:15:41Z"
+    },
+    {
+      "sha": "b2536640bc9470ee70573870dca86aa7efb7aa9e",
+      "message": "Add version-locked v143 current-reference grader",
+      "authorDate": "2026-08-20T08:15:27Z",
+      "committerDate": "2026-08-20T08:15:27Z"
+    },
+    {
+      "sha": "d143ea5cc5887ce61a17e059cdd1168eec7cb602",
+      "message": "Run v143 reference parser diagnostic in GitHub Actions",
+      "authorDate": "2026-08-20T08:07:39Z",
+      "committerDate": "2026-08-20T08:07:39Z"
+    },
+    {
+      "sha": "9e07f63adbd3bcd746704d0a7cfded8a9604735c",
+      "message": "Add blind-safe v143 reference parser diagnostic",
+      "authorDate": "2026-08-20T08:07:33Z",
+      "committerDate": "2026-08-20T08:07:33Z"
+    },
+    {
+      "sha": "b3d72c1be16d20a5bac3a5bad2786fa14a188871",
+      "message": "Freeze correlation-safe fixed-count reranker before grading",
+      "authorDate": "2026-08-20T06:51:50Z",
+      "committerDate": "2026-08-20T06:51:50Z"
+    },
+    {
+      "sha": "1e73b08ed29712b4572432b21b8923f4bae9f263",
+      "message": "Add correlation-safe fixed-count reranker freeze experiment",
+      "authorDate": "2026-08-20T06:22:03Z",
+      "committerDate": "2026-08-20T06:22:03Z"
+    },
+    {
+      "sha": "c66a5dde79d045838ed1b5d3046ad1255d75ee43",
+      "message": "Freeze V143 sequence predictions on consumed measures 17-96 before grading",
+      "authorDate": "2026-08-20T05:01:43Z",
+      "committerDate": "2026-08-20T05:01:43Z"
+    },
+    {
+      "sha": "da3b32f42a78a486ea1579712e933e84a047c77b",
+      "message": "Record V143 recovery blind holdout failure on Section 5",
+      "authorDate": "2026-08-20T04:10:27Z",
+      "committerDate": "2026-08-20T04:10:27Z"
+    },
+    {
+      "sha": "c64e4cde306ad8c3e2878a57b093e74752acef85",
+      "message": "Freeze V143 Section 5 blind base and recovery predictions",
+      "authorDate": "2026-08-20T03:58:59Z",
+      "committerDate": "2026-08-20T03:58:59Z"
+    },
+    {
+      "sha": "08e8096875211d131275c5fe0bf65be910f9fab0",
+      "message": "Freeze V143 recovery candidate after robust cross-validation",
+      "authorDate": "2026-08-20T03:40:47Z",
+      "committerDate": "2026-08-20T03:40:47Z"
+    },
+    {
+      "sha": "907f5a6f41c898cff69ca73c702a3fc1af8a73c4",
+      "message": "Promote V143 correlation-safe threshold 0.27 after blind holdout",
+      "authorDate": "2026-08-20T02:48:32Z",
+      "committerDate": "2026-08-20T02:48:32Z"
+    },
+    {
+      "sha": "b76ac54042e563f6b70e97a8980c0c9bfb6711df",
+      "message": "Record V143 blind holdout win for threshold 0.27",
+      "authorDate": "2026-08-20T02:36:25Z",
+      "committerDate": "2026-08-20T02:36:25Z"
+    },
+    {
+      "sha": "570084d6f9fd55a5b2ef64d4cd9ca4922c575eb5",
+      "message": "Freeze V143 final blind holdout predictions",
+      "authorDate": "2026-08-20T02:33:08Z",
+      "committerDate": "2026-08-20T02:33:08Z"
+    },
+    {
+      "sha": "e23b0f5f51cd5560a9859e3a2729ce16c476b15b",
+      "message": "Freeze V143 threshold 0.27 candidate before final holdout",
+      "authorDate": "2026-08-20T02:23:33Z",
+      "committerDate": "2026-08-20T02:23:33Z"
+    },
+    {
+      "sha": "795ea2829ce4ff3e64a64a520072190ecd2890bb",
+      "message": "Freeze V143 blind Section 3 predictions",
+      "authorDate": "2026-08-19T06:13:27Z",
+      "committerDate": "2026-08-19T06:13:27Z"
+    },
+    {
+      "sha": "4bbcb061c65d36b4f092297f3cd615bdaaf886fc",
+      "message": "Freeze V143 blind Section 2 predictions",
+      "authorDate": "2026-08-19T05:23:02Z",
+      "committerDate": "2026-08-19T05:23:02Z"
+    },
+    {
+      "sha": "053b416d42865be0d7f2eb0e63f8a49f411065e3",
+      "message": "Freeze V143 correlation-safe event stack",
+      "authorDate": "2026-08-19T05:04:11Z",
+      "committerDate": "2026-08-19T05:04:11Z"
+    },
+    {
+      "sha": "e79a5cc127d33d24525ad4fc895e83e80e3c85dc",
+      "message": "Add frozen reference-free Verse 1 predictor",
+      "authorDate": "2026-08-19T03:23:49Z",
+      "committerDate": "2026-08-19T03:23:49Z"
+    },
+    {
+      "sha": "2be927d69d56de2db18233a425aaf1928303ab67",
+      "message": "Add fresh Verse 1 reference-free V143 capture",
+      "authorDate": "2026-08-19T03:14:20Z",
+      "committerDate": "2026-08-19T03:14:20Z"
+    },
+    {
+      "sha": "9cd69e377e3220e4ffa707549e0d5aeb54f4561f",
+      "message": "Add learned reference-free grid event selector diagnostic",
+      "authorDate": "2026-08-19T02:10:06Z",
+      "committerDate": "2026-08-19T02:10:06Z"
+    },
+    {
+      "sha": "590669bda531a5bdfd93134c5d34ad4f482aeec2",
+      "message": "Add reference-free repetition consensus temporal decoder benchmark",
+      "authorDate": "2026-08-18T20:11:33Z",
+      "committerDate": "2026-08-18T20:11:33Z"
+    },
+    {
+      "sha": "454cfa45777637ddb018bb2e607efae4ade1cf15",
+      "message": "Add V143 professional intro baseline grader",
+      "authorDate": "2026-08-18T06:57:45Z",
+      "committerDate": "2026-08-18T06:57:45Z"
+    },
+    {
+      "sha": "c1492bd14a0a68f4bf404f0081df1f3a66861a74",
+      "message": "Freeze V143 seeded repeatability checkpoint",
+      "authorDate": "2026-08-18T05:34:26Z",
+      "committerDate": "2026-08-18T05:34:26Z"
+    },
+    {
+      "sha": "e78fc6fbd0c9938b05199e50f017820797d7e033",
+      "message": "Add V143 reference-free legato evidence verifier",
+      "authorDate": "2026-08-18T04:53:30Z",
+      "committerDate": "2026-08-18T04:53:30Z"
+    },
+    {
+      "sha": "1d8c2e83d12bbc1340273e4e136cdb923e1f2244",
+      "message": "Add reference-free V143 rhythm legato evidence stage",
+      "authorDate": "2026-08-18T04:52:55Z",
+      "committerDate": "2026-08-18T04:52:55Z"
+    },
+    {
+      "sha": "ec886660a9c00c56b7c22f91a31aead216c2646e",
+      "message": "Freeze V143 strict bend consensus v1 checkpoint",
+      "authorDate": "2026-08-18T04:52:06Z",
+      "committerDate": "2026-08-18T04:52:06Z"
+    },
+    {
+      "sha": "870aba5a69421694d35a43104c18d3037d35d36c",
+      "message": "Add reference-free V143 real-audio bend smoke",
+      "authorDate": "2026-08-18T04:23:39Z",
+      "committerDate": "2026-08-18T04:23:39Z"
+    },
+    {
+      "sha": "efd8a840f4456506399d12503e06c65b2e186873",
+      "message": "Wire reference-free bend evidence into V143 rhythm worker",
+      "authorDate": "2026-08-18T04:14:16Z",
+      "committerDate": "2026-08-18T04:14:16Z"
+    },
+    {
+      "sha": "36451af40eb6c1cf7cc6a0748bdd09970cd95f74",
+      "message": "Add reference-free V143 rhythm bend evidence",
+      "authorDate": "2026-08-18T04:12:59Z",
+      "committerDate": "2026-08-18T04:12:59Z"
+    },
+    {
+      "sha": "09d4191656781df662e157afaf651b24a04ec5fd",
+      "message": "Add reference-free V143 sustain technique enricher",
+      "authorDate": "2026-08-17T22:58:22Z",
+      "committerDate": "2026-08-17T22:58:22Z"
+    },
+    {
+      "sha": "3fb5773d914f3109ef0f1be7d1a316205d4cc204",
+      "message": "Assemble reference-free V143 rhythm pipeline",
+      "authorDate": "2026-08-17T18:20:58Z",
+      "committerDate": "2026-08-17T18:20:58Z"
+    },
+    {
+      "sha": "fc455df8d32d459e0d4d0f25f552c135da0cb0ee",
+      "message": "Strengthen reference-free timing verifier across tempo and phase",
+      "authorDate": "2026-08-17T17:52:28Z",
+      "committerDate": "2026-08-17T17:52:28Z"
+    },
+    {
+      "sha": "9862eec6b820b157c0ce20d16d4c55f20759d714",
+      "message": "Add deterministic reference-free timing verifier",
+      "authorDate": "2026-08-17T17:51:05Z",
+      "committerDate": "2026-08-17T17:51:05Z"
+    },
+    {
+      "sha": "c65284a834fed6d03b163a2e2ac46f03c3e96d56",
+      "message": "Add reference-free beat and downbeat timing estimator",
+      "authorDate": "2026-08-17T17:50:03Z",
+      "committerDate": "2026-08-17T17:50:03Z"
+    },
+    {
+      "sha": "f25bd1e9e4415ba4bce1763d7cb6ef391c872746",
+      "message": "Add reference-free V143 candidate timing adapter",
+      "authorDate": "2026-08-17T17:30:29Z",
+      "committerDate": "2026-08-17T17:30:29Z"
+    },
+    {
+      "sha": "62159c8a256ba5e009646e27823e0d4d2ff86ea7",
+      "message": "Add authoritative V143 production scorer and replay harness",
+      "authorDate": "2026-08-17T17:03:38Z",
+      "committerDate": "2026-08-17T17:07:59Z"
+    },
+    {
+      "sha": "036f5aab907c77c327ae85bf4a6120fbd86b8353",
+      "message": "Freeze V143 blind 11-mod-16 confirmation protocol",
+      "authorDate": "2026-08-16T03:18:57Z",
+      "committerDate": "2026-08-16T03:18:57Z"
+    },
+    {
+      "sha": "fe1b026e003a0e0f77e2bd5328e2ac0920ff884c",
+      "message": "Freeze V143 final multi-family selector before held-out evaluation",
+      "authorDate": "2026-08-16T03:04:10Z",
+      "committerDate": "2026-08-16T03:04:10Z"
+    },
+    {
+      "sha": "871b9240e3a333c48692dd0ea174bb8f19f49ec2",
+      "message": "Add V143 final multi-family selector freeze guard",
+      "authorDate": "2026-08-16T02:55:08Z",
+      "committerDate": "2026-08-16T02:55:08Z"
+    },
+    {
+      "sha": "5101fc47510a48559a2862ad80aa640b8fa0cb07",
+      "message": "Freeze V143 final multi-family sweep before development",
+      "authorDate": "2026-08-16T02:34:41Z",
+      "committerDate": "2026-08-16T02:34:41Z"
+    },
+    {
+      "sha": "605ea2715881c2059ea09ef92ed307fc6b70fb20",
+      "message": "Freeze V142 temporal slope progression recipe before development",
+      "authorDate": "2026-08-16T02:09:27Z",
+      "committerDate": "2026-08-16T02:09:27Z"
+    },
+    {
+      "sha": "a6bad11ca5bf8cf14a551c807399650e6240b309",
+      "message": "Freeze V141 temporal envelope curvature feature recipe",
+      "authorDate": "2026-08-16T01:58:43Z",
+      "committerDate": "2026-08-16T01:58:43Z"
+    },
+    {
+      "sha": "c5749a252194caceee561acab00e2bbcdc16c707",
+      "message": "Freeze V140 attack-tail coupling selector before held-out evaluation",
+      "authorDate": "2026-08-16T01:44:23Z",
+      "committerDate": "2026-08-16T01:44:23Z"
+    },
+    {
+      "sha": "b6a765d8992408888d8b3a0bb0f0c3841a09fa1d",
+      "message": "Add V140 replicated selector freeze guard",
+      "authorDate": "2026-08-16T01:39:56Z",
+      "committerDate": "2026-08-16T01:39:56Z"
+    },
+    {
+      "sha": "bee82da1ff1f62373e7f77c417a88512c5affe1f",
+      "message": "Freeze V140 attack-tail coupling feature recipe before development",
+      "authorDate": "2026-08-16T01:28:46Z",
+      "committerDate": "2026-08-16T01:28:46Z"
+    },
+    {
+      "sha": "563937a18be527fddf3f9906d66767cdc14e7226",
+      "message": "Freeze V139 temporal persistence selector before held-out evaluation",
+      "authorDate": "2026-08-16T01:15:58Z",
+      "committerDate": "2026-08-16T01:15:58Z"
+    },
+    {
+      "sha": "d0ae2240265fc6ebbbca29a2580b884a89be0f6e",
+      "message": "Add V139 replicated selector freeze guard",
+      "authorDate": "2026-08-16T01:12:42Z",
+      "committerDate": "2026-08-16T01:12:42Z"
+    },
+    {
+      "sha": "7e39d567eed1b5f6c2d5afe22ece5ce94fd3fe69",
+      "message": "Freeze V139 temporal persistence recipe before development",
+      "authorDate": "2026-08-16T01:03:54Z",
+      "committerDate": "2026-08-16T01:03:54Z"
+    },
+    {
+      "sha": "0fb935303539da197e23d6f2ab70cc99588e8b75",
+      "message": "Freeze V138 cross-band sustain selector before held-out evaluation",
+      "authorDate": "2026-08-16T00:51:02Z",
+      "committerDate": "2026-08-16T00:51:02Z"
+    },
+    {
+      "sha": "5c3f687f9c53950aee52f7a94ad57285705899a3",
+      "message": "Add V138 selector freeze guard",
+      "authorDate": "2026-08-16T00:45:36Z",
+      "committerDate": "2026-08-16T00:45:36Z"
+    },
+    {
+      "sha": "cb739f2134b5c5ebac322ceaa26e3c77b4a30af2",
+      "message": "Freeze V138 cross-band sustain structure specification",
+      "authorDate": "2026-08-16T00:39:14Z",
+      "committerDate": "2026-08-16T00:39:14Z"
+    },
+    {
+      "sha": "9191cab7a47c05c480f4a4453a991769252cabca",
+      "message": "Freeze V137 training-only selective sustain candidate",
+      "authorDate": "2026-08-16T00:29:58Z",
+      "committerDate": "2026-08-16T00:29:58Z"
+    },
+    {
+      "sha": "c5c40954b56f522329e65508d7ef3a5505952ddf",
+      "message": "Seal Jimmy PAIge 113-measure blind midterm paper",
+      "authorDate": "2026-08-15T00:24:12Z",
+      "committerDate": "2026-08-15T00:24:12Z"
+    },
+    {
+      "sha": "0920cf96b4826b0ae8c9f3a8f84d0bcb0bb94a9d",
+      "message": "Seal Jimmy PAIge V134 113-measure midterm source and rules",
+      "authorDate": "2026-08-14T23:27:35Z",
+      "committerDate": "2026-08-14T23:27:37Z"
+    },
+    {
+      "sha": "b4c39268bf0d15988f6fa58891bc5b3bf38e7104",
+      "message": "Freeze V134 97.1875 champion and reserve 11mod16 family",
+      "authorDate": "2026-08-14T22:50:06Z",
+      "committerDate": "2026-08-14T22:50:06Z"
+    },
+    {
+      "sha": "6fe647884cc968e9b2adcf0c7d26db862fb2ea3b",
+      "message": "Advance recovery checkpoint through V133 and freeze V134 selector",
+      "authorDate": "2026-08-14T21:18:09Z",
+      "committerDate": "2026-08-14T21:18:09Z"
+    }
+  ],
+  "matchCount": 204,
+  "referencePayloadOpened": false,
+  "productionModified": false
+}
