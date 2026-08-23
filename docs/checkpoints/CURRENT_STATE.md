@@ -107,18 +107,31 @@ Fresh artifact lock:
 
 Per-file fresh artifact hashes are recorded in the artifact-lock JSON. The earlier 358-note monophonic run `32623173615` is historical only and must not be professionally scored as the current candidate.
 
-## Scorer phase is now authorized
+## Final-render presentation hardening — IN PROGRESS BEFORE PROFESSIONAL SCORE
 
-The mandatory post-musical-change fresh reference-free freeze is complete and locked. It is now permissible to open the recovered professional source **only inside scorer work**, produce a complete structured professional reference, verify reference completeness, and score the exact frozen candidate from run `32642331373`.
+User specifically flagged the prior end-to-end failure where V143 effectively displayed only one note per measure and asked that final Rhythm rendering preserve timing, techniques, and section display.
 
-No valid final professional score has yet been declared.
+Fresh locked run `32642331373` is **not** collapsed: it contains 1,017 note events across 112 populated measures and 358 distinct attack locations; median populated measure density is 8 notes and 277 attacks are polyphonic.
+
+Presentation hardening now committed on this branch, without professional-reference input and without changing analyzer note selection:
+- `c776722069ec7859278309fc8ef1f2d9ecde8005` — extends `lib/v143RenderContract.js` with deterministic reference-free section grouping from authenticated render-event self-similarity, presentation-density metrics, and a one-note-per-measure collapse detector.
+- `6099f818c8ee3828e1a7908f85a29ff1506942a5` — hardens `lib/createV143RhythmPdf.js` so the final structured Rhythm PDF visibly includes a 16th-note timing grid/beat guides, section labels, a technique legend, bend/release notation, legato/slide connectors with fallback symbols, sustain lines, and a fail-closed one-note-per-measure collapse guard. The renderer still receives and validates the exact authenticated event stream and does not alter note placement.
+- `0932a76b0e427368f95a2bbacc81bdfb51358548` — adds CPU-only `.github/workflows/rhythm-render-presentation-proof.yml` to prove multi-note density, polyphonic onsets, section generation, technique visibility, timing legend, PDF generation, and the collapse negative case before any new GPU run.
+
+The presentation CPU proof is currently pending/being observed. Do **not** run the professional human score until this presentation gate is green and the final-code fresh approved-audio freeze is regenerated/locked, because the final user-visible renderer must be part of the candidate being scored/end-to-end verified.
+
+## Scorer phase status
+
+Professional scorer access is authorized in principle because the earlier post-polyphony freeze is green and locked, but scoring is intentionally held while final-render presentation hardening is validated. The recovered professional source remains scorer-only; no valid final professional score has yet been declared.
 
 ## Immediate next steps
 
-1. Inspect the scorer-only tooling/schema and the professional reference recovery workflow before touching the professional image.
-2. Download scorer artifact `9489261810`, verify source hash/provenance again, and keep source/transcription outside runtime paths.
-3. Build a complete scorer-only structured reference for measures 1–113 from the immutable professional source. Do not invent unreadable notes/events.
-4. Run `verify_reference_completeness.py` and the mandatory `run_final_holdout_gate.py` against the exact fresh frozen candidate from run `32642331373`.
-5. Require professional score >=0.99, `criticalMismatchCount == 0`, and PDF-event fidelity 1.0 before declaring Rhythm complete.
-6. If the score misses, use the professional result only to diagnose general error classes. Any musical code correction must be reference-free/general, followed by a brand-new approved-audio freeze before another professional score.
-7. Once the real professional gate passes, verify DadRock `/ai-tab` user end-to-end and create `Final Rhythm Pipeline`.
+1. Wait for `rhythm-render-presentation-proof` CPU gate; inspect its proof/PDF and fix presentation only if needed.
+2. Once CPU presentation proof is green, update the real-audio pre-holdout gate with explicit final-render density/timing/technique/section assertions and intentionally trigger one fresh approved-audio run on the final presentation code. Do not trigger extra GPU runs.
+3. Require the new final-code freeze to preserve runtime safety, exact event/PDF hash identity and fidelity 1.0, while also proving the 1,017-style multi-note/polyphonic stream is not collapsed and the final PDF exposes timing/technique/section presentation.
+4. Lock that final-code artifact as the scoring candidate.
+5. Build the complete scorer-only structured professional reference for measures 1–113 from the immutable source. Do not invent unreadable notes/events.
+6. Run `verify_reference_completeness.py` and mandatory `run_final_holdout_gate.py` against the exact final-code frozen candidate.
+7. Require professional score >=0.99, `criticalMismatchCount == 0`, and PDF-event fidelity 1.0 before declaring Rhythm complete.
+8. If the score misses, use the professional result only to diagnose general error classes. Any musical code correction must be reference-free/general, followed by a brand-new approved-audio freeze before another professional score.
+9. Once the real professional gate passes, verify DadRock `/ai-tab` user end-to-end — specifically multiple notes/chords per measure, timing grid, techniques, sections, preview/full identity — then create `Final Rhythm Pipeline`.
