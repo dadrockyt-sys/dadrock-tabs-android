@@ -7,6 +7,7 @@ on:
     paths:
       - 'validation/rhythm_holdout/**'
       - 'app/ai-tab/page.js'
+      - 'app/api/analyze-audio-tab/route.js'
       - 'app/api/generate-tab-preview/route.js'
       - 'app/api/generate-tab-pdf/route.js'
       - 'lib/v143RenderContract.js'
@@ -61,6 +62,8 @@ jobs:
             validation/rhythm_holdout/run_final_holdout_gate.py
           bash -n validation/rhythm_holdout/run_static_preholdout_preflight.sh
           node --check validation/rhythm_holdout/verify_ai_tab_pdf_product_contract.mjs
+          node --check validation/rhythm_holdout/verify_real_audio_preholdout_workflow_contract.mjs
+          node --check validation/rhythm_holdout/verify_v143_runtime_safety_contract.mjs
 
       - name: Verify production runtime cannot read holdout reference
         run: |
@@ -80,6 +83,8 @@ jobs:
               'referenceFree': True,
               'professionalReferenceUsed': False,
               'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'v143RuntimeSafetyVerified': True,
               'tempoBpm': 129.19921875,
               'timeSignature': '4/4',
               'tuning': 'E Standard',
@@ -223,6 +228,8 @@ jobs:
             "referenceFree": true,
             "professionalReferenceUsed": true,
             "referenceRuntimeInputUsed": false,
+            "runtimeLabelsRequired": false,
+            "v143RuntimeSafetyVerified": true,
             "renderEvents": [
               {
                 "eventIndex": 0,
@@ -279,8 +286,6 @@ jobs:
       - name: Exercise full static raw-response to AI-tab professional-PDF glue
         run: |
           set -euo pipefail
-          # Keep the ESM renderer copies below GITHUB_WORKSPACE. The previous
-          # /tmp location could not resolve the repository's installed pdf-lib.
           bash validation/rhythm_holdout/run_static_preholdout_preflight.sh \
             "$GITHUB_WORKSPACE/.preholdout-static"
 
@@ -300,7 +305,7 @@ jobs:
           static = json.loads(Path('.preholdout-static/report.json').read_text())
 
           payload = {
-              'schemaVersion': 5,
+              'schemaVersion': 6,
               'gate': 'rhythm-professional-holdout-self-test',
               'sourceCommit': os.environ['GITHUB_SHA'],
               'runtimeIsolationPassed': isolation.get('passed') is True,
@@ -319,6 +324,10 @@ jobs:
               'staticAiTabPdfProductContractPassed': static.get('checks', {}).get('aiTabPdfProductContractPassed') is True,
               'staticPageIsPdfContractSourceOfTruth': static.get('checks', {}).get('pageIsPdfContractSourceOfTruth') is True,
               'staticPreviewAndPurchasedCarryRenderEvents': static.get('checks', {}).get('previewAndPurchasedBothCarryRenderEvents') is True,
+              'staticAnalyzerRuntimeSafetyDefenseInDepth': static.get('checks', {}).get('v143RuntimeAntiLeakageContractPassed') is True,
+              'staticUnsafeRuntimeCasesAllRejected': static.get('checks', {}).get('v143RuntimeUnsafeCasesAllRejected') is True,
+              'staticRealAudioWorkflowContractPassed': static.get('checks', {}).get('realAudioPreholdoutWorkflowContractPassed') is True,
+              'staticPolishedBrandingContractPassed': static.get('checks', {}).get('polishedBrandingContractPassed') is True,
               'staticPreholdoutEventCount': static.get('eventCount'),
               'staticPreholdoutMeasureCount': static.get('uniqueMeasureCount'),
               'staticPreholdoutPdfEventFidelity': static.get('pdfEventFidelity'),
@@ -348,6 +357,10 @@ jobs:
               payload['staticAiTabPdfProductContractPassed'],
               payload['staticPageIsPdfContractSourceOfTruth'],
               payload['staticPreviewAndPurchasedCarryRenderEvents'],
+              payload['staticAnalyzerRuntimeSafetyDefenseInDepth'],
+              payload['staticUnsafeRuntimeCasesAllRejected'],
+              payload['staticRealAudioWorkflowContractPassed'],
+              payload['staticPolishedBrandingContractPassed'],
               payload['staticPreholdoutEventCount'] == 400,
               payload['staticPreholdoutMeasureCount'] == 100,
               payload['staticPreholdoutPdfEventFidelity'] == 1.0,
