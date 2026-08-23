@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "instrument": "rhythm",
+  "song": "Are You Gonna Go My Way",
+  "artist": "Lenny Kravitz",
+  "completeReferenceAvailable": false,
+  "finalScoringAuthorized": false,
+  "cleanHoldoutPolicy": {
+    "runtimeAccessAllowed": false,
+    "analyzerTrainingAllowed": false,
+    "analyzerTuningAllowed": false,
+    "candidateSelectionAllowed": false,
+    "postFreezeScoringOnly": true
+  },
+  "survivingCleanReferenceMaterial": [
+    {
+      "externalLibraryName": "1000116180.jpg",
+      "type": "professional-human-tab-screenshot",
+      "coverage": "chorus measures 33-35 only",
+      "visibleLabels": ["G6", "A(tp2)", "E", "D"],
+      "completeWholeSongReference": false,
+      "eligibleForFinalWholeSongScore": false
+    }
+  ],
+  "explicitlyExcludedFromFinalHoldout": [
+    {
+      "path": "analyzer/fixtures/gomyway2_full_tab_reference.json",
+      "reason": "historical coarse development/reference benchmark material"
+    },
+    {
+      "path": "analyzer/fixtures/gomyway_full_chord_sustain_reference.json",
+      "reason": "historical expectation/development material"
+    },
+    {
+      "path": "public/training/v143-musical-reconstruction-calibration/contextual-prune-freeze-manifest.json",
+      "reason": "records developmentReferenceUsed=true; contaminated for clean final holdout"
+    },
+    {
+      "path": "analyzer/modal_analyzer_v7_full_song_timeline_benchmark.py",
+      "reason": "historical benchmark passes reference chord context into analyzer path"
+    },
+    {
+      "externalLibraryName": "1000116132.jpg",
+      "reason": "DadRock/Jimmy PAIge generated proof output, not human ground truth"
+    },
+    {
+      "externalLibraryName": "1000116183.jpg",
+      "reason": "DadRock/Jimmy PAIge generated proof output, not human ground truth"
+    },
+    {
+      "externalLibraryName": "1000116184.jpg",
+      "reason": "DadRock/Jimmy PAIge development/generated tablature evidence, not the dark-theme human reference"
+    },
+    {
+      "emailAttachment": "ds-music-are-you-gonna-go-my-way-remastered-2025-lenny-kravitz-rhythm-tab.pdf",
+      "reason": "DadRock generated customer/product PDF, not human holdout ground truth"
+    }
+  ],
+  "historicalContaminationWarning": "Historical Chorus 33-35 development screenshots and scripts explicitly used the professional reference for scoring and/or development diagnostics. They must never be promoted to the clean final completion holdout.",
+  "nextRequiredReferenceAction": "Recover or re-supply the complete professionally human-written Rhythm TAB and transcribe it into the scorer-only completeReference schema after the fresh reference-free output has been frozen.",
+  "rhythmComplete": false
+}
