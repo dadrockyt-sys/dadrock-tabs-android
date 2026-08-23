@@ -36,6 +36,20 @@ Near-100 completion means the generated transcription must match the human profe
 
 After Rhythm passes this holdout end-to-end gate, repeat the same methodology for Bass, then Lead. Do not use the Bass/Lead professional references as runtime inputs either.
 
+## Finalized pipeline packaging rule
+
+When an instrument is truly complete, preserve its proven end-to-end implementation as a self-contained finalized folder before using it as the basis for the next instrument.
+
+Required order and packaging:
+
+1. **Rhythm first.** Once the complete upload → reference-free analysis → authenticated events → professional PDF → isolated human-reference near-100 scoring gate passes, commit the finalized implementation into its own folder named **`Final Rhythm Pipeline`**. This folder becomes the protected working blueprint for later instruments.
+2. **Bass second.** Use the finalized Rhythm architecture to shape/reuse the common pipeline machinery for Bass instead of rebuilding shared pieces. Adapt only what is instrument-specific (separation, range/tuning/string mapping, techniques, scoring semantics, rendering). When the user provides the professional human Bass TAB, use it only as the isolated post-hoc scoring holdout under the same no-learning/no-runtime-reference rule. Once Bass independently reaches the same professional near-100 end-to-end standard, commit it into its own folder named **`Final Bass Pipeline`**.
+3. **Lead third.** Use the finalized Rhythm architecture as the primary mold for Lead, reusing the proven shared pipeline and adapting Lead-specific analysis/techniques/register/voicing/scoring. When the user provides the professional human Lead TAB, use it only as isolated post-hoc scoring holdout. Once Lead independently reaches the professional near-100 end-to-end standard, commit it into its own folder named **`Final Lead Pipeline`**.
+
+Do **not** ask for the Bass or Lead professional human references before those phases are ready for scoring; the user will provide each reference when needed.
+
+The finalized folders are not permission to deploy Production or alter the live V143 endpoint. They are versioned, proven pipeline packages on `v143-contextual-prune-lobo` until separate authorization is given.
+
 ## Rhythm — STRUCTURAL/RENDER GREEN, HUMAN-REFERENCE END-TO-END SCORE STILL OPEN
 
 Approved audio fixture `public/gomywayfullaitest.m4a`. Existing professional analyzer/render proof includes 358 valid render events, 100% render survival/playability/placement/pitch validity, 112 unique measures, 25 technique events, 358 sustain coverage, tempo ~129.199 BPM, 4/4, E Standard. Local built-Next gate is green at `5b29c0c3df3c97c0f4962e058997b2134d0179b7`. Existing whole-product structural contract is green.
@@ -139,4 +153,4 @@ Immediate next action:
 4. Verify professional PDF derives 100% from the exact scored frozen events; PDF fidelity must be 100% even if transcription accuracy is still below target.
 5. Run user-upload-equivalent audio → analyzer → structured events → professional PDF → isolated holdout scorer.
 6. Do not declare Rhythm complete until the post-hoc human-reference score is near 100% with no critical musical mismatches. Improve only through reference-free/general algorithms, rerunning from audio from scratch after every change.
-7. After Rhythm passes, repeat end-to-end for Bass, then Lead.
+7. Once Rhythm passes, package it as `Final Rhythm Pipeline`; then build Bass from that blueprint and wait for the user's Bass professional reference when Bass reaches scoring. After Bass passes, package `Final Bass Pipeline`; then build Lead from the Rhythm blueprint and wait for the user's Lead professional reference when Lead reaches scoring. After Lead passes, package `Final Lead Pipeline`.
