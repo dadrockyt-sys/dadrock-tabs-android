@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gate": "ai-tab-end-to-end-contract",
   "product": "dadrocktabs.com/ai-tab",
   "instrumentChoices": [
@@ -13,6 +13,8 @@
   "previewPdfWired": true,
   "fullPdfUnlockWired": true,
   "analysisMetadataTransportWired": true,
+  "previewAndFullProfessionalFeatureGateShared": true,
+  "previewAndFullProfessionalRendererShared": true,
   "rhythmDedicatedV143RouteFailClosed": true,
   "rhythmStructuredProfessionalRendererFailClosed": true,
   "leadLegacyPreserved": true,
