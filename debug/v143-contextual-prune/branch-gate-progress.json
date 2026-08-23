@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 2,
+  "gate": "v143-branch-gate-progress",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceCommit": "22dc06af353220006a7558c6b9ba0c262cc64cb8",
+  "phase": "post-verifiers",
+  "analyzerQualityVerifierExitCode": 0,
+  "previewFeatureVerifierExitCode": 0,
+  "installExitCode": null,
+  "nextBuildExitCode": null,
+  "localNextPreviewSimulation": true,
+  "actualVercelPreviewDeployment": false,
+  "vercelDeploymentAttempted": false,
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false
+}
