@@ -20,12 +20,16 @@ COMMON_NATURAL_HARMONIC_INTERVALS = (
     (24, 5),   # double-octave harmonic, physical node near fret 5
 )
 
-MIN_HARMONIC_DURATION_SECONDS = 0.18
+# These gates are intentionally strict. A normal fretted note can share the same
+# sounding MIDI and a similar harmonic series as a natural harmonic. The detector
+# must therefore abstain unless the mapped position is a common physical node and
+# both separated Bass views show unusually clean, upper-partial-rich evidence.
+MIN_HARMONIC_DURATION_SECONDS = 0.22
 MIN_HARMONIC_DURATION_STEPS = 2
-MAX_HARMONIC_ONSET_STRENGTH = 0.42
-MIN_HARMONIC_TONAL_PURITY = 0.68
-MIN_HARMONIC_UPPER_PARTIAL_RATIO = 0.22
-MAX_HARMONIC_SUBHARMONIC_RATIO = 0.10
+MAX_HARMONIC_ONSET_STRENGTH = 0.30
+MIN_HARMONIC_TONAL_PURITY = 0.78
+MIN_HARMONIC_UPPER_PARTIAL_RATIO = 0.90
+MAX_HARMONIC_SUBHARMONIC_RATIO = 0.06
 
 
 def _finite(value: Any, fallback: float = 0.0) -> float:
@@ -75,23 +79,38 @@ def natural_harmonic_sources(midi: int) -> list[dict[str, int | str]]:
     return out
 
 
+def _mapped_node_sources(event: dict[str, Any], midi: int) -> list[dict[str, int | str]]:
+    """Keep only natural-harmonic origins matching the authenticated TAB position."""
+    string_index = _integer(event, "stringIndex")
+    fret = _integer(event, "fret")
+    if string_index is None or fret is None:
+        return []
+    return [
+        source
+        for source in natural_harmonic_sources(midi)
+        if int(source["stringIndex"]) == int(string_index)
+        and int(source["physicalNodeFret"]) == int(fret)
+    ]
+
+
 def evaluate_natural_harmonic_view(
     view: AudioBassTechniqueView,
     event: dict[str, Any],
 ) -> dict[str, Any] | None:
-    """Require a conservative natural-harmonic-like spectrum from one Bass view.
+    """Require unusually strong natural-harmonic evidence from one Bass view.
 
-    This does not infer a physical fret from the mapped TAB position. It only
-    considers pitches reachable as common open-string natural harmonics and then
-    requires tonal purity, upper-partial support, weak subharmonic energy and a
-    non-aggressive onset in the separated Bass audio.
+    Matching a common natural-harmonic pitch is not enough: fretted notes can have
+    the same sounding pitch. We additionally require the authenticated string/fret
+    position to coincide with a common harmonic node and demand a narrow, strongly
+    upper-partial-rich spectrum with weak lower-octave energy in this Bass view.
+    Ambiguous cases deliberately return None.
     """
     import numpy as np
 
     midi = _integer(event, "midi")
     if midi is None or not 28 <= midi <= 67:
         return None
-    sources = natural_harmonic_sources(midi)
+    sources = _mapped_node_sources(event, midi)
     if not sources:
         return None
 
@@ -103,7 +122,7 @@ def evaluate_natural_harmonic_view(
     if duration < MIN_HARMONIC_DURATION_SECONDS or duration_steps < MIN_HARMONIC_DURATION_STEPS:
         return None
 
-    window_end = onset + min(0.48, max(0.20, duration))
+    window_end = onset + min(0.48, max(0.22, duration))
     indices = np.where(
         (view.times >= onset + 0.025)
         & (view.times <= window_end)
@@ -114,6 +133,7 @@ def evaluate_natural_harmonic_view(
     fundamental = _band_energy(view, midi)[indices]
     octave = _band_energy(view, midi + 12)[indices]
     third_partial = _band_energy(view, midi + 19)[indices]
+    fourth_partial = _band_energy(view, midi + 24)[indices]
     lower_octave = _band_energy(view, midi - 12)[indices]
     lower_third = _band_energy(view, midi - 19)[indices]
     neighbour_low = _band_energy(view, midi - 1.0, half_width=0.32)[indices]
@@ -125,11 +145,14 @@ def evaluate_natural_harmonic_view(
 
     octave_level = float(np.percentile(octave, 75))
     third_level = float(np.percentile(third_partial, 75))
+    fourth_level = float(np.percentile(fourth_partial, 75))
     lower_level = float(np.percentile(lower_octave + 0.5 * lower_third, 75))
     neighbour_level = float(np.percentile(neighbour_low + neighbour_high, 75))
 
     tonal_purity = fundamental_level / max(fundamental_level + neighbour_level, 1.0e-10)
-    upper_partial_ratio = (octave_level + 0.5 * third_level) / fundamental_level
+    upper_partial_ratio = (
+        octave_level + 0.65 * third_level + 0.45 * fourth_level
+    ) / fundamental_level
     subharmonic_ratio = lower_level / fundamental_level
     onset_strength = float(view.onset_strength(onset))
 
@@ -142,11 +165,11 @@ def evaluate_natural_harmonic_view(
     if onset_strength > MAX_HARMONIC_ONSET_STRENGTH:
         return None
 
-    purity_score = min(1.0, max(0.0, (tonal_purity - 0.5) / 0.5))
-    partial_score = min(1.0, upper_partial_ratio / 0.75)
+    purity_score = min(1.0, max(0.0, (tonal_purity - 0.65) / 0.35))
+    partial_score = min(1.0, upper_partial_ratio / 1.40)
     subharmonic_score = max(0.0, 1.0 - subharmonic_ratio / MAX_HARMONIC_SUBHARMONIC_RATIO)
     onset_score = max(0.0, 1.0 - onset_strength / MAX_HARMONIC_ONSET_STRENGTH)
-    score = 0.40 * purity_score + 0.30 * partial_score + 0.20 * subharmonic_score + 0.10 * onset_score
+    score = 0.40 * purity_score + 0.35 * partial_score + 0.15 * subharmonic_score + 0.10 * onset_score
 
     return {
         "type": "harmonic",
@@ -160,6 +183,7 @@ def evaluate_natural_harmonic_view(
         "upperPartialRatio": round(upper_partial_ratio, 6),
         "subharmonicRatio": round(subharmonic_ratio, 6),
         "onsetStrength": round(onset_strength, 6),
+        "mappedNodeMatched": True,
         "naturalHarmonicSources": deepcopy(sources),
         "referenceFree": True,
     }
@@ -183,7 +207,7 @@ def _harmonic_consensus(rows: Sequence[dict[str, Any] | None]) -> dict[str, Any]
         "referenceFree": True,
         "professionalReferenceUsed": False,
         "runtimeLabelsRequired": False,
-        "detector": "standard-bass-natural-harmonic-spectrum-v1",
+        "detector": "standard-bass-natural-harmonic-spectrum-v2-strict",
     }
 
 
@@ -192,7 +216,7 @@ def enrich_bass_events_with_harmonic_evidence(
     *,
     stem_paths: Sequence[str | Path],
 ) -> dict[str, Any]:
-    """Append only two-view harmonic evidence without changing musical identity."""
+    """Append only strict two-view harmonic evidence without changing identity."""
     if len(stem_paths) < REQUIRED_VIEW_AGREEMENT:
         raise ValueError("Bass harmonic evidence requires direct and cascade Bass stems")
 
@@ -214,13 +238,14 @@ def enrich_bass_events_with_harmonic_evidence(
         event["techniques"] = labels
         event["bassTechniqueEvidence"] = evidence
         event["bassHarmonicEnrichment"] = {
-            "version": 1,
-            "mode": "reference-free-two-view-natural-harmonic-spectrum",
+            "version": 2,
+            "mode": "reference-free-two-view-natural-harmonic-spectrum-strict",
             "requiredViewAgreement": REQUIRED_VIEW_AGREEMENT,
             "noteTimingPlayabilityChanged": False,
             "harmonicEvidenceImplemented": True,
             "professionalReferenceUsed": False,
             "runtimeLabelsRequired": False,
+            "safeAbstentionAllowed": True,
         }
 
     return {
@@ -230,9 +255,10 @@ def enrich_bass_events_with_harmonic_evidence(
             "harmonicEventCount": harmonic_event_count,
             "harmonicEvidenceObserved": harmonic_event_count > 0,
             "harmonicFamilyProven": harmonic_event_count > 0,
+            "safeAbstention": harmonic_event_count == 0,
             "requiredViewAgreement": REQUIRED_VIEW_AGREEMENT,
             "harmonicEvidenceImplemented": True,
-            "detector": "standard-bass-natural-harmonic-spectrum-v1",
+            "detector": "standard-bass-natural-harmonic-spectrum-v2-strict",
             "thresholds": {
                 "minimumDurationSeconds": MIN_HARMONIC_DURATION_SECONDS,
                 "minimumDurationSteps": MIN_HARMONIC_DURATION_STEPS,
@@ -240,6 +266,7 @@ def enrich_bass_events_with_harmonic_evidence(
                 "minimumTonalPurity": MIN_HARMONIC_TONAL_PURITY,
                 "minimumUpperPartialRatio": MIN_HARMONIC_UPPER_PARTIAL_RATIO,
                 "maximumSubharmonicRatio": MAX_HARMONIC_SUBHARMONIC_RATIO,
+                "mappedNaturalHarmonicNodeRequired": True,
             },
             "futureHighRiskFamiliesEnabled": False,
             "referenceFree": True,
