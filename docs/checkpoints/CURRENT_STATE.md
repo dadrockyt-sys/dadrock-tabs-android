@@ -132,6 +132,10 @@ Route verification:
 
 Do not invent a second PDF product contract. Tests should mirror the fields/routes from `app/ai-tab/page.js` and the two API routes above.
 
+New static contract proof:
+- `a45f71296bf0ffb2284f5adeea462f2ab94114ac` — `validation/rhythm_holdout/verify_ai_tab_pdf_product_contract.mjs` reads the real `page.js`, both PDF API routes, `createJimmyPaigeProfessionalPdf.js`, and `createAiTabPdf.js`; it fails if the endpoints, shared structured musical fields, `renderEvents`, preview lock/watermark settings, or V143 professional-renderer routing disappear.
+- `fa67cf7b39a026684a956698cf42ec5422b232dd` — static preflight workflow now runs this product-contract verifier before the PDF renderer test.
+
 ## Fresh real-audio pre-holdout freeze/PDF gate — CODED, authoritative result still pending
 
 Committed machinery:
@@ -162,6 +166,7 @@ Files/commits:
 - `88b8260791dc86c292e02a0fa93bb8447897b0aa` — failure diagnostics persist to branch.
 - `eea01a28d674fe130db38a086eff054e0e007fd0` — aligned static workflow with the `/ai-tab` PDF product files and moved standalone ESM work from `/tmp` into `$GITHUB_WORKSPACE/.preholdout-static` so Node can resolve the repository's installed `pdf-lib` dependency exactly as the product renderer does.
 - `eb57a53f9a54294f69fc5174a89ef549da4b6039` — static runner now persists a sanitized last-24-lines diagnostic tail from the failing stage into `rhythm-preholdout-static-preflight.json`; no secrets are expected in this CPU test, and token/secret-like assignments are redacted defensively.
+- product-contract verifier commits `a45f712...` / `fa67cf7...` ensure the CPU proof is explicitly tied to the real `/ai-tab` preview and purchased-PDF wiring before rendering.
 
 Latest persisted diagnostic before those fixes:
 `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`
@@ -183,7 +188,7 @@ Await the new static workflow evidence. If it becomes green, this confirms the e
 
 ## Immediate next actions
 
-1. Observe the post-`eb57a53...` static preflight result and require professional preview/full PDFs plus exact PDF-event fidelity 1.0.
+1. Observe the post-`fa67cf7...` static preflight result: first require the `app/ai-tab/page.js` product-contract gate, then professional preview/full PDFs and exact PDF-event fidelity 1.0.
 2. If still red, read `failureLogTail` from the schemaVersion 3 diagnostic and fix only the concrete failing condition.
 3. Save this checkpoint after each meaningful change.
 4. Only after CPU glue is green, diagnose/retrigger exactly one fresh real-audio pre-holdout GPU run if needed.
