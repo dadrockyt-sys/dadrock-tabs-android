@@ -1,0 +1,493 @@
+APPROVED_AUDIO_SHA=PASS:215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f
+PROTECTED_PIPELINE_BLOB=PASS:7f72f8ed9b14af8bc93e95544195204d99c6bec1
+CORRECTION_APPROVED_REFERENCE_TOKEN_SCAN=PASS
+CORRECTION_SOURCE_BLOB=3bcad86b67116cc6d50295f2937a7bf3602b41dd
+CORRECTION_MODAL_BLOB=1ee6b81c5cc61dfea7d6ed927948896770db3ac0
+TIMING_HYPOTHESIS_BLOB=775a64aa5b561ddc643c5b970372298875451664
+CHECKED_OUT_COMMIT=f088337bef0811187b87e93265186f80336d8c2d
+Collecting modal
+  Downloading modal-1.5.4-py3-none-any.whl.metadata (2.5 kB)
+Collecting aiohttp (from modal)
+  Downloading aiohttp-3.14.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.3 kB)
+Collecting cbor2 (from modal)
+  Downloading cbor2-6.1.4-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (5.5 kB)
+Collecting certifi (from modal)
+  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Collecting click~=8.1 (from modal)
+  Downloading click-8.4.2-py3-none-any.whl.metadata (2.6 kB)
+Collecting grpclib<0.4.10,>=0.4.7 (from modal)
+  Downloading grpclib-0.4.9-py3-none-any.whl.metadata (6.1 kB)
+Collecting protobuf!=4.24.0,<7.0,>=3.19 (from modal)
+  Downloading protobuf-6.33.6-cp39-abi3-manylinux2014_x86_64.whl.metadata (593 bytes)
+Collecting rich>=12.0.0 (from modal)
+  Downloading rich-15.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting synchronicity~=0.12.5 (from modal)
+  Downloading synchronicity-0.12.5-py3-none-any.whl.metadata (14 kB)
+Collecting toml (from modal)
+  Downloading toml-0.10.2-py2.py3-none-any.whl.metadata (7.1 kB)
+Collecting types-certifi (from modal)
+  Downloading types_certifi-2021.10.8.3-py3-none-any.whl.metadata (1.4 kB)
+Collecting types-toml (from modal)
+  Downloading types_toml-0.10.8.20260518-py3-none-any.whl.metadata (1.7 kB)
+Collecting watchfiles (from modal)
+  Downloading watchfiles-1.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+Collecting typing_extensions~=4.6 (from modal)
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting h2<5,>=3.1.0 (from grpclib<0.4.10,>=0.4.7->modal)
+  Downloading h2-4.4.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting multidict (from grpclib<0.4.10,>=0.4.7->modal)
+  Downloading multidict-6.7.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.3 kB)
+Collecting hyperframe<7,>=6.1 (from h2<5,>=3.1.0->grpclib<0.4.10,>=0.4.7->modal)
+  Downloading hyperframe-6.1.0-py3-none-any.whl.metadata (4.3 kB)
+Collecting hpack<5,>=4.2 (from h2<5,>=3.1.0->grpclib<0.4.10,>=0.4.7->modal)
+  Downloading hpack-4.2.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting markdown-it-py>=2.2.0 (from rich>=12.0.0->modal)
+  Downloading markdown_it_py-4.2.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich>=12.0.0->modal)
+  Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=12.0.0->modal)
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting aiohappyeyeballs>=2.5.0 (from aiohttp->modal)
+  Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.4.0 (from aiohttp->modal)
+  Downloading aiosignal-1.4.0-py3-none-any.whl.metadata (3.7 kB)
+Collecting attrs>=17.3.0 (from aiohttp->modal)
+  Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp->modal)
+  Downloading frozenlist-1.8.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (20 kB)
+Collecting propcache>=0.2.0 (from aiohttp->modal)
+  Downloading propcache-0.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (16 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp->modal)
+  Downloading yarl-1.24.5-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (103 kB)
+Collecting idna>=2.0 (from yarl<2.0,>=1.17.0->aiohttp->modal)
+  Downloading idna-3.19-py3-none-any.whl.metadata (9.2 kB)
+Collecting anyio>=3.0.0 (from watchfiles->modal)
+  Downloading anyio-4.14.2-py3-none-any.whl.metadata (4.6 kB)
+Downloading modal-1.5.4-py3-none-any.whl (979 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 979.4/979.4 kB 137.3 MB/s  0:00:00
+Downloading click-8.4.2-py3-none-any.whl (119 kB)
+Downloading grpclib-0.4.9-py3-none-any.whl (77 kB)
+Downloading h2-4.4.1-py3-none-any.whl (62 kB)
+Downloading hpack-4.2.0-py3-none-any.whl (34 kB)
+Downloading hyperframe-6.1.0-py3-none-any.whl (13 kB)
+Downloading protobuf-6.33.6-cp39-abi3-manylinux2014_x86_64.whl (323 kB)
+Downloading synchronicity-0.12.5-py3-none-any.whl (41 kB)
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading rich-15.0.0-py3-none-any.whl (310 kB)
+Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 190.9 MB/s  0:00:00
+Downloading markdown_it_py-4.2.0-py3-none-any.whl (91 kB)
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Downloading aiohttp-3.14.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 279.6 MB/s  0:00:00
+Downloading multidict-6.7.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (246 kB)
+Downloading yarl-1.24.5-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (111 kB)
+Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl (15 kB)
+Downloading aiosignal-1.4.0-py3-none-any.whl (7.5 kB)
+Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+Downloading frozenlist-1.8.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (231 kB)
+Downloading idna-3.19-py3-none-any.whl (68 kB)
+Downloading propcache-0.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (58 kB)
+Downloading cbor2-6.1.4-cp311-cp311-manylinux_2_28_x86_64.whl (464 kB)
+Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+Downloading toml-0.10.2-py2.py3-none-any.whl (16 kB)
+Downloading types_certifi-2021.10.8.3-py3-none-any.whl (2.1 kB)
+Downloading types_toml-0.10.8.20260518-py3-none-any.whl (9.7 kB)
+Downloading watchfiles-1.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (456 kB)
+Downloading anyio-4.14.2-py3-none-any.whl (125 kB)
+Installing collected packages: types-certifi, typing_extensions, types-toml, toml, pygments, protobuf, propcache, multidict, mdurl, idna, hyperframe, hpack, frozenlist, click, certifi, cbor2, attrs, aiohappyeyeballs, yarl, synchronicity, markdown-it-py, h2, anyio, aiosignal, watchfiles, rich, grpclib, aiohttp, modal
+
+Successfully installed aiohappyeyeballs-2.7.1 aiohttp-3.14.3 aiosignal-1.4.0 anyio-4.14.2 attrs-26.1.0 cbor2-6.1.4 certifi-2026.7.22 click-8.4.2 frozenlist-1.8.0 grpclib-0.4.9 h2-4.4.1 hpack-4.2.0 hyperframe-6.1.0 idna-3.19 markdown-it-py-4.2.0 mdurl-0.1.2 modal-1.5.4 multidict-6.7.1 propcache-0.5.2 protobuf-6.33.6 pygments-2.21.0 rich-15.0.0 synchronicity-0.12.5 toml-0.10.2 types-certifi-2021.10.8.3 types-toml-0.10.8.20260518 typing_extensions-4.16.0 watchfiles-1.2.0 yarl-1.24.5
+✓ Initialized. View run at 
+https://modal.com/apps/dadrockyt/main/ap-7zYaruYZvsBjQa5GO6lNri
+✓ Created objects.
+├── 🔨 Created mount 
+│   /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143_co
+│   ntextual_prune_shadow_correction_modal.py
+├── 🔨 Created mount 
+│   /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/public/training/
+│   v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-sequenc
+│   e-frozen-events.json
+├── 🔨 Created mount 
+│   /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/public/training/
+│   v143-musical-reconstruction-calibration/contextual-prune-frozen-model.json
+├── 🔨 Created mount 
+│   /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/public/training/
+│   v143-musical-reconstruction-calibration/intro-correlation-safe-sequence-even
+│   t-model.json
+├── 🔨 Created mount 
+│   /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/public/training/
+│   v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-se
+│   lector-model.json
+├── 🔨 Created mount PythonPackage:v143_ai_tab_gpu_worker, 
+│   PythonPackage:v143_candidate_timing_adapter, 
+│   PythonPackage:v143_reference_free_timing, 
+│   PythonPackage:v143_contextual_prune_reference_free_carrier, 
+│   PythonPackage:v143_contextual_prune_runtime, 
+│   PythonPackage:v143_contextual_prune_shadow_correction, 
+│   PythonPackage:v143_rhythm_timing_consistency_shadow, 
+│   PythonPackage:v143_rhythm_timing_hypothesis_shadow, 
+│   PythonPackage:v143_correlation_safe_fixed_count_reranker_freeze, 
+│   PythonPackage:v143_intro_sequence_event_model, 
+│   PythonPackage:v143_intro_learned_grid_event_selector, 
+│   PythonPackage:v143_intro_learned_onset_spectral_set_model, 
+│   PythonPackage:v143_intro_raw_attack_temporal_diagnostic, 
+│   PythonPackage:v143_intro_repetition_recovery_event_selector, 
+│   PythonPackage:v143_intro_supervised_temporal_assignment, 
+│   PythonPackage:v143_deterministic_separator, 
+│   PythonPackage:v143_seeded_separator, 
+│   PythonPackage:v143_production_separator, 
+│   PythonPackage:v143_seeded_audio_separator_cli
+└── 🔨 Created function analyze_reference_free_correction_shadow.
+2026-08-23 19:14:34.525 - INFO - cli - Separator version 0.44.5 beginning with input path(s): /tmp/v143-correction-shadow-xuz303jn/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:14:34.529 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: /tmp/v143-correction-shadow-xuz303jn/stems/_work/direct, output_format: WAV
+2026-08-23 19:14:34.529 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/
+2026-08-23 19:14:34.529 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016
+2026-08-23 19:14:34.529 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: 
+2026-08-23 19:14:34.529 - INFO - separator - Python Version: 3.11.12
+2026-08-23 19:14:34.529 - INFO - separator - PyTorch Version: 2.13.0+cu130
+2026-08-23 19:14:34.705 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers
+2026-08-23 19:14:34.708 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0
+2026-08-23 19:14:34.708 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA
+2026-08-23 19:14:34.709 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration
+2026-08-23 19:14:34.709 - INFO - separator - Loading model htdemucs_6s.yaml...
+
+[1A  0%|          | 0.00/3.54k [00:00<?, ?iB/s]28.3kiB [00:00, 28.6MiB/s]                  
+
+[1A  0%|          | 0.00/55.0M [00:00<?, ?iB/s]
+[1A 15%|█▌        | 8.47M/55.0M [00:00<00:00, 84.6MiB/s]
+[1A 31%|███       | 16.9M/55.0M [00:00<00:00, 82.1MiB/s]
+[1A 46%|████▌     | 25.2M/55.0M [00:00<00:00, 77.0MiB/s]
+[1A 60%|█████▉    | 32.9M/55.0M [00:00<00:00, 76.7MiB/s]
+[1A 74%|███████▍  | 40.9M/55.0M [00:00<00:00, 77.9MiB/s]
+[1A 89%|████████▊ | 48.7M/55.0M [00:00<00:00, 77.4MiB/s]
+[1A100%|██████████| 55.0M/55.0M [00:00<00:00, 78.0MiB/s]
+
+[1A  0%|          | 0.00/21.0 [00:00<?, ?iB/s]
+[1A100%|██████████| 21.0/21.0 [00:00<00:00, 28.1kiB/s]
+2026-08-23 19:14:35.835 - INFO - demucs_separator - Demucs Separator initialisation complete
+2026-08-23 19:14:35.835 - INFO - separator - Load model duration: 00:00:01
+2026-08-23 19:14:35.835 - INFO - separator - Processing file: /tmp/v143-correction-shadow-xuz303jn/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:14:35.835 - INFO - separator - Starting separation process for audio_file_path: /tmp/v143-correction-shadow-xuz303jn/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:14:35.836 - INFO - common_separator - Input audio subtype: PCM_16
+2026-08-23 19:14:35.836 - INFO - common_separator - Detected input bit depth: 16-bit
+
+[1A  0%|          | 0/40 [00:00<?, ?it/s]
+[1A  2%|▎         | 1/40 [00:01<00:43,  1.10s/it]
+[1A  8%|▊         | 3/40 [00:01<00:13,  2.84it/s]
+[1A 12%|█▎        | 5/40 [00:01<00:07,  4.64it/s]
+[1A 18%|█▊        | 7/40 [00:01<00:05,  6.21it/s]
+[1A 22%|██▎       | 9/40 [00:01<00:04,  7.53it/s]
+[1A 28%|██▊       | 11/40 [00:01<00:03,  8.58it/s]
+[1A 32%|███▎      | 13/40 [00:02<00:02,  9.40it/s]
+[1A 38%|███▊      | 15/40 [00:02<00:02,  9.99it/s]
+[1A 42%|████▎     | 17/40 [00:02<00:02, 10.46it/s]
+[1A 48%|████▊     | 19/40 [00:02<00:01, 10.79it/s]
+[1A 52%|█████▎    | 21/40 [00:02<00:01, 11.03it/s]
+[1A 57%|█████▊    | 23/40 [00:03<00:01, 11.21it/s]
+[1A 62%|██████▎   | 25/40 [00:03<00:01, 11.34it/s]
+[1A 68%|██████▊   | 27/40 [00:03<00:01, 11.46it/s]
+[1A 72%|███████▎  | 29/40 [00:03<00:00, 11.50it/s]
+[1A 78%|███████▊  | 31/40 [00:03<00:00, 11.55it/s]
+[1A 82%|████████▎ | 33/40 [00:03<00:00, 11.58it/s]
+[1A 88%|████████▊ | 35/40 [00:04<00:00, 11.60it/s]
+[1A 92%|█████████▎| 37/40 [00:04<00:00, 11.59it/s]
+[1A 98%|█████████▊| 39/40 [00:04<00:00, 11.62it/s]
+[1A100%|██████████| 40/40 [00:04<00:00,  8.96it/s]
+2026-08-23 19:15:07.747 - INFO - common_separator - Audio duration is 0.06 hours (211.44 seconds).
+2026-08-23 19:15:07.747 - WARNING - common_separator - Using soundfile for writing.
+2026-08-23 19:15:07.832 - INFO - common_separator - Using input subtype for output: PCM_16
+2026-08-23 19:15:08.362 - INFO - common_separator - Clearing input audio file paths, sources and stems...
+2026-08-23 19:15:08.362 - INFO - separator - Separation duration: 00:00:32
+2026-08-23 19:15:08.362 - INFO - cli - Separation complete! Output file(s): input-normalized_(Guitar)_htdemucs_6s.wav
+2026-08-23 19:15:13.805 - INFO - cli - Separator version 0.44.5 beginning with input path(s): /tmp/v143-correction-shadow-xuz303jn/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:15:13.809 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: /tmp/v143-correction-shadow-xuz303jn/stems/_work/roformer, output_format: WAV
+2026-08-23 19:15:13.809 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/
+2026-08-23 19:15:13.809 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016
+2026-08-23 19:15:13.810 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: 
+2026-08-23 19:15:13.810 - INFO - separator - Python Version: 3.11.12
+2026-08-23 19:15:13.810 - INFO - separator - PyTorch Version: 2.13.0+cu130
+2026-08-23 19:15:14.007 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers
+2026-08-23 19:15:14.010 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0
+2026-08-23 19:15:14.011 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA
+2026-08-23 19:15:14.011 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration
+2026-08-23 19:15:14.011 - INFO - separator - Loading model model_bs_roformer_ep_317_sdr_12.9755.ckpt...
+
+[1A  0%|          | 0.00/639M [00:00<?, ?iB/s]
+[1A  1%|          | 6.86M/639M [00:00<00:09, 68.6MiB/s]
+[1A  2%|▏         | 15.6M/639M [00:00<00:07, 79.7MiB/s]
+[1A  4%|▍         | 24.7M/639M [00:00<00:07, 84.9MiB/s]
+[1A  5%|▌         | 33.2M/639M [00:00<00:07, 77.2MiB/s]
+[1A  7%|▋         | 42.0M/639M [00:00<00:07, 77.4MiB/s]
+[1A  8%|▊         | 52.4M/639M [00:00<00:07, 81.4MiB/s]
+[1A 10%|▉         | 61.0M/639M [00:00<00:07, 82.6MiB/s]
+[1A 11%|█         | 69.3M/639M [00:00<00:07, 78.1MiB/s]
+[1A 12%|█▏        | 77.1M/639M [00:00<00:07, 77.8MiB/s]
+[1A 13%|█▎        | 84.9M/639M [00:01<00:07, 74.1MiB/s]
+[1A 14%|█▍        | 92.4M/639M [00:01<00:07, 73.5MiB/s]
+[1A 16%|█▌        | 99.8M/639M [00:01<00:07, 73.7MiB/s]
+[1A 17%|█▋        | 108M/639M [00:01<00:06, 76.0MiB/s] 
+[1A 18%|█▊        | 116M/639M [00:01<00:06, 78.1MiB/s]
+[1A 19%|█▉        | 125M/639M [00:01<00:06, 79.3MiB/s]
+[1A 21%|██        | 132M/639M [00:01<00:06, 76.3MiB/s]
+[1A 22%|██▏       | 140M/639M [00:01<00:06, 72.5MiB/s]
+[1A 23%|██▎       | 147M/639M [00:01<00:06, 72.3MiB/s]
+[1A 24%|██▍       | 155M/639M [00:02<00:06, 72.7MiB/s]
+[1A 25%|██▌       | 162M/639M [00:02<00:08, 56.0MiB/s]
+[1A 26%|██▋       | 169M/639M [00:02<00:07, 60.0MiB/s]
+[1A 28%|██▊       | 176M/639M [00:02<00:07, 62.5MiB/s]
+[1A 29%|██▊       | 184M/639M [00:02<00:07, 64.8MiB/s]
+[1A 30%|██▉       | 191M/639M [00:02<00:06, 66.6MiB/s]
+[1A 31%|███       | 198M/639M [00:02<00:06, 67.0MiB/s]
+[1A 32%|███▏      | 205M/639M [00:02<00:06, 68.1MiB/s]
+[1A 33%|███▎      | 212M/639M [00:02<00:06, 69.9MiB/s]
+[1A 34%|███▍      | 219M/639M [00:03<00:05, 70.3MiB/s]
+[1A 35%|███▌      | 227M/639M [00:03<00:05, 71.1MiB/s]
+[1A 37%|███▋      | 234M/639M [00:03<00:05, 71.3MiB/s]
+[1A 38%|███▊      | 241M/639M [00:03<00:06, 64.9MiB/s]
+[1A 39%|███▉      | 248M/639M [00:03<00:05, 67.0MiB/s]
+[1A 40%|███▉      | 256M/639M [00:03<00:05, 68.2MiB/s]
+[1A 41%|████      | 263M/639M [00:03<00:05, 69.0MiB/s]
+[1A 42%|████▏     | 271M/639M [00:03<00:04, 74.3MiB/s]
+[1A 44%|████▎     | 279M/639M [00:03<00:05, 68.2MiB/s]
+[1A 45%|████▍     | 286M/639M [00:04<00:05, 69.3MiB/s]
+[1A 46%|████▌     | 293M/639M [00:04<00:04, 70.0MiB/s]
+[1A 47%|████▋     | 301M/639M [00:04<00:04, 72.8MiB/s]
+[1A 49%|████▊     | 312M/639M [00:04<00:04, 81.7MiB/s]
+[1A 50%|█████     | 320M/639M [00:04<00:04, 78.7MiB/s]
+[1A 51%|█████▏    | 329M/639M [00:04<00:03, 81.1MiB/s]
+[1A 53%|█████▎    | 338M/639M [00:04<00:03, 85.4MiB/s]
+[1A 55%|█████▍    | 349M/639M [00:04<00:03, 91.1MiB/s]
+[1A 56%|█████▌    | 358M/639M [00:04<00:03, 92.7MiB/s]
+[1A 58%|█████▊    | 368M/639M [00:04<00:02, 94.3MiB/s]
+[1A 59%|█████▉    | 378M/639M [00:05<00:02, 97.0MiB/s]
+[1A 61%|██████    | 388M/639M [00:05<00:03, 75.9MiB/s]
+[1A 62%|██████▏   | 396M/639M [00:05<00:03, 73.8MiB/s]
+[1A 63%|██████▎   | 404M/639M [00:05<00:03, 72.7MiB/s]
+[1A 64%|██████▍   | 412M/639M [00:05<00:03, 72.4MiB/s]
+[1A 66%|██████▌   | 420M/639M [00:05<00:02, 73.3MiB/s]
+[1A 67%|██████▋   | 429M/639M [00:05<00:02, 78.5MiB/s]
+[1A 68%|██████▊   | 437M/639M [00:05<00:02, 78.3MiB/s]
+[1A 70%|██████▉   | 445M/639M [00:05<00:02, 79.1MiB/s]
+[1A 71%|███████   | 453M/639M [00:06<00:02, 77.5MiB/s]
+[1A 72%|███████▏  | 461M/639M [00:06<00:02, 76.3MiB/s]
+[1A 73%|███████▎  | 468M/639M [00:06<00:02, 73.8MiB/s]
+[1A 74%|███████▍  | 476M/639M [00:06<00:02, 72.7MiB/s]
+[1A 76%|███████▌  | 483M/639M [00:06<00:02, 72.2MiB/s]
+[1A 77%|███████▋  | 490M/639M [00:06<00:02, 68.0MiB/s]
+[1A 78%|███████▊  | 497M/639M [00:06<00:02, 67.3MiB/s]
+[1A 79%|███████▉  | 504M/639M [00:06<00:02, 67.3MiB/s]
+[1A 80%|███████▉  | 511M/639M [00:06<00:01, 65.8MiB/s]
+[1A 81%|████████  | 517M/639M [00:07<00:01, 62.1MiB/s]
+[1A 82%|████████▏ | 524M/639M [00:07<00:02, 49.9MiB/s]
+[1A 83%|████████▎ | 529M/639M [00:07<00:02, 42.0MiB/s]
+[1A 83%|████████▎ | 534M/639M [00:07<00:02, 39.5MiB/s]
+[1A 84%|████████▍ | 538M/639M [00:07<00:02, 37.0MiB/s]
+[1A 85%|████████▍ | 542M/639M [00:07<00:02, 38.3MiB/s]
+[1A 86%|████████▌ | 547M/639M [00:07<00:02, 40.6MiB/s]
+[1A 86%|████████▋ | 553M/639M [00:08<00:01, 45.5MiB/s]
+[1A 87%|████████▋ | 559M/639M [00:08<00:01, 50.4MiB/s]
+[1A 88%|████████▊ | 565M/639M [00:08<00:01, 52.3MiB/s]
+[1A 89%|████████▉ | 570M/639M [00:08<00:01, 53.0MiB/s]
+[1A 90%|█████████ | 576M/639M [00:08<00:01, 53.0MiB/s]
+[1A 91%|█████████ | 582M/639M [00:08<00:01, 55.4MiB/s]
+[1A 92%|█████████▏| 590M/639M [00:08<00:00, 63.0MiB/s]
+[1A 93%|█████████▎| 597M/639M [00:08<00:00, 64.2MiB/s]
+[1A 94%|█████████▍| 603M/639M [00:08<00:00, 62.0MiB/s]
+[1A 95%|█████████▌| 609M/639M [00:08<00:00, 60.2MiB/s]
+[1A 96%|█████████▋| 616M/639M [00:09<00:00, 60.0MiB/s]
+[1A 97%|█████████▋| 622M/639M [00:09<00:00, 61.9MiB/s]
+[1A 98%|█████████▊| 629M/639M [00:09<00:00, 63.7MiB/s]
+[1A 99%|█████████▉| 636M/639M [00:09<00:00, 64.7MiB/s]100%|██████████| 639M/639M [00:09<00:00, 68.2MiB/s]
+
+[1A  0%|          | 0.00/2.27k [00:00<?, ?iB/s]100%|██████████| 2.27k/2.27k [00:00<00:00, 3.15MiB/s]
+2026-08-23 19:15:26.997 - INFO - mdxc_separator - MDXC Separator initialisation complete
+2026-08-23 19:15:26.997 - INFO - separator - Roformer loading stats: {'new_implementation_success': 1, 'total_failures': 0}
+2026-08-23 19:15:26.997 - INFO - separator - Load model duration: 00:00:12
+2026-08-23 19:15:26.998 - INFO - separator - Processing file: /tmp/v143-correction-shadow-xuz303jn/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:15:26.998 - INFO - separator - Starting separation process for audio_file_path: /tmp/v143-correction-shadow-xuz303jn/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:15:26.999 - INFO - common_separator - Input audio subtype: PCM_16
+2026-08-23 19:15:26.999 - INFO - common_separator - Detected input bit depth: 16-bit
+
+[1A  0%|          | 0/27 [00:00<?, ?it/s]
+[1A  4%|▎         | 1/27 [00:02<00:59,  2.28s/it]
+[1A  7%|▋         | 2/27 [00:04<00:49,  1.96s/it]
+[1A 11%|█         | 3/27 [00:05<00:44,  1.87s/it]
+[1A 15%|█▍        | 4/27 [00:07<00:42,  1.83s/it]
+[1A 19%|█▊        | 5/27 [00:09<00:39,  1.81s/it]
+[1A 22%|██▏       | 6/27 [00:11<00:37,  1.79s/it]
+[1A 26%|██▌       | 7/27 [00:12<00:35,  1.78s/it]
+[1A 30%|██▉       | 8/27 [00:14<00:33,  1.78s/it]
+[1A 33%|███▎      | 9/27 [00:16<00:32,  1.78s/it]
+[1A 37%|███▋      | 10/27 [00:18<00:30,  1.78s/it]
+[1A 41%|████      | 11/27 [00:19<00:28,  1.78s/it]
+[1A 44%|████▍     | 12/27 [00:21<00:26,  1.78s/it]
+[1A 48%|████▊     | 13/27 [00:23<00:24,  1.78s/it]
+[1A 52%|█████▏    | 14/27 [00:25<00:23,  1.77s/it]
+[1A 56%|█████▌    | 15/27 [00:27<00:21,  1.77s/it]
+[1A 59%|█████▉    | 16/27 [00:28<00:19,  1.77s/it]
+[1A 63%|██████▎   | 17/27 [00:30<00:17,  1.76s/it]
+[1A 67%|██████▋   | 18/27 [00:32<00:15,  1.76s/it]
+[1A 70%|███████   | 19/27 [00:34<00:14,  1.76s/it]
+[1A 74%|███████▍  | 20/27 [00:35<00:12,  1.76s/it]
+[1A 78%|███████▊  | 21/27 [00:37<00:10,  1.75s/it]
+[1A 81%|████████▏ | 22/27 [00:39<00:08,  1.75s/it]
+[1A 85%|████████▌ | 23/27 [00:41<00:06,  1.75s/it]
+[1A 89%|████████▉ | 24/27 [00:42<00:05,  1.75s/it]
+[1A 93%|█████████▎| 25/27 [00:44<00:03,  1.75s/it]
+[1A 96%|█████████▋| 26/27 [00:46<00:01,  1.74s/it]
+[1A100%|██████████| 27/27 [00:47<00:00,  1.74s/it]
+[1A100%|██████████| 27/27 [00:47<00:00,  1.78s/it]
+2026-08-23 19:16:17.183 - INFO - mdxc_separator - Saving Instrumental stem to input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav...
+2026-08-23 19:16:17.483 - INFO - common_separator - Audio duration is 0.06 hours (211.44 seconds).
+2026-08-23 19:16:17.483 - WARNING - common_separator - Using soundfile for writing.
+2026-08-23 19:16:17.559 - INFO - common_separator - Using input subtype for output: PCM_16
+2026-08-23 19:16:18.099 - INFO - common_separator - Clearing input audio file paths, sources and stems...
+2026-08-23 19:16:18.101 - INFO - separator - Separation duration: 00:00:51
+2026-08-23 19:16:18.101 - INFO - cli - Separation complete! Output file(s): input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav
+2026-08-23 19:16:23.117 - INFO - cli - Separator version 0.44.5 beginning with input path(s): /tmp/v143-correction-shadow-xuz303jn/stems/_work/roformer/input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav
+2026-08-23 19:16:23.120 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: /tmp/v143-correction-shadow-xuz303jn/stems/_work/cascade, output_format: WAV
+2026-08-23 19:16:23.121 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/
+2026-08-23 19:16:23.121 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016
+2026-08-23 19:16:23.121 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: 
+2026-08-23 19:16:23.121 - INFO - separator - Python Version: 3.11.12
+2026-08-23 19:16:23.121 - INFO - separator - PyTorch Version: 2.13.0+cu130
+2026-08-23 19:16:23.311 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers
+2026-08-23 19:16:23.314 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0
+2026-08-23 19:16:23.314 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA
+2026-08-23 19:16:23.314 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration
+2026-08-23 19:16:23.314 - INFO - separator - Loading model htdemucs_6s.yaml...
+2026-08-23 19:16:23.370 - INFO - demucs_separator - Demucs Separator initialisation complete
+2026-08-23 19:16:23.370 - INFO - separator - Load model duration: 00:00:00
+2026-08-23 19:16:23.371 - INFO - separator - Processing file: /tmp/v143-correction-shadow-xuz303jn/stems/_work/roformer/input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav
+2026-08-23 19:16:23.371 - INFO - separator - Starting separation process for audio_file_path: /tmp/v143-correction-shadow-xuz303jn/stems/_work/roformer/input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav
+2026-08-23 19:16:23.371 - INFO - common_separator - Input audio subtype: PCM_16
+2026-08-23 19:16:23.371 - INFO - common_separator - Detected input bit depth: 16-bit
+
+[1A  0%|          | 0/40 [00:00<?, ?it/s]
+[1A  2%|▎         | 1/40 [00:00<00:26,  1.46it/s]
+[1A  8%|▊         | 3/40 [00:00<00:09,  4.10it/s]
+[1A 12%|█▎        | 5/40 [00:01<00:05,  6.18it/s]
+[1A 18%|█▊        | 7/40 [00:01<00:04,  7.73it/s]
+[1A 22%|██▎       | 9/40 [00:01<00:03,  8.90it/s]
+[1A 28%|██▊       | 11/40 [00:01<00:02,  9.71it/s]
+[1A 32%|███▎      | 13/40 [00:01<00:02, 10.34it/s]
+[1A 38%|███▊      | 15/40 [00:01<00:02, 10.75it/s]
+[1A 42%|████▎     | 17/40 [00:02<00:02, 11.07it/s]
+[1A 48%|████▊     | 19/40 [00:02<00:01, 11.27it/s]
+[1A 52%|█████▎    | 21/40 [00:02<00:01, 11.44it/s]
+[1A 57%|█████▊    | 23/40 [00:02<00:01, 11.52it/s]
+[1A 62%|██████▎   | 25/40 [00:02<00:01, 11.60it/s]
+[1A 68%|██████▊   | 27/40 [00:02<00:01, 11.66it/s]
+[1A 72%|███████▎  | 29/40 [00:03<00:00, 11.72it/s]
+[1A 78%|███████▊  | 31/40 [00:03<00:00, 11.72it/s]
+[1A 82%|████████▎ | 33/40 [00:03<00:00, 11.74it/s]
+[1A 88%|████████▊ | 35/40 [00:03<00:00, 11.73it/s]
+[1A 92%|█████████▎| 37/40 [00:03<00:00, 11.74it/s]
+[1A 98%|█████████▊| 39/40 [00:03<00:00, 11.74it/s]
+[1A100%|██████████| 40/40 [00:03<00:00, 10.00it/s]
+2026-08-23 19:16:32.726 - INFO - common_separator - Audio duration is 0.06 hours (211.44 seconds).
+2026-08-23 19:16:32.726 - WARNING - common_separator - Using soundfile for writing.
+2026-08-23 19:16:32.801 - INFO - common_separator - Using input subtype for output: PCM_16
+2026-08-23 19:16:33.266 - INFO - common_separator - Clearing input audio file paths, sources and stems...
+2026-08-23 19:16:33.267 - INFO - separator - Separation duration: 00:00:09
+2026-08-23 19:16:33.267 - INFO - cli - Separation complete! Output file(s): input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12_(Guitar)_htdemucs_6s.wav
+WARNING:root:Coremltools is not installed. If you plan to use a CoreML Saved Model, reinstall basic-pitch with `pip install 'basic-pitch[coreml]'`
+WARNING:root:tflite-runtime is not installed. If you plan to use a TFLite Model, reinstall basic-pitch with `pip install 'basic-pitch tflite-runtime'` or `pip install 'basic-pitch[tf]'
+2026-08-23 19:16:36.485511: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-08-23 19:16:36.607836: I external/local_tsl/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-08-23 19:16:36.718936: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-08-23 19:16:36.719177: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-08-23 19:16:36.722674: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-08-23 19:16:36.739143: I external/local_tsl/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-08-23 19:16:36.739974: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-08-23 19:16:39.145440: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+/usr/local/lib/python3.11/site-packages/resampy/filters.py:50: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+Predicting MIDI for /tmp/v143-correction-shadow-xuz303jn/stems/direct-demucs6s-guitar.wav...
+2026-08-23 19:16:41.883418: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:887] could not open file to read NUMA node: /sys/bus/pci/devices/0000:00:04.0/numa_node
+Your kernel may have been built without NUMA support.
+2026-08-23 19:16:41.890988: W tensorflow/core/common_runtime/gpu/gpu_device.cc:2256] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+Predicting MIDI for /tmp/v143-correction-shadow-xuz303jn/stems/direct-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-correction-shadow-xuz303jn/stems/direct-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-correction-shadow-xuz303jn/stems/direct-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-correction-shadow-xuz303jn/stems/bsroformer-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-correction-shadow-xuz303jn/stems/bsroformer-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-correction-shadow-xuz303jn/stems/bsroformer-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-correction-shadow-xuz303jn/stems/bsroformer-demucs6s-guitar.wav...
+Traceback (most recent call last):
+  File "/pkg/modal/_runtime/container_io_manager.py", line 977, in handle_input_exception
+    yield
+  File "/pkg/modal/_container_entrypoint.py", line 187, in run_input_sync
+    values = io_context.call_function_sync()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_runtime/container_io_manager.py", line 265, in call_function_sync
+    expected_value_or_values = self.finalized_function.callable(*args, **kwargs)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/v143_contextual_prune_shadow_correction_modal.py", line 177, in analyze_reference_free_correction_shadow
+    carrier = build_contextual_prune_reference_free_carrier(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/v143_contextual_prune_reference_free_carrier.py", line 476, in build_contextual_prune_reference_free_carrier
+    raise RuntimeError(
+RuntimeError: Contextual-prune carrier grid incomplete: 1788 != 1808
+Stopping app - uncaught exception raised locally: RuntimeError('Contextual-prune carrier grid incomplete: 1788 != 1808').
+╭───────────────────── Traceback (most recent call last) ──────────────────────╮
+│ /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143_co │
+│ ntextual_prune_shadow_correction_modal.py:305 in approved_audio              │
+│                                                                              │
+│   304 │   │   )                                                              │
+│ ❱ 305 │   result = analyze_reference_free_correction_shadow.remote(          │
+│   306 │   │   source_bytes,                                                  │
+│                                                                              │
+│ /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/modal/_ │
+│ object.py:46 in wrapped                                                      │
+│                                                                              │
+│    45 │   │   await self.hydrate()                                           │
+│ ❱  46 │   │   return await method(self, *args, **kwargs)                     │
+│    47                                                                        │
+│                                                                              │
+│ /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/modal/_ │
+│ functions.py:1841 in remote                                                  │
+│                                                                              │
+│   1840 │   │                                                                 │
+│ ❱ 1841 │   │   return await self._call_function(args, kwargs)                │
+│   1842                                                                       │
+│                                                                              │
+│ /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/modal/_ │
+│ functions.py:1778 in _call_function                                          │
+│                                                                              │
+│   1777 │   │                                                                 │
+│ ❱ 1778 │   │   return await invocation.run_function()                        │
+│   1779                                                                       │
+│                                                                              │
+│ /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/modal/_ │
+│ functions.py:502 in run_function                                             │
+│                                                                              │
+│    501 │   │   │   # No more retries left.                                   │
+│ ❱  502 │   │   │   return await _process_result(                             │
+│    503 │   │   │   │   await_response.output.result, await_response.output.d │
+│                                                                              │
+│ /opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/modal/_ │
+│ utils/function_utils.py:572 in _process_result                               │
+│                                                                              │
+│   571 │   │   │                                                              │
+│ ❱ 572 │   │   │   raise exc_with_hints(exc)                                  │
+│   573                                                                        │
+│                                                                              │
+│     ...Remote call to Modal Function (ta-01M0R0Q79N1Q3H16X88QPRAY4R)...      │
+│                                                                              │
+│ /root/v143_contextual_prune_shadow_correction_modal.py:177 in                │
+│ analyze_reference_free_correction_shadow                                     │
+│                                                                              │
+│ ❱ 177 carrier = build_contextual_prune_reference_free_carrier(               │
+│                                                                              │
+│                                                                              │
+│ /root/v143_contextual_prune_reference_free_carrier.py:476 in                 │
+│ build_contextual_prune_reference_free_carrier                                │
+│                                                                              │
+│ ❱ 476 raise RuntimeError(                                                    │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+RuntimeError: Contextual-prune carrier grid incomplete: 1788 != 1808
