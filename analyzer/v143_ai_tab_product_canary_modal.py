@@ -129,6 +129,8 @@ def analyze_approved_audio(source_audio: bytes) -> dict[str, Any]:
         "modalGpu": "L4",
         "rhythmOnly": True,
         "referenceFree": True,
+        "professionalReferenceUsed": False,
+        "referenceRuntimeInputUsed": False,
         "bendEvidence": "strict-two-view-cross-separated-harmonic-contour",
         "bendConsensusViews": 2,
         "legatoEvidence": "strict-two-view-pitch-path-and-reattack",
@@ -136,7 +138,6 @@ def analyze_approved_audio(source_audio: bytes) -> dict[str, Any]:
         "separatorDeterministic": True,
         "separatorSeed": 143,
         "demucsShifts": 1,
-        "professionalReferenceUsed": False,
         "runtimeLabelsRequired": False,
     }
     result["canary"] = {
