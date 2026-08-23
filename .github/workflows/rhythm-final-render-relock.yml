@@ -1,0 +1,330 @@
+name: Rhythm Final Renderer Relock
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/rhythm-final-render-relock.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: rhythm-final-render-relock-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  relock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact renderer revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install isolated renderer dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .relock
+          cat > .relock/package.json <<'JSON'
+          {
+            "private": true,
+            "dependencies": {
+              "pdf-lib": "1.17.1"
+            }
+          }
+          JSON
+          npm install --prefix .relock --ignore-scripts --no-audit --no-fund --package-lock=false
+          python -m pip install --disable-pip-version-check --quiet pypdf
+
+      - name: Download locked post-polyphony source artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: rhythm-professional-preholdout-real-audio
+          path: .source
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: 32643978196
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify and stage immutable frozen source
+        shell: bash
+        run: |
+          set -euo pipefail
+          snapshot=$(find .source -type f -name rhythm-frozen-analysis.json | head -n 1)
+          manifest=$(find .source -type f -name rhythm-freeze-manifest.json | head -n 1)
+          proof=$(find .source -type f -name rhythm-professional-preholdout-real-audio.json | head -n 1)
+          test -n "$snapshot" && test -s "$snapshot"
+          test -n "$manifest" && test -s "$manifest"
+          test -n "$proof" && test -s "$proof"
+          mkdir -p .relock/freeze/pdf .relock/esm debug/v143-contextual-prune
+          cp "$snapshot" .relock/freeze/rhythm-frozen-analysis.json
+          cp "$manifest" .relock/freeze/rhythm-freeze-manifest.json
+          cp "$proof" .relock/source-preholdout-proof.json
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          expected_hash = 'a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e'
+          proof = json.loads(Path('.relock/source-preholdout-proof.json').read_text(encoding='utf-8'))
+          manifest = json.loads(Path('.relock/freeze/rhythm-freeze-manifest.json').read_text(encoding='utf-8'))
+          frozen = json.loads(Path('.relock/freeze/rhythm-frozen-analysis.json').read_text(encoding='utf-8'))
+          safety = frozen.get('safety') or {}
+          checks = {
+              'sourceRunExact': str(proof.get('workflowRunId')) == '32643978196',
+              'sourceCommitExact': proof.get('sourceCommit') == 'b23bdfb476bc26af5f353b7862465af3f2abc485',
+              'sourceEventHashExact': proof.get('frozenEventSha256') == expected_hash,
+              'manifestEventHashExact': manifest.get('eventSha256') == expected_hash,
+              'eventCountExact': int(manifest.get('eventCount') or 0) == 1017,
+              'pdfFidelityPreviouslyExact': proof.get('pdfEventFidelity') == 1.0,
+              'referenceFree': safety.get('referenceFree') is True,
+              'professionalReferenceNotUsed': safety.get('professionalReferenceUsed') is False,
+              'referenceRuntimeInputNotUsed': safety.get('referenceRuntimeInputUsed') is False,
+              'runtimeLabelsNotRequired': safety.get('runtimeLabelsRequired') is False,
+              'runtimeSafetyVerified': safety.get('v143RuntimeSafetyVerified') is True,
+              'referenceNotOpenedDuringFreeze': manifest.get('referenceOpenedDuringFreeze') is False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              raise SystemExit('source relock verification failed: ' + ', '.join(failed))
+          PY
+
+      - name: Prepare current standalone renderer
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp lib/v143RenderContract.js .relock/esm/v143RenderContract.mjs
+          sed "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" \
+            lib/createV143RhythmPdf.js > .relock/esm/createV143RhythmPdf.mjs
+          sed "s#../../lib/v143RenderContract.js#./v143RenderContract.mjs#" \
+            validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs > .relock/esm/render-frozen.mjs
+          node --check .relock/esm/v143RenderContract.mjs
+          node --check .relock/esm/createV143RhythmPdf.mjs
+          node --check .relock/esm/render-frozen.mjs
+          python -m py_compile validation/rhythm_holdout/canonical.py validation/rhythm_holdout/verify_pdf_event_fidelity.py
+
+      - name: Render exact locked events with current final renderer
+        shell: bash
+        run: |
+          set -euo pipefail
+          node .relock/esm/render-frozen.mjs \
+            .relock/freeze/rhythm-frozen-analysis.json \
+            .relock/freeze/pdf \
+            .relock/esm/createV143RhythmPdf.mjs \
+            > .relock/render.log 2>&1
+
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .relock/freeze \
+            .relock/freeze/pdf/pdf-event-evidence.json \
+            > .relock/fidelity.log 2>&1
+
+      - name: Verify final timing technique section and density presentation
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { summarizeV143RhythmPresentation } from './.relock/esm/v143RenderContract.mjs';
+
+          const frozen = JSON.parse(await fs.readFile('.relock/freeze/rhythm-frozen-analysis.json', 'utf8'));
+          const events = frozen.renderEvents || [];
+          const presentation = summarizeV143RhythmPresentation(events);
+          const maxMeasure = Math.max(...events.map((event) => Number(event.measure) || 0));
+          const minimumSectionSpan = presentation.sections.length
+            ? Math.min(...presentation.sections.map((section) => section.endMeasure - section.startMeasure + 1))
+            : 0;
+          const checks = {
+            eventCountExact: presentation.eventCount === 1017,
+            uniqueMeasureCountExact: presentation.uniqueMeasureCount === 112,
+            maximumMeasureExact: maxMeasure === 113,
+            multiNoteMeasureDensity: presentation.averageNotesPerMeasure > 2,
+            uniqueOnsetsBeyondMeasureCount: presentation.uniqueOnsetCount > presentation.uniqueMeasureCount,
+            polyphonicOnsetsPresent: presentation.multiNoteOnsetCount > 0,
+            maximumChordSize: presentation.maximumChordSize >= 2,
+            techniqueEventsPresent: presentation.techniqueEventCount > 0,
+            techniqueTypesPresent: presentation.techniqueTypes.length >= 2,
+            sectionCountReasonable: presentation.sectionCount >= 2 && presentation.sectionCount <= Math.ceil(maxMeasure / 8),
+            sectionMinimumSpan: minimumSectionSpan >= 8,
+            sectionStartsAtOne: presentation.sections[0]?.startMeasure === 1,
+            sectionEndsAtSongEnd: presentation.sections[presentation.sections.length - 1]?.endMeasure === maxMeasure,
+            oneNotePerMeasureCollapseAbsent: presentation.oneNotePerMeasureCollapseDetected === false,
+            referenceFree: presentation.referenceFree === true,
+            professionalReferenceNotUsed: presentation.professionalReferenceUsed === false,
+            runtimeLabelsNotRequired: presentation.runtimeLabelsRequired === false,
+          };
+          const failed = Object.entries(checks).filter(([, ok]) => !ok).map(([name]) => name);
+          const report = {
+            schemaVersion: 2,
+            gate: 'rhythm-final-render-relock-presentation',
+            presentation,
+            maximumMeasure: maxMeasure,
+            minimumSectionSpan,
+            checks,
+            failedChecks: failed,
+            passed: failed.length === 0,
+          };
+          await fs.writeFile('.relock/freeze/pdf/rhythm-final-render-presentation.json', JSON.stringify(report, null, 2) + '\n');
+          if (failed.length) throw new Error('final relock presentation failed: ' + failed.join(', '));
+          NODE
+
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          from pypdf import PdfReader
+
+          full = Path('.relock/freeze/pdf/full-frozen-rhythm.pdf')
+          preview = Path('.relock/freeze/pdf/preview-frozen-rhythm.pdf')
+          full_text = '\n'.join(page.extract_text() or '' for page in PdfReader(str(full)).pages)
+          preview_text = '\n'.join(page.extract_text() or '' for page in PdfReader(str(preview)).pages)
+          section_count = full_text.count('SECTION ')
+          checks = {
+              'timingLegendVisible': 'Timing: 16th-note grid' in full_text,
+              'roundedTempoVisible': '129 BPM' in full_text,
+              'unroundedTempoAbsent': '128.999' not in full_text,
+              'sectionLabelsVisible': section_count >= 2,
+              'sectionLabelsNotOversegmented': section_count <= 15,
+              'techniqueHammerOnVisible': 'hammer-on' in full_text,
+              'techniquePullOffVisible': 'pull-off' in full_text,
+              'techniqueSlideVisible': 'slide' in full_text,
+              'techniqueBendVisible': 'bend' in full_text,
+              'measure113Visible': re.search(r'(?<!\\d)113(?!\\d)', full_text) is not None,
+              'phantomMeasure114Absent': re.search(r'(?<!\\d)114(?!\\d)', full_text) is None,
+              'previewLockVisible': 'FULL TAB LOCKED' in preview_text,
+              'previewTimingVisible': 'Timing: 16th-note grid' in preview_text,
+              'previewSectionVisible': 'SECTION ' in preview_text,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          report = {
+              'schemaVersion': 2,
+              'gate': 'rhythm-final-render-relock-text-proof',
+              'sectionTextCount': section_count,
+              'checks': checks,
+              'failedChecks': failed,
+              'passed': not failed,
+          }
+          Path('.relock/freeze/pdf/rhythm-final-render-text-proof.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          if failed:
+              raise SystemExit('final relock text proof failed: ' + ', '.join(failed))
+          PY
+
+      - name: Write final renderer relock proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+
+          def sha(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+          source = json.loads(Path('.relock/source-preholdout-proof.json').read_text(encoding='utf-8'))
+          manifest = json.loads(Path('.relock/freeze/rhythm-freeze-manifest.json').read_text(encoding='utf-8'))
+          fidelity = json.loads(Path('.relock/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+          render = json.loads(Path('.relock/freeze/pdf/pdf-event-evidence.json').read_text(encoding='utf-8'))
+          presentation = json.loads(Path('.relock/freeze/pdf/rhythm-final-render-presentation.json').read_text(encoding='utf-8'))
+          text = json.loads(Path('.relock/freeze/pdf/rhythm-final-render-text-proof.json').read_text(encoding='utf-8'))
+          expected_hash = 'a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e'
+          checks = {
+              'sourceRunBound': str(source.get('workflowRunId')) == '32643978196',
+              'frozenHashBound': manifest.get('eventSha256') == expected_hash,
+              'pdfHashBound': fidelity.get('pdfEventSha256') == expected_hash,
+              'pdfEventFidelityExact': fidelity.get('pdfEventFidelity') == 1.0,
+              'rendererProjectionExact': render.get('rendererProjectionExactlyEqual') is True,
+              'eventCountExact': int(render.get('renderEventCount') or 0) == 1017,
+              'presentationPassed': presentation.get('passed') is True,
+              'textProofPassed': text.get('passed') is True,
+              'productionModified': False,
+              'professionalReferenceOpened': False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          report = {
+              'schemaVersion': 1,
+              'gate': 'rhythm-final-render-relock',
+              'sourceFreezeRunId': '32643978196',
+              'sourceArtifactId': 9494412019,
+              'sourceArtifactDigest': 'sha256:5ab309e1c86826cb8b5c6ef9c6e3a8edbad334d99d55c07538475c7b61ba519b',
+              'sourceFreezeCommit': source.get('sourceCommit'),
+              'rendererCommit': os.environ.get('GITHUB_SHA'),
+              'sourceAudioSha256': source.get('sourceAudioSha256'),
+              'eventCount': render.get('renderEventCount'),
+              'frozenEventSha256': manifest.get('eventSha256'),
+              'pdfEventSha256': fidelity.get('pdfEventSha256'),
+              'pdfEventFidelity': fidelity.get('pdfEventFidelity'),
+              'presentation': presentation.get('presentation'),
+              'presentationChecks': presentation.get('checks'),
+              'textChecks': text.get('checks'),
+              'fullPdf': {
+                  'bytes': render.get('fullPdfBytes'),
+                  'pages': render.get('fullPageCount'),
+                  'sha256': sha('.relock/freeze/pdf/full-frozen-rhythm.pdf'),
+              },
+              'previewPdf': {
+                  'bytes': render.get('previewPdfBytes'),
+                  'pages': render.get('previewPageCount'),
+                  'sha256': sha('.relock/freeze/pdf/preview-frozen-rhythm.pdf'),
+              },
+              'checks': checks,
+              'failedChecks': failed,
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'v143RuntimeSafetyVerified': True,
+              'professionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'passed': not failed,
+          }
+          Path('debug/v143-contextual-prune/rhythm-final-render-relock.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          if failed:
+              raise SystemExit('final renderer relock failed: ' + ', '.join(failed))
+          PY
+
+      - name: Upload final renderer relock artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhythm-final-render-relock
+          path: |
+            .relock/freeze/rhythm-frozen-analysis.json
+            .relock/freeze/rhythm-freeze-manifest.json
+            .relock/freeze/rhythm-pdf-event-fidelity.json
+            .relock/freeze/pdf/pdf-event-evidence.json
+            .relock/freeze/pdf/rhythm-final-render-presentation.json
+            .relock/freeze/pdf/rhythm-final-render-text-proof.json
+            .relock/freeze/pdf/full-frozen-rhythm.pdf
+            .relock/freeze/pdf/preview-frozen-rhythm.pdf
+            debug/v143-contextual-prune/rhythm-final-render-relock.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Persist final renderer relock proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add debug/v143-contextual-prune/rhythm-final-render-relock.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m 'Record final Rhythm renderer relock proof'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
