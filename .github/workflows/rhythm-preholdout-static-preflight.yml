@@ -1,0 +1,249 @@
+name: Rhythm Pre-Holdout Static Preflight
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - 'validation/rhythm_holdout/**'
+      - 'lib/v143RenderContract.js'
+      - 'lib/v143AnalyzerQuality.js'
+      - 'lib/jimmyPaigeAnalysisPayload.js'
+      - 'lib/createV143RhythmPdf.js'
+      - '.github/workflows/rhythm-preholdout-static-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  static-preflight:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts
+
+      - name: Verify holdout runtime isolation
+        run: |
+          set -euo pipefail
+          mkdir -p .preflight/logs debug/v143-contextual-prune
+          python validation/rhythm_holdout/verify_runtime_isolation.py \
+            > .preflight/logs/runtime-isolation.json
+          cat .preflight/logs/runtime-isolation.json
+
+      - name: Prepare exact standalone ESM modules
+        run: |
+          set -euo pipefail
+          mkdir -p .preflight/esm
+
+          cp lib/v143RenderContract.js \
+            .preflight/esm/v143RenderContract.mjs
+
+          sed \
+            "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
+            lib/v143AnalyzerQuality.js \
+            > .preflight/esm/v143AnalyzerQuality.mjs
+
+          sed \
+            -e "s#'./v143AnalyzerQuality.js'#'./v143AnalyzerQuality.mjs'#" \
+            -e "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
+            lib/jimmyPaigeAnalysisPayload.js \
+            > .preflight/esm/jimmyPaigeAnalysisPayload.mjs
+
+          sed \
+            "s#../../lib/jimmyPaigeAnalysisPayload.js#./jimmyPaigeAnalysisPayload.mjs#" \
+            validation/rhythm_holdout/prepare_rhythm_freeze_payload.mjs \
+            > .preflight/esm/prepare-freeze.mjs
+
+          sed \
+            "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" \
+            lib/createV143RhythmPdf.js \
+            > .preflight/esm/createV143RhythmPdf.mjs
+
+          sed \
+            "s#../../lib/v143RenderContract.js#./v143RenderContract.mjs#" \
+            validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs \
+            > .preflight/esm/render-frozen.mjs
+
+          node --check .preflight/esm/v143RenderContract.mjs
+          node --check .preflight/esm/v143AnalyzerQuality.mjs
+          node --check .preflight/esm/jimmyPaigeAnalysisPayload.mjs
+          node --check .preflight/esm/prepare-freeze.mjs
+          node --check .preflight/esm/createV143RhythmPdf.mjs
+          node --check .preflight/esm/render-frozen.mjs
+
+          python -m py_compile \
+            validation/rhythm_holdout/canonical.py \
+            validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            validation/rhythm_holdout/verify_reference_completeness.py \
+            validation/rhythm_holdout/score_rhythm_holdout.py
+
+      - name: Build synthetic reference-free product response
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          positions = [
+              (5, 0, 40),
+              (4, 2, 47),
+              (3, 2, 52),
+              (2, 0, 55),
+          ]
+          events = []
+          index = 0
+          for measure in range(1, 17):
+              for step_index, step in enumerate((0, 4, 8, 12)):
+                  string_index, fret, midi = positions[step_index]
+                  start = index * 0.115
+                  events.append({
+                      'start': start,
+                      'end': start + 0.10,
+                      'duration': 0.10,
+                      'measure': measure,
+                      'step': step,
+                      'stringIndex': string_index,
+                      'fret': fret,
+                      'midi': midi,
+                      'durationSteps': 2,
+                      'techniques': [],
+                  })
+                  index += 1
+
+          payload = {
+              'generatedTab': 'Synthetic reference-free Rhythm preflight tablature',
+              'tuning': 'E Standard',
+              'tempo': 129.19921875,
+              'timeSignature': '4/4',
+              'noteCount': len(events),
+              'events': events,
+              'liveV143': {
+                  'referenceFree': True,
+                  'professionalReferenceUsed': False,
+                  'referenceRuntimeInputUsed': False,
+                  'runtimeLabelsRequired': False,
+              },
+              'canary': {
+                  'sameProductRhythmPipeline': True,
+                  'sameProductRhythmImage': True,
+                  'productionModified': False,
+                  'liveEndpointDeployedOrModified': False,
+                  'productionPromotionAuthorized': False,
+                  'sourceSha256': '3333333333333333333333333333333333333333333333333333333333333333',
+                  'sourceBytes': 123456,
+              },
+          }
+          Path('.preflight/raw-product-output.json').write_text(
+              json.dumps(payload, indent=2) + '\n', encoding='utf-8'
+          )
+          print(f"syntheticEvents={len(events)}")
+          PY
+
+      - name: Exercise raw response through freeze and professional PDF fidelity
+        run: |
+          set -euo pipefail
+
+          node .preflight/esm/prepare-freeze.mjs \
+            .preflight/raw-product-output.json \
+            .preflight/rhythm-freeze-input.json \
+            > .preflight/logs/prepare-freeze.log 2>&1
+
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .preflight/rhythm-freeze-input.json \
+            .preflight/freeze \
+            --source-commit "$GITHUB_SHA" \
+            > .preflight/logs/freeze.log 2>&1
+
+          node .preflight/esm/render-frozen.mjs \
+            .preflight/freeze/rhythm-frozen-analysis.json \
+            .preflight/freeze/pdf \
+            .preflight/esm/createV143RhythmPdf.mjs \
+            > .preflight/logs/render-frozen-pdf.log 2>&1
+
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .preflight/freeze \
+            .preflight/freeze/pdf/pdf-event-evidence.json \
+            > .preflight/logs/pdf-event-fidelity.log 2>&1
+
+      - name: Record compact static preflight evidence
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          isolation = json.loads(Path('.preflight/logs/runtime-isolation.json').read_text())
+          manifest = json.loads(Path('.preflight/freeze/rhythm-freeze-manifest.json').read_text())
+          pdf = json.loads(Path('.preflight/freeze/rhythm-pdf-event-fidelity.json').read_text())
+          render = json.loads(Path('.preflight/freeze/pdf/pdf-event-evidence.json').read_text())
+
+          checks = {
+              'runtimeIsolationPassed': isolation.get('passed') is True,
+              'eventCount64': manifest.get('eventCount') == 64,
+              'sourceAudioHashPresent': bool(manifest.get('sourceAudioSha256')),
+              'rendererProjectionExactlyEqual': render.get('rendererProjectionExactlyEqual') is True,
+              'fullPdfHeaderValid': render.get('fullPdfHeaderValid') is True,
+              'previewPdfHeaderValid': render.get('previewPdfHeaderValid') is True,
+              'pdfEventFidelityExact': pdf.get('pdfEventFidelity') == 1.0,
+              'pdfHashMatchesFrozen': pdf.get('pdfEventSha256') == manifest.get('eventSha256'),
+              'humanReferenceOpened': False,
+          }
+          failed = [name for name, passed in checks.items() if not passed]
+          report = {
+              'schemaVersion': 1,
+              'gate': 'rhythm-preholdout-static-preflight',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'eventCount': manifest.get('eventCount'),
+              'uniqueMeasureCount': manifest.get('uniqueMeasureCount'),
+              'frozenEventSha256': manifest.get('eventSha256'),
+              'pdfEventSha256': manifest.get('pdfEventSha256'),
+              'pdfEventFidelity': manifest.get('pdfEventFidelity'),
+              'fullPdfBytes': render.get('fullPdfBytes'),
+              'previewPdfBytes': render.get('previewPdfBytes'),
+              'fullPageCount': render.get('fullPageCount'),
+              'previewPageCount': render.get('previewPageCount'),
+              'checks': checks,
+              'failedChecks': failed,
+              'usesSyntheticAudioResponseOnly': True,
+              'realProfessionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'passed': not failed,
+          }
+          output = Path('debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json')
+          output.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(report, indent=2))
+          if failed:
+              raise SystemExit('Static preflight failed: ' + ', '.join(failed))
+          PY
+
+          git add debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Rhythm pre-holdout static preflight'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
