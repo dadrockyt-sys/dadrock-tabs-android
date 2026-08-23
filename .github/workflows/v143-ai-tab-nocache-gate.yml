@@ -1,0 +1,234 @@
+name: V143 AI Tab No-Cache Route Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-ai-tab-nocache-gate.yml'
+
+concurrency:
+  group: v143-ai-tab-branch-build-gate
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  verify-build-and-route-smoke:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      NODE_OPTIONS: '--max-old-space-size=4096'
+      RESULT_PATH: debug/v143-contextual-prune/ai-tab-nocache-gate.json
+      ROUTE_PATH: debug/v143-contextual-prune/next-preview-route-smoke-nocache.json
+
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Prepare evidence workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .nocache-gate
+          mkdir -p .nocache-gate debug/v143-contextual-prune
+          echo "SOURCE_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Set up Node.js 22 without package cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run analyzer-quality verifier
+        shell: bash
+        run: |
+          set +e
+          timeout 120s node --experimental-default-type=module analyzer/verify_v143_analyzer_quality_gate.mjs > .nocache-gate/analyzer.log 2>&1
+          echo "ANALYZER_EXIT=$?" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Run Preview feature verifier
+        shell: bash
+        run: |
+          set +e
+          timeout 120s node --experimental-default-type=module analyzer/verify_jimmy_paige_preview_feature_gate.mjs > .nocache-gate/preview.log 2>&1
+          echo "PREVIEW_EXIT=$?" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Set up Node.js 24 without package cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install locked dependencies
+        shell: bash
+        run: |
+          set +e
+          timeout 600s npm ci --ignore-scripts > .nocache-gate/npm-ci.log 2>&1
+          echo "INSTALL_EXIT=$?" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Build Next.js application
+        shell: bash
+        run: |
+          set +e
+          status=99
+          if [ "${INSTALL_EXIT:-99}" -eq 0 ]; then
+            timeout 600s npm run build > .nocache-gate/next-build.log 2>&1
+            status=$?
+          else
+            echo 'Build skipped because npm ci did not pass.' > .nocache-gate/next-build.log
+          fi
+          echo "BUILD_EXIT=$status" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Start built Preview-mode server
+        shell: bash
+        run: |
+          set +e
+          ready=false
+          if [ "${BUILD_EXIT:-99}" -eq 0 ]; then
+            VERCEL_ENV=preview VERCEL_GIT_COMMIT_REF=v143-contextual-prune-lobo HOSTNAME=127.0.0.1 PORT=4310 npm start > .nocache-gate/next-server.log 2>&1 &
+            echo $! > .nocache-gate/server.pid
+            for attempt in $(seq 1 60); do
+              if curl --silent --show-error --fail --user-agent 'Mozilla/5.0 (compatible; DadRock-V143-Preview-Smoke/1.0)' http://127.0.0.1:4310/ai-tab > /dev/null 2>&1; then
+                ready=true
+                break
+              fi
+              sleep 1
+            done
+          else
+            echo 'Server skipped because build did not pass.' > .nocache-gate/next-server.log
+          fi
+          echo "SERVER_READY=$ready" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Exercise built Preview route
+        env:
+          V143_PREVIEW_SMOKE_BASE_URL: http://127.0.0.1:4310
+          V143_PREVIEW_SMOKE_RESULT_PATH: debug/v143-contextual-prune/next-preview-route-smoke-nocache.json
+        shell: bash
+        run: |
+          set +e
+          status=99
+          if [ "${SERVER_READY:-false}" = true ]; then
+            timeout 300s node analyzer/verify_v143_next_preview_route_smoke.mjs > .nocache-gate/route-smoke.log 2>&1
+            status=$?
+          else
+            echo 'Route smoke skipped because server was not ready.' > .nocache-gate/route-smoke.log
+          fi
+          echo "ROUTE_EXIT=$status" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Finalize no-cache evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          def code(name):
+              try:
+                  return int(os.environ.get(name, '99'))
+              except ValueError:
+                  return 99
+
+          analyzer = code('ANALYZER_EXIT')
+          preview = code('PREVIEW_EXIT')
+          install = code('INSTALL_EXIT')
+          build = code('BUILD_EXIT')
+          route = code('ROUTE_EXIT')
+          ready = os.environ.get('SERVER_READY') == 'true'
+          route_path = Path(os.environ['ROUTE_PATH'])
+          try:
+              route_data = json.loads(route_path.read_text(encoding='utf-8'))
+          except Exception:
+              route_data = {}
+          verifier_passed = route_data.get('passed') is True
+          passed = analyzer == 0 and preview == 0 and install == 0 and build == 0 and ready and route == 0 and verifier_passed
+          evidence = {
+              'schemaVersion': 1,
+              'gate': 'v143-ai-tab-nocache-route-gate',
+              'branch': 'v143-contextual-prune-lobo',
+              'sourceCommit': os.environ.get('SOURCE_COMMIT'),
+              'nodeSetupCacheEnabled': False,
+              'analyzerQualityVerifierExitCode': analyzer,
+              'previewFeatureVerifierExitCode': preview,
+              'installExitCode': install,
+              'nextBuildExitCode': build,
+              'serverReady': ready,
+              'routeSmokeExitCode': route,
+              'routeVerifierPassed': verifier_passed,
+              'localNextPreviewSimulation': True,
+              'actualVercelPreviewDeployment': False,
+              'vercelDeploymentAttempted': False,
+              'liveEndpointDeployedOrModified': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'paidPurchaseAttempted': False,
+              'customerTokenRedeemed': False,
+              'customerEmailSent': False,
+              'passed': passed,
+          }
+          Path(os.environ['RESULT_PATH']).write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(evidence, indent=2))
+          PY
+
+      - name: Preserve diagnostic logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-ai-tab-nocache-gate
+          path: |
+            .nocache-gate/
+            debug/v143-contextual-prune/ai-tab-nocache-gate.json
+            debug/v143-contextual-prune/next-preview-route-smoke-nocache.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commit compact no-cache evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp "$RESULT_PATH" /tmp/v143-nocache-gate.json
+          if [ -f "$ROUTE_PATH" ]; then cp "$ROUTE_PATH" /tmp/v143-nocache-route.json; fi
+          git restore -- "$RESULT_PATH" "$ROUTE_PATH" 2>/dev/null || true
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          cp /tmp/v143-nocache-gate.json "$RESULT_PATH"
+          if [ -f /tmp/v143-nocache-route.json ]; then cp /tmp/v143-nocache-route.json "$ROUTE_PATH"; fi
+          git add "$RESULT_PATH"
+          if [ -f "$ROUTE_PATH" ]; then git add "$ROUTE_PATH"; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record V143 no-cache route gate' || true
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce no-cache gate
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          data = json.loads(Path(os.environ['RESULT_PATH']).read_text())
+          if data.get('passed') is not True:
+              raise SystemExit(f"No-cache gate failed: {data}")
+          print('V143 NO-CACHE BUILD + ROUTE GATE PASSED')
+          PY
+
+      - name: Stop built server
+        if: always()
+        shell: bash
+        run: |
+          if [ -f .nocache-gate/server.pid ]; then kill "$(cat .nocache-gate/server.pid)" 2>/dev/null || true; fi
