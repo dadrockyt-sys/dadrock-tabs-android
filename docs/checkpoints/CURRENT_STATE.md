@@ -97,7 +97,15 @@ The currently persisted static file is still stale schema v4 from `b65cf9dd...` 
 
 These changes affect CI orchestration/evidence only. They do not modify renderer behavior, musical thresholds, Modal/Production, payment paths, or professional-reference access.
 
-Next authoritative event is the fresh schema-v7 static result from `dbeac220...` (or descendant containing it). Any red result should now be actionable rather than silently leaving stale evidence.
+### Current static-run observation
+
+`dbeac220...` was committed at 2026-08-23 05:30:36Z (01:30:36 America/Montreal). Through 01:44:59 local, the branch still contained no new workflow evidence commit and `rhythm-preholdout-static-preflight.json` remained the stale schema-v4 `b65cf9dd...` report. This exceeds the workflow's 12-minute job timeout measured from job start, but does **not** by itself prove the push run never started because runner queue delay is not observable from the current connector.
+
+Current GitHub connector limitation: it can inspect a known workflow run/job, but it cannot list push-triggered workflow runs or dispatch this workflow. Commit-status lookup exposes no Actions check-run status for this branch. Public Actions-page fallback also did not yield a usable run listing. Continue to avoid diagnosing the renderer from stale schema-v4 evidence.
+
+The standalone runner itself already has an EXIT trap that writes schema-v7 failure evidence; its internal git persistence is best-effort (`|| true`). `dbeac220...` remains useful as a strict workflow-level second persistence path if that internal push fails.
+
+Next authoritative event is still a fresh schema-v7 static result from `dbeac220...` (or descendant containing it). Any red schema-v7 result should be actionable.
 
 ## Fresh real-audio pre-holdout workflow
 
@@ -106,11 +114,25 @@ Next authoritative event is the fresh schema-v7 static result from `dbeac220...`
 **Do not intentionally trigger duplicate GPU work until CPU static v7 + self-test v6 are both green.**
 After CPU green, strengthen that workflow's compact proof and intentionally allow exactly one fresh approved-audio GPU run. Require source hash, complete runtime safety, positive frozen events, polished preview/full PDFs, exact event/hash identity, fidelity 1.0, reference sealed, Production unchanged.
 
+## Self-test stabilization queued after standalone static green
+
+Current `.github/workflows/rhythm-professional-holdout-self-test.yml` still has three orchestration risks: mutable branch checkout, `github.actor != 'github-actions[bot]'`, and no concurrency group. It also writes the standalone static evidence file from inside the consolidated self-test, creating a cross-workflow overwrite/race risk.
+
+After standalone static schema v7 is green, stabilize self-test by:
+- exact `${{ github.sha }}` checkout;
+- branch-scoped concurrency/cancel-in-progress;
+- remove the actor guard;
+- run its internal static preflight locally with `GITHUB_ACTIONS=false` so the reusable runner cannot push standalone static evidence from inside self-test;
+- stop writing/staging `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json` from self-test;
+- stage only the schema-v6 self-test evidence file.
+
+That self-test workflow edit is CPU-only and does not trigger the real-audio GPU workflow.
+
 ## Immediate next steps
 
-1. Observe new standalone static evidence from `dbeac220...`; require schema v7.
-2. If red, use only the current `failedStage` + sanitized `failureLogTail` and fix the concrete issue without weakening contracts.
-3. If green, stabilize the consolidated self-test (exact triggering SHA/concurrency and avoid cross-workflow static evidence races) and require schema v6 green.
+1. Continue observing standalone static evidence from `dbeac220...`; require schema v7 before changing musical/product behavior.
+2. If schema v7 is red, use only its current `failedStage` + sanitized `failureLogTail` and fix the concrete issue without weakening contracts.
+3. If schema v7 is green, immediately stabilize the consolidated self-test as above and require schema v6 green.
 4. Save this checkpoint after every meaningful result.
 5. Only after both CPU gates green, proceed to exactly one fresh real-audio pre-holdout run.
 6. Only after fresh freeze/PDF proof is locked, recover/re-supply the complete clean professional Rhythm source if needed and run completeness → isolated scorer → final wrapper.
