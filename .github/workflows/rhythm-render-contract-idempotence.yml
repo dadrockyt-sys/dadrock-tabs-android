@@ -1,0 +1,63 @@
+name: Rhythm Render Contract Idempotence
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - 'lib/v143RenderContract.js'
+      - 'lib/createAiTabPdf.js'
+      - 'validation/rhythm_holdout/verify_render_idempotence.mjs'
+      - '.github/workflows/rhythm-render-contract-idempotence.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  exact-event-identity:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Prove projection and validation preserve exact event identity
+        run: |
+          set -euo pipefail
+          node --check validation/rhythm_holdout/verify_render_idempotence.mjs
+          node validation/rhythm_holdout/verify_render_idempotence.mjs \
+            debug/v143-contextual-prune/rhythm-render-contract-idempotence.json
+
+      - name: Add source provenance and commit compact evidence
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          path = Path('debug/v143-contextual-prune/rhythm-render-contract-idempotence.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          data['sourceCommit'] = os.environ['GITHUB_SHA']
+          path.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(data, indent=2))
+          PY
+
+          git add debug/v143-contextual-prune/rhythm-render-contract-idempotence.json
+          if git diff --cached --quiet; then
+            echo 'Render identity evidence already current.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record V143 render event identity proof'
+          git push origin HEAD:v143-contextual-prune-lobo
