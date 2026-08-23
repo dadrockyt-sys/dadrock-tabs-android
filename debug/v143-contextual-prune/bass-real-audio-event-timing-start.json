@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "gate": "bass-real-audio-event-timing-start",
+  "runId": "32611818648",
+  "runAttempt": "1",
+  "sourceCommit": "370cdca101f983a5c11a3bbd53bb68724de9dc2f",
+  "branch": "v143-contextual-prune-lobo",
+  "workflow": "Bass Real Audio Event Timing",
+  "actor": "dadrockyt-sys",
+  "startedAtUtc": "2026-08-23T02:02:29.507123+00:00",
+  "diagnosticOnly": true,
+  "trainingRunAuthorized": false,
+  "analyzerRoutingEnabled": false,
+  "professionalStructuredIdentityEnabled": false,
+  "pdfRendererEnabled": false,
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false
+}
