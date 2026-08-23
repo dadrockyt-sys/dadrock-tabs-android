@@ -32,6 +32,7 @@ CQT_MIDI_MIN = 28
 CQT_MIDI_MAX = 112
 GUITAR_MIDI_MIN = 40
 GUITAR_MIDI_MAX = 88
+STEPS_PER_MEASURE = 16
 
 Predictor = Callable[..., Any]
 TimingEstimator = Callable[..., ReferenceFreeTimingEstimate]
@@ -152,6 +153,104 @@ def _resolve_measure_range(
     if missing:
         raise RuntimeError(f"Timing grid is missing requested measures: {missing[:12]}")
     return start, end
+
+
+def _validate_section_grid(
+    section_grid: Sequence[dict[str, Any]],
+    first_measure: int,
+    last_measure: int,
+) -> dict[str, Any]:
+    """Validate a real audio-bounded grid without inventing pre/post-audio slots.
+
+    A reference-free track may begin on beat 2/3/4 of its first numbered measure
+    or end before the last numbered measure is complete. Those boundary partial
+    measures are valid observations and must not be padded with synthetic timing.
+    Every interior requested measure, however, must contain all sixteen 16th-note
+    slots. Boundary slots must be contiguous: a first-measure suffix and a
+    last-measure prefix. This keeps the frozen contextual selector label-free while
+    distinguishing legitimate audio boundaries from a genuinely broken grid.
+    """
+    first = int(first_measure)
+    last = int(last_measure)
+    if first < 1 or last < first:
+        raise ValueError("Invalid section grid measure range")
+    if not section_grid:
+        raise RuntimeError("Contextual-prune carrier section grid is empty")
+
+    by_measure: dict[int, list[int]] = {}
+    seen: set[tuple[int, int]] = set()
+    for raw in section_grid:
+        measure = int(raw["measure"])
+        step = int(raw["step"])
+        if not first <= measure <= last:
+            raise RuntimeError(
+                f"Contextual-prune carrier grid escaped requested range: {(measure, step)}"
+            )
+        if not 0 <= step < STEPS_PER_MEASURE:
+            raise RuntimeError(
+                f"Contextual-prune carrier grid has invalid step: {(measure, step)}"
+            )
+        key = (measure, step)
+        if key in seen:
+            raise RuntimeError(f"Contextual-prune carrier grid duplicated slot: {key}")
+        seen.add(key)
+        by_measure.setdefault(measure, []).append(step)
+
+    missing_measures = [
+        measure for measure in range(first, last + 1) if measure not in by_measure
+    ]
+    if missing_measures:
+        raise RuntimeError(
+            "Contextual-prune carrier grid is missing requested measures: "
+            f"{missing_measures[:12]}"
+        )
+
+    full_steps = list(range(STEPS_PER_MEASURE))
+    for measure in range(first, last + 1):
+        steps = sorted(by_measure[measure])
+        contiguous = list(range(steps[0], steps[-1] + 1))
+        if steps != contiguous:
+            raise RuntimeError(
+                "Contextual-prune carrier grid has an internal step gap in measure "
+                f"{measure}: {steps}"
+            )
+
+        if first == last:
+            continue
+        if first < measure < last and steps != full_steps:
+            raise RuntimeError(
+                "Contextual-prune carrier interior measure is incomplete: "
+                f"measure={measure} steps={steps}"
+            )
+        if measure == first and steps != full_steps and steps[-1] != STEPS_PER_MEASURE - 1:
+            raise RuntimeError(
+                "Contextual-prune carrier first boundary is not a contiguous suffix: "
+                f"measure={measure} steps={steps}"
+            )
+        if measure == last and steps != full_steps and steps[0] != 0:
+            raise RuntimeError(
+                "Contextual-prune carrier last boundary is not a contiguous prefix: "
+                f"measure={measure} steps={steps}"
+            )
+
+    first_steps = sorted(by_measure[first])
+    last_steps = sorted(by_measure[last])
+    return {
+        "gridCount": len(section_grid),
+        "measureCount": last - first + 1,
+        "firstMeasure": first,
+        "lastMeasure": last,
+        "firstMeasureStepStart": first_steps[0],
+        "firstMeasureStepEnd": first_steps[-1],
+        "firstMeasureStepCount": len(first_steps),
+        "lastMeasureStepStart": last_steps[0],
+        "lastMeasureStepEnd": last_steps[-1],
+        "lastMeasureStepCount": len(last_steps),
+        "interiorMeasuresFull": True,
+        "boundaryPartialMeasuresAllowed": True,
+        "syntheticBoundarySlotsAdded": False,
+        "referenceFree": True,
+    }
 
 
 def build_contextual_prune_reference_free_carrier(
@@ -471,12 +570,7 @@ def build_contextual_prune_reference_free_carrier(
         for slot in grid_slots
         if first_measure <= int(slot.measure) <= last_measure
     ]
-    expected_grid_count = (last_measure - first_measure + 1) * 16
-    if len(section_grid) != expected_grid_count:
-        raise RuntimeError(
-            "Contextual-prune carrier grid incomplete: "
-            f"{len(section_grid)} != {expected_grid_count}"
-        )
+    _validate_section_grid(section_grid, first_measure, last_measure)
 
     row_measures = {int(row["measure"]) for row in spectral_rows}
     missing_row_measures = [
@@ -514,6 +608,8 @@ __all__ = [
     "CQT_MIDI_MAX",
     "GUITAR_MIDI_MIN",
     "GUITAR_MIDI_MAX",
+    "STEPS_PER_MEASURE",
     "ContextualPruneCarrier",
+    "_validate_section_grid",
     "build_contextual_prune_reference_free_carrier",
 ]
