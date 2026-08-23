@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 20:20 CDT
+Updated: 2026-08-22 21:38 EDT
 Branch: `v143-contextual-prune-lobo`
 
 ## Product contract
@@ -74,15 +74,16 @@ Initial trigger commit `9b50bb6c6049f16febfc75d9b2f70c089700ce72` produced no vi
 
 - `751a30f0bb4b5310921d202a8026fcd9114aa652` — `Retrigger Bass canary with early run heartbeat`
 
-Heartbeat evidence is now committed:
+Heartbeat evidence is committed:
 
 - `debug/v143-contextual-prune/bass-real-audio-canary-start.json`
 - GitHub Actions run ID: `32610329984`
+- job ID: `97122230041`
 - run attempt: `1`
 - source commit: `751a30f0bb4b5310921d202a8026fcd9114aa652`
 - started UTC: `2026-08-23T01:26:27.264028+00:00`
 
-Latest direct job inspection: run `32610329984` is `in_progress`; checkout, heartbeat, Python setup, and Modal CLI install all passed. Current active step is `Run isolated real-audio Bass separator canary`. Verifier/evidence/fail-closed enforcement steps are still pending. Therefore do **not** infer pass/fail yet.
+Latest direct job inspection at about 21:38 EDT: run `32610329984` remains `in_progress`. Checkout, heartbeat, Python setup, and Modal CLI install all passed. The active step is still `Run isolated real-audio Bass separator canary`; verifier/evidence/fail-closed enforcement remain pending. This is roughly 13 minutes into the run and still inside the remote/job timeout bounds. Do **not** infer pass/fail yet.
 
 The canary is locked to `public/gomywayfullaitest.m4a` and evaluates only:
 
