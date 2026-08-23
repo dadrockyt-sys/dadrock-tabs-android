@@ -3,8 +3,7 @@
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
 Priority: **complete Rhythm end-to-end before Bass/Lead**.
-Latest functional commit under test: `e4de6ff5bcb4c0641941dd15191da2a3d9868cc8` — `Verify exact V143 event validation at PDF wrapper`.
-Latest observed branch head before this save also included bot staged-gate activity; bot staged-gate commits are not completion proof.
+Latest functional commit under test: `a98151b6477f06d446bc64d7381b2045fc4854ae` — `Verify final Rhythm renderer never reprojects V143 events`.
 
 ## Absolute rules
 
@@ -48,7 +47,7 @@ Authenticated Rhythm path:
 `page.js → PDF API → createJimmyPaigeProfessionalPdf → createAiTabPdf → createV143RhythmPdf`.
 `createV143RhythmPdf` is the real polished renderer with DadRock logo/branding. Do not create a second PDF path.
 
-## Current V143 anti-leakage chain
+## Current V143 anti-leakage / identity chain
 
 Required runtime facts:
 - `referenceFree:true`
@@ -57,30 +56,32 @@ Required runtime facts:
 - `runtimeLabelsRequired:false`
 - `v143RuntimeSafetyVerified:true`
 
-Important current hardening:
+Important hardening:
 - `190b6a36...`: payload builder requires complete runtime safety contract.
 - `b1273fa8...`: analyze API independently fails closed.
 - `7bcee069...`: freeze preparation requires raw + structured safety.
 - `098622e0...`: freeze snapshot/manifest records full safety.
 - `301c38bd47ebee04d6f9435554ac1fde9d0010e1`: PDF-event fidelity requires safe freeze + renderer evidence before hash/event equality.
 - `6a724bae...`: reference completeness refuses reference access until safety/PDF gate is verified.
-- `e0c1cd7b5ac1571e9dcd401a81064972ef1b9c48`: final wrapper binds the exact professional-reference byte hash before/after scoring, closing reference TOCTOU risk.
+- `e0c1cd7b5ac1571e9dcd401a81064972ef1b9c48`: final wrapper binds exact professional-reference bytes before/after scoring, closing reference TOCTOU risk.
 
 No professional reference was opened by this hardening. Production remains untouched.
 
-## Exact V143 PDF-wrapper identity hardening just completed
+## Authenticated V143 PDF chain now validates instead of re-projecting at every product boundary
 
-`d36839458fa129491d107c2203423fbeb2c240c6` made authenticated V143 Rhythm fail closed rather than silently falling back to legacy polished output when structured events are absent/invalid.
+`d36839458fa129491d107c2203423fbeb2c240c6`:
+Authenticated V143 Rhythm cannot silently fall back to legacy polished output when structured events are absent/invalid.
 
-`a7a76e5b4d270f5b2e25f4869da4e19c5d86c660` strengthened this further: `createJimmyPaigeProfessionalPdf` now uses `validateV143RenderEvents(...)` for authenticated V143 input rather than re-projecting it. The wrapper therefore cannot compact/drop malformed events and present only survivors as a successful V143 PDF.
+`a7a76e5b4d270f5b2e25f4869da4e19c5d86c660`:
+`createJimmyPaigeProfessionalPdf` uses `validateV143RenderEvents(...)`, not a second projection. It cannot compact/drop malformed events and render surviving rows as successful V143.
 
-`e4de6ff5bcb4c0641941dd15191da2a3d9868cc8` upgraded `verify_ai_tab_pdf_product_contract.mjs` to schema v5. It now requires:
-- exact V143 event validation at the professional wrapper,
-- no `projectV143RenderEvents` use in that authenticated wrapper,
-- no legacy fallback for invalid V143 streams,
-- the established structured renderer/branding path.
+`e7128a7f39a55366dde339a1a1a1c762eabdf5e4`:
+The final polished renderer `createV143RhythmPdf` now also uses `validateV143RenderEvents(...)` rather than `projectV143RenderEvents(...)`. Thus the last PDF layer itself cannot silently compact/drop/coerce authenticated events. Invalid/empty streams fail closed.
 
-This is the functional head currently being revalidated by CPU workflows.
+`a98151b6477f06d446bc64d7381b2045fc4854ae`:
+`verify_ai_tab_pdf_product_contract.mjs` schema v6 now requires exact validation and forbids re-projection both in `createJimmyPaigeProfessionalPdf` and in final `createV143RhythmPdf`, while still verifying page.js wiring, runtime safety, no legacy fallback, DadRock logo/branding, preview lock and structured renderer path.
+
+This closes the last obvious PDF event-integrity re-projection edge. Stop adding speculative PDF hardening now; wait for CPU evidence unless a concrete failing diagnostic identifies another issue.
 
 ## CPU proof target — WAIT FOR REFRESH, DO NOT USE STALE FILE
 
@@ -90,9 +91,9 @@ Authoritative targets:
 
 The persisted static schema v4 `/tmp ... pdf-lib` error is stale. It was a test-environment package-resolution failure, not a polished renderer/logo defect. Current preflight runs repository-local `.preholdout-static`.
 
-Current CPU gate checks runtime isolation, page.js preview/full contract, runtime negative cases, real-audio workflow contract, 400 synthetic events / 100 measures, polished preview/full PDFs, exact projection/hash identity, PDF fidelity 1.0, holdout completeness/final wrapper, and the new exact V143 PDF wrapper contract.
+Current CPU gate checks runtime isolation, page.js preview/full contract, runtime negative cases, real-audio workflow contract, 400 synthetic events / 100 measures, polished preview/full PDFs, exact event/hash identity, PDF fidelity 1.0, holdout completeness/final wrapper, and exact V143 validation through the entire PDF chain.
 
-Recent synthetic fixture repair: `126a2e5256742a9970bdc62a4db47122dc40e5d3` added the renderer safety metadata required by the strengthened PDF-fidelity verifier. The wrong-PDF fixture carries valid safety metadata so it fails for event mismatch, not metadata absence.
+Recent synthetic fixture repair: `126a2e5256742a9970bdc62a4db47122dc40e5d3` added renderer safety metadata required by the strengthened PDF-fidelity verifier. Wrong-PDF fixture carries valid safety metadata so it fails for event mismatch, not metadata absence.
 
 ## Fresh real-audio pre-holdout workflow
 
@@ -104,7 +105,7 @@ After CPU turns green, strengthen that workflow's compact report with explicit r
 ## Immediate next steps
 
 1. Poll refreshed CPU evidence; ignore stale schema v4/v3 evidence.
-2. Require static v7 green + consolidated self-test v6 green for the latest relevant functional code.
+2. Require static v7 green + consolidated self-test v6 green for `a98151b...` or a descendant containing it.
 3. If red, use current `failedStage` + sanitized `failureLogTail`; fix only the concrete issue and do not weaken product/scoring contracts.
 4. Save this file after the result.
 5. Once CPU green, make the one intentional real-audio workflow hardening edit and allow exactly one GPU run.
