@@ -46,6 +46,21 @@ Recovery proof:
 
 The professional source remains **scorer-only**. It may now be opened/transcribed/scored against the final relocked candidate below, but must never feed runtime or runtime tuning.
 
+### Corrected scorer-only PDF source — LOCKED LOCALLY
+
+A scorer-only eight-page PDF was constructed from the immutable professional source without changing notation:
+- `/mnt/data/rhythm_scorer_source/Professionalexample-scorer-source-v2.pdf`
+- pageCount **8**, using source panels 1–8; panel 9 excluded as redundant overlap
+- PDF SHA256 `c356ebcbfd6d435f96a84ff8960c55c35cc2d388b617b7d62212bbcc485d38ef`
+- PDF bytes 2,731,718
+- source composite remains SHA256 `aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9`
+- manifest `/mnt/data/rhythm_scorer_source/Professionalexample-scorer-source-v2.manifest.json`
+- manifest SHA256 `724f1edd4236920ab8e1e9a5b4aed11807947cf0ff3829bbeb4c0e6216c4a13e`
+- scorerOnly true; runtimeAccessAllowed false; referenceModified false
+- rendered page inspection completed on all eight pages.
+
+Do not commit the professional PDF, source image, or complete event-level human reference. They remain temporary scorer-side inputs only.
+
 ## Reference-free polyphonic mapper — implemented and proven
 
 General/reference-free musical correction:
@@ -145,11 +160,62 @@ The musical event stream and current final renderer are both locked and green. P
 
 No valid final professional score has yet been declared.
 
+### Current source-transcription progress
+
+The complete 8-page professional notation has been visually mapped through measures 1–113. High-confidence structural templates now include:
+- primary E riff: 16th-grid attack steps `[0,3,4,6,8,10,14]`; fret/string identities resolved
+- intro/even-bar E-riff variation: same first six attacks, final step 14 is the high-string 3/3 double-stop
+- G-shifted riff: same grid `[0,3,4,6,8,10,14]`; transposed fret/string identities resolved
+- G6 and A(tp2) chorus voicings and repeated attacks resolved
+- chorus E/D/E and E/G/E chord figures resolved to attack steps `[0,1,2,3,4,6]`
+- Bridge and Out-Chorus source regions enlarged for final event extraction.
+
+Uncertain duration/tie/technique/rest annotations will be omitted from the scorer JSON rather than invented; every playable attack/note/voicing required by the source must still be transcribed.
+
+## Jimmy failure diagnosis — GENERAL CLASSES ONLY
+
+The current `a089...` candidate exposes two broad reference-free error classes that will be tested in isolated shadow code before any protected/live integration:
+
+1. **Attack under-selection / whole-measure loss**
+   - candidateCount 1,788 but frozen V143 global `q=0.2` retains 358 attacks
+   - selection is global rather than per-measure, so quieter valid measures can disappear
+   - current candidate populates only 112 of source measures 1–113.
+
+2. **Polyphony / harmonic inflation**
+   - the low-threshold wide-recall Basic Pitch pass often exposes roughly two dozen pitch hypotheses at one attack
+   - current mapper expands many into simultaneous notes
+   - 277/358 attacks are polyphonic, including 58 attacks with 5–6 notes, far above plausible chord density outside chord sections.
+
+These findings are diagnostics only. Professional source information must not become runtime features or song-specific rules.
+
+## Isolated contextual-prune shadow — PROTECTED LIVE FILES RESTORED / STATIC GREEN
+
+An attempted direct prototype touched protected `analyzer/v143_reference_free_rhythm_pipeline.py`; it was immediately reverted before any GPU/product run. The protected file is restored byte-for-byte to blob:
+`7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+
+Restore commit:
+- `4ff233346b8dc7b80d8f4316fe1317338b5be718` — `Restore protected V143 pipeline before shadow testing`
+
+Static shadow safety gate then passed and recorded:
+- `7af7b81f7b08f14563b1586d8da2c31ffab855ed` — `Record V143 contextual prune shadow static gate`
+- carrier constants match historical research
+- all four historical wide-recall sweeps required
+- whole-onset CQT windows match research
+- Section-5 label-free replay is prepared
+- frozen contextual model fingerprint matches
+- isolated shadow app has no HTTP endpoint
+- all protected live V143 blobs unchanged
+- professional reference path absent from shadow runtime sources
+- Production modified false.
+
+Any next musical experiment must remain only in isolated shadow modules until independently validated. Do not modify protected live/runtime files merely to test a hypothesis.
+
 ## Immediate next steps
 
-1. Preserve/record final V3 relock artifact metadata if needed and visually inspect its 4-page full PDF against the presentation requirements.
-2. Build the complete scorer-only structured professional reference for measures 1–113 from immutable `Professionalexample.jpg`; do not invent unreadable notes/events and do not use generated DadRock PDFs as ground truth.
-3. Run `verify_reference_completeness.py` and mandatory `run_final_holdout_gate.py` against the exact relocked/frozen `a089...` candidate.
-4. Require professional score >=0.99, `criticalMismatchCount == 0`, and PDF-event fidelity 1.0 before declaring Rhythm complete.
-5. If the score misses, use professional results only to diagnose general error classes. Any musical code correction must be general/reference-free, followed by a brand-new approved-audio freeze before another professional score.
-6. Once the real professional gate passes, verify DadRock `/ai-tab` user E2E — specifically multiple notes/chords per measure, timing grid, techniques, sections, preview/full identity, and no one-note-per-measure collapse — then create `Final Rhythm Pipeline`.
+1. Finish the temporary scorer-only complete structured professional reference for measures 1–113 from immutable `Professionalexample.jpg` / corrected 8-page scorer PDF; do not invent unreadable events and do not use generated DadRock PDFs as ground truth.
+2. Run `verify_reference_completeness.py` and mandatory `run_final_holdout_gate.py` against the exact relocked/frozen `a089...` candidate.
+3. Require professional score >=0.99, `criticalMismatchCount == 0`, and PDF-event fidelity 1.0 before declaring Rhythm complete.
+4. If the score misses, use professional results only to diagnose general error classes.
+5. Develop the next correction only in isolated contextual-prune shadow code: evaluate strict two-stem precision evidence for additive attack rescue and for suppressing unsupported secondary chord tones. Keep professional reference out of runtime entirely.
+6. Run CPU/static anti-leakage gates before any isolated shadow GPU experiment. If a general correction is eventually integrated into the product pipeline, create a brand-new approved-audio freeze before any professional rescore.
+7. Once the real professional gate passes, verify DadRock `/ai-tab` user E2E — specifically multiple notes/chords per measure, timing grid, techniques, sections, preview/full identity, and no one-note-per-measure collapse — then create `Final Rhythm Pipeline`.
