@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "gate": "rhythm-professional-preholdout-artifact-lock",
+  "workflowRunId": "32623173615",
+  "artifactId": 9489025699,
+  "artifactName": "rhythm-professional-preholdout-real-audio",
+  "artifactDigest": "sha256:e0c5f94d09f79430f4aa03c156a3d3fc32431bf79abc541ab65dde3d815e4f2c",
+  "artifactZipSha256": "e0c5f94d09f79430f4aa03c156a3d3fc32431bf79abc541ab65dde3d815e4f2c",
+  "headCommit": "1df4a6c55123ae1c4c4b37530f306d43da69bbdd",
+  "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "sourceAudioBytes": 3478611,
+  "referenceFree": true,
+  "professionalReferenceUsed": false,
+  "referenceRuntimeInputUsed": false,
+  "runtimeLabelsRequired": false,
+  "v143RuntimeSafetyVerified": true,
+  "referenceOpenedDuringFreeze": false,
+  "eventCount": 358,
+  "uniqueMeasureCount": 112,
+  "frozenEventSha256": "f5e18ed4469b10ccfbae0a7f993d5e32a8e9552867aa50fb0d3fe2d90a82d06a",
+  "pdfEventSha256": "f5e18ed4469b10ccfbae0a7f993d5e32a8e9552867aa50fb0d3fe2d90a82d06a",
+  "pdfEventFidelity": 1.0,
+  "fullPdf": {
+    "bytes": 1686160,
+    "pages": 4,
+    "sha256": "986c78f0b35f0d3c90a0be86cee8842b16dccc928c412dedb6a14ffcc879b2c6"
+  },
+  "previewPdf": {
+    "bytes": 1678667,
+    "pages": 4,
+    "sha256": "052ed9f0a843581cb38a50caeb52fe8989f044b8a4fc619fe07d2bf9d7d8b915"
+  },
+  "fileSha256": {
+    "rawProductOutput": "7fea5df2fd0449bc9f642d30fa5401163060ba3c47665a6dcbce4ff4031e3b3a",
+    "freezeInput": "edcc118d0f42e0f2efd1b5bf76c19f0d113a2440f92fa1800e8ddfdc6d45f231",
+    "frozenAnalysis": "66433b4e7eaf92d3d6c618cc327c8c7dc06db9f56413ba90c2af993c5a925d63",
+    "freezeManifest": "e045dbd7096daa26278326391f4b1e8d1d467c680afd3e87b2bcafad6594333a",
+    "pdfFidelity": "a183a4e4ba4193fcbad9af5e951c141ed75542379a0799a2ee71a3f3bf177b38",
+    "pdfEventEvidence": "6459c3b46596db368d83f4a2f2c90f975ad6dadc3c6a9342d4204ad199816949",
+    "compactProof": "a80c12df8d59095a6b1aafeaa3af3617d2601ed3020d8544d5a4b8ad975de39f"
+  },
+  "liveEndpointModified": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "professionalHumanScoreRun": false,
+  "locked": true,
+  "passed": true
+}
