@@ -132,11 +132,11 @@ Result:
 - protected pipeline blob exact `7f72...`
 - Production unchanged
 
-So the conservative uncertainty fix is CPU-proven. The later CPU workflow-only commit does not alter any of those source blobs.
+So the conservative uncertainty fix is CPU-proven. Later workflow-only commits do not alter these source blobs.
 
-### Diagnostic freshness / branch-race fix
+### Diagnostic freshness / branch-race / anti-leakage hardening
 
-Long-running workflows could previously fail their final diagnostic push when checkpoint/code commits advanced the branch during Modal execution. Diagnostic workflows are being made source-stamped and rebase-before-push so current work can continue without losing results.
+Long-running workflows could previously fail their final diagnostic push when checkpoint/code commits advanced the branch during Modal execution. Diagnostic workflows are now source-stamped and use fetch/rebase-before-push so current work can continue without losing results.
 
 CPU workflow:
 - source stamping commit `d1a50efc2ffb640068f4c8bf72b4c0bb1f42b7ee`
@@ -145,8 +145,10 @@ CPU workflow:
 Approved correction workflow:
 - `.github/workflows/v143-contextual-prune-shadow-correction-approved-audio.yml`
 - race-safe/source-stamped commit `9d5315abc3e6535403059bb399e33437ee23c46b`
-- records checked-out commit and correction/Modal/timing-hypothesis source blobs
-- fetches/rebases latest `v143-contextual-prune-lobo` before diagnostic push
+- hardened anti-leakage/protected-runtime commit `f088337bef0811187b87e93265186f80336d8c2d`
+- action schema 3 records checked-out commit, correction/Modal/timing-hypothesis source blobs, protected pipeline blob, and reference-token-scan state
+- refuses to run if the protected pipeline is not exact or if scorer/reference tokens are found in correction/timing sources
+- fetches/rebases latest branch before diagnostic push
 - still enforces approved fixture identity, non-mutating timing diagnostics, reference-free behavior and no Production/live changes
 
 Approved-audio output remains pending:
@@ -194,10 +196,17 @@ Workflow:
 Original workflow commit:
 `c4077eff19e1e720719fc0147c1625df49c5c32a`
 
-Race-safe/source-stamped workflow commit:
+Race-safe/source-stamped commit:
 `a7af569758c50c68a2dea6d59bc0804ec66562db`
 
-It records trigger SHA, checked-out commit, runner source blob, semantic-guard blob and sustain-shadow blob; fetches/rebases latest branch before pushing; and retains all approved-fixture, event-identity, semantics, sustain and no-Production invariants.
+Hardened anti-leakage/protected-runtime commit:
+`6443b78a2a593734726499186ba4eeb58da2317f`
+
+Current workflow behavior:
+- action schema 3 records trigger SHA, checked-out commit, runner/guard/sustain source blobs, protected pipeline blob, and reference-token-scan state
+- refuses to run if approved fixture SHA changes, protected Rhythm pipeline blob changes, or scorer/reference tokens appear in the semantics/sustain shadow sources
+- fetches/rebases latest branch before pushing diagnostics
+- retains event-identity, semantic-ownership, sustain, reference-free and no-Production invariants
 
 Expected outputs are pending:
 - `debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow-action.json`
@@ -237,8 +246,8 @@ commit `d3639460ca54d7b8a5710978469cbe44bf1ac35e`
 
 ## Immediate next steps
 
-1. Read the race-safe approved-audio attack/pitch correction action/report when committed.
-2. Read the race-safe approved-audio semantics/sustain action/report when committed.
+1. Read the hardened race-safe approved-audio attack/pitch correction action/report when committed.
+2. Read the hardened race-safe approved-audio semantics/sustain action/report when committed.
 3. Inspect approved-audio four-way phase evidence + strict grid ambiguity only as label-free diagnostics; do not change phase from scorer information.
 4. If approved-audio invariants pass, decide corrections using only physical/reference-free evidence.
 5. Only after independent acceptance, integrate general corrections and create a **brand-new approved-audio analysis/freeze/PDF identity**.
