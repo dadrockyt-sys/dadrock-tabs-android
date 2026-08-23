@@ -17,129 +17,171 @@ Preview/full must use the same authenticated/frozen stream. Browser/PDF may not 
 
 ## Completion gate
 
-Rhythm is complete only with professional score >=0.99, zero critical mismatches, and PDF-event fidelity exactly 1.0. Then create `Final Rhythm Pipeline`. Bass remains paused until then; Lead remains after Bass.
+Rhythm is complete only with professional score >=0.99, zero critical mismatches, and PDF-event fidelity exactly 1.0. Then create `Final Rhythm Pipeline`.
 
-**No completion claim has been made. Rhythm remains incomplete.**
+**Rhythm is NOT complete. A real professional holdout was run and failed. No completion claim is authorized.**
 
-## Locked green product/freeze state
+## Locked frozen candidate / presentation identity
 
-- Static preflight, professional holdout self-test, runtime isolation, product PDF routing, anti-leakage, hard failures, and exact PDF-event fidelity are green.
-- Reference-free polyphonic mapper proof remains green (`cc56e645...`, `c235a153...`, verifier `e6820f0...`, workflow `f015715...`).
-- Fresh approved-audio run `32642331373` / later final-presentation run `32643978196` use the same exact authenticated event stream.
-- Approved fixture: `public/gomywayfullaitest.m4a`, SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
-- Frozen structured output: 358 rhythmic attacks, 1,017 rendered note events, 277 polyphonic attacks, 81 single-note attacks, measure range 1–113 with 112 populated measures.
-- Frozen event SHA256: `a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e`.
-- Final-presentation artifact: run `32643978196`, artifact `9494412019`, digest `sha256:5ab309e1c86826cb8b5c6ef9c6e3a8edbad334d99d55c07538475c7b61ba519b`.
-- Final current-renderer relock V3: 1,017 events, frozen/PDF event SHA identical `a089...`, PDF-event fidelity 1.0, full/preview PDFs green, sections/timing/techniques visible, measure 113 present, no phantom 114, no one-note-per-measure collapse.
-- Earlier 358-note monophonic candidate is historical only and must not be scored.
+Exact frozen/current candidate:
+- 358 attacks
+- 1,017 rendered notes
+- 277 polyphonic attacks
+- 112 populated measures of source 1–113
+- event SHA256 `a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e`
+- approved fixture `public/gomywayfullaitest.m4a`, SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
+- final-presentation run `32643978196`, artifact `9494412019`, digest `sha256:5ab309e1c86826cb8b5c6ef9c6e3a8edbad334d99d55c07538475c7b61ba519b`
+- frozen/PDF event hashes identical
+- PDF-event fidelity exactly `1.0`
+- full/preview presentation remains green; no phantom 114 and no one-note-per-measure presentation collapse.
 
-## Professional source — scorer-only
+Earlier 358-note monophonic candidate is historical only and must not be scored.
 
-Immutable source:
+## Professional scorer-only source
+
+Immutable professional source:
 - `main/public/Professionalexample.jpg` at commit `e0f91e74c815b9ecdf0a72fae6d1523414b34577`
 - recovery run `32624327056`, artifact `9489261810`
 - source SHA256 `aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9`
-- JPEG RGB 2160×3840, 979,815 bytes, 3×3 / nine-panel complete source covering measures 1–113
-- source remains scorer-only; never commit the complete event-level professional reference or feed it to runtime.
+- JPEG 2160×3840, 979,815 bytes
+- title `Are You Gonna Go My Way`, artist `Lenny Kravitz`, tempo 129
+- 3×3 / nine-panel source; panels 1–8 contain complete notation and panel 9 is redundant overlap
+- source remains scorer-only and must never become a runtime/tuning feature.
 
-### Local recovery in current work session
+Current session local recovery:
+- source artifact `/mnt/data/professional-source.zip`
+- extracted under `/mnt/data/rhythm_scorer_source/`
+- frozen artifact `/mnt/data/rhythm-preholdout.zip`
+- exact freeze `/mnt/data/rhythm_preholdout/.preholdout/freeze`
 
-The immutable Actions source artifact has been re-downloaded locally to `/mnt/data/professional-source.zip` and extracted under `/mnt/data/rhythm_scorer_source/`.
+## Complete temporary structured human reference — BUILT AND COMPLETENESS-PASSED
 
-Recovered:
-- `Professionalexample.jpg` (979,815 bytes)
-- source panels 1–9 split locally for visual transcription
-- panel 9 confirmed redundant overlap; panels 1–8 contain the complete notation source.
+A scorer-only measures 1–113 structured reference was built locally at:
+`/mnt/data/scorer_workspace/validation/rhythm_holdout/reference/professional-rhythm-complete.json`
 
-The exact frozen candidate artifact `9494412019` has also been re-downloaded locally to `/mnt/data/rhythm-preholdout.zip` and extracted under `/mnt/data/rhythm_preholdout/`.
+It is temporary and **must not be committed**.
 
-Exact freeze directory:
-`/mnt/data/rhythm_preholdout/.preholdout/freeze`
+Reference byte SHA256:
+`4d3e7ee6b5485c747bc917077b0648747da7f7d7325c8ccce5058fc41090d8cd`
 
-It contains the exact `rhythm-frozen-analysis.json` / `rhythm-freeze-manifest.json` bound to `a089...` and PDF fidelity 1.0.
+Reference contents:
+- contiguous measures 1–113
+- 577 playable onset objects
+- 925 playable note entries
+- 104 measures with playable attacks; intentional continuation/sustain/empty measures remain declared
+- uncertain duration/tie/technique/rest labels omitted rather than invented
+- dead/muted `X` attacks that cannot be represented as pitched notes were not invented as pitches.
 
-## Professional structured reference — IN PROGRESS, TEMPORARY ONLY
+Important corrected source template (standard string indices `0=high E, 1=B, 2=G, 3=D, 4=A, 5=low E`):
 
-The complete scorer-only reference must remain temporary under a local `validation/rhythm_holdout/reference` path and must **not** be committed.
-
-Validator/scorer contracts checked on this branch:
-- `verify_reference_completeness.py` requires complete contiguous measures, source provenance/hash, valid string/fret/MIDI identities, and validates freeze/PDF identity before opening the reference.
-- `run_final_holdout_gate.py` runs completeness first, locks exact reference bytes, then runs the scorer with minimum 0.99.
-- `score_rhythm_holdout.py` gates pitch content, timing, string/fret timing, chord pitch set, exact voicing, measure coverage, PDF fidelity, and optional duration/technique/tie/rest metrics only when those labels are present.
-- Critical mismatch count includes missing reference measures plus gross unmatched reference/generated notes using same-measure/same-MIDI matching within ±2 steps.
-
-Uncertain duration/tie/technique/rest annotations will be omitted rather than invented. Every readable playable attack/note/voicing must still be transcribed.
-
-### High-confidence source templates currently resolved
-
-Standard string indices: `0=high E`, `1=B`, `2=G`, `3=D`, `4=A`, `5=low E`.
-
-Primary E riff, attack steps `[0,3,4,6,8,10,14]`:
-- step0 D-string fret2
-- step3 D-string fret0
-- step4 A-string fret2
+Primary E riff steps `[0,3,4,6,8,10,14]`:
+- step0 G-string fret2
+- step3 G-string fret0
+- step4 D-string fret2
 - step6 low-E fret0
-- step8 A-string fret0
-- step10 A-string fret2
+- step8 D-string fret0
+- step10 D-string fret2
 - step14 low-E fret0
 
-Intro/even-bar E-riff variation:
-- same first six attacks
-- step14 is high-E + B double-stop, frets `3/3`.
+Intro/even variation uses the same first six attacks but replaces the final low-E attack with high-E+B `3/3` double-stop at step14.
 
-G-shifted riff, same steps `[0,3,4,6,8,10,14]`:
-- D5, D3, A5, low-E3, A3, A5, low-E3.
+G-shifted riff uses the same string pattern/steps with frets:
+G5, G3, D5, low-E3, D3, D5, low-E3.
 
-Resolved chorus voicings:
-- `G6`: high-E0, B3, G4, D5
-- `A(tp2)`: high-E2, B2, G2, D2, A0
-- high-position `E`: top four strings fret9
-- high-position `D`: top four strings fret7
-- high-position `G`: top four strings fret12
+High-confidence chorus voicings/timing:
+- G6 = high-E0, B3, G4, D5
+- A(tp2) = high-E2, B2, G2, D2, A0
+- chorus E/D/G four-note stacks occupy B/G/D/A strings at fret 9/7/12
+- repeated G6/A figures use `[0,3,4]`
+- E/D/E and E/G/E figures use `[0,1,2,3,4,6]`.
 
-Resolved chorus timing:
-- repeated `G6` / `A(tp2)` three-hit figures use early 16th-grid attacks `[0,3,4]` where visually confirmed.
-- E/D/E and E/G/E chord figures use `[0,1,2,3,4,6]`.
+Other transcribed source structure:
+- m1–16 Intro: odd primary E; even 3/3 variation
+- m17–24 primary E
+- m25–27 G-shifted
+- m28 pitched fill on G string among dead notes
+- m29–32 primary E
+- m33–38 Chorus 1
+- m39–46 alternating primary/3-3 return riff
+- m47–54 primary E
+- m55–57 G-shifted
+- m58 pitched G-string fill among dead notes
+- m59–62 primary E
+- m63–69 Chorus 2
+- m70–94 Bridge, including x7999x / x5777x bridge voicings, B/G/D A/D/E triads, and low-E 4-5-6 pickup in m94
+- m95–102 primary E with no 3/3 endings
+- m103–113 Out-Chorus including sustained G6/A figures, E/D/E, E/G/E, long A sustain, and final muted ending.
 
-### Current measure map
+Completeness verifier was run against exact frozen `a089...` candidate and **PASSED**:
+- contiguousMeasureCoverage true
+- measureCount 113
+- playableNoteCount 925
+- duplicateOnsets 0
+- duplicateNotes 0
+- pitchPositionConsistency true
+- source SHA bound correctly
+- reference opened only after freeze validation
+- frozen/PDF SHA identical `a089...`
+- PDF-event fidelity 1.0
+- runtime labels not required
+- V143 runtime safety verified.
 
-High-confidence structural map:
-- m1–16 Intro: odd bars primary E; even bars E variation with final high `3/3` double-stop.
-- m17–24 Verse 1: primary E riff.
-- m25–27 G-shifted riff.
-- m28 muted/single-string fill — pitched identities still being finalized; do not invent unreadable X/dead-note events.
-- m29–32 primary E riff.
-- m33 G6; m34 A(tp2); m35 E/D/E; m36 E/G/E; m37 G6 plus late A(tp2); m38 tie/sustain continuation only.
-- m39–46 return riff alternating primary E / intro-even `3/3` variation.
-- m47–54 Verse 2: primary E riff.
-- m55–57 G-shifted riff.
-- m58 muted/single-string fill — pitched identities still being finalized.
-- m59–62 primary E riff.
-- m63 G6; m64 A(tp2); m65 E/D/E; m66 E/G/E; m67 G6; m68–69 continuation/space.
-- Bridge begins m70 and is currently the main remaining detailed chord/string/timing extraction task.
-- m94 contains a visible pitched single-string ascending fill after muted attacks; identities/timing still being finalized.
-- m95–102 primary E riff.
-- Out-chorus begins m103; m103–113 source has been visually mapped, but exact attack steps for sustained/late chord entries are being finalized before JSON creation.
+## REAL mandatory professional holdout — RUN AND FAILED
 
-No complete reference JSON has yet been declared. No professional score has yet been run or declared.
+`run_final_holdout_gate.py --minimum 0.99` was run locally against the exact frozen `a089...` stream and the completeness-passed temporary human reference.
 
-## Current candidate general failure classes — diagnostic only
+Gate return code: `2` (failed, as expected from the visible error classes).
 
-The exact `a089...` candidate already exposes two broad reference-free classes:
+Professional score:
+- generated notes: `1017`
+- reference notes: `925`
+- `pitchContentF1 = 0.2626158599382081`
+- `pitchTimingTolerantF1 = 0.07209062821833163`
+- `stringFretTimingTolerantF1 = 0.030895983522142123`
+- `chordPitchSetTolerantF1 = 0.0`
+- `exactVoicingTolerantF1 = 0.0`
+- `measureCoverageRecall = 0.9911504424778761`
+- `pdfEventFidelity = 1.0`
+- `criticalMismatchCount = 1653`
+  - gross unmatched generated notes `872`
+  - gross unmatched reference notes `780`
+  - missing reference measures `1`
+- missing generated measure is **101**.
+
+Final gate failed checks:
+- `professionalScorePassed`
+- `near100ProfessionalGatePassed`
+- `zeroCriticalMismatches`
+
+PDF identity/safety checks stayed green. Production modified false. Production promotion remains unauthorized.
+
+Local score outputs:
+- `/mnt/data/scorer_workspace/final-holdout/rhythm-reference-completeness.json`
+- `/mnt/data/scorer_workspace/final-holdout/rhythm-professional-holdout-score.json`
+- `/mnt/data/scorer_workspace/final-holdout/rhythm-final-holdout-gate.json`
+
+## Failure diagnosis — GENERAL CLASSES ONLY
+
+The real holdout confirms the pre-existing broad reference-free diagnosis:
 
 1. **Attack under-selection / whole-measure loss**
-   - wide candidateCount 1,788; frozen global `q=0.2` retains 358 attacks
-   - selection is global rather than per-measure, so quieter valid measures can disappear
-   - current candidate populates 112 of source measures 1–113.
+   - wide candidate count 1,788; frozen global `q=0.2` retains only 358 attacks
+   - one whole source measure is absent: m101
+   - global selection can discard quieter valid measures.
 
 2. **Polyphony / harmonic inflation**
-   - low-threshold wide-recall Basic Pitch often yields many simultaneous pitch hypotheses
-   - current mapper expands many into simultaneous notes
-   - 277/358 attacks are polyphonic; 58 attacks have 5–6 notes.
+   - candidate has 1,017 notes against 925 professional reference notes despite only 358 retained attacks
+   - 277/358 retained attacks are polyphonic; 58 attacks contain 5–6 notes
+   - chord pitch-set and exact-voicing F1 are both 0, proving simultaneous-note expansion is not musically controlled enough.
 
-Professional source results may only diagnose general classes. They must never become song-specific runtime rules/features.
+3. **Pitch/position/timing mismatch remains severe**
+   - pitch-content F1 only ~0.263
+   - timing F1 ~0.072
+   - string/fret timing F1 ~0.031.
 
-## Isolated contextual-prune shadow — protected live files remain restored
+Professional source/score may only be used to name/quantify these general classes. It must not become a song-specific runtime rule.
+
+## Isolated contextual-prune shadow safety
 
 Protected `analyzer/v143_reference_free_rhythm_pipeline.py` must remain byte-for-byte blob:
 `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
@@ -161,12 +203,11 @@ Any next musical experiment must remain only in isolated shadow modules until in
 
 ## Immediate next steps
 
-1. Finish exact bridge, m28/m58/m94 fills, and out-chorus playable event extraction from the immutable professional source.
-2. Build the temporary complete measures 1–113 structured professional reference locally; do not commit it.
-3. Run `verify_reference_completeness.py` against the exact `a089...` freeze.
-4. Run mandatory `run_final_holdout_gate.py --minimum 0.99` against the same exact frozen candidate.
-5. Require score >=0.99, `criticalMismatchCount == 0`, and PDF-event fidelity 1.0 before any completion claim.
-6. If it fails, use the scorer output only to quantify general error classes.
-7. Validate a general/reference-free correction only in isolated contextual-prune shadow code: strict two-stem precision evidence for additive attack rescue and suppression of unsupported secondary chord tones. No professional reference in runtime.
-8. Run CPU/static anti-leakage gates before any isolated shadow GPU experiment. If a general correction is later integrated into product code, create a brand-new approved-audio freeze before any new professional rescore.
-9. Only after the real gate passes: verify `/ai-tab` E2E multiple-note/chord rendering, timing grid, techniques, sections, preview/full identity, and no collapse; then create `Final Rhythm Pipeline`.
+1. Inspect the existing isolated contextual-prune shadow modules and raw reference-free evidence for this exact approved-audio run.
+2. Validate a **general/reference-free** shadow correction for the two confirmed classes:
+   - per-measure/additive attack rescue using strict two-stem precision evidence rather than global quantile alone
+   - suppress unsupported secondary chord tones using local carrier/CQT/stem agreement rather than song-specific chord rules.
+3. Run static/CPU anti-leakage and protected-blob checks before any GPU experiment.
+4. Do **not** rescore this same frozen candidate after tuning. If a general correction is accepted for product integration, produce a brand-new approved-audio run/freeze/PDF identity first, then run the professional scorer only afterward.
+5. Require >=0.99, zero critical mismatches, fidelity 1.0 before Rhythm completion.
+6. Only after passing: verify `/ai-tab` E2E and create `Final Rhythm Pipeline`; then resume Bass, then Lead.
