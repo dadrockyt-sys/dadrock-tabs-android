@@ -7,6 +7,7 @@ on:
     paths:
       - 'validation/rhythm_holdout/**'
       - 'app/ai-tab/page.js'
+      - 'app/api/analyze-audio-tab/route.js'
       - 'app/api/generate-tab-preview/route.js'
       - 'app/api/generate-tab-pdf/route.js'
       - 'lib/v143RenderContract.js'
@@ -51,9 +52,10 @@ jobs:
       - name: Run authoritative AI-tab PDF static pre-holdout gate
         run: |
           set -euo pipefail
-          # The reusable runner itself verifies app/ai-tab/page.js plus both PDF
-          # routes before rendering. Keep its ESM copies below GITHUB_WORKSPACE so
-          # package resolution matches the product environment (including pdf-lib).
+          # The reusable runner verifies the analyzer anti-leakage gates,
+          # app/ai-tab/page.js, and both PDF routes before rendering. Keep its
+          # ESM copies below GITHUB_WORKSPACE so package resolution matches the
+          # product environment (including pdf-lib).
           bash validation/rhythm_holdout/run_static_preholdout_preflight.sh \
             "$GITHUB_WORKSPACE/.preholdout-static"
 
