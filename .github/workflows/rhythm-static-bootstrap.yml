@@ -10,35 +10,135 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: rhythm-static-bootstrap
+  cancel-in-progress: true
+
 jobs:
   bootstrap:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
 
-      - name: Persist bootstrap proof
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run and persist authoritative static diagnostic
         run: |
-          set -euo pipefail
-          mkdir -p debug/v143-contextual-prune
-          cat > debug/v143-contextual-prune/rhythm-static-bootstrap.json <<EOF
-          {
-            "schemaVersion": 1,
-            "gate": "rhythm-static-bootstrap",
-            "sourceCommit": "$GITHUB_SHA",
-            "runId": "$GITHUB_RUN_ID",
-            "actor": "$GITHUB_ACTOR",
-            "eventName": "$GITHUB_EVENT_NAME",
-            "passed": true,
-            "productionModified": false,
-            "productionPromotionAuthorized": false
+          set -u
+          mkdir -p .rhythm-static-bootstrap debug/v143-contextual-prune
+
+          npm ci --ignore-scripts > .rhythm-static-bootstrap/install.log 2>&1
+          install_status=$?
+          preflight_status=99
+
+          if [ "$install_status" -eq 0 ]; then
+            GITHUB_ACTIONS=false bash validation/rhythm_holdout/run_static_preholdout_preflight.sh \
+              "$GITHUB_WORKSPACE/.rhythm-static-bootstrap/work" \
+              > .rhythm-static-bootstrap/preflight.log 2>&1
+            preflight_status=$?
+          fi
+
+          if [ "$install_status" -ne 0 ]; then
+            python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          p = Path('.rhythm-static-bootstrap/install.log')
+          lines = p.read_text(encoding='utf-8', errors='replace').splitlines()[-24:] if p.exists() else []
+          clean = []
+          for line in lines:
+              line = re.sub(r'(?i)(token|secret|authorization|password)(\s*[:=]\s*)\S+', r'\1\2[REDACTED]', line)
+              clean.append(line[:500])
+          report = {
+              'schemaVersion': 7,
+              'gate': 'rhythm-preholdout-static-preflight',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'passed': False,
+              'failedStage': 'install-locked-dependencies',
+              'exitStatus': 1,
+              'failureLogTail': clean,
+              'usesSyntheticAudioResponseOnly': True,
+              'realProfessionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
           }
-          EOF
-          git add debug/v143-contextual-prune/rhythm-static-bootstrap.json
+          Path('.rhythm-static-bootstrap/report.json').write_text(json.dumps(report, indent=2) + '\n')
+          PY
+          elif [ -s .rhythm-static-bootstrap/work/report.json ]; then
+            cp .rhythm-static-bootstrap/work/report.json .rhythm-static-bootstrap/report.json
+          else
+            PREFLIGHT_STATUS="$preflight_status" python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          p = Path('.rhythm-static-bootstrap/preflight.log')
+          lines = p.read_text(encoding='utf-8', errors='replace').splitlines()[-24:] if p.exists() else []
+          clean = []
+          for line in lines:
+              line = re.sub(r'(?i)(token|secret|authorization|password)(\s*[:=]\s*)\S+', r'\1\2[REDACTED]', line)
+              clean.append(line[:500])
+          report = {
+              'schemaVersion': 7,
+              'gate': 'rhythm-preholdout-static-preflight',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'passed': False,
+              'failedStage': 'static-runner-missing-report',
+              'exitStatus': int(os.environ.get('PREFLIGHT_STATUS') or 1),
+              'failureLogTail': clean,
+              'usesSyntheticAudioResponseOnly': True,
+              'realProfessionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('.rhythm-static-bootstrap/report.json').write_text(json.dumps(report, indent=2) + '\n')
+          PY
+          fi
+
+          cp .rhythm-static-bootstrap/report.json \
+            debug/v143-contextual-prune/rhythm-static-bootstrap-preflight.json
+
+          INSTALL_STATUS="$install_status" PREFLIGHT_STATUS="$preflight_status" python - <<'PY'
+          import json, os
+          from pathlib import Path
+          report = json.loads(Path('.rhythm-static-bootstrap/report.json').read_text())
+          run = {
+              'schemaVersion': 2,
+              'gate': 'rhythm-static-bootstrap',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'runId': os.environ.get('GITHUB_RUN_ID'),
+              'actor': os.environ.get('GITHUB_ACTOR'),
+              'eventName': os.environ.get('GITHUB_EVENT_NAME'),
+              'installStatus': int(os.environ.get('INSTALL_STATUS') or 0),
+              'preflightStatus': int(os.environ.get('PREFLIGHT_STATUS') or 0),
+              'reportSchemaVersion': report.get('schemaVersion'),
+              'reportPassed': report.get('passed') is True,
+              'failedStage': report.get('failedStage'),
+              'realProfessionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('debug/v143-contextual-prune/rhythm-static-bootstrap.json').write_text(json.dumps(run, indent=2) + '\n')
+          print(json.dumps(run, indent=2))
+          PY
+
+          git add \
+            debug/v143-contextual-prune/rhythm-static-bootstrap.json \
+            debug/v143-contextual-prune/rhythm-static-bootstrap-preflight.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record Rhythm static bootstrap proof'
+          git commit -m 'Record authoritative Rhythm static bootstrap proof'
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
+
+          if [ "$install_status" -ne 0 ]; then
+            exit "$install_status"
+          fi
+          exit "$preflight_status"
