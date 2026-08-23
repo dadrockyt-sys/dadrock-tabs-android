@@ -6,9 +6,14 @@ on:
       - v143-contextual-prune-lobo
     paths:
       - 'validation/rhythm_holdout/**'
+      - 'app/ai-tab/page.js'
+      - 'app/api/generate-tab-preview/route.js'
+      - 'app/api/generate-tab-pdf/route.js'
       - 'lib/v143RenderContract.js'
       - 'lib/v143AnalyzerQuality.js'
       - 'lib/jimmyPaigeAnalysisPayload.js'
+      - 'lib/createJimmyPaigeProfessionalPdf.js'
+      - 'lib/createAiTabPdf.js'
       - 'lib/createV143RhythmPdf.js'
       - '.github/workflows/rhythm-preholdout-static-preflight.yml'
   workflow_dispatch:
@@ -46,14 +51,18 @@ jobs:
       - name: Run reusable static pre-holdout gate
         run: |
           set -euo pipefail
+          # Keep the standalone ESM copies inside the checked-out repository so
+          # Node resolves the same installed pdf-lib dependency used by the
+          # /ai-tab preview and purchased-PDF routes. The previous /tmp location
+          # could fail at the polished PDF stage before the renderer itself ran.
           bash validation/rhythm_holdout/run_static_preholdout_preflight.sh \
-            /tmp/rhythm-preholdout-static
+            "$GITHUB_WORKSPACE/.preholdout-static"
 
       - name: Commit compact static proof
         run: |
           set -euo pipefail
           mkdir -p debug/v143-contextual-prune
-          cp /tmp/rhythm-preholdout-static/report.json \
+          cp .preholdout-static/report.json \
             debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json
 
           git add debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json
