@@ -64,9 +64,9 @@ The V143 detector already carries many simultaneous `pitchHypotheses` per select
 
 Reference-free exploratory evidence from the locked analyzer output showed a median of roughly two strong conservative simultaneous hypotheses per selected attack after source-consensus/amplitude/grid/duration screening. No professional reference was used to derive those screening observations.
 
-## Reference-free polyphonic mapper — IMPLEMENTED, CPU PROOF PENDING
+## Reference-free polyphonic mapper — IMPLEMENTED, CPU PROOF GREEN
 
-General musical correction now committed on this branch:
+General musical correction committed on this branch:
 
 1. Commit `cc56e64589fcc9bae3032b55133e8b73ba5fd956` — `Add reference-free polyphonic Rhythm note mapping`
    - rewrites `analyzer/v143_rhythm_guitar_note_mapper.py`
@@ -82,7 +82,6 @@ General musical correction now committed on this branch:
    - secondary recovered chord tones do not duplicate attack-level bend/slide/mute/etc. technique attributes
 
 2. Commit `c235a1535138f86ea44c4bbcb8334500c45cba7b` — `Harden Rhythm assembly for polyphonic attacks`
-   - updates `analyzer/v143_rhythm_event_assembly.py`
    - distinguishes frozen selected attack count from rendered note count
    - permits one selected attack to emit multiple guitar notes
    - requires every selected attack to remain represented
@@ -93,27 +92,56 @@ General musical correction now committed on this branch:
    - fails closed on unresolved/reference-dependent mappings
 
 3. Commit `e6820f0782eba3d79854b9a140851ffc1d99afb0` — `Add CPU proof for reference-free Rhythm polyphony`
-   - adds `validation/rhythm_holdout/verify_reference_free_polyphonic_mapper.py`
    - synthetic checks cover single-note stability, strong chord expansion, unique strings, weak near-unison suppression, six-string cap, technique non-duplication, attack-count vs note-count semantics, and assembly safety flags.
 
 4. Commit `f015715a291ff3f9c2a9da9f633f1b5bef63352a` — `Add CPU gate for reference-free Rhythm polyphony`
-   - adds `.github/workflows/rhythm-polyphony-cpu-proof.yml`
-   - CPU-only exact-SHA workflow
-   - writes `debug/v143-contextual-prune/rhythm-polyphony-cpu-proof.json`
-   - no professional source, no GPU, no Production modification.
+   - exact-SHA, CPU-only workflow; no professional source, no GPU, no Production modification.
+
+Persisted green proof:
+- `debug/v143-contextual-prune/rhythm-polyphony-cpu-proof.json`
+- run `32631065756`, attempt 1
+- source commit `f015715a291ff3f9c2a9da9f633f1b5bef63352a`
+- proof commit `b769a5c834ce03f47d3e4019ac7cf51a7bf04493`
+- `passed:true`, `verifyOutcome:"success"`
+- `referenceFree:true`
+- `professionalReferenceUsed:false`
+- `referenceRuntimeInputUsed:false`
+- `runtimeLabelsRequired:false`
+- `productionModified:false`
+- `productionPromotionAuthorized:false`
 
 Local reference-free replay of the mapper against the locked 358-event analyzer artifact emitted 1,020 guitar-note events across the same 358 attack locations with no duplicate `(measure, step, string)` occupancy and every emitted MIDI traceable to an original attack hypothesis. This is exploratory implementation validation only, not a professional score and not yet a fresh freeze.
 
-At this checkpoint the GitHub CPU proof file had not appeared yet. Do not declare the new mapper green until that persisted proof is inspected and passed.
+## Product/runtime compatibility checked
+
+Existing downstream product code is already compatible with attack count != rendered-note count:
+- `analyzer/v143_rhythm_output_adapter.py` groups multiple same-onset notes on unique strings and reports `noteCount=len(events)` while `selectedCount` can remain the rhythmic attack count.
+- `lib/jimmyPaigeAnalysisPayload.js` consumes authenticated render events and `noteCount`; it does not require `selectedCount == noteCount`.
+- `app/api/analyze-audio-tab/route.js` forwards analyzer output and does not impose that equality.
+- `lib/createV143RhythmPdf.js` and `lib/v143RenderContract.js` already render same-onset chords and reject duplicate `(measure, step, stringIndex)` occupancy rather than rejecting polyphony.
+
+## Safe fresh GPU execution path confirmed — live endpoint will not be altered
+
+`.github/workflows/rhythm-professional-preholdout-real-audio.yml` runs:
+`python -m modal run analyzer/v143_ai_tab_product_canary_modal.py::run`
+
+`analyzer/v143_ai_tab_product_canary_modal.py` creates an isolated Modal app (`dadrock-v143-ai-tab-product-canary`) and reuses the live Rhythm **image definition**, not the deployed live endpoint. It explicitly reports `liveEndpointDeployedOrModified:false` and `productionModified:false`.
+
+`analyzer/v143_modal_live_endpoint.py` defines `V143_MODULES`, which explicitly packages both `v143_rhythm_guitar_note_mapper` and `v143_rhythm_event_assembly` plus the rest of the V143 stack into `rhythm_image` from the checked-out branch source. Therefore a fresh `modal run` can exercise the new branch mapper/assembly in an isolated ephemeral canary without deploying or modifying live V143 Modal.
+
+Important: the real-audio workflow only push-triggers when its own workflow file changes, so mapper commits did **not** accidentally trigger GPU work. A deliberate workflow-file trigger is required for exactly one fresh candidate run.
+
+## CPU orchestration note
+
+The older persisted schema-7 static preflight remains green, but `debug/v143-contextual-prune/rhythm-preholdout-static-v2-run.json` still has not appeared after the earlier validation-path push. Do not interpret that missing V2 marker as a mapper failure: the dedicated mapper/assembly CPU proof above is independently green. The current self-test workflow is still the older mutable-checkout/cross-static-write version; avoid touching validation paths again until that orchestration is stabilized or until after the isolated real-audio candidate is safely locked.
 
 ## Immediate next steps
 
-1. Poll `debug/v143-contextual-prune/rhythm-polyphony-cpu-proof.json` and the existing schema-7 static preflight result produced by the validation-path push.
-2. If the polyphony CPU proof is red, inspect the exact failed test and fix only the concrete general/reference-free defect. Save this checkpoint again.
-3. If CPU proof is green, inspect whether any existing analyzer/product contracts assume `selectedCount == noteCount`; update only the necessary contract semantics so `selectedCount` remains rhythmic attacks and `noteCount` remains rendered guitar notes.
-4. Re-run/confirm all CPU gates green. Do not use the professional source for tuning.
-5. Because musical runtime logic changed after professional-source recovery, the old run `32623173615` can no longer be professionally scored as the candidate. Trigger exactly one brand-new approved-audio GPU run/freeze only after CPU gates are green.
-6. Require the new run to preserve runtime safety, positive events, complete measure coverage, polished preview/full PDF, exact event/hash equality, PDF-event fidelity 1.0, reference sealed, live endpoint unchanged, and Production unchanged.
-7. Only after that new freeze is locked may scorer-side professional transcription/scoring proceed. Require score >=0.99 and zero critical mismatches.
-8. If score misses, change only general/reference-free musical logic and repeat the mandatory fresh-audio freeze before any rescore.
-9. Once the real professional gate passes, verify DadRock `/ai-tab` user end-to-end and create `Final Rhythm Pipeline`.
+1. Preserve the green polyphony CPU proof and do not tune from the professional source.
+2. Intentionally trigger exactly one fresh isolated approved-audio product-canary run by a controlled edit to `.github/workflows/rhythm-professional-preholdout-real-audio.yml`; do not deploy live V143 Modal.
+3. Require the new run to preserve runtime safety, positive event count, complete measure coverage, polished preview/full PDF, exact event/hash equality, PDF-event fidelity 1.0, reference sealed, live endpoint unchanged, and Production unchanged.
+4. Inspect the fresh artifact before any professional scoring. Confirm the new output actually exercised `noteMapping.version:2` / polyphonic expansion and that attack/note semantics remain valid end-to-end.
+5. Lock that fresh artifact as the new candidate freeze.
+6. Only then may scorer-side professional transcription/scoring proceed. Require score >=0.99 and zero critical mismatches.
+7. If score misses, change only general/reference-free musical logic and repeat the mandatory fresh-audio freeze before any rescore.
+8. Once the real professional gate passes, verify DadRock `/ai-tab` user end-to-end and create `Final Rhythm Pipeline`.
