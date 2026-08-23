@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "gate": "rhythm-preholdout-static-preflight",
+  "sourceCommit": "88b8260791dc86c292e02a0fa93bb8447897b0aa",
+  "passed": false,
+  "failedStage": "professional-pdf-render",
+  "exitStatus": 1,
+  "usesSyntheticAudioResponseOnly": true,
+  "realProfessionalReferenceOpened": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false
+}
