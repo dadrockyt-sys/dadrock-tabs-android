@@ -4,6 +4,7 @@ Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
 Priority: **complete Rhythm end-to-end before Bass/Lead**.
 Latest functional commit under test: `400edb3febfa32626f7830d641f641c9325a93bf` — `Verify AI PDF router rejects invalid V143 fallback`.
+Latest observed branch head: `00432397b81bd835c8d668f7bf1ab0040d00fee9` — `Checkpoint full V143 PDF fail-closed chain`.
 
 ## Absolute rules
 
@@ -101,6 +102,10 @@ The persisted static schema v4 `/tmp ... pdf-lib` error is stale. It was a test-
 Current CPU gate checks runtime isolation, page.js preview/full contract, runtime negative cases, real-audio workflow contract, 400 synthetic events / 100 measures, polished preview/full PDFs, exact event/hash identity, PDF fidelity 1.0, holdout completeness/final wrapper, and exact/fail-closed V143 validation through the entire PDF chain.
 
 Recent synthetic fixture repair: `126a2e5256742a9970bdc62a4db47122dc40e5d3` added renderer safety metadata required by the strengthened PDF-fidelity verifier. Wrong-PDF fixture carries valid safety metadata so it fails for event mismatch, not metadata absence.
+
+### Latest CPU observation
+
+Repeated branch/evidence polls after `00432397...` still show the same stale static schema v4 file and stale consolidated self-test schema v3 file. No new schema v7/v6 result or current failure diagnostic has landed yet. The branch head remained `00432397...` during these polls. Do **not** infer a renderer failure from the stale v4 file and do not add speculative product/PDF changes while the current CPU jobs are unresolved.
 
 ## Fresh real-audio pre-holdout workflow
 
