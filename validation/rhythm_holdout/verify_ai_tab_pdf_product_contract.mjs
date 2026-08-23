@@ -172,6 +172,14 @@ const checks = [
     'createV143RhythmPdf({',
     'renderEvents,',
   ]),
+  requireAll('final-rhythm-renderer-validates-exact-events', structuredRhythmRendererSource, [
+    "import { validateV143RenderEvents } from '@/lib/v143RenderContract'",
+    'const events = validateV143RenderEvents(renderEvents)',
+    'complete valid render event stream',
+  ]),
+  forbidAll('final-rhythm-renderer-does-not-reproject-events', structuredRhythmRendererSource, [
+    'projectV143RenderEvents',
+  ]),
   requireAll('structured-rhythm-polished-branding-and-preview-lock', structuredRhythmRendererSource, [
     "path.join(process.cwd(), 'public', 'DadRock-Tabs-Logo.png')",
     "'DIY Guitar & Bass TAB Generator'",
@@ -193,10 +201,14 @@ const purchasedRoutePassed = byLabel['purchased-route-professional-renderer']?.p
 const exactWrapperValidationPassed =
   byLabel['professional-wrapper-v143-routing']?.passed === true &&
   byLabel['professional-wrapper-does-not-reproject-authenticated-events']?.passed === true;
+const exactFinalRendererValidationPassed =
+  byLabel['final-rhythm-renderer-validates-exact-events']?.passed === true &&
+  byLabel['final-rhythm-renderer-does-not-reproject-events']?.passed === true;
 const v143InvalidStreamFailsClosed =
   byLabel['professional-wrapper-v143-invalid-stream-fails-closed']?.passed === true;
 const wrapperRoutingPassed =
   exactWrapperValidationPassed &&
+  exactFinalRendererValidationPassed &&
   v143InvalidStreamFailsClosed &&
   byLabel['ai-pdf-v143-underlying-renderer']?.passed === true;
 const polishedBrandingContractPassed =
@@ -204,7 +216,7 @@ const polishedBrandingContractPassed =
 
 const failedChecks = checks.filter((check) => !check.passed);
 const report = {
-  schemaVersion: 5,
+  schemaVersion: 6,
   gate: 'ai-tab-pdf-product-contract',
   sourceOfTruth: 'app/ai-tab/page.js',
   analyzerEndpoint: '/api/analyze-audio-tab',
@@ -219,6 +231,7 @@ const report = {
   analyzerRuntimeSafetyDefenseInDepth: analyzerRouteSafetyPassed && analysisPayloadSafetyPassed,
   routesUseProfessionalFeatureGate: previewRoutePassed && purchasedRoutePassed,
   authenticatedV143RhythmValidatesExactEventStream: exactWrapperValidationPassed,
+  finalRhythmRendererValidatesExactEventStream: exactFinalRendererValidationPassed,
   authenticatedV143RhythmRoutesToStructuredRenderer: wrapperRoutingPassed,
   authenticatedV143RhythmRejectsLegacyPdfFallback: v143InvalidStreamFailsClosed,
   polishedBrandingContractPassed,
