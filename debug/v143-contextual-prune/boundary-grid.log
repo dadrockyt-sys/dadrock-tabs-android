@@ -1,10 +1,15 @@
-Traceback (most recent call last):
-  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/check_v143_contextual_prune_boundary_grid.py", line 4, in <module>
-    from v143_contextual_prune_reference_free_carrier import _validate_section_grid
-  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143_contextual_prune_reference_free_carrier.py", line 16, in <module>
-    from v143_reference_free_timing import (
-  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143_reference_free_timing.py", line 8, in <module>
-    import numpy as np
-ModuleNotFoundError: No module named 'numpy'
+Collecting numpy
+  Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+Collecting scipy
+  Downloading scipy-1.17.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.9/16.9 MB 28.5 MB/s  0:00:00
+Downloading scipy-1.17.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 120.9 MB/s  0:00:00
+Installing collected packages: numpy, scipy
+
+Successfully installed numpy-2.4.6 scipy-1.17.1
+V143 contextual-prune boundary grid proof passed
+{'gridCount': 1788, 'measureCount': 113, 'firstMeasure': 1, 'lastMeasure': 113, 'firstMeasureStepStart': 12, 'firstMeasureStepEnd': 15, 'firstMeasureStepCount': 4, 'lastMeasureStepStart': 0, 'lastMeasureStepEnd': 7, 'lastMeasureStepCount': 8, 'interiorMeasuresFull': True, 'boundaryPartialMeasuresAllowed': True, 'syntheticBoundarySlotsAdded': False, 'referenceFree': True}
 BOUNDARY_GRID_REFERENCE_TOKEN_SCAN=PASS
 PROTECTED_PIPELINE_BLOB=PASS:7f72f8ed9b14af8bc93e95544195204d99c6bec1
