@@ -11,6 +11,11 @@ on:
       - analyzer/v143_contextual_prune_shadow_correction_modal.py
       - analyzer/v143_contextual_prune_reference_free_carrier.py
       - analyzer/v143_contextual_prune_runtime.py
+      - analyzer/v143_rhythm_timing_consistency_shadow.py
+
+concurrency:
+  group: v143-contextual-prune-shadow-correction-approved-audio
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -153,12 +158,30 @@ jobs:
               "baseEventsPreserved": True,
               "rescuedEventsPhysicallyObserved": True,
               "candidateRelocatesEvents": False,
+              "timingDiagnosticChangesGrid": False,
               "liveRhythmOutputChanged": False,
               "leadChanged": False,
               "bassChanged": False,
               "productionModified": False,
           }
           failed = [key for key, expected in required.items() if invariants.get(key) is not expected]
+          timing = report.get("timingConsistency") or {}
+          timing_invariants = timing.get("invariants") or {}
+          timing_required = {
+              "tempoChanged": False,
+              "barPhaseChanged": False,
+              "attackTimingChanged": False,
+              "candidateSelectionChanged": False,
+              "pitchChanged": False,
+              "professionalReferenceUsed": False,
+              "runtimeLabelsRequired": False,
+              "productionModified": False,
+          }
+          failed.extend(
+              f"timing.{key}"
+              for key, expected in timing_required.items()
+              if timing_invariants.get(key) is not expected
+          )
           if failed:
               raise SystemExit(f"Approved-audio correction invariant failure: {failed}")
           print("V143 approved-audio correction shadow completed with reference-free invariants intact")
