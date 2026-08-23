@@ -6,6 +6,8 @@ on:
       - v143-contextual-prune-lobo
     paths:
       - '.github/workflows/rhythm-render-presentation-proof.yml'
+      - 'lib/v143RenderContract.js'
+      - 'lib/createV143RhythmPdf.js'
   workflow_dispatch:
 
 permissions:
@@ -92,12 +94,16 @@ jobs:
             });
           };
 
-          for (let measure = 1; measure <= 12; measure += 1) {
-            const block = Math.floor((measure - 1) / 4);
-            const steps = block === 0 ? [0, 4, 8, 12] : block === 1 ? [0, 2, 6, 10, 14] : [0, 4, 6, 8, 12, 14];
+          for (let measure = 1; measure <= 24; measure += 1) {
+            const phrase = Math.floor((measure - 1) / 8);
+            const steps = phrase === 0
+              ? [0, 4, 8, 12]
+              : phrase === 1
+                ? [0, 2, 4, 6, 8, 10, 12, 14]
+                : [0, 8];
             for (const step of steps) {
-              push(measure, step, 5, block === 1 ? 3 : 0);
-              push(measure, step, 4, block === 2 ? 5 : 2);
+              push(measure, step, 5, phrase === 1 ? 3 : 0);
+              push(measure, step, 4, phrase === 2 ? 5 : 2);
             }
           }
 
@@ -120,7 +126,7 @@ jobs:
             legatoContinuationFromEventIndex: slideSourceIndex,
             legatoContinuationType: 'slide-up',
           });
-          push(10, 8, 0, 7, { techniques: ['vibrato'] });
+          push(18, 8, 0, 7, { techniques: ['vibrato'] });
 
           const presentation = summarizeV143RhythmPresentation(events);
           const sections = buildReferenceFreeRhythmSections(events);
@@ -129,7 +135,8 @@ jobs:
           if (presentation.multiNoteOnsetCount < 20) throw new Error('polyphonic onset evidence lost');
           if (presentation.maximumChordSize < 2) throw new Error('chord display evidence lost');
           if (!presentation.techniqueTypes.includes('bend') || !presentation.techniqueTypes.includes('slide-up')) throw new Error('technique coverage lost');
-          if (sections.length < 2) throw new Error('reference-free section segmentation not present');
+          if (sections.length < 2 || sections.length > 4) throw new Error(`reference-free section count unreasonable: ${sections.length}`);
+          if (sections.some((section) => section.endMeasure - section.startMeasure + 1 < 8)) throw new Error('section shorter than minimum professional phrase span');
 
           const collapsed = Array.from({ length: 10 }, (_, index) => ({
             eventIndex: index,
@@ -150,13 +157,13 @@ jobs:
             generatedTab: 'proof',
             renderEvents: events,
             tuning: 'E Standard',
-            tempo: 129,
+            tempo: 129.19921875,
             timeSignature: '4/4',
             preview: false,
           });
           await fs.writeFile('.presentation-proof/presentation-proof.pdf', pdf);
           await fs.writeFile('.presentation-proof/presentation-proof.json', JSON.stringify({
-            schemaVersion: 1,
+            schemaVersion: 2,
             sourceCommit: process.env.GITHUB_SHA,
             eventCount: events.length,
             presentation,
@@ -165,6 +172,8 @@ jobs:
             timingGridRequired: true,
             techniqueDisplayRequired: true,
             sectionDisplayRequired: true,
+            minimumSectionMeasures: 8,
+            maximumReasonableSectionCount: 4,
             oneNotePerMeasureCollapseGuard: true,
             referenceFree: true,
             professionalReferenceUsed: false,
@@ -185,7 +194,10 @@ jobs:
           checks = {
               'pdfRendered': pdf.stat().st_size > 20000,
               'timingLegendDisplayed': 'Timing: 16th-note grid' in text,
+              'tempoDisplayRounded': '129 BPM' in text and '129.19921875 BPM' not in text,
               'sectionLabelsDisplayed': 'SECTION ' in text,
+              'sectionCountReasonable': 2 <= len(report['sections']) <= report['maximumReasonableSectionCount'],
+              'sectionMinimumSpan': all((s['endMeasure'] - s['startMeasure'] + 1) >= report['minimumSectionMeasures'] for s in report['sections']),
               'bendNotationDisplayed': 'b' in text,
               'pageCountPositive': len(reader.pages) > 0,
               'multiNoteDensityPreserved': report['presentation']['averageNotesPerMeasure'] > 2,
@@ -228,7 +240,7 @@ jobs:
           if git diff --cached --quiet; then
             exit 0
           fi
-          git commit -m "Record Rhythm render presentation proof"
+          git commit -m "Record polished Rhythm presentation proof"
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
