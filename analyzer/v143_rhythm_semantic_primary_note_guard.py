@@ -68,8 +68,6 @@ def _is_primary(event: Mapping[str, Any]) -> bool:
     if marker is not None:
         return marker is True
 
-    # Backward-compatible isolated verification: monophonic events have no
-    # secondary chord tone to inherit an attack-level technique from.
     try:
         chord_count = int(mapping.get("chordNoteCount", 1))
     except (TypeError, ValueError):
@@ -86,7 +84,11 @@ def _strip_fields(event: dict[str, Any], fields: Sequence[str]) -> bool:
     return changed
 
 
-def _strip_audio_techniques(event: dict[str, Any]) -> int:
+def _strip_audio_techniques(
+    event: dict[str, Any],
+    *,
+    sources: frozenset[str] = AUDIO_SEMANTIC_SOURCES,
+) -> int:
     techniques = event.get("rhythmTechniques")
     if not isinstance(techniques, list):
         return 0
@@ -98,7 +100,7 @@ def _strip_audio_techniques(event: dict[str, Any]) -> int:
             kept.append(deepcopy(item))
             continue
         source = str(item.get("source") or "")
-        if source in AUDIO_SEMANTIC_SOURCES:
+        if source in sources:
             removed += 1
             continue
         kept.append(deepcopy(item))
@@ -111,12 +113,11 @@ def guard_semantic_events(
 ) -> tuple[list[dict[str, Any]], SemanticGuardDiagnostics]:
     """Keep audio-derived technique semantics on the mapped primary note only.
 
-    The polyphonic mapper already records which rendered note owns attack-level
-    technique semantics through noteMapping.primaryTechniqueNote. Downstream bend
-    and legato detectors operate on individual rendered notes, so without this
-    guard a harmonic/secondary chord tone can inherit a false bend or become a
-    false legato endpoint. This guard changes annotation only: it never adds,
-    removes, retimes, repitches, or remaps a rendered note.
+    The polyphonic mapper records the note that owns attack-level semantics using
+    noteMapping.primaryTechniqueNote. Audio-derived bend/legato passes currently
+    inspect individual rendered notes, so a harmonic/secondary chord tone can be
+    mistaken for a bend or legato endpoint. This guard changes annotation only:
+    it never adds, removes, retimes, repitches, or remaps a rendered note.
     """
     guarded = [deepcopy(dict(event)) for event in events]
     primary = [_is_primary(event) for event in guarded]
@@ -126,7 +127,6 @@ def guard_semantic_events(
     stripped_invalid_primary_legato = 0
     stripped_labels = 0
 
-    # First remove audio semantics from every mapped secondary chord tone.
     for index, event in enumerate(guarded):
         if primary[index]:
             continue
@@ -142,33 +142,29 @@ def guard_semantic_events(
             "referenceFree": True,
         }
 
-    # A primary source event may have been linked by the legacy legato evidence
-    # pass to a secondary chord tone. Remove that relationship rather than
-    # silently redirecting it to another note.
+    # If a primary note was linked to a secondary target, remove only the legato
+    # relationship and its legato label. Valid bend evidence on the same primary
+    # note is independent and must remain intact.
     for index, event in enumerate(guarded):
         if not primary[index]:
             continue
         raw_target = event.get("legatoTargetEventIndex")
-        if raw_target is None:
-            event["semanticPrimaryNoteGuard"] = {
-                "version": 1,
-                "primaryTechniqueNote": True,
-                "audioDerivedSemanticsAllowed": True,
-                "referenceFree": True,
-            }
-            continue
-        try:
-            target_index = int(raw_target)
-        except (TypeError, ValueError):
-            target_index = -1
-        target_is_primary = (
-            0 <= target_index < len(guarded)
-            and primary[target_index]
-        )
-        if not target_is_primary:
-            if _strip_fields(event, LEGATO_SOURCE_FIELDS):
-                stripped_invalid_primary_legato += 1
-            stripped_labels += _strip_audio_techniques(event)
+        if raw_target is not None:
+            try:
+                target_index = int(raw_target)
+            except (TypeError, ValueError):
+                target_index = -1
+            target_is_primary = (
+                0 <= target_index < len(guarded)
+                and primary[target_index]
+            )
+            if not target_is_primary:
+                if _strip_fields(event, LEGATO_SOURCE_FIELDS):
+                    stripped_invalid_primary_legato += 1
+                stripped_labels += _strip_audio_techniques(
+                    event,
+                    sources=frozenset({AUDIO_LEGATO_SOURCE}),
+                )
         event["semanticPrimaryNoteGuard"] = {
             "version": 1,
             "primaryTechniqueNote": True,
@@ -176,7 +172,6 @@ def guard_semantic_events(
             "referenceFree": True,
         }
 
-    # Remove orphan continuation markers whose source link no longer exists.
     valid_links: set[tuple[int, int]] = set()
     for source_index, event in enumerate(guarded):
         raw_target = event.get("legatoTargetEventIndex")
@@ -216,15 +211,11 @@ def guard_rhythm_assembly(assembly: Any) -> Any:
 
     if not isinstance(assembly, RhythmEventAssemblyResult):
         raise TypeError("assembly must be RhythmEventAssemblyResult")
-    guarded, diagnostics = guard_semantic_events(assembly.events)
-    result = RhythmEventAssemblyResult(
+    guarded, _diagnostics = guard_semantic_events(assembly.events)
+    return RhythmEventAssemblyResult(
         source=assembly.source,
         events=tuple(guarded),
     )
-    # Attribute assignment is intentionally avoided on the frozen dataclass;
-    # diagnostics are returned by the pure event-level API used by shadow gates.
-    _ = diagnostics
-    return result
 
 
 __all__ = [
