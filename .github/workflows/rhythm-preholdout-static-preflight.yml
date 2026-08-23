@@ -48,6 +48,13 @@ jobs:
           set -euo pipefail
           npm ci --ignore-scripts
 
+      - name: Verify the actual AI-tab preview and purchased-PDF wiring
+        run: |
+          set -euo pipefail
+          mkdir -p .preholdout-static/logs
+          node validation/rhythm_holdout/verify_ai_tab_pdf_product_contract.mjs \
+            .preholdout-static/logs/ai-tab-pdf-product-contract.json
+
       - name: Run reusable static pre-holdout gate
         run: |
           set -euo pipefail
