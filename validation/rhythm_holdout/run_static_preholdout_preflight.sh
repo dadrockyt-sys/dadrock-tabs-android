@@ -64,7 +64,7 @@ if log_path and log_path.exists():
         )
         log_tail.append(line[:500])
 report = {
-    "schemaVersion": 4,
+    "schemaVersion": 5,
     "gate": "rhythm-preholdout-static-preflight",
     "sourceCommit": os.environ.get("SOURCE_COMMIT_VALUE"),
     "passed": False,
@@ -244,6 +244,11 @@ checks = {
     "aiTabPdfProductContractPassed": product_contract.get("passed") is True,
     "pageIsPdfContractSourceOfTruth": product_contract.get("sourceOfTruth") == "app/ai-tab/page.js",
     "previewAndPurchasedBothCarryRenderEvents": product_contract.get("previewAndPurchasedBothCarryRenderEvents") is True,
+    "previewAndPurchasedExpectPdf": product_contract.get("previewAndPurchasedExpectPdf") is True,
+    "routesUseProfessionalFeatureGate": product_contract.get("routesUseProfessionalFeatureGate") is True,
+    "authenticatedV143RhythmRoutesToStructuredRenderer": product_contract.get("authenticatedV143RhythmRoutesToStructuredRenderer") is True,
+    "polishedBrandingContractPassed": product_contract.get("polishedBrandingContractPassed") is True,
+    "dadRockLogoPathConfirmed": product_contract.get("dadRockLogoPath") == "public/DadRock-Tabs-Logo.png",
     "syntheticEventCount400": manifest.get("eventCount") == 400,
     "syntheticMeasureCount100": manifest.get("uniqueMeasureCount") == 100,
     "sourceAudioHashPresent": bool(manifest.get("sourceAudioSha256")),
@@ -257,7 +262,7 @@ checks = {
 }
 failed = [name for name, passed in checks.items() if not passed]
 report = {
-    "schemaVersion": 4,
+    "schemaVersion": 5,
     "gate": "rhythm-preholdout-static-preflight",
     "sourceCommit": source_commit,
     "eventCount": manifest.get("eventCount"),
@@ -269,6 +274,7 @@ report = {
     "previewPdfBytes": render.get("previewPdfBytes"),
     "fullPageCount": render.get("fullPageCount"),
     "previewPageCount": render.get("previewPageCount"),
+    "pdfProductContractSchemaVersion": product_contract.get("schemaVersion"),
     "checks": checks,
     "failedChecks": failed,
     "failureLogTail": [],
