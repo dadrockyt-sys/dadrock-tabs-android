@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-professional-reference-artifact-inventory",
+  "triggerSha": "5a8457d7cb8888ec7d0ac376b11b1134632e9999",
+  "artifactsScanned": 186,
+  "matchingArtifacts": [
+    {
+      "id": 9502117311,
+      "name": "v143-professional-source-raw-track",
+      "sizeInBytes": 4635,
+      "expired": false,
+      "createdAt": "2026-08-23T23:32:26Z",
+      "updatedAt": "2026-08-23T23:32:26Z",
+      "expiresAt": "2026-08-24T23:32:25Z",
+      "digest": "sha256:380165b5eb160cc8a35196192032c7d50224402880e453de448eed906c3b7dcb",
+      "workflowRun": {
+        "id": 32673894509,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "fd2b8f66876fe33b83bed1e11786f0f9e5dfa384"
+      }
+    },
+    {
+      "id": 9502105235,
+      "name": "v143-professional-source-raw-track",
+      "sizeInBytes": 4635,
+      "expired": false,
+      "createdAt": "2026-08-23T23:31:27Z",
+      "updatedAt": "2026-08-23T23:31:27Z",
+      "expiresAt": "2026-08-24T23:31:26Z",
+      "digest": "sha256:e9ceffb4ece4de0efa24c2025ab519e3c83f81e8e941ec7cbce3169ff3975d46",
+      "workflowRun": {
+        "id": 32673844007,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "ea4a5dec3cbe8e75eb89222284705811b7173709"
+      }
+    },
+    {
+      "id": 9499229323,
+      "name": "v143-corrected-rhythm-professional-freeze",
+      "sizeInBytes": 3943381,
+      "expired": false,
+      "createdAt": "2026-08-23T19:59:29Z",
+      "updatedAt": "2026-08-23T19:59:29Z",
+      "expiresAt": "2026-09-06T19:59:29Z",
+      "digest": "sha256:980070d12011c3c6724d9d7c26da3b2158b0161d6ed54c561454ab254ba1706a",
+      "workflowRun": {
+        "id": 32662674725,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "5553479e2dffc75c58f260404e83dd1929d154b9"
+      }
+    },
+    {
+      "id": 9499110125,
+      "name": "v143-corrected-rhythm-professional-freeze",
+      "sizeInBytes": 3943374,
+      "expired": false,
+      "createdAt": "2026-08-23T19:50:14Z",
+      "updatedAt": "2026-08-23T19:50:14Z",
+      "expiresAt": "2026-09-06T19:50:13Z",
+      "digest": "sha256:fdc8068601892edf3f0939a07523b6acfb5f3cb41d7172ae611f8d6d8d8f0b98",
+      "workflowRun": {
+        "id": 32662167148,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "ec63baa13870ec357934f0530409bb04ccb4dc73"
+      }
+    },
+    {
+      "id": 9495888602,
+      "name": "rhythm-final-render-relock-v3",
+      "sizeInBytes": 3465520,
+      "expired": false,
+      "createdAt": "2026-08-23T15:53:08Z",
+      "updatedAt": "2026-08-23T15:53:08Z",
+      "expiresAt": "2026-09-22T15:53:07Z",
+      "digest": "sha256:55d4d1d9cf8e639e41ddeea358863faf6022b3aa7a4d4eb7e814dd1f6ac30955",
+      "workflowRun": {
+        "id": 32649924303,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "e52beadfad35156d541ea0cd4d5bd75e8fd0c446"
+      }
+    },
+    {
+      "id": 9494517434,
+      "name": "rhythm-render-presentation-proof",
+      "sizeInBytes": 1679575,
+      "expired": false,
+      "createdAt": "2026-08-23T14:10:46Z",
+      "updatedAt": "2026-08-23T14:10:46Z",
+      "expiresAt": "2026-09-06T14:10:44Z",
+      "digest": "sha256:a5a81a9bfb4206942380284e89a05efccf30ac43cfc99a5d90a90a793fb63807",
+      "workflowRun": {
+        "id": 32644613517,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "24c407b7bbd477a10b6815afec159115197d6467"
+      }
+    },
+    {
+      "id": 9494412019,
+      "name": "rhythm-professional-preholdout-real-audio",
+      "sizeInBytes": 7247146,
+      "expired": false,
+      "createdAt": "2026-08-23T14:03:09Z",
+      "updatedAt": "2026-08-23T14:03:09Z",
+      "expiresAt": "2026-09-06T14:03:08Z",
+      "digest": "sha256:5ab309e1c86826cb8b5c6ef9c6e3a8edbad334d99d55c07538475c7b61ba519b",
+      "workflowRun": {
+        "id": 32643978196,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "b23bdfb476bc26af5f353b7862465af3f2abc485"
+      }
+    },
+    {
+      "id": 9494321636,
+      "name": "rhythm-render-presentation-proof",
+      "sizeInBytes": 1672855,
+      "expired": false,
+      "createdAt": "2026-08-23T13:56:04Z",
+      "updatedAt": "2026-08-23T13:56:04Z",
+      "expiresAt": "2026-09-06T13:56:03Z",
+      "digest": "sha256:20797e4ffb136b2059134ce2cb09c32642cf49620eb7103cc560419c2f4b1c9a",
+      "workflowRun": {
+        "id": 32643845141,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "0932a76b0e427368f95a2bbacc81bdfb51358548"
+      }
+    },
+    {
+      "id": 9493999904,
+      "name": "rhythm-professional-preholdout-real-audio",
+      "sizeInBytes": 7194045,
+      "expired": false,
+      "createdAt": "2026-08-23T13:31:15Z",
+      "updatedAt": "2026-08-23T13:31:15Z",
+      "expiresAt": "2026-09-06T13:31:14Z",
+      "digest": "sha256:bdd8a7617455e571b2dbeaaeb83ad5c40310e6581e21dde0e5bcb51e28684223",
+      "workflowRun": {
+        "id": 32642331373,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "580550c7cfa6d7a2204aac70052c4c5ab88aa130"
+      }
+    },
+    {
+      "id": 9489261810,
+      "name": "rhythm-professional-reference-recovery",
+      "sizeInBytes": 5288477,
+      "expired": false,
+      "createdAt": "2026-08-23T06:58:55Z",
+      "updatedAt": "2026-08-23T06:58:55Z",
+      "expiresAt": "2026-09-22T06:58:53Z",
+      "digest": "sha256:c99d243520f274adfa9e817ec0b143617d9c95f50eb7817551049f3727e3207a",
+      "workflowRun": {
+        "id": 32624327056,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "d07b3a714133703e77b233ec1dd9a978c4b2cfb3"
+      }
+    },
+    {
+      "id": 9489025699,
+      "name": "rhythm-professional-preholdout-real-audio",
+      "sizeInBytes": 4824873,
+      "expired": false,
+      "createdAt": "2026-08-23T06:37:34Z",
+      "updatedAt": "2026-08-23T06:37:34Z",
+      "expiresAt": "2026-09-06T06:37:33Z",
+      "digest": "sha256:e0c5f94d09f79430f4aa03c156a3d3fc32431bf79abc541ab65dde3d815e4f2c",
+      "workflowRun": {
+        "id": 32623173615,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "1df4a6c55123ae1c4c4b37530f306d43da69bbdd"
+      }
+    },
+    {
+      "id": 9486716269,
+      "name": "rhythm-professional-preholdout-real-audio",
+      "sizeInBytes": 4826602,
+      "expired": false,
+      "createdAt": "2026-08-23T03:23:18Z",
+      "updatedAt": "2026-08-23T03:23:18Z",
+      "expiresAt": "2026-09-06T03:23:17Z",
+      "digest": "sha256:ca7044a96a8336af94f6ee06c639cf608415ae15efc1b167fc967afa2c7bb2f7",
+      "workflowRun": {
+        "id": 32615028780,
+        "headBranch": "v143-contextual-prune-lobo",
+        "headSha": "8066dd24494ba7c550c3c0481d4932cf6e45470c"
+      }
+    },
+    {
+      "id": 8844875595,
+      "name": "gomyway-rhythm-training-v3-30784546978",
+      "sizeInBytes": 12109612,
+      "expired": false,
+      "createdAt": "2026-08-03T04:34:05Z",
+      "updatedAt": "2026-08-03T04:34:05Z",
+      "expiresAt": "2026-09-02T04:34:01Z",
+      "digest": "sha256:65fa30acc657385576c996f3a2bfe7fab51a9126b3f561b88fafc17794b151f7",
+      "workflowRun": {
+        "id": 30784546978,
+        "headBranch": "main",
+        "headSha": "36502d3844b3deadc253284673aa7ff631d6c0be"
+      }
+    },
+    {
+      "id": 8844792726,
+      "name": "gomyway-rhythm-training-v3-30784246839",
+      "sizeInBytes": 9473550,
+      "expired": false,
+      "createdAt": "2026-08-03T04:28:38Z",
+      "updatedAt": "2026-08-03T04:28:38Z",
+      "expiresAt": "2026-09-02T04:28:35Z",
+      "digest": "sha256:bac2316bf29ca884458de2a0bf9c94a3efad2a407faadf42d9794b2ad9bc9dbb",
+      "workflowRun": {
+        "id": 30784246839,
+        "headBranch": "main",
+        "headSha": "36502d3844b3deadc253284673aa7ff631d6c0be"
+      }
+    },
+    {
+      "id": 8844689071,
+      "name": "gomyway-rhythm-training-v3-30783994290",
+      "sizeInBytes": 6360630,
+      "expired": false,
+      "createdAt": "2026-08-03T04:22:21Z",
+      "updatedAt": "2026-08-03T04:22:21Z",
+      "expiresAt": "2026-09-02T04:22:19Z",
+      "digest": "sha256:d3869d400fdcafa483e984ee830955b34881d709c4d684746e3e898bae934128",
+      "workflowRun": {
+        "id": 30783994290,
+        "headBranch": "main",
+        "headSha": "36502d3844b3deadc253284673aa7ff631d6c0be"
+      }
+    },
+    {
+      "id": 8844602873,
+      "name": "gomyway-rhythm-training-v3-30783681173",
+      "sizeInBytes": 3248773,
+      "expired": false,
+      "createdAt": "2026-08-03T04:17:16Z",
+      "updatedAt": "2026-08-03T04:17:16Z",
+      "expiresAt": "2026-09-02T04:17:14Z",
+      "digest": "sha256:f400606a0a0d5050bcf1198d2a3a3c766e599081e546f545c3ce82c0cb23145e",
+      "workflowRun": {
+        "id": 30783681173,
+        "headBranch": "main",
+        "headSha": "36502d3844b3deadc253284673aa7ff631d6c0be"
+      }
+    },
+    {
+      "id": 8844338170,
+      "name": "gomyway-rhythm-training-v2-30783079392",
+      "sizeInBytes": 1440483,
+      "expired": false,
+      "createdAt": "2026-08-03T03:59:06Z",
+      "updatedAt": "2026-08-03T03:59:06Z",
+      "expiresAt": "2026-09-02T03:59:05Z",
+      "digest": "sha256:926b74be71938b34335df5a7d80407651596390da63a856d4caeed9717663ae7",
+      "workflowRun": {
+        "id": 30783079392,
+        "headBranch": "main",
+        "headSha": "4de20d71560bec921dd685ef0de726604619644b"
+      }
+    },
+    {
+      "id": 8844163629,
+      "name": "gomyway-rhythm-training-30782566157",
+      "sizeInBytes": 178569,
+      "expired": false,
+      "createdAt": "2026-08-03T03:45:52Z",
+      "updatedAt": "2026-08-03T03:45:52Z",
+      "expiresAt": "2026-09-02T03:45:51Z",
+      "digest": "sha256:c0709139c4ed5ecb393b7864d27316192209fd054f023037189680986571bef8",
+      "workflowRun": {
+        "id": 30782566157,
+        "headBranch": "main",
+        "headSha": "93516f2fcbbb5860470dcf8fadd01c3b30384396"
+      }
+    }
+  ],
+  "matchingArtifactCount": 18,
+  "referencePayloadOpened": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false
+}
