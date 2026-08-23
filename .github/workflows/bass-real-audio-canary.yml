@@ -26,6 +26,7 @@ jobs:
     env:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      START_PATH: debug/v143-contextual-prune/bass-real-audio-canary-start.json
       RAW_PATH: .bass-canary/raw-bass-canary.json
       RESULT_PATH: debug/v143-contextual-prune/bass-real-audio-canary.json
       ACTION_PATH: debug/v143-contextual-prune/bass-real-audio-canary-action.json
@@ -35,6 +36,45 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: v143-contextual-prune-lobo
+
+      - name: Commit early canary heartbeat
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          payload = {
+              'schemaVersion': 1,
+              'gate': 'bass-real-audio-canary-start',
+              'runId': os.environ.get('GITHUB_RUN_ID'),
+              'runAttempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'branch': os.environ.get('GITHUB_REF_NAME'),
+              'workflow': os.environ.get('GITHUB_WORKFLOW'),
+              'actor': os.environ.get('GITHUB_ACTOR'),
+              'startedAtUtc': datetime.now(timezone.utc).isoformat(),
+              'diagnosticOnly': True,
+              'liveEndpointDeployedOrModified': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          path = Path(os.environ['START_PATH'])
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(payload, indent=2))
+          PY
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$START_PATH"
+          git commit -m 'Record Bass real-audio canary start' || true
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
@@ -99,6 +139,9 @@ jobs:
           payload = {
               'schemaVersion': 1,
               'gate': 'bass-real-audio-canary-action',
+              'runId': os.environ.get('GITHUB_RUN_ID'),
+              'runAttempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
               'modalCredentialsAvailableInGitHubActions': os.environ.get('BASS_MODAL_CREDENTIALS') == 'true',
               'modalExitCode': int(os.environ.get('BASS_MODAL_STATUS', '99')),
               'rawCanaryOutputPresent': raw.is_file() and raw.stat().st_size > 0,
@@ -135,6 +178,7 @@ jobs:
             .bass-canary/raw-bass-canary.json
             debug/v143-contextual-prune/bass-real-audio-canary.json
             debug/v143-contextual-prune/bass-real-audio-canary-action.json
+            debug/v143-contextual-prune/bass-real-audio-canary-start.json
           if-no-files-found: warn
           retention-days: 14
 
@@ -146,14 +190,17 @@ jobs:
           mkdir -p /tmp/bass-canary-evidence
           cp "$ACTION_PATH" /tmp/bass-canary-evidence/action.json
           if [ -s "$RESULT_PATH" ]; then cp "$RESULT_PATH" /tmp/bass-canary-evidence/result.json; fi
+          if [ -s "$START_PATH" ]; then cp "$START_PATH" /tmp/bass-canary-evidence/start.json; fi
 
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
 
           cp /tmp/bass-canary-evidence/action.json "$ACTION_PATH"
           if [ -s /tmp/bass-canary-evidence/result.json ]; then cp /tmp/bass-canary-evidence/result.json "$RESULT_PATH"; fi
+          if [ -s /tmp/bass-canary-evidence/start.json ]; then cp /tmp/bass-canary-evidence/start.json "$START_PATH"; fi
           git add "$ACTION_PATH"
           if [ -s "$RESULT_PATH" ]; then git add "$RESULT_PATH"; fi
+          if [ -s "$START_PATH" ]; then git add "$START_PATH"; fi
 
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
