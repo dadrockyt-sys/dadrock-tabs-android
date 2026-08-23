@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 4,
+  "schemaVersion": 5,
   "gate": "v143-next-preview-route-smoke",
   "branch": "v143-contextual-prune-lobo",
-  "sourceCommit": "4c9c33b106248bf9343f4c06738344704319ab33",
-  "phase": "started-bounded-branch-gate",
+  "sourceCommit": "22dc06af353220006a7558c6b9ba0c262cc64cb8",
+  "phase": "started-staged-branch-gate",
   "localNextPreviewSimulation": true,
   "actualVercelPreviewDeployment": false,
   "installExitCode": null,
@@ -18,5 +18,5 @@
   "paidPurchaseAttempted": false,
   "customerTokenRedeemed": false,
   "customerEmailSent": false,
-  "error": "bounded-branch-gate-in-progress"
+  "error": "staged-branch-gate-in-progress"
 }
