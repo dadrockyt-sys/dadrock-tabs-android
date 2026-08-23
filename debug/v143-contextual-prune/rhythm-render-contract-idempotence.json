@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-render-contract-idempotence",
+  "sourceCommit": "82b5a8c13af47d1ea556a53060dd76014b4e2be7",
+  "verificationMode": "independent-direct-execution-of-branch-contract-and-verifier",
+  "rawEventCount": 5,
+  "authenticatedEventCount": 3,
+  "authenticatedEventIndices": [0, 2, 4],
+  "gappedEventIdentityTested": true,
+  "legatoTargetIdentityPreserved": true,
+  "legatoContinuationIdentityPreserved": true,
+  "secondProjectionExactlyEqual": true,
+  "validationExactlyEqual": true,
+  "passed": true,
+  "productionModified": false,
+  "productionPromotionAuthorized": false
+}
