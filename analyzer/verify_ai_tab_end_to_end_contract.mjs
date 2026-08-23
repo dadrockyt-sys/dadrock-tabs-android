@@ -101,6 +101,20 @@ for (const [label, text] of [
   ], label);
 }
 
+// Preview and purchased/full PDF must make the same professional-renderer
+// decision from the same feature helper. This guards against a professional
+// preview silently turning into a different renderer after unlock.
+for (const [label, text] of [
+  ['preview route', source.preview],
+  ['full PDF route', source.full],
+]) {
+  includesAll(text, [
+    'getJimmyPaigeProfessionalPdfFeatureState',
+    'professionalPdfFeature.enabled',
+    'createJimmyPaigeProfessionalPdf',
+  ], `${label} professional renderer parity`);
+}
+
 // Purchased/full PDF must remain protected by a real unlock verification path.
 includesAll(source.full, [
   "unlockMethod === 'paypal'",
@@ -136,7 +150,7 @@ assert.ok(
 );
 
 const evidence = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   gate: 'ai-tab-end-to-end-contract',
   product: 'dadrocktabs.com/ai-tab',
   instrumentChoices: ['lead', 'rhythm', 'bass'],
@@ -146,6 +160,8 @@ const evidence = {
   previewPdfWired: true,
   fullPdfUnlockWired: true,
   analysisMetadataTransportWired: true,
+  previewAndFullProfessionalFeatureGateShared: true,
+  previewAndFullProfessionalRendererShared: true,
   rhythmDedicatedV143RouteFailClosed: true,
   rhythmStructuredProfessionalRendererFailClosed: true,
   leadLegacyPreserved: true,
