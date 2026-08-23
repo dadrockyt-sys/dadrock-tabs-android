@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "instrument": "bass",
+  "engineFamily": "dadrock-final-product-bass",
+  "purpose": "independent-reference-free-bass-model-training-contract",
+  "referenceFreeRuntimeRequired": true,
+  "independentFromRhythmWeights": true,
+  "independentFromLeadWeights": true,
+  "trainingAudioRightsRequired": true,
+  "recordingLevelTrainValidationTestSeparationRequired": true,
+  "fixtureSpecificRuntimeLabelsAllowed": false,
+  "songIdentityRuntimeFeaturesAllowed": false,
+  "artistIdentityRuntimeFeaturesAllowed": false,
+  "allowedTrainingTargets": [
+    "fundamental_pitch",
+    "note_onset",
+    "note_offset",
+    "duration_sustain",
+    "timing_grid_alignment",
+    "bass_string_fret_position",
+    "bass_technique_evidence",
+    "confidence"
+  ],
+  "initialTechniqueFamilies": [
+    "slide",
+    "hammer_on",
+    "pull_off",
+    "mute",
+    "harmonic",
+    "sustain"
+  ],
+  "futureTechniqueFamiliesRequireSeparateEvidence": [
+    "slap",
+    "pop",
+    "tap",
+    "bend",
+    "vibrato"
+  ],
+  "activation": {
+    "trainingRunAuthorized": false,
+    "customerRoutingEnabled": false,
+    "professionalStructuredIdentityEnabled": false,
+    "pdfRendererEnabled": false,
+    "productionPromotionAuthorized": false
+  }
+}
