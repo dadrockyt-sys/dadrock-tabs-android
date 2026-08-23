@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 — Bass harmonic safe-abstention CLOSED GREEN; harmonic remains unproven
+Updated: 2026-08-22 — Bass structured integration boundary selected
 Branch: `v143-contextual-prune-lobo`
 
 ## Safety / product contract
@@ -82,7 +82,6 @@ subset->final identity: 100%
 quality gate: 100% across all established metrics
 harmonicEventCount: 0
 harmonicLabelCount: 0
-harmonicConsensusPercent: 100 (vacuous: no emitted harmonic labels)
 harmonicEvidenceObserved: false
 harmonicFamilyProven: false
 safeAbstention: true
@@ -101,13 +100,32 @@ The correct product conclusion is: the reference-free harmonic diagnostic safely
 
 High-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven. Professional Bass remains false. All training/routing/structured identity/PDF/live Modal/Vercel/Production/payment/token/email flags remain disabled.
 
-## LIVE STEP — determine the next isolated Bass completion boundary
+## Existing Bass presentation contracts — GREEN SCAFFOLDS / INACTIVE
 
-Do not enable professional Bass routing/PDF/customer output merely because the safe subset is green. Harmonic is still unproven and high-risk families remain disabled.
+Inspection confirmed the missing boundary is integration, not another low-level scaffold:
+
+- `lib/bassProfessionalRenderContract.js` already defines the four-string `G-D-A-E`, `[43,38,33,28]`, fret 0..24, measure/step 16th-grid render projection and exact MIDI/string/fret consistency. It is diagnostic-only and inactive.
+- `lib/bassProfessionalQuality.js` already enforces the established minimum-4 / 70% render, playability, timing, pitch and pitch-position quality thresholds. It is diagnostic-only and inactive.
+- `.github/workflows/bass-professional-render-contract.yml` and `.github/workflows/bass-professional-quality-scaffold.yml` prove those synthetic scaffolds only.
+- `lib/jimmyPaigeAnalysisPayload.js`, `lib/createAiTabPdf.js`, and `lib/createJimmyPaigeProfessionalPdf.js` enable structured identity/rendering only for V143 Rhythm. Bass still follows legacy routing/fallback and must remain that way during this boundary.
+
+## LIVE STEP — isolated real-audio Bass structured-event integration
+
+Selected next boundary: prove that one same-run reference-free Bass analysis can flow from authenticated events through conservative techniques/harmonic abstention into the existing Bass render + quality contracts **without enabling customer routing or PDF**.
+
+Planned contract:
+
+1. Run the approved Bass audio through the existing direct+cascade separation, reference-free timing/candidate pipeline, conservative technique subset, and strict harmonic diagnostic.
+2. Feed those exact same-run final events into a new diagnostic Bass structured-analysis contract built on `projectBassProfessionalRenderEvents()` and `buildBassProfessionalQualityReport()`.
+3. Require 100% event survival for this canary, exact measure/step/string/fret/MIDI identity, Standard Bass mapping, and preservation of only defensibly supported technique labels.
+4. Require harmonic/high-risk unsupported labels to remain absent unless separately proven; current harmonic expectation is safe abstention.
+5. Keep `professionalStructuredIdentityEnabled:false`, `analyzerRoutingEnabled:false`, `pdfRendererEnabled:false`, `professionalBassComplete:false`, and all live/Production/customer actions false.
+
+Passing this boundary will prove structured Bass **data integration readiness only**. It will not authorize professional Bass branding, PDF routing, live Modal deployment, Vercel changes, Production, payment, token redemption, or email.
 
 ## Immediate next action
 
-1. Inspect existing Bass final-product/scaffold/checkpoint code to identify the next missing professional completion contract after separation, timing/playability, conservative techniques, and harmonic safe-abstention.
-2. Prefer an integration/quality contract that can explicitly preserve unsupported techniques as absent rather than attempting high-risk technique families without defensible evidence.
-3. Keep all routing, structured professional identity, PDF renderer, live Modal, Vercel, Production, payment, token, and email flags disabled while proving the next isolated boundary.
-4. Save this checkpoint before any new canary/workflow and again after its result.
+1. Add the diagnostic Bass structured-analysis contract and verifier.
+2. Add an isolated real-audio workflow that reuses the approved fixture and existing Modal secrets but never deploys a live endpoint.
+3. Run and require 100% same-run integration survival/identity plus the unchanged established quality gate.
+4. Save this checkpoint when the workflow starts and after its result.
