@@ -1,5 +1,5 @@
 V143 contextual-prune shadow correction CPU proof passed
-{'baseEventCount': 1, 'correctedEventCount': 2, 'rescuedEventCount': 1, 'suppressedPitchCount': 1, 'observedSlotCount': 4, 'strictSlotCount': 2, 'baseEventsPreserved': True, 'rescuesAreObservedSlots': True, 'candidateRelocatesEvents': False, 'referenceFree': True, 'runtimeLabelsRequired': False, 'productionModified': False}
+{'baseEventCount': 1, 'correctedEventCount': 3, 'rescuedEventCount': 2, 'suppressedPitchCount': 1, 'observedSlotCount': 5, 'strictSlotCount': 3, 'baseEventsPreserved': True, 'rescuesAreObservedSlots': True, 'localPeakRescueEnabled': True, 'emptyMeasureFailSafeEnabled': True, 'candidateRelocatesEvents': False, 'referenceFree': True, 'runtimeLabelsRequired': False, 'productionModified': False}
 CORRECTION_SHADOW_REFERENCE_TOKEN_SCAN=PASS
 === V143 CONTEXTUAL PRUNE SHADOW STATIC GATE ===
 CARRIER_CONSTANTS_MATCH_RESEARCH True
