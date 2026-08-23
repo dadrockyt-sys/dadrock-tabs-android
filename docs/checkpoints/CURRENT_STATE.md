@@ -19,79 +19,55 @@ Preview/full must use the same authenticated/frozen stream. Browser/PDF may not 
 
 Rhythm is complete only with professional score >=0.99, zero critical mismatches, and PDF-event fidelity exactly 1.0. Then create `Final Rhythm Pipeline`. Bass remains paused until then; Lead remains after Bass.
 
-## Real-audio structural baseline
-
-Approved fixture: `public/gomywayfullaitest.m4a`.
-Prior structural proof: 358 valid Rhythm events, measures 1..113 / 112 unique measures, all 16 grid steps, 25 technique events, sustain 358/358, tempo 129.19921875, 4/4, E Standard, prior full+preview PDFs.
-This remains structural proof only.
-
-## Professional holdout
-
-Do not open/recover the professional human reference until a fresh real-audio reference-free freeze/PDF proof is locked.
-`validation/rhythm_holdout/reference/reference-inventory.json` remains `completeReferenceAvailable:false`, `finalScoringAuthorized:false`.
-
-## Product PDF source of truth
-
-`app/ai-tab/page.js` is authoritative.
-Preview → `/api/generate-tab-preview`; full/purchased → `/api/generate-tab-pdf`.
-Authenticated Rhythm path:
-`page.js → PDF API → createJimmyPaigeProfessionalPdf → createAiTabPdf → createV143RhythmPdf`.
-
 ## CPU gate 1 — GREEN
 
-Minimal-dependency bootstrap source:
-`f84e4b1504fb648799341fbf68255664fb95dc0b` — `Use minimal PDF dependency for Rhythm static gate`.
+Canonical `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json` is schema 7, `passed:true` from source commit `f84e4b1504fb648799341fbf68255664fb95dc0b` / Actions run `32622951910`.
 
-Actions run ID: `32622951910`.
-Run identity: `debug/v143-contextual-prune/rhythm-static-bootstrap.json` schema 4, installStatus 0, preflightStatus 0, reportSchemaVersion 7, reportPassed true.
+Key proof: 400 events, 100 measures, frozen/PDF SHA `6475a7d68071a8810890982e1c06c0d39f99e85d646680706233ceed5a58b37e`, fidelity 1.0, polished full+preview PDF rendered, product/real-audio/runtime safety contracts green, reference unopened, Production unchanged.
+Canonical promotion commit: `1f995f876e52f091c404002e340b062e373cbe05`.
 
-Authoritative schema-v7 result:
-- eventCount 400
-- uniqueMeasureCount 100
-- frozen/pdf SHA identical: `6475a7d68071a8810890982e1c06c0d39f99e85d646680706233ceed5a58b37e`
-- PDF-event fidelity 1.0
-- full PDF 1,689,220 bytes / 4 pages
-- preview PDF 1,678,893 bytes / 4 pages
-- product contract schema 7 green
-- real-audio workflow contract green
-- runtime anti-leakage green
-- polished branding/logo green
-- no failed checks
-- professional reference unopened
-- Production unchanged
+## CPU gate 2 — GREEN
 
-The green bootstrap report was copied exactly to canonical:
-`debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`
-at commit `1f995f876e52f091c404002e340b062e373cbe05`.
+`debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json` is now schema 6, `passed:true`, source commit `1c64d91fff0fb13f4982c212267c22f2951061f7`.
 
-CPU static gate is now established green.
+It proves runtime isolation, complete synthetic scorer reference contract, final wrapper positive path >=0.99, PDF fidelity 1.0, zero critical mismatches, partial-reference hard failure, leakage hard failure, PDF mismatch hard failure, static product→professional-PDF glue, branding, event/hash identity. Real professional reference was not opened and Production was not modified.
 
-## CPU gate 2 — self-test V2 IN FLIGHT
+Both required CPU gates are established green.
 
-Created fresh isolated workflow:
-`.github/workflows/rhythm-professional-holdout-self-test-v2.yml`
-commit `1c64d91fff0fb13f4982c212267c22f2951061f7`.
+## Fresh real-audio pre-holdout — EXACTLY ONE RUN LAUNCHED
 
-It is CPU-only and triggers only from its own workflow file. It:
-- checks out exact triggering SHA;
-- has branch concurrency and no actor guard;
-- installs only isolated `pdf-lib@1.17.1`;
-- verifies runtime isolation and compiles scorer-only tools;
-- creates synthetic complete/partial references only after runtime-isolation proof;
-- proves positive final wrapper at >=0.99, fidelity 1.0, zero critical mismatch;
-- proves partial reference, leakage and PDF mismatch hard failures;
-- reruns full static product→professional-PDF glue with `GITHUB_ACTIONS=false`;
-- writes only `debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json` schema 6;
-- never overwrites canonical static evidence;
-- never opens the real professional holdout;
-- does not trigger GPU or touch Production.
+Updated `.github/workflows/rhythm-professional-preholdout-real-audio.yml` once at commit:
+`1df4a6c55123ae1c4c4b37530f306d43da69bbdd` — `Run locked fresh Rhythm real-audio preholdout`.
 
-## Next after schema-v6 self-test green
+That workflow-file write is the intentional single GPU trigger. Do not edit that workflow again while this run is active.
 
-1. Strengthen/verify the real-audio pre-holdout compact proof if needed without changing musical thresholds.
-2. Intentionally trigger exactly one fresh approved-audio GPU run.
-3. Require source hash, full runtime safety, positive frozen events, polished preview/full PDFs, exact event/hash identity, fidelity 1.0, reference sealed, Production unchanged.
-4. Lock that fresh freeze/PDF evidence.
-5. Only then recover/use the complete professional human-written reference strictly scorer-side.
-6. If score <0.99 or critical mismatches >0, change only general/reference-free musical logic, rerun audio from scratch, then rescore.
-7. Once real gate passes, test DadRock `/ai-tab` user end-to-end and create `Final Rhythm Pipeline`.
+The run now:
+- checks out exact `${{ github.sha }}`;
+- uses branch concurrency/cancel-in-progress to avoid duplicates;
+- installs isolated `pdf-lib@1.17.1` plus Modal CLI rather than the full Next.js dependency graph;
+- runs approved fixture `public/gomywayfullaitest.m4a` through the exact V143 Rhythm product canary/live Rhythm image on L4;
+- verifies runtime isolation before analysis;
+- freezes exact structured renderEvents before any reference access;
+- requires `referenceFree:true`, `professionalReferenceUsed:false`, `referenceRuntimeInputUsed:false`, `runtimeLabelsRequired:false`, derived `v143RuntimeSafetyVerified:true`;
+- requires freeze input and frozen snapshot to carry the same complete safety state;
+- explicitly requires the live endpoint and Production to remain unmodified and promotion unauthorized;
+- binds source commit and approved-audio hash/bytes;
+- renders full+preview professional PDFs from frozen events only;
+- requires renderer projection equality, fidelity 1.0 and frozen/PDF hash identity;
+- uploads frozen evidence/PDF artifact and commits compact schema-v2 proof;
+- never opens the professional holdout and never runs professional-human scoring.
+
+## Professional holdout remains sealed
+
+Do not recover/open the professional human reference until the fresh GPU proof is green and locked.
+`validation/rhythm_holdout/reference/reference-inventory.json` remains `completeReferenceAvailable:false`, `finalScoringAuthorized:false`.
+
+## Immediate next steps
+
+1. Observe `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` from the single run triggered by `1df4a6c5...`.
+2. If red, diagnose only the fresh failure without touching holdout reference; no second GPU run unless a concrete general/reference-free fix requires it.
+3. If green, fetch/download the run artifact by its `workflowRunId` and lock the frozen analysis/manifest/PDF fidelity/full+preview PDFs.
+4. Only after that lock, recover/re-supply the complete professional human-written Rhythm reference strictly scorer-side.
+5. Run completeness → isolated scorer → final wrapper. Require score >=0.99, zero critical mismatch, fidelity 1.0.
+6. If score misses, improve only general/reference-free musical logic, rerun fresh approved audio, then rescore.
+7. Once real gate passes, verify DadRock `/ai-tab` user end-to-end and create `Final Rhythm Pipeline`.
