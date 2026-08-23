@@ -3,7 +3,7 @@
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
 Priority: **complete Rhythm end-to-end before Bass/Lead**.
-Latest functional commit under test: `a98151b6477f06d446bc64d7381b2045fc4854ae` — `Verify final Rhythm renderer never reprojects V143 events`.
+Latest functional commit under test: `400edb3febfa32626f7830d641f641c9325a93bf` — `Verify AI PDF router rejects invalid V143 fallback`.
 
 ## Absolute rules
 
@@ -67,21 +67,28 @@ Important hardening:
 
 No professional reference was opened by this hardening. Production remains untouched.
 
-## Authenticated V143 PDF chain now validates instead of re-projecting at every product boundary
+## Authenticated V143 PDF chain now validates exact events and fails closed at every router/renderer boundary
 
 `d36839458fa129491d107c2203423fbeb2c240c6`:
-Authenticated V143 Rhythm cannot silently fall back to legacy polished output when structured events are absent/invalid.
+Authenticated V143 Rhythm cannot silently fall back to legacy polished output at the professional wrapper when structured events are absent/invalid.
 
 `a7a76e5b4d270f5b2e25f4869da4e19c5d86c660`:
 `createJimmyPaigeProfessionalPdf` uses `validateV143RenderEvents(...)`, not a second projection. It cannot compact/drop malformed events and render surviving rows as successful V143.
 
 `e7128a7f39a55366dde339a1a1a1c762eabdf5e4`:
-The final polished renderer `createV143RhythmPdf` now also uses `validateV143RenderEvents(...)` rather than `projectV143RenderEvents(...)`. Thus the last PDF layer itself cannot silently compact/drop/coerce authenticated events. Invalid/empty streams fail closed.
+Final polished renderer `createV143RhythmPdf` also uses `validateV143RenderEvents(...)` rather than `projectV143RenderEvents(...)`. The last PDF layer cannot silently compact/drop/coerce authenticated events. Invalid/empty streams fail closed.
 
-`a98151b6477f06d446bc64d7381b2045fc4854ae`:
-`verify_ai_tab_pdf_product_contract.mjs` schema v6 now requires exact validation and forbids re-projection both in `createJimmyPaigeProfessionalPdf` and in final `createV143RhythmPdf`, while still verifying page.js wiring, runtime safety, no legacy fallback, DadRock logo/branding, preview lock and structured renderer path.
+`0f902f49d6853db5bb6da970a404efcd60a5dd6c`:
+`createAiTabPdf` now has the same direct defense-in-depth: when transcriptionType is Rhythm and analysisEngine is exactly `v143-reference-free-rhythm`, invalid/empty structured events throw instead of falling through to the legacy AI PDF renderer. It validates only authenticated V143 input and does not re-project it.
 
-This closes the last obvious PDF event-integrity re-projection edge. Stop adding speculative PDF hardening now; wait for CPU evidence unless a concrete failing diagnostic identifies another issue.
+`400edb3febfa32626f7830d641f641c9325a93bf`:
+`verify_ai_tab_pdf_product_contract.mjs` schema v7 now proves all three downstream V143 boundaries:
+- professional wrapper validates exact events, no re-projection, no legacy fallback;
+- AI PDF router validates exact events, no re-projection, no legacy fallback;
+- final Rhythm renderer validates exact events, no re-projection;
+while preserving page.js preview/full wiring, analyzer runtime safety, DadRock branding/logo, preview lock and structured renderer path.
+
+This is the current PDF integrity endpoint. Do not add speculative PDF changes now; wait for CPU evidence unless a concrete diagnostic identifies a new defect.
 
 ## CPU proof target — WAIT FOR REFRESH, DO NOT USE STALE FILE
 
@@ -91,7 +98,7 @@ Authoritative targets:
 
 The persisted static schema v4 `/tmp ... pdf-lib` error is stale. It was a test-environment package-resolution failure, not a polished renderer/logo defect. Current preflight runs repository-local `.preholdout-static`.
 
-Current CPU gate checks runtime isolation, page.js preview/full contract, runtime negative cases, real-audio workflow contract, 400 synthetic events / 100 measures, polished preview/full PDFs, exact event/hash identity, PDF fidelity 1.0, holdout completeness/final wrapper, and exact V143 validation through the entire PDF chain.
+Current CPU gate checks runtime isolation, page.js preview/full contract, runtime negative cases, real-audio workflow contract, 400 synthetic events / 100 measures, polished preview/full PDFs, exact event/hash identity, PDF fidelity 1.0, holdout completeness/final wrapper, and exact/fail-closed V143 validation through the entire PDF chain.
 
 Recent synthetic fixture repair: `126a2e5256742a9970bdc62a4db47122dc40e5d3` added renderer safety metadata required by the strengthened PDF-fidelity verifier. Wrong-PDF fixture carries valid safety metadata so it fails for event mismatch, not metadata absence.
 
@@ -105,7 +112,7 @@ After CPU turns green, strengthen that workflow's compact report with explicit r
 ## Immediate next steps
 
 1. Poll refreshed CPU evidence; ignore stale schema v4/v3 evidence.
-2. Require static v7 green + consolidated self-test v6 green for `a98151b...` or a descendant containing it.
+2. Require static v7 green + consolidated self-test v6 green for `400edb3...` or a descendant containing it.
 3. If red, use current `failedStage` + sanitized `failureLogTail`; fix only the concrete issue and do not weaken product/scoring contracts.
 4. Save this file after the result.
 5. Once CPU green, make the one intentional real-audio workflow hardening edit and allow exactly one GPU run.
