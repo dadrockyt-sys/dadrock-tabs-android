@@ -1,0 +1,101 @@
+name: Bass Professional Separator Scaffold
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/bass-professional-separator-scaffold.yml'
+      - 'analyzer/bass_professional_separator_scaffold.py'
+      - 'analyzer/verify_bass_professional_separator_scaffold.py'
+
+concurrency:
+  group: bass-professional-separator-scaffold
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  verify-scaffold:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify inactive Bass separation contract
+        env:
+          BASS_SEPARATOR_SCAFFOLD_RESULT_PATH: debug/v143-contextual-prune/bass-professional-separator-scaffold.json
+        run: python analyzer/verify_bass_professional_separator_scaffold.py
+
+      - name: Enforce safety boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('debug/v143-contextual-prune/bass-professional-separator-scaffold.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+
+          if data.get('passed') is not True:
+              raise SystemExit('Bass scaffold contract did not pass')
+          if data.get('demucsSingleStem') != 'Bass':
+              raise SystemExit('Bass scaffold did not request the Bass stem')
+          if data.get('diagnosticOnly') is not True:
+              raise SystemExit('Bass scaffold must remain diagnostic-only')
+          if data.get('productionCandidate') is not False:
+              raise SystemExit('Bass scaffold must not claim production-candidate status')
+          if data.get('analyzerRoutingEnabled') is not False:
+              raise SystemExit('Bass analyzer routing must remain disabled')
+          if data.get('professionalStructuredIdentityEnabled') is not False:
+              raise SystemExit('Bass professional identity must remain disabled')
+          if data.get('realAudioBassCanaryPassed') is not False:
+              raise SystemExit('Bass real-audio canary has not been proven')
+          if data.get('noteTimingTechniqueQualityProven') is not False:
+              raise SystemExit('Bass note/timing/technique quality has not been proven')
+          if data.get('liveEndpointDeployedOrModified') is not False:
+              raise SystemExit('Safety failure: live endpoint changed')
+          if data.get('vercelDeploymentAttempted') is not False:
+              raise SystemExit('Safety failure: Vercel deployment attempted')
+          if data.get('productionModified') is not False:
+              raise SystemExit('Safety failure: Production modified')
+          if data.get('productionPromotionAuthorized') is not False:
+              raise SystemExit('Safety failure: Production promotion authorized')
+
+          print('BASS PROFESSIONAL SEPARATOR SCAFFOLD PASSED')
+          print('analyzerRoutingEnabled=false')
+          print('professionalStructuredIdentityEnabled=false')
+          print('productionModified=false')
+          PY
+
+      - name: Commit compact scaffold evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          file=debug/v143-contextual-prune/bass-professional-separator-scaffold.json
+          git add -- "$file"
+
+          if git diff --cached --quiet; then
+            echo 'Bass scaffold evidence unchanged.'
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Bass professional separator scaffold'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
