@@ -102,66 +102,65 @@ Keep this file continuously current after meaningful results.
 
 ---
 
-# LIVE STEP — STAGED RHYTHM BUILT-NEXT HTTP GATE
+# LIVE STEP — NO-CACHE RHYTHM BUILT-NEXT HTTP GATE
 
-Workflow:
-
-`.github/workflows/v143-ai-tab-branch-build-gate.yml`
-
-Authoritative source:
+The staged source:
 
 `22dc06af353220006a7558c6b9ba0c262cc64cb8` — `Add staged diagnostics to V143 branch gate`
 
-The obsolete `4c9c33b...` >20-minute opaque run was superseded. Follow only source `22dc06a...` or a later staged source.
-
-Current heartbeat:
-
-`debug/v143-contextual-prune/next-preview-route-smoke.json`
+proved that the runner and both Node-22 regressions were healthy:
 
 ```text
-schemaVersion: 5
-sourceCommit: 22dc06af353220006a7558c6b9ba0c262cc64cb8
-phase: started-staged-branch-gate
-localNextPreviewSimulation: true
-actualVercelPreviewDeployment: false
-productionModified: false
-productionPromotionAuthorized: false
-```
-
-Current staged progress:
-
-`debug/v143-contextual-prune/branch-gate-progress.json`
-
-```text
-schemaVersion: 2
-sourceCommit: 22dc06af353220006a7558c6b9ba0c262cc64cb8
 phase: post-verifiers
 analyzerQualityVerifierExitCode: 0
 previewFeatureVerifierExitCode: 0
-installExitCode: null
-nextBuildExitCode: null
-productionModified: false
-productionPromotionAuthorized: false
 ```
 
-**Meaning:** runner is healthy; analyzer-quality and Preview feature regressions pass. The workflow is currently in the Node-24 setup/install portion.
+It then remained at `post-verifiers` for roughly 12 minutes. Because the following `npm ci` command itself is hard-bounded to 600 seconds, the absence of a `post-install` marker strongly indicates the workflow had not completed the unbounded Node-24 setup/cache-restore step. This is treated as a CI harness/runtime issue, **not a DadRock product regression**.
 
-Staged phases:
+A no-cache superseding gate was therefore added:
+
+`.github/workflows/v143-ai-tab-nocache-gate.yml`
+
+Source commit:
+
+`b465b5b23668d011df852e9a4cf0388f6558f1c1` — `Add no-cache V143 branch route gate`
+
+It uses the **same concurrency group** as the staged gate with `cancel-in-progress:true`, so it supersedes the stalled run.
+
+Key difference:
 
 ```text
-post-verifiers → post-install → post-build → final HTTP evidence
+actions/setup-node Node 22: no package cache
+actions/setup-node Node 24: no package cache
+npm ci: hard timeout 600s
+Next build: hard timeout 600s
+server readiness: 60s
+route smoke: hard timeout 300s
 ```
 
-Immediate next action: fetch `branch-gate-progress.json` and require `post-install` with `installExitCode:0`, then `post-build` with `nextBuildExitCode:0`.
+No product code, Production, live Modal, payments, tokens, or customer email are touched.
 
-Final route proof must show:
+Expected evidence:
 
 ```text
-phase: complete-by-staged-branch-gate
+debug/v143-contextual-prune/ai-tab-nocache-gate.json
+debug/v143-contextual-prune/next-preview-route-smoke-nocache.json
+```
+
+At the latest check the no-cache final evidence had not yet landed. Do not infer failure from that alone.
+
+Required final local proof:
+
+```text
+nodeSetupCacheEnabled: false
+analyzerQualityVerifierExitCode: 0
+previewFeatureVerifierExitCode: 0
 installExitCode: 0
 nextBuildExitCode: 0
 serverReady: true
 routeSmokeExitCode: 0
+routeVerifierPassed: true
 passed: true
 actualVercelPreviewDeployment: false
 vercelDeploymentAttempted: false
@@ -169,31 +168,20 @@ productionModified: false
 productionPromotionAuthorized: false
 ```
 
-Required structured Preview headers:
+Required structured Preview response remains:
 
 ```text
 X-Jimmy-PAIge-PDF-Feature: v143-branch-preview-canary
 X-Jimmy-PAIge-PDF-Renderer: v143-structured-rhythm
 ```
 
-Required fallback renderer:
+Required fallback renderer remains:
 
 `polished-safe-fallback`
 
 Missing generated tab must return HTTP 400.
 
-Hard bounds:
-
-```text
-overall 35m
-verifiers 120s each
-npm ci 600s
-Next build 600s
-server readiness 60s
-route smoke 300s
-```
-
-Exit `124` means that phase hit its hard timeout. Diagnose only the failing phase; do not weaken assertions.
+Immediate next action: fetch both no-cache evidence files. If the gate passes, mark local built-Next Rhythm application wiring closed. If it fails, diagnose only the exact failing field/log; never weaken product assertions.
 
 ---
 
@@ -341,7 +329,52 @@ productionModified: false
 productionPromotionAuthorized: false
 ```
 
-**Important:** this prevents future Bass output from being incorrectly engraved on the six-string Rhythm/Guitar staff. No Bass PDF renderer is enabled yet.
+## Bass quality-gate scaffold
+
+Evidence:
+
+`debug/v143-contextual-prune/bass-professional-quality-scaffold.json`
+
+Bot commit:
+
+`4afc8e529f0098993f8a8e3fffa2c493eca747d7` — `Record Bass professional quality scaffold`
+
+Thresholds:
+
+```text
+minimum valid render events: 4
+minimum render-event survival: 70%
+minimum playable string/fret coverage: 70%
+minimum timing coverage: 70%
+minimum pitch validity: 70%
+minimum pitch/string/fret consistency: 70%
+```
+
+Synthetic result:
+
+```text
+passed: true
+rawEventCount: 8
+validRenderEventCount: 8
+renderEventSurvivalPercent: 100%
+playableStringFretPercent: 100%
+timingCoveragePercent: 100%
+pitchValidityPercent: 100%
+pitchStringFretConsistencyPercent: 100%
+weakFixturePassed: false
+legacyUntimedPassed: false
+legacyUntimedTimingCoveragePercent: 0
+diagnosticOnly: true
+productionCandidate: false
+analyzerRoutingEnabled: false
+pdfRendererEnabled: false
+professionalStructuredIdentityEnabled: false
+realAudioBassCanaryPassed: false
+productionModified: false
+productionPromotionAuthorized: false
+```
+
+**Important:** the Bass track now has independently proven inactive separation, four-string rendering, and quality contracts, but it still has **no real-audio Bass analyzer proof, no customer routing, no structured professional identity, and no enabled Bass PDF renderer**.
 
 Historical `bass_technique_diagnostics_v7.py` was reviewed and explicitly identifies itself as `reference-guided-bass-technique-diagnostic-only`; do not reuse that label-guided logic in the new reference-free Bass professional path.
 
@@ -375,9 +408,10 @@ Do not use the connected Vercel deploy action merely to obtain a URL because it 
 
 # NEXT BOUNDARIES
 
-1. Finish the staged Rhythm built-Next HTTP gate.
-2. If it passes, mark local Rhythm application wiring closed; real Vercel Preview integration remains external blocker.
-3. Only after the Rhythm integration boundary is closed, advance Bass from inactive contracts to an isolated approved real-audio separation/analysis canary.
-4. Keep Bass routing, Bass structured identity, and Bass PDF renderer disabled until real-audio quality is proven.
-5. Lead remains legacy; future professional Lead should use separated guitar views plus Lead-specific analysis/selection.
-6. Never automate the real full-PDF unlock route during validation because it can trigger payment/token/email side effects.
+1. Finish/read the no-cache Rhythm built-Next HTTP gate.
+2. If it passes, mark local Rhythm application wiring closed; real Vercel Preview integration remains the external blocker.
+3. Then begin physically organizing the new shared-core/separate-engine final-product folders without changing active Rhythm behavior.
+4. Advance Bass from inactive contracts to an isolated approved real-audio separation/analysis canary only after the local Rhythm HTTP boundary is closed.
+5. Keep Bass routing, Bass structured identity, and Bass PDF renderer disabled until real-audio quality is proven.
+6. Lead remains legacy; future professional Lead should use separated guitar views plus Lead-specific Hz/pitch, melodic/solo selection, techniques, training, and quality gating.
+7. Never automate the real full-PDF unlock route during validation because it can trigger payment/token/email side effects.
