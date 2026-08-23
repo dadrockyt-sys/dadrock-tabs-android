@@ -1,0 +1,210 @@
+name: V143 Rhythm Semantics Sustain Approved Shadow
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-rhythm-semantics-sustain-approved-shadow.yml
+      - analyzer/v143_rhythm_semantics_sustain_approved_shadow_modal.py
+      - analyzer/v143_rhythm_semantic_primary_note_guard.py
+      - analyzer/v143_rhythm_sustain_consensus_shadow.py
+      - analyzer/v143_rhythm_bend_consensus.py
+      - analyzer/v143_rhythm_bend_evidence.py
+      - analyzer/v143_rhythm_legato_evidence.py
+      - analyzer/v143_rhythm_guitar_note_mapper.py
+      - analyzer/v143_reference_free_rhythm_pipeline.py
+
+concurrency:
+  group: v143-rhythm-semantics-sustain-approved-shadow
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  approved-audio-shadow:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run approved-audio semantics and sustain shadow
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow.log
+          action=debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow-action.json
+          report=debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow.json
+          : > "$log"
+
+          expected=215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f
+          actual=$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')
+          source_ok=false
+          if [ "$actual" = "$expected" ]; then
+            source_ok=true
+            echo "APPROVED_AUDIO_SHA=PASS:$actual" >> "$log"
+          else
+            echo "APPROVED_AUDIO_SHA=FAIL:$actual expected=$expected" >> "$log"
+          fi
+
+          token_available=false
+          attempted=false
+          status=99
+          if [ "$source_ok" = true ] && [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            token_available=true
+            attempted=true
+            python -m pip install --disable-pip-version-check modal >> "$log" 2>&1
+            install_status=$?
+            if [ "$install_status" -eq 0 ]; then
+              python -m modal run \
+                analyzer/v143_rhythm_semantics_sustain_approved_shadow_modal.py::approved_audio \
+                --audio-path public/gomywayfullaitest.m4a \
+                --output-path "$report" >> "$log" 2>&1
+              status=$?
+            else
+              status=$install_status
+            fi
+          elif [ "$source_ok" != true ]; then
+            status=41
+            echo "Approved audio identity failed; semantics/sustain shadow not attempted." >> "$log"
+          else
+            echo "Modal GitHub credentials unavailable; semantics/sustain shadow not attempted." >> "$log"
+          fi
+
+          TOKEN_AVAILABLE="$token_available" ATTEMPTED="$attempted" STATUS="$status" SOURCE_OK="$source_ok" ACTUAL_SHA="$actual" REPORT_EXISTS="$([ -s "$report" ] && echo true || echo false)" python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          log_path = Path("debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow.log")
+          output = Path("debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow-action.json")
+          lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+          attempted = os.environ["ATTEMPTED"] == "true"
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-rhythm-semantics-sustain-approved-shadow",
+              "approvedAudioSha256": os.environ["ACTUAL_SHA"],
+              "approvedAudioIdentityPassed": os.environ["SOURCE_OK"] == "true",
+              "modalCredentialsAvailableInGitHubActions": os.environ["TOKEN_AVAILABLE"] == "true",
+              "shadowAttempted": attempted,
+              "shadowExitCode": int(os.environ["STATUS"]) if attempted else None,
+              "reportExists": os.environ["REPORT_EXISTS"] == "true",
+              "professionalReferenceUsed": False,
+              "runtimeLabelsRequired": False,
+              "liveEndpointDeployedOrModified": False,
+              "productionModified": False,
+              "logTail": lines[-200:],
+          }
+          output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          exit 0
+
+      - name: Commit approved-audio semantics/sustain diagnostics
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow.log \
+            debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow-action.json
+          report=debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow.json
+          if [ -s "$report" ]; then
+            git add -- "$report"
+          fi
+          if git diff --cached --quiet; then
+            echo "No approved-audio semantics/sustain diagnostic changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 approved-audio semantics sustain shadow"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce approved-audio semantics/sustain invariants
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          action = json.loads(Path("debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow-action.json").read_text(encoding="utf-8"))
+          if action.get("approvedAudioIdentityPassed") is not True:
+              raise SystemExit("Approved audio SHA gate failed")
+          if action.get("modalCredentialsAvailableInGitHubActions") is not True:
+              print("Approved-audio semantics/sustain shadow is credential-blocked; no production change was made")
+              raise SystemExit(0)
+          if action.get("shadowAttempted") is not True or int(action.get("shadowExitCode", 1)) != 0:
+              raise SystemExit("Approved-audio semantics/sustain shadow failed; inspect committed diagnostic")
+          if action.get("reportExists") is not True:
+              raise SystemExit("Approved-audio semantics/sustain report missing")
+
+          report = json.loads(Path("debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow.json").read_text(encoding="utf-8"))
+          invariants = report.get("invariants") or {}
+          required = {
+              "sourceIsApprovedFixture": True,
+              "referenceFree": True,
+              "runtimeLabelsRequired": False,
+              "eventCountUnchanged": True,
+              "coreEventIdentityUnchanged": True,
+              "attackTimingChanged": False,
+              "pitchChanged": False,
+              "stringFretChanged": False,
+              "sustainShadowOverwritesProductionSustain": False,
+              "tieOrLetRingInferred": False,
+              "liveRhythmOutputChanged": False,
+              "leadChanged": False,
+              "bassChanged": False,
+              "productionModified": False,
+          }
+          failed = [key for key, expected in required.items() if invariants.get(key) is not expected]
+
+          semantic_guard = ((report.get("semantics") or {}).get("guard") or {})
+          semantic_required = {
+              "eventCountChanged": False,
+              "attackTimingChanged": False,
+              "pitchChanged": False,
+              "stringFretChanged": False,
+              "referenceFree": True,
+              "runtimeLabelsRequired": False,
+              "productionModified": False,
+          }
+          failed.extend(
+              f"semantics.guard.{key}"
+              for key, expected in semantic_required.items()
+              if semantic_guard.get(key) is not expected
+          )
+
+          sustain = ((report.get("sustain") or {}).get("diagnostics") or {})
+          sustain_required = {
+              "eventCountChanged": False,
+              "attackTimingChanged": False,
+              "pitchChanged": False,
+              "tieOrLetRingInferred": False,
+              "referenceFree": True,
+              "runtimeLabelsRequired": False,
+              "productionModified": False,
+          }
+          failed.extend(
+              f"sustain.{key}"
+              for key, expected in sustain_required.items()
+              if sustain.get(key) is not expected
+          )
+
+          if failed:
+              raise SystemExit(f"Approved-audio semantics/sustain invariant failure: {failed}")
+          print("V143 approved-audio semantics/sustain shadow completed with reference-free invariants intact")
+          PY
