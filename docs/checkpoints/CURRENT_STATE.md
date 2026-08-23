@@ -4,7 +4,7 @@ Updated: 2026-08-23
 Branch: `v143-contextual-prune-lobo`
 Priority: **complete Rhythm end-to-end before Bass/Lead**.
 Latest functional commit under test: `400edb3febfa32626f7830d641f641c9325a93bf` — `Verify AI PDF router rejects invalid V143 fallback`.
-Latest CPU-workflow orchestration commit: `b7b91f9c47001e2e931cd3e9d69163f7d0317e23` — `Allow authoritative Rhythm static gate on all branch pushes`.
+Latest CPU-workflow orchestration commit: `dbeac22061e0efbbbbf9a0dc6afd8b72dc2ad465` — `Persist Rhythm static runner failures`.
 
 ## Absolute rules
 
@@ -88,9 +88,16 @@ The currently persisted static file is still stale schema v4 from `b65cf9dd...` 
 - this is safe from evidence loops because `debug/**` is not in that workflow's push path filter;
 - exact-SHA checkout, concurrency and install-failure diagnostics remain intact.
 
+`dbeac22061e0efbbbbf9a0dc6afd8b72dc2ad465`:
+- identified a second evidence blind spot: if the authoritative static runner itself failed after dependencies installed, the workflow stopped before committing `.preholdout-static/report.json`, leaving the repository stuck on stale schema v4 with no current diagnostic;
+- the runner now tees a local log and uses `continue-on-error` only to allow evidence persistence;
+- an `always()` persistence step commits the runner's schema-v7 report even when the runner fails;
+- if the runner unexpectedly fails without producing a report, the workflow synthesizes a compact sanitized schema-v7 `static-runner-missing-report` diagnostic from the log tail;
+- after persistence, an explicit final step restores the workflow's failing status when the preflight failed.
+
 These changes affect CI orchestration/evidence only. They do not modify renderer behavior, musical thresholds, Modal/Production, payment paths, or professional-reference access.
 
-Next authoritative event is the fresh schema-v7 static result from `b7b91f9c...` (or descendant containing it). Ignore stale schema-v4 evidence while waiting.
+Next authoritative event is the fresh schema-v7 static result from `dbeac220...` (or descendant containing it). Any red result should now be actionable rather than silently leaving stale evidence.
 
 ## Fresh real-audio pre-holdout workflow
 
@@ -101,7 +108,7 @@ After CPU green, strengthen that workflow's compact proof and intentionally allo
 
 ## Immediate next steps
 
-1. Observe new standalone static evidence from `b7b91f9c...`; require schema v7.
+1. Observe new standalone static evidence from `dbeac220...`; require schema v7.
 2. If red, use only the current `failedStage` + sanitized `failureLogTail` and fix the concrete issue without weakening contracts.
 3. If green, stabilize the consolidated self-test (exact triggering SHA/concurrency and avoid cross-workflow static evidence races) and require schema v6 green.
 4. Save this checkpoint after every meaningful result.
