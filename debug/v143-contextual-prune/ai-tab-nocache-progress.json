@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-ai-tab-nocache-route-gate-progress",
+  "branch": "v143-contextual-prune-lobo",
+  "sourceCommit": "8bcfe7d725dde2b48330f86138ca7eb497911849",
+  "phase": "prepared",
+  "recordedAtUtc": "2026-08-23T00:55:07.795958+00:00",
+  "nodeSetupCacheEnabled": false,
+  "analyzerQualityVerifierExitCode": null,
+  "previewFeatureVerifierExitCode": null,
+  "installExitCode": null,
+  "nextBuildExitCode": null,
+  "serverReady": null,
+  "routeSmokeExitCode": null,
+  "actualVercelPreviewDeployment": false,
+  "vercelDeploymentAttempted": false,
+  "liveEndpointDeployedOrModified": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "paidPurchaseAttempted": false,
+  "customerTokenRedeemed": false,
+  "customerEmailSent": false
+}
