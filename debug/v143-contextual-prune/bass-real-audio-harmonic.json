@@ -1,46 +1,57 @@
 {
-  "schemaVersion": 1,
-  "gate": "bass-real-audio-reference-free-harmonic-evidence",
+  "schemaVersion": 2,
+  "gate": "bass-real-audio-reference-free-harmonic-diagnostic",
   "approvedFixture": "public/gomywayfullaitest.m4a",
   "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
   "sourceBytes": 3478611,
-  "eventCount": 1754,
-  "baseToSubsetIdentityPreservedEventCount": 1754,
+  "eventCount": 1757,
+  "baseToSubsetIdentityPreservedEventCount": 1757,
   "baseToSubsetIdentityPreservationPercent": 100,
-  "subsetToFinalIdentityPreservedEventCount": 1754,
+  "subsetToFinalIdentityPreservedEventCount": 1757,
   "subsetToFinalIdentityPreservationPercent": 100,
-  "harmonicEventCount": 1,
-  "harmonicLabelCount": 1,
-  "consensusHarmonicLabelCount": 1,
+  "harmonicEventCount": 0,
+  "harmonicLabelCount": 0,
+  "consensusHarmonicLabelCount": 0,
   "harmonicConsensusPercent": 100,
   "observedTechniqueCounts": {
-    "sustain": 217,
-    "slide-down": 34,
-    "slide-up": 40,
-    "pull-off": 11,
+    "sustain": 235,
+    "slide-down": 33,
+    "slide-up": 38,
     "hammer-on": 11,
-    "harmonic": 1
+    "pull-off": 14,
+    "mute": 1
   },
   "observedTechniqueFamilyCounts": {
     "hammer_on": 11,
-    "pull_off": 11,
-    "slide": 74,
-    "sustain": 217,
-    "harmonic": 1
+    "mute": 1,
+    "pull_off": 14,
+    "slide": 71,
+    "sustain": 235
   },
-  "previousSubsetTechniqueFamilies": [
+  "currentRunSubsetTechniqueFamilies": [
     "hammer_on",
+    "mute",
     "pull_off",
     "slide",
     "sustain"
   ],
   "harmonicFamilyProven": false,
+  "safeAbstention": true,
   "allInitialTechniqueFamiliesProven": false,
   "thresholds": {
-    "minimumHarmonicEvents": 1,
+    "minimumSubsetTechniqueEvents": 4,
     "requiredViewAgreement": 2,
     "requiredIdentityPreservationPercent": 100,
-    "requiredHarmonicConsensusPercent": 100
+    "requiredObservedHarmonicConsensusPercent": 100,
+    "harmonicDetector": {
+      "minimumDurationSeconds": 0.22,
+      "minimumDurationSteps": 2,
+      "maximumOnsetStrength": 0.3,
+      "minimumTonalPurity": 0.78,
+      "minimumUpperPartialRatio": 0.9,
+      "maximumSubharmonicRatio": 0.06,
+      "mappedNaturalHarmonicNodeRequired": true
+    }
   },
   "qualityThresholds": {
     "minimumValidRenderEvents": 4,
@@ -54,8 +65,8 @@
     "name": "bass-professional-quality-gate",
     "version": 1,
     "instrument": "bass",
-    "rawEventCount": 1754,
-    "validRenderEventCount": 1754,
+    "rawEventCount": 1757,
+    "validRenderEventCount": 1757,
     "renderEventSurvivalPercent": 100,
     "playableStringFretPercent": 100,
     "timingCoveragePercent": 100,
@@ -83,18 +94,18 @@
     "crossViewConsensusRequired": true,
     "noteTimingPlayabilityPrecondition": true,
     "subsetTechniquePrecondition": true,
+    "subsetDiagnosticSound": true,
     "eventCountStable": true,
     "baseTechniqueFree": true,
     "baseToSubsetIdentityPreserved": true,
     "subsetToFinalIdentityPreserved": true,
     "subsetLabelsPreserved": true,
-    "requiredSubsetFamiliesStillProven": false,
     "allowedTechniqueLabelsOnly": true,
     "noUnexpectedAddedLabels": true,
     "highRiskFamiliesRemainDisabled": true,
     "harmonicImplemented": true,
-    "minimumHarmonicEvents": true,
-    "everyHarmonicHasTwoViewEvidence": true,
+    "strictHarmonicDetector": true,
+    "everyObservedHarmonicHasStrictTwoViewEvidence": true,
     "harmonicDiagnosticsAgree": true,
     "qualityGateStillPassed": true,
     "professionalBassNotClaimed": true
@@ -112,9 +123,9 @@
     "tokenNotRedeemed": true,
     "emailNotSent": true
   },
-  "bassHarmonicEvidenceBoundaryPassed": false,
+  "bassHarmonicDiagnosticBoundaryPassed": true,
   "harmonicEvidenceImplemented": true,
-  "harmonicEvidenceObserved": true,
+  "harmonicEvidenceObserved": false,
   "futureHighRiskFamiliesEnabled": false,
   "professionalBassComplete": false,
   "trainingRunAuthorized": false,
@@ -128,5 +139,5 @@
   "paidPurchaseAttempted": false,
   "customerTokenRedeemed": false,
   "customerEmailSent": false,
-  "passed": false
+  "passed": true
 }
