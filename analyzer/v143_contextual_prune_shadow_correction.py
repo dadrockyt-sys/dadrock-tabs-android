@@ -16,6 +16,8 @@ BODY_CONSENSUS_FLOOR = -0.25
 SECONDARY_SCORE_MARGIN = 1.35
 SECONDARY_ATTACK_MARGIN = 1.00
 SECONDARY_BODY_MARGIN = 1.00
+MIN_RESCUE_STEP_SEPARATION = 2
+LOCAL_RESCUE_RADIUS_STEPS = 2
 
 EventKey = tuple[int, int]
 
@@ -49,6 +51,8 @@ class ShadowCorrectionResult:
             "strictSlotCount": int(self.strict_slot_count),
             "baseEventsPreserved": self.base_events.issubset(self.corrected_events),
             "rescuesAreObservedSlots": True,
+            "localPeakRescueEnabled": True,
+            "emptyMeasureFailSafeEnabled": True,
             "candidateRelocatesEvents": False,
             "referenceFree": True,
             "runtimeLabelsRequired": False,
@@ -196,14 +200,31 @@ def _best_rows_by_slot(
     return best
 
 
-def _rescue_quiet_measures(
+def _steps_too_close(step: int, occupied_steps: Iterable[int]) -> bool:
+    return any(
+        abs(int(step) - int(other)) < MIN_RESCUE_STEP_SEPARATION
+        for other in occupied_steps
+    )
+
+
+def _rescue_strict_local_peaks(
     base_events: set[EventKey],
     rows_by_slot: Mapping[EventKey, Mapping[str, Any]],
     target_measures: set[int],
 ) -> set[EventKey]:
-    selected_by_measure: dict[int, int] = {}
-    for measure, _step in base_events:
-        selected_by_measure[measure] = selected_by_measure.get(measure, 0) + 1
+    """Add only locally dominant, cross-view-confirmed physical onset slots.
+
+    This replaces the old empty-measure-only rescue. It remains deliberately
+    label-free: a rescue must already exist in the physical carrier, pass strict
+    stem/sweep/CQT consensus, be at least the median strict evidence strength in
+    its own measure, be a local strength maximum, and remain separated from an
+    already-selected attack. Completely empty measures retain one conservative
+    strict fail-safe so a global rank cutoff cannot erase an otherwise observed
+    measure.
+    """
+    occupied_by_measure: dict[int, set[int]] = {}
+    for measure, step in base_events:
+        occupied_by_measure.setdefault(int(measure), set()).add(int(step))
 
     strict_by_measure: dict[int, list[tuple[EventKey, Mapping[str, Any]]]] = {}
     for key, row in rows_by_slot.items():
@@ -215,19 +236,56 @@ def _rescue_quiet_measures(
 
     rescued: set[EventKey] = set()
     for measure in sorted(target_measures):
-        if selected_by_measure.get(measure, 0) > 0:
-            continue
-        candidates = strict_by_measure.get(measure) or ()
+        candidates = list(strict_by_measure.get(measure) or ())
         if not candidates:
             continue
-        key, _row = max(
+
+        strengths = [float(row.get("_shadowEvidenceStrength") or -99.0) for _, row in candidates]
+        local_floor = float(median(strengths))
+        ordered = sorted(
             candidates,
             key=lambda item: (
-                float(item[1].get("_shadowEvidenceStrength") or -99.0),
-                -int(item[0][1]),
+                -float(item[1].get("_shadowEvidenceStrength") or -99.0),
+                int(item[0][1]),
             ),
         )
-        rescued.add(key)
+
+        occupied = set(occupied_by_measure.get(measure) or ())
+        measure_rescues: set[EventKey] = set()
+        for key, row in ordered:
+            step = int(key[1])
+            strength = float(row.get("_shadowEvidenceStrength") or -99.0)
+            if strength < local_floor:
+                continue
+            if _steps_too_close(step, occupied):
+                continue
+
+            neighborhood = [
+                (other_key, other_row)
+                for other_key, other_row in candidates
+                if abs(int(other_key[1]) - step) <= LOCAL_RESCUE_RADIUS_STEPS
+            ]
+            neighborhood_winner = min(
+                neighborhood,
+                key=lambda item: (
+                    -float(item[1].get("_shadowEvidenceStrength") or -99.0),
+                    int(item[0][1]),
+                ),
+            )
+            if neighborhood_winner[0] != key:
+                continue
+
+            measure_rescues.add(key)
+            occupied.add(step)
+
+        # A completely empty base measure is protected from global-cutoff erasure.
+        # The fallback is still a strict physical row and never invents a slot.
+        if not occupied_by_measure.get(measure) and not measure_rescues:
+            key, _row = ordered[0]
+            measure_rescues.add(key)
+
+        rescued.update(measure_rescues)
+
     return rescued
 
 
@@ -267,9 +325,9 @@ def apply_reference_free_shadow_correction(
 ) -> ShadowCorrectionResult:
     """Conservative isolated correction driven only by physical audio evidence.
 
-    Existing events are preserved. A completely empty target measure may receive
-    one observed slot when two separated guitar views, three historical detector
-    sweeps, and cross-view CQT evidence all agree on a physical attack. For every
+    Existing events are preserved. Additional events may only come from strict
+    cross-view physical onset rows that are locally dominant in their measure;
+    completely empty measures retain a one-event strict fail-safe. For every
     selected observed slot, secondary pitch hypotheses are retained only when
     they remain strong in both views and stay close to the locally strongest
     pitch across attack/body windows. No event is relocated and no label input is
@@ -280,7 +338,7 @@ def apply_reference_free_shadow_correction(
     if not targets:
         raise ValueError("target_measures cannot be empty")
     rows_by_slot = _best_rows_by_slot(carrier_rows, grid)
-    rescued = _rescue_quiet_measures(base, rows_by_slot, targets)
+    rescued = _rescue_strict_local_peaks(base, rows_by_slot, targets)
     corrected = set(base) | rescued
 
     original_pitch_sets: dict[EventKey, tuple[int, ...]] = {}
@@ -324,6 +382,8 @@ __all__ = [
     "STRICT_MIN_STEM_SUPPORT",
     "STRICT_MIN_SWEEP_SUPPORT",
     "STRICT_MIN_DETECTION_COUNT",
+    "MIN_RESCUE_STEP_SEPARATION",
+    "LOCAL_RESCUE_RADIUS_STEPS",
     "ShadowCorrectionResult",
     "apply_reference_free_shadow_correction",
 ]
