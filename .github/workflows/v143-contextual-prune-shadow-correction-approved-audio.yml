@@ -59,6 +59,15 @@ jobs:
             echo "APPROVED_AUDIO_SHA=FAIL:$actual expected=$expected" >> "$log"
           fi
 
+          correction_blob=$(git hash-object analyzer/v143_contextual_prune_shadow_correction.py)
+          modal_blob=$(git hash-object analyzer/v143_contextual_prune_shadow_correction_modal.py)
+          timing_hypothesis_blob=$(git hash-object analyzer/v143_rhythm_timing_hypothesis_shadow.py)
+          checked_out_commit=$(git rev-parse HEAD)
+          echo "CORRECTION_SOURCE_BLOB=$correction_blob" >> "$log"
+          echo "CORRECTION_MODAL_BLOB=$modal_blob" >> "$log"
+          echo "TIMING_HYPOTHESIS_BLOB=$timing_hypothesis_blob" >> "$log"
+          echo "CHECKED_OUT_COMMIT=$checked_out_commit" >> "$log"
+
           token_available=false
           attempted=false
           status=99
@@ -83,7 +92,7 @@ jobs:
             echo "Modal GitHub credentials unavailable; correction shadow not attempted." >> "$log"
           fi
 
-          TOKEN_AVAILABLE="$token_available" ATTEMPTED="$attempted" STATUS="$status" SOURCE_OK="$source_ok" ACTUAL_SHA="$actual" REPORT_EXISTS="$([ -s "$report" ] && echo true || echo false)" python - <<'PY'
+          TOKEN_AVAILABLE="$token_available" ATTEMPTED="$attempted" STATUS="$status" SOURCE_OK="$source_ok" ACTUAL_SHA="$actual" REPORT_EXISTS="$([ -s "$report" ] && echo true || echo false)" CORRECTION_BLOB="$correction_blob" MODAL_BLOB="$modal_blob" TIMING_HYPOTHESIS_BLOB="$timing_hypothesis_blob" CHECKED_OUT_COMMIT="$checked_out_commit" TRIGGER_SHA="${GITHUB_SHA}" python - <<'PY'
           import json
           import os
           from pathlib import Path
@@ -93,8 +102,13 @@ jobs:
           lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
           attempted = os.environ["ATTEMPTED"] == "true"
           payload = {
-              "schemaVersion": 1,
+              "schemaVersion": 2,
               "gate": "v143-contextual-prune-shadow-correction-approved-audio",
+              "triggerSha": os.environ["TRIGGER_SHA"],
+              "checkedOutCommit": os.environ["CHECKED_OUT_COMMIT"],
+              "correctionSourceBlob": os.environ["CORRECTION_BLOB"],
+              "modalSourceBlob": os.environ["MODAL_BLOB"],
+              "timingHypothesisSourceBlob": os.environ["TIMING_HYPOTHESIS_BLOB"],
               "approvedAudioSha256": os.environ["ACTUAL_SHA"],
               "approvedAudioIdentityPassed": os.environ["SOURCE_OK"] == "true",
               "modalCredentialsAvailableInGitHubActions": os.environ["TOKEN_AVAILABLE"] == "true",
@@ -105,7 +119,7 @@ jobs:
               "runtimeLabelsRequired": False,
               "liveEndpointDeployedOrModified": False,
               "productionModified": False,
-              "logTail": lines[-200:],
+              "logTail": lines[-220:],
           }
           output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
           PY
@@ -130,6 +144,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Record V143 approved-audio shadow correction"
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
 
       - name: Enforce approved-audio shadow invariants
@@ -140,6 +156,15 @@ jobs:
           from pathlib import Path
 
           action = json.loads(Path("debug/v143-contextual-prune/shadow-correction-approved-audio-action.json").read_text(encoding="utf-8"))
+          identity_fields = (
+              "checkedOutCommit",
+              "correctionSourceBlob",
+              "modalSourceBlob",
+              "timingHypothesisSourceBlob",
+          )
+          missing_identity = [key for key in identity_fields if not str(action.get(key) or "").strip()]
+          if missing_identity:
+              raise SystemExit(f"Approved-audio correction source identity missing: {missing_identity}")
           if action.get("approvedAudioIdentityPassed") is not True:
               raise SystemExit("Approved audio SHA gate failed")
           if action.get("modalCredentialsAvailableInGitHubActions") is not True:
