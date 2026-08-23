@@ -20,11 +20,12 @@ function section(source, startMarker, endMarker) {
 
 function requireAll(label, source, patterns) {
   const missing = patterns.filter((pattern) => !source.includes(pattern));
-  return {
-    label,
-    passed: missing.length === 0,
-    missing,
-  };
+  return { label, passed: missing.length === 0, missing };
+}
+
+function forbidAll(label, source, patterns) {
+  const present = patterns.filter((pattern) => source.includes(pattern));
+  return { label, passed: present.length === 0, forbiddenPresent: present };
 }
 
 const [
@@ -144,13 +145,17 @@ const checks = [
   ]),
   requireAll('professional-wrapper-v143-routing', professionalWrapperSource, [
     "from '@/lib/createAiTabPdf'",
-    "from '@/lib/v143RenderContract'",
+    "import { validateV143RenderEvents } from '@/lib/v143RenderContract'",
     "contract.rendererOptions.transcriptionType === 'rhythm'",
     "analysisEngine === 'v143-reference-free-rhythm'",
-    'renderEvents.length > 0',
+    'validateV143RenderEvents(input?.renderEvents)',
+    'renderEvents.length === 0',
     'createAiTabPdf({',
     'renderEvents,',
     "mode: 'v143-structured-rhythm'",
+  ]),
+  forbidAll('professional-wrapper-does-not-reproject-authenticated-events', professionalWrapperSource, [
+    'projectV143RenderEvents',
   ]),
   requireAll('professional-wrapper-v143-invalid-stream-fails-closed', professionalWrapperSource, [
     'const requestedV143StructuredRhythm =',
@@ -179,30 +184,27 @@ const checks = [
 ];
 
 const byLabel = Object.fromEntries(checks.map((check) => [check.label, check]));
-const previewPayloadPassed =
-  byLabel['page-preview-endpoint-and-musical-payload']?.passed === true;
-const purchasedPayloadPassed =
-  byLabel['page-purchased-endpoint-and-musical-payload']?.passed === true;
-const analyzerRouteSafetyPassed =
-  byLabel['analyzer-route-complete-v143-runtime-safety-gate']?.passed === true;
-const analysisPayloadSafetyPassed =
-  byLabel['analysis-payload-complete-v143-runtime-safety-gate']?.passed === true;
-const previewRoutePassed =
-  byLabel['preview-route-professional-renderer']?.passed === true;
-const purchasedRoutePassed =
-  byLabel['purchased-route-professional-renderer']?.passed === true;
-const wrapperRoutingPassed =
+const previewPayloadPassed = byLabel['page-preview-endpoint-and-musical-payload']?.passed === true;
+const purchasedPayloadPassed = byLabel['page-purchased-endpoint-and-musical-payload']?.passed === true;
+const analyzerRouteSafetyPassed = byLabel['analyzer-route-complete-v143-runtime-safety-gate']?.passed === true;
+const analysisPayloadSafetyPassed = byLabel['analysis-payload-complete-v143-runtime-safety-gate']?.passed === true;
+const previewRoutePassed = byLabel['preview-route-professional-renderer']?.passed === true;
+const purchasedRoutePassed = byLabel['purchased-route-professional-renderer']?.passed === true;
+const exactWrapperValidationPassed =
   byLabel['professional-wrapper-v143-routing']?.passed === true &&
-  byLabel['professional-wrapper-v143-invalid-stream-fails-closed']?.passed === true &&
-  byLabel['ai-pdf-v143-underlying-renderer']?.passed === true;
+  byLabel['professional-wrapper-does-not-reproject-authenticated-events']?.passed === true;
 const v143InvalidStreamFailsClosed =
   byLabel['professional-wrapper-v143-invalid-stream-fails-closed']?.passed === true;
+const wrapperRoutingPassed =
+  exactWrapperValidationPassed &&
+  v143InvalidStreamFailsClosed &&
+  byLabel['ai-pdf-v143-underlying-renderer']?.passed === true;
 const polishedBrandingContractPassed =
   byLabel['structured-rhythm-polished-branding-and-preview-lock']?.passed === true;
 
 const failedChecks = checks.filter((check) => !check.passed);
 const report = {
-  schemaVersion: 4,
+  schemaVersion: 5,
   gate: 'ai-tab-pdf-product-contract',
   sourceOfTruth: 'app/ai-tab/page.js',
   analyzerEndpoint: '/api/analyze-audio-tab',
@@ -212,14 +214,11 @@ const report = {
     'page.js -> analyze route/payload safety gates -> PDF API route -> createJimmyPaigeProfessionalPdf -> createAiTabPdf -> createV143RhythmPdf',
   polishedRhythmRenderer: 'lib/createV143RhythmPdf.js',
   sharedMusicalFields,
-  previewAndPurchasedBothCarryRenderEvents:
-    previewPayloadPassed && purchasedPayloadPassed,
-  previewAndPurchasedExpectPdf:
-    previewPayloadPassed && purchasedPayloadPassed,
-  analyzerRuntimeSafetyDefenseInDepth:
-    analyzerRouteSafetyPassed && analysisPayloadSafetyPassed,
-  routesUseProfessionalFeatureGate:
-    previewRoutePassed && purchasedRoutePassed,
+  previewAndPurchasedBothCarryRenderEvents: previewPayloadPassed && purchasedPayloadPassed,
+  previewAndPurchasedExpectPdf: previewPayloadPassed && purchasedPayloadPassed,
+  analyzerRuntimeSafetyDefenseInDepth: analyzerRouteSafetyPassed && analysisPayloadSafetyPassed,
+  routesUseProfessionalFeatureGate: previewRoutePassed && purchasedRoutePassed,
+  authenticatedV143RhythmValidatesExactEventStream: exactWrapperValidationPassed,
   authenticatedV143RhythmRoutesToStructuredRenderer: wrapperRoutingPassed,
   authenticatedV143RhythmRejectsLegacyPdfFallback: v143InvalidStreamFailsClosed,
   polishedBrandingContractPassed,
