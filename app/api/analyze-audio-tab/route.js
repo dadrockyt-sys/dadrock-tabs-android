@@ -180,21 +180,28 @@ export async function POST(request) {
       );
     }
 
-    // During the Rhythm canary, require the new endpoint to identify itself.
-    // If the wrong Modal target is configured, fail closed instead of silently
-    // presenting legacy output as a successful V143 result.
+    // V143 Rhythm must prove the complete anti-leakage contract before its
+    // response can enter the structured product path. The payload builder below
+    // independently enforces the same contract as a second fail-closed layer.
+    const liveV143 = analyzerData?.liveV143;
+    const v143RuntimeSafetyVerified =
+      liveV143?.referenceFree === true &&
+      liveV143?.professionalReferenceUsed === false &&
+      liveV143?.referenceRuntimeInputUsed === false &&
+      liveV143?.runtimeLabelsRequired === false;
+
     if (
       usingV143RhythmAnalyzer &&
-      analyzerData?.liveV143?.referenceFree !== true
+      !v143RuntimeSafetyVerified
     ) {
       console.error(
-        'V143 rhythm analyzer identity check failed.'
+        'V143 rhythm analyzer runtime safety check failed.'
       );
 
       return NextResponse.json(
         {
           error:
-            'The V143 rhythm analyzer did not identify itself correctly.',
+            'The V143 rhythm analyzer did not satisfy the reference-free runtime safety contract.',
         },
         { status: 502 }
       );
