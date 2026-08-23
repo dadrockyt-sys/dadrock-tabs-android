@@ -1,7 +1,10 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gate": "v143-corrected-rhythm-candidate-preholdout",
-  "triggerSha": "ec63baa13870ec357934f0530409bb04ccb4dc73",
+  "runId": 32662674725,
+  "runAttempt": 1,
+  "artifactName": "v143-corrected-rhythm-professional-freeze",
+  "triggerSha": "5553479e2dffc75c58f260404e83dd1929d154b9",
   "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
   "candidateDiagnostics": {
     "correctedAttackCount": 979,
@@ -67,7 +70,7 @@
   "snapshotSha256": "15490767571f0ba96f77c20cfc8c8bcef7fab72988e1c87d3d130b9b8dc7e1d8",
   "pdfEventSha256": "c621ab4fd3a14849946a349b1ce2ed430322e3a8b49310f073b51cd8f417a194",
   "pdfEventFidelity": 1.0,
-  "fullPdfBytes": 1767161,
+  "fullPdfBytes": 1767162,
   "previewPdfBytes": 1712052,
   "fullPageCount": 4,
   "previewPageCount": 4,
