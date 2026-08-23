@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "gate": "bass-final-product-hz-training-contract",
+  "profile": {
+    "instrument": "bass",
+    "tuning": "Standard Bass",
+    "stringLabels": [
+      "G",
+      "D",
+      "A",
+      "E"
+    ],
+    "openMidi": [
+      43,
+      38,
+      33,
+      28
+    ],
+    "maximumFret": 24,
+    "playableMidiMinimum": 28,
+    "playableMidiMaximum": 67,
+    "playableFundamentalHzMinimum": 41.203445,
+    "playableFundamentalHzMaximum": 391.995436,
+    "equalTemperamentA4Hz": 440.0,
+    "referenceFree": true,
+    "diagnosticOnly": true,
+    "analyzerRoutingEnabled": false,
+    "professionalStructuredIdentityEnabled": false
+  },
+  "trainingContract": {
+    "instrument": "bass",
+    "referenceFreeRuntimeRequired": true,
+    "independentFromRhythmWeights": true,
+    "independentFromLeadWeights": true,
+    "trainingAudioRightsRequired": true,
+    "recordingLevelTrainValidationTestSeparationRequired": true,
+    "fixtureSpecificRuntimeLabelsAllowed": false,
+    "songIdentityRuntimeFeaturesAllowed": false,
+    "artistIdentityRuntimeFeaturesAllowed": false,
+    "activation": {
+      "trainingRunAuthorized": false,
+      "customerRoutingEnabled": false,
+      "professionalStructuredIdentityEnabled": false,
+      "pdfRendererEnabled": false,
+      "productionPromotionAuthorized": false
+    }
+  },
+  "checks": {
+    "stringLabels": true,
+    "openMidi": true,
+    "maximumFret": true,
+    "playableMidiBounds": true,
+    "openEHz": true,
+    "openAHz": true,
+    "openDHz": true,
+    "openGHz": true,
+    "highestPlayableFundamental": true,
+    "positionConsistency": true,
+    "referenceFreeProfile": true,
+    "profileInactive": true,
+    "trainingInstrument": true,
+    "trainingReferenceFree": true,
+    "independentWeights": true,
+    "rightsRequired": true,
+    "recordingSplitRequired": true,
+    "noRuntimeSongIdentity": true,
+    "trainingTargets": true,
+    "activationDisabled": true
+  },
+  "realAudioBassCanaryPassed": false,
+  "trainingRunAuthorized": false,
+  "customerRoutingEnabled": false,
+  "professionalStructuredIdentityEnabled": false,
+  "pdfRendererEnabled": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "passed": true
+}
