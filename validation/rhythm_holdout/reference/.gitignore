@@ -1,0 +1,6 @@
+# The real professional human holdout and its event-level transcription are
+# scorer-only evaluation material. Never commit them to this repository.
+*
+!.gitignore
+!reference.schema.json
+!reference-inventory.json
