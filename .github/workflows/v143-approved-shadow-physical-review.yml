@@ -1,0 +1,138 @@
+name: V143 Approved Shadow Physical Review
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-approved-shadow-physical-review.yml
+      - analyzer/v143_approved_shadow_physical_review.py
+      - analyzer/check_v143_approved_shadow_physical_review.py
+
+concurrency:
+  group: v143-approved-shadow-physical-review
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  physical-review-proof:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run reference-free physical review proof
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=debug/v143-contextual-prune/approved-shadow-physical-review.log
+          report=debug/v143-contextual-prune/approved-shadow-physical-review.json
+          : > "$log"
+          status=0
+
+          python -m py_compile \
+            analyzer/v143_approved_shadow_physical_review.py \
+            analyzer/check_v143_approved_shadow_physical_review.py >> "$log" 2>&1 || status=$?
+          if [ "$status" -eq 0 ]; then
+            PYTHONPATH=analyzer python analyzer/check_v143_approved_shadow_physical_review.py >> "$log" 2>&1 || status=$?
+          fi
+
+          reference_scan_passed=true
+          if grep -E -n \
+            'gomyway-professional-rhythm-reference|Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score' \
+            analyzer/v143_approved_shadow_physical_review.py \
+            analyzer/check_v143_approved_shadow_physical_review.py >> "$log" 2>&1; then
+            reference_scan_passed=false
+            status=71
+            echo "PHYSICAL_REVIEW_REFERENCE_TOKEN_SCAN=FAIL" >> "$log"
+          else
+            echo "PHYSICAL_REVIEW_REFERENCE_TOKEN_SCAN=PASS" >> "$log"
+          fi
+
+          protected_blob=$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)
+          expected_blob=7f72f8ed9b14af8bc93e95544195204d99c6bec1
+          protected_ok=false
+          if [ "$protected_blob" = "$expected_blob" ]; then
+            protected_ok=true
+            echo "PROTECTED_PIPELINE_BLOB=PASS:$protected_blob" >> "$log"
+          else
+            status=72
+            echo "PROTECTED_PIPELINE_BLOB=FAIL:$protected_blob expected=$expected_blob" >> "$log"
+          fi
+
+          review_blob=$(git hash-object analyzer/v143_approved_shadow_physical_review.py)
+          checker_blob=$(git hash-object analyzer/check_v143_approved_shadow_physical_review.py)
+          checked_out_commit=$(git rev-parse HEAD)
+          STATUS="$status" REFERENCE_SCAN_PASSED="$reference_scan_passed" PROTECTED_BLOB="$protected_blob" EXPECTED_BLOB="$expected_blob" PROTECTED_OK="$protected_ok" REVIEW_BLOB="$review_blob" CHECKER_BLOB="$checker_blob" CHECKED_OUT_COMMIT="$checked_out_commit" TRIGGER_SHA="${GITHUB_SHA}" python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          lines = Path("debug/v143-contextual-prune/approved-shadow-physical-review.log").read_text(encoding="utf-8", errors="replace").splitlines()
+          status = int(os.environ["STATUS"])
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-approved-shadow-physical-review",
+              "triggerSha": os.environ["TRIGGER_SHA"],
+              "checkedOutCommit": os.environ["CHECKED_OUT_COMMIT"],
+              "reviewSourceBlob": os.environ["REVIEW_BLOB"],
+              "checkerSourceBlob": os.environ["CHECKER_BLOB"],
+              "exitCode": status,
+              "passed": status == 0,
+              "referenceTokenScanPassed": os.environ["REFERENCE_SCAN_PASSED"] == "true",
+              "protectedPipelineBlob": os.environ["PROTECTED_BLOB"],
+              "expectedProtectedPipelineBlob": os.environ["EXPECTED_BLOB"],
+              "protectedPipelineUnchanged": os.environ["PROTECTED_OK"] == "true",
+              "professionalReferenceUsed": False,
+              "runtimeLabelsRequired": False,
+              "productionModified": False,
+              "logTail": lines[-140:],
+          }
+          Path("debug/v143-contextual-prune/approved-shadow-physical-review.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+          exit 0
+
+      - name: Commit physical review proof diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/approved-shadow-physical-review.log \
+            debug/v143-contextual-prune/approved-shadow-physical-review.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 approved shadow physical review proof"
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce physical review proof
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path("debug/v143-contextual-prune/approved-shadow-physical-review.json").read_text())
+          required={
+              "passed":True,
+              "referenceTokenScanPassed":True,
+              "protectedPipelineUnchanged":True,
+              "professionalReferenceUsed":False,
+              "runtimeLabelsRequired":False,
+              "productionModified":False,
+          }
+          failed=[key for key, expected in required.items() if data.get(key) is not expected]
+          if failed:
+              raise SystemExit(f"V143 approved shadow physical review proof failed: {failed}")
+          print("V143 approved shadow physical review proof passed")
+          PY
