@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "gate": "bass-professional-render-contract-scaffold",
+  "instrument": "bass",
+  "tuning": "Standard Bass",
+  "stringLabels": [
+    "G",
+    "D",
+    "A",
+    "E"
+  ],
+  "openMidi": [
+    43,
+    38,
+    33,
+    28
+  ],
+  "stringCount": 4,
+  "maximumFret": 24,
+  "stepsPerMeasure": 16,
+  "validFixtureEvents": 4,
+  "projectedFixtureEvents": 4,
+  "invalidFixtureEventsRejected": 5,
+  "pitchStringFretConsistencyRequired": true,
+  "diagnosticOnly": true,
+  "productionCandidate": false,
+  "pdfRendererEnabled": false,
+  "analyzerRoutingEnabled": false,
+  "professionalStructuredIdentityEnabled": false,
+  "realAudioBassCanaryPassed": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "passed": true
+}
