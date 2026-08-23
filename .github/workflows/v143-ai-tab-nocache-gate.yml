@@ -1,4 +1,6 @@
-# Retriggered against current branch HEAD; no product behavior changes.
+# Fail-closed no-cache V143 gate with branch-visible phase markers.
+# Product assertions and per-phase hard timeouts are unchanged; the wider job timeout
+# exists only so cleanup/evidence can run after the bounded install/build/route phases.
 name: V143 AI Tab No-Cache Route Gate
 
 on:
@@ -20,12 +22,13 @@ jobs:
   verify-build-and-route-smoke:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     env:
       NEXT_TELEMETRY_DISABLED: '1'
       NODE_OPTIONS: '--max-old-space-size=4096'
       RESULT_PATH: debug/v143-contextual-prune/ai-tab-nocache-gate.json
       ROUTE_PATH: debug/v143-contextual-prune/next-preview-route-smoke-nocache.json
+      PROGRESS_PATH: debug/v143-contextual-prune/ai-tab-nocache-progress.json
 
     steps:
       - name: Checkout isolated branch
@@ -40,6 +43,69 @@ jobs:
           rm -rf .nocache-gate
           mkdir -p .nocache-gate debug/v143-contextual-prune
           echo "SOURCE_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          cat > .nocache-gate/record-progress.sh <<'SH'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          phase="$1"
+          path="${PROGRESS_PATH:?PROGRESS_PATH is required}"
+          python - "$phase" "$path" <<'PY'
+          import json, os, sys
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          phase, path = sys.argv[1], sys.argv[2]
+
+          def optional_int(name):
+              value = os.environ.get(name)
+              if value is None:
+                  return None
+              try:
+                  return int(value)
+              except ValueError:
+                  return None
+
+          server_ready = os.environ.get('SERVER_READY')
+          payload = {
+              'schemaVersion': 1,
+              'gate': 'v143-ai-tab-nocache-route-gate-progress',
+              'branch': 'v143-contextual-prune-lobo',
+              'sourceCommit': os.environ.get('SOURCE_COMMIT'),
+              'phase': phase,
+              'recordedAtUtc': datetime.now(timezone.utc).isoformat(),
+              'nodeSetupCacheEnabled': False,
+              'analyzerQualityVerifierExitCode': optional_int('ANALYZER_EXIT'),
+              'previewFeatureVerifierExitCode': optional_int('PREVIEW_EXIT'),
+              'installExitCode': optional_int('INSTALL_EXIT'),
+              'nextBuildExitCode': optional_int('BUILD_EXIT'),
+              'serverReady': None if server_ready is None else server_ready == 'true',
+              'routeSmokeExitCode': optional_int('ROUTE_EXIT'),
+              'actualVercelPreviewDeployment': False,
+              'vercelDeploymentAttempted': False,
+              'liveEndpointDeployedOrModified': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'paidPurchaseAttempted': False,
+              'customerTokenRedeemed': False,
+              'customerEmailSent': False,
+          }
+          Path(path).write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(payload, indent=2))
+          PY
+          git add "$path"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "Record V143 no-cache progress: $phase" || true
+          if ! git push origin HEAD:v143-contextual-prune-lobo; then
+            git fetch origin v143-contextual-prune-lobo
+            git rebase --autostash origin/v143-contextual-prune-lobo
+            git push origin HEAD:v143-contextual-prune-lobo
+          fi
+          SH
+          chmod +x .nocache-gate/record-progress.sh
+
+      - name: Record prepared phase
+        shell: bash
+        run: .nocache-gate/record-progress.sh prepared
 
       - name: Set up Node.js 22 without package cache
         uses: actions/setup-node@v4
@@ -62,10 +128,18 @@ jobs:
           echo "PREVIEW_EXIT=$?" >> "$GITHUB_ENV"
           exit 0
 
+      - name: Record verifier phase
+        shell: bash
+        run: .nocache-gate/record-progress.sh post-verifiers
+
       - name: Set up Node.js 24 without package cache
         uses: actions/setup-node@v4
         with:
           node-version: '24'
+
+      - name: Record Node 24 phase
+        shell: bash
+        run: .nocache-gate/record-progress.sh node24-ready
 
       - name: Install locked dependencies
         shell: bash
@@ -74,6 +148,10 @@ jobs:
           timeout 600s npm ci --ignore-scripts > .nocache-gate/npm-ci.log 2>&1
           echo "INSTALL_EXIT=$?" >> "$GITHUB_ENV"
           exit 0
+
+      - name: Record install phase
+        shell: bash
+        run: .nocache-gate/record-progress.sh post-install
 
       - name: Build Next.js application
         shell: bash
@@ -88,6 +166,10 @@ jobs:
           fi
           echo "BUILD_EXIT=$status" >> "$GITHUB_ENV"
           exit 0
+
+      - name: Record build phase
+        shell: bash
+        run: .nocache-gate/record-progress.sh post-build
 
       - name: Start built Preview-mode server
         shell: bash
@@ -126,6 +208,11 @@ jobs:
           fi
           echo "ROUTE_EXIT=$status" >> "$GITHUB_ENV"
           exit 0
+
+      - name: Record route phase
+        if: always()
+        shell: bash
+        run: .nocache-gate/record-progress.sh post-route
 
       - name: Finalize no-cache evidence
         if: always()
@@ -190,6 +277,7 @@ jobs:
           name: v143-ai-tab-nocache-gate
           path: |
             .nocache-gate/
+            debug/v143-contextual-prune/ai-tab-nocache-progress.json
             debug/v143-contextual-prune/ai-tab-nocache-gate.json
             debug/v143-contextual-prune/next-preview-route-smoke-nocache.json
           if-no-files-found: warn
@@ -204,7 +292,7 @@ jobs:
           if [ -f "$ROUTE_PATH" ]; then cp "$ROUTE_PATH" /tmp/v143-nocache-route.json; fi
           git restore -- "$RESULT_PATH" "$ROUTE_PATH" 2>/dev/null || true
           git fetch origin v143-contextual-prune-lobo
-          git rebase origin/v143-contextual-prune-lobo
+          git rebase --autostash origin/v143-contextual-prune-lobo
           cp /tmp/v143-nocache-gate.json "$RESULT_PATH"
           if [ -f /tmp/v143-nocache-route.json ]; then cp /tmp/v143-nocache-route.json "$ROUTE_PATH"; fi
           git add "$RESULT_PATH"
