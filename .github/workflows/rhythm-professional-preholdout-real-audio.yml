@@ -11,9 +11,12 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: rhythm-professional-preholdout-real-audio-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   fresh-reference-free-freeze:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
@@ -21,10 +24,10 @@ jobs:
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
 
     steps:
-      - name: Check out isolated branch
+      - name: Check out exact triggering revision
         uses: actions/checkout@v4
         with:
-          ref: v143-contextual-prune-lobo
+          ref: ${{ github.sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -35,12 +38,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
 
-      - name: Install locked dependencies and Modal CLI
+      - name: Install isolated PDF dependency and Modal CLI
         run: |
           set -euo pipefail
-          npm ci --ignore-scripts
+          mkdir -p .preholdout
+          cat > .preholdout/package.json <<'JSON'
+          {
+            "private": true,
+            "dependencies": {
+              "pdf-lib": "1.17.1"
+            }
+          }
+          JSON
+          npm install --prefix .preholdout \
+            --ignore-scripts --no-audit --no-fund --package-lock=false
           python -m pip install --disable-pip-version-check modal
 
       - name: Verify holdout is isolated from runtime
@@ -121,6 +133,7 @@ jobs:
             > .preholdout/logs/prepare-freeze.log 2>&1
 
           checked_out_commit=$(git rev-parse HEAD)
+          test "$checked_out_commit" = "$GITHUB_SHA"
           python validation/rhythm_holdout/freeze_rhythm_analysis.py \
             .preholdout/rhythm-freeze-input.json \
             .preholdout/freeze \
@@ -148,7 +161,7 @@ jobs:
           test -s .preholdout/freeze/pdf/preview-frozen-rhythm.pdf
           test -s .preholdout/freeze/rhythm-pdf-event-fidelity.json
 
-      - name: Write compact pre-holdout proof
+      - name: Write locked compact pre-holdout proof
         run: |
           set -euo pipefail
           python - <<'PY'
@@ -157,44 +170,76 @@ jobs:
           from pathlib import Path
 
           raw = json.loads(Path('.preholdout/raw-product-output.json').read_text(encoding='utf-8'))
+          freeze_input = json.loads(Path('.preholdout/rhythm-freeze-input.json').read_text(encoding='utf-8'))
           manifest = json.loads(Path('.preholdout/freeze/rhythm-freeze-manifest.json').read_text(encoding='utf-8'))
+          frozen = json.loads(Path('.preholdout/freeze/rhythm-frozen-analysis.json').read_text(encoding='utf-8'))
           pdf = json.loads(Path('.preholdout/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
           pdf_render = json.loads(Path('.preholdout/freeze/pdf/pdf-event-evidence.json').read_text(encoding='utf-8'))
           isolation = json.loads(Path('.preholdout/logs/runtime-isolation.json').read_text(encoding='utf-8'))
           live = raw.get('liveV143') or {}
           canary = raw.get('canary') or {}
+          frozen_safety = frozen.get('safety') or {}
+          expected_audio_path = 'public/gomywayfullaitest.m4a'
+          runtime_safety_verified = all([
+              live.get('referenceFree') is True,
+              live.get('professionalReferenceUsed') is False,
+              live.get('referenceRuntimeInputUsed') is False,
+              live.get('runtimeLabelsRequired') is False,
+          ])
 
           checks = {
               'runtimeIsolationPassed': isolation.get('passed') is True,
+              'approvedAudioFixture': canary.get('approvedFixture') is True and canary.get('approvedFixtureRepositoryPath') == expected_audio_path,
               'referenceFree': live.get('referenceFree') is True,
               'professionalReferenceNotUsed': live.get('professionalReferenceUsed') is False,
               'referenceRuntimeInputNotUsed': live.get('referenceRuntimeInputUsed') is False,
+              'runtimeLabelsNotRequired': live.get('runtimeLabelsRequired') is False,
+              'v143RuntimeSafetyVerified': runtime_safety_verified,
+              'freezeInputRuntimeSafetyVerified': freeze_input.get('v143RuntimeSafetyVerified') is True,
+              'frozenReferenceFree': frozen_safety.get('referenceFree') is True,
+              'frozenProfessionalReferenceNotUsed': frozen_safety.get('professionalReferenceUsed') is False,
+              'frozenReferenceRuntimeInputNotUsed': frozen_safety.get('referenceRuntimeInputUsed') is False,
+              'frozenRuntimeLabelsNotRequired': frozen_safety.get('runtimeLabelsRequired') is False,
+              'frozenRuntimeSafetyVerified': frozen_safety.get('v143RuntimeSafetyVerified') is True,
+              'freezeManifestReferenceNotOpened': manifest.get('referenceOpenedDuringFreeze') is False,
               'sameProductRhythmPipeline': canary.get('sameProductRhythmPipeline') is True,
               'sameProductRhythmImage': canary.get('sameProductRhythmImage') is True,
-              'frozenEventCountPositive': int(manifest.get('eventCount') or 0) > 0,
+              'liveEndpointUnmodified': canary.get('liveEndpointDeployedOrModified') is False,
+              'productionUnmodified': canary.get('productionModified') is False,
+              'productionPromotionUnauthorized': canary.get('productionPromotionAuthorized') is False,
+              'sourceCommitExact': manifest.get('sourceCommit') == os.environ.get('GITHUB_SHA'),
               'sourceAudioHashPresent': bool(manifest.get('sourceAudioSha256')),
+              'sourceAudioHashMatchesCanary': manifest.get('sourceAudioSha256') == canary.get('sourceSha256'),
+              'sourceAudioBytesMatchCanary': manifest.get('sourceAudioBytes') == canary.get('sourceBytes'),
+              'frozenEventCountPositive': int(manifest.get('eventCount') or 0) > 0,
               'pdfRendererProjectionExact': pdf_render.get('rendererProjectionExactlyEqual') is True,
               'fullPdfRendered': int(pdf_render.get('fullPdfBytes') or 0) > 20000,
               'previewPdfRendered': int(pdf_render.get('previewPdfBytes') or 0) > 20000,
+              'fullPdfPagesPositive': int(pdf_render.get('fullPageCount') or 0) > 0,
+              'previewPdfPagesPositive': int(pdf_render.get('previewPageCount') or 0) > 0,
               'pdfEventFidelityExact': pdf.get('pdfEventFidelity') == 1.0,
               'pdfHashMatchesFrozenHash': pdf.get('pdfEventSha256') == manifest.get('eventSha256'),
               'humanReferenceStillSealed': True,
-              'productionUnmodified': canary.get('productionModified') is False,
           }
           failed = [name for name, passed in checks.items() if not passed]
           report = {
-              'schemaVersion': 1,
+              'schemaVersion': 2,
               'gate': 'rhythm-professional-preholdout-real-audio',
               'workflowRunId': os.environ.get('GITHUB_RUN_ID'),
               'eventTriggerCommit': os.environ.get('GITHUB_SHA'),
               'sourceCommit': manifest.get('sourceCommit'),
               'sourceAudioSha256': manifest.get('sourceAudioSha256'),
               'sourceAudioBytes': manifest.get('sourceAudioBytes'),
+              'referenceFree': live.get('referenceFree'),
+              'professionalReferenceUsed': live.get('professionalReferenceUsed'),
+              'referenceRuntimeInputUsed': live.get('referenceRuntimeInputUsed'),
+              'runtimeLabelsRequired': live.get('runtimeLabelsRequired'),
+              'v143RuntimeSafetyVerified': runtime_safety_verified,
               'eventCount': manifest.get('eventCount'),
               'uniqueMeasureCount': manifest.get('uniqueMeasureCount'),
               'frozenEventSha256': manifest.get('eventSha256'),
-              'pdfEventSha256': manifest.get('pdfEventSha256'),
-              'pdfEventFidelity': manifest.get('pdfEventFidelity'),
+              'pdfEventSha256': pdf.get('pdfEventSha256'),
+              'pdfEventFidelity': pdf.get('pdfEventFidelity'),
               'fullPdfBytes': pdf_render.get('fullPdfBytes'),
               'previewPdfBytes': pdf_render.get('previewPdfBytes'),
               'fullPageCount': pdf_render.get('fullPageCount'),
