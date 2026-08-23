@@ -37,7 +37,8 @@ jobs:
             validation/rhythm_holdout/verify_pdf_event_fidelity.py \
             validation/rhythm_holdout/verify_runtime_isolation.py \
             validation/rhythm_holdout/verify_reference_completeness.py \
-            validation/rhythm_holdout/score_rhythm_holdout.py
+            validation/rhythm_holdout/score_rhythm_holdout.py \
+            validation/rhythm_holdout/run_final_holdout_gate.py
 
       - name: Verify production runtime cannot read holdout reference
         run: |
@@ -46,10 +47,10 @@ jobs:
             > /tmp/rhythm-runtime-isolation.json
           cat /tmp/rhythm-runtime-isolation.json
 
-      - name: Exercise perfect frozen-analysis to complete-reference score path
+      - name: Exercise perfect frozen-analysis to final holdout gate
         run: |
           set -euo pipefail
-          rm -rf /tmp/rhythm-holdout-freeze
+          rm -rf /tmp/rhythm-holdout-freeze /tmp/rhythm-final-gate
           cat > /tmp/rhythm-analysis.json <<'JSON'
           {
             "referenceFree": true,
@@ -176,11 +177,18 @@ jobs:
             validation/rhythm_holdout/reference/.synthetic-self-test.json \
             --output /tmp/rhythm-perfect-score.json
 
+          python validation/rhythm_holdout/run_final_holdout_gate.py \
+            /tmp/rhythm-holdout-freeze \
+            validation/rhythm_holdout/reference/.synthetic-self-test.json \
+            --output-dir /tmp/rhythm-final-gate \
+            --minimum 0.99
+
           python - <<'PY'
           import json
           from pathlib import Path
           complete = json.loads(Path('/tmp/rhythm-reference-completeness.json').read_text())
           score = json.loads(Path('/tmp/rhythm-perfect-score.json').read_text())
+          final = json.loads(Path('/tmp/rhythm-final-gate/rhythm-final-holdout-gate.json').read_text())
           assert complete['passed'] is True
           assert complete['referenceComplete'] is True
           assert complete['sourceComplete'] is True
@@ -190,7 +198,12 @@ jobs:
           assert score['pdfEventFidelity'] == 1.0
           assert score['criticalMismatchCount'] == 0
           assert all(value >= 0.99 for value in score['gatedMetrics'].values())
-          print('Perfect complete-reference synthetic holdout path PASSED')
+          assert final['passed'] is True
+          assert final['rhythmComplete'] is True
+          assert final['failedChecks'] == []
+          assert final['pdfEventFidelity'] == 1.0
+          assert final['criticalMismatchCount'] == 0
+          print('Perfect mandatory final holdout wrapper path PASSED')
           PY
 
       - name: Prove partial reference, leakage and PDF mismatches hard-fail
@@ -222,6 +235,13 @@ jobs:
             /tmp/rhythm-holdout-freeze \
             validation/rhythm_holdout/reference/.partial-self-test.json; then
             echo 'Partial professional reference was incorrectly accepted.' >&2
+            exit 1
+          fi
+          if python validation/rhythm_holdout/run_final_holdout_gate.py \
+            /tmp/rhythm-holdout-freeze \
+            validation/rhythm_holdout/reference/.partial-self-test.json \
+            --output-dir /tmp/rhythm-partial-final-gate; then
+            echo 'Final wrapper incorrectly accepted a partial reference.' >&2
             exit 1
           fi
 
@@ -285,7 +305,7 @@ jobs:
           rm -f \
             validation/rhythm_holdout/reference/.synthetic-self-test.json \
             validation/rhythm_holdout/reference/.partial-self-test.json
-          echo 'Negative completeness/safety tests PASSED'
+          echo 'Negative completeness/final-wrapper/safety tests PASSED'
 
       - name: Record compact successful self-test evidence
         run: |
@@ -299,8 +319,9 @@ jobs:
           isolation = json.loads(Path('/tmp/rhythm-runtime-isolation.json').read_text())
           complete = json.loads(Path('/tmp/rhythm-reference-completeness.json').read_text())
           score = json.loads(Path('/tmp/rhythm-perfect-score.json').read_text())
+          final = json.loads(Path('/tmp/rhythm-final-gate/rhythm-final-holdout-gate.json').read_text())
           payload = {
-              'schemaVersion': 2,
+              'schemaVersion': 3,
               'gate': 'rhythm-professional-holdout-self-test',
               'sourceCommit': os.environ['GITHUB_SHA'],
               'runtimeIsolationPassed': isolation.get('passed') is True,
@@ -310,9 +331,12 @@ jobs:
               'syntheticContiguousMeasureCoverage': complete.get('contiguousMeasureCoverage') is True,
               'referenceOpenedOnlyAfterFreezeValidation': complete.get('referenceOpenedOnlyAfterFreezeValidation') is True,
               'syntheticPerfectScorePassed': score.get('rhythmComplete') is True,
-              'syntheticPdfEventFidelity': score.get('pdfEventFidelity'),
-              'syntheticCriticalMismatchCount': score.get('criticalMismatchCount'),
+              'syntheticFinalWrapperPassed': final.get('passed') is True,
+              'syntheticFinalWrapperRhythmComplete': final.get('rhythmComplete') is True,
+              'syntheticPdfEventFidelity': final.get('pdfEventFidelity'),
+              'syntheticCriticalMismatchCount': final.get('criticalMismatchCount'),
               'partialReferenceHardFailurePassed': True,
+              'partialReferenceFinalWrapperHardFailurePassed': True,
               'negativeSafetyTestsPassed': True,
               'usesSyntheticReferenceOnly': True,
               'realProfessionalReferenceOpened': False,
@@ -333,7 +357,7 @@ jobs:
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record strict Rhythm professional holdout self-test'
+          git commit -m 'Record final Rhythm holdout wrapper self-test'
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
