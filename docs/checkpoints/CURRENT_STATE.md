@@ -3,39 +3,29 @@
 Updated: 2026-08-22
 Branch: `v143-contextual-prune-lobo`
 
-# PROJECT FOCUS — `dadrocktabs.com/ai-tab` end to end
+# PROJECT FOCUS
 
-> **User uploaded audio → Bass / Lead / Rhythm selection → `app/ai-tab/page.js` → requested-part separation/processing → notes + playable positions + techniques + timing + metadata → authenticated musical events → professional preview TAB PDF → purchased/unlocked professional full TAB PDF.**
+> **`dadrocktabs.com/ai-tab`: user uploaded audio → Bass / Lead / Rhythm choice → `app/ai-tab/page.js` → requested-part separation/processing → notes + playable positions + techniques + timing + metadata → authenticated musical events → professional preview TAB PDF → purchased/unlocked professional full TAB PDF.**
 
-The finished product must support all three instrument choices. Preview and purchased full PDF must derive from the same authenticated analysis. Browser/PDF code must never manufacture missing musical placement.
+Preview and purchased full PDF must derive from the same authenticated analysis. Browser/PDF code must never manufacture missing musical placement.
 
-Detailed whole-product roadmap:
+Detailed product map:
 
 `docs/checkpoints/AI_TAB_END_TO_END_CONSTRUCTION.md`
 
----
-
-# RESUME / SAFETY DIRECTIVE
+# SAFETY / RESUME
 
 Resume **only** on `v143-contextual-prune-lobo`.
 
-Never:
+Do not modify `main`, merge this branch, alter/deploy live V143 Modal, automatically promote Production, make payment, redeem customer token, send customer email, weaken quality thresholds, or relabel legacy Lead/Bass as structured professional output.
 
-- modify `main` or merge this branch into `main`;
-- deploy/modify the live V143 Modal endpoint during this validation;
-- automatically promote/enable Production;
-- make a payment, redeem a customer token, or send customer email in automated tests;
-- manufacture timing/measure/step data;
-- weaken analyzer quality thresholds merely to pass a gate;
-- relabel legacy Lead/Bass output as professional structured output.
-
-Keep this file continuously current after meaningful steps/results. A new chat should be able to resume from this file alone.
+Keep this file continuously current after meaningful results.
 
 ---
 
-# LIVE CURRENT STEP — staged built-Next Rhythm HTTP gate
+# LIVE STEP — STAGED RHYTHM BUILT-NEXT HTTP GATE
 
-Authoritative workflow:
+Workflow:
 
 `.github/workflows/v143-ai-tab-branch-build-gate.yml`
 
@@ -43,11 +33,9 @@ Authoritative source:
 
 `22dc06af353220006a7558c6b9ba0c262cc64cb8` — `Add staged diagnostics to V143 branch gate`
 
-The earlier `4c9c33b...` run was superseded because it remained opaque for >20 minutes. Do not follow its old schema-4 heartbeat.
+The obsolete `4c9c33b...` >20-minute opaque run was superseded. Follow only source `22dc06a...` or a later staged source.
 
-## Current staged evidence — POST-VERIFIERS PASSED
-
-Route heartbeat:
+Current heartbeat:
 
 `debug/v143-contextual-prune/next-preview-route-smoke.json`
 
@@ -61,11 +49,9 @@ productionModified: false
 productionPromotionAuthorized: false
 ```
 
-Progress evidence:
+Current staged progress:
 
 `debug/v143-contextual-prune/branch-gate-progress.json`
-
-Latest result:
 
 ```text
 schemaVersion: 2
@@ -75,38 +61,21 @@ analyzerQualityVerifierExitCode: 0
 previewFeatureVerifierExitCode: 0
 installExitCode: null
 nextBuildExitCode: null
-localNextPreviewSimulation: true
-actualVercelPreviewDeployment: false
-vercelDeploymentAttempted: false
-liveEndpointDeployedOrModified: false
 productionModified: false
 productionPromotionAuthorized: false
 ```
 
-**Interpretation:** GitHub Actions runner is healthy. Analyzer-quality and Preview feature regressions both pass. The previous long delay is now isolated to a later phase, not these product gates.
+**Meaning:** runner is healthy; analyzer-quality and Preview feature regressions pass. The workflow is currently in the Node-24 setup/install portion.
 
-## Immediate next step
-
-Fetch `debug/v143-contextual-prune/branch-gate-progress.json` again and follow the staged phases:
+Staged phases:
 
 ```text
 post-verifiers → post-install → post-build → final HTTP evidence
 ```
 
-At `post-install` require:
+Immediate next action: fetch `branch-gate-progress.json` and require `post-install` with `installExitCode:0`, then `post-build` with `nextBuildExitCode:0`.
 
-```text
-installExitCode: 0
-```
-
-At `post-build` require:
-
-```text
-installExitCode: 0
-nextBuildExitCode: 0
-```
-
-Final route evidence must become:
+Final route proof must show:
 
 ```text
 phase: complete-by-staged-branch-gate
@@ -116,51 +85,40 @@ serverReady: true
 routeSmokeExitCode: 0
 passed: true
 actualVercelPreviewDeployment: false
+vercelDeploymentAttempted: false
 productionModified: false
 productionPromotionAuthorized: false
 ```
 
-Required structured response:
+Required structured Preview headers:
 
 ```text
-HTTP 200
-Content-Type: application/pdf
 X-Jimmy-PAIge-PDF-Feature: v143-branch-preview-canary
 X-Jimmy-PAIge-PDF-Renderer: v143-structured-rhythm
 ```
 
-Required fallback response:
+Required fallback renderer:
 
-```text
-HTTP 200
-Content-Type: application/pdf
-X-Jimmy-PAIge-PDF-Feature: v143-branch-preview-canary
-X-Jimmy-PAIge-PDF-Renderer: polished-safe-fallback
-```
+`polished-safe-fallback`
 
 Missing generated tab must return HTTP 400.
 
-### Staged gate bounds
+Hard bounds:
 
 ```text
-overall: 35 minutes
-analyzer verifier: 120s
-Preview feature verifier: 120s
-npm ci: 600s
-Next build: 600s
-server readiness: 60s
-route smoke: 300s
+overall 35m
+verifiers 120s each
+npm ci 600s
+Next build 600s
+server readiness 60s
+route smoke 300s
 ```
 
-If a later phase returns `124`, that command hit its hard timeout. Diagnose that phase only; do not weaken product assertions.
+Exit `124` means that phase hit its hard timeout. Diagnose only the failing phase; do not weaken assertions.
 
 ---
 
-# WHOLE-PRODUCT CONTRACT — PASSED
-
-Verifier:
-
-`analyzer/verify_ai_tab_end_to_end_contract.mjs`
+# WHOLE-PRODUCT CUSTOMER CONTRACT — PASSED
 
 Evidence:
 
@@ -190,37 +148,30 @@ productionModified: false
 productionPromotionAuthorized: false
 ```
 
-Key commits:
-
-- `97ec364c257b516949e2c2be8a94c24cb0ed0d39` — initial bot evidence.
-- `8784cbb734928ff8284cc17d6c41f0844c7fbe22` — Preview/full renderer parity guard.
-
-**Conclusion:** customer application wiring is proven for Bass, Lead, and Rhythm. The remaining parity gap is professional analyzer/separation/event quality, not page wiring.
+Preview and purchased/full routes are contract-proven to share `getJimmyPaigeProfessionalPdfFeatureState(...)` and `createJimmyPaigeProfessionalPdf(...)`.
 
 ---
 
-# RHYTHM PROFESSIONAL TRACK — PROVEN ANALYZER/PDF CORE
+# RHYTHM PROFESSIONAL CORE — PASSED
 
 Approved fixture:
 
 `public/gomywayfullaitest.m4a`
 
-Real-audio evidence:
+Analyzer evidence:
 
 `debug/v143-contextual-prune/ai-tab-real-audio-canary.json`
 
-Bot evidence commit:
+Bot evidence:
 
 `9f52bf83597e921da12887874bace0df0ffe6d47`
 
-Key result:
+Key results:
 
 ```text
 passed: true
 analysisEngine: v143-reference-free-rhythm
 referenceFree: true
-modalGpu: L4
-rawEventCount: 358
 validRenderEventCount: 358
 renderEventSurvivalPercent: 100%
 playableStringFretPercent: 100%
@@ -232,10 +183,9 @@ sustainCoverage: 358/358
 tempo: 129.19921875
 meter: 4/4
 tuning: E Standard
-techniques: bend, bend-release, hammer-on, pull-off, slide-down, slide-up
 ```
 
-Exact-response PDF evidence:
+PDF evidence:
 
 `debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json`
 
@@ -247,25 +197,17 @@ fullPageCount: 4
 previewPageCount: 4
 ```
 
-Structured identity remains fail-closed on `liveV143.referenceFree === true` plus analyzer quality and surviving structured events.
-
 ---
 
-# BASS PROFESSIONAL TRACK — INACTIVE SEPARATION SCAFFOLD PASSED
+# BASS PROFESSIONAL TRACK — INACTIVE SCAFFOLDS PASSED
 
-Files:
-
-```text
-analyzer/bass_professional_separator_scaffold.py
-analyzer/verify_bass_professional_separator_scaffold.py
-.github/workflows/bass-professional-separator-scaffold.yml
-```
+## Separation scaffold
 
 Evidence:
 
 `debug/v143-contextual-prune/bass-professional-separator-scaffold.json`
 
-Bot evidence:
+Bot commit:
 
 `70c5411d2e72f06923e88075e6f48f9555a8c0e5`
 
@@ -273,51 +215,69 @@ Bot evidence:
 passed: true
 directPath: audio -> Demucs6s Bass
 cascadePath: audio -> BS-RoFormer Instrumental -> Demucs6s Bass
-demucsSingleStem: Bass
-demucsShifts: 1
-demucsOverlap: 0.10
-demucsSegmentSize: 6
 deterministicSeed: 143
-referenceFree: true
 diagnosticOnly: true
-productionCandidate: false
 analyzerRoutingEnabled: false
 professionalStructuredIdentityEnabled: false
 realAudioBassCanaryPassed: false
-noteTimingTechniqueQualityProven: false
+```
+
+## Four-string render-contract scaffold
+
+Files:
+
+```text
+lib/bassProfessionalRenderContract.js
+analyzer/verify_bass_professional_render_contract.mjs
+.github/workflows/bass-professional-render-contract.yml
+```
+
+Bot evidence commit:
+
+`4bd524c79feb621c497d8917128b36e971d85d1b` — `Record Bass professional render scaffold`
+
+Evidence:
+
+`debug/v143-contextual-prune/bass-professional-render-contract.json`
+
+```text
+passed: true
+tuning: Standard Bass
+stringLabels: G, D, A, E
+openMidi: 43, 38, 33, 28
+stringCount: 4
+maximumFret: 24
+stepsPerMeasure: 16
+validFixtureEvents: 4
+projectedFixtureEvents: 4
+invalidFixtureEventsRejected: 5
+pitchStringFretConsistencyRequired: true
+diagnosticOnly: true
+productionCandidate: false
+pdfRendererEnabled: false
+analyzerRoutingEnabled: false
+professionalStructuredIdentityEnabled: false
+realAudioBassCanaryPassed: false
 productionModified: false
 productionPromotionAuthorized: false
 ```
 
-Do **not** route customer Bass traffic to this scaffold yet. Next Bass milestone is an isolated approved real-audio separation/analysis canary only after the current Rhythm integration gate is resolved.
+**Important:** this prevents future Bass output from being incorrectly engraved on the six-string Rhythm/Guitar staff. No Bass PDF renderer is enabled yet.
 
-Important architecture distinction:
+Historical `bass_technique_diagnostics_v7.py` was reviewed and explicitly identifies itself as `reference-guided-bass-technique-diagnostic-only`; do not reuse that label-guided logic in the new reference-free Bass professional path.
+
+Architecture distinction:
 
 - Bass has a true Demucs `Bass` stem.
-- Lead and Rhythm both exist inside the separated `Guitar` stem. A future Lead path needs Lead-specific musical analysis/selection on guitar views, not a fictitious Lead stem.
+- Lead and Rhythm both live in the separated `Guitar` stem; future Lead needs Lead-specific analysis/selection, not a fake Lead stem.
 
 ---
 
 # VERCEL PREVIEW BLOCKER
 
-No exact-branch Vercel Preview is available yet.
+No exact-branch Vercel Preview exists yet.
 
-Project:
-
-```text
-project: dadrock-tabs-android
-projectId: prj_6biwsn0iHci6FHNswAUCS8UYrAqF
-teamId: team_qJrw8Cuze5bCEg9M3Q67XMWt
-node: 24.x
-```
-
-Fail-closed workflow:
-
-`.github/workflows/v143-vercel-preview-deploy.yml`
-
-Latest evidence:
-
-`debug/v143-contextual-prune/vercel-preview-deploy-action.json`
+`debug/v143-contextual-prune/vercel-preview-deploy-action.json` still shows:
 
 ```text
 vercelTokenAvailableInGitHubActions: false
@@ -330,17 +290,15 @@ productionModified: false
 productionPromotionAuthorized: false
 ```
 
-Do not use the connected Vercel deploy action merely to obtain a URL because it does not expose an exact source branch/ref.
+Do not use the connected Vercel deploy action merely to obtain a URL because it cannot guarantee the exact branch source.
 
 ---
 
-# NEXT AFTER STAGED LOCAL HTTP PASS
+# NEXT BOUNDARIES
 
-1. Mark local built-Next Rhythm application wiring closed.
-2. Leave real Vercel Preview deployment/environment integration as the remaining Rhythm application blocker.
-3. When a supported Vercel CLI token exists, rerun the fail-closed Preview deployment workflow.
-4. Confirm target is Preview before requests.
-5. Validate `/ai-tab` and `/api/generate-tab-preview` first.
-6. Only after deployed route + runtime-key proof, consider actual browser upload using `public/gomywayfullaitest.m4a`.
-7. Do not automate `/api/generate-tab-pdf` because unlock verification can cause payment/token/email side effects.
-8. After Rhythm application integration is closed, advance Bass real-audio professional canary and then a separate Lead professional track.
+1. Finish the staged Rhythm built-Next HTTP gate.
+2. If it passes, mark local Rhythm application wiring closed; real Vercel Preview integration remains external blocker.
+3. Only after the Rhythm integration boundary is closed, advance Bass from inactive contracts to an isolated approved real-audio separation/analysis canary.
+4. Keep Bass routing, Bass structured identity, and Bass PDF renderer disabled until real-audio quality is proven.
+5. Lead remains legacy; future professional Lead should use separated guitar views plus Lead-specific analysis/selection.
+6. Never automate the real full-PDF unlock route during validation because it can trigger payment/token/email side effects.
