@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "gate": "bass-real-audio-candidate-note-timing-playability",
+  "approvedFixture": "public/gomywayfullaitest.m4a",
+  "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "sourceBytes": 3478611,
+  "separator": {
+    "directPath": "audio -> Demucs6s Bass",
+    "cascadePath": "audio -> BS-RoFormer Instrumental -> Demucs6s Bass",
+    "settings": {
+      "demucsSingleStem": "Bass",
+      "demucsShifts": 1,
+      "demucsOverlap": 0.1,
+      "demucsSegmentSize": 6,
+      "roformerSingleStem": "Instrumental",
+      "roformerBatchSize": 1,
+      "deterministicSeed": 143
+    },
+    "models": {
+      "demucs": "htdemucs_6s.yaml",
+      "bsRoformer": "model_bs_roformer_ep_317_sdr_12.9755.ckpt"
+    }
+  },
+  "timing": {
+    "tempoBpm": 129.19921875,
+    "meterNumerator": 4,
+    "meterDenominator": 4,
+    "beatCount": 447,
+    "firstBeatInMeasure": 3,
+    "downbeatIndexMod4": 1,
+    "beatConfidence": 0.7232655171250919,
+    "barConfidence": 0.08797339512490356,
+    "sourceSampleRate": 44100,
+    "analysisSampleRate": 22050,
+    "referenceFree": true
+  },
+  "candidateDiagnostics": {
+    "sourceRawEventCounts": {
+      "direct": 21354,
+      "cascade": 20589
+    },
+    "sourceInBassRangeCounts": {
+      "direct": 21354,
+      "cascade": 20589
+    },
+    "sourceGridAlignedCounts": {
+      "direct": 21079,
+      "cascade": 20309
+    },
+    "slotPitchHypothesisCount": 22648,
+    "rejectedSlotPitchHypothesesWithoutConsensus": 9132,
+    "consensusSlotCount": 1754,
+    "acceptedEventCount": 1754,
+    "requiredConsensusViews": 2,
+    "maximumGridErrorSeconds": 0.1,
+    "bassMidiMinimum": 28,
+    "bassMidiMaximum": 67,
+    "bassMinimumFrequencyHz": 41.20344461410875,
+    "bassMaximumFrequencyHz": 391.99543598174927
+  },
+  "eventCount": 1754,
+  "projectedRenderEventCount": 1754,
+  "uniqueMeasures": 113,
+  "consensusEventCount": 1754,
+  "bassRangeEventCount": 1754,
+  "gridErrorAuthenticatedEventCount": 1754,
+  "techniqueFreeEventCount": 1754,
+  "qualityThresholds": {
+    "minimumValidRenderEvents": 4,
+    "minimumRenderEventSurvivalPercent": 70,
+    "minimumPlayableStringFretPercent": 70,
+    "minimumTimingCoveragePercent": 70,
+    "minimumPitchValidityPercent": 70,
+    "minimumPitchStringFretConsistencyPercent": 70
+  },
+  "qualityReport": {
+    "name": "bass-professional-quality-gate",
+    "version": 1,
+    "instrument": "bass",
+    "rawEventCount": 1754,
+    "validRenderEventCount": 1754,
+    "renderEventSurvivalPercent": 100,
+    "playableStringFretPercent": 100,
+    "timingCoveragePercent": 100,
+    "pitchValidityPercent": 100,
+    "pitchStringFretConsistencyPercent": 100,
+    "thresholds": {
+      "minimumValidRenderEvents": 4,
+      "minimumRenderEventSurvivalPercent": 70,
+      "minimumPlayableStringFretPercent": 70,
+      "minimumTimingCoveragePercent": 70,
+      "minimumPitchValidityPercent": 70,
+      "minimumPitchStringFretConsistencyPercent": 70
+    },
+    "passed": true,
+    "diagnosticOnly": true,
+    "productionCandidate": false,
+    "analyzerRoutingEnabled": false,
+    "pdfRendererEnabled": false,
+    "professionalStructuredIdentityEnabled": false,
+    "productionPromotionAuthorized": false
+  },
+  "boundaryChecks": {
+    "approvedFixture": true,
+    "referenceFree": true,
+    "crossViewConsensusRequired": true,
+    "candidateNoteTimingGenerated": true,
+    "eventCountMinimum": true,
+    "consensusCoverage": true,
+    "bassRangeCoverage": true,
+    "gridErrorCoverage": true,
+    "techniqueBoundaryPreserved": true,
+    "timingBeatCount": true,
+    "timingTempoRange": true,
+    "timingMeter": true,
+    "multipleMeasures": true,
+    "requiredConsensusDiagnostics": true,
+    "bassMidiDiagnostics": true,
+    "qualityGatePassed": true,
+    "techniqueQualityNotClaimed": true,
+    "professionalBassNotClaimed": true
+  },
+  "safetyChecks": {
+    "trainingDisabled": true,
+    "routingDisabled": true,
+    "structuredIdentityDisabled": true,
+    "pdfDisabled": true,
+    "liveEndpointUnchanged": true,
+    "vercelNotAttempted": true,
+    "productionUnchanged": true,
+    "promotionDisabled": true,
+    "purchaseNotAttempted": true,
+    "tokenNotRedeemed": true,
+    "emailNotSent": true
+  },
+  "realAudioBassCandidateTimingPassed": true,
+  "noteTimingPlayabilityBoundaryPassed": true,
+  "techniqueQualityProven": false,
+  "professionalBassComplete": false,
+  "trainingRunAuthorized": false,
+  "analyzerRoutingEnabled": false,
+  "professionalStructuredIdentityEnabled": false,
+  "pdfRendererEnabled": false,
+  "liveEndpointDeployedOrModified": false,
+  "vercelDeploymentAttempted": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "paidPurchaseAttempted": false,
+  "customerTokenRedeemed": false,
+  "customerEmailSent": false,
+  "passed": true
+}
