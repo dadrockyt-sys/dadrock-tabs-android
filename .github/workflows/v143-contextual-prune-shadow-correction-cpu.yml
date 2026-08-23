@@ -74,6 +74,14 @@ jobs:
 
           protected_blob=$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)
           expected_blob=7f72f8ed9b14af8bc93e95544195204d99c6bec1
+          correction_blob=$(git hash-object analyzer/v143_contextual_prune_shadow_correction.py)
+          checker_blob=$(git hash-object analyzer/check_v143_contextual_prune_shadow_correction.py)
+          modal_blob=$(git hash-object analyzer/v143_contextual_prune_shadow_correction_modal.py)
+          checked_out_commit=$(git rev-parse HEAD)
+          echo "CORRECTION_SOURCE_BLOB=$correction_blob" >> "$log"
+          echo "CORRECTION_CHECKER_BLOB=$checker_blob" >> "$log"
+          echo "CORRECTION_MODAL_BLOB=$modal_blob" >> "$log"
+          echo "CHECKED_OUT_COMMIT=$checked_out_commit" >> "$log"
           if [ "$protected_blob" != "$expected_blob" ]; then
             echo "PROTECTED_PIPELINE_BLOB_MISMATCH=$protected_blob expected=$expected_blob" >> "$log"
             status=32
@@ -81,7 +89,7 @@ jobs:
             echo "PROTECTED_PIPELINE_BLOB=PASS:$protected_blob" >> "$log"
           fi
 
-          STATUS="$status" PROTECTED_BLOB="$protected_blob" EXPECTED_BLOB="$expected_blob" python - <<'PY'
+          STATUS="$status" PROTECTED_BLOB="$protected_blob" EXPECTED_BLOB="$expected_blob" CORRECTION_BLOB="$correction_blob" CHECKER_BLOB="$checker_blob" MODAL_BLOB="$modal_blob" CHECKED_OUT_COMMIT="$checked_out_commit" TRIGGER_SHA="${GITHUB_SHA}" python - <<'PY'
           import json
           import os
           from pathlib import Path
@@ -91,8 +99,13 @@ jobs:
           lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
           status = int(os.environ["STATUS"])
           payload = {
-              "schemaVersion": 1,
+              "schemaVersion": 2,
               "gate": "v143-contextual-prune-shadow-correction-cpu",
+              "triggerSha": os.environ["TRIGGER_SHA"],
+              "checkedOutCommit": os.environ["CHECKED_OUT_COMMIT"],
+              "correctionSourceBlob": os.environ["CORRECTION_BLOB"],
+              "checkerSourceBlob": os.environ["CHECKER_BLOB"],
+              "modalSourceBlob": os.environ["MODAL_BLOB"],
               "exitCode": status,
               "passed": status == 0,
               "referenceTokenScanPassed": any(
@@ -104,7 +117,7 @@ jobs:
               "professionalReferenceUsed": False,
               "runtimeLabelsRequired": False,
               "productionModified": False,
-              "logTail": lines[-160:],
+              "logTail": lines[-180:],
           }
           output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
           PY
@@ -144,6 +157,13 @@ jobs:
               "productionModified": False,
           }
           failed = [key for key, expected in required.items() if data.get(key) is not expected]
+          identity_fields = (
+              "checkedOutCommit",
+              "correctionSourceBlob",
+              "checkerSourceBlob",
+              "modalSourceBlob",
+          )
+          failed.extend(key for key in identity_fields if not str(data.get(key) or "").strip())
           if failed:
               raise SystemExit(f"V143 correction CPU gate failed: {failed}")
           print("V143 contextual-prune shadow correction CPU gate passed")
