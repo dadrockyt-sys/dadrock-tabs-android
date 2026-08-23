@@ -1,4 +1,5 @@
 name: Rhythm Professional Pre-Holdout Real Audio
+# Fresh post-polyphony approved-audio freeze trigger: 2026-08-23.
 
 on:
   workflow_dispatch:
@@ -77,8 +78,8 @@ jobs:
             > .preholdout/esm/v143AnalyzerQuality.mjs
 
           sed \
-            -e "s#'./v143AnalyzerQuality.js'#'./v143AnalyzerQuality.mjs'#" \
-            -e "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
+            -e "s#'./v143AnalyzerQuality.js'#'./v143AnalyzerQuality.mjs#" \
+            -e "s#'./v143RenderContract.js'#'./v143RenderContract.mjs#" \
             lib/jimmyPaigeAnalysisPayload.js \
             > .preholdout/esm/jimmyPaigeAnalysisPayload.mjs
 
