@@ -1,0 +1,106 @@
+name: Bass Professional Quality Scaffold
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/bass-professional-quality-scaffold.yml'
+      - 'lib/bassProfessionalRenderContract.js'
+      - 'lib/bassProfessionalQuality.js'
+      - 'analyzer/verify_bass_professional_quality_gate.mjs'
+
+concurrency:
+  group: bass-professional-quality-scaffold
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  verify-quality-scaffold:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify inactive Bass professional quality gate
+        env:
+          BASS_QUALITY_RESULT_PATH: debug/v143-contextual-prune/bass-professional-quality-scaffold.json
+        run: node --experimental-default-type=module analyzer/verify_bass_professional_quality_gate.mjs
+
+      - name: Enforce fail-closed safety boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('debug/v143-contextual-prune/bass-professional-quality-scaffold.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+
+          if data.get('passed') is not True:
+              raise SystemExit('Bass professional quality scaffold did not pass')
+          passing = data.get('passingFixture') or {}
+          if passing.get('passed') is not True:
+              raise SystemExit('Known-good Bass fixture did not pass quality scaffold')
+          if data.get('weakFixturePassed') is not False:
+              raise SystemExit('Weak Bass fixture must fail')
+          if data.get('legacyUntimedPassed') is not False:
+              raise SystemExit('Legacy untimed Bass events must fail structured quality')
+          if data.get('legacyUntimedTimingCoveragePercent') != 0:
+              raise SystemExit('Legacy untimed fixture should have zero timing coverage')
+          if data.get('diagnosticOnly') is not True:
+              raise SystemExit('Bass quality scaffold must remain diagnostic-only')
+          if data.get('productionCandidate') is not False:
+              raise SystemExit('Bass quality scaffold must not claim production status')
+          if data.get('analyzerRoutingEnabled') is not False:
+              raise SystemExit('Bass analyzer routing must remain disabled')
+          if data.get('pdfRendererEnabled') is not False:
+              raise SystemExit('Bass PDF renderer must remain disabled')
+          if data.get('professionalStructuredIdentityEnabled') is not False:
+              raise SystemExit('Bass structured identity must remain disabled')
+          if data.get('realAudioBassCanaryPassed') is not False:
+              raise SystemExit('Bass real-audio canary is not yet proven')
+          if data.get('productionModified') is not False:
+              raise SystemExit('Safety failure: Production modified')
+          if data.get('productionPromotionAuthorized') is not False:
+              raise SystemExit('Safety failure: Production promotion authorized')
+
+          print('BASS PROFESSIONAL QUALITY SCAFFOLD PASSED')
+          print('weakFixturePassed=false')
+          print('legacyUntimedPassed=false')
+          print('professionalStructuredIdentityEnabled=false')
+          print('productionModified=false')
+          PY
+
+      - name: Commit compact scaffold evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          file=debug/v143-contextual-prune/bass-professional-quality-scaffold.json
+          git add -- "$file"
+
+          if git diff --cached --quiet; then
+            echo 'Bass quality scaffold evidence unchanged.'
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Bass professional quality scaffold'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
