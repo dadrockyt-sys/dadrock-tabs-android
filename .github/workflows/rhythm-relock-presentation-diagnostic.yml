@@ -1,0 +1,108 @@
+name: Rhythm Relock Presentation Diagnostic
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/rhythm-relock-presentation-diagnostic.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: rhythm-professional-preholdout-real-audio
+          path: .source
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: 32643978196
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Diagnose source and current section presentation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .diag debug/v143-contextual-prune
+          snapshot=$(find .source -type f -name rhythm-frozen-analysis.json | head -n 1)
+          manifest=$(find .source -type f -name rhythm-freeze-manifest.json | head -n 1)
+          proof=$(find .source -type f -name rhythm-professional-preholdout-real-audio.json | head -n 1)
+          cp "$snapshot" .diag/rhythm-frozen-analysis.json
+          cp "$manifest" .diag/rhythm-freeze-manifest.json
+          cp "$proof" .diag/source-proof.json
+          cp lib/v143RenderContract.js .diag/v143RenderContract.mjs
+
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { summarizeV143RhythmPresentation } from './.diag/v143RenderContract.mjs';
+
+          const frozen = JSON.parse(await fs.readFile('.diag/rhythm-frozen-analysis.json', 'utf8'));
+          const manifest = JSON.parse(await fs.readFile('.diag/rhythm-freeze-manifest.json', 'utf8'));
+          const source = JSON.parse(await fs.readFile('.diag/source-proof.json', 'utf8'));
+          const events = frozen.renderEvents || [];
+          const presentation = summarizeV143RhythmPresentation(events);
+          const maximumMeasure = Math.max(...events.map((event) => Number(event.measure) || 0));
+          const minimumSectionSpan = presentation.sections.length
+            ? Math.min(...presentation.sections.map((section) => section.endMeasure - section.startMeasure + 1))
+            : 0;
+          const expectedHash = 'a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e';
+          const checks = {
+            sourceRunExact: String(source.workflowRunId) === '32643978196',
+            sourceCommitExact: source.sourceCommit === 'b23bdfb476bc26af5f353b7862465af3f2abc485',
+            sourceHashExact: source.frozenEventSha256 === expectedHash,
+            manifestHashExact: manifest.eventSha256 === expectedHash,
+            eventCountExact: presentation.eventCount === 1017,
+            uniqueMeasureCountExact: presentation.uniqueMeasureCount === 112,
+            maximumMeasureExact: maximumMeasure === 113,
+            averageNotesPerMeasure: presentation.averageNotesPerMeasure > 2,
+            multiNoteOnsets: presentation.multiNoteOnsetCount > 0,
+            maximumChordSize: presentation.maximumChordSize >= 2,
+            techniquesPresent: presentation.techniqueEventCount > 0,
+            sectionCountReasonable: presentation.sectionCount >= 2 && presentation.sectionCount <= Math.ceil(maximumMeasure / 8),
+            sectionMinimumSpan: minimumSectionSpan >= 8,
+            startsAtOne: presentation.sections[0]?.startMeasure === 1,
+            endsAtSongEnd: presentation.sections[presentation.sections.length - 1]?.endMeasure === maximumMeasure,
+            collapseAbsent: presentation.oneNotePerMeasureCollapseDetected === false,
+            referenceFree: presentation.referenceFree === true,
+            professionalReferenceNotUsed: presentation.professionalReferenceUsed === false,
+            runtimeLabelsNotRequired: presentation.runtimeLabelsRequired === false,
+          };
+          const failedChecks = Object.entries(checks).filter(([, value]) => !value).map(([name]) => name);
+          const report = {
+            schemaVersion: 1,
+            gate: 'rhythm-relock-presentation-diagnostic',
+            sourceCommit: process.env.GITHUB_SHA,
+            maximumMeasure,
+            minimumSectionSpan,
+            presentation,
+            checks,
+            failedChecks,
+            passed: failedChecks.length === 0,
+            productionModified: false,
+          };
+          await fs.writeFile('debug/v143-contextual-prune/rhythm-relock-presentation-diagnostic.json', JSON.stringify(report, null, 2) + '\n');
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add debug/v143-contextual-prune/rhythm-relock-presentation-diagnostic.json
+          git commit -m 'Record Rhythm relock presentation diagnostic'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
