@@ -13,6 +13,85 @@ Detailed product map:
 
 `docs/checkpoints/AI_TAB_END_TO_END_CONSTRUCTION.md`
 
+# FINAL PRODUCT ARCHITECTURE — SHARED CORE + SEPARATE RHYTHM / LEAD / BASS ENGINES
+
+The intended final production structure is **one shared core plus three separate instrument-specific final-product folders/engines**. Rhythm is the proven reference architecture/template, but Lead and Bass must remain independently trainable and instrument-specific rather than becoming copies of Rhythm musical assumptions.
+
+Target organization:
+
+```text
+analyzer/final_product/
+  shared/
+    audio_normalization/
+    request_adapter/
+    timing_grid/
+    event_schema/
+    metadata/
+    quality_metrics/
+    common_evidence/
+    shared_safety/
+
+  rhythm/
+    separation/
+    hz_features/
+    candidate_detection/
+    fretboard_mapping/
+    timing/
+    techniques/
+    model/
+    training/
+    output/
+    quality_gate/
+
+  lead/
+    separation/
+    hz_features/
+    candidate_detection/
+    fretboard_mapping/
+    timing/
+    techniques/
+    model/
+    training/
+    output/
+    quality_gate/
+
+  bass/
+    separation/
+    hz_features/
+    candidate_detection/
+    fretboard_mapping/
+    timing/
+    techniques/
+    model/
+    training/
+    output/
+    quality_gate/
+```
+
+Professional rendering should follow the same separation of concerns:
+
+```text
+pdf/shared/
+pdf/rhythm/
+pdf/lead/
+pdf/bass/
+```
+
+Architecture rules:
+
+1. **Rhythm is the implementation template, not the universal musical model.** Reuse its proven pipeline shape to reduce workload: separation/views → Hz/pitch evidence → candidates → timing → playable position → technique evidence → authenticated events → quality gate → professional PDF.
+2. **Shared code should contain only genuinely instrument-agnostic behavior** such as audio normalization, request handling, timing/grid utilities, common event schema, metadata transport, evidence/safety helpers, and reusable PDF layout primitives.
+3. **Each instrument owns its own Hz/frequency behavior, training data, model/checkpoints, candidate selection, fretboard mapping, techniques, quality thresholds, output identity, and instrument-specific rendering rules.** This intentionally permits independent Bass and Lead training without changing the frozen/proven Rhythm engine.
+4. **Bass has a real separate Bass stem.** The professional Bass path should use deterministic Demucs `Bass` separation (including the already scaffolded paired direct/cascade views), four-string `G-D-A-E` mapping, Bass-specific Hz ranges/features, Bass training, Bass techniques, Bass quality gate, and a true four-string professional TAB renderer.
+5. **Lead and Rhythm both begin from separated Guitar views, not imaginary Lead/Rhythm stems.** Lead and Rhythm may reuse the same deterministic Guitar separation substrate, but they must diverge after separation: Rhythm keeps its chord/riff-oriented V143 analysis while Lead gets Lead-specific melodic/solo selection, Hz/pitch trajectory logic, fretboard movement, bends/releases/vibrato/slides/legato emphasis, Lead training, and its own quality gate.
+6. **Separate model/training evolution is allowed and expected.** Future Bass or Lead Hz features, datasets, learned weights/checkpoints, technique models, and tuning-specific behavior must be able to evolve independently without retraining or modifying the proven Rhythm engine.
+7. **No instrument earns structured professional identity merely by matching the folder shape.** Lead and Bass remain fail-closed until each independently passes real-audio separation/analysis quality, authenticated timing/playability, technique evidence, preview/full PDF evidence, and its own conservative quality gate.
+8. **Do not duplicate shared infrastructure unnecessarily.** The goal of the folder split is to reduce workload and prevent cross-instrument regressions while preserving independent musical intelligence where it matters.
+
+Concise final architecture:
+
+> **Shared DadRock core + Rhythm engine + Lead engine + Bass engine. Rhythm supplies the proven architectural pattern; Bass and Lead get their own Hz analysis, training/models, techniques, fretboard rules, quality gates, identities, and final renderers.**
+
 # SAFETY / RESUME
 
 Resume **only** on `v143-contextual-prune-lobo`.
