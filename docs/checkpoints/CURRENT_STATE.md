@@ -73,6 +73,17 @@ Historical contextual-prune development grading also contains a 431-event refere
 
 Next inventory work: locate the complete professional source/pages and any existing event-level extraction/provenance in the repository or supplied Library before manually reconstructing anything.
 
+### New final Rhythm holdout infrastructure — STARTED / REFERENCE STILL SEALED
+
+Committed scorer-only infrastructure on this branch:
+
+- `ade4cfeaf4d9e340cb06c9c6a11daf96f67ebad4` — `validation/rhythm_holdout/README.md`, defining the strict audio → frozen structured events → PDF identity → post-hoc human-reference scoring order.
+- `d909df1a59f10969aa7862edf76ffd6b55bd1792` — `validation/rhythm_holdout/reference/reference.schema.json`, a complete event/measure reference schema for pitch, string/fret, voicing, timing, duration, ties/rests and techniques.
+- `e76bfb70bd4b6659e578b485bb4bdceec3654d0c` — `validation/rhythm_holdout/canonical.py`, canonical V143 Rhythm event normalization and SHA-256 fingerprinting.
+- `83a52eaceaa50fca069fd15320919b4c1811ce38` — `validation/rhythm_holdout/freeze_rhythm_analysis.py`, which refuses reference-directory input, requires explicit `referenceFree:true`, `professionalReferenceUsed:false`, `referenceRuntimeInputUsed:false`, requires the exact professional `renderEvents` stream, and freezes/hash-manifests it before the scorer may access the human tab.
+
+The reference remains unopened by this freeze infrastructure and no score has been run. Next: add PDF-event hash verification, static runtime-isolation guard, and the isolated professional scorer; then locate/complete the full user-supplied human reference before scoring.
+
 ## Bass separation + pitch — CLOSED GREEN / PAUSED
 
 Run `32611529763` passed. Direct/cascade stems are distinct, seed 143 fixed, both 211.44 s, ~99.99% 30–1000 Hz energy, ~99.7% playable-range pitch frames.
