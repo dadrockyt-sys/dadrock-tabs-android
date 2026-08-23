@@ -56,7 +56,29 @@ Old holdout FAILED:
 
 General failure classes only: attack under-selection/measure loss; polyphony/harmonic inflation; broad pitch-position-timing mismatch. No song-specific runtime rule may come from the scorer/reference.
 
-## Attack + pitch correction shadow
+## Boundary-grid fix — GREEN
+
+The first hardened approved correction run failed safely because the research carrier required `113 * 16 = 1808` slots even though the approved audio begins inside measure 1 and ends inside measure 113. The physically valid timing grid has 1788 slots.
+
+Carrier fix:
+- `analyzer/v143_contextual_prune_reference_free_carrier.py`
+- commit `9b0adba5cda329cccbee0b7eed58cd4f75277ee0`
+- no synthetic boundary timing slots
+- full 16-step interior measures remain mandatory
+- first partial boundary must be a contiguous suffix ending step 15
+- last partial boundary must be a contiguous prefix starting step 0
+
+Dedicated proof is now GREEN:
+`debug/v143-contextual-prune/boundary-grid.json`
+- trigger/checkout `5840db2af5e8cfe230ff09f364f1616d57fd57a0`
+- carrier blob `99866aa8af14dc243d226c6fb28d68af14d003ac`
+- checker blob `422efbc4c9eac8bd78b67e23102e97d8801491f1`
+- exact approved shape: measure 1 steps 12–15, measures 2–112 full, measure 113 steps 0–7
+- grid count 1788
+- no synthetic boundary slots
+- token scan passed; protected pipeline exact; Production unchanged
+
+## Attack + pitch correction shadow — approved audio GREEN
 
 Files:
 - `analyzer/v143_contextual_prune_shadow_correction.py`
@@ -65,109 +87,117 @@ Files:
 - `.github/workflows/v143-contextual-prune-shadow-correction-cpu.yml`
 - `.github/workflows/v143-contextual-prune-shadow-correction-approved-audio.yml`
 
-Conservative uncertainty fix: if the strongest pitch candidate itself fails independent two-view attack/body floors, preserve the entire observed pitch set; suppress secondaries only after the strongest pitch has positive physical support.
-- code commit `2544c1c6da446bb6eaeaf96b6745757fce0a54a4`
-- checker commit `b682d5ed6574866ec2ac175d6c72be13f9fc8fbd`
+Conservative uncertainty rule remains: if the strongest pitch candidate fails independent two-view attack/body floors, preserve the entire observed pitch set; suppress secondaries only after the strongest pitch itself has positive physical support.
 
-Current source-stamped CPU report `debug/v143-contextual-prune/shadow-correction-cpu.json` is GREEN:
-- schema 2; passed true
-- correction blob `3bcad86b67116cc6d50295f2937a7bf3602b41dd`
-- checker blob `bfe37235938b33d2f36f4f9d6ef39ebabeeb57e7`
-- synthetic base 2 / corrected 4 / rescued 2 / suppressed 1
-- protected blob exact; token scan passed; Production unchanged
+CPU proof remains GREEN with correction blob `3bcad86b67116cc6d50295f2937a7bf3602b41dd` and checker blob `bfe37235938b33d2f36f4f9d6ef39ebabeeb57e7`.
 
-### First hardened approved-audio correction run — FAILED safely
-
-Action now exists: `debug/v143-contextual-prune/shadow-correction-approved-audio-action.json`
-
-It proves the safety gates worked:
+Fresh approved-audio action is GREEN:
+`debug/v143-contextual-prune/shadow-correction-approved-audio-action.json`
+- trigger/checkout `9b0adba5cda329cccbee0b7eed58cd4f75277ee0`
 - schema 3
-- trigger/checkout `f088337bef0811187b87e93265186f80336d8c2d`
-- correction source blob `3bcad86b67116cc6d50295f2937a7bf3602b41dd`
-- Modal runner blob `1ee6b81c5cc61dfea7d6ed927948896770db3ac0`
-- timing-hypothesis blob `775a64aa5b561ddc643c5b970372298875451664`
 - approved SHA exact
 - protected pipeline exact
 - reference-token scan passed
-- Modal credentials available; shadow attempted
-- Production/live endpoint unchanged
+- Modal credentials present
+- shadow attempted; exit code 0
+- report exists
+- no professional reference/runtime labels/live deployment/Production modification
 
-But `shadowExitCode=1` and `reportExists=false`.
+Fresh approved report:
+`debug/v143-contextual-prune/shadow-correction-approved-audio.json`
 
-Exact general failure:
-`RuntimeError: Contextual-prune carrier grid incomplete: 1788 != 1808`
+Physical/reference-free result:
+- carrier rows 5,484; grid 1,788; raw detector events 143,902
+- contextual base selector: 1,116 base events → 949 candidate attacks
+- correction: 949 → 979 attacks via 30 strict physically observed local-peak rescues
+- all 113 measures populated before and after correction
+- original observed pitch hypotheses: 10,686 total, mean 10.915/event, max 33
+- corrected supported pitch hypotheses: 2,055 total, mean 2.099/event, max 8
+- 959 events changed only by suppression; 8,631 candidate pitches suppressed
+- events with >=5 pitches: 884 → 41
+- events with >=6 pitches: 833 → 14
+- base events preserved; no event relocation; no invented pitch
+- timing diagnostics do not mutate tempo/phase/attacks/pitch
 
-Diagnosis is label-free: the timing estimate starts inside measure 1 and ends inside measure 113. `1788` slots correspond to a valid first-measure suffix + full interior measures + last-measure prefix. The old carrier incorrectly required all 113 numbered measures to contain 16 slots, which would require inventing pre-audio/post-audio timing slots.
+Timing evidence:
+- tempo `129.19921875`
+- first beat in measure `3`; downbeat index mod4 `1`
+- current four-way phase is the label-free winner but confidence is low: `0.08797339512490407`
+- strict residual median ~27.3 ms; ~99.65% within 60 ms
+- strict grid ambiguity fraction within 20 ms ~15.97%
+- phase was **not** selected/changed by the diagnostic
 
-### Boundary-grid fix
-
-`analyzer/v143_contextual_prune_reference_free_carrier.py` commit `9b0adba5cda329cccbee0b7eed58cd4f75277ee0`
-
-New behavior:
-- no synthetic boundary slots are added
-- every interior requested measure must still contain all 16 steps
-- first partial boundary must be a contiguous suffix ending at step 15
-- last partial boundary must be a contiguous prefix starting at step 0
-- all measures must exist; all steps valid/unique/contiguous
-- single-measure partial captures remain allowed when internally contiguous
-- protected runtime is untouched
-
-This carrier change automatically retriggers the approved-audio correction shadow.
-
-Dedicated proof:
-- `analyzer/check_v143_contextual_prune_boundary_grid.py` commit `9dcda4aaa5871b29fa795448ed909653b8d37a6c`
-- `.github/workflows/v143-contextual-prune-boundary-grid.yml` commit `649944ba729c396cfa2c3963147e3331cfba4883`
-- synthetic approved-shape proof explicitly uses 1788 slots: measure 1 steps 12–15, measures 2–112 full, measure 113 steps 0–7
-- malformed interior gap, invalid first/last boundary shape, and duplicate slot must fail
-- CPU diagnostic pending
-
-Do not accept the correction musically until a **new** approved-audio report is green.
-
-## Approved-shadow physical review — CPU PASSED
+## Real approved correction physical review — GREEN
 
 Reusable scorer-free reviewer:
-- `analyzer/v143_approved_shadow_physical_review.py` commit `68c13fb87b08b1eb949d4732650238d900e7fdfc`
-- checker commit `2de96bca2f1298dff5221a761fb2c2602140088a`
-- workflow commit `39263eedc06f7caffb42c4ca0917721c04586fb5`
-- bot diagnostic commit `bc24a8aae6945fecfe9a7f63122836052a8b122b`
-- report `debug/v143-contextual-prune/approved-shadow-physical-review.json` passed true
-- protected blob exact; reference token scan passed; Production unchanged
+- `analyzer/v143_approved_shadow_physical_review.py`
+- reviewer source blob `c8025ee99596354d731628b57e42f69e0ca39c10`
 
-It validates approved fixture/runtime/action safety, event-count reconciliation, unique observed rescues, non-decreasing coverage, no newly missing measures, suppression-only pitch changes, exact suppression counts, and non-mutating timing hypotheses. It deliberately does **not** decide musical correctness or use the professional reference.
+Checker was extended to validate the real approved action/report in addition to synthetic tamper cases:
+- commit `670fb25b9177f1483abe0efca2fd1781a89e3cb8`
+- checker blob `e2facac5a63d49af05bd85f4bcf05625113284cf`
 
-## Semantic primary-note guard / sustain
+Current diagnostic:
+`debug/v143-contextual-prune/approved-shadow-physical-review.json`
+- trigger/checkout `670fb25b9177f1483abe0efca2fd1781a89e3cb8`
+- passed true
+- real metrics: base 949 / corrected 979 / rescued 30 / suppressed pitches 8,631
+- all 113 measures remain populated
+- 959 pitch-changed events reconcile exactly
+- phase winner matches current; no phase mutation
+- professional reference not used
+- protected pipeline exact; Production unchanged
 
-Semantic CPU report `debug/v143-contextual-prune/rhythm-semantic-primary-note-guard.json` is green: event/timing/pitch/string/fret identity preserved while invalid secondary audio bend/legato ownership is removed; protected exact; Production unchanged.
+This establishes internal physical/safety consistency. It is **not** yet a professional score and does not claim musical correctness.
 
-Sustain CPU report `debug/v143-contextual-prune/rhythm-sustain-consensus-shadow.json` is green: two-view harmonic persistence writes only `rhythmSustainShadow`; no attack/pitch invention; no tie/let-ring inference; Production unchanged.
+## Semantic primary-note guard + sustain — approved audio GREEN
 
-Approved semantics+sustain runner: `analyzer/v143_rhythm_semantics_sustain_approved_shadow_modal.py`, commit `cd0fec62bdd3b4da9ce7645db4d3582d528a2164`.
+Approved action:
+`debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow-action.json`
+- schema 3; exit 0; report exists
+- approved SHA exact; protected exact; token scan passed
+- no live/Production modification
 
-Approved workflow `.github/workflows/v143-rhythm-semantics-sustain-approved-shadow.yml`:
-- race-safe/source-stamped `a7af569758c50c68a2dea6d59bc0804ec66562db`
-- anti-leakage/protected-runtime hardened `6443b78a2a593734726499186ba4eeb58da2317f`
+Approved report:
+`debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow.json`
 
-Expected action/report are still pending. Do not integrate semantics/sustain into routing until green.
+Semantic guard on the current 358-attack production-compatible assembly:
+- 1,020 rendered notes
+- before guard: 82 technique events, 53 on secondary/polyphonic notes, 40 bends, 42 legato sources
+- after guard: 22 technique events, zero secondary technique events, 13 bends, 9 legato sources
+- stripped 27 secondary bends, 48 secondary legato annotations, 7 invalid primary→secondary legato links, 80 audio-derived technique labels
+- event/timing/pitch/string/fret identity unchanged
 
-## Timing diagnostics
+Sustain shadow:
+- 652/1,020 notes received two-view harmonic-persistence sustain evidence
+- 587 were longer than the current detector sustain; 56 shorter
+- no attacks/pitches moved or invented
+- no tie/let-ring inferred from duration alone
+- current production sustain is not overwritten
 
-Timing consistency shadow is green: `debug/v143-contextual-prune/rhythm-timing-consistency-shadow.json`.
+Both are reference-free and physically safe, but they are not yet integrated into the new corrected candidate freeze.
 
-Four-way phase + grid ambiguity shadow is green:
-- module `2774a0421bc7f6781b5263d355f852c6dcf0f411`
-- proof `70dab327ffdedf216c18de8fb5eb5c7ffb131fcc`
-- workflow `57754a31de69a061563a96c7623f2dfcc74cb59f`
-- Actions diagnostic `1fcf86c55e90ddf1c33846e43c982461d0de7af3`
+## Current architecture gap
 
-It exposes four 4/4 phase hypotheses and grid ambiguity without selecting/changing phase, timing, attacks or pitch. Approved correction runner includes it as diagnostics only (`d3639460ca54d7b8a5710978469cbe44bf1ac35e`).
+The green correction shadow currently stops at corrected `(measure, step)` attacks + supported pitch sets. It does **not** yet produce the final mapped guitar events, semantic/sustain annotations, authenticated event freeze, or Jimmy PAIge professional preview/full PDF.
+
+Next work is to build an **isolated candidate path** that consumes the accepted physical correction and reuses the existing professional mapping/render contracts without touching the protected live pipeline. Then freeze a brand-new approved-audio identity and only after that run the scorer-only professional holdout.
+
+Relevant existing workflow families discovered for reuse:
+- `rhythm-final-preholdout-lock.yml`
+- `rhythm-final-render-relock*.yml`
+- `rhythm-professional-preholdout-real-audio.yml`
+- `rhythm-professional-holdout-self-test-v2.yml`
+- `v143-jimmy-professional-pdf-bridge-check.yml`
+- `v143-jimmy-upload-to-professional-pdf-integration-v2.yml`
+- `rhythm-render-presentation-proof.yml`
 
 ## Immediate next steps
 
-1. Read the boundary-grid CPU diagnostic; require green.
-2. Read the automatically retriggered approved correction action/report after the boundary-grid fix.
-3. If green, run the scorer-free physical review against the real approved report and inspect only label-free correction/timing evidence.
-4. Read the pending approved semantics+sustain action/report.
-5. Accept only independently supported general/reference-free corrections.
-6. Then create a **brand-new approved-audio analysis/freeze/PDF identity**.
-7. Only then open the scorer-only professional reference for a new holdout.
-8. Require >=0.99, zero critical mismatches, PDF-event fidelity 1.0 before Rhythm completion.
+1. Inspect the existing preholdout/final-render/Jimmy PDF workflows and their referenced scripts to reuse the exact professional rendering contract.
+2. Build an isolated corrected-candidate event adapter: physical corrected attacks + supported pitch sets → mapped string/fret events, without modifying `v143_reference_free_rhythm_pipeline.py`.
+3. Apply only independently green reference-free semantics/sustain handling in that candidate path.
+4. Create a **brand-new approved-audio analysis/freeze/PDF identity** and prove PDF-event fidelity `1.0`.
+5. Only after the freeze is immutable, open the scorer-only professional human reference and run the new holdout.
+6. Use any new failure only as broad/general diagnostics; never add song-specific runtime rules.
+7. Require >=0.99, zero critical mismatches, PDF-event fidelity 1.0 before Rhythm completion.
