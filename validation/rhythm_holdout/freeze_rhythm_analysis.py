@@ -61,6 +61,8 @@ def require_safety(payload: Mapping[str, Any], analysis: Mapping[str, Any]) -> d
         "referenceFree": True,
         "professionalReferenceUsed": False,
         "referenceRuntimeInputUsed": False,
+        "runtimeLabelsRequired": False,
+        "v143RuntimeSafetyVerified": True,
     }
     resolved: dict[str, bool] = {}
     for key, wanted in expected.items():
@@ -149,7 +151,7 @@ def main() -> int:
         "sourceAudioBytes": source_audio_bytes,
     }
     frozen = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "instrument": "rhythm",
         "safety": safety,
         "metadata": metadata,
@@ -165,7 +167,7 @@ def main() -> int:
     snapshot_path.write_text(canonical_json(frozen) + "\n", encoding="utf-8")
 
     manifest = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "instrument": "rhythm",
         "frozenAtUtc": datetime.now(timezone.utc).isoformat(),
         "sourceCommit": args.source_commit,
@@ -175,6 +177,8 @@ def main() -> int:
         "referenceFree": True,
         "professionalReferenceUsed": False,
         "referenceRuntimeInputUsed": False,
+        "runtimeLabelsRequired": False,
+        "v143RuntimeSafetyVerified": True,
         "eventCount": len(events),
         "uniqueMeasureCount": len({event["measure"] for event in events}),
         "eventSha256": sha256_json(events),
