@@ -29,16 +29,14 @@ Key proof: `passed:true`, `analysisEngine:v143-reference-free-rhythm`, 358 valid
 
 PDF evidence: `debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json`, `passed:true`, 358 events, maximum measure 113, 4 full pages, 4 preview pages.
 
-Local built-Next HTTP gate is also closed green. Evidence:
+Local built-Next HTTP gate is closed green. Evidence:
 
 - `debug/v143-contextual-prune/ai-tab-nocache-gate.json`
 - `debug/v143-contextual-prune/next-preview-route-smoke-nocache.json`
 
 Bot evidence commit: `5b29c0c3df3c97c0f4962e058997b2134d0179b7`.
 
-Proof includes install/build/server/route verifier all green, `/ai-tab` 200, structured renderer `v143-structured-rhythm`, fallback `polished-safe-fallback`, missing-tab 400 validation, and no Vercel/live/Production/payment/token/email side effects.
-
-Whole-product customer contract also passed at `debug/v143-contextual-prune/ai-tab-end-to-end-contract.json`. Lead and Bass remain legacy/fail-closed; no missing placement is manufactured.
+Whole-product customer contract passed at `debug/v143-contextual-prune/ai-tab-end-to-end-contract.json`. Lead and Bass remain legacy/fail-closed; no missing placement is manufactured.
 
 ## Bass — inactive contracts already green
 
@@ -64,7 +62,7 @@ Quality thresholds remain fail-closed: minimum 4 valid render events and 70% min
 
 Historical `bass_technique_diagnostics_v7.py` is reference-guided and must **not** be reused as the reference-free professional Bass engine.
 
-## LIVE STEP — isolated Bass real-audio canary
+## LIVE STEP — isolated Bass real-audio canary ACTIVE
 
 Canary files:
 
@@ -72,11 +70,19 @@ Canary files:
 - `analyzer/verify_bass_real_audio_canary.py`
 - `.github/workflows/bass-real-audio-canary.yml`
 
-Commits:
+Initial trigger commit `9b50bb6c6049f16febfc75d9b2f70c089700ce72` produced no visible branch evidence after the bounded workflow window, so the workflow was safely retriggered with an early heartbeat in commit:
 
-- `36809663be076815f5c4e9297201120790b38850` — add canary
-- `9933233638615ec6021228a78ad0a55f435c1cc5` — add verifier
-- `9b50bb6c6049f16febfc75d9b2f70c089700ce72` — trigger canary
+- `751a30f0bb4b5310921d202a8026fcd9114aa652` — `Retrigger Bass canary with early run heartbeat`
+
+Heartbeat evidence is now committed:
+
+- `debug/v143-contextual-prune/bass-real-audio-canary-start.json`
+- GitHub Actions run ID: `32610329984`
+- run attempt: `1`
+- source commit: `751a30f0bb4b5310921d202a8026fcd9114aa652`
+- started UTC: `2026-08-23T01:26:27.264028+00:00`
+
+Latest direct job inspection: run `32610329984` is `in_progress`; checkout, heartbeat, Python setup, and Modal CLI install all passed. Current active step is `Run isolated real-audio Bass separator canary`. Verifier/evidence/fail-closed enforcement steps are still pending. Therefore do **not** infer pass/fail yet.
 
 The canary is locked to `public/gomywayfullaitest.m4a` and evaluates only:
 
@@ -87,19 +93,18 @@ It uses ephemeral Modal research substrate only; it does not deploy/modify live 
 
 It proves separation + reference-free Bass pitch evidence only if green. It deliberately does **not** claim note placement, timing, techniques, professional quality, structured Bass identity, PDF rendering, training, routing, Vercel deployment, Production modification, purchase, token redemption, or email.
 
-Expected evidence:
+Expected final evidence:
 
 - `debug/v143-contextual-prune/bass-real-audio-canary-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-canary.json`
 
-Latest poll: both Bass canary evidence files are still absent (404). Do **not** infer pass/fail. Branch has advanced through checkpoint-only commits descended from trigger commit `9b50bb6c...`; docs-only checkpoint pushes do not match the workflow path filter and therefore do not retrigger/cancel the canary.
-
-A next-stage Bass candidate/timing design was inspected but **no candidate-detection file has been committed yet**. Reusable reference-free timing logic exists in `analyzer/v143_reference_free_timing.py`; Guitar-specific `v143_candidate_timing_adapter.py` may be reused only structurally, not with its Guitar pitch/range assumptions.
+A next-stage Bass candidate/timing design was inspected but **no candidate-detection file has been committed yet**. Reusable reference-free timing logic exists in `analyzer/v143_reference_free_timing.py`; Guitar-specific `v143_candidate_timing_adapter.py` may be reused only structurally, not with Guitar pitch/range assumptions.
 
 ## Immediate next action
 
-1. Poll `bass-real-audio-canary-action.json` and `bass-real-audio-canary.json`.
-2. If green, close only the Bass separation + pitch boundary.
-3. Then implement one isolated reference-free Bass candidate/note/timing boundary using Bass-specific playable range and the existing four-string contract. Keep training/routing/identity/PDF disabled.
-4. If canary fails, diagnose only the exact failing harness/metric without weakening thresholds or safety.
-5. Exact-branch Vercel Preview remains an external blocker; do not use unrelated deploy mechanisms.
+1. Poll GitHub Actions run `32610329984` / job `97122230041` until the current Modal separator step finishes.
+2. Fetch `bass-real-audio-canary-action.json` and `bass-real-audio-canary.json` immediately when committed.
+3. If green, close only the Bass separation + pitch boundary.
+4. Then implement one isolated reference-free Bass candidate/note/timing boundary using Bass-specific playable range and the existing four-string contract. Keep training/routing/identity/PDF disabled.
+5. If canary fails, diagnose only the exact failing harness/metric without weakening thresholds or safety.
+6. Exact-branch Vercel Preview remains an external blocker.
