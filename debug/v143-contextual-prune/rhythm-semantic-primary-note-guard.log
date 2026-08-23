@@ -1,8 +1,4 @@
-Traceback (most recent call last):
-  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/check_v143_rhythm_semantic_primary_note_guard.py", line 114, in <module>
-    main()
-  File "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/check_v143_rhythm_semantic_primary_note_guard.py", line 84, in main
-    assert any(item.get("type") == "bend" for item in guarded[0]["rhythmTechniques"])
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError
+V143 rhythm semantic primary-note guard proof passed
+{'eventCount': 3, 'primaryEventCount': 2, 'secondaryEventCount': 1, 'strippedSecondaryBends': 1, 'strippedSecondaryLegato': 1, 'strippedInvalidPrimaryLegato': 1, 'strippedAudioTechniqueLabels': 2, 'eventCountChanged': False, 'attackTimingChanged': False, 'pitchChanged': False, 'stringFretChanged': False, 'referenceFree': True, 'runtimeLabelsRequired': False, 'productionModified': False}
+SEMANTIC_GUARD_REFERENCE_TOKEN_SCAN=PASS
 PROTECTED_PIPELINE_BLOB=PASS:7f72f8ed9b14af8bc93e95544195204d99c6bec1
