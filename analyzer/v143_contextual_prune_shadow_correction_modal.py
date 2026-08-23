@@ -32,6 +32,7 @@ SHADOW_MODULES = (
     "v143_contextual_prune_runtime",
     "v143_contextual_prune_shadow_correction",
     "v143_rhythm_timing_consistency_shadow",
+    "v143_rhythm_timing_hypothesis_shadow",
     "v143_correlation_safe_fixed_count_reranker_freeze",
     "v143_intro_sequence_event_model",
     "v143_intro_learned_grid_event_selector",
@@ -160,6 +161,10 @@ def analyze_reference_free_correction_shadow(
     from v143_rhythm_timing_consistency_shadow import (
         summarize_reference_free_timing_consistency,
     )
+    from v143_rhythm_timing_hypothesis_shadow import (
+        extract_reference_free_beat_accents,
+        summarize_timing_hypothesis_shadow,
+    )
 
     with tempfile.TemporaryDirectory(prefix="v143-correction-shadow-") as temp_dir:
         root = Path(temp_dir)
@@ -197,6 +202,16 @@ def analyze_reference_free_correction_shadow(
             beat_confidence=float(carrier.timing.beat_confidence),
             bar_confidence=float(carrier.timing.bar_confidence),
         )
+        beat_accents = extract_reference_free_beat_accents(
+            str(normalized),
+            carrier.timing.beat_times,
+        )
+        timing_hypothesis = summarize_timing_hypothesis_shadow(
+            beat_accents,
+            carrier.rows,
+            carrier.grid,
+            current_downbeat_index_mod4=int(carrier.timing.downbeat_index_mod4),
+        )
 
         base_measures = {measure for measure, _step in base.candidate_events}
         corrected_measures = {measure for measure, _step in correction.corrected_events}
@@ -222,7 +237,7 @@ def analyze_reference_free_correction_shadow(
             )
 
         return {
-            "schemaVersion": 2,
+            "schemaVersion": 3,
             "mode": "v143-contextual-prune-reference-free-correction-shadow",
             "sourceSha256": _sha256_bytes(source_audio),
             "measureStart": carrier.measure_start,
@@ -231,6 +246,7 @@ def analyze_reference_free_correction_shadow(
             "baseSelector": base.diagnostics(),
             "correction": correction.diagnostics(),
             "timingConsistency": timing_consistency,
+            "timingHypothesis": timing_hypothesis,
             "coverage": {
                 "targetMeasureCount": len(targets),
                 "populatedMeasureCountBefore": len(base_measures),
@@ -263,6 +279,7 @@ def analyze_reference_free_correction_shadow(
                 "rescuedEventsPhysicallyObserved": correction.diagnostics()["rescuesAreObservedSlots"],
                 "candidateRelocatesEvents": False,
                 "timingDiagnosticChangesGrid": False,
+                "timingHypothesisChangesGrid": False,
                 "liveRhythmOutputChanged": False,
                 "leadChanged": False,
                 "bassChanged": False,
@@ -300,6 +317,8 @@ def approved_audio(
     print(json.dumps(result["coverage"], sort_keys=True))
     print(json.dumps(result["pitchSupport"], sort_keys=True))
     print(json.dumps(result["timingConsistency"]["strictRowsResidual"], sort_keys=True))
+    print(json.dumps(result["timingHypothesis"]["barPhaseEvidence"], sort_keys=True))
+    print(json.dumps(result["timingHypothesis"]["gridAmbiguity"]["strictRows"], sort_keys=True))
     print(f"WROTE={output}")
 
 
