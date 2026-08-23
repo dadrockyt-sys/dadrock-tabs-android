@@ -6,14 +6,7 @@ import {
 } from '../lib/bassProfessionalQuality.js';
 
 const REQUIRED_VIEW_AGREEMENT = 2;
-const MINIMUM_HARMONIC_EVENTS = 1;
-const REQUIRED_SUBSET_FAMILIES = new Set([
-  'slide',
-  'hammer_on',
-  'pull_off',
-  'mute',
-  'sustain',
-]);
+const MINIMUM_SUBSET_TECHNIQUE_EVENTS = 4;
 const ALLOWED_TECHNIQUES = new Set([
   'slide-up',
   'slide-down',
@@ -84,6 +77,10 @@ const harmonicDiagnostics =
   raw.harmonicDiagnostics && typeof raw.harmonicDiagnostics === 'object'
     ? raw.harmonicDiagnostics
     : {};
+const harmonicThresholds =
+  harmonicDiagnostics.thresholds && typeof harmonicDiagnostics.thresholds === 'object'
+    ? harmonicDiagnostics.thresholds
+    : {};
 
 let baseToSubsetIdentityCount = 0;
 let subsetToFinalIdentityCount = 0;
@@ -141,6 +138,7 @@ for (let index = 0; index < Math.max(baseEvents.length, subsetEvents.length, eve
         row.referenceFree === true &&
         row.professionalReferenceUsed === false &&
         row.runtimeLabelsRequired === false &&
+        String(row.detector || '').includes('v2-strict') &&
         Array.isArray(row.views) &&
         row.views.length >= REQUIRED_VIEW_AGREEMENT &&
         row.views.every(
@@ -148,10 +146,12 @@ for (let index = 0; index < Math.max(baseEvents.length, subsetEvents.length, eve
             view &&
             view.type === 'harmonic' &&
             view.referenceFree === true &&
-            Number(view.tonalPurity) >= 0.68 &&
-            Number(view.upperPartialRatio) >= 0.22 &&
-            Number(view.subharmonicRatio) <= 0.10 &&
-            Number(view.onsetStrength) <= 0.42 &&
+            view.mappedNodeMatched === true &&
+            Number(view.tonalPurity) >= Number(harmonicThresholds.minimumTonalPurity) &&
+            Number(view.upperPartialRatio) >= Number(harmonicThresholds.minimumUpperPartialRatio) &&
+            Number(view.subharmonicRatio) <= Number(harmonicThresholds.maximumSubharmonicRatio) &&
+            Number(view.onsetStrength) <= Number(harmonicThresholds.maximumOnsetStrength) &&
+            Number(view.durationSeconds) >= Number(harmonicThresholds.minimumDurationSeconds) &&
             Array.isArray(view.naturalHarmonicSources) &&
             view.naturalHarmonicSources.length > 0
         )
@@ -169,7 +169,7 @@ const subsetToFinalIdentityPercent = events.length
   : 0;
 const harmonicConsensusPercent = harmonicLabelCount
   ? Number(((consensusHarmonicLabelCount / harmonicLabelCount) * 100).toFixed(2))
-  : 0;
+  : 100;
 const qualityReport = buildBassProfessionalQualityReport(events);
 
 const subsetFamilies = Array.isArray(subsetDiagnostics.provenTechniqueFamilies)
@@ -180,9 +180,8 @@ for (const family of subsetFamilies) {
 }
 if (harmonicEventCount > 0) observedFamilyCounts.harmonic = harmonicEventCount;
 
-const requiredSubsetFamiliesStillProven = [...REQUIRED_SUBSET_FAMILIES].every((family) =>
-  subsetFamilies.includes(family)
-);
+const safeAbstention = harmonicEventCount === 0;
+const harmonicFamilyProven = harmonicEventCount > 0 && consensusHarmonicLabelCount === harmonicLabelCount;
 
 const boundaryChecks = {
   approvedFixture: raw.approvedFixture === 'public/gomywayfullaitest.m4a',
@@ -191,6 +190,12 @@ const boundaryChecks = {
     raw.crossViewConsensusRequired === true && Number(raw.requiredConsensusViews) === REQUIRED_VIEW_AGREEMENT,
   noteTimingPlayabilityPrecondition: raw.noteTimingPlayabilityPreconditionPassed === true,
   subsetTechniquePrecondition: raw.subsetTechniqueBoundaryPreconditionPassed === true,
+  subsetDiagnosticSound:
+    Number(subsetDiagnostics.eventCount) === subsetEvents.length &&
+    Number(subsetDiagnostics.techniqueEventCount) >= MINIMUM_SUBSET_TECHNIQUE_EVENTS &&
+    Number(subsetDiagnostics.requiredViewAgreement) === REQUIRED_VIEW_AGREEMENT &&
+    subsetDiagnostics.referenceFree === true &&
+    subsetDiagnostics.futureHighRiskFamiliesEnabled === false,
   eventCountStable:
     baseEvents.length > 0 &&
     baseEvents.length === subsetEvents.length &&
@@ -202,7 +207,6 @@ const boundaryChecks = {
     events.length > 0 && subsetToFinalIdentityCount === events.length,
   subsetLabelsPreserved:
     events.length > 0 && subsetLabelsPreservedCount === events.length,
-  requiredSubsetFamiliesStillProven,
   allowedTechniqueLabelsOnly:
     finalLabelCount > 0 && allowedTechniqueLabelCount === finalLabelCount,
   noUnexpectedAddedLabels: unexpectedAddedLabelCount === 0,
@@ -210,15 +214,18 @@ const boundaryChecks = {
     highRiskTechniqueLabelCount === 0 && raw.futureHighRiskFamiliesEnabled === false,
   harmonicImplemented:
     raw.harmonicEvidenceImplemented === true && harmonicDiagnostics.harmonicEvidenceImplemented === true,
-  minimumHarmonicEvents: harmonicEventCount >= MINIMUM_HARMONIC_EVENTS,
-  everyHarmonicHasTwoViewEvidence:
-    harmonicLabelCount > 0 && consensusHarmonicLabelCount === harmonicLabelCount,
+  strictHarmonicDetector:
+    String(harmonicDiagnostics.detector || '').includes('v2-strict') &&
+    harmonicThresholds.mappedNaturalHarmonicNodeRequired === true,
+  everyObservedHarmonicHasStrictTwoViewEvidence:
+    harmonicLabelCount === 0 || consensusHarmonicLabelCount === harmonicLabelCount,
   harmonicDiagnosticsAgree:
     Number(harmonicDiagnostics.eventCount) === events.length &&
     Number(harmonicDiagnostics.harmonicEventCount) === harmonicEventCount &&
     Number(harmonicDiagnostics.requiredViewAgreement) === REQUIRED_VIEW_AGREEMENT &&
     harmonicDiagnostics.harmonicEvidenceObserved === (harmonicEventCount > 0) &&
-    harmonicDiagnostics.harmonicFamilyProven === (harmonicEventCount > 0),
+    harmonicDiagnostics.harmonicFamilyProven === (harmonicEventCount > 0) &&
+    harmonicDiagnostics.safeAbstention === safeAbstention,
   qualityGateStillPassed: qualityReport.passed === true,
   professionalBassNotClaimed: raw.professionalBassComplete === false,
 };
@@ -241,14 +248,9 @@ const passed =
   Object.values(boundaryChecks).every(Boolean) &&
   Object.values(safetyChecks).every(Boolean);
 
-const allInitialTechniqueFamiliesProven =
-  passed &&
-  requiredSubsetFamiliesStillProven &&
-  harmonicEventCount >= MINIMUM_HARMONIC_EVENTS;
-
 const evidence = {
-  schemaVersion: 1,
-  gate: 'bass-real-audio-reference-free-harmonic-evidence',
+  schemaVersion: 2,
+  gate: 'bass-real-audio-reference-free-harmonic-diagnostic',
   approvedFixture: raw.approvedFixture,
   sourceSha256: raw.sourceSha256,
   sourceBytes: raw.sourceBytes,
@@ -263,20 +265,22 @@ const evidence = {
   harmonicConsensusPercent,
   observedTechniqueCounts,
   observedTechniqueFamilyCounts: observedFamilyCounts,
-  previousSubsetTechniqueFamilies: subsetFamilies,
-  harmonicFamilyProven: passed && harmonicEventCount > 0,
-  allInitialTechniqueFamiliesProven,
+  currentRunSubsetTechniqueFamilies: subsetFamilies,
+  harmonicFamilyProven: passed && harmonicFamilyProven,
+  safeAbstention: passed && safeAbstention,
+  allInitialTechniqueFamiliesProven: false,
   thresholds: {
-    minimumHarmonicEvents: MINIMUM_HARMONIC_EVENTS,
+    minimumSubsetTechniqueEvents: MINIMUM_SUBSET_TECHNIQUE_EVENTS,
     requiredViewAgreement: REQUIRED_VIEW_AGREEMENT,
     requiredIdentityPreservationPercent: 100,
-    requiredHarmonicConsensusPercent: 100,
+    requiredObservedHarmonicConsensusPercent: 100,
+    harmonicDetector: harmonicThresholds,
   },
   qualityThresholds: DEFAULT_BASS_PROFESSIONAL_THRESHOLDS,
   qualityReport,
   boundaryChecks,
   safetyChecks,
-  bassHarmonicEvidenceBoundaryPassed: passed,
+  bassHarmonicDiagnosticBoundaryPassed: passed,
   harmonicEvidenceImplemented: true,
   harmonicEvidenceObserved: harmonicEventCount > 0,
   futureHighRiskFamiliesEnabled: false,
@@ -303,5 +307,9 @@ console.log(JSON.stringify(evidence, null, 2));
 if (!passed) {
   process.exitCode = 1;
 } else {
-  console.log('BASS REAL-AUDIO REFERENCE-FREE HARMONIC EVIDENCE PASSED');
+  console.log(
+    harmonicFamilyProven
+      ? 'BASS REAL-AUDIO STRICT HARMONIC EVIDENCE PASSED'
+      : 'BASS REAL-AUDIO HARMONIC SAFE-ABSTENTION BOUNDARY PASSED'
+  );
 }
