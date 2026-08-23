@@ -290,6 +290,7 @@ def _rescue_strict_local_peaks(
 
 
 def _supported_pitch_set(row: Mapping[str, Any]) -> tuple[int, ...]:
+    original = _candidate_midis(row)
     evidence = _row_pitch_evidence(row)
     if not evidence:
         return ()
@@ -299,8 +300,19 @@ def _supported_pitch_set(row: Mapping[str, Any]) -> tuple[int, ...]:
         reverse=True,
     )
     best_midi, best = ranked[0]
-    kept = {best_midi}
 
+    # Suppression must be evidence-positive, not merely relative. If even the
+    # strongest candidate fails the independent two-view attack/body floors,
+    # preserve the observed candidate set unchanged rather than collapsing an
+    # uncertain chord to an arbitrary single pitch. This keeps the shadow
+    # correction conservative whenever the physical evidence is inconclusive.
+    if (
+        best["attack"] <= ATTACK_CONSENSUS_FLOOR
+        or best["body"] <= BODY_CONSENSUS_FLOOR
+    ):
+        return original
+
+    kept = {best_midi}
     for midi, item in ranked[1:]:
         if item["attack"] <= ATTACK_CONSENSUS_FLOOR:
             continue
@@ -327,10 +339,12 @@ def apply_reference_free_shadow_correction(
 
     Existing events are preserved. Additional events may only come from strict
     cross-view physical onset rows that are locally dominant in their measure;
-    completely empty measures retain a one-event strict fail-safe. For every
-    selected observed slot, secondary pitch hypotheses are retained only when
-    they remain strong in both views and stay close to the locally strongest
-    pitch across attack/body windows. No event is relocated and no label input is
+    completely empty measures retain a one-event strict fail-safe. Secondary
+    pitch hypotheses are suppressed only when the locally strongest candidate
+    itself has positive two-view attack/body support, and retained pitches must
+    remain close to that strongest candidate across attack/body windows. If the
+    strongest candidate is not independently supported, the original observed
+    pitch set is preserved unchanged. No event is relocated and no label input is
     accepted by this function.
     """
     base = {(int(measure), int(step)) for measure, step in base_events}
@@ -353,7 +367,7 @@ def apply_reference_free_shadow_correction(
             original_pitch_sets[key] = original
         supported = _supported_pitch_set(row)
         if not supported and original:
-            supported = (original[0],)
+            supported = original
         if supported:
             pitch_sets[key] = supported
             suppressed += max(0, len(original) - len(supported))
