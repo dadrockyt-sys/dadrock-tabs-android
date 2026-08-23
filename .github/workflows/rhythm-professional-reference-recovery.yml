@@ -1,0 +1,191 @@
+name: Rhythm Professional Reference Recovery
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/rhythm-professional-reference-recovery.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rhythm-professional-reference-recovery-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  recover-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      REFERENCE_COMMIT: e0f91e74c815b9ecdf0a72fae6d1523414b34577
+      REFERENCE_PATH: public/Professionalexample.jpg
+      WORK_DIR: .holdout-reference-recovery
+      REPORT_PATH: debug/v143-contextual-prune/rhythm-professional-reference-recovery.json
+    steps:
+      - name: Checkout exact triggering commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Download immutable scorer-only reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$WORK_DIR/tiles"
+          url="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${REFERENCE_COMMIT}/${REFERENCE_PATH}"
+          curl --fail --location --retry 3 --silent --show-error "$url" -o "$WORK_DIR/Professionalexample.jpg"
+          test -s "$WORK_DIR/Professionalexample.jpg"
+
+      - name: Install image inspection dependency
+        shell: bash
+        run: python -m pip install --disable-pip-version-check --quiet pillow
+
+      - name: Hash and tile reference without interpretation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          import hashlib, json, math, os
+
+          root = Path(os.environ['WORK_DIR'])
+          src = root / 'Professionalexample.jpg'
+          raw = src.read_bytes()
+          image = Image.open(src)
+          image.load()
+          width, height = image.size
+          tile_edge = 1600
+          tiles = []
+          idx = 0
+          for y in range(0, height, tile_edge):
+              for x in range(0, width, tile_edge):
+                  idx += 1
+                  box = (x, y, min(x + tile_edge, width), min(y + tile_edge, height))
+                  tile = image.crop(box)
+                  path = root / 'tiles' / f'tile-{idx:03d}-x{x}-y{y}.png'
+                  tile.save(path, format='PNG', optimize=False)
+                  tile_raw = path.read_bytes()
+                  tiles.append({
+                      'name': path.name,
+                      'x': x,
+                      'y': y,
+                      'width': box[2] - box[0],
+                      'height': box[3] - box[1],
+                      'sha256': hashlib.sha256(tile_raw).hexdigest(),
+                      'bytes': len(tile_raw),
+                  })
+
+          max_overview_width = 2400
+          scale = min(1.0, max_overview_width / width)
+          overview_size = (max(1, round(width * scale)), max(1, round(height * scale)))
+          overview = image if overview_size == image.size else image.resize(overview_size, Image.Resampling.LANCZOS)
+          overview_path = root / 'overview.png'
+          overview.save(overview_path, format='PNG', optimize=False)
+
+          manifest = {
+              'schemaVersion': 1,
+              'purpose': 'scorer-only-professional-human-reference-recovery',
+              'sourceRepository': os.environ['GITHUB_REPOSITORY'],
+              'sourceCommit': os.environ['REFERENCE_COMMIT'],
+              'sourcePath': os.environ['REFERENCE_PATH'],
+              'sourceSha256': hashlib.sha256(raw).hexdigest(),
+              'sourceBytes': len(raw),
+              'imageFormat': image.format,
+              'imageMode': image.mode,
+              'width': width,
+              'height': height,
+              'tileEdge': tile_edge,
+              'tileCount': len(tiles),
+              'tiles': tiles,
+              'overviewWidth': overview_size[0],
+              'overviewHeight': overview_size[1],
+              'referenceModified': False,
+              'runtimeAccessAllowed': False,
+              'analyzerTrainingAllowed': False,
+              'analyzerTuningAllowed': False,
+              'candidateSelectionAllowed': False,
+              'postFreezeScoringOnly': True,
+              'wholeSongCoverageVerified': False,
+              'finalScoringAuthorized': False,
+              'note': 'Byte-identical immutable GitHub source plus lossless visual tiles. Musical coverage must be verified by scorer-side visual review before final scoring.',
+          }
+          (root / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+          PY
+
+      - name: Upload scorer-only recovery artifact
+        id: artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhythm-professional-reference-recovery
+          path: |
+            .holdout-reference-recovery/Professionalexample.jpg
+            .holdout-reference-recovery/overview.png
+            .holdout-reference-recovery/manifest.json
+            .holdout-reference-recovery/tiles/*.png
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Persist non-reference recovery report
+        shell: bash
+        env:
+          ARTIFACT_ID: ${{ steps.artifact.outputs.artifact-id }}
+          ARTIFACT_DIGEST: ${{ steps.artifact.outputs.artifact-digest }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$(dirname "$REPORT_PATH")"
+          python - <<'PY'
+          from pathlib import Path
+          import json, os
+
+          manifest = json.loads((Path(os.environ['WORK_DIR']) / 'manifest.json').read_text(encoding='utf-8'))
+          report = {
+              'schemaVersion': 1,
+              'gate': 'rhythm-professional-reference-recovery',
+              'passed': True,
+              'workflowSourceCommit': os.environ['GITHUB_SHA'],
+              'runId': os.environ['GITHUB_RUN_ID'],
+              'runAttempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'actor': os.environ['GITHUB_ACTOR'],
+              'eventName': os.environ['GITHUB_EVENT_NAME'],
+              'ref': os.environ['GITHUB_REF'],
+              'referenceRepository': manifest['sourceRepository'],
+              'referenceCommit': manifest['sourceCommit'],
+              'referencePath': manifest['sourcePath'],
+              'referenceSha256': manifest['sourceSha256'],
+              'referenceBytes': manifest['sourceBytes'],
+              'imageFormat': manifest['imageFormat'],
+              'imageMode': manifest['imageMode'],
+              'width': manifest['width'],
+              'height': manifest['height'],
+              'tileCount': manifest['tileCount'],
+              'artifactId': os.environ.get('ARTIFACT_ID') or None,
+              'artifactDigest': os.environ.get('ARTIFACT_DIGEST') or None,
+              'referenceModified': False,
+              'runtimeAccessAllowed': False,
+              'analyzerTrainingAllowed': False,
+              'analyzerTuningAllowed': False,
+              'candidateSelectionAllowed': False,
+              'postFreezeScoringOnly': True,
+              'wholeSongCoverageVerified': False,
+              'finalScoringAuthorized': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path(os.environ['REPORT_PATH']).write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          PY
+
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add "$REPORT_PATH"
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Record Rhythm professional reference recovery"
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
