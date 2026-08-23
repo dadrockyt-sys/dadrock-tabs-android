@@ -2,10 +2,7 @@
 
 Updated: 2026-08-23
 Branch: `v143-contextual-prune-lobo`
-Priority: **complete Rhythm end-to-end before Bass/Lead**.
-Latest functional commit under test: `400edb3febfa32626f7830d641f641c9325a93bf` — `Verify AI PDF router rejects invalid V143 fallback`.
-Latest static-workflow orchestration commit: `dbeac22061e0efbbbbf9a0dc6afd8b72dc2ad465` — `Persist Rhythm static runner failures`.
-Latest Actions observability proof: `5045e95a139bd993fe87ab7cc6b44ee1a2f1e092` — `Record V143 Actions branch heartbeat`.
+Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
 ## Absolute rules
 
@@ -18,126 +15,98 @@ Preview/full must use the same authenticated/frozen stream. Browser/PDF may not 
 
 **Save this checkpoint frequently.**
 
-## Completion order
+## Completion gate
 
-1. Rhythm: professional score >=0.99, zero critical mismatches, PDF-event fidelity exactly 1.0 → `Final Rhythm Pipeline`.
-2. Bass only after Rhythm; user provides Bass holdout when scoring is ready → `Final Bass Pipeline`.
-3. Lead only after that → `Final Lead Pipeline`.
+Rhythm is complete only with professional score >=0.99, zero critical mismatches, and PDF-event fidelity exactly 1.0. Then create `Final Rhythm Pipeline`. Bass remains paused until then; Lead remains after Bass.
 
-Bass remains paused.
-
-## Existing real-audio Rhythm baseline
+## Existing real-audio structural baseline
 
 Approved fixture: `public/gomywayfullaitest.m4a`.
-Existing structural proof: V143 reference-free Rhythm, 358 valid events, measures 1..113 / 112 unique measures, all 16 grid steps, 25 technique events, sustain 358/358, tempo 129.19921875, 4/4, E Standard, prior full+preview PDFs.
+Prior structural proof: 358 valid Rhythm events, measures 1..113 / 112 unique measures, all 16 grid steps, 25 technique events, sustain 358/358, tempo 129.19921875, 4/4, E Standard, prior full+preview PDFs.
 Evidence: `debug/v143-contextual-prune/ai-tab-real-audio-canary.json` and `ai-tab-real-audio-pdf-validation.json`.
 This is structural proof, not final professional musical correctness.
 
 ## Clean professional holdout
 
-Complete clean whole-song professional Rhythm source is still not available. Confirmed clean surviving screenshot: Library `1000116180.jpg`, Chorus measures 33–35, dark professional TAB, labels `G6`, `A(tp2)`, `E`, `D`.
-Do not use DadRock/generated/development screenshots, old Chorus development references, coarse fixtures, or contextual-prune development references as final ground truth.
+Do **not** open/recover the professional human reference yet. Fresh reference-free freeze/PDF proof must be locked first.
+Previously confirmed surviving clean screenshot: Library `1000116180.jpg`, Chorus measures 33–35, labels `G6`, `A(tp2)`, `E`, `D`.
 `validation/rhythm_holdout/reference/reference-inventory.json` remains `completeReferenceAvailable:false`, `finalScoringAuthorized:false`.
-Do not unblock reference access until fresh reference-free freeze/PDF proof is locked.
+User now wants the eventual end-to-end DadRock result tested against the complete professional human-written PDF/reference once pre-holdout isolation is green.
 
-## `app/ai-tab/page.js` is the PDF product source of truth
+## Product PDF source of truth
 
-Preview → `/api/generate-tab-preview`; purchased/full → `/api/generate-tab-pdf`.
-Both carry exact structured musical fields including `renderEvents`; preview is locked/watermarked and both expect PDF.
+`app/ai-tab/page.js` is authoritative.
+Preview → `/api/generate-tab-preview`; full/purchased → `/api/generate-tab-pdf`.
 Authenticated Rhythm path:
 `page.js → PDF API → createJimmyPaigeProfessionalPdf → createAiTabPdf → createV143RhythmPdf`.
-`createV143RhythmPdf` is the real polished renderer with DadRock logo/branding. Do not invent a second PDF path.
+Both preview/full carry exact structured fields including `renderEvents`; preview is locked/watermarked; `createV143RhythmPdf` is the polished DadRock renderer.
 
-## V143 runtime safety / event identity chain
+## Runtime/event safety already hardened
 
-Required runtime facts:
-- `referenceFree:true`
-- `professionalReferenceUsed:false`
-- `referenceRuntimeInputUsed:false`
-- `runtimeLabelsRequired:false`
-- `v143RuntimeSafetyVerified:true`
+Required facts: `referenceFree:true`, `professionalReferenceUsed:false`, `referenceRuntimeInputUsed:false`, `runtimeLabelsRequired:false`, `v143RuntimeSafetyVerified:true`.
+Downstream wrappers validate authenticated V143 events and reject invalid V143 legacy fallback. Product contract schema v7 verifies page/PDF boundaries, branding/logo, and preview lock. Production remains untouched.
 
-Important hardening already in branch:
-- payload + analyzer API fail closed on incomplete runtime safety;
-- freeze/PDF fidelity/reference completeness/final wrapper bind that safety;
-- `e0c1cd7b...` binds immutable professional-reference bytes before/after scoring;
-- `a7a76e5b...`, `e7128a7f...`, `0f902f49...` make professional wrapper, AI PDF router and final Rhythm renderer validate authenticated events rather than re-project them and prohibit legacy fallback for invalid V143 streams;
-- `400edb3f...` product-contract schema v7 verifies all three downstream exact-validation boundaries plus `app/ai-tab/page.js`, DadRock branding/logo and preview lock.
+## CPU gates required before GPU
 
-No professional reference was opened by this hardening. Production remains untouched.
+Required persisted evidence:
+- `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json` → schema 7, `passed:true`
+- `debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json` → schema 6, `passed:true`
 
-## CPU proof target — authoritative refresh still required
+Old persisted static evidence is stale schema v4 from `b65cf9dd...` with `/tmp/... pdf-lib` resolution failure and must not be used to diagnose current renderer behavior.
 
-Required evidence:
-- `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json` → schema **7**, `passed:true`
-- `debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json` → schema **6**, `passed:true`
+## GitHub Actions recovery
 
-The currently persisted static file is still stale schema v4 from `b65cf9dd...` with `/tmp/... pdf-lib` module-resolution failure. That old failure is test-environment-only and must not be treated as a current polished renderer/logo defect. The current runner uses repository-local `.preholdout-static`.
+Old static workflow was hardened with exact SHA checkout, concurrency, install diagnostics, runner failure persistence, and strict failure restoration, but still did not refresh repository evidence.
 
-### CPU workflow orchestration repairs
+A minimal branch heartbeat proved Actions itself is healthy:
+- `.github/workflows/v143-actions-branch-heartbeat.yml`
+- source commit `f434fb682cf392c209e3f11a438b9de99e72e0ac`
+- run ID `32621233674`
+- proof commit `5045e95a139bd993fe87ab7cc6b44ee1a2f1e092`
+- `debug/v143-contextual-prune/actions-branch-heartbeat.json` → `passed:true`
 
-`741a8bf7512a4b2e4c49f461301b0fce1cc98dcd`: exact `${{ github.sha }}` checkout + branch-scoped concurrency for standalone static.
+Therefore the stale static evidence problem is workflow-specific, not repository-wide.
 
-`8f00a6be802f2d0ff9ce3de69ba85b3ab7b617ac`: dependency-install log + schema-v7 `install-locked-dependencies` failure persistence.
+## Fresh standalone static V2 — CURRENTLY IN FLIGHT
 
-`b7b91f9c47001e2e931cd3e9d69163f7d0317e23`: removed static job's `github.actor != github-actions[bot]` guard; `debug/**` is outside its push path filter so this does not create an evidence loop.
+Created `.github/workflows/rhythm-preholdout-static-preflight-v2.yml` at commit:
+`3ea7a6298455f5b4235d7af15fa164419f044686` — `Add fresh Rhythm static preflight workflow`.
 
-`dbeac22061e0efbbbbf9a0dc6afd8b72dc2ad465`: runner step now permits downstream persistence after failure; workflow persists runner report or a sanitized schema-v7 `static-runner-missing-report`, then restores failing job status. This is a strict second persistence path in addition to the runner's own best-effort EXIT trap.
+V2 is CPU-only and:
+- checks out exact triggering SHA;
+- uses independent concurrency;
+- installs locked dependencies;
+- runs `validation/rhythm_holdout/run_static_preholdout_preflight.sh` with `GITHUB_ACTIONS=false` so only the workflow owns persistence;
+- always writes canonical schema-v7 static evidence plus `debug/v143-contextual-prune/rhythm-preholdout-static-v2-run.json`;
+- restores a failing job result if canonical report is not schema 7 green;
+- never opens the professional reference and does not trigger the real-audio GPU workflow.
 
-These changes affect CI orchestration/evidence only. They do not modify renderer behavior, musical thresholds, Modal/Production, payment paths, or professional-reference access.
+At the latest check, the V2 evidence file had not yet appeared and branch head was still `3ea7a629...`; the run may still be executing/queued. Do not infer failure until the 15-minute V2 timeout window plus queue uncertainty is exhausted.
 
-### Actions observability breakthrough
+## Self-test stabilization after static green
 
-The original standalone static workflow still produced no new repository evidence through 01:44:59 local after `dbeac220...`, so the stale schema-v4 report remained non-actionable. The connector cannot list push runs or dispatch workflows and no Actions status was exposed through commit-status lookup.
+Current old self-test has mutable branch checkout, actor guard, no concurrency, and writes the standalone static evidence file from inside itself.
+After static schema 7 green, create/stabilize a CPU-only self-test that:
+- exact-SHA checks out;
+- uses branch concurrency;
+- has no bot actor guard;
+- runs internal static preflight with `GITHUB_ACTIONS=false`;
+- stages only schema-v6 self-test evidence;
+- never overwrites canonical standalone static evidence.
 
-To distinguish a repository-wide Actions trigger problem from a problem specific to the old static workflow, a minimal CPU-only branch heartbeat workflow was added:
-- workflow: `.github/workflows/v143-actions-branch-heartbeat.yml`
-- creation commit: `f434fb682cf392c209e3f11a438b9de99e72e0ac`
-- it successfully triggered from the connected GitHub write within seconds;
-- proof file: `debug/v143-contextual-prune/actions-branch-heartbeat.json`
-- run ID: `32621233674`
-- source commit: `f434fb682cf392c209e3f11a438b9de99e72e0ac`
-- actor: `dadrockyt-sys`
-- event: `push`
-- passed: `true`
-- proof commit by `github-actions[bot]`: `5045e95a139bd993fe87ab7cc6b44ee1a2f1e092`.
+## Real-audio pre-holdout after both CPU gates green
 
-This proves GitHub Actions is enabled, branch `push` events created by the connected GitHub write do trigger workflows, branch workflow files do not need to be on `main` for `push`, `contents: write` works, and a workflow can commit/rebase/push branch evidence successfully. Therefore the lack of current static evidence is specific to the existing static workflow/run path (for example disabled workflow state, an early pre-evidence failure, or another workflow-specific problem), not a repository-wide trigger failure.
-
-Next recovery step: create a fresh CPU-only standalone static workflow identity using the already-hardened runner and canonical schema-v7 evidence path. A new workflow file avoids any stale disabled-state identity while leaving the real-audio GPU workflow untouched. It must use exact SHA checkout, its own concurrency group, dependency install, the same `run_static_preholdout_preflight.sh`, strict evidence persistence, and no professional reference access.
-
-## Fresh real-audio pre-holdout workflow
-
-`.github/workflows/rhythm-professional-preholdout-real-audio.yml` is coded, but `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` is not established green.
-
-**Do not intentionally trigger duplicate GPU work until CPU static v7 + self-test v6 are both green.**
-After CPU green, strengthen that workflow's compact proof and intentionally allow exactly one fresh approved-audio GPU run. Require source hash, complete runtime safety, positive frozen events, polished preview/full PDFs, exact event/hash identity, fidelity 1.0, reference sealed, Production unchanged.
-
-## Self-test stabilization queued after standalone static green
-
-Current `.github/workflows/rhythm-professional-holdout-self-test.yml` still has three orchestration risks: mutable branch checkout, `github.actor != 'github-actions[bot]'`, and no concurrency group. It also writes the standalone static evidence file from inside the consolidated self-test, creating a cross-workflow overwrite/race risk.
-
-After standalone static schema v7 is green, stabilize self-test by:
-- exact `${{ github.sha }}` checkout;
-- branch-scoped concurrency/cancel-in-progress;
-- remove the actor guard;
-- run its internal static preflight locally with `GITHUB_ACTIONS=false` so the reusable runner cannot push standalone static evidence from inside self-test;
-- stop writing/staging `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json` from self-test;
-- stage only the schema-v6 self-test evidence file.
-
-That self-test workflow edit is CPU-only and does not trigger the real-audio GPU workflow.
+`.github/workflows/rhythm-professional-preholdout-real-audio.yml` exists but is not yet established green.
+Do not intentionally trigger GPU work until static v7 + self-test v6 are both green.
+Then permit exactly one fresh approved-audio run and require source hash, full runtime safety, positive frozen events, polished preview/full PDFs, exact event/hash identity, fidelity 1.0, reference sealed, Production unchanged.
 
 ## Immediate next steps
 
-1. Add fresh CPU-only standalone static workflow identity and let it produce canonical schema-v7 evidence.
-2. If schema v7 is red, use only its current `failedStage` + sanitized `failureLogTail` and fix the concrete issue without weakening contracts.
-3. If schema v7 is green, immediately stabilize the consolidated self-test as above and require schema v6 green.
+1. Observe V2 canonical schema-v7 result.
+2. If red, use only its current `failedStage` + sanitized `failureLogTail`; fix the concrete CPU issue without weakening contracts.
+3. If green, establish isolated schema-v6 self-test.
 4. Save this checkpoint after every meaningful result.
-5. Only after both CPU gates green, proceed to exactly one fresh real-audio pre-holdout run.
-6. Only after fresh freeze/PDF proof is locked, recover/re-supply the complete clean professional Rhythm source if needed and run completeness → isolated scorer → final wrapper.
+5. Only after both CPU gates are green, run exactly one fresh real-audio pre-holdout freeze/PDF proof.
+6. Only after that proof is locked, recover/use the complete professional human-written reference strictly in the isolated scorer/final wrapper.
 7. If score <0.99 or critical mismatches >0, improve only general/reference-free logic, rerun audio from scratch, then rescore.
-8. Only after the real gate passes create `Final Rhythm Pipeline`.
-
-## Bass
-
-Paused until Rhythm is complete. Existing Bass diagnostics remain available but are not final professional ground truth.
+8. Once real gate passes, test the DadRock `/ai-tab` user end-to-end path against that professional reference and create `Final Rhythm Pipeline`.
