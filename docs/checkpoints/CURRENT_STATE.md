@@ -99,9 +99,8 @@ General musical correction committed on this branch:
 
 Persisted green proof:
 - `debug/v143-contextual-prune/rhythm-polyphony-cpu-proof.json`
-- run `32631065756`, attempt 1
+- latest observed run `32641304362`, attempt 1
 - source commit `f015715a291ff3f9c2a9da9f633f1b5bef63352a`
-- proof commit `b769a5c834ce03f47d3e4019ac7cf51a7bf04493`
 - `passed:true`, `verifyOutcome:"success"`
 - `referenceFree:true`
 - `professionalReferenceUsed:false`
@@ -129,19 +128,26 @@ Existing downstream product code is already compatible with attack count != rend
 
 `analyzer/v143_modal_live_endpoint.py` defines `V143_MODULES`, which explicitly packages both `v143_rhythm_guitar_note_mapper` and `v143_rhythm_event_assembly` plus the rest of the V143 stack into `rhythm_image` from the checked-out branch source. Therefore a fresh `modal run` can exercise the new branch mapper/assembly in an isolated ephemeral canary without deploying or modifying live V143 Modal.
 
-Important: the real-audio workflow only push-triggers when its own workflow file changes, so mapper commits did **not** accidentally trigger GPU work. A deliberate workflow-file trigger is required for exactly one fresh candidate run.
+## Fresh post-polyphony approved-audio freeze — TRIGGERED, RESULT PENDING
+
+Exactly one deliberate GPU candidate trigger was committed:
+- trigger commit `ebbaf7f30cf96f5e084d7122765bf9fac076b60e`
+- commit message `Trigger fresh post-polyphony Rhythm audio freeze`
+- change is only a harmless dated trigger comment in `.github/workflows/rhythm-professional-preholdout-real-audio.yml`
+- the workflow checks out exact `${{ github.sha }}` and runs the isolated product canary; it does not deploy/alter live V143 Modal or Production.
+
+At this checkpoint, `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` still contains historical run `32623173615`, so the new GPU run has not yet persisted its result. Do not trigger a second GPU run while this one is pending.
 
 ## CPU orchestration note
 
-The older persisted schema-7 static preflight remains green, but `debug/v143-contextual-prune/rhythm-preholdout-static-v2-run.json` still has not appeared after the earlier validation-path push. Do not interpret that missing V2 marker as a mapper failure: the dedicated mapper/assembly CPU proof above is independently green. The current self-test workflow is still the older mutable-checkout/cross-static-write version; avoid touching validation paths again until that orchestration is stabilized or until after the isolated real-audio candidate is safely locked.
+Current persisted static preflight is schema 7 / `passed:true`, with PDF-event fidelity 1.0. Current persisted professional-holdout self-test is schema 6 / `passed:true`. The dedicated mapper/assembly CPU proof is independently green. Do not treat older orchestration marker issues as a musical failure.
 
 ## Immediate next steps
 
-1. Preserve the green polyphony CPU proof and do not tune from the professional source.
-2. Intentionally trigger exactly one fresh isolated approved-audio product-canary run by a controlled edit to `.github/workflows/rhythm-professional-preholdout-real-audio.yml`; do not deploy live V143 Modal.
-3. Require the new run to preserve runtime safety, positive event count, complete measure coverage, polished preview/full PDF, exact event/hash equality, PDF-event fidelity 1.0, reference sealed, live endpoint unchanged, and Production unchanged.
-4. Inspect the fresh artifact before any professional scoring. Confirm the new output actually exercised `noteMapping.version:2` / polyphonic expansion and that attack/note semantics remain valid end-to-end.
-5. Lock that fresh artifact as the new candidate freeze.
-6. Only then may scorer-side professional transcription/scoring proceed. Require score >=0.99 and zero critical mismatches.
-7. If score misses, change only general/reference-free musical logic and repeat the mandatory fresh-audio freeze before any rescore.
-8. Once the real professional gate passes, verify DadRock `/ai-tab` user end-to-end and create `Final Rhythm Pipeline`.
+1. Poll `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` until `eventTriggerCommit` becomes `ebbaf7f30cf96f5e084d7122765bf9fac076b60e`, or inspect the corresponding Actions run if it fails before persistence. Do not trigger another GPU run.
+2. Require the new run to preserve runtime safety, positive event count, complete measure coverage, polished preview/full PDF, exact event/hash equality, PDF-event fidelity 1.0, reference sealed, live endpoint unchanged, and Production unchanged.
+3. Inspect the fresh artifact before any professional scoring. Confirm the new output actually exercised `noteMapping.version:2` / polyphonic expansion and that attack/note semantics remain valid end-to-end.
+4. Lock that fresh artifact as the new candidate freeze.
+5. Only then may scorer-side professional transcription/scoring proceed. Require score >=0.99 and zero critical mismatches.
+6. If score misses, change only general/reference-free musical logic and repeat the mandatory fresh-audio freeze before any rescore.
+7. Once the real professional gate passes, verify DadRock `/ai-tab` user end-to-end and create `Final Rhythm Pipeline`.
