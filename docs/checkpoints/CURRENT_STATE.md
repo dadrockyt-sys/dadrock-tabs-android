@@ -124,8 +124,8 @@ Therefore `createV143RhythmPdf` is the underlying polished Rhythm renderer used 
 
 Static product-path protection:
 - `a45f71296bf0ffb2284f5adeea462f2ab94114ac` — original `verify_ai_tab_pdf_product_contract.mjs` gate.
-- `280c86fcf40e57a9d365b77321e1a1e3d37609c7` — strengthened contract verifier now also proves both UI flows expect PDFs, both API routes use the professional feature gate, authenticated V143 Rhythm routes to the structured renderer, and `createV143RhythmPdf` still carries the actual DadRock logo path, product branding, preview watermark/lock, and branded footer.
-- `3cd507e4898e44840d1a32a550f6bc947dc2761f` — reusable static preflight upgraded to schemaVersion 5 and explicitly gates on those polished product-contract facts before accepting PDF render/hash proof.
+- `280c86fcf40e57a9d365b77321e1a1e3d37609c7` — strengthened contract verifier proves both UI flows expect PDFs, both API routes use the professional feature gate, authenticated V143 Rhythm routes to the structured renderer, and `createV143RhythmPdf` still carries the real DadRock logo path, product branding, preview watermark/lock, and branded footer.
+- `3cd507e4898e44840d1a32a550f6bc947dc2761f` — reusable static preflight gates on those polished product-contract facts before accepting render/hash proof.
 
 These are validation-only changes; production renderer behavior and branding were not altered.
 
@@ -140,6 +140,10 @@ Committed machinery:
 Required proof: fresh audio, referenceFree true, professionalReferenceUsed false, referenceRuntimeInputUsed false, frozen source/event hashes, full+preview PDF, exact PDF/frozen event hash equality, fidelity 1.0, human reference unopened.
 
 `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` is still not established green. Do not launch duplicate expensive GPU work until CPU glue is green.
+
+Additional GPU-readiness safeguards were added **without editing or triggering the GPU workflow itself**:
+- `b63f6d33d7b8a8a73d752e4f97e47aeda256260d` — new `verify_real_audio_preholdout_workflow_contract.mjs` statically verifies the real-audio workflow uses the approved audio fixture and product analyzer, repository-local `.preholdout/esm` renderer tools, freeze-before-render order, anti-leakage proof fields, exact PDF/frozen hash proof, full+preview artifacts, and no holdout-reference or `/tmp` renderer path.
+- `ad740dd51d8bbb9793988fa19b52921997b054c4` — CPU preflight upgraded to schemaVersion 6 and now must pass that real-audio workflow contract before the eventual GPU run is allowed to be considered ready.
 
 ## CPU polished-PDF preflight — EXACT ROOT CAUSE FOUND AND TEST GLUE FIXED; REFRESH RUNS IN FLIGHT
 
@@ -158,17 +162,18 @@ Fixes now in branch:
 - reusable runner default is repository-local: `$ROOT/.preholdout-static`
 - `1906bd89b35abdc2ea121f7d6605acc2f24eee04` — consolidated self-test no longer overrides the runner with `/tmp`; it uses `$GITHUB_WORKSPACE/.preholdout-static`
 - `e5bade98915c6b9b4af75ba55f8c214ee1109b4e` — consolidated path uses the same authoritative AI-tab PDF preflight runner
-- `280c86fcf40e57a9d365b77321e1a1e3d37609c7` / `3cd507e4898e44840d1a32a550f6bc947dc2761f` — polished product contract strengthened and CPU workflows retriggered without touching the GPU real-audio workflow
+- `280c86fcf40e57a9d365b77321e1a1e3d37609c7` / `3cd507e4898e44840d1a32a550f6bc947dc2761f` — polished product contract strengthened
+- `b63f6d33d7b8a8a73d752e4f97e47aeda256260d` / `ad740dd51d8bbb9793988fa19b52921997b054c4` — future real-audio GPU workflow contract is now preflighted by CPU before any GPU retry
 
-Current branch head before this checkpoint: `3cd507e4898e44840d1a32a550f6bc947dc2761f`.
+Current branch head before this checkpoint: `ad740dd51d8bbb9793988fa19b52921997b054c4`.
 
-Await refreshed bot evidence. Do not treat the old `/tmp` failure JSON as current post-fix evidence. If a refreshed run fails, use its persisted `failedStage` and sanitized `failureLogTail` rather than guessing.
+CPU workflows were retriggered by validation-only commits. Await refreshed bot evidence. Do not treat the old `/tmp` failure JSON as current post-fix evidence. If a refreshed run fails, use its persisted `failedStage` and sanitized `failureLogTail` rather than guessing.
 
 No live Modal, Production, payments, token redemption, email, or customer flow was invoked.
 
 ## Immediate next actions
 
-1. Observe refreshed `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`; require schemaVersion 5 `passed:true`, page.js product contract true, polished branding/logo contract true, 400 events/100 measures, full+preview PDFs, hash equality, fidelity 1.0.
+1. Observe refreshed `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`; require schemaVersion 6 `passed:true`, page.js polished PDF contract true, future real-audio workflow contract true, 400 events/100 measures, full+preview PDFs, hash equality, fidelity 1.0.
 2. Observe refreshed `debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json`; require consolidated `passed:true` with product-path/static/final-wrapper gates green.
 3. If any CPU gate remains red, use the new persisted `failureLogTail`; do not alter product rendering unless evidence proves a real product defect.
 4. Save this checkpoint after each meaningful result.
