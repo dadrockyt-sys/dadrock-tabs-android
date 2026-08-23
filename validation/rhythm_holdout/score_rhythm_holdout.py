@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 """Score a frozen Jimmy PAIge Rhythm transcription against the professional holdout.
 
-CRITICAL ORDER: this program validates the freeze manifest, frozen snapshot hash, safety
-flags and 100% PDF-event fidelity *before* opening the human-reference JSON. It is a
-post-hoc scorer only and never writes corrections back into analyzer output.
+CRITICAL ORDER: validate the freeze manifest, frozen snapshot hash, safety flags and
+100% PDF-event fidelity before opening the human-reference JSON. This is a post-hoc
+scorer only; it never writes corrections back into analyzer output.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-import math
 import sys
 from collections import Counter
 from pathlib import Path
@@ -21,7 +20,7 @@ REFERENCE_DIR = (HERE / "reference").resolve()
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
-from canonical import OPEN_MIDI, canonical_events, sha256_json  # noqa: E402
+from canonical import OPEN_MIDI_BY_STRING_INDEX, canonical_events, sha256_json  # noqa: E402
 
 NEAR_100 = 0.99
 STEP_TOLERANCE = 0.50
@@ -56,10 +55,10 @@ def prf(matched: int, generated: int, reference: int) -> dict[str, Any]:
 
 
 def multiset_match(generated: Iterable[tuple[Any, ...]], reference: Iterable[tuple[Any, ...]]) -> dict[str, Any]:
-    g = Counter(generated)
-    r = Counter(reference)
-    matched = sum((g & r).values())
-    return prf(matched, sum(g.values()), sum(r.values()))
+    generated_counter = Counter(generated)
+    reference_counter = Counter(reference)
+    matched = sum((generated_counter & reference_counter).values())
+    return prf(matched, sum(generated_counter.values()), sum(reference_counter.values()))
 
 
 def greedy_match(
@@ -69,37 +68,44 @@ def greedy_match(
     max_step_delta: float,
 ) -> list[tuple[int, int]]:
     candidates: list[tuple[float, int, int]] = []
-    for gi, gen in enumerate(generated):
-        for ri, ref in enumerate(reference):
-            if gen["measure"] != ref["measure"] or not compatible(gen, ref):
+    for generated_index, generated_item in enumerate(generated):
+        for reference_index, reference_item in enumerate(reference):
+            if generated_item["measure"] != reference_item["measure"]:
                 continue
-            delta = abs(float(gen["step"]) - float(ref["step"]))
+            if not compatible(generated_item, reference_item):
+                continue
+            delta = abs(float(generated_item["step"]) - float(reference_item["step"]))
             if delta <= max_step_delta + EPSILON:
-                candidates.append((delta, gi, ri))
+                candidates.append((delta, generated_index, reference_index))
+
     candidates.sort(key=lambda item: (item[0], item[1], item[2]))
-    used_g: set[int] = set()
-    used_r: set[int] = set()
+    used_generated: set[int] = set()
+    used_reference: set[int] = set()
     pairs: list[tuple[int, int]] = []
-    for _, gi, ri in candidates:
-        if gi in used_g or ri in used_r:
+    for _, generated_index, reference_index in candidates:
+        if generated_index in used_generated or reference_index in used_reference:
             continue
-        used_g.add(gi)
-        used_r.add(ri)
-        pairs.append((gi, ri))
+        used_generated.add(generated_index)
+        used_reference.add(reference_index)
+        pairs.append((generated_index, reference_index))
     return pairs
 
 
-def metric_for_pairs(pairs: Sequence[tuple[int, int]], generated: Sequence[Any], reference: Sequence[Any]) -> dict[str, Any]:
+def metric_for_pairs(
+    pairs: Sequence[tuple[int, int]], generated: Sequence[Any], reference: Sequence[Any]
+) -> dict[str, Any]:
     return prf(len(pairs), len(generated), len(reference))
 
 
 def normalize_labels(value: Any) -> list[str]:
     if not isinstance(value, list):
         return []
-    return sorted(set(str(label).strip() for label in value if str(label).strip()))
+    return sorted(set(str(label).strip().lower() for label in value if str(label).strip()))
 
 
-def flatten_reference(reference: Mapping[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], set[int]]:
+def flatten_reference(
+    reference: Mapping[str, Any],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], set[int]]:
     notes: list[dict[str, Any]] = []
     rests: list[dict[str, Any]] = []
     declared_measures: set[int] = set()
@@ -109,24 +115,26 @@ def flatten_reference(reference: Mapping[str, Any]) -> tuple[list[dict[str, Any]
     if not isinstance(measures, list) or not measures:
         raise ValueError("complete professional reference requires a non-empty measures array")
 
-    for measure_obj in measures:
-        if not isinstance(measure_obj, Mapping):
+    for measure_object in measures:
+        if not isinstance(measure_object, Mapping):
             raise ValueError("reference measure must be an object")
-        measure = int(measure_obj.get("measure"))
+        measure = int(measure_object.get("measure"))
         if measure < 1 or measure in seen_measure_numbers:
             raise ValueError(f"invalid or duplicate reference measure {measure}")
         seen_measure_numbers.add(measure)
         declared_measures.add(measure)
-        events = measure_obj.get("events")
+
+        events = measure_object.get("events")
         if not isinstance(events, list):
             raise ValueError(f"reference measure {measure} events must be an array")
 
         for onset in events:
             if not isinstance(onset, Mapping):
                 raise ValueError(f"reference measure {measure} onset must be an object")
-            step = float(onset.get("step"))
-            if not 0 <= step < 16:
+            step = int(onset.get("step"))
+            if not 0 <= step <= 15:
                 raise ValueError(f"reference measure {measure} has invalid step {step}")
+
             onset_techniques = normalize_labels(onset.get("techniques"))
             onset_duration = onset.get("durationSteps")
             onset_tie_in = bool(onset.get("tieIn", False))
@@ -143,25 +151,30 @@ def flatten_reference(reference: Mapping[str, Any]) -> tuple[list[dict[str, Any]
             for note in note_items:
                 if not isinstance(note, Mapping):
                     raise ValueError("reference note must be an object")
-                string = int(note.get("string"))
+                string_index = int(note.get("stringIndex"))
                 fret = int(note.get("fret"))
                 midi = int(note.get("midi"))
-                if string not in OPEN_MIDI or not 0 <= fret <= 24:
-                    raise ValueError(f"invalid reference string/fret: {string}/{fret}")
-                expected = OPEN_MIDI[string] + fret
+                if string_index not in OPEN_MIDI_BY_STRING_INDEX or not 0 <= fret <= 36:
+                    raise ValueError(
+                        f"invalid reference stringIndex/fret: {string_index}/{fret}"
+                    )
+                expected = OPEN_MIDI_BY_STRING_INDEX[string_index] + fret
                 if midi != expected:
                     raise ValueError(
                         f"reference pitch-position mismatch measure={measure} step={step}: "
-                        f"string={string} fret={fret} midi={midi} expected={expected}"
+                        f"stringIndex={string_index} fret={fret} midi={midi} expected={expected}"
                     )
+
                 note_duration = note.get("durationSteps", onset_duration)
-                duration = None if note_duration is None else float(note_duration)
-                techniques = sorted(set(onset_techniques + normalize_labels(note.get("techniques"))))
+                duration = None if note_duration is None else int(note_duration)
+                techniques = sorted(
+                    set(onset_techniques + normalize_labels(note.get("techniques")))
+                )
                 notes.append(
                     {
                         "measure": measure,
                         "step": step,
-                        "string": string,
+                        "stringIndex": string_index,
                         "fret": fret,
                         "midi": midi,
                         "durationSteps": duration,
@@ -174,36 +187,34 @@ def flatten_reference(reference: Mapping[str, Any]) -> tuple[list[dict[str, Any]
     return notes, rests, declared_measures
 
 
-def flatten_generated(events: Sequence[Mapping[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def flatten_generated(
+    events: Sequence[Mapping[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     notes: list[dict[str, Any]] = []
-    rests_seen: set[tuple[int, float]] = set()
     for event in canonical_events(events):
-        duration = event.get("durationSteps")
-        if duration is None:
-            duration = event.get("sustainSteps")
         notes.append(
             {
                 "measure": event["measure"],
                 "step": event["step"],
-                "string": event["string"],
+                "stringIndex": event["stringIndex"],
                 "fret": event["fret"],
                 "midi": event["midi"],
-                "durationSteps": duration,
-                "tieIn": event.get("tieIn", False),
-                "tieOut": event.get("tieOut", False),
+                "durationSteps": event["durationSteps"],
+                # The current V143 renderer contract carries sustain duration but
+                # no explicit tie/rest flags. Do not infer either in the scorer.
+                "tieIn": False,
+                "tieOut": False,
                 "techniques": event.get("techniques", []),
             }
         )
-        if event.get("rest", False):
-            rests_seen.add((event["measure"], event["step"]))
-    rests = [{"measure": m, "step": s} for m, s in sorted(rests_seen)]
-    return notes, rests
+    return notes, []
 
 
 def onset_groups(notes: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
-    grouped: dict[tuple[int, float], list[Mapping[str, Any]]] = {}
+    grouped: dict[tuple[int, int], list[Mapping[str, Any]]] = {}
     for note in notes:
-        grouped.setdefault((int(note["measure"]), float(note["step"])), []).append(note)
+        grouped.setdefault((int(note["measure"]), int(note["step"])), []).append(note)
+
     result: list[dict[str, Any]] = []
     for (measure, step), items in sorted(grouped.items()):
         result.append(
@@ -211,7 +222,16 @@ def onset_groups(notes: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
                 "measure": measure,
                 "step": step,
                 "pitchSet": tuple(sorted(int(item["midi"]) for item in items)),
-                "voicing": tuple(sorted((int(item["string"]), int(item["fret"]), int(item["midi"])) for item in items)),
+                "voicing": tuple(
+                    sorted(
+                        (
+                            int(item["stringIndex"]),
+                            int(item["fret"]),
+                            int(item["midi"]),
+                        )
+                        for item in items
+                    )
+                ),
             }
         )
     return result
@@ -226,17 +246,26 @@ def label_events(notes: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
 
 
 def duration_metrics(
-    generated: Sequence[Mapping[str, Any]], reference: Sequence[Mapping[str, Any]], pairs: Sequence[tuple[int, int]]
+    generated: Sequence[Mapping[str, Any]],
+    reference: Sequence[Mapping[str, Any]],
+    pairs: Sequence[tuple[int, int]],
 ) -> dict[str, Any]:
-    comparable = []
-    for gi, ri in pairs:
-        gd = generated[gi].get("durationSteps")
-        rd = reference[ri].get("durationSteps")
-        if gd is None or rd is None:
+    comparable: list[tuple[float, float]] = []
+    for generated_index, reference_index in pairs:
+        generated_duration = generated[generated_index].get("durationSteps")
+        reference_duration = reference[reference_index].get("durationSteps")
+        if generated_duration is None or reference_duration is None:
             continue
-        comparable.append((float(gd), float(rd)))
-    exact = sum(1 for gd, rd in comparable if abs(gd - rd) <= EPSILON)
-    tolerant = sum(1 for gd, rd in comparable if abs(gd - rd) <= DURATION_TOLERANCE + EPSILON)
+        comparable.append((float(generated_duration), float(reference_duration)))
+
+    exact = sum(
+        1 for generated_duration, reference_duration in comparable
+        if abs(generated_duration - reference_duration) <= EPSILON
+    )
+    tolerant = sum(
+        1 for generated_duration, reference_duration in comparable
+        if abs(generated_duration - reference_duration) <= DURATION_TOLERANCE + EPSILON
+    )
     return {
         "comparable": len(comparable),
         "exactAgreement": safe_ratio(exact, len(comparable)),
@@ -246,22 +275,32 @@ def duration_metrics(
 
 
 def tie_metrics(
-    generated: Sequence[Mapping[str, Any]], reference: Sequence[Mapping[str, Any]], pairs: Sequence[tuple[int, int]]
+    generated: Sequence[Mapping[str, Any]],
+    reference: Sequence[Mapping[str, Any]],
+    pairs: Sequence[tuple[int, int]],
 ) -> dict[str, Any]:
-    ref_relevant = [(gi, ri) for gi, ri in pairs if reference[ri].get("tieIn") or reference[ri].get("tieOut")]
+    reference_relevant = [
+        (generated_index, reference_index)
+        for generated_index, reference_index in pairs
+        if reference[reference_index].get("tieIn") or reference[reference_index].get("tieOut")
+    ]
     matched = sum(
         1
-        for gi, ri in ref_relevant
-        if bool(generated[gi].get("tieIn")) == bool(reference[ri].get("tieIn"))
-        and bool(generated[gi].get("tieOut")) == bool(reference[ri].get("tieOut"))
+        for generated_index, reference_index in reference_relevant
+        if bool(generated[generated_index].get("tieIn"))
+        == bool(reference[reference_index].get("tieIn"))
+        and bool(generated[generated_index].get("tieOut"))
+        == bool(reference[reference_index].get("tieOut"))
     )
     return {
-        "referenceTieNotes": len(ref_relevant),
-        "exactAgreement": safe_ratio(matched, len(ref_relevant)),
+        "referenceTieNotes": len(reference_relevant),
+        "exactAgreement": safe_ratio(matched, len(reference_relevant)),
     }
 
 
-def validate_pre_reference(freeze_dir: Path) -> tuple[Mapping[str, Any], list[dict[str, Any]], Mapping[str, Any]]:
+def validate_pre_reference(
+    freeze_dir: Path,
+) -> tuple[Mapping[str, Any], list[dict[str, Any]], Mapping[str, Any]]:
     # The human reference is intentionally not touched anywhere in this function.
     manifest_path = freeze_dir / "rhythm-freeze-manifest.json"
     snapshot_path = freeze_dir / "rhythm-frozen-analysis.json"
@@ -278,22 +317,32 @@ def validate_pre_reference(freeze_dir: Path) -> tuple[Mapping[str, Any], list[di
         "pdfFidelityVerified": True,
     }.items():
         if manifest.get(key) is not expected:
-            raise ValueError(f"freeze manifest fails anti-leakage/PDF gate: {key}={manifest.get(key)!r}")
+            raise ValueError(
+                f"freeze manifest fails anti-leakage/PDF gate: {key}={manifest.get(key)!r}"
+            )
 
     safety = snapshot.get("safety")
     if not isinstance(safety, Mapping):
         raise ValueError("frozen snapshot missing safety object")
     if safety.get("referenceFree") is not True:
         raise ValueError("frozen snapshot is not reference-free")
-    if safety.get("professionalReferenceUsed") is not False or safety.get("referenceRuntimeInputUsed") is not False:
+    if (
+        safety.get("professionalReferenceUsed") is not False
+        or safety.get("referenceRuntimeInputUsed") is not False
+    ):
         raise ValueError("frozen snapshot indicates professional reference/runtime input use")
 
     generated_events = canonical_events(snapshot.get("renderEvents", []))
     frozen_hash = sha256_json(generated_events)
     if not generated_events or manifest.get("eventSha256") != frozen_hash:
         raise ValueError("frozen event hash mismatch")
-    if manifest.get("pdfEventSha256") != frozen_hash or float(manifest.get("pdfEventFidelity", 0.0)) != 1.0:
-        raise ValueError("professional PDF event stream is not exactly identical to frozen scored events")
+    if (
+        manifest.get("pdfEventSha256") != frozen_hash
+        or float(manifest.get("pdfEventFidelity", 0.0)) != 1.0
+    ):
+        raise ValueError(
+            "professional PDF event stream is not exactly identical to frozen scored events"
+        )
     return manifest, generated_events, snapshot
 
 
@@ -312,7 +361,9 @@ def validate_reference(reference: Any) -> Mapping[str, Any]:
     if not str(source.get("provenance", "")).strip():
         raise ValueError("professional reference provenance is required")
     if reference.get("stepsPerMeasure", 16) != 16:
-        raise ValueError("final scorer currently requires the same 16-step measure grid as the V143 render contract")
+        raise ValueError(
+            "final scorer requires the same 16-step measure grid as the V143 render contract"
+        )
     return reference
 
 
@@ -330,12 +381,14 @@ def main() -> int:
     freeze_dir = args.freeze_dir.resolve()
 
     # 1) Validate safety, freeze hash and PDF identity BEFORE reference access.
-    manifest, generated_events, snapshot = validate_pre_reference(freeze_dir)
+    manifest, generated_events, _snapshot = validate_pre_reference(freeze_dir)
 
     # 2) Only now resolve/open the professional human reference.
     reference_path = args.reference_json.resolve()
     if not (reference_path == REFERENCE_DIR or REFERENCE_DIR in reference_path.parents):
-        raise ValueError("final professional reference must live under validation/rhythm_holdout/reference")
+        raise ValueError(
+            "final professional reference must live under validation/rhythm_holdout/reference"
+        )
     reference = validate_reference(load_json(reference_path))
 
     generated_notes, generated_rests = flatten_generated(generated_events)
@@ -346,73 +399,107 @@ def main() -> int:
     generated_measures = {int(note["measure"]) for note in generated_notes}
 
     pitch_content = multiset_match(
-        ((n["measure"], n["midi"]) for n in generated_notes),
-        ((n["measure"], n["midi"]) for n in reference_notes),
+        ((note["measure"], note["midi"]) for note in generated_notes),
+        ((note["measure"], note["midi"]) for note in reference_notes),
     )
     exact_pitch_timing = multiset_match(
-        ((n["measure"], round(float(n["step"]), 6), n["midi"]) for n in generated_notes),
-        ((n["measure"], round(float(n["step"]), 6), n["midi"]) for n in reference_notes),
+        ((note["measure"], note["step"], note["midi"]) for note in generated_notes),
+        ((note["measure"], note["step"], note["midi"]) for note in reference_notes),
     )
     exact_position_timing = multiset_match(
-        ((n["measure"], round(float(n["step"]), 6), n["midi"], n["string"], n["fret"]) for n in generated_notes),
-        ((n["measure"], round(float(n["step"]), 6), n["midi"], n["string"], n["fret"]) for n in reference_notes),
+        (
+            (
+                note["measure"],
+                note["step"],
+                note["midi"],
+                note["stringIndex"],
+                note["fret"],
+            )
+            for note in generated_notes
+        ),
+        (
+            (
+                note["measure"],
+                note["step"],
+                note["midi"],
+                note["stringIndex"],
+                note["fret"],
+            )
+            for note in reference_notes
+        ),
     )
 
     pitch_pairs = greedy_match(
         generated_notes,
         reference_notes,
-        lambda g, r: g["midi"] == r["midi"],
+        lambda generated, ref: generated["midi"] == ref["midi"],
         STEP_TOLERANCE,
     )
     position_pairs = greedy_match(
         generated_notes,
         reference_notes,
-        lambda g, r: g["midi"] == r["midi"] and g["string"] == r["string"] and g["fret"] == r["fret"],
+        lambda generated, ref: (
+            generated["midi"] == ref["midi"]
+            and generated["stringIndex"] == ref["stringIndex"]
+            and generated["fret"] == ref["fret"]
+        ),
         STEP_TOLERANCE,
     )
     gross_pitch_pairs = greedy_match(
         generated_notes,
         reference_notes,
-        lambda g, r: g["midi"] == r["midi"],
+        lambda generated, ref: generated["midi"] == ref["midi"],
         GROSS_STEP_TOLERANCE,
     )
 
-    tolerant_pitch_timing = metric_for_pairs(pitch_pairs, generated_notes, reference_notes)
-    tolerant_position_timing = metric_for_pairs(position_pairs, generated_notes, reference_notes)
+    tolerant_pitch_timing = metric_for_pairs(
+        pitch_pairs, generated_notes, reference_notes
+    )
+    tolerant_position_timing = metric_for_pairs(
+        position_pairs, generated_notes, reference_notes
+    )
 
-    gen_onsets = onset_groups(generated_notes)
-    ref_onsets = onset_groups(reference_notes)
+    generated_onsets = onset_groups(generated_notes)
+    reference_onsets = onset_groups(reference_notes)
     voicing_pairs = greedy_match(
-        gen_onsets,
-        ref_onsets,
-        lambda g, r: g["voicing"] == r["voicing"],
+        generated_onsets,
+        reference_onsets,
+        lambda generated, ref: generated["voicing"] == ref["voicing"],
         STEP_TOLERANCE,
     )
     pitchset_pairs = greedy_match(
-        gen_onsets,
-        ref_onsets,
-        lambda g, r: g["pitchSet"] == r["pitchSet"],
+        generated_onsets,
+        reference_onsets,
+        lambda generated, ref: generated["pitchSet"] == ref["pitchSet"],
         STEP_TOLERANCE,
     )
-    voicing_metric = metric_for_pairs(voicing_pairs, gen_onsets, ref_onsets)
-    pitchset_metric = metric_for_pairs(pitchset_pairs, gen_onsets, ref_onsets)
+    voicing_metric = metric_for_pairs(
+        voicing_pairs, generated_onsets, reference_onsets
+    )
+    pitchset_metric = metric_for_pairs(
+        pitchset_pairs, generated_onsets, reference_onsets
+    )
 
-    gen_labels = label_events(generated_notes)
-    ref_labels = label_events(reference_notes)
+    generated_labels = label_events(generated_notes)
+    reference_labels = label_events(reference_notes)
     technique_pairs = greedy_match(
-        gen_labels,
-        ref_labels,
-        lambda g, r: (
-            g["midi"] == r["midi"]
-            and g["string"] == r["string"]
-            and g["fret"] == r["fret"]
-            and g["label"] == r["label"]
+        generated_labels,
+        reference_labels,
+        lambda generated, ref: (
+            generated["midi"] == ref["midi"]
+            and generated["stringIndex"] == ref["stringIndex"]
+            and generated["fret"] == ref["fret"]
+            and generated["label"] == ref["label"]
         ),
         STEP_TOLERANCE,
     )
-    technique_metric = metric_for_pairs(technique_pairs, gen_labels, ref_labels)
+    technique_metric = metric_for_pairs(
+        technique_pairs, generated_labels, reference_labels
+    )
 
-    rest_pairs = greedy_match(generated_rests, reference_rests, lambda _g, _r: True, STEP_TOLERANCE)
+    rest_pairs = greedy_match(
+        generated_rests, reference_rests, lambda _generated, _ref: True, STEP_TOLERANCE
+    )
     rest_metric = metric_for_pairs(rest_pairs, generated_rests, reference_rests)
 
     duration = duration_metrics(generated_notes, reference_notes, position_pairs)
@@ -424,14 +511,20 @@ def main() -> int:
         "referenceMeasureCount": len(reference_measures),
         "generatedMeasureCount": len(generated_measures),
         "matchedReferenceMeasures": len(reference_measures & generated_measures),
-        "recall": safe_ratio(len(reference_measures & generated_measures), len(reference_measures)),
+        "recall": safe_ratio(
+            len(reference_measures & generated_measures), len(reference_measures)
+        ),
         "missingReferenceMeasures": missing_reference_measures,
         "extraGeneratedMeasures": extra_generated_measures,
     }
 
     gross_unmatched_reference = len(reference_notes) - len(gross_pitch_pairs)
     gross_unmatched_generated = len(generated_notes) - len(gross_pitch_pairs)
-    critical_mismatch_count = len(missing_reference_measures) + gross_unmatched_reference + gross_unmatched_generated
+    critical_mismatch_count = (
+        len(missing_reference_measures)
+        + gross_unmatched_reference
+        + gross_unmatched_generated
+    )
 
     gated_metrics = {
         "pitchContentF1": pitch_content["f1"],
@@ -444,15 +537,18 @@ def main() -> int:
     }
     if duration["comparable"]:
         gated_metrics["durationAgreement"] = duration["withinToleranceAgreement"]
-    if ref_labels:
+    if reference_labels:
         gated_metrics["techniqueF1"] = technique_metric["f1"]
     if ties["referenceTieNotes"]:
         gated_metrics["tieAgreement"] = ties["exactAgreement"]
     if reference_rests:
         gated_metrics["restF1"] = rest_metric["f1"]
 
-    threshold_failures = {name: value for name, value in gated_metrics.items() if value + EPSILON < args.minimum}
-    # PDF fidelity is exact, not merely near-100.
+    threshold_failures = {
+        name: value
+        for name, value in gated_metrics.items()
+        if value + EPSILON < args.minimum
+    }
     if gated_metrics["pdfEventFidelity"] != 1.0:
         threshold_failures["pdfEventFidelity"] = gated_metrics["pdfEventFidelity"]
 
@@ -499,9 +595,15 @@ def main() -> int:
         "rhythmComplete": passed,
     }
 
-    output_path = args.output.resolve() if args.output else freeze_dir / "rhythm-professional-holdout-score.json"
+    output_path = (
+        args.output.resolve()
+        if args.output
+        else freeze_dir / "rhythm-professional-holdout-score.json"
+    )
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    output_path.write_text(
+        json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if passed else 2
 
