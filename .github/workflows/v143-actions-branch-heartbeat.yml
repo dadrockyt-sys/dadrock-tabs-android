@@ -1,0 +1,58 @@
+name: V143 Actions Branch Heartbeat
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-actions-branch-heartbeat.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check out exact triggering revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Persist branch Actions heartbeat
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = {
+              'schemaVersion': 1,
+              'gate': 'v143-actions-branch-heartbeat',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'runId': os.environ.get('GITHUB_RUN_ID'),
+              'runAttempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+              'actor': os.environ.get('GITHUB_ACTOR'),
+              'eventName': os.environ.get('GITHUB_EVENT_NAME'),
+              'ref': os.environ.get('GITHUB_REF'),
+              'passed': True,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('debug/v143-contextual-prune/actions-branch-heartbeat.json').write_text(
+              json.dumps(report, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(report, indent=2))
+          PY
+
+          git add debug/v143-contextual-prune/actions-branch-heartbeat.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record V143 Actions branch heartbeat'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
