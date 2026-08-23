@@ -65,33 +65,30 @@ A second minimal workflow also triggered correctly:
 
 Therefore branch workflow creation/update and `contents:write` are working.
 
-## Static diagnostics now bounded — CURRENT
+## Static diagnostic path — CURRENT
 
-The first upgraded bootstrap static run (`01586977...`) did not persist evidence before nearing its 15-minute job timeout. Because its `npm ci` + static runner were unbounded inside a single step, a job-level timeout could kill the step before evidence persistence.
+The original full-repository `npm ci` diagnostic path did not persist timely evidence even after bounded install/preflight stages. This is CI dependency-environment overhead, not a renderer or musical defect.
 
-Fixed at commit:
-`b7dd58c28853b5a39735397a954bb647db1251d3` — `Bound Rhythm static diagnostic stages`.
+New authoritative bootstrap change:
+`f84e4b1504fb648799341fbf68255664fb95dc0b` — `Use minimal PDF dependency for Rhythm static gate`.
 
-Current `.github/workflows/rhythm-static-bootstrap.yml` now:
-- exact-SHA checkout;
-- CPU only;
-- 15-minute job timeout;
-- `npm ci --ignore-scripts --no-audit --no-fund` bounded to 300 seconds;
-- authoritative `run_static_preholdout_preflight.sh` bounded to 420 seconds with `GITHUB_ACTIONS=false`;
-- reserves remaining job time to always synthesize/copy a schema-v7 diagnostic and commit it;
-- distinguishes `install-locked-dependencies-timeout`, `install-locked-dependencies`, `static-runner-timeout`, and `static-runner-missing-report`;
-- writes `debug/v143-contextual-prune/rhythm-static-bootstrap-preflight.json` plus schema-v3 bootstrap run identity;
-- never opens professional reference and does not touch Production/GPU.
+The static preflight only requires `pdf-lib` as an external runtime package; all other checks are repository Python/Node scripts and local modules. The bootstrap now creates an isolated parent package containing exactly `pdf-lib@1.17.1`. Its ESM workspace is nested below that directory, so normal Node parent-directory module resolution sees the package without installing the complete Next.js application graph.
 
-Separate install-only diagnostic workflow was also added at:
-`49b8aa3fcf098a3d5d524eb052b0926f2b45b1df` — `Add Rhythm dependency install diagnostic`.
-Its proof path is `debug/v143-contextual-prune/rhythm-install-diagnostic.json`; at last check it had not yet persisted.
+Current bootstrap behavior:
+- exact triggering SHA checkout;
+- CPU only; professional reference remains sealed;
+- installs only `pdf-lib@1.17.1`, bounded to 180 seconds;
+- runs authoritative `validation/rhythm_holdout/run_static_preholdout_preflight.sh` with `GITHUB_ACTIONS=false`, bounded to 360 seconds;
+- preserves the same schema-v7 contracts and thresholds; no checks were removed or weakened;
+- persists `debug/v143-contextual-prune/rhythm-static-bootstrap-preflight.json` and schema-v4 run identity;
+- distinguishes minimal dependency install failure/timeout from static-runner failure/timeout;
+- Production, Modal and GPU remain untouched.
 
-The earlier fresh V2 workflow (`3ea7a629...`) also had not persisted evidence and is no longer the primary diagnostic path; the bounded bootstrap is authoritative for the next concrete failure signal.
+The earlier fresh V2 workflow and full-`npm ci` bootstrap attempts are no longer primary. The minimal-dependency bootstrap is the next actionable proof source.
 
 ## After static green
 
-Create/stabilize CPU-only schema-v6 self-test with exact SHA checkout, branch concurrency, no actor guard, internal static runner forced `GITHUB_ACTIONS=false`, and staging only the self-test proof (never canonical static evidence).
+Create/stabilize CPU-only schema-v6 self-test with exact SHA checkout, branch concurrency, no actor guard, internal static runner forced `GITHUB_ACTIONS=false`, and staging only the self-test proof (never canonical static evidence). The same isolated `pdf-lib@1.17.1` dependency approach may be used because the self-test's PDF/static contract uses the same renderer dependency.
 
 ## Real-audio pre-holdout after both CPU gates green
 
@@ -102,9 +99,9 @@ Only after that proof is locked may the complete professional human-written refe
 
 ## Immediate next steps
 
-1. Observe bounded bootstrap proof from `b7dd58c...`.
+1. Observe minimal-dependency bootstrap proof from `f84e4b15...`.
 2. If red, use only current schema-v7 `failedStage` + sanitized `failureLogTail` and fix that exact CPU issue without weakening contracts.
-3. If green, establish schema-v6 self-test.
+3. If green, establish schema-v6 self-test immediately.
 4. Save this checkpoint after every meaningful result.
 5. Only after both CPU gates green, run exactly one fresh real-audio pre-holdout freeze/PDF proof.
 6. Then recover/use complete professional reference strictly scorer-side.
