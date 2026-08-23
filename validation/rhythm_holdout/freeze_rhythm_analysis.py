@@ -43,8 +43,12 @@ def safety_value(payload: Mapping[str, Any], analysis: Mapping[str, Any], key: s
     candidates = [
         analysis.get(key),
         payload.get(key),
-        analysis.get("safety", {}).get(key) if isinstance(analysis.get("safety"), Mapping) else None,
-        payload.get("safety", {}).get(key) if isinstance(payload.get("safety"), Mapping) else None,
+        analysis.get("safety", {}).get(key)
+        if isinstance(analysis.get("safety"), Mapping)
+        else None,
+        payload.get("safety", {}).get(key)
+        if isinstance(payload.get("safety"), Mapping)
+        else None,
     ]
     for value in candidates:
         if value is not None:
@@ -69,21 +73,58 @@ def require_safety(payload: Mapping[str, Any], analysis: Mapping[str, Any]) -> d
     return resolved
 
 
-def exact_render_events(payload: Mapping[str, Any], analysis: Mapping[str, Any]) -> list[dict[str, Any]]:
-    # The final professional gate scores the stream that actually drives the structured PDF.
-    # Do not silently fall back to raw candidates/events because that would break PDF identity.
+def exact_render_events(
+    payload: Mapping[str, Any], analysis: Mapping[str, Any]
+) -> list[dict[str, Any]]:
+    # Score the exact stream that drives the structured PDF. Never silently fall
+    # back to candidates/raw events because that would break PDF identity.
     candidates = [analysis.get("renderEvents"), payload.get("renderEvents")]
     for value in candidates:
         if isinstance(value, list) and value:
             return canonical_events(value)
-    raise ValueError("non-empty renderEvents are required; raw analyzer candidates are not a scoring substitute")
+    raise ValueError(
+        "non-empty renderEvents are required; raw analyzer candidates are not a scoring substitute"
+    )
+
+
+def optional_source_provenance(payload: Mapping[str, Any]) -> tuple[str | None, int | None]:
+    source_sha = str(payload.get("sourceAudioSha256") or "").strip().lower()
+    source_bytes_raw = payload.get("sourceAudioBytes")
+
+    if source_sha:
+        if len(source_sha) != 64 or any(char not in "0123456789abcdef" for char in source_sha):
+            raise ValueError("sourceAudioSha256 must be a 64-character lowercase hex SHA-256")
+    else:
+        source_sha = None
+
+    source_bytes: int | None = None
+    if source_bytes_raw is not None:
+        if isinstance(source_bytes_raw, bool):
+            raise ValueError("sourceAudioBytes must be a positive integer")
+        source_bytes = int(source_bytes_raw)
+        if source_bytes <= 0:
+            raise ValueError("sourceAudioBytes must be a positive integer")
+
+    return source_sha, source_bytes
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("analysis_json", type=Path, help="reference-free structured Rhythm analysis/payload JSON")
-    parser.add_argument("output_dir", type=Path, help="directory for frozen snapshot and manifest")
-    parser.add_argument("--source-commit", default=os.environ.get("GITHUB_SHA"), help="source commit for provenance")
+    parser.add_argument(
+        "analysis_json",
+        type=Path,
+        help="reference-free structured Rhythm analysis/payload JSON",
+    )
+    parser.add_argument(
+        "output_dir",
+        type=Path,
+        help="directory for frozen snapshot and manifest",
+    )
+    parser.add_argument(
+        "--source-commit",
+        default=os.environ.get("GITHUB_SHA"),
+        help="source commit for provenance",
+    )
     args = parser.parse_args()
 
     input_path = args.analysis_json.resolve()
@@ -96,6 +137,7 @@ def main() -> int:
     analysis = analysis_object(payload)
     safety = require_safety(payload, analysis)
     events = exact_render_events(payload, analysis)
+    source_audio_sha256, source_audio_bytes = optional_source_provenance(payload)
 
     metadata = {
         "instrument": "rhythm",
@@ -103,6 +145,8 @@ def main() -> int:
         "timeSignature": analysis.get("timeSignature", payload.get("timeSignature")),
         "tuning": analysis.get("tuning", payload.get("tuning")),
         "structuredMode": analysis.get("structuredMode", payload.get("structuredMode")),
+        "sourceAudioSha256": source_audio_sha256,
+        "sourceAudioBytes": source_audio_bytes,
     }
     frozen = {
         "schemaVersion": 1,
@@ -125,6 +169,8 @@ def main() -> int:
         "instrument": "rhythm",
         "frozenAtUtc": datetime.now(timezone.utc).isoformat(),
         "sourceCommit": args.source_commit,
+        "sourceAudioSha256": source_audio_sha256,
+        "sourceAudioBytes": source_audio_bytes,
         "referenceOpenedDuringFreeze": False,
         "referenceFree": True,
         "professionalReferenceUsed": False,
@@ -138,7 +184,9 @@ def main() -> int:
         "pdfFidelityVerified": False,
     }
     manifest_path = output_dir / "rhythm-freeze-manifest.json"
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    manifest_path.write_text(
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
 
     print(json.dumps(manifest, indent=2, sort_keys=True))
     return 0
