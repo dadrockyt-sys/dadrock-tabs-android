@@ -1,0 +1,403 @@
+APPROVED_AUDIO_SHA=PASS:215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f
+PROTECTED_PIPELINE_BLOB=PASS:7f72f8ed9b14af8bc93e95544195204d99c6bec1
+CANDIDATE_REFERENCE_TOKEN_SCAN=PASS
+✓ Initialized. View run at 
+https://modal.com/apps/dadrockyt/main/ap-LYiG0mFel8mh6R5lDtz57k
+✓ Created objects.
+├── 🔨 Created mount 
+│   /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/analyzer/v143_co
+│   ntextual_prune_candidate_product_modal.py
+├── 🔨 Created mount 
+│   /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/public/training/
+│   v143-musical-reconstruction-calibration/contextual-prune-frozen-model.json
+├── 🔨 Created mount 
+│   /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/public/training/
+│   v143-musical-reconstruction-calibration/intro-correlation-safe-sequence-even
+│   t-model.json
+├── 🔨 Created mount 
+│   /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/public/training/
+│   v143-musical-reconstruction-calibration/fresh-17-96-correlation-safe-sequenc
+│   e-frozen-events.json
+├── 🔨 Created mount 
+│   /home/runner/work/dadrock-tabs-android/dadrock-tabs-android/public/training/
+│   v143-musical-reconstruction-calibration/intro-correlation-safe-grid-event-se
+│   lector-model.json
+├── 🔨 Created mount PythonPackage:v143_ai_tab_gpu_worker, 
+│   PythonPackage:v143_candidate_timing_adapter, 
+│   PythonPackage:v143_reference_free_timing, 
+│   PythonPackage:v143_reference_free_rhythm_pipeline, 
+│   PythonPackage:v143_contextual_prune_reference_free_carrier, 
+│   PythonPackage:v143_contextual_prune_runtime, 
+│   PythonPackage:v143_contextual_prune_shadow_correction, 
+│   PythonPackage:v143_contextual_prune_candidate_events, 
+│   PythonPackage:v143_correlation_safe_fixed_count_reranker_freeze, 
+│   PythonPackage:v143_intro_sequence_event_model, 
+│   PythonPackage:v143_intro_learned_grid_event_selector, 
+│   PythonPackage:v143_intro_learned_onset_spectral_set_model, 
+│   PythonPackage:v143_intro_raw_attack_temporal_diagnostic, 
+│   PythonPackage:v143_intro_repetition_recovery_event_selector, 
+│   PythonPackage:v143_intro_supervised_temporal_assignment, 
+│   PythonPackage:v143_deterministic_separator, 
+│   PythonPackage:v143_seeded_separator, 
+│   PythonPackage:v143_production_separator, 
+│   PythonPackage:v143_seeded_audio_separator_cli, 
+│   PythonPackage:v143_production_engine, PythonPackage:v143_rhythm_runtime, 
+│   PythonPackage:v143_rhythm_event_assembly, 
+│   PythonPackage:v143_rhythm_guitar_note_mapper, 
+│   PythonPackage:v143_rhythm_sustain_technique_enricher, 
+│   PythonPackage:v143_rhythm_bend_consensus, 
+│   PythonPackage:v143_rhythm_bend_evidence, 
+│   PythonPackage:v143_rhythm_legato_evidence, 
+│   PythonPackage:v143_rhythm_semantic_primary_note_guard, 
+│   PythonPackage:v143_rhythm_sustain_consensus_shadow, 
+│   PythonPackage:v143_rhythm_output_adapter, 
+│   PythonPackage:v143_modal_rhythm_router, 
+│   PythonPackage:v143_rhythm_stem_provider
+└── 🔨 Created function analyze_corrected_candidate.
+2026-08-23 19:48:55.166 - INFO - cli - Separator version 0.44.5 beginning with input path(s): /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:48:55.169 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/direct, output_format: WAV
+2026-08-23 19:48:55.169 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/
+2026-08-23 19:48:55.170 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016
+2026-08-23 19:48:55.170 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: 
+2026-08-23 19:48:55.171 - INFO - separator - Python Version: 3.11.12
+2026-08-23 19:48:55.171 - INFO - separator - PyTorch Version: 2.13.0+cu130
+2026-08-23 19:48:55.382 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers
+2026-08-23 19:48:55.385 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0
+2026-08-23 19:48:55.385 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA
+2026-08-23 19:48:55.385 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration
+2026-08-23 19:48:55.386 - INFO - separator - Loading model htdemucs_6s.yaml...
+
+[1A  0%|          | 0.00/3.54k [00:00<?, ?iB/s]
+[1A28.3kiB [00:00, 21.6MiB/s]                  
+
+[1A  0%|          | 0.00/55.0M [00:00<?, ?iB/s]
+[1A 10%|▉         | 5.48M/55.0M [00:00<00:00, 54.6MiB/s]
+[1A 21%|██        | 11.3M/55.0M [00:00<00:00, 56.6MiB/s]
+[1A 31%|███▏      | 17.2M/55.0M [00:00<00:00, 57.7MiB/s]
+[1A 42%|████▏     | 23.0M/55.0M [00:00<00:00, 55.3MiB/s]
+[1A 52%|█████▏    | 28.5M/55.0M [00:00<00:00, 51.6MiB/s]
+[1A 61%|██████▏   | 33.7M/55.0M [00:00<00:00, 50.3MiB/s]
+[1A 71%|███████   | 38.8M/55.0M [00:00<00:00, 50.1MiB/s]
+[1A 81%|████████  | 44.4M/55.0M [00:00<00:00, 51.8MiB/s]
+[1A 90%|█████████ | 49.6M/55.0M [00:00<00:00, 49.7MiB/s]
+[1A 99%|█████████▉| 54.6M/55.0M [00:01<00:00, 49.1MiB/s]
+[1A100%|██████████| 55.0M/55.0M [00:01<00:00, 51.3MiB/s]
+
+[1A  0%|          | 0.00/21.0 [00:00<?, ?iB/s]
+[1A100%|██████████| 21.0/21.0 [00:00<00:00, 53.7kiB/s]
+2026-08-23 19:48:56.970 - INFO - demucs_separator - Demucs Separator initialisation complete
+2026-08-23 19:48:56.971 - INFO - separator - Load model duration: 00:00:01
+2026-08-23 19:48:56.971 - INFO - separator - Processing file: /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:48:56.971 - INFO - separator - Starting separation process for audio_file_path: /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:48:56.971 - INFO - common_separator - Input audio subtype: PCM_16
+2026-08-23 19:48:56.971 - INFO - common_separator - Detected input bit depth: 16-bit
+
+[1A  0%|          | 0/40 [00:00<?, ?it/s]
+[1A  2%|▎         | 1/40 [00:01<00:39,  1.01s/it]
+[1A  8%|▊         | 3/40 [00:01<00:11,  3.12it/s]
+[1A 12%|█▎        | 5/40 [00:01<00:06,  5.09it/s]
+[1A 18%|█▊        | 7/40 [00:01<00:04,  6.80it/s]
+[1A 22%|██▎       | 9/40 [00:01<00:03,  8.22it/s]
+[1A 28%|██▊       | 11/40 [00:01<00:03,  9.34it/s]
+[1A 32%|███▎      | 13/40 [00:01<00:02, 10.21it/s]
+[1A 38%|███▊      | 15/40 [00:02<00:02, 10.88it/s]
+[1A 42%|████▎     | 17/40 [00:02<00:02, 11.33it/s]
+[1A 48%|████▊     | 19/40 [00:02<00:01, 11.65it/s]
+[1A 52%|█████▎    | 21/40 [00:02<00:01, 11.91it/s]
+[1A 57%|█████▊    | 23/40 [00:02<00:01, 12.06it/s]
+[1A 62%|██████▎   | 25/40 [00:02<00:01, 12.17it/s]
+[1A 68%|██████▊   | 27/40 [00:03<00:01, 12.29it/s]
+[1A 72%|███████▎  | 29/40 [00:03<00:00, 12.35it/s]
+[1A 78%|███████▊  | 31/40 [00:03<00:00, 12.41it/s]
+[1A 82%|████████▎ | 33/40 [00:03<00:00, 12.45it/s]
+[1A 88%|████████▊ | 35/40 [00:03<00:00, 12.47it/s]
+[1A 92%|█████████▎| 37/40 [00:03<00:00, 12.49it/s]
+[1A 98%|█████████▊| 39/40 [00:04<00:00, 12.44it/s]
+[1A100%|██████████| 40/40 [00:04<00:00,  9.70it/s]
+2026-08-23 19:49:27.950 - INFO - common_separator - Audio duration is 0.06 hours (211.44 seconds).
+2026-08-23 19:49:27.950 - WARNING - common_separator - Using soundfile for writing.
+2026-08-23 19:49:27.995 - INFO - common_separator - Using input subtype for output: PCM_16
+2026-08-23 19:49:28.553 - INFO - common_separator - Clearing input audio file paths, sources and stems...
+2026-08-23 19:49:28.554 - INFO - separator - Separation duration: 00:00:31
+2026-08-23 19:49:28.554 - INFO - cli - Separation complete! Output file(s): input-normalized_(Guitar)_htdemucs_6s.wav
+2026-08-23 19:49:34.576 - INFO - cli - Separator version 0.44.5 beginning with input path(s): /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:49:34.580 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/roformer, output_format: WAV
+2026-08-23 19:49:34.581 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/
+2026-08-23 19:49:34.581 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016
+2026-08-23 19:49:34.581 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: 
+2026-08-23 19:49:34.581 - INFO - separator - Python Version: 3.11.12
+2026-08-23 19:49:34.581 - INFO - separator - PyTorch Version: 2.13.0+cu130
+2026-08-23 19:49:34.834 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers
+2026-08-23 19:49:34.837 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0
+2026-08-23 19:49:34.838 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA
+2026-08-23 19:49:34.838 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration
+2026-08-23 19:49:34.839 - INFO - separator - Loading model model_bs_roformer_ep_317_sdr_12.9755.ckpt...
+
+[1A  0%|          | 0.00/639M [00:00<?, ?iB/s]
+[1A  1%|          | 3.60M/639M [00:00<00:17, 35.9MiB/s]
+[1A  1%|▏         | 9.40M/639M [00:00<00:12, 48.9MiB/s]
+[1A  2%|▏         | 15.0M/639M [00:00<00:11, 52.3MiB/s]
+[1A  3%|▎         | 20.3M/639M [00:00<00:12, 49.7MiB/s]
+[1A  4%|▍         | 25.3M/639M [00:00<00:12, 48.6MiB/s]
+[1A  5%|▍         | 30.5M/639M [00:00<00:12, 49.7MiB/s]
+[1A  6%|▌         | 36.5M/639M [00:00<00:11, 53.1MiB/s]
+[1A  7%|▋         | 41.9M/639M [00:00<00:11, 51.9MiB/s]
+[1A  7%|▋         | 47.1M/639M [00:00<00:12, 47.7MiB/s]
+[1A  8%|▊         | 51.9M/639M [00:01<00:12, 45.9MiB/s]
+[1A  9%|▉         | 56.7M/639M [00:01<00:12, 46.3MiB/s]
+[1A 10%|▉         | 61.3M/639M [00:01<00:12, 46.3MiB/s]
+[1A 10%|█         | 66.0M/639M [00:01<00:12, 46.1MiB/s]
+[1A 11%|█         | 71.3M/639M [00:01<00:11, 48.0MiB/s]
+[1A 12%|█▏        | 76.1M/639M [00:01<00:12, 46.4MiB/s]
+[1A 13%|█▎        | 80.9M/639M [00:01<00:11, 46.8MiB/s]
+[1A 13%|█▎        | 85.6M/639M [00:01<00:12, 44.5MiB/s]
+[1A 14%|█▍        | 90.1M/639M [00:01<00:12, 42.3MiB/s]
+[1A 15%|█▍        | 94.3M/639M [00:02<00:12, 42.1MiB/s]
+[1A 15%|█▌        | 98.6M/639M [00:02<00:13, 40.8MiB/s]
+[1A 16%|█▌        | 103M/639M [00:02<00:13, 40.2MiB/s] 
+[1A 17%|█▋        | 107M/639M [00:02<00:12, 42.3MiB/s]
+[1A 18%|█▊        | 112M/639M [00:02<00:12, 43.0MiB/s]
+[1A 18%|█▊        | 116M/639M [00:02<00:12, 42.1MiB/s]
+[1A 19%|█▉        | 120M/639M [00:02<00:12, 41.4MiB/s]
+[1A 19%|█▉        | 125M/639M [00:02<00:12, 40.8MiB/s]
+[1A 20%|██        | 130M/639M [00:02<00:11, 44.2MiB/s]
+[1A 21%|██        | 134M/639M [00:02<00:11, 43.8MiB/s]
+[1A 22%|██▏       | 139M/639M [00:03<00:11, 42.6MiB/s]
+[1A 22%|██▏       | 143M/639M [00:03<00:12, 40.9MiB/s]
+[1A 23%|██▎       | 147M/639M [00:03<00:12, 41.0MiB/s]
+[1A 24%|██▎       | 151M/639M [00:03<00:12, 40.4MiB/s]
+[1A 24%|██▍       | 156M/639M [00:03<00:11, 41.3MiB/s]
+[1A 25%|██▌       | 160M/639M [00:03<00:11, 41.7MiB/s]
+[1A 26%|██▌       | 164M/639M [00:03<00:11, 40.9MiB/s]
+[1A 26%|██▋       | 168M/639M [00:03<00:11, 40.4MiB/s]
+[1A 27%|██▋       | 172M/639M [00:03<00:11, 39.7MiB/s]
+[1A 28%|██▊       | 177M/639M [00:04<00:11, 41.6MiB/s]
+[1A 28%|██▊       | 182M/639M [00:04<00:10, 44.8MiB/s]
+[1A 29%|██▉       | 187M/639M [00:04<00:10, 45.1MiB/s]
+[1A 30%|██▉       | 192M/639M [00:04<00:09, 46.7MiB/s]
+[1A 31%|███       | 197M/639M [00:04<00:09, 47.7MiB/s]
+[1A 32%|███▏      | 202M/639M [00:04<00:08, 49.4MiB/s]
+[1A 32%|███▏      | 207M/639M [00:04<00:09, 47.7MiB/s]
+[1A 33%|███▎      | 212M/639M [00:04<00:09, 46.3MiB/s]
+[1A 34%|███▍      | 217M/639M [00:04<00:09, 45.0MiB/s]
+[1A 35%|███▍      | 221M/639M [00:04<00:09, 45.7MiB/s]
+[1A 35%|███▌      | 226M/639M [00:05<00:08, 47.6MiB/s]
+[1A 36%|███▋      | 232M/639M [00:05<00:08, 49.6MiB/s]
+[1A 37%|███▋      | 237M/639M [00:05<00:08, 48.6MiB/s]
+[1A 38%|███▊      | 242M/639M [00:05<00:08, 48.6MiB/s]
+[1A 39%|███▊      | 247M/639M [00:05<00:08, 48.3MiB/s]
+[1A 39%|███▉      | 252M/639M [00:05<00:08, 46.4MiB/s]
+[1A 40%|████      | 256M/639M [00:05<00:08, 44.3MiB/s]
+[1A 41%|████      | 261M/639M [00:05<00:08, 42.5MiB/s]
+[1A 41%|████▏     | 265M/639M [00:05<00:09, 40.8MiB/s]
+[1A 42%|████▏     | 270M/639M [00:06<00:08, 42.7MiB/s]
+[1A 43%|████▎     | 274M/639M [00:06<00:08, 43.3MiB/s]
+[1A 44%|████▎     | 279M/639M [00:06<00:08, 43.9MiB/s]
+[1A 44%|████▍     | 283M/639M [00:06<00:08, 43.0MiB/s]
+[1A 45%|████▍     | 287M/639M [00:06<00:08, 42.2MiB/s]
+[1A 46%|████▌     | 292M/639M [00:06<00:08, 42.0MiB/s]
+[1A 46%|████▋     | 296M/639M [00:06<00:08, 42.4MiB/s]
+[1A 47%|████▋     | 301M/639M [00:06<00:07, 44.6MiB/s]
+[1A 48%|████▊     | 306M/639M [00:06<00:07, 43.8MiB/s]
+[1A 48%|████▊     | 310M/639M [00:06<00:07, 43.2MiB/s]
+[1A 49%|████▉     | 314M/639M [00:07<00:07, 41.9MiB/s]
+[1A 50%|████▉     | 319M/639M [00:07<00:07, 43.1MiB/s]
+[1A 51%|█████     | 323M/639M [00:07<00:07, 43.2MiB/s]
+[1A 51%|█████     | 328M/639M [00:07<00:07, 42.2MiB/s]
+[1A 52%|█████▏    | 332M/639M [00:07<00:07, 41.9MiB/s]
+[1A 53%|█████▎    | 336M/639M [00:07<00:07, 38.2MiB/s]
+[1A 53%|█████▎    | 340M/639M [00:07<00:08, 33.5MiB/s]
+[1A 54%|█████▍    | 344M/639M [00:07<00:08, 35.4MiB/s]
+[1A 55%|█████▍    | 349M/639M [00:07<00:07, 39.1MiB/s]
+[1A 55%|█████▌    | 353M/639M [00:08<00:07, 40.2MiB/s]
+[1A 56%|█████▌    | 358M/639M [00:08<00:06, 43.1MiB/s]
+[1A 57%|█████▋    | 363M/639M [00:08<00:06, 45.5MiB/s]
+[1A 58%|█████▊    | 368M/639M [00:08<00:06, 44.0MiB/s]
+[1A 58%|█████▊    | 372M/639M [00:08<00:06, 42.8MiB/s]
+[1A 59%|█████▉    | 378M/639M [00:08<00:05, 46.9MiB/s]
+[1A 60%|█████▉    | 383M/639M [00:08<00:05, 44.4MiB/s]
+[1A 61%|██████    | 387M/639M [00:08<00:05, 43.7MiB/s]
+[1A 61%|██████▏   | 392M/639M [00:08<00:05, 43.2MiB/s]
+[1A 62%|██████▏   | 397M/639M [00:09<00:05, 45.2MiB/s]
+[1A 63%|██████▎   | 401M/639M [00:09<00:05, 45.0MiB/s]
+[1A 64%|██████▎   | 406M/639M [00:09<00:05, 44.0MiB/s]
+[1A 64%|██████▍   | 410M/639M [00:09<00:05, 42.3MiB/s]
+[1A 65%|██████▍   | 415M/639M [00:09<00:05, 41.9MiB/s]
+[1A 66%|██████▌   | 419M/639M [00:09<00:05, 41.8MiB/s]
+[1A 66%|██████▋   | 425M/639M [00:09<00:04, 47.3MiB/s]
+[1A 67%|██████▋   | 430M/639M [00:09<00:04, 45.0MiB/s]
+[1A 68%|██████▊   | 434M/639M [00:09<00:04, 43.8MiB/s]
+[1A 69%|██████▊   | 439M/639M [00:09<00:04, 42.4MiB/s]
+[1A 69%|██████▉   | 443M/639M [00:10<00:04, 42.8MiB/s]
+[1A 70%|██████▉   | 447M/639M [00:10<00:04, 42.9MiB/s]
+[1A 71%|███████   | 452M/639M [00:10<00:04, 41.7MiB/s]
+[1A 71%|███████▏  | 456M/639M [00:10<00:04, 41.2MiB/s]
+[1A 72%|███████▏  | 460M/639M [00:10<00:04, 41.4MiB/s]
+[1A 73%|███████▎  | 464M/639M [00:10<00:04, 41.4MiB/s]
+[1A 73%|███████▎  | 468M/639M [00:10<00:04, 41.8MiB/s]
+[1A 74%|███████▍  | 473M/639M [00:10<00:03, 43.3MiB/s]
+[1A 75%|███████▍  | 478M/639M [00:10<00:03, 42.9MiB/s]
+[1A 75%|███████▌  | 482M/639M [00:11<00:03, 43.2MiB/s]
+[1A 76%|███████▌  | 486M/639M [00:11<00:03, 42.5MiB/s]
+[1A 77%|███████▋  | 491M/639M [00:11<00:03, 42.6MiB/s]
+[1A 77%|███████▋  | 495M/639M [00:11<00:03, 42.9MiB/s]
+[1A 78%|███████▊  | 499M/639M [00:11<00:03, 42.5MiB/s]
+[1A 79%|███████▊  | 503M/639M [00:11<00:03, 42.4MiB/s]
+[1A 79%|███████▉  | 508M/639M [00:11<00:03, 43.1MiB/s]
+[1A 80%|████████  | 512M/639M [00:11<00:02, 42.9MiB/s]
+[1A 81%|████████  | 517M/639M [00:11<00:02, 42.0MiB/s]
+[1A 81%|████████▏ | 521M/639M [00:11<00:02, 41.4MiB/s]
+[1A 82%|████████▏ | 525M/639M [00:12<00:02, 41.7MiB/s]
+[1A 83%|████████▎ | 529M/639M [00:12<00:02, 41.6MiB/s]
+[1A 83%|████████▎ | 533M/639M [00:12<00:02, 41.9MiB/s]
+[1A 84%|████████▍ | 538M/639M [00:12<00:02, 42.9MiB/s]
+[1A 85%|████████▍ | 542M/639M [00:12<00:02, 43.0MiB/s]
+[1A 85%|████████▌ | 547M/639M [00:12<00:02, 42.8MiB/s]
+[1A 86%|████████▌ | 551M/639M [00:12<00:02, 42.2MiB/s]
+[1A 87%|████████▋ | 555M/639M [00:12<00:02, 41.8MiB/s]
+[1A 87%|████████▋ | 559M/639M [00:12<00:01, 41.2MiB/s]
+[1A 88%|████████▊ | 563M/639M [00:12<00:01, 41.2MiB/s]
+[1A 89%|████████▉ | 568M/639M [00:13<00:01, 41.7MiB/s]
+[1A 89%|████████▉ | 572M/639M [00:13<00:01, 41.2MiB/s]
+[1A 90%|█████████ | 576M/639M [00:13<00:01, 42.7MiB/s]
+[1A 91%|█████████ | 581M/639M [00:13<00:01, 43.8MiB/s]
+[1A 92%|█████████▏| 586M/639M [00:13<00:01, 43.3MiB/s]
+[1A 92%|█████████▏| 590M/639M [00:13<00:01, 43.9MiB/s]
+[1A 93%|█████████▎| 595M/639M [00:13<00:00, 46.0MiB/s]
+[1A 94%|█████████▍| 600M/639M [00:13<00:01, 30.1MiB/s]
+[1A 95%|█████████▍| 604M/639M [00:14<00:01, 33.6MiB/s]
+[1A 95%|█████████▌| 609M/639M [00:14<00:00, 35.9MiB/s]
+[1A 96%|█████████▌| 613M/639M [00:14<00:00, 37.3MiB/s]
+[1A 97%|█████████▋| 617M/639M [00:14<00:00, 38.2MiB/s]
+[1A 97%|█████████▋| 621M/639M [00:14<00:00, 39.1MiB/s]
+[1A 98%|█████████▊| 626M/639M [00:14<00:00, 40.7MiB/s]
+[1A 99%|█████████▊| 630M/639M [00:14<00:00, 41.2MiB/s]
+[1A 99%|█████████▉| 634M/639M [00:14<00:00, 40.6MiB/s]
+[1A100%|█████████▉| 638M/639M [00:14<00:00, 41.2MiB/s]
+[1A100%|██████████| 639M/639M [00:14<00:00, 43.0MiB/s]
+
+[1A  0%|          | 0.00/2.27k [00:00<?, ?iB/s]100%|██████████| 2.27k/2.27k [00:00<00:00, 3.34MiB/s]
+2026-08-23 19:49:53.276 - INFO - mdxc_separator - MDXC Separator initialisation complete
+2026-08-23 19:49:53.276 - INFO - separator - Roformer loading stats: {'new_implementation_success': 1, 'total_failures': 0}
+2026-08-23 19:49:53.276 - INFO - separator - Load model duration: 00:00:18
+2026-08-23 19:49:53.277 - INFO - separator - Processing file: /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:49:53.277 - INFO - separator - Starting separation process for audio_file_path: /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/normalized/input-normalized.wav
+2026-08-23 19:49:53.279 - INFO - common_separator - Input audio subtype: PCM_16
+2026-08-23 19:49:53.279 - INFO - common_separator - Detected input bit depth: 16-bit
+
+[1A  0%|          | 0/27 [00:00<?, ?it/s]
+[1A  4%|▎         | 1/27 [00:02<00:56,  2.18s/it]
+[1A  7%|▋         | 2/27 [00:03<00:46,  1.87s/it]
+[1A 11%|█         | 3/27 [00:05<00:42,  1.77s/it]
+[1A 15%|█▍        | 4/27 [00:07<00:39,  1.73s/it]
+[1A 19%|█▊        | 5/27 [00:08<00:37,  1.70s/it]
+[1A 22%|██▏       | 6/27 [00:10<00:35,  1.69s/it]
+[1A 26%|██▌       | 7/27 [00:12<00:33,  1.68s/it]
+[1A 30%|██▉       | 8/27 [00:13<00:31,  1.67s/it]
+[1A 33%|███▎      | 9/27 [00:15<00:30,  1.67s/it]
+[1A 37%|███▋      | 10/27 [00:17<00:28,  1.67s/it]
+[1A 41%|████      | 11/27 [00:18<00:26,  1.67s/it]
+[1A 44%|████▍     | 12/27 [00:20<00:25,  1.67s/it]
+[1A 48%|████▊     | 13/27 [00:22<00:23,  1.67s/it]
+[1A 52%|█████▏    | 14/27 [00:23<00:21,  1.67s/it]
+[1A 56%|█████▌    | 15/27 [00:25<00:20,  1.67s/it]
+[1A 59%|█████▉    | 16/27 [00:27<00:18,  1.67s/it]
+[1A 63%|██████▎   | 17/27 [00:28<00:16,  1.67s/it]
+[1A 67%|██████▋   | 18/27 [00:30<00:15,  1.67s/it]
+[1A 70%|███████   | 19/27 [00:32<00:13,  1.67s/it]
+[1A 74%|███████▍  | 20/27 [00:33<00:11,  1.67s/it]
+[1A 78%|███████▊  | 21/27 [00:35<00:10,  1.67s/it]
+[1A 81%|████████▏ | 22/27 [00:37<00:08,  1.67s/it]
+[1A 85%|████████▌ | 23/27 [00:38<00:06,  1.68s/it]
+[1A 89%|████████▉ | 24/27 [00:40<00:05,  1.68s/it]
+[1A 93%|█████████▎| 25/27 [00:42<00:03,  1.68s/it]
+[1A 96%|█████████▋| 26/27 [00:43<00:01,  1.68s/it]
+[1A100%|██████████| 27/27 [00:45<00:00,  1.68s/it]
+[1A100%|██████████| 27/27 [00:45<00:00,  1.69s/it]
+2026-08-23 19:50:40.890 - INFO - mdxc_separator - Saving Instrumental stem to input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav...
+2026-08-23 19:50:41.205 - INFO - common_separator - Audio duration is 0.06 hours (211.44 seconds).
+2026-08-23 19:50:41.205 - WARNING - common_separator - Using soundfile for writing.
+2026-08-23 19:50:41.250 - INFO - common_separator - Using input subtype for output: PCM_16
+2026-08-23 19:50:41.850 - INFO - common_separator - Clearing input audio file paths, sources and stems...
+2026-08-23 19:50:41.851 - INFO - separator - Separation duration: 00:00:48
+2026-08-23 19:50:41.851 - INFO - cli - Separation complete! Output file(s): input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav
+2026-08-23 19:50:47.565 - INFO - cli - Separator version 0.44.5 beginning with input path(s): /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/roformer/input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav
+2026-08-23 19:50:47.569 - INFO - separator - Separator version 0.44.5 instantiating with output_dir: /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/cascade, output_format: WAV
+2026-08-23 19:50:47.569 - INFO - separator - Using model directory from model_file_dir parameter: /tmp/audio-separator-models/
+2026-08-23 19:50:47.570 - INFO - separator - Operating System: Linux #1 SMP Sun Jan 10 15:06:54 PST 2016
+2026-08-23 19:50:47.571 - INFO - separator - System: Linux Node: modal Release: 4.19.0-gvisor Machine: x86_64 Proc: 
+2026-08-23 19:50:47.571 - INFO - separator - Python Version: 3.11.12
+2026-08-23 19:50:47.571 - INFO - separator - PyTorch Version: 2.13.0+cu130
+2026-08-23 19:50:47.808 - INFO - separator - FFmpeg installed: ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers
+2026-08-23 19:50:47.811 - INFO - separator - ONNX Runtime GPU package installed with version: 1.28.0
+2026-08-23 19:50:47.812 - INFO - separator - CUDA is available in Torch, setting Torch device to CUDA
+2026-08-23 19:50:47.812 - INFO - separator - ONNXruntime has CUDAExecutionProvider available, enabling acceleration
+2026-08-23 19:50:47.812 - INFO - separator - Loading model htdemucs_6s.yaml...
+2026-08-23 19:50:47.876 - INFO - demucs_separator - Demucs Separator initialisation complete
+2026-08-23 19:50:47.877 - INFO - separator - Load model duration: 00:00:00
+2026-08-23 19:50:47.877 - INFO - separator - Processing file: /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/roformer/input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav
+2026-08-23 19:50:47.877 - INFO - separator - Starting separation process for audio_file_path: /tmp/v143-corrected-candidate-x7wxk5hz/stems/_work/roformer/input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav
+2026-08-23 19:50:47.878 - INFO - common_separator - Input audio subtype: PCM_16
+2026-08-23 19:50:47.878 - INFO - common_separator - Detected input bit depth: 16-bit
+
+[1A  0%|          | 0/40 [00:00<?, ?it/s]
+[1A  2%|▎         | 1/40 [00:00<00:24,  1.58it/s]
+[1A  8%|▊         | 3/40 [00:00<00:08,  4.43it/s]
+[1A 12%|█▎        | 5/40 [00:00<00:05,  6.64it/s]
+[1A 18%|█▊        | 7/40 [00:01<00:03,  8.28it/s]
+[1A 22%|██▎       | 9/40 [00:01<00:03,  9.47it/s]
+[1A 28%|██▊       | 11/40 [00:01<00:02, 10.32it/s]
+[1A 32%|███▎      | 13/40 [00:01<00:02, 10.98it/s]
+[1A 38%|███▊      | 15/40 [00:01<00:02, 11.42it/s]
+[1A 42%|████▎     | 17/40 [00:01<00:01, 11.72it/s]
+[1A 48%|████▊     | 19/40 [00:02<00:01, 11.91it/s]
+[1A 52%|█████▎    | 21/40 [00:02<00:01, 12.09it/s]
+[1A 57%|█████▊    | 23/40 [00:02<00:01, 12.24it/s]
+[1A 62%|██████▎   | 25/40 [00:02<00:01, 12.30it/s]
+[1A 68%|██████▊   | 27/40 [00:02<00:01, 12.31it/s]
+[1A 72%|███████▎  | 29/40 [00:02<00:00, 12.34it/s]
+[1A 78%|███████▊  | 31/40 [00:03<00:00, 12.25it/s]
+[1A 82%|████████▎ | 33/40 [00:03<00:00, 12.29it/s]
+[1A 88%|████████▊ | 35/40 [00:03<00:00, 12.28it/s]
+[1A 92%|█████████▎| 37/40 [00:03<00:00, 12.31it/s]
+[1A 98%|█████████▊| 39/40 [00:03<00:00, 12.36it/s]
+[1A100%|██████████| 40/40 [00:03<00:00, 10.59it/s]
+2026-08-23 19:50:56.330 - INFO - common_separator - Audio duration is 0.06 hours (211.44 seconds).
+2026-08-23 19:50:56.331 - WARNING - common_separator - Using soundfile for writing.
+2026-08-23 19:50:56.370 - INFO - common_separator - Using input subtype for output: PCM_16
+2026-08-23 19:50:56.914 - INFO - common_separator - Clearing input audio file paths, sources and stems...
+2026-08-23 19:50:56.914 - INFO - separator - Separation duration: 00:00:09
+2026-08-23 19:50:56.914 - INFO - cli - Separation complete! Output file(s): input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12_(Guitar)_htdemucs_6s.wav
+WARNING:root:Coremltools is not installed. If you plan to use a CoreML Saved Model, reinstall basic-pitch with `pip install 'basic-pitch[coreml]'`
+WARNING:root:tflite-runtime is not installed. If you plan to use a TFLite Model, reinstall basic-pitch with `pip install 'basic-pitch tflite-runtime'` or `pip install 'basic-pitch[tf]'
+2026-08-23 19:50:59.826492: I external/local_tsl/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-08-23 19:50:59.932163: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-08-23 19:50:59.932341: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-08-23 19:50:59.935054: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-08-23 19:50:59.949200: I external/local_tsl/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-08-23 19:50:59.949584: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-08-23 19:51:03.928073: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+/usr/local/lib/python3.11/site-packages/resampy/filters.py:50: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+Predicting MIDI for /tmp/v143-corrected-candidate-x7wxk5hz/stems/direct-demucs6s-guitar.wav...
+2026-08-23 19:51:08.354729: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:887] could not open file to read NUMA node: /sys/bus/pci/devices/0000:3c:00.0/numa_node
+Your kernel may have been built without NUMA support.
+2026-08-23 19:51:08.364249: W tensorflow/core/common_runtime/gpu/gpu_device.cc:2256] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+Predicting MIDI for /tmp/v143-corrected-candidate-x7wxk5hz/stems/direct-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-corrected-candidate-x7wxk5hz/stems/direct-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-corrected-candidate-x7wxk5hz/stems/direct-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-corrected-candidate-x7wxk5hz/stems/bsroformer-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-corrected-candidate-x7wxk5hz/stems/bsroformer-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-corrected-candidate-x7wxk5hz/stems/bsroformer-demucs6s-guitar.wav...
+Predicting MIDI for /tmp/v143-corrected-candidate-x7wxk5hz/stems/bsroformer-demucs6s-guitar.wav...
+{"candidateAddsUnobservedPitch": false, "candidateRelocatesEvents": false, "correctedAttackCount": 979, "everyCorrectedAttackRendered": true, "productionModified": false, "referenceFree": true, "renderedNoteCount": 2009, "renderedPitchCount": 2009, "runtimeLabelsRequired": false, "supportedPitchCount": 2055, "voicingDroppedPitchCount": 46}
+{"baseEventCount": 949, "baseEventsPreserved": true, "candidateRelocatesEvents": false, "correctedEventCount": 979, "emptyMeasureFailSafeEnabled": true, "localPeakRescueEnabled": true, "observedSlotCount": 1787, "productionModified": false, "referenceFree": true, "rescuedEventCount": 30, "rescuesAreObservedSlots": true, "runtimeLabelsRequired": false, "strictSlotCount": 1640, "suppressedPitchCount": 8631}
+{"attackTimingChanged": false, "eventCount": 2009, "eventCountChanged": false, "pitchChanged": false, "primaryEventCount": 979, "productionModified": false, "referenceFree": true, "runtimeLabelsRequired": false, "secondaryEventCount": 1030, "stringFretChanged": false, "strippedAudioTechniqueLabels": 70, "strippedInvalidPrimaryLegato": 10, "strippedSecondaryBends": 0, "strippedSecondaryLegato": 101}
+{"annotatedEventCount": 1498, "attackTimingChanged": false, "eventCount": 2009, "eventCountChanged": false, "longerThanDetectorCount": 1498, "pitchChanged": false, "productionModified": false, "referenceFree": true, "runtimeLabelsRequired": false, "shorterThanDetectorCount": 0, "tieOrLetRingInferred": false}
+WROTE=.candidate-diagnostic/corrected-candidate-product.json
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/dadrockyt/main/ap-LYiG0mFel8mh6R5lDtz57k
+{"attackCount": 979, "candidateDiagnostics": {"candidateAddsUnobservedPitch": false, "candidateRelocatesEvents": false, "correctedAttackCount": 979, "everyCorrectedAttackRendered": true, "productionModified": false, "referenceFree": true, "renderedNoteCount": 2009, "renderedPitchCount": 2009, "runtimeLabelsRequired": false, "supportedPitchCount": 2055, "voicingDroppedPitchCount": 46}, "checks": {"all113Measures": true, "approvedFixture": true, "attackCountMatches": true, "baseEventsPreserved": true, "eventCountPositive": true, "everyCorrectedAttackRendered": true, "liveEndpointUnmodified": true, "noInventedPitch": true, "noRelocation": true, "productionUnmodified": true, "professionalReferenceNotUsed": true, "runtimeLabelsNotRequired": true, "semanticEventIdentity": true, "sustainEventIdentity": true}, "correctionDiagnostics": {"baseEventCount": 949, "baseEventsPreserved": true, "candidateRelocatesEvents": false, "correctedEventCount": 979, "emptyMeasureFailSafeEnabled": true, "localPeakRescueEnabled": true, "observedSlotCount": 1787, "productionModified": false, "referenceFree": true, "rescuedEventCount": 30, "rescuesAreObservedSlots": true, "runtimeLabelsRequired": false, "strictSlotCount": 1640, "suppressedPitchCount": 8631}, "eventCount": 2009, "failedChecks": [], "firstMeasure": 1, "gate": "v143-corrected-candidate-approved-audio-summary", "lastMeasure": 113, "passed": true, "productionModified": false, "professionalReferenceOpened": false, "schemaVersion": 1, "semanticGuard": {"attackTimingChanged": false, "eventCount": 2009, "eventCountChanged": false, "pitchChanged": false, "primaryEventCount": 979, "productionModified": false, "referenceFree": true, "runtimeLabelsRequired": false, "secondaryEventCount": 1030, "stringFretChanged": false, "strippedAudioTechniqueLabels": 70, "strippedInvalidPrimaryLegato": 10, "strippedSecondaryBends": 0, "strippedSecondaryLegato": 101}, "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f", "sustainDiagnostics": {"annotatedEventCount": 1498, "attackTimingChanged": false, "eventCount": 2009, "eventCountChanged": false, "longerThanDetectorCount": 1498, "pitchChanged": false, "productionModified": false, "referenceFree": true, "runtimeLabelsRequired": false, "shorterThanDetectorCount": 0, "tieOrLetRingInferred": false}, "uniqueMeasureCount": 113}
