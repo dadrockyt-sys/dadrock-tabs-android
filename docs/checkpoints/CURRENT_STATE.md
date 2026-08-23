@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 — Bass structured integration boundary selected
+Updated: 2026-08-22 — Bass structured integration canary active
 Branch: `v143-contextual-prune-lobo`
 
 ## Safety / product contract
@@ -19,15 +19,17 @@ Approved fixture `public/gomywayfullaitest.m4a`. Professional analyzer and PDF a
 
 ## Bass separation + pitch — CLOSED GREEN
 
-Run `32611529763` passed. Direct/cascade stems are distinct, seed 143 fixed, both 211.44 s, ~99.99% 30–1000 Hz energy, ~99.7% playable-range pitch frames. Evidence:
+Run `32611529763` passed. Direct/cascade stems are distinct, seed 143 fixed, both 211.44 s, ~99.99% 30–1000 Hz energy, ~99.7% playable-range pitch frames.
 
+Evidence:
 - `debug/v143-contextual-prune/bass-real-audio-canary-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-canary.json`
 
 ## Bass candidate / note / timing / playability — CLOSED GREEN
 
-Run `32611818648` passed. 1754 authenticated events; two-view MIDI consensus; tempo 129.19921875 BPM; 4/4; 447 beats; MIDI 28..67; max grid error 0.1 s; 100% render survival/playability/timing/pitch/pitch-position consistency. Evidence:
+Run `32611818648` passed. 1754 authenticated events; two-view MIDI consensus; tempo 129.19921875 BPM; 4/4; 447 beats; MIDI 28..67; max grid error 0.1 s; 100% render survival/playability/timing/pitch/pitch-position consistency.
 
+Evidence:
 - `debug/v143-contextual-prune/bass-real-audio-event-timing-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-event-timing.json`
 
@@ -42,90 +44,83 @@ Key proof: 1757 events; 100% identity preservation; 302 technique events; 332 la
 Proven reference-free/two-view families: `slide`, `hammer_on`, `pull_off`, `mute`, `sustain`.
 
 Evidence:
-
 - `debug/v143-contextual-prune/bass-real-audio-technique-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-technique.json`
 - artifact `9485858031`
 
-Important: separate GPU analyses can regenerate slightly different event/rare-technique counts. The prior structural run produced 1754 events; the technique run produced 1757. Do not require cross-run bit identity. Enrichment identity must remain 100% within each authenticated analysis.
+Important: separate GPU analyses can regenerate slightly different event/rare-technique counts. The structural run produced 1754 events; the technique run produced 1757. Do not require cross-run bit identity. Enrichment identity must remain 100% within each authenticated analysis.
 
 ## Bass harmonic investigation — CLOSED GREEN SAFE ABSTENTION / HARMONIC UNPROVEN
 
-First run `32612695589` exposed one ambiguous MIDI-40/fret-12 candidate and a verifier mistake that required rare `mute` recurrence across independent GPU reruns. The candidate was deliberately not accepted as harmonic proof because a normal fretted E2 and a 12th-node natural harmonic can share the same sounding pitch and similar overtone structure.
+Strict harmonic detector requires minimum duration 0.22 s, max onset 0.30, min tonal purity 0.78, min upper-partial ratio 0.90, max subharmonic ratio 0.06, authenticated mapped string/fret matching a common natural-harmonic node, and two independent Bass views.
 
-Hardening commits:
-
-- `db74e2e64e17000f0aeee3faa438258951687b38` — stricter harmonic evidence
-- `2e420d677f05442d442b61e1d8f027c42d9c74c9` — safe-abstention-aware verifier
-- `1ef20763aab365042f620800f60adab9be98c830` — fail-closed workflow accepts exactly one outcome: strict proof or safe abstention
-
-Strict detector requirements:
-
-```text
-minimum duration: 0.22 s
-maximum onset strength: 0.30
-minimum tonal purity: 0.78
-minimum upper-partial ratio: 0.90
-maximum subharmonic ratio: 0.06
-mapped string/fret must match a common natural-harmonic physical node
-required independent views: 2
-```
-
-Authoritative rerun `32613012696` from source commit `1ef20763aab365042f620800f60adab9be98c830` completed `success` and every workflow step passed.
-
-Final harmonic diagnostic proof:
+Authoritative run `32613012696` passed with:
 
 ```text
 eventCount: 1757
 base->subset identity: 100%
 subset->final identity: 100%
-quality gate: 100% across all established metrics
+quality: 100%
 harmonicEventCount: 0
-harmonicLabelCount: 0
-harmonicEvidenceObserved: false
 harmonicFamilyProven: false
 safeAbstention: true
-bassHarmonicDiagnosticBoundaryPassed: true
 passed: true
 ```
 
-Current-run conservative subset also reproduced the prior green counts: sustain 235, slide-down 33, slide-up 38, hammer-on 11, pull-off 14, mute 1.
-
 Evidence:
-
 - `debug/v143-contextual-prune/bass-real-audio-harmonic-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-harmonic.json`
 
-The correct product conclusion is: the reference-free harmonic diagnostic safely rejects ambiguous evidence on the approved fixture. `harmonic` remains disabled/unproven. Do not weaken criteria or relabel this abstention as harmonic proof.
-
-High-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven. Professional Bass remains false. All training/routing/structured identity/PDF/live Modal/Vercel/Production/payment/token/email flags remain disabled.
+Correct conclusion: ambiguous harmonic evidence is safely rejected. `harmonic` remains disabled/unproven. High-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven.
 
 ## Existing Bass presentation contracts — GREEN SCAFFOLDS / INACTIVE
 
-Inspection confirmed the missing boundary is integration, not another low-level scaffold:
+- `lib/bassProfessionalRenderContract.js`: four-string `G-D-A-E`, open MIDI `[43,38,33,28]`, frets 0..24, 16 steps/measure, exact MIDI/string/fret consistency.
+- `lib/bassProfessionalQuality.js`: existing minimum-4 / 70% render/playability/timing/pitch/pitch-position thresholds.
+- Existing scaffold workflows prove these contracts synthetically only.
+- `lib/jimmyPaigeAnalysisPayload.js`, `lib/createAiTabPdf.js`, and `lib/createJimmyPaigeProfessionalPdf.js` still enable structured professional routing only for Rhythm. Bass remains legacy/inactive.
 
-- `lib/bassProfessionalRenderContract.js` already defines the four-string `G-D-A-E`, `[43,38,33,28]`, fret 0..24, measure/step 16th-grid render projection and exact MIDI/string/fret consistency. It is diagnostic-only and inactive.
-- `lib/bassProfessionalQuality.js` already enforces the established minimum-4 / 70% render, playability, timing, pitch and pitch-position quality thresholds. It is diagnostic-only and inactive.
-- `.github/workflows/bass-professional-render-contract.yml` and `.github/workflows/bass-professional-quality-scaffold.yml` prove those synthetic scaffolds only.
-- `lib/jimmyPaigeAnalysisPayload.js`, `lib/createAiTabPdf.js`, and `lib/createJimmyPaigeProfessionalPdf.js` enable structured identity/rendering only for V143 Rhythm. Bass still follows legacy routing/fallback and must remain that way during this boundary.
+## LIVE STEP — real-audio Bass structured-event integration
 
-## LIVE STEP — isolated real-audio Bass structured-event integration
+New diagnostic integration files/commits:
 
-Selected next boundary: prove that one same-run reference-free Bass analysis can flow from authenticated events through conservative techniques/harmonic abstention into the existing Bass render + quality contracts **without enabling customer routing or PDF**.
+- `1d80fb1fc28cad1194762d1ca32fb6b0aa75ef1f` — `lib/bassProfessionalStructuredAnalysis.js`
+- `4e0ac878fbca28e629c75f76268b3ceb18512c8e` — `analyzer/verify_bass_real_audio_structured_integration.mjs`
+- `b2fb4b7a2288a2751549f77b5e0f6ec9d22b345c` — `.github/workflows/bass-real-audio-structured-integration.yml`
+- `30fd6ef286c9723b2c403d4431eb3d7039046d32` — explicit structured-contract safety flags
+- `8a668f9a4af966b8abf14034b975a36d6ed7d587` — hardened verifier safety checks; authoritative source commit for the current run
 
-Planned contract:
+Contract behavior:
 
-1. Run the approved Bass audio through the existing direct+cascade separation, reference-free timing/candidate pipeline, conservative technique subset, and strict harmonic diagnostic.
-2. Feed those exact same-run final events into a new diagnostic Bass structured-analysis contract built on `projectBassProfessionalRenderEvents()` and `buildBassProfessionalQualityReport()`.
-3. Require 100% event survival for this canary, exact measure/step/string/fret/MIDI identity, Standard Bass mapping, and preservation of only defensibly supported technique labels.
-4. Require harmonic/high-risk unsupported labels to remain absent unless separately proven; current harmonic expectation is safe abstention.
-5. Keep `professionalStructuredIdentityEnabled:false`, `analyzerRoutingEnabled:false`, `pdfRendererEnabled:false`, `professionalBassComplete:false`, and all live/Production/customer actions false.
+- Projects the exact same-run final Bass events through the existing Bass render contract.
+- Requires 100% render survival for this canary and exact render identity.
+- Allows only the already-proven conservative labels: `slide-up`, `slide-down`, `hammer-on`, `pull-off`, `mute`, `sustain`.
+- Requires every emitted technique label to retain two-view reference-free evidence.
+- Requires harmonic safe abstention and no harmonic/high-risk labels.
+- Reuses the unchanged existing Bass professional quality thresholds and additionally requires 100% on this canary.
+- Remains diagnostic-only with professional identity, routing, PDF, live endpoint, Vercel, Production, payment, token, email, training and high-risk families disabled.
 
-Passing this boundary will prove structured Bass **data integration readiness only**. It will not authorize professional Bass branding, PDF routing, live Modal deployment, Vercel changes, Production, payment, token redemption, or email.
+Earlier runs `32613381366` and `32613408513` were intentionally cancelled by workflow concurrency because safety-hardening commits arrived while they were running. Their failure diagnostics are not product regressions.
+
+Current authoritative heartbeat:
+
+```text
+workflow: Bass Real Audio Structured Integration
+runId: 32613450912
+sourceCommit: 8a668f9a4af966b8abf14034b975a36d6ed7d587
+startedAtUtc: 2026-08-23T02:41:13.180249+00:00
+status: in progress
+```
+
+Expected compact evidence:
+- `debug/v143-contextual-prune/bass-real-audio-structured-integration-action.json`
+- `debug/v143-contextual-prune/bass-real-audio-structured-integration.json`
+
+Passing this boundary proves structured Bass **data integration readiness only**. It does not authorize professional Bass branding, PDF routing, live Modal deployment, Vercel changes, Production, payment, token redemption, or email.
 
 ## Immediate next action
 
-1. Add the diagnostic Bass structured-analysis contract and verifier.
-2. Add an isolated real-audio workflow that reuses the approved fixture and existing Modal secrets but never deploys a live endpoint.
-3. Run and require 100% same-run integration survival/identity plus the unchanged established quality gate.
-4. Save this checkpoint when the workflow starts and after its result.
+1. Poll run `32613450912` through completion.
+2. Inspect action/evidence and artifact/logs if red.
+3. Require 100% same-run render survival, exact render identity, evidence-backed technique labels, harmonic safe abstention, 100% established quality metrics, and all safety flags false.
+4. Save this checkpoint after the result.
