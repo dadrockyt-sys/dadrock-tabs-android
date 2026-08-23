@@ -115,9 +115,14 @@ jobs:
           Path('/tmp/rhythm-analysis.json').write_text(
               json.dumps(analysis, indent=2) + '\n', encoding='utf-8'
           )
+          pdf_evidence = {
+              'runtimeSafetyVerified': True,
+              'runtimeLabelsRequired': False,
+              'referenceOpened': False,
+              'renderEvents': analysis['renderEvents'],
+          }
           Path('/tmp/rhythm-pdf-events.json').write_text(
-              json.dumps({'renderEvents': analysis['renderEvents']}, indent=2) + '\n',
-              encoding='utf-8',
+              json.dumps(pdf_evidence, indent=2) + '\n', encoding='utf-8'
           )
 
           reference = {
@@ -252,6 +257,9 @@ jobs:
 
           cat > /tmp/rhythm-wrong-pdf.json <<'JSON'
           {
+            "runtimeSafetyVerified": true,
+            "runtimeLabelsRequired": false,
+            "referenceOpened": false,
             "renderEvents": [
               {
                 "eventIndex": 0,
