@@ -46,6 +46,14 @@ const structuredChecks = {
   structuredRenderEligible:
     structured.payloadContract?.structuredRenderEligible === true,
   payloadReferenceFree: structured.payloadContract?.referenceFree === true,
+  payloadProfessionalReferenceNotUsed:
+    structured.payloadContract?.professionalReferenceNotUsed === true,
+  payloadReferenceRuntimeInputNotUsed:
+    structured.payloadContract?.referenceRuntimeInputNotUsed === true,
+  payloadRuntimeLabelsNotRequired:
+    structured.payloadContract?.runtimeLabelsNotRequired === true,
+  payloadRuntimeSafetyVerified:
+    structured.payloadContract?.v143RuntimeSafetyVerified === true,
   renderEventsPresent:
     Array.isArray(structured.renderEvents) && structured.renderEvents.length > 0,
 };
@@ -59,11 +67,13 @@ if (failedStructuredChecks.length) {
 }
 
 const freezeInput = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   instrument: 'rhythm',
   referenceFree: true,
   professionalReferenceUsed: false,
   referenceRuntimeInputUsed: false,
+  runtimeLabelsRequired: false,
+  v143RuntimeSafetyVerified: true,
   tempoBpm: structured.tempo,
   timeSignature: structured.timeSignature,
   tuning: structured.tuning,
@@ -78,6 +88,7 @@ await fs.writeFile(outputPath, `${JSON.stringify(freezeInput, null, 2)}\n`, 'utf
 
 console.log(JSON.stringify({
   gate: 'rhythm-freeze-payload-preparation',
+  schemaVersion: 2,
   safetyChecks,
   structuredChecks,
   sourceAudioSha256: freezeInput.sourceAudioSha256,
