@@ -1,0 +1,4 @@
+V143 approved shadow physical review proof passed
+{'schemaVersion': 1, 'mode': 'v143-approved-shadow-physical-review', 'passed': True, 'issues': [], 'metrics': {'baseEventCount': 3, 'correctedEventCount': 4, 'rescuedEventCount': 1, 'suppressedPitchCount': 1, 'targetMeasureCount': 113, 'populatedMeasureCountBefore': 112, 'populatedMeasureCountAfter': 113, 'missingMeasureCountBefore': 1, 'missingMeasureCountAfter': 0, 'pitchChangedEventCount': 1, 'phaseWinnerMatchesCurrent': True, 'phaseConfidence': 0.8}, 'professionalReferenceUsed': False, 'runtimeLabelsRequired': False, 'productionModified': False}
+PHYSICAL_REVIEW_REFERENCE_TOKEN_SCAN=PASS
+PROTECTED_PIPELINE_BLOB=PASS:7f72f8ed9b14af8bc93e95544195204d99c6bec1
