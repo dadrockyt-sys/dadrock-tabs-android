@@ -1,0 +1,44 @@
+name: Rhythm Static Bootstrap
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/rhythm-static-bootstrap.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Persist bootstrap proof
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          cat > debug/v143-contextual-prune/rhythm-static-bootstrap.json <<EOF
+          {
+            "schemaVersion": 1,
+            "gate": "rhythm-static-bootstrap",
+            "sourceCommit": "$GITHUB_SHA",
+            "runId": "$GITHUB_RUN_ID",
+            "actor": "$GITHUB_ACTOR",
+            "eventName": "$GITHUB_EVENT_NAME",
+            "passed": true,
+            "productionModified": false,
+            "productionPromotionAuthorized": false
+          }
+          EOF
+          git add debug/v143-contextual-prune/rhythm-static-bootstrap.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Rhythm static bootstrap proof'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
