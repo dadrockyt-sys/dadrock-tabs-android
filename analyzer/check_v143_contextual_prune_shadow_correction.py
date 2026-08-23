@@ -73,6 +73,9 @@ def main() -> None:
     }
     rows = [
         _row(1, 0.01, [40], strong=[40]),
+        # Measure 1 is already populated by the base selector. This strict,
+        # separated local peak proves the new rescue is not empty-measure-only.
+        _row(1, 0.49, [45], strong=[45]),
         _row(2, 2.02, [40, 52, 64, 76, 88], strong=[40, 52, 64, 76], weak_cross_view=[88]),
         _row(2, 2.49, [43], strong=[43], stem_support=1),
         _row(3, 4.01, [45], strong=[45], stem_support=1),
@@ -85,6 +88,7 @@ def main() -> None:
     )
 
     assert (1, 0) in result.corrected_events
+    assert (1, 4) in result.rescued_events
     assert (2, 0) in result.rescued_events
     assert all(key[0] != 3 for key in result.rescued_events)
     assert result.pitch_sets[(2, 0)] == (40, 52, 64, 76)
@@ -92,6 +96,8 @@ def main() -> None:
     assert result.suppressed_pitch_count == 1
     assert result.diagnostics()["baseEventsPreserved"] is True
     assert result.diagnostics()["rescuesAreObservedSlots"] is True
+    assert result.diagnostics()["localPeakRescueEnabled"] is True
+    assert result.diagnostics()["emptyMeasureFailSafeEnabled"] is True
     assert result.diagnostics()["candidateRelocatesEvents"] is False
     assert result.diagnostics()["referenceFree"] is True
     assert result.diagnostics()["runtimeLabelsRequired"] is False
