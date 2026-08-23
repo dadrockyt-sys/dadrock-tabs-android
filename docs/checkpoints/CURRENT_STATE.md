@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab` End-to-End Construction
 
-Updated: 2026-08-22 20:17 CDT
+Updated: 2026-08-22 20:20 CDT
 Branch: `v143-contextual-prune-lobo`
 
 # PROJECT FOCUS
@@ -212,6 +212,17 @@ Bot evidence commit: `4afc8e529f0098993f8a8e3fffa2c493eca747d7`
 
 Synthetic fail-closed contract passed; legacy untimed input fails timing coverage. Thresholds remain 70% minimum for render survival, playable string/fret, timing, pitch validity, and pitch/string/fret consistency.
 
+Exact reusable contracts confirmed during read-only next-stage preparation:
+
+```text
+lib/bassProfessionalRenderContract.js
+lib/bassProfessionalQuality.js
+analyzer/verify_bass_professional_quality_gate.mjs
+.github/workflows/bass-professional-quality-scaffold.yml
+```
+
+The render contract requires authenticated `measure` >= 1, `step` 0..15, four-string `stringIndex` 0..3, fret 0..24, MIDI pitch, and exact `openMidi[stringIndex] + fret == midi`. The quality gate remains fail-closed at 70% minimum render survival/playability/timing/pitch/pitch-position consistency and at least 4 valid render events. These rules are the target contract for the next Bass real-audio event/timing boundary; they are not being weakened or activated while the current canary is pending.
+
 Historical `bass_technique_diagnostics_v7.py` is reference-guided diagnostic logic and must not be reused as the new reference-free Bass professional engine.
 
 ---
@@ -256,7 +267,7 @@ debug/v143-contextual-prune/bass-real-audio-canary-action.json
 debug/v143-contextual-prune/bass-real-audio-canary.json
 ```
 
-Latest check: neither evidence file has landed yet. Branch HEAD remains `9b50bb6c6049f16febfc75d9b2f70c089700ce72`, so do not infer pass/fail yet.
+Latest poll after the checkpoint-only branch commit: `bass-real-audio-canary-action.json` is still absent (404), so no pass/fail is inferred. The branch HEAD is a checkpoint-only commit descended from canary trigger commit `9b50bb6c6049f16febfc75d9b2f70c089700ce72`; the docs-only checkpoint push does not match the Bass canary workflow path filter and therefore does not retrigger/cancel the canary.
 
 Immediate next action: poll branch/evidence. If evidence lands, inspect exact fields. If it passes, advance only to isolated Bass event/note/timing analysis. If it fails, diagnose only the failing metric or harness phase without weakening thresholds or safety.
 
