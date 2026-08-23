@@ -1,0 +1,78 @@
+name: Rhythm Relock Artifact Diagnostic
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/rhythm-relock-download-diagnostic.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Download source artifact
+        id: download
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: rhythm-professional-preholdout-real-audio
+          path: .diag-source
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: 32643978196
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Persist diagnostic outcome
+        if: always()
+        shell: bash
+        env:
+          DOWNLOAD_OUTCOME: ${{ steps.download.outcome }}
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          files = []
+          root = Path('.diag-source')
+          if root.exists():
+              files = sorted(str(path.relative_to(root)) for path in root.rglob('*') if path.is_file())
+          report = {
+              'schemaVersion': 1,
+              'gate': 'rhythm-relock-artifact-download-diagnostic',
+              'sourceRunId': '32643978196',
+              'sourceArtifactId': 9494412019,
+              'downloadOutcome': os.environ.get('DOWNLOAD_OUTCOME'),
+              'downloadedFileCount': len(files),
+              'downloadedFiles': files[:80],
+              'snapshotPresent': any(path.endswith('rhythm-frozen-analysis.json') for path in files),
+              'manifestPresent': any(path.endswith('rhythm-freeze-manifest.json') for path in files),
+              'compactProofPresent': any(path.endswith('rhythm-professional-preholdout-real-audio.json') for path in files),
+              'productionModified': False,
+              'passed': os.environ.get('DOWNLOAD_OUTCOME') == 'success',
+          }
+          Path('debug/v143-contextual-prune/rhythm-relock-artifact-download-diagnostic.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(report, indent=2))
+          PY
+
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add debug/v143-contextual-prune/rhythm-relock-artifact-download-diagnostic.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record Rhythm relock artifact diagnostic'
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            git push origin HEAD:v143-contextual-prune-lobo
+          fi
