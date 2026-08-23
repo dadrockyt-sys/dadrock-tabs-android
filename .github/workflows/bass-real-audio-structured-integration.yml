@@ -1,0 +1,297 @@
+name: Bass Real Audio Structured Integration
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/bass-real-audio-structured-integration.yml'
+      - 'lib/bassProfessionalStructuredAnalysis.js'
+      - 'lib/bassProfessionalRenderContract.js'
+      - 'lib/bassProfessionalQuality.js'
+      - 'analyzer/verify_bass_real_audio_structured_integration.mjs'
+      - 'analyzer/bass_real_audio_harmonic_canary_modal.py'
+      - 'analyzer/final_product/bass/techniques/bass_harmonic_evidence.py'
+      - 'analyzer/final_product/bass/techniques/bass_technique_evidence.py'
+      - 'analyzer/final_product/bass/candidate_detection/bass_candidate_timing.py'
+      - 'analyzer/final_product/shared/timing_grid.py'
+      - 'analyzer/final_product/bass/hz_features/bass_frequency_profile.py'
+      - 'analyzer/bass_professional_separator_scaffold.py'
+      - 'analyzer/v143_reference_free_timing.py'
+
+concurrency:
+  group: bass-real-audio-structured-integration
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  bass-real-audio-structured-integration:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      START_PATH: debug/v143-contextual-prune/bass-real-audio-structured-integration-start.json
+      RAW_PATH: .bass-structured/raw-bass-structured-source.json
+      RESULT_PATH: debug/v143-contextual-prune/bass-real-audio-structured-integration.json
+      ACTION_PATH: debug/v143-contextual-prune/bass-real-audio-structured-integration-action.json
+
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Commit early structured-integration heartbeat
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          payload = {
+              'schemaVersion': 1,
+              'gate': 'bass-real-audio-structured-integration-start',
+              'runId': os.environ.get('GITHUB_RUN_ID'),
+              'runAttempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'branch': os.environ.get('GITHUB_REF_NAME'),
+              'workflow': os.environ.get('GITHUB_WORKFLOW'),
+              'actor': os.environ.get('GITHUB_ACTOR'),
+              'startedAtUtc': datetime.now(timezone.utc).isoformat(),
+              'diagnosticOnly': True,
+              'trainingRunAuthorized': False,
+              'analyzerRoutingEnabled': False,
+              'professionalStructuredIdentityEnabled': False,
+              'pdfRendererEnabled': False,
+              'liveEndpointDeployedOrModified': False,
+              'vercelDeploymentAttempted': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'paidPurchaseAttempted': False,
+              'customerTokenRedeemed': False,
+              'customerEmailSent': False,
+          }
+          path = Path(os.environ['START_PATH'])
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(payload, indent=2))
+          PY
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$START_PATH"
+          git commit -m 'Record Bass structured integration start' || true
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Modal CLI
+        shell: bash
+        run: python -m pip install --disable-pip-version-check modal
+
+      - name: Run same-analysis Bass source canary
+        shell: bash
+        run: |
+          set +e
+          mkdir -p .bass-structured/logs debug/v143-contextual-prune
+          credentials=false
+          status=99
+          if [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            credentials=true
+            timeout 1500s python -m modal run \
+              analyzer/bass_real_audio_harmonic_canary_modal.py::run \
+              --audio-path public/gomywayfullaitest.m4a \
+              --output-path "$RAW_PATH" \
+              > .bass-structured/logs/modal.log 2>&1
+            status=$?
+          else
+            echo 'Modal GitHub credentials unavailable; Bass structured integration source canary not attempted.' \
+              > .bass-structured/logs/modal.log
+          fi
+          echo "BASS_STRUCTURED_MODAL_CREDENTIALS=$credentials" >> "$GITHUB_ENV"
+          echo "BASS_STRUCTURED_MODAL_STATUS=$status" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Verify real-audio Bass structured integration
+        shell: bash
+        run: |
+          set +e
+          status=99
+          if [ "${BASS_STRUCTURED_MODAL_STATUS:-99}" -eq 0 ] && [ -s "$RAW_PATH" ]; then
+            node analyzer/verify_bass_real_audio_structured_integration.mjs \
+              --input "$RAW_PATH" \
+              --output "$RESULT_PATH" \
+              > .bass-structured/logs/verifier.log 2>&1
+            status=$?
+          else
+            echo 'Verifier skipped because raw Bass structured source output is unavailable.' \
+              > .bass-structured/logs/verifier.log
+          fi
+          echo "BASS_STRUCTURED_VERIFY_STATUS=$status" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Write compact structured-integration action diagnostic
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          raw = Path(os.environ['RAW_PATH'])
+          result = Path(os.environ['RESULT_PATH'])
+          payload = {
+              'schemaVersion': 1,
+              'gate': 'bass-real-audio-structured-integration-action',
+              'runId': os.environ.get('GITHUB_RUN_ID'),
+              'runAttempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'modalCredentialsAvailableInGitHubActions': os.environ.get('BASS_STRUCTURED_MODAL_CREDENTIALS') == 'true',
+              'modalExitCode': int(os.environ.get('BASS_STRUCTURED_MODAL_STATUS', '99')),
+              'rawCanaryOutputPresent': raw.is_file() and raw.stat().st_size > 0,
+              'verifierExitCode': int(os.environ.get('BASS_STRUCTURED_VERIFY_STATUS', '99')),
+              'canaryEvidencePresent': result.is_file() and result.stat().st_size > 0,
+              'approvedFixture': 'public/gomywayfullaitest.m4a',
+              'referenceFree': True,
+              'sameAnalysisIntegrationRequired': True,
+              'diagnosticOnly': True,
+              'trainingRunAuthorized': False,
+              'analyzerRoutingEnabled': False,
+              'professionalStructuredIdentityEnabled': False,
+              'pdfRendererEnabled': False,
+              'liveEndpointDeployedOrModified': False,
+              'vercelDeploymentAttempted': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'paidPurchaseAttempted': False,
+              'customerTokenRedeemed': False,
+              'customerEmailSent': False,
+          }
+          path = Path(os.environ['ACTION_PATH'])
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(payload, indent=2))
+          PY
+
+      - name: Preserve structured-integration diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bass-real-audio-structured-integration
+          path: |
+            .bass-structured/logs/
+            .bass-structured/raw-bass-structured-source.json
+            debug/v143-contextual-prune/bass-real-audio-structured-integration.json
+            debug/v143-contextual-prune/bass-real-audio-structured-integration-action.json
+            debug/v143-contextual-prune/bass-real-audio-structured-integration-start.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commit compact structured-integration evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/bass-structured-evidence
+          cp "$ACTION_PATH" /tmp/bass-structured-evidence/action.json
+          if [ -s "$RESULT_PATH" ]; then cp "$RESULT_PATH" /tmp/bass-structured-evidence/result.json; fi
+          if [ -s "$START_PATH" ]; then cp "$START_PATH" /tmp/bass-structured-evidence/start.json; fi
+
+          git reset --hard HEAD
+          git clean -f -- "$ACTION_PATH" "$RESULT_PATH"
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+
+          cp /tmp/bass-structured-evidence/action.json "$ACTION_PATH"
+          if [ -s /tmp/bass-structured-evidence/result.json ]; then cp /tmp/bass-structured-evidence/result.json "$RESULT_PATH"; fi
+          if [ -s /tmp/bass-structured-evidence/start.json ]; then cp /tmp/bass-structured-evidence/start.json "$START_PATH"; fi
+          git add "$ACTION_PATH"
+          if [ -s "$RESULT_PATH" ]; then git add "$RESULT_PATH"; fi
+          if [ -s "$START_PATH" ]; then git add "$START_PATH"; fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Bass real-audio structured integration' || true
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce fail-closed structured-integration boundary
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          action = json.loads(Path(os.environ['ACTION_PATH']).read_text(encoding='utf-8'))
+          if action.get('modalExitCode') != 0 or action.get('verifierExitCode') != 0:
+              raise SystemExit(f'Bass structured integration execution failed: {action}')
+
+          result = json.loads(Path(os.environ['RESULT_PATH']).read_text(encoding='utf-8'))
+          if result.get('passed') is not True or result.get('structuredEventIntegrationBoundaryPassed') is not True:
+              raise SystemExit(f'Bass structured integration boundary did not pass: {result}')
+          if result.get('renderSurvivalPercent') != 100:
+              raise SystemExit('Bass structured integration must preserve 100% render survival')
+          if result.get('exactRenderIdentityPercent') != 100:
+              raise SystemExit('Bass structured integration must preserve 100% render identity')
+          if result.get('evidenceBackedTechniquePercent') != 100:
+              raise SystemExit('Every emitted Bass technique must remain evidence-backed')
+          if result.get('harmonicSafeAbstention') is not True or result.get('harmonicFamilyProven') is not False:
+              raise SystemExit('Bass harmonic must remain safely abstained/unproven in this boundary')
+          if result.get('professionalBassComplete') is not False:
+              raise SystemExit('Professional Bass completion must remain false')
+
+          for key in (
+              'trainingRunAuthorized',
+              'analyzerRoutingEnabled',
+              'professionalStructuredIdentityEnabled',
+              'pdfRendererEnabled',
+              'liveEndpointDeployedOrModified',
+              'vercelDeploymentAttempted',
+              'productionModified',
+              'productionPromotionAuthorized',
+              'paidPurchaseAttempted',
+              'customerTokenRedeemed',
+              'customerEmailSent',
+          ):
+              if action.get(key) is not False:
+                  raise SystemExit(f'Safety failure: action {key} must remain false')
+
+          for key in (
+              'analyzerRoutingEnabled',
+              'professionalStructuredIdentityEnabled',
+              'pdfRendererEnabled',
+              'liveEndpointDeployedOrModified',
+              'vercelDeploymentAttempted',
+              'productionModified',
+              'productionPromotionAuthorized',
+              'paidPurchaseAttempted',
+              'customerTokenRedeemed',
+              'customerEmailSent',
+          ):
+              if result.get(key) is not False:
+                  raise SystemExit(f'Safety failure: result {key} must remain false')
+
+          print('BASS REAL-AUDIO STRUCTURED EVENT INTEGRATION BOUNDARY PASSED')
+          print('professionalStructuredIdentityEnabled=false')
+          print('pdfRendererEnabled=false')
+          print('productionModified=false')
+          PY
