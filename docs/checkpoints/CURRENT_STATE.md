@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 — Bass technique subset closed green
+Updated: 2026-08-22 — Bass harmonic boundary implementation in progress
 Branch: `v143-contextual-prune-lobo`
 
 ## Safety / product contract
@@ -92,20 +92,28 @@ Proven reference-free/two-view families: `slide`, `hammer_on`, `pull_off`, `mute
 
 Important: the isolated technique rerun regenerated 1757 base events versus 1754 in the earlier structural run. Raw candidate counts also changed slightly across the two separate GPU analyses, while timing stayed identical (129.19921875 BPM, 447 beats, same fixture/hash). This does **not** violate the technique identity gate because enrichment preserved every base event 100% within the same authenticated analysis. Do not claim cross-run bit-identical event generation from the current evidence.
 
-`harmonic` remains deliberately unimplemented/unproven. High-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven.
-
 All training/routing/structured identity/PDF/live Modal/Vercel/Production/payment/token/email flags remain disabled.
 
-## LIVE STEP — harmonic evidence boundary only
+## LIVE STEP — isolated harmonic evidence boundary
 
-Next work must remain isolated and diagnostic. Do not enable customer output.
+Implementation started, still diagnostic only.
 
-Goal: determine whether `harmonic` can be added conservatively using reference-free, two-view Bass spectral evidence without changing note/timing/MIDI/string/fret/duration identity. A harmonic label must require agreement from both Bass views and must remain absent when evidence is ambiguous. If a defensible harmonic boundary cannot be proven on the approved fixture, leave it unproven rather than weakening thresholds.
+New commits/files:
+
+- `0d6ebd52465ccf07f9193b19eaef099d7d9f4235` — `analyzer/final_product/bass/techniques/bass_harmonic_evidence.py`
+- `07e0a7a6eedade3c90f47d7baf493e4278915ba4` — `analyzer/bass_real_audio_harmonic_canary_modal.py`
+
+The helper considers only common standard-Bass open-string natural-harmonic sounding pitches and requires two-view spectral evidence: tonal purity, upper-partial support, weak subharmonic energy, controlled onset, minimum duration, and exact cross-view agreement. It does not reinterpret the mapped TAB fret as a harmonic node and must not change note/timing/MIDI/string/fret/duration identity.
+
+This detector is **not proven yet**. No harmonic label is authorized for professional output until the isolated verifier/workflow and real-audio canary pass. If the approved fixture yields absent or ambiguous harmonic evidence, keep `harmonic` unproven rather than weakening thresholds.
+
+High-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven. Professional Bass remains false.
 
 ## Immediate next action
 
-1. Implement a conservative two-view harmonic detector inside `analyzer/final_product/bass/techniques/bass_technique_evidence.py` only if the spectral evidence is sufficiently discriminative.
-2. Extend the isolated technique verifier/workflow so harmonic is claimed only when both views agree and identity remains 100% unchanged.
-3. Run a new Bass technique canary on `public/gomywayfullaitest.m4a`.
-4. If red or harmonic evidence is absent/ambiguous, keep harmonic explicitly unproven and do not weaken established quality/safety.
-5. Professional Bass PDF/routing/identity remain disabled. Exact-branch Vercel Preview remains an external blocker.
+1. Finish `analyzer/verify_bass_real_audio_harmonics.mjs`.
+2. Add a dedicated fail-closed GitHub Actions harmonic workflow using the approved fixture and Modal secrets, with all production/customer flags false.
+3. Run the isolated harmonic canary.
+4. If harmonic evidence is absent/ambiguous or any identity/safety gate fails, keep harmonic explicitly unproven and do not weaken thresholds.
+5. Save this checkpoint again before and after the run.
+6. Professional Bass PDF/routing/identity remain disabled. Exact-branch Vercel Preview remains an external blocker.
