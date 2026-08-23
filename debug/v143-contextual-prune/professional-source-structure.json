@@ -1,8 +1,12 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gate": "v143-professional-holdout-source-inspect",
-  "triggerSha": "20f5a3e275addfedeb44e27cbaf59efa0303fc2c",
+  "runId": 32673844007,
+  "runAttempt": 1,
+  "triggerSha": "ea4a5dec3cbe8e75eb89222284705811b7173709",
+  "artifactName": "v143-professional-source-raw-track",
   "songId": 243,
+  "rhythmTrackIndex": 3,
   "meta": {
     "artist": "Lenny Kravitz",
     "title": "Are You Gonna Go My Way",
@@ -1500,7 +1504,7 @@
       "trackMeta": {
         "instrumentId": 29,
         "instrument": "Overdriven Guitar",
-        "views": 132141,
+        "views": 132142,
         "name": "Craig Ross | 1953 Gibson Les Paul Goldtop | Rhythm Guitar",
         "tuning": [
           64,
@@ -1739,6 +1743,7 @@
       }
     }
   ],
+  "rhythmTrackTemporaryArtifactSaved": true,
   "professionalReferenceOpenedOnlyAfterFreshFreeze": true,
   "referenceUsedByAnalyzer": false,
   "runtimeLabelsRequired": false,
