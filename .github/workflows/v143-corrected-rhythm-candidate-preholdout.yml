@@ -206,8 +206,11 @@ jobs:
           }
           failed=[name for name,ok in checks.items() if not ok]
           out={
-              'schemaVersion':1,
+              'schemaVersion':2,
               'gate':'v143-corrected-rhythm-candidate-preholdout',
+              'runId':int('${{ github.run_id }}'),
+              'runAttempt':int('${{ github.run_attempt }}'),
+              'artifactName':'v143-corrected-rhythm-professional-freeze',
               'triggerSha':'${{ github.sha }}',
               'protectedPipelineBlob':protected,
               'candidateDiagnostics':diag,
