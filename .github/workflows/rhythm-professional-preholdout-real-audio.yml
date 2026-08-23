@@ -78,8 +78,8 @@ jobs:
             > .preholdout/esm/v143AnalyzerQuality.mjs
 
           sed \
-            -e "s#'./v143AnalyzerQuality.js'#'./v143AnalyzerQuality.mjs#" \
-            -e "s#'./v143RenderContract.js'#'./v143RenderContract.mjs#" \
+            -e "s#'./v143AnalyzerQuality.js'#'./v143AnalyzerQuality.mjs'#" \
+            -e "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
             lib/jimmyPaigeAnalysisPayload.js \
             > .preholdout/esm/jimmyPaigeAnalysisPayload.mjs
 
