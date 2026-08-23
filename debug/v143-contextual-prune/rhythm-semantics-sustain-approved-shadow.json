@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "mode": "v143-rhythm-approved-audio-semantics-sustain-shadow",
+  "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "timing": {
+    "tempoBpm": 129.19921875,
+    "firstBeatInMeasure": 3,
+    "downbeatIndexMod4": 1,
+    "beatConfidence": 0.7232655171250919,
+    "barConfidence": 0.08797339512490356
+  },
+  "selection": {
+    "candidateCount": 1788,
+    "selectedAttackCount": 358,
+    "renderedNoteCount": 1020
+  },
+  "semantics": {
+    "beforeGuard": {
+      "eventCount": 1020,
+      "techniqueEventCount": 82,
+      "secondaryTechniqueEventCount": 53,
+      "bendEventCount": 40,
+      "legatoSourceEventCount": 42,
+      "allTechniqueLabels": {
+        "bend": 40,
+        "bend-release": 26,
+        "hammer-on": 4,
+        "pull-off": 3,
+        "slide-down": 19,
+        "slide-up": 16
+      },
+      "primaryTechniqueLabels": {
+        "bend": 13,
+        "bend-release": 6,
+        "hammer-on": 1,
+        "pull-off": 1,
+        "slide-down": 8,
+        "slide-up": 6
+      },
+      "secondaryTechniqueLabels": {
+        "bend": 27,
+        "bend-release": 20,
+        "hammer-on": 3,
+        "pull-off": 2,
+        "slide-down": 11,
+        "slide-up": 10
+      }
+    },
+    "afterGuard": {
+      "eventCount": 1020,
+      "techniqueEventCount": 22,
+      "secondaryTechniqueEventCount": 0,
+      "bendEventCount": 13,
+      "legatoSourceEventCount": 9,
+      "allTechniqueLabels": {
+        "bend": 13,
+        "bend-release": 6,
+        "hammer-on": 1,
+        "pull-off": 1,
+        "slide-down": 5,
+        "slide-up": 2
+      },
+      "primaryTechniqueLabels": {
+        "bend": 13,
+        "bend-release": 6,
+        "hammer-on": 1,
+        "pull-off": 1,
+        "slide-down": 5,
+        "slide-up": 2
+      },
+      "secondaryTechniqueLabels": {}
+    },
+    "guard": {
+      "eventCount": 1020,
+      "primaryEventCount": 358,
+      "secondaryEventCount": 662,
+      "strippedSecondaryBends": 27,
+      "strippedSecondaryLegato": 48,
+      "strippedInvalidPrimaryLegato": 7,
+      "strippedAudioTechniqueLabels": 80,
+      "eventCountChanged": false,
+      "attackTimingChanged": false,
+      "pitchChanged": false,
+      "stringFretChanged": false,
+      "referenceFree": true,
+      "runtimeLabelsRequired": false,
+      "productionModified": false
+    }
+  },
+  "sustain": {
+    "diagnostics": {
+      "eventCount": 1020,
+      "annotatedEventCount": 652,
+      "longerThanDetectorCount": 587,
+      "shorterThanDetectorCount": 56,
+      "eventCountChanged": false,
+      "attackTimingChanged": false,
+      "pitchChanged": false,
+      "tieOrLetRingInferred": false,
+      "referenceFree": true,
+      "runtimeLabelsRequired": false,
+      "productionModified": false
+    },
+    "shadowDurationStepHistogram": {
+      "1": 239,
+      "2": 148,
+      "3": 65,
+      "4": 77,
+      "5": 22,
+      "6": 15,
+      "7": 21,
+      "8": 19,
+      "9": 10,
+      "10": 3,
+      "11": 2,
+      "12": 10,
+      "13": 3,
+      "14": 6,
+      "17": 1,
+      "18": 1,
+      "22": 1,
+      "23": 1,
+      "25": 1,
+      "26": 7
+    },
+    "detectorDurationStepHistogram": {
+      "1": 971,
+      "2": 41,
+      "3": 5,
+      "4": 3
+    }
+  },
+  "invariants": {
+    "sourceIsApprovedFixture": true,
+    "referenceFree": true,
+    "runtimeLabelsRequired": false,
+    "eventCountUnchanged": true,
+    "coreEventIdentityUnchanged": true,
+    "attackTimingChanged": false,
+    "pitchChanged": false,
+    "stringFretChanged": false,
+    "sustainShadowOverwritesProductionSustain": false,
+    "tieOrLetRingInferred": false,
+    "liveRhythmOutputChanged": false,
+    "leadChanged": false,
+    "bassChanged": false,
+    "productionModified": false
+  }
+}
