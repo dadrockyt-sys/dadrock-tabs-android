@@ -110,6 +110,28 @@ Key commits:
 
 Verified gapped IDs `[0,2,4]`, legato source/target identity, exact second projection equality and exact validation equality. Production unchanged.
 
+## AI-tab polished preview / purchased PDF product contract — CONFIRMED FROM `app/ai-tab/page.js`
+
+User pointed out that the authoritative preview/full-PDF payload and route information is already in `app/ai-tab/page.js`. This is now the source of truth for the PDF validation path.
+
+Preview flow in `page.js`:
+- `requestPreviewPdf(...)` POSTs to `/api/generate-tab-preview`
+- sends `song`, `artist`, `transcriptionType`, `generatedTab`, `tuning`, `tempo`, `timeSignature`, `keySignature`, `analysisEngine`, `techniques`, **`renderEvents`**, `measureGrid`, `confidence`, `difficulty`
+- sends `previewSystems: 4`, watermark `DADROCK TABS PREVIEW`, and `locked:true`
+- expects `application/pdf`
+
+Purchased/unlocked flow in `page.js`:
+- `handleDownloadPdf(...)` POSTs to `/api/generate-tab-pdf`
+- sends the same structured musical fields, including the exact analyzer **`renderEvents`**, plus unlock/payment/token and customer-email fields
+- expects `application/pdf`
+
+Route verification:
+- `app/api/generate-tab-preview/route.js` and `app/api/generate-tab-pdf/route.js` both use `createJimmyPaigeProfessionalPdf(...)` when the professional PDF feature is enabled
+- for authenticated V143 Rhythm (`analysisEngine === 'v143-reference-free-rhythm'` with render events), `createJimmyPaigeProfessionalPdf` routes through `createAiTabPdf` → `createV143RhythmPdf`
+- therefore the structured Rhythm renderer currently under test **is** the final underlying polished renderer for the actual `/ai-tab` preview and purchased PDF path, including the DadRock logo/branding
+
+Do not invent a second PDF product contract. Tests should mirror the fields/routes from `app/ai-tab/page.js` and the two API routes above.
+
 ## Fresh real-audio pre-holdout freeze/PDF gate — CODED, authoritative result still pending
 
 Committed machinery:
@@ -130,16 +152,17 @@ Required proof from this gate:
 
 Expected compact evidence `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` is still absent. Do not call this gate green yet and do not launch duplicate expensive GPU work until CPU glue is green.
 
-## CPU static pre-holdout glue — FAILURE NOW LOCALIZED
+## CPU static pre-holdout glue — FAILURE LOCALIZED; ENVIRONMENT FIX COMMITTED
 
-Purpose: exercise exact raw product-response → structured payload → freeze → professional `createV143RhythmPdf` → PDF-event-fidelity glue without GPU or professional reference.
+Purpose: exercise exact raw product-response → structured payload → freeze → actual polished V143 Rhythm renderer → PDF-event-fidelity glue without GPU or professional reference.
 
 Files/commits:
 - `57a9955a6f4a2e799d3df92216409a81055712eb` — reusable `validation/rhythm_holdout/run_static_preholdout_preflight.sh`.
 - `a1dac791e7266c04f09fe3efa267e6a978d1e667` — simplified CPU workflow using reusable runner.
 - `88b8260791dc86c292e02a0fa93bb8447897b0aa` — failure diagnostics persist to branch.
+- `eea01a28d674fe130db38a086eff054e0e007fd0` — aligned static workflow with the `/ai-tab` PDF product files and moved standalone ESM work from `/tmp` into `$GITHUB_WORKSPACE/.preholdout-static` so Node can resolve the repository's installed `pdf-lib` dependency exactly as the product renderer does.
 
-Latest diagnostic now exists:
+Latest persisted diagnostic before that fix:
 `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`
 
 Observed:
@@ -153,14 +176,14 @@ realProfessionalReferenceOpened: false
 productionModified: false
 ```
 
-This is useful: upstream runtime isolation, standalone ESM preparation, synthetic product-response creation, structured freeze payload, and freeze-analysis all got far enough that the first recorded hard failure is the professional PDF render stage. The renderer source references `public/DadRock-Tabs-Logo.png`, and that file exists on the branch; exact render error text still needs to be captured.
+Important diagnosis: the previous CPU test copied `createV143RhythmPdf.mjs` under `/tmp/.../esm`. Node package resolution starts from the importing module's location, so `pdf-lib` installed in the repository `node_modules` could be unreachable before the renderer itself ran. The updated workflow now keeps those standalone modules under the repository workspace. This is a test-environment correction only; no production renderer behavior, branding, or thresholds were changed.
 
-Current debugging target: persist the tail of `render-frozen-pdf.log` into the compact failure diagnostic, identify the exact renderer exception, then fix only the static/test glue unless evidence proves a real renderer defect.
+Await the new static workflow evidence. If it becomes green, this confirms the earlier PDF-stage failure was test glue rather than a polished-renderer defect. If it still fails, persist the exact sanitized renderer-log tail and fix the next concrete exception.
 
 ## Immediate next actions
 
-1. Enhance static failure report with sanitized renderer log tail and rerun CPU preflight.
-2. Fix the localized `professional-pdf-render` failure and make static preflight green with 400 synthetic authenticated events, professional full/preview PDFs, and exact PDF-event fidelity 1.0.
+1. Observe the `eea01a28...` static preflight result and require professional preview/full PDFs plus exact PDF-event fidelity 1.0.
+2. If still red, capture the sanitized `render-frozen-pdf.log` tail and diagnose the exact remaining exception.
 3. Save this checkpoint after each meaningful change.
 4. Only after CPU glue is green, diagnose/retrigger exactly one fresh real-audio pre-holdout GPU run if needed.
 5. Recover/re-supply a **clean complete** professional Rhythm source only after the fresh reference-free freeze/PDF evidence is safely locked.
