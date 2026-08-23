@@ -49,9 +49,55 @@ jobs:
           cache: npm
 
       - name: Install locked dependencies
+        id: install
         run: |
           set -euo pipefail
-          npm ci --ignore-scripts
+          mkdir -p .preholdout-static
+          npm ci --ignore-scripts 2>&1 | tee .preholdout-static/install.log
+
+      - name: Persist dependency-install diagnostic
+        if: ${{ failure() && steps.install.outcome == 'failure' }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+
+          log_path = Path('.preholdout-static/install.log')
+          lines = log_path.read_text(encoding='utf-8', errors='replace').splitlines()[-24:] if log_path.exists() else []
+          clean = []
+          for line in lines:
+              line = re.sub(r'(?i)(token|secret|authorization|password)(\s*[:=]\s*)\S+', r'\1\2[REDACTED]', line)
+              clean.append(line[:500])
+          report = {
+              'schemaVersion': 7,
+              'gate': 'rhythm-preholdout-static-preflight',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'passed': False,
+              'failedStage': 'install-locked-dependencies',
+              'exitStatus': 1,
+              'failureLogTail': clean,
+              'usesSyntheticAudioResponseOnly': True,
+              'realProfessionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('.preholdout-static/report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(report, indent=2))
+          PY
+
+          mkdir -p debug/v143-contextual-prune
+          cp .preholdout-static/report.json \
+            debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json
+          git add debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record failed Rhythm dependency-install diagnostic' || true
+          git fetch origin v143-contextual-prune-lobo || true
+          git rebase origin/v143-contextual-prune-lobo || true
+          git push origin HEAD:v143-contextual-prune-lobo || true
 
       - name: Run authoritative AI-tab PDF static pre-holdout gate
         run: |
