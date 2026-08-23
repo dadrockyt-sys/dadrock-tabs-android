@@ -48,20 +48,12 @@ jobs:
           set -euo pipefail
           npm ci --ignore-scripts
 
-      - name: Verify the actual AI-tab preview and purchased-PDF wiring
+      - name: Run authoritative AI-tab PDF static pre-holdout gate
         run: |
           set -euo pipefail
-          mkdir -p .preholdout-static/logs
-          node validation/rhythm_holdout/verify_ai_tab_pdf_product_contract.mjs \
-            .preholdout-static/logs/ai-tab-pdf-product-contract.json
-
-      - name: Run reusable static pre-holdout gate
-        run: |
-          set -euo pipefail
-          # Keep the standalone ESM copies inside the checked-out repository so
-          # Node resolves the same installed pdf-lib dependency used by the
-          # /ai-tab preview and purchased-PDF routes. The previous /tmp location
-          # could fail at the polished PDF stage before the renderer itself ran.
+          # The reusable runner itself verifies app/ai-tab/page.js plus both PDF
+          # routes before rendering. Keep its ESM copies below GITHUB_WORKSPACE so
+          # package resolution matches the product environment (including pdf-lib).
           bash validation/rhythm_holdout/run_static_preholdout_preflight.sh \
             "$GITHUB_WORKSPACE/.preholdout-static"
 
