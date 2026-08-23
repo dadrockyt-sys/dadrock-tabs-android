@@ -33,6 +33,7 @@ jobs:
           mkdir -p debug/v143-contextual-prune .scorer
           python - <<'PY'
           import gzip, json, subprocess, urllib.request
+          from collections import Counter
           from pathlib import Path
 
           SONG_ID = 243
@@ -53,6 +54,9 @@ jobs:
           def get_json(url):
               return json.loads(get_bytes(url))
 
+          def truthy(value):
+              return value not in (None, False, 0, '', [], {})
+
           meta = get_json(f'https://www.songsterr.com/api/meta/{SONG_ID}')
           try:
               revisions = get_json(f'https://www.songsterr.com/api/meta/{SONG_ID}/revisions')
@@ -64,6 +68,7 @@ jobs:
           tracks = meta.get('tracks') or []
           track_summaries = []
           rhythm_track_saved = False
+          rhythm_playable_summary = None
           for index, track in enumerate(tracks):
               if image.endswith('-stage'):
                   hosts = [STAGE_HOST]
@@ -74,104 +79,100 @@ jobs:
               part = None
               last_error = None
               for host in hosts:
-                  if image:
-                      url = f'https://{host}.cloudfront.net/{SONG_ID}/{revision_id}/{image}/{index}.json'
-                  else:
-                      url = f'https://{host}.cloudfront.net/part/{revision_id}/{index}'
+                  url = (f'https://{host}.cloudfront.net/{SONG_ID}/{revision_id}/{image}/{index}.json'
+                         if image else f'https://{host}.cloudfront.net/part/{revision_id}/{index}')
                   try:
                       part = get_json(url)
                       break
                   except Exception as exc:
                       last_error = type(exc).__name__ + ': ' + str(exc)
-              summary = {
-                  'index': index,
-                  'trackMeta': track,
-                  'fetchSucceeded': part is not None,
-                  'fetchError': last_error if part is None else None,
-              }
+              summary = {'index': index, 'trackMeta': track, 'fetchSucceeded': part is not None,
+                         'fetchError': last_error if part is None else None}
               if isinstance(part, dict):
                   if index == RHYTHM_TRACK_INDEX:
                       Path('.scorer/rhythm-track.json').write_text(json.dumps(part, separators=(',', ':')) + '\n')
                       Path('.scorer/song-meta.json').write_text(json.dumps(meta, separators=(',', ':')) + '\n')
                       rhythm_track_saved = True
                   measures = part.get('measures') or []
-                  beat_count = 0
-                  note_count = 0
-                  voice_count = 0
-                  measure_keys = set()
-                  beat_keys = set()
-                  note_keys = set()
+                  beat_count = note_count = voice_count = 0
+                  measure_keys=set(); beat_keys=set(); note_keys=set()
+                  if index == RHYTHM_TRACK_INDEX:
+                      agg = Counter()
+                      beat_duration_values = Counter()
+                      note_flag_combos = Counter()
                   for measure in measures:
-                      if isinstance(measure, dict):
-                          measure_keys.update(measure.keys())
-                          voices = measure.get('voices') or []
-                          voice_count += len(voices)
-                          for voice in voices:
-                              if not isinstance(voice, dict):
-                                  continue
-                              for beat in voice.get('beats') or []:
-                                  if not isinstance(beat, dict):
-                                      continue
-                                  beat_count += 1
-                                  beat_keys.update(beat.keys())
-                                  notes = beat.get('notes') or []
-                                  note_count += len(notes)
+                      if not isinstance(measure, dict): continue
+                      measure_keys.update(measure.keys())
+                      voices = measure.get('voices') or []
+                      voice_count += len(voices)
+                      for voice in voices:
+                          if not isinstance(voice, dict): continue
+                          for beat in voice.get('beats') or []:
+                              if not isinstance(beat, dict): continue
+                              beat_count += 1; beat_keys.update(beat.keys())
+                              notes = [n for n in (beat.get('notes') or []) if isinstance(n, dict)]
+                              note_count += len(notes)
+                              for note in notes: note_keys.update(note.keys())
+                              if index == RHYTHM_TRACK_INDEX:
+                                  agg['beats'] += 1
+                                  if truthy(beat.get('rest')): agg['beatRestTruthy'] += 1
+                                  beat_duration_values[str(beat.get('duration'))] += 1
+                                  positional=[]; live=[]; live_non_tie=[]
                                   for note in notes:
-                                      if isinstance(note, dict):
-                                          note_keys.update(note.keys())
+                                      agg['notes'] += 1
+                                      has_pos = isinstance(note.get('fret'), (int,float)) and isinstance(note.get('string'), (int,float))
+                                      is_rest = truthy(note.get('rest'))
+                                      is_dead = truthy(note.get('dead'))
+                                      is_tie = truthy(note.get('tie'))
+                                      if has_pos: agg['notesWithPosition'] += 1
+                                      if is_rest: agg['noteRestTruthy'] += 1
+                                      if is_dead: agg['noteDeadTruthy'] += 1
+                                      if is_tie: agg['noteTieTruthy'] += 1
+                                      note_flag_combos[f'pos={int(has_pos)} rest={int(is_rest)} dead={int(is_dead)} tie={int(is_tie)}'] += 1
+                                      if has_pos: positional.append(note)
+                                      if has_pos and not is_rest and not is_dead: live.append(note)
+                                      if has_pos and not is_rest and not is_dead and not is_tie: live_non_tie.append(note)
+                                  if positional: agg['beatsWithPositionNote'] += 1
+                                  if live: agg['beatsWithPlayableLiveNote'] += 1
+                                  if live_non_tie: agg['beatsWithPlayableLiveNonTieNote'] += 1
+                                  agg['playableLiveNotes'] += len(live)
+                                  agg['playableLiveNonTieNotes'] += len(live_non_tie)
+                      
                   summary['structure'] = {
-                      'topLevelKeys': sorted(part.keys()),
-                      'measureCount': len(measures),
-                      'voiceCount': voice_count,
-                      'beatCount': beat_count,
-                      'noteCount': note_count,
-                      'measureKeys': sorted(measure_keys),
-                      'beatKeys': sorted(beat_keys),
-                      'noteKeys': sorted(note_keys),
-                      'partName': part.get('name'),
-                      'instrument': part.get('instrument'),
-                      'tuning': part.get('tuning'),
-                      'capo': part.get('capo'),
-                      'frets': part.get('frets'),
-                      'strings': part.get('strings'),
-                  }
+                      'topLevelKeys': sorted(part.keys()), 'measureCount': len(measures),
+                      'voiceCount': voice_count, 'beatCount': beat_count, 'noteCount': note_count,
+                      'measureKeys': sorted(measure_keys), 'beatKeys': sorted(beat_keys), 'noteKeys': sorted(note_keys),
+                      'partName': part.get('name'), 'instrument': part.get('instrument'), 'tuning': part.get('tuning'),
+                      'capo': part.get('capo'), 'frets': part.get('frets'), 'strings': part.get('strings')}
+                  if index == RHYTHM_TRACK_INDEX:
+                      rhythm_playable_summary = {
+                          'aggregate': dict(sorted(agg.items())),
+                          'beatDurationHistogram': dict(sorted(beat_duration_values.items())),
+                          'noteFlagCombinations': dict(sorted(note_flag_combos.items())),
+                          'targetPriorVerifiedPlayableOnsets': 577,
+                          'targetPriorVerifiedPlayableNotes': 925,
+                      }
               track_summaries.append(summary)
 
           protected_blob = subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'], text=True).strip()
           out = {
-              'schemaVersion': 2,
-              'gate': 'v143-professional-holdout-source-inspect',
-              'runId': int('${{ github.run_id }}'),
-              'runAttempt': int('${{ github.run_attempt }}'),
-              'triggerSha': '${{ github.sha }}',
-              'artifactName': 'v143-professional-source-raw-track',
-              'songId': SONG_ID,
-              'rhythmTrackIndex': RHYTHM_TRACK_INDEX,
-              'meta': {
-                  'artist': meta.get('artist'),
-                  'title': meta.get('title'),
-                  'revisionId': revision_id,
-                  'image': image,
-                  'trackCount': len(tracks),
-                  'defaultTrack': meta.get('defaultTrack'),
-                  'popularTrack': meta.get('popularTrack'),
-                  'keys': sorted(meta.keys()),
-              },
-              'revisionsSummary': revisions,
-              'tracks': track_summaries,
+              'schemaVersion': 3, 'gate': 'v143-professional-holdout-source-inspect',
+              'runId': int('${{ github.run_id }}'), 'runAttempt': int('${{ github.run_attempt }}'),
+              'triggerSha': '${{ github.sha }}', 'artifactName': 'v143-professional-source-raw-track',
+              'songId': SONG_ID, 'rhythmTrackIndex': RHYTHM_TRACK_INDEX,
+              'meta': {'artist': meta.get('artist'), 'title': meta.get('title'), 'revisionId': revision_id,
+                       'image': image, 'trackCount': len(tracks), 'defaultTrack': meta.get('defaultTrack'),
+                       'popularTrack': meta.get('popularTrack'), 'keys': sorted(meta.keys())},
+              'revisionsSummary': revisions, 'tracks': track_summaries,
+              'rhythmPlayableStructure': rhythm_playable_summary,
               'rhythmTrackTemporaryArtifactSaved': rhythm_track_saved,
               'professionalReferenceOpenedOnlyAfterFreshFreeze': True,
-              'referenceUsedByAnalyzer': False,
-              'runtimeLabelsRequired': False,
-              'protectedPipelineBlob': protected_blob,
-              'protectedPipelineUnchanged': protected_blob == EXPECTED_PROTECTED,
-              'productionModified': False,
-              'copyrightedNotePayloadCommitted': False,
-          }
+              'referenceUsedByAnalyzer': False, 'runtimeLabelsRequired': False,
+              'protectedPipelineBlob': protected_blob, 'protectedPipelineUnchanged': protected_blob == EXPECTED_PROTECTED,
+              'productionModified': False, 'copyrightedNotePayloadCommitted': False}
           out['passed'] = out['protectedPipelineUnchanged'] and rhythm_track_saved
           Path('debug/v143-contextual-prune/professional-source-structure.json').write_text(json.dumps(out, indent=2) + '\n')
-          if not out['passed']:
-              raise SystemExit('professional source structure inspection failed')
+          if not out['passed']: raise SystemExit('professional source structure inspection failed')
           PY
 
       - name: Upload scorer-only raw rhythm track
