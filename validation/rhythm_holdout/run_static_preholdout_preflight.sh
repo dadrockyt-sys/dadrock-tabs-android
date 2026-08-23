@@ -4,14 +4,52 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 WORK="${1:-/tmp/rhythm-preholdout-static}"
 SOURCE_COMMIT="${GITHUB_SHA:-unknown}"
+STAGE="initialization"
+
+on_exit() {
+  local status=$?
+  trap - EXIT
+  if [ "$status" -ne 0 ]; then
+    STAGE_VALUE="$STAGE" \
+    STATUS_VALUE="$status" \
+    WORK_VALUE="$WORK" \
+    SOURCE_COMMIT_VALUE="$SOURCE_COMMIT" \
+      python - <<'PY' || true
+import json
+import os
+from pathlib import Path
+
+work = Path(os.environ["WORK_VALUE"])
+work.mkdir(parents=True, exist_ok=True)
+report = {
+    "schemaVersion": 2,
+    "gate": "rhythm-preholdout-static-preflight",
+    "sourceCommit": os.environ.get("SOURCE_COMMIT_VALUE"),
+    "passed": False,
+    "failedStage": os.environ.get("STAGE_VALUE"),
+    "exitStatus": int(os.environ.get("STATUS_VALUE") or 1),
+    "usesSyntheticAudioResponseOnly": True,
+    "realProfessionalReferenceOpened": False,
+    "productionModified": False,
+    "productionPromotionAuthorized": False,
+}
+(work / "report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+print(json.dumps(report, indent=2))
+PY
+  fi
+  exit "$status"
+}
+trap on_exit EXIT
 
 cd "$ROOT"
 rm -rf "$WORK"
 mkdir -p "$WORK/esm" "$WORK/logs"
 
+STAGE="runtime-isolation"
 python validation/rhythm_holdout/verify_runtime_isolation.py \
   > "$WORK/logs/runtime-isolation.json"
 
+STAGE="standalone-esm-preparation"
 cp lib/v143RenderContract.js "$WORK/esm/v143RenderContract.mjs"
 
 sed \
@@ -52,6 +90,7 @@ python -m py_compile \
   validation/rhythm_holdout/freeze_rhythm_analysis.py \
   validation/rhythm_holdout/verify_pdf_event_fidelity.py
 
+STAGE="synthetic-product-response"
 python - "$WORK/raw-product-output.json" <<'PY'
 import json
 import sys
@@ -112,28 +151,33 @@ payload = {
 output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 PY
 
+STAGE="structured-freeze-payload"
 node "$WORK/esm/prepare-freeze.mjs" \
   "$WORK/raw-product-output.json" \
   "$WORK/rhythm-freeze-input.json" \
   > "$WORK/logs/prepare-freeze.log" 2>&1
 
+STAGE="freeze-analysis"
 python validation/rhythm_holdout/freeze_rhythm_analysis.py \
   "$WORK/rhythm-freeze-input.json" \
   "$WORK/freeze" \
   --source-commit "$SOURCE_COMMIT" \
   > "$WORK/logs/freeze.log" 2>&1
 
+STAGE="professional-pdf-render"
 node "$WORK/esm/render-frozen.mjs" \
   "$WORK/freeze/rhythm-frozen-analysis.json" \
   "$WORK/freeze/pdf" \
   "$WORK/esm/createV143RhythmPdf.mjs" \
   > "$WORK/logs/render-frozen-pdf.log" 2>&1
 
+STAGE="pdf-event-fidelity"
 python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
   "$WORK/freeze" \
   "$WORK/freeze/pdf/pdf-event-evidence.json" \
   > "$WORK/logs/pdf-event-fidelity.log" 2>&1
 
+STAGE="final-static-report"
 python - "$WORK" "$SOURCE_COMMIT" <<'PY'
 import json
 import sys
@@ -161,7 +205,7 @@ checks = {
 }
 failed = [name for name, passed in checks.items() if not passed]
 report = {
-    "schemaVersion": 1,
+    "schemaVersion": 2,
     "gate": "rhythm-preholdout-static-preflight",
     "sourceCommit": source_commit,
     "eventCount": manifest.get("eventCount"),
@@ -186,3 +230,6 @@ print(json.dumps(report, indent=2))
 if failed:
     raise SystemExit("Static preflight failed: " + ", ".join(failed))
 PY
+
+STAGE="complete"
+trap - EXIT
