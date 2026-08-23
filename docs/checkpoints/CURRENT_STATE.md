@@ -50,6 +50,7 @@ Confirmed:
 - emailed `ds-music-are-you-gonna-go-my-way-remastered-2025-lenny-kravitz-rhythm-tab.pdf` is generated DadRock output, **not** holdout ground truth
 - Library image `1000116180.jpg` is a different dark-theme professional tablature source for *Are You Gonna Go My Way*, showing Chorus measures 33–35, labels including `G6`, `A(tp2)`, `E`, `D`, exact string/fret stacks, rhythm notation and lyrics; treat as holdout material only
 - Library images `1000116132.jpg` and `1000116183.jpg` are DadRock/Jimmy PAIge proof PDFs, not holdout
+- Library search around the professional screenshot surfaced many historical Chorus 33–35 development screenshots/scripts. Some explicitly state variants of `Professional reference used as training label only: True` / professional-reference sync. These are further evidence that the old Chorus development path is contaminated and cannot serve as the clean final holdout.
 - complete professional human source has not yet been reconstructed/inventoried event-by-event; partial screenshots cannot authorize final score
 
 Historical/contaminated diagnostics are not final holdout authority:
@@ -94,26 +95,46 @@ passed: true
 
 This proves the holdout machinery, not real transcription accuracy.
 
-## Exact structured-event → PDF identity — FIX IN PROGRESS
+## Exact structured-event → PDF identity — IMPLEMENTED, NEW PROOFS PENDING OBSERVATION
 
 A subtle issue was found: `buildJimmyPaigeAnalysisPayload` projects raw events once, while `createAiTabPdf` and `createV143RhythmPdf` projected the already-projected stream again. Reprojection could compact/reset `eventIndex`, which is used by legato connectors. Event count equality alone was therefore not strong enough to prove exact event identity.
 
 Fixes committed:
-- `36d7815bce80571176b5a09fa507d5493af60461` — real-audio canary now explicitly records `referenceRuntimeInputUsed:false`
-- `b825e88143ecf88e11128d136778cb698c15682f` then `2f7e35f26905b082ef9e7571b539794838def96f` — `lib/v143RenderContract.js` adds strict validation of already-projected render streams and makes projection idempotent by preserving existing authenticated `eventIndex`
-- `5892a8b8a6c976d50e94438fb8149a02a4e5e39a` — `lib/createAiTabPdf.js` now fail-closes on `validateV143RenderEvents` instead of re-numbering via a fresh projection
+- `36d7815bce80571176b5a09fa507d5493af60461` — real-audio canary explicitly records `referenceRuntimeInputUsed:false`
+- `b825e88143ecf88e11128d136778cb698c15682f` then `2f7e35f26905b082ef9e7571b539794838def96f` — `lib/v143RenderContract.js` strict validation/idempotent projection preserving authenticated `eventIndex`
+- `5892a8b8a6c976d50e94438fb8149a02a4e5e39a` — `lib/createAiTabPdf.js` fail-closes on `validateV143RenderEvents`
+- `d50adfe58db499ae1eb3c9d470108b1765731ef3` — `validation/rhythm_holdout/verify_render_idempotence.mjs`; deliberately tests rejected raw events producing gapped IDs `[0,2,4]`, plus legato target/continuation identity
+- `d6a3f49e424b9c2c0d6693deb72046b925b56706` — `.github/workflows/rhythm-render-contract-idempotence.yml`; non-GPU exact event-identity workflow
 
-`createV143RhythmPdf` still calls `projectV143RenderEvents`, but projection is now idempotent for already-projected events, so event identities should survive unchanged. This must be explicitly tested before calling PDF fidelity closed.
+Expected evidence file `debug/v143-contextual-prune/rhythm-render-contract-idempotence.json` is **not yet present on branch** at last check, so do not claim this workflow passed yet.
 
-The `v143-ai-tab-real-audio-canary` workflow is triggered by `lib/v143RenderContract.js`; a fresh isolated GPU canary may be running/queued from these commits. Do not start another expensive canary unnecessarily until its result is observed.
+## Fresh real-audio pre-holdout gate — IMPLEMENTED, RESULT PENDING
+
+New pre-holdout machinery deliberately never opens the human reference:
+- `32b538fc2b7b1a23a3f47aa66bbaa6c528d0faa8` — `validation/rhythm_holdout/prepare_rhythm_freeze_payload.mjs`; converts exact raw product output into structured freeze input only after explicit no-reference/product-safety checks
+- `a185760b134e38b548711d928b24e559530f9b40` — `validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs`; requires frozen safe analysis, asserts renderer projection is exactly idempotent, renders preview/full professional PDFs from frozen events only, and emits event evidence
+- `16bc56a5885802c194a77864553681b7634b7112` — freeze manifest now records source-audio SHA-256/byte provenance
+- `8066dd24494ba7c550c3c0481d4932cf6e45470c` — `.github/workflows/rhythm-professional-preholdout-real-audio.yml`
+
+Pre-holdout workflow order:
+1. static runtime isolation
+2. fresh Modal analysis of approved uploaded-audio-equivalent fixture
+3. explicit `referenceFree:true`, `professionalReferenceUsed:false`, `referenceRuntimeInputUsed:false`
+4. structured payload construction
+5. freeze exact render events + source audio hash before any holdout access
+6. render full/preview professional PDFs from frozen stream only
+7. compare PDF event SHA-256 to frozen event SHA-256; require fidelity exactly 1.0
+8. upload full frozen evidence/PDFs as short-retention artifact and commit compact proof only
+
+Expected compact evidence `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` is **not yet present** at last check, so its GPU workflow result is still pending/unknown. Do not launch duplicate expensive canaries until status is known.
 
 ## Immediate Rhythm actions
 
-1. Extend/observe the non-GPU holdout self-test with an explicit V143 projection-idempotence assertion (including gapped event indices and legato target relationships).
-2. Observe the fresh real-audio canary triggered by the render-contract change; require success and explicit `referenceRuntimeInputUsed:false` before using its raw artifact.
-3. Add a pre-holdout real-audio freeze workflow: raw product payload → structured payload → freeze exact render events/hash → render preview/full from frozen stream → exact PDF-event hash proof. Do **not** open professional reference there.
-4. Finish locating/inventorying the complete user-supplied professional Rhythm source and convert it to scorer-only event/measure ground truth.
-5. Run fresh audio → analyzer → freeze/hash → exact PDF → isolated scorer.
+1. Observe `rhythm-render-contract-idempotence` result; fix if evidence does not appear.
+2. Observe the fresh `v143-ai-tab-real-audio-canary` / `rhythm-professional-preholdout-real-audio` result; require explicit `referenceRuntimeInputUsed:false`, frozen source-audio hash, successful professional preview/full render and `pdfEventFidelity:1.0`.
+3. Keep checkpointing frequently.
+4. Finish locating/inventorying the complete user-supplied professional Rhythm source and convert it to scorer-only event/measure ground truth. Do not substitute historical contaminated Chorus labels or DadRock-generated PDFs.
+5. Run fresh audio → analyzer → freeze/hash → exact PDF → isolated scorer only when the complete clean professional holdout is available.
 6. If below 0.99 or any critical mismatch, improve only general/reference-free algorithms, rerun audio from scratch, refreeze, regenerate PDF, rescore.
 7. Only after near-100 + zero critical mismatches + exact PDF fidelity create **`Final Rhythm Pipeline`**.
 
