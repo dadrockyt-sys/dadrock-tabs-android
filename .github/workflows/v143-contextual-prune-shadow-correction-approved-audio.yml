@@ -12,6 +12,7 @@ on:
       - analyzer/v143_contextual_prune_reference_free_carrier.py
       - analyzer/v143_contextual_prune_runtime.py
       - analyzer/v143_rhythm_timing_consistency_shadow.py
+      - analyzer/v143_rhythm_timing_hypothesis_shadow.py
 
 concurrency:
   group: v143-contextual-prune-shadow-correction-approved-audio
@@ -159,12 +160,14 @@ jobs:
               "rescuedEventsPhysicallyObserved": True,
               "candidateRelocatesEvents": False,
               "timingDiagnosticChangesGrid": False,
+              "timingHypothesisChangesGrid": False,
               "liveRhythmOutputChanged": False,
               "leadChanged": False,
               "bassChanged": False,
               "productionModified": False,
           }
           failed = [key for key, expected in required.items() if invariants.get(key) is not expected]
+
           timing = report.get("timingConsistency") or {}
           timing_invariants = timing.get("invariants") or {}
           timing_required = {
@@ -182,6 +185,18 @@ jobs:
               for key, expected in timing_required.items()
               if timing_invariants.get(key) is not expected
           )
+
+          hypothesis = report.get("timingHypothesis") or {}
+          hypothesis_invariants = hypothesis.get("invariants") or {}
+          failed.extend(
+              f"timingHypothesis.{key}"
+              for key, expected in timing_required.items()
+              if hypothesis_invariants.get(key) is not expected
+          )
+          phase = hypothesis.get("barPhaseEvidence") or {}
+          if phase.get("phaseSelectedOrChanged") is not False:
+              failed.append("timingHypothesis.barPhaseEvidence.phaseSelectedOrChanged")
+
           if failed:
               raise SystemExit(f"Approved-audio correction invariant failure: {failed}")
           print("V143 approved-audio correction shadow completed with reference-free invariants intact")
