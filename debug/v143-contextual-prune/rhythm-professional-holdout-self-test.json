@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "gate": "rhythm-professional-holdout-self-test",
-  "sourceCommit": "a185760b134e38b548711d928b24e559530f9b40",
+  "sourceCommit": "16bc56a5885802c194a77864553681b7634b7112",
   "runtimeIsolationPassed": true,
   "syntheticPerfectScorePassed": true,
   "syntheticPdfEventFidelity": 1.0,
