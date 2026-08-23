@@ -1,0 +1,131 @@
+name: V143 Professional Source Revision Scan
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-professional-source-revision-scan.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-professional-source-revision-scan
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Scan human-written Rhythm revisions without analyzer access
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import gzip, json, subprocess, urllib.request
+          from pathlib import Path
+
+          SONG_ID=243
+          TRACK_INDEX=3
+          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
+          HOSTS=['dqsljvtekg760','d34shlm8p2ums2','d3cqchs6g3b5ew','d3rrfvx08uyjp1','dodkcbujl0ebx','dj1usja78sinh']
+          EXPECTED_PROTECTED='7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+
+          def get_bytes(url):
+              req=urllib.request.Request(url,headers={'User-Agent':UA,'Accept':'*/*','Accept-Encoding':'gzip'})
+              with urllib.request.urlopen(req,timeout=15) as r: data=r.read()
+              if data[:2]==b'\x1f\x8b': data=gzip.decompress(data)
+              return data
+          def get_json(url): return json.loads(get_bytes(url))
+          def truthy(v): return v not in (None,False,0,'',[],{})
+          def counts(part):
+              beats=notes=live=live_nt=on_live=on_nt=dead=tie=rests=0
+              measures=set()
+              for mi,m in enumerate(part.get('measures') or [],1):
+                  for voice in m.get('voices') or []:
+                      for b in voice.get('beats') or []:
+                          beats+=1
+                          l=[]; nt=[]
+                          for n in b.get('notes') or []:
+                              if not isinstance(n,dict): continue
+                              notes+=1
+                              has=isinstance(n.get('string'),(int,float)) and isinstance(n.get('fret'),(int,float))
+                              r=truthy(n.get('rest')); d=truthy(n.get('dead')); t=truthy(n.get('tie'))
+                              if r: rests+=1
+                              if d: dead+=1
+                              if t: tie+=1
+                              if has and not r and not d:
+                                  live+=1; l.append(n)
+                                  if not t: live_nt+=1; nt.append(n)
+                          if l: on_live+=1
+                          if nt: on_nt+=1; measures.add(mi)
+              return {'measureCount':len(part.get('measures') or []),'rawBeatCount':beats,'rawNoteCount':notes,
+                      'liveNoteCount':live,'liveNonTieNoteCount':live_nt,'liveOnsetCount':on_live,
+                      'liveNonTieOnsetCount':on_nt,'liveNonTieMeasureCount':len(measures),
+                      'deadNoteCount':dead,'tieNoteCount':tie,'restNoteCount':rests}
+
+          meta=get_json(f'https://www.songsterr.com/api/meta/{SONG_ID}')
+          revs=get_json(f'https://www.songsterr.com/api/meta/{SONG_ID}/revisions')
+          rev_list=revs if isinstance(revs,list) else (revs.get('revisions') or revs.get('items') or [])
+          current_image=str(meta.get('image') or '')
+          results=[]
+          for rev in rev_list[:60]:
+              rid=int(rev.get('id') or rev.get('revisionId') or 0)
+              if not rid: continue
+              part=None; used=None; error=None
+              candidates=[]
+              if current_image:
+                  for h in HOSTS[:3]: candidates.append(f'https://{h}.cloudfront.net/{SONG_ID}/{rid}/{current_image}/{TRACK_INDEX}.json')
+              for h in HOSTS: candidates.append(f'https://{h}.cloudfront.net/part/{rid}/{TRACK_INDEX}')
+              for url in candidates:
+                  try:
+                      obj=get_json(url)
+                      if isinstance(obj,dict) and obj.get('measures'):
+                          part=obj; used=url.split('.cloudfront.net/')[1]; break
+                  except Exception as exc:
+                      error=type(exc).__name__+': '+str(exc)
+              row={'revisionId':rid,'createdAt':rev.get('createdAt'),'description':rev.get('description'),
+                   'authorName':(rev.get('author') or {}).get('name') if isinstance(rev.get('author'),dict) else None,
+                   'fetched':part is not None,'pathShape':used,'error':None if part is not None else error}
+              if part is not None:
+                  row['partName']=part.get('name'); row['counts']=counts(part)
+                  c=row['counts']
+                  row['matchesPriorNoteCount925']=c['liveNonTieNoteCount']==925
+                  row['matchesPriorOnsetCount577']=c['liveNonTieOnsetCount']==577
+                  row['matchesBothPriorCounts']=row['matchesPriorNoteCount925'] and row['matchesPriorOnsetCount577']
+              results.append(row)
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          out={'schemaVersion':1,'gate':'v143-professional-source-revision-scan','triggerSha':'${{ github.sha }}',
+               'songId':SONG_ID,'trackIndex':TRACK_INDEX,'currentRevisionId':meta.get('revisionId'),
+               'priorVerifiedTarget':{'playableOnsetObjects':577,'playableNoteEntries':925},
+               'revisionCountReported':len(rev_list),'revisions':results,
+               'professionalReferenceUsedByAnalyzer':False,'referenceRuntimeInputUsed':False,'runtimeLabelsRequired':False,
+               'protectedPipelineBlob':protected,'protectedPipelineUnchanged':protected==EXPECTED_PROTECTED,
+               'productionModified':False}
+          out['exactCountMatches']=[r['revisionId'] for r in results if r.get('matchesBothPriorCounts')]
+          out['passed']=out['protectedPipelineUnchanged'] and any(r.get('fetched') for r in results)
+          Path('debug/v143-contextual-prune/professional-source-revision-scan.json').write_text(json.dumps(out,indent=2)+'\n')
+          if not out['passed']: raise SystemExit('revision scan failed')
+          PY
+
+      - name: Commit scorer-only revision summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/professional-source-revision-scan.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record professional source revision scan'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
