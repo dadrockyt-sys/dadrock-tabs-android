@@ -20,12 +20,15 @@ const frozen = JSON.parse(await fs.readFile(snapshotPath, 'utf8'));
 if (frozen?.instrument !== 'rhythm') {
   throw new Error('frozen analysis is not Rhythm');
 }
+const safety = frozen?.safety || {};
 if (
-  frozen?.safety?.referenceFree !== true ||
-  frozen?.safety?.professionalReferenceUsed !== false ||
-  frozen?.safety?.referenceRuntimeInputUsed !== false
+  safety.referenceFree !== true ||
+  safety.professionalReferenceUsed !== false ||
+  safety.referenceRuntimeInputUsed !== false ||
+  safety.runtimeLabelsRequired !== false ||
+  safety.v143RuntimeSafetyVerified !== true
 ) {
-  throw new Error('frozen analysis fails anti-leakage safety contract');
+  throw new Error('frozen analysis fails complete V143 anti-leakage safety contract');
 }
 
 const renderEvents = frozen?.renderEvents;
@@ -81,10 +84,12 @@ await fs.writeFile(previewPath, previewBytes);
 const fullDocument = await PDFDocument.load(fullBytes);
 const previewDocument = await PDFDocument.load(previewBytes);
 const evidence = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   gate: 'rhythm-frozen-professional-pdf-render',
   instrument: 'rhythm',
   referenceOpened: false,
+  runtimeSafetyVerified: true,
+  runtimeLabelsRequired: false,
   renderer: 'createV143RhythmPdf',
   rendererProjectionExactlyEqual: true,
   renderEventCount: renderEvents.length,
@@ -102,6 +107,8 @@ const evidence = {
 };
 
 evidence.passed = Boolean(
+  evidence.runtimeSafetyVerified &&
+  evidence.runtimeLabelsRequired === false &&
   evidence.rendererProjectionExactlyEqual &&
   evidence.fullPdfHeaderValid &&
   evidence.previewPdfHeaderValid &&
