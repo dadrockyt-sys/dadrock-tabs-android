@@ -123,9 +123,11 @@ For authenticated V143 Rhythm (`analysisEngine === 'v143-reference-free-rhythm'`
 Therefore `createV143RhythmPdf` is the underlying polished Rhythm renderer used by the actual `/ai-tab` preview/purchased PDF product, including DadRock logo/branding. Do not invent a second PDF contract.
 
 Static product-path protection:
-- `a45f71296bf0ffb2284f5adeea462f2ab94114ac` — `validation/rhythm_holdout/verify_ai_tab_pdf_product_contract.mjs` verifies real page.js endpoints/fields/renderEvents/watermark/lock and V143 renderer routing.
-- `fa67cf7b39a026684a956698cf42ec5422b232dd` — standalone static workflow runs this verifier before PDF render.
-- `b65cf9dd016edb3fce54d2cd36dd73d9a593f637` — reusable static runner itself is now bound to the page.js product contract and emits schemaVersion 4 product-path checks.
+- `a45f71296bf0ffb2284f5adeea462f2ab94114ac` — original `verify_ai_tab_pdf_product_contract.mjs` gate.
+- `280c86fcf40e57a9d365b77321e1a1e3d37609c7` — strengthened contract verifier now also proves both UI flows expect PDFs, both API routes use the professional feature gate, authenticated V143 Rhythm routes to the structured renderer, and `createV143RhythmPdf` still carries the actual DadRock logo path, product branding, preview watermark/lock, and branded footer.
+- `3cd507e4898e44840d1a32a550f6bc947dc2761f` — reusable static preflight upgraded to schemaVersion 5 and explicitly gates on those polished product-contract facts before accepting PDF render/hash proof.
+
+These are validation-only changes; production renderer behavior and branding were not altered.
 
 ## Fresh real-audio pre-holdout freeze/PDF gate — CODED, authoritative result still pending
 
@@ -139,11 +141,11 @@ Required proof: fresh audio, referenceFree true, professionalReferenceUsed false
 
 `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` is still not established green. Do not launch duplicate expensive GPU work until CPU glue is green.
 
-## CPU polished-PDF preflight — EXACT ROOT CAUSE FOUND AND FIXED IN TEST GLUE
+## CPU polished-PDF preflight — EXACT ROOT CAUSE FOUND AND TEST GLUE FIXED; REFRESH RUNS IN FLIGHT
 
 The previous failure was **not evidence of a logo or polished renderer defect**.
 
-Latest schemaVersion 4 failure diagnostic from source commit `b65cf9dd016edb3fce54d2cd36dd73d9a593f637` explicitly showed:
+Latest persisted old failure diagnostic from source commit `b65cf9dd016edb3fce54d2cd36dd73d9a593f637` explicitly showed:
 ```text
 failedStage: professional-pdf-render
 Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pdf-lib'
@@ -152,25 +154,23 @@ imported from /tmp/rhythm-preholdout-static/esm/render-frozen.mjs
 
 This proves Node was executing a standalone ESM copy under `/tmp`, outside the repository package-resolution tree. The repository has `pdf-lib` as a locked dependency, and the actual product renderer runs inside the repository/Next.js environment.
 
-The remaining `/tmp` caller was found in the consolidated `.github/workflows/rhythm-professional-holdout-self-test.yml` step `Exercise full static raw-response to professional-PDF glue`. It explicitly passed `/tmp/rhythm-preholdout-static`, overriding the reusable runner's new safe repository-local default.
+Fixes now in branch:
+- reusable runner default is repository-local: `$ROOT/.preholdout-static`
+- `1906bd89b35abdc2ea121f7d6605acc2f24eee04` — consolidated self-test no longer overrides the runner with `/tmp`; it uses `$GITHUB_WORKSPACE/.preholdout-static`
+- `e5bade98915c6b9b4af75ba55f8c214ee1109b4e` — consolidated path uses the same authoritative AI-tab PDF preflight runner
+- `280c86fcf40e57a9d365b77321e1a1e3d37609c7` / `3cd507e4898e44840d1a32a550f6bc947dc2761f` — polished product contract strengthened and CPU workflows retriggered without touching the GPU real-audio workflow
 
-Fix committed:
-- `1906bd89b35abdc2ea121f7d6605acc2f24eee04` — consolidated self-test now runs static PDF glue under `$GITHUB_WORKSPACE/.preholdout-static`, reads the report there, watches the real page.js/PDF route/wrapper files, and produces schemaVersion 5 consolidated evidence including:
-  - `staticAiTabPdfProductContractPassed`
-  - `staticPageIsPdfContractSourceOfTruth`
-  - `staticPreviewAndPurchasedCarryRenderEvents`
-  - 400 synthetic authenticated events / 100 measures
-  - full/preview polished PDF page counts
-  - exact frozen/PDF event hash equality
-  - `pdfEventFidelity:1.0`
+Current branch head before this checkpoint: `3cd507e4898e44840d1a32a550f6bc947dc2761f`.
 
-No production renderer behavior, logo, branding, analyzer thresholds, live Modal, payments, tokens, email, or Production were changed.
+Await refreshed bot evidence. Do not treat the old `/tmp` failure JSON as current post-fix evidence. If a refreshed run fails, use its persisted `failedStage` and sanitized `failureLogTail` rather than guessing.
+
+No live Modal, Production, payments, token redemption, email, or customer flow was invoked.
 
 ## Immediate next actions
 
-1. Observe refreshed `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`; require schemaVersion 4 `passed:true`, page.js product contract true, 400 events/100 measures, full+preview PDFs, hash equality, fidelity 1.0.
-2. Observe refreshed `debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json`; require schemaVersion 5 consolidated `passed:true` with all product-path/static/final-wrapper gates green.
-3. If any gate remains red, use the persisted `failureLogTail`; do not guess and do not alter product rendering unless evidence proves a real product defect.
+1. Observe refreshed `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`; require schemaVersion 5 `passed:true`, page.js product contract true, polished branding/logo contract true, 400 events/100 measures, full+preview PDFs, hash equality, fidelity 1.0.
+2. Observe refreshed `debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json`; require consolidated `passed:true` with product-path/static/final-wrapper gates green.
+3. If any CPU gate remains red, use the new persisted `failureLogTail`; do not alter product rendering unless evidence proves a real product defect.
 4. Save this checkpoint after each meaningful result.
 5. Only after CPU glue is green, diagnose/retrigger exactly one fresh real-audio pre-holdout GPU run if needed.
 6. After fresh reference-free freeze/PDF evidence is safely locked, recover/re-supply a **clean complete** professional Rhythm source if necessary.
