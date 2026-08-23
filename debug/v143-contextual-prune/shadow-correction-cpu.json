@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-contextual-prune-shadow-correction-cpu",
+  "exitCode": 0,
+  "passed": true,
+  "referenceTokenScanPassed": true,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "expectedProtectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "protectedPipelineUnchanged": true,
+  "professionalReferenceUsed": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "logTail": [
+    "V143 contextual-prune shadow correction CPU proof passed",
+    "{'baseEventCount': 1, 'correctedEventCount': 2, 'rescuedEventCount': 1, 'suppressedPitchCount': 1, 'observedSlotCount': 4, 'strictSlotCount': 2, 'baseEventsPreserved': True, 'rescuesAreObservedSlots': True, 'candidateRelocatesEvents': False, 'referenceFree': True, 'runtimeLabelsRequired': False, 'productionModified': False}",
+    "CORRECTION_SHADOW_REFERENCE_TOKEN_SCAN=PASS",
+    "=== V143 CONTEXTUAL PRUNE SHADOW STATIC GATE ===",
+    "CARRIER_CONSTANTS_MATCH_RESEARCH True",
+    "FOUR_WIDE_RECALL_SWEEPS True",
+    "CQT_WINDOWS_MATCH_RESEARCH True",
+    "RESEARCH_NORMALIZATION_LOCKED True",
+    "SECTION5_REFERENCE_FREE_CACHE_LOCKED True",
+    "SECTION5_AUDIO_CARRIER_REPLAY_PREPARED True",
+    "MODEL_FINGERPRINT_MATCHED True",
+    "SHADOW_APP_ISOLATED True",
+    "LIVE_V143_FILES_UNCHANGED True",
+    "PROFESSIONAL_REFERENCE_IN_NEW_RUNTIME False",
+    "PRODUCTION_MODIFIED False",
+    "WROTE=/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/public/training/v143-musical-reconstruction-calibration/contextual-prune-shadow-static-report.json",
+    "PROTECTED_PIPELINE_BLOB=PASS:7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+  ]
+}
