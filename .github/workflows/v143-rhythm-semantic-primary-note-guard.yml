@@ -1,0 +1,142 @@
+name: V143 Rhythm Semantic Primary Note Guard
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-rhythm-semantic-primary-note-guard.yml
+      - analyzer/v143_rhythm_semantic_primary_note_guard.py
+      - analyzer/check_v143_rhythm_semantic_primary_note_guard.py
+      - analyzer/v143_rhythm_bend_consensus.py
+      - analyzer/v143_rhythm_bend_evidence.py
+      - analyzer/v143_rhythm_legato_evidence.py
+      - analyzer/v143_rhythm_guitar_note_mapper.py
+      - analyzer/v143_reference_free_rhythm_pipeline.py
+
+concurrency:
+  group: v143-rhythm-semantic-primary-note-guard
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  semantic-guard:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run semantic guard and anti-leakage checks
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=debug/v143-contextual-prune/rhythm-semantic-primary-note-guard.log
+          report=debug/v143-contextual-prune/rhythm-semantic-primary-note-guard.json
+          : > "$log"
+          status=0
+
+          python -m py_compile \
+            analyzer/v143_rhythm_semantic_primary_note_guard.py \
+            analyzer/check_v143_rhythm_semantic_primary_note_guard.py >> "$log" 2>&1 || status=$?
+
+          if [ "$status" -eq 0 ]; then
+            PYTHONPATH=analyzer python analyzer/check_v143_rhythm_semantic_primary_note_guard.py >> "$log" 2>&1 || status=$?
+          fi
+
+          if [ "$status" -eq 0 ]; then
+            if grep -E -n \
+              'gomyway-professional-rhythm-reference|Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score' \
+              analyzer/v143_rhythm_semantic_primary_note_guard.py \
+              analyzer/check_v143_rhythm_semantic_primary_note_guard.py >> "$log" 2>&1; then
+              echo "Forbidden scorer/reference token found in semantic guard sources" >> "$log"
+              status=51
+            else
+              echo "SEMANTIC_GUARD_REFERENCE_TOKEN_SCAN=PASS" >> "$log"
+            fi
+          fi
+
+          protected_blob=$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)
+          expected_blob=7f72f8ed9b14af8bc93e95544195204d99c6bec1
+          if [ "$protected_blob" != "$expected_blob" ]; then
+            echo "PROTECTED_PIPELINE_BLOB_MISMATCH=$protected_blob expected=$expected_blob" >> "$log"
+            status=52
+          else
+            echo "PROTECTED_PIPELINE_BLOB=PASS:$protected_blob" >> "$log"
+          fi
+
+          STATUS="$status" PROTECTED_BLOB="$protected_blob" EXPECTED_BLOB="$expected_blob" python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          log_path = Path("debug/v143-contextual-prune/rhythm-semantic-primary-note-guard.log")
+          output = Path("debug/v143-contextual-prune/rhythm-semantic-primary-note-guard.json")
+          lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+          status = int(os.environ["STATUS"])
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-rhythm-semantic-primary-note-guard",
+              "exitCode": status,
+              "passed": status == 0,
+              "referenceTokenScanPassed": "SEMANTIC_GUARD_REFERENCE_TOKEN_SCAN=PASS" in lines,
+              "protectedPipelineBlob": os.environ["PROTECTED_BLOB"],
+              "expectedProtectedPipelineBlob": os.environ["EXPECTED_BLOB"],
+              "protectedPipelineUnchanged": os.environ["PROTECTED_BLOB"] == os.environ["EXPECTED_BLOB"],
+              "professionalReferenceUsed": False,
+              "runtimeLabelsRequired": False,
+              "productionModified": False,
+              "logTail": lines[-120:],
+          }
+          output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+          exit 0
+
+      - name: Commit semantic guard diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/rhythm-semantic-primary-note-guard.log \
+            debug/v143-contextual-prune/rhythm-semantic-primary-note-guard.json
+          if git diff --cached --quiet; then
+            echo "No semantic guard diagnostic changed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 semantic primary-note guard"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce semantic guard
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("debug/v143-contextual-prune/rhythm-semantic-primary-note-guard.json").read_text(encoding="utf-8"))
+          required = {
+              "passed": True,
+              "referenceTokenScanPassed": True,
+              "protectedPipelineUnchanged": True,
+              "professionalReferenceUsed": False,
+              "runtimeLabelsRequired": False,
+              "productionModified": False,
+          }
+          failed = [key for key, expected in required.items() if data.get(key) is not expected]
+          if failed:
+              raise SystemExit(f"V143 semantic primary-note guard failed: {failed}")
+          print("V143 rhythm semantic primary-note guard passed")
+          PY
