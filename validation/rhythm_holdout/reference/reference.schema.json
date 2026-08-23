@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dadrocktabs.com/schemas/rhythm-professional-holdout-reference-v1.json",
+  "title": "DadRock Rhythm Professional Human Holdout Reference",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "instrument",
+    "holdout",
+    "source",
+    "timeSignature",
+    "tuning",
+    "measures"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "instrument": { "const": "rhythm" },
+    "holdout": { "const": true },
+    "source": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "const": "professional-human-tab" },
+        "title": { "type": "string" },
+        "artist": { "type": "string" },
+        "provenance": { "type": "string" },
+        "pageCount": { "type": "integer", "minimum": 1 },
+        "sourceSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "tempoBpm": { "type": "number", "exclusiveMinimum": 0 },
+    "timeSignature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["beats", "noteValue"],
+      "properties": {
+        "beats": { "type": "integer", "minimum": 1 },
+        "noteValue": { "type": "integer", "enum": [1, 2, 4, 8, 16, 32] }
+      }
+    },
+    "stepsPerMeasure": { "type": "integer", "minimum": 1, "default": 16 },
+    "tuning": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": { "type": "string" }
+    },
+    "measures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["measure", "events"],
+        "properties": {
+          "measure": { "type": "integer", "minimum": 1 },
+          "section": { "type": ["string", "null"] },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["step", "notes"],
+              "properties": {
+                "step": { "type": "number", "minimum": 0 },
+                "durationSteps": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+                "rest": { "type": "boolean", "default": false },
+                "tieIn": { "type": "boolean", "default": false },
+                "tieOut": { "type": "boolean", "default": false },
+                "techniques": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": { "type": "string" },
+                  "default": []
+                },
+                "notes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["string", "fret", "midi"],
+                    "properties": {
+                      "string": { "type": "integer", "minimum": 1, "maximum": 6 },
+                      "fret": { "type": "integer", "minimum": 0, "maximum": 24 },
+                      "midi": { "type": "integer", "minimum": 40, "maximum": 88 },
+                      "durationSteps": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+                      "tieIn": { "type": "boolean", "default": false },
+                      "tieOut": { "type": "boolean", "default": false },
+                      "techniques": {
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": { "type": "string" },
+                        "default": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
