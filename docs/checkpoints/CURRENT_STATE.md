@@ -64,7 +64,7 @@ Formal inventory:
 
 Some earlier uploads may no longer be loadable. If the complete clean professional source cannot be recovered, it will need to be re-uploaded when final scoring is ready. Do not block reference-free pipeline work on that yet.
 
-## Holdout architecture — STRICT SELF-TEST GREEN
+## Holdout architecture — STRICT SYNTHETIC GATE GREEN
 
 Core files:
 - `validation/rhythm_holdout/canonical.py`
@@ -79,44 +79,36 @@ Core files:
 - `validation/rhythm_holdout/reference/.gitignore`
 
 Important commits:
-- `10ae14101cff959a7b90822b33c44df229ad0b61` — reference schema now requires complete-source provenance, page count, source SHA-256, `transcribedFromCompleteSource:true`, contiguous measure range.
-- `4169e44522815539cdc4a299730a9ca8e32d53da` — strict reference completeness verifier. It validates frozen/PDF safety **before opening the reference**, then rejects partial/non-contiguous/duplicate/inconsistent ground truth.
-- `ac0fd9f2587ab4f5568c6ee3d4d980792478e4d2` — self-test updated to enforce completeness and prove partial references hard-fail.
-- bot evidence `7e5085c77aa4248890b652767f2784a7d881bebe` (later refreshed by bot) — strict self-test green.
-- `669f4445d6b98391754de25276cd6cb1ed54b7cf` — `reference/.gitignore` prevents real professional source/event transcription being committed; only schema/inventory/policy remain in repo.
-- `4f9c0d83686f56853a5b6ba2edb1035ed323a542` — mandatory final wrapper `run_final_holdout_gate.py` binds completeness + scorer + frozen/PDF hashes into one fail-closed final result.
-- `21c4e08eaa4dae8c798a65a3a23f37b0925ea40c` — README updated with exact final sequence/storage policy.
+- `10ae14101cff959a7b90822b33c44df229ad0b61` — complete-source reference schema requirements.
+- `4169e44522815539cdc4a299730a9ca8e32d53da` — strict reference completeness verifier; validates freeze/PDF safety before opening reference.
+- `669f4445d6b98391754de25276cd6cb1ed54b7cf` — real holdout/event transcription ignored from git.
+- `4f9c0d83686f56853a5b6ba2edb1035ed323a542` — mandatory `run_final_holdout_gate.py` binds completeness + scorer + frozen/PDF hashes.
+- `10bc229a424dda3ad56a680fc7000d7286687a2f` — self-test exercises mandatory final wrapper.
+- latest observed bot evidence `debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json` reached schemaVersion 3 and passed:
+  - runtime isolation true
+  - reference completeness true
+  - complete source true
+  - contiguous coverage true
+  - reference opened only after freeze validation true
+  - final wrapper passed true
+  - PDF event fidelity 1.0
+  - critical mismatches 0
+  - partial-reference wrapper hard-failure true
+  - real professional reference opened false
+  - Production unchanged
 
-Latest observed strict synthetic evidence (`debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json`):
-```text
-schemaVersion: 2
-runtimeIsolationPassed: true
-syntheticReferenceCompletenessPassed: true
-syntheticReferenceComplete: true
-syntheticSourceComplete: true
-syntheticContiguousMeasureCoverage: true
-referenceOpenedOnlyAfterFreezeValidation: true
-syntheticPerfectScorePassed: true
-syntheticPdfEventFidelity: 1.0
-syntheticCriticalMismatchCount: 0
-partialReferenceHardFailurePassed: true
-negativeSafetyTestsPassed: true
-realProfessionalReferenceOpened: false
-passed: true
-```
-
-This proves holdout machinery only, not real transcription accuracy.
+A later consolidated self-test workflow was committed at `1d99690759a4d572d389bd3e7599cebd76d84b1b`; its consolidated static-PDF portion is still under diagnosis below.
 
 ## Exact authenticated event → PDF identity — DIRECT PROOF GREEN
 
 Bug fixed: a second projection could previously compact/reset `eventIndex`, risking broken legato connector identities despite equal event counts.
 
 Key commits:
-- `2f7e35f26905b082ef9e7571b539794838def96f` — projection is idempotent and preserves existing authenticated event IDs.
+- `2f7e35f26905b082ef9e7571b539794838def96f` — projection idempotent and authenticated event IDs preserved.
 - `5892a8b8a6c976d50e94438fb8149a02a4e5e39a` — `createAiTabPdf` fail-closes on validated authenticated Rhythm events.
 - `23909503afa0de7337d43aa419779627075fbbfe` — direct proof `debug/v143-contextual-prune/rhythm-render-contract-idempotence.json`.
 
-Verified gapped IDs `[0,2,4]`, legato source/target identity, exact second-projection equality and exact validation equality. Production unchanged.
+Verified gapped IDs `[0,2,4]`, legato source/target identity, exact second projection equality and exact validation equality. Production unchanged.
 
 ## Fresh real-audio pre-holdout freeze/PDF gate — CODED, authoritative result still pending
 
@@ -136,26 +128,45 @@ Required proof from this gate:
 7. PDF event hash exactly equals frozen hash; fidelity 1.0
 8. human reference remains sealed/unopened
 
-Expected compact evidence `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` is still absent. Do not call this gate green yet.
+Expected compact evidence `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` is still absent. Do not call this gate green yet and do not launch duplicate expensive GPU work until CPU glue is green.
 
-## Static preflight diagnostic — RUNNING / NOT YET GREEN
+## CPU static pre-holdout glue — FAILURE NOW LOCALIZED
 
-A CPU-only preflight was added to exercise the exact raw-response → structured payload → freeze → professional PDF → hash-fidelity glue before spending another GPU run:
-- `e89b206a0d8b7dcfea2a86804bd973f902330c0a` — initial static workflow.
-- `92d66619cfdb2864d573f7c64c57dc5bd391ea46` — self-diagnosing version with per-stage outcomes and 400 synthetic authenticated events.
-- workflow `.github/workflows/rhythm-preholdout-static-preflight.yml`.
+Purpose: exercise exact raw product-response → structured payload → freeze → professional `createV143RhythmPdf` → PDF-event-fidelity glue without GPU or professional reference.
 
-Expected diagnostic `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json` has not appeared yet. Continue observing/diagnosing this CPU gate before retriggering expensive real-audio GPU work.
+Files/commits:
+- `57a9955a6f4a2e799d3df92216409a81055712eb` — reusable `validation/rhythm_holdout/run_static_preholdout_preflight.sh`.
+- `a1dac791e7266c04f09fe3efa267e6a978d1e667` — simplified CPU workflow using reusable runner.
+- `88b8260791dc86c292e02a0fa93bb8447897b0aa` — failure diagnostics persist to branch.
+
+Latest diagnostic now exists:
+`debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`
+
+Observed:
+```text
+schemaVersion: 2
+passed: false
+failedStage: professional-pdf-render
+exitStatus: 1
+usesSyntheticAudioResponseOnly: true
+realProfessionalReferenceOpened: false
+productionModified: false
+```
+
+This is useful: upstream runtime isolation, standalone ESM preparation, synthetic product-response creation, structured freeze payload, and freeze-analysis all got far enough that the first recorded hard failure is the professional PDF render stage. The renderer source references `public/DadRock-Tabs-Logo.png`, and that file exists on the branch; exact render error text still needs to be captured.
+
+Current debugging target: persist the tail of `render-frozen-pdf.log` into the compact failure diagnostic, identify the exact renderer exception, then fix only the static/test glue unless evidence proves a real renderer defect.
 
 ## Immediate next actions
 
-1. Get `rhythm-preholdout-static-preflight` to emit a diagnostic and pass.
-2. Then diagnose/retrigger exactly one fresh real-audio pre-holdout GPU run if necessary; require frozen audio/event hashes + exact professional PDF fidelity 1.0 and no-reference flags.
-3. Keep saving this checkpoint frequently.
-4. Recover/re-supply a **clean complete** professional Rhythm source only when the reference-free freeze/PDF evidence is safely locked.
-5. Run: freeze/PDF proof → reference completeness verifier → isolated professional scorer → `run_final_holdout_gate.py`.
-6. If score <0.99 or any critical mismatch, change only general/reference-free algorithms; rerun audio from scratch and rescore.
-7. Only after the real gate passes create **`Final Rhythm Pipeline`**.
+1. Enhance static failure report with sanitized renderer log tail and rerun CPU preflight.
+2. Fix the localized `professional-pdf-render` failure and make static preflight green with 400 synthetic authenticated events, professional full/preview PDFs, and exact PDF-event fidelity 1.0.
+3. Save this checkpoint after each meaningful change.
+4. Only after CPU glue is green, diagnose/retrigger exactly one fresh real-audio pre-holdout GPU run if needed.
+5. Recover/re-supply a **clean complete** professional Rhythm source only after the fresh reference-free freeze/PDF evidence is safely locked.
+6. Run: freeze/PDF proof → reference completeness verifier → isolated professional scorer → `run_final_holdout_gate.py`.
+7. If score <0.99 or any critical mismatch, change only general/reference-free algorithms; rerun audio from scratch and rescore.
+8. Only after the real gate passes create **`Final Rhythm Pipeline`**.
 
 ## Bass — GREEN DIAGNOSTICS, PAUSED
 
