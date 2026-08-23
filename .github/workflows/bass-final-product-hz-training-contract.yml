@@ -1,0 +1,49 @@
+name: Bass Final Product Hz Training Contract
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/bass-final-product-hz-training-contract.yml'
+      - 'analyzer/final_product/bass/hz_features/**'
+      - 'analyzer/final_product/bass/training/**'
+      - 'analyzer/verify_bass_final_product_hz_training_contract.py'
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify Bass Hz and training contracts
+        run: python analyzer/verify_bass_final_product_hz_training_contract.py
+
+      - name: Commit evidence safely
+        shell: bash
+        run: |
+          set -euo pipefail
+          path='debug/v143-contextual-prune/bass-final-product-hz-training.json'
+          cp "$path" /tmp/bass-final-product-hz-training.json
+          git restore -- "$path" 2>/dev/null || true
+          rm -f "$path"
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          cp /tmp/bass-final-product-hz-training.json "$path"
+          git add "$path"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Bass final-product Hz training contract' || true
+          git push origin HEAD:v143-contextual-prune-lobo
