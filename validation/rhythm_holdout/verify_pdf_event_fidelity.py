@@ -42,6 +42,22 @@ def find_render_events(payload: Any) -> list[dict[str, Any]]:
     raise ValueError("PDF evidence must expose the non-empty renderEvents stream it rendered")
 
 
+def require_manifest_safety(manifest: Mapping[str, Any]) -> None:
+    required = {
+        "referenceFree": True,
+        "professionalReferenceUsed": False,
+        "referenceRuntimeInputUsed": False,
+        "runtimeLabelsRequired": False,
+        "v143RuntimeSafetyVerified": True,
+        "referenceOpenedDuringFreeze": False,
+    }
+    for key, expected in required.items():
+        if manifest.get(key) is not expected:
+            raise ValueError(
+                f"PDF fidelity cannot proceed with unsafe freeze manifest: {key}={manifest.get(key)!r}"
+            )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("freeze_dir", type=Path)
@@ -57,6 +73,9 @@ def main() -> int:
     manifest_path = freeze_dir / "rhythm-freeze-manifest.json"
     snapshot = load_json(snapshot_path)
     manifest = load_json(manifest_path)
+    if not isinstance(manifest, Mapping):
+        raise ValueError("freeze manifest must be a JSON object")
+    require_manifest_safety(manifest)
 
     frozen_events = canonical_events(snapshot.get("renderEvents", []))
     if not frozen_events:
@@ -66,14 +85,25 @@ def main() -> int:
         raise ValueError("freeze manifest event hash no longer matches frozen snapshot")
 
     pdf_evidence = load_json(evidence_path)
+    if not isinstance(pdf_evidence, Mapping):
+        raise ValueError("PDF event evidence must be a JSON object")
+    if pdf_evidence.get("runtimeSafetyVerified") is not True:
+        raise ValueError("PDF render evidence does not prove V143 runtime safety")
+    if pdf_evidence.get("runtimeLabelsRequired") is not False:
+        raise ValueError("PDF render evidence does not prove runtime labels were unnecessary")
+    if pdf_evidence.get("referenceOpened") is not False:
+        raise ValueError("PDF render evidence indicates reference access")
+
     pdf_events = find_render_events(pdf_evidence)
     pdf_hash = sha256_json(pdf_events)
 
     exact = pdf_hash == frozen_hash and pdf_events == frozen_events
     report = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "instrument": "rhythm",
         "referenceOpenedDuringPdfFidelityCheck": False,
+        "runtimeSafetyVerified": True,
+        "runtimeLabelsRequired": False,
         "frozenEventCount": len(frozen_events),
         "pdfEventCount": len(pdf_events),
         "frozenEventSha256": frozen_hash,
