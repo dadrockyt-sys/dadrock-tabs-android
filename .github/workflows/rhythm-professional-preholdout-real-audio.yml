@@ -1,5 +1,5 @@
 name: Rhythm Professional Pre-Holdout Real Audio
-# Fresh post-polyphony approved-audio freeze trigger: 2026-08-23.
+# Final presentation-hardening approved-audio freeze trigger: 2026-08-23.
 
 on:
   workflow_dispatch:
@@ -54,7 +54,7 @@ jobs:
           JSON
           npm install --prefix .preholdout \
             --ignore-scripts --no-audit --no-fund --package-lock=false
-          python -m pip install --disable-pip-version-check modal
+          python -m pip install --disable-pip-version-check --quiet modal pypdf
 
       - name: Verify holdout is isolated from runtime
         run: |
@@ -147,7 +147,7 @@ jobs:
       - name: Render preview and full professional PDF from frozen events only
         run: |
           set -euo pipefail
-          node .preholdout/esm/render-frozen.mjs \
+          NODE_PATH="$PWD/.preholdout/node_modules" node .preholdout/esm/render-frozen.mjs \
             .preholdout/freeze/rhythm-frozen-analysis.json \
             .preholdout/freeze/pdf \
             .preholdout/esm/createV143RhythmPdf.mjs \
@@ -161,6 +161,67 @@ jobs:
           test -s .preholdout/freeze/pdf/full-frozen-rhythm.pdf
           test -s .preholdout/freeze/pdf/preview-frozen-rhythm.pdf
           test -s .preholdout/freeze/rhythm-pdf-event-fidelity.json
+
+      - name: Verify final render density timing techniques and sections
+        run: |
+          set -euo pipefail
+          NODE_PATH="$PWD/.preholdout/node_modules" node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { summarizeV143RhythmPresentation } from './.preholdout/esm/v143RenderContract.mjs';
+
+          const frozen = JSON.parse(await fs.readFile('.preholdout/freeze/rhythm-frozen-analysis.json', 'utf8'));
+          const presentation = summarizeV143RhythmPresentation(frozen.renderEvents || []);
+          const checks = {
+            eventCountPositive: presentation.eventCount > 0,
+            multiNoteMeasureDensity: presentation.uniqueMeasureCount > 0 && presentation.averageNotesPerMeasure > 2,
+            uniqueOnsetsBeyondMeasureCount: presentation.uniqueOnsetCount > presentation.uniqueMeasureCount,
+            polyphonicOnsetsPresent: presentation.multiNoteOnsetCount > 0,
+            chordSizePresent: presentation.maximumChordSize >= 2,
+            techniqueEventsPresent: presentation.techniqueEventCount > 0,
+            multipleTechniqueTypesPresent: presentation.techniqueTypes.length >= 2,
+            sectionDisplayDataPresent: presentation.sectionCount >= 2,
+            oneNotePerMeasureCollapseAbsent: presentation.oneNotePerMeasureCollapseDetected === false,
+            referenceFree: presentation.referenceFree === true,
+            professionalReferenceNotUsed: presentation.professionalReferenceUsed === false,
+            runtimeLabelsNotRequired: presentation.runtimeLabelsRequired === false,
+          };
+          const failed = Object.entries(checks).filter(([, ok]) => !ok).map(([name]) => name);
+          const report = { schemaVersion: 1, gate: 'rhythm-final-render-presentation', presentation, checks, failedChecks: failed, passed: failed.length === 0 };
+          await fs.writeFile('.preholdout/freeze/pdf/rhythm-render-presentation.json', JSON.stringify(report, null, 2) + '\n');
+          if (failed.length) throw new Error('final render presentation failed: ' + failed.join(', '));
+          NODE
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from pypdf import PdfReader
+
+          full = Path('.preholdout/freeze/pdf/full-frozen-rhythm.pdf')
+          preview = Path('.preholdout/freeze/pdf/preview-frozen-rhythm.pdf')
+          full_text = '\n'.join(page.extract_text() or '' for page in PdfReader(str(full)).pages)
+          preview_text = '\n'.join(page.extract_text() or '' for page in PdfReader(str(preview)).pages)
+          checks = {
+              'timingGridLegendVisible': 'Timing: 16th-note grid' in full_text,
+              'sectionLabelsVisible': 'SECTION ' in full_text,
+              'techniqueLegendHammerOnVisible': 'hammer-on' in full_text,
+              'techniqueLegendPullOffVisible': 'pull-off' in full_text,
+              'techniqueLegendSlideVisible': 'slide' in full_text,
+              'previewLockVisible': 'FULL TAB LOCKED' in preview_text,
+              'previewTimingGridLegendVisible': 'Timing: 16th-note grid' in preview_text,
+              'previewSectionLabelsVisible': 'SECTION ' in preview_text,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          report = {
+              'schemaVersion': 1,
+              'gate': 'rhythm-final-render-text-proof',
+              'checks': checks,
+              'failedChecks': failed,
+              'passed': not failed,
+          }
+          Path('.preholdout/freeze/pdf/rhythm-render-text-proof.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          if failed:
+              raise SystemExit('render text proof failed: ' + ', '.join(failed))
+          PY
 
       - name: Write locked compact pre-holdout proof
         run: |
@@ -176,10 +237,14 @@ jobs:
           frozen = json.loads(Path('.preholdout/freeze/rhythm-frozen-analysis.json').read_text(encoding='utf-8'))
           pdf = json.loads(Path('.preholdout/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
           pdf_render = json.loads(Path('.preholdout/freeze/pdf/pdf-event-evidence.json').read_text(encoding='utf-8'))
+          presentation = json.loads(Path('.preholdout/freeze/pdf/rhythm-render-presentation.json').read_text(encoding='utf-8'))
+          text_proof = json.loads(Path('.preholdout/freeze/pdf/rhythm-render-text-proof.json').read_text(encoding='utf-8'))
           isolation = json.loads(Path('.preholdout/logs/runtime-isolation.json').read_text(encoding='utf-8'))
           live = raw.get('liveV143') or {}
           canary = raw.get('canary') or {}
+          assembly = raw.get('assembly') or {}
           frozen_safety = frozen.get('safety') or {}
+          present = presentation.get('presentation') or {}
           expected_audio_path = 'public/gomywayfullaitest.m4a'
           runtime_safety_verified = all([
               live.get('referenceFree') is True,
@@ -213,6 +278,22 @@ jobs:
               'sourceAudioHashMatchesCanary': manifest.get('sourceAudioSha256') == canary.get('sourceSha256'),
               'sourceAudioBytesMatchCanary': manifest.get('sourceAudioBytes') == canary.get('sourceBytes'),
               'frozenEventCountPositive': int(manifest.get('eventCount') or 0) > 0,
+              'polyphonicExpansion': assembly.get('polyphonicExpansion') is True,
+              'renderNotesExceedSelectedAttacks': int(assembly.get('renderNoteCount') or 0) > int(assembly.get('selectedAttackCount') or 0),
+              'oneNotePerMeasureCollapseAbsent': present.get('oneNotePerMeasureCollapseDetected') is False,
+              'multiNoteMeasureDensity': float(present.get('averageNotesPerMeasure') or 0) > 2,
+              'polyphonicOnsetsPresent': int(present.get('multiNoteOnsetCount') or 0) > 0,
+              'sectionsPresent': int(present.get('sectionCount') or 0) >= 2,
+              'techniquesPresent': int(present.get('techniqueEventCount') or 0) > 0,
+              'presentationProofPassed': presentation.get('passed') is True,
+              'renderTextProofPassed': text_proof.get('passed') is True,
+              'timingDisplayVerified': text_proof.get('checks', {}).get('timingGridLegendVisible') is True,
+              'techniqueDisplayVerified': all([
+                  text_proof.get('checks', {}).get('techniqueLegendHammerOnVisible') is True,
+                  text_proof.get('checks', {}).get('techniqueLegendPullOffVisible') is True,
+                  text_proof.get('checks', {}).get('techniqueLegendSlideVisible') is True,
+              ]),
+              'sectionDisplayVerified': text_proof.get('checks', {}).get('sectionLabelsVisible') is True,
               'pdfRendererProjectionExact': pdf_render.get('rendererProjectionExactlyEqual') is True,
               'fullPdfRendered': int(pdf_render.get('fullPdfBytes') or 0) > 20000,
               'previewPdfRendered': int(pdf_render.get('previewPdfBytes') or 0) > 20000,
@@ -224,7 +305,7 @@ jobs:
           }
           failed = [name for name, passed in checks.items() if not passed]
           report = {
-              'schemaVersion': 2,
+              'schemaVersion': 3,
               'gate': 'rhythm-professional-preholdout-real-audio',
               'workflowRunId': os.environ.get('GITHUB_RUN_ID'),
               'eventTriggerCommit': os.environ.get('GITHUB_SHA'),
@@ -236,8 +317,18 @@ jobs:
               'referenceRuntimeInputUsed': live.get('referenceRuntimeInputUsed'),
               'runtimeLabelsRequired': live.get('runtimeLabelsRequired'),
               'v143RuntimeSafetyVerified': runtime_safety_verified,
+              'selectedAttackCount': assembly.get('selectedAttackCount'),
+              'renderNoteCount': assembly.get('renderNoteCount'),
               'eventCount': manifest.get('eventCount'),
               'uniqueMeasureCount': manifest.get('uniqueMeasureCount'),
+              'uniqueOnsetCount': present.get('uniqueOnsetCount'),
+              'averageNotesPerMeasure': present.get('averageNotesPerMeasure'),
+              'multiNoteOnsetCount': present.get('multiNoteOnsetCount'),
+              'maximumChordSize': present.get('maximumChordSize'),
+              'techniqueEventCount': present.get('techniqueEventCount'),
+              'techniqueTypes': present.get('techniqueTypes'),
+              'sectionCount': present.get('sectionCount'),
+              'sections': present.get('sections'),
               'frozenEventSha256': manifest.get('eventSha256'),
               'pdfEventSha256': pdf.get('pdfEventSha256'),
               'pdfEventFidelity': pdf.get('pdfEventFidelity'),
@@ -272,6 +363,8 @@ jobs:
             .preholdout/freeze/rhythm-freeze-manifest.json
             .preholdout/freeze/rhythm-pdf-event-fidelity.json
             .preholdout/freeze/pdf/pdf-event-evidence.json
+            .preholdout/freeze/pdf/rhythm-render-presentation.json
+            .preholdout/freeze/pdf/rhythm-render-text-proof.json
             .preholdout/freeze/pdf/full-frozen-rhythm.pdf
             .preholdout/freeze/pdf/preview-frozen-rhythm.pdf
             .preholdout/logs/*.json
@@ -290,7 +383,7 @@ jobs:
 
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record fresh Rhythm professional pre-holdout proof'
+          git commit -m 'Record final-presented Rhythm pre-holdout proof'
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
