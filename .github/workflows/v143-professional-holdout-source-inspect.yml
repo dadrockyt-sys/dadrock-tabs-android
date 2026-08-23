@@ -30,12 +30,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p debug/v143-contextual-prune
+          mkdir -p debug/v143-contextual-prune .scorer
           python - <<'PY'
-          import gzip, hashlib, json, urllib.request, urllib.error
+          import gzip, json, subprocess, urllib.request
           from pathlib import Path
 
           SONG_ID = 243
+          RHYTHM_TRACK_INDEX = 3
           UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
           NORMAL_HOSTS = ['dqsljvtekg760', 'd34shlm8p2ums2', 'd3cqchs6g3b5ew']
           STAGE_HOST = 'd3d3l6a6rcgkaf'
@@ -62,6 +63,7 @@ jobs:
           image = str(meta.get('image') or '')
           tracks = meta.get('tracks') or []
           track_summaries = []
+          rhythm_track_saved = False
           for index, track in enumerate(tracks):
               if image.endswith('-stage'):
                   hosts = [STAGE_HOST]
@@ -70,14 +72,12 @@ jobs:
               else:
                   hosts = ['d3rrfvx08uyjp1', 'dodkcbujl0ebx', 'dj1usja78sinh']
               part = None
-              source_url_shape = None
               last_error = None
               for host in hosts:
                   if image:
                       url = f'https://{host}.cloudfront.net/{SONG_ID}/{revision_id}/{image}/{index}.json'
                   else:
                       url = f'https://{host}.cloudfront.net/part/{revision_id}/{index}'
-                  source_url_shape = url
                   try:
                       part = get_json(url)
                       break
@@ -90,6 +90,10 @@ jobs:
                   'fetchError': last_error if part is None else None,
               }
               if isinstance(part, dict):
+                  if index == RHYTHM_TRACK_INDEX:
+                      Path('.scorer/rhythm-track.json').write_text(json.dumps(part, separators=(',', ':')) + '\n')
+                      Path('.scorer/song-meta.json').write_text(json.dumps(meta, separators=(',', ':')) + '\n')
+                      rhythm_track_saved = True
                   measures = part.get('measures') or []
                   beat_count = 0
                   note_count = 0
@@ -133,15 +137,16 @@ jobs:
                   }
               track_summaries.append(summary)
 
-          protected = hashlib.sha1(Path('analyzer/v143_reference_free_rhythm_pipeline.py').read_bytes()).hexdigest()
-          # git blob SHA, not plain content SHA1
-          import subprocess
           protected_blob = subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'], text=True).strip()
           out = {
-              'schemaVersion': 1,
+              'schemaVersion': 2,
               'gate': 'v143-professional-holdout-source-inspect',
+              'runId': int('${{ github.run_id }}'),
+              'runAttempt': int('${{ github.run_attempt }}'),
               'triggerSha': '${{ github.sha }}',
+              'artifactName': 'v143-professional-source-raw-track',
               'songId': SONG_ID,
+              'rhythmTrackIndex': RHYTHM_TRACK_INDEX,
               'meta': {
                   'artist': meta.get('artist'),
                   'title': meta.get('title'),
@@ -154,6 +159,7 @@ jobs:
               },
               'revisionsSummary': revisions,
               'tracks': track_summaries,
+              'rhythmTrackTemporaryArtifactSaved': rhythm_track_saved,
               'professionalReferenceOpenedOnlyAfterFreshFreeze': True,
               'referenceUsedByAnalyzer': False,
               'runtimeLabelsRequired': False,
@@ -162,11 +168,20 @@ jobs:
               'productionModified': False,
               'copyrightedNotePayloadCommitted': False,
           }
-          out['passed'] = out['protectedPipelineUnchanged'] and any(t.get('fetchSucceeded') for t in track_summaries)
+          out['passed'] = out['protectedPipelineUnchanged'] and rhythm_track_saved
           Path('debug/v143-contextual-prune/professional-source-structure.json').write_text(json.dumps(out, indent=2) + '\n')
           if not out['passed']:
               raise SystemExit('professional source structure inspection failed')
           PY
+
+      - name: Upload scorer-only raw rhythm track
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-professional-source-raw-track
+          path: |
+            .scorer/rhythm-track.json
+            .scorer/song-meta.json
+          retention-days: 1
 
       - name: Commit non-copyrighted structure diagnostic
         shell: bash
