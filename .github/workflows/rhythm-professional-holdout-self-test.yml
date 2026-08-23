@@ -5,15 +5,16 @@ on:
     branches:
       - v143-contextual-prune-lobo
     paths:
-      - validation/rhythm_holdout/**
-      - .github/workflows/rhythm-professional-holdout-self-test.yml
+      - 'validation/rhythm_holdout/**'
+      - '.github/workflows/rhythm-professional-holdout-self-test.yml'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   holdout-contract:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -54,15 +55,34 @@ jobs:
             "professionalReferenceUsed": false,
             "referenceRuntimeInputUsed": false,
             "tempoBpm": 129.19921875,
-            "timeSignature": {"beats": 4, "noteValue": 4},
-            "tuning": ["E4", "B3", "G3", "D3", "A2", "E2"],
-            "structuredMode": "v143-rhythm-events-v1",
+            "timeSignature": "4/4",
+            "tuning": "E Standard",
+            "structuredMode": "v143-reference-free-rhythm",
             "renderEvents": [
-              {"measure": 1, "step": 0, "string": 6, "fret": 0, "midi": 40, "durationSteps": 2, "sustainSteps": 2, "technique": "sustain"},
-              {"measure": 1, "step": 4, "string": 5, "fret": 2, "midi": 47, "durationSteps": 2, "sustainSteps": 2}
+              {
+                "eventIndex": 0,
+                "measure": 1,
+                "step": 0,
+                "stringIndex": 5,
+                "fret": 0,
+                "midi": 40,
+                "durationSteps": 2,
+                "techniques": ["let-ring"]
+              },
+              {
+                "eventIndex": 1,
+                "measure": 1,
+                "step": 4,
+                "stringIndex": 4,
+                "fret": 2,
+                "midi": 47,
+                "durationSteps": 2,
+                "techniques": []
+              }
             ]
           }
           JSON
+
           python validation/rhythm_holdout/freeze_rhythm_analysis.py \
             /tmp/rhythm-analysis.json /tmp/rhythm-holdout-freeze \
             --source-commit "$GITHUB_SHA"
@@ -70,11 +90,30 @@ jobs:
           cat > /tmp/rhythm-pdf-events.json <<'JSON'
           {
             "renderEvents": [
-              {"measure": 1, "step": 0, "string": 6, "fret": 0, "midi": 40, "durationSteps": 2, "sustainSteps": 2, "technique": "sustain"},
-              {"measure": 1, "step": 4, "string": 5, "fret": 2, "midi": 47, "durationSteps": 2, "sustainSteps": 2}
+              {
+                "eventIndex": 0,
+                "measure": 1,
+                "step": 0,
+                "stringIndex": 5,
+                "fret": 0,
+                "midi": 40,
+                "durationSteps": 2,
+                "techniques": ["let-ring"]
+              },
+              {
+                "eventIndex": 1,
+                "measure": 1,
+                "step": 4,
+                "stringIndex": 4,
+                "fret": 2,
+                "midi": 47,
+                "durationSteps": 2,
+                "techniques": []
+              }
             ]
           }
           JSON
+
           python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
             /tmp/rhythm-holdout-freeze /tmp/rhythm-pdf-events.json
 
@@ -96,17 +135,32 @@ jobs:
               {
                 "measure": 1,
                 "events": [
-                  {"step": 0, "durationSteps": 2, "techniques": ["sustain"], "notes": [{"string": 6, "fret": 0, "midi": 40}]},
-                  {"step": 4, "durationSteps": 2, "notes": [{"string": 5, "fret": 2, "midi": 47}]}
+                  {
+                    "step": 0,
+                    "durationSteps": 2,
+                    "techniques": ["let-ring"],
+                    "notes": [
+                      {"stringIndex": 5, "fret": 0, "midi": 40}
+                    ]
+                  },
+                  {
+                    "step": 4,
+                    "durationSteps": 2,
+                    "notes": [
+                      {"stringIndex": 4, "fret": 2, "midi": 47}
+                    ]
+                  }
                 ]
               }
             ]
           }
           JSON
+
           python validation/rhythm_holdout/score_rhythm_holdout.py \
             /tmp/rhythm-holdout-freeze \
             validation/rhythm_holdout/reference/.synthetic-self-test.json \
             --output /tmp/rhythm-perfect-score.json
+
           python - <<'PY'
           import json
           from pathlib import Path
@@ -114,6 +168,7 @@ jobs:
           assert report['rhythmComplete'] is True
           assert report['pdfEventFidelity'] == 1.0
           assert report['criticalMismatchCount'] == 0
+          assert all(value >= 0.99 for value in report['gatedMetrics'].values())
           print('Perfect synthetic holdout path PASSED')
           PY
           rm -f validation/rhythm_holdout/reference/.synthetic-self-test.json
@@ -126,10 +181,22 @@ jobs:
             "referenceFree": true,
             "professionalReferenceUsed": true,
             "referenceRuntimeInputUsed": false,
-            "renderEvents": [{"measure": 1, "step": 0, "string": 6, "fret": 0, "midi": 40}]
+            "renderEvents": [
+              {
+                "eventIndex": 0,
+                "measure": 1,
+                "step": 0,
+                "stringIndex": 5,
+                "fret": 0,
+                "midi": 40,
+                "durationSteps": 1,
+                "techniques": []
+              }
+            ]
           }
           JSON
-          if python validation/rhythm_holdout/freeze_rhythm_analysis.py /tmp/rhythm-unsafe.json /tmp/unsafe-freeze; then
+          if python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            /tmp/rhythm-unsafe.json /tmp/unsafe-freeze; then
             echo 'Unsafe reference use was incorrectly accepted.' >&2
             exit 1
           fi
@@ -137,13 +204,74 @@ jobs:
           cat > /tmp/rhythm-wrong-pdf.json <<'JSON'
           {
             "renderEvents": [
-              {"measure": 1, "step": 0, "string": 6, "fret": 0, "midi": 40, "durationSteps": 2, "sustainSteps": 2, "technique": "sustain"},
-              {"measure": 1, "step": 4, "string": 5, "fret": 3, "midi": 48, "durationSteps": 2, "sustainSteps": 2}
+              {
+                "eventIndex": 0,
+                "measure": 1,
+                "step": 0,
+                "stringIndex": 5,
+                "fret": 0,
+                "midi": 40,
+                "durationSteps": 2,
+                "techniques": ["let-ring"]
+              },
+              {
+                "eventIndex": 1,
+                "measure": 1,
+                "step": 4,
+                "stringIndex": 4,
+                "fret": 3,
+                "midi": 48,
+                "durationSteps": 2,
+                "techniques": []
+              }
             ]
           }
           JSON
-          if python validation/rhythm_holdout/verify_pdf_event_fidelity.py /tmp/rhythm-holdout-freeze /tmp/rhythm-wrong-pdf.json; then
+          if python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            /tmp/rhythm-holdout-freeze /tmp/rhythm-wrong-pdf.json; then
             echo 'Non-identical PDF events were incorrectly accepted.' >&2
             exit 1
           fi
           echo 'Negative safety tests PASSED'
+
+      - name: Record compact successful self-test evidence
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          isolation = json.loads(Path('/tmp/rhythm-runtime-isolation.json').read_text())
+          score = json.loads(Path('/tmp/rhythm-perfect-score.json').read_text())
+          payload = {
+              'schemaVersion': 1,
+              'gate': 'rhythm-professional-holdout-self-test',
+              'sourceCommit': os.environ['GITHUB_SHA'],
+              'runtimeIsolationPassed': isolation.get('passed') is True,
+              'syntheticPerfectScorePassed': score.get('rhythmComplete') is True,
+              'syntheticPdfEventFidelity': score.get('pdfEventFidelity'),
+              'syntheticCriticalMismatchCount': score.get('criticalMismatchCount'),
+              'negativeSafetyTestsPassed': True,
+              'usesSyntheticReferenceOnly': True,
+              'realProfessionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'passed': True,
+          }
+          Path('debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json').write_text(
+              json.dumps(payload, indent=2) + '\n', encoding='utf-8'
+          )
+          print(json.dumps(payload, indent=2))
+          PY
+
+          git add debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json
+          if git diff --cached --quiet; then
+            echo 'Self-test evidence already current.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Rhythm professional holdout self-test'
+          git push origin HEAD:v143-contextual-prune-lobo
