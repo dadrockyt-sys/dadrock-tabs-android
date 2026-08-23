@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import json
 from copy import deepcopy
+from pathlib import Path
 
 from v143_approved_shadow_physical_review import (
     APPROVED_AUDIO_SHA256,
     EXPECTED_PROTECTED_PIPELINE_BLOB,
     review_approved_correction_shadow,
 )
+
+
+ROOT = Path(__file__).resolve().parents[1]
+REAL_ACTION = ROOT / "debug" / "v143-contextual-prune" / "shadow-correction-approved-audio-action.json"
+REAL_REPORT = ROOT / "debug" / "v143-contextual-prune" / "shadow-correction-approved-audio.json"
 
 
 def _timing_invariants() -> dict[str, bool]:
@@ -99,6 +106,15 @@ def _valid_report() -> dict[str, object]:
     }
 
 
+def _load_json(path: Path) -> dict[str, object]:
+    if not path.exists() or path.stat().st_size <= 0:
+        raise RuntimeError(f"Required approved-shadow diagnostic missing: {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise RuntimeError(f"Expected JSON object: {path}")
+    return payload
+
+
 def main() -> None:
     action = _valid_action()
     report = _valid_report()
@@ -126,8 +142,16 @@ def main() -> None:
     assert moved.passed is False
     assert any("selected or changed bar phase" in issue for issue in moved.issues)
 
+    real_action = _load_json(REAL_ACTION)
+    real_report = _load_json(REAL_REPORT)
+    real = review_approved_correction_shadow(real_action, real_report)
+    assert real.passed is True, real.issues
+    assert real.issues == ()
+
     print("V143 approved shadow physical review proof passed")
     print(accepted.to_dict())
+    print("V143 real approved correction physical review passed")
+    print(real.to_dict())
 
 
 if __name__ == "__main__":
