@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "gate": "v143-approved-shadow-physical-review",
-  "triggerSha": "39263eedc06f7caffb42c4ca0917721c04586fb5",
-  "checkedOutCommit": "39263eedc06f7caffb42c4ca0917721c04586fb5",
+  "triggerSha": "670fb25b9177f1483abe0efca2fd1781a89e3cb8",
+  "checkedOutCommit": "670fb25b9177f1483abe0efca2fd1781a89e3cb8",
   "reviewSourceBlob": "c8025ee99596354d731628b57e42f69e0ca39c10",
-  "checkerSourceBlob": "80dcf9bf342db4f4a4b93bef8cf983c06000fc33",
+  "checkerSourceBlob": "e2facac5a63d49af05bd85f4bcf05625113284cf",
   "exitCode": 0,
   "passed": true,
   "referenceTokenScanPassed": true,
@@ -17,6 +17,8 @@
   "logTail": [
     "V143 approved shadow physical review proof passed",
     "{'schemaVersion': 1, 'mode': 'v143-approved-shadow-physical-review', 'passed': True, 'issues': [], 'metrics': {'baseEventCount': 3, 'correctedEventCount': 4, 'rescuedEventCount': 1, 'suppressedPitchCount': 1, 'targetMeasureCount': 113, 'populatedMeasureCountBefore': 112, 'populatedMeasureCountAfter': 113, 'missingMeasureCountBefore': 1, 'missingMeasureCountAfter': 0, 'pitchChangedEventCount': 1, 'phaseWinnerMatchesCurrent': True, 'phaseConfidence': 0.8}, 'professionalReferenceUsed': False, 'runtimeLabelsRequired': False, 'productionModified': False}",
+    "V143 real approved correction physical review passed",
+    "{'schemaVersion': 1, 'mode': 'v143-approved-shadow-physical-review', 'passed': True, 'issues': [], 'metrics': {'baseEventCount': 949, 'correctedEventCount': 979, 'rescuedEventCount': 30, 'suppressedPitchCount': 8631, 'targetMeasureCount': 113, 'populatedMeasureCountBefore': 113, 'populatedMeasureCountAfter': 113, 'missingMeasureCountBefore': 0, 'missingMeasureCountAfter': 0, 'pitchChangedEventCount': 959, 'phaseWinnerMatchesCurrent': True, 'phaseConfidence': 0.08797339512490407}, 'professionalReferenceUsed': False, 'runtimeLabelsRequired': False, 'productionModified': False}",
     "PHYSICAL_REVIEW_REFERENCE_TOKEN_SCAN=PASS",
     "PROTECTED_PIPELINE_BLOB=PASS:7f72f8ed9b14af8bc93e95544195204d99c6bec1"
   ]
