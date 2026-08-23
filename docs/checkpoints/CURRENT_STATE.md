@@ -2,6 +2,7 @@
 
 Updated: 2026-08-22 — LIVE PRIORITY: complete Rhythm end-to-end before Bass/Lead
 Branch: `v143-contextual-prune-lobo`
+Latest observed branch head before this checkpoint save: `51f7d3e5c23180d5117fa1e3b3a9d4b5671a5246` — `Bind complete V143 safety contract into final holdout gate`.
 
 ## Immutable safety / product contract
 
@@ -14,7 +15,7 @@ Preview/full PDF must derive from the exact frozen event stream. Renderer/browse
 
 Professional human reference is scorer-only holdout material. Analyzer may never read/train/tune/select/infer from it. Every improvement after scoring must be general/reference-free and requires a fresh audio run from scratch before rescoring.
 
-Save this checkpoint frequently.
+Save this checkpoint frequently. User explicitly re-confirmed this requirement during the current work session; keep updating `docs/checkpoints/CURRENT_STATE.md` after meaningful steps and during longer workflow waits.
 
 ## Required completion order / finalized folders
 
