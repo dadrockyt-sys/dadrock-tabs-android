@@ -1,96 +1,31 @@
 # CURRENT STATE — DadRock `/ai-tab` End-to-End Construction
 
-Updated: 2026-08-22
+Updated: 2026-08-22 20:17 CDT
 Branch: `v143-contextual-prune-lobo`
 
 # PROJECT FOCUS
 
-> **`dadrocktabs.com/ai-tab`: user uploaded audio → Bass / Lead / Rhythm choice → `app/ai-tab/page.js` → requested-part separation/processing → notes + playable positions + techniques + timing + metadata → authenticated musical events → professional preview TAB PDF → purchased/unlocked professional full TAB PDF.**
+> `dadrocktabs.com/ai-tab`: user uploaded audio → Bass / Lead / Rhythm choice → requested-part separation/processing → notes + playable positions + techniques + timing + metadata → authenticated musical events → professional preview TAB PDF → purchased/unlocked professional full TAB PDF.
 
-Preview and purchased full PDF must derive from the same authenticated analysis. Browser/PDF code must never manufacture missing musical placement.
+Preview and full PDF must derive from the same authenticated analysis. Browser/PDF code must never manufacture missing musical placement.
 
-Detailed product map:
+Detailed product map: `docs/checkpoints/AI_TAB_END_TO_END_CONSTRUCTION.md`
 
-`docs/checkpoints/AI_TAB_END_TO_END_CONSTRUCTION.md`
+# FINAL PRODUCT ARCHITECTURE
 
-# FINAL PRODUCT ARCHITECTURE — SHARED CORE + SEPARATE RHYTHM / LEAD / BASS ENGINES
-
-The intended final production structure is **one shared core plus three separate instrument-specific final-product folders/engines**. Rhythm is the proven reference architecture/template, but Lead and Bass must remain independently trainable and instrument-specific rather than becoming copies of Rhythm musical assumptions.
-
-Target organization:
+One shared instrument-agnostic core plus three separate engines:
 
 ```text
 analyzer/final_product/
   shared/
-    audio_normalization/
-    request_adapter/
-    timing_grid/
-    event_schema/
-    metadata/
-    quality_metrics/
-    common_evidence/
-    shared_safety/
-
   rhythm/
-    separation/
-    hz_features/
-    candidate_detection/
-    fretboard_mapping/
-    timing/
-    techniques/
-    model/
-    training/
-    output/
-    quality_gate/
-
   lead/
-    separation/
-    hz_features/
-    candidate_detection/
-    fretboard_mapping/
-    timing/
-    techniques/
-    model/
-    training/
-    output/
-    quality_gate/
-
   bass/
-    separation/
-    hz_features/
-    candidate_detection/
-    fretboard_mapping/
-    timing/
-    techniques/
-    model/
-    training/
-    output/
-    quality_gate/
 ```
 
-Professional rendering should follow the same separation of concerns:
+Rhythm is the proven architectural template, not the universal musical model. Bass and Lead own their own Hz/pitch behavior, training/models, candidate selection, fretboard rules, techniques, quality gates, output identity, and rendering rules.
 
-```text
-pdf/shared/
-pdf/rhythm/
-pdf/lead/
-pdf/bass/
-```
-
-Architecture rules:
-
-1. **Rhythm is the implementation template, not the universal musical model.** Reuse its proven pipeline shape to reduce workload: separation/views → Hz/pitch evidence → candidates → timing → playable position → technique evidence → authenticated events → quality gate → professional PDF.
-2. **Shared code should contain only genuinely instrument-agnostic behavior** such as audio normalization, request handling, timing/grid utilities, common event schema, metadata transport, evidence/safety helpers, and reusable PDF layout primitives.
-3. **Each instrument owns its own Hz/frequency behavior, training data, model/checkpoints, candidate selection, fretboard mapping, techniques, quality thresholds, output identity, and instrument-specific rendering rules.** This intentionally permits independent Bass and Lead training without changing the frozen/proven Rhythm engine.
-4. **Bass has a real separate Bass stem.** The professional Bass path should use deterministic Demucs `Bass` separation (including the already scaffolded paired direct/cascade views), four-string `G-D-A-E` mapping, Bass-specific Hz ranges/features, Bass training, Bass techniques, Bass quality gate, and a true four-string professional TAB renderer.
-5. **Lead and Rhythm both begin from separated Guitar views, not imaginary Lead/Rhythm stems.** Lead and Rhythm may reuse the same deterministic Guitar separation substrate, but they must diverge after separation: Rhythm keeps its chord/riff-oriented V143 analysis while Lead gets Lead-specific melodic/solo selection, Hz/pitch trajectory logic, fretboard movement, bends/releases/vibrato/slides/legato emphasis, Lead training, and its own quality gate.
-6. **Separate model/training evolution is allowed and expected.** Future Bass or Lead Hz features, datasets, learned weights/checkpoints, technique models, and tuning-specific behavior must be able to evolve independently without retraining or modifying the proven Rhythm engine.
-7. **No instrument earns structured professional identity merely by matching the folder shape.** Lead and Bass remain fail-closed until each independently passes real-audio separation/analysis quality, authenticated timing/playability, technique evidence, preview/full PDF evidence, and its own conservative quality gate.
-8. **Do not duplicate shared infrastructure unnecessarily.** The goal of the folder split is to reduce workload and prevent cross-instrument regressions while preserving independent musical intelligence where it matters.
-
-Concise final architecture:
-
-> **Shared DadRock core + Rhythm engine + Lead engine + Bass engine. Rhythm supplies the proven architectural pattern; Bass and Lead get their own Hz analysis, training/models, techniques, fretboard rules, quality gates, identities, and final renderers.**
+Bass uses a true Demucs `Bass` stem and four-string `G-D-A-E` mapping. Lead and Rhythm both begin from separated Guitar views and then diverge into instrument-specific analysis.
 
 # SAFETY / RESUME
 
@@ -98,59 +33,65 @@ Resume **only** on `v143-contextual-prune-lobo`.
 
 Do not modify `main`, merge this branch, alter/deploy live V143 Modal, automatically promote Production, make payment, redeem customer token, send customer email, weaken quality thresholds, or relabel legacy Lead/Bass as structured professional output.
 
-Keep this file continuously current after meaningful results.
+Save this file after every meaningful boundary or diagnostic result.
 
 ---
 
-# LIVE STEP — NO-CACHE RHYTHM BUILT-NEXT HTTP GATE
+# RHYTHM PROFESSIONAL CORE — PASSED
 
-The staged source:
+Approved fixture: `public/gomywayfullaitest.m4a`
 
-`22dc06af353220006a7558c6b9ba0c262cc64cb8` — `Add staged diagnostics to V143 branch gate`
+Analyzer evidence: `debug/v143-contextual-prune/ai-tab-real-audio-canary.json`
 
-proved that the runner and both Node-22 regressions were healthy:
+Bot evidence commit: `9f52bf83597e921da12887874bace0df0ffe6d47`
 
-```text
-phase: post-verifiers
-analyzerQualityVerifierExitCode: 0
-previewFeatureVerifierExitCode: 0
-```
-
-It then remained at `post-verifiers` for roughly 12 minutes. Because the following `npm ci` command itself is hard-bounded to 600 seconds, the absence of a `post-install` marker strongly indicates the workflow had not completed the unbounded Node-24 setup/cache-restore step. This is treated as a CI harness/runtime issue, **not a DadRock product regression**.
-
-A no-cache superseding gate was therefore added:
-
-`.github/workflows/v143-ai-tab-nocache-gate.yml`
-
-Source commit:
-
-`b465b5b23668d011df852e9a4cf0388f6558f1c1` — `Add no-cache V143 branch route gate`
-
-It uses the **same concurrency group** as the staged gate with `cancel-in-progress:true`, so it supersedes the stalled run.
-
-Key difference:
+Key proof:
 
 ```text
-actions/setup-node Node 22: no package cache
-actions/setup-node Node 24: no package cache
-npm ci: hard timeout 600s
-Next build: hard timeout 600s
-server readiness: 60s
-route smoke: hard timeout 300s
+passed: true
+analysisEngine: v143-reference-free-rhythm
+referenceFree: true
+validRenderEventCount: 358
+renderEventSurvivalPercent: 100%
+playableStringFretPercent: 100%
+musicalPlacementPercent: 100%
+pitchValidityPercent: 100%
+uniqueMeasures: 112
+techniqueEvents: 25/358
+sustainCoverage: 358/358
+tempo: 129.19921875
+meter: 4/4
+tuning: E Standard
 ```
 
-No product code, Production, live Modal, payments, tokens, or customer email are touched.
+PDF evidence: `debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json`
 
-Expected evidence:
+```text
+passed: true
+renderEventCount: 358
+maximumMeasure: 113
+fullPageCount: 4
+previewPageCount: 4
+```
+
+---
+
+# RHYTHM LOCAL BUILT-NEXT HTTP BOUNDARY — CLOSED GREEN
+
+The no-cache CI gate completed and committed final evidence.
+
+Evidence:
 
 ```text
 debug/v143-contextual-prune/ai-tab-nocache-gate.json
 debug/v143-contextual-prune/next-preview-route-smoke-nocache.json
 ```
 
-At the latest check the no-cache final evidence had not yet landed. Do not infer failure from that alone.
+Bot evidence commit:
 
-Required final local proof:
+`5b29c0c3df3c97c0f4962e058997b2134d0179b7` — `Record V143 no-cache route gate`
+
+Final gate:
 
 ```text
 nodeSetupCacheEnabled: false
@@ -164,34 +105,31 @@ routeVerifierPassed: true
 passed: true
 actualVercelPreviewDeployment: false
 vercelDeploymentAttempted: false
+liveEndpointDeployedOrModified: false
 productionModified: false
 productionPromotionAuthorized: false
 ```
 
-Required structured Preview response remains:
+Built-Next route proof:
 
 ```text
-X-Jimmy-PAIge-PDF-Feature: v143-branch-preview-canary
-X-Jimmy-PAIge-PDF-Renderer: v143-structured-rhythm
+/ai-tab status: 200
+structured status: 200
+structured feature: v143-branch-preview-canary
+structured renderer: v143-structured-rhythm
+fallback status: 200
+fallback renderer: polished-safe-fallback
+missing-tab HTTP 400 validation: passed
+passed: true
 ```
 
-Required fallback renderer remains:
-
-`polished-safe-fallback`
-
-Missing generated tab must return HTTP 400.
-
-Immediate next action: fetch both no-cache evidence files. If the gate passes, mark local built-Next Rhythm application wiring closed. If it fails, diagnose only the exact failing field/log; never weaken product assertions.
+Conclusion: local Rhythm application wiring is closed green. Previous missing evidence was a CI harness/visibility problem, not dependency installation or a DadRock regression.
 
 ---
 
 # WHOLE-PRODUCT CUSTOMER CONTRACT — PASSED
 
-Evidence:
-
-`debug/v143-contextual-prune/ai-tab-end-to-end-contract.json`
-
-Latest schema-2 result:
+Evidence: `debug/v143-contextual-prune/ai-tab-end-to-end-contract.json`
 
 ```text
 passed: true
@@ -215,68 +153,27 @@ productionModified: false
 productionPromotionAuthorized: false
 ```
 
-Preview and purchased/full routes are contract-proven to share `getJimmyPaigeProfessionalPdfFeatureState(...)` and `createJimmyPaigeProfessionalPdf(...)`.
+Never automate the real full-PDF unlock route during validation because it can trigger payment/token/email side effects.
 
 ---
 
-# RHYTHM PROFESSIONAL CORE — PASSED
+# FINAL-PRODUCT FOLDER SCAFFOLD — CREATED
 
-Approved fixture:
+The physical shared/Rhythm/Lead/Bass organization now exists under:
 
-`public/gomywayfullaitest.m4a`
+`analyzer/final_product/`
 
-Analyzer evidence:
-
-`debug/v143-contextual-prune/ai-tab-real-audio-canary.json`
-
-Bot evidence:
-
-`9f52bf83597e921da12887874bace0df0ffe6d47`
-
-Key results:
-
-```text
-passed: true
-analysisEngine: v143-reference-free-rhythm
-referenceFree: true
-validRenderEventCount: 358
-renderEventSurvivalPercent: 100%
-playableStringFretPercent: 100%
-musicalPlacementPercent: 100%
-pitchValidityPercent: 100%
-uniqueMeasures: 112
-techniqueEvents: 25/358
-sustainCoverage: 358/358
-tempo: 129.19921875
-meter: 4/4
-tuning: E Standard
-```
-
-PDF evidence:
-
-`debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json`
-
-```text
-passed: true
-renderEventCount: 358
-maximumMeasure: 113
-fullPageCount: 4
-previewPageCount: 4
-```
+Bass currently includes separate `hz_features/` and `training/` areas. These folders establish ownership boundaries only; they do not activate customer routing or professional identity.
 
 ---
 
-# BASS PROFESSIONAL TRACK — INACTIVE SCAFFOLDS PASSED
+# BASS PROFESSIONAL TRACK — INACTIVE CONTRACTS PASSED
 
 ## Separation scaffold
 
-Evidence:
+Evidence: `debug/v143-contextual-prune/bass-professional-separator-scaffold.json`
 
-`debug/v143-contextual-prune/bass-professional-separator-scaffold.json`
-
-Bot commit:
-
-`70c5411d2e72f06923e88075e6f48f9555a8c0e5`
+Bot commit: `70c5411d2e72f06923e88075e6f48f9555a8c0e5`
 
 ```text
 passed: true
@@ -286,26 +183,13 @@ deterministicSeed: 143
 diagnosticOnly: true
 analyzerRoutingEnabled: false
 professionalStructuredIdentityEnabled: false
-realAudioBassCanaryPassed: false
 ```
 
 ## Four-string render-contract scaffold
 
-Files:
+Evidence: `debug/v143-contextual-prune/bass-professional-render-contract.json`
 
-```text
-lib/bassProfessionalRenderContract.js
-analyzer/verify_bass_professional_render_contract.mjs
-.github/workflows/bass-professional-render-contract.yml
-```
-
-Bot evidence commit:
-
-`4bd524c79feb621c497d8917128b36e971d85d1b` — `Record Bass professional render scaffold`
-
-Evidence:
-
-`debug/v143-contextual-prune/bass-professional-render-contract.json`
+Bot evidence commit: `4bd524c79feb621c497d8917128b36e971d85d1b`
 
 ```text
 passed: true
@@ -314,74 +198,67 @@ stringLabels: G, D, A, E
 openMidi: 43, 38, 33, 28
 stringCount: 4
 maximumFret: 24
-stepsPerMeasure: 16
-validFixtureEvents: 4
-projectedFixtureEvents: 4
-invalidFixtureEventsRejected: 5
 pitchStringFretConsistencyRequired: true
-diagnosticOnly: true
-productionCandidate: false
 pdfRendererEnabled: false
 analyzerRoutingEnabled: false
 professionalStructuredIdentityEnabled: false
-realAudioBassCanaryPassed: false
-productionModified: false
-productionPromotionAuthorized: false
 ```
 
 ## Bass quality-gate scaffold
 
-Evidence:
+Evidence: `debug/v143-contextual-prune/bass-professional-quality-scaffold.json`
 
-`debug/v143-contextual-prune/bass-professional-quality-scaffold.json`
+Bot evidence commit: `4afc8e529f0098993f8a8e3fffa2c493eca747d7`
 
-Bot commit:
+Synthetic fail-closed contract passed; legacy untimed input fails timing coverage. Thresholds remain 70% minimum for render survival, playable string/fret, timing, pitch validity, and pitch/string/fret consistency.
 
-`4afc8e529f0098993f8a8e3fffa2c493eca747d7` — `Record Bass professional quality scaffold`
+Historical `bass_technique_diagnostics_v7.py` is reference-guided diagnostic logic and must not be reused as the new reference-free Bass professional engine.
 
-Thresholds:
+---
 
-```text
-minimum valid render events: 4
-minimum render-event survival: 70%
-minimum playable string/fret coverage: 70%
-minimum timing coverage: 70%
-minimum pitch validity: 70%
-minimum pitch/string/fret consistency: 70%
-```
+# LIVE STEP — ISOLATED BASS REAL-AUDIO CANARY
 
-Synthetic result:
+Rhythm is closed green, so the next allowed boundary has started: real-audio Bass separation + reference-free pitch evidence only.
+
+New files:
 
 ```text
-passed: true
-rawEventCount: 8
-validRenderEventCount: 8
-renderEventSurvivalPercent: 100%
-playableStringFretPercent: 100%
-timingCoveragePercent: 100%
-pitchValidityPercent: 100%
-pitchStringFretConsistencyPercent: 100%
-weakFixturePassed: false
-legacyUntimedPassed: false
-legacyUntimedTimingCoveragePercent: 0
-diagnosticOnly: true
-productionCandidate: false
-analyzerRoutingEnabled: false
-pdfRendererEnabled: false
-professionalStructuredIdentityEnabled: false
-realAudioBassCanaryPassed: false
-productionModified: false
-productionPromotionAuthorized: false
+analyzer/bass_real_audio_canary_modal.py
+analyzer/verify_bass_real_audio_canary.py
+.github/workflows/bass-real-audio-canary.yml
 ```
 
-**Important:** the Bass track now has independently proven inactive separation, four-string rendering, and quality contracts, but it still has **no real-audio Bass analyzer proof, no customer routing, no structured professional identity, and no enabled Bass PDF renderer**.
+Commits:
 
-Historical `bass_technique_diagnostics_v7.py` was reviewed and explicitly identifies itself as `reference-guided-bass-technique-diagnostic-only`; do not reuse that label-guided logic in the new reference-free Bass professional path.
+```text
+36809663be076815f5c4e9297201120790b38850 — Add isolated Bass real-audio canary
+9933233638615ec6021228a78ad0a55f435c1cc5 — Add Bass real-audio canary verifier
+9b50bb6c6049f16febfc75d9b2f70c089700ce72 — Run isolated Bass real-audio canary
+```
 
-Architecture distinction:
+The canary is locked to `public/gomywayfullaitest.m4a` and runs only ephemeral Modal research using the frozen V143 execution image. It does **not** deploy/modify a live Modal endpoint.
 
-- Bass has a true Demucs `Bass` stem.
-- Lead and Rhythm both live in the separated `Guitar` stem; future Lead needs Lead-specific analysis/selection, not a fake Lead stem.
+It evaluates both approved Bass views:
+
+```text
+direct: audio -> Demucs6s Bass
+cascade: audio -> BS-RoFormer Instrumental -> Demucs6s Bass
+```
+
+Verifier requires non-empty real stems, valid audio, Bass-band energy, active pitch frames, playable Bass-range median/pitches, deterministic seed 143, and all safety flags false.
+
+This boundary deliberately does **not** claim note placement, timing, techniques, professional quality, structured Bass identity, PDF rendering, training, customer routing, Vercel deployment, Production modification, purchase, token redemption, or email.
+
+Expected committed evidence:
+
+```text
+debug/v143-contextual-prune/bass-real-audio-canary-action.json
+debug/v143-contextual-prune/bass-real-audio-canary.json
+```
+
+Latest check: neither evidence file has landed yet. Branch HEAD remains `9b50bb6c6049f16febfc75d9b2f70c089700ce72`, so do not infer pass/fail yet.
+
+Immediate next action: poll branch/evidence. If evidence lands, inspect exact fields. If it passes, advance only to isolated Bass event/note/timing analysis. If it fails, diagnose only the failing metric or harness phase without weakening thresholds or safety.
 
 ---
 
@@ -389,29 +266,15 @@ Architecture distinction:
 
 No exact-branch Vercel Preview exists yet.
 
-`debug/v143-contextual-prune/vercel-preview-deploy-action.json` still shows:
-
-```text
-vercelTokenAvailableInGitHubActions: false
-previewConfigPullExitCode: 99
-previewBuildExitCode: 99
-previewDeployExitCode: 99
-deploymentUrl: null
-productionDeployFlagUsed: false
-productionModified: false
-productionPromotionAuthorized: false
-```
-
-Do not use the connected Vercel deploy action merely to obtain a URL because it cannot guarantee the exact branch source.
+`debug/v143-contextual-prune/vercel-preview-deploy-action.json` still shows GitHub Actions lacks the Vercel token required for exact-branch Preview deployment. Do not use the connected Vercel deploy action merely to obtain a URL because it cannot guarantee the exact branch source.
 
 ---
 
 # NEXT BOUNDARIES
 
-1. Finish/read the no-cache Rhythm built-Next HTTP gate.
-2. If it passes, mark local Rhythm application wiring closed; real Vercel Preview integration remains the external blocker.
-3. Then begin physically organizing the new shared-core/separate-engine final-product folders without changing active Rhythm behavior.
-4. Advance Bass from inactive contracts to an isolated approved real-audio separation/analysis canary only after the local Rhythm HTTP boundary is closed.
-5. Keep Bass routing, Bass structured identity, and Bass PDF renderer disabled until real-audio quality is proven.
-6. Lead remains legacy; future professional Lead should use separated guitar views plus Lead-specific Hz/pitch, melodic/solo selection, techniques, training, and quality gating.
-7. Never automate the real full-PDF unlock route during validation because it can trigger payment/token/email side effects.
+1. Read Bass real-audio canary action/result evidence when it lands.
+2. If separation + reference-free pitch passes, build isolated Bass candidate/event/timing analysis while routing/PDF identity remain disabled.
+3. Prove four-string mapping + note/timing quality against real audio through the existing Bass quality gate.
+4. Only after real-audio analysis is green, add Bass-specific technique evidence and professional four-string PDF validation.
+5. Keep Bass customer routing, structured identity, and PDF activation disabled until the entire Bass chain is independently proven.
+6. Lead remains legacy and will later get its own separated-Guitar melodic/solo engine, Hz/pitch trajectory logic, training, techniques, quality gate, and renderer.
