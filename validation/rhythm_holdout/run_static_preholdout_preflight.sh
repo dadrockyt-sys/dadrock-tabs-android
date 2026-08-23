@@ -38,17 +38,40 @@ on_exit() {
       python - <<'PY' || true
 import json
 import os
+import re
 from pathlib import Path
 
 work = Path(os.environ["WORK_VALUE"])
 work.mkdir(parents=True, exist_ok=True)
+stage = os.environ.get("STAGE_VALUE")
+log_by_stage = {
+    "runtime-isolation": work / "logs/runtime-isolation.json",
+    "structured-freeze-payload": work / "logs/prepare-freeze.log",
+    "freeze-analysis": work / "logs/freeze.log",
+    "professional-pdf-render": work / "logs/render-frozen-pdf.log",
+    "pdf-event-fidelity": work / "logs/pdf-event-fidelity.log",
+}
+log_path = log_by_stage.get(stage)
+log_tail = []
+if log_path and log_path.exists():
+    lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()[-24:]
+    for line in lines:
+        # Keep only diagnostic text and redact token/secret-like assignments if any
+        # future command happens to echo one. Current static gate has no secrets.
+        line = re.sub(
+            r"(?i)(token|secret|authorization|password)(\s*[:=]\s*)\S+",
+            r"\1\2[REDACTED]",
+            line,
+        )
+        log_tail.append(line[:500])
 report = {
-    "schemaVersion": 2,
+    "schemaVersion": 3,
     "gate": "rhythm-preholdout-static-preflight",
     "sourceCommit": os.environ.get("SOURCE_COMMIT_VALUE"),
     "passed": False,
-    "failedStage": os.environ.get("STAGE_VALUE"),
+    "failedStage": stage,
     "exitStatus": int(os.environ.get("STATUS_VALUE") or 1),
+    "failureLogTail": log_tail,
     "usesSyntheticAudioResponseOnly": True,
     "realProfessionalReferenceOpened": False,
     "productionModified": False,
@@ -227,7 +250,7 @@ checks = {
 }
 failed = [name for name, passed in checks.items() if not passed]
 report = {
-    "schemaVersion": 2,
+    "schemaVersion": 3,
     "gate": "rhythm-preholdout-static-preflight",
     "sourceCommit": source_commit,
     "eventCount": manifest.get("eventCount"),
@@ -241,6 +264,7 @@ report = {
     "previewPageCount": render.get("previewPageCount"),
     "checks": checks,
     "failedChecks": failed,
+    "failureLogTail": [],
     "usesSyntheticAudioResponseOnly": True,
     "realProfessionalReferenceOpened": False,
     "productionModified": False,
