@@ -1,0 +1,146 @@
+name: V143 Contextual Prune Shadow Correction CPU Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-shadow-correction-cpu.yml
+      - analyzer/v143_contextual_prune_shadow_correction.py
+      - analyzer/check_v143_contextual_prune_shadow_correction.py
+      - analyzer/v143_contextual_prune_shadow_correction_modal.py
+      - analyzer/v143_contextual_prune_reference_free_carrier.py
+      - analyzer/v143_contextual_prune_runtime.py
+      - analyzer/check_v143_contextual_prune_shadow_static.py
+
+permissions:
+  contents: write
+
+jobs:
+  correction-cpu-gate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run isolated correction CPU and anti-leakage gates
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=debug/v143-contextual-prune/shadow-correction-cpu.log
+          diagnostic=debug/v143-contextual-prune/shadow-correction-cpu.json
+          : > "$log"
+
+          status=0
+
+          python -m py_compile \
+            analyzer/v143_contextual_prune_shadow_correction.py \
+            analyzer/check_v143_contextual_prune_shadow_correction.py \
+            analyzer/v143_contextual_prune_shadow_correction_modal.py >> "$log" 2>&1 || status=$?
+
+          if [ "$status" -eq 0 ]; then
+            PYTHONPATH=analyzer python analyzer/check_v143_contextual_prune_shadow_correction.py >> "$log" 2>&1 || status=$?
+          fi
+
+          if [ "$status" -eq 0 ]; then
+            if grep -E -n \
+              'gomyway-professional-rhythm-reference|Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score' \
+              analyzer/v143_contextual_prune_shadow_correction.py \
+              analyzer/v143_contextual_prune_shadow_correction_modal.py >> "$log" 2>&1; then
+              echo "Forbidden scorer/reference token found in correction shadow sources" >> "$log"
+              status=31
+            else
+              echo "CORRECTION_SHADOW_REFERENCE_TOKEN_SCAN=PASS" >> "$log"
+            fi
+          fi
+
+          if [ "$status" -eq 0 ]; then
+            python analyzer/check_v143_contextual_prune_shadow_static.py >> "$log" 2>&1 || status=$?
+          fi
+
+          protected_blob=$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)
+          expected_blob=7f72f8ed9b14af8bc93e95544195204d99c6bec1
+          if [ "$protected_blob" != "$expected_blob" ]; then
+            echo "PROTECTED_PIPELINE_BLOB_MISMATCH=$protected_blob expected=$expected_blob" >> "$log"
+            status=32
+          else
+            echo "PROTECTED_PIPELINE_BLOB=PASS:$protected_blob" >> "$log"
+          fi
+
+          STATUS="$status" PROTECTED_BLOB="$protected_blob" EXPECTED_BLOB="$expected_blob" python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          log_path = Path("debug/v143-contextual-prune/shadow-correction-cpu.log")
+          output = Path("debug/v143-contextual-prune/shadow-correction-cpu.json")
+          lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+          status = int(os.environ["STATUS"])
+          payload = {
+              "schemaVersion": 1,
+              "gate": "v143-contextual-prune-shadow-correction-cpu",
+              "exitCode": status,
+              "passed": status == 0,
+              "referenceTokenScanPassed": any(
+                  line == "CORRECTION_SHADOW_REFERENCE_TOKEN_SCAN=PASS" for line in lines
+              ),
+              "protectedPipelineBlob": os.environ["PROTECTED_BLOB"],
+              "expectedProtectedPipelineBlob": os.environ["EXPECTED_BLOB"],
+              "protectedPipelineUnchanged": os.environ["PROTECTED_BLOB"] == os.environ["EXPECTED_BLOB"],
+              "professionalReferenceUsed": False,
+              "runtimeLabelsRequired": False,
+              "productionModified": False,
+              "logTail": lines[-160:],
+          }
+          output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          exit 0
+
+      - name: Commit CPU gate diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/shadow-correction-cpu.log \
+            debug/v143-contextual-prune/shadow-correction-cpu.json
+          if git diff --cached --quiet; then
+            echo "No correction CPU diagnostic changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 shadow correction CPU gate"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce CPU gate
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("debug/v143-contextual-prune/shadow-correction-cpu.json").read_text(encoding="utf-8"))
+          required = {
+              "passed": True,
+              "referenceTokenScanPassed": True,
+              "protectedPipelineUnchanged": True,
+              "professionalReferenceUsed": False,
+              "runtimeLabelsRequired": False,
+              "productionModified": False,
+          }
+          failed = [key for key, expected in required.items() if data.get(key) is not expected]
+          if failed:
+              raise SystemExit(f"V143 correction CPU gate failed: {failed}")
+          print("V143 contextual-prune shadow correction CPU gate passed")
+          PY
