@@ -6,6 +6,10 @@ on:
       - v143-contextual-prune-lobo
     paths:
       - 'validation/rhythm_holdout/**'
+      - 'lib/v143RenderContract.js'
+      - 'lib/v143AnalyzerQuality.js'
+      - 'lib/jimmyPaigeAnalysisPayload.js'
+      - 'lib/createV143RhythmPdf.js'
       - '.github/workflows/rhythm-professional-holdout-self-test.yml'
   workflow_dispatch:
 
@@ -16,7 +20,7 @@ jobs:
   holdout-contract:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Check out isolated branch
         uses: actions/checkout@v4
@@ -28,7 +32,18 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Compile scorer-only holdout tools
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts
+
+      - name: Compile all scorer-only tools
         run: |
           set -euo pipefail
           python -m py_compile \
@@ -39,6 +54,7 @@ jobs:
             validation/rhythm_holdout/verify_reference_completeness.py \
             validation/rhythm_holdout/score_rhythm_holdout.py \
             validation/rhythm_holdout/run_final_holdout_gate.py
+          bash -n validation/rhythm_holdout/run_static_preholdout_preflight.sh
 
       - name: Verify production runtime cannot read holdout reference
         run: |
@@ -47,135 +63,122 @@ jobs:
             > /tmp/rhythm-runtime-isolation.json
           cat /tmp/rhythm-runtime-isolation.json
 
-      - name: Exercise perfect frozen-analysis to final holdout gate
+      - name: Build synthetic final-holdout fixtures
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          analysis = {
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'tempoBpm': 129.19921875,
+              'timeSignature': '4/4',
+              'tuning': 'E Standard',
+              'structuredMode': 'v143-reference-free-rhythm',
+              'renderEvents': [
+                  {
+                      'eventIndex': 0,
+                      'measure': 1,
+                      'step': 0,
+                      'stringIndex': 5,
+                      'fret': 0,
+                      'midi': 40,
+                      'durationSteps': 2,
+                      'techniques': ['let-ring'],
+                  },
+                  {
+                      'eventIndex': 1,
+                      'measure': 1,
+                      'step': 4,
+                      'stringIndex': 4,
+                      'fret': 2,
+                      'midi': 47,
+                      'durationSteps': 2,
+                      'techniques': [],
+                  },
+              ],
+          }
+          Path('/tmp/rhythm-analysis.json').write_text(
+              json.dumps(analysis, indent=2) + '\n', encoding='utf-8'
+          )
+          Path('/tmp/rhythm-pdf-events.json').write_text(
+              json.dumps({'renderEvents': analysis['renderEvents']}, indent=2) + '\n',
+              encoding='utf-8',
+          )
+
+          reference = {
+              'schemaVersion': 1,
+              'instrument': 'rhythm',
+              'holdout': True,
+              'completeReference': True,
+              'transcribedFromCompleteSource': True,
+              'source': {
+                  'kind': 'professional-human-tab',
+                  'provenance': 'synthetic CI contract fixture only; not real ground truth',
+                  'pageCount': 1,
+                  'sourceSha256': '1' * 64,
+                  'completeSource': True,
+              },
+              'measureRange': {
+                  'firstMeasure': 1,
+                  'lastMeasure': 1,
+                  'measureCount': 1,
+              },
+              'tempoBpm': 129.19921875,
+              'timeSignature': {'beats': 4, 'noteValue': 4},
+              'stepsPerMeasure': 16,
+              'tuning': ['E4', 'B3', 'G3', 'D3', 'A2', 'E2'],
+              'measures': [
+                  {
+                      'measure': 1,
+                      'events': [
+                          {
+                              'step': 0,
+                              'durationSteps': 2,
+                              'techniques': ['let-ring'],
+                              'notes': [{'stringIndex': 5, 'fret': 0, 'midi': 40}],
+                          },
+                          {
+                              'step': 4,
+                              'durationSteps': 2,
+                              'notes': [{'stringIndex': 4, 'fret': 2, 'midi': 47}],
+                          },
+                      ],
+                  },
+              ],
+          }
+          reference_dir = Path('validation/rhythm_holdout/reference')
+          (reference_dir / '.synthetic-self-test.json').write_text(
+              json.dumps(reference, indent=2) + '\n', encoding='utf-8'
+          )
+
+          partial = dict(reference)
+          partial['completeReference'] = False
+          partial['transcribedFromCompleteSource'] = False
+          partial['source'] = dict(reference['source'])
+          partial['source']['completeSource'] = False
+          partial['source']['sourceSha256'] = '2' * 64
+          (reference_dir / '.partial-self-test.json').write_text(
+              json.dumps(partial, indent=2) + '\n', encoding='utf-8'
+          )
+          PY
+
+      - name: Prove mandatory final holdout wrapper positive path
         run: |
           set -euo pipefail
           rm -rf /tmp/rhythm-holdout-freeze /tmp/rhythm-final-gate
-          cat > /tmp/rhythm-analysis.json <<'JSON'
-          {
-            "referenceFree": true,
-            "professionalReferenceUsed": false,
-            "referenceRuntimeInputUsed": false,
-            "tempoBpm": 129.19921875,
-            "timeSignature": "4/4",
-            "tuning": "E Standard",
-            "structuredMode": "v143-reference-free-rhythm",
-            "renderEvents": [
-              {
-                "eventIndex": 0,
-                "measure": 1,
-                "step": 0,
-                "stringIndex": 5,
-                "fret": 0,
-                "midi": 40,
-                "durationSteps": 2,
-                "techniques": ["let-ring"]
-              },
-              {
-                "eventIndex": 1,
-                "measure": 1,
-                "step": 4,
-                "stringIndex": 4,
-                "fret": 2,
-                "midi": 47,
-                "durationSteps": 2,
-                "techniques": []
-              }
-            ]
-          }
-          JSON
 
           python validation/rhythm_holdout/freeze_rhythm_analysis.py \
-            /tmp/rhythm-analysis.json /tmp/rhythm-holdout-freeze \
+            /tmp/rhythm-analysis.json \
+            /tmp/rhythm-holdout-freeze \
             --source-commit "$GITHUB_SHA"
 
-          cat > /tmp/rhythm-pdf-events.json <<'JSON'
-          {
-            "renderEvents": [
-              {
-                "eventIndex": 0,
-                "measure": 1,
-                "step": 0,
-                "stringIndex": 5,
-                "fret": 0,
-                "midi": 40,
-                "durationSteps": 2,
-                "techniques": ["let-ring"]
-              },
-              {
-                "eventIndex": 1,
-                "measure": 1,
-                "step": 4,
-                "stringIndex": 4,
-                "fret": 2,
-                "midi": 47,
-                "durationSteps": 2,
-                "techniques": []
-              }
-            ]
-          }
-          JSON
-
           python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
-            /tmp/rhythm-holdout-freeze /tmp/rhythm-pdf-events.json
-
-          cat > validation/rhythm_holdout/reference/.synthetic-self-test.json <<'JSON'
-          {
-            "schemaVersion": 1,
-            "instrument": "rhythm",
-            "holdout": true,
-            "completeReference": true,
-            "transcribedFromCompleteSource": true,
-            "source": {
-              "kind": "professional-human-tab",
-              "provenance": "synthetic CI contract fixture only; not real scoring ground truth",
-              "pageCount": 1,
-              "sourceSha256": "1111111111111111111111111111111111111111111111111111111111111111",
-              "completeSource": true
-            },
-            "measureRange": {
-              "firstMeasure": 1,
-              "lastMeasure": 1,
-              "measureCount": 1
-            },
-            "tempoBpm": 129.19921875,
-            "timeSignature": {"beats": 4, "noteValue": 4},
-            "stepsPerMeasure": 16,
-            "tuning": ["E4", "B3", "G3", "D3", "A2", "E2"],
-            "measures": [
-              {
-                "measure": 1,
-                "events": [
-                  {
-                    "step": 0,
-                    "durationSteps": 2,
-                    "techniques": ["let-ring"],
-                    "notes": [
-                      {"stringIndex": 5, "fret": 0, "midi": 40}
-                    ]
-                  },
-                  {
-                    "step": 4,
-                    "durationSteps": 2,
-                    "notes": [
-                      {"stringIndex": 4, "fret": 2, "midi": 47}
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-          JSON
-
-          python validation/rhythm_holdout/verify_reference_completeness.py \
             /tmp/rhythm-holdout-freeze \
-            validation/rhythm_holdout/reference/.synthetic-self-test.json \
-            --output /tmp/rhythm-reference-completeness.json
-
-          python validation/rhythm_holdout/score_rhythm_holdout.py \
-            /tmp/rhythm-holdout-freeze \
-            validation/rhythm_holdout/reference/.synthetic-self-test.json \
-            --output /tmp/rhythm-perfect-score.json
+            /tmp/rhythm-pdf-events.json
 
           python validation/rhythm_holdout/run_final_holdout_gate.py \
             /tmp/rhythm-holdout-freeze \
@@ -186,57 +189,21 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          complete = json.loads(Path('/tmp/rhythm-reference-completeness.json').read_text())
-          score = json.loads(Path('/tmp/rhythm-perfect-score.json').read_text())
-          final = json.loads(Path('/tmp/rhythm-final-gate/rhythm-final-holdout-gate.json').read_text())
-          assert complete['passed'] is True
-          assert complete['referenceComplete'] is True
-          assert complete['sourceComplete'] is True
-          assert complete['contiguousMeasureCoverage'] is True
-          assert complete['referenceOpenedOnlyAfterFreezeValidation'] is True
-          assert score['rhythmComplete'] is True
-          assert score['pdfEventFidelity'] == 1.0
-          assert score['criticalMismatchCount'] == 0
-          assert all(value >= 0.99 for value in score['gatedMetrics'].values())
+          final = json.loads(
+              Path('/tmp/rhythm-final-gate/rhythm-final-holdout-gate.json').read_text()
+          )
           assert final['passed'] is True
           assert final['rhythmComplete'] is True
           assert final['failedChecks'] == []
           assert final['pdfEventFidelity'] == 1.0
           assert final['criticalMismatchCount'] == 0
-          print('Perfect mandatory final holdout wrapper path PASSED')
+          print('Mandatory final holdout wrapper positive path PASSED')
           PY
 
-      - name: Prove partial reference, leakage and PDF mismatches hard-fail
+      - name: Prove partial-reference, leakage and PDF mismatch hard failures
         run: |
           set -euo pipefail
 
-          cat > validation/rhythm_holdout/reference/.partial-self-test.json <<'JSON'
-          {
-            "schemaVersion": 1,
-            "instrument": "rhythm",
-            "holdout": true,
-            "completeReference": false,
-            "transcribedFromCompleteSource": false,
-            "source": {
-              "kind": "professional-human-tab",
-              "provenance": "deliberately partial negative CI fixture",
-              "pageCount": 1,
-              "sourceSha256": "2222222222222222222222222222222222222222222222222222222222222222",
-              "completeSource": false
-            },
-            "measureRange": {"firstMeasure": 1, "lastMeasure": 1, "measureCount": 1},
-            "timeSignature": {"beats": 4, "noteValue": 4},
-            "stepsPerMeasure": 16,
-            "tuning": ["E4", "B3", "G3", "D3", "A2", "E2"],
-            "measures": [{"measure": 1, "events": []}]
-          }
-          JSON
-          if python validation/rhythm_holdout/verify_reference_completeness.py \
-            /tmp/rhythm-holdout-freeze \
-            validation/rhythm_holdout/reference/.partial-self-test.json; then
-            echo 'Partial professional reference was incorrectly accepted.' >&2
-            exit 1
-          fi
           if python validation/rhythm_holdout/run_final_holdout_gate.py \
             /tmp/rhythm-holdout-freeze \
             validation/rhythm_holdout/reference/.partial-self-test.json \
@@ -266,7 +233,7 @@ jobs:
           JSON
           if python validation/rhythm_holdout/freeze_rhythm_analysis.py \
             /tmp/rhythm-unsafe.json /tmp/unsafe-freeze; then
-            echo 'Unsafe reference use was incorrectly accepted.' >&2
+            echo 'Unsafe professional-reference use was incorrectly accepted.' >&2
             exit 1
           fi
 
@@ -298,16 +265,18 @@ jobs:
           JSON
           if python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
             /tmp/rhythm-holdout-freeze /tmp/rhythm-wrong-pdf.json; then
-            echo 'Non-identical PDF events were incorrectly accepted.' >&2
+            echo 'Non-identical PDF event stream was incorrectly accepted.' >&2
             exit 1
           fi
+          echo 'Negative final-wrapper/safety gates PASSED'
 
-          rm -f \
-            validation/rhythm_holdout/reference/.synthetic-self-test.json \
-            validation/rhythm_holdout/reference/.partial-self-test.json
-          echo 'Negative completeness/final-wrapper/safety tests PASSED'
+      - name: Exercise full static raw-response to professional-PDF glue
+        run: |
+          set -euo pipefail
+          bash validation/rhythm_holdout/run_static_preholdout_preflight.sh \
+            /tmp/rhythm-preholdout-static
 
-      - name: Record compact successful self-test evidence
+      - name: Record consolidated successful proof
         run: |
           set -euo pipefail
           mkdir -p debug/v143-contextual-prune
@@ -317,47 +286,81 @@ jobs:
           from pathlib import Path
 
           isolation = json.loads(Path('/tmp/rhythm-runtime-isolation.json').read_text())
-          complete = json.loads(Path('/tmp/rhythm-reference-completeness.json').read_text())
-          score = json.loads(Path('/tmp/rhythm-perfect-score.json').read_text())
-          final = json.loads(Path('/tmp/rhythm-final-gate/rhythm-final-holdout-gate.json').read_text())
+          final = json.loads(
+              Path('/tmp/rhythm-final-gate/rhythm-final-holdout-gate.json').read_text()
+          )
+          static = json.loads(Path('/tmp/rhythm-preholdout-static/report.json').read_text())
+
           payload = {
-              'schemaVersion': 3,
+              'schemaVersion': 4,
               'gate': 'rhythm-professional-holdout-self-test',
               'sourceCommit': os.environ['GITHUB_SHA'],
               'runtimeIsolationPassed': isolation.get('passed') is True,
-              'syntheticReferenceCompletenessPassed': complete.get('passed') is True,
-              'syntheticReferenceComplete': complete.get('referenceComplete') is True,
-              'syntheticSourceComplete': complete.get('sourceComplete') is True,
-              'syntheticContiguousMeasureCoverage': complete.get('contiguousMeasureCoverage') is True,
-              'referenceOpenedOnlyAfterFreezeValidation': complete.get('referenceOpenedOnlyAfterFreezeValidation') is True,
-              'syntheticPerfectScorePassed': score.get('rhythmComplete') is True,
+              'syntheticReferenceCompletenessPassed': final['checks'].get('referenceCompletenessPassed') is True,
+              'syntheticReferenceComplete': final['checks'].get('referenceComplete') is True,
+              'syntheticSourceComplete': final['checks'].get('sourceComplete') is True,
+              'syntheticContiguousMeasureCoverage': final['checks'].get('contiguousMeasureCoverage') is True,
+              'referenceOpenedOnlyAfterFreezeValidation': final['checks'].get('referenceOpenedOnlyAfterFreezeValidation') is True,
               'syntheticFinalWrapperPassed': final.get('passed') is True,
               'syntheticFinalWrapperRhythmComplete': final.get('rhythmComplete') is True,
               'syntheticPdfEventFidelity': final.get('pdfEventFidelity'),
               'syntheticCriticalMismatchCount': final.get('criticalMismatchCount'),
-              'partialReferenceHardFailurePassed': True,
               'partialReferenceFinalWrapperHardFailurePassed': True,
               'negativeSafetyTestsPassed': True,
+              'staticPreholdoutGluePassed': static.get('passed') is True,
+              'staticPreholdoutEventCount': static.get('eventCount'),
+              'staticPreholdoutMeasureCount': static.get('uniqueMeasureCount'),
+              'staticPreholdoutPdfEventFidelity': static.get('pdfEventFidelity'),
+              'staticPreholdoutFrozenEventSha256': static.get('frozenEventSha256'),
+              'staticPreholdoutPdfEventSha256': static.get('pdfEventSha256'),
+              'staticProfessionalFullPdfPages': static.get('fullPageCount'),
+              'staticProfessionalPreviewPdfPages': static.get('previewPageCount'),
               'usesSyntheticReferenceOnly': True,
               'realProfessionalReferenceOpened': False,
               'productionModified': False,
               'productionPromotionAuthorized': False,
-              'passed': True,
           }
+          payload['passed'] = all([
+              payload['runtimeIsolationPassed'],
+              payload['syntheticReferenceCompletenessPassed'],
+              payload['syntheticReferenceComplete'],
+              payload['syntheticSourceComplete'],
+              payload['syntheticContiguousMeasureCoverage'],
+              payload['referenceOpenedOnlyAfterFreezeValidation'],
+              payload['syntheticFinalWrapperPassed'],
+              payload['syntheticFinalWrapperRhythmComplete'],
+              payload['syntheticPdfEventFidelity'] == 1.0,
+              payload['syntheticCriticalMismatchCount'] == 0,
+              payload['partialReferenceFinalWrapperHardFailurePassed'],
+              payload['negativeSafetyTestsPassed'],
+              payload['staticPreholdoutGluePassed'],
+              payload['staticPreholdoutEventCount'] == 400,
+              payload['staticPreholdoutMeasureCount'] == 100,
+              payload['staticPreholdoutPdfEventFidelity'] == 1.0,
+              payload['staticPreholdoutFrozenEventSha256'] == payload['staticPreholdoutPdfEventSha256'],
+          ])
+          if not payload['passed']:
+              raise SystemExit('Consolidated Rhythm self-test proof did not pass.')
+
           Path('debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json').write_text(
               json.dumps(payload, indent=2) + '\n', encoding='utf-8'
+          )
+          Path('debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json').write_text(
+              json.dumps(static, indent=2) + '\n', encoding='utf-8'
           )
           print(json.dumps(payload, indent=2))
           PY
 
-          git add debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json
-          if git diff --cached --quiet; then
-            echo 'Self-test evidence already current.'
-            exit 0
-          fi
+          rm -f \
+            validation/rhythm_holdout/reference/.synthetic-self-test.json \
+            validation/rhythm_holdout/reference/.partial-self-test.json
+
+          git add \
+            debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json \
+            debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record final Rhythm holdout wrapper self-test'
+          git commit -m 'Record consolidated Rhythm holdout and PDF preflight proof'
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
