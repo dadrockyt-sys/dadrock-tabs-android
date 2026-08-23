@@ -58,7 +58,22 @@ However, current older human-reference benchmark infrastructure is too coarse to
 
 Rhythm is therefore reopened for the final end-to-end professional holdout benchmark.
 
-## Bass separation + pitch — CLOSED GREEN / PAUSED AFTER CURRENT CANARY
+### Rhythm professional-reference inventory — IN PROGRESS, DO NOT SCORE YET
+
+The already-supplied material has begun to be inventoried without exposing it to analyzer runtime.
+
+Confirmed distinctions:
+
+- The emailed DadRock V143 Rhythm PDF `ds-music-are-you-gonna-go-my-way-remastered-2025-lenny-kravitz-rhythm-tab.pdf` is a **generated DadRock output**, not the professional human holdout reference. Never use it as ground truth.
+- A Library image named `1000116180.jpg` is a clearly different dark-theme professional tablature source for **Are You Gonna Go My Way**, showing Chorus measures 33–35 with chord/voicing labels including `G6`, `A(tp2)`, `E`, `D`, exact string/fret stacks, rhythmic notation, and aligned lyrics. Treat this as holdout/reference material only.
+- Other Library images such as `1000116132.jpg` and `1000116183.jpg` are DadRock/Jimmy PAIge generated proof PDFs and are not the human reference.
+- The complete human reference has **not yet been reconstructed/inventoried event-by-event**, so no final professional score is authorized yet.
+
+Historical contextual-prune development grading also contains a 431-event reference count for measures 17–96 (`contextual-prune-freeze-manifest.json`), but that older development reference was used during historical model development and therefore cannot automatically be promoted to the new clean holdout completion authority. It may help locate provenance/source material, not serve as a leak-free final score unless isolation is proven.
+
+Next inventory work: locate the complete professional source/pages and any existing event-level extraction/provenance in the repository or supplied Library before manually reconstructing anything.
+
+## Bass separation + pitch — CLOSED GREEN / PAUSED
 
 Run `32611529763` passed. Direct/cascade stems are distinct, seed 143 fixed, both 211.44 s, ~99.99% 30–1000 Hz energy, ~99.7% playable-range pitch frames.
 
@@ -121,36 +136,39 @@ Correct conclusion: ambiguous harmonic evidence is safely rejected. `harmonic` r
 - Existing scaffold workflows prove these contracts synthetically only.
 - `lib/jimmyPaigeAnalysisPayload.js`, `lib/createAiTabPdf.js`, and `lib/createJimmyPaigeProfessionalPdf.js` still enable structured professional routing only for Rhythm. Bass remains legacy/inactive.
 
-## Bass current canary — allow current isolated run to finish, then pause Bass expansion
+## Bass structured integration canary — CLOSED GREEN, BASS NOW PAUSED
 
-New diagnostic integration files/commits:
+Diagnostic integration files/commits:
 
 - `1d80fb1fc28cad1194762d1ca32fb6b0aa75ef1f` — `lib/bassProfessionalStructuredAnalysis.js`
 - `4e0ac878fbca28e629c75f76268b3ceb18512c8e` — `analyzer/verify_bass_real_audio_structured_integration.mjs`
 - `b2fb4b7a2288a2751549f77b5e0f6ec9d22b345c` — `.github/workflows/bass-real-audio-structured-integration.yml`
 - `30fd6ef286c9723b2c403d4431eb3d7039046d32` — explicit structured-contract safety flags
-- `8a668f9a4af966b8abf14034b975a36d6ed7d587` — hardened verifier safety checks; authoritative source commit for the current run
+- `8a668f9a4af966b8abf14034b975a36d6ed7d587` — hardened verifier safety checks; authoritative source commit
 
-Current authoritative heartbeat:
+Authoritative result:
 
 ```text
 workflow: Bass Real Audio Structured Integration
 runId: 32613450912
 sourceCommit: 8a668f9a4af966b8abf14034b975a36d6ed7d587
-startedAtUtc: 2026-08-23T02:41:13.180249+00:00
-status: last observed in progress
+runStartedAtUtc: 2026-08-23T02:40:35Z
+completedAtUtc: 2026-08-23T02:44:56Z
+status: completed
+conclusion: success
 ```
 
-Let this already-started isolated diagnostic run finish and record its result, but start no additional Bass capability expansion until Rhythm passes the new professional human-reference end-to-end gate.
+This closes the already-started isolated Bass diagnostic only. Start **no additional Bass capability expansion** until Rhythm passes the professional human-reference end-to-end gate.
 
 ## LIVE PRIORITY — build the final Rhythm holdout benchmark
 
 Immediate next action:
 
-1. Inventory the exact professionally human-written Rhythm TAB source already supplied and convert it into a complete scorer-only event/measure ground truth without exposing it to the analyzer runtime.
-2. Build a scorer that aligns frozen Jimmy PAIge Rhythm events to that reference measure-by-measure and reports precision/recall/F1 plus exact/near-exact correctness for pitch/chords, string/fret/voicing, timing, durations/rests/sustain/ties, and supported techniques.
-3. Add hard anti-leakage assertions: `referenceFree:true`, `professionalReferenceUsed:false`, no scorer/reference import in analyzer code path, and hash/freeze analysis before scorer access.
-4. Verify professional PDF derives 100% from the exact scored frozen events; PDF fidelity must be 100% even if transcription accuracy is still below target.
-5. Run user-upload-equivalent audio → analyzer → structured events → professional PDF → isolated holdout scorer.
-6. Do not declare Rhythm complete until the post-hoc human-reference score is near 100% with no critical musical mismatches. Improve only through reference-free/general algorithms, rerunning from audio from scratch after every change.
-7. Once Rhythm passes, package it as `Final Rhythm Pipeline`; then build Bass from that blueprint and wait for the user's Bass professional reference when Bass reaches scoring. After Bass passes, package `Final Bass Pipeline`; then build Lead from the Rhythm blueprint and wait for the user's Lead professional reference when Lead reaches scoring. After Lead passes, package `Final Lead Pipeline`.
+1. Finish inventorying the exact professionally human-written Rhythm TAB source already supplied and convert it into a complete scorer-only event/measure ground truth without exposing it to analyzer runtime.
+2. Locate any existing event-level professional-reference extraction/provenance before manually reconstructing the human source. Do not substitute generated DadRock proof PDFs for the human reference.
+3. Build a scorer that aligns frozen Jimmy PAIge Rhythm events to that reference measure-by-measure and reports precision/recall/F1 plus exact/near-exact correctness for pitch/chords, string/fret/voicing, timing, durations/rests/sustain/ties, and supported techniques.
+4. Add hard anti-leakage assertions: `referenceFree:true`, `professionalReferenceUsed:false`, no scorer/reference import in analyzer code path, and hash/freeze analysis before scorer access.
+5. Verify professional PDF derives 100% from the exact scored frozen events; PDF fidelity must be 100% even if transcription accuracy is still below target.
+6. Run user-upload-equivalent audio → analyzer → structured events → professional PDF → isolated holdout scorer.
+7. Do not declare Rhythm complete until the post-hoc human-reference score is near 100% with no critical musical mismatches. Improve only through reference-free/general algorithms, rerunning from audio from scratch after every change.
+8. Once Rhythm passes, package it as `Final Rhythm Pipeline`; then build Bass from that blueprint and wait for the user's Bass professional reference when Bass reaches scoring. After Bass passes, package `Final Bass Pipeline`; then build Lead from the Rhythm blueprint and wait for the user's Lead professional reference when Lead reaches scoring. After Lead passes, package `Final Lead Pipeline`.
