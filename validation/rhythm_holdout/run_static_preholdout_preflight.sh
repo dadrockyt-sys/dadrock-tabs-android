@@ -6,6 +6,27 @@ WORK="${1:-/tmp/rhythm-preholdout-static}"
 SOURCE_COMMIT="${GITHUB_SHA:-unknown}"
 STAGE="initialization"
 
+persist_ci_failure_report() {
+  if [ "${GITHUB_ACTIONS:-false}" != "true" ]; then
+    return 0
+  fi
+  cd "$ROOT"
+  mkdir -p debug/v143-contextual-prune
+  if [ -s "$WORK/report.json" ]; then
+    cp "$WORK/report.json" \
+      debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json
+    git add debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json
+    if ! git diff --cached --quiet; then
+      git config user.name 'github-actions[bot]'
+      git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      git commit -m 'Record failed Rhythm pre-holdout static diagnostic' || true
+      git fetch origin v143-contextual-prune-lobo || true
+      git rebase origin/v143-contextual-prune-lobo || true
+      git push origin HEAD:v143-contextual-prune-lobo || true
+    fi
+  fi
+}
+
 on_exit() {
   local status=$?
   trap - EXIT
@@ -36,6 +57,7 @@ report = {
 (work / "report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 print(json.dumps(report, indent=2))
 PY
+    persist_ci_failure_report || true
   fi
   exit "$status"
 }
