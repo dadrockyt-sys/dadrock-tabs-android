@@ -70,6 +70,7 @@ def main() -> None:
         (2, 0): 2.00,
         (2, 4): 2.50,
         (3, 0): 4.00,
+        (4, 0): 6.00,
     }
     rows = [
         _row(1, 0.01, [40], strong=[40]),
@@ -79,20 +80,27 @@ def main() -> None:
         _row(2, 2.02, [40, 52, 64, 76, 88], strong=[40, 52, 64, 76], weak_cross_view=[88]),
         _row(2, 2.49, [43], strong=[43], stem_support=1),
         _row(3, 4.01, [45], strong=[45], stem_support=1),
+        # A base-selected event with no independently supported pitch must not be
+        # collapsed to a single arbitrary winner merely because one candidate is
+        # relatively less weak than another.
+        _row(4, 6.01, [48, 60], strong=[], weak_cross_view=[48, 60]),
     ]
     result = apply_reference_free_shadow_correction(
         rows,
         grid,
-        base_events={(1, 0)},
-        target_measures={1, 2, 3},
+        base_events={(1, 0), (4, 0)},
+        target_measures={1, 2, 3, 4},
     )
 
     assert (1, 0) in result.corrected_events
+    assert (4, 0) in result.corrected_events
     assert (1, 4) in result.rescued_events
     assert (2, 0) in result.rescued_events
     assert all(key[0] != 3 for key in result.rescued_events)
     assert result.pitch_sets[(2, 0)] == (40, 52, 64, 76)
     assert 88 not in result.pitch_sets[(2, 0)]
+    assert result.pitch_sets[(4, 0)] == (48, 60)
+    assert result.original_pitch_sets[(4, 0)] == result.pitch_sets[(4, 0)]
     assert result.suppressed_pitch_count == 1
     assert result.diagnostics()["baseEventsPreserved"] is True
     assert result.diagnostics()["rescuesAreObservedSlots"] is True
