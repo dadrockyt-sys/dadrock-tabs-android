@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 — Bass harmonic safe-abstention rerun queued
+Updated: 2026-08-22 — Bass harmonic safe-abstention rerun active
 Branch: `v143-contextual-prune-lobo`
 
 ## Safety / product contract
@@ -74,7 +74,7 @@ Evidence:
 - `debug/v143-contextual-prune/bass-real-audio-harmonic.json`
 - artifact `9486003926`
 
-## Harmonic boundary hardening — IMPLEMENTED / RERUN PENDING
+## Harmonic boundary hardening — IMPLEMENTED / RERUN ACTIVE
 
 New commits:
 
@@ -100,13 +100,24 @@ Verifier no longer conflates rare-technique recurrence across independent GPU an
 
 A green rerun may legitimately report `safeAbstention: true` and `harmonicFamilyProven: false`. That proves the diagnostic safely refuses ambiguous harmonic evidence; it does **not** prove harmonic technique detection.
 
+The helper-triggered run `32612959798` was cancelled by concurrency after later verifier/workflow commits, as expected.
+
+Current authoritative heartbeat:
+
+```text
+workflow: Bass Real Audio Harmonics
+runId: 32613012696
+sourceCommit: 1ef20763aab365042f620800f60adab9be98c830
+startedAtUtc: 2026-08-23T02:30:40.930771+00:00
+```
+
 High-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven. Professional Bass remains false. All training/routing/structured identity/PDF/live Modal/Vercel/Production/payment/token/email flags remain disabled.
 
 ## Immediate next action
 
-1. Capture the latest `Bass Real Audio Harmonics` heartbeat triggered by commit `1ef20763aab365042f620800f60adab9be98c830`.
-2. Poll the latest run through completion; concurrency may cancel earlier runs triggered by the preceding helper/verifier commits.
-3. Inspect final action/evidence. Expected conservative result is zero harmonic labels + `safeAbstention: true` + workflow success.
-4. If so, close harmonic as disabled/unproven on this fixture rather than weakening criteria.
+1. Poll run `32613012696` through completion.
+2. Inspect final action/evidence. Expected conservative result is zero harmonic labels + `safeAbstention: true` + workflow success.
+3. If so, close harmonic as disabled/unproven on this fixture rather than weakening criteria.
+4. If any strict harmonic survives, inspect its evidence manually before claiming proof.
 5. Save this checkpoint again after the rerun.
 6. Professional Bass PDF/routing/identity remain disabled. Exact-branch Vercel Preview remains an external blocker.
