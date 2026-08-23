@@ -25,6 +25,10 @@ Rhythm is complete only with professional score >=0.99, zero critical mismatches
 - Professional holdout self-test: schema 6 / green.
 - Dedicated reference-free polyphony CPU proof: green, latest observed run `32641304362`, source commit `f015715a291ff3f9c2a9da9f633f1b5bef63352a`.
 - Runtime isolation, product PDF routing, branding, reference anti-leakage, hard failures, and exact PDF-event fidelity are green.
+- Polished final-render CPU presentation proof: schema 2 / green after section/tempo/phantom-measure fixes.
+- Real frozen-stream presentation diagnostic: green on the exact 1,017-note candidate.
+- Current-renderer execution diagnostic: green, including exact event fidelity and extracted PDF text checks.
+- Final current-renderer relock V3: schema 3 / green.
 
 ## Professional scorer source recovery
 
@@ -40,7 +44,7 @@ Recovery proof:
 - clean Library screenshot `1000116180.jpg` independently matches the recovered Chorus around measures 33–35
 - `validation/rhythm_holdout/reference/reference-inventory.json` records complete source availability.
 
-The professional source remains **scorer-only**. It may now be opened/transcribed/scored against the fresh locked candidate below, but must never feed runtime or runtime tuning.
+The professional source remains **scorer-only**. It may now be opened/transcribed/scored against the final relocked candidate below, but must never feed runtime or runtime tuning.
 
 ## Reference-free polyphonic mapper — implemented and proven
 
@@ -50,88 +54,102 @@ General/reference-free musical correction:
 - `e6820f0782eba3d79854b9a140851ffc1d99afb0` — CPU verifier.
 - `f015715a291ff3f9c2a9da9f633f1b5bef63352a` — CPU workflow.
 
-Downstream product contracts were checked: output adapter, Jimmy PAIge payload, analyze route, render contract, and professional PDF renderer already support multiple same-onset notes on unique strings and do not require `selectedCount == noteCount`.
+Downstream product contracts were checked: output adapter, Jimmy PAIge payload, analyze route, render contract, and professional PDF renderer support multiple same-onset notes on unique strings and do not require `selectedCount == noteCount`.
 
-## Fresh post-polyphony approved-audio freeze — GREEN AND LOCKED
+## Fresh post-polyphony approved-audio stream — GREEN AND IMMUTABLY BOUND
 
-The viable candidate trigger is commit `580550c7cfa6d7a2204aac70052c4c5ab88aa130` (`Fix pre-GPU ESM rewrite and retrigger Rhythm freeze`). It ran only the isolated product canary and did not deploy/alter live V143 Modal or Production.
-
-Fresh Actions run:
-- run `32642331373`, completed `success`
-- source commit `580550c7cfa6d7a2204aac70052c4c5ab88aa130`
+Fresh approved-audio run:
+- run `32642331373`, source commit `580550c7cfa6d7a2204aac70052c4c5ab88aa130`
 - approved fixture `public/gomywayfullaitest.m4a`
 - source SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
 - source bytes 3,478,611
-- `referenceFree:true`
-- `professionalReferenceUsed:false`
-- `referenceRuntimeInputUsed:false`
-- `runtimeLabelsRequired:false`
-- `v143RuntimeSafetyVerified:true`
-- live endpoint unchanged
-- Production unchanged
-- promotion unauthorized
-- human reference remained sealed during freeze
+- runtime safety all correct: reference-free true; professional/runtime reference inputs false; runtime labels false; V143 safety verified true
+- live endpoint unchanged; Production unchanged; promotion unauthorized; human reference sealed during freeze.
 
-Fresh structured output:
+Structured output:
 - selected rhythmic attacks: **358**
-- rendered guitar-note events: **1,017**
+- rendered note events: **1,017**
 - distinct attack locations: 358
 - polyphonic attacks: 277
 - single-note attacks: 81
 - notes/attack distribution: 1→81, 2→100, 3→64, 4→55, 5→24, 6→34
-- median notes/attack: 2.0
-- max notes/attack: 6
-- all 1,017 events use `noteMapping.version:2`
-- all chord voicings jointly resolved
-- every rendered MIDI traces to the attack's frozen pitch hypotheses
-- dominant MIDI preserved at every attack
-- unique `(measure, step, stringIndex)` occupancy: true
-- assembly v2 `polyphonicExpansion:true`, `selectionChanged:false`, `attackTimingChanged:false`, `pitchEvidenceChanged:false`
-- measure range 1–113, 112 unique measures
+- max chord size 6
+- all 1,017 events use noteMapping v2
+- every rendered MIDI traces to the frozen pitch hypotheses; dominant MIDI preserved
+- unique `(measure, step, stringIndex)` occupancy true
+- measure range 1–113, 112 populated measures
+- frozen event SHA256 `a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e`.
 
-Fresh PDF/freeze proof:
-- frozen event SHA256 `a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e`
-- PDF event SHA256 identical
-- PDF-event fidelity **1.0**
-- full PDF 1,704,133 bytes / 4 pages
-- preview PDF 1,680,565 bytes / 4 pages
-- compact proof `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` passed with no failed checks.
-
-Fresh artifact lock:
+Original post-polyphony artifact lock remains historical source proof:
 - artifact ID `9493999904`
-- name `rhythm-professional-preholdout-real-audio`
-- artifact digest / ZIP SHA256 `bdd8a7617455e571b2dbeaaeb83ad5c40310e6581e21dde0e5bcb51e28684223`
-- permanent lock `debug/v143-contextual-prune/rhythm-professional-preholdout-artifact-lock.json`
-- lock commit `c6762427c28b0aebaaae454f12931aee313674cc`
-- `locked:true`, `passed:true`
+- digest `sha256:bdd8a7617455e571b2dbeaaeb83ad5c40310e6581e21dde0e5bcb51e28684223`
+- lock commit `c6762427c28b0aebaaae454f12931aee313674cc`.
 
-Per-file fresh artifact hashes are recorded in the artifact-lock JSON. The earlier 358-note monophonic run `32623173615` is historical only and must not be professionally scored as the current candidate.
+A later final-presentation fresh run `32643978196` used the same exact authenticated event hash `a089...`, 1,017 notes, and PDF fidelity 1.0. Its artifact is `9494412019`, digest `sha256:5ab309e1c86826cb8b5c6ef9c6e3a8edbad334d99d55c07538475c7b61ba519b`. This exact immutable frozen stream is now the source stream used by the CPU-only final renderer relock.
 
-## Final-render presentation hardening — IN PROGRESS BEFORE PROFESSIONAL SCORE
+The earlier 358-note monophonic run `32623173615` is historical only and must never be professionally scored as the current candidate.
 
-User specifically flagged the prior end-to-end failure where V143 effectively displayed only one note per measure and asked that final Rhythm rendering preserve timing, techniques, and section display.
+## Final-render presentation — GREEN AND RELOCKED
 
-Fresh locked run `32642331373` is **not** collapsed: it contains 1,017 note events across 112 populated measures and 358 distinct attack locations; median populated measure density is 8 notes and 277 attacks are polyphonic.
+User specifically flagged the prior E2E failure where V143 effectively displayed only one note per measure and asked that final Rhythm rendering preserve timing, techniques, and section display.
 
-Presentation hardening now committed on this branch, without professional-reference input and without changing analyzer note selection:
-- `c776722069ec7859278309fc8ef1f2d9ecde8005` — extends `lib/v143RenderContract.js` with deterministic reference-free section grouping from authenticated render-event self-similarity, presentation-density metrics, and a one-note-per-measure collapse detector.
-- `6099f818c8ee3828e1a7908f85a29ff1506942a5` — hardens `lib/createV143RhythmPdf.js` so the final structured Rhythm PDF visibly includes a 16th-note timing grid/beat guides, section labels, a technique legend, bend/release notation, legato/slide connectors with fallback symbols, sustain lines, and a fail-closed one-note-per-measure collapse guard. The renderer still receives and validates the exact authenticated event stream and does not alter note placement.
-- `0932a76b0e427368f95a2bbacc81bdfb51358548` — adds CPU-only `.github/workflows/rhythm-render-presentation-proof.yml` to prove multi-note density, polyphonic onsets, section generation, technique visibility, timing legend, PDF generation, and the collapse negative case before any new GPU run.
+Presentation code now includes, without changing authenticated note placement:
+- 16th-note timing grid and beat guides
+- section labels derived only from reference-free event change points
+- technique legend and visible bend/release, hammer-on, pull-off, slide and sustain notation
+- fail-closed one-note-per-measure collapse guard
+- clean integer tempo display
+- no phantom measure labels beyond the actual final measure.
 
-The presentation CPU proof is currently pending/being observed. Do **not** run the professional human score until this presentation gate is green and the final-code fresh approved-audio freeze is regenerated/locked, because the final user-visible renderer must be part of the candidate being scored/end-to-end verified.
+Key commits:
+- `c776722069ec7859278309fc8ef1f2d9ecde8005` initial reference-free presentation summary/collapse guard
+- `6099f818c8ee3828e1a7908f85a29ff1506942a5` initial timing/technique/section renderer display
+- `838f3c02e02733cef9ad620826d0efa66da25456` section logic changed to reference-free change-point segmentation with sensible 8–16-measure spans
+- `2116c7ac38233eecce39d5187b1d9a044811b82f` rounded tempo, improved timing grid, removed phantom final measures
+- `24c407b7bbd477a10b6815afec159115197d6467` polished CPU presentation proof
+- Actions proof commit `920d4b52caeb407f11a8157fd760a0568779fab9`.
 
-## Scorer phase status
+Real frozen-stream section diagnostic (`debug/v143-contextual-prune/rhythm-relock-presentation-diagnostic.json`) is green:
+- 1,017 events / 358 onsets / 112 populated measures
+- average 9.08 notes/populated measure
+- 277 multi-note onsets; max chord size 6
+- 82 technique events; bend, bend-release, hammer-on, pull-off, slide-down, slide-up
+- eight reference-free sections: 1–16, 17–32, 33–40, 41–56, 57–72, 73–88, 89–104, 105–113
+- no one-note-per-measure collapse.
 
-Professional scorer access is authorized in principle because the earlier post-polyphony freeze is green and locked, but scoring is intentionally held while final-render presentation hardening is validated. The recovered professional source remains scorer-only; no valid final professional score has yet been declared.
+Current renderer execution diagnostic (`debug/v143-contextual-prune/rhythm-relock-render-diagnostic.json`) is green:
+- render succeeds on exact locked 1,017-event stream
+- PDF-event fidelity 1.0, frozen/PDF hash both `a089...`
+- full PDF 4 pages; preview 4 pages
+- extracted-text checks all green: timing legend, `129 BPM`, no unrounded tempo, eight section labels, hammer-on/pull-off/slide/bend labels, measure 113 present, measure 114 absent, preview lock/timing/sections present.
+
+Final observable CPU relock:
+- workflow commit `e52beadfad35156d541ea0cd4d5bd75e8fd0c446`
+- proof commit `11a2fc02e4f8943c5de2ba89108b3f61f84c8f2b`
+- proof `debug/v143-contextual-prune/rhythm-final-render-relock-v3.json`, schema 3, `passed:true`, no failed checks
+- exact event count 1,017
+- frozen/PDF event SHA both `a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e`
+- PDF-event fidelity **1.0**
+- full final-render PDF: 1,730,922 bytes / 4 pages / SHA256 `5ea3ed1f382268d649dd54fcda9b3154ff81e2cc0712ddbbd7ae7aa593ed6cad`
+- preview final-render PDF: 1,705,648 bytes / 4 pages / SHA256 `bb5ce7da9783527b8dd4055adfbace3ab7d8d461153531ee553e7fa14348c99e`
+- eight section labels, correct song end at measure 113, no phantom 114
+- timing/technique/preview presentation checks all true
+- professional reference not opened by renderer relock
+- Production unchanged.
+
+Because the changes after run `32643978196` are presentation-only and the V3 relock proves the current renderer consumes the exact immutable frozen stream with fidelity 1.0, another GPU analyzer run is not required merely to re-engrave the unchanged authenticated events.
+
+## Scorer phase — NOW READY
+
+The musical event stream and current final renderer are both locked and green. Professional scorer work can proceed against the exact `a089...` candidate. The recovered professional human source remains scorer-only.
+
+No valid final professional score has yet been declared.
 
 ## Immediate next steps
 
-1. Wait for `rhythm-render-presentation-proof` CPU gate; inspect its proof/PDF and fix presentation only if needed.
-2. Once CPU presentation proof is green, update the real-audio pre-holdout gate with explicit final-render density/timing/technique/section assertions and intentionally trigger one fresh approved-audio run on the final presentation code. Do not trigger extra GPU runs.
-3. Require the new final-code freeze to preserve runtime safety, exact event/PDF hash identity and fidelity 1.0, while also proving the 1,017-style multi-note/polyphonic stream is not collapsed and the final PDF exposes timing/technique/section presentation.
-4. Lock that final-code artifact as the scoring candidate.
-5. Build the complete scorer-only structured professional reference for measures 1–113 from the immutable source. Do not invent unreadable notes/events.
-6. Run `verify_reference_completeness.py` and mandatory `run_final_holdout_gate.py` against the exact final-code frozen candidate.
-7. Require professional score >=0.99, `criticalMismatchCount == 0`, and PDF-event fidelity 1.0 before declaring Rhythm complete.
-8. If the score misses, use the professional result only to diagnose general error classes. Any musical code correction must be reference-free/general, followed by a brand-new approved-audio freeze before another professional score.
-9. Once the real professional gate passes, verify DadRock `/ai-tab` user end-to-end — specifically multiple notes/chords per measure, timing grid, techniques, sections, preview/full identity — then create `Final Rhythm Pipeline`.
+1. Preserve/record final V3 relock artifact metadata if needed and visually inspect its 4-page full PDF against the presentation requirements.
+2. Build the complete scorer-only structured professional reference for measures 1–113 from immutable `Professionalexample.jpg`; do not invent unreadable notes/events and do not use generated DadRock PDFs as ground truth.
+3. Run `verify_reference_completeness.py` and mandatory `run_final_holdout_gate.py` against the exact relocked/frozen `a089...` candidate.
+4. Require professional score >=0.99, `criticalMismatchCount == 0`, and PDF-event fidelity 1.0 before declaring Rhythm complete.
+5. If the score misses, use professional results only to diagnose general error classes. Any musical code correction must be general/reference-free, followed by a brand-new approved-audio freeze before another professional score.
+6. Once the real professional gate passes, verify DadRock `/ai-tab` user E2E — specifically multiple notes/chords per measure, timing grid, techniques, sections, preview/full identity, and no one-note-per-measure collapse — then create `Final Rhythm Pipeline`.
