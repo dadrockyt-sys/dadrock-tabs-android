@@ -1,0 +1,100 @@
+name: Bass Professional Render Contract Scaffold
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/bass-professional-render-contract.yml'
+      - 'lib/bassProfessionalRenderContract.js'
+      - 'analyzer/verify_bass_professional_render_contract.mjs'
+
+concurrency:
+  group: bass-professional-render-contract-scaffold
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  verify-scaffold:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify inactive four-string Bass render contract
+        env:
+          BASS_RENDER_CONTRACT_RESULT_PATH: debug/v143-contextual-prune/bass-professional-render-contract.json
+        run: node --experimental-default-type=module analyzer/verify_bass_professional_render_contract.mjs
+
+      - name: Enforce inactive safety boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('debug/v143-contextual-prune/bass-professional-render-contract.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+
+          if data.get('passed') is not True:
+              raise SystemExit('Bass render contract scaffold did not pass')
+          if data.get('stringLabels') != ['G', 'D', 'A', 'E']:
+              raise SystemExit('Bass scaffold must use four Standard Bass strings')
+          if data.get('stringCount') != 4:
+              raise SystemExit('Bass scaffold must remain four-string')
+          if data.get('pitchStringFretConsistencyRequired') is not True:
+              raise SystemExit('Bass pitch/string/fret consistency must be enforced')
+          if data.get('diagnosticOnly') is not True:
+              raise SystemExit('Bass render scaffold must remain diagnostic-only')
+          if data.get('productionCandidate') is not False:
+              raise SystemExit('Bass render scaffold must not claim production status')
+          if data.get('pdfRendererEnabled') is not False:
+              raise SystemExit('Bass PDF renderer must remain disabled')
+          if data.get('analyzerRoutingEnabled') is not False:
+              raise SystemExit('Bass analyzer routing must remain disabled')
+          if data.get('professionalStructuredIdentityEnabled') is not False:
+              raise SystemExit('Bass professional identity must remain disabled')
+          if data.get('productionModified') is not False:
+              raise SystemExit('Safety failure: Production modified')
+          if data.get('productionPromotionAuthorized') is not False:
+              raise SystemExit('Safety failure: Production promotion authorized')
+
+          print('BASS PROFESSIONAL RENDER CONTRACT SCAFFOLD PASSED')
+          print('stringCount=4')
+          print('pdfRendererEnabled=false')
+          print('analyzerRoutingEnabled=false')
+          print('productionModified=false')
+          PY
+
+      - name: Commit compact scaffold evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          file=debug/v143-contextual-prune/bass-professional-render-contract.json
+          git add -- "$file"
+
+          if git diff --cached --quiet; then
+            echo 'Bass render scaffold evidence unchanged.'
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Bass professional render scaffold'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
