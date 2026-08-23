@@ -4,7 +4,8 @@ Updated: 2026-08-23
 Branch: `v143-contextual-prune-lobo`
 Priority: **complete Rhythm end-to-end before Bass/Lead**.
 Latest functional commit under test: `400edb3febfa32626f7830d641f641c9325a93bf` — `Verify AI PDF router rejects invalid V143 fallback`.
-Latest CPU-workflow orchestration commit: `dbeac22061e0efbbbbf9a0dc6afd8b72dc2ad465` — `Persist Rhythm static runner failures`.
+Latest static-workflow orchestration commit: `dbeac22061e0efbbbbf9a0dc6afd8b72dc2ad465` — `Persist Rhythm static runner failures`.
+Latest Actions observability proof: `5045e95a139bd993fe87ab7cc6b44ee1a2f1e092` — `Record V143 Actions branch heartbeat`.
 
 ## Absolute rules
 
@@ -75,37 +76,35 @@ The currently persisted static file is still stale schema v4 from `b65cf9dd...` 
 
 ### CPU workflow orchestration repairs
 
-`741a8bf7512a4b2e4c49f461301b0fce1cc98dcd`:
-- static workflow checks out exact `${{ github.sha }}` instead of mutable branch head;
-- branch-scoped concurrency cancels overlapping older static runs.
+`741a8bf7512a4b2e4c49f461301b0fce1cc98dcd`: exact `${{ github.sha }}` checkout + branch-scoped concurrency for standalone static.
 
-`8f00a6be802f2d0ff9ce3de69ba85b3ab7b617ac`:
-- dependency install is logged;
-- a sanitized schema-v7 `install-locked-dependencies` diagnostic is committed if `npm ci` fails before the main runner.
+`8f00a6be802f2d0ff9ce3de69ba85b3ab7b617ac`: dependency-install log + schema-v7 `install-locked-dependencies` failure persistence.
 
-`b7b91f9c47001e2e931cd3e9d69163f7d0317e23`:
-- removed the standalone static job's `github.actor != github-actions[bot]` guard;
-- this is safe from evidence loops because `debug/**` is not in that workflow's push path filter;
-- exact-SHA checkout, concurrency and install-failure diagnostics remain intact.
+`b7b91f9c47001e2e931cd3e9d69163f7d0317e23`: removed static job's `github.actor != github-actions[bot]` guard; `debug/**` is outside its push path filter so this does not create an evidence loop.
 
-`dbeac22061e0efbbbbf9a0dc6afd8b72dc2ad465`:
-- identified a second evidence blind spot: if the authoritative static runner itself failed after dependencies installed, the workflow stopped before committing `.preholdout-static/report.json`, leaving the repository stuck on stale schema v4 with no current diagnostic;
-- the runner now tees a local log and uses `continue-on-error` only to allow evidence persistence;
-- an `always()` persistence step commits the runner's schema-v7 report even when the runner fails;
-- if the runner unexpectedly fails without producing a report, the workflow synthesizes a compact sanitized schema-v7 `static-runner-missing-report` diagnostic from the log tail;
-- after persistence, an explicit final step restores the workflow's failing status when the preflight failed.
+`dbeac22061e0efbbbbf9a0dc6afd8b72dc2ad465`: runner step now permits downstream persistence after failure; workflow persists runner report or a sanitized schema-v7 `static-runner-missing-report`, then restores failing job status. This is a strict second persistence path in addition to the runner's own best-effort EXIT trap.
 
 These changes affect CI orchestration/evidence only. They do not modify renderer behavior, musical thresholds, Modal/Production, payment paths, or professional-reference access.
 
-### Current static-run observation
+### Actions observability breakthrough
 
-`dbeac220...` was committed at 2026-08-23 05:30:36Z (01:30:36 America/Montreal). Through 01:44:59 local, the branch still contained no new workflow evidence commit and `rhythm-preholdout-static-preflight.json` remained the stale schema-v4 `b65cf9dd...` report. This exceeds the workflow's 12-minute job timeout measured from job start, but does **not** by itself prove the push run never started because runner queue delay is not observable from the current connector.
+The original standalone static workflow still produced no new repository evidence through 01:44:59 local after `dbeac220...`, so the stale schema-v4 report remained non-actionable. The connector cannot list push runs or dispatch workflows and no Actions status was exposed through commit-status lookup.
 
-Current GitHub connector limitation: it can inspect a known workflow run/job, but it cannot list push-triggered workflow runs or dispatch this workflow. Commit-status lookup exposes no Actions check-run status for this branch. Public Actions-page fallback also did not yield a usable run listing. Continue to avoid diagnosing the renderer from stale schema-v4 evidence.
+To distinguish a repository-wide Actions trigger problem from a problem specific to the old static workflow, a minimal CPU-only branch heartbeat workflow was added:
+- workflow: `.github/workflows/v143-actions-branch-heartbeat.yml`
+- creation commit: `f434fb682cf392c209e3f11a438b9de99e72e0ac`
+- it successfully triggered from the connected GitHub write within seconds;
+- proof file: `debug/v143-contextual-prune/actions-branch-heartbeat.json`
+- run ID: `32621233674`
+- source commit: `f434fb682cf392c209e3f11a438b9de99e72e0ac`
+- actor: `dadrockyt-sys`
+- event: `push`
+- passed: `true`
+- proof commit by `github-actions[bot]`: `5045e95a139bd993fe87ab7cc6b44ee1a2f1e092`.
 
-The standalone runner itself already has an EXIT trap that writes schema-v7 failure evidence; its internal git persistence is best-effort (`|| true`). `dbeac220...` remains useful as a strict workflow-level second persistence path if that internal push fails.
+This proves GitHub Actions is enabled, branch `push` events created by the connected GitHub write do trigger workflows, branch workflow files do not need to be on `main` for `push`, `contents: write` works, and a workflow can commit/rebase/push branch evidence successfully. Therefore the lack of current static evidence is specific to the existing static workflow/run path (for example disabled workflow state, an early pre-evidence failure, or another workflow-specific problem), not a repository-wide trigger failure.
 
-Next authoritative event is still a fresh schema-v7 static result from `dbeac220...` (or descendant containing it). Any red schema-v7 result should be actionable.
+Next recovery step: create a fresh CPU-only standalone static workflow identity using the already-hardened runner and canonical schema-v7 evidence path. A new workflow file avoids any stale disabled-state identity while leaving the real-audio GPU workflow untouched. It must use exact SHA checkout, its own concurrency group, dependency install, the same `run_static_preholdout_preflight.sh`, strict evidence persistence, and no professional reference access.
 
 ## Fresh real-audio pre-holdout workflow
 
@@ -130,7 +129,7 @@ That self-test workflow edit is CPU-only and does not trigger the real-audio GPU
 
 ## Immediate next steps
 
-1. Continue observing standalone static evidence from `dbeac220...`; require schema v7 before changing musical/product behavior.
+1. Add fresh CPU-only standalone static workflow identity and let it produce canonical schema-v7 evidence.
 2. If schema v7 is red, use only its current `failedStage` + sanitized `failureLogTail` and fix the concrete issue without weakening contracts.
 3. If schema v7 is green, immediately stabilize the consolidated self-test as above and require schema v6 green.
 4. Save this checkpoint after every meaningful result.
