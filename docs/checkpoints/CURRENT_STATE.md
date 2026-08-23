@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 — Bass event/timing canary active
+Updated: 2026-08-22 — Bass note/timing/playability closed green
 Branch: `v143-contextual-prune-lobo`
 
 ## Product contract / safety
@@ -19,13 +19,11 @@ Save this file frequently after meaningful work and during long CI waits.
 
 Approved fixture: `public/gomywayfullaitest.m4a`.
 
-Professional analyzer evidence: `debug/v143-contextual-prune/ai-tab-real-audio-canary.json`.
+Professional analyzer: `debug/v143-contextual-prune/ai-tab-real-audio-canary.json` — `passed:true`, 358 valid render events, 100% render survival/playability/placement/pitch validity, 112 unique measures, 25 technique events, 358 sustain coverage, tempo ~129.199 BPM, 4/4, E Standard.
 
-Key proof: `passed:true`, `analysisEngine:v143-reference-free-rhythm`, 358 valid render events, 100% render survival/playability/placement/pitch validity, 112 unique measures, 25 technique events, 358 sustain coverage, tempo ~129.199 BPM, 4/4, E Standard.
+PDF: `debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json` — `passed:true`, 358 events, max measure 113, 4 full pages, 4 preview pages.
 
-PDF evidence: `debug/v143-contextual-prune/ai-tab-real-audio-pdf-validation.json`, `passed:true`, 358 events, maximum measure 113, 4 full pages, 4 preview pages.
-
-Local built-Next HTTP gate is closed green at bot evidence commit `5b29c0c3df3c97c0f4962e058997b2134d0179b7`. Whole-product customer contract passed at `debug/v143-contextual-prune/ai-tab-end-to-end-contract.json`.
+Local built-Next HTTP gate is green at `5b29c0c3df3c97c0f4962e058997b2134d0179b7`. Whole-product contract passed at `debug/v143-contextual-prune/ai-tab-end-to-end-contract.json`.
 
 ## Bass base contracts — GREEN / INACTIVE
 
@@ -48,72 +46,120 @@ Historical `bass_technique_diagnostics_v7.py` is reference-guided and must **not
 
 ## Bass real-audio separation + pitch — CLOSED GREEN
 
-Failure-harness diagnosis is preserved at `debug/v143-contextual-prune/bass-real-audio-canary-failure-diagnostic.json`. Harness fixes were commits `885b90a741d922143bfd83e8d0c376d13a0c4582` and `9973e30af77f0c8bbccbc9ec9960ccd858f895aa`.
-
-Superseding run `32611529763` passed completely. Evidence:
+Evidence:
 
 - `debug/v143-contextual-prune/bass-real-audio-canary-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-canary.json`
 
-Proof:
+Run `32611529763`: Modal exit 0, verifier exit 0, `passed:true`, real separation true, pitch evidence true, distinct direct/cascade stems, deterministic seed 143. Both 211.44-second Bass views have ~99.99% 30–1000 Hz energy and ~99.7% playable-range pitch frames.
 
-```text
-modalExitCode: 0
-verifierExitCode: 0
-passed: true
-realAudioBassSeparationPassed: true
-realAudioBassPitchEvidencePassed: true
-realAudioBassCanaryPassed: true
-stemsDistinct: true
-deterministicSeed: 143
-```
+This proved only real Bass separation + reference-free pitch plausibility.
 
-Direct view: 211.4409 s, 44.1 kHz stereo, 99.9866% energy 30–1000 Hz, 6942 active pitch frames, median 74.0637 Hz, 99.7263% playable-range frames.
+## Bass candidate / note / timing / playability — CLOSED GREEN
 
-Cascade view: 211.4409 s, 44.1 kHz stereo, 99.9864% energy 30–1000 Hz, 6943 active pitch frames, median 74.0633 Hz, 99.6975% playable-range frames.
+Implemented files:
 
-This proves only real Bass separation + reference-free pitch plausibility. Note/timing/techniques/full professional quality were not claimed.
+- `analyzer/final_product/shared/timing_grid.py`
+- `analyzer/final_product/bass/candidate_detection/bass_candidate_timing.py`
+- `analyzer/bass_real_audio_event_timing_canary_modal.py`
+- `analyzer/verify_bass_real_audio_event_timing.mjs`
+- `.github/workflows/bass-real-audio-event-timing.yml`
 
-## LIVE STEP — Bass candidate / note / timing / playability canary ACTIVE
+Run `32611818648` completed **success**, including fail-closed enforcement.
 
-Exactly one next boundary has been implemented. New files/commits:
-
-- `929bbee6293a13a42ee7c7c43f0975a89d739fd9` — `analyzer/final_product/shared/timing_grid.py`; shared instrument-agnostic 4/4 subdivision grid and nearest-slot authentication.
-- `812265864e30e2ac3cd56270f615f7d5fa540c27` — `analyzer/final_product/bass/candidate_detection/bass_candidate_timing.py`; Bass-only Basic Pitch range MIDI 28..67 / ~41.203..391.995 Hz, exact direct+cascade consensus, authenticated timing slots, deterministic four-string position selection.
-- `daa695a66bf36d985467a30654bc7e06b5b54bc2` — `analyzer/bass_real_audio_event_timing_canary_modal.py`; isolated Modal real-audio orchestration using full-mix reference-free timing plus the two proven Bass stems.
-- `26492e0fff05c50743e20fad8c5129742e38edf6` — `analyzer/verify_bass_real_audio_event_timing.mjs`; validates generated real-audio events through the existing Bass render contract and unchanged fail-closed quality gate.
-- `370cdca101f983a5c11a3bbd53bb68724de9dc2f` — `.github/workflows/bass-real-audio-event-timing.yml`; isolated run + heartbeat + artifact + compact evidence commit + fail-closed enforcement.
-
-Boundary rules:
-
-- audio-derived candidates only; no song/reference TAB labels;
-- exact direct+cascade MIDI consensus required;
-- reference-free timing comes from `analyzer/v143_reference_free_timing.py`;
-- every accepted event must carry real `measure`, `step`, MIDI, `stringIndex`, fret, and exact pitch-position consistency;
-- no technique claim: every event carries an empty technique list in this boundary;
-- existing 70% quality thresholds are reused unchanged;
-- training/routing/structured identity/PDF/live/Vercel/Production/payment/token/email remain disabled.
-
-Current GitHub Actions heartbeat:
-
-```text
-workflow: Bass Real Audio Event Timing
-runId: 32611818648
-sourceCommit: 370cdca101f983a5c11a3bbd53bb68724de9dc2f
-startedAtUtc: 2026-08-23T02:02:29.507123+00:00
-```
-
-Heartbeat evidence: `debug/v143-contextual-prune/bass-real-audio-event-timing-start.json`.
-
-Expected final evidence:
+Evidence:
 
 - `debug/v143-contextual-prune/bass-real-audio-event-timing-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-event-timing.json`
 
+Action proof:
+
+```text
+modalCredentialsAvailableInGitHubActions: true
+modalExitCode: 0
+rawCanaryOutputPresent: true
+verifierExitCode: 0
+canaryEvidencePresent: true
+```
+
+Reference-free timing proof:
+
+```text
+tempoBpm: 129.19921875
+meter: 4/4
+beatCount: 447
+firstBeatInMeasure: 3
+downbeatIndexMod4: 1
+beatConfidence: 0.7233
+barConfidence: 0.0880
+```
+
+Candidate proof:
+
+```text
+direct raw Basic Pitch events: 21354
+cascade raw Basic Pitch events: 20589
+direct grid-aligned: 21079
+cascade grid-aligned: 20309
+slot/pitch hypotheses: 22648
+rejected without two-view consensus: 9132
+consensus slots / accepted events: 1754
+requiredConsensusViews: 2
+Bass MIDI range: 28..67
+maximumGridErrorSeconds: 0.1
+```
+
+All 1754 accepted events are supported by exact direct+cascade MIDI consensus, fall in the Bass range, are authenticated to the reference-free timing grid, map to valid four-string G-D-A-E positions, and contain no technique claim.
+
+Existing Bass professional quality gate on these real-audio events:
+
+```text
+rawEventCount: 1754
+validRenderEventCount: 1754
+renderEventSurvivalPercent: 100
+playableStringFretPercent: 100
+timingCoveragePercent: 100
+pitchValidityPercent: 100
+pitchStringFretConsistencyPercent: 100
+passed: true
+```
+
+Boundary result:
+
+```text
+passed: true
+realAudioBassCandidateTimingPassed: true
+noteTimingPlayabilityBoundaryPassed: true
+techniqueQualityProven: false
+professionalBassComplete: false
+```
+
+All safety checks remained green/disabled: no training, customer routing, structured Bass identity, PDF renderer, live Modal change, Vercel deployment, Production modification/promotion, payment, token redemption, or email.
+
+Important interpretation: this closes the audio-derived candidate/note/timing/playability **contract boundary**. It does not claim ground-truth note transcription accuracy against a reference TAB, and it does not prove Bass techniques or complete professional Bass output.
+
+## LIVE STEP — isolated Bass technique evidence
+
+Advance exactly one boundary next: add conservative, reference-free Bass-specific technique evidence to the already authenticated 1754-event substrate.
+
+Requirements:
+
+- no reference TAB, song identity, artist identity, or fixture-specific labels;
+- technique evidence must derive from the separated Bass audio and authenticated event trajectories;
+- do not reuse `bass_technique_diagnostics_v7.py`;
+- preserve note/timing/string/fret fields unchanged;
+- fail closed: uncertain events remain technique-free rather than guessed;
+- technique families must be independently evidenced and conservative;
+- no training authorization in this boundary;
+- keep routing, structured identity, PDF, live Modal, Vercel, Production, payment/token/email disabled;
+- existing Bass note/timing/playability thresholds remain unchanged.
+
+Candidate technique families from the inactive training contract are `slide`, `hammer_on`, `pull_off`, `mute`, `harmonic`, and `sustain`; higher-risk `slap`, `pop`, `tap`, `bend`, and `vibrato` remain future evidence boundaries unless separately proven.
+
 ## Immediate next action
 
-1. Poll run `32611818648` through completion.
-2. Fetch action/result evidence and exact logs/artifact if any phase fails.
-3. If green, close only candidate/note/timing/playability. Techniques remain the next separate boundary; professional Bass PDF/routing remain disabled.
-4. If red, fix only the exact harness/metric without weakening thresholds or safety.
-5. Exact-branch Vercel Preview remains an external blocker.
+1. Inspect proven reference-free Rhythm technique modules only for reusable structural patterns, not Guitar musical assumptions.
+2. Implement isolated Bass-specific conservative technique extraction over the accepted real-audio Bass events and direct/cascade stems.
+3. Verify that techniques never alter authenticated note/timing/playability and that uncertain techniques remain absent.
+4. Run an isolated real-audio technique canary on the approved fixture.
+5. Professional Bass PDF/routing/identity remain disabled after this boundary; exact-branch Vercel Preview remains an external blocker.
