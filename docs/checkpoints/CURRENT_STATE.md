@@ -152,7 +152,7 @@ Required proof from this gate:
 
 Expected compact evidence `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` is still absent. Do not call this gate green yet and do not launch duplicate expensive GPU work until CPU glue is green.
 
-## CPU static pre-holdout glue — FAILURE LOCALIZED; ENVIRONMENT FIX COMMITTED
+## CPU static pre-holdout glue — FAILURE LOCALIZED; ENVIRONMENT FIX + DIAGNOSTICS COMMITTED
 
 Purpose: exercise exact raw product-response → structured payload → freeze → actual polished V143 Rhythm renderer → PDF-event-fidelity glue without GPU or professional reference.
 
@@ -161,8 +161,9 @@ Files/commits:
 - `a1dac791e7266c04f09fe3efa267e6a978d1e667` — simplified CPU workflow using reusable runner.
 - `88b8260791dc86c292e02a0fa93bb8447897b0aa` — failure diagnostics persist to branch.
 - `eea01a28d674fe130db38a086eff054e0e007fd0` — aligned static workflow with the `/ai-tab` PDF product files and moved standalone ESM work from `/tmp` into `$GITHUB_WORKSPACE/.preholdout-static` so Node can resolve the repository's installed `pdf-lib` dependency exactly as the product renderer does.
+- `eb57a53f9a54294f69fc5174a89ef549da4b6039` — static runner now persists a sanitized last-24-lines diagnostic tail from the failing stage into `rhythm-preholdout-static-preflight.json`; no secrets are expected in this CPU test, and token/secret-like assignments are redacted defensively.
 
-Latest persisted diagnostic before that fix:
+Latest persisted diagnostic before those fixes:
 `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`
 
 Observed:
@@ -178,12 +179,12 @@ productionModified: false
 
 Important diagnosis: the previous CPU test copied `createV143RhythmPdf.mjs` under `/tmp/.../esm`. Node package resolution starts from the importing module's location, so `pdf-lib` installed in the repository `node_modules` could be unreachable before the renderer itself ran. The updated workflow now keeps those standalone modules under the repository workspace. This is a test-environment correction only; no production renderer behavior, branding, or thresholds were changed.
 
-Await the new static workflow evidence. If it becomes green, this confirms the earlier PDF-stage failure was test glue rather than a polished-renderer defect. If it still fails, persist the exact sanitized renderer-log tail and fix the next concrete exception.
+Await the new static workflow evidence. If it becomes green, this confirms the earlier PDF-stage failure was test glue rather than a polished-renderer defect. If it still fails, the next committed schemaVersion 3 diagnostic should contain the exact sanitized renderer-log tail needed to fix the concrete exception.
 
 ## Immediate next actions
 
-1. Observe the `eea01a28...` static preflight result and require professional preview/full PDFs plus exact PDF-event fidelity 1.0.
-2. If still red, capture the sanitized `render-frozen-pdf.log` tail and diagnose the exact remaining exception.
+1. Observe the post-`eb57a53...` static preflight result and require professional preview/full PDFs plus exact PDF-event fidelity 1.0.
+2. If still red, read `failureLogTail` from the schemaVersion 3 diagnostic and fix only the concrete failing condition.
 3. Save this checkpoint after each meaningful change.
 4. Only after CPU glue is green, diagnose/retrigger exactly one fresh real-audio pre-holdout GPU run if needed.
 5. Recover/re-supply a **clean complete** professional Rhythm source only after the fresh reference-free freeze/PDF evidence is safely locked.
