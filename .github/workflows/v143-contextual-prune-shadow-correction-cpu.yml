@@ -14,6 +14,10 @@ on:
       - analyzer/v143_contextual_prune_runtime.py
       - analyzer/check_v143_contextual_prune_shadow_static.py
 
+concurrency:
+  group: v143-contextual-prune-shadow-correction-cpu
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
