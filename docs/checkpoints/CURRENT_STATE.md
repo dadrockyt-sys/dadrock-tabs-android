@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 — Bass harmonic boundary implementation in progress
+Updated: 2026-08-22 — Bass harmonic canary queued
 Branch: `v143-contextual-prune-lobo`
 
 ## Safety / product contract
@@ -96,24 +96,30 @@ All training/routing/structured identity/PDF/live Modal/Vercel/Production/paymen
 
 ## LIVE STEP — isolated harmonic evidence boundary
 
-Implementation started, still diagnostic only.
+Implementation is complete enough for the first real-audio diagnostic run, still customer-inactive.
 
 New commits/files:
 
 - `0d6ebd52465ccf07f9193b19eaef099d7d9f4235` — `analyzer/final_product/bass/techniques/bass_harmonic_evidence.py`
 - `07e0a7a6eedade3c90f47d7baf493e4278915ba4` — `analyzer/bass_real_audio_harmonic_canary_modal.py`
+- `4eb76fe1f43dddc12d97ae20ba72b0543b9f962a` — `analyzer/verify_bass_real_audio_harmonics.mjs`
+- `01d71399a14f706152fdf8b3353e59b781cf3e5d` — `.github/workflows/bass-real-audio-harmonics.yml`
 
 The helper considers only common standard-Bass open-string natural-harmonic sounding pitches and requires two-view spectral evidence: tonal purity, upper-partial support, weak subharmonic energy, controlled onset, minimum duration, and exact cross-view agreement. It does not reinterpret the mapped TAB fret as a harmonic node and must not change note/timing/MIDI/string/fret/duration identity.
 
-This detector is **not proven yet**. No harmonic label is authorized for professional output until the isolated verifier/workflow and real-audio canary pass. If the approved fixture yields absent or ambiguous harmonic evidence, keep `harmonic` unproven rather than weakening thresholds.
+The verifier is fail-closed: base→subset and subset→harmonic identity must remain 100%; the five already-proven subset families must remain proven; only `harmonic` may be newly added; every harmonic label must have two-view reference-free evidence; all quality gates must remain green; all production/customer flags remain false. At least one harmonic event is required to prove this boundary.
+
+Workflow `Bass Real Audio Harmonics` was created and should auto-trigger from commit `01d71399a14f706152fdf8b3353e59b781cf3e5d`. Heartbeat file is expected at `debug/v143-contextual-prune/bass-real-audio-harmonic-start.json`; it was not present on the first immediate poll after workflow creation.
+
+This detector is **not proven yet**. If the approved fixture yields absent or ambiguous harmonic evidence, keep `harmonic` unproven rather than weakening thresholds.
 
 High-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven. Professional Bass remains false.
 
 ## Immediate next action
 
-1. Finish `analyzer/verify_bass_real_audio_harmonics.mjs`.
-2. Add a dedicated fail-closed GitHub Actions harmonic workflow using the approved fixture and Modal secrets, with all production/customer flags false.
-3. Run the isolated harmonic canary.
+1. Poll for `debug/v143-contextual-prune/bass-real-audio-harmonic-start.json` and capture run id.
+2. Poll that run through completion.
+3. Inspect `debug/v143-contextual-prune/bass-real-audio-harmonic-action.json` and `debug/v143-contextual-prune/bass-real-audio-harmonic.json` plus artifact/logs if red.
 4. If harmonic evidence is absent/ambiguous or any identity/safety gate fails, keep harmonic explicitly unproven and do not weaken thresholds.
-5. Save this checkpoint again before and after the run.
+5. Save this checkpoint again after the run/result.
 6. Professional Bass PDF/routing/identity remain disabled. Exact-branch Vercel Preview remains an external blocker.
