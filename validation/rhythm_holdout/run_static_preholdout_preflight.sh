@@ -48,6 +48,7 @@ log_by_stage = {
     "runtime-isolation": work / "logs/runtime-isolation.json",
     "ai-tab-pdf-product-contract": work / "logs/ai-tab-pdf-product-contract.json",
     "real-audio-preholdout-workflow-contract": work / "logs/real-audio-preholdout-workflow-contract.json",
+    "v143-runtime-anti-leakage-contract": work / "logs/v143-runtime-anti-leakage-contract.json",
     "structured-freeze-payload": work / "logs/prepare-freeze.log",
     "freeze-analysis": work / "logs/freeze.log",
     "professional-pdf-render": work / "logs/render-frozen-pdf.log",
@@ -65,7 +66,7 @@ if log_path and log_path.exists():
         )
         log_tail.append(line[:500])
 report = {
-    "schemaVersion": 6,
+    "schemaVersion": 7,
     "gate": "rhythm-preholdout-static-preflight",
     "sourceCommit": os.environ.get("SOURCE_COMMIT_VALUE"),
     "passed": False,
@@ -137,6 +138,11 @@ node --check "$WORK/esm/jimmyPaigeAnalysisPayload.mjs"
 node --check "$WORK/esm/prepare-freeze.mjs"
 node --check "$WORK/esm/createV143RhythmPdf.mjs"
 node --check "$WORK/esm/render-frozen.mjs"
+
+STAGE="v143-runtime-anti-leakage-contract"
+node validation/rhythm_holdout/verify_v143_runtime_safety_contract.mjs \
+  "$WORK/esm/jimmyPaigeAnalysisPayload.mjs" \
+  > "$WORK/logs/v143-runtime-anti-leakage-contract.json"
 
 python -m py_compile \
   validation/rhythm_holdout/canonical.py \
@@ -241,6 +247,7 @@ source_commit = sys.argv[2]
 isolation = json.loads((work / "logs/runtime-isolation.json").read_text(encoding="utf-8"))
 product_contract = json.loads((work / "logs/ai-tab-pdf-product-contract.json").read_text(encoding="utf-8"))
 real_audio_workflow = json.loads((work / "logs/real-audio-preholdout-workflow-contract.json").read_text(encoding="utf-8"))
+runtime_safety = json.loads((work / "logs/v143-runtime-anti-leakage-contract.json").read_text(encoding="utf-8"))
 manifest = json.loads((work / "freeze/rhythm-freeze-manifest.json").read_text(encoding="utf-8"))
 pdf = json.loads((work / "freeze/rhythm-pdf-event-fidelity.json").read_text(encoding="utf-8"))
 render = json.loads((work / "freeze/pdf/pdf-event-evidence.json").read_text(encoding="utf-8"))
@@ -260,6 +267,9 @@ checks = {
     "realAudioWorkflowUsesRepoLocalRenderer": real_audio_workflow.get("rendererWorkspace") == ".preholdout/esm",
     "realAudioWorkflowHasNoHoldoutReferencePath": real_audio_workflow.get("humanReferencePathPresent") is False,
     "realAudioWorkflowHasNoTmpRendererWorkspace": real_audio_workflow.get("tmpRendererWorkspacePresent") is False,
+    "v143RuntimeAntiLeakageContractPassed": runtime_safety.get("passed") is True,
+    "v143RuntimeUnsafeCasesAllRejected": runtime_safety.get("unsafeAccepted") == [],
+    "v143RuntimeSafeCaseCarriesRenderEvents": runtime_safety.get("safeChecks", {}).get("renderEventsPresent") is True,
     "syntheticEventCount400": manifest.get("eventCount") == 400,
     "syntheticMeasureCount100": manifest.get("uniqueMeasureCount") == 100,
     "sourceAudioHashPresent": bool(manifest.get("sourceAudioSha256")),
@@ -273,7 +283,7 @@ checks = {
 }
 failed = [name for name, passed in checks.items() if not passed]
 report = {
-    "schemaVersion": 6,
+    "schemaVersion": 7,
     "gate": "rhythm-preholdout-static-preflight",
     "sourceCommit": source_commit,
     "eventCount": manifest.get("eventCount"),
@@ -287,6 +297,7 @@ report = {
     "previewPageCount": render.get("previewPageCount"),
     "pdfProductContractSchemaVersion": product_contract.get("schemaVersion"),
     "realAudioWorkflowContractSchemaVersion": real_audio_workflow.get("schemaVersion"),
+    "runtimeSafetyContractSchemaVersion": runtime_safety.get("schemaVersion"),
     "checks": checks,
     "failedChecks": failed,
     "failureLogTail": [],
