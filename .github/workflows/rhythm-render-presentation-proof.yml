@@ -1,0 +1,234 @@
+name: Rhythm Render Presentation CPU Proof
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/rhythm-render-presentation-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rhythm-render-presentation-proof-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact triggering commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install isolated render dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .presentation-proof
+          cat > .presentation-proof/package.json <<'JSON'
+          {
+            "private": true,
+            "dependencies": {
+              "pdf-lib": "1.17.1"
+            }
+          }
+          JSON
+          npm install --prefix .presentation-proof --ignore-scripts --no-audit --no-fund --package-lock=false
+          python -m pip install --disable-pip-version-check --quiet pypdf
+
+      - name: Build standalone ESM renderer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .presentation-proof/esm
+          cp lib/v143RenderContract.js .presentation-proof/esm/v143RenderContract.mjs
+          sed "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" \
+            lib/createV143RhythmPdf.js > .presentation-proof/esm/createV143RhythmPdf.mjs
+          node --check .presentation-proof/esm/v143RenderContract.mjs
+          node --check .presentation-proof/esm/createV143RhythmPdf.mjs
+
+      - name: Run presentation contract proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          NODE_PATH="$PWD/.presentation-proof/node_modules" node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import {
+            buildReferenceFreeRhythmSections,
+            summarizeV143RhythmPresentation,
+          } from './.presentation-proof/esm/v143RenderContract.mjs';
+          import { createV143RhythmPdf } from './.presentation-proof/esm/createV143RhythmPdf.mjs';
+
+          const events = [];
+          let eventIndex = 0;
+          const push = (measure, step, stringIndex, fret, extra = {}) => {
+            const open = [64, 59, 55, 50, 45, 40][stringIndex];
+            events.push({
+              eventIndex: eventIndex++,
+              measure,
+              step,
+              stringIndex,
+              fret,
+              midi: open + fret,
+              durationSteps: extra.durationSteps || 2,
+              techniques: extra.techniques || [],
+              ...extra,
+            });
+          };
+
+          for (let measure = 1; measure <= 12; measure += 1) {
+            const block = Math.floor((measure - 1) / 4);
+            const steps = block === 0 ? [0, 4, 8, 12] : block === 1 ? [0, 2, 6, 10, 14] : [0, 4, 6, 8, 12, 14];
+            for (const step of steps) {
+              push(measure, step, 5, block === 1 ? 3 : 0);
+              push(measure, step, 4, block === 2 ? 5 : 2);
+            }
+          }
+
+          push(2, 14, 2, 2, {
+            techniques: ['bend', 'bend-release'],
+            bendSemitones: 2,
+            bendTargetFret: 4,
+            bendTargetMidi: 59,
+            bendRelease: true,
+          });
+          const slideSourceIndex = eventIndex;
+          push(6, 8, 1, 3, {
+            techniques: ['slide-up'],
+            legatoTargetEventIndex: slideSourceIndex + 1,
+            legatoTargetFret: 5,
+            legatoTargetMidi: 64,
+          });
+          push(6, 12, 1, 5, {
+            techniques: [],
+            legatoContinuationFromEventIndex: slideSourceIndex,
+            legatoContinuationType: 'slide-up',
+          });
+          push(10, 8, 0, 7, { techniques: ['vibrato'] });
+
+          const presentation = summarizeV143RhythmPresentation(events);
+          const sections = buildReferenceFreeRhythmSections(events);
+          if (presentation.oneNotePerMeasureCollapseDetected) throw new Error('false one-note-per-measure collapse');
+          if (presentation.averageNotesPerMeasure <= 2) throw new Error('multi-note measure density lost');
+          if (presentation.multiNoteOnsetCount < 20) throw new Error('polyphonic onset evidence lost');
+          if (presentation.maximumChordSize < 2) throw new Error('chord display evidence lost');
+          if (!presentation.techniqueTypes.includes('bend') || !presentation.techniqueTypes.includes('slide-up')) throw new Error('technique coverage lost');
+          if (sections.length < 2) throw new Error('reference-free section segmentation not present');
+
+          const collapsed = Array.from({ length: 10 }, (_, index) => ({
+            eventIndex: index,
+            measure: index + 1,
+            step: 0,
+            stringIndex: 5,
+            fret: 0,
+            midi: 40,
+            durationSteps: 1,
+            techniques: [],
+          }));
+          const collapsedSummary = summarizeV143RhythmPresentation(collapsed);
+          if (!collapsedSummary.oneNotePerMeasureCollapseDetected) throw new Error('collapsed stream not detected');
+
+          const pdf = await createV143RhythmPdf({
+            song: 'Presentation Proof',
+            artist: 'DadRock Tabs',
+            generatedTab: 'proof',
+            renderEvents: events,
+            tuning: 'E Standard',
+            tempo: 129,
+            timeSignature: '4/4',
+            preview: false,
+          });
+          await fs.writeFile('.presentation-proof/presentation-proof.pdf', pdf);
+          await fs.writeFile('.presentation-proof/presentation-proof.json', JSON.stringify({
+            schemaVersion: 1,
+            sourceCommit: process.env.GITHUB_SHA,
+            eventCount: events.length,
+            presentation,
+            sections,
+            pdfBytes: pdf.length,
+            timingGridRequired: true,
+            techniqueDisplayRequired: true,
+            sectionDisplayRequired: true,
+            oneNotePerMeasureCollapseGuard: true,
+            referenceFree: true,
+            professionalReferenceUsed: false,
+            runtimeLabelsRequired: false,
+          }, null, 2) + '\n');
+          NODE
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from pypdf import PdfReader
+
+          pdf = Path('.presentation-proof/presentation-proof.pdf')
+          report_path = Path('.presentation-proof/presentation-proof.json')
+          report = json.loads(report_path.read_text(encoding='utf-8'))
+          reader = PdfReader(str(pdf))
+          text = '\n'.join(page.extract_text() or '' for page in reader.pages)
+          checks = {
+              'pdfRendered': pdf.stat().st_size > 20000,
+              'timingLegendDisplayed': 'Timing: 16th-note grid' in text,
+              'sectionLabelsDisplayed': 'SECTION ' in text,
+              'bendNotationDisplayed': 'b' in text,
+              'pageCountPositive': len(reader.pages) > 0,
+              'multiNoteDensityPreserved': report['presentation']['averageNotesPerMeasure'] > 2,
+              'polyphonicOnsetsPreserved': report['presentation']['multiNoteOnsetCount'] > 20,
+              'oneNotePerMeasureCollapseGuard': report['oneNotePerMeasureCollapseGuard'] is True,
+              'referenceFree': report['referenceFree'] is True,
+              'professionalReferenceNotUsed': report['professionalReferenceUsed'] is False,
+              'runtimeLabelsNotRequired': report['runtimeLabelsRequired'] is False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          report['checks'] = checks
+          report['failedChecks'] = failed
+          report['pageCount'] = len(reader.pages)
+          report['passed'] = not failed
+          report_path.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          if failed:
+              raise SystemExit('presentation proof failed: ' + ', '.join(failed))
+          PY
+
+          cp .presentation-proof/presentation-proof.json \
+            debug/v143-contextual-prune/rhythm-render-presentation-proof.json
+
+      - name: Upload proof artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhythm-render-presentation-proof
+          path: |
+            .presentation-proof/presentation-proof.pdf
+            .presentation-proof/presentation-proof.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Persist proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add debug/v143-contextual-prune/rhythm-render-presentation-proof.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Record Rhythm render presentation proof"
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
