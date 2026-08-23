@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 — Bass harmonic first canary inspected; proof intentionally withheld
+Updated: 2026-08-22 — Bass harmonic safe-abstention rerun queued
 Branch: `v143-contextual-prune-lobo`
 
 ## Safety / product contract
@@ -35,7 +35,7 @@ This closes structural/audio-derived note/timing/playability, not ground-truth t
 
 ## Bass conservative technique subset — CLOSED GREEN
 
-Run `32612166508` passed from source commit `1b94d42a5d52047e183eeee8763ef5d6c88b1d8` lineage through workflow source `1b94d42a5d5ae8e3704f479c259499fa6c2c214e`; final evidence commit `145f8a15a047016020ff20b38fb1b277b0b30603`.
+Run `32612166508` passed. Final evidence commit `145f8a15a047016020ff20b38fb1b277b0b30603`.
 
 Key proof: 1757 events; 100% identity preservation; 302 technique events; 332 labels; 100% two-view consensus; sustain 235; slide-down 33; slide-up 38; hammer-on 11; pull-off 14; mute 1; quality 100% across established gates.
 
@@ -51,20 +51,9 @@ Important: separate GPU analyses can regenerate slightly different event/rare-te
 
 ## Bass harmonic investigation — FIRST CANARY RED / HARMONIC NOT PROVEN
 
-Files/commits:
+Run `32612695589` completed `failure` only at the fail-closed enforcement step. Modal exited 0. The first verifier exited 1 because it incorrectly required the rare `mute` family to recur in this independent rerun.
 
-- `0d6ebd52465ccf07f9193b19eaef099d7d9f4235` — `analyzer/final_product/bass/techniques/bass_harmonic_evidence.py`
-- `07e0a7a6eedade3c90f47d7baf493e4278915ba4` — `analyzer/bass_real_audio_harmonic_canary_modal.py`
-- `4eb76fe1f43dddc12d97ae20ba72b0543b9f962a` — `analyzer/verify_bass_real_audio_harmonics.mjs`
-- `01d71399a14f706152fdf8b3353e59b781cf3e5d` — `.github/workflows/bass-real-audio-harmonics.yml`
-
-Run `32612695589` completed `failure` only at the fail-closed enforcement step. Modal itself exited 0 and generated raw output; verifier exited 1. Evidence:
-
-- `debug/v143-contextual-prune/bass-real-audio-harmonic-action.json`
-- `debug/v143-contextual-prune/bass-real-audio-harmonic.json`
-- artifact `9486003926`
-
-Observed first-run facts:
+First-run evidence:
 
 ```text
 eventCount: 1754
@@ -77,17 +66,47 @@ current-run subset: sustain 217, slide 74, hammer-on 11, pull-off 11, mute 0
 passed: false
 ```
 
-The verifier failed `requiredSubsetFamiliesStillProven` because this independent rerun produced no `mute`, while the prior closed-green technique run had one mute. This is a harness conflation of independent-run repeatability with the already-closed subset proof; it is not an identity/quality regression.
+The single harmonic candidate was MIDI 40 at mapped E-string fret 12, duration ~0.244 s. Both views showed tonal purity ~0.696, upper-partial ratio ~0.52, subharmonic ratio ~0.014 and zero detected onset. A normal fretted E2 and a 12th-node natural harmonic can share the same sounding pitch and similar overtone structure, so this candidate is ambiguous. It is deliberately **not accepted as proof**.
 
-More importantly, the single harmonic candidate is **not strong enough to claim harmonic**. It is MIDI 40 at mapped E-string fret 12, duration ~0.244 s. Both views showed tonal purity ~0.696, upper-partial ratio ~0.52, subharmonic ratio ~0.014 and zero detected onset. A normal fretted E2 and a 12th-node natural harmonic can share the same sounding pitch and similar overtone structure. The present spectral criteria do not defensibly distinguish them. Therefore harmonic remains unproven rather than accepting a plausible false positive.
+Evidence:
+
+- `debug/v143-contextual-prune/bass-real-audio-harmonic-action.json`
+- `debug/v143-contextual-prune/bass-real-audio-harmonic.json`
+- artifact `9486003926`
+
+## Harmonic boundary hardening — IMPLEMENTED / RERUN PENDING
+
+New commits:
+
+- `db74e2e64e17000f0aeee3faa438258951687b38` — harden `bass_harmonic_evidence.py`
+- `2e420d677f05442d442b61e1d8f027c42d9c74c9` — safe-abstention-aware verifier
+- `1ef20763aab365042f620800f60adab9be98c830` — fail-closed workflow accepts exactly one outcome: strict proof or safe abstention
+
+Hardening is only stricter, never looser:
+
+```text
+minimum duration: 0.22 s
+maximum onset strength: 0.30
+minimum tonal purity: 0.78
+minimum upper-partial ratio: 0.90
+maximum subharmonic ratio: 0.06
+mapped string/fret must match a common natural-harmonic physical node
+required independent views: 2
+```
+
+The ambiguous first-run candidate (~0.696 purity, ~0.52 upper-partial ratio) must now be rejected.
+
+Verifier no longer conflates rare-technique recurrence across independent GPU analyses with the already-closed subset proof. It still requires current-run subset diagnostics to be sound, base→subset identity 100%, subset→final identity 100%, preservation of every current-run subset label, no unexpected labels, 100% strict two-view evidence for any harmonic actually emitted, all established quality gates green, and all production/customer flags false.
+
+A green rerun may legitimately report `safeAbstention: true` and `harmonicFamilyProven: false`. That proves the diagnostic safely refuses ambiguous harmonic evidence; it does **not** prove harmonic technique detection.
 
 High-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven. Professional Bass remains false. All training/routing/structured identity/PDF/live Modal/Vercel/Production/payment/token/email flags remain disabled.
 
-## LIVE STEP — convert harmonic boundary to safe-abstention diagnostic
+## Immediate next action
 
-1. Harden harmonic evidence so the ambiguous MIDI-40/fret-12 candidate is rejected unless materially stronger harmonic-specific evidence exists. Do not loosen any threshold.
-2. Fix the harmonic verifier so it does not demand rare-technique recurrence from a separate GPU rerun. The already-closed subset proof remains external; within-run base→subset→harmonic identity and preservation of whatever subset labels are produced must remain 100%.
-3. Allow the harmonic workflow to finish green when the detector safely abstains, while explicitly setting `harmonicFamilyProven: false`. A green workflow then means the negative/abstention boundary is sound, **not** that harmonic is proven.
-4. Re-run the approved fixture. If no defensible harmonic survives, close harmonic as disabled/unproven and do not weaken criteria.
-5. Save this checkpoint before/after the rerun.
+1. Capture the latest `Bass Real Audio Harmonics` heartbeat triggered by commit `1ef20763aab365042f620800f60adab9be98c830`.
+2. Poll the latest run through completion; concurrency may cancel earlier runs triggered by the preceding helper/verifier commits.
+3. Inspect final action/evidence. Expected conservative result is zero harmonic labels + `safeAbstention: true` + workflow success.
+4. If so, close harmonic as disabled/unproven on this fixture rather than weakening criteria.
+5. Save this checkpoint again after the rerun.
 6. Professional Bass PDF/routing/identity remain disabled. Exact-branch Vercel Preview remains an external blocker.
