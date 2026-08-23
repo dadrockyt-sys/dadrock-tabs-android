@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 20:56 local
+Updated: 2026-08-22 — Bass separation/pitch canary closed green
 Branch: `v143-contextual-prune-lobo`
 
 ## Product contract
@@ -38,7 +38,7 @@ Bot evidence commit: `5b29c0c3df3c97c0f4962e058997b2134d0179b7`.
 
 Whole-product customer contract passed at `debug/v143-contextual-prune/ai-tab-end-to-end-contract.json`. Lead and Bass remain legacy/fail-closed; no missing placement is manufactured.
 
-## Bass — inactive contracts already green
+## Bass — inactive contracts green
 
 Bass uses true Demucs `Bass` separation and standard four-string `G-D-A-E` mapping.
 
@@ -62,55 +62,90 @@ Quality thresholds remain fail-closed: minimum 4 valid render events and 70% min
 
 Historical `bass_technique_diagnostics_v7.py` is reference-guided and must **not** be reused as the reference-free professional Bass engine.
 
-## LIVE STEP — isolated Bass real-audio canary harness fixed; rerun active
+## Bass real-audio separation + pitch — CLOSED GREEN
 
-Run `32610329984` completed failure, but the failure was a harness/import failure and **did not evaluate Bass musical quality**.
+A first run failed only at the CI/Modal import harness. Diagnosis is preserved at:
 
-Saved evidence:
-
-- `debug/v143-contextual-prune/bass-real-audio-canary-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-canary-failure-diagnostic.json`
 
-Exact diagnosis from the workflow artifact/log:
+Harness fixes:
 
-- Modal credentials were available.
-- The remote function repeatedly failed during module hydration with `ModuleNotFoundError: No module named 'v143_modal_live_endpoint'` while importing `bass_real_audio_canary_modal.py`.
-- The local Modal command then hit the explicit 1500-second timeout (`modalExitCode:124`), so no raw canary output existed and the verifier was correctly skipped (`verifierExitCode:99`).
-- The compact evidence commit also failed because generated evidence left the checkout dirty before `git rebase` (`cannot rebase: You have unstaged changes`).
-- No quality thresholds were changed and all training/routing/identity/PDF/live/Production/payment/token/email safety flags remained false.
+- `885b90a741d922143bfd83e8d0c376d13a0c4582` — mount `v143_modal_live_endpoint` in the ephemeral canary image.
+- `9973e30af77f0c8bbccbc9ec9960ccd858f895aa` — clean the checkout before evidence rebase/commit.
 
-Harness fixes committed:
-
-- `885b90a741d922143bfd83e8d0c376d13a0c4582` — mounts `v143_modal_live_endpoint` in the ephemeral Bass canary image so the remote function module can hydrate.
-- `9973e30af77f0c8bbccbc9ec9960ccd858f895aa` — preserves generated evidence in `/tmp`, restores a clean Git checkout before rebase, then restores/commits evidence after rebase.
-
-Current superseding canary run:
-
-- run ID: `32611529763`
-- source commit: `9973e30af77f0c8bbccbc9ec9960ccd858f895aa`
-- heartbeat started UTC: `2026-08-23T01:55:48.802605+00:00`
-- heartbeat evidence: `debug/v143-contextual-prune/bass-real-audio-canary-start.json`
-
-The canary remains locked to `public/gomywayfullaitest.m4a` and evaluates only:
-
-- direct: audio → Demucs6s `Bass`
-- cascade: audio → BS-RoFormer `Instrumental` → Demucs6s `Bass`
-
-It uses ephemeral Modal research substrate only; it does not deploy/modify live Modal.
-
-It proves separation + reference-free Bass pitch evidence only if green. It deliberately does **not** claim note placement, timing, techniques, professional quality, structured Bass identity, PDF rendering, training, routing, Vercel deployment, Production modification, purchase, token redemption, or email.
-
-Expected final evidence:
+Superseding run `32611529763` passed completely. Evidence:
 
 - `debug/v143-contextual-prune/bass-real-audio-canary-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-canary.json`
 
-A next-stage Bass candidate/timing design has been inspected but **no candidate-detection file has been committed yet**. Reusable reference-free timing logic exists in `analyzer/v143_reference_free_timing.py`; Guitar-specific `v143_candidate_timing_adapter.py` may be reused only structurally, not with Guitar pitch/range assumptions. The Bass candidate boundary must use MIDI 28..67 / ~41.203..391.995 Hz, preserve authenticated measure/step placement, and remain isolated from training/routing/identity/PDF activation.
+Action proof:
+
+```text
+modalCredentialsAvailableInGitHubActions: true
+modalExitCode: 0
+rawCanaryOutputPresent: true
+verifierExitCode: 0
+canaryEvidencePresent: true
+```
+
+Real-audio proof on `public/gomywayfullaitest.m4a`:
+
+```text
+passed: true
+realAudioBassSeparationPassed: true
+realAudioBassPitchEvidencePassed: true
+realAudioBassCanaryPassed: true
+stemsDistinct: true
+deterministicSeed: 143
+```
+
+Direct Bass view:
+
+```text
+duration: 211.4409 s
+sampleRate: 44100
+channels: 2
+bassBand30To1000HzPercent: 99.9866
+activePitchFrameCount: 6942
+medianFundamentalHz: 74.0637
+playableRangeFramePercent: 99.7263
+```
+
+Cascade Bass view:
+
+```text
+duration: 211.4409 s
+sampleRate: 44100
+channels: 2
+bassBand30To1000HzPercent: 99.9864
+activePitchFrameCount: 6943
+medianFundamentalHz: 74.0633
+playableRangeFramePercent: 99.6975
+```
+
+All safety checks passed. Training, customer routing, structured Bass identity, PDF renderer, live Modal modification, Vercel deployment, Production modification/promotion, payment, token redemption, and email remain disabled/false.
+
+This canary proves **only real Bass separation + reference-free pitch plausibility**. It explicitly does not prove note placement, timing, techniques, or full professional Bass quality.
+
+## LIVE STEP — isolated Bass candidate / note / timing boundary
+
+Advance exactly one boundary now: derive reference-free Bass note candidates from the two proven Bass stems, authenticate them onto the reference-free 4/4 timing grid, map them to valid four-string `G-D-A-E` positions, and evaluate those real-audio events through the existing fail-closed Bass render/quality contract.
+
+Requirements:
+
+- Bass-specific range only: MIDI 28..67 / ~41.203..391.995 Hz.
+- Candidate evidence must come from audio, not song labels/reference TAB.
+- Prefer cross-view direct+cascade consensus for authenticated note candidates.
+- Timing must come from `analyzer/v143_reference_free_timing.py` or equivalent reference-free audio evidence.
+- Every accepted event must contain real `measure`, `step`, MIDI, `stringIndex`, and fret with exact `openMidi[stringIndex] + fret == midi`.
+- No techniques in this boundary beyond optional neutral sustain duration metadata.
+- Keep training, routing, structured Bass identity, PDF rendering, live endpoint, Vercel, Production, payment/token/email disabled.
+- Do not weaken the existing 70% Bass quality thresholds.
 
 ## Immediate next action
 
-1. Poll run `32611529763` through completion.
-2. Fetch committed action/result evidence immediately when available.
-3. If green, close only Bass separation + pitch and advance one boundary to isolated Bass candidate/note/timing analysis.
-4. If it fails, inspect the exact new artifact/log and fix only that harness/metric; do not weaken thresholds or safety.
+1. Implement isolated Bass-specific candidate/timing logic and a real-audio canary/verifier.
+2. Run it on the same approved fixture using the proven direct/cascade Bass separation substrate.
+3. Validate the generated events with the existing Bass professional render/quality contract.
+4. If green, close note/timing/playability only; techniques and professional PDF remain separate future boundaries.
 5. Exact-branch Vercel Preview remains an external blocker.
