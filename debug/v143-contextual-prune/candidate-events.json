@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-contextual-prune-candidate-events",
+  "triggerSha": "119a18cbff67ff04f9be663db23f3255fb592e7a",
+  "checkedOutCommit": "119a18cbff67ff04f9be663db23f3255fb592e7a",
+  "adapterSourceBlob": "175db5dbbdf77e2be9113ba16f2413a3993aebb2",
+  "checkerSourceBlob": "e831b36e5a5b5f06c941e29349646ac70eea7804",
+  "exitCode": 0,
+  "passed": true,
+  "referenceTokenScanPassed": true,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "expectedProtectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "protectedPipelineUnchanged": true,
+  "professionalReferenceUsed": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "logTail": [
+    "V143 corrected Rhythm candidate event proof passed",
+    "{'correctedAttackCount': 3, 'renderedNoteCount': 10, 'supportedPitchCount': 11, 'renderedPitchCount': 10, 'voicingDroppedPitchCount': 1, 'everyCorrectedAttackRendered': True, 'candidateAddsUnobservedPitch': False, 'candidateRelocatesEvents': False, 'referenceFree': True, 'runtimeLabelsRequired': False, 'productionModified': False}",
+    "CANDIDATE_EVENTS_REFERENCE_TOKEN_SCAN=PASS",
+    "PROTECTED_PIPELINE_BLOB=PASS:7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+  ]
+}
