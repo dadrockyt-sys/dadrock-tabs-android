@@ -4,12 +4,13 @@
 This wrapper makes it difficult to accidentally score a partial professional reference.
 It first runs the strict completeness verifier (which itself validates the frozen/PDF
 identity before opening the reference), then runs the professional scorer, and finally
-binds both reports to the same frozen event hash.
+binds both reports to the same frozen event hash and the same immutable reference bytes.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -24,6 +25,14 @@ def load_json(path: Path) -> Mapping[str, Any]:
     if not isinstance(value, Mapping):
         raise ValueError(f"expected JSON object: {path}")
     return value
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def run_checked(args: list[str]) -> None:
@@ -53,6 +62,8 @@ def main() -> int:
     score_path = output_dir / "rhythm-professional-holdout-score.json"
     final_path = output_dir / "rhythm-final-holdout-gate.json"
 
+    # The completeness verifier is intentionally first: it validates the frozen
+    # analysis/PDF safety gate before it opens the professional reference.
     run_checked(
         [
             sys.executable,
@@ -68,6 +79,19 @@ def main() -> int:
     if completeness.get("passed") is not True:
         raise SystemExit("reference completeness verifier did not pass")
 
+    # Reference access is now authorized. Bind the exact bytes accepted by the
+    # completeness verifier before invoking the scorer, then hash again after
+    # scoring to fail closed on any concurrent or accidental reference change.
+    completeness_reference_hash = str(completeness.get("referenceJsonSha256") or "")
+    reference_hash_before_score = sha256_file(reference_json)
+    if (
+        len(completeness_reference_hash) != 64
+        or reference_hash_before_score != completeness_reference_hash
+    ):
+        raise SystemExit(
+            "professional reference changed after completeness verification and before scoring"
+        )
+
     run_checked(
         [
             sys.executable,
@@ -81,6 +105,7 @@ def main() -> int:
         ]
     )
 
+    reference_hash_after_score = sha256_file(reference_json)
     score = load_json(score_path)
     frozen_hash = str(completeness.get("frozenEventSha256") or "")
     pdf_hash = str(completeness.get("pdfEventSha256") or "")
@@ -95,6 +120,10 @@ def main() -> int:
         "referenceOpenedOnlyAfterFreezeValidation": completeness.get("referenceOpenedOnlyAfterFreezeValidation") is True,
         "v143RuntimeSafetyVerified": completeness.get("v143RuntimeSafetyVerified") is True,
         "runtimeLabelsNotRequired": completeness.get("runtimeLabelsRequired") is False,
+        "referenceHashMatchesCompletenessBeforeScore": bool(completeness_reference_hash)
+        and reference_hash_before_score == completeness_reference_hash,
+        "referenceUnchangedDuringProfessionalScore": reference_hash_after_score
+        == reference_hash_before_score,
         "professionalScorePassed": score.get("rhythmComplete") is True,
         "near100ProfessionalGatePassed": score.get("near100ProfessionalGatePassed") is True,
         "zeroCriticalMismatches": int(score.get("criticalMismatchCount") or 0) == 0,
@@ -108,13 +137,15 @@ def main() -> int:
     failed = [name for name, passed in checks.items() if not passed]
 
     report = {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "instrument": "rhythm",
         "gate": "rhythm-final-professional-holdout",
         "minimumProfessionalScore": args.minimum,
         "checks": checks,
         "failedChecks": failed,
-        "referenceJsonSha256": completeness.get("referenceJsonSha256"),
+        "referenceJsonSha256": completeness_reference_hash,
+        "referenceJsonSha256BeforeScore": reference_hash_before_score,
+        "referenceJsonSha256AfterScore": reference_hash_after_score,
         "professionalSourceSha256": completeness.get("sourceSha256"),
         "frozenEventSha256": frozen_hash,
         "pdfEventSha256": pdf_hash,
