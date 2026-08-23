@@ -201,13 +201,47 @@ Static shadow safety proof:
 
 Any next musical experiment must remain only in isolated shadow modules until independently validated.
 
+## Isolated reference-free correction experiment — IN PROGRESS
+
+New shadow-only files were added on this branch; none touch the protected live V143 route:
+- `analyzer/v143_contextual_prune_shadow_correction.py`
+- `analyzer/check_v143_contextual_prune_shadow_correction.py`
+- `analyzer/v143_contextual_prune_shadow_correction_modal.py`
+- `.github/workflows/v143-contextual-prune-shadow-correction-cpu.yml`
+- `.github/workflows/v143-contextual-prune-shadow-correction-approved-audio.yml`
+
+Current conservative correction behavior:
+- preserve every event from the existing frozen contextual-prune base selector
+- only rescue an empty target measure when an already-observed physical onset has two-stem support, >=3 historical sweep support, >=4 detections, and cross-view CQT attack/body consensus
+- rescue at most one strongest strict-evidence slot in an otherwise empty measure
+- suppress a secondary pitch only when it lacks cross-view attack/body support or falls materially below the strongest local pitch
+- no hard chord-size cap; strongly supported polyphony can survive
+- no relocation, no scorer input, no professional reference, no runtime labels.
+
+Local synthetic CPU proof passed before commit:
+- existing base event preserved
+- strong empty measure rescued
+- weak single-stem empty measure not rescued
+- strong four-note chord retained
+- unsupported fifth harmonic suppressed
+- production modified false.
+
+Committed setup SHAs:
+- correction module `10b01750c83154329d9348c4cc2d3417b470e8ab`
+- CPU proof `7be40a5328999383d2a96ab897a634b4b8d8611d`
+- isolated correction Modal `79891bdc4fb1951797e0cf6ca77dc8c6714542c6`
+- CPU workflow `e2bdd4c8c62a323fb248050abcb53efe8a9aba99`
+- approved-audio workflow `7d258a72df35c6a35856a6560d4e801fe75ddf42`
+
+The approved-audio shadow is SHA-bound to `public/gomywayfullaitest.m4a` (`215bd5...`). It reports only reference-free coverage and pitch-support diagnostics. **No professional rescore is permitted on this tuned experiment or the old frozen candidate.**
+
+CPU/static GitHub gate and the exact approved-audio isolated Modal run are now pending workflow results. No musical success/completion claim is authorized yet.
+
 ## Immediate next steps
 
-1. Inspect the existing isolated contextual-prune shadow modules and raw reference-free evidence for this exact approved-audio run.
-2. Validate a **general/reference-free** shadow correction for the two confirmed classes:
-   - per-measure/additive attack rescue using strict two-stem precision evidence rather than global quantile alone
-   - suppress unsupported secondary chord tones using local carrier/CQT/stem agreement rather than song-specific chord rules.
-3. Run static/CPU anti-leakage and protected-blob checks before any GPU experiment.
+1. Read the new CPU/static workflow diagnostic and require protected blob `7f72...`, anti-reference token scan, existing shadow static gate, and synthetic correction invariants all green.
+2. Read the exact approved-audio isolated Modal report and evaluate only label-free diagnostics: empty-measure rescue behavior, observed-slot invariants, and reduction of weak secondary pitch hypotheses.
+3. If reference-free evidence shows the conservative rule is insufficient, adjust only general audio-evidence logic in the isolated correction shadow and repeat safety + approved-audio diagnostics.
 4. Do **not** rescore this same frozen candidate after tuning. If a general correction is accepted for product integration, produce a brand-new approved-audio run/freeze/PDF identity first, then run the professional scorer only afterward.
 5. Require >=0.99, zero critical mismatches, fidelity 1.0 before Rhythm completion.
 6. Only after passing: verify `/ai-tab` E2E and create `Final Rhythm Pipeline`; then resume Bass, then Lead.
