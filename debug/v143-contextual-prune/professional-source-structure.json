@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "gate": "v143-professional-holdout-source-inspect",
-  "runId": 32673844007,
+  "runId": 32673894509,
   "runAttempt": 1,
-  "triggerSha": "ea4a5dec3cbe8e75eb89222284705811b7173709",
+  "triggerSha": "fd2b8f66876fe33b83bed1e11786f0f9e5dfa384",
   "artifactName": "v143-professional-source-raw-track",
   "songId": 243,
   "rhythmTrackIndex": 3,
@@ -1595,7 +1595,7 @@
       "trackMeta": {
         "instrumentId": 33,
         "instrument": "Electric Bass (finger)",
-        "views": 85594,
+        "views": 85595,
         "name": "Tony Breit | Fender Precision Bass",
         "tuning": [
           43,
@@ -1743,6 +1743,39 @@
       }
     }
   ],
+  "rhythmPlayableStructure": {
+    "aggregate": {
+      "beatRestTruthy": 23,
+      "beats": 812,
+      "beatsWithPlayableLiveNonTieNote": 603,
+      "beatsWithPlayableLiveNote": 696,
+      "beatsWithPositionNote": 789,
+      "noteDeadTruthy": 173,
+      "noteRestTruthy": 23,
+      "noteTieTruthy": 157,
+      "notes": 1299,
+      "notesWithPosition": 1276,
+      "playableLiveNonTieNotes": 946,
+      "playableLiveNotes": 1103
+    },
+    "beatDurationHistogram": {
+      "[1, 16]": 184,
+      "[1, 1]": 9,
+      "[1, 2]": 9,
+      "[1, 4]": 71,
+      "[1, 8]": 519,
+      "[3, 16]": 18,
+      "[3, 4]": 2
+    },
+    "noteFlagCombinations": {
+      "pos=0 rest=1 dead=0 tie=0": 23,
+      "pos=1 rest=0 dead=0 tie=0": 946,
+      "pos=1 rest=0 dead=0 tie=1": 157,
+      "pos=1 rest=0 dead=1 tie=0": 173
+    },
+    "targetPriorVerifiedPlayableOnsets": 577,
+    "targetPriorVerifiedPlayableNotes": 925
+  },
   "rhythmTrackTemporaryArtifactSaved": true,
   "professionalReferenceOpenedOnlyAfterFreshFreeze": true,
   "referenceUsedByAnalyzer": false,
