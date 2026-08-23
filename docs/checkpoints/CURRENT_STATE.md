@@ -97,13 +97,33 @@ Files:
 - `.github/workflows/v143-contextual-prune-shadow-correction-cpu.yml`
 - `.github/workflows/v143-contextual-prune-shadow-correction-approved-audio.yml`
 
-CPU proof is green:
+Prior CPU proof was green:
 `debug/v143-contextual-prune/shadow-correction-cpu.json`
 
-Approved-audio output is still missing:
+### Conservative pitch-suppression safety fix
+
+A general uncertainty bug was found by source inspection: `_supported_pitch_set()` always retained its relative best pitch before proving that the best pitch itself passed the independent two-view attack/body floors. Therefore an uncertain base-selected multi-pitch event could be collapsed to one arbitrary least-weak pitch even when **none** of its candidates had positive physical consensus.
+
+Fixed reference-free behavior:
+- compute the locally strongest candidate as before
+- if that strongest candidate itself fails attack/body consensus, preserve the entire original observed pitch set unchanged
+- suppress secondary pitches only after the strongest pitch has positive independent two-view support
+- no attack, timing, string/fret, or Production behavior changed
+
+Code commit:
+`2544c1c6da446bb6eaeaf96b6745757fce0a54a4`
+
+Proof update commit:
+`b682d5ed6574866ec2ac175d6c72be13f9fc8fbd`
+
+The synthetic checker now includes a base-selected two-pitch event where both candidates fail cross-view support and requires the original two-pitch set to remain unchanged. The existing unsupported fifth-harmonic suppression proof remains required.
+
+This source change retriggers both correction CPU and approved-audio correction workflows. New reports are pending.
+
+Approved-audio output remains pending:
 `debug/v143-contextual-prune/shadow-correction-approved-audio-action.json`
 
-Do not accept this correction musically until the approved-audio report is present and green.
+Do not accept this correction musically until the new CPU proof and approved-audio report are present and green.
 
 ## Semantic primary-note guard
 
@@ -186,7 +206,7 @@ Result:
 
 ### Integrated into approved correction diagnostics only
 
-`analyzer/v143_contextual_prune_shadow_correction_modal.py` now also computes:
+`analyzer/v143_contextual_prune_shadow_correction_modal.py` computes:
 - exact four-way reference-free beat-accent phase evidence
 - current-winner match/separation/confidence
 - strict grid-slot ambiguity margins
@@ -196,10 +216,8 @@ Integration commit:
 
 No timing is changed. It is diagnostic-only.
 
-Approved correction workflow was tightened to enforce timing-hypothesis invariants and `phaseSelectedOrChanged=false`:
+Approved correction workflow enforces timing-hypothesis invariants and `phaseSelectedOrChanged=false`:
 commit `f9a89733c289ae7ad0943400a385817df41365c0`
-
-This workflow push also retriggers the exact approved-audio correction shadow. Its report is pending.
 
 ## Existing production semantic path
 
@@ -207,10 +225,11 @@ This workflow push also retriggers the exact approved-audio correction shadow. I
 
 ## Immediate next steps
 
-1. Read the retriggered approved-audio attack/pitch correction action/report when committed.
-2. Read the pending approved-audio semantics/sustain action/report.
-3. Inspect approved-audio four-way phase evidence + strict grid ambiguity only as label-free diagnostics; do not change phase from scorer information.
-4. If approved-audio invariants pass, decide corrections using only physical/reference-free evidence.
-5. Only after independent acceptance, integrate general corrections and create a **brand-new approved-audio analysis/freeze/PDF identity**.
-6. Then, and only then, run a new scorer-only professional holdout.
-7. Require >=0.99, zero critical mismatches and PDF-event fidelity 1.0 before Rhythm completion.
+1. Read the newly retriggered correction CPU report; require the new uncertain-pitch preservation proof to pass.
+2. Read the retriggered approved-audio attack/pitch correction action/report when committed.
+3. Read the pending approved-audio semantics/sustain action/report.
+4. Inspect approved-audio four-way phase evidence + strict grid ambiguity only as label-free diagnostics; do not change phase from scorer information.
+5. If approved-audio invariants pass, decide corrections using only physical/reference-free evidence.
+6. Only after independent acceptance, integrate general corrections and create a **brand-new approved-audio analysis/freeze/PDF identity**.
+7. Then, and only then, run a new scorer-only professional holdout.
+8. Require >=0.99, zero critical mismatches and PDF-event fidelity 1.0 before Rhythm completion.
