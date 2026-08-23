@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "gate": "bass-professional-quality-scaffold",
+  "thresholds": {
+    "minimumValidRenderEvents": 4,
+    "minimumRenderEventSurvivalPercent": 70,
+    "minimumPlayableStringFretPercent": 70,
+    "minimumTimingCoveragePercent": 70,
+    "minimumPitchValidityPercent": 70,
+    "minimumPitchStringFretConsistencyPercent": 70
+  },
+  "passingFixture": {
+    "name": "bass-professional-quality-gate",
+    "version": 1,
+    "instrument": "bass",
+    "rawEventCount": 8,
+    "validRenderEventCount": 8,
+    "renderEventSurvivalPercent": 100,
+    "playableStringFretPercent": 100,
+    "timingCoveragePercent": 100,
+    "pitchValidityPercent": 100,
+    "pitchStringFretConsistencyPercent": 100,
+    "thresholds": {
+      "minimumValidRenderEvents": 4,
+      "minimumRenderEventSurvivalPercent": 70,
+      "minimumPlayableStringFretPercent": 70,
+      "minimumTimingCoveragePercent": 70,
+      "minimumPitchValidityPercent": 70,
+      "minimumPitchStringFretConsistencyPercent": 70
+    },
+    "passed": true,
+    "diagnosticOnly": true,
+    "productionCandidate": false,
+    "analyzerRoutingEnabled": false,
+    "pdfRendererEnabled": false,
+    "professionalStructuredIdentityEnabled": false,
+    "productionPromotionAuthorized": false
+  },
+  "weakFixturePassed": false,
+  "legacyUntimedPassed": false,
+  "legacyUntimedTimingCoveragePercent": 0,
+  "diagnosticOnly": true,
+  "productionCandidate": false,
+  "analyzerRoutingEnabled": false,
+  "pdfRendererEnabled": false,
+  "professionalStructuredIdentityEnabled": false,
+  "realAudioBassCanaryPassed": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "passed": true
+}
