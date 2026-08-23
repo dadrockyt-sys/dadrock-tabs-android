@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 21:38 EDT
+Updated: 2026-08-22 20:47 local
 Branch: `v143-contextual-prune-lobo`
 
 ## Product contract
@@ -83,7 +83,7 @@ Heartbeat evidence is committed:
 - source commit: `751a30f0bb4b5310921d202a8026fcd9114aa652`
 - started UTC: `2026-08-23T01:26:27.264028+00:00`
 
-Latest direct job inspection at about 21:38 EDT: run `32610329984` remains `in_progress`. Checkout, heartbeat, Python setup, and Modal CLI install all passed. The active step is still `Run isolated real-audio Bass separator canary`; verifier/evidence/fail-closed enforcement remain pending. This is roughly 13 minutes into the run and still inside the remote/job timeout bounds. Do **not** infer pass/fail yet.
+Latest direct job inspection at about 20:47 local: run `32610329984` remains `in_progress`. Checkout, heartbeat, Python setup, and Modal CLI install all passed. The active step is still `Run isolated real-audio Bass separator canary`; verifier/evidence/fail-closed enforcement remain pending. This is roughly 21 minutes into the run and still inside the 25-minute Modal command timeout / 35-minute job timeout. Do **not** infer pass/fail yet.
 
 The canary is locked to `public/gomywayfullaitest.m4a` and evaluates only:
 
@@ -99,7 +99,7 @@ Expected final evidence:
 - `debug/v143-contextual-prune/bass-real-audio-canary-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-canary.json`
 
-A next-stage Bass candidate/timing design was inspected but **no candidate-detection file has been committed yet**. Reusable reference-free timing logic exists in `analyzer/v143_reference_free_timing.py`; Guitar-specific `v143_candidate_timing_adapter.py` may be reused only structurally, not with Guitar pitch/range assumptions.
+A next-stage Bass candidate/timing design has been inspected but **no candidate-detection file has been committed yet**. Reusable reference-free timing logic exists in `analyzer/v143_reference_free_timing.py`; Guitar-specific `v143_candidate_timing_adapter.py` may be reused only structurally, not with Guitar pitch/range assumptions. The Bass candidate boundary must use MIDI 28..67 / ~41.203..391.995 Hz, preserve authenticated measure/step placement, and remain isolated from training/routing/identity/PDF activation.
 
 ## Immediate next action
 
