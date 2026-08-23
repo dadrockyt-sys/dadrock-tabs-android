@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "gate": "rhythm-reference-free-polyphony-cpu-proof",
+  "sourceCommit": "f015715a291ff3f9c2a9da9f633f1b5bef63352a",
+  "runId": "32641304362",
+  "runAttempt": "1",
+  "eventName": "push",
+  "ref": "refs/heads/v143-contextual-prune-lobo",
+  "passed": true,
+  "verifyOutcome": "success",
+  "referenceFree": true,
+  "professionalReferenceUsed": false,
+  "referenceRuntimeInputUsed": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false
+}
