@@ -2,7 +2,7 @@
 
 Updated: 2026-08-22 — LIVE PRIORITY: complete Rhythm end-to-end before Bass/Lead
 Branch: `v143-contextual-prune-lobo`
-Latest observed branch head before this checkpoint save: `51f7d3e5c23180d5117fa1e3b3a9d4b5671a5246` — `Bind complete V143 safety contract into final holdout gate`.
+Latest observed working head before this checkpoint write: `126a2e5256742a9970bdc62a4db47122dc40e5d3` — `Keep holdout self-test aligned with PDF safety proof`.
 
 ## Immutable safety / product contract
 
@@ -134,8 +134,10 @@ Hardening commits:
 - `5d412df2e17fefb7e1b057c0b61bf2739e9f1cd9` — consolidated holdout self-test updated with complete synthetic safety flags and explicit static runtime-safety/product/workflow/branding proof gates.
 - `6a724bae55b3b3d8f40b94346535830567f4bdd7` — reference completeness verifier now refuses to open the professional reference unless runtime-label absence and `v143RuntimeSafetyVerified:true` are present in the already-verified freeze manifest.
 - `51f7d3e5c23180d5117fa1e3b3a9d4b5671a5246` — mandatory final holdout wrapper schemaVersion 2 explicitly binds `v143RuntimeSafetyVerified` and `runtimeLabelsNotRequired` into the final Rhythm-complete decision.
+- `301c38bd47ebee04d6f9435554ac1fde9d0010e1` — PDF-event fidelity verifier schemaVersion 2 now refuses unsafe freeze manifests and requires renderer evidence to prove `runtimeSafetyVerified:true`, `runtimeLabelsRequired:false`, and `referenceOpened:false` before exact event/hash equality can be accepted.
+- `126a2e5256742a9970bdc62a4db47122dc40e5d3` — consolidated holdout workflow synthetic PDF fixtures were corrected to carry those same renderer safety facts on the positive path; the deliberately wrong-PDF negative fixture now also carries valid safety evidence so it fails for the intended **event mismatch**, not merely for missing safety metadata.
 
-This is defense-in-depth from analyzer response → structured product payload → freeze → pre-reference completeness → final holdout wrapper. No musical thresholds/tolerances were weakened. No holdout reference was opened. No live Modal endpoint, Production promotion, payment, token redemption, or customer email action was performed.
+This is defense-in-depth from analyzer response → structured product payload → freeze → professional PDF-event identity → pre-reference completeness → final holdout wrapper. No musical thresholds/tolerances were weakened. No holdout reference was opened. No live Modal endpoint, Production promotion, payment, token redemption, or customer email action was performed.
 
 A staged local Next route gate bot commit was observed (`33ace6ee89b377be2a98d05b7d6c34e10b1b9a6e` and later refreshed source entries). Its evidence explicitly says `actualVercelPreviewDeployment:false`, `vercelDeploymentAttempted:false`, `liveEndpointDeployedOrModified:false`, `productionModified:false`.
 
@@ -170,7 +172,9 @@ imported from /tmp/rhythm-preholdout-static/esm/render-frozen.mjs
 
 The product has locked `pdf-lib`; old standalone test modules were under `/tmp`, outside repository Node package resolution. Current runner uses repository-local `.preholdout-static` and now also gates the full anti-leakage chain described above.
 
-Authoritative target is now static preflight schemaVersion 7 plus consolidated holdout self-test schemaVersion 6. Until refreshed bot evidence lands, do not call the post-hardening CPU gate green and do not interpret the stale schemaVersion 4 JSON as a current failure.
+Important current observation: after strengthening `verify_pdf_event_fidelity.py`, the existing consolidated self-test's synthetic PDF evidence no longer satisfied the new proof contract because it contained only `renderEvents`. That was a **test-fixture mismatch**, not a product renderer defect. Commit `126a2e...` fixes the positive fixture and makes the negative mismatch fixture prove the intended failure mode.
+
+Authoritative target remains static preflight schemaVersion 7 plus consolidated holdout self-test schemaVersion 6. Until refreshed bot evidence lands, do not call the post-hardening CPU gate green and do not interpret the stale schemaVersion 4 JSON as a current failure.
 
 ## Immediate next actions
 
