@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 — Bass technique canary active
+Updated: 2026-08-22 — Bass technique subset closed green
 Branch: `v143-contextual-prune-lobo`
 
 ## Safety / product contract
@@ -30,7 +30,7 @@ Run `32611529763` passed. Evidence:
 - `debug/v143-contextual-prune/bass-real-audio-canary-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-canary.json`
 
-Direct/cascade stems are distinct, deterministic seed 143, both 211.44 s, ~99.99% 30–1000 Hz energy, ~99.7% playable-range pitch frames. This proves separation + reference-free pitch plausibility only.
+Direct/cascade stems are distinct, seed 143 is fixed, both 211.44 s, ~99.99% 30–1000 Hz energy, ~99.7% playable-range pitch frames. This proves separation + reference-free pitch plausibility only.
 
 ## Bass candidate / note / timing / playability — CLOSED GREEN
 
@@ -59,62 +59,53 @@ passed: true
 
 All 1754 events have exact direct+cascade MIDI consensus and authenticated grid placement. This closes the structural/audio-derived note/timing/playability boundary, not ground-truth transcription accuracy. Techniques were deliberately empty.
 
-## LIVE STEP — isolated conservative Bass technique evidence
+## Bass conservative technique subset — CLOSED GREEN
 
-Implemented this boundary without changing note/timing/playability or enabling customer output.
+Run `32612166508` completed `success` from source commit `1b94d42a5d5ae8e3704f479c259499fa6c2c214e`. Final workflow evidence commit: `145f8a15a047016020ff20b38fb1b277b0b30603`.
 
-New files/commits:
-
-- `b9a21229c5d52047e183eeee8763ef5d6c88b1d8` — `analyzer/final_product/bass/techniques/bass_technique_evidence.py`
-- `c0d606edbc649f3db1751e306265cb95d66daac9` — `analyzer/bass_real_audio_technique_canary_modal.py`
-- `1c862006a475a344299a3c82c260d3330e56795c` — `analyzer/verify_bass_real_audio_techniques.mjs`
-- `1b94d42a5d5ae8e3704f479c259499fa6c2c214e` — `.github/workflows/bass-real-audio-techniques.yml`
-
-Technique logic is Bass-specific and reference-free. It builds low-register pitch/onset views from both proven Bass stems and requires exact two-view technique agreement. It can conservatively emit only:
-
-```text
-slide-up
-slide-down
-hammer-on
-pull-off
-mute
-sustain
-```
-
-Rules:
-
-- `sustain` requires both duration eligibility and persistent Bass pitch energy in both views; duration alone cannot create it.
-- `mute` requires a strong attack plus rapid pitch-energy collapse in both views.
-- slide/hammer-on/pull-off require same-string authenticated event transitions plus Bass pitch-path/re-attack evidence in both views.
-- uncertain events remain technique-free.
-- note/timing/MIDI/string/fret/duration identity must remain 100% unchanged.
-- every technique label must have two-view evidence.
-- minimum 4 technique events required for this diagnostic boundary.
-- `harmonic` is deliberately **not implemented/proven yet**.
-- high-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven.
-- professional Bass completion remains false even if this subset passes.
-
-Current workflow heartbeat:
-
-```text
-workflow: Bass Real Audio Techniques
-runId: 32612166508
-sourceCommit: 1b94d42a5d5ae8e3704f479c259499fa6c2c214e
-startedAtUtc: 2026-08-23T02:10:23.674406+00:00
-```
-
-Heartbeat: `debug/v143-contextual-prune/bass-real-audio-technique-start.json`.
-
-Expected final evidence:
+Evidence:
 
 - `debug/v143-contextual-prune/bass-real-audio-technique-action.json`
 - `debug/v143-contextual-prune/bass-real-audio-technique.json`
+- workflow artifact `bass-real-audio-techniques` / artifact id `9485858031`
+
+Key proof:
+
+```text
+eventCount: 1757
+identityPreservationPercent: 100
+techniqueEventCount: 302
+techniqueLabelCount: 332
+consensusTechniquePercent: 100
+sustain: 235
+slide-down: 33
+slide-up: 38
+hammer-on: 11
+pull-off: 14
+mute: 1
+quality gate: 100% across render/playability/timing/pitch/pitch-position
+passed: true
+professionalBassComplete: false
+```
+
+Proven reference-free/two-view families: `slide`, `hammer_on`, `pull_off`, `mute`, `sustain`.
+
+Important: the isolated technique rerun regenerated 1757 base events versus 1754 in the earlier structural run. Raw candidate counts also changed slightly across the two separate GPU analyses, while timing stayed identical (129.19921875 BPM, 447 beats, same fixture/hash). This does **not** violate the technique identity gate because enrichment preserved every base event 100% within the same authenticated analysis. Do not claim cross-run bit-identical event generation from the current evidence.
+
+`harmonic` remains deliberately unimplemented/unproven. High-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven.
 
 All training/routing/structured identity/PDF/live Modal/Vercel/Production/payment/token/email flags remain disabled.
 
+## LIVE STEP — harmonic evidence boundary only
+
+Next work must remain isolated and diagnostic. Do not enable customer output.
+
+Goal: determine whether `harmonic` can be added conservatively using reference-free, two-view Bass spectral evidence without changing note/timing/MIDI/string/fret/duration identity. A harmonic label must require agreement from both Bass views and must remain absent when evidence is ambiguous. If a defensible harmonic boundary cannot be proven on the approved fixture, leave it unproven rather than weakening thresholds.
+
 ## Immediate next action
 
-1. Poll run `32612166508` through completion.
-2. If red, inspect exact artifact/log and fix only the harness/evidence logic without weakening established quality/safety.
-3. If green, close only the proven technique subset; harmonic and any missing initial technique family remain explicitly unproven.
-4. Professional Bass PDF/routing/identity remain disabled. Exact-branch Vercel Preview remains an external blocker.
+1. Implement a conservative two-view harmonic detector inside `analyzer/final_product/bass/techniques/bass_technique_evidence.py` only if the spectral evidence is sufficiently discriminative.
+2. Extend the isolated technique verifier/workflow so harmonic is claimed only when both views agree and identity remains 100% unchanged.
+3. Run a new Bass technique canary on `public/gomywayfullaitest.m4a`.
+4. If red or harmonic evidence is absent/ambiguous, keep harmonic explicitly unproven and do not weaken established quality/safety.
+5. Professional Bass PDF/routing/identity remain disabled. Exact-branch Vercel Preview remains an external blocker.
