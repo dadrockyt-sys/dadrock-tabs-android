@@ -1,5 +1,5 @@
 V143 contextual-prune shadow correction CPU proof passed
-{'baseEventCount': 1, 'correctedEventCount': 3, 'rescuedEventCount': 2, 'suppressedPitchCount': 1, 'observedSlotCount': 5, 'strictSlotCount': 3, 'baseEventsPreserved': True, 'rescuesAreObservedSlots': True, 'localPeakRescueEnabled': True, 'emptyMeasureFailSafeEnabled': True, 'candidateRelocatesEvents': False, 'referenceFree': True, 'runtimeLabelsRequired': False, 'productionModified': False}
+{'baseEventCount': 2, 'correctedEventCount': 4, 'rescuedEventCount': 2, 'suppressedPitchCount': 1, 'observedSlotCount': 6, 'strictSlotCount': 3, 'baseEventsPreserved': True, 'rescuesAreObservedSlots': True, 'localPeakRescueEnabled': True, 'emptyMeasureFailSafeEnabled': True, 'candidateRelocatesEvents': False, 'referenceFree': True, 'runtimeLabelsRequired': False, 'productionModified': False}
 CORRECTION_SHADOW_REFERENCE_TOKEN_SCAN=PASS
 === V143 CONTEXTUAL PRUNE SHADOW STATIC GATE ===
 CARRIER_CONSTANTS_MATCH_RESEARCH True
@@ -14,4 +14,8 @@ LIVE_V143_FILES_UNCHANGED True
 PROFESSIONAL_REFERENCE_IN_NEW_RUNTIME False
 PRODUCTION_MODIFIED False
 WROTE=/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/public/training/v143-musical-reconstruction-calibration/contextual-prune-shadow-static-report.json
+CORRECTION_SOURCE_BLOB=3bcad86b67116cc6d50295f2937a7bf3602b41dd
+CORRECTION_CHECKER_BLOB=bfe37235938b33d2f36f4f9d6ef39ebabeeb57e7
+CORRECTION_MODAL_BLOB=1ee6b81c5cc61dfea7d6ed927948896770db3ac0
+CHECKED_OUT_COMMIT=d1a50efc2ffb640068f4c8bf72b4c0bb1f42b7ee
 PROTECTED_PIPELINE_BLOB=PASS:7f72f8ed9b14af8bc93e95544195204d99c6bec1
