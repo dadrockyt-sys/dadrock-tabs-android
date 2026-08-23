@@ -29,6 +29,8 @@ function requireAll(label, source, patterns) {
 
 const [
   pageSource,
+  analyzerRouteSource,
+  analysisPayloadSource,
   previewRouteSource,
   fullRouteSource,
   professionalWrapperSource,
@@ -36,6 +38,8 @@ const [
   structuredRhythmRendererSource,
 ] = await Promise.all([
   read('app/ai-tab/page.js'),
+  read('app/api/analyze-audio-tab/route.js'),
+  read('lib/jimmyPaigeAnalysisPayload.js'),
   read('app/api/generate-tab-preview/route.js'),
   read('app/api/generate-tab-pdf/route.js'),
   read('lib/createJimmyPaigeProfessionalPdf.js'),
@@ -91,6 +95,29 @@ const checks = [
     'customerEmail:',
     "'content-type'",
     "'application/pdf'",
+  ]),
+  requireAll('analyzer-route-complete-v143-runtime-safety-gate', analyzerRouteSource, [
+    'const v143RuntimeSafetyVerified =',
+    'liveV143?.referenceFree === true',
+    'liveV143?.professionalReferenceUsed === false',
+    'liveV143?.referenceRuntimeInputUsed === false',
+    'liveV143?.runtimeLabelsRequired === false',
+    'usingV143RhythmAnalyzer &&',
+    '!v143RuntimeSafetyVerified',
+    'status: 502',
+    'buildJimmyPaigeAnalysisPayload(',
+  ]),
+  requireAll('analysis-payload-complete-v143-runtime-safety-gate', analysisPayloadSource, [
+    'const v143RuntimeSafetyVerified =',
+    'professionalReferenceNotUsed &&',
+    'referenceRuntimeInputNotUsed &&',
+    'runtimeLabelsNotRequired',
+    'usingV143RhythmAnalyzer &&',
+    '!v143RuntimeSafetyVerified',
+    'const renderEvents = v143RuntimeSafetyVerified',
+    'version: 3',
+    'v143RuntimeSafetyVerified,',
+    'productionPromotionAuthorized: false',
   ]),
   requireAll('preview-route-professional-renderer', previewRouteSource, [
     "from '@/lib/createJimmyPaigeProfessionalPdf'",
@@ -150,6 +177,10 @@ const previewPayloadPassed =
   byLabel['page-preview-endpoint-and-musical-payload']?.passed === true;
 const purchasedPayloadPassed =
   byLabel['page-purchased-endpoint-and-musical-payload']?.passed === true;
+const analyzerRouteSafetyPassed =
+  byLabel['analyzer-route-complete-v143-runtime-safety-gate']?.passed === true;
+const analysisPayloadSafetyPassed =
+  byLabel['analysis-payload-complete-v143-runtime-safety-gate']?.passed === true;
 const previewRoutePassed =
   byLabel['preview-route-professional-renderer']?.passed === true;
 const purchasedRoutePassed =
@@ -162,19 +193,22 @@ const polishedBrandingContractPassed =
 
 const failedChecks = checks.filter((check) => !check.passed);
 const report = {
-  schemaVersion: 2,
+  schemaVersion: 3,
   gate: 'ai-tab-pdf-product-contract',
   sourceOfTruth: 'app/ai-tab/page.js',
+  analyzerEndpoint: '/api/analyze-audio-tab',
   previewEndpoint: '/api/generate-tab-preview',
   purchasedEndpoint: '/api/generate-tab-pdf',
   structuredRhythmPath:
-    'page.js -> API route -> createJimmyPaigeProfessionalPdf -> createAiTabPdf -> createV143RhythmPdf',
+    'page.js -> analyze route/payload safety gates -> PDF API route -> createJimmyPaigeProfessionalPdf -> createAiTabPdf -> createV143RhythmPdf',
   polishedRhythmRenderer: 'lib/createV143RhythmPdf.js',
   sharedMusicalFields,
   previewAndPurchasedBothCarryRenderEvents:
     previewPayloadPassed && purchasedPayloadPassed,
   previewAndPurchasedExpectPdf:
     previewPayloadPassed && purchasedPayloadPassed,
+  analyzerRuntimeSafetyDefenseInDepth:
+    analyzerRouteSafetyPassed && analysisPayloadSafetyPassed,
   routesUseProfessionalFeatureGate:
     previewRoutePassed && purchasedRoutePassed,
   authenticatedV143RhythmRoutesToStructuredRenderer: wrapperRoutingPassed,
