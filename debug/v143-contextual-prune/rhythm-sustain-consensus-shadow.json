@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-rhythm-sustain-consensus-shadow",
+  "exitCode": 0,
+  "passed": true,
+  "referenceTokenScanPassed": true,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "expectedProtectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "protectedPipelineUnchanged": true,
+  "professionalReferenceUsed": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "logTail": [
+    "V143 rhythm sustain consensus shadow proof passed",
+    "{'eventCount': 2, 'annotatedEventCount': 1, 'longerThanDetectorCount': 1, 'shorterThanDetectorCount': 0, 'eventCountChanged': False, 'attackTimingChanged': False, 'pitchChanged': False, 'tieOrLetRingInferred': False, 'referenceFree': True, 'runtimeLabelsRequired': False, 'productionModified': False}",
+    "SUSTAIN_SHADOW_REFERENCE_TOKEN_SCAN=PASS",
+    "PROTECTED_PIPELINE_BLOB=PASS:7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+  ]
+}
