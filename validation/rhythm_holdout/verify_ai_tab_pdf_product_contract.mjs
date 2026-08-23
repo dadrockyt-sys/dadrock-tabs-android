@@ -152,6 +152,12 @@ const checks = [
     'renderEvents,',
     "mode: 'v143-structured-rhythm'",
   ]),
+  requireAll('professional-wrapper-v143-invalid-stream-fails-closed', professionalWrapperSource, [
+    'const requestedV143StructuredRhythm =',
+    'if (requestedV143StructuredRhythm && renderEvents.length === 0)',
+    'Authenticated V143 Rhythm requires non-empty valid renderEvents',
+    'legacy PDF fallback is not allowed',
+  ]),
   requireAll('ai-pdf-v143-underlying-renderer', aiPdfSource, [
     "from '@/lib/createV143RhythmPdf'",
     "from '@/lib/v143RenderContract'",
@@ -187,13 +193,16 @@ const purchasedRoutePassed =
   byLabel['purchased-route-professional-renderer']?.passed === true;
 const wrapperRoutingPassed =
   byLabel['professional-wrapper-v143-routing']?.passed === true &&
+  byLabel['professional-wrapper-v143-invalid-stream-fails-closed']?.passed === true &&
   byLabel['ai-pdf-v143-underlying-renderer']?.passed === true;
+const v143InvalidStreamFailsClosed =
+  byLabel['professional-wrapper-v143-invalid-stream-fails-closed']?.passed === true;
 const polishedBrandingContractPassed =
   byLabel['structured-rhythm-polished-branding-and-preview-lock']?.passed === true;
 
 const failedChecks = checks.filter((check) => !check.passed);
 const report = {
-  schemaVersion: 3,
+  schemaVersion: 4,
   gate: 'ai-tab-pdf-product-contract',
   sourceOfTruth: 'app/ai-tab/page.js',
   analyzerEndpoint: '/api/analyze-audio-tab',
@@ -212,6 +221,7 @@ const report = {
   routesUseProfessionalFeatureGate:
     previewRoutePassed && purchasedRoutePassed,
   authenticatedV143RhythmRoutesToStructuredRenderer: wrapperRoutingPassed,
+  authenticatedV143RhythmRejectsLegacyPdfFallback: v143InvalidStreamFailsClosed,
   polishedBrandingContractPassed,
   dadRockLogoPath: 'public/DadRock-Tabs-Logo.png',
   browserInventsMusicalPlacement: false,
