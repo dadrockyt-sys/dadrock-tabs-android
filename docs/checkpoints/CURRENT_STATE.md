@@ -112,27 +112,47 @@ Code commit:
 Checker commit:
 `b682d5ed6574866ec2ac175d6c72be13f9fc8fbd`
 
-The checker now requires an unsupported two-pitch base event to remain unchanged while retaining the prior unsupported fifth-harmonic suppression test.
+### Current correction CPU gate — PASSED on the new source
+
+Current source-stamped report:
+`debug/v143-contextual-prune/shadow-correction-cpu.json`
+
+Result:
+- `schemaVersion=2`
+- `passed=true`
+- checked-out commit `d1a50efc2ffb640068f4c8bf72b4c0bb1f42b7ee`
+- correction source blob `3bcad86b67116cc6d50295f2937a7bf3602b41dd`
+- checker source blob `bfe37235938b33d2f36f4f9d6ef39ebabeeb57e7`
+- Modal runner blob `1ee6b81c5cc61dfea7d6ed927948896770db3ac0`
+- synthetic `baseEventCount=2`, confirming the new unsupported two-pitch preservation case actually ran
+- `correctedEventCount=4`
+- `rescuedEventCount=2`
+- `suppressedPitchCount=1`
+- reference token scan passed
+- protected pipeline blob exact `7f72...`
+- Production unchanged
+
+So the conservative uncertainty fix is CPU-proven. The later CPU workflow-only commit does not alter any of those source blobs.
 
 ### Diagnostic freshness / branch-race fix
 
-The previously committed correction CPU report still showed the old synthetic `baseEventCount=1`, so it could not be treated as proof of the new checker. A likely infrastructure failure was identified: long-running GitHub/Modal workflows checked out an older branch head, then attempted a direct `git push` after newer checkpoint/code commits had advanced the branch. That can reject the diagnostic push as non-fast-forward, explaining missing approved-audio reports while rapid work continued.
+Long-running workflows could previously fail their final diagnostic push when checkpoint/code commits advanced the branch during Modal execution. Diagnostic workflows are being made source-stamped and rebase-before-push so current work can continue without losing results.
 
-Corrections made:
+CPU workflow:
+- source stamping commit `d1a50efc2ffb640068f4c8bf72b4c0bb1f42b7ee`
+- rebase-before-push commit `b7b0e7bb04923c54f37c2376b83776d5123be20c`
 
-CPU workflow source stamping:
-- `.github/workflows/v143-contextual-prune-shadow-correction-cpu.yml`
-- commit `d1a50efc2ffb640068f4c8bf72b4c0bb1f42b7ee`
-- diagnostics schema now records trigger SHA, checked-out commit, correction source blob, checker blob, Modal runner blob, plus protected runtime blob
-
-Approved correction workflow race safety + source stamping:
+Approved correction workflow:
 - `.github/workflows/v143-contextual-prune-shadow-correction-approved-audio.yml`
-- commit `9d5315abc3e6535403059bb399e33437ee23c46b`
+- race-safe/source-stamped commit `9d5315abc3e6535403059bb399e33437ee23c46b`
 - records checked-out commit and correction/Modal/timing-hypothesis source blobs
-- after creating the diagnostic commit it now fetches and rebases on the latest `v143-contextual-prune-lobo` before pushing, allowing checkpoint/code commits made during a long Modal run to coexist
-- still enforces approved fixture identity, timing diagnostics as non-mutating, reference-free behavior and no Production/live changes
+- fetches/rebases latest `v143-contextual-prune-lobo` before diagnostic push
+- still enforces approved fixture identity, non-mutating timing diagnostics, reference-free behavior and no Production/live changes
 
-New correction CPU and approved-audio reports are pending. Do not treat the old CPU JSON as current proof until the source-stamped schema-2 report lands.
+Approved-audio output remains pending:
+`debug/v143-contextual-prune/shadow-correction-approved-audio-action.json`
+
+Do not accept the attack/pitch correction musically until the approved-audio report is present and green.
 
 ## Semantic primary-note guard
 
@@ -174,11 +194,10 @@ Workflow:
 Original workflow commit:
 `c4077eff19e1e720719fc0147c1625df49c5c32a`
 
-The same long-run non-fast-forward risk applied here. The workflow has now been made race-safe and source-stamped:
-- commit `a7af569758c50c68a2dea6d59bc0804ec66562db`
-- action schema records trigger SHA, checked-out commit, runner source blob, semantic-guard blob and sustain-shadow blob
-- diagnostic commit fetches/rebases latest branch before push
-- approved fixture, event identity, semantic guard, sustain and no-Production invariants remain enforced
+Race-safe/source-stamped workflow commit:
+`a7af569758c50c68a2dea6d59bc0804ec66562db`
+
+It records trigger SHA, checked-out commit, runner source blob, semantic-guard blob and sustain-shadow blob; fetches/rebases latest branch before pushing; and retains all approved-fixture, event-identity, semantics, sustain and no-Production invariants.
 
 Expected outputs are pending:
 - `debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow-action.json`
@@ -218,11 +237,10 @@ commit `d3639460ca54d7b8a5710978469cbe44bf1ac35e`
 
 ## Immediate next steps
 
-1. Read the new source-stamped correction CPU report; require schema 2 and verify it corresponds to the new conservative checker/source.
-2. Read the race-safe approved-audio attack/pitch correction action/report when committed.
-3. Read the race-safe approved-audio semantics/sustain action/report when committed.
-4. Inspect approved-audio four-way phase evidence + strict grid ambiguity only as label-free diagnostics; do not change phase from scorer information.
-5. If approved-audio invariants pass, decide corrections using only physical/reference-free evidence.
-6. Only after independent acceptance, integrate general corrections and create a **brand-new approved-audio analysis/freeze/PDF identity**.
-7. Then, and only then, run a new scorer-only professional holdout.
-8. Require >=0.99, zero critical mismatches and PDF-event fidelity 1.0 before Rhythm completion.
+1. Read the race-safe approved-audio attack/pitch correction action/report when committed.
+2. Read the race-safe approved-audio semantics/sustain action/report when committed.
+3. Inspect approved-audio four-way phase evidence + strict grid ambiguity only as label-free diagnostics; do not change phase from scorer information.
+4. If approved-audio invariants pass, decide corrections using only physical/reference-free evidence.
+5. Only after independent acceptance, integrate general corrections and create a **brand-new approved-audio analysis/freeze/PDF identity**.
+6. Then, and only then, run a new scorer-only professional holdout.
+7. Require >=0.99, zero critical mismatches and PDF-event fidelity 1.0 before Rhythm completion.
