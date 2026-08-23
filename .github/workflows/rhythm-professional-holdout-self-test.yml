@@ -1,0 +1,149 @@
+name: Rhythm Professional Holdout Self Test
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - validation/rhythm_holdout/**
+      - .github/workflows/rhythm-professional-holdout-self-test.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  holdout-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile scorer-only holdout tools
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            validation/rhythm_holdout/canonical.py \
+            validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            validation/rhythm_holdout/verify_runtime_isolation.py \
+            validation/rhythm_holdout/score_rhythm_holdout.py
+
+      - name: Verify production runtime cannot read holdout reference
+        run: |
+          set -euo pipefail
+          python validation/rhythm_holdout/verify_runtime_isolation.py \
+            > /tmp/rhythm-runtime-isolation.json
+          cat /tmp/rhythm-runtime-isolation.json
+
+      - name: Exercise perfect frozen-analysis to PDF to holdout score path
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/rhythm-holdout-freeze
+          cat > /tmp/rhythm-analysis.json <<'JSON'
+          {
+            "referenceFree": true,
+            "professionalReferenceUsed": false,
+            "referenceRuntimeInputUsed": false,
+            "tempoBpm": 129.19921875,
+            "timeSignature": {"beats": 4, "noteValue": 4},
+            "tuning": ["E4", "B3", "G3", "D3", "A2", "E2"],
+            "structuredMode": "v143-rhythm-events-v1",
+            "renderEvents": [
+              {"measure": 1, "step": 0, "string": 6, "fret": 0, "midi": 40, "durationSteps": 2, "sustainSteps": 2, "technique": "sustain"},
+              {"measure": 1, "step": 4, "string": 5, "fret": 2, "midi": 47, "durationSteps": 2, "sustainSteps": 2}
+            ]
+          }
+          JSON
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            /tmp/rhythm-analysis.json /tmp/rhythm-holdout-freeze \
+            --source-commit "$GITHUB_SHA"
+
+          cat > /tmp/rhythm-pdf-events.json <<'JSON'
+          {
+            "renderEvents": [
+              {"measure": 1, "step": 0, "string": 6, "fret": 0, "midi": 40, "durationSteps": 2, "sustainSteps": 2, "technique": "sustain"},
+              {"measure": 1, "step": 4, "string": 5, "fret": 2, "midi": 47, "durationSteps": 2, "sustainSteps": 2}
+            ]
+          }
+          JSON
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            /tmp/rhythm-holdout-freeze /tmp/rhythm-pdf-events.json
+
+          cat > validation/rhythm_holdout/reference/.synthetic-self-test.json <<'JSON'
+          {
+            "schemaVersion": 1,
+            "instrument": "rhythm",
+            "holdout": true,
+            "completeReference": true,
+            "source": {
+              "kind": "professional-human-tab",
+              "provenance": "synthetic CI contract fixture only; not real scoring ground truth"
+            },
+            "tempoBpm": 129.19921875,
+            "timeSignature": {"beats": 4, "noteValue": 4},
+            "stepsPerMeasure": 16,
+            "tuning": ["E4", "B3", "G3", "D3", "A2", "E2"],
+            "measures": [
+              {
+                "measure": 1,
+                "events": [
+                  {"step": 0, "durationSteps": 2, "techniques": ["sustain"], "notes": [{"string": 6, "fret": 0, "midi": 40}]},
+                  {"step": 4, "durationSteps": 2, "notes": [{"string": 5, "fret": 2, "midi": 47}]}
+                ]
+              }
+            ]
+          }
+          JSON
+          python validation/rhythm_holdout/score_rhythm_holdout.py \
+            /tmp/rhythm-holdout-freeze \
+            validation/rhythm_holdout/reference/.synthetic-self-test.json \
+            --output /tmp/rhythm-perfect-score.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('/tmp/rhythm-perfect-score.json').read_text())
+          assert report['rhythmComplete'] is True
+          assert report['pdfEventFidelity'] == 1.0
+          assert report['criticalMismatchCount'] == 0
+          print('Perfect synthetic holdout path PASSED')
+          PY
+          rm -f validation/rhythm_holdout/reference/.synthetic-self-test.json
+
+      - name: Prove anti-leakage and PDF-identity failures are hard failures
+        run: |
+          set -euo pipefail
+          cat > /tmp/rhythm-unsafe.json <<'JSON'
+          {
+            "referenceFree": true,
+            "professionalReferenceUsed": true,
+            "referenceRuntimeInputUsed": false,
+            "renderEvents": [{"measure": 1, "step": 0, "string": 6, "fret": 0, "midi": 40}]
+          }
+          JSON
+          if python validation/rhythm_holdout/freeze_rhythm_analysis.py /tmp/rhythm-unsafe.json /tmp/unsafe-freeze; then
+            echo 'Unsafe reference use was incorrectly accepted.' >&2
+            exit 1
+          fi
+
+          cat > /tmp/rhythm-wrong-pdf.json <<'JSON'
+          {
+            "renderEvents": [
+              {"measure": 1, "step": 0, "string": 6, "fret": 0, "midi": 40, "durationSteps": 2, "sustainSteps": 2, "technique": "sustain"},
+              {"measure": 1, "step": 4, "string": 5, "fret": 3, "midi": 48, "durationSteps": 2, "sustainSteps": 2}
+            ]
+          }
+          JSON
+          if python validation/rhythm_holdout/verify_pdf_event_fidelity.py /tmp/rhythm-holdout-freeze /tmp/rhythm-wrong-pdf.json; then
+            echo 'Non-identical PDF events were incorrectly accepted.' >&2
+            exit 1
+          fi
+          echo 'Negative safety tests PASSED'
