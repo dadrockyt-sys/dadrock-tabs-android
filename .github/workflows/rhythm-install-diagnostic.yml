@@ -1,0 +1,68 @@
+name: Rhythm Dependency Install Diagnostic
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/rhythm-install-diagnostic.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  install-diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install and persist diagnostic
+        run: |
+          set -u
+          mkdir -p .rhythm-install debug/v143-contextual-prune
+          npm ci --ignore-scripts > .rhythm-install/install.log 2>&1
+          status=$?
+          STATUS="$status" python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          p = Path('.rhythm-install/install.log')
+          lines = p.read_text(encoding='utf-8', errors='replace').splitlines()[-24:] if p.exists() else []
+          clean = []
+          for line in lines:
+              line = re.sub(r'(?i)(token|secret|authorization|password)(\s*[:=]\s*)\S+', r'\1\2[REDACTED]', line)
+              clean.append(line[:500])
+          status = int(os.environ.get('STATUS') or 1)
+          report = {
+              'schemaVersion': 1,
+              'gate': 'rhythm-dependency-install-diagnostic',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'runId': os.environ.get('GITHUB_RUN_ID'),
+              'status': status,
+              'passed': status == 0,
+              'failureLogTail': [] if status == 0 else clean,
+              'realProfessionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('debug/v143-contextual-prune/rhythm-install-diagnostic.json').write_text(json.dumps(report, indent=2) + '\n')
+          print(json.dumps(report, indent=2))
+          PY
+          git add debug/v143-contextual-prune/rhythm-install-diagnostic.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record Rhythm dependency install diagnostic'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
+          exit "$status"
