@@ -9,8 +9,11 @@
     "instrument",
     "holdout",
     "completeReference",
+    "transcribedFromCompleteSource",
     "source",
+    "measureRange",
     "timeSignature",
+    "stepsPerMeasure",
     "tuning",
     "measures"
   ],
@@ -19,17 +22,35 @@
     "instrument": { "const": "rhythm" },
     "holdout": { "const": true },
     "completeReference": { "const": true },
+    "transcribedFromCompleteSource": { "const": true },
     "source": {
       "type": "object",
       "additionalProperties": true,
-      "required": ["kind", "provenance"],
+      "required": [
+        "kind",
+        "provenance",
+        "pageCount",
+        "sourceSha256",
+        "completeSource"
+      ],
       "properties": {
         "kind": { "const": "professional-human-tab" },
         "title": { "type": "string" },
         "artist": { "type": "string" },
         "provenance": { "type": "string", "minLength": 1 },
         "pageCount": { "type": "integer", "minimum": 1 },
-        "sourceSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        "sourceSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "completeSource": { "const": true }
+      }
+    },
+    "measureRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["firstMeasure", "lastMeasure", "measureCount"],
+      "properties": {
+        "firstMeasure": { "type": "integer", "minimum": 1 },
+        "lastMeasure": { "type": "integer", "minimum": 1 },
+        "measureCount": { "type": "integer", "minimum": 1 }
       }
     },
     "tempoBpm": { "type": "number", "exclusiveMinimum": 0 },
