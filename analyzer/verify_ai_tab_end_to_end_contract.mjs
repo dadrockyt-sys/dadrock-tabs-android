@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
 
 const files = {
   page: 'app/ai-tab/page.js',
@@ -13,9 +14,9 @@ const files = {
 
 const source = Object.fromEntries(
   await Promise.all(
-    Object.entries(files).map(async ([key, path]) => [
+    Object.entries(files).map(async ([key, filePath]) => [
       key,
-      await readFile(path, 'utf8'),
+      await readFile(filePath, 'utf8'),
     ])
   )
 );
@@ -160,6 +161,13 @@ const evidence = {
   productionPromotionAuthorized: false,
   passed: true,
 };
+
+const resultPath = String(process.env.AI_TAB_E2E_RESULT_PATH || '').trim();
+if (resultPath) {
+  const absolute = path.resolve(resultPath);
+  await mkdir(path.dirname(absolute), { recursive: true });
+  await writeFile(absolute, `${JSON.stringify(evidence, null, 2)}\n`, 'utf8');
+}
 
 console.log(JSON.stringify(evidence, null, 2));
 console.log('AI TAB END-TO-END CONTRACT VERIFIED');
