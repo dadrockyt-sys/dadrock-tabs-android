@@ -13,6 +13,7 @@ on:
       - analyzer/v143_contextual_prune_runtime.py
       - analyzer/v143_rhythm_timing_consistency_shadow.py
       - analyzer/v143_rhythm_timing_hypothesis_shadow.py
+      - analyzer/v143_reference_free_rhythm_pipeline.py
 
 concurrency:
   group: v143-contextual-prune-shadow-correction-approved-audio
@@ -59,6 +60,29 @@ jobs:
             echo "APPROVED_AUDIO_SHA=FAIL:$actual expected=$expected" >> "$log"
           fi
 
+          protected_blob=$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)
+          expected_protected_blob=7f72f8ed9b14af8bc93e95544195204d99c6bec1
+          protected_ok=false
+          if [ "$protected_blob" = "$expected_protected_blob" ]; then
+            protected_ok=true
+            echo "PROTECTED_PIPELINE_BLOB=PASS:$protected_blob" >> "$log"
+          else
+            echo "PROTECTED_PIPELINE_BLOB=FAIL:$protected_blob expected=$expected_protected_blob" >> "$log"
+          fi
+
+          reference_scan_passed=true
+          if grep -E -n \
+            'gomyway-professional-rhythm-reference|Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score' \
+            analyzer/v143_contextual_prune_shadow_correction.py \
+            analyzer/v143_contextual_prune_shadow_correction_modal.py \
+            analyzer/v143_rhythm_timing_consistency_shadow.py \
+            analyzer/v143_rhythm_timing_hypothesis_shadow.py >> "$log" 2>&1; then
+            reference_scan_passed=false
+            echo "CORRECTION_APPROVED_REFERENCE_TOKEN_SCAN=FAIL" >> "$log"
+          else
+            echo "CORRECTION_APPROVED_REFERENCE_TOKEN_SCAN=PASS" >> "$log"
+          fi
+
           correction_blob=$(git hash-object analyzer/v143_contextual_prune_shadow_correction.py)
           modal_blob=$(git hash-object analyzer/v143_contextual_prune_shadow_correction_modal.py)
           timing_hypothesis_blob=$(git hash-object analyzer/v143_rhythm_timing_hypothesis_shadow.py)
@@ -71,7 +95,7 @@ jobs:
           token_available=false
           attempted=false
           status=99
-          if [ "$source_ok" = true ] && [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+          if [ "$source_ok" = true ] && [ "$protected_ok" = true ] && [ "$reference_scan_passed" = true ] && [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
             token_available=true
             attempted=true
             python -m pip install --disable-pip-version-check modal >> "$log" 2>&1
@@ -88,11 +112,17 @@ jobs:
           elif [ "$source_ok" != true ]; then
             status=41
             echo "Approved audio identity failed; correction shadow not attempted." >> "$log"
+          elif [ "$protected_ok" != true ]; then
+            status=42
+            echo "Protected Rhythm pipeline identity failed; correction shadow not attempted." >> "$log"
+          elif [ "$reference_scan_passed" != true ]; then
+            status=43
+            echo "Scorer/reference token scan failed; correction shadow not attempted." >> "$log"
           else
             echo "Modal GitHub credentials unavailable; correction shadow not attempted." >> "$log"
           fi
 
-          TOKEN_AVAILABLE="$token_available" ATTEMPTED="$attempted" STATUS="$status" SOURCE_OK="$source_ok" ACTUAL_SHA="$actual" REPORT_EXISTS="$([ -s "$report" ] && echo true || echo false)" CORRECTION_BLOB="$correction_blob" MODAL_BLOB="$modal_blob" TIMING_HYPOTHESIS_BLOB="$timing_hypothesis_blob" CHECKED_OUT_COMMIT="$checked_out_commit" TRIGGER_SHA="${GITHUB_SHA}" python - <<'PY'
+          TOKEN_AVAILABLE="$token_available" ATTEMPTED="$attempted" STATUS="$status" SOURCE_OK="$source_ok" ACTUAL_SHA="$actual" REPORT_EXISTS="$([ -s "$report" ] && echo true || echo false)" CORRECTION_BLOB="$correction_blob" MODAL_BLOB="$modal_blob" TIMING_HYPOTHESIS_BLOB="$timing_hypothesis_blob" CHECKED_OUT_COMMIT="$checked_out_commit" TRIGGER_SHA="${GITHUB_SHA}" PROTECTED_BLOB="$protected_blob" EXPECTED_PROTECTED_BLOB="$expected_protected_blob" PROTECTED_OK="$protected_ok" REFERENCE_SCAN_PASSED="$reference_scan_passed" python - <<'PY'
           import json
           import os
           from pathlib import Path
@@ -102,13 +132,17 @@ jobs:
           lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
           attempted = os.environ["ATTEMPTED"] == "true"
           payload = {
-              "schemaVersion": 2,
+              "schemaVersion": 3,
               "gate": "v143-contextual-prune-shadow-correction-approved-audio",
               "triggerSha": os.environ["TRIGGER_SHA"],
               "checkedOutCommit": os.environ["CHECKED_OUT_COMMIT"],
               "correctionSourceBlob": os.environ["CORRECTION_BLOB"],
               "modalSourceBlob": os.environ["MODAL_BLOB"],
               "timingHypothesisSourceBlob": os.environ["TIMING_HYPOTHESIS_BLOB"],
+              "protectedPipelineBlob": os.environ["PROTECTED_BLOB"],
+              "expectedProtectedPipelineBlob": os.environ["EXPECTED_PROTECTED_BLOB"],
+              "protectedPipelineUnchanged": os.environ["PROTECTED_OK"] == "true",
+              "referenceTokenScanPassed": os.environ["REFERENCE_SCAN_PASSED"] == "true",
               "approvedAudioSha256": os.environ["ACTUAL_SHA"],
               "approvedAudioIdentityPassed": os.environ["SOURCE_OK"] == "true",
               "modalCredentialsAvailableInGitHubActions": os.environ["TOKEN_AVAILABLE"] == "true",
@@ -119,7 +153,7 @@ jobs:
               "runtimeLabelsRequired": False,
               "liveEndpointDeployedOrModified": False,
               "productionModified": False,
-              "logTail": lines[-220:],
+              "logTail": lines[-240:],
           }
           output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
           PY
@@ -165,6 +199,10 @@ jobs:
           missing_identity = [key for key in identity_fields if not str(action.get(key) or "").strip()]
           if missing_identity:
               raise SystemExit(f"Approved-audio correction source identity missing: {missing_identity}")
+          if action.get("protectedPipelineUnchanged") is not True:
+              raise SystemExit("Protected Rhythm pipeline blob changed")
+          if action.get("referenceTokenScanPassed") is not True:
+              raise SystemExit("Approved-audio correction scorer/reference token scan failed")
           if action.get("approvedAudioIdentityPassed") is not True:
               raise SystemExit("Approved audio SHA gate failed")
           if action.get("modalCredentialsAvailableInGitHubActions") is not True:
