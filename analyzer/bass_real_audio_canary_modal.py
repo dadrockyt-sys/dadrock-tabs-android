@@ -19,10 +19,13 @@ PLAYABLE_BASS_MIN_HZ = 41.203445
 PLAYABLE_BASS_MAX_HZ = 391.995436
 
 # Reuse the frozen V143 execution image only as an ephemeral research substrate.
-# The Bass scaffold is added as local source; no live Modal endpoint is deployed
-# or modified by this canary.
+# The canary module imports v143_modal_live_endpoint when Modal hydrates the
+# remote function, so that source must also be present inside the image. This
+# does not deploy or modify the live V143 app; it only makes the frozen image
+# definition importable in the isolated canary container.
 canary_image = frozen_v143_image.add_local_python_source(
-    "bass_professional_separator_scaffold"
+    "v143_modal_live_endpoint",
+    "bass_professional_separator_scaffold",
 )
 
 
