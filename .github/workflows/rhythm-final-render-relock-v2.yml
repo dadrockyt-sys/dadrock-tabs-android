@@ -1,0 +1,266 @@
+name: Rhythm Final Renderer Relock V2
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/rhythm-final-render-relock-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: rhythm-final-render-relock-v2-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  relock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install isolated renderer dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .relock-v2
+          cat > .relock-v2/package.json <<'JSON'
+          {"private":true,"dependencies":{"pdf-lib":"1.17.1"}}
+          JSON
+          npm install --prefix .relock-v2 --ignore-scripts --no-audit --no-fund --package-lock=false
+          python -m pip install --disable-pip-version-check --quiet pypdf
+
+      - name: Download immutable frozen source artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: rhythm-professional-preholdout-real-audio
+          path: .source
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: 32643978196
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Stage exact frozen stream and current renderer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .relock-v2/esm .relock-v2/freeze/pdf debug/v143-contextual-prune
+          snapshot=$(find .source -type f -name rhythm-frozen-analysis.json | head -n 1)
+          manifest=$(find .source -type f -name rhythm-freeze-manifest.json | head -n 1)
+          proof=$(find .source -type f -name rhythm-professional-preholdout-real-audio.json | head -n 1)
+          test -s "$snapshot" && test -s "$manifest" && test -s "$proof"
+          cp "$snapshot" .relock-v2/freeze/rhythm-frozen-analysis.json
+          cp "$manifest" .relock-v2/freeze/rhythm-freeze-manifest.json
+          cp "$proof" .relock-v2/source-proof.json
+          cp lib/v143RenderContract.js .relock-v2/esm/v143RenderContract.mjs
+          sed "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" lib/createV143RhythmPdf.js > .relock-v2/esm/createV143RhythmPdf.mjs
+          sed "s#../../lib/v143RenderContract.js#./v143RenderContract.mjs#" validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs > .relock-v2/esm/render-frozen.mjs
+          node --check .relock-v2/esm/v143RenderContract.mjs
+          node --check .relock-v2/esm/createV143RhythmPdf.mjs
+          node --check .relock-v2/esm/render-frozen.mjs
+
+      - name: Verify source binding before render
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          expected = 'a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e'
+          proof = json.loads(Path('.relock-v2/source-proof.json').read_text(encoding='utf-8'))
+          manifest = json.loads(Path('.relock-v2/freeze/rhythm-freeze-manifest.json').read_text(encoding='utf-8'))
+          frozen = json.loads(Path('.relock-v2/freeze/rhythm-frozen-analysis.json').read_text(encoding='utf-8'))
+          safety = frozen.get('safety') or {}
+          checks = {
+              'sourceRun': str(proof.get('workflowRunId')) == '32643978196',
+              'sourceCommit': proof.get('sourceCommit') == 'b23bdfb476bc26af5f353b7862465af3f2abc485',
+              'sourceHash': proof.get('frozenEventSha256') == expected,
+              'manifestHash': manifest.get('eventSha256') == expected,
+              'eventCount': int(manifest.get('eventCount') or 0) == 1017,
+              'referenceFree': safety.get('referenceFree') is True,
+              'professionalReferenceNotUsed': safety.get('professionalReferenceUsed') is False,
+              'referenceRuntimeInputNotUsed': safety.get('referenceRuntimeInputUsed') is False,
+              'runtimeLabelsNotRequired': safety.get('runtimeLabelsRequired') is False,
+              'v143RuntimeSafetyVerified': safety.get('v143RuntimeSafetyVerified') is True,
+              'referenceNotOpenedDuringFreeze': manifest.get('referenceOpenedDuringFreeze') is False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              raise SystemExit('source binding failed: ' + ', '.join(failed))
+          PY
+
+      - name: Render current final PDF from locked events only
+        shell: bash
+        run: |
+          set -euo pipefail
+          node .relock-v2/esm/render-frozen.mjs \
+            .relock-v2/freeze/rhythm-frozen-analysis.json \
+            .relock-v2/freeze/pdf \
+            .relock-v2/esm/createV143RhythmPdf.mjs \
+            > .relock-v2/render.log 2>&1
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .relock-v2/freeze \
+            .relock-v2/freeze/pdf/pdf-event-evidence.json \
+            > .relock-v2/fidelity.log 2>&1
+
+      - name: Verify final presentation and write compact proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { summarizeV143RhythmPresentation } from './.relock-v2/esm/v143RenderContract.mjs';
+          const frozen = JSON.parse(await fs.readFile('.relock-v2/freeze/rhythm-frozen-analysis.json', 'utf8'));
+          const events = frozen.renderEvents || [];
+          const presentation = summarizeV143RhythmPresentation(events);
+          const maximumMeasure = Math.max(...events.map((event) => Number(event.measure) || 0));
+          const minimumSectionSpan = Math.min(...presentation.sections.map((section) => section.endMeasure - section.startMeasure + 1));
+          const checks = {
+            eventCountExact: presentation.eventCount === 1017,
+            uniqueMeasureCountExact: presentation.uniqueMeasureCount === 112,
+            maximumMeasureExact: maximumMeasure === 113,
+            multiNoteDensity: presentation.averageNotesPerMeasure > 2,
+            uniqueOnsetsBeyondMeasures: presentation.uniqueOnsetCount > presentation.uniqueMeasureCount,
+            polyphonicOnsets: presentation.multiNoteOnsetCount > 0,
+            chordSize: presentation.maximumChordSize >= 2,
+            techniques: presentation.techniqueEventCount > 0 && presentation.techniqueTypes.length >= 2,
+            sectionCountReasonable: presentation.sectionCount >= 2 && presentation.sectionCount <= Math.ceil(maximumMeasure / 8),
+            sectionMinimumSpan: minimumSectionSpan >= 8,
+            sectionStartsAtOne: presentation.sections[0]?.startMeasure === 1,
+            sectionEndsAt113: presentation.sections[presentation.sections.length - 1]?.endMeasure === 113,
+            collapseAbsent: presentation.oneNotePerMeasureCollapseDetected === false,
+            referenceFree: presentation.referenceFree === true,
+            professionalReferenceNotUsed: presentation.professionalReferenceUsed === false,
+            runtimeLabelsNotRequired: presentation.runtimeLabelsRequired === false,
+          };
+          const failed = Object.entries(checks).filter(([, ok]) => !ok).map(([name]) => name);
+          await fs.writeFile('.relock-v2/presentation.json', JSON.stringify({schemaVersion:1,presentation,maximumMeasure,minimumSectionSpan,checks,failedChecks:failed,passed:failed.length===0}, null, 2) + '\n');
+          if (failed.length) throw new Error('presentation checks failed: ' + failed.join(', '));
+          NODE
+
+          python - <<'PY'
+          import hashlib, json, os, re
+          from pathlib import Path
+          from pypdf import PdfReader
+
+          def sha(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+          expected = 'a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e'
+          full = Path('.relock-v2/freeze/pdf/full-frozen-rhythm.pdf')
+          preview = Path('.relock-v2/freeze/pdf/preview-frozen-rhythm.pdf')
+          full_reader = PdfReader(str(full))
+          preview_reader = PdfReader(str(preview))
+          full_text = '\n'.join(page.extract_text() or '' for page in full_reader.pages)
+          preview_text = '\n'.join(page.extract_text() or '' for page in preview_reader.pages)
+          presentation = json.loads(Path('.relock-v2/presentation.json').read_text(encoding='utf-8'))
+          fidelity = json.loads(Path('.relock-v2/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+          render = json.loads(Path('.relock-v2/freeze/pdf/pdf-event-evidence.json').read_text(encoding='utf-8'))
+          source = json.loads(Path('.relock-v2/source-proof.json').read_text(encoding='utf-8'))
+          section_text_count = full_text.count('SECTION ')
+          text_checks = {
+              'timingLegendVisible': 'Timing: 16th-note grid' in full_text,
+              'roundedTempoVisible': '129 BPM' in full_text,
+              'unroundedTempoAbsent': '128.999' not in full_text,
+              'sectionsVisible': section_text_count >= 2 and section_text_count <= 15,
+              'hammerOnVisible': 'hammer-on' in full_text,
+              'pullOffVisible': 'pull-off' in full_text,
+              'slideVisible': 'slide' in full_text,
+              'bendVisible': 'bend' in full_text,
+              'measure113Visible': re.search(r'(?<!\d)113(?!\d)', full_text) is not None,
+              'phantom114Absent': re.search(r'(?<!\d)114(?!\d)', full_text) is None,
+              'previewLockVisible': 'FULL TAB LOCKED' in preview_text,
+              'previewTimingVisible': 'Timing: 16th-note grid' in preview_text,
+              'previewSectionVisible': 'SECTION ' in preview_text,
+          }
+          checks = {
+              'presentationPassed': presentation.get('passed') is True,
+              'textPassed': all(text_checks.values()),
+              'frozenHashBound': fidelity.get('frozenEventSha256') == expected,
+              'pdfHashBound': fidelity.get('pdfEventSha256') == expected,
+              'pdfEventFidelityExact': fidelity.get('pdfEventFidelity') == 1.0,
+              'rendererProjectionExact': render.get('rendererProjectionExactlyEqual') is True,
+              'eventCountExact': int(render.get('renderEventCount') or 0) == 1017,
+              'fullPdfRendered': full.stat().st_size > 20000 and len(full_reader.pages) > 0,
+              'previewPdfRendered': preview.stat().st_size > 20000 and len(preview_reader.pages) > 0,
+              'professionalReferenceOpened': False,
+              'productionModified': False,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          report = {
+              'schemaVersion': 2,
+              'gate': 'rhythm-final-render-relock',
+              'sourceFreezeRunId': '32643978196',
+              'sourceArtifactId': 9494412019,
+              'sourceArtifactDigest': 'sha256:5ab309e1c86826cb8b5c6ef9c6e3a8edbad334d99d55c07538475c7b61ba519b',
+              'sourceFreezeCommit': source.get('sourceCommit'),
+              'rendererCommit': os.environ.get('GITHUB_SHA'),
+              'sourceAudioSha256': source.get('sourceAudioSha256'),
+              'eventCount': render.get('renderEventCount'),
+              'frozenEventSha256': fidelity.get('frozenEventSha256'),
+              'pdfEventSha256': fidelity.get('pdfEventSha256'),
+              'pdfEventFidelity': fidelity.get('pdfEventFidelity'),
+              'presentation': presentation.get('presentation'),
+              'presentationChecks': presentation.get('checks'),
+              'textChecks': text_checks,
+              'sectionTextCount': section_text_count,
+              'fullPdf': {'bytes': full.stat().st_size, 'pages': len(full_reader.pages), 'sha256': sha(full)},
+              'previewPdf': {'bytes': preview.stat().st_size, 'pages': len(preview_reader.pages), 'sha256': sha(preview)},
+              'checks': checks,
+              'failedChecks': failed,
+              'referenceFree': True,
+              'professionalReferenceUsed': False,
+              'referenceRuntimeInputUsed': False,
+              'runtimeLabelsRequired': False,
+              'v143RuntimeSafetyVerified': True,
+              'professionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+              'passed': not failed,
+          }
+          Path('debug/v143-contextual-prune/rhythm-final-render-relock-v2.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          if failed:
+              raise SystemExit('final relock failed: ' + ', '.join(failed))
+          PY
+
+      - name: Upload final relock artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhythm-final-render-relock-v2
+          path: |
+            .relock-v2/freeze/rhythm-frozen-analysis.json
+            .relock-v2/freeze/rhythm-freeze-manifest.json
+            .relock-v2/freeze/rhythm-pdf-event-fidelity.json
+            .relock-v2/freeze/pdf/pdf-event-evidence.json
+            .relock-v2/freeze/pdf/full-frozen-rhythm.pdf
+            .relock-v2/freeze/pdf/preview-frozen-rhythm.pdf
+            .relock-v2/presentation.json
+            debug/v143-contextual-prune/rhythm-final-render-relock-v2.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Persist proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add debug/v143-contextual-prune/rhythm-final-render-relock-v2.json
+          git commit -m 'Record final Rhythm renderer relock V2'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
