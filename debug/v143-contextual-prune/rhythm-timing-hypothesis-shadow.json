@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-rhythm-timing-hypothesis-shadow",
+  "exitCode": 0,
+  "passed": true,
+  "referenceTokenScanPassed": true,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "expectedProtectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "protectedPipelineUnchanged": true,
+  "professionalReferenceUsed": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "logTail": [
+    "V143 rhythm timing hypothesis shadow proof passed",
+    "{'beatCount': 16, 'candidates': [{'downbeatIndexMod4': 0, 'firstBeatInMeasure': 0, 'downbeatMeanAccent': 0.2, 'otherBeatMeanAccent': 0.49, 'accentContrast': -0.29, 'downbeatSampleCount': 4, 'otherBeatSampleCount': 12}, {'downbeatIndexMod4': 1, 'firstBeatInMeasure': 3, 'downbeatMeanAccent': 0.25, 'otherBeatMeanAccent': 0.47333333333333333, 'accentContrast': -0.22333333333333333, 'downbeatSampleCount': 4, 'otherBeatSampleCount': 12}, {'downbeatIndexMod4': 2, 'firstBeatInMeasure': 2, 'downbeatMeanAccent': 1.0, 'otherBeatMeanAccent': 0.22333333333333333, 'accentContrast': 0.7766666666666666, 'downbeatSampleCount': 4, 'otherBeatSampleCount': 12}, {'downbeatIndexMod4': 3, 'firstBeatInMeasure': 1, 'downbeatMeanAccent': 0.22, 'otherBeatMeanAccent': 0.48333333333333334, 'accentContrast': -0.2633333333333333, 'downbeatSampleCount': 4, 'otherBeatSampleCount': 12}], 'winnerDownbeatIndexMod4': 2, 'winnerFirstBeatInMeasure': 2, 'winnerAccentContrast': 0.7766666666666666, 'runnerUpAccentContrast': -0.22333333333333333, 'winnerSeparation': 1.0, 'accentSpread': 0.33677700337166727, 'confidence': 1.0, 'currentDownbeatIndexMod4': 2, 'currentWinnerMatches': True, 'phaseSelectedOrChanged': False}",
+    "{'ambiguousCount': 1, 'ambiguousFraction': 0.3333333333333333, 'marginP10Seconds': 0.021000000000000005, 'marginP50Seconds': 0.10500000000000001, 'marginMedianSeconds': 0.10500000000000001}",
+    "TIMING_HYPOTHESIS_REFERENCE_TOKEN_SCAN=PASS",
+    "PROTECTED_PIPELINE_BLOB=PASS:7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+  ]
+}
