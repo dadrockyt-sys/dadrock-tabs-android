@@ -78,13 +78,7 @@ Core files:
 - `validation/rhythm_holdout/reference/reference-inventory.json`
 - `validation/rhythm_holdout/reference/.gitignore`
 
-Important commits:
-- `10ae14101cff959a7b90822b33c44df229ad0b61` — complete-source reference schema requirements.
-- `4169e44522815539cdc4a299730a9ca8e32d53da` — strict reference completeness verifier; validates freeze/PDF safety before opening reference.
-- `669f4445d6b98391754de25276cd6cb1ed54b7cf` — real holdout/event transcription ignored from git.
-- `4f9c0d83686f56853a5b6ba2edb1035ed323a542` — mandatory `run_final_holdout_gate.py` binds completeness + scorer + frozen/PDF hashes.
-- `10bc229a424dda3ad56a680fc7000d7286687a2f` — self-test exercises mandatory final wrapper.
-- latest previously observed strict synthetic evidence was green: runtime isolation, complete source/reference, contiguous coverage, final wrapper, PDF event fidelity 1.0, critical mismatches 0, partial-reference hard failure, real professional reference unopened, Production unchanged.
+Previously observed strict synthetic evidence was green: runtime isolation, complete source/reference, contiguous coverage, final wrapper, PDF event fidelity 1.0, critical mismatches 0, partial-reference hard failure, real professional reference unopened, Production unchanged.
 
 ## Exact authenticated event → PDF identity — DIRECT PROOF GREEN
 
@@ -112,22 +106,30 @@ Purchased/unlocked:
 - sends same structured musical fields including exact analyzer **renderEvents**, plus unlock/payment/token/customer-email fields
 - expects `application/pdf`
 
-Routes:
-- `app/api/generate-tab-preview/route.js`
-- `app/api/generate-tab-pdf/route.js`
-Both use `createJimmyPaigeProfessionalPdf(...)` when professional PDF feature is enabled.
-
-For authenticated V143 Rhythm (`analysisEngine === 'v143-reference-free-rhythm'` + render events), actual path is:
+For authenticated V143 Rhythm, actual PDF path is:
 `page.js → API route → createJimmyPaigeProfessionalPdf → createAiTabPdf → createV143RhythmPdf`.
 
-Therefore `createV143RhythmPdf` is the underlying polished Rhythm renderer used by the actual `/ai-tab` preview/purchased PDF product, including DadRock logo/branding. Do not invent a second PDF contract.
+`createV143RhythmPdf` is the actual underlying polished Rhythm renderer, including DadRock logo/branding. Do not invent a second PDF contract.
 
-Static product-path protection:
-- `a45f71296bf0ffb2284f5adeea462f2ab94114ac` — original `verify_ai_tab_pdf_product_contract.mjs` gate.
-- `280c86fcf40e57a9d365b77321e1a1e3d37609c7` — strengthened contract verifier proves both UI flows expect PDFs, both API routes use the professional feature gate, authenticated V143 Rhythm routes to the structured renderer, and `createV143RhythmPdf` still carries the real DadRock logo path, product branding, preview watermark/lock, and branded footer.
-- `3cd507e4898e44840d1a32a550f6bc947dc2761f` — reusable static preflight gates on those polished product-contract facts before accepting render/hash proof.
+## CRITICAL V143 runtime anti-leakage hardening — FIXED IN PRODUCT PATH, CPU PROOF ADDED
 
-These are validation-only changes; production renderer behavior and branding were not altered.
+A product-path audit found a real safety gap: before this hardening, `app/api/analyze-audio-tab/route.js` and `buildJimmyPaigeAnalysisPayload(...)` effectively treated `liveV143.referenceFree === true` as sufficient identity proof. That was weaker than the immutable contract because an unsafe response could theoretically claim `referenceFree:true` while also reporting professional-reference use, reference runtime input, or required runtime labels.
+
+Hardening commits:
+- `190b6a36c349c91b97b2f3a1b66781851927f16d` — `lib/jimmyPaigeAnalysisPayload.js` now requires the complete explicit runtime safety contract before creating structured `renderEvents`:
+  - `referenceFree === true`
+  - `professionalReferenceUsed === false`
+  - `referenceRuntimeInputUsed === false`
+  - `runtimeLabelsRequired === false`
+  Unsafe or missing flags hard-fail for V143 Rhythm. Payload contract bumped to v3 and records `v143RuntimeSafetyVerified`.
+- `06a547c5148434553032455253a3aec0d5095b83` — new `verify_v143_runtime_safety_contract.mjs`; proves a safe synthetic V143 response is accepted and unsafe/missing flag variants are rejected. It never opens a professional reference.
+- `b1273fa8eb925f46471084205e95885f98fab96a` — defense-in-depth at `app/api/analyze-audio-tab/route.js`; the API route independently requires all four flags before the response enters `buildJimmyPaigeAnalysisPayload`, returning 502 when the V143 runtime safety contract fails.
+- `b486243169d5445763b00f031b28df50cd2d9e3d` — CPU preflight upgraded to schemaVersion 7 and now runs the runtime anti-leakage negative test before synthetic freeze/PDF proof.
+- `3191153c0bb84c53d85c17e9bd18c026728c701d` — AI-tab product-contract verifier upgraded to schemaVersion 3 and now checks both route-layer and payload-layer anti-leakage gates in addition to the actual PDF wiring/branding.
+
+No threshold, musical inference, renderer, payment, email, live Modal, or Production behavior was loosened or promoted. These changes are fail-closed safety hardening on the isolated branch.
+
+A bot commit `33ace6ee89b377be2a98d05b7d6c34e10b1b9a6e` was observed after the payload hardening; it only refreshed `debug/v143-contextual-prune/next-preview-route-smoke.json` to record a staged local branch-gate start for source commit `190b6a...`. It explicitly reported local simulation / no actual Vercel preview deployment in that evidence file change.
 
 ## Fresh real-audio pre-holdout freeze/PDF gate — CODED, authoritative result still pending
 
@@ -136,49 +138,38 @@ Committed machinery:
 - `a185760b134e38b548711d928b24e559530f9b40` — preview/full professional PDFs from frozen events only.
 - `16bc56a5885802c194a77864553681b7634b7112` — freeze records source-audio SHA-256/bytes.
 - `8066dd24494ba7c550c3c0481d4932cf6e45470c` — real-audio pre-holdout workflow.
+- `b63f6d33d7b8a8a73d752e4f97e47aeda256260d` — static verifier for future real-audio workflow contract.
+- `ad740dd51d8bbb9793988fa19b52921997b054c4` — CPU preflight requires that GPU-workflow contract before GPU use.
 
-Required proof: fresh audio, referenceFree true, professionalReferenceUsed false, referenceRuntimeInputUsed false, frozen source/event hashes, full+preview PDF, exact PDF/frozen event hash equality, fidelity 1.0, human reference unopened.
+Required proof: fresh audio, all anti-leakage flags safe, frozen source/event hashes, full+preview PDF, exact PDF/frozen event hash equality, fidelity 1.0, human reference unopened.
 
 `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` is still not established green. Do not launch duplicate expensive GPU work until CPU glue is green.
 
-Additional GPU-readiness safeguards were added **without editing or triggering the GPU workflow itself**:
-- `b63f6d33d7b8a8a73d752e4f97e47aeda256260d` — new `verify_real_audio_preholdout_workflow_contract.mjs` statically verifies the real-audio workflow uses the approved audio fixture and product analyzer, repository-local `.preholdout/esm` renderer tools, freeze-before-render order, anti-leakage proof fields, exact PDF/frozen hash proof, full+preview artifacts, and no holdout-reference or `/tmp` renderer path.
-- `ad740dd51d8bbb9793988fa19b52921997b054c4` — CPU preflight upgraded to schemaVersion 6 and now must pass that real-audio workflow contract before the eventual GPU run is allowed to be considered ready.
+## CPU polished-PDF preflight — OLD FAILURE EXPLAINED; POST-FIX SCHEMA 7 EVIDENCE PENDING
 
-## CPU polished-PDF preflight — EXACT ROOT CAUSE FOUND AND TEST GLUE FIXED; REFRESH RUNS IN FLIGHT
-
-The previous failure was **not evidence of a logo or polished renderer defect**.
-
-Latest persisted old failure diagnostic from source commit `b65cf9dd016edb3fce54d2cd36dd73d9a593f637` explicitly showed:
+Old persisted failure was test-environment-only:
 ```text
-failedStage: professional-pdf-render
 Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pdf-lib'
 imported from /tmp/rhythm-preholdout-static/esm/render-frozen.mjs
 ```
 
-This proves Node was executing a standalone ESM copy under `/tmp`, outside the repository package-resolution tree. The repository has `pdf-lib` as a locked dependency, and the actual product renderer runs inside the repository/Next.js environment.
+The repository has locked `pdf-lib`; the old standalone test lived under `/tmp`, outside repository Node package resolution. This is not evidence of a logo or polished-renderer defect.
 
-Fixes now in branch:
-- reusable runner default is repository-local: `$ROOT/.preholdout-static`
-- `1906bd89b35abdc2ea121f7d6605acc2f24eee04` — consolidated self-test no longer overrides the runner with `/tmp`; it uses `$GITHUB_WORKSPACE/.preholdout-static`
-- `e5bade98915c6b9b4af75ba55f8c214ee1109b4e` — consolidated path uses the same authoritative AI-tab PDF preflight runner
-- `280c86fcf40e57a9d365b77321e1a1e3d37609c7` / `3cd507e4898e44840d1a32a550f6bc947dc2761f` — polished product contract strengthened
-- `b63f6d33d7b8a8a73d752e4f97e47aeda256260d` / `ad740dd51d8bbb9793988fa19b52921997b054c4` — future real-audio GPU workflow contract is now preflighted by CPU before any GPU retry
+Fixes:
+- reusable runner is repository-local under `.preholdout-static`
+- consolidated self-test also uses `$GITHUB_WORKSPACE/.preholdout-static`
+- CPU preflight now gates the real `app/ai-tab/page.js` PDF contract, polished branding/logo path, future real-audio workflow safety, and V143 runtime anti-leakage behavior before accepting PDF/hash proof
 
-Current branch head before this checkpoint: `ad740dd51d8bbb9793988fa19b52921997b054c4`.
-
-CPU workflows were retriggered by validation-only commits. Await refreshed bot evidence. Do not treat the old `/tmp` failure JSON as current post-fix evidence. If a refreshed run fails, use its persisted `failedStage` and sanitized `failureLogTail` rather than guessing.
-
-No live Modal, Production, payments, token redemption, email, or customer flow was invoked.
+Current authoritative post-hardening CPU target is schemaVersion 7. The old schemaVersion 4 `/tmp` failure JSON is stale and must not be treated as current evidence.
 
 ## Immediate next actions
 
-1. Observe refreshed `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`; require schemaVersion 6 `passed:true`, page.js polished PDF contract true, future real-audio workflow contract true, 400 events/100 measures, full+preview PDFs, hash equality, fidelity 1.0.
-2. Observe refreshed `debug/v143-contextual-prune/rhythm-professional-holdout-self-test.json`; require consolidated `passed:true` with product-path/static/final-wrapper gates green.
-3. If any CPU gate remains red, use the new persisted `failureLogTail`; do not alter product rendering unless evidence proves a real product defect.
-4. Save this checkpoint after each meaningful result.
-5. Only after CPU glue is green, diagnose/retrigger exactly one fresh real-audio pre-holdout GPU run if needed.
-6. After fresh reference-free freeze/PDF evidence is safely locked, recover/re-supply a **clean complete** professional Rhythm source if necessary.
+1. Observe refreshed `debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json`; require schemaVersion 7 `passed:true`, runtime anti-leakage contract true, page.js polished PDF contract true, future real-audio workflow contract true, 400 events/100 measures, full+preview PDFs, hash equality, fidelity 1.0.
+2. Observe refreshed consolidated holdout self-test; require all synthetic final-wrapper/static/product safety gates green.
+3. If CPU remains red, use persisted `failedStage` + `failureLogTail`; do not alter product renderer unless evidence proves a real renderer defect.
+4. Save checkpoint after each meaningful result.
+5. Only after CPU glue is green, execute/diagnose exactly one fresh real-audio pre-holdout GPU run if necessary.
+6. Once fresh reference-free freeze/PDF evidence is locked, recover/re-supply a **clean complete** professional Rhythm source if necessary.
 7. Run final sequence: freeze/PDF proof → reference completeness verifier → isolated professional scorer → `run_final_holdout_gate.py`.
 8. If score <0.99 or any critical mismatch, change only general/reference-free algorithms; rerun audio from scratch and rescore.
 9. Only after real gate passes create **`Final Rhythm Pipeline`**.
