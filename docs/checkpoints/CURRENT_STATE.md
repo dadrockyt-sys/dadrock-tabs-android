@@ -128,15 +128,18 @@ Existing downstream product code is already compatible with attack count != rend
 
 `analyzer/v143_modal_live_endpoint.py` defines `V143_MODULES`, which explicitly packages both `v143_rhythm_guitar_note_mapper` and `v143_rhythm_event_assembly` plus the rest of the V143 stack into `rhythm_image` from the checked-out branch source. Therefore a fresh `modal run` can exercise the new branch mapper/assembly in an isolated ephemeral canary without deploying or modifying live V143 Modal.
 
-## Fresh post-polyphony approved-audio freeze — TRIGGERED, RESULT PENDING
+## Fresh post-polyphony approved-audio freeze — CORRECTED TRIGGER PENDING
 
-Exactly one deliberate GPU candidate trigger was committed:
-- trigger commit `ebbaf7f30cf96f5e084d7122765bf9fac076b60e`
-- commit message `Trigger fresh post-polyphony Rhythm audio freeze`
-- change is only a harmless dated trigger comment in `.github/workflows/rhythm-professional-preholdout-real-audio.yml`
-- the workflow checks out exact `${{ github.sha }}` and runs the isolated product canary; it does not deploy/alter live V143 Modal or Production.
+Initial trigger commit `ebbaf7f30cf96f5e084d7122765bf9fac076b60e` accidentally removed the closing apostrophe from two standalone-ESM `sed` replacements. If that workflow instance executed, `.preholdout/esm/jimmyPaigeAnalysisPayload.mjs` is syntactically invalid and the following `node --check` must fail **before** the Modal analysis step. Therefore that defective revision cannot reach or consume the GPU product-canary stage.
 
-At this checkpoint, `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` still contains historical run `32623173615`, so the new GPU run has not yet persisted its result. Do not trigger a second GPU run while this one is pending.
+The defect was corrected without changing runtime musical logic:
+- corrected trigger commit `580550c7cfa6d7a2204aac70052c4c5ab88aa130`
+- commit message `Fix pre-GPU ESM rewrite and retrigger Rhythm freeze`
+- verified commit diff restores only the two missing apostrophes in the ESM rewrite.
+
+This corrected workflow is the first viable post-polyphony GPU candidate trigger. Do not trigger another run while it is pending.
+
+At this checkpoint, `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` still contains historical run `32623173615`; the corrected candidate has not yet persisted its result.
 
 ## CPU orchestration note
 
@@ -144,7 +147,7 @@ Current persisted static preflight is schema 7 / `passed:true`, with PDF-event f
 
 ## Immediate next steps
 
-1. Poll `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` until `eventTriggerCommit` becomes `ebbaf7f30cf96f5e084d7122765bf9fac076b60e`, or inspect the corresponding Actions run if it fails before persistence. Do not trigger another GPU run.
+1. Poll `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json` until `eventTriggerCommit` becomes `580550c7cfa6d7a2204aac70052c4c5ab88aa130`, or inspect the corresponding Actions run if it fails before persistence. Do not trigger another GPU run.
 2. Require the new run to preserve runtime safety, positive event count, complete measure coverage, polished preview/full PDF, exact event/hash equality, PDF-event fidelity 1.0, reference sealed, live endpoint unchanged, and Production unchanged.
 3. Inspect the fresh artifact before any professional scoring. Confirm the new output actually exercised `noteMapping.version:2` / polyphonic expansion and that attack/note semantics remain valid end-to-end.
 4. Lock that fresh artifact as the new candidate freeze.
