@@ -138,6 +138,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Record V143 shadow correction CPU gate"
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
 
       - name: Enforce CPU gate
