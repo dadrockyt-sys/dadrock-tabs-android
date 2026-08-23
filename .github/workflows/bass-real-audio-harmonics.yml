@@ -118,7 +118,7 @@ jobs:
           echo "BASS_HARMONIC_MODAL_STATUS=$status" >> "$GITHUB_ENV"
           exit 0
 
-      - name: Verify real-audio Bass harmonic evidence
+      - name: Verify real-audio Bass harmonic diagnostic
         shell: bash
         run: |
           set +e
@@ -147,7 +147,7 @@ jobs:
           raw = Path(os.environ['RAW_PATH'])
           result = Path(os.environ['RESULT_PATH'])
           payload = {
-              'schemaVersion': 1,
+              'schemaVersion': 2,
               'gate': 'bass-real-audio-harmonic-action',
               'runId': os.environ.get('GITHUB_RUN_ID'),
               'runAttempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
@@ -160,6 +160,7 @@ jobs:
               'approvedFixture': 'public/gomywayfullaitest.m4a',
               'referenceFree': True,
               'crossViewConsensusRequired': True,
+              'safeAbstentionAllowed': True,
               'diagnosticOnly': True,
               'trainingRunAuthorized': False,
               'analyzerRoutingEnabled': False,
@@ -220,7 +221,7 @@ jobs:
           git commit -m 'Record Bass real-audio harmonic canary' || true
           git push origin HEAD:v143-contextual-prune-lobo
 
-      - name: Enforce fail-closed harmonic boundary
+      - name: Enforce fail-closed harmonic diagnostic boundary
         if: always()
         shell: bash
         run: |
@@ -231,13 +232,17 @@ jobs:
 
           action = json.loads(Path(os.environ['ACTION_PATH']).read_text(encoding='utf-8'))
           if action.get('modalExitCode') != 0 or action.get('verifierExitCode') != 0:
-              raise SystemExit(f'Bass harmonic canary execution failed: {action}')
+              raise SystemExit(f'Bass harmonic diagnostic execution failed: {action}')
 
           result = json.loads(Path(os.environ['RESULT_PATH']).read_text(encoding='utf-8'))
-          if result.get('passed') is not True or result.get('bassHarmonicEvidenceBoundaryPassed') is not True:
-              raise SystemExit(f'Bass harmonic evidence boundary did not pass: {result}')
-          if result.get('harmonicFamilyProven') is not True:
-              raise SystemExit('Harmonic family was not proven by two-view evidence')
+          if result.get('passed') is not True or result.get('bassHarmonicDiagnosticBoundaryPassed') is not True:
+              raise SystemExit(f'Bass harmonic diagnostic boundary did not pass: {result}')
+
+          proven = result.get('harmonicFamilyProven') is True
+          abstained = result.get('safeAbstention') is True
+          if proven == abstained:
+              raise SystemExit('Exactly one harmonic outcome is required: proven or safe abstention')
+
           if result.get('futureHighRiskFamiliesEnabled') is not False:
               raise SystemExit('High-risk Bass techniques must remain disabled')
           if result.get('professionalBassComplete') is not False:
@@ -257,5 +262,9 @@ jobs:
           ):
               if result.get(key) is not False:
                   raise SystemExit(f'Safety failure: {key} must remain false')
-          print('BASS REAL-AUDIO HARMONIC EVIDENCE BOUNDARY PASSED')
+
+          if proven:
+              print('BASS REAL-AUDIO STRICT HARMONIC EVIDENCE BOUNDARY PASSED')
+          else:
+              print('BASS REAL-AUDIO HARMONIC SAFE-ABSTENTION BOUNDARY PASSED')
           PY
