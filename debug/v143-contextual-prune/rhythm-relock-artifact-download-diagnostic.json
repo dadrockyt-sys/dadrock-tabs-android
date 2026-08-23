@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "gate": "rhythm-relock-artifact-download-diagnostic",
+  "sourceRunId": "32643978196",
+  "sourceArtifactId": 9494412019,
+  "downloadOutcome": "success",
+  "downloadedFileCount": 17,
+  "downloadedFiles": [
+    ".preholdout/freeze/pdf/full-frozen-rhythm.pdf",
+    ".preholdout/freeze/pdf/pdf-event-evidence.json",
+    ".preholdout/freeze/pdf/preview-frozen-rhythm.pdf",
+    ".preholdout/freeze/pdf/rhythm-render-presentation.json",
+    ".preholdout/freeze/pdf/rhythm-render-text-proof.json",
+    ".preholdout/freeze/rhythm-freeze-manifest.json",
+    ".preholdout/freeze/rhythm-frozen-analysis.json",
+    ".preholdout/freeze/rhythm-pdf-event-fidelity.json",
+    ".preholdout/logs/freeze.log",
+    ".preholdout/logs/modal-analysis.log",
+    ".preholdout/logs/pdf-event-fidelity.log",
+    ".preholdout/logs/prepare-freeze.log",
+    ".preholdout/logs/render-frozen-pdf.log",
+    ".preholdout/logs/runtime-isolation.json",
+    ".preholdout/raw-product-output.json",
+    ".preholdout/rhythm-freeze-input.json",
+    "debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json"
+  ],
+  "snapshotPresent": true,
+  "manifestPresent": true,
+  "compactProofPresent": true,
+  "productionModified": false,
+  "passed": true
+}
