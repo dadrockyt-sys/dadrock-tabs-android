@@ -97,33 +97,42 @@ Files:
 - `.github/workflows/v143-contextual-prune-shadow-correction-cpu.yml`
 - `.github/workflows/v143-contextual-prune-shadow-correction-approved-audio.yml`
 
-Prior CPU proof was green:
-`debug/v143-contextual-prune/shadow-correction-cpu.json`
-
 ### Conservative pitch-suppression safety fix
 
-A general uncertainty bug was found by source inspection: `_supported_pitch_set()` always retained its relative best pitch before proving that the best pitch itself passed the independent two-view attack/body floors. Therefore an uncertain base-selected multi-pitch event could be collapsed to one arbitrary least-weak pitch even when **none** of its candidates had positive physical consensus.
+A general uncertainty bug was found by source inspection: `_supported_pitch_set()` could collapse an uncertain multi-pitch base event to one relative winner even when the strongest candidate itself failed independent two-view attack/body support.
 
-Fixed reference-free behavior:
-- compute the locally strongest candidate as before
-- if that strongest candidate itself fails attack/body consensus, preserve the entire original observed pitch set unchanged
-- suppress secondary pitches only after the strongest pitch has positive independent two-view support
-- no attack, timing, string/fret, or Production behavior changed
+Fixed behavior:
+- if the strongest candidate fails the physical floors, preserve the entire original observed pitch set
+- suppress secondary pitches only when the strongest pitch itself has positive independent two-view evidence
+- no attack/timing/string/fret/Production behavior changes
 
 Code commit:
 `2544c1c6da446bb6eaeaf96b6745757fce0a54a4`
 
-Proof update commit:
+Checker commit:
 `b682d5ed6574866ec2ac175d6c72be13f9fc8fbd`
 
-The synthetic checker now includes a base-selected two-pitch event where both candidates fail cross-view support and requires the original two-pitch set to remain unchanged. The existing unsupported fifth-harmonic suppression proof remains required.
+The checker now requires an unsupported two-pitch base event to remain unchanged while retaining the prior unsupported fifth-harmonic suppression test.
 
-This source change retriggers both correction CPU and approved-audio correction workflows. New reports are pending.
+### Diagnostic freshness / branch-race fix
 
-Approved-audio output remains pending:
-`debug/v143-contextual-prune/shadow-correction-approved-audio-action.json`
+The previously committed correction CPU report still showed the old synthetic `baseEventCount=1`, so it could not be treated as proof of the new checker. A likely infrastructure failure was identified: long-running GitHub/Modal workflows checked out an older branch head, then attempted a direct `git push` after newer checkpoint/code commits had advanced the branch. That can reject the diagnostic push as non-fast-forward, explaining missing approved-audio reports while rapid work continued.
 
-Do not accept this correction musically until the new CPU proof and approved-audio report are present and green.
+Corrections made:
+
+CPU workflow source stamping:
+- `.github/workflows/v143-contextual-prune-shadow-correction-cpu.yml`
+- commit `d1a50efc2ffb640068f4c8bf72b4c0bb1f42b7ee`
+- diagnostics schema now records trigger SHA, checked-out commit, correction source blob, checker blob, Modal runner blob, plus protected runtime blob
+
+Approved correction workflow race safety + source stamping:
+- `.github/workflows/v143-contextual-prune-shadow-correction-approved-audio.yml`
+- commit `9d5315abc3e6535403059bb399e33437ee23c46b`
+- records checked-out commit and correction/Modal/timing-hypothesis source blobs
+- after creating the diagnostic commit it now fetches and rebases on the latest `v143-contextual-prune-lobo` before pushing, allowing checkpoint/code commits made during a long Modal run to coexist
+- still enforces approved fixture identity, timing diagnostics as non-mutating, reference-free behavior and no Production/live changes
+
+New correction CPU and approved-audio reports are pending. Do not treat the old CPU JSON as current proof until the source-stamped schema-2 report lands.
 
 ## Semantic primary-note guard
 
@@ -132,7 +141,7 @@ Files:
 - `analyzer/check_v143_rhythm_semantic_primary_note_guard.py`
 - `.github/workflows/v143-rhythm-semantic-primary-note-guard.yml`
 
-CPU report is green:
+Existing CPU report is green:
 `debug/v143-contextual-prune/rhythm-semantic-primary-note-guard.json`
 
 It proves event/timing/pitch/string/fret identity is preserved while secondary bend/legato ownership errors are removed. Protected pipeline exact; Production unchanged.
@@ -146,7 +155,7 @@ Files:
 - `analyzer/check_v143_rhythm_sustain_consensus_shadow.py`
 - `.github/workflows/v143-rhythm-sustain-consensus-shadow.yml`
 
-CPU report is green:
+Existing CPU report is green:
 `debug/v143-contextual-prune/rhythm-sustain-consensus-shadow.json`
 
 The shadow uses two guitar-view harmonic persistence, writes only `rhythmSustainShadow`, never moves attacks/invents pitch, never infers tie/let-ring, and leaves Production unchanged.
@@ -162,10 +171,16 @@ Runner commit:
 Workflow:
 `.github/workflows/v143-rhythm-semantics-sustain-approved-shadow.yml`
 
-Workflow commit:
+Original workflow commit:
 `c4077eff19e1e720719fc0147c1625df49c5c32a`
 
-Expected outputs still pending:
+The same long-run non-fast-forward risk applied here. The workflow has now been made race-safe and source-stamped:
+- commit `a7af569758c50c68a2dea6d59bc0804ec66562db`
+- action schema records trigger SHA, checked-out commit, runner source blob, semantic-guard blob and sustain-shadow blob
+- diagnostic commit fetches/rebases latest branch before push
+- approved fixture, event identity, semantic guard, sustain and no-Production invariants remain enforced
+
+Expected outputs are pending:
 - `debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow-action.json`
 - `debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow.json`
 
@@ -173,11 +188,8 @@ Do not integrate semantics/sustain into routing until approved-audio invariants 
 
 ## Timing diagnostics
 
-Existing timing consistency shadow:
-- `analyzer/v143_rhythm_timing_consistency_shadow.py`
-- `analyzer/check_v143_rhythm_timing_consistency_shadow.py`
-- `.github/workflows/v143-rhythm-timing-consistency-shadow.yml`
-- green CPU report: `debug/v143-contextual-prune/rhythm-timing-consistency-shadow.json`
+Existing timing consistency shadow is green:
+`debug/v143-contextual-prune/rhythm-timing-consistency-shadow.json`
 
 ### Four-way phase + grid ambiguity shadow — CPU PASSED
 
@@ -190,44 +202,25 @@ Commits:
 - module `2774a0421bc7f6781b5263d355f852c6dcf0f411`
 - proof `70dab327ffdedf216c18de8fb5eb5c7ffb131fcc`
 - workflow `57754a31de69a061563a96c7623f2dfcc74cb59f`
-- GitHub Actions diagnostic `1fcf86c55e90ddf1c33846e43c982461d0de7af3`
+- green Actions diagnostic `1fcf86c55e90ddf1c33846e43c982461d0de7af3`
 
-Committed CPU report:
+Report:
 `debug/v143-contextual-prune/rhythm-timing-hypothesis-shadow.json`
 
-Result:
-- `passed=true`
-- four phase hypotheses exposed without selecting/changing phase
-- synthetic winner correctly matched current phase
-- grid nearest-vs-runner-up ambiguity measured
-- protected pipeline exact
-- reference token scan passed
-- Production unchanged
+It exposes all four 4/4 accent hypotheses and nearest-vs-runner-up grid ambiguity without selecting/changing phase, timing, attacks or pitches. Protected pipeline exact; no reference; Production unchanged.
 
-### Integrated into approved correction diagnostics only
-
-`analyzer/v143_contextual_prune_shadow_correction_modal.py` computes:
-- exact four-way reference-free beat-accent phase evidence
-- current-winner match/separation/confidence
-- strict grid-slot ambiguity margins
-
-Integration commit:
-`d3639460ca54d7b8a5710978469cbe44bf1ac35e`
-
-No timing is changed. It is diagnostic-only.
-
-Approved correction workflow enforces timing-hypothesis invariants and `phaseSelectedOrChanged=false`:
-commit `f9a89733c289ae7ad0943400a385817df41365c0`
+Approved correction Modal runner includes these diagnostics only:
+commit `d3639460ca54d7b8a5710978469cbe44bf1ac35e`
 
 ## Existing production semantic path
 
-`analyzer/v143_modal_live_endpoint.py` already applies bends then legato post-selection. Old output was therefore not technique-disabled. Any semantic changes must remain general/reference-free.
+`analyzer/v143_modal_live_endpoint.py` already applies bends then legato post-selection. Old output was not technique-disabled. Any semantic changes must remain general/reference-free.
 
 ## Immediate next steps
 
-1. Read the newly retriggered correction CPU report; require the new uncertain-pitch preservation proof to pass.
-2. Read the retriggered approved-audio attack/pitch correction action/report when committed.
-3. Read the pending approved-audio semantics/sustain action/report.
+1. Read the new source-stamped correction CPU report; require schema 2 and verify it corresponds to the new conservative checker/source.
+2. Read the race-safe approved-audio attack/pitch correction action/report when committed.
+3. Read the race-safe approved-audio semantics/sustain action/report when committed.
 4. Inspect approved-audio four-way phase evidence + strict grid ambiguity only as label-free diagnostics; do not change phase from scorer information.
 5. If approved-audio invariants pass, decide corrections using only physical/reference-free evidence.
 6. Only after independent acceptance, integrate general corrections and create a **brand-new approved-audio analysis/freeze/PDF identity**.
