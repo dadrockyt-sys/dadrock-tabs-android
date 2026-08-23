@@ -1,0 +1,182 @@
+name: V143 Professional Holdout Source Inspect
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-professional-holdout-source-inspect.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-professional-holdout-source-inspect
+  cancel-in-progress: true
+
+jobs:
+  inspect-source:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact triggering revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Inspect scorer-only professional source structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import gzip, hashlib, json, urllib.request, urllib.error
+          from pathlib import Path
+
+          SONG_ID = 243
+          UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
+          NORMAL_HOSTS = ['dqsljvtekg760', 'd34shlm8p2ums2', 'd3cqchs6g3b5ew']
+          STAGE_HOST = 'd3d3l6a6rcgkaf'
+          EXPECTED_PROTECTED = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+
+          def get_bytes(url):
+              req = urllib.request.Request(url, headers={'User-Agent': UA, 'Accept': '*/*', 'Accept-Encoding': 'gzip'})
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  data = r.read()
+              if data[:2] == b'\x1f\x8b':
+                  data = gzip.decompress(data)
+              return data
+
+          def get_json(url):
+              return json.loads(get_bytes(url))
+
+          meta = get_json(f'https://www.songsterr.com/api/meta/{SONG_ID}')
+          try:
+              revisions = get_json(f'https://www.songsterr.com/api/meta/{SONG_ID}/revisions')
+          except Exception as exc:
+              revisions = {'error': type(exc).__name__ + ': ' + str(exc)}
+
+          revision_id = int(meta['revisionId'])
+          image = str(meta.get('image') or '')
+          tracks = meta.get('tracks') or []
+          track_summaries = []
+          for index, track in enumerate(tracks):
+              if image.endswith('-stage'):
+                  hosts = [STAGE_HOST]
+              elif image:
+                  hosts = NORMAL_HOSTS
+              else:
+                  hosts = ['d3rrfvx08uyjp1', 'dodkcbujl0ebx', 'dj1usja78sinh']
+              part = None
+              source_url_shape = None
+              last_error = None
+              for host in hosts:
+                  if image:
+                      url = f'https://{host}.cloudfront.net/{SONG_ID}/{revision_id}/{image}/{index}.json'
+                  else:
+                      url = f'https://{host}.cloudfront.net/part/{revision_id}/{index}'
+                  source_url_shape = url
+                  try:
+                      part = get_json(url)
+                      break
+                  except Exception as exc:
+                      last_error = type(exc).__name__ + ': ' + str(exc)
+              summary = {
+                  'index': index,
+                  'trackMeta': track,
+                  'fetchSucceeded': part is not None,
+                  'fetchError': last_error if part is None else None,
+              }
+              if isinstance(part, dict):
+                  measures = part.get('measures') or []
+                  beat_count = 0
+                  note_count = 0
+                  voice_count = 0
+                  measure_keys = set()
+                  beat_keys = set()
+                  note_keys = set()
+                  for measure in measures:
+                      if isinstance(measure, dict):
+                          measure_keys.update(measure.keys())
+                          voices = measure.get('voices') or []
+                          voice_count += len(voices)
+                          for voice in voices:
+                              if not isinstance(voice, dict):
+                                  continue
+                              for beat in voice.get('beats') or []:
+                                  if not isinstance(beat, dict):
+                                      continue
+                                  beat_count += 1
+                                  beat_keys.update(beat.keys())
+                                  notes = beat.get('notes') or []
+                                  note_count += len(notes)
+                                  for note in notes:
+                                      if isinstance(note, dict):
+                                          note_keys.update(note.keys())
+                  summary['structure'] = {
+                      'topLevelKeys': sorted(part.keys()),
+                      'measureCount': len(measures),
+                      'voiceCount': voice_count,
+                      'beatCount': beat_count,
+                      'noteCount': note_count,
+                      'measureKeys': sorted(measure_keys),
+                      'beatKeys': sorted(beat_keys),
+                      'noteKeys': sorted(note_keys),
+                      'partName': part.get('name'),
+                      'instrument': part.get('instrument'),
+                      'tuning': part.get('tuning'),
+                      'capo': part.get('capo'),
+                      'frets': part.get('frets'),
+                      'strings': part.get('strings'),
+                  }
+              track_summaries.append(summary)
+
+          protected = hashlib.sha1(Path('analyzer/v143_reference_free_rhythm_pipeline.py').read_bytes()).hexdigest()
+          # git blob SHA, not plain content SHA1
+          import subprocess
+          protected_blob = subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'], text=True).strip()
+          out = {
+              'schemaVersion': 1,
+              'gate': 'v143-professional-holdout-source-inspect',
+              'triggerSha': '${{ github.sha }}',
+              'songId': SONG_ID,
+              'meta': {
+                  'artist': meta.get('artist'),
+                  'title': meta.get('title'),
+                  'revisionId': revision_id,
+                  'image': image,
+                  'trackCount': len(tracks),
+                  'defaultTrack': meta.get('defaultTrack'),
+                  'popularTrack': meta.get('popularTrack'),
+                  'keys': sorted(meta.keys()),
+              },
+              'revisionsSummary': revisions,
+              'tracks': track_summaries,
+              'professionalReferenceOpenedOnlyAfterFreshFreeze': True,
+              'referenceUsedByAnalyzer': False,
+              'runtimeLabelsRequired': False,
+              'protectedPipelineBlob': protected_blob,
+              'protectedPipelineUnchanged': protected_blob == EXPECTED_PROTECTED,
+              'productionModified': False,
+              'copyrightedNotePayloadCommitted': False,
+          }
+          out['passed'] = out['protectedPipelineUnchanged'] and any(t.get('fetchSucceeded') for t in track_summaries)
+          Path('debug/v143-contextual-prune/professional-source-structure.json').write_text(json.dumps(out, indent=2) + '\n')
+          if not out['passed']:
+              raise SystemExit('professional source structure inspection failed')
+          PY
+
+      - name: Commit non-copyrighted structure diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/professional-source-structure.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record professional holdout source structure'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
