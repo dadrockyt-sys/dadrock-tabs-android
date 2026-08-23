@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "gate": "bass-real-audio-separation-pitch-canary",
+  "approvedFixture": "public/gomywayfullaitest.m4a",
+  "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "sourceBytes": 3478611,
+  "separator": {
+    "directPath": "audio -> Demucs6s Bass",
+    "cascadePath": "audio -> BS-RoFormer Instrumental -> Demucs6s Bass",
+    "settings": {
+      "demucsSingleStem": "Bass",
+      "demucsShifts": 1,
+      "demucsOverlap": 0.1,
+      "demucsSegmentSize": 6,
+      "roformerSingleStem": "Instrumental",
+      "roformerBatchSize": 1,
+      "deterministicSeed": 143
+    },
+    "models": {
+      "demucs": "htdemucs_6s.yaml",
+      "bsRoformer": "model_bs_roformer_ep_317_sdr_12.9755.ckpt"
+    }
+  },
+  "thresholds": {
+    "minimumDurationSeconds": 10.0,
+    "minimumSampleRate": 16000,
+    "minimumRms": 0.0001,
+    "minimumPeak": 0.001,
+    "minimumBassBand30To1000HzPercent": 5.0,
+    "minimumActivePitchFrames": 10,
+    "playableBassMinimumHz": 41.203445,
+    "playableBassMaximumHz": 391.995436
+  },
+  "views": {
+    "direct": {
+      "metrics": {
+        "sha256": "6a0358798e296ec88426e55ebfe326084b2689749ff0f23435367338f6c7b996",
+        "bytes": 37298220,
+        "sampleRate": 44100,
+        "channels": 2,
+        "durationSeconds": 211.44090702947847,
+        "rms": 0.1651179308247713,
+        "peak": 0.7592010498046875,
+        "bassBand30To1000HzPercent": 99.9865844780166,
+        "activePitchFrameCount": 6942,
+        "medianFundamentalHz": 74.06367981138743,
+        "p10FundamentalHz": 46.493155265018906,
+        "p90FundamentalHz": 92.22684499576471,
+        "playableRangeFramePercent": 99.72630365888793
+      },
+      "checks": {
+        "nonEmptyFile": true,
+        "sampleRate": true,
+        "channels": true,
+        "duration": true,
+        "rms": true,
+        "peak": true,
+        "bassBandEnergy": true,
+        "activePitchFrames": true,
+        "medianFundamentalPlayable": true,
+        "playablePitchRange": true
+      }
+    },
+    "cascade": {
+      "metrics": {
+        "sha256": "6e939979ba0cfce2306f4c6965ba34a7177ab435af3861c95c8d4c569eab9b44",
+        "bytes": 37298220,
+        "sampleRate": 44100,
+        "channels": 2,
+        "durationSeconds": 211.44090702947847,
+        "rms": 0.12618662168446684,
+        "peak": 0.5848846435546875,
+        "bassBand30To1000HzPercent": 99.98638874760859,
+        "activePitchFrameCount": 6943,
+        "medianFundamentalHz": 74.06332754827967,
+        "p10FundamentalHz": 46.48230865923104,
+        "p90FundamentalHz": 92.15809360053086,
+        "playableRangeFramePercent": 99.69753708771425
+      },
+      "checks": {
+        "nonEmptyFile": true,
+        "sampleRate": true,
+        "channels": true,
+        "duration": true,
+        "rms": true,
+        "peak": true,
+        "bassBandEnergy": true,
+        "activePitchFrames": true,
+        "medianFundamentalPlayable": true,
+        "playablePitchRange": true
+      }
+    }
+  },
+  "stemsDistinct": true,
+  "safetyChecks": {
+    "approvedFixture": true,
+    "referenceFree": true,
+    "diagnosticOnly": true,
+    "demucsBassStem": true,
+    "deterministicSeed": true,
+    "trainingDisabled": true,
+    "routingDisabled": true,
+    "structuredIdentityDisabled": true,
+    "pdfDisabled": true,
+    "noteTimingTechniqueNotClaimed": true,
+    "liveEndpointUnchanged": true,
+    "vercelNotAttempted": true,
+    "productionUnchanged": true,
+    "promotionDisabled": true,
+    "purchaseNotAttempted": true,
+    "tokenNotRedeemed": true,
+    "emailNotSent": true
+  },
+  "realAudioBassSeparationPassed": true,
+  "realAudioBassPitchEvidencePassed": true,
+  "realAudioBassCanaryPassed": true,
+  "noteTimingTechniqueQualityProven": false,
+  "professionalQualityGateSatisfied": false,
+  "trainingRunAuthorized": false,
+  "analyzerRoutingEnabled": false,
+  "professionalStructuredIdentityEnabled": false,
+  "pdfRendererEnabled": false,
+  "liveEndpointDeployedOrModified": false,
+  "vercelDeploymentAttempted": false,
+  "productionModified": false,
+  "productionPromotionAuthorized": false,
+  "paidPurchaseAttempted": false,
+  "customerTokenRedeemed": false,
+  "customerEmailSent": false,
+  "passed": true
+}
