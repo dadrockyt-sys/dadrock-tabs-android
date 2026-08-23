@@ -1,0 +1,183 @@
+name: Rhythm Relock Render Diagnostic
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/rhythm-relock-render-diagnostic.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        id: install
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .diag-render
+          cat > .diag-render/package.json <<'JSON'
+          {"private":true,"dependencies":{"pdf-lib":"1.17.1"}}
+          JSON
+          npm install --prefix .diag-render --ignore-scripts --no-audit --no-fund --package-lock=false
+          python -m pip install --disable-pip-version-check --quiet pypdf
+
+      - name: Download source artifact
+        id: download
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: rhythm-professional-preholdout-real-audio
+          path: .diag-source
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: 32643978196
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Stage renderer
+        id: stage
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .diag-render/esm .diag-render/freeze/pdf
+          snapshot=$(find .diag-source -type f -name rhythm-frozen-analysis.json | head -n 1)
+          manifest=$(find .diag-source -type f -name rhythm-freeze-manifest.json | head -n 1)
+          cp "$snapshot" .diag-render/freeze/rhythm-frozen-analysis.json
+          cp "$manifest" .diag-render/freeze/rhythm-freeze-manifest.json
+          cp lib/v143RenderContract.js .diag-render/esm/v143RenderContract.mjs
+          sed "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" lib/createV143RhythmPdf.js > .diag-render/esm/createV143RhythmPdf.mjs
+          sed "s#../../lib/v143RenderContract.js#./v143RenderContract.mjs#" validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs > .diag-render/esm/render-frozen.mjs
+          node --check .diag-render/esm/v143RenderContract.mjs
+          node --check .diag-render/esm/createV143RhythmPdf.mjs
+          node --check .diag-render/esm/render-frozen.mjs
+
+      - name: Render current PDF
+        id: render
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          node .diag-render/esm/render-frozen.mjs \
+            .diag-render/freeze/rhythm-frozen-analysis.json \
+            .diag-render/freeze/pdf \
+            .diag-render/esm/createV143RhythmPdf.mjs \
+            > .diag-render/render.log 2>&1
+
+      - name: Fidelity
+        id: fidelity
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .diag-render/freeze \
+            .diag-render/freeze/pdf/pdf-event-evidence.json \
+            > .diag-render/fidelity.log 2>&1
+
+      - name: Text inspect
+        id: text
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          from pypdf import PdfReader
+          full = Path('.diag-render/freeze/pdf/full-frozen-rhythm.pdf')
+          preview = Path('.diag-render/freeze/pdf/preview-frozen-rhythm.pdf')
+          full_text = '\n'.join(page.extract_text() or '' for page in PdfReader(str(full)).pages)
+          preview_text = '\n'.join(page.extract_text() or '' for page in PdfReader(str(preview)).pages)
+          checks = {
+              'timingLegendVisible': 'Timing: 16th-note grid' in full_text,
+              'roundedTempoVisible': '129 BPM' in full_text,
+              'unroundedTempoAbsent': '128.999' not in full_text,
+              'sectionCount': full_text.count('SECTION '),
+              'techniqueHammerOnVisible': 'hammer-on' in full_text,
+              'techniquePullOffVisible': 'pull-off' in full_text,
+              'techniqueSlideVisible': 'slide' in full_text,
+              'techniqueBendVisible': 'bend' in full_text,
+              'measure113Visible': re.search(r'(?<!\d)113(?!\d)', full_text) is not None,
+              'phantomMeasure114Absent': re.search(r'(?<!\d)114(?!\d)', full_text) is None,
+              'previewLockVisible': 'FULL TAB LOCKED' in preview_text,
+              'previewTimingVisible': 'Timing: 16th-note grid' in preview_text,
+              'previewSectionVisible': 'SECTION ' in preview_text,
+          }
+          Path('.diag-render/text.json').write_text(json.dumps(checks, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(checks, indent=2))
+          PY
+
+      - name: Persist diagnostic
+        if: always()
+        shell: bash
+        env:
+          INSTALL_OUTCOME: ${{ steps.install.outcome }}
+          DOWNLOAD_OUTCOME: ${{ steps.download.outcome }}
+          STAGE_OUTCOME: ${{ steps.stage.outcome }}
+          RENDER_OUTCOME: ${{ steps.render.outcome }}
+          FIDELITY_OUTCOME: ${{ steps.fidelity.outcome }}
+          TEXT_OUTCOME: ${{ steps.text.outcome }}
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          def read_json(path):
+              p=Path(path)
+              if not p.exists(): return None
+              try: return json.loads(p.read_text(encoding='utf-8'))
+              except Exception as exc: return {'readError': str(exc)}
+          report = {
+              'schemaVersion': 1,
+              'gate': 'rhythm-relock-render-diagnostic',
+              'outcomes': {
+                  'install': os.environ.get('INSTALL_OUTCOME'),
+                  'download': os.environ.get('DOWNLOAD_OUTCOME'),
+                  'stage': os.environ.get('STAGE_OUTCOME'),
+                  'render': os.environ.get('RENDER_OUTCOME'),
+                  'fidelity': os.environ.get('FIDELITY_OUTCOME'),
+                  'text': os.environ.get('TEXT_OUTCOME'),
+              },
+              'renderEvidence': read_json('.diag-render/freeze/pdf/pdf-event-evidence.json'),
+              'fidelityEvidence': read_json('.diag-render/freeze/rhythm-pdf-event-fidelity.json'),
+              'textEvidence': read_json('.diag-render/text.json'),
+              'renderLogTail': Path('.diag-render/render.log').read_text(encoding='utf-8', errors='replace')[-3000:] if Path('.diag-render/render.log').exists() else None,
+              'fidelityLogTail': Path('.diag-render/fidelity.log').read_text(encoding='utf-8', errors='replace')[-3000:] if Path('.diag-render/fidelity.log').exists() else None,
+              'productionModified': False,
+          }
+          report['passed'] = all(value == 'success' for value in report['outcomes'].values())
+          Path('debug/v143-contextual-prune/rhythm-relock-render-diagnostic.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(report, indent=2))
+          PY
+
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add debug/v143-contextual-prune/rhythm-relock-render-diagnostic.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record Rhythm relock render diagnostic'
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            git push origin HEAD:v143-contextual-prune-lobo
+          fi
