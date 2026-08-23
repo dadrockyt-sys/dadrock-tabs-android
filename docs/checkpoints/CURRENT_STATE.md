@@ -11,14 +11,14 @@ Work only on `v143-contextual-prune-lobo`. Do not modify/merge `main`, deploy/al
 Required Rhythm path:
 `user audio → Rhythm → reference-free Jimmy PAIge → authenticated events → exact professional preview/full PDF → post-freeze professional-human holdout score`
 
-Professional human reference is scorer-only. Runtime may never read/train/tune/select from it. Musical corrections after a holdout failure must remain general/reference-free. After accepting any correction, create a **brand-new approved-audio run/freeze/PDF identity before another professional score**.
+Professional human reference is scorer-only. Runtime may never read/train/tune/select from it. Any correction after a holdout failure must remain general/reference-free. After accepting any correction, create a **brand-new approved-audio run/freeze/PDF identity before another professional score**.
 
-Rhythm completion requires all of:
+Rhythm completion requires:
 - professional score >= `0.99`
 - critical mismatches = `0`
 - PDF-event fidelity = `1.0`
 
-**Rhythm is NOT complete. No completion claim is authorized.**
+**Rhythm is NOT complete.**
 
 ## Protected runtime boundary
 
@@ -31,11 +31,11 @@ Required exact blob:
 Restore commit:
 `4ff233346b8dc7b80d8f4316fe1317338b5be718`
 
-Current correction, semantic, sustain and timing CPU gates must continue proving this blob unchanged and Production unmodified.
+All shadow gates must continue proving this blob unchanged and Production unmodified.
 
-## Approved audio / old frozen score identity
+## Approved fixture / old scored freeze
 
-Approved fixture:
+Approved audio:
 `public/gomywayfullaitest.m4a`
 
 SHA256:
@@ -46,16 +46,15 @@ Old scored freeze:
 - 1,017 rendered notes
 - 277 polyphonic attacks
 - 112 populated measures of 1–113
-- missing generated measure 101
+- missing measure 101
 - event SHA256 `a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e`
 - PDF-event fidelity `1.0`
-- presentation run `32643978196`, artifact `9494412019`
 
 Do **not** rescore this old freeze after tuning.
 
-## Scorer-only human reference
+## Scorer-only reference
 
-Temporary local scorer reference:
+Local temporary reference:
 `/mnt/data/scorer_workspace/validation/rhythm_holdout/reference/professional-rhythm-complete.json`
 
 SHA256:
@@ -66,14 +65,13 @@ State:
 - 577 playable onset objects
 - 925 playable note entries
 - 104 measures with playable attacks
-- uncertain semantics omitted rather than invented
 - completeness verifier PASSED
 
 **Never commit this reference.**
 
 ## Real professional holdout — FAILED
 
-Old freeze results:
+Old freeze:
 - `pitchContentF1 = 0.2626158599382081`
 - `pitchTimingTolerantF1 = 0.07209062821833163`
 - `stringFretTimingTolerantF1 = 0.030895983522142123`
@@ -88,7 +86,7 @@ General failure classes only:
 2. polyphony / harmonic inflation
 3. broad pitch-position-timing mismatch
 
-No song-specific runtime rule may be derived from this score/reference.
+No song-specific runtime rules may come from the scorer/reference.
 
 ## Attack + pitch correction shadow
 
@@ -99,65 +97,41 @@ Files:
 - `.github/workflows/v143-contextual-prune-shadow-correction-cpu.yml`
 - `.github/workflows/v143-contextual-prune-shadow-correction-approved-audio.yml`
 
-CPU/static proof is green:
+CPU proof is green:
 `debug/v143-contextual-prune/shadow-correction-cpu.json`
 
-It proves base-event preservation, strict physical rescue, unsupported-harmonic suppression, protected pipeline blob exact, reference token scan passed and Production unchanged.
-
-Approved-audio correction output is still missing:
+Approved-audio output is still missing:
 `debug/v143-contextual-prune/shadow-correction-approved-audio-action.json`
 
-Do not accept the correction musically until the exact approved-audio report exists and passes invariants.
+Do not accept this correction musically until the approved-audio report is present and green.
 
-## Semantic primary-note ownership guard
+## Semantic primary-note guard
 
 Files:
 - `analyzer/v143_rhythm_semantic_primary_note_guard.py`
 - `analyzer/check_v143_rhythm_semantic_primary_note_guard.py`
 - `.github/workflows/v143-rhythm-semantic-primary-note-guard.yml`
 
-General bug fixed in isolation: bend/legato semantics must belong to mapper-designated `noteMapping.primaryTechniqueNote`; secondary chord tones must not inherit audio-derived primary semantics.
-
-CPU gate is green:
+CPU report is green:
 `debug/v143-contextual-prune/rhythm-semantic-primary-note-guard.json`
 
-Result:
-- `passed=true`
-- event count/timing/pitch/string/fret unchanged
-- secondary bend/legato and invalid primary legato stripped in synthetic proof
-- reference token scan passed
-- protected pipeline exact
-- Production unchanged
+It proves event/timing/pitch/string/fret identity is preserved while secondary bend/legato ownership errors are removed. Protected pipeline exact; Production unchanged.
 
 Not integrated into product routing yet.
 
-## Sustain/duration shadow
+## Sustain shadow
 
 Files:
 - `analyzer/v143_rhythm_sustain_consensus_shadow.py`
 - `analyzer/check_v143_rhythm_sustain_consensus_shadow.py`
 - `.github/workflows/v143-rhythm-sustain-consensus-shadow.yml`
 
-Design:
-- two independent guitar-view harmonic persistence
-- bounded by next authenticated attack on the same string / max sustain
-- annotates only `rhythmSustainShadow`
-- never moves attacks or invents pitch
-- never infers tie/let-ring labels
-- does not overwrite production sustain
-
-CPU gate is green:
+CPU report is green:
 `debug/v143-contextual-prune/rhythm-sustain-consensus-shadow.json`
 
-Result:
-- `passed=true`
-- synthetic two-view proof recovers sustain longer than short detector duration
-- event count/timing/pitch unchanged
-- no tie/let-ring inference
-- protected pipeline exact
-- Production unchanged
+The shadow uses two guitar-view harmonic persistence, writes only `rhythmSustainShadow`, never moves attacks/invents pitch, never infers tie/let-ring, and leaves Production unchanged.
 
-## Approved-audio semantics + sustain shadow
+## Approved-audio semantics + sustain
 
 Modal runner:
 `analyzer/v143_rhythm_semantics_sustain_approved_shadow_modal.py`
@@ -171,61 +145,72 @@ Workflow:
 Workflow commit:
 `c4077eff19e1e720719fc0147c1625df49c5c32a`
 
-It SHA-gates the approved fixture, runs reference-free rhythm assembly → bends → legato → semantic guard → sustain shadow, commits diagnostics, and enforces core-event identity plus no Production/live-route mutation.
-
-Expected outputs are still pending:
+Expected outputs still pending:
 - `debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow-action.json`
 - `debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow.json`
 
-Do not integrate semantic guard or sustain shadow until these approved-audio outputs are green.
+Do not integrate semantics/sustain into routing until approved-audio invariants pass.
 
 ## Timing diagnostics
 
-Existing observational timing consistency files:
+Existing timing consistency shadow:
 - `analyzer/v143_rhythm_timing_consistency_shadow.py`
 - `analyzer/check_v143_rhythm_timing_consistency_shadow.py`
 - `.github/workflows/v143-rhythm-timing-consistency-shadow.yml`
+- green CPU report: `debug/v143-contextual-prune/rhythm-timing-consistency-shadow.json`
 
-CPU gate is green:
-`debug/v143-contextual-prune/rhythm-timing-consistency-shadow.json`
+### Four-way phase + grid ambiguity shadow — CPU PASSED
 
-It proves residual/repeated-structure diagnostics are label-free and do not change tempo, phase, attack timing, candidate selection, pitch or Production.
+Files:
+- `analyzer/v143_rhythm_timing_hypothesis_shadow.py`
+- `analyzer/check_v143_rhythm_timing_hypothesis_shadow.py`
+- `.github/workflows/v143-rhythm-timing-hypothesis-shadow.yml`
 
-### New four-way phase + grid-ambiguity shadow
+Commits:
+- module `2774a0421bc7f6781b5263d355f852c6dcf0f411`
+- proof `70dab327ffdedf216c18de8fb5eb5c7ffb131fcc`
+- workflow `57754a31de69a061563a96c7623f2dfcc74cb59f`
+- GitHub Actions diagnostic `1fcf86c55e90ddf1c33846e43c982461d0de7af3`
 
-Added:
-- `analyzer/v143_rhythm_timing_hypothesis_shadow.py` — commit `2774a0421bc7f6781b5263d355f852c6dcf0f411`
-- `analyzer/check_v143_rhythm_timing_hypothesis_shadow.py` — commit `70dab327ffdedf216c18de8fb5eb5c7ffb131fcc`
-- `.github/workflows/v143-rhythm-timing-hypothesis-shadow.yml` — commit `57754a31de69a061563a96c7623f2dfcc74cb59f`
-
-New shadow behavior:
-- exposes all four 4/4 accent hypotheses using the same reference-free beat-accent concept as timing
-- reports winner/runner-up separation and confidence but **does not select/change phase**
-- measures nearest-vs-runner-up grid-slot margins and strict-row ambiguity
-- never changes tempo, phase, attacks, candidate selection or pitch
-- no scorer/reference input
-- Production unchanged
-
-Expected CPU report is pending:
+Committed CPU report:
 `debug/v143-contextual-prune/rhythm-timing-hypothesis-shadow.json`
 
-Do not integrate this diagnostic into approved-audio timing evaluation until its CPU gate is green.
+Result:
+- `passed=true`
+- four phase hypotheses exposed without selecting/changing phase
+- synthetic winner correctly matched current phase
+- grid nearest-vs-runner-up ambiguity measured
+- protected pipeline exact
+- reference token scan passed
+- Production unchanged
+
+### Integrated into approved correction diagnostics only
+
+`analyzer/v143_contextual_prune_shadow_correction_modal.py` now also computes:
+- exact four-way reference-free beat-accent phase evidence
+- current-winner match/separation/confidence
+- strict grid-slot ambiguity margins
+
+Integration commit:
+`d3639460ca54d7b8a5710978469cbe44bf1ac35e`
+
+No timing is changed. It is diagnostic-only.
+
+Approved correction workflow was tightened to enforce timing-hypothesis invariants and `phaseSelectedOrChanged=false`:
+commit `f9a89733c289ae7ad0943400a385817df41365c0`
+
+This workflow push also retriggers the exact approved-audio correction shadow. Its report is pending.
 
 ## Existing production semantic path
 
-`analyzer/v143_modal_live_endpoint.py` already applies post-selection:
-1. `enrich_router_assembly_with_consensus_bends`
-2. `enrich_router_assembly_with_legato`
-
-So old output was not technique-disabled. Any semantic improvement must remain general/reference-free.
+`analyzer/v143_modal_live_endpoint.py` already applies bends then legato post-selection. Old output was therefore not technique-disabled. Any semantic changes must remain general/reference-free.
 
 ## Immediate next steps
 
-1. Read the pending timing-hypothesis CPU report when GitHub Actions commits it.
+1. Read the retriggered approved-audio attack/pitch correction action/report when committed.
 2. Read the pending approved-audio semantics/sustain action/report.
-3. Continue checking the still-missing approved-audio attack-correction action/report.
-4. If timing-hypothesis CPU is green, integrate **diagnostics only** into an approved-audio shadow so four-way phase confidence + grid ambiguity can be inspected without changing timing.
-5. Evaluate all approved-audio corrections only by label-free invariants/counts/evidence before any new holdout.
-6. Only after independently accepting general corrections, integrate them and create a **brand-new approved-audio analysis/freeze/PDF identity**.
-7. Then, and only then, run a new scorer-only professional holdout.
-8. Require >=0.99, zero critical mismatches and PDF-event fidelity 1.0 before Rhythm completion.
+3. Inspect approved-audio four-way phase evidence + strict grid ambiguity only as label-free diagnostics; do not change phase from scorer information.
+4. If approved-audio invariants pass, decide corrections using only physical/reference-free evidence.
+5. Only after independent acceptance, integrate general corrections and create a **brand-new approved-audio analysis/freeze/PDF identity**.
+6. Then, and only then, run a new scorer-only professional holdout.
+7. Require >=0.99, zero critical mismatches and PDF-event fidelity 1.0 before Rhythm completion.
