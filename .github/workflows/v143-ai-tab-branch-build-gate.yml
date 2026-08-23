@@ -35,7 +35,7 @@ jobs:
   verify-build-and-route-smoke:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     env:
       NEXT_TELEMETRY_DISABLED: '1'
       NODE_OPTIONS: '--max-old-space-size=4096'
@@ -63,11 +63,11 @@ jobs:
           from pathlib import Path
           path = Path('debug/v143-contextual-prune/next-preview-route-smoke.json')
           path.write_text(json.dumps({
-              'schemaVersion': 4,
+              'schemaVersion': 5,
               'gate': 'v143-next-preview-route-smoke',
               'branch': 'v143-contextual-prune-lobo',
               'sourceCommit': os.environ.get('BRANCH_GATE_SOURCE_COMMIT'),
-              'phase': 'started-bounded-branch-gate',
+              'phase': 'started-staged-branch-gate',
               'localNextPreviewSimulation': True,
               'actualVercelPreviewDeployment': False,
               'installExitCode': None,
@@ -82,13 +82,13 @@ jobs:
               'paidPurchaseAttempted': False,
               'customerTokenRedeemed': False,
               'customerEmailSent': False,
-              'error': 'bounded-branch-gate-in-progress',
+              'error': 'staged-branch-gate-in-progress',
           }, indent=2) + '\n', encoding='utf-8')
           PY
           git add debug/v143-contextual-prune/next-preview-route-smoke.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record V143 bounded gate start' || true
+          git commit -m 'Record V143 staged gate start' || true
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
@@ -120,6 +120,48 @@ jobs:
           echo "BRANCH_PREVIEW_FEATURE_EXIT_CODE=$status" >> "$GITHUB_ENV"
           exit 0
 
+      - name: Persist post-verifier progress
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          def code(name):
+              try: return int(os.environ.get(name, '99'))
+              except ValueError: return 99
+          payload = {
+              'schemaVersion': 2,
+              'gate': 'v143-branch-gate-progress',
+              'branch': 'v143-contextual-prune-lobo',
+              'sourceCommit': os.environ.get('BRANCH_GATE_SOURCE_COMMIT'),
+              'phase': 'post-verifiers',
+              'analyzerQualityVerifierExitCode': code('BRANCH_ANALYZER_QUALITY_EXIT_CODE'),
+              'previewFeatureVerifierExitCode': code('BRANCH_PREVIEW_FEATURE_EXIT_CODE'),
+              'installExitCode': None,
+              'nextBuildExitCode': None,
+              'localNextPreviewSimulation': True,
+              'actualVercelPreviewDeployment': False,
+              'vercelDeploymentAttempted': False,
+              'liveEndpointDeployedOrModified': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('debug/v143-contextual-prune/branch-gate-progress.json').write_text(
+              json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+          cp debug/v143-contextual-prune/branch-gate-progress.json /tmp/v143-progress.json
+          git restore -- debug/v143-contextual-prune/branch-gate-progress.json 2>/dev/null || true
+          rm -f debug/v143-contextual-prune/branch-gate-progress.json
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          cp /tmp/v143-progress.json debug/v143-contextual-prune/branch-gate-progress.json
+          git add debug/v143-contextual-prune/branch-gate-progress.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record V143 post-verifier progress' || true
+          git push origin HEAD:v143-contextual-prune-lobo
+
       - name: Set up Node.js 24 for application build
         uses: actions/setup-node@v4
         with:
@@ -135,6 +177,49 @@ jobs:
           status=$?
           echo "BRANCH_INSTALL_EXIT_CODE=$status" >> "$GITHUB_ENV"
           exit 0
+
+      - name: Persist post-install progress
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          def code(name):
+              try: return int(os.environ.get(name, '99'))
+              except ValueError: return 99
+          payload = {
+              'schemaVersion': 2,
+              'gate': 'v143-branch-gate-progress',
+              'branch': 'v143-contextual-prune-lobo',
+              'sourceCommit': os.environ.get('BRANCH_GATE_SOURCE_COMMIT'),
+              'phase': 'post-install',
+              'analyzerQualityVerifierExitCode': code('BRANCH_ANALYZER_QUALITY_EXIT_CODE'),
+              'previewFeatureVerifierExitCode': code('BRANCH_PREVIEW_FEATURE_EXIT_CODE'),
+              'installExitCode': code('BRANCH_INSTALL_EXIT_CODE'),
+              'nextBuildExitCode': None,
+              'localNextPreviewSimulation': True,
+              'actualVercelPreviewDeployment': False,
+              'vercelDeploymentAttempted': False,
+              'liveEndpointDeployedOrModified': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('debug/v143-contextual-prune/branch-gate-progress.json').write_text(
+              json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+          cp debug/v143-contextual-prune/branch-gate-progress.json /tmp/v143-progress.json
+          git restore -- debug/v143-contextual-prune/branch-gate-progress.json 2>/dev/null || true
+          rm -f debug/v143-contextual-prune/branch-gate-progress.json
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          cp /tmp/v143-progress.json debug/v143-contextual-prune/branch-gate-progress.json
+          git add debug/v143-contextual-prune/branch-gate-progress.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record V143 post-install progress' || true
+          git push origin HEAD:v143-contextual-prune-lobo
 
       - name: Compile full Next.js application with hard timeout
         shell: bash
@@ -164,7 +249,7 @@ jobs:
               try: return int(os.environ.get(name, '99'))
               except ValueError: return 99
           payload = {
-              'schemaVersion': 1,
+              'schemaVersion': 2,
               'gate': 'v143-branch-gate-progress',
               'branch': 'v143-contextual-prune-lobo',
               'sourceCommit': os.environ.get('BRANCH_GATE_SOURCE_COMMIT'),
@@ -183,17 +268,16 @@ jobs:
           Path('debug/v143-contextual-prune/branch-gate-progress.json').write_text(
               json.dumps(payload, indent=2) + '\n', encoding='utf-8')
           PY
-
-          cp debug/v143-contextual-prune/branch-gate-progress.json /tmp/v143-branch-gate-progress.json
+          cp debug/v143-contextual-prune/branch-gate-progress.json /tmp/v143-progress.json
           git restore -- debug/v143-contextual-prune/branch-gate-progress.json 2>/dev/null || true
           rm -f debug/v143-contextual-prune/branch-gate-progress.json
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
-          cp /tmp/v143-branch-gate-progress.json debug/v143-contextual-prune/branch-gate-progress.json
+          cp /tmp/v143-progress.json debug/v143-contextual-prune/branch-gate-progress.json
           git add debug/v143-contextual-prune/branch-gate-progress.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record V143 branch gate progress' || true
+          git commit -m 'Record V143 post-build progress' || true
           git push origin HEAD:v143-contextual-prune-lobo
 
       - name: Start built server and verify readiness
@@ -273,11 +357,11 @@ jobs:
 
           verifier_passed = route_data.get('passed') is True
           route_data.update({
-              'schemaVersion': 4,
+              'schemaVersion': 5,
               'gate': 'v143-next-preview-route-smoke',
               'branch': 'v143-contextual-prune-lobo',
               'sourceCommit': source,
-              'phase': 'complete-by-bounded-branch-gate',
+              'phase': 'complete-by-staged-branch-gate',
               'localNextPreviewSimulation': True,
               'actualVercelPreviewDeployment': False,
               'installExitCode': install,
@@ -310,7 +394,7 @@ jobs:
           route_path.write_text(json.dumps(route_data, indent=2) + '\n', encoding='utf-8')
 
           gate = {
-              'schemaVersion': 4,
+              'schemaVersion': 5,
               'gate': 'v143-ai-tab-branch-build',
               'branch': 'v143-contextual-prune-lobo',
               'sourceCommit': source,
@@ -346,7 +430,7 @@ jobs:
           print(json.dumps(gate, indent=2))
           PY
 
-      - name: Preserve bounded gate logs
+      - name: Preserve staged gate logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -379,10 +463,10 @@ jobs:
             debug/v143-contextual-prune/next-preview-route-smoke.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record V143 bounded branch gate' || true
+          git commit -m 'Record V143 staged branch gate' || true
           git push origin HEAD:v143-contextual-prune-lobo
 
-      - name: Enforce bounded branch gate
+      - name: Enforce staged branch gate
         if: always()
         shell: bash
         run: |
@@ -394,7 +478,7 @@ jobs:
           route = json.loads(Path('debug/v143-contextual-prune/next-preview-route-smoke.json').read_text())
           if build.get('passed') is not True:
               raise SystemExit(
-                  'V143 bounded gate failed: '
+                  'V143 staged gate failed: '
                   f"analyzer={build.get('analyzerQualityVerifierExitCode')}, "
                   f"preview={build.get('previewFeatureVerifierExitCode')}, "
                   f"install={build.get('installExitCode')}, "
@@ -413,7 +497,7 @@ jobs:
                   raise SystemExit('Safety failure: Production was modified')
               if data.get('productionPromotionAuthorized') is not False:
                   raise SystemExit('Safety failure: Production promotion was authorized')
-          print('V143 BOUNDED BRANCH BUILD + ROUTE GATE PASSED')
+          print('V143 STAGED BRANCH BUILD + ROUTE GATE PASSED')
           print(f"sourceCommit={build.get('sourceCommit')}")
           print('actualVercelPreviewDeployment=false')
           print('productionModified=false')
