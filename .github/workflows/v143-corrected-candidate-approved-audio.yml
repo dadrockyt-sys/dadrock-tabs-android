@@ -1,0 +1,262 @@
+name: V143 Corrected Candidate Approved Audio
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-corrected-candidate-approved-audio.yml
+      - analyzer/v143_contextual_prune_candidate_product_modal.py
+      - analyzer/v143_contextual_prune_candidate_events.py
+      - analyzer/v143_contextual_prune_shadow_correction.py
+      - analyzer/v143_contextual_prune_reference_free_carrier.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-corrected-candidate-approved-audio
+  cancel-in-progress: true
+
+jobs:
+  approved-audio-candidate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run approved-audio corrected candidate and always record diagnostic
+        shell: bash
+        run: |
+          set +e
+          mkdir -p debug/v143-contextual-prune .candidate-diagnostic
+          log=debug/v143-contextual-prune/corrected-candidate-approved-audio.log
+          action=debug/v143-contextual-prune/corrected-candidate-approved-audio-action.json
+          summary=debug/v143-contextual-prune/corrected-candidate-approved-audio-summary.json
+          raw=.candidate-diagnostic/corrected-candidate-product.json
+          : > "$log"
+
+          expected_audio=215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f
+          actual_audio=$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')
+          source_ok=false
+          if [ "$actual_audio" = "$expected_audio" ]; then
+            source_ok=true
+            echo "APPROVED_AUDIO_SHA=PASS:$actual_audio" >> "$log"
+          else
+            echo "APPROVED_AUDIO_SHA=FAIL:$actual_audio expected=$expected_audio" >> "$log"
+          fi
+
+          protected_blob=$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)
+          expected_protected=7f72f8ed9b14af8bc93e95544195204d99c6bec1
+          protected_ok=false
+          if [ "$protected_blob" = "$expected_protected" ]; then
+            protected_ok=true
+            echo "PROTECTED_PIPELINE_BLOB=PASS:$protected_blob" >> "$log"
+          else
+            echo "PROTECTED_PIPELINE_BLOB=FAIL:$protected_blob expected=$expected_protected" >> "$log"
+          fi
+
+          reference_scan_passed=true
+          if grep -E -n \
+            'gomyway-professional-rhythm-reference|Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score' \
+            analyzer/v143_contextual_prune_candidate_product_modal.py \
+            analyzer/v143_contextual_prune_candidate_events.py \
+            analyzer/v143_contextual_prune_shadow_correction.py >> "$log" 2>&1; then
+            reference_scan_passed=false
+            echo "CANDIDATE_REFERENCE_TOKEN_SCAN=FAIL" >> "$log"
+          else
+            echo "CANDIDATE_REFERENCE_TOKEN_SCAN=PASS" >> "$log"
+          fi
+
+          credentials=false
+          attempted=false
+          status=99
+          if [ "$source_ok" = true ] && [ "$protected_ok" = true ] && [ "$reference_scan_passed" = true ] && [ -n "${MODAL_TOKEN_ID:-}" ] && [ -n "${MODAL_TOKEN_SECRET:-}" ]; then
+            credentials=true
+            attempted=true
+            python -m pip install --disable-pip-version-check --quiet modal >> "$log" 2>&1
+            install_status=$?
+            if [ "$install_status" -eq 0 ]; then
+              python -m modal run \
+                analyzer/v143_contextual_prune_candidate_product_modal.py::approved_audio \
+                --audio-path public/gomywayfullaitest.m4a \
+                --output-path "$raw" >> "$log" 2>&1
+              status=$?
+            else
+              status=$install_status
+            fi
+          elif [ -z "${MODAL_TOKEN_ID:-}" ] || [ -z "${MODAL_TOKEN_SECRET:-}" ]; then
+            echo "Modal GitHub credentials unavailable; candidate not attempted." >> "$log"
+          else
+            status=41
+            echo "Pre-run identity/anti-leakage gate failed; candidate not attempted." >> "$log"
+          fi
+
+          raw_exists=false
+          summary_passed=false
+          if [ -s "$raw" ]; then
+            raw_exists=true
+            RAW="$raw" SUMMARY="$summary" python - <<'PY' >> "$log" 2>&1
+          import json, os
+          from pathlib import Path
+          raw=json.loads(Path(os.environ['RAW']).read_text(encoding='utf-8'))
+          candidate=raw.get('candidate') or {}
+          diag=raw.get('candidateDiagnostics') or {}
+          correction=raw.get('correctionDiagnostics') or {}
+          semantic=raw.get('semanticGuard') or {}
+          sustain=raw.get('sustainDiagnostics') or {}
+          events=raw.get('events') or []
+          measures=sorted({int(event['measure']) for event in events if isinstance(event,dict) and event.get('measure') is not None})
+          onsets={(int(event['measure']),int(event['step'])) for event in events if isinstance(event,dict) and event.get('measure') is not None and event.get('step') is not None}
+          checks={
+              'approvedFixture': candidate.get('approvedFixture') is True,
+              'professionalReferenceNotUsed': candidate.get('professionalReferenceUsed') is False,
+              'runtimeLabelsNotRequired': candidate.get('runtimeLabelsRequired') is False,
+              'liveEndpointUnmodified': candidate.get('liveEndpointDeployedOrModified') is False,
+              'productionUnmodified': candidate.get('productionModified') is False,
+              'everyCorrectedAttackRendered': diag.get('everyCorrectedAttackRendered') is True,
+              'noInventedPitch': diag.get('candidateAddsUnobservedPitch') is False,
+              'noRelocation': diag.get('candidateRelocatesEvents') is False,
+              'baseEventsPreserved': correction.get('baseEventsPreserved') is True,
+              'all113Measures': len(measures)==113 and measures[0]==1 and measures[-1]==113,
+              'eventCountPositive': len(events)>0,
+              'attackCountMatches': len(onsets)==int(diag.get('correctedAttackCount') or -1),
+              'semanticEventIdentity': semantic.get('eventCountChanged') is False and semantic.get('attackTimingChanged') is False and semantic.get('pitchChanged') is False,
+              'sustainEventIdentity': sustain.get('eventCountChanged') is False and sustain.get('attackTimingChanged') is False and sustain.get('pitchChanged') is False,
+          }
+          failed=[name for name,ok in checks.items() if not ok]
+          payload={
+              'schemaVersion':1,
+              'gate':'v143-corrected-candidate-approved-audio-summary',
+              'sourceSha256':candidate.get('sourceSha256'),
+              'eventCount':len(events),
+              'attackCount':len(onsets),
+              'uniqueMeasureCount':len(measures),
+              'firstMeasure':measures[0] if measures else None,
+              'lastMeasure':measures[-1] if measures else None,
+              'candidateDiagnostics':diag,
+              'correctionDiagnostics':correction,
+              'semanticGuard':semantic,
+              'sustainDiagnostics':sustain,
+              'checks':checks,
+              'failedChecks':failed,
+              'professionalReferenceOpened':False,
+              'productionModified':False,
+              'passed':not failed,
+          }
+          Path(os.environ['SUMMARY']).write_text(json.dumps(payload,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(payload,sort_keys=True))
+          PY
+            summary_status=$?
+            if [ "$summary_status" -eq 0 ]; then
+              summary_passed=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('debug/v143-contextual-prune/corrected-candidate-approved-audio-summary.json')
+          print('true' if json.loads(p.read_text()).get('passed') is True else 'false')
+          PY
+              )
+            else
+              status=$summary_status
+            fi
+          fi
+
+          runner_blob=$(git hash-object analyzer/v143_contextual_prune_candidate_product_modal.py)
+          adapter_blob=$(git hash-object analyzer/v143_contextual_prune_candidate_events.py)
+          correction_blob=$(git hash-object analyzer/v143_contextual_prune_shadow_correction.py)
+          carrier_blob=$(git hash-object analyzer/v143_contextual_prune_reference_free_carrier.py)
+          checked_out=$(git rev-parse HEAD)
+
+          SOURCE_OK="$source_ok" ACTUAL_AUDIO="$actual_audio" PROTECTED_OK="$protected_ok" PROTECTED_BLOB="$protected_blob" EXPECTED_PROTECTED="$expected_protected" REFERENCE_SCAN="$reference_scan_passed" CREDENTIALS="$credentials" ATTEMPTED="$attempted" STATUS="$status" RAW_EXISTS="$raw_exists" SUMMARY_PASSED="$summary_passed" RUNNER_BLOB="$runner_blob" ADAPTER_BLOB="$adapter_blob" CORRECTION_BLOB="$correction_blob" CARRIER_BLOB="$carrier_blob" CHECKED_OUT="$checked_out" TRIGGER_SHA="${GITHUB_SHA}" RUN_ID="${GITHUB_RUN_ID}" RUN_ATTEMPT="${GITHUB_RUN_ATTEMPT}" python - <<'PY'
+          import json, os
+          from pathlib import Path
+          lines=Path('debug/v143-contextual-prune/corrected-candidate-approved-audio.log').read_text(encoding='utf-8',errors='replace').splitlines()
+          attempted=os.environ['ATTEMPTED']=='true'
+          payload={
+              'schemaVersion':1,
+              'gate':'v143-corrected-candidate-approved-audio',
+              'runId':int(os.environ['RUN_ID']),
+              'runAttempt':int(os.environ['RUN_ATTEMPT']),
+              'triggerSha':os.environ['TRIGGER_SHA'],
+              'checkedOutCommit':os.environ['CHECKED_OUT'],
+              'runnerSourceBlob':os.environ['RUNNER_BLOB'],
+              'candidateAdapterBlob':os.environ['ADAPTER_BLOB'],
+              'correctionSourceBlob':os.environ['CORRECTION_BLOB'],
+              'carrierSourceBlob':os.environ['CARRIER_BLOB'],
+              'approvedAudioSha256':os.environ['ACTUAL_AUDIO'],
+              'approvedAudioIdentityPassed':os.environ['SOURCE_OK']=='true',
+              'protectedPipelineBlob':os.environ['PROTECTED_BLOB'],
+              'expectedProtectedPipelineBlob':os.environ['EXPECTED_PROTECTED'],
+              'protectedPipelineUnchanged':os.environ['PROTECTED_OK']=='true',
+              'referenceTokenScanPassed':os.environ['REFERENCE_SCAN']=='true',
+              'modalCredentialsAvailableInGitHubActions':os.environ['CREDENTIALS']=='true',
+              'candidateAttempted':attempted,
+              'candidateExitCode':int(os.environ['STATUS']) if attempted else None,
+              'rawCandidateExists':os.environ['RAW_EXISTS']=='true',
+              'summaryPassed':os.environ['SUMMARY_PASSED']=='true',
+              'professionalReferenceUsed':False,
+              'runtimeLabelsRequired':False,
+              'liveEndpointDeployedOrModified':False,
+              'productionModified':False,
+              'logTail':lines[-220:],
+          }
+          Path('debug/v143-contextual-prune/corrected-candidate-approved-audio-action.json').write_text(json.dumps(payload,indent=2)+'\n',encoding='utf-8')
+          PY
+          exit 0
+
+      - name: Commit candidate diagnostic even on failure
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/corrected-candidate-approved-audio.log \
+            debug/v143-contextual-prune/corrected-candidate-approved-audio-action.json
+          if [ -s debug/v143-contextual-prune/corrected-candidate-approved-audio-summary.json ]; then
+            git add -- debug/v143-contextual-prune/corrected-candidate-approved-audio-summary.json
+          fi
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 corrected candidate approved-audio diagnostic"
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce candidate diagnostic
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          action=json.loads(Path('debug/v143-contextual-prune/corrected-candidate-approved-audio-action.json').read_text())
+          required={
+              'approvedAudioIdentityPassed':True,
+              'protectedPipelineUnchanged':True,
+              'referenceTokenScanPassed':True,
+              'modalCredentialsAvailableInGitHubActions':True,
+              'candidateAttempted':True,
+              'rawCandidateExists':True,
+              'summaryPassed':True,
+              'professionalReferenceUsed':False,
+              'runtimeLabelsRequired':False,
+              'liveEndpointDeployedOrModified':False,
+              'productionModified':False,
+          }
+          failed=[name for name,wanted in required.items() if action.get(name) is not wanted]
+          if int(action.get('candidateExitCode') or 0)!=0:
+              failed.append('candidateExitCode')
+          if failed:
+              raise SystemExit('corrected candidate approved-audio gate failed: '+', '.join(failed))
+          print('V143 corrected candidate approved-audio gate passed')
+          PY
