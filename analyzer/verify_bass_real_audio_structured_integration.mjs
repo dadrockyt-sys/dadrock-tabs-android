@@ -85,7 +85,16 @@ let evidenceBackedTechniqueLabelCount = 0;
 let techniqueLabelCount = 0;
 let harmonicLabelCount = 0;
 let highRiskLabelCount = 0;
-const highRiskLabels = new Set(['harmonic', 'natural-harmonic', 'pinch-harmonic', 'slap', 'pop', 'tap', 'bend', 'vibrato']);
+const highRiskLabels = new Set([
+  'harmonic',
+  'natural-harmonic',
+  'pinch-harmonic',
+  'slap',
+  'pop',
+  'tap',
+  'bend',
+  'vibrato',
+]);
 
 for (let index = 0; index < events.length; index += 1) {
   const rawEvent = events[index];
@@ -178,6 +187,13 @@ const boundaryChecks = {
 const safetyChecks = {
   diagnosticOnly: structured.diagnosticOnly === true,
   productionCandidateDisabled: structured.productionCandidate === false,
+  professionalBassNotClaimed:
+    structured.professionalBassComplete === false && raw.professionalBassComplete === false,
+  trainingDisabled:
+    structured.trainingRunAuthorized === false && raw.trainingRunAuthorized === false,
+  futureHighRiskFamiliesDisabled:
+    structured.futureHighRiskFamiliesEnabled === false &&
+    raw.futureHighRiskFamiliesEnabled === false,
   structuredIdentityDisabled:
     structured.professionalStructuredIdentityEnabled === false &&
     raw.professionalStructuredIdentityEnabled === false,
@@ -201,7 +217,6 @@ const safetyChecks = {
     structured.customerTokenRedeemed === false && raw.customerTokenRedeemed === false,
   emailNotSent:
     structured.customerEmailSent === false && raw.customerEmailSent === false,
-  professionalBassNotClaimed: raw.professionalBassComplete === false,
 };
 
 const passed =
@@ -239,6 +254,8 @@ const evidence = {
   structuredEventIntegrationBoundaryPassed: passed,
   diagnosticOnly: true,
   professionalBassComplete: false,
+  trainingRunAuthorized: false,
+  futureHighRiskFamiliesEnabled: false,
   professionalStructuredIdentityEnabled: false,
   analyzerRoutingEnabled: false,
   pdfRendererEnabled: false,
