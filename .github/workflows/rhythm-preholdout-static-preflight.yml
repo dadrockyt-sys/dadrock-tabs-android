@@ -99,18 +99,54 @@ jobs:
           git push origin HEAD:v143-contextual-prune-lobo || true
 
       - name: Run authoritative AI-tab PDF static pre-holdout gate
+        id: preflight
+        continue-on-error: true
         run: |
           set -euo pipefail
           # The reusable runner verifies the analyzer anti-leakage gates,
           # app/ai-tab/page.js, and both PDF routes before rendering. Keep its
           # ESM copies below GITHUB_WORKSPACE so package resolution matches the
-          # product environment (including pdf-lib).
+          # product environment (including pdf-lib). Tee the runner log so a
+          # missing report can still produce a compact sanitized diagnostic.
           bash validation/rhythm_holdout/run_static_preholdout_preflight.sh \
-            "$GITHUB_WORKSPACE/.preholdout-static"
+            "$GITHUB_WORKSPACE/.preholdout-static" \
+            2>&1 | tee .preholdout-static/preflight.log
 
-      - name: Commit compact static proof
+      - name: Persist compact static proof or runner diagnostic
+        if: ${{ always() && steps.install.outcome == 'success' }}
         run: |
           set -euo pipefail
+          if [ ! -s .preholdout-static/report.json ]; then
+            python - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+
+          log_path = Path('.preholdout-static/preflight.log')
+          lines = log_path.read_text(encoding='utf-8', errors='replace').splitlines()[-24:] if log_path.exists() else []
+          clean = []
+          for line in lines:
+              line = re.sub(r'(?i)(token|secret|authorization|password)(\s*[:=]\s*)\S+', r'\1\2[REDACTED]', line)
+              clean.append(line[:500])
+          report = {
+              'schemaVersion': 7,
+              'gate': 'rhythm-preholdout-static-preflight',
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'passed': False,
+              'failedStage': 'static-runner-missing-report',
+              'exitStatus': 1,
+              'failureLogTail': clean,
+              'usesSyntheticAudioResponseOnly': True,
+              'realProfessionalReferenceOpened': False,
+              'productionModified': False,
+              'productionPromotionAuthorized': False,
+          }
+          Path('.preholdout-static/report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(report, indent=2))
+          PY
+          fi
+
           mkdir -p debug/v143-contextual-prune
           cp .preholdout-static/report.json \
             debug/v143-contextual-prune/rhythm-preholdout-static-preflight.json
@@ -126,3 +162,7 @@ jobs:
           git fetch origin v143-contextual-prune-lobo
           git rebase origin/v143-contextual-prune-lobo
           git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Fail job when static preflight failed
+        if: ${{ always() && steps.install.outcome == 'success' && steps.preflight.outcome == 'failure' }}
+        run: exit 1
