@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-22 — Bass harmonic safe-abstention rerun active
+Updated: 2026-08-22 — Bass harmonic safe-abstention CLOSED GREEN; harmonic remains unproven
 Branch: `v143-contextual-prune-lobo`
 
 ## Safety / product contract
@@ -49,40 +49,17 @@ Evidence:
 
 Important: separate GPU analyses can regenerate slightly different event/rare-technique counts. The prior structural run produced 1754 events; the technique run produced 1757. Do not require cross-run bit identity. Enrichment identity must remain 100% within each authenticated analysis.
 
-## Bass harmonic investigation — FIRST CANARY RED / HARMONIC NOT PROVEN
+## Bass harmonic investigation — CLOSED GREEN SAFE ABSTENTION / HARMONIC UNPROVEN
 
-Run `32612695589` completed `failure` only at the fail-closed enforcement step. Modal exited 0. The first verifier exited 1 because it incorrectly required the rare `mute` family to recur in this independent rerun.
+First run `32612695589` exposed one ambiguous MIDI-40/fret-12 candidate and a verifier mistake that required rare `mute` recurrence across independent GPU reruns. The candidate was deliberately not accepted as harmonic proof because a normal fretted E2 and a 12th-node natural harmonic can share the same sounding pitch and similar overtone structure.
 
-First-run evidence:
+Hardening commits:
 
-```text
-eventCount: 1754
-base->subset identity: 100%
-subset->final identity: 100%
-quality gate: 100%
-harmonicEventCount: 1
-harmonic consensus: 100% (2 views)
-current-run subset: sustain 217, slide 74, hammer-on 11, pull-off 11, mute 0
-passed: false
-```
-
-The single harmonic candidate was MIDI 40 at mapped E-string fret 12, duration ~0.244 s. Both views showed tonal purity ~0.696, upper-partial ratio ~0.52, subharmonic ratio ~0.014 and zero detected onset. A normal fretted E2 and a 12th-node natural harmonic can share the same sounding pitch and similar overtone structure, so this candidate is ambiguous. It is deliberately **not accepted as proof**.
-
-Evidence:
-
-- `debug/v143-contextual-prune/bass-real-audio-harmonic-action.json`
-- `debug/v143-contextual-prune/bass-real-audio-harmonic.json`
-- artifact `9486003926`
-
-## Harmonic boundary hardening — IMPLEMENTED / RERUN ACTIVE
-
-New commits:
-
-- `db74e2e64e17000f0aeee3faa438258951687b38` — harden `bass_harmonic_evidence.py`
+- `db74e2e64e17000f0aeee3faa438258951687b38` — stricter harmonic evidence
 - `2e420d677f05442d442b61e1d8f027c42d9c74c9` — safe-abstention-aware verifier
 - `1ef20763aab365042f620800f60adab9be98c830` — fail-closed workflow accepts exactly one outcome: strict proof or safe abstention
 
-Hardening is only stricter, never looser:
+Strict detector requirements:
 
 ```text
 minimum duration: 0.22 s
@@ -94,30 +71,43 @@ mapped string/fret must match a common natural-harmonic physical node
 required independent views: 2
 ```
 
-The ambiguous first-run candidate (~0.696 purity, ~0.52 upper-partial ratio) must now be rejected.
+Authoritative rerun `32613012696` from source commit `1ef20763aab365042f620800f60adab9be98c830` completed `success` and every workflow step passed.
 
-Verifier no longer conflates rare-technique recurrence across independent GPU analyses with the already-closed subset proof. It still requires current-run subset diagnostics to be sound, base→subset identity 100%, subset→final identity 100%, preservation of every current-run subset label, no unexpected labels, 100% strict two-view evidence for any harmonic actually emitted, all established quality gates green, and all production/customer flags false.
-
-A green rerun may legitimately report `safeAbstention: true` and `harmonicFamilyProven: false`. That proves the diagnostic safely refuses ambiguous harmonic evidence; it does **not** prove harmonic technique detection.
-
-The helper-triggered run `32612959798` was cancelled by concurrency after later verifier/workflow commits, as expected.
-
-Current authoritative heartbeat:
+Final harmonic diagnostic proof:
 
 ```text
-workflow: Bass Real Audio Harmonics
-runId: 32613012696
-sourceCommit: 1ef20763aab365042f620800f60adab9be98c830
-startedAtUtc: 2026-08-23T02:30:40.930771+00:00
+eventCount: 1757
+base->subset identity: 100%
+subset->final identity: 100%
+quality gate: 100% across all established metrics
+harmonicEventCount: 0
+harmonicLabelCount: 0
+harmonicConsensusPercent: 100 (vacuous: no emitted harmonic labels)
+harmonicEvidenceObserved: false
+harmonicFamilyProven: false
+safeAbstention: true
+bassHarmonicDiagnosticBoundaryPassed: true
+passed: true
 ```
+
+Current-run conservative subset also reproduced the prior green counts: sustain 235, slide-down 33, slide-up 38, hammer-on 11, pull-off 14, mute 1.
+
+Evidence:
+
+- `debug/v143-contextual-prune/bass-real-audio-harmonic-action.json`
+- `debug/v143-contextual-prune/bass-real-audio-harmonic.json`
+
+The correct product conclusion is: the reference-free harmonic diagnostic safely rejects ambiguous evidence on the approved fixture. `harmonic` remains disabled/unproven. Do not weaken criteria or relabel this abstention as harmonic proof.
 
 High-risk `slap`, `pop`, `tap`, `bend`, `vibrato` remain disabled/unproven. Professional Bass remains false. All training/routing/structured identity/PDF/live Modal/Vercel/Production/payment/token/email flags remain disabled.
 
+## LIVE STEP — determine the next isolated Bass completion boundary
+
+Do not enable professional Bass routing/PDF/customer output merely because the safe subset is green. Harmonic is still unproven and high-risk families remain disabled.
+
 ## Immediate next action
 
-1. Poll run `32613012696` through completion.
-2. Inspect final action/evidence. Expected conservative result is zero harmonic labels + `safeAbstention: true` + workflow success.
-3. If so, close harmonic as disabled/unproven on this fixture rather than weakening criteria.
-4. If any strict harmonic survives, inspect its evidence manually before claiming proof.
-5. Save this checkpoint again after the rerun.
-6. Professional Bass PDF/routing/identity remain disabled. Exact-branch Vercel Preview remains an external blocker.
+1. Inspect existing Bass final-product/scaffold/checkpoint code to identify the next missing professional completion contract after separation, timing/playability, conservative techniques, and harmonic safe-abstention.
+2. Prefer an integration/quality contract that can explicitly preserve unsupported techniques as absent rather than attempting high-risk technique families without defensible evidence.
+3. Keep all routing, structured professional identity, PDF renderer, live Modal, Vercel, Production, payment, token, and email flags disabled while proving the next isolated boundary.
+4. Save this checkpoint before any new canary/workflow and again after its result.
