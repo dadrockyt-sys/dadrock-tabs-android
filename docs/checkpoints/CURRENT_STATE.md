@@ -5,89 +5,91 @@ Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
 ## Hard boundaries
-- Work only on `v143-contextual-prune-lobo`; do not modify/merge `main` or change live Production.
+- Work only on `v143-contextual-prune-lobo`; do not modify/merge `main` or live Production.
 - Protected `analyzer/v143_reference_free_rhythm_pipeline.py` must remain blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
 - Approved fixture SHA256: `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
-- Professional human reference is scorer-only. Runtime/shadows may never read/train/tune/select from it.
-- Retired scored freeze/render event SHA `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb` must never be rerun/rescored.
-- Any accepted correction requires a completely new approved-audio candidate → immutable freeze/PDF → lock → one professional score.
-- Completion remains score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`. **Rhythm is not complete.**
-- **Modal/L4 quota boundary: do not run any further Modal/L4 job unless the user explicitly reopens paid Modal usage.** Reuse proven prior outputs/evidence for development whenever they can be SHA-bound.
+- Professional reference is scorer-only; runtime/shadows may never read/train/tune/select from it.
+- Retired scored render SHA `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb` must never be rerun/rescored.
+- Completion requires score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`. **Rhythm is not complete.**
+- **No more Modal/L4 unless the user explicitly reopens paid usage.** Reuse cryptographically bound prior outputs/evidence instead.
 
-## Last scored candidate / holdout result
-- Repaired timing + precision: 449 repaired beats, 0 interval outliers, 113 measures / 1796 slots, all measures populated, explicit primary complete.
-- Exact 2-pass proof run `32697939613` passed. Old candidate/freeze must not be rerun/rescored.
-- One-shot professional run `32731885778`: coverage recall `1.0`, pitch-content F1 `0.23718280683583634`, pitch+timing F1 `0.033143448990160536`, critical mismatches `1723`.
-- Scorer/reference is closed again. Allowed diagnosis only: coverage solved; timing/grid identity and pitch identity fundamentally wrong.
-- Retired scored identity: 725 selected/unique attacks → 985 rendered notes, 236 multi-note onsets, max chord size 6, 113 measures, PDF fidelity 1.0.
+## Last scored result
+- 725 selected attacks → 985 rendered notes, 113 measures, PDF fidelity 1.0.
+- professional score run `32731885778`: coverage recall `1.0`, pitch-content F1 `0.23718280683583634`, pitch+timing F1 `0.033143448990160536`, critical mismatches `1723`.
+- scorer/reference is closed again.
 
-## Precision polyphonic expansion — audio-only defect PROVEN
-- 144 fundamental promotions; all 144 still rendered the strongest raw pitch.
-- 96/144 strongest pitches were harmonic-family intervals above promoted primary: +12=78, +19=11, +24=6, +28=1.
-- minimal promoted-harmonic guard is proven green, attack identity unchanged, pitch identity changed, protected runtime exact, anti-leakage passed, no reference/GPU/Production in proof.
-- guard helper commit `588b314c3103ffbea8a0a933351562551750f670`; product integration `534be3fec36cf5ec4a87089b1298becb4933693d`; proof extension `30d7da578667f7d128824d7d343be782bf064533`.
+## Proven promoted-harmonic defect/fix
+- 144 fundamental promotions; all 144 also rendered the strongest raw pitch.
+- 96/144 strongest pitches are upper harmonic-family intervals: +12=78, +19=11, +24=6, +28=1.
+- minimal reference-free guard is green: attack identity unchanged, primary unchanged, exactly 96 contradictory strongest harmonics suppressed.
+- helper commit `588b314c3103ffbea8a0a933351562551750f670`; integration `534be3fec36cf5ec4a87089b1298becb4933693d`.
+- offline projection proof `debug/v143-contextual-prune/harmonic-guard-offline-projection-proof.json` reproduces old 985-event SHA and projects 889 notes / SHA `50aa17f6855a816ce73f8b427062e8c24c5ce0a5751c7b6425e79c6cea89ecca`, but explicitly says `simulationAcceptedAsCandidate=false`.
 
-## One-shot new approved-audio candidate — FULL L4 RUN TIMED OUT
-Workflow `.github/workflows/v143-harmonic-guard-candidate-once.yml`; trigger marker commit `a9e9ddd61c1d41b2530ab15e352bf8f410b592fc` at `2026-08-24T15:08:46Z` (~10:08 local).
-- no success candidate/proof was committed; original marker remains; **do not retrigger it**.
-- zero-Modal preflight replay passed every original pre-Modal gate.
-- read-only Modal auth/list diagnostic proved app reached Modal, created `15:09:13Z`, stopped `15:39:28Z`, matching the function `timeout=1800` almost exactly.
-- second read-only stopped-app-ID diagnostic found that the stopped ephemeral app had already aged out of `modal app list`; no ID/log recovery remained available. It invoked no remote function/GPU.
+## Modal timeout / quota boundary
+- one-shot corrected candidate did reach Modal but hit its 1800s timeout; do not retrigger.
+- exact successful run `32697939613` proves the frozen stage hashes:
+  - normalized WAV `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`
+  - direct guitar `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`
+  - cascade guitar `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`
+  - carrier grid `ccedc78898c84d86099f912a18605d72ae52b5d14c66bf35a1878f0c91f81b83`
+  - carrier rows `b308a052c5c0e42091db242815227b8963fc62408548650d8f0f27a49e9cf498`
+  - precision events `a418118222079a423b4319c7362867c13710620e506f5b211d73e974015392cc`
+  - precision pitch sets `4a986b255002fe2fce2e1a74df73b9b2ed73ebea9a611a857779ccbcbba839e9`
+  - precision primaries `bd08caf874fc3afd969cadc1595f87f1fb68a539bf1ff9af2977f976bf46a6a8`
+- successful run resource split: deterministic CPU Demucs (~7m42), GPU BS-RoFormer (~47s), deterministic CPU cascade Demucs (~7m17), then downstream CPU analysis; full pass ~18m26.
+- exact proof artifacts for `32697939613` contain JSON reports, not WAV stem bytes.
+- direct Demucs is already cross-host byte-exact on CPU, so it need not consume L4.
+- staged CPU→L4→CPU recovery preflight is green but is now SEALED; do not trigger it under the quota boundary.
 
-## Exact historical stage timing / identity recovered from run 32697939613
-Successful exact pass job `97343555320` gives direct stage evidence from the same frozen separator graph:
-- Modal image uses `audio-separator[gpu]==0.44.5`; do **not** describe the image as CPU-only Torch.
-- seeded Demucs intentionally sets `CUDA_VISIBLE_DEVICES=''`, one CPU thread, oneDNN disabled and deterministic seed 143. Direct Demucs therefore reports no hardware acceleration and took ~7m42s.
-- BS-RoFormer unsets the CUDA mask, reports CUDA + ONNX CUDA provider, and took ~47s on GPU.
-- cascade Demucs restores the deterministic CPU mask and took ~7m17s.
-- downstream repaired-timing precision shadow then completed and the whole pass finished successfully in ~18m26s.
-- exact successful stage hashes: normalized WAV `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`; direct guitar `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`; cascade guitar `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`.
-- proof artifacts for run `32697939613` are JSON reports only; they do **not** contain the WAV stem bytes.
-- current seeded separator source confirms this resource split is intentional: direct/cascade Demucs CPU-only single-thread; RoFormer GPU-auto-proven-deterministic.
+## CRITICAL RECOVERY: rich pre-scorer historical product artifact FOUND
+Source preholdout run: `32702772593`.
+Artifact: `rhythm-professional-preholdout-real-audio`, artifact ID `9511117529`, artifact digest `fe16e937bae1c4af9f52b0d7863846c9a8da4da91be0af03256947bc2f5deaf4`.
+Downloaded artifact contains:
+- `.preholdout/raw-product-output.json`
+- `.preholdout/rhythm-freeze-input.json`
+- frozen analysis/manifest/PDF fidelity proofs
+- full + preview frozen PDFs
+- binding/runtime-isolation logs
+- `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json`
 
-### Direct Demucs frozen-stage reproducibility
-Existing cross-host CPU proof checks exact normalized/direct hashes, PCM-int16 hash, private shift trace and execution controls across different CPU vendors. The successful proof bound direct guitar SHA `0ac47da...` and demonstrated the deterministic direct Demucs stage can be regenerated byte-exact without paying for L4. Therefore the remaining cached-byte problem is primarily RoFormer/cascade or an equivalent formally frozen upstream evidence boundary.
+The artifact summary itself proves:
+- source audio SHA exact `215bd5...`
+- reference-free=true; professionalReferenceUsed=false; referenceRuntimeInputUsed=false; runtimeLabelsRequired=false
+- candidate result commit `289a04e0fe30b5668ddaf39427404d8472ca1f51`, candidate blob `20e7a583fcb96249636cc63b01cf9ae0044f2c62`
+- selectedAttackCount=725, renderNoteCount=985, all 113 measures
+- frozen/pdf event SHA exactly retired `a81190...`, PDF fidelity 1.0
+- human reference was still sealed and no professional score had run at this stage.
 
-## Offline promoted-harmonic projection — GREEN
-`debug/v143-contextual-prune/harmonic-guard-offline-projection-proof.json`, bot commit `ed16166cf8aab235f1cc8c123e0d379c42b0af1c`.
-- reproduces retired 985-event SHA exactly: `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`.
-- suppresses exactly 96 harmonic duplicates; simulated 725 attacks / 889 render events.
-- simulated new projected SHA `50aa17f6855a816ce73f8b427062e8c24c5ce0a5751c7b6425e79c6cea89ecca`.
-- `simulationAcceptedAsCandidate=false`: proof only, not a replacement approved-audio candidate.
+`raw-product-output.json` is therefore the best available immutable **pre-scorer, approved-audio, reference-free frozen upstream evidence** for no-Modal correction/testing. It has all 985 rich product events including physical onset provenance, explicit primary, per-pitch physical CQT support, string/fret mapping, bend/legato evidence, sustain evidence and candidate/timing diagnostics.
 
-## Cost-bounded staged recovery — PREPARED BUT NOW SEALED BY USER QUOTA BOUNDARY
-Staged recovery module `analyzer/v143_harmonic_guard_staged_recovery_modal.py` and its fail-closed checker/preflight are prepared. Preflight is now green:
-- `debug/v143-contextual-prune/harmonic-guard-staged-recovery-preflight.json` has `passed=true`.
-- recovery source blob `215d62368c9f4939a948b0b057001f7913d08208`.
-- product source blob `6460bc136120d38e4da209e4b6d5bdb1c9f0edaf`.
-- protected blob exact; approved fixture exact; normalized/direct/cascade historical hashes exact; pipeline call order preserved; anti-leakage green; no Modal/GPU was invoked by preflight.
-- resource plan would have been CPU Demucs → short L4 RoFormer → CPU Demucs → CPU assembly.
+## New equivalence audit — deletion-only projection is NOT sufficient
+Using the recovered raw product and the current deterministic chord voicing algorithm:
+- serialized physical evidence independently re-identifies exactly the same 96 promoted-harmonic suppressions and interval distribution.
+- after suppressing those 96 pitch-set members and rerunning the exact candidate voicing rule, the selected MIDI sets equal `old rendered MIDI set - suppressed harmonic` at all 725 attacks (no surprise/additional pitch changes).
+- HOWEVER **48 surviving notes change legal string/fret mapping** when the contradictory harmonic is removed.
+- Example: measure 1 step 14 old `{57,69}` maps MIDI57 to D-string fret7; after suppressing MIDI69, MIDI57 legally remaps to G-string fret2.
+- therefore merely deleting 96 final events (the earlier 889-event offline projection) is useful evidence but is not semantically identical to running the guard before candidate assembly.
 
-**Do not trigger the staged-recovery Modal workflow now.** User reports Modal quota/plan pressure and has explicitly approved reuse of the best proven previous Modal results for further testing.
+This matters because downstream legato and sustain passes use same-string event topology. We must rebuild/remap the 889-note candidate conservatively from the serialized pre-scorer evidence rather than relabel the deletion-only simulation.
 
-## Frozen-result reuse strategy — ACTIVE
-Goal: stop re-proving the separator and make the proven upstream result an immutable, SHA-bound test fixture/evidence boundary.
-1. Reuse actual historical stem bytes if recoverable from any retained artifact/cache; accept only exact normalized/direct/cascade hashes above.
-2. Direct Demucs can be regenerated CPU-only under the already proven cross-host controls if its bytes are needed.
-3. Search retained repo/Actions evidence for BS-RoFormer instrumental or cascade WAV bytes. Historical exact-proof artifacts inspected so far are JSON-only.
-4. If those WAV bytes are unavailable, formalize a **frozen upstream evidence reuse** boundary from the richest already-serialized approved-audio evidence that is sufficient to apply the new guard/downstream projection. This must remain honestly distinct from a fresh inference and may not simply relabel the existing offline simulation.
-5. Any CPU-only reused-evidence candidate must cryptographically bind itself to the approved fixture/proven upstream identity, prove no professional/reference input, produce a genuinely new corrected product/render identity, and pass the normal freeze/PDF/lock gates before one professional score.
+## Safe no-Modal reconstruction direction
+1. Bind input to artifact ID/digest, candidate commit/blob, approved source SHA, old retired event SHA and historical stage hashes.
+2. Apply the exact guard from serialized physical pitch evidence; require exactly 96 suppressions and unchanged 725 attack keys/primaries.
+3. Rerun the exact deterministic joint chord voicing from guarded pitch sets. Update noteMapping/chord indexes/counts/string/fret. Require exactly 889 notes and no unobserved pitch/attack.
+4. Bend evidence is pitch/time based; for a surviving remapped primary it may be retained only with `bendTargetFret` recomputed from the new fret. Secondary audio semantics remain prohibited.
+5. Legato is topology-dependent. Retain an old evidence-backed primary→primary link only if both endpoints survive and remain a valid same-string adjacent pair under the new mapping; remap event indices. Strip invalidated links. **Do not invent newly possible legato links without stem evidence.**
+6. Sustain is also topology-dependent. Reuse historical two-view sustain evidence only conservatively: never lengthen it; clamp to any earlier new same-string hard end and requantize. If remapping creates more space, keep the old shorter supported duration.
+7. Re-run the event-only semantic guard and sustain promotion, then render/freeze/PDF using normal CPU gates.
+8. This rebuilt product must have a new product/render identity and explicitly declare historical frozen-upstream reuse; it is not a fresh separator inference.
+9. Only after binding + PDF fidelity 1.0 may exactly one professional score run.
 
 ## Downstream prepared
-- CPU binding post-proof `.github/workflows/v143-harmonic-guard-candidate-postproof.yml` commit `5d7e96c38c8328457bd82aeeb691245a66ffed00`.
-- fail-closed preholdout `.github/workflows/v143-harmonic-guard-final-preholdout.yml` commit `12958a2f5f245697148a7fba190dd7bb8e98987c`; marker not created.
-- preholdout requires real candidate + initial proof + binding proof, new frozen identity, exact PDF renderer projection and `pdfEventFidelity == 1.0`; scorer remains sealed.
-
-## Cost control
-- No more Modal/L4 until explicitly reopened by the user.
-- Do not rerun the failed whole-L4 candidate or staged L4 recovery.
-- Prefer immutable historical outputs, CPU-only exact regeneration, and CPU-only downstream tests.
-- No professional scorer/reference has been reopened.
-- Old candidate/freeze/scorer remain untouched.
+- CPU candidate post-proof: `.github/workflows/v143-harmonic-guard-candidate-postproof.yml` commit `5d7e96c38c8328457bd82aeeb691245a66ffed00`.
+- fail-closed preholdout: `.github/workflows/v143-harmonic-guard-final-preholdout.yml` commit `12958a2f5f245697148a7fba190dd7bb8e98987c`; marker NOT created.
 
 ## Next exact actions
-1. Search committed/debug/workflow history for retained BS-RoFormer/cascade stem bytes or artifacts and verify any found bytes against exact historical hashes.
-2. Inspect the retired approved-audio candidate + harmonic-guard offline proof path to identify the richest already-serialized evidence sufficient for a formal frozen-upstream correction boundary.
-3. Build a CPU-only fail-closed frozen-result-reuse proof/candidate path; it must reject wrong fixture/upstream hashes, remain reference-free, keep old scored identity retired, and produce the corrected new render identity from historical evidence without Modal.
-4. Only after that CPU-only candidate is independently bound and new, allow the existing preholdout freeze/PDF/lock gates.
-5. Only after preholdout passes with PDF fidelity 1.0 may exactly one professional score run.
+1. Build a CPU-only reconstruction checker against the recovered artifact evidence with the conservative remap/legato/sustain rules above.
+2. Prove its invariants locally/CPU-only: exact provenance, 96 suppressions, 725 attacks, 889 notes, no new pitch/attack, correct remapping, no unsupported semantic links, protected blob exact, anti-leakage green.
+3. Persist the minimum immutable historical evidence needed so Actions does not depend on artifact retention.
+4. Create a new corrected candidate identity from that evidence; run existing binding/preholdout freeze/PDF gates without Modal.
+5. Keep scorer sealed until new PDF fidelity = 1.0 and all fail-closed gates pass.
