@@ -1,0 +1,214 @@
+name: V143 Harmonic Guard Candidate Once
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v143-contextual-prune/RUN_HARMONIC_GUARD_CANDIDATE_ONCE
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-harmonic-guard-candidate-once
+  cancel-in-progress: false
+
+jobs:
+  candidate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - name: Check out exact trigger revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Fail-closed CPU safety gate before any Modal call
+        shell: bash
+        run: |
+          set -euo pipefail
+          marker='debug/v143-contextual-prune/RUN_HARMONIC_GUARD_CANDIDATE_ONCE'
+          old_candidate='debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json'
+          guard_proof='debug/v143-contextual-prune/precision-promoted-harmonic-guard-proof.json'
+          test -f "$marker"
+          test -s "$old_candidate"
+          test -s "$guard_proof"
+          test "$(git hash-object "$old_candidate")" = '20e7a583fcb96249636cc63b01cf9ae0044f2c62'
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          python -m py_compile \
+            analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
+            analyzer/v143_precision_promoted_harmonic_guard.py \
+            analyzer/check_v143_precision_promoted_harmonic_guard.py \
+            analyzer/v143_precision_sustain_promotion.py
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_promoted_harmonic_guard.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('debug/v143-contextual-prune/precision-promoted-harmonic-guard-proof.json').read_text(encoding='utf-8'))
+          required={
+            'passed': True,
+            'correctionChangesPitchIdentity': True,
+            'correctionChangesAttackIdentity': False,
+            'protectedPipelineUnchanged': True,
+            'antiLeakagePassed': True,
+            'professionalReferenceUsed': False,
+            'runtimeLabelsRequired': False,
+            'productionModified': False,
+            'modalGpuUsed': False,
+          }
+          failed=[k for k,v in required.items() if d.get(k) is not v]
+          if int(d.get('oldCandidateScoringRelevantSuppressionOpportunityCount') or -1) != 96:
+            failed.append('oldCandidateScoringRelevantSuppressionOpportunityCount')
+          if failed:
+            raise SystemExit('harmonic guard prerequisite proof failed: '+', '.join(failed))
+          PY
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
+            analyzer/v143_precision_promoted_harmonic_guard.py \
+            analyzer/v143_precision_sustain_promotion.py \
+            analyzer/v143_contextual_prune_precision_candidate_events.py; then
+            echo 'Forbidden scorer/source token in harmonic-guard candidate path' >&2
+            exit 31
+          fi
+
+      - name: Run exactly one approved-audio harmonic-guard candidate inference
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet modal
+          python -m modal run analyzer/v143_repaired_timing_precision_candidate_product_modal.py::approved_audio \
+            --audio-path public/gomywayfullaitest.m4a \
+            --output-path debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-product.json
+
+      - name: Prove new candidate and projected scored identity before commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .harmonic-guard-candidate
+          candidate='debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-product.json'
+          test -s "$candidate"
+          node validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs \
+            "$candidate" \
+            .harmonic-guard-candidate/rhythm-freeze-input.json \
+            > .harmonic-guard-candidate/prepare-freeze.log 2>&1
+          PYTHONPATH=validation/rhythm_holdout python - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          from canonical import canonical_events, sha256_json
+
+          candidate_path=Path('debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-product.json')
+          freeze_path=Path('.harmonic-guard-candidate/rhythm-freeze-input.json')
+          proof_path=Path('debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-proof.json')
+          d=json.loads(candidate_path.read_text(encoding='utf-8'))
+          freeze=json.loads(freeze_path.read_text(encoding='utf-8'))
+          candidate=d.get('candidate') or {}
+          assembly=d.get('assembly') or {}
+          live=d.get('liveV143') or {}
+          timing=d.get('timing') or {}
+          guard=d.get('promotedHarmonicGuardDiagnostics') or {}
+          events=d.get('events') or []
+          render_events=canonical_events(freeze.get('renderEvents') or [])
+          render_sha=sha256_json(render_events)
+          retired='a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb'
+          raw_sha=hashlib.sha256(json.dumps(events,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode('utf-8')).hexdigest()
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          checks={
+            'schemaV4': int(d.get('schemaVersion') or 0)==4,
+            'approvedFixture': candidate.get('approvedFixture') is True,
+            'approvedSourceSha': candidate.get('sourceSha256')=='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+            'measureRangeDerivedFromAudio': candidate.get('measureRangeDerivedFromAudio') is True and timing.get('measureRangeDerivedFromAudio') is True,
+            'repairedOutliersZero': candidate.get('repairedIntervalOutliersZero') is True and int(timing.get('repairedIntervalOutlierCount') or 0)==0,
+            'referenceFree': live.get('referenceFree') is True and assembly.get('referenceFree') is True,
+            'professionalReferenceUnused': live.get('professionalReferenceUsed') is False and candidate.get('professionalReferenceUsed') is False,
+            'runtimeLabelsUnused': live.get('runtimeLabelsRequired') is False and candidate.get('runtimeLabelsRequired') is False,
+            'productionUnmodified': candidate.get('productionModified') is False,
+            'protectedRuntimeUnmodified': candidate.get('protectedLivePipelineModified') is False and protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+            'noInventedAttack': candidate.get('addsUnobservedAttack') is False,
+            'noInventedPitch': candidate.get('addsUnobservedPitch') is False,
+            'noRelocation': candidate.get('relocatesAttack') is False,
+            'guardReferenceFree': guard.get('referenceFree') is True and guard.get('professionalReferenceUsed') is False,
+            'guardDidSuppress': int(guard.get('suppressedStrongestHarmonicCount') or 0)>0,
+            'guardAttackIdentityUnchanged': guard.get('attackIdentityChanged') is False,
+            'guardPrimaryUnchanged': guard.get('primaryMidiChanged') is False,
+            'eventsPresent': len(events)>0,
+            'renderEventsPresent': len(render_events)>0,
+            'all113Measures': int(d.get('audioDerivedMeasureCount') or 0)==113,
+            'brandNewScoredRenderIdentity': render_sha != retired,
+          }
+          failed=[k for k,v in checks.items() if not v]
+          proof={
+            'schemaVersion':1,
+            'gate':'v143-harmonic-guard-new-approved-audio-candidate',
+            'triggerSha':'${{ github.sha }}',
+            'candidateBlobSha':subprocess.check_output(['git','hash-object',str(candidate_path)],text=True).strip(),
+            'rawEventSha256':raw_sha,
+            'rawEventCount':len(events),
+            'projectedRenderEventSha256':render_sha,
+            'retiredScoredRenderEventSha256':retired,
+            'projectedRenderIdentityIsNew':render_sha != retired,
+            'projectedRenderEventCount':len(render_events),
+            'selectedAttackCount':int(d.get('selectedCount') or 0),
+            'guardDiagnostics':guard,
+            'protectedPipelineBlob':protected,
+            'checks':checks,
+            'failedChecks':failed,
+            'professionalReferenceUsed':False,
+            'runtimeLabelsRequired':False,
+            'productionModified':False,
+            'passed':not failed,
+          }
+          d['preFreezeTrace']={
+            'runId':int('${{ github.run_id }}'),
+            'triggerSha':'${{ github.sha }}',
+            'rawEventsSha256':raw_sha,
+            'projectedRenderEventsSha256':render_sha,
+            'retiredScoredRenderEventsSha256':retired,
+            'projectedRenderIdentityIsNew':render_sha != retired,
+            'eventCount':len(events),
+            'projectedRenderEventCount':len(render_events),
+            'protectedPipelineBlob':protected,
+            'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+            'productionModified':False,
+            'validationFailures':failed,
+            'passed':not failed,
+          }
+          candidate_path.write_text(json.dumps(d,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+          proof_path.write_text(json.dumps(proof,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+          if failed:
+            raise SystemExit('new harmonic-guard candidate failed: '+', '.join(failed))
+          print(json.dumps(proof,indent=2))
+          PY
+
+      - name: Commit immutable new candidate evidence and retire one-shot marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-product.json \
+            debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-proof.json
+          git rm -- debug/v143-contextual-prune/RUN_HARMONIC_GUARD_CANDIDATE_ONCE
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record one-shot harmonic-guard approved-audio candidate'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
