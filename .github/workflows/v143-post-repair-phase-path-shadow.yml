@@ -7,6 +7,8 @@ on:
     paths:
       - analyzer/v143_post_repair_phase_path_shadow.py
       - analyzer/check_v143_post_repair_phase_path_shadow.py
+      - analyzer/v143_repair_index_alignment_shadow.py
+      - analyzer/check_v143_repair_index_alignment_shadow.py
       - .github/workflows/v143-post-repair-phase-path-shadow.yml
 
 permissions:
@@ -46,12 +48,20 @@ jobs:
           mkdir -p /tmp/v143-phase-path
           (
             set -euo pipefail
-            python -m py_compile analyzer/v143_post_repair_phase_path_shadow.py analyzer/check_v143_post_repair_phase_path_shadow.py
+            python -m py_compile \
+              analyzer/v143_post_repair_phase_path_shadow.py \
+              analyzer/check_v143_post_repair_phase_path_shadow.py \
+              analyzer/v143_repair_index_alignment_shadow.py \
+              analyzer/check_v143_repair_index_alignment_shadow.py
             python analyzer/check_v143_post_repair_phase_path_shadow.py
+            python analyzer/check_v143_repair_index_alignment_shadow.py
             test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
             if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
-              analyzer/v143_post_repair_phase_path_shadow.py analyzer/check_v143_post_repair_phase_path_shadow.py; then
-              echo 'Forbidden scorer/source token in local phase path shadow' >&2
+              analyzer/v143_post_repair_phase_path_shadow.py \
+              analyzer/check_v143_post_repair_phase_path_shadow.py \
+              analyzer/v143_repair_index_alignment_shadow.py \
+              analyzer/check_v143_repair_index_alignment_shadow.py; then
+              echo 'Forbidden scorer/source token in local timing diagnostics' >&2
               exit 1
             fi
           ) > /tmp/v143-phase-path/static.log 2>&1
@@ -76,6 +86,7 @@ jobs:
           from pathlib import Path
           import soundfile as sf
           from v143_post_repair_phase_path_shadow import assess_post_repair_phase_path_from_samples
+          from v143_repair_index_alignment_shadow import summarize_repair_index_alignment
           from v143_reference_free_beat_grid_repair import repair_reference_free_beat_grid_from_samples
           from v143_reference_free_timing import estimate_reference_free_timing
 
@@ -91,10 +102,15 @@ jobs:
           timing=estimate_reference_free_timing(normalized)
           samples,sr=sf.read(str(normalized),always_2d=False)
           repair=repair_reference_free_beat_grid_from_samples(samples,int(sr),timing)
-          path=assess_post_repair_phase_path_from_samples(samples,int(sr),repair.repaired_beat_times)
+          phase_path=assess_post_repair_phase_path_from_samples(samples,int(sr),repair.repaired_beat_times)
+          index_alignment=summarize_repair_index_alignment(
+              repair.original_beat_times,
+              repair.repaired_beat_times,
+              60.0/float(timing.tempo_bpm),
+          )
           protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
           out={
-            'schemaVersion':1,
+            'schemaVersion':2,
             'gate':'v143-post-repair-local-phase-path-approved-audio-shadow',
             'runId':int('${{ github.run_id }}'),
             'runAttempt':int('${{ github.run_attempt }}'),
@@ -108,13 +124,15 @@ jobs:
               'barConfidence':float(timing.bar_confidence),
             },
             'repair':repair.diagnostics(),
-            'phasePath':path,
+            'phasePath':phase_path,
+            'rawRepairedIndexAlignment':index_alignment,
             'invariants':{
               'referenceFree':True,
               'professionalReferenceUsed':False,
               'runtimeLabelsRequired':False,
               'repairedIntervalOutliersZero':repair.repaired_interval_outlier_count==0,
-              'featureExtractionSinglePass':path.get('featureExtractionPassCount')==1,
+              'featureExtractionSinglePass':phase_path.get('featureExtractionPassCount')==1,
+              'indexAlignmentHasMatches':int(index_alignment.get('matchedBeatCount') or 0)>0,
               'recommendationOnly':True,
               'runtimePhaseChanged':False,
               'liveRhythmOutputChanged':False,
@@ -123,12 +141,13 @@ jobs:
               'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
             }
           }
-          failed=[key for key in ('referenceFree','repairedIntervalOutliersZero','featureExtractionSinglePass','recommendationOnly','protectedPipelineUnchanged') if out['invariants'].get(key) is not True]
+          failed=[key for key in ('referenceFree','repairedIntervalOutliersZero','featureExtractionSinglePass','indexAlignmentHasMatches','recommendationOnly','protectedPipelineUnchanged') if out['invariants'].get(key) is not True]
           failed += [key for key in ('professionalReferenceUsed','runtimeLabelsRequired','runtimePhaseChanged','liveRhythmOutputChanged','productionModified') if out['invariants'].get(key) is not False]
           if failed: raise SystemExit(f'local phase path invariant failure: {failed}')
           output=Path('debug/v143-contextual-prune/post-repair-local-phase-path-approved-audio-shadow.json')
           output.write_text(json.dumps(out,indent=2,allow_nan=False)+'\n')
-          print(json.dumps(path['summary'],sort_keys=True))
+          print(json.dumps(phase_path['summary'],sort_keys=True))
+          print(json.dumps(index_alignment,sort_keys=True))
           print(f'WROTE={output}')
           PY
           ) > /tmp/v143-phase-path/approved.log 2>&1
@@ -154,7 +173,7 @@ jobs:
           protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
           approved=Path('debug/v143-contextual-prune/post-repair-local-phase-path-approved-audio-shadow.json')
           out={
-            'schemaVersion':1,'gate':'v143-post-repair-local-phase-path-self-report',
+            'schemaVersion':2,'gate':'v143-post-repair-local-phase-path-self-report',
             'runId':int('${{ github.run_id }}'),'runAttempt':int('${{ github.run_attempt }}'),'triggerSha':'${{ github.sha }}',
             'staticOutcome':os.environ.get('STATIC_OUTCOME','unknown'),'approvedOutcome':os.environ.get('APPROVED_OUTCOME','unknown'),
             'approvedDiagnosticExists':approved.exists(),'staticLogTail':tail('/tmp/v143-phase-path/static.log'),'approvedLogTail':tail('/tmp/v143-phase-path/approved.log'),
