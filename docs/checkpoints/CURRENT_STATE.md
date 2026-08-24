@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 08:36 America/Thunder_Bay
+Updated: 2026-08-24 08:40 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -64,3 +64,10 @@ Do not rescore event SHA `a81190d...`. Do not rerun candidate/freeze. No repeate
 8. **Create a completely new Jimmy identity after an accepted correction.** New approved-audio candidate → new authenticated events → new professional preview/full PDF → new immutable lock. Never reuse or rescore event SHA `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`.
 9. **Open scorer exactly once only after the new lock is complete.** Require scorer V2 completeness, PDF-event fidelity `1.0`, protected pipeline exact, Production unchanged, then run the unchanged `>=0.99` professional holdout gate.
 10. **Completion remains strict.** Rhythm is complete only at score `>=0.99`, critical mismatches `0`, and PDF-event fidelity `1.0`. If the next score fails, close the scorer again and repeat only with another general/reference-free correction and another brand-new freeze.
+
+## Continuation audit — 2026-08-24 08:40
+- Resumed directly from this branch/checkpoint; protected rhythm pipeline remains untouched.
+- Inspected `analyzer/v143_candidate_timing_adapter.py` and `analyzer/v143_reference_free_timing.py` only as source/static evidence.
+- Current adapter maps `downbeat_index_mod4` to `first_beat_in_measure = (-downbeat_index_mod4) % 4`, then serializes `absolute_beat = first_beat_in_measure + beat_index`; no sign/indexing defect has yet been proven from static inspection alone.
+- Existing audio-only bar-phase diagnostic shows competing timing candidates disagree on residue-class phase and 4/4 phase confidence is extremely weak, so the simple accent-residue phase estimate must not be treated as trustworthy evidence by itself.
+- Immediate next action: trace the exact 477→449 repaired-beat path and determine whether post-repair phase/origin metadata is preserved or recomputed; then build a cheap reference-free phase/invariant shadow diagnostic before any runtime change or inference.
