@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 01:00 America/Thunder_Bay
+Updated: 2026-08-24 01:34 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -15,31 +15,41 @@ Protected `analyzer/v143_reference_free_rhythm_pipeline.py` required blob `7f72f
 Scorer V2 SHA `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac` remains CLOSED until a new deterministic immutable freeze/PDF. Never rescore retired Freeze2 `e693602ade26256851dc0d77b003bf6ba0d5014dfaec7e35103ecdf25d33c32f`.
 
 ## Reference-free musical fixes already green
-Explicit-primary propagation green; no invented attack/pitch/relocation. Beat-grid repair `32683424669`: 447→449 beats, outliers38→0, 113 measures/1796 slots; phase remains `downbeatIndexMod4=1`, `firstBeatInMeasure=3`.
+Explicit-primary propagation green; no invented attack/pitch/relocation. Beat-grid repair: 447→449 beats, outliers38→0, 113 measures/1796 slots; phase remains `downbeatIndexMod4=1`, `firstBeatInMeasure=3`.
 
 ## Separator determinism — GREEN THROUGH SINGLE-PASS FULL GRAPH
 oneDNN-off CPU proof is byte-exact across AWS Intel and GCP AMD with same source/normalized bytes, exact private shift `0,22050,6026`, effective ATen `DEFAULT`, oneDNN disabled, WAV `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`, PCM `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`.
 
-`debug/v143-contextual-prune/separator-single-pass-smoke.json` is GREEN:
+`debug/v143-contextual-prune/separator-single-pass-smoke.json` GREEN:
 - normalized `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`
 - direct Demucs `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`
 - RoFormer `ce7ae8c6c57e00e1e191b8c15a8c4f39627cbcdf3b7a75ac7ca4c246f6f64b14`
 - cascade `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`
 - deterministic/reference-free true; protected/Production unchanged; musical settings unchanged.
 
-## ACTIVE compute — ONE combined single-pass smoke
-- Combined smoke preflight hardened at commit `2eca69e079adf68f40fffca4c0cd78d1b5a8192d` to re-run the exact cross-host checker using both committed CPU proofs.
-- One-shot launch commit `989150b7613d2eeb0808a7ab2cb4f978abea5b59`.
-- Workflow restored manual-only immediately at `e975c08088244805147ecbac6b6b10bd61800ae8`.
-- Expected output: `debug/v143-contextual-prune/repaired-timing-precision-single-pass-smoke.json`.
-- Exactly one combined Modal pass is active; do not launch any further compute until it resolves.
+## Combined repaired-timing + precision single-pass — GREEN
+`debug/v143-contextual-prune/repaired-timing-precision-single-pass-smoke.json` completed successfully:
+- repaired beats 449, interval outliers 0, 113 measures / 1796 grid slots
+- correction: 984 attacks
+- precision: 725 retained attacks / 987 pitch hypotheses / 144 fundamental promotions
+- explicit primary MIDI complete: 725/725
+- all 113 target measures populated
+- no unobserved attack, relocation, or unobserved pitch; reference-free; protected/Production unchanged
+- direct stem `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`
+- cascade stem `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`
+- repaired beats SHA `c74915787c824d91ba82b1314f3ce52e83bc40c6b72fec13efbf0b23d954e6aa`
+- precision events SHA `a418118222079a423b4319c7362867c13710620e506f5b211d73e974015392cc`
+- precision pitch sets SHA `4a986b255002fe2fce2e1a74df73b9b2ed73ebea9a611a857779ccbcbba839e9`
+- precision primary MIDI SHA `bd08caf874fc3afd969cadc1595f87f1fb68a539bf1ff9af2977f976bf46a6a8`
+
+This clears the combined single-pass bridge gate. Scorer is still closed.
 
 ## Modal cost-control — ACTIVE
-No repeated 3-pass L4 debugging. Scorer remains closed. Final multi-pass proofs are reserved for acceptance gates only.
+No debugging loops. Final 2-pass exact combined proof is now the next acceptance gate; after it resolves do not launch additional compute until assessed. Scorer remains closed.
 
 ## Current work NOW
-1. Poll only for `repaired-timing-precision-single-pass-smoke.json`.
-2. Require all reference-free/safety/coverage invariants and all stage hashes present.
-3. If green, run final exact combined determinism proof as required before acceptance, then candidate/pre-freeze.
+1. Harden the final 2-pass combined exact proof preflight to require the committed cross-host CPU proofs, current dispatch controls, separator smoke, and combined single-pass smoke.
+2. Launch the final 2-pass exact combined proof exactly once.
+3. If exact and all invariants green, run candidate/pre-freeze path.
 4. Create BRAND-NEW Jimmy analysis/authenticated events/freeze/PDF identity; verify fidelity1.0, protected exact, Production unchanged.
 5. ONLY THEN reopen scorer V2 and score at unchanged >=0.99 threshold.
