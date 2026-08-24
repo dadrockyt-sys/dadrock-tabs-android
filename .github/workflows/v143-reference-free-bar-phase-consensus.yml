@@ -48,7 +48,7 @@ jobs:
             echo 'Forbidden scorer/source token in bar-phase module' >&2
             exit 1
           fi
-      - name: Run approved-audio timing and multi-signal phase diagnostic
+      - name: Run approved-audio timing, phase, and beat-grid health diagnostic
         env:
           PYTHONPATH: analyzer
         shell: bash
@@ -58,9 +58,13 @@ jobs:
           python - <<'PY'
           import hashlib, json, subprocess
           from pathlib import Path
+          import numpy as np
           import soundfile as sf
           from v143_reference_free_timing import estimate_reference_free_timing
           from v143_reference_free_bar_phase_consensus import estimate_reference_free_bar_phase_consensus_from_samples
+
+          def percentile(values, q):
+              return float(np.quantile(np.asarray(values,dtype=np.float64),q)) if values else 0.0
 
           audio_path=Path('public/gomywayfullaitest.m4a')
           expected='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
@@ -70,13 +74,41 @@ jobs:
           subprocess.run(['ffmpeg','-y','-v','error','-i',str(audio_path),'-map','0:a:0','-vn','-ar','44100','-ac','2','-c:a','pcm_s16le',str(normalized)],check=True)
           timing=estimate_reference_free_timing(normalized)
           samples,sr=sf.read(str(normalized),always_2d=False)
-          consensus=estimate_reference_free_bar_phase_consensus_from_samples(samples,int(sr),timing.beat_times)
+          values=np.asarray(samples,dtype=np.float64)
+          if values.ndim==2: values=values.mean(axis=1)
+          consensus=estimate_reference_free_bar_phase_consensus_from_samples(values,int(sr),timing.beat_times)
           beat_times=list(timing.beat_times)
           intervals=[b-a for a,b in zip(beat_times[:-1],beat_times[1:])]
-          median_interval=sorted(intervals)[len(intervals)//2]
-          duration=len(samples)/float(sr)
+          expected_period=60.0/float(timing.tempo_bpm)
+          ratios=[value/expected_period for value in intervals]
+          duration=len(values)/float(sr)
+
+          # Audio-active range from short-time RMS, independent of beat tracking.
+          frame=2048; hop=512
+          rms=[]; frame_times=[]
+          for start in range(0,max(1,len(values)-frame+1),hop):
+              block=values[start:start+frame]
+              if len(block)<frame: break
+              rms.append(float(np.sqrt(np.mean(block*block))))
+              frame_times.append((start+frame/2)/float(sr))
+          rms_arr=np.asarray(rms,dtype=np.float64)
+          noise=float(np.quantile(rms_arr,0.10))
+          robust_peak=float(np.quantile(rms_arr,0.99))
+          active_threshold=max(noise*3.0, noise+0.02*max(0.0,robust_peak-noise))
+          active_idx=np.flatnonzero(rms_arr>=active_threshold)
+          if len(active_idx):
+              active_start=max(0.0,float(frame_times[int(active_idx[0])])-frame/(2*float(sr)))
+              active_end=min(duration,float(frame_times[int(active_idx[-1])])+frame/(2*float(sr)))
+          else:
+              active_start=0.0; active_end=duration
+          expected_beats_active=(active_end-active_start)/expected_period+1.0
+          anomalies=[]
+          for index,(interval,ratio) in enumerate(zip(intervals,ratios)):
+              if ratio<0.75 or ratio>1.35:
+                  anomalies.append({'afterBeatIndex':index,'leftBeatTime':beat_times[index],'rightBeatTime':beat_times[index+1],'intervalSeconds':interval,'periodRatio':ratio})
+
           out={
-            'schemaVersion':1,
+            'schemaVersion':2,
             'gate':'v143-reference-free-bar-phase-consensus-approved-audio',
             'runId':int('${{ github.run_id }}'),
             'runAttempt':int('${{ github.run_attempt }}'),
@@ -84,6 +116,7 @@ jobs:
             'approvedAudioSha256':digest,
             'timing':{
               'tempoBpm':timing.tempo_bpm,
+              'expectedBeatPeriodSeconds':expected_period,
               'beatConfidence':timing.beat_confidence,
               'accentOnlyFirstBeatInMeasure':timing.first_beat_in_measure,
               'accentOnlyDownbeatIndexMod4':timing.downbeat_index_mod4,
@@ -91,25 +124,55 @@ jobs:
               'beatCount':len(beat_times),
               'firstBeatTime':beat_times[0],
               'lastBeatTime':beat_times[-1],
-              'medianBeatInterval':median_interval,
               'audioDuration':duration,
-              'leadingAudioBeforeFirstBeat':beat_times[0],
-              'trailingAudioAfterLastBeat':duration-beat_times[-1],
               'first12BeatTimes':beat_times[:12],
               'last12BeatTimes':beat_times[-12:],
+            },
+            'beatGridHealth':{
+              'intervalCount':len(intervals),
+              'intervalSecondsP01':percentile(intervals,0.01),
+              'intervalSecondsP05':percentile(intervals,0.05),
+              'intervalSecondsP50':percentile(intervals,0.50),
+              'intervalSecondsP95':percentile(intervals,0.95),
+              'intervalSecondsP99':percentile(intervals,0.99),
+              'periodRatioP01':percentile(ratios,0.01),
+              'periodRatioP05':percentile(ratios,0.05),
+              'periodRatioP50':percentile(ratios,0.50),
+              'periodRatioP95':percentile(ratios,0.95),
+              'periodRatioP99':percentile(ratios,0.99),
+              'shortIntervalsUnder075Period':sum(r<0.75 for r in ratios),
+              'shortIntervalsUnder085Period':sum(r<0.85 for r in ratios),
+              'longIntervalsOver125Period':sum(r>1.25 for r in ratios),
+              'longIntervalsOver135Period':sum(r>1.35 for r in ratios),
+              'anomalyCountOutside075To135':len(anomalies),
+              'first40Anomalies':anomalies[:40],
+              'activeAudioStart':active_start,
+              'activeAudioEnd':active_end,
+              'activeAudioDuration':active_end-active_start,
+              'leadingInactiveAudioSeconds':active_start,
+              'trailingInactiveAudioSeconds':duration-active_end,
+              'firstBeatMinusActiveStartSeconds':beat_times[0]-active_start,
+              'activeEndMinusLastBeatSeconds':active_end-beat_times[-1],
+              'approxExpectedBeatCountAcrossActiveAudio':expected_beats_active,
+              'trackedBeatCount':len(beat_times),
+              'trackedMinusApproxExpected':len(beat_times)-expected_beats_active,
+              'rmsNoiseFloor':noise,
+              'rmsRobustPeak':robust_peak,
+              'rmsActiveThreshold':active_threshold,
             },
             'consensus':consensus.diagnostics(),
             'invariants':{
               'referenceFree':True,
               'runtimeLabelsRequired':False,
               'phaseChanged':False,
+              'beatGridChanged':False,
               'liveRhythmOutputChanged':False,
               'productionModified':False,
               'protectedPipelineUnchanged':subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()=='7f72f8ed9b14af8bc93e95544195204d99c6bec1'
             }
           }
           Path('debug/v143-contextual-prune/bar-phase-consensus-approved-audio.json').write_text(json.dumps(out,indent=2)+'\n')
-          print(json.dumps(out['timing'],sort_keys=True))
+          print(json.dumps(out['beatGridHealth'],sort_keys=True))
           print(json.dumps(out['consensus'],sort_keys=True))
           PY
       - name: Commit diagnostic race-safe
