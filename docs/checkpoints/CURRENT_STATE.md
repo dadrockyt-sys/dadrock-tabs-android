@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-23 22:46 America/Thunder_Bay
+Updated: 2026-08-23 22:49 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -102,10 +102,11 @@ User billing screenshot at this checkpoint: L4 `$11.92`, memory `$1.40`, CPU `$1
 
 Cost-control commits:
 - `4e366290c52f7b54b2d5b1ac087f6050f97ecbf2`: expensive separator 3-pass proof changed to manual `workflow_dispatch` only.
-- `03b4d41b52d8dd49cffee954ed427c68fd88dff3`: optional `V143_DEMUCS_SHIFT_TRACE_PATH` records only randint bounds/value when explicitly enabled; off by default and no musical settings changed.
-- `7ed9cba0c8f4edfa06ae5e33f99822bb39e7d23b`: added `analyzer/v143_demucs_cpu_host_probe_modal.py`, direct Demucs only, **no GPU request**, 1 CPU, records WAV hash + decoded PCM hash + exact shift trace + host CPU/PyTorch fingerprint.
-- `d4bf65c1d93e558c2be8b088b947486da8c9a58a`: created a one-time workflow to launch exactly one cheap CPU-only diagnostic pass.
-- `9296e3580796423bbf23c19dc90ad589cde19b16`: immediately converted that CPU probe workflow to manual-only so future edits cannot create compute automatically. The one already-triggered pass, if still running from `d4bf65c...`, may finish and commit its diagnostic; no additional run is to be started automatically.
+- `03b4d41b52d8dd49cffee954ed427c68fd88dff3`: optional `V143_DEMUCS_SHIFT_TRACE_PATH`, off by default, records only randint bounds/value in research diagnostics.
+- `7ed9cba0c8f4edfa06ae5e33f99822bb39e7d23b`: added `analyzer/v143_demucs_cpu_host_probe_modal.py`, direct Demucs only, **no GPU request**, 1 CPU, WAV hash + decoded PCM hash + exact shift trace + host/PyTorch fingerprint.
+- `d4bf65c1d93e558c2be8b088b947486da8c9a58a`: one-time launch of exactly one cheap CPU-only diagnostic pass.
+- `9296e3580796423bbf23c19dc90ad589cde19b16`: CPU probe workflow changed immediately to manual-only; future edits cannot create compute automatically.
+- `ff339c08df4b8bfb4774af1102ddcbb85f33ffca`: GitHub Actions committed the one CPU-only probe result.
 
 Low-cost rules:
 1. no repeated 3-pass full-song Modal during bug iteration;
@@ -116,21 +117,40 @@ Low-cost rules:
 6. do not run repaired-timing/precision full path until separator exactness;
 7. scorer stays closed until deterministic fresh freeze.
 
-## Current source-level diagnosis
-Upstream `audio-separator==0.44.5` was inspected without Modal:
-- `demucs/apply.py`: shift trick uses `random.randint`, but private replacement failed to stabilize output.
-- `architectures/demucs_separator.py`: `.eval()` then namespaced `apply_model`, with same shifts/split/overlap/device settings.
-- `demucs/transformer.py`: sinusoidal positional code can call `random.randrange(self.sin_random_shift + 1)`, but htdemucs_6s uses `t_sin_random_shift=0`; dropout is disabled by `.eval()`.
-- no obvious remaining inference RNG explains the exact two-state result.
+## CPU-only direct Demucs probe — RESULT
+Artifact committed as `debug/v143-contextual-prune/demucs-cpu-host-probe.json` at bot commit `ff339c08df4b8bfb4774af1102ddcbb85f33ffca`.
 
-Current stronger hypothesis: **CPU host/kernel numerical branch variation** across Modal hosts. PyTorch documentation states bitwise results are not guaranteed across different platforms/hardware even with deterministic algorithms; the repeated exact two-state hashes are consistent with two CPU execution/kernel branches. Intel oneMKL documents `MKL_CBWR` code-branch controls for conditional numerical reproducibility. Do not apply an ISA pin blindly; first correlate direct hash + exact shift trace + host fingerprint with the cheap CPU-only probe.
+Result:
+- source SHA exact `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
+- normalized SHA exact `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`
+- direct WAV SHA `7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c` — one of the two previously observed CPU states
+- decoded int16 PCM SHA `820cec705b357eaee03369cb183840216214b98c76f62885184a6259c023efd0`
+- bytes `37298220`, sampleRate44100, frames9324544, channels2
+- exact private shift trace: **`0,22050,6026`**
+- expected seed143 first shift = `6026`; exact match
+- no GPU requested; Torch reports CUDA unavailable in this CPU worker
+- host exposed by gVisor: `AuthenticAMD`, CPU family175/model1, AVX2 available, no AVX512 flags exposed
+- PyTorch `2.13.0+cu130`, built with oneMKL 2024.2 and MKL-DNN/oneDNN 3.12.0, `USE_MKL=ON`, `USE_MKLDNN=ON`, CPU capability usage AVX2
+- protected/Production/reference-free invariants passed.
+
+This **rules out “private shift hook was not actually exercised”**: the Demucs shift hook executed and selected the exact deterministic offset 6026 while the output still landed in the known `7999b372...` state. The remaining two-state drift is therefore after/further inside the CPU inference/numerical path, not the selected shift integer.
+
+## Current source-level diagnosis
+Upstream `audio-separator==0.44.5` inspected without Modal:
+- `demucs/apply.py`: shift trick uses `random.randint`; now directly proven fixed at offset6026.
+- `architectures/demucs_separator.py`: `.eval()` then namespaced `apply_model`, same shifts/split/overlap/device settings.
+- `demucs/transformer.py`: sinusoidal positional path has `random.randrange`, but htdemucs_6s has `t_sin_random_shift=0`; dropout disabled by `.eval()`.
+- no obvious remaining inference RNG explains exact two-state behavior.
+
+Strong current hypothesis: **CPU numerical/kernel dispatch variation across host classes**. PyTorch documents that deterministic algorithms guarantee same results on the same software/hardware but bitwise identity is not guaranteed across different platforms/hardware. Current worker confirms a CPU stack containing both oneMKL and oneDNN. oneDNN documents runtime ISA dispatch controls (`ONEDNN_MAX_CPU_ISA`); Intel oneMKL documents `MKL_CBWR=COMPATIBLE` specifically for reproducibility across Intel and Intel-compatible CPUs, forcing a common code path. This is now the next general/reference-free execution-control avenue; do not change musical settings.
 
 ## Current work NOW
-1. Wait only for the already-triggered CPU-only host probe result from `d4bf65c...`; do not launch another run automatically.
-2. Verify whether `demucsShiftTrace` is actually `0,22050,6026` (seed143 first private randint) and whether decoded PCM hash follows the same two-state behavior as WAV hash.
-3. Record CPU model/flags/PyTorch build from that result. If one hash state correlates with a host branch, research a safe general CPU execution pin (e.g. CNR/ISA control) before any next one-pass CPU test.
-4. Keep `.github/workflows/v143-separator-private-shift-cold-proof.yml` and `.github/workflows/v143-repaired-timing-precision-cold-exact.yml` dormant/manual.
-5. Do not open scorer reference until separator + full combined path are exact and a brand-new approved-audio freeze/PDF identity is locked.
+1. No more Modal runs in this checkpoint window; the promised single bug-diagnostic run is complete.
+2. Research/prepare a general CPU-dispatch pin only in the research wrapper (not Production): likely evaluate oneDNN ISA cap plus oneMKL cross-vendor CNR control, preserving shifts1/overlap.10/segment6/model/PCM input unchanged.
+3. Before any next CPU inference, do static/syntax/anti-leakage/protected checks and record the exact proposed dispatch controls.
+4. Any next runtime test is one CPU-only direct-Demucs pass, not L4 and not the full separator graph.
+5. Keep `.github/workflows/v143-separator-private-shift-cold-proof.yml` and `.github/workflows/v143-repaired-timing-precision-cold-exact.yml` dormant/manual.
+6. Do not open scorer reference until separator + full combined path are exact and a brand-new approved-audio freeze/PDF identity is locked.
 
 ## After separator + combined determinism are green
 1. Accept combined correction only after exact cold-session reproducibility and all safety/coverage invariants pass.
