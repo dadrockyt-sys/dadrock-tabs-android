@@ -58,6 +58,12 @@ def seed_separator_runtime(seed: int = SEED) -> None:
         if hasattr(torch, "set_float32_matmul_precision"):
             torch.set_float32_matmul_precision("highest")
 
+        # Research-only execution control. When requested by the Demucs child,
+        # bypass oneDNN so host-specific oneDNN kernels cannot affect inference.
+        # This changes no model, shift, overlap, segment, audio, or musical rule.
+        if os.environ.get("V143_DEMUCS_DISABLE_MKLDNN") == "1":
+            torch.backends.mkldnn.enabled = False
+
         if hasattr(torch.backends, "cudnn"):
             torch.backends.cudnn.benchmark = False
             torch.backends.cudnn.deterministic = True
@@ -111,6 +117,7 @@ def write_demucs_runtime_trace() -> None:
                 "MKL_DYNAMIC",
                 "OMP_NUM_THREADS",
                 "OMP_DYNAMIC",
+                "V143_DEMUCS_DISABLE_MKLDNN",
             )
         },
     }
