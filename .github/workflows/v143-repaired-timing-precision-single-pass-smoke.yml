@@ -1,0 +1,61 @@
+name: V143 Repaired Timing Precision Single Pass Smoke
+
+# Low-cost bridge gate. Manual only; exactly one full combined pass.
+# Do not run until the separator single-pass smoke is green.
+on:
+  workflow_dispatch:
+
+permissions: {contents: write}
+
+jobs:
+  smoke:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ github.sha }}'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Free safety gate
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet numpy scipy
+          python -m py_compile analyzer/v143_repaired_timing_precision_shadow_modal.py analyzer/v143_seeded_separator.py analyzer/v143_seeded_audio_separator_cli.py
+          PYTHONPATH=analyzer python analyzer/check_v143_reference_free_beat_grid_repair.py
+          PYTHONPATH=analyzer python analyzer/check_v143_contextual_prune_precision_shadow.py
+          PYTHONPATH=analyzer python analyzer/check_v143_demucs_cpu_dispatch_controls.py
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          test -f debug/v143-contextual-prune/separator-single-pass-smoke.json
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' analyzer/v143_repaired_timing_precision_shadow_modal.py analyzer/v143_reference_free_beat_grid_repair.py analyzer/v143_contextual_prune_precision_shadow.py analyzer/v143_seeded_separator.py analyzer/v143_seeded_audio_separator_cli.py; then exit 31; fi
+      - name: One combined Modal pass
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet modal
+          python -m modal run analyzer/v143_repaired_timing_precision_shadow_modal.py::approved_audio --audio-path public/gomywayfullaitest.m4a --output-path debug/v143-contextual-prune/repaired-timing-precision-single-pass-smoke.json
+      - name: Validate and commit
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('debug/v143-contextual-prune/repaired-timing-precision-single-pass-smoke.json')
+          d=json.loads(p.read_text())
+          inv=d.get('invariants') or {}; hashes=d.get('stageHashes') or {}
+          required_true=('sourceIsApprovedFixture','referenceFree','measureRangeDerivedFromAudio','repairedIntervalOutliersZero','carrierUsesRepairedTiming','precisionAttacksSubsetOfCorrectedAttacks','precisionPitchesSubsetOfObservedCarrierPitches','explicitPrimaryComplete','allTargetMeasuresPopulated')
+          required_false=('professionalReferenceUsed','referenceRuntimeInputUsed','runtimeLabelsRequired','tempoChangedByRepair','barPhaseChangedByRepair','candidateAddsUnobservedAttack','candidateRelocatesEvents','candidateAddsUnobservedPitch','liveRhythmOutputChanged','leadChanged','bassChanged','productionModified')
+          failures=[k for k in required_true if inv.get(k) is not True] + [k for k in required_false if inv.get(k) is not False]
+          required_hashes=('sourceBytesSha256','normalizedWavSha256','originalBeatTimesSha256','repairedBeatTimesSha256','directGuitarStemSha256','cascadeGuitarStemSha256','carrierGridSha256','carrierRowsSha256','baseCandidateEventsSha256','correctionEventsSha256','correctionPitchSetsSha256','precisionEventsSha256','precisionPitchSetsSha256','precisionPrimaryMidisSha256')
+          missing=[k for k in required_hashes if not hashes.get(k)]
+          if failures or missing: raise SystemExit(f'invariant failures={failures}; missing hashes={missing}')
+          print(json.dumps({'stageHashes':{k:hashes[k] for k in required_hashes},'precision':d.get('precision'),'coverage':d.get('coverage')},indent=2))
+          PY
+          git add debug/v143-contextual-prune/repaired-timing-precision-single-pass-smoke.json
+          git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record combined single-pass smoke'
+          for n in 1 2 3 4; do git fetch origin v143-contextual-prune-lobo; git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0; git rebase --abort 2>/dev/null || true; sleep 2; done
+          exit 1
