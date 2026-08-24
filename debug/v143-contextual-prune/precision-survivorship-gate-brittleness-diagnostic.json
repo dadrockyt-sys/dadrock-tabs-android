@@ -1,0 +1,110 @@
+{
+  "classification": "hard-intersection-survivorship-brittleness-clue",
+  "historicalGate": {
+    "denominator": "strongest-raw-candidate independently for score, attack, and body",
+    "harmonicIntervals": [
+      12,
+      19,
+      24,
+      28,
+      31,
+      36
+    ],
+    "harmonicSecondaryRawRatio": 0.92,
+    "intersection": "score AND attack AND body",
+    "secondaryRawRatio": 0.8
+  },
+  "interpretation": {
+    "brittleness": "Among the 118 nontrivial retained secondaries, attack is the limiting dimension 57 times, body 47 times, and total score only 14 times. 61/118 survive within 0.05 of the hard floor and 94/118 within 0.10. The surviving boundary is therefore controlled primarily by the independent attack/body conjunction rather than total physical score.",
+    "eventMutationJustified": false,
+    "exactRecoveryCountsClaimed": false,
+    "midi64": "Only 15/202 primary-MIDI64 attacks retain any nontrivial secondary, versus 93/523 non64 attacks. This is a retained-survivorship disparity only; the unavailable suppressed rows prevent an exact claim about how many MIDI64 alternatives a relaxed rule would recover.",
+    "nextSafeTest": "Evaluate a source-only alternative such as strong total score plus either strong attack or strong body when full pre-precision rows become available; do not tune thresholds against professional mismatches.",
+    "strongestRawSecondaryAccounting": "All 144 promoted-fundamental attacks necessarily retain the strongest raw candidate; those 144 rows account for 144 of the 262 retained secondaries. Only 118 retained secondaries are nontrivial gate survivors.",
+    "suppressedRowsUnavailable": true
+  },
+  "midi64Survivorship": {
+    "non64AttackCount": 523,
+    "non64AttacksWithNontrivialSecondary": 93,
+    "non64NontrivialSecondaryAttackRate": 0.17782026768642448,
+    "non64NontrivialSecondaryMargins": {
+      "count": 102,
+      "lt0p01": 13,
+      "lt0p02": 21,
+      "lt0p05": 52,
+      "lt0p10": 82,
+      "median": 0.04797153045195812
+    },
+    "non64PromotionCount": 136,
+    "non64PromotionRate": 0.26003824091778205,
+    "non64SingleHypothesisCount": 308,
+    "non64SingleHypothesisRate": 0.5889101338432122,
+    "primaryMidi64AttackCount": 202,
+    "primaryMidi64AttacksWithNontrivialSecondary": 15,
+    "primaryMidi64NontrivialSecondaryAttackRate": 0.07425742574257425,
+    "primaryMidi64NontrivialSecondaryMargins": {
+      "count": 16,
+      "lt0p01": 1,
+      "lt0p02": 3,
+      "lt0p05": 9,
+      "lt0p10": 12,
+      "median": 0.03300759970372641
+    },
+    "primaryMidi64PromotionCount": 8,
+    "primaryMidi64PromotionRate": 0.039603960396039604,
+    "primaryMidi64SingleHypothesisCount": 179,
+    "primaryMidi64SingleHypothesisRate": 0.8861386138613861
+  },
+  "nontrivialSecondarySurvivorship": {
+    "count": 118,
+    "definition": "retained secondary excluding the strongest-raw candidate that is necessarily retained when a lower fundamental is promoted",
+    "harmonicUpperCount": 10,
+    "limitingDimensionCounts": {
+      "attack": 57,
+      "body": 47,
+      "score": 14
+    },
+    "minimumGateMarginSummary": {
+      "count": 118,
+      "lt0p01": 14,
+      "lt0p02": 24,
+      "lt0p05": 61,
+      "lt0p10": 94,
+      "maximum": 0.18923103952607345,
+      "median": 0.046961721991778504,
+      "minimum": 0.0009346497274316246
+    },
+    "nonHarmonicCount": 108,
+    "within0p05Rate": 0.5169491525423728,
+    "within0p10Rate": 0.7966101694915254
+  },
+  "productionModified": false,
+  "reconstruction": {
+    "attackCount": 725,
+    "fundamentalPromotionCount": 144,
+    "gateValidationFailureCount": 0,
+    "nontrivialSecondaryCount": 118,
+    "retainedPitchHypothesisCount": 987,
+    "retainedSecondaryHypothesisCount": 262,
+    "strongestRawSecondaryCount": 144,
+    "supportCountDistribution": {
+      "1": 487,
+      "2": 217,
+      "3": 20,
+      "6": 1
+    }
+  },
+  "referenceFree": true,
+  "runtimeLabelsRequired": false,
+  "schemaVersion": 1,
+  "source": {
+    "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "candidateProduct": "debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json",
+    "candidateRunId": 32699399835,
+    "eventsSha256": "641a3928d7389e3c3e1593fc3b8432206434655bd798df79aeaa4b09666cf012",
+    "newInferenceUsed": false,
+    "professionalReferenceUsed": false,
+    "referenceRuntimeInputUsed": false,
+    "triggerSha": "1861f7a2a4aec814dd8b8504e5cca7c1f8ce6ae1"
+  }
+}
