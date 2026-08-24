@@ -1,0 +1,136 @@
+name: V143 Repaired Timing Precision Candidate Product
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Safety and anti-leakage gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile analyzer/v143_repaired_timing_precision_candidate_product_modal.py
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
+            analyzer/v143_contextual_prune_precision_candidate_events.py \
+            analyzer/v143_seeded_separator.py \
+            analyzer/v143_seeded_audio_separator_cli.py; then
+            echo 'Forbidden scorer/source token in candidate product path' >&2
+            exit 1
+          fi
+      - name: Run approved-audio candidate product
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet modal
+          python -m modal run analyzer/v143_repaired_timing_precision_candidate_product_modal.py::approved_audio \
+            --audio-path public/gomywayfullaitest.m4a \
+            --output-path debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json
+      - name: Validate candidate invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import subprocess
+          from pathlib import Path
+
+          path = Path('debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json')
+          data = json.loads(path.read_text())
+          candidate = data.get('candidate') or {}
+          assembly = data.get('assembly') or {}
+          timing = data.get('timing') or {}
+          live = data.get('liveV143') or {}
+          failures = []
+          required_true = {
+              'candidate.approvedFixture': candidate.get('approvedFixture'),
+              'candidate.measureRangeDerivedFromAudio': candidate.get('measureRangeDerivedFromAudio'),
+              'candidate.repairedIntervalOutliersZero': candidate.get('repairedIntervalOutliersZero'),
+              'assembly.referenceFree': assembly.get('referenceFree'),
+              'live.referenceFree': live.get('referenceFree'),
+              'timing.measureRangeDerivedFromAudio': timing.get('measureRangeDerivedFromAudio'),
+          }
+          for key, value in required_true.items():
+              if value is not True:
+                  failures.append(f'{key}!=true')
+          required_false = {
+              'candidate.tempoChangedByRepair': candidate.get('tempoChangedByRepair'),
+              'candidate.barPhaseChangedByRepair': candidate.get('barPhaseChangedByRepair'),
+              'candidate.protectedLivePipelineModified': candidate.get('protectedLivePipelineModified'),
+              'candidate.liveEndpointDeployedOrModified': candidate.get('liveEndpointDeployedOrModified'),
+              'candidate.productionModified': candidate.get('productionModified'),
+              'candidate.professionalReferenceUsed': candidate.get('professionalReferenceUsed'),
+              'candidate.runtimeLabelsRequired': candidate.get('runtimeLabelsRequired'),
+              'candidate.addsUnobservedAttack': candidate.get('addsUnobservedAttack'),
+              'candidate.addsUnobservedPitch': candidate.get('addsUnobservedPitch'),
+              'candidate.relocatesAttack': candidate.get('relocatesAttack'),
+              'assembly.candidateRelocatesEvents': assembly.get('candidateRelocatesEvents'),
+              'assembly.professionalReferenceUsed': assembly.get('professionalReferenceUsed'),
+              'assembly.runtimeLabelsRequired': assembly.get('runtimeLabelsRequired'),
+              'live.professionalReferenceUsed': live.get('professionalReferenceUsed'),
+              'live.referenceRuntimeInputUsed': live.get('referenceRuntimeInputUsed'),
+              'live.runtimeLabelsRequired': live.get('runtimeLabelsRequired'),
+          }
+          for key, value in required_false.items():
+              if value is not False:
+                  failures.append(f'{key}!=false')
+          if candidate.get('sourceSha256') != '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f':
+              failures.append('candidate.sourceSha256')
+          if int(data.get('audioDerivedMeasureCount') or 0) <= 0:
+              failures.append('audioDerivedMeasureCount')
+          if int(data.get('selectedCount') or 0) <= 0:
+              failures.append('selectedCount')
+          if int(data.get('noteCount') or 0) <= 0:
+              failures.append('noteCount')
+          protected = subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'], text=True).strip()
+          if protected != '7f72f8ed9b14af8bc93e95544195204d99c6bec1':
+              failures.append('protectedPipelineBlob')
+          canonical = json.dumps(data.get('events') or [], sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False).encode('utf-8')
+          data['preFreezeTrace'] = {
+              'runId': int('${{ github.run_id }}'),
+              'triggerSha': '${{ github.sha }}',
+              'eventsSha256': hashlib.sha256(canonical).hexdigest(),
+              'eventCount': len(data.get('events') or []),
+              'protectedPipelineBlob': protected,
+              'protectedPipelineUnchanged': protected == '7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+              'productionModified': False,
+              'validationFailures': failures,
+              'passed': not failures,
+          }
+          path.write_text(json.dumps(data, indent=2, allow_nan=False) + '\n')
+          if failures:
+              raise SystemExit('candidate product invariant failure: ' + str(failures))
+          PY
+      - name: Commit pre-freeze candidate diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record repaired-timing precision candidate product'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
