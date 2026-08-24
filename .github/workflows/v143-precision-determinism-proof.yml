@@ -1,0 +1,90 @@
+name: V143 Precision Determinism Proof
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - .github/workflows/v143-precision-determinism-proof.yml
+      - analyzer/v143_contextual_prune_precision_shadow_modal.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-precision-determinism-proof
+  cancel-in-progress: true
+
+jobs:
+  prove:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Anti-leakage and protected-runtime gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_contextual_prune_precision_shadow_modal.py; then
+            echo 'Forbidden scorer/source token in precision determinism diagnostic' >&2
+            exit 1
+          fi
+      - name: Run two complete approved-audio passes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet modal
+          python -m modal run analyzer/v143_contextual_prune_precision_shadow_modal.py::determinism_proof \
+            --audio-path public/gomywayfullaitest.m4a \
+            --output-path debug/v143-contextual-prune/precision-determinism-proof.json
+      - name: Validate safety and record exact stage comparison
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          p=Path('debug/v143-contextual-prune/precision-determinism-proof.json')
+          d=json.loads(p.read_text())
+          inv=d.get('invariants') or {}
+          assert inv.get('referenceFree') is True
+          assert inv.get('runtimeLabelsRequired') is False
+          assert inv.get('professionalReferenceUsed') is False
+          assert inv.get('productionModified') is False
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          assert protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1', protected
+          d['actionTrace']={
+            'runId':int('${{ github.run_id }}'),
+            'runAttempt':int('${{ github.run_attempt }}'),
+            'triggerSha':'${{ github.sha }}',
+            'modalBlob':subprocess.check_output(['git','hash-object','analyzer/v143_contextual_prune_precision_shadow_modal.py'],text=True).strip(),
+            'protectedPipelineBlob':protected,
+            'protectedPipelineUnchanged':True,
+            'productionModified':False,
+          }
+          p.write_text(json.dumps(d,indent=2)+'\n')
+          print(json.dumps({'firstMismatchStage':d.get('firstMismatchStage'),'allStageHashesExact':d.get('allStageHashesExact')},sort_keys=True))
+          PY
+          git add debug/v143-contextual-prune/precision-determinism-proof.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record precision determinism proof'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            sleep 2
+          done
+          exit 1
