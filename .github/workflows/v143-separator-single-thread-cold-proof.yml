@@ -1,0 +1,97 @@
+name: V143 Separator Single Thread Cold Proof
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v143-separator-single-thread-cold-proof.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  pass:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        n: [1, 2, 3]
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ github.sha }}'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Safety gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          grep -q 'OMP_NUM_THREADS.*1' analyzer/v143_seeded_separator.py
+          grep -q 'torch.set_num_threads(1)' analyzer/v143_seeded_audio_separator_cli.py
+          if grep -E -n 'Professionalexample|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross|professional-rhythm' analyzer/v143_seeded_separator.py analyzer/v143_seeded_audio_separator_cli.py analyzer/v143_separator_cold_determinism_probe_modal.py; then exit 31; fi
+      - name: Independent separator pass
+        run: |
+          python -m pip install --disable-pip-version-check --quiet modal
+          mkdir -p .cold
+          python -m modal run analyzer/v143_separator_cold_determinism_probe_modal.py::approved_audio --audio-path public/gomywayfullaitest.m4a --output-path .cold/pass-${{ matrix.n }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: single-thread-pass-${{ matrix.n }}
+          path: .cold/pass-${{ matrix.n }}.json
+          retention-days: 7
+
+  compare:
+    if: always() && github.actor != 'github-actions[bot]'
+    needs: pass
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ github.sha }}'}
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: single-thread-pass-*
+          path: .cold
+          merge-multiple: true
+      - name: Compare exact hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          files=sorted(Path('.cold').glob('pass-*.json'))
+          if len(files)!=3: raise SystemExit(f'expected 3 passes, got {len(files)}')
+          p=[json.loads(x.read_text()) for x in files]
+          keys=('sourceSha256','normalizedWavSha256','directGuitarSha256','roformerInstrumentalSha256','cascadeGuitarSha256')
+          cmp={k:{'values':[x[k] for x in p],'exact':len({x[k] for x in p})==1} for k in keys}
+          first=next((k for k in keys if not cmp[k]['exact']),None)
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          passed=first is None and protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          d={'schemaVersion':1,'gate':'v143-separator-single-thread-cold-proof','runId':int('${{ github.run_id }}'),'triggerSha':'${{ github.sha }}','independentPassCount':3,'comparisons':cmp,'firstMismatchStage':first,'allSeparatorHashesExact':first is None,'protectedPipelineBlob':protected,'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1','productionModified':False,'passed':passed}
+          Path('debug/v143-contextual-prune/separator-single-thread-cold-proof.json').write_text(json.dumps(d,indent=2)+'\n')
+          print(json.dumps(d,indent=2))
+          PY
+      - name: Commit diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/separator-single-thread-cold-proof.json
+          git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record single-thread Demucs cold proof'
+          for n in 1 2 3 4; do git fetch origin v143-contextual-prune-lobo; git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0; git rebase --abort 2>/dev/null || true; sleep 2; done
+          exit 1
+      - name: Enforce proof
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('debug/v143-contextual-prune/separator-single-thread-cold-proof.json').read_text())
+          if d.get('passed') is not True: raise SystemExit('cold proof failed at '+str(d.get('firstMismatchStage')))
+          PY
