@@ -1,0 +1,98 @@
+name: V143 Repaired Timing Precision Shadow
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - analyzer/v143_repaired_timing_precision_shadow_modal.py
+      - .github/workflows/v143-repaired-timing-precision-shadow.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-repaired-timing-precision-shadow
+  cancel-in-progress: true
+
+jobs:
+  shadow:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: CPU invariants and anti-leakage gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet numpy scipy
+          python -m py_compile analyzer/v143_repaired_timing_precision_shadow_modal.py
+          PYTHONPATH=analyzer python analyzer/check_v143_reference_free_beat_grid_repair.py
+          PYTHONPATH=analyzer python analyzer/check_v143_contextual_prune_precision_shadow.py
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_repaired_timing_precision_shadow_modal.py \
+            analyzer/v143_reference_free_beat_grid_repair.py \
+            analyzer/v143_contextual_prune_precision_shadow.py; then
+            echo 'Forbidden scorer/source token in repaired-timing precision path' >&2
+            exit 1
+          fi
+      - name: Run approved-audio combined shadow
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet modal
+          python -m modal run analyzer/v143_repaired_timing_precision_shadow_modal.py::approved_audio \
+            --audio-path public/gomywayfullaitest.m4a \
+            --output-path debug/v143-contextual-prune/repaired-timing-precision-shadow.json
+      - name: Validate and commit diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          p=Path('debug/v143-contextual-prune/repaired-timing-precision-shadow.json')
+          d=json.loads(p.read_text())
+          i=d.get('invariants') or {}
+          required=(
+            'sourceIsApprovedFixture','referenceFree','repairedIntervalOutliersZero','carrierUsesRepairedTiming',
+            'precisionAttacksSubsetOfCorrectedAttacks','precisionPitchesSubsetOfObservedCarrierPitches',
+            'explicitPrimaryComplete','allTargetMeasuresPopulated'
+          )
+          failed=[key for key in required if i.get(key) is not True]
+          forbidden_true=('professionalReferenceUsed','referenceRuntimeInputUsed','runtimeLabelsRequired','tempoChangedByRepair','barPhaseChangedByRepair','candidateAddsUnobservedAttack','candidateRelocatesEvents','candidateAddsUnobservedPitch','liveRhythmOutputChanged','leadChanged','bassChanged','productionModified')
+          failed += [key for key in forbidden_true if i.get(key) is not False]
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          if protected!='7f72f8ed9b14af8bc93e95544195204d99c6bec1': failed.append('protectedPipelineBlob')
+          if failed: raise SystemExit(f'repaired-timing precision invariant failure: {failed}')
+          d['actionTrace']={
+            'runId':int('${{ github.run_id }}'),'runAttempt':int('${{ github.run_attempt }}'),'triggerSha':'${{ github.sha }}',
+            'combinedModuleBlob':subprocess.check_output(['git','hash-object','analyzer/v143_repaired_timing_precision_shadow_modal.py'],text=True).strip(),
+            'beatRepairBlob':subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_beat_grid_repair.py'],text=True).strip(),
+            'precisionBlob':subprocess.check_output(['git','hash-object','analyzer/v143_contextual_prune_precision_shadow.py'],text=True).strip(),
+            'protectedPipelineBlob':protected,'protectedPipelineUnchanged':True,'productionModified':False,
+          }
+          p.write_text(json.dumps(d,indent=2)+'\n')
+          PY
+          git add debug/v143-contextual-prune/repaired-timing-precision-shadow.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record repaired-timing precision shadow'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            sleep 2
+          done
+          exit 1
