@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 15:02 America/Montreal
+Updated: 2026-08-24 15:18 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -74,14 +74,14 @@ Report: `debug/v143-contextual-prune/frozen-evidence-grid-timestamp-diagnostic.j
 
 ## Broad pitch/register diagnosis
 Report: `debug/v143-contextual-prune/frozen-evidence-pitch-register-diagnostic.json`.
-- **487/725 attacks (67.17%) have only one pitch hypothesis.** Downstream re-ranking cannot repair most broad pitch errors.
-- Best hypothesis differs from primary on only 144/725 attacks; 96 of those are the already-known upper-harmonic family defect.
-- Any lower hypothesis than primary appears on only 19 attacks; exact lower octave on only 5; exact upper octave on 78.
+- **487/725 attacks (67.17%) have only one retained pitch hypothesis after precision pruning.** Downstream re-ranking of the retained set cannot repair most broad pitch errors.
+- Best retained hypothesis differs from primary on only 144/725 attacks; 96 of those are the already-known upper-harmonic family defect.
+- Any retained lower hypothesis than primary appears on only 19 attacks; exact lower octave on only 5; exact upper octave on 78.
 - Primary MIDI median `64`; MIDI 64 occurs `202` times; pitch class E occurs `337` times.
 - Primary strings: string0=325, string1=127, string2=81, string3=92, string4=65, string5=35; top two strings total 452/725.
 - Adjacent primary jumps >=12 semitones: 133; >=19: 71. 117 could become <=7 semitones by octave-equivalent folding, but neighbor evidence does not support a safe blanket octave-fold rule.
 - Selected voicings: 500 single-note attacks, 203 double, 17 triple, 4 quad, 1 quintuple; 82 exact-octave pairs; 98 harmonic-family multi-note attacks; 55 disconnected string sets; 95 fret spans >=6.
-- Conclusion: broad pitch failure is largely upstream candidate-generation/proposal quality, not merely final hypothesis ranking.
+- **The older conclusion that the 487 single-hypothesis attacks prove upstream proposal starvation is superseded by the source-ancestry finding below.**
 
 ## Open-string / E64 hypothesis-collapse diagnostic — 2026-08-24 14:42 America/Montreal
 Files:
@@ -92,63 +92,58 @@ Files:
 Reference-free result recorded at 14:42:
 - Diagnostic classification: `open-high-e-persistence-bias-clue`.
 - Open high E / MIDI 64 as canonical open string occurs on **186/725 attacks (25.66%)**.
-- **179/186 E64 attacks (96.24%) are single-hypothesis attacks** — no alternative pitch candidate exists to re-rank.
-- E64 alone accounts for **179/487 = 36.76% of every single-hypothesis attack**.
-- The 14:42 checkpoint text also recorded `423/725` any-open-string primaries and `303` fretted primaries. **Those two values are now known to be inconsistent with the committed report/source and must not be used.**
-- No event mutation, no scorer/reference, no Modal/L4, protected runtime unchanged, Production untouched.
+- **179/186 E64 attacks (96.24%) are single-hypothesis after precision pruning**.
+- E64 alone accounts for **179/487 = 36.76% of every retained single-hypothesis attack**.
+- The 14:42 checkpoint text also recorded `423/725` any-open-string primaries and `303` fretted primaries. **Those two values are known wrong and must not be used.**
 
 ## Open-string definition audit — 2026-08-24 14:57 America/Montreal
-- Re-read the committed diagnostic source and its committed JSON report at branch head `98e95060a0cef65a2d253f48e0580c5cb7da4941`.
-- Source definition `primaryHasOpenStringMapping` is exact: the selected note whose MIDI equals the primary must have a validated standard-tuning mapping with `fret == 0`.
-- Under that exact definition, the committed report says:
-  - `anyOpenStringPrimary.count = 264`
-  - `frettedPrimary.count = 461`
-  - partition check: `264 + 461 = 725`
-- Therefore the earlier `423 open / 303 fretted` statement is stale or misclassified and is rejected. It does not reconcile to 725 and is not what the committed diagnostic computed.
-- This materially weakens any generic “most attacks are open strings” interpretation. The useful clue is narrower: high-E/MIDI64 candidate diversity must be audited distinctly from generic open-string mapping.
-- Also keep distinct:
-  - primary MIDI value equals `64`
-  - primary is physically mapped to string 0 / fret 0 (`openHighE64`)
-  - any note in the selected voicing is open
-  - primary MIDI equals one of standard-tuning open pitches
-  These are not interchangeable classes.
-- Current E64 hypothesis-collapse conclusion is therefore **under audit, not a correction**.
-- No events changed; professional reference/scorer remains closed; Modal/L4 remains closed; protected runtime and Production untouched.
+- Exact primary-mapped-open count = `264`; primary-mapped-fretted = `461`; partition = 725.
+- Distinguish primary MIDI64, physically mapped open-high-E64, any selected open note, and primary MIDI equal to a standard-tuning open pitch.
 
-## MIDI64 candidate-diversity audit — 2026-08-24 15:02 America/Montreal
+## MIDI64 retained-diversity audit — 2026-08-24 15:02 America/Montreal
 Files:
 - `analyzer/v143_frozen_evidence_open_string_candidate_audit.py`
 - `.github/workflows/v143-frozen-evidence-open-string-candidate-audit.yml`
 - `debug/v143-contextual-prune/frozen-evidence-open-string-candidate-audit.json`
 
-Commits:
-- `a9e0a7fe0ef80231347860107aeb3657d39e26b5` — add CPU-only audit script.
-- `11127882610189a0386b7d29a2299a0a02bb53b5` — add one-shot cheap workflow.
-- `d41a9b6b1b5d803c717571cef2b796f91dcf336b` — workflow persisted the report successfully.
+Findings on the **post-precision retained pitch sets**:
+- primary MIDI64 = `202`; non64 = `523`.
+- open-high-E mapped string0/fret0 = `186`.
+- primary mapped open = `264`; primary mapped fretted = `461`.
+- any selected voicing note open = `277`; none open = `448`.
+- MIDI64 retained single-hypothesis rate `179/202 = 88.61%`; non64 `308/523 = 58.89%`; excess `+29.72` points.
+- Generic open-note presence does not explain it.
+- On the 23 multi-hypothesis MIDI64 attacks, persistence does not explain the primary win.
+- This remains a useful symptom, but **it must not be interpreted as evidence that the upstream carrier lacked alternatives**.
 
-Reference-free findings:
-- All definition partitions reconcile exactly to 725:
-  - primary MIDI64 = `202`; non64 = `523`.
-  - open-high-E mapped string0/fret0 = `186`.
-  - primary mapped open = `264`; primary mapped fretted = `461`.
-  - primary MIDI equals a standard open pitch = `337`; not = `388`.
-  - any selected voicing note open = `277`; none open = `448`.
-- **Primary MIDI64 is strongly candidate-starved:** `179/202 = 88.61%` are single-hypothesis; mean hypothesis count `1.124`.
-- Non64 baseline: `308/523 = 58.89%` single-hypothesis; mean hypothesis count `1.558`.
-- MIDI64 single-hypothesis excess vs non64 = **+29.72 percentage points**.
-- Open-high-E64 mapped subset is even more concentrated: `172/186 = 92.47%` single-hypothesis.
-- Generic presence of an open note does **not** explain the collapse: any-open-selected rate `67.51%` vs no-open-selected `66.96%`, essentially identical.
-- Therefore this is not evidence for a broad “open strings are bad” rule; it is a pitch-specific MIDI64/high-E candidate-proposal anomaly.
-- On the 23 multi-hypothesis MIDI64 attacks, persistence does not explain the primary win: primary-minus-best-combined-rival persistence median is approximately `-0.06799`. MIDI64 often has *less* persistence than its rival.
-- Ranking physics of the small multi-hyp MIDI64 subset is not radically different from non64; the dominant anomaly is **absence of alternatives on 179/202 attacks**.
-- Diagnostic classification: `midi64-candidate-diversity-collapse-clue`.
-- This is a strong structural clue, **not proof that the 202 MIDI64 events are wrong and not yet a correction**.
-- No event mutation, no scorer/reference, no Modal/L4, protected runtime unchanged, Production untouched.
+## Exact pitch-source ancestry correction — 2026-08-24 15:18 America/Montreal
+Historical source identity traced from preholdout run `32702772593` back through:
+- preholdout source commit `23a64776333a8fd44dd092890d87e08a4a767e14`
+- candidate product commit `289a04e0fe30b5668ddaf39427404d8472ca1f51`
+- candidate launch commit `1861f7a2a4aec814dd8b8504e5cca7c1f8ce6ae1`
+
+Exact source files used by that candidate:
+- `analyzer/v143_contextual_prune_reference_free_carrier.py` blob `99866aa8af14dc243d226c6fb28d68af14d003ac` (still identical on current branch).
+- `analyzer/v143_contextual_prune_precision_shadow.py` blob `feeaafea511bf727099d1532a323f9106af75b7a` (still identical on current branch).
+- `analyzer/v143_contextual_prune_precision_candidate_events.py` supplies the post-precision render adapter.
+
+**Pivotal correction:** the carrier was not pitch-starved before precision.
+- Committed `debug/v143-contextual-prune/repaired-timing-precision-single-pass-smoke.json` proves that on the same 725 retained attacks the precision stage received **7,535 original observed pitch hypotheses**, mean **10.393 pitches/attack**, maximum 26.
+- Before precision, only **2/725** attacks were single-hypothesis.
+- Precision retained only **987** hypotheses, mean **1.361/attack**, with **487/725** single-hypothesis afterward.
+- It explicitly reports **6,548 pitches suppressed** by precision: about **86.9%** of the observed pitch universe for retained attacks.
+- Therefore the previous diagnosis “broad pitch failure is mainly upstream candidate proposal starvation” is **rejected**.
+- The dominant retained-diversity collapse is caused inside `apply_reference_free_precision_shadow()` / `_precision_pitch_set()`.
+- `_precision_pitch_set()` starts from the observed carrier `candidateMidis`, then keeps a primary plus secondaries only when score/attack/body each clear aggressive relative gates: `SECONDARY_RAW_RATIO=0.80`; harmonic-above-primary uses `HARMONIC_SECONDARY_RAW_RATIO=0.92`.
+- The carrier itself computes two-view whole-onset CQT evidence across MIDI 28–112, while `candidateMidis` come from four wide-recall Basic Pitch sweeps on both deterministic guitar views. Thus rich physical evidence existed before the precision collapse.
+- There is no MIDI64 special-case in these source files. The MIDI64 symptom is likely an interaction between its strong primary evidence and the aggressive precision secondary gates, not a hard-coded E4 boundary.
+- No event mutation has been made; scorer/reference closed; Modal/L4 closed; protected runtime and Production untouched.
 
 ## Next exact actions
-1. Trace the upstream candidate-proposal/pruning ancestry that produced frozen pitch hypotheses, with focus on why MIDI64/high-E gets no alternatives.
-2. Locate source logic for spectral candidate extraction, harmonic/subharmonic proposal, pitch-range/open-string feasibility, top-N pruning, and any MIDI/frequency boundary around E4/MIDI64.
-3. Build the next CPU-only/reference-free structural diagnostic from source + frozen evidence to determine whether the MIDI64 starvation comes from extractor thresholding, candidate-window truncation, harmonic-family pruning, string-feasibility filtering, or another deterministic proposal defect.
-4. Do **not** tune persistence weighting first; current evidence does not support it as the primary cause.
-5. Do **not** mutate events until a source-level defect is independently proven.
-6. Only after a genuinely new corrected candidate is frozen/locked may the professional scorer be considered again.
+1. Stop pursuing upstream proposal starvation as the primary pitch defect.
+2. Reconstruct as much **pre-precision pitch-set behavior** as possible from already committed diagnostics/artifacts, without fresh separator inference.
+3. Audit the precision pruning law itself: quantify how much each of score, attack, body, harmonic-above-primary 0.92 gate, and fundamental-primary promotion contributes to the 7,535→987 collapse.
+4. Search historical CPU/GitHub artifacts for persisted pre-precision `original_pitch_sets` or carrier rows; if available, build a fully reference-free threshold-sensitivity diagnostic over the exact 725 attacks.
+5. If per-event pre-precision evidence is recoverable, test conservative physically supported alternatives to the 0.80/0.92 hard intersection using source-only criteria and hold out the professional reference completely.
+6. Do **not** mutate events yet. First prove a less destructive precision rule on frozen/pre-precision evidence.
+7. Only after a genuinely new corrected candidate is frozen/locked may the professional scorer be considered again.
