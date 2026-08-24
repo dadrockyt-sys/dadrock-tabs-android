@@ -1,9 +1,7 @@
 name: V143 Repaired Timing Precision Candidate Product
 
 on:
-  push:
-    paths:
-      - '.github/workflows/v143-repaired-timing-precision-candidate-product.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
