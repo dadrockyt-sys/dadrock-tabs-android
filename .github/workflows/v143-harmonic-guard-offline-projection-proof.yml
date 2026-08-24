@@ -1,0 +1,77 @@
+name: V143 Harmonic Guard Offline Projection Proof
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v143-contextual-prune/RUN_HARMONIC_GUARD_OFFLINE_PROJECTION
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-harmonic-guard-offline-projection-proof
+  cancel-in-progress: true
+
+jobs:
+  proof:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Replay guard against retired serialized evidence and real render projection
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/check_v143_harmonic_guard_offline_projection.py \
+            2>&1 | tee debug/v143-contextual-prune/harmonic-guard-offline-projection-proof.log || true
+          test -s debug/v143-contextual-prune/harmonic-guard-offline-projection-proof.json
+
+      - name: Commit diagnostic and retire diagnostic marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/harmonic-guard-offline-projection-proof.json \
+            debug/v143-contextual-prune/harmonic-guard-offline-projection-proof.log
+          git rm -- debug/v143-contextual-prune/RUN_HARMONIC_GUARD_OFFLINE_PROJECTION
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record harmonic guard offline projection proof'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
+
+      - name: Enforce proof result
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('debug/v143-contextual-prune/harmonic-guard-offline-projection-proof.json').read_text(encoding='utf-8'))
+          if d.get('passed') is not True:
+              raise SystemExit('offline projection proof failed: '+', '.join(d.get('failedChecks') or []))
+          if d.get('simulationAcceptedAsCandidate') is not False:
+              raise SystemExit('offline simulation must never be accepted as a candidate')
+          if d.get('modalInvoked') is not False or d.get('professionalReferenceUsed') is not False:
+              raise SystemExit('offline projection proof crossed a sealed boundary')
+          print('V143 harmonic guard offline projection proof: PASS')
+          PY
