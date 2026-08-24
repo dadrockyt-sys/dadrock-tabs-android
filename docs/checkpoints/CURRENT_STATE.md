@@ -84,23 +84,34 @@ Observed Actions proof `debug/v143-contextual-prune/precision-promoted-harmonic-
 - anti-leakage passed; professional reference false; runtime labels false; Production false; Modal GPU false.
 
 Product path updated commit `534be3fec36cf5ec4a87089b1298becb4933693d`:
-- bundles/apply guard after reference-free precision and before candidate assembly;
+- bundles/applies guard after reference-free precision and before candidate assembly;
 - emits `promotedHarmonicGuardDiagnostics`;
 - output schemaVersion 4 / assembly version 6 / liveV143 version 7 / candidate schemaVersion 4.
 
 CPU audit workflow updated commit `f8022a7a90baf8ce2a902217b2ceb499fa58e84a` and observed guard proof green.
 Product-proof workflow extended commit `30d7da578667f7d128824d7d343be782bf064533` to compile/run the guard checker, include guard files/artifacts in path triggers, and enforce anti-leakage/protected-runtime tokens.
 
+## Brand-new one-shot candidate path — CREATED, NOT YET TRIGGERED
+Created `.github/workflows/v143-harmonic-guard-candidate-once.yml` in commit `346d0f38381906e9c821b7f6020c932f3e2b4c1c`.
+
+Safety design:
+- workflow triggers only when dedicated marker `debug/v143-contextual-prune/RUN_HARMONIC_GUARD_CANDIDATE_ONCE` is pushed; the marker has **not** been created yet at this checkpoint.
+- bot pushes are excluded, so the workflow's marker deletion cannot launch a second inference.
+- before Modal it requires: marker exists, old retired candidate blob remains exact `20e7a583...`, protected runtime exact, approved audio SHA exact, green guard proof with opportunity count 96, guard synthetic checker pass, anti-leakage pass.
+- exactly one Modal L4 call writes only new path `debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-product.json`; old candidate path is never overwritten.
+- after inference it runs repaired-timing freeze-payload preparation without opening scorer/reference, canonicalizes projected render events, and fails closed unless projected render SHA differs from retired `a81190...`.
+- requires schema v4, guard suppression >0, 113 audio-derived measures, no invented attack/pitch/relocation, reference-free/runtime-label-free/Production-safe/protected-runtime-safe invariants.
+- writes `repaired-timing-precision-harmonic-guard-candidate-proof.json` and `preFreezeTrace`, then commits both candidate/proof and deletes the marker in the same bot commit.
+
 ## Cost control
-- No Modal/GPU inference has been run for this new guard yet.
+- No Modal/GPU inference has been run for the new guard yet.
 - No professional scorer/reference opened.
 - Old candidate/freeze/scorer remain untouched.
-- The harmonic guard is a source/audio-only correction proven capable of changing scored MIDI identity, so exactly one new approved-audio inference is now justified.
+- One new approved-audio inference is now justified and the one-shot path is prepared to prevent accidental repeats.
 
 ## Next exact actions
-1. Create a brand-new harmonic-guard candidate output path/workflow; never overwrite retired `repaired-timing-precision-candidate-product.json`.
-2. Make that workflow require the green guard proof, protected hash, approved audio SHA, anti-leakage, and no Production mutation before inference.
-3. Run exactly one approved-audio inference into the new path.
-4. Prove new candidate invariants and deterministic/render projection identity; require projected render-event SHA != retired `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`.
-5. Create/use a new preholdout path bound to the new candidate and fail closed on all retired scored render identities, including `a81190...`; do not dispatch stale preholdout.
-6. Only after deterministic new identity + freeze/PDF fidelity 1.0: immutable lock, then exactly one professional score.
+1. Create the dedicated one-shot marker to trigger exactly one approved-audio harmonic-guard inference.
+2. Re-check the branch for the new candidate + proof; require proof `passed=true`, guard suppression >0, 113 measures, protected hash exact, and projected render-event SHA != retired `a81190...`.
+3. Save the new candidate SHA/event identity in this checkpoint immediately.
+4. Create/use a new preholdout path bound to the new candidate and fail closed on all retired scored render identities, including `a81190...`; do not dispatch stale preholdout.
+5. Only after deterministic new identity + freeze/PDF fidelity 1.0: immutable lock, then exactly one professional score.
