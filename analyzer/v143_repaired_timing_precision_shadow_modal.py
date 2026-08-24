@@ -177,14 +177,17 @@ def analyze(source_audio: bytes, suffix: str = ".audio") -> dict[str, Any]:
         def repaired_timing_estimator(_path: Any):
             return repair.timing
 
+        # The measure range is derived from the repaired audio timing itself.
+        # No professional-reference measure count or target event count enters
+        # the musical selection path.
         carrier = build_contextual_prune_reference_free_carrier(
             normalized,
             (direct, cascade),
             measure_start=1,
-            measure_end=113,
+            measure_end=None,
             timing_estimator=repaired_timing_estimator,
         )
-        targets = set(range(1, 114))
+        targets = set(range(carrier.measure_start, carrier.measure_end + 1))
         base = run_contextual_prune(
             carrier.rows_by_measure,
             carrier.grid,
@@ -243,7 +246,7 @@ def analyze(source_audio: bytes, suffix: str = ".audio") -> dict[str, Any]:
         }
 
         return {
-            "schemaVersion": 1,
+            "schemaVersion": 2,
             "mode": "v143-reference-free-repaired-timing-precision-shadow",
             "sourceSha256": _sha256_bytes(source_audio),
             "timing": {
@@ -268,7 +271,10 @@ def analyze(source_audio: bytes, suffix: str = ".audio") -> dict[str, Any]:
                 "after": _pitch_hist(precision.pitch_sets),
             },
             "coverage": {
-                "targetMeasureCount": 113,
+                "measureRangeDerivedFromAudio": True,
+                "targetMeasureStart": int(carrier.measure_start),
+                "targetMeasureEnd": int(carrier.measure_end),
+                "targetMeasureCount": len(targets),
                 "retainedPopulatedMeasureCount": len(retained_measures),
                 "missingMeasures": missing,
             },
@@ -279,6 +285,7 @@ def analyze(source_audio: bytes, suffix: str = ".audio") -> dict[str, Any]:
                 "professionalReferenceUsed": False,
                 "referenceRuntimeInputUsed": False,
                 "runtimeLabelsRequired": False,
+                "measureRangeDerivedFromAudio": True,
                 "tempoChangedByRepair": False,
                 "barPhaseChangedByRepair": False,
                 "repairedIntervalOutliersZero": repair.repaired_interval_outlier_count == 0,
@@ -315,6 +322,7 @@ def approved_audio(
     required = (
         "sourceIsApprovedFixture",
         "referenceFree",
+        "measureRangeDerivedFromAudio",
         "repairedIntervalOutliersZero",
         "carrierUsesRepairedTiming",
         "precisionAttacksSubsetOfCorrectedAttacks",
