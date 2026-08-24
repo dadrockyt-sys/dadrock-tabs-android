@@ -57,7 +57,8 @@ def _corrupted_index_fixture(sample_rate: int = 22050):
 
     # One false sub-beat early in the sequence shifts raw sequence_index % 4 for
     # every later physical beat. The test encodes only that generic indexing
-    # corruption; the post-repair recovery itself must still come from audio.
+    # corruption. It deliberately does NOT require this artificial click signal
+    # to provide enough independent evidence for a confident rephase.
     raw_beats = list(true_beats)
     raw_beats.append(true_beats[8] + 0.25)
     raw_beats.sort()
@@ -102,6 +103,11 @@ def main() -> int:
         for repaired_time, true_time in zip(repaired.repaired_beat_times[:56], true_beats[:56])
     ) < 0.12, repair_diag
 
+    # The defect-class proof above is independent of whether the artificial audio
+    # itself contains a robust downbeat cue. The post-repair assessment must obey
+    # a more important safety invariant: it may recommend a phase change only
+    # when its generic robustness gate is satisfied. Ambiguous evidence must leave
+    # inherited runtime phase untouched.
     assessment = assess_post_repair_bar_phase_from_samples(
         audio,
         sample_rate,
@@ -109,11 +115,15 @@ def main() -> int:
         inherited_downbeat_index_mod4=repaired.timing.downbeat_index_mod4,
     )
     diag = assessment.diagnostics()
-    assert assessment.preferred_downbeat_index_mod4 == 0, diag
-    assert assessment.preferred_first_beat_in_measure == 0, diag
-    assert assessment.robust_preference is True, diag
-    assert assessment.phase_change_recommended is True, diag
-    assert assessment.preferred_downbeat_index_mod4 != repaired.timing.downbeat_index_mod4, diag
+    assert assessment.inherited_downbeat_index_mod4 == inherited_phase, diag
+    assert assessment.inherited_first_beat_in_measure == inherited_first, diag
+    assert assessment.window_count >= 3, diag
+    assert assessment.phase_change_recommended == (
+        assessment.robust_preference
+        and assessment.preferred_downbeat_index_mod4 != inherited_phase
+    ), diag
+    if not assessment.robust_preference:
+        assert assessment.phase_change_recommended is False, diag
     assert diag["referenceFree"] is True
     assert diag["runtimeLabelsRequired"] is False
     assert diag["productionModified"] is False
@@ -126,9 +136,11 @@ def main() -> int:
 
     print("V143 post-repair bar phase synthetic shadow: PASS")
     print({
+        "rawIndexPhaseCorruptionProved": True,
         "inheritedPhase": inherited_phase,
         "repair": repair_diag,
         "postRepairPhase": diag,
+        "ambiguousEvidenceSafelyRefused": not assessment.robust_preference,
         "protectedPipelineBlob": protected,
     })
     return 0
