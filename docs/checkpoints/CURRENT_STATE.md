@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-23 23:15 America/Thunder_Bay
+Updated: 2026-08-23 23:28 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -12,9 +12,7 @@ Required path:
 
 Human professional reference is scorer-only. Runtime may NEVER read/train/tune/select from it. After a scored failure, correction remains general/reference-free. After accepting a correction, create a **BRAND-NEW approved-audio run/freeze/PDF identity before another score**.
 
-Completion requires score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`.
-
-**Rhythm is NOT complete. No completion claim has been made.**
+Completion requires score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`. Rhythm is NOT complete.
 
 ## Protected runtime / fixture
 - protected `analyzer/v143_reference_free_rhythm_pipeline.py`
@@ -32,14 +30,14 @@ Completion requires score >= `0.99`, critical mismatches `0`, PDF-event fidelity
 - V2 = 113 measures / 603 playable onsets / 946 notes / 104 populated; payload never committed.
 
 ## Retired freezes — NEVER RESCORE
-Freeze1: artifact `9499229323`, event SHA `c621ab4fd3a14849946a349b1ce2ed430322e3a8b49310f073b51cd8f417a194`, 979 attacks / 2,009 notes /113 measures/fidelity1.0; pitch `.2463621`, timing `.0710660`, string/fret `.0263959`, chord `.00252845`, critical2541.
+Freeze1: artifact `9499229323`, event SHA `c621ab4fd3a14849946a349b1ce2ed430322e3a8b49310f073b51cd8f417a194`, 979 attacks / 2,009 notes /113 measures/fidelity1.0; failed pitch `.2463621`, timing `.0710660`, string/fret `.0263959`, chord `.00252845`, critical2541.
 
 Freeze2: preholdout run `32680719988`, artifact `9504147164`, event/PDF SHA `e693602ade26256851dc0d77b003bf6ba0d5014dfaec7e35103ecdf25d33c32f`, 714 attacks /967 notes /113 measures/fidelity1.0; score run `32681394580`: pitch `.2624150549`, timing `.0522739153`, string/fret `.0282279143`, chord `.00759301443`, coverage1.0, critical1649.
 
 Allowed diagnosis only: count inflation largely fixed; remaining broad classes pitch identity and timing/grid identity. Never derive song-specific runtime rules from scorer events.
 
 ## General reference-free fixes already green
-- Explicit-primary propagation is green; candidate adapter preserves selected primary; no invented attack/pitch/relocation.
+- Explicit-primary propagation green; candidate adapter preserves selected primary; no invented attack/pitch/relocation.
 - Beat-grid repair run `32683424669`: 447→449 beats, interval outliers38→0, repaired last `209.0956916100s`, active end `209.1231746032s`, 113 measures/1796 slots; keep `downbeatIndexMod4=1`, `firstBeatInMeasure=3`.
 
 ## Combined repaired timing + primary — NOT ACCEPTED
@@ -52,73 +50,48 @@ No new Jimmy freeze accepted; scorer remains closed.
 - BS-RoFormer `model_bs_roformer_ep_317_sdr_12.9755.ckpt`, Instrumental, batch1
 - cascade = BS-RoFormer Instrumental → same Demucs6s Guitar.
 
-## Determinism history
-- `32684922439`: GPU controls insufficient; first mismatch direct Demucs.
-- `32685233870`: CPU direct two-state `7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c` / `be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849`.
-- `32685887212`: same two-state despite one-thread controls.
-- `32686215820`: dedicated Demucs shift RNG still same two-state; source/normalized/RoFormer exact; first mismatch direct.
-
 ## Modal cost-control mode — ACTIVE
-Billing screenshot: L4 `$11.92`, memory `$1.40`, CPU `$1.09`, total `$14.41`; L4 is dominant.
-Rules: free/static checks first; only one CPU-only direct-Demucs diagnostic at a time; no repeated 3-pass L4 during debugging; multi-pass L4 only final; full repaired-timing/precision and scorer stay closed until separator exactness.
+Billing screenshot showed L4 `$11.92`, memory `$1.40`, CPU `$1.09`, total `$14.41`; L4 is dominant.
+Rules: free/static checks first; one CPU-only direct-Demucs diagnostic at a time; no repeated 3-pass L4 during debugging; multi-pass L4 final-only; full repaired-timing/precision and scorer stay closed until separator exactness.
 Expensive 3-pass separator workflow manual-only since `4e366290c52f7b54b2d5b1ac087f6050f97ecbf2`.
 
-## ROOT CAUSE CONFIRMED — CPU ISA/kernel dispatch
-Two cheap CPU-only direct-Demucs probes had identical fixture, normalized WAV, model/settings, one thread and shift `0,22050,6026`:
+## ROOT CAUSE — CPU ISA/kernel dispatch
+Two cheap CPU-only direct-Demucs probes had identical fixture, normalized WAV, model/settings, one thread and shift `0,22050,6026` but mapped the old two output states to CPU host class:
+- AMD/AVX2: WAV `7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c`, PCM `820cec705b357eaee03369cb183840216214b98c76f62885184a6259c023efd0`.
+- Intel/AVX512: WAV `be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849`, PCM `a15084b514701163ae4ff9029d077f814f75fe74d6d3f83479311a85384109c3`.
+RNG/event logic ruled out as source of the two-state drift.
 
-### AMD / AVX2
-`debug/v143-contextual-prune/demucs-cpu-host-probe.json`, bot commit `ff339c08df4b8bfb4774af1102ddcbb85f33ffca`
-- WAV `7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c`
-- PCM `820cec705b357eaee03369cb183840216214b98c76f62885184a6259c023efd0`
-- AuthenticAMD / AVX2.
+## Dispatch controls
+SSE41 control experiment produced a third state (`b6cc6404...` WAV / `8f0cf1c8...` PCM), proving CPU dispatch controls affect inference but that candidate was not final.
 
-### Intel / AVX512
-`debug/v143-contextual-prune/demucs-cpu-host-probe-2.json`, bot commit `961161f48018da29a85d10ddefd149f8aa53b1b8`
-- WAV `be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849`
-- PCM `a15084b514701163ae4ff9029d077f814f75fe74d6d3f83479311a85384109c3`
-- GenuineIntel / AVX512.
-
-Thus old two-state drift maps to CPU host ISA, not RNG/event logic.
-
-## Dispatch-control experiments
-### SSE41 control probe — completed
-Research `7713f13f18d23917d71813b87b5cfa793ea1d488`: oneMKL `COMPATIBLE`, dynamic threading false, oneDNN/DNNL SSE41; no ATen cap.
-CPU-only result `debug/v143-contextual-prune/demucs-cpu-dispatch-probe-1.json`:
-- Intel AVX512 host, shift exact
-- WAV `b6cc6404c0b262673b6217ece869ded150c780b88f0e517f9662e6e5fa80b35f`
-- PCM `8f0cf1c8d7c5bbdddbf16fae56ca6d2c8e6de8ac23e721831a03be993ce338`
-Third numerical state proves dispatch controls affect inference; SSE41/no-ATen-pin is not final candidate.
-
-### Refined common AVX2 candidate
-Current research wrapper commit `1661a86bfb79239efbb3a7e3f5b9a41ac1bb4ddc` pins Demucs child only:
+Current refined common-AVX2 research wrapper pins Demucs child only:
 - `ATEN_CPU_CAPABILITY=avx2`
 - `ONEDNN_MAX_CPU_ISA=AVX2`
 - `DNNL_MAX_CPU_ISA=AVX2`
 - `MKL_CBWR=COMPATIBLE`
 - `MKL_DYNAMIC=FALSE`, `OMP_DYNAMIC=FALSE`
-- one thread; private shift seed unchanged; model/shifts1/overlap.10/segment6 unchanged.
+- one thread, private shift seed unchanged, model/shifts1/overlap.10/segment6 unchanged.
+Research commits include `1661a86bfb79239efbb3a7e3f5b9a41ac1bb4ddc`, probe reporting `6ce928b0e5ad846304115ce945fc86a7013b9fae`, static checker `d722b7a1612367b13fa66243a5b546ff9006b95c`, cross-host checker `9bc894676a2a78fc50fed9fddb2157a4f1fbdd31`.
 
-Related:
-- `6ce928b0e5ad846304115ce945fc86a7013b9fae`: probe reports requested AVX2/MKL controls.
-- `d722b7a1612367b13fa66243a5b546ff9006b95c`: static control checker.
-- `9bc894676a2a78fc50fed9fddb2157a4f1fbdd31`: added `analyzer/check_v143_demucs_cpu_cross_host_exact.py` for eventual two-host exact comparison.
+## First corrected common-AVX2 CPU probe — GREEN
+Artifact now exists: `debug/v143-contextual-prune/demucs-cpu-avx2-probe-1.json`.
+Result:
+- source SHA exact `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
+- normalized SHA exact `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`
+- direct WAV SHA **`2abd5b447969af2e9aedc89d19050d4ae658e6d4d6f34ecec1b0398654a6ae32`**
+- decoded PCM SHA **`8bbe56527107faf402741df8ffde78cb3051e53b8bdd5f02e94037f405d146a5`**
+- exact shift trace `0,22050,6026`
+- host `AuthenticAMD`, AVX2
+- requested controls recorded: ATen avx2, oneDNN/DNNL AVX2, MKL COMPATIBLE, dynamic threading false
+- no GPU requested; protected/Production/reference-free invariants passed.
 
-## Important preflight correction
-The first AVX2 one-shot launch at `1c4ab496cf161b830dc3d72fa95614cf5a4f1966` did **not** produce a result. Source inspection found the free preflight grepped `analyzer/check_v143_demucs_cpu_dispatch_controls.py`, which intentionally contains the forbidden-token literals it checks for; therefore the grep self-matched before Modal inference. This explains the absent result and means that launch should not be treated as AVX2 inference evidence.
-
-Commit `75657e9e2ed1e9b2f44be997d53424578e192873` fixes the free preflight: executable runtime/probe files are grepped; the static checker separately scans the runtime sources. Workflow stays manual by default.
-
-## ACTIVE one CPU-only AVX2 probe
-Corrected one-shot launch commit: `4c29269305a782a9cbb19f565e2147ec1b92d277`.
-Workflow was immediately restored to manual at `a0a034bd7ac21f8303fdb13004b6b74a14a94c87`.
-Expected result: `debug/v143-contextual-prune/demucs-cpu-avx2-probe-1.json`.
-This is CPU-only; no L4 request. Do NOT launch a second compute job until this result resolves.
+This is the first valid result for the refined candidate. It is green on AMD. Cross-host exactness is NOT yet proven.
 
 ## Current work NOW
-1. Wait/poll only for `demucs-cpu-avx2-probe-1.json`.
-2. On result, save exact WAV/PCM/shift/host/settings here.
-3. If green, launch ONE second cheap cold-host CPU AVX2 pass; require exact WAV+PCM+shift and different vendor using `check_v143_demucs_cpu_cross_host_exact.py`.
-4. Only after cross-host CPU exactness run one full separator graph pass; multi-pass L4 remains final-only.
+1. Launch exactly ONE second cheap cold-host CPU AVX2 pass, no L4.
+2. Require exact WAV `2abd5b44...`, PCM `8bbe5652...`, shift `0,22050,6026` and ideally a different CPU vendor using `check_v143_demucs_cpu_cross_host_exact.py`.
+3. If second host is same vendor, do not claim cross-host proof; decide cheapest next validation.
+4. Only after CPU cross-host exactness run one full separator graph pass; multi-pass L4 remains final-only.
 5. Keep repaired-timing/precision and scorer closed until separator exactness.
 
 ## After separator + combined determinism are green
