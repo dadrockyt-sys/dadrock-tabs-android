@@ -1,0 +1,55 @@
+name: V143 Separator Single Pass Smoke
+
+# Low-cost bridge gate: manual only, exactly one full separator graph pass.
+# Do not run until CPU cross-host Demucs exactness is green.
+on:
+  workflow_dispatch:
+
+permissions: {contents: write}
+
+jobs:
+  smoke:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ github.sha }}'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Free preflight
+        run: |
+          set -euo pipefail
+          python -m py_compile analyzer/v143_separator_cold_determinism_probe_modal.py analyzer/v143_deterministic_separator.py analyzer/v143_seeded_separator.py analyzer/v143_seeded_audio_separator_cli.py analyzer/check_v143_demucs_cpu_dispatch_controls.py
+          PYTHONPATH=analyzer python analyzer/check_v143_demucs_cpu_dispatch_controls.py
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' analyzer/v143_separator_cold_determinism_probe_modal.py analyzer/v143_deterministic_separator.py analyzer/v143_seeded_separator.py analyzer/v143_seeded_audio_separator_cli.py; then exit 31; fi
+      - name: One full Modal separator pass
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet modal
+          python -m modal run analyzer/v143_separator_cold_determinism_probe_modal.py::approved_audio --audio-path public/gomywayfullaitest.m4a --output-path debug/v143-contextual-prune/separator-single-pass-smoke.json
+      - name: Validate and commit
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('debug/v143-contextual-prune/separator-single-pass-smoke.json')
+          d=json.loads(p.read_text())
+          inv=d.get('invariants') or {}
+          if inv.get('approvedFixture') is not True or inv.get('referenceFree') is not True or inv.get('deterministicFlag') is not True:
+              raise SystemExit('separator smoke invariant failed')
+          if inv.get('productionModified') is not False or inv.get('protectedPipelineModified') is not False:
+              raise SystemExit('production/protected invariant failed')
+          print(json.dumps({k:d.get(k) for k in ('normalizedWavSha256','directGuitarSha256','roformerInstrumentalSha256','cascadeGuitarSha256')}, indent=2))
+          PY
+          git add debug/v143-contextual-prune/separator-single-pass-smoke.json
+          git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record single-pass separator smoke'
+          for n in 1 2 3 4; do git fetch origin v143-contextual-prune-lobo; git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0; git rebase --abort 2>/dev/null || true; sleep 2; done
+          exit 1
