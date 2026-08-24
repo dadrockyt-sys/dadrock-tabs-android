@@ -1,168 +1,130 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 16:42 America/Montreal
+Updated: 2026-08-24 16:54 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
 ## Hard boundaries
 - Work only on `v143-contextual-prune-lobo`; do not modify/merge `main` or live Production.
-- Protected `analyzer/v143_reference_free_rhythm_pipeline.py` must remain blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- Protected `analyzer/v143_reference_free_rhythm_pipeline.py` must remain blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1` (reverified unchanged at 16:54).
 - Approved fixture SHA256: `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
-- Professional reference is scorer-only; runtime/shadows may never read/train/tune/select from it.
+- Professional reference/scorer is CLOSED. Runtime/shadows may never read/train/tune/select from it.
 - Retired scored render identities must never be rerun/rescored:
   - `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`
   - `07b12f807295219d39198641de3a9e170c684de60d274befd2b6f6f50af9588c`
 - Any future score requires a genuinely new approved-audio/frozen-evidence corrected candidate identity → immutable freeze/PDF → lock → exactly one professional score.
-- Completion requires score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`. **Rhythm is NOT complete.**
-- **No more Modal/L4 unless the user explicitly reopens paid usage.** Continue with cryptographically bound historical evidence and CPU-only/reference-free development.
-- Professional scorer/reference is CLOSED. Do not inspect/tune against per-event professional mismatches.
+- Completion gate: score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`. **Rhythm is NOT complete.**
+- **No more Modal/L4 unless the user explicitly reopens paid usage.** Current work is CPU-only/reference-free.
 
 ## Immutable historical score state
-### First retired professional score
+### Score 1 — retired
 - 725 selected attacks → 985 rendered notes, 113 measures, PDF fidelity 1.0.
-- score run `32731885778`: coverage `1.0`; pitch F1 `0.23718280683583634`; pitch+timing F1 `0.033143448990160536`; critical mismatches `1723`.
+- run `32731885778`: coverage `1.0`; pitch F1 `0.23718280683583634`; pitch+timing F1 `0.033143448990160536`; critical mismatches `1723`.
 
-### Harmonic duplicate fix
+### Harmonic contradiction correction + Score 2 — retired
 - 144 fundamental promotions; 96 contradictory strongest upper harmonics suppressed (+12=78, +19=11, +24=6, +28=1).
-- Attack identity and primaries intentionally preserved.
-- Corrected retired canonical render identity: `07b12f807295219d39198641de3a9e170c684de60d274befd2b6f6f50af9588c`.
-- CPU reconstruction/preholdout passed; 889 events / 113 measures / PDF-event fidelity `1.0`.
+- Corrected retired render identity `07b12...`; 889 events; PDF-event fidelity 1.0.
+- run `32752374788`: generated 889; reference 946; pitch F1 `0.24305177111716622`; pitch+timing F1 `0.03051771117166212`; string/fret+timing F1 `0.01852861035422343`; chord F1 `0.012048192771084336`; critical mismatches `1635`.
+- Conclusion: harmonic contradiction was real but not the dominant broad failure.
 
-### Second retired professional score
-- run `32752374788`, attempt 1.
-- generated `889`; reference `946`; coverage recall `1.0`.
-- pitch-content F1 `0.24305177111716622`.
-- pitch+timing tolerant F1 `0.03051771117166212`.
-- string/fret+timing F1 `0.01852861035422343`.
-- chord pitch-set and exact voicing F1 `0.012048192771084336`.
-- unmatched generated `789`; unmatched reference `846`; critical mismatches `1635`.
-- near-100 gate false; `rhythmComplete=false`.
-- Conclusion: harmonic contradiction was real, but broad pitch identity and timing/grid identity remain fundamentally wrong.
-
-## Frozen reference-free source available
+## Frozen/reference-free evidence
 - `debug/v143-contextual-prune/frozen-approved-audio-preholdout-evidence.json`
-- approved source SHA exact `215bd5...`; 725 attacks; 113 measures; `tempoBpm=129.19921875`.
-- pre-scorer provenance; `professionalReferenceUsed=false`; `referenceRuntimeInputUsed=false`.
-- No fresh separator inference is allowed under current quota boundary.
+- 725 retained attacks, 113 measures, `tempoBpm=129.19921875`, approved source SHA exact.
+- Historical preholdout run `32702772593` artifact `rhythm-professional-preholdout-real-audio` recovered without new inference.
+- Candidate generation run `32699399835`, job `97347696711`, trigger commit `1861f7a2a4aec814dd8b8504e5cca7c1f8ce6ae1`; candidate product commit `289a04e0fe30b5668ddaf39427404d8472ca1f51`.
+- Historical carrier source blob `99866aa8af14dc243d226c6fb28d68af14d003ac`; historical precision source blob `feeaafea511bf727099d1532a323f9106af75b7a`.
 
-## Timing diagnosis — global fixes rejected
-### Attack physics
-- 176 short same-primary repeat pairs.
-- only 14 weak carryover suspects; 0 strict weak-front/strong-body suspects.
-- Retrigger suppression is not currently supported as the dominant correction.
+## Timing diagnosis — simple global fixes rejected
+- Global physical accent/phase evidence is sectional/mixed; reject a global half-bar origin shift.
+- Metadata BPM `129.19921875`; global timestamp fit `129.2881694947` (+0.06885%). Reject global BPM replacement.
+- Local timing residuals are nonmonotonic and sectionally variable. Any future timing correction needs a locally varying, reference-free physical grid; no simple mutation is justified yet.
 
-### Edge-safe / sectional phase
-Reports:
-- `debug/v143-contextual-prune/frozen-evidence-phase-stability-diagnostic.json`
-- `debug/v143-contextual-prune/frozen-evidence-phase-section-diagnostic.json`
+## Pivotal pitch diagnosis
+The upstream carrier was **not pitch-starved**.
+- Same 725 retained attacks entered precision with `7,535` observed pitch hypotheses (mean `10.393`, max 26).
+- Only 2/725 attacks were single-hypothesis before precision.
+- Legacy precision retained only `987` hypotheses (mean 1.361), leaving 487/725 attacks single-hypothesis.
+- `6,548` observed pitches were suppressed.
+- Therefore the dominant diversity collapse is inside the legacy precision secondary gate, not Basic Pitch candidate proposal.
+
+### Exact legacy gate semantics
+- Primary selection may promote a physically present lower fundamental using harmonic-family evidence.
+- Every non-primary secondary is compared against the **strongest raw candidate**, independently for score, attack, and body.
+- Normal secondary floor = `0.80`.
+- Exact upper-harmonic intervals `{12,19,24,28,31,36}` use floor `0.92`.
+- Legacy retention requires `score AND attack AND body` all to clear the applicable floor.
+- There is no MIDI64 special-case in the source.
+
+### Exact optional-candidate accounting — new
+Files:
+- `analyzer/v143_precision_optional_candidate_accounting.py`
+- `debug/v143-contextual-prune/precision-optional-candidate-accounting.json`
+
+Reconciled arithmetic:
+- 7,535 original hypotheses − 725 primaries = 6,810 non-primary hypotheses.
+- On 144 promoted-fundamental attacks, the strongest raw pitch is a distinct secondary and is a forced survivor because all of its relative ratios are 1.0.
+- Removing those 144 forced occupants leaves **6,666 genuinely optional secondary candidates**.
+- Only **118/6,666 = 1.7702%** survived the legacy gate.
+- **6,548/6,666 = 98.2298% of optional candidates were suppressed.**
+- This exactly reconciles the historical `suppressedPitchCount=6548`.
+
+### Retained-survivor brittleness diagnostic — new
+Files:
+- `analyzer/v143_precision_survivorship_gate_brittleness_diagnostic.py`
+- `debug/v143-contextual-prune/precision-survivorship-gate-brittleness-diagnostic.json`
 
 Findings:
-- Global physical attack accent favors offset 8, but local evidence is split: 8-measure windows 7–7; 16-measure stride-8 windows 6–7.
-- Classification `sectional-or-mixed-phase-accent-clue`; `stablePhase8PhysicalAccentClue=false`.
-- 8-measure coarse phase runs: m1–32→8, 33–40→0, 41–64→8, 65–72→4, 73–112→12.
-- Unrestricted 4-measure phase is highly volatile: 24 changes in 27 transitions; 12 large jumps; only 37.5% of changes are 1–2 steps.
-- **Reject global half-bar origin shift and attack-accent phase as a timing mutation.**
+- 987 retained hypotheses = 725 primaries + 262 secondaries.
+- 144/262 secondaries are the forced strongest-raw survivors on promoted attacks; only 118 are nontrivial gate survivors.
+- Among those 118: limiting dimension is attack 57 times, body 47, total score only 14.
+- 61/118 (51.69%) survive within 0.05 of the hard floor; 94/118 (79.66%) within 0.10.
+- This supports classification `hard-intersection-survivorship-brittleness-clue`: the three-way conjunction is dominated by independent attack/body envelope requirements even though total score already combines physical evidence.
 
-### Timestamp/grid consistency
-Report: `debug/v143-contextual-prune/frozen-evidence-grid-timestamp-diagnostic.json`.
-- Metadata BPM `129.19921875`; global timestamp-vs-labeled-step fit `129.2881694947` (+0.06885%).
-- Therefore no meaningful simple global BPM error.
-- Nominal residual span `7.375` sixteenth steps; best global fit still spans `7.965` steps.
-- Local 8-measure fits vary about `125.33–131.63 BPM`; residual trend is nonmonotonic (`correlation=-0.1607`).
-- Adjacent selected-attack pairs center exactly on metadata tempo (median implied BPM `129.19921875`).
-- **Reject global BPM replacement.** Any future timing correction would need locally varying/reference-free physical grid reconstruction; none is yet justified.
+### MIDI64 symptom retained
+- primary MIDI64=202; non64=523.
+- MIDI64 single-hypothesis 179/202 = 88.61%; non64 308/523 = 58.89%.
+- Only 15/202 MIDI64-primary attacks retain a nontrivial secondary vs 93/523 non64 attacks.
+- Treat as a symptom of the gate interaction, not evidence of a hard-coded E4 rule.
+- Correct primary-open partition remains 264 open / 461 fretted; older 423/303 values are invalid and must not be reused.
 
-## Broad pitch/register diagnosis
-Report: `debug/v143-contextual-prune/frozen-evidence-pitch-register-diagnostic.json`.
-- **487/725 attacks (67.17%) have only one retained pitch hypothesis after precision pruning.** Downstream re-ranking of the retained set cannot repair most broad pitch errors.
-- Best retained hypothesis differs from primary on only 144/725 attacks; 96 of those are the already-known upper-harmonic family defect.
-- Any retained lower hypothesis than primary appears on only 19 attacks; exact lower octave on only 5; exact upper octave on 78.
-- Primary MIDI median `64`; MIDI 64 occurs `202` times; pitch class E occurs `337` times.
-- Primary strings: string0=325, string1=127, string2=81, string3=92, string4=65, string5=35; top two strings total 452/725.
-- Adjacent primary jumps >=12 semitones: 133; >=19: 71. 117 could become <=7 semitones by octave-equivalent folding, but neighbor evidence does not support a safe blanket octave-fold rule.
-- Selected voicings: 500 single-note attacks, 203 double, 17 triple, 4 quad, 1 quintuple; 82 exact-octave pairs; 98 harmonic-family multi-note attacks; 55 disconnected string sets; 95 fret spans >=6.
-- **The older conclusion that the 487 single-hypothesis attacks prove upstream proposal starvation is superseded by the source-ancestry finding below.**
+## Historical raw-row recovery result
+- Exact candidate run `32699399835` has zero uploaded artifacts.
+- Exact job logs contain only aggregate diagnostics; no per-event `candidateMidis`, `rawPhysicalAttacks`, or suppressed rows.
+- Candidate adapter persisted only post-precision-supported hypotheses.
+- Preholdout raw/freeze/PDF artifacts likewise do not contain the 6,548 suppressed per-event rows.
+- The producer used a `TemporaryDirectory`; historical stems/carrier rows were ephemeral, not a persistent Modal volume.
+- Repo searches for `candidateMidis`, `rawPhysicalAttacks`, and the temporary stem filenames found no persisted snapshot.
+- Therefore exact replay of a relaxed policy on the historical 7,535 rows is impossible without one new carrier capture.
 
-## Open-string / E64 hypothesis-collapse diagnostic — 2026-08-24 14:42 America/Montreal
-Files:
-- `analyzer/v143_frozen_evidence_open_string_bias_diagnostic.py`
-- `.github/workflows/v143-frozen-evidence-open-string-bias-diagnostic.yml`
-- `debug/v143-contextual-prune/frozen-evidence-open-string-bias-diagnostic.json`
+## Precision v2 prepared — NOT RUN
+New research-only module:
+- `analyzer/v143_contextual_prune_precision_shadow_v2.py` commit `efcc90b6d8b004395159e35fd1a87f079952a3e1`.
+- Policy name `envelope-balanced-secondary-v2`.
+- Attack selection, local-prominence logic, fail-safe behavior, fundamental promotion, no-invention invariants, and harmonic protection remain unchanged.
+- For **non-harmonic** observed secondaries only: replace legacy 3-of-3 conjunction with **2-of-3 physical consensus** across score/attack/body at the existing 0.80 floor.
+- For exact upper-harmonic intervals `{12,19,24,28,31,36}`: retain the full legacy 3-of-3 0.92 gate.
+- No new numeric threshold, pitch, attack, key/chord/song rule, runtime label, or professional information was introduced.
 
-Reference-free result recorded at 14:42:
-- Diagnostic classification: `open-high-e-persistence-bias-clue`.
-- Open high E / MIDI 64 as canonical open string occurs on **186/725 attacks (25.66%)**.
-- **179/186 E64 attacks (96.24%) are single-hypothesis after precision pruning**.
-- E64 alone accounts for **179/487 = 36.76% of every retained single-hypothesis attack**.
-- The 14:42 checkpoint text also recorded `423/725` any-open-string primaries and `303` fretted primaries. **Those two values are known wrong and must not be used.**
+Policy guard:
+- `analyzer/check_v143_precision_shadow_v2_policy.py` commit `e923c597bef9fdd88ef59392a8f61bf7f8ce8b1c`.
+- `.github/workflows/v143-precision-shadow-v2-cpu-guard.yml` added and later updated at commit `249fae8403387a4a6fe0c9250453a6959dc3a4d3` to compile/test the v2 path, historical accounting, candidate integration, protected-runtime blob, and anti-leakage tokens.
+- Workflow is CPU-only and contains no Modal invocation.
 
-## Open-string definition audit — 2026-08-24 14:57 America/Montreal
-- Exact primary-mapped-open count = `264`; primary-mapped-fretted = `461`; partition = 725.
-- Distinguish primary MIDI64, physically mapped open-high-E64, any selected open note, and primary MIDI equal to a standard-tuning open pitch.
-
-## MIDI64 retained-diversity audit — 2026-08-24 15:02 America/Montreal
-Files:
-- `analyzer/v143_frozen_evidence_open_string_candidate_audit.py`
-- `.github/workflows/v143-frozen-evidence-open-string-candidate-audit.yml`
-- `debug/v143-contextual-prune/frozen-evidence-open-string-candidate-audit.json`
-
-Findings on the **post-precision retained pitch sets**:
-- primary MIDI64 = `202`; non64 = `523`.
-- open-high-E mapped string0/fret0 = `186`.
-- primary mapped open = `264`; primary mapped fretted = `461`.
-- any selected voicing note open = `277`; none open = `448`.
-- MIDI64 retained single-hypothesis rate `179/202 = 88.61%`; non64 `308/523 = 58.89%`; excess `+29.72` points.
-- Generic open-note presence does not explain it.
-- On the 23 multi-hypothesis MIDI64 attacks, persistence does not explain the primary win.
-- This remains a useful symptom, but **it must not be interpreted as evidence that the upstream carrier lacked alternatives**.
-
-## Exact pitch-source ancestry correction — 2026-08-24 15:18 America/Montreal
-Historical source identity traced from preholdout run `32702772593` back through:
-- preholdout source commit `23a64776333a8fd44dd092890d87e08a4a767e14`
-- candidate product commit `289a04e0fe30b5668ddaf39427404d8472ca1f51`
-- candidate launch commit `1861f7a2a4aec814dd8b8504e5cca7c1f8ce6ae1`
-
-Exact source files used by that candidate:
-- `analyzer/v143_contextual_prune_reference_free_carrier.py` blob `99866aa8af14dc243d226c6fb28d68af14d003ac` (still identical on current branch).
-- `analyzer/v143_contextual_prune_precision_shadow.py` blob `feeaafea511bf727099d1532a323f9106af75b7a` (still identical on current branch).
-- `analyzer/v143_contextual_prune_precision_candidate_events.py` supplies the post-precision render adapter.
-
-**Pivotal correction:** the carrier was not pitch-starved before precision.
-- Committed `debug/v143-contextual-prune/repaired-timing-precision-single-pass-smoke.json` proves that on the same 725 retained attacks the precision stage received **7,535 original observed pitch hypotheses**, mean **10.393 pitches/attack**, maximum 26.
-- Before precision, only **2/725** attacks were single-hypothesis.
-- Precision retained only **987** hypotheses, mean **1.361/attack**, with **487/725** single-hypothesis afterward.
-- It explicitly reports **6,548 pitches suppressed** by precision: about **86.9%** of the observed pitch universe for retained attacks.
-- Therefore the previous diagnosis “broad pitch failure is mainly upstream candidate proposal starvation” is **rejected**.
-- The dominant retained-diversity collapse is caused inside `apply_reference_free_precision_shadow()` / `_precision_pitch_set()`.
-- `_precision_pitch_set()` starts from the observed carrier `candidateMidis`, then keeps a primary plus secondaries only when score/attack/body each clear aggressive relative gates: `SECONDARY_RAW_RATIO=0.80`; harmonic-above-primary uses `HARMONIC_SECONDARY_RAW_RATIO=0.92`.
-- The carrier itself computes two-view whole-onset CQT evidence across MIDI 28–112, while `candidateMidis` come from four wide-recall Basic Pitch sweeps on both deterministic guitar views. Thus rich physical evidence existed before the precision collapse.
-- There is no MIDI64 special-case in these source files. The MIDI64 symptom is likely an interaction between its strong primary evidence and the aggressive precision secondary gates, not a hard-coded E4 boundary.
-- No event mutation has been made; scorer/reference closed; Modal/L4 closed; protected runtime and Production untouched.
-
-## Historical pre-holdout artifact recovery — 2026-08-24 15:20 America/Montreal
-- Exact run `32702772593` artifact `rhythm-professional-preholdout-real-audio` is still available and was recovered without new inference.
-- Artifact contains the immutable raw product/freeze/PDF evidence, including `.preholdout/raw-product-output.json` and final `precisionDiagnostics`.
-- It reconfirms `984` precision input attacks → `725` retained attacks and `7,535` original observed pitch hypotheses → `987` retained, with `6,548` suppressed and `144` fundamental promotions.
-- The artifact does **not** itself expose the 5,624 carrier rows or per-event `original_pitch_sets`; the next search is historical workflow/debug artifacts for those source rows.
-- No event/runtime mutation made. Modal/L4 remains closed. Professional reference remains closed.
-
-## Exact candidate workflow persistence audit — 2026-08-24 16:42 America/Montreal
-- Candidate product `preFreezeTrace` identifies exact generation run `32699399835`; exact successful job `97347696711`.
-- The workflow run has **zero uploaded artifacts**.
-- Exact job logs were inspected. They print only aggregate timing/candidate/precision/semantic/sustain diagnostics, including the known `7,535 → 987` precision collapse; they do **not** print the per-event `candidateMidis`, `rawPhysicalAttacks`, or suppressed hypothesis rows.
-- The producer ran separator/carrier → precision → candidate adapter in memory and wrote only `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json`, which the job then committed to `v143-contextual-prune-lobo`.
-- The candidate adapter filters each event's `pitchHypotheses` to the post-precision support set, so the committed product cannot reconstruct the 6,548 suppressed hypotheses.
-- Recursive inspection of recovered `.preholdout/raw-product-output.json` found physical hypothesis fields only under final `events[].pitchHypotheses`; its diagnostics preserve aggregate pre/post counts but no hidden `candidateMidis`, `rawPhysicalAttacks`, carrier rows, or original per-event hypothesis sets.
-- Repo debug listing/search likewise has not exposed a persisted raw carrier snapshot.
-- Current evidence therefore indicates the 6,548 suppressed per-event rows were transient during historical candidate generation and were never persisted.
-- This is an evidence-retention limitation, **not** a reason to reopen paid inference. Continue CPU-only with the retained physical evidence and exact historical source logic.
-- No Modal/L4 was run during this audit; no professional reference was opened; no event/runtime/Production mutation was made.
+## Candidate path prepared to prevent another evidence-loss cycle — NOT RUN
+`analyzer/v143_repaired_timing_precision_candidate_product_modal.py` updated at commit `83c050f5a8246dfbd80b118390039cab7d29909b` (blob `859040d832d3f77be4e5b361bdc86cbf186fb354`).
+- Future isolated candidate generation now calls precision v2, then the existing promoted-harmonic guard.
+- It persists `precisionReplayEvidence` for every retained attack: every observed original candidate MIDI plus compact score/attack/body/early/sustain/continuity physical evidence, selected flag, and primary flag.
+- This means **one future carrier capture can support repeated CPU-only precision policy experiments without rerunning separator/Basic Pitch inference**.
+- Candidate metadata explicitly records the v2 policy and that no new threshold/reference information is used.
+- The producer file was locally syntax-compiled before commit.
+- Protected runtime was reverified unchanged after integration.
+- **No candidate was generated, no Modal/L4 was invoked, no scorer was invoked, no events were mutated, and Production/main remain untouched.**
 
 ## Next exact actions
-1. Build a CPU-only/reference-free **precision survivorship and gate-brittleness diagnostic** from the retained physical hypothesis evidence in the immutable historical raw product.
-2. Group by attack and reconstruct unique post-precision support sets; quantify retained secondary score/attack/body ratios to each primary, harmonic-family status, and threshold margins.
-3. Quantify how often retained secondaries barely survive one or more gates and how the hard three-way `score AND attack AND body` intersection concentrates survivorship; separately audit MIDI64 versus non64 and promoted-fundamental cases where identifiable.
-4. Use those source-only findings to define the least-destructive physically justified replacement rule. Do **not** tune against professional mismatches and do **not** invent exact recovery counts for the unavailable suppressed rows.
-5. Do **not** mutate events yet. First commit the non-mutating diagnostic and its report.
-6. Only if the reference-free evidence supports a correction should a new candidate path be implemented; no Modal/L4 unless the user explicitly reopens paid usage.
-7. Only after a genuinely new corrected candidate is frozen/locked may the professional scorer be considered again.
+1. Retrieve/verify the CPU guard result if available; fix any static/invariant failure without inference.
+2. Finish a source-only preflight around `precisionReplayEvidence` so a future capture is rejected unless it persists a complete replayable candidate universe.
+3. Do not run the candidate yet under the current cost boundary.
+4. Once the no-cost preflight is green, the remaining hard blocker is one explicit user-authorized carrier/candidate capture. That capture must persist replay evidence; after it, all policy sensitivity work should return to CPU-only.
+5. Use the captured replay evidence to quantify legacy vs v2 retention and inspect physical-support distributions without professional mismatches.
+6. Only if source-only evidence supports the corrected candidate: immutable freeze/PDF → fidelity 1.0 → lock → exactly one professional score.
+7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
