@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gate": "v143-reference-free-beat-grid-repair-approved-audio",
-  "runId": 32682813632,
+  "runId": 32683234132,
   "runAttempt": 1,
-  "triggerSha": "ec426f8093f3a27346c013ad8840cb427dea4d93",
+  "triggerSha": "9011486c54e033ca97eb9654801ad91563048d6e",
   "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
   "originalTiming": {
     "tempoBpm": 129.19921875,
@@ -57,6 +57,80 @@
     "runtimeLabelsRequired": false,
     "productionModified": false
   },
+  "tailBoundaryProbe": [
+    {
+      "offsetBeats": 1,
+      "predictedTime": 207.70249433106576,
+      "accent": 0.03517902385225743,
+      "localRms": 0.05425683209823929,
+      "aboveBoundaryAccentFloor": false,
+      "aboveBoundaryEnergyFloor": false,
+      "insideActiveAudioBound": true
+    },
+    {
+      "offsetBeats": 2,
+      "predictedTime": 208.1668934240363,
+      "accent": 0.026999522318577218,
+      "localRms": 0.04479791089096907,
+      "aboveBoundaryAccentFloor": false,
+      "aboveBoundaryEnergyFloor": false,
+      "insideActiveAudioBound": true
+    },
+    {
+      "offsetBeats": 3,
+      "predictedTime": 208.6312925170068,
+      "accent": 0.024419451194880454,
+      "localRms": 0.043411086368731075,
+      "aboveBoundaryAccentFloor": false,
+      "aboveBoundaryEnergyFloor": false,
+      "insideActiveAudioBound": true
+    },
+    {
+      "offsetBeats": 4,
+      "predictedTime": 209.09569160997734,
+      "accent": 1.6447713749936983,
+      "localRms": 0.24524983152218374,
+      "aboveBoundaryAccentFloor": true,
+      "aboveBoundaryEnergyFloor": true,
+      "insideActiveAudioBound": true
+    },
+    {
+      "offsetBeats": 5,
+      "predictedTime": 209.56009070294786,
+      "accent": 0.02843298488981121,
+      "localRms": 0.03542845362737585,
+      "aboveBoundaryAccentFloor": false,
+      "aboveBoundaryEnergyFloor": false,
+      "insideActiveAudioBound": false
+    },
+    {
+      "offsetBeats": 6,
+      "predictedTime": 210.02448979591838,
+      "accent": 0.010416191735654714,
+      "localRms": 0.01609229411022676,
+      "aboveBoundaryAccentFloor": false,
+      "aboveBoundaryEnergyFloor": false,
+      "insideActiveAudioBound": false
+    },
+    {
+      "offsetBeats": 7,
+      "predictedTime": 210.48888888888888,
+      "accent": 0.0016724365072448392,
+      "localRms": 0.0023200056150351547,
+      "aboveBoundaryAccentFloor": false,
+      "aboveBoundaryEnergyFloor": false,
+      "insideActiveAudioBound": false
+    },
+    {
+      "offsetBeats": 8,
+      "predictedTime": 210.9532879818594,
+      "accent": 0.00010964475845300974,
+      "localRms": 0.00018624449862630983,
+      "aboveBoundaryAccentFloor": false,
+      "aboveBoundaryEnergyFloor": false,
+      "insideActiveAudioBound": false
+    }
+  ],
   "repairedBarPhaseConsensus": {
     "winnerDownbeatIndexMod4": 2,
     "winnerFirstBeatInMeasure": 2,
