@@ -24,7 +24,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m py_compile analyzer/v143_repaired_timing_precision_candidate_product_modal.py analyzer/check_v143_demucs_cpu_dispatch_controls.py
+          python -m py_compile \
+            analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
+            analyzer/v143_contextual_prune_precision_shadow_v2.py \
+            analyzer/check_v143_precision_shadow_v2_policy.py \
+            analyzer/check_v143_demucs_cpu_dispatch_controls.py
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_shadow_v2_policy.py
           PYTHONPATH=analyzer python analyzer/check_v143_demucs_cpu_dispatch_controls.py
           test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
           test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
@@ -40,6 +45,8 @@ jobs:
           PY
           if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
             analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
+            analyzer/v143_contextual_prune_precision_shadow_v2.py \
+            analyzer/check_v143_precision_shadow_v2_policy.py \
             analyzer/v143_contextual_prune_precision_candidate_events.py \
             analyzer/v143_seeded_separator.py \
             analyzer/v143_seeded_audio_separator_cli.py; then
@@ -54,13 +61,14 @@ jobs:
           python -m modal run analyzer/v143_repaired_timing_precision_candidate_product_modal.py::approved_audio \
             --audio-path public/gomywayfullaitest.m4a \
             --output-path debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json
-      - name: Validate candidate invariants
+      - name: Validate candidate invariants and replay evidence
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
           import hashlib
           import json
+          import math
           import subprocess
           from pathlib import Path
 
@@ -70,6 +78,9 @@ jobs:
           assembly = data.get('assembly') or {}
           timing = data.get('timing') or {}
           live = data.get('liveV143') or {}
+          policy = data.get('precisionPolicy') or {}
+          precision = data.get('precisionDiagnostics') or {}
+          replay = data.get('precisionReplayEvidence') or {}
           failures = []
           required_true = {
               'candidate.approvedFixture': candidate.get('approvedFixture'),
@@ -78,6 +89,7 @@ jobs:
               'assembly.referenceFree': assembly.get('referenceFree'),
               'live.referenceFree': live.get('referenceFree'),
               'timing.measureRangeDerivedFromAudio': timing.get('measureRangeDerivedFromAudio'),
+              'replay.referenceFree': replay.get('referenceFree'),
           }
           for key, value in required_true.items():
               if value is not True:
@@ -99,27 +111,84 @@ jobs:
               'live.professionalReferenceUsed': live.get('professionalReferenceUsed'),
               'live.referenceRuntimeInputUsed': live.get('referenceRuntimeInputUsed'),
               'live.runtimeLabelsRequired': live.get('runtimeLabelsRequired'),
+              'replay.professionalReferenceUsed': replay.get('professionalReferenceUsed'),
+              'replay.runtimeLabelsRequired': replay.get('runtimeLabelsRequired'),
+              'replay.productionModified': replay.get('productionModified'),
+              'replay.candidateAddsUnobservedAttack': replay.get('candidateAddsUnobservedAttack'),
+              'replay.candidateAddsUnobservedPitch': replay.get('candidateAddsUnobservedPitch'),
+              'policy.professionalReferenceUsed': policy.get('professionalReferenceUsed'),
+              'policy.newNumericThresholdIntroduced': policy.get('newNumericThresholdIntroduced'),
           }
           for key, value in required_false.items():
               if value is not False:
                   failures.append(f'{key}!=false')
           if candidate.get('sourceSha256') != '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f':
               failures.append('candidate.sourceSha256')
+          if policy.get('name') != 'envelope-balanced-secondary-v2':
+              failures.append('precisionPolicy.name')
           if int(data.get('audioDerivedMeasureCount') or 0) <= 0:
               failures.append('audioDerivedMeasureCount')
           if int(data.get('selectedCount') or 0) <= 0:
               failures.append('selectedCount')
           if int(data.get('noteCount') or 0) <= 0:
               failures.append('noteCount')
+
+          replay_attacks = replay.get('attacks') or []
+          replay_attack_count = int(replay.get('retainedAttackCount') or -1)
+          replay_pitch_count = int(replay.get('originalPitchHypothesisCount') or -1)
+          precision_attack_count = int(precision.get('retainedAttackCount') or -2)
+          precision_original_pitch_count = int(precision.get('originalPitchHypothesisCount') or -2)
+          precision_retained_pitch_count = int(precision.get('retainedPitchHypothesisCount') or -2)
+          if replay_attack_count != precision_attack_count or replay_attack_count != len(replay_attacks):
+              failures.append('replay.retainedAttackCount')
+          if replay_pitch_count != precision_original_pitch_count:
+              failures.append('replay.originalPitchHypothesisCount')
+
+          seen_attack_keys = set()
+          replay_candidate_total = 0
+          replay_selected_total = 0
+          for attack in replay_attacks:
+              key = (int(attack.get('measure') or 0), int(attack.get('step') or -1))
+              if key in seen_attack_keys:
+                  failures.append(f'replay.duplicateAttack:{key}')
+              seen_attack_keys.add(key)
+              midis = [int(value) for value in (attack.get('candidateMidis') or [])]
+              candidates = attack.get('candidates') or []
+              candidate_midis = [int(item.get('midi')) for item in candidates]
+              if midis != candidate_midis or len(midis) != len(set(midis)):
+                  failures.append(f'replay.candidateIdentity:{key}')
+              primaries = [item for item in candidates if item.get('primary') is True]
+              if len(primaries) != 1 or primaries[0].get('selected') is not True:
+                  failures.append(f'replay.primaryIdentity:{key}')
+              for item in candidates:
+                  for field in ('attack','early','sustain','body','continuity','score'):
+                      try:
+                          value = float(item[field])
+                      except (KeyError, TypeError, ValueError):
+                          failures.append(f'replay.{field}:{key}')
+                          continue
+                      if not math.isfinite(value):
+                          failures.append(f'replay.nonFinite{field}:{key}')
+                  replay_selected_total += int(item.get('selected') is True)
+              replay_candidate_total += len(candidates)
+          if replay_candidate_total != replay_pitch_count:
+              failures.append('replay.candidateTotal')
+          if replay_selected_total != precision_retained_pitch_count:
+              failures.append('replay.selectedTotal')
+
           protected = subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'], text=True).strip()
           if protected != '7f72f8ed9b14af8bc93e95544195204d99c6bec1':
               failures.append('protectedPipelineBlob')
-          canonical = json.dumps(data.get('events') or [], sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False).encode('utf-8')
+          canonical_events = json.dumps(data.get('events') or [], sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False).encode('utf-8')
+          canonical_replay = json.dumps(replay, sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False).encode('utf-8')
           data['preFreezeTrace'] = {
               'runId': int('${{ github.run_id }}'),
               'triggerSha': '${{ github.sha }}',
-              'eventsSha256': hashlib.sha256(canonical).hexdigest(),
+              'eventsSha256': hashlib.sha256(canonical_events).hexdigest(),
+              'replayEvidenceSha256': hashlib.sha256(canonical_replay).hexdigest(),
               'eventCount': len(data.get('events') or []),
+              'replayAttackCount': replay_attack_count,
+              'replayOriginalPitchHypothesisCount': replay_pitch_count,
               'protectedPipelineBlob': protected,
               'protectedPipelineUnchanged': protected == '7f72f8ed9b14af8bc93e95544195204d99c6bec1',
               'productionModified': False,
@@ -137,7 +206,7 @@ jobs:
           git add debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record repaired-timing precision candidate product'
+          git commit -m 'Record repaired-timing precision v2 candidate product with replay evidence'
           for attempt in 1 2 3 4; do
             git fetch origin v143-contextual-prune-lobo
             git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
