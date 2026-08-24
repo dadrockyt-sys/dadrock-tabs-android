@@ -19,41 +19,41 @@ Priority: **finish Rhythm end-to-end before Bass/Lead**.
 - One-shot professional run `32731885778` failed broadly: coverage recall `1.0`, pitch-content F1 `0.23718280683583634`, pitch+timing F1 `0.033143448990160536`, critical mismatches `1723`.
 - Allowed diagnosis only: coverage solved; timing/grid identity and pitch identity fundamentally wrong. Scorer/reference closed again.
 
-## Timing audit finding — GENERAL / REFERENCE-FREE
-Adapter sign convention is coherent. General defect is earlier: beat-grid repair rebuilds a clean pulse sequence after malformed raw beat intervals but blindly copies raw `first_beat_in_measure` / `downbeat_index_mod4`. Raw phase is defined by raw sequence index modulo 4, so inserted/sub-beat/duplicate pulse removal can invalidate inherited phase.
+## General timing defect
+Beat-grid repair can rebuild a clean pulse train after malformed raw beat intervals but still blindly inherit raw modulo-4 phase. Raw phase is defined by raw sequence index, so inserted/sub-beat/duplicate pulse removal can make inherited phase stale.
 
-## Approved post-repair phase shadow — GREEN DIAGNOSTIC, NOT YET ACCEPTED RUNTIME CHANGE
-CPU-only run `32736686527`, trigger `acc3d0d89ff8973186e093b4e2f155cdcc87aa60`:
-- synthetic `success`; approved `success`
-- protected exact; reference-free; runtime/live/Production unchanged
-- raw 447 beats / 38 interval outliers / inherited phase 1
-- repaired 449 beats / 0 interval outliers
-- global multi-window preferred phase 2, 5/7 votes, weighted fraction `0.6784292`, full signal count 2, `robustPreference=true`, `phaseChangeRecommended=true`
-- BUT first half strongly/stably prefers phase 1 (`0.48126`) while second half strongly/stably prefers phase 2 (`0.44882`). Do not apply a global rephase until local phase path is understood.
+## Approved post-repair global phase diagnostic
+CPU run `32736686527`: synthetic + approved success, protected/live/Production unchanged. Repaired grid 449 beats / 0 interval outliers. Global multi-window preferred phase 2 with 5/7 votes and weighted fraction `0.6784292`, but first half strongly/stably prefers phase 1 while second half strongly/stably prefers phase 2. Global phase replacement remains unsafe.
 
-## Local phase-path diagnostic staged
-- Added `analyzer/v143_post_repair_phase_path_shadow.py`.
-  - generic local windows: 64 repaired beats (16 bars), stride 16 beats (4 bars), starts aligned to modulo-4 residue.
-  - computes the same four audio-only signals (accent, low accent, harmonic change, bass change) **once** for the whole repaired grid, then slices local windows; no repeated STFT per window.
-  - a local window is `strong` only when at least two independent signals choose its winner **and** the winner is stable across the window halves; no fixture-tuned confidence threshold.
-  - records local winners/scores/confidence plus contiguous strong runs and strong phase transitions; diagnostic only, no runtime phase mutation.
-  - efficient version commit `a0adbfc346871ee921b13cc579c10e2c47771b65`.
-- Added `analyzer/check_v143_post_repair_phase_path_shadow.py` commit `4434b13bfddf886e56a5e54f571c853139a19748`.
-  - validates aligned local-window coverage and pure strong-run/transition summarization without song/reference data.
-- Added CPU-only self-reporting workflow `.github/workflows/v143-post-repair-phase-path-shadow.yml` commit `c680158f29b61ceaa721acc7f8fb99223795456a`.
-  - no Modal/GPU.
-  - runs static checker + anti-leakage + protected blob gate, then one approved-audio timing/repair/local-phase-path pass.
-  - writes `debug/v143-contextual-prune/post-repair-local-phase-path-status.json` always and approved diagnostic on success.
-  - runtimePhaseChanged/liveRhythmOutputChanged/productionModified remain false.
+## Approved local phase-path diagnostic — GREEN / IMPORTANT
+CPU run `32737275715`, trigger `c680158f29b61ceaa721acc7f8fb99223795456a`:
+- static `success`, approved `success`, protected exact, reference-free, single feature extraction pass, runtime/live/Production unchanged.
+- 26 local windows (64 repaired beats / 16-beat stride).
+- first strong run: phase 1, 12 strong windows, repaired beat indices 32→272, mean confidence `0.54835`, min `0.40707`.
+- transition region 224→304 is ambiguous/unstable (winners 2/0/2 with insufficient stability).
+- later strong run: phase 3, 2 strong windows, repaired indices 304→384, mean confidence `0.50006`.
+- later strong phase 2: one strong window, repaired indices 368→432, confidence `0.48565`.
+- overall strong windows: phase1=12, phase3=2, phase2=1; multiple strong phases observed.
+This rules out treating the full-file phase-2 vote as a simple global correction. The repaired pulse train or musical phase evidence changes materially later in the track.
+
+## Raw↔repaired index-alignment diagnostic staged
+To distinguish repair-index drift from arrangement-only accent changes, added a purely reference-free raw/repaired index provenance test:
+- `analyzer/v143_repair_index_alignment_shadow.py` commit `f11e47147e9840280e10f7aef2762ab2c1502603`.
+  - nearest raw-beat match within 0.25 expected period (same generic scale as repair boundary search), traces `rawIndex - repairedIndex` and modulo-4 offset runs/change points.
+  - a raw inserted pulse should objectively produce a later modulo offset change even when repaired intervals are clean.
+- `analyzer/check_v143_repair_index_alignment_shadow.py` commit `2159d9172b37cf88fef4141115b70d10417b8a9f`.
+  - synthetic false-sub-beat proof requires offset run 0 before insertion and offset run 1 afterward; no song/reference labels.
+- Updated CPU-only phase-path workflow at commit `6ce76949057eaae6a10ed160de061e984db7f023` to run both static checkers and add `rawRepairedIndexAlignment` to the approved diagnostic.
+- This triggers one new CPU-only pass; still no Modal/GPU, no runtime timing mutation.
 
 ## Cost control
 - No Modal/GPU inference in this continuation.
 - Do not rerun old candidate/freeze/scorer.
-- Inspect only the single CPU local-phase-path run triggered by the new workflow.
+- Inspect only the single CPU index-alignment-enhanced local-phase-path run triggered by `6ce7694...`.
 
 ## Next exact actions
-1. Read `debug/v143-contextual-prune/post-repair-local-phase-path-status.json` once committed.
-2. If successful, inspect `post-repair-local-phase-path-approved-audio-shadow.json` for strong local runs/transitions.
-3. Determine whether the first-half phase-1 / second-half phase-2 disagreement is a stable local transition, ambiguous arrangement evidence, or pulse-grid drift.
-4. Do not alter runtime timing until that is resolved generically/reference-free.
-5. After timing coherence, resume independent pitch-carrier audit; any accepted correction still requires a brand-new candidate/freeze/PDF/lock before one new professional score.
+1. Read the new `post-repair-local-phase-path-status.json` and enhanced approved diagnostic.
+2. Compare raw↔repaired modulo-offset change points with the local phase-path transition region around repaired indices ~224–304 and later phase changes.
+3. If index-offset changes line up with phase changes, build a general post-repair phase provenance correction; if they do not, treat local phase changes as musical/arrangement evidence and do not mutate the global beat index.
+4. Stay CPU/reference-free until this distinction is resolved.
+5. Only after timing coherence, resume independent pitch-carrier audit; any accepted correction still requires a brand-new candidate/freeze/PDF/lock before one new professional score.
