@@ -1,0 +1,88 @@
+name: V143 Contextual Prune Precision Shadow Approved Audio
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - .github/workflows/v143-contextual-prune-precision-shadow-approved-audio.yml
+
+concurrency:
+  group: v143-contextual-prune-precision-shadow-approved-audio
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  approved-audio:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Preflight anti-leakage and protected runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_contextual_prune_precision_shadow.py \
+            analyzer/v143_contextual_prune_precision_shadow_modal.py; then
+            echo 'Forbidden scorer/source token in precision runtime' >&2
+            exit 1
+          fi
+          PYTHONPATH=analyzer python analyzer/check_v143_contextual_prune_precision_shadow.py
+      - name: Run approved-audio precision shadow
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check modal
+          python -m modal run analyzer/v143_contextual_prune_precision_shadow_modal.py::approved_audio \
+            --audio-path public/gomywayfullaitest.m4a \
+            --output-path debug/v143-contextual-prune/precision-shadow-approved-audio.json
+      - name: Validate and commit diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          p=Path('debug/v143-contextual-prune/precision-shadow-approved-audio.json')
+          d=json.loads(p.read_text())
+          i=d.get('invariants') or {}
+          required={
+            'sourceIsApprovedFixture':True,'referenceFree':True,'runtimeLabelsRequired':False,
+            'precisionAttacksSubsetOfCorrectedAttacks':True,'precisionPitchesSubsetOfObservedCarrierPitches':True,
+            'allTargetMeasuresPopulated':True,'candidateAddsUnobservedAttack':False,'candidateRelocatesEvents':False,
+            'candidateAddsUnobservedPitch':False,'liveRhythmOutputChanged':False,'leadChanged':False,'bassChanged':False,
+            'productionModified':False,
+          }
+          failed=[k for k,v in required.items() if i.get(k) is not v]
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          if protected!='7f72f8ed9b14af8bc93e95544195204d99c6bec1': failed.append('protectedPipelineBlob')
+          if failed: raise SystemExit(f'precision shadow invariant failure: {failed}')
+          d['actionTrace']={
+            'runId':int('${{ github.run_id }}'),'runAttempt':int('${{ github.run_attempt }}'),'triggerSha':'${{ github.sha }}',
+            'precisionModuleBlob':subprocess.check_output(['git','hash-object','analyzer/v143_contextual_prune_precision_shadow.py'],text=True).strip(),
+            'precisionModalBlob':subprocess.check_output(['git','hash-object','analyzer/v143_contextual_prune_precision_shadow_modal.py'],text=True).strip(),
+            'protectedPipelineBlob':protected,'protectedPipelineUnchanged':True,'productionModified':False,
+          }
+          p.write_text(json.dumps(d,indent=2)+'\n')
+          PY
+          git add debug/v143-contextual-prune/precision-shadow-approved-audio.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record approved-audio precision shadow'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
