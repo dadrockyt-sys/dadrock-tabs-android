@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 17:39 America/Montreal
+Updated: 2026-08-24 17:42 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -186,13 +186,22 @@ Fresh CPU replay of the exact timing + repair path:
 - Protected runtime unchanged.
 - `main` and Production untouched.
 
+## Checkpoint save — 2026-08-24 17:42 America/Montreal
+- User explicitly requested that the current state and next steps be saved here before continuing.
+- Precision v2 CPU guard is confirmed green from persisted result and successful job logs; no paid inference was used.
+- Timing remains frozen because reference-free IOI, tempo, bar-phase-stability and beat-repair audits do not justify a timing mutation.
+- The strongest justified correction remains precision v2, but the one-shot candidate capture is still behind the explicit paid-usage authorization gate.
+- No paid candidate workflow was dispatched, no professional reference was opened, no render was scored, and no Production/main mutation occurred.
+- Safe work can continue with CPU-only capture-readiness/invariant auditing so that, if paid usage is explicitly reopened later, the single permitted carrier capture has the highest chance of succeeding and preserving all replay evidence.
+
 # Next exact actions
-1. Keep timing frozen for now: current CPU evidence rejects simple tempo/local-gap/global-phase/repair-index fixes.
-2. Precision v2 CPU preflight is green and is the strongest justified pitch correction.
-3. **Do not dispatch paid candidate workflow unless user explicitly authorizes Modal/L4 usage.**
-4. Continue seeking a truly free way to recover/capture the exact two-view carrier; do not weaken source identity just to avoid Modal.
-5. If user explicitly authorizes paid capture, dispatch exactly once with `paid_capture_authorized=YES`; one-shot lock must prevent repeats.
-6. Immediately require persisted `precisionReplayEvidence` + `precision-v2-replay-policy-compare.json` to reconcile exactly before any later inference/mutation.
-7. Use persisted replay evidence for all subsequent precision experiments CPU-only.
-8. Only when source-only evidence supports a genuinely corrected candidate: immutable freeze/PDF → fidelity `1.0` → lock → exactly one professional score.
-9. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
+1. Reverify branch and protected runtime blob before every candidate-path mutation; keep `main` and Production untouched.
+2. Keep timing frozen: current CPU evidence rejects simple tempo/local-gap/global-phase/repair-index fixes.
+3. Continue **CPU-only** preauthorization readiness work: audit the one-shot workflow, producer, replay serializer, lock, hash binding and failure paths so one future capture cannot lose the full source universe again.
+4. Precision v2 remains the strongest justified pitch correction; do not weaken its source identity or tune it against professional mismatches.
+5. **Do not dispatch the paid candidate workflow unless the user explicitly authorizes Modal/L4 usage.**
+6. If explicit authorization is later given, dispatch exactly once with `paid_capture_authorized=YES`; require the one-shot lock to prevent repeats.
+7. Immediately require persisted `precisionReplayEvidence` + `precision-v2-replay-policy-compare.json` to reconcile exactly before any later inference or mutation.
+8. Use persisted replay evidence for every subsequent precision experiment CPU-only; no repeated separator inference.
+9. Only when source-only evidence supports a genuinely corrected candidate: immutable freeze/PDF → fidelity `1.0` → lock → exactly one professional score.
+10. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
