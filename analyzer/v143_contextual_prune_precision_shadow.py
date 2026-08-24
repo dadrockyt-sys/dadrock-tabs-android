@@ -37,6 +37,7 @@ class PrecisionShadowResult:
     pruned_events: frozenset[EventKey]
     original_pitch_sets: dict[EventKey, tuple[int, ...]]
     pitch_sets: dict[EventKey, tuple[int, ...]]
+    primary_midis: dict[EventKey, int]
     fail_safe_events: frozenset[EventKey]
     fundamental_promotions: int
     suppressed_pitch_count: int
@@ -44,6 +45,13 @@ class PrecisionShadowResult:
     def diagnostics(self) -> dict[str, Any]:
         before_pitches = sum(len(value) for value in self.original_pitch_sets.values())
         after_pitches = sum(len(value) for value in self.pitch_sets.values())
+        primary_complete = (
+            set(self.primary_midis) == set(self.retained_events)
+            and all(
+                int(primary) in set(self.pitch_sets.get(key, ()))
+                for key, primary in self.primary_midis.items()
+            )
+        )
         return {
             "inputAttackCount": len(self.input_events),
             "retainedAttackCount": len(self.retained_events),
@@ -51,6 +59,8 @@ class PrecisionShadowResult:
             "failSafeAttackCount": len(self.fail_safe_events),
             "originalPitchHypothesisCount": int(before_pitches),
             "retainedPitchHypothesisCount": int(after_pitches),
+            "explicitPrimaryMidiCount": len(self.primary_midis),
+            "explicitPrimaryMidiComplete": bool(primary_complete),
             "suppressedPitchCount": int(self.suppressed_pitch_count),
             "fundamentalPromotionCount": int(self.fundamental_promotions),
             "attackTransientRatioFloor": ATTACK_TRANSIENT_RATIO_FLOOR,
@@ -238,8 +248,10 @@ def _harmonic_family_score(
     return float(score)
 
 
-def _precision_pitch_set(row: Mapping[str, Any]) -> tuple[tuple[int, ...], bool]:
+def _precision_pitch_set(row: Mapping[str, Any]) -> tuple[tuple[int, ...], bool, int]:
     original = _candidate_midis(row)
+    if not original:
+        raise ValueError("Precision pitch selection requires an observed candidate pitch")
     evidence = {midi: _pitch_evidence(row, midi) for midi in original}
     positive = {
         midi: item
@@ -247,7 +259,11 @@ def _precision_pitch_set(row: Mapping[str, Any]) -> tuple[tuple[int, ...], bool]
         if item["attack"] > POSITIVE_ATTACK_FLOOR and item["body"] > POSITIVE_BODY_FLOOR
     }
     if not positive:
-        return original, False
+        strongest = max(
+            original,
+            key=lambda midi: (evidence[midi]["score"], evidence[midi]["attack"], -midi),
+        )
+        return original, False, int(strongest)
 
     strongest_raw_midi = max(
         positive,
@@ -268,7 +284,6 @@ def _precision_pitch_set(row: Mapping[str, Any]) -> tuple[tuple[int, ...], bool]
         primary = strongest_raw_midi
 
     kept = {int(primary)}
-    primary_item = positive[primary]
     for midi, item in sorted(
         positive.items(),
         key=lambda pair: (pair[1]["score"], pair[1]["attack"], -pair[0]),
@@ -287,7 +302,7 @@ def _precision_pitch_set(row: Mapping[str, Any]) -> tuple[tuple[int, ...], bool]
         kept.add(int(midi))
 
     promoted = int(primary) != int(strongest_raw_midi)
-    return tuple(sorted(kept)), promoted
+    return tuple(sorted(kept)), promoted, int(primary)
 
 
 def apply_reference_free_precision_shadow(
@@ -304,8 +319,10 @@ def apply_reference_free_precision_shadow(
     transient-vs-body evidence plus a narrow local-prominence exception. Pitch
     precision ranks observed lower candidates with physically supported upper
     harmonic families, then requires strong independent evidence for additional
-    chord tones. No key, chord name, song section, reference label, or target event
-    count is accepted by the function.
+    chord tones. The selected primary pitch is explicitly preserved so a later
+    guitar-voicing adapter cannot silently replace a promoted fundamental with a
+    stronger overtone. No key, chord name, song section, reference label, or target
+    event count is accepted by the function.
     """
     if not isinstance(correction, ShadowCorrectionResult):
         raise TypeError("correction must be ShadowCorrectionResult")
@@ -329,8 +346,6 @@ def apply_reference_free_precision_shadow(
         measure_inputs = sorted(key for key in eligible if key[0] == measure)
         if not measure_inputs or any(key in retained for key in measure_inputs):
             continue
-        # Preserve coverage using only an already-corrected, physically observed
-        # slot. Prefer transient evidence first, then contextual strength.
         winner = max(
             measure_inputs,
             key=lambda key: (
@@ -344,25 +359,27 @@ def apply_reference_free_precision_shadow(
 
     original_pitch_sets: dict[EventKey, tuple[int, ...]] = {}
     pitch_sets: dict[EventKey, tuple[int, ...]] = {}
+    primary_midis: dict[EventKey, int] = {}
     promoted_count = 0
     suppressed = 0
     for key in sorted(retained):
         row = rows_by_slot[key]
         original = _candidate_midis(row)
         if not original:
-            # A corrected event with no carrier pitch cannot be safely emitted.
             retained.remove(key)
             fail_safe.discard(key)
             continue
-        selected, promoted = _precision_pitch_set(row)
+        selected, promoted, primary = _precision_pitch_set(row)
         if not selected:
             selected = original
+        if int(primary) not in set(selected):
+            raise RuntimeError(f"Precision primary escaped retained pitch set at {key}")
         original_pitch_sets[key] = original
         pitch_sets[key] = selected
+        primary_midis[key] = int(primary)
         promoted_count += int(promoted)
         suppressed += max(0, len(original) - len(selected))
 
-    # Re-run the coverage fail-safe if an impossible pitch row was removed.
     retained_measures = {measure for measure, _step in retained}
     missing = targets - retained_measures
     if missing:
@@ -381,19 +398,27 @@ def apply_reference_free_precision_shadow(
             retained.add(winner)
             fail_safe.add(winner)
             original = _candidate_midis(rows_by_slot[winner])
-            selected, promoted = _precision_pitch_set(rows_by_slot[winner])
+            selected, promoted, primary = _precision_pitch_set(rows_by_slot[winner])
+            selected = selected or original
+            if int(primary) not in set(selected):
+                raise RuntimeError(f"Precision fail-safe primary escaped pitch set at {winner}")
             original_pitch_sets[winner] = original
-            pitch_sets[winner] = selected or original
+            pitch_sets[winner] = selected
+            primary_midis[winner] = int(primary)
             promoted_count += int(promoted)
-            suppressed += max(0, len(original) - len(pitch_sets[winner]))
+            suppressed += max(0, len(original) - len(selected))
 
     pruned = input_events - retained
     if not retained.issubset(input_events):
         raise RuntimeError("Precision shadow added an attack")
+    if set(primary_midis) != set(retained):
+        raise RuntimeError("Precision shadow did not preserve one explicit primary per retained attack")
     for key, selected in pitch_sets.items():
         observed = set(_candidate_midis(rows_by_slot[key]))
         if not set(selected).issubset(observed):
             raise RuntimeError(f"Precision shadow invented pitch at {key}")
+        if int(primary_midis[key]) not in set(selected):
+            raise RuntimeError(f"Precision primary is not retained at {key}")
 
     return PrecisionShadowResult(
         input_events=frozenset(input_events),
@@ -401,6 +426,7 @@ def apply_reference_free_precision_shadow(
         pruned_events=frozenset(pruned),
         original_pitch_sets=original_pitch_sets,
         pitch_sets=pitch_sets,
+        primary_midis=primary_midis,
         fail_safe_events=frozenset(fail_safe),
         fundamental_promotions=int(promoted_count),
         suppressed_pitch_count=int(suppressed),
