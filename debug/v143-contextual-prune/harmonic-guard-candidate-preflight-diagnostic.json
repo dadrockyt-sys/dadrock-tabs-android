@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-harmonic-guard-candidate-pre-modal-preflight-replay",
+  "checks": {
+    "originalOneShotMarkerStillPresent": true,
+    "oldCandidatePresent": true,
+    "guardProofPresent": true,
+    "approvedAudioPresent": true,
+    "protectedPipelinePresent": true,
+    "oldCandidateBlobExact": true,
+    "protectedPipelineExact": true,
+    "approvedAudioShaExact": true,
+    "guardProofExact": true,
+    "allCandidatePythonCompiles": true,
+    "guardCheckerPassed": true,
+    "antiLeakagePassed": true
+  },
+  "failedChecks": [],
+  "details": {
+    "newCandidateAlreadyPresent": false,
+    "oldCandidateBlob": "20e7a583fcb96249636cc63b01cf9ae0044f2c62",
+    "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+    "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "guardProofChecks": {
+      "passed": true,
+      "correctionChangesPitchIdentity": true,
+      "correctionChangesAttackIdentity": true,
+      "protectedPipelineUnchanged": true,
+      "antiLeakagePassed": true,
+      "professionalReferenceUsed": true,
+      "runtimeLabelsRequired": true,
+      "productionModified": true,
+      "modalGpuUsed": true,
+      "oldCandidateOpportunityCount96": true
+    },
+    "compileResults": {
+      "analyzer/v143_repaired_timing_precision_candidate_product_modal.py": true,
+      "analyzer/v143_precision_promoted_harmonic_guard.py": true,
+      "analyzer/check_v143_precision_promoted_harmonic_guard.py": true,
+      "analyzer/v143_precision_sustain_promotion.py": true
+    },
+    "guardCheckerReturnCode": 0,
+    "guardCheckerStdoutTail": "V143 precision promoted harmonic guard checker: PASS\n{\n  \"schemaVersion\": 1,\n  \"gate\": \"v143-precision-promoted-harmonic-guard-proof\",\n  \"syntheticChecks\": {\n    \"attackIdentityUnchanged\": true,\n    \"primaryMidiUnchanged\": true,\n    \"promotedOctaveStrongestSuppressed\": true,\n    \"nonHarmonicStrongestPreserved\": true,\n    \"unpromotedPitchSetPreserved\": true,\n    \"exactlyOneSyntheticPitchSuppressed\": true,\n    \"diagnosticInspectedThree\": true,\n    \"diagnosticSawTwoPromotions\": true,\n    \"diagnosticSawOneHarmonicPromotion\": true,\n    \"diagnosticSuppressedOne\": true,\n    \"noAttackAdded\": true,\n    \"noPitchAdded\": true,\n    \"noRelocation\": true\n  },\n  \"oldCandidateChecks\": {\n    \"auditSchemaV2\": true,\n    \"doubleCountPathProven\": true,\n    \"oldFundamentalPromotionCount144\": true,\n    \"oldAllPromotedStrongestRendered\": true,\n    \"oldHarmonicPromotedStrongestRendered96\": true,\n    \"oldOctavePromotedStrongest78\": true,\n    \"oldSerializedPerPitchBasicPitchSupportUnavailable\": true\n  },\n  \"oldCandidateScoringRelevantSuppressionOpportunityCount\": 96,\n  \"oldCandidateOctaveSuppressionOpportunityCount\": 78,\n  \"correctionChangesPitchIdentity\": true,\n  \"correctionChangesAttackIdentity\": false,\n  \"correctionAddsPitch\": false,\n  \"correctionRelocatesAttack\": false,\n  \"guardDiagnostics\": {\n    \"schemaVersion\": 1,\n    \"guard\": \"v143-reference-free-promoted-fundamental-strongest-harmonic\",\n    \"inspectedAttackCount\": 3,\n    \"promotedPrimaryCount\": 2,\n    \"harmonicStrongestAbovePromotedPrimaryCount\": 1,\n    \"suppressedStrongestHarmonicCount\": 1,\n    \"attackIdentityChanged\": false,\n    \"primaryMidiChanged\": false,\n    \"addsUnobservedAttack\": false,\n    \"addsUnobservedPitch\": false,\n    \"relocatesAttack\": false,\n    \"referenceFree\": true,\n    \"professionalReferenceUsed\": false,\n    \"runtimeLabelsRequired\": false,\n    \"productionModified\": false\n  },\n  \"protectedPipelineBlob\": \"7f72f8ed9b14af8bc93e95544195204d99c6bec1\",\n  \"expectedProtectedPipelineBlob\": \"7f72f8ed9b14af8bc93e95544195204d99c6bec1\",\n  \"protectedPipelineUnchanged\": true,\n  \"antiLeakagePassed\": true,\n  \"professionalReferenceUsed\": false,\n  \"runtimeLabelsRequired\": false,\n  \"productionModified\": false,\n  \"modalGpuUsed\": false,\n  \"passed\": true\n}\n",
+    "guardCheckerStderrTail": "",
+    "antiLeakageHits": []
+  },
+  "errors": [],
+  "modalImported": false,
+  "modalInvoked": false,
+  "modalGpuUsed": false,
+  "professionalReferenceUsed": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "passed": true
+}
