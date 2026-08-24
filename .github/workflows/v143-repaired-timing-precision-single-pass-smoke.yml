@@ -1,9 +1,10 @@
 name: V143 Repaired Timing Precision Single Pass Smoke
 
-# Low-cost bridge gate. Manual only; exactly one full combined pass.
-# Requires green cross-host CPU proof and green separator single-pass smoke.
+# One-shot combined validation; push trigger removed immediately after launch.
 on:
-  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v143-repaired-timing-precision-single-pass-smoke.yml]
 
 permissions: {contents: write}
 
