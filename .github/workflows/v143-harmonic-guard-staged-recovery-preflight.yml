@@ -32,34 +32,48 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Compile and prove staged recovery without Modal execution
+      - name: Run and capture zero-Modal preflight
+        id: preflight
         shell: bash
         run: |
-          set -euo pipefail
-          python -m py_compile \
-            analyzer/v143_harmonic_guard_staged_recovery_modal.py \
-            analyzer/check_v143_harmonic_guard_staged_recovery.py
-          python analyzer/check_v143_harmonic_guard_staged_recovery.py
-          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
-          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
-          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
-            analyzer/v143_harmonic_guard_staged_recovery_modal.py \
-            analyzer/check_v143_harmonic_guard_staged_recovery.py; then
-            echo 'Forbidden scorer/source token in staged recovery path' >&2
-            exit 31
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          {
+            python -m py_compile \
+              analyzer/v143_harmonic_guard_staged_recovery_modal.py \
+              analyzer/check_v143_harmonic_guard_staged_recovery.py && \
+            python analyzer/check_v143_harmonic_guard_staged_recovery.py && \
+            test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1' && \
+            test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          } > debug/v143-contextual-prune/harmonic-guard-staged-recovery-preflight-run.txt 2>&1
+          rc=$?
+          if test "$rc" -eq 0; then
+            if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+              analyzer/v143_harmonic_guard_staged_recovery_modal.py \
+              analyzer/check_v143_harmonic_guard_staged_recovery.py \
+              >> debug/v143-contextual-prune/harmonic-guard-staged-recovery-preflight-run.txt 2>&1; then
+              echo 'Forbidden scorer/source token in staged recovery path' >> debug/v143-contextual-prune/harmonic-guard-staged-recovery-preflight-run.txt
+              rc=31
+            fi
           fi
+          echo "exitCode=$rc" >> debug/v143-contextual-prune/harmonic-guard-staged-recovery-preflight-run.txt
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
 
-      - name: Commit zero-Modal preflight proof
+      - name: Commit preflight evidence
         shell: bash
         run: |
           set -euo pipefail
-          git add -- debug/v143-contextual-prune/harmonic-guard-staged-recovery-preflight.json
-          if test -f debug/v143-contextual-prune/RUN_HARMONIC_GUARD_STAGED_RECOVERY_PREFLIGHT_ONCE; then
+          git add -- debug/v143-contextual-prune/harmonic-guard-staged-recovery-preflight-run.txt
+          if test -s debug/v143-contextual-prune/harmonic-guard-staged-recovery-preflight.json; then
+            git add -- debug/v143-contextual-prune/harmonic-guard-staged-recovery-preflight.json
+          fi
+          if test "${{ steps.preflight.outputs.rc }}" = '0' && test -f debug/v143-contextual-prune/RUN_HARMONIC_GUARD_STAGED_RECOVERY_PREFLIGHT_ONCE; then
             git rm -- debug/v143-contextual-prune/RUN_HARMONIC_GUARD_STAGED_RECOVERY_PREFLIGHT_ONCE
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record staged harmonic guard recovery preflight'
+          git commit -m 'Record staged harmonic guard recovery preflight evidence'
           for attempt in 1 2 3 4; do
             git fetch origin v143-contextual-prune-lobo
             git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
@@ -67,3 +81,9 @@ jobs:
             sleep 2
           done
           exit 1
+
+      - name: Enforce preflight result
+        if: always()
+        shell: bash
+        run: |
+          test "${{ steps.preflight.outputs.rc }}" = '0'
