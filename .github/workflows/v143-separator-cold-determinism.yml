@@ -1,4 +1,5 @@
 name: V143 Separator Cold Determinism
+# v2: Demucs CPU isolation after GPU cold-session mismatch; RoFormer remains on proven deterministic accelerated path.
 
 on:
   workflow_dispatch:
@@ -104,11 +105,13 @@ jobs:
           protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
           passed=all(item['exact'] for item in comparisons.values()) and inv_ok and protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1'
           report={
-              'schemaVersion':1,
+              'schemaVersion':2,
               'gate':'v143-separator-cold-determinism',
               'runId':int('${{ github.run_id }}'),
               'runAttempt':int('${{ github.run_attempt }}'),
               'triggerSha':'${{ github.sha }}',
+              'demucsExecutionDevice':'cpu',
+              'roformerExecutionDevice':'gpu-auto-proven-deterministic',
               'independentPassCount':len(passes),
               'passes':passes,
               'comparisons':comparisons,
