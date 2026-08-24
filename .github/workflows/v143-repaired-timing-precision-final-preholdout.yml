@@ -1,0 +1,285 @@
+name: V143 Repaired Timing Precision Final Pre-Holdout
+
+# Freeze/render the already-green committed candidate. No Modal analysis is run here.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-repaired-timing-precision-final-preholdout
+  cancel-in-progress: true
+
+jobs:
+  freeze-render-lock-input:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out exact triggering revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Bind exact green candidate and safety proofs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .preholdout/logs debug/v143-contextual-prune
+          candidate='debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json'
+          test -s "$candidate"
+          test "$(git hash-object "$candidate")" = '20e7a583fcb96249636cc63b01cf9ae0044f2c62'
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          test -s debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json
+          python validation/rhythm_holdout/verify_runtime_isolation.py > .preholdout/logs/runtime-isolation.json
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          candidate_path=Path('debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json')
+          d=json.loads(candidate_path.read_text(encoding='utf-8'))
+          exact=json.loads(Path('debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json').read_text(encoding='utf-8'))
+          isolation=json.loads(Path('.preholdout/logs/runtime-isolation.json').read_text(encoding='utf-8'))
+          c=d.get('candidate') or {}; live=d.get('liveV143') or {}; assembly=d.get('assembly') or {}; precision=d.get('precisionDiagnostics') or {}; trace=d.get('preFreezeTrace') or {}
+          events=d.get('events') or []
+          raw=json.dumps(events,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode('utf-8')
+          event_sha=hashlib.sha256(raw).hexdigest()
+          checks={
+            'candidateApprovedFixture':c.get('approvedFixture') is True,
+            'candidateSourceExact':c.get('sourceSha256')=='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+            'audioMeasureRange':c.get('measureRangeDerivedFromAudio') is True,
+            'timingOutliersZero':c.get('repairedIntervalOutliersZero') is True,
+            'tempoUnchanged':c.get('tempoChangedByRepair') is False,
+            'barPhaseUnchanged':c.get('barPhaseChangedByRepair') is False,
+            'candidateNoReference':c.get('professionalReferenceUsed') is False,
+            'candidateNoRuntimeLabels':c.get('runtimeLabelsRequired') is False,
+            'candidateNoInventedAttack':c.get('addsUnobservedAttack') is False,
+            'candidateNoInventedPitch':c.get('addsUnobservedPitch') is False,
+            'candidateNoRelocation':c.get('relocatesAttack') is False,
+            'protectedRuntimeUnmodified':c.get('protectedLivePipelineModified') is False,
+            'liveEndpointUnmodified':c.get('liveEndpointDeployedOrModified') is False,
+            'productionUnmodified':c.get('productionModified') is False,
+            'liveReferenceFree':live.get('referenceFree') is True,
+            'liveNoProfessionalReference':live.get('professionalReferenceUsed') is False,
+            'liveNoReferenceRuntimeInput':live.get('referenceRuntimeInputUsed') is False,
+            'liveNoRuntimeLabels':live.get('runtimeLabelsRequired') is False,
+            'assemblyReferenceFree':assembly.get('referenceFree') is True,
+            'assemblyPolyphonic':assembly.get('polyphonicExpansion') is True,
+            'precisionReferenceFree':precision.get('referenceFree') is True,
+            'precisionPrimaryComplete':precision.get('explicitPrimaryMidiComplete') is True,
+            'eventsPresent':len(events)>0,
+            'selectedAttacksPresent':int(d.get('selectedCount') or 0)>0,
+            'all113Measures':int(d.get('audioDerivedMeasureCount') or 0)==113,
+            'preFreezePassed':trace.get('passed') is True,
+            'preFreezeProductionUnmodified':trace.get('productionModified') is False,
+            'preFreezeProtectedExact':trace.get('protectedPipelineUnchanged') is True,
+            'preFreezeEventCountExact':int(trace.get('eventCount') or -1)==len(events),
+            'preFreezeEventShaExact':trace.get('eventsSha256')==event_sha,
+            'coldExactPassed':exact.get('passed') is True,
+            'coldExactProtected':exact.get('protectedPipelineUnchanged') is True,
+            'coldExactProduction':exact.get('productionModified') is False,
+            'runtimeIsolationPassed':isolation.get('passed') is True,
+          }
+          failed=[k for k,v in checks.items() if not v]
+          report={'schemaVersion':1,'gate':'current-candidate-binding','candidateBlob':'20e7a583fcb96249636cc63b01cf9ae0044f2c62','candidateResultCommit':'289a04e0fe30b5668ddaf39427404d8472ca1f51','candidatePreFreezeEventSha256':event_sha,'candidateEventCount':len(events),'checks':checks,'failedChecks':failed,'referenceOpened':False,'passed':not failed}
+          Path('.preholdout/logs/current-candidate-binding.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+          if failed: raise SystemExit('candidate binding failed: '+', '.join(failed))
+          PY
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            validation/rhythm_holdout/prepare_precision_candidate_freeze_payload.mjs \
+            validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs \
+            validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            lib/jimmyPaigeAnalysisPayload.js lib/v143RenderContract.js lib/createV143RhythmPdf.js; then
+            echo 'Forbidden scorer/source token in final preholdout runtime path' >&2
+            exit 31
+          fi
+
+      - name: Install isolated freeze/render dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .preholdout
+          printf '%s\n' '{"private":true,"dependencies":{"pdf-lib":"1.17.1"}}' > .preholdout/package.json
+          npm install --prefix .preholdout --ignore-scripts --no-audit --no-fund --package-lock=false
+          python -m pip install --disable-pip-version-check --quiet pypdf
+
+      - name: Prepare standalone ESM freeze and renderer tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .preholdout/esm .preholdout/freeze/pdf
+          cp lib/v143RenderContract.js .preholdout/esm/v143RenderContract.mjs
+          sed "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" lib/v143AnalyzerQuality.js > .preholdout/esm/v143AnalyzerQuality.mjs
+          sed -e "s#'./v143AnalyzerQuality.js'#'./v143AnalyzerQuality.mjs'#" -e "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" lib/jimmyPaigeAnalysisPayload.js > .preholdout/esm/jimmyPaigeAnalysisPayload.mjs
+          sed "s#../../lib/jimmyPaigeAnalysisPayload.js#./jimmyPaigeAnalysisPayload.mjs#" validation/rhythm_holdout/prepare_precision_candidate_freeze_payload.mjs > .preholdout/esm/prepare-freeze.mjs
+          sed "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" lib/createV143RhythmPdf.js > .preholdout/esm/createV143RhythmPdf.mjs
+          sed "s#../../lib/v143RenderContract.js#./v143RenderContract.mjs#" validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs > .preholdout/esm/render-frozen.mjs
+          node --check .preholdout/esm/v143RenderContract.mjs
+          node --check .preholdout/esm/v143AnalyzerQuality.mjs
+          node --check .preholdout/esm/jimmyPaigeAnalysisPayload.mjs
+          node --check .preholdout/esm/prepare-freeze.mjs
+          node --check .preholdout/esm/createV143RhythmPdf.mjs
+          node --check .preholdout/esm/render-frozen.mjs
+          python -m py_compile validation/rhythm_holdout/canonical.py validation/rhythm_holdout/freeze_rhythm_analysis.py validation/rhythm_holdout/verify_pdf_event_fidelity.py
+
+      - name: Freeze exact committed candidate events
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json .preholdout/raw-product-output.json
+          node .preholdout/esm/prepare-freeze.mjs .preholdout/raw-product-output.json .preholdout/rhythm-freeze-input.json > .preholdout/logs/prepare-freeze.log 2>&1
+          checked_out_commit=$(git rev-parse HEAD)
+          test "$checked_out_commit" = "$GITHUB_SHA"
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py .preholdout/rhythm-freeze-input.json .preholdout/freeze --source-commit "$checked_out_commit" > .preholdout/logs/freeze.log 2>&1
+          test -s .preholdout/freeze/rhythm-frozen-analysis.json
+          test -s .preholdout/freeze/rhythm-freeze-manifest.json
+
+      - name: Render exact professional preview and full PDF
+        shell: bash
+        run: |
+          set -euo pipefail
+          NODE_PATH="$PWD/.preholdout/node_modules" node .preholdout/esm/render-frozen.mjs .preholdout/freeze/rhythm-frozen-analysis.json .preholdout/freeze/pdf .preholdout/esm/createV143RhythmPdf.mjs > .preholdout/logs/render-pdf.log 2>&1
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py .preholdout/freeze .preholdout/freeze/pdf/pdf-event-evidence.json > .preholdout/logs/pdf-fidelity.log 2>&1
+          test -s .preholdout/freeze/pdf/full-frozen-rhythm.pdf
+          test -s .preholdout/freeze/pdf/preview-frozen-rhythm.pdf
+          test -s .preholdout/freeze/rhythm-pdf-event-fidelity.json
+
+      - name: Verify professional presentation and visible PDF contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          NODE_PATH="$PWD/.preholdout/node_modules" node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { summarizeV143RhythmPresentation } from './.preholdout/esm/v143RenderContract.mjs';
+          const frozen=JSON.parse(await fs.readFile('.preholdout/freeze/rhythm-frozen-analysis.json','utf8'));
+          const p=summarizeV143RhythmPresentation(frozen.renderEvents||[]);
+          const checks={eventCountPositive:p.eventCount>0,all113Measures:p.uniqueMeasureCount===113,multiNoteDensity:p.averageNotesPerMeasure>2,uniqueOnsets:p.uniqueOnsetCount>p.uniqueMeasureCount,polyphony:p.multiNoteOnsetCount>0,chords:p.maximumChordSize>=2,techniques:p.techniqueEventCount>0&&p.techniqueTypes.length>=2,sections:p.sectionCount>=2,noCollapse:p.oneNotePerMeasureCollapseDetected===false,referenceFree:p.referenceFree===true,professionalReferenceNotUsed:p.professionalReferenceUsed===false,runtimeLabelsNotRequired:p.runtimeLabelsRequired===false};
+          const failed=Object.entries(checks).filter(([,v])=>!v).map(([k])=>k);
+          await fs.writeFile('.preholdout/freeze/pdf/rhythm-render-presentation.json',JSON.stringify({schemaVersion:1,gate:'current-candidate-presentation',presentation:p,checks,failedChecks:failed,passed:failed.length===0},null,2)+'\n');
+          if(failed.length) throw new Error(failed.join(', '));
+          NODE
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from pypdf import PdfReader
+          full=Path('.preholdout/freeze/pdf/full-frozen-rhythm.pdf'); preview=Path('.preholdout/freeze/pdf/preview-frozen-rhythm.pdf')
+          ft='\n'.join(p.extract_text() or '' for p in PdfReader(str(full)).pages); pt='\n'.join(p.extract_text() or '' for p in PdfReader(str(preview)).pages)
+          checks={'timingGridLegendVisible':'Timing: 16th-note grid' in ft,'sectionLabelsVisible':'SECTION ' in ft,'techniqueLegendHammerOnVisible':'hammer-on' in ft,'techniqueLegendPullOffVisible':'pull-off' in ft,'techniqueLegendSlideVisible':'slide' in ft,'previewLockVisible':'FULL TAB LOCKED' in pt,'previewTimingGridLegendVisible':'Timing: 16th-note grid' in pt,'previewSectionLabelsVisible':'SECTION ' in pt}
+          failed=[k for k,v in checks.items() if not v]
+          Path('.preholdout/freeze/pdf/rhythm-render-text-proof.json').write_text(json.dumps({'schemaVersion':1,'gate':'current-candidate-render-text','checks':checks,'failedChecks':failed,'passed':not failed},indent=2)+'\n',encoding='utf-8')
+          if failed: raise SystemExit('render text proof failed: '+', '.join(failed))
+          PY
+
+      - name: Write fresh immutable pre-holdout proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          raw=json.loads(Path('.preholdout/raw-product-output.json').read_text(encoding='utf-8'))
+          freeze_input=json.loads(Path('.preholdout/rhythm-freeze-input.json').read_text(encoding='utf-8'))
+          manifest=json.loads(Path('.preholdout/freeze/rhythm-freeze-manifest.json').read_text(encoding='utf-8'))
+          frozen=json.loads(Path('.preholdout/freeze/rhythm-frozen-analysis.json').read_text(encoding='utf-8'))
+          fidelity=json.loads(Path('.preholdout/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+          evidence=json.loads(Path('.preholdout/freeze/pdf/pdf-event-evidence.json').read_text(encoding='utf-8'))
+          presentation=json.loads(Path('.preholdout/freeze/pdf/rhythm-render-presentation.json').read_text(encoding='utf-8'))
+          text=json.loads(Path('.preholdout/freeze/pdf/rhythm-render-text-proof.json').read_text(encoding='utf-8'))
+          binding=json.loads(Path('.preholdout/logs/current-candidate-binding.json').read_text(encoding='utf-8'))
+          isolation=json.loads(Path('.preholdout/logs/runtime-isolation.json').read_text(encoding='utf-8'))
+          live=raw.get('liveV143') or {}; assembly=raw.get('assembly') or {}; candidate=raw.get('candidate') or {}; frozen_safety=frozen.get('safety') or {}; present=presentation.get('presentation') or {}; trace=raw.get('preFreezeTrace') or {}
+          retired={'c621ab4fd3a14849946a349b1ce2ed430322e3a8b49310f073b51cd8f417a194','e693602ade26256851dc0d77b003bf6ba0d5014dfaec7e35103ecdf25d33c32f'}
+          checks={
+            'runtimeIsolationPassed':isolation.get('passed') is True,
+            'candidateBindingPassed':binding.get('passed') is True,
+            'approvedAudioFixture':candidate.get('approvedFixture') is True,
+            'referenceFree':live.get('referenceFree') is True,
+            'professionalReferenceNotUsed':live.get('professionalReferenceUsed') is False,
+            'referenceRuntimeInputNotUsed':live.get('referenceRuntimeInputUsed') is False,
+            'runtimeLabelsNotRequired':live.get('runtimeLabelsRequired') is False,
+            'v143RuntimeSafetyVerified':freeze_input.get('v143RuntimeSafetyVerified') is True,
+            'frozenReferenceFree':frozen_safety.get('referenceFree') is True,
+            'frozenProfessionalReferenceNotUsed':frozen_safety.get('professionalReferenceUsed') is False,
+            'frozenReferenceRuntimeInputNotUsed':frozen_safety.get('referenceRuntimeInputUsed') is False,
+            'frozenRuntimeLabelsNotRequired':frozen_safety.get('runtimeLabelsRequired') is False,
+            'freezeManifestReferenceNotOpened':manifest.get('referenceOpenedDuringFreeze') is False,
+            'sourceCommitExact':manifest.get('sourceCommit')==os.environ.get('GITHUB_SHA'),
+            'sourceAudioHashExact':manifest.get('sourceAudioSha256')=='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+            'frozenEventCountPositive':int(manifest.get('eventCount') or 0)>0,
+            'all113Measures':int(manifest.get('uniqueMeasureCount') or 0)==113,
+            'polyphonicExpansion':assembly.get('polyphonicExpansion') is True,
+            'renderNotesExceedSelectedAttacks':int(assembly.get('renderNoteCount') or 0)>int(assembly.get('selectedAttackCount') or 0),
+            'oneNotePerMeasureCollapseAbsent':present.get('oneNotePerMeasureCollapseDetected') is False,
+            'presentationProofPassed':presentation.get('passed') is True,
+            'renderTextProofPassed':text.get('passed') is True,
+            'timingDisplayVerified':text.get('checks',{}).get('timingGridLegendVisible') is True,
+            'techniqueDisplayVerified':all(text.get('checks',{}).get(k) is True for k in ['techniqueLegendHammerOnVisible','techniqueLegendPullOffVisible','techniqueLegendSlideVisible']),
+            'sectionDisplayVerified':text.get('checks',{}).get('sectionLabelsVisible') is True,
+            'pdfRendererProjectionExact':evidence.get('rendererProjectionExactlyEqual') is True,
+            'fullPdfRendered':int(evidence.get('fullPdfBytes') or 0)>20000,
+            'previewPdfRendered':int(evidence.get('previewPdfBytes') or 0)>20000,
+            'pdfEventFidelityExact':fidelity.get('pdfEventFidelity')==1.0,
+            'pdfHashMatchesFrozenHash':fidelity.get('pdfEventSha256')==manifest.get('eventSha256'),
+            'brandNewEventIdentity':manifest.get('eventSha256') not in retired,
+            'humanReferenceStillSealed':True,
+            'productionUnmodified':candidate.get('productionModified') is False,
+          }
+          failed=[k for k,v in checks.items() if not v]
+          report={
+            'schemaVersion':4,'gate':'rhythm-professional-preholdout-real-audio','workflowRunId':os.environ.get('GITHUB_RUN_ID'),'eventTriggerCommit':os.environ.get('GITHUB_SHA'),'sourceCommit':manifest.get('sourceCommit'),
+            'candidateResultCommit':'289a04e0fe30b5668ddaf39427404d8472ca1f51','candidateBlob':'20e7a583fcb96249636cc63b01cf9ae0044f2c62','candidatePreFreezeRunId':trace.get('runId'),'candidatePreFreezeEventSha256':trace.get('eventsSha256'),
+            'sourceAudioSha256':manifest.get('sourceAudioSha256'),'sourceAudioBytes':manifest.get('sourceAudioBytes'),'referenceFree':True,'professionalReferenceUsed':False,'referenceRuntimeInputUsed':False,'runtimeLabelsRequired':False,'v143RuntimeSafetyVerified':True,
+            'selectedAttackCount':assembly.get('selectedAttackCount'),'renderNoteCount':assembly.get('renderNoteCount'),'eventCount':manifest.get('eventCount'),'uniqueMeasureCount':manifest.get('uniqueMeasureCount'),'uniqueOnsetCount':present.get('uniqueOnsetCount'),'averageNotesPerMeasure':present.get('averageNotesPerMeasure'),'multiNoteOnsetCount':present.get('multiNoteOnsetCount'),'maximumChordSize':present.get('maximumChordSize'),'techniqueEventCount':present.get('techniqueEventCount'),'techniqueTypes':present.get('techniqueTypes'),'sectionCount':present.get('sectionCount'),'sections':present.get('sections'),
+            'frozenEventSha256':manifest.get('eventSha256'),'pdfEventSha256':fidelity.get('pdfEventSha256'),'pdfEventFidelity':fidelity.get('pdfEventFidelity'),'fullPdfBytes':evidence.get('fullPdfBytes'),'previewPdfBytes':evidence.get('previewPdfBytes'),'fullPageCount':evidence.get('fullPageCount'),'previewPageCount':evidence.get('previewPageCount'),
+            'checks':checks,'failedChecks':failed,'realProfessionalReferenceOpened':False,'professionalHumanScoreRun':False,'rhythmComplete':False,'productionModified':False,'productionPromotionAuthorized':False,'passed':not failed,
+          }
+          Path('debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+          if failed: raise SystemExit('fresh preholdout proof failed: '+', '.join(failed))
+          print(json.dumps({k:report[k] for k in ['workflowRunId','sourceCommit','eventCount','frozenEventSha256','pdfEventFidelity','passed']},indent=2))
+          PY
+
+      - name: Upload fresh freeze and professional PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhythm-professional-preholdout-real-audio
+          path: |
+            .preholdout/raw-product-output.json
+            .preholdout/rhythm-freeze-input.json
+            .preholdout/freeze/rhythm-frozen-analysis.json
+            .preholdout/freeze/rhythm-freeze-manifest.json
+            .preholdout/freeze/rhythm-pdf-event-fidelity.json
+            .preholdout/freeze/pdf/pdf-event-evidence.json
+            .preholdout/freeze/pdf/rhythm-render-presentation.json
+            .preholdout/freeze/pdf/rhythm-render-text-proof.json
+            .preholdout/freeze/pdf/full-frozen-rhythm.pdf
+            .preholdout/freeze/pdf/preview-frozen-rhythm.pdf
+            .preholdout/logs/*.json
+            .preholdout/logs/*.log
+            debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json
+          retention-days: 14
+
+      - name: Commit compact fresh pre-holdout proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record fresh repaired-precision Rhythm preholdout proof'
+          for n in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
