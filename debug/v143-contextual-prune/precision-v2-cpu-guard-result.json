@@ -9,7 +9,8 @@
   "professionalReferenceUsed": false,
   "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
   "replayCompareSelfTestPassed": true,
-  "runId": 32776944800,
-  "schemaVersion": 1,
-  "sourceSha": "6b952122c2f66dd05fa73341f363647fc0239751"
+  "runId": 32777140959,
+  "schemaVersion": 2,
+  "singlePaidCaptureStaticGuardPassed": true,
+  "sourceSha": "930b768107b9f6e93382a5ddf00462fc36543e78"
 }
