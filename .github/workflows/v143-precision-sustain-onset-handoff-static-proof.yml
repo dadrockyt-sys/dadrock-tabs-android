@@ -8,8 +8,10 @@ on:
     paths:
       - .github/workflows/v143-precision-sustain-onset-handoff-static-proof.yml
       - analyzer/check_v143_precision_sustain_onset_handoff.py
+      - analyzer/v143_precision_sustain_promotion.py
       - analyzer/v143_contextual_prune_precision_candidate_events.py
       - analyzer/v143_repaired_timing_precision_candidate_product_modal.py
+      - analyzer/v143_rhythm_sustain_technique_enricher.py
       - analyzer/v143_reference_free_rhythm_pipeline.py
 
 concurrency:
@@ -34,11 +36,13 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Prove current onset handoff defect statically
+      - name: Prove corrected onset handoff contract
         shell: bash
         run: |
           set -euo pipefail
-          python -m py_compile analyzer/check_v143_precision_sustain_onset_handoff.py
+          python -m py_compile \
+            analyzer/v143_precision_sustain_promotion.py \
+            analyzer/check_v143_precision_sustain_onset_handoff.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_sustain_onset_handoff.py \
             | tee debug/v143-contextual-prune/precision-sustain-onset-handoff.log
 
@@ -58,7 +62,7 @@ jobs:
           git commit -m "Record V143 precision sustain onset handoff proof"
           git push origin HEAD:v143-contextual-prune-lobo
 
-      - name: Enforce static proof
+      - name: Enforce corrected static proof
         shell: bash
         run: |
           python - <<'PY'
@@ -67,11 +71,20 @@ jobs:
 
           data = json.loads(Path("debug/v143-contextual-prune/precision-sustain-onset-handoff.json").read_text(encoding="utf-8"))
           required = {
-              "defectProven": True,
+              "passed": True,
+              "defectPresent": False,
               "assemblySeparatesPhysicalFromGrid": True,
-              "promotionAnchorsStartToGrid": True,
-              "promotionOverwritesPhysicalOnset": True,
-              "promotionClaimsAttackTimingChangedFalse": True,
+              "productDelegatesToPurePromotion": True,
+              "promotionModuleBundledInCandidateImage": True,
+              "eventCountUnchanged": True,
+              "attackPitchPositionIdentityUnchanged": True,
+              "physicalOnsetPreserved": True,
+              "quantizedGridStartPreserved": True,
+              "durationContractConsistent": True,
+              "physicalOnsetDeltaTruthful": True,
+              "sustainTimingMetadataTruthful": True,
+              "noInventedAttackOrPitch": True,
+              "correctionProven": True,
               "protectedPipelineUnchanged": True,
               "professionalReferenceUsed": False,
               "runtimeLabelsRequired": False,
@@ -80,6 +93,6 @@ jobs:
           }
           failed = [key for key, expected in required.items() if data.get(key) is not expected]
           if failed:
-              raise SystemExit(f"V143 onset handoff static proof failed: {failed}")
-          print("V143 precision sustain onset handoff static proof passed")
+              raise SystemExit(f"V143 corrected onset handoff proof failed: {failed}")
+          print("V143 precision sustain physical-onset preservation proof passed")
           PY
