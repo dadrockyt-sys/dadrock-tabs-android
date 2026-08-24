@@ -28,20 +28,24 @@ Approved-audio evidence already shows disagreement without professional referenc
 - independent repaired-grid consensus: phase 2 / first beat 2, confidence `0.1978`, two signal winners, unstable halves
 This proves inheritance is unsafe; it does not yet prove phase 2 is correct.
 
-## Post-repair phase shadow work
+## Post-repair phase shadow status
 - `analyzer/v143_post_repair_bar_phase_shadow.py`: diagnostic-only multi-window audio phase assessment; no runtime mutation.
-- `analyzer/check_v143_post_repair_bar_phase_shadow.py`: hardened at commit `5b99cf111845ba99f9269a1cf00d261821f8e871`. Synthetic proof now demonstrates raw modulo-index corruption arithmetically after one inserted false sub-beat, sets the stale inherited phase explicitly, then requires the post-repair **audio-only** assessment to recover physical phase. This removes a brittle dependency on raw multi-signal consensus from the unit proof.
-- `.github/workflows/v143-post-repair-bar-phase-shadow.yml`: updated at commit `16ce36d5a5330062a7f95ebf91cff20518099fd2` to self-report failures. CPU-only/no Modal. Synthetic and approved-audio steps capture logs with `continue-on-error`; an `if: always()` step writes and commits `debug/v143-contextual-prune/post-repair-bar-phase-shadow-status.json` even if a diagnostic stage fails. If approved analysis succeeds it also commits `post-repair-bar-phase-approved-audio-shadow.json`.
-- This workflow update triggers one new CPU-only run. `runtimePhaseChanged=false`, protected/live/Production untouched.
+- Self-reporting CPU workflow run `32735869765` proved the previous synthetic test was over-constrained. It failed because the artificial click signal itself was ambiguous: preferred phase 2 had only 4/7 window votes, weighted fraction `0.44899`, full consensus signal count `0`, confidence `0.0223`; therefore `robustPreference=false` and `phaseChangeRecommended=false`. Approved-audio stage was correctly skipped. Protected/runtime/Production unchanged.
+- This is a good safety behavior: ambiguous phase evidence must not trigger a rephase.
+- `analyzer/check_v143_post_repair_bar_phase_shadow.py` fixed at commit `acc3d0d89ff8973186e093b4e2f155cdcc87aa60`.
+  - still proves the defect class arithmetically: one inserted false sub-beat shifts later physical downbeats from raw residue 0 to raw residue 1 while repair restores the clean physical pulse train but retains stale phase 1.
+  - no longer falsely requires this artificial audio to recover phase 0.
+  - now requires the real safety invariant: `phase_change_recommended == robust_preference AND preferred != inherited`; ambiguous evidence must refuse change.
+- The push from `acc3d0d...` triggers one new CPU-only self-reporting workflow. No Modal/GPU.
 
 ## Cost control
 - No Modal/GPU inference in this continuation.
 - Do not rerun old candidate/freeze/scorer.
-- Wait only for the single self-reporting CPU run result; do not blind-loop compute.
+- Inspect only the single CPU self-report result triggered by `acc3d0d...`.
 
 ## Next exact actions
-1. Read `debug/v143-contextual-prune/post-repair-bar-phase-shadow-status.json` once committed; inspect exact synthetic/approved outcomes and log tails.
-2. If successful, inspect `post-repair-bar-phase-approved-audio-shadow.json` for robustness/window agreement.
-3. If robust, create a NEW repaired timing shadow that explicitly applies audio-derived post-repair rephasing; update shadow invariants to permit and prove that change. Do not touch old frozen identity.
-4. Run static/determinism gates before any Modal inference, then at most one targeted low-cost combined inference.
-5. After timing coherence, resume independent pitch-carrier audit. Current static concern only: pitch evidence uses the minimum across two guitar views and may be over-conservative; no pitch change accepted yet.
+1. Read the new `debug/v143-contextual-prune/post-repair-bar-phase-shadow-status.json` and confirm synthetic success.
+2. If approved stage ran, inspect `post-repair-bar-phase-approved-audio-shadow.json` for robustness/window agreement.
+3. If approved audio remains ambiguous, do **not** rephase. Improve generic audio-only phase evidence or switch focus to the independent pitch-carrier audit without spending Modal compute.
+4. If approved phase is robust, create a NEW repaired timing shadow that explicitly applies audio-derived post-repair rephasing, then static/determinism gates before at most one targeted low-cost inference.
+5. Any accepted correction eventually requires a brand-new candidate/freeze/PDF/lock identity before another single professional score.
