@@ -24,6 +24,8 @@ ENERGY_ACTIVE_LOW_FRACTION = 0.001
 ENERGY_ACTIVE_HIGH_FRACTION = 0.999
 MIN_STABLE_INTERVAL_RUN = 8
 LOCAL_PERIOD_WINDOW = 12
+BOUNDARY_ENERGY_RATIO_TO_RAW_BEATS = 0.20
+BOUNDARY_RMS_WINDOW_SECONDS = 0.14
 
 
 @dataclass(frozen=True)
@@ -43,26 +45,16 @@ class BeatGridRepairResult:
     continuity_only_beat_count: int
     snapped_beat_count: int
     boundary_evidence_floor: float
+    boundary_energy_floor: float
 
     def diagnostics(self) -> dict[str, Any]:
         expected_period = 60.0 / float(self.timing.tempo_bpm)
-        original_intervals = [
-            b - a for a, b in zip(self.original_beat_times[:-1], self.original_beat_times[1:])
-        ]
-        repaired_intervals = [
-            b - a for a, b in zip(self.repaired_beat_times[:-1], self.repaired_beat_times[1:])
-        ]
+        original_intervals = [b - a for a, b in zip(self.original_beat_times[:-1], self.original_beat_times[1:])]
+        repaired_intervals = [b - a for a, b in zip(self.repaired_beat_times[:-1], self.repaired_beat_times[1:])]
 
         def summary(values: Sequence[float]) -> dict[str, float | int]:
             if not values:
-                return {
-                    "count": 0,
-                    "ratioP01": 0.0,
-                    "ratioP05": 0.0,
-                    "ratioP50": 0.0,
-                    "ratioP95": 0.0,
-                    "ratioP99": 0.0,
-                }
+                return {"count": 0, "ratioP01": 0.0, "ratioP05": 0.0, "ratioP50": 0.0, "ratioP95": 0.0, "ratioP99": 0.0}
             ratios = np.asarray(values, dtype=np.float64) / expected_period
             return {
                 "count": len(values),
@@ -76,6 +68,10 @@ class BeatGridRepairResult:
         return {
             "originalBeatCount": len(self.original_beat_times),
             "repairedBeatCount": len(self.repaired_beat_times),
+            "originalFirstBeatTime": float(self.original_beat_times[0]),
+            "originalLastBeatTime": float(self.original_beat_times[-1]),
+            "repairedFirstBeatTime": float(self.repaired_beat_times[0]),
+            "repairedLastBeatTime": float(self.repaired_beat_times[-1]),
             "originalIntervalOutlierCount": int(self.original_interval_outlier_count),
             "repairedIntervalOutlierCount": int(self.repaired_interval_outlier_count),
             "stableAnchorStartIndex": int(self.stable_anchor_start_index),
@@ -88,6 +84,7 @@ class BeatGridRepairResult:
             "continuityOnlyBeatCount": int(self.continuity_only_beat_count),
             "snappedBeatCount": int(self.snapped_beat_count),
             "boundaryEvidenceFloor": float(self.boundary_evidence_floor),
+            "boundaryEnergyFloor": float(self.boundary_energy_floor),
             "originalIntervals": summary(original_intervals),
             "repairedIntervals": summary(repaired_intervals),
             "barPhaseChanged": False,
@@ -100,10 +97,7 @@ class BeatGridRepairResult:
 
 def _stable_anchor_run(beat_times: Sequence[float], expected_period: float) -> tuple[int, int, float]:
     intervals = [float(b - a) for a, b in zip(beat_times[:-1], beat_times[1:])]
-    good = [
-        STABLE_INTERVAL_MIN_RATIO <= interval / expected_period <= STABLE_INTERVAL_MAX_RATIO
-        for interval in intervals
-    ]
+    good = [STABLE_INTERVAL_MIN_RATIO <= interval / expected_period <= STABLE_INTERVAL_MAX_RATIO for interval in intervals]
     best_start = best_end = -1
     current_start = 0
     for index, is_good in enumerate(good + [False]):
@@ -115,7 +109,6 @@ def _stable_anchor_run(beat_times: Sequence[float], expected_period: float) -> t
         current_start = index + 1
     if best_start < 0 or best_end - best_start < MIN_STABLE_INTERVAL_RUN:
         raise RuntimeError("No sufficiently long tempo-stable beat run was found")
-    # Interval run [start,end) corresponds to beat indices [start,end].
     local = intervals[best_start:best_end]
     return int(best_start), int(best_end), float(median(local))
 
@@ -134,6 +127,17 @@ def _active_energy_bounds(audio: np.ndarray, sample_rate: int) -> tuple[float, f
     return float(lo / sample_rate), float(hi / sample_rate)
 
 
+def _local_rms(audio: np.ndarray, sample_rate: int, time_seconds: float) -> float:
+    half = max(1, int(round(0.5 * BOUNDARY_RMS_WINDOW_SECONDS * sample_rate)))
+    center = int(round(float(time_seconds) * sample_rate))
+    lo = max(0, center - half)
+    hi = min(len(audio), center + half)
+    if hi <= lo:
+        return 0.0
+    block = np.asarray(audio[lo:hi], dtype=np.float64)
+    return float(np.sqrt(np.mean(np.square(block))))
+
+
 def _nearest_accent_index(frame_times: np.ndarray, time_seconds: float) -> int:
     position = int(np.searchsorted(frame_times, float(time_seconds)))
     options = [index for index in (position - 1, position) if 0 <= index < len(frame_times)]
@@ -142,17 +146,8 @@ def _nearest_accent_index(frame_times: np.ndarray, time_seconds: float) -> int:
     return min(options, key=lambda index: abs(float(frame_times[index]) - float(time_seconds)))
 
 
-def _snap_prediction(
-    predicted: float,
-    period: float,
-    frame_times: np.ndarray,
-    accents: np.ndarray,
-    *,
-    boundary: bool,
-) -> tuple[float, float, bool]:
-    radius = period * (
-        BOUNDARY_SEARCH_RADIUS_PERIOD_RATIO if boundary else SEARCH_RADIUS_PERIOD_RATIO
-    )
+def _snap_prediction(predicted: float, period: float, frame_times: np.ndarray, accents: np.ndarray, *, boundary: bool) -> tuple[float, float, bool]:
+    radius = period * (BOUNDARY_SEARCH_RADIUS_PERIOD_RATIO if boundary else SEARCH_RADIUS_PERIOD_RATIO)
     left = int(np.searchsorted(frame_times, predicted - radius, side="left"))
     right = int(np.searchsorted(frame_times, predicted + radius, side="right"))
     left = max(0, min(len(frame_times) - 1, left))
@@ -167,32 +162,23 @@ def _snap_prediction(
     winner = int(np.argmax(scores))
     chosen = float(candidate_times[winner])
     evidence = float(candidate_accents[winner])
-    snapped = abs(chosen - predicted) <= radius
-    return chosen, evidence, snapped
+    return chosen, evidence, abs(chosen - predicted) <= radius
 
 
 def _interval_outlier_count(beat_times: Sequence[float], expected_period: float) -> int:
-    return sum(
-        not (STABLE_INTERVAL_MIN_RATIO <= (b - a) / expected_period <= STABLE_INTERVAL_MAX_RATIO)
-        for a, b in zip(beat_times[:-1], beat_times[1:])
-    )
+    return sum(not (STABLE_INTERVAL_MIN_RATIO <= (b - a) / expected_period <= STABLE_INTERVAL_MAX_RATIO) for a, b in zip(beat_times[:-1], beat_times[1:]))
 
 
-def repair_reference_free_beat_grid_from_samples(
-    samples: Any,
-    sample_rate: int,
-    timing: ReferenceFreeTimingEstimate,
-) -> BeatGridRepairResult:
+def repair_reference_free_beat_grid_from_samples(samples: Any, sample_rate: int, timing: ReferenceFreeTimingEstimate) -> BeatGridRepairResult:
     """Repair sub-beat duplicates and premature boundaries from audio only.
 
-    The original tempo and 4/4 phase remain immutable. A longest tempo-stable
-    region anchors a one-pulse-per-beat trajectory. Each next beat is predicted
-    from recent stable intervals and may snap only to nearby full-mix transient
-    evidence. Interior weak beats may use tempo continuity, because a musical beat
-    need not contain a note onset. New leading/trailing beats are stricter: they
-    are admitted only when local transient evidence exceeds an adaptive floor and
-    they remain inside the cumulative-energy active range. No external labels,
-    target measure counts, or song identity are accepted.
+    Tempo and existing bar phase remain immutable. A longest tempo-stable region
+    anchors one pulse per beat. Interior beats may use tempo continuity because a
+    musical beat need not contain a note onset. Outside the original tracked span,
+    extension is allowed only inside audio-active energy and only while either a
+    nearby transient or substantial local RMS energy supports continuation. This
+    prevents both premature truncation of sustained/fading music and fabricated
+    beats in silence. No external labels, target counts, or song identity enter.
     """
     if not isinstance(timing, ReferenceFreeTimingEstimate):
         raise TypeError("timing must be ReferenceFreeTimingEstimate")
@@ -205,54 +191,42 @@ def repair_reference_free_beat_grid_from_samples(
 
     mono = _finite_audio(samples)
     analysis_audio = _resample_audio(mono, int(sample_rate), TIMING_SAMPLE_RATE)
-    onset, low_energy, frame_times = _normalized_onset_envelope(
-        analysis_audio,
-        TIMING_SAMPLE_RATE,
-    )
+    onset, low_energy, frame_times = _normalized_onset_envelope(analysis_audio, TIMING_SAMPLE_RATE)
     accents = np.asarray(onset + 0.25 * low_energy, dtype=np.float64)
     active_start, active_end = _active_energy_bounds(analysis_audio, TIMING_SAMPLE_RATE)
 
     anchor_start, anchor_end, anchor_period = _stable_anchor_run(original, expected_period)
     anchor_index = (anchor_start + anchor_end) // 2
     anchor_time = float(original[anchor_index])
+    raw_first = float(original[0])
+    raw_last = float(original[-1])
 
-    raw_accent_values = [
-        float(accents[_nearest_accent_index(frame_times, beat_time)]) for beat_time in original
-    ]
-    boundary_floor = max(
-        float(np.quantile(accents, 0.70)),
-        0.30 * float(median(raw_accent_values)),
-    )
+    raw_accent_values = [float(accents[_nearest_accent_index(frame_times, beat_time)]) for beat_time in original]
+    raw_rms_values = [_local_rms(analysis_audio, TIMING_SAMPLE_RATE, beat_time) for beat_time in original]
+    boundary_floor = max(float(np.quantile(accents, 0.70)), 0.30 * float(median(raw_accent_values)))
+    boundary_energy_floor = BOUNDARY_ENERGY_RATIO_TO_RAW_BEATS * float(median(raw_rms_values))
+
+    # Never let a conservative cumulative-energy bound erase an already tracked
+    # edge; bounds only control NEW leading/trailing extension.
+    forward_limit = max(active_end, raw_last)
+    backward_limit = min(active_start, raw_first)
 
     accepted_forward: list[float] = [anchor_time]
     forward_intervals: list[float] = []
     snapped_count = 0
     continuity_only = 0
     trailing_extended = 0
-    raw_last = float(original[-1])
 
     while True:
-        local_period = (
-            float(median(forward_intervals[-LOCAL_PERIOD_WINDOW:]))
-            if forward_intervals
-            else anchor_period
-        )
-        local_period = min(
-            expected_period * STABLE_INTERVAL_MAX_RATIO,
-            max(expected_period * STABLE_INTERVAL_MIN_RATIO, local_period),
-        )
+        local_period = float(median(forward_intervals[-LOCAL_PERIOD_WINDOW:])) if forward_intervals else anchor_period
+        local_period = min(expected_period * STABLE_INTERVAL_MAX_RATIO, max(expected_period * STABLE_INTERVAL_MIN_RATIO, local_period))
         predicted = accepted_forward[-1] + local_period
-        if predicted > active_end + 0.10 * expected_period:
+        if predicted > forward_limit + 0.10 * expected_period:
             break
         boundary = predicted > raw_last + 0.35 * expected_period
-        chosen, evidence, snapped = _snap_prediction(
-            predicted,
-            local_period,
-            frame_times,
-            accents,
-            boundary=boundary,
-        )
-        if boundary and evidence < boundary_floor:
+        chosen, evidence, snapped = _snap_prediction(predicted, local_period, frame_times, accents, boundary=boundary)
+        local_energy = _local_rms(analysis_audio, TIMING_SAMPLE_RATE, chosen)
+        if boundary and evidence < boundary_floor and local_energy < boundary_energy_floor:
             break
         interval = chosen - accepted_forward[-1]
         ratio = interval / expected_period
@@ -260,6 +234,9 @@ def repair_reference_free_beat_grid_from_samples(
             chosen = predicted
             interval = local_period
             snapped = False
+            local_energy = _local_rms(analysis_audio, TIMING_SAMPLE_RATE, chosen)
+            if boundary and evidence < boundary_floor and local_energy < boundary_energy_floor:
+                break
         accepted_forward.append(float(chosen))
         forward_intervals.append(float(interval))
         snapped_count += int(snapped)
@@ -271,30 +248,17 @@ def repair_reference_free_beat_grid_from_samples(
     accepted_backward: list[float] = []
     backward_intervals: list[float] = []
     leading_extended = 0
-    raw_first = float(original[0])
     current = anchor_time
     while True:
-        local_period = (
-            float(median(backward_intervals[-LOCAL_PERIOD_WINDOW:]))
-            if backward_intervals
-            else anchor_period
-        )
-        local_period = min(
-            expected_period * STABLE_INTERVAL_MAX_RATIO,
-            max(expected_period * STABLE_INTERVAL_MIN_RATIO, local_period),
-        )
+        local_period = float(median(backward_intervals[-LOCAL_PERIOD_WINDOW:])) if backward_intervals else anchor_period
+        local_period = min(expected_period * STABLE_INTERVAL_MAX_RATIO, max(expected_period * STABLE_INTERVAL_MIN_RATIO, local_period))
         predicted = current - local_period
-        if predicted < active_start - 0.10 * expected_period or predicted < 0.0:
+        if predicted < backward_limit - 0.10 * expected_period or predicted < 0.0:
             break
         boundary = predicted < raw_first - 0.35 * expected_period
-        chosen, evidence, snapped = _snap_prediction(
-            predicted,
-            local_period,
-            frame_times,
-            accents,
-            boundary=boundary,
-        )
-        if boundary and evidence < boundary_floor:
+        chosen, evidence, snapped = _snap_prediction(predicted, local_period, frame_times, accents, boundary=boundary)
+        local_energy = _local_rms(analysis_audio, TIMING_SAMPLE_RATE, chosen)
+        if boundary and evidence < boundary_floor and local_energy < boundary_energy_floor:
             break
         interval = current - chosen
         ratio = interval / expected_period
@@ -302,6 +266,9 @@ def repair_reference_free_beat_grid_from_samples(
             chosen = predicted
             interval = local_period
             snapped = False
+            local_energy = _local_rms(analysis_audio, TIMING_SAMPLE_RATE, chosen)
+            if boundary and evidence < boundary_floor and local_energy < boundary_energy_floor:
+                break
         accepted_backward.append(float(chosen))
         backward_intervals.append(float(interval))
         snapped_count += int(snapped)
@@ -345,6 +312,7 @@ def repair_reference_free_beat_grid_from_samples(
         continuity_only_beat_count=int(continuity_only),
         snapped_beat_count=int(snapped_count),
         boundary_evidence_floor=float(boundary_floor),
+        boundary_energy_floor=float(boundary_energy_floor),
     )
 
 
