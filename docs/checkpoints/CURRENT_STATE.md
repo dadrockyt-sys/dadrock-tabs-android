@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 14:57 America/Montreal
+Updated: 2026-08-24 15:02 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -115,10 +115,40 @@ Reference-free result recorded at 14:42:
 - Current E64 hypothesis-collapse conclusion is therefore **under audit, not a correction**.
 - No events changed; professional reference/scorer remains closed; Modal/L4 remains closed; protected runtime and Production untouched.
 
+## MIDI64 candidate-diversity audit — 2026-08-24 15:02 America/Montreal
+Files:
+- `analyzer/v143_frozen_evidence_open_string_candidate_audit.py`
+- `.github/workflows/v143-frozen-evidence-open-string-candidate-audit.yml`
+- `debug/v143-contextual-prune/frozen-evidence-open-string-candidate-audit.json`
+
+Commits:
+- `a9e0a7fe0ef80231347860107aeb3657d39e26b5` — add CPU-only audit script.
+- `11127882610189a0386b7d29a2299a0a02bb53b5` — add one-shot cheap workflow.
+- `d41a9b6b1b5d803c717571cef2b796f91dcf336b` — workflow persisted the report successfully.
+
+Reference-free findings:
+- All definition partitions reconcile exactly to 725:
+  - primary MIDI64 = `202`; non64 = `523`.
+  - open-high-E mapped string0/fret0 = `186`.
+  - primary mapped open = `264`; primary mapped fretted = `461`.
+  - primary MIDI equals a standard open pitch = `337`; not = `388`.
+  - any selected voicing note open = `277`; none open = `448`.
+- **Primary MIDI64 is strongly candidate-starved:** `179/202 = 88.61%` are single-hypothesis; mean hypothesis count `1.124`.
+- Non64 baseline: `308/523 = 58.89%` single-hypothesis; mean hypothesis count `1.558`.
+- MIDI64 single-hypothesis excess vs non64 = **+29.72 percentage points**.
+- Open-high-E64 mapped subset is even more concentrated: `172/186 = 92.47%` single-hypothesis.
+- Generic presence of an open note does **not** explain the collapse: any-open-selected rate `67.51%` vs no-open-selected `66.96%`, essentially identical.
+- Therefore this is not evidence for a broad “open strings are bad” rule; it is a pitch-specific MIDI64/high-E candidate-proposal anomaly.
+- On the 23 multi-hypothesis MIDI64 attacks, persistence does not explain the primary win: primary-minus-best-combined-rival persistence median is approximately `-0.06799`. MIDI64 often has *less* persistence than its rival.
+- Ranking physics of the small multi-hyp MIDI64 subset is not radically different from non64; the dominant anomaly is **absence of alternatives on 179/202 attacks**.
+- Diagnostic classification: `midi64-candidate-diversity-collapse-clue`.
+- This is a strong structural clue, **not proof that the 202 MIDI64 events are wrong and not yet a correction**.
+- No event mutation, no scorer/reference, no Modal/L4, protected runtime unchanged, Production untouched.
+
 ## Next exact actions
-1. Build one CPU-only/reference-free candidate-diversity audit from the already persisted frozen evidence that reports all open-string definitions side-by-side and reconciles every partition to 725 where applicable.
-2. For primary MIDI64 attacks, measure hypothesis count, single-hypothesis rate, strongest non-64 rival when available, and attack/body/persistence/combined-score margins; compare against non-64/common-primary baselines.
-3. Test whether MIDI64 wins combined score while losing attack support, and whether its single-hypothesis rate is uniquely abnormal after controlling for primary frequency/register.
-4. If E64 is uniquely proposal-starved, trace upstream hypothesis proposal/pruning source ancestry. If not, abandon the E64-collapse premise and follow the broader actual candidate-generation failure.
+1. Trace the upstream candidate-proposal/pruning ancestry that produced frozen pitch hypotheses, with focus on why MIDI64/high-E gets no alternatives.
+2. Locate source logic for spectral candidate extraction, harmonic/subharmonic proposal, pitch-range/open-string feasibility, top-N pruning, and any MIDI/frequency boundary around E4/MIDI64.
+3. Build the next CPU-only/reference-free structural diagnostic from source + frozen evidence to determine whether the MIDI64 starvation comes from extractor thresholding, candidate-window truncation, harmonic-family pruning, string-feasibility filtering, or another deterministic proposal defect.
+4. Do **not** tune persistence weighting first; current evidence does not support it as the primary cause.
 5. Do **not** mutate events until a source-level defect is independently proven.
 6. Only after a genuinely new corrected candidate is frozen/locked may the professional scorer be considered again.
