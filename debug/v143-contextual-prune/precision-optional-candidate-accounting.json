@@ -1,0 +1,35 @@
+{
+  "accounting": {
+    "mandatoryStrongestRawSecondaryCount": 144,
+    "optionalCandidateCount": 6666,
+    "optionalSuppressedCount": 6548,
+    "optionalSuppressionRate": 0.9822982298229823,
+    "optionalSurvivalRate": 0.0177017701770177,
+    "optionalSurvivorCount": 118,
+    "originalNonPrimaryCount": 6810,
+    "originalPitchHypothesisCount": 7535,
+    "retainedAttackPrimaryCount": 725,
+    "retainedPitchHypothesisCount": 987,
+    "retainedSecondaryCount": 262,
+    "wholeUniverseSuppressionRate": 0.8690112806901128
+  },
+  "classification": "extreme-optional-secondary-pruning",
+  "interpretation": {
+    "eventMutationJustified": false,
+    "exactRelaxedRuleRecoveryCountClaimed": false,
+    "legacyOptionalGateSuppressionPercent": 98.22982298229823,
+    "legacyOptionalGateSurvivalPercent": 1.7701770177017702,
+    "statement": "After removing one primary per retained attack and the 144 strongest-raw secondaries that are forced survivors on promoted-fundamental attacks, the legacy precision gate retained only 118 of 6,666 optional pitch candidates.",
+    "suppressedPerEventRowsAvailable": false
+  },
+  "productionModified": false,
+  "referenceFree": true,
+  "runtimeLabelsRequired": false,
+  "schemaVersion": 1,
+  "source": {
+    "newInferenceUsed": false,
+    "precisionDiagnosticsBound": true,
+    "professionalReferenceUsed": false,
+    "referenceRuntimeInputUsed": false
+  }
+}
