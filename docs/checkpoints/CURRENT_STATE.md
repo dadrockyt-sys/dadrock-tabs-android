@@ -13,60 +13,35 @@ Priority: **finish Rhythm end-to-end before Bass/Lead**.
 - Any accepted correction requires a completely new approved-audio candidate → immutable freeze/PDF → lock → one professional score.
 - Completion remains score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`. **Rhythm is not complete.**
 
-## Last proven candidate/freeze
+## Last proven candidate/freeze + failed holdout
 - Combined repaired timing + precision: 449 repaired beats, 0 interval outliers, 113 measures / 1796 slots, all measures populated, explicit primary complete.
-- Exact 2-pass proof run `32697939613` passed.
-- Candidate product blob `20e7a583fcb96249636cc63b01cf9ae0044f2c62`; pre-freeze run `32699399835`. Do not rerun it.
-- Fresh scored lock came from preholdout run `32702772593`; PDF-event fidelity `1.0`; protected/Production unchanged.
-
-## One-shot professional score — FAILED
-Run `32731885778` used immutable scorer-only V2 after lock validation. Broad results only:
-- measure coverage recall `1.0`
-- pitch-content F1 `0.23718280683583634`
-- pitch+timing tolerant F1 `0.033143448990160536`
-- string/fret+timing tolerant F1 `0.018643190056965304`
-- chord pitch-set tolerant F1 `0.006024096385542168`
-- exact voicing tolerant F1 `0.006024096385542168`
-- critical mismatches `1723`
-Allowed diagnosis: coverage is solved; timing/grid identity and pitch identity remain fundamentally wrong. Scorer/reference is closed again.
+- Exact 2-pass proof run `32697939613` passed. Old candidate/freeze must not be rerun/rescored.
+- One-shot professional run `32731885778` failed broadly: coverage recall `1.0`, pitch-content F1 `0.23718280683583634`, pitch+timing F1 `0.033143448990160536`, critical mismatches `1723`.
+- Allowed diagnosis only: coverage solved; timing/grid identity and pitch identity fundamentally wrong. Scorer/reference closed again.
 
 ## Timing audit finding — GENERAL / REFERENCE-FREE
-The adapter sign convention itself is coherent: `first_beat_in_measure = (-downbeat_index_mod4) % 4` and serialization uses that phase consistently.
+Adapter sign convention is coherent. General defect is earlier: beat-grid repair rebuilds a clean pulse sequence after malformed raw beat intervals but blindly copies raw `first_beat_in_measure` / `downbeat_index_mod4`. Raw phase is defined by raw sequence index modulo 4, so inserted/sub-beat/duplicate pulse removal can invalidate inherited phase.
 
-A general defect was found one stage earlier: `v143_reference_free_beat_grid_repair.py` reconstructs a new clean beat sequence but copies the raw tracker's `first_beat_in_measure` and `downbeat_index_mod4` unchanged and declares `barPhaseChanged=false`. Raw phase is defined by raw `sequence_index % 4`; once inserted/sub-beat/duplicate pulse indices are repaired, that phase is not a safe invariant.
+Approved-audio evidence already shows disagreement without professional reference:
+- raw: 447 beats, 38 interval outliers, phase 1 / first beat 3, bar confidence `0.08797`
+- repaired: 449 beats, 0 interval outliers
+- independent repaired-grid consensus: phase 2 / first beat 2, confidence `0.1978`, two signal winners, unstable halves
+This proves inheritance is unsafe; it does not yet prove phase 2 is correct.
 
-Existing audio-only diagnostics already expose this disagreement without professional-reference data:
-- raw timing: 447 beats, 38 interval outliers, `downbeatIndexMod4=1`, `firstBeatInMeasure=3`, bar confidence `0.08797`
-- repaired timing: 449 beats, 0 interval outliers
-- independent post-repair bar consensus: phase `2`, `firstBeatInMeasure=2`, confidence `0.1978`, two signal winners, not stable across halves
-This proves inherited phase is logically unsafe; it does **not** yet prove phase 2 should be accepted.
-
-## New diagnostic-only work staged
-1. `analyzer/v143_post_repair_bar_phase_shadow.py`
-   - created commit `1880c8da7f0e31f0cdfdb36a7b204bd00a904a7b`
-   - current trigger commit `26a95a3cdb37110b8663ea895b39f94f6f74b4da`
-   - evaluates seven long bar-residue-aligned windows of the repaired pulse train and aggregates independent audio-only phase votes/scores.
-   - recommendation only; does not mutate runtime timing.
-2. `analyzer/check_v143_post_repair_bar_phase_shadow.py`
-   - commit `f7675600ceaa31378528b7db8851d081f0c70f75`
-   - synthetic proof inserts one false sub-beat early, demonstrating how raw index phase becomes wrong while repair restores physical beat continuity; post-repair audio-only phase must recover the physical phase.
-3. `.github/workflows/v143-post-repair-bar-phase-shadow.yml`
-   - commit `473b0bc9b8abb2d1fcd89022f5c1da00579486c0`
-   - CPU-only; no Modal/GPU. Runs syntax/synthetic/anti-leakage/protected gates, then one approved-audio post-repair phase shadow and writes `debug/v143-contextual-prune/post-repair-bar-phase-approved-audio-shadow.json`.
-   - `runtimePhaseChanged=false`, live output unchanged, Production unchanged.
-
-The workflow was explicitly triggered by commit `26a95a3cdb37110b8663ea895b39f94f6f74b4da`. At this checkpoint the diagnostic file had not yet appeared, so do not infer pass/fail yet.
+## Post-repair phase shadow work
+- `analyzer/v143_post_repair_bar_phase_shadow.py`: diagnostic-only multi-window audio phase assessment; no runtime mutation.
+- `analyzer/check_v143_post_repair_bar_phase_shadow.py`: hardened at commit `5b99cf111845ba99f9269a1cf00d261821f8e871`. Synthetic proof now demonstrates raw modulo-index corruption arithmetically after one inserted false sub-beat, sets the stale inherited phase explicitly, then requires the post-repair **audio-only** assessment to recover physical phase. This removes a brittle dependency on raw multi-signal consensus from the unit proof.
+- `.github/workflows/v143-post-repair-bar-phase-shadow.yml`: updated at commit `16ce36d5a5330062a7f95ebf91cff20518099fd2` to self-report failures. CPU-only/no Modal. Synthetic and approved-audio steps capture logs with `continue-on-error`; an `if: always()` step writes and commits `debug/v143-contextual-prune/post-repair-bar-phase-shadow-status.json` even if a diagnostic stage fails. If approved analysis succeeds it also commits `post-repair-bar-phase-approved-audio-shadow.json`.
+- This workflow update triggers one new CPU-only run. `runtimePhaseChanged=false`, protected/live/Production untouched.
 
 ## Cost control
-- No Modal/GPU inference has been used in this continuation.
-- Do not rerun old candidate/freeze or old scorer.
-- Inspect the single CPU phase-shadow result first.
-- If ambiguous, improve generic audio-only phase evidence only; no song-specific offset and no professional-event diagnosis.
+- No Modal/GPU inference in this continuation.
+- Do not rerun old candidate/freeze/scorer.
+- Wait only for the single self-reporting CPU run result; do not blind-loop compute.
 
 ## Next exact actions
-1. Read `debug/v143-contextual-prune/post-repair-bar-phase-approved-audio-shadow.json` once it exists.
-2. If the shadow is robust and internally consistent, create a NEW repaired timing shadow that applies rephasing after repair; update its invariants so phase change is explicit and audio-derived rather than forbidden.
-3. Re-establish deterministic/static gates before any Modal inference.
-4. Only then run at most one targeted low-cost combined inference to validate the new timing carrier.
-5. After timing is coherent, continue the independent pitch-carrier audit; current static note is that pitch selection is extremely conservative across the two guitar views and needs separate audio-only evidence before change.
-6. If a timing/pitch correction is accepted, create a brand-new candidate/freeze/PDF/lock identity before one new professional score.
+1. Read `debug/v143-contextual-prune/post-repair-bar-phase-shadow-status.json` once committed; inspect exact synthetic/approved outcomes and log tails.
+2. If successful, inspect `post-repair-bar-phase-approved-audio-shadow.json` for robustness/window agreement.
+3. If robust, create a NEW repaired timing shadow that explicitly applies audio-derived post-repair rephasing; update shadow invariants to permit and prove that change. Do not touch old frozen identity.
+4. Run static/determinism gates before any Modal inference, then at most one targeted low-cost combined inference.
+5. After timing coherence, resume independent pitch-carrier audit. Current static concern only: pitch evidence uses the minimum across two guitar views and may be over-conservative; no pitch change accepted yet.
