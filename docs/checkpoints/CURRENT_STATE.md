@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-23 22:29 America/Thunder_Bay
+Updated: 2026-08-23 22:38 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -121,21 +121,44 @@ Three independent sessions kept source, normalized WAV, and RoFormer exact, but 
 
 Conclusion: the two-state divergence is not explained by CPU parallel reduction. The earliest remaining plausible deterministic cause is Demucs' intentional random time-shift selection (`shifts=1`) consuming process-global Python RNG after variable unrelated setup/import consumption.
 
-### Current correction under proof — dedicated Demucs shift RNG
+### Dedicated Demucs shift RNG proof — FAILED, scorer stayed closed
 
-Commits before the active proof:
+Commits before proof:
 - `10ad1f129c5266465fe3c590f241c70af200c718` — `analyzer/v143_seeded_audio_separator_cli.py` installs a private module-like RNG for Demucs `apply_model` shift selection, seeded only from `V143_SEPARATOR_SEED=143`.
 - `c8f18da8a2f6c5017ddb8935b993b2a0429cf453` — `analyzer/v143_seeded_separator.py` enables `V143_DEMUCS_FIXED_SHIFT_RNG=1` only for Demucs children; model, shifts=1, overlap=.10, segment6 remain unchanged.
 - `57ec69007194579d574238a6026b9e1524e13dcc` — added `.github/workflows/v143-separator-private-shift-cold-proof.yml`.
 
-Active proof run: `32686215820` (`V143 Separator Private Shift Cold Proof`), three genuinely independent Modal passes. At this checkpoint all three pass jobs are in `Fresh Modal pass`; comparison has not run yet. Human scorer remains closed.
+Run `32686215820` completed all three independent Modal passes, then exact comparison failed. Diagnostic committed by GitHub Actions at branch commit `d2cee67a55c72ba9eddfafe1fcb9b2d744d05493`:
+- source exact all3: `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
+- normalized exact all3: `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`
+- RoFormer exact all3: `ce7ae8c6c57e00e1e191b8c15a8c4f39627cbcdf3b7a75ac7ca4c246f6f64b14`
+- direct Demucs values: `be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849`, `7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c`, `be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849`
+- cascade Demucs values: `ffec952349534fd1bc0eef5126c42d337998482e8bcd0096dcc94cbbd09a755a`, `76d8dec2f9db08261594235daed86cb3d4cb04ff92b95761067c30b3b458a2b0`, `ffec952349534fd1bc0eef5126c42d337998482e8bcd0096dcc94cbbd09a755a`
+- first mismatch remains `directGuitarSha256`; protected blob exact; Production false; `passed=false`.
+
+The dedicated `apply.py` RNG replacement therefore did not remove the same exact two-state Demucs divergence. Do NOT spend more GPU runs merely repeating this hypothesis.
+
+## Modal cost-control mode — ACTIVE
+
+User showed Modal Usage & Billing at total `$14.41`, with L4 the dominant component at `$11.92` (memory `$1.40`, CPU `$1.09`). Cost is now an explicit engineering constraint during bug work.
+
+Commit `4e366290c52f7b54b2d5b1ac087f6050f97ecbf2` changed `.github/workflows/v143-separator-private-shift-cold-proof.yml` from automatic push-triggered three-pass execution to **manual `workflow_dispatch` only**. Editing/debugging the separator can no longer automatically spawn three L4 proof jobs.
+
+Low-cost rule from here:
+1. no repeated three-pass full-song Modal proof during bug iteration;
+2. perform source inspection, syntax, anti-leakage, protected-blob, fixture-hash, invariant, and static checks without Modal first;
+3. isolate the earliest failing direct-Demucs stage and prefer CPU-only/one-pass diagnostics when inference is genuinely required;
+4. reserve full multi-pass Modal determinism proof for the final gate after a concrete root-cause fix;
+5. do not run the full repaired-timing/precision candidate path until separator stability is established;
+6. professional scorer remains closed until fresh deterministic freeze.
 
 ## Current work NOW
 
-1. Finish run `32686215820` and require exact source, normalized WAV, direct Demucs, RoFormer intermediate, and cascade Demucs hashes across all three independent sessions.
-2. If dedicated shift RNG makes all hashes exact, immediately checkpoint exact hashes and then rerun the full repaired-timing + precision path at least twice in fresh sessions, requiring exact carrier rows, base/correction events, pitch sets, precision attacks/pitches/primaries.
-3. If private-shift proof still diverges, inspect the next earliest random/stateful operation inside Demucs shift/window/apply path and output-write order. Do not accept tolerances that can alter event identity.
-4. Do not open scorer reference until separator + full combined path are exact and a brand-new approved-audio freeze/PDF identity is locked.
+1. Continue source-level inspection of the Demucs apply/window/shift path to identify the actual two-state stateful operation; private `random.randint` isolation is now ruled out as sufficient.
+2. Build/modify only a cheap earliest-stage diagnostic if runtime evidence is required; one pass during debugging, CPU-only where practical.
+3. Do not run `.github/workflows/v143-separator-private-shift-cold-proof.yml` again until there is a concrete candidate fix worth a FINAL 3-pass proof.
+4. Keep `.github/workflows/v143-repaired-timing-precision-cold-exact.yml` dormant until separator exactness is established.
+5. Do not open scorer reference until separator + full combined path are exact and a brand-new approved-audio freeze/PDF identity is locked.
 
 ## Next steps after separator + combined determinism are green
 
