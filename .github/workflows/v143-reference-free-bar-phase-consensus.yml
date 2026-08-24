@@ -29,7 +29,11 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install CPU timing dependencies
-        run: python -m pip install --disable-pip-version-check --quiet numpy scipy soundfile
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python -m pip install --disable-pip-version-check --quiet numpy scipy soundfile
       - name: Run synthetic checker and anti-leakage gate
         env:
           PYTHONPATH: analyzer
@@ -62,7 +66,6 @@ jobs:
           expected='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
           digest=hashlib.sha256(audio_path.read_bytes()).hexdigest()
           assert digest==expected,digest
-          # SoundFile may not decode m4a on every runner, so normalize with ffmpeg first.
           normalized=Path('/tmp/v143-phase-normalized.wav')
           subprocess.run(['ffmpeg','-y','-v','error','-i',str(audio_path),'-map','0:a:0','-vn','-ar','44100','-ac','2','-c:a','pcm_s16le',str(normalized)],check=True)
           timing=estimate_reference_free_timing(normalized)
