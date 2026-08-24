@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-23 22:15 America/Thunder_Bay
+Updated: 2026-08-23 22:29 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -89,45 +89,53 @@ Research-only deterministic wrappers:
 - `analyzer/v143_seeded_separator.py`
 - `analyzer/v143_seeded_audio_separator_cli.py`
 - probe `analyzer/v143_separator_cold_determinism_probe_modal.py`
-- workflow `.github/workflows/v143-separator-cold-determinism.yml`
 
 ### Cold proof 1 — deterministic GPU controls NOT sufficient
 
-Run `32684922439`, three genuinely independent Modal sessions:
+Run `32684922439`, three independent Modal sessions:
 - normalized exact all3: `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`
-- **BS-RoFormer intermediate exact all3:** `ce7ae8c6c57e00e1e191b8c15a8c4f39627cbcdf3b7a75ac7ca4c246f6f64b14`
-- direct Demucs: pass1=pass3 `5820375b67d6d3ad38386c267f8e21b721a06446ba9d8b4de14260d832d2f5a4`; pass2 `41ad8bc3fd1d484ce14322df6da337ea30d626895d788d12e5a5fc0f6e928a8b`
-- cascade Demucs: pass1=pass3 `599a51f583312f05784becd7d104bb5ded21b43a2e884b905e397e8b275d2029`; pass2 `277ec12dafe3809974e93a5a2df80e7e1c3f3e79275f389e0a318cc22fba86c8`
+- BS-RoFormer exact all3: `ce7ae8c6c57e00e1e191b8c15a8c4f39627cbcdf3b7a75ac7ca4c246f6f64b14`
+- direct Demucs pass1=pass3 `5820375b67d6d3ad38386c267f8e21b721a06446ba9d8b4de14260d832d2f5a4`; pass2 `41ad8bc3fd1d484ce14322df6da337ea30d626895d788d12e5a5fc0f6e928a8b`
+- cascade pass1=pass3 `599a51f583312f05784becd7d104bb5ded21b43a2e884b905e397e8b275d2029`; pass2 `277ec12dafe3809974e93a5a2df80e7e1c3f3e79275f389e0a318cc22fba86c8`
 - first mismatch = direct Demucs.
-
-Conclusion: RoFormer is deterministic; Demucs is the unstable component.
 
 ### Cold proof 2 — CPU Demucs alone NOT sufficient
 
-Demucs was moved to CPU only, keeping identical model/parameters; RoFormer stayed accelerated/proven deterministic.
 Run `32685233870`, three independent sessions:
-- normalized exact all3
-- RoFormer intermediate exact all3 at same SHA `ce7ae8c...`
-- direct CPU Demucs: pass1=pass3 `7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c`; pass2 `be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849`
-- cascade CPU Demucs: pass1=pass3 `76d8dec2f9db08261594235daed86cb3d4cb04ff92b95761067c30b3b458a2b0`; pass2 `ffec952349534fd1bc0eef5126c42d337998482e8bcd0096dcc94cbbd09a755a`
-- `firstMismatchStage=directGuitarSha256`, protected exact, Production false.
+- normalized exact all3; RoFormer exact all3 at `ce7ae8c...`
+- direct CPU Demucs pass1=pass3 `7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c`; pass2 `be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849`
+- cascade CPU Demucs pass1=pass3 `76d8dec2f9db08261594235daed86cb3d4cb04ff92b95761067c30b3b458a2b0`; pass2 `ffec952349534fd1bc0eef5126c42d337998482e8bcd0096dcc94cbbd09a755a`
+- first mismatch = direct Demucs.
 
-The same two-state pass1/pass3 vs pass2 pattern on CPU strongly suggests native CPU parallel reduction/thread scheduling rather than song logic or scorer influence.
+### Cold proof 3 — single-thread CPU Demucs STILL NOT sufficient
 
-### Current correction now committed — single-thread CPU Demucs
+Run `32685887212`, diagnostic committed as `debug/v143-contextual-prune/separator-single-thread-cold-proof.json` at branch commit `a8136fdb181bd7930e03f92aa62dc2298b04fdbc`.
 
-- child CLI commit `731d5524...`: `torch.set_num_threads(1)`, `torch.set_num_interop_threads(1)`, deterministic algorithms, seeded RNGs.
-- parent separator commit `b1520a8e...`: Demucs children CPU-only plus `OMP_NUM_THREADS=1`, `MKL_NUM_THREADS=1`, `OPENBLAS_NUM_THREADS=1`, `VECLIB_MAXIMUM_THREADS=1`, `NUMEXPR_NUM_THREADS=1`, `TBB_NUM_THREADS=1`.
-- RoFormer remains unchanged accelerated path because it has already proven byte-exact.
-- protected runtime/Production untouched.
+Three independent sessions kept source, normalized WAV, and RoFormer exact, but Demucs remained exactly two-state even with Torch/native math pinned to one thread:
+- source exact all3: `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
+- normalized exact all3: `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`
+- RoFormer exact all3: `ce7ae8c6c57e00e1e191b8c15a8c4f39627cbcdf3b7a75ac7ca4c246f6f64b14`
+- direct: pass1=`be081481...`, pass2=`be081481...`, pass3=`7999b372...`
+- cascade: pass1=`ffec9523...`, pass2=`ffec9523...`, pass3=`76d8dec2...`
+- first mismatch `directGuitarSha256`; protected blob exact; Production false; `passed=false`.
+
+Conclusion: the two-state divergence is not explained by CPU parallel reduction. The earliest remaining plausible deterministic cause is Demucs' intentional random time-shift selection (`shifts=1`) consuming process-global Python RNG after variable unrelated setup/import consumption.
+
+### Current correction under proof — dedicated Demucs shift RNG
+
+Commits before the active proof:
+- `10ad1f129c5266465fe3c590f241c70af200c718` — `analyzer/v143_seeded_audio_separator_cli.py` installs a private module-like RNG for Demucs `apply_model` shift selection, seeded only from `V143_SEPARATOR_SEED=143`.
+- `c8f18da8a2f6c5017ddb8935b993b2a0429cf453` — `analyzer/v143_seeded_separator.py` enables `V143_DEMUCS_FIXED_SHIFT_RNG=1` only for Demucs children; model, shifts=1, overlap=.10, segment6 remain unchanged.
+- `57ec69007194579d574238a6026b9e1524e13dcc` — added `.github/workflows/v143-separator-private-shift-cold-proof.yml`.
+
+Active proof run: `32686215820` (`V143 Separator Private Shift Cold Proof`), three genuinely independent Modal passes. At this checkpoint all three pass jobs are in `Fresh Modal pass`; comparison has not run yet. Human scorer remains closed.
 
 ## Current work NOW
 
-1. Re-run the 3-cold-session separator proof with **single-thread CPU Demucs**.
-2. Require exact source, normalized WAV, direct Demucs, RoFormer intermediate, and cascade Demucs hashes across all three sessions.
-3. If still divergent, inspect Demucs shift/window implementation and output-write order for the next earliest nondeterministic operation; do not accept a tolerance that can alter event identity.
-4. Once separator hashes are exact, rerun the entire repaired-timing + precision path at least twice in fresh sessions and require exact carrier rows, base/correction events, pitch sets, precision attacks/pitches/primaries.
-5. Checkpoint exact stable hashes/counts immediately.
+1. Finish run `32686215820` and require exact source, normalized WAV, direct Demucs, RoFormer intermediate, and cascade Demucs hashes across all three independent sessions.
+2. If dedicated shift RNG makes all hashes exact, immediately checkpoint exact hashes and then rerun the full repaired-timing + precision path at least twice in fresh sessions, requiring exact carrier rows, base/correction events, pitch sets, precision attacks/pitches/primaries.
+3. If private-shift proof still diverges, inspect the next earliest random/stateful operation inside Demucs shift/window/apply path and output-write order. Do not accept tolerances that can alter event identity.
+4. Do not open scorer reference until separator + full combined path are exact and a brand-new approved-audio freeze/PDF identity is locked.
 
 ## Next steps after separator + combined determinism are green
 
