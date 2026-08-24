@@ -1,0 +1,70 @@
+name: V143 Harmonic Guard Candidate Preflight Diagnostic
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v143-contextual-prune/RUN_HARMONIC_GUARD_PREFLIGHT_DIAGNOSTIC
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-harmonic-guard-candidate-preflight-diagnostic
+  cancel-in-progress: true
+
+jobs:
+  preflight:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Replay exact pre-Modal candidate safety gate without Modal
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/check_v143_harmonic_guard_candidate_preflight.py \
+            | tee debug/v143-contextual-prune/harmonic-guard-candidate-preflight-diagnostic.log
+
+      - name: Commit diagnostic and retire diagnostic marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/harmonic-guard-candidate-preflight-diagnostic.json \
+            debug/v143-contextual-prune/harmonic-guard-candidate-preflight-diagnostic.log
+          git rm -- debug/v143-contextual-prune/RUN_HARMONIC_GUARD_PREFLIGHT_DIAGNOSTIC
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record harmonic guard candidate preflight diagnostic'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
+
+      - name: Enforce diagnostic result
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('debug/v143-contextual-prune/harmonic-guard-candidate-preflight-diagnostic.json').read_text(encoding='utf-8'))
+          if d.get('passed') is not True:
+              raise SystemExit('pre-Modal diagnostic failed: '+', '.join(d.get('failedChecks') or []))
+          if d.get('modalInvoked') is not False or d.get('modalGpuUsed') is not False:
+              raise SystemExit('diagnostic unexpectedly used Modal')
+          print('V143 harmonic guard candidate pre-Modal diagnostic: PASS')
+          PY
