@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 14:19 America/Montreal
+Updated: 2026-08-24 14:28 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -115,10 +115,10 @@ Exact score result:
 - Any next correction must be justified independently from reference-free audio/evidence, produce a brand-new immutable scored identity, and pass fresh CPU binding/freeze/PDF gates before another one-shot score.
 
 ## Next exact actions
-1. Resume reference-free diagnosis from the persisted approved-audio evidence. Prioritize the dominant unresolved problems: musical grid/timing identity and broad pitch identity, not coverage.
-2. Use CPU-only tests against physical onset/CQT/carrier evidence and deterministic reconstruction. No Modal and no scorer/reference.
-3. Look for a general audio-only correction that materially changes timing/pitch identity rather than merely suppressing a small subset of notes.
-4. Prove any proposed correction on reference-free invariants and create a genuinely new corrected render identity.
+1. Continue reference-free broad pitch/register diagnosis from the persisted approved-audio evidence; simple global phase and BPM fixes are now rejected.
+2. Quantify octave/register ambiguity, adjacent-primary jump behavior, physical string/register plausibility, and whether context-supported octave folding would improve continuity without consulting labels/reference.
+3. Keep retrigger suppression secondary: 176 short same-primary repeat pairs exist, but only 14 weak carryover suspects and 0 strict weak-front/strong-body suspects under the current physical test.
+4. Only after a general audio-only correction is independently justified should a genuinely new corrected render identity be created and frozen.
 5. Only after new freeze/PDF fidelity 1.0 and fail-closed lock may another professional score be considered.
 
 ## Resume log — 2026-08-24 11:45 America/Thunder_Bay
@@ -153,5 +153,23 @@ Exact score result:
   - 16-measure windows at 8-measure stride: phase 8 wins 6 vs phase 0 wins 7; median contrast difference `-0.1065373`.
   - diagnostic classification: `sectional-or-mixed-phase-accent-clue`; `stablePhase8PhysicalAccentClue=false`.
 - Therefore **reject a global half-bar shift correction**. The apparent global offset-8 advantage is a sectional/arrangement clue, not evidence for moving every measure origin.
-- Next exact action: map the local phase winner sequence to measure ranges and compare its transitions against reference-free attack-density/retrigger/pitch-support changes. Determine whether the phase changes reflect pickup/section resets, tempo/grid drift, or merely arrangement accents before any timing mutation is proposed.
+- Scorer/reference remains closed. Modal/L4 remains closed. Protected runtime and Production remain untouched.
+
+## Sectional phase / fine-phase diagnostic — 2026-08-24 14:23 America/Montreal
+- Added `analyzer/v143_frozen_evidence_phase_section_diagnostic.py` and CPU-only workflow `.github/workflows/v143-frozen-evidence-phase-section-diagnostic.yml`; persisted `debug/v143-contextual-prune/frozen-evidence-phase-section-diagnostic.json`.
+- 8-measure coarse whole-beat phase runs are strongly sectional: measures 1–32→8, 33–40→0, 41–64→8, 65–72→4, 73–112→12.
+- Coarse transitions occur near measures 33, 41, 65, and 73, but they are not consistent with one simple grid reset. At measure 73 the coarse winner jumps 4→12 while the unrestricted fine-phase winner remains 13→13, proving that at least one apparent coarse transition is only a change inside the restricted 0/4/8/12 view.
+- The unrestricted 4-measure phase winner is highly volatile: 24 changes across 27 consecutive windows; 12 changes are >=4 sixteenth steps, only 9 are 1–2 steps, and only `0.375` of changes are small among changed windows.
+- This volatility is incompatible with using physical attack accent as a smooth global tempo-drift estimator. It is much more consistent with arrangement/accent changes and local phrase structure.
+- Therefore reject attack-accent phase as the basis for a timing mutation. Keep phase only as descriptive reference-free section evidence.
+
+## Grid timestamp consistency diagnostic — 2026-08-24 14:28 America/Montreal
+- Added `analyzer/v143_frozen_evidence_grid_timestamp_diagnostic.py` and CPU-only workflow `.github/workflows/v143-frozen-evidence-grid-timestamp-diagnostic.yml`; persisted `debug/v143-contextual-prune/frozen-evidence-grid-timestamp-diagnostic.json`.
+- A simple global BPM error is **not** present: frozen metadata BPM is `129.19921875`; global timestamp-vs-labeled-step fit implies `129.2881694947`, only `+0.06885%` different.
+- Nevertheless the timestamp/grid relationship is strongly nonuniform: nominal-tempo residuals span `7.375` labeled sixteenth steps, and even the best global linear fit leaves a `7.965`-step residual span.
+- Local 8-measure fits vary materially: approximately `125.33–131.63 BPM`. Window median residuals versus the nominal grid move from `-3.625` steps (m1–8), through near zero in the middle, to `+1.825` (m49–56), and back to `-3.225` (m105–112).
+- The residual trend is not monotonic (`correlation=-0.1607`), so this is **not** a simple cumulative tempo drift that a single BPM replacement would fix.
+- Adjacent selected attack pairs still center exactly on the metadata grid (713 pairs, median implied BPM `129.19921875`), while the tails are broad. This is consistent with locally varying/piecewise grid timing rather than one globally wrong tempo.
+- Combined timing conclusion: reject both a global half-bar origin shift and a global BPM replacement. Any future timing correction must model local grid timing/warping from reference-free physical evidence; no timing mutation is yet justified.
+- Immediate work pivots to the other dominant unsolved axis: broad pitch/register identity. The existing harmonic guard corrected contradictory duplicated upper harmonics but deliberately preserved every primary, so primary octave/register errors remain untested.
 - Scorer/reference remains closed. Modal/L4 remains closed. Protected runtime and Production remain untouched.
