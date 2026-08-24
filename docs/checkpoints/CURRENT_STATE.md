@@ -49,7 +49,7 @@ Cheap proof:
 - protected pipeline remained exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
 - no Modal/GPU or professional reference/scorer used.
 
-## Candidate-only correction now committed — CI RESULT PENDING
+## Candidate-only correction — STATIC/SYNTHETIC PROOF PASSED
 - Added pure CPU helper `analyzer/v143_precision_sustain_promotion.py` in commit `89143dc7382b200af449b607d1fbd294ba6916fd`.
 - Updated `analyzer/v143_repaired_timing_precision_candidate_product_modal.py` in commit `c72ed6ff569e402f8761dbe1be5ea802c8e68059` to bundle the helper and delegate `_promote_candidate_sustain()` to it.
 - Updated static/synthetic checker in commit `2e488187fd53414090efdf0c47d39fa1cca72229`.
@@ -64,21 +64,24 @@ Corrected timing contract:
 - `physicalOnsetDeltaFromGridSeconds` is serialized directly from the two preserved timing facts; no timing is invented.
 - `attackTimingChanged=false` is now truthful: promotion preserves the incoming physical attack while retaining the separate grid start.
 
-Post-fix checker exercises two synthetic residual directions and requires:
-- same event count;
-- same `(measure,step)`, MIDI, string, fret, and `timeSeconds`;
-- physical `onsetTime` preserved exactly;
-- `start == timeSeconds`;
-- `end-start == duration == rhythmSustain.durationSeconds` and `offsetTime == end`;
-- residual metadata equals `onsetTime-timeSeconds`;
-- no invented attack or pitch;
-- protected pipeline unchanged;
-- no Modal/GPU and no scorer/reference.
-
-At this checkpoint, the branch still shows the earlier schema-v1 defect diagnostic; the new schema-v2 corrected proof has not yet been observed/committed by Actions. **Do not claim the correction has passed CI until the schema-v2 diagnostic appears.**
+The Actions-generated schema-v2 diagnostic has now been observed and passes:
+- `schemaVersion=2`, `passed=true`, `defectPresent=false`, `correctionProven=true`.
+- assembly separation true; product delegates to pure promotion helper; helper is bundled into candidate image.
+- synthetic event count `2 → 2` unchanged.
+- `(measure,step)`, MIDI, string, fret, and `timeSeconds` identity unchanged.
+- physical `onsetTime` preserved exactly; quantized grid start preserved.
+- duration contract consistent; residual metadata truthful; sustain timing metadata truthful; no invented attack/pitch.
+- positive residual example `+0.08300000000000018s`; negative residual example `-0.02800000000000047s`.
+- protected pipeline exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`, unchanged.
+- `professionalReferenceUsed=false`, `runtimeLabelsRequired=false`, `productionModified=false`, `modalGpuUsed=false`.
 
 ## Sustain semantics note
 `v143_rhythm_sustain_consensus_shadow.py` still intentionally analyzes sustain from `timeSeconds` through `_event_time()`, so the promoted absolute sustain endpoint remains grid-derived. This correction does not silently change sustain inference; it only preserves the independent physical attack provenance and makes timing bases explicit.
+
+## Downstream consumer audit — IN PROGRESS
+- `analyzer/v143_rhythm_output_adapter.py::render_rhythm_tab()` renders from `measure`, `step`, `stringIndex`, `fret`, and technique markers; it does not read `onsetTime`, `start`, `end`, `offsetTime`, or duration fields.
+- Therefore this adapter is structurally isolated from the dual-time correction as long as attack/pitch/position identity remains unchanged, which the corrected synthetic proof already enforces.
+- Remaining freeze/PDF/product-proof consumers still need inspection for any assumption that `onsetTime == start` before a new approved-audio candidate is allowed.
 
 ## Existing diagnostic files from earlier audit
 - `analyzer/check_v143_candidate_physical_grid_fidelity.py` commit `013053025984172752af46ef2d10112dd22aec1f` and workflow commit `13ba13453424ce861c96d02d0c4c483817a74c6c` exist, but their first result is schema-limited as described above. Do not use its zero top-level residual as evidence of physical timing accuracy.
@@ -89,7 +92,7 @@ At this checkpoint, the branch still shows the earlier schema-v1 defect diagnost
 - Current work is source/static/synthetic only.
 
 ## Next exact actions
-1. Verify the updated cheap workflow emits schema-v2 diagnostic with `passed=true`, `defectPresent=false`, `physicalOnsetPreserved=true`, identity invariants true, and protected pipeline unchanged.
-2. If static proof passes, inspect candidate serialization/render consumers for any assumption that `onsetTime == start`; keep the new dual-time contract explicit and isolated.
-3. Add/adjust any cheap downstream static invariant needed for serialization fidelity; no Modal/GPU yet.
+1. Inspect `.github/workflows/v143-repaired-timing-precision-candidate-product.yml`, `v143-repaired-timing-precision-product-proof.yml`, and `v143-repaired-timing-precision-final-preholdout.yml` to identify all downstream product/freeze/PDF consumers.
+2. Inspect those consumers for any assumption that `onsetTime == start` and keep the new dual-time contract explicit and isolated.
+3. Add/adjust a cheap downstream render/JSON-serialization invariant if needed; no Modal/GPU yet.
 4. Only after the static chain is clean consider one new low-cost approved-audio candidate inference with a brand-new identity; never modify/rescore the retired freeze.
