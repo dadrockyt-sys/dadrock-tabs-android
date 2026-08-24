@@ -1,0 +1,245 @@
+{
+  "adjacentSelectedAttackLocalGrid": {
+    "definition": "adjacent selected attacks separated by 1..8 labeled sixteenth steps",
+    "impliedBpm": {
+      "count": 713,
+      "max": 147.6562500000005,
+      "mean": 129.0867008213245,
+      "median": 129.19921874999932,
+      "min": 112.34714673913075,
+      "q10": 126.04801829267305,
+      "q25": 126.0480182926881,
+      "q75": 130.28492647058818,
+      "q90": 132.51201923077042
+    },
+    "pairCount": 713,
+    "secondsPerGridStep": {
+      "count": 713,
+      "max": 0.13351473922902457,
+      "mean": 0.11629992186994813,
+      "median": 0.11609977324263099,
+      "min": 0.10158730158730123,
+      "q10": 0.11319727891156361,
+      "q25": 0.1151322751322752,
+      "q75": 0.11900226757369126,
+      "q90": 0.11900226757370547
+    }
+  },
+  "attackCount": 725,
+  "bestLinearFitResidual": {
+    "residualSeconds": {
+      "count": 725,
+      "max": 0.3027726219382032,
+      "mean": 1.0214817497602906e-14,
+      "median": 0.04264301740400356,
+      "min": -0.6212788455464898,
+      "q10": -0.24209895177811447,
+      "q25": -0.14601646987212646,
+      "q75": 0.13916497363453573,
+      "q90": 0.24306058694834298
+    },
+    "residualSixteenthSteps": {
+      "count": 725,
+      "max": 2.6096612042335634,
+      "mean": 8.804380955139269e-14,
+      "median": 0.3675491774596386,
+      "min": -5.3549336457660575,
+      "q10": -2.086702020798661,
+      "q25": -1.2585468070564236,
+      "q75": 1.1994923132658915,
+      "q90": 2.0949905575240324
+    },
+    "spanSixteenthSteps": 7.964594849999621
+  },
+  "candidateRenderProduced": false,
+  "diagnosticFlags": {
+    "bestLinearFitResidualSpanExceedsOneSixteenthStep": true,
+    "metadataTempoDiffersFromGlobalTimestampFitByMoreThanHalfPercent": false,
+    "nominalTempoResidualSpanExceedsOneSixteenthStep": true,
+    "strongMonotonicNominalResidualTrendAcrossEightMeasureWindows": false
+  },
+  "eightMeasureWindows": [
+    {
+      "attackCount": 58,
+      "endMeasure": 8,
+      "meanNominalResidualSixteenthSteps": -3.4568965517240366,
+      "medianNominalResidualSixteenthSteps": -3.624999999999896,
+      "startMeasure": 1,
+      "windowLinearFitBpm": 125.32858941481463,
+      "windowLinearFitSecondsPerSixteenthStep": 0.1196853812050238
+    },
+    {
+      "attackCount": 50,
+      "endMeasure": 16,
+      "meanNominalResidualSixteenthSteps": -0.6644999999999067,
+      "medianNominalResidualSixteenthSteps": -0.5749999999998913,
+      "startMeasure": 9,
+      "windowLinearFitBpm": 127.26231854072843,
+      "windowLinearFitSecondsPerSixteenthStep": 0.117866782343742
+    },
+    {
+      "attackCount": 42,
+      "endMeasure": 24,
+      "meanNominalResidualSixteenthSteps": 0.036904761904849454,
+      "medianNominalResidualSixteenthSteps": 0.0250000000000751,
+      "startMeasure": 17,
+      "windowLinearFitBpm": 129.19522235272044,
+      "windowLinearFitSecondsPerSixteenthStep": 0.11610336455823397
+    },
+    {
+      "attackCount": 44,
+      "endMeasure": 32,
+      "meanNominalResidualSixteenthSteps": 0.0687500000000716,
+      "medianNominalResidualSixteenthSteps": 0.0500000000000584,
+      "startMeasure": 25,
+      "windowLinearFitBpm": 129.38221040210573,
+      "windowLinearFitSecondsPerSixteenthStep": 0.1159355675975982
+    },
+    {
+      "attackCount": 53,
+      "endMeasure": 40,
+      "meanNominalResidualSixteenthSteps": -0.12499999999990784,
+      "medianNominalResidualSixteenthSteps": -0.1249999999998859,
+      "startMeasure": 33,
+      "windowLinearFitBpm": 128.93048353532447,
+      "windowLinearFitSecondsPerSixteenthStep": 0.11634176486967328
+    },
+    {
+      "attackCount": 55,
+      "endMeasure": 48,
+      "meanNominalResidualSixteenthSteps": 1.1086363636364347,
+      "medianNominalResidualSixteenthSteps": 1.3250000000000022,
+      "startMeasure": 41,
+      "windowLinearFitBpm": 127.18380093032047,
+      "windowLinearFitSecondsPerSixteenthStep": 0.11793954804211247
+    },
+    {
+      "attackCount": 46,
+      "endMeasure": 56,
+      "meanNominalResidualSixteenthSteps": 1.8440217391304887,
+      "medianNominalResidualSixteenthSteps": 1.8250000000000355,
+      "startMeasure": 49,
+      "windowLinearFitBpm": 129.07626163127642,
+      "windowLinearFitSecondsPerSixteenthStep": 0.11621036905182071
+    },
+    {
+      "attackCount": 45,
+      "endMeasure": 64,
+      "meanNominalResidualSixteenthSteps": 0.945555555555608,
+      "medianNominalResidualSixteenthSteps": 0.7250000000000358,
+      "startMeasure": 57,
+      "windowLinearFitBpm": 130.4596164489278,
+      "windowLinearFitSecondsPerSixteenthStep": 0.11497810899875048
+    },
+    {
+      "attackCount": 51,
+      "endMeasure": 72,
+      "meanNominalResidualSixteenthSteps": 0.4362745098039673,
+      "medianNominalResidualSixteenthSteps": 0.4250000000001139,
+      "startMeasure": 65,
+      "windowLinearFitBpm": 129.734763632325,
+      "windowLinearFitSecondsPerSixteenthStep": 0.1156205135773074
+    },
+    {
+      "attackCount": 41,
+      "endMeasure": 80,
+      "meanNominalResidualSixteenthSteps": 0.21097560975614918,
+      "medianNominalResidualSixteenthSteps": 0.2000000000001112,
+      "startMeasure": 73,
+      "windowLinearFitBpm": 129.44166689536272,
+      "windowLinearFitSecondsPerSixteenthStep": 0.11588231486639933
+    },
+    {
+      "attackCount": 48,
+      "endMeasure": 88,
+      "meanNominalResidualSixteenthSteps": 0.05572916666670275,
+      "medianNominalResidualSixteenthSteps": 0.1250000000000695,
+      "startMeasure": 81,
+      "windowLinearFitBpm": 130.13178343572824,
+      "windowLinearFitSecondsPerSixteenthStep": 0.11526776629022734
+    },
+    {
+      "attackCount": 53,
+      "endMeasure": 96,
+      "meanNominalResidualSixteenthSteps": -1.2226415094339445,
+      "medianNominalResidualSixteenthSteps": -0.8749999999999969,
+      "startMeasure": 89,
+      "windowLinearFitBpm": 131.62768658909104,
+      "windowLinearFitSecondsPerSixteenthStep": 0.11395778797530853
+    },
+    {
+      "attackCount": 60,
+      "endMeasure": 104,
+      "meanNominalResidualSixteenthSteps": -2.7366666666666375,
+      "medianNominalResidualSixteenthSteps": -2.775000000000074,
+      "startMeasure": 97,
+      "windowLinearFitBpm": 130.3619996187042,
+      "windowLinearFitSecondsPerSixteenthStep": 0.11506420616340265
+    },
+    {
+      "attackCount": 69,
+      "endMeasure": 112,
+      "meanNominalResidualSixteenthSteps": -3.09311594202897,
+      "medianNominalResidualSixteenthSteps": -3.2249999999998344,
+      "startMeasure": 105,
+      "windowLinearFitBpm": 128.47266613506963,
+      "windowLinearFitSecondsPerSixteenthStep": 0.11675635332600448
+    }
+  ],
+  "eventMutationProposed": false,
+  "globalLinearFit": {
+    "impliedBpm": 129.28816949470763,
+    "impliedBpmMinusMetadataPercent": 0.06884774193546057,
+    "interceptSeconds": -0.07436126896483586,
+    "secondsPerSixteenthStep": 0.11601989616392566
+  },
+  "interpretationBoundary": "this tests internal consistency of frozen timestamp/grid labels only; it does not assume the song is constant-tempo and does not select or mutate a grid",
+  "invariants": {
+    "all725AttacksRead": true,
+    "attackGridMutated": false,
+    "eventsMutated": false,
+    "pitchSelectionMutated": false,
+    "referenceConsulted": false,
+    "tempoOrOriginSelected": false
+  },
+  "modalUsed": false,
+  "mode": "v143-frozen-evidence-grid-timestamp-diagnostic",
+  "nominalSecondsPerSixteenthStep": 0.11609977324263039,
+  "nominalTempoResidual": {
+    "interceptMedianFitSeconds": -0.07256235827665591,
+    "residualSeconds": {
+      "count": 725,
+      "max": 0.23219954648526198,
+      "mean": -0.07660583313784665,
+      "median": 0.0,
+      "min": -0.6240362811791266,
+      "q10": -0.3686167800453575,
+      "q25": -0.2525170068027194,
+      "q75": 0.04353741496598218,
+      "q90": 0.17705215419501885
+    },
+    "residualSixteenthSteps": {
+      "count": 725,
+      "max": 2.00000000000001,
+      "mean": -0.6598275862068432,
+      "median": 0.0,
+      "min": -5.374999999999899,
+      "q10": -3.1750000000000513,
+      "q25": -2.174999999999985,
+      "q75": 0.3749999999999637,
+      "q90": 1.5250000000000643
+    },
+    "spanSixteenthSteps": 7.374999999999909
+  },
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "protectedRuntimeModified": false,
+  "referenceFree": true,
+  "referenceRuntimeInputUsed": false,
+  "runtimeLabelsRequired": false,
+  "schemaVersion": 1,
+  "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "sourceRetiredEventSha256": "a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb",
+  "tempoMetadataBpm": 129.19921875,
+  "windowMedianNominalResidualTrendCorrelation": -0.16066643257831736
+}
