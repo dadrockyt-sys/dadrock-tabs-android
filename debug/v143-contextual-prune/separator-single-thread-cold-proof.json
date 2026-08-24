@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-separator-single-thread-cold-proof",
+  "runId": 32685887212,
+  "triggerSha": "064e49a95d9404a14699875ed7422e2ce8205d83",
+  "independentPassCount": 3,
+  "comparisons": {
+    "sourceSha256": {
+      "values": [
+        "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+        "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+        "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+      ],
+      "exact": true
+    },
+    "normalizedWavSha256": {
+      "values": [
+        "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f"
+      ],
+      "exact": true
+    },
+    "directGuitarSha256": {
+      "values": [
+        "be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849",
+        "be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849",
+        "7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c"
+      ],
+      "exact": false
+    },
+    "roformerInstrumentalSha256": {
+      "values": [
+        "ce7ae8c6c57e00e1e191b8c15a8c4f39627cbcdf3b7a75ac7ca4c246f6f64b14",
+        "ce7ae8c6c57e00e1e191b8c15a8c4f39627cbcdf3b7a75ac7ca4c246f6f64b14",
+        "ce7ae8c6c57e00e1e191b8c15a8c4f39627cbcdf3b7a75ac7ca4c246f6f64b14"
+      ],
+      "exact": true
+    },
+    "cascadeGuitarSha256": {
+      "values": [
+        "ffec952349534fd1bc0eef5126c42d337998482e8bcd0096dcc94cbbd09a755a",
+        "ffec952349534fd1bc0eef5126c42d337998482e8bcd0096dcc94cbbd09a755a",
+        "76d8dec2f9db08261594235daed86cb3d4cb04ff92b95761067c30b3b458a2b0"
+      ],
+      "exact": false
+    }
+  },
+  "firstMismatchStage": "directGuitarSha256",
+  "allSeparatorHashesExact": false,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "protectedPipelineUnchanged": true,
+  "productionModified": false,
+  "passed": false
+}
