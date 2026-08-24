@@ -51,6 +51,11 @@ def main() -> None:
         child = item.get("childRuntime") or {}
         if str(child.get("torchCpuCapability") or "").upper() != "DEFAULT":
             failures.append(f"probe{index}:effective-aten={child.get('torchCpuCapability')!r}")
+        if child.get("mkldnnEnabled") is not False:
+            failures.append(f"probe{index}:mkldnn-enabled={child.get('mkldnnEnabled')!r}")
+        env = child.get("environment") or {}
+        if env.get("V143_DEMUCS_DISABLE_MKLDNN") != "1":
+            failures.append(f"probe{index}:mkldnn-disable-env={env.get('V143_DEMUCS_DISABLE_MKLDNN')!r}")
 
     for key in ("sourceSha256", "normalizedWavSha256", "directGuitarSha256", "directPcmInt16Sha256"):
         if first.get(key) != second.get(key):
@@ -70,6 +75,7 @@ def main() -> None:
         "directPcmInt16Sha256": first.get("directPcmInt16Sha256"),
         "shiftTrace": EXPECTED_SHIFT,
         "effectiveAten": "DEFAULT",
+        "mkldnnEnabled": False,
     }, sort_keys=True))
 
 
