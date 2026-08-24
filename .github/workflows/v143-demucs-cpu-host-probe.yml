@@ -1,8 +1,10 @@
 name: V143 Demucs CPU Host Probe
 
-# Cheap diagnostic only; manual so bug edits never create compute automatically.
+# One-shot cheap CPU-only validation; this push trigger is removed immediately after launch.
 on:
-  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v143-demucs-cpu-host-probe.yml]
 
 permissions: {contents: write}
 
@@ -27,27 +29,31 @@ jobs:
           test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
           test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
           if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' analyzer/v143_demucs_cpu_host_probe_modal.py analyzer/v143_seeded_audio_separator_cli.py analyzer/v143_seeded_separator.py; then exit 31; fi
-      - name: One CPU-only Modal direct-Demucs pass
+      - name: One CPU-only oneDNN-off Demucs pass
         run: |
           set -euo pipefail
           python -m pip install --disable-pip-version-check --quiet modal
-          python -m modal run analyzer/v143_demucs_cpu_host_probe_modal.py::approved_audio --audio-path public/gomywayfullaitest.m4a --output-path debug/v143-contextual-prune/demucs-cpu-host-probe.json
+          python -m modal run analyzer/v143_demucs_cpu_host_probe_modal.py::approved_audio --audio-path public/gomywayfullaitest.m4a --output-path debug/v143-contextual-prune/demucs-cpu-nomkldnn-probe-1.json
       - name: Validate and commit diagnostic
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
           from pathlib import Path
-          p=Path('debug/v143-contextual-prune/demucs-cpu-host-probe.json')
+          p=Path('debug/v143-contextual-prune/demucs-cpu-nomkldnn-probe-1.json')
           d=json.loads(p.read_text())
-          inv=d.get('invariants') or {}
+          inv=d.get('invariants') or {}; child=d.get('childRuntime') or {}; env=child.get('environment') or {}; host=d.get('host') or {}
           if inv.get('approvedFixture') is not True or inv.get('referenceFree') is not True: raise SystemExit('safety invariant failed')
           if inv.get('modalGpuRequested') is not False or inv.get('productionModified') is not False: raise SystemExit('GPU/production invariant failed')
           if inv.get('childRuntimeTracePresent') is not True: raise SystemExit('child runtime trace missing')
-          print(json.dumps({'direct':d.get('directGuitarSha256'),'pcm':d.get('directPcmInt16Sha256'),'shiftTrace':d.get('demucsShiftTrace'),'childRuntime':d.get('childRuntime')},indent=2))
+          if str(child.get('torchCpuCapability') or '').upper() != 'DEFAULT': raise SystemExit('effective ATen is not DEFAULT')
+          if child.get('mkldnnEnabled') is not False: raise SystemExit(f"oneDNN still enabled: {child.get('mkldnnEnabled')}")
+          if env.get('V143_DEMUCS_DISABLE_MKLDNN') != '1': raise SystemExit('oneDNN disable env missing')
+          if d.get('demucsShiftTrace') != ['0,22050,6026']: raise SystemExit(f"unexpected shift: {d.get('demucsShiftTrace')}")
+          print(json.dumps({'direct':d.get('directGuitarSha256'),'pcm':d.get('directPcmInt16Sha256'),'vendor':('AMD' if 'AuthenticAMD' in (host.get('lscpu') or '') else 'Intel' if 'GenuineIntel' in (host.get('lscpu') or '') else 'other'),'modalCloudProvider':host.get('modalCloudProvider'),'modalRegion':host.get('modalRegion'),'effectiveAten':child.get('torchCpuCapability'),'mkldnnEnabled':child.get('mkldnnEnabled')},indent=2))
           PY
-          git add debug/v143-contextual-prune/demucs-cpu-host-probe.json
+          git add debug/v143-contextual-prune/demucs-cpu-nomkldnn-probe-1.json
           git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record CPU-only Demucs host probe'
+          git commit -m 'Record oneDNN-off CPU Demucs probe'
           for n in 1 2 3 4; do git fetch origin v143-contextual-prune-lobo; git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0; git rebase --abort 2>/dev/null || true; sleep 2; done
           exit 1
