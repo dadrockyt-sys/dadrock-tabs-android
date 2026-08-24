@@ -1,0 +1,17 @@
+{
+  "candidateAddsUnobservedAttack": false,
+  "candidateAddsUnobservedPitch": false,
+  "candidateRelocatesEvents": false,
+  "checkerPassed": true,
+  "checkerSha256": "88f6b6b9dd9ce2c4d4b2390525ba57a6f7281ca6c8737ef8ef8aa59e2c08fc92",
+  "gate": "v143-contextual-prune-precision-shadow-cpu-proof",
+  "moduleSha256": "95bae514c6441260ea2cddd476928c2fbd607b7a930185d74ced63ead2b2c137",
+  "passed": true,
+  "productionModified": false,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "protectedPipelineUnchanged": true,
+  "referenceFree": true,
+  "runtimeLabelsRequired": false,
+  "schemaVersion": 1,
+  "triggerSha": "600821f8793243639f2e7d4f76b3ae90b4ae6bf5"
+}
