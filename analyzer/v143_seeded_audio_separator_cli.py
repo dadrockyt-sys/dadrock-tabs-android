@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 import random
 from pathlib import Path
@@ -30,19 +31,12 @@ class _DedicatedRandom:
 
 
 def seed_separator_runtime(seed: int = SEED) -> None:
-    """Seed RNGs and force deterministic Torch execution for separator inference.
-
-    This is a reference-free execution boundary only. Model choices, Demucs
-    shifts/overlap/segment size, RoFormer batch size, and all musical rules remain
-    unchanged. CPU Demucs uses one Torch/native math thread; accelerated components
-    keep deterministic Torch/cuDNN/cuBLAS controls.
-    """
+    """Seed RNGs and force deterministic Torch execution for separator inference."""
     value = int(seed)
     random.seed(value)
 
     try:
         import numpy as np
-
         np.random.seed(value)
     except Exception:
         pass
@@ -80,28 +74,60 @@ def seed_separator_runtime(seed: int = SEED) -> None:
         raise
 
 
-def install_dedicated_demucs_shift_rng(seed: int = SEED) -> None:
-    """Give Demucs' shift trick a private RNG whose state nothing else can consume.
+def write_demucs_runtime_trace() -> None:
+    """Optional research trace proving what the Demucs child actually selected.
 
-    audio-separator's bundled Demucs `apply_model` intentionally calls
-    `random.randint` for each shift. Seeding Python at process start is not a
-    sufficient isolation boundary if unrelated imports/model setup consume the
-    process-global RNG first. Replacing only that module's `random` handle keeps
-    shifts=1 and the exact Demucs algorithm while making its shift sequence depend
-    solely on V143_SEPARATOR_SEED. This path contains no song/reference data.
-
-    When V143_DEMUCS_SHIFT_TRACE_PATH is set, the wrapper records only the randint
-    bounds and selected integer so a research probe can prove whether this hook was
-    actually exercised. The trace switch is off by default and changes no inference
-    setting or musical behavior.
+    Off by default. Records execution controls only; no audio, song, reference,
+    scorer, model-output, or musical information is written.
     """
-    from audio_separator.separator.uvr_lib_v5.demucs import apply as demucs_apply
+    trace_path = os.environ.get("V143_DEMUCS_RUNTIME_TRACE_PATH")
+    if not trace_path:
+        return
 
+    import torch
+
+    cpu_capability = None
+    cpu_backend = getattr(torch.backends, "cpu", None)
+    getter = getattr(cpu_backend, "get_cpu_capability", None)
+    if callable(getter):
+        cpu_capability = str(getter())
+
+    payload = {
+        "torchVersion": str(torch.__version__),
+        "torchCpuCapability": cpu_capability,
+        "torchCudaAvailable": bool(torch.cuda.is_available()),
+        "mkldnnAvailable": bool(torch.backends.mkldnn.is_available()),
+        "mkldnnEnabled": bool(torch.backends.mkldnn.enabled),
+        "torchNumThreads": int(torch.get_num_threads()),
+        "torchNumInteropThreads": int(torch.get_num_interop_threads()),
+        "environment": {
+            key: os.environ.get(key)
+            for key in (
+                "ATEN_CPU_CAPABILITY",
+                "ONEDNN_MAX_CPU_ISA",
+                "DNNL_MAX_CPU_ISA",
+                "MKL_CBWR",
+                "MKL_NUM_THREADS",
+                "MKL_DYNAMIC",
+                "OMP_NUM_THREADS",
+                "OMP_DYNAMIC",
+            )
+        },
+    }
+    path = Path(trace_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def install_dedicated_demucs_shift_rng(seed: int = SEED) -> None:
+    """Give Demucs' shift trick a private RNG whose state nothing else can consume."""
+    from audio_separator.separator.uvr_lib_v5.demucs import apply as demucs_apply
     demucs_apply.random = _DedicatedRandom(int(seed))
 
 
 if __name__ == "__main__":
     seed_separator_runtime()
+    write_demucs_runtime_trace()
     from audio_separator.utils.cli import main
 
     if os.environ.get("V143_DEMUCS_FIXED_SHIFT_RNG") == "1":
