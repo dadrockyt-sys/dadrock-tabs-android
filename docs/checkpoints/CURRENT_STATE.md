@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 16:24 America/Montreal
+Updated: 2026-08-24 17:32 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -35,9 +35,36 @@ Priority: **finish Rhythm end-to-end before Bass/Lead**.
 - Historical carrier source blob `99866aa8af14dc243d226c6fb28d68af14d003ac`; legacy precision source blob `feeaafea511bf727099d1532a323f9106af75b7a`.
 
 ## Timing diagnosis
-- Global physical accent/phase is sectional/mixed; reject a global half-bar shift.
-- Metadata BPM `129.19921875`; best global timestamp fit `129.2881694947` (+0.06885%); reject global BPM replacement.
-- Remaining timing error requires locally varying/reference-free physical grid work; no simple timing mutation is justified yet.
+### Earlier global tests
+- Global physical attack accent/phase is sectional/mixed; do not justify a global half-bar mutation from guitar-attack accents alone.
+- Metadata BPM `129.19921875`; best global timestamp fit `129.2881694947` (+0.06885%); reject simple global BPM replacement.
+
+### Physical IOI vs labeled grid-gap audit — 2026-08-24 17:27 America/Montreal
+Files:
+- `analyzer/v143_frozen_evidence_ioi_grid_gap_diagnostic.py`
+- `.github/workflows/v143-frozen-evidence-ioi-grid-gap-diagnostic.yml`
+- `debug/v143-contextual-prune/frozen-evidence-ioi-grid-gap-diagnostic.json`
+
+Result on all 725 frozen attacks / 724 consecutive pairs:
+- Metadata sixteenth duration `0.11609977324263039 s`.
+- For pairs whose physical IOI lies within `0.10` sixteenth of an integer multiple: **638/638 exact labeled-gap matches**.
+- Within `0.15`: **680/680 exact**.
+- Within `0.20`: **697/697 exact**.
+- Within `0.25`: **710/710 exact**.
+- At the `0.20` high-confidence band there are **zero** nonzero step-gap offsets.
+- Every 8-measure window has `exactGapMatchRate=1.0` for its high-confidence pairs.
+- This strongly rejects the earlier idea that the broad timing failure is caused by local integer sixteenth-gap corruption or widespread local step relabeling.
+- Current attack ordering and **relative integer sixteenth spacing are physically self-consistent**. Remaining timing investigation should focus on absolute subdivision/bar phase/origin (and possibly beat-track absolute coordinate identity), not local gap replacement.
+- No event/grid mutation was made.
+
+### Full-mix bar-phase stability diagnostic — in progress, CPU only
+Prepared:
+- `analyzer/v143_reference_free_fullmix_bar_phase_stability_diagnostic.py`
+- `.github/workflows/v143-fullmix-bar-phase-stability-diagnostic.yml`
+- Uses the existing reference-free full-mix timing front end and compares combined/onset-only/low-band 4/4 phase stability globally plus 16-beat and 32-beat windows.
+- No Modal, professional reference, runtime labels, or event mutation.
+- Workflow now persists a run-status JSON even if the diagnostic fails, so this investigation cannot disappear silently.
+- Do not claim a bar-phase conclusion until the persisted result/status is observed.
 
 ## Pivotal pitch diagnosis
 The upstream carrier was **not pitch-starved**.
@@ -147,17 +174,19 @@ Candidate workflow:
 
 ## Current mutation/cost state
 - No new candidate generated.
-- No Modal/L4 invoked during current v2 work.
+- No Modal/L4 invoked during current v2/timing diagnostic work.
 - No professional scorer/reference invoked.
 - No render events mutated.
 - Protected runtime unchanged.
 - `main` and Production untouched.
 
 ## Next exact actions
-1. CPU preflight is complete and green; no free preflight blocker remains.
-2. Under the current hard boundary, **do not dispatch the candidate workflow** until the user explicitly authorizes paid Modal/L4 usage.
-3. If explicitly authorized, dispatch exactly one capture with `paid_capture_authorized=YES`; the one-shot lock must prevent repeats.
-4. Immediately require persisted candidate replay evidence + `precision-v2-replay-policy-compare.json` to reconcile exactly before any further inference or mutation.
-5. Use captured replay evidence for all later precision experiments CPU-only; do not repeat separator inference.
-6. Only if source-only replay evidence supports the corrected candidate: immutable freeze/PDF → fidelity 1.0 → lock → exactly one professional score.
-7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
+1. Observe the persisted full-mix bar-phase stability diagnostic or its persisted run-status and resolve any CPU-only failure.
+2. Use full-mix source evidence plus the 100%-consistent IOI gap result to determine whether absolute bar/subdivision phase has a stable reference-free correction; do not mutate if it remains ambiguous.
+3. CPU precision-v2 preflight is already complete and green.
+4. Under the current hard boundary, **do not dispatch the candidate workflow** until the user explicitly authorizes paid Modal/L4 usage.
+5. If explicitly authorized, dispatch exactly one capture with `paid_capture_authorized=YES`; the one-shot lock must prevent repeats.
+6. Immediately require persisted candidate replay evidence + `precision-v2-replay-policy-compare.json` to reconcile exactly before any further inference or mutation.
+7. Use captured replay evidence for all later precision experiments CPU-only; do not repeat separator inference.
+8. Only if source-only replay evidence supports the corrected candidate: immutable freeze/PDF → fidelity 1.0 → lock → exactly one professional score.
+9. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
