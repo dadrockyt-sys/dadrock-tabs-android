@@ -1,5 +1,6 @@
 name: v143 frozen evidence IOI grid-gap diagnostic
 
+# CPU-only, reference-free timing diagnostic.
 on:
   push:
     branches:
