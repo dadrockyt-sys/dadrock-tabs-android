@@ -18,6 +18,7 @@ Priority: **finish Rhythm end-to-end before Bass/Lead**.
 - Exact 2-pass proof run `32697939613` passed. Old candidate/freeze must not be rerun/rescored.
 - One-shot professional run `32731885778` failed broadly: coverage recall `1.0`, pitch-content F1 `0.23718280683583634`, pitch+timing F1 `0.033143448990160536`, critical mismatches `1723`.
 - Allowed diagnosis only: coverage solved; timing/grid identity and pitch identity fundamentally wrong. Scorer/reference closed again.
+- Retired scored render-event identity is confirmed from committed preholdout proof as `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`, with `725` selected/unique onsets expanded to `985` rendered notes across `113` measures and PDF fidelity `1.0`.
 
 ## Bar-phase / raw-index timing investigation — CLOSED FOR NOW
 - Beat repair can invalidate inherited raw modulo-4 phase in principle, proven synthetically.
@@ -64,7 +65,7 @@ Corrected timing contract:
 - `physicalOnsetDeltaFromGridSeconds` is serialized directly from the two preserved timing facts; no timing is invented.
 - `attackTimingChanged=false` is now truthful: promotion preserves the incoming physical attack while retaining the separate grid start.
 
-The Actions-generated schema-v2 diagnostic has now been observed and passes:
+The Actions-generated schema-v2 diagnostic has been observed and passes:
 - `schemaVersion=2`, `passed=true`, `defectPresent=false`, `correctionProven=true`.
 - assembly separation true; product delegates to pure promotion helper; helper is bundled into candidate image.
 - synthetic event count `2 → 2` unchanged.
@@ -78,10 +79,37 @@ The Actions-generated schema-v2 diagnostic has now been observed and passes:
 ## Sustain semantics note
 `v143_rhythm_sustain_consensus_shadow.py` still intentionally analyzes sustain from `timeSeconds` through `_event_time()`, so the promoted absolute sustain endpoint remains grid-derived. This correction does not silently change sustain inference; it only preserves the independent physical attack provenance and makes timing bases explicit.
 
-## Downstream consumer audit — IN PROGRESS
-- `analyzer/v143_rhythm_output_adapter.py::render_rhythm_tab()` renders from `measure`, `step`, `stringIndex`, `fret`, and technique markers; it does not read `onsetTime`, `start`, `end`, `offsetTime`, or duration fields.
-- Therefore this adapter is structurally isolated from the dual-time correction as long as attack/pitch/position identity remains unchanged, which the corrected synthetic proof already enforces.
-- Remaining freeze/PDF/product-proof consumers still need inspection for any assumption that `onsetTime == start` before a new approved-audio candidate is allowed.
+## Downstream render/freeze audit — IMPORTANT SCORING BOUNDARY
+Inspected:
+- `.github/workflows/v143-repaired-timing-precision-candidate-product.yml`
+- `.github/workflows/v143-repaired-timing-precision-product-proof.yml`
+- `.github/workflows/v143-repaired-timing-precision-final-preholdout.yml`
+- `validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs`
+- `validation/rhythm_holdout/prepare_precision_candidate_freeze_payload.mjs`
+- `lib/jimmyPaigeAnalysisPayload.js`
+- `lib/v143RenderContract.js`
+- `validation/rhythm_holdout/freeze_rhythm_analysis.py`
+- `validation/rhythm_holdout/canonical.py`
+- `analyzer/v143_rhythm_output_adapter.py`
+
+Findings:
+- `render_rhythm_tab()` uses authenticated grid placement/pitch-position fields and technique markers; it does not use physical onset seconds.
+- `buildJimmyPaigeAnalysisPayload()` creates structured `renderEvents` through `projectV143RenderEvents(rawEvents)`.
+- `projectV143RenderEvents()` intentionally projects `eventIndex`, `measure`, `step`, `stringIndex`, `fret`, `midi`, sustain duration/tier, and techniques. It does **not** serialize `timeSeconds`, `start`, `onsetTime`, `end`, `offsetTime`, or physical-onset residual.
+- freeze preparation writes only `structured.renderEvents`; `freeze_rhythm_analysis.py` freezes exactly those events; `canonical.py` likewise has no physical-onset-seconds field.
+- Therefore preserving physical `onsetTime` is a valid provenance/correctness fix in the raw candidate JSON, but **by itself it cannot change the frozen/PDF/scored event stream**.
+- Because the correction deliberately leaves `(measure,step)`, pitch-position, sustain, and event count unchanged, a new inference based only on this fix would be expected to reproduce retired frozen render-event SHA `a81190…`, not create a legitimate new scoring identity. **Do not spend Modal/GPU or open the holdout for this correction alone.**
+
+Cheap projection proof:
+- Added `validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs` in commit `37164fcabaf03fe3a900eb0e29a81143ac623722`.
+- It proves raw JSON preserves distinct physical onset/residual while mutations to physical onset alone leave `projectV143RenderEvents()` byte-structurally unchanged, and confirms physical timing fields are absent from the scored/render projection.
+- Extended `.github/workflows/v143-repaired-timing-precision-product-proof.yml` in commit `e3264e90a79c3f5412df6894f20973a6ae723613` to run both the corrected onset-handoff checker and render-projection checker before any expensive candidate path, with protected-runtime and anti-leakage gates.
+- Product-proof workflow is CPU-only/read-only; no Modal/GPU or professional reference use.
+
+## Workflow safety drift to resolve before future holdout
+- `v143-repaired-timing-precision-final-preholdout.yml` is still pinned to old candidate blob `20e7a583...` / result commit `289a04e...` and uses the generic `prepare_precision_candidate_freeze_payload.mjs` instead of the repaired-timing-specific preparation script.
+- Its local `retired` set currently lists older identities `c621...` and `e693...` but not the now-scored retired `a81190...` identity.
+- Do not dispatch this old final-preholdout workflow as-is. Before any future freeze path, make the retired `a81190...` identity fail closed and bind a genuinely new candidate only after a correction changes scored grid/pitch identity.
 
 ## Existing diagnostic files from earlier audit
 - `analyzer/check_v143_candidate_physical_grid_fidelity.py` commit `013053025984172752af46ef2d10112dd22aec1f` and workflow commit `13ba13453424ce861c96d02d0c4c483817a74c6c` exist, but their first result is schema-limited as described above. Do not use its zero top-level residual as evidence of physical timing accuracy.
@@ -89,10 +117,12 @@ The Actions-generated schema-v2 diagnostic has now been observed and passes:
 ## Cost control
 - No Modal/GPU inference in this continuation yet.
 - Do not rerun old candidate/freeze/scorer.
-- Current work is source/static/synthetic only.
+- Do **not** run a new GPU candidate for physical-onset preservation alone because it cannot change the scored render-event identity.
+- Current work is source/static/synthetic/CPU-only.
 
 ## Next exact actions
-1. Inspect `.github/workflows/v143-repaired-timing-precision-candidate-product.yml`, `v143-repaired-timing-precision-product-proof.yml`, and `v143-repaired-timing-precision-final-preholdout.yml` to identify all downstream product/freeze/PDF consumers.
-2. Inspect those consumers for any assumption that `onsetTime == start` and keep the new dual-time contract explicit and isolated.
-3. Add/adjust a cheap downstream render/JSON-serialization invariant if needed; no Modal/GPU yet.
-4. Only after the static chain is clean consider one new low-cost approved-audio candidate inference with a brand-new identity; never modify/rescore the retired freeze.
+1. Verify the updated CPU-only product-proof workflow is green after commit `e3264e90...`.
+2. Fail-close future preholdout/holdout paths against retired scored event SHA `a81190...`; do not dispatch any old workflow while doing this.
+3. Continue audio-only source audit for a correction that can actually change scored `measure/step` and/or MIDI/string/fret identity without using professional reference.
+4. Prioritize a cheap structural audit of precision polyphonic expansion: old candidate has `725` selected attacks but `985` rendered notes (`236` multi-note onsets, max chord size `6`) while pitch-content F1 was only `0.237`; determine whether secondary-tone expansion has an audio-only over-expansion defect before any GPU run.
+5. Only after a proven scoring-relevant correction exists, create a brand-new approved-audio candidate identity/path; freeze/PDF/lock it immutably and only then permit one professional score.
