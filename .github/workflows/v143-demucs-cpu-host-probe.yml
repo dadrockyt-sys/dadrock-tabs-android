@@ -1,8 +1,10 @@
 name: V143 Demucs CPU Host Probe
 
-# Cheap diagnostic only; manual so bug edits never create compute automatically.
+# One-shot cheap CPU-only validation; this push trigger is removed immediately after launch.
 on:
-  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v143-demucs-cpu-host-probe.yml]
 
 permissions: {contents: write}
 
@@ -31,24 +33,26 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --disable-pip-version-check --quiet modal
-          python -m modal run analyzer/v143_demucs_cpu_host_probe_modal.py::approved_audio --audio-path public/gomywayfullaitest.m4a --output-path debug/v143-contextual-prune/demucs-cpu-host-probe.json
+          python -m modal run analyzer/v143_demucs_cpu_host_probe_modal.py::approved_audio --audio-path public/gomywayfullaitest.m4a --output-path debug/v143-contextual-prune/demucs-cpu-avx2-probe-2.json
       - name: Validate and commit diagnostic
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
           from pathlib import Path
-          p=Path('debug/v143-contextual-prune/demucs-cpu-host-probe.json')
+          p=Path('debug/v143-contextual-prune/demucs-cpu-avx2-probe-2.json')
           d=json.loads(p.read_text())
           inv=d.get('invariants') or {}
           if inv.get('approvedFixture') is not True or inv.get('referenceFree') is not True: raise SystemExit('safety invariant failed')
           if inv.get('modalGpuRequested') is not False or inv.get('productionModified') is not False: raise SystemExit('GPU/production invariant failed')
           trace=d.get('demucsShiftTrace') or []
-          if not trace: raise SystemExit('Demucs shift hook was not exercised')
-          print(json.dumps({'direct':d.get('directGuitarSha256'),'pcm':d.get('directPcmInt16Sha256'),'shiftTrace':trace,'cpuModel':(d.get('host') or {}).get('cpuModelName')},indent=2))
+          if trace != ['0,22050,6026']: raise SystemExit(f'unexpected Demucs shift trace: {trace}')
+          settings=d.get('settings') or {}
+          if settings.get('atenCpuCapability') != 'avx2' or settings.get('oneDnnMaxCpuIsa') != 'AVX2' or settings.get('mklCbwr') != 'COMPATIBLE': raise SystemExit('dispatch controls missing')
+          print(json.dumps({'direct':d.get('directGuitarSha256'),'pcm':d.get('directPcmInt16Sha256'),'shiftTrace':trace,'vendor':('AMD' if 'AuthenticAMD' in ((d.get('host') or {}).get('lscpu') or '') else 'Intel' if 'GenuineIntel' in ((d.get('host') or {}).get('lscpu') or '') else 'other')},indent=2))
           PY
-          git add debug/v143-contextual-prune/demucs-cpu-host-probe.json
+          git add debug/v143-contextual-prune/demucs-cpu-avx2-probe-2.json
           git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record CPU-only Demucs host probe'
+          git commit -m 'Record second common AVX2 CPU probe'
           for n in 1 2 3 4; do git fetch origin v143-contextual-prune-lobo; git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0; git rebase --abort 2>/dev/null || true; sleep 2; done
           exit 1
