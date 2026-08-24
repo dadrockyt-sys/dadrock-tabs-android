@@ -142,6 +142,11 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
                 "demucsCpuThreads": 1,
                 "modalGpuRequested": False,
                 "deterministicSeed": 143,
+                "mklCbwr": DEMUCS_SINGLE_THREAD_ENV.get("MKL_CBWR"),
+                "mklDynamic": DEMUCS_SINGLE_THREAD_ENV.get("MKL_DYNAMIC"),
+                "ompDynamic": DEMUCS_SINGLE_THREAD_ENV.get("OMP_DYNAMIC"),
+                "oneDnnMaxCpuIsa": DEMUCS_SINGLE_THREAD_ENV.get("ONEDNN_MAX_CPU_ISA"),
+                "dnnlMaxCpuIsa": DEMUCS_SINGLE_THREAD_ENV.get("DNNL_MAX_CPU_ISA"),
             },
             "invariants": {
                 "approvedFixture": _sha256_bytes(source_audio) == APPROVED_AUDIO_SHA256,
