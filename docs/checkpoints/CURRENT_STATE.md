@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 America/Thunder_Bay
+Updated: 2026-08-24 14:19 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -140,4 +140,18 @@ Exact score result:
 - Global lag recurrence metrics are effectively phase-rotation insensitive apart from edge effects, so their split winners at offsets 4/8/12 are not sufficient evidence for a bar-boundary correction.
 - Physical primary-attack support is materially different: the strongest whole-beat phase candidate is offset **8 sixteenth steps** from the current boundary (a half-bar shift). This is now a source-level clue, but **not yet a correction**.
 - Next action: test 0-vs-8 attack-support contrast across contiguous local windows / musical sections with edge-safe aggregation, robust median and sign-vote statistics. Only if the half-bar signal is stable across the piece will measure-origin mapping be inspected for a global phase defect; if it is sectional, inspect pickup/local reset behavior instead.
+- Scorer/reference remains closed. Modal/L4 remains closed. Protected runtime and Production remain untouched.
+
+## Edge-safe phase stability diagnostic — 2026-08-24 14:19 America/Montreal
+- Added `analyzer/v143_frozen_evidence_phase_stability_diagnostic.py` and CPU-only workflow `.github/workflows/v143-frozen-evidence-phase-stability-diagnostic.yml`; no candidate generation, Modal, scorer, runtime edit, or Production edit is permitted by the diagnostic.
+- Persisted report: `debug/v143-contextual-prune/frozen-evidence-phase-stability-diagnostic.json`.
+- The stricter method compares every phase on the **same current-measure set**, rotates whole-beat positions modulo 16, zero-fills missing attacks, and reports occupied-only means separately. This removes the leading/trailing truncation and occupancy-conditioning weaknesses in the earlier phase clue.
+- Global zero-filled physical-accent ranking still places offset 8 first: offset-8 contrast `0.1768629263` versus offset-0 `0.1011387611`; difference `+0.0757241652`. Occupied-only contrast also favors offset 8 (`0.4863533122` versus `-0.0474636840`).
+- However the signal is **not stable across the piece**:
+  - paired measure-by-measure step-8 minus step-0 support: phase 8 wins 47, phase 0 wins 41, ties 25; median difference `0.0`; non-tie phase-8 win fraction `0.5341`.
+  - non-overlapping 8-measure windows: phase 8 wins 7 vs phase 0 wins 7; median contrast difference `+0.1116815`.
+  - 16-measure windows at 8-measure stride: phase 8 wins 6 vs phase 0 wins 7; median contrast difference `-0.1065373`.
+  - diagnostic classification: `sectional-or-mixed-phase-accent-clue`; `stablePhase8PhysicalAccentClue=false`.
+- Therefore **reject a global half-bar shift correction**. The apparent global offset-8 advantage is a sectional/arrangement clue, not evidence for moving every measure origin.
+- Next exact action: map the local phase winner sequence to measure ranges and compare its transitions against reference-free attack-density/retrigger/pitch-support changes. Determine whether the phase changes reflect pickup/section resets, tempo/grid drift, or merely arrangement accents before any timing mutation is proposed.
 - Scorer/reference remains closed. Modal/L4 remains closed. Protected runtime and Production remain untouched.
