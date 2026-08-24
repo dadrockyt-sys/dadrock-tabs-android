@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-separator-cold-determinism-probe",
+  "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "normalizedWavSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+  "directGuitarSha256": "0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c",
+  "roformerInstrumentalSha256": "ce7ae8c6c57e00e1e191b8c15a8c4f39627cbcdf3b7a75ac7ca4c246f6f64b14",
+  "cascadeGuitarSha256": "546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41",
+  "directBytes": 37298220,
+  "roformerBytes": 37298220,
+  "cascadeBytes": 37298220,
+  "settings": {
+    "demucsSingleStem": "Guitar",
+    "demucsShifts": 1,
+    "demucsOverlap": 0.1,
+    "demucsSegmentSize": 6,
+    "demucsExecutionDevice": "cpu",
+    "demucsCpuThreads": 1,
+    "demucsShiftRng": "private-seed-143",
+    "demucsAtenCpuCapability": "default",
+    "demucsMklCbwr": "COMPATIBLE",
+    "demucsMkldnnEnabled": false,
+    "demucsOneDnnMaxCpuIsa": "SSE41",
+    "demucsMklDynamic": false,
+    "demucsOmpDynamic": false,
+    "roformerSingleStem": "Instrumental",
+    "roformerBatchSize": 1,
+    "roformerExecutionDevice": "gpu-auto-proven-deterministic",
+    "useSoundfile": true,
+    "deterministicSeed": 143,
+    "pythonHashSeedAtChildStartup": 143,
+    "cublasWorkspaceConfig": ":4096:8",
+    "tf32Disabled": true,
+    "torchDeterministicAlgorithms": true
+  },
+  "invariants": {
+    "approvedFixture": true,
+    "referenceFree": true,
+    "deterministicFlag": true,
+    "productionModified": false,
+    "protectedPipelineModified": false
+  }
+}
