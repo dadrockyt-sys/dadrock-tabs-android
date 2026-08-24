@@ -1,0 +1,31 @@
+{
+  "checks": {
+    "all113Measures": true,
+    "bindingPassed": true,
+    "brandNewFrozenIdentity": true,
+    "eventCount889": true,
+    "pdfEventFidelityExact": true,
+    "pdfHashMatchesFrozen": true,
+    "pdfRendererProjectionExact": true,
+    "referenceStillSealed": true,
+    "sourceAudioExact": true,
+    "sourceCommitExact": true
+  },
+  "correctedRenderBlobSha": "53686c90c72bf82c557a6f9555a13827423ee40c",
+  "correctedRenderEventsCanonicalSha256": "07b12f807295219d39198641de3a9e170c684de60d274befd2b6f6f50af9588c",
+  "eventCount": 889,
+  "failedChecks": [],
+  "frozenEventSha256": "07b12f807295219d39198641de3a9e170c684de60d274befd2b6f6f50af9588c",
+  "gate": "v143-frozen-evidence-harmonic-guard-preholdout",
+  "modalUsed": false,
+  "passed": true,
+  "pdfEventFidelity": 1.0,
+  "pdfEventSha256": "07b12f807295219d39198641de3a9e170c684de60d274befd2b6f6f50af9588c",
+  "productionModified": false,
+  "professionalScoreRun": false,
+  "referenceOpened": false,
+  "schemaVersion": 1,
+  "sourceCommit": "315f9525ff747f2b42e5020c9579713f5f962d7b",
+  "uniqueMeasureCount": 113,
+  "workflowRunId": "32751771832"
+}
