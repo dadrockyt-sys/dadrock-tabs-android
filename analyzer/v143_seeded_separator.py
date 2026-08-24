@@ -20,6 +20,7 @@ SEPARATOR_SEED = "143"
 CUBLAS_WORKSPACE_CONFIG = ":4096:8"
 DEMUCS_SINGLE_THREAD_ENV = {
     "CUDA_VISIBLE_DEVICES": "",
+    "V143_DEMUCS_FIXED_SHIFT_RNG": "1",
     "OMP_NUM_THREADS": "1",
     "MKL_NUM_THREADS": "1",
     "OPENBLAS_NUM_THREADS": "1",
@@ -58,11 +59,11 @@ def build_seeded_v143_stems(
     """Run the frozen V143 separator graph through deterministic child boundaries.
 
     The musical graph is unchanged: Demucs6s Guitar, shifts=1, overlap=.10,
-    segment=6, plus BS-RoFormer Instrumental -> Demucs6s. Cold-session proof
-    showed BS-RoFormer is byte-exact, while Demucs remains two-state across fresh
-    executions even after CUDA determinism and then CPU isolation. Demucs is
-    therefore CPU-only with a fixed single-thread math topology. Model weights and
-    all musical separator parameters remain identical.
+    segment=6, plus BS-RoFormer Instrumental -> Demucs6s. BS-RoFormer is already
+    byte-exact across cold sessions. Demucs is CPU-only/single-thread and its
+    intentional shift trick uses a private RNG seeded only by V143_SEPARATOR_SEED,
+    so unrelated global-RNG consumption cannot change the chosen shift. Model
+    weights and all musical separator parameters remain identical.
 
     No song/reference labels, human targets, or scorer values enter this path.
     """
@@ -88,9 +89,6 @@ def build_seeded_v143_stems(
     }
 
     with _temporary_environment(common_env):
-        # Demucs is the proven earliest mismatch. CUDA is hidden before process
-        # startup and every common native CPU thread pool is pinned to one worker
-        # so floating-point reduction order cannot vary with host scheduling.
         with _temporary_environment(DEMUCS_SINGLE_THREAD_ENV):
             direct = separate_demucs_guitar(
                 cli,
@@ -98,7 +96,8 @@ def build_seeded_v143_stems(
                 work / "direct",
             )
 
-        # BS-RoFormer has already proven byte-identical across cold sessions.
+        # BS-RoFormer has proven byte-identical and does not receive the Demucs
+        # private-shift environment switch.
         with _temporary_environment({"CUDA_VISIBLE_DEVICES": None}):
             roformer = separate_roformer_instrumental(
                 cli,
@@ -145,6 +144,7 @@ def build_seeded_v143_stems(
             "demucsSegmentSize": 6,
             "demucsExecutionDevice": "cpu",
             "demucsCpuThreads": 1,
+            "demucsShiftRng": "private-seed-143",
             "roformerSingleStem": "Instrumental",
             "roformerBatchSize": 1,
             "roformerExecutionDevice": "gpu-auto-proven-deterministic",
