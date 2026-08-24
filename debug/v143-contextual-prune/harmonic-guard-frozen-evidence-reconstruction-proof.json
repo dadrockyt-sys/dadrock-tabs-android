@@ -1,0 +1,29 @@
+{
+  "attackCount": 725,
+  "conservativelyClampedSustainCount": 13,
+  "correctedRenderEventCount": 889,
+  "correctedRenderEventsCanonicalSha256": "07b12f807295219d39198641de3a9e170c684de60d274befd2b6f6f50af9588c",
+  "freshSeparatorInference": false,
+  "historicalLegatoLinkCount": 28,
+  "intervalCounts": {
+    "12": 78,
+    "19": 11,
+    "24": 6,
+    "28": 1
+  },
+  "modalUsed": false,
+  "mode": "v143-promoted-harmonic-guard-frozen-upstream-reuse",
+  "oldRenderEventCount": 985,
+  "passed": true,
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "referenceFree": true,
+  "referenceRuntimeInputUsed": false,
+  "remappedSurvivorCount": 48,
+  "retainedEvidenceBackedLegatoLinkCount": 27,
+  "retiredEventSha256": "a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb",
+  "schemaVersion": 1,
+  "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "strippedInvalidatedLegatoLinkCount": 1,
+  "suppressedHarmonicCount": 96
+}
