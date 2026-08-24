@@ -52,7 +52,7 @@ Safety design:
 
 Trigger marker was created in commit `a9e9ddd61c1d41b2530ab15e352bf8f410b592fc`. Therefore the one approved-audio inference is now in-flight/eligible; **do not create another marker or dispatch another candidate workflow**.
 
-At this checkpoint the new candidate file is not yet present on the branch (latest re-check returned 404). Do not claim inference success yet.
+At this checkpoint the new candidate file is still not present on the branch (latest re-check returned 404). Do not claim inference success yet.
 
 ## CPU post-proof prepared
 Created `.github/workflows/v143-harmonic-guard-candidate-postproof.yml` commit `5d7e96c38c8328457bd82aeeb691245a66ffed00`.
@@ -62,9 +62,19 @@ Created `.github/workflows/v143-harmonic-guard-candidate-postproof.yml` commit `
 - inherits determinism from prior exact 2-pass run `32697939613` only after requiring all upstream stage/section hashes exact; new harmonic guard is separately proven pure deterministic, so this avoids paying for a second GPU inference.
 - writes `repaired-timing-precision-harmonic-guard-candidate-binding-proof.json`; no reference, no GPU, no Production.
 
+## New fail-closed preholdout workflow — PREPARED, NOT TRIGGERED
+Created `.github/workflows/v143-harmonic-guard-final-preholdout.yml` commit `12958a2f5f245697148a7fba190dd7bb8e98987c`.
+- triggers only from dedicated `RUN_HARMONIC_GUARD_PREHOLDOUT_ONCE` marker; marker has not been created.
+- refuses to run unless the new candidate, initial proof, and final binding proof all exist and pass.
+- binds final candidate blob SHA + projected render SHA and rejects retired identities `c621...`, `e693...`, and scored `a81190...` before freeze.
+- uses repaired-timing-specific freeze prep, runtime isolation, protected hash and approved-audio gates, and anti-leakage checks.
+- freezes exact committed candidate, renders full/preview PDFs, verifies renderer projection and `pdfEventFidelity == 1.0`, and requires frozen SHA == bound projected SHA != every retired identity.
+- writes compact `rhythm-harmonic-guard-final-preholdout.json`, uploads immutable freeze/PDF artifacts, then removes the preholdout marker in the same bot commit.
+- scorer/reference remains sealed; workflow cannot claim Rhythm complete and cannot promote Production.
+
 ## Holdout workflow safety drift
 - old `.github/workflows/v143-repaired-timing-precision-final-preholdout.yml` remains stale and must not be dispatched.
-- new preholdout must bind the new candidate binding proof and fail closed on retired `a81190...` before any score.
+- use only the new harmonic-guard preholdout path after candidate binding proof is green.
 
 ## Cost control
 - Exactly one new harmonic-guard candidate trigger has been issued; do not issue another.
@@ -75,5 +85,6 @@ Created `.github/workflows/v143-harmonic-guard-candidate-postproof.yml` commit `
 1. Re-check branch for new candidate + initial proof; require `passed=true`, guard suppression >0, 113 measures, protected hash exact, projected render SHA != retired `a81190...`.
 2. Re-check for automatic binding proof; require final committed blob/event hashes and determinism inheritance proof green.
 3. Save exact new candidate/render identities here immediately.
-4. Create a new harmonic-guard preholdout workflow bound to that binding proof; fail closed on all retired scored render identities and do not dispatch stale preholdout.
-5. Run freeze/PDF/fidelity lock without scorer; only if PDF-event fidelity = 1.0 and immutable identity is new may exactly one professional score be permitted.
+4. Only after binding proof green, create `RUN_HARMONIC_GUARD_PREHOLDOUT_ONCE` exactly once.
+5. Require final preholdout `passed=true`, frozen SHA == bound projected SHA, PDF-event fidelity 1.0, and all retired identities rejected.
+6. Only then may exactly one professional score be permitted.
