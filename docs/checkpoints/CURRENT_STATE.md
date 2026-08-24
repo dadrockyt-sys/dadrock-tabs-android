@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 02:29 America/Thunder_Bay
+Updated: 2026-08-24 02:42 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -11,25 +11,27 @@ Human professional reference is scorer-only. Runtime may NEVER read/train/tune/s
 Completion requires score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`. **Rhythm is NOT complete.**
 
 ## Protected/runtime boundary
-Protected `analyzer/v143_reference_free_rhythm_pipeline.py` required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`. Fixture `public/gomywayfullaitest.m4a` SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`. Protected exact; Production unchanged.
-Scorer V2 remains CLOSED until a new deterministic immutable freeze/PDF. Never rescore retired Freeze2.
+Protected `analyzer/v143_reference_free_rhythm_pipeline.py` required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`. Fixture `public/gomywayfullaitest.m4a` SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`. Protected exact; Production unchanged. Scorer V2 remains CLOSED until a new deterministic immutable freeze/PDF. Never rescore retired freezes.
 
-## Determinism gates — GREEN
-- oneDNN-off Demucs direct stem byte-exact across AWS Intel and GCP AMD: WAV `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`, PCM `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`.
-- Full separator single-pass smoke GREEN.
-- Combined repaired-timing/precision single-pass GREEN: 449 repaired beats, 0 interval outliers, 113 measures / 1796 slots, 984 correction attacks, 725 retained precision attacks, 987 pitch hypotheses, 725/725 explicit primaries, all 113 measures populated, no invented/relocated attack or pitch.
-- Final two-pass combined exact proof `debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json`, run `32697939613`: `passed=true`, every required stage hash/section exact, no invariant failures, protected exact, Production unchanged.
+## Determinism + candidate gates — GREEN
+- oneDNN-off Demucs byte-exact across AWS Intel / GCP AMD.
+- Full separator single-pass GREEN.
+- Combined repaired timing + precision single-pass GREEN: 449 repaired beats, 0 outliers, 113 measures/1796 slots, 725 retained attacks, 987 pitch hypotheses, explicit primary complete, all 113 measures populated.
+- Final 2-pass exact proof run `32697939613`: `passed=true`, every stage hash/section exact, no invariant failures, protected exact, Production unchanged.
+- Candidate product `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json` GREEN at bot commit `289a04e0fe30b5668ddaf39427404d8472ca1f51`, blob `20e7a583fcb96249636cc63b01cf9ae0044f2c62`. Do not rerun candidate.
 
-## Candidate / pre-freeze product — GREEN
-`debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json` completed and was committed by `github-actions[bot]` at commit `289a04e0fe30b5668ddaf39427404d8472ca1f51` (`Record repaired-timing precision candidate product`), result blob `20e7a583fcb96249636cc63b01cf9ae0044f2c62`.
-The workflow only commits after approved-fixture, audio-derived measure range, repaired timing, reference-free assembly/live path, nonzero events/notes, no unobserved attack/pitch/relocation, protected-blob exactness, Production unchanged, and pre-freeze trace validation are green. No scorer/reference input was opened.
+## Fresh Jimmy freeze/PDF path — ACTIVE
+A new reference-free preholdout workflow was prepared at `.github/workflows/v143-repaired-timing-precision-final-preholdout.yml`. It consumes the exact committed green candidate instead of rerunning Modal, revalidates candidate `preFreezeTrace`, deterministic proof, fixture/protected hashes and runtime isolation, then builds the Jimmy structured payload, freezes exact render events, renders full+preview PDFs, verifies PDF-event fidelity, presentation/visible contract, and rejects retired event identities.
+One-shot launch commit: `23a64776333a8fd44dd092890d87e08a4a767e14`.
+Workflow restored manual-only immediately at `31949e5b42b1f9bad99e6b7bff8ddf7afb708394`.
+Expected compact result: `debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json`; artifact name `rhythm-professional-preholdout-real-audio`.
+If green, existing `rhythm-final-preholdout-lock.yml` automatically locks that exact run/artifact and independently re-verifies event/PDF identity and presentation. No scorer/reference file is opened by this path.
 
-## Modal cost-control — ACTIVE
-Candidate compute is complete. Do not rerun it. No debugging loops. Scorer remains closed until a BRAND-NEW candidate freeze/PDF is locked.
+## Cost control
+No new Modal/L4 analysis is used for this fresh freeze/PDF gate. Scorer remains closed. Do not launch any other compute until the fresh preholdout result is assessed.
 
 ## Current work NOW
-1. Inspect only the non-scorer preholdout/freeze/render workflows and select or prepare a safe current-candidate path.
-2. Require current candidate events as input; do not reuse retired Freeze2 identity or hashes.
-3. Create a BRAND-NEW Jimmy analysis/authenticated event identity + immutable freeze + professional preview/full PDF.
-4. Verify PDF-event fidelity `1.0`, protected exact, Production unchanged, reference-free runtime path.
-5. ONLY THEN reopen scorer V2 and score at unchanged >= `0.99` threshold.
+1. Poll only for fresh preholdout compact proof.
+2. Require brand-new frozen event SHA, PDF-event fidelity `1.0`, all 113 measures, reference-free safety, protected exact, Production unchanged.
+3. Require automatic permanent artifact lock to pass.
+4. ONLY THEN reopen scorer V2 and run the unchanged >= `0.99` professional holdout score.
