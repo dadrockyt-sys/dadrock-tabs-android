@@ -1,0 +1,11 @@
+{
+  "exitCode": 127,
+  "logTail": "/home/runner/work/_temp/4419af39-715b-4540-9073-ed73dc83e2aa.sh: line 21: ffmpeg: command not found\n",
+  "modalInvoked": false,
+  "newInferenceUsed": false,
+  "passed": false,
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "schemaVersion": 1
+}
