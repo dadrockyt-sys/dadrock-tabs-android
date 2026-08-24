@@ -1,0 +1,150 @@
+name: V143 Post-Repair Bar Phase Shadow
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - analyzer/v143_post_repair_bar_phase_shadow.py
+      - analyzer/check_v143_post_repair_bar_phase_shadow.py
+      - .github/workflows/v143-post-repair-bar-phase-shadow.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-post-repair-bar-phase-shadow
+  cancel-in-progress: true
+
+jobs:
+  cpu-shadow:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU audio dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python -m pip install --disable-pip-version-check --quiet numpy scipy soundfile
+      - name: Static synthetic proof and anti-leakage gate
+        env:
+          PYTHONPATH: analyzer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            analyzer/v143_post_repair_bar_phase_shadow.py \
+            analyzer/check_v143_post_repair_bar_phase_shadow.py
+          python analyzer/check_v143_post_repair_bar_phase_shadow.py
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_post_repair_bar_phase_shadow.py \
+            analyzer/check_v143_post_repair_bar_phase_shadow.py; then
+            echo 'Forbidden scorer/source token in post-repair phase shadow' >&2
+            exit 1
+          fi
+      - name: Run approved-audio post-repair CPU shadow
+        env:
+          PYTHONPATH: analyzer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          import soundfile as sf
+          from v143_post_repair_bar_phase_shadow import assess_post_repair_bar_phase_from_samples
+          from v143_reference_free_beat_grid_repair import repair_reference_free_beat_grid_from_samples
+          from v143_reference_free_timing import estimate_reference_free_timing
+
+          source=Path('public/gomywayfullaitest.m4a')
+          expected='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          digest=hashlib.sha256(source.read_bytes()).hexdigest()
+          assert digest==expected,digest
+          normalized=Path('/tmp/v143-post-repair-phase.wav')
+          subprocess.run([
+              'ffmpeg','-y','-v','error','-i',str(source),'-map','0:a:0','-vn',
+              '-ar','44100','-ac','2','-c:a','pcm_s16le',str(normalized)
+          ],check=True)
+          timing=estimate_reference_free_timing(normalized)
+          samples,sr=sf.read(str(normalized),always_2d=False)
+          repair=repair_reference_free_beat_grid_from_samples(samples,int(sr),timing)
+          assessment=assess_post_repair_bar_phase_from_samples(
+              samples,
+              int(sr),
+              repair.repaired_beat_times,
+              inherited_downbeat_index_mod4=repair.timing.downbeat_index_mod4,
+          )
+          protected=subprocess.check_output([
+              'git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'
+          ],text=True).strip()
+          out={
+            'schemaVersion':1,
+            'gate':'v143-post-repair-bar-phase-approved-audio-shadow',
+            'runId':int('${{ github.run_id }}'),
+            'runAttempt':int('${{ github.run_attempt }}'),
+            'triggerSha':'${{ github.sha }}',
+            'approvedAudioSha256':digest,
+            'originalTiming':{
+              'tempoBpm':float(timing.tempo_bpm),
+              'beatCount':len(timing.beat_times),
+              'firstBeatInMeasure':int(timing.first_beat_in_measure),
+              'downbeatIndexMod4':int(timing.downbeat_index_mod4),
+              'barConfidence':float(timing.bar_confidence),
+            },
+            'repair':repair.diagnostics(),
+            'postRepairPhase':assessment.diagnostics(),
+            'invariants':{
+              'referenceFree':True,
+              'professionalReferenceUsed':False,
+              'runtimeLabelsRequired':False,
+              'repairedIntervalOutliersZero':repair.repaired_interval_outlier_count==0,
+              'recommendationOnly':True,
+              'runtimePhaseChanged':False,
+              'liveRhythmOutputChanged':False,
+              'productionModified':False,
+              'protectedPipelineBlob':protected,
+              'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+            }
+          }
+          failed=[key for key in (
+              'referenceFree','repairedIntervalOutliersZero','recommendationOnly','protectedPipelineUnchanged'
+          ) if out['invariants'].get(key) is not True]
+          forbidden_true=(
+              'professionalReferenceUsed','runtimeLabelsRequired','runtimePhaseChanged',
+              'liveRhythmOutputChanged','productionModified'
+          )
+          failed += [key for key in forbidden_true if out['invariants'].get(key) is not False]
+          if failed:
+              raise SystemExit(f'post-repair phase shadow invariant failure: {failed}')
+          path=Path('debug/v143-contextual-prune/post-repair-bar-phase-approved-audio-shadow.json')
+          path.write_text(json.dumps(out,indent=2,allow_nan=False)+'\n')
+          print(json.dumps(out['originalTiming'],sort_keys=True))
+          print(json.dumps(out['repair'],sort_keys=True))
+          print(json.dumps(out['postRepairPhase'],sort_keys=True))
+          print(f'WROTE={path}')
+          PY
+      - name: Commit diagnostic race-safe
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/post-repair-bar-phase-approved-audio-shadow.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record post-repair bar phase CPU shadow'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            sleep 2
+          done
+          exit 1
