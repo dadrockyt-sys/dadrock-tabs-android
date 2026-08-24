@@ -1,0 +1,32 @@
+name: V143 Separator Single Thread Status
+on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v143-separator-single-thread-status.yml]
+permissions: {actions: read, contents: write}
+jobs:
+  status:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ github.sha }}'}
+      - env: {GH_TOKEN: '${{ github.token }}'}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json,os,urllib.request
+          from pathlib import Path
+          u='https://api.github.com/repos/${{ github.repository }}/actions/workflows/v143-separator-single-thread-cold-proof.yml/runs?branch=v143-contextual-prune-lobo&per_page=5'
+          q=urllib.request.Request(u,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','User-Agent':'dadrock-status'})
+          with urllib.request.urlopen(q,timeout=30) as r:d=json.load(r)
+          runs=[{'id':x['id'],'status':x['status'],'conclusion':x['conclusion'],'headSha':x['head_sha'],'createdAt':x['created_at']} for x in d.get('workflow_runs',[])]
+          Path('debug/v143-contextual-prune/separator-single-thread-run-status.json').write_text(json.dumps({'schemaVersion':1,'runs':runs,'productionModified':False},indent=2)+'\n')
+          PY
+          git add debug/v143-contextual-prune/separator-single-thread-run-status.json
+          git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record single-thread separator run status'
+          for n in 1 2 3 4; do git fetch origin v143-contextual-prune-lobo; git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0; git rebase --abort 2>/dev/null || true; sleep 2; done
+          exit 1
