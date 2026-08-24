@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 02:46 America/Thunder_Bay
+Updated: 2026-08-24 08:11 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -11,7 +11,7 @@ Human professional reference is scorer-only. Runtime may NEVER read/train/tune/s
 Completion requires score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`. **Rhythm is NOT complete.**
 
 ## Protected/runtime boundary
-Protected `analyzer/v143_reference_free_rhythm_pipeline.py` required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`. Fixture `public/gomywayfullaitest.m4a` SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`. Protected exact; Production unchanged. Scorer V2 remains CLOSED until the new permanent artifact lock is confirmed. Never rescore retired freezes.
+Protected `analyzer/v143_reference_free_rhythm_pipeline.py` required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`. Fixture `public/gomywayfullaitest.m4a` SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`. Protected exact; Production unchanged. Never rescore retired freezes.
 
 ## Determinism + candidate gates — GREEN
 - oneDNN-off Demucs byte-exact across AWS Intel / GCP AMD.
@@ -29,31 +29,35 @@ Protected `analyzer/v143_reference_free_rhythm_pipeline.py` required blob `7f72f
 - all 113 measures, 725 unique onsets, 236 polyphonic onsets, max chord size 6
 - 28 technique events; hammer-on, pull-off, slide-down, slide-up
 - 8 reference-free sections spanning measures 1–113
-- BRAND-NEW frozen event SHA `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`
-- PDF event SHA exact same `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`
+- BRAND-NEW frozen/PDF event SHA `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`
 - PDF-event fidelity `1.0`
 - full PDF 1,734,110 bytes / 4 pages; preview 1,707,709 bytes / 4 pages
 - protected/Production unchanged.
-Workflow artifact exists and is bound to the exact source run: artifact id `9511117529`, digest `sha256:e51777f07b2505b47f5dcf280e1eb9c758c89461ae431f879cdd102f13be05d9`, head SHA `23a64776333a8fd44dd092890d87e08a4a767e14`.
 
-## Permanent artifact lock — PENDING
-`rhythm-final-preholdout-lock.yml` should automatically consume the new compact proof and exact artifact and independently verify event/PDF identity, presentation, pitch traceability, occupancy, safety and artifact digest.
-Current committed `debug/v143-contextual-prune/rhythm-professional-preholdout-artifact-lock.json` is still the OLD retired lock (schema2, run `32642331373`, event SHA `a089a829...`, 1017 events /112 measures). Do NOT treat it as current and do NOT open scorer yet.
-Required new lock identity:
-- schemaVersion 3
+## Permanent artifact lock — GREEN / CURRENT
+`debug/v143-contextual-prune/rhythm-professional-preholdout-artifact-lock.json` is now schemaVersion 3 and independently locks the exact current fresh artifact:
+- `passed=true`, `locked=true`
 - workflowRunId `32702772593`
-- headCommit `23a64776333a8fd44dd092890d87e08a4a767e14`
 - artifactId `9511117529`
-- eventCount 985 / uniqueMeasureCount 113
-- frozen/PDF event SHA `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`
-- PDF-event fidelity 1.0
-- reference-free safety true, Production false, `locked=true`, `passed=true`.
+- artifact digest/ZIP SHA `e51777f07b2505b47f5dcf280e1eb9c758c89461ae431f879cdd102f13be05d9`
+- headCommit `23a64776333a8fd44dd092890d87e08a4a767e14`
+- source audio SHA exact `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
+- 725 attack locations / 985 events / 113 measures
+- 236 polyphonic attacks; max 6 notes at an attack
+- all rendered MIDIs trace to frozen pitch hypotheses
+- unique measure/step/string occupancy true
+- frozen/PDF event SHA exact `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`
+- PDF-event fidelity `1.0`
+- timing/technique/section display verified
+- reference-free safety true; reference not opened during freeze; Production/live endpoint unchanged.
+This supersedes the old lock (`a089a829...`) for the next score. Retired locks/freezes remain forbidden for rescoring.
 
 ## Cost control
-Fresh freeze/PDF used no new Modal/L4 analysis. Do not rerun candidate or launch other compute while lock resolves. Scorer remains closed.
+Candidate compute and fresh freeze/PDF are complete. Do not rerun them. No additional Modal/L4 analysis is needed before scoring.
 
 ## Current work NOW
-1. Poll only for replacement permanent lock.
-2. Require exact new run/artifact/event identity and every lock invariant green.
-3. Save checkpoint immediately when lock lands.
-4. ONLY THEN reopen scorer V2 and run exactly one unchanged >= `0.99` professional holdout score.
+1. Inspect scorer workflow/code only and bind it to THIS exact current lock/artifact; do not alter scorer semantics or threshold.
+2. Verify scorer-only V2 identity remains expected and runtime/reference isolation stays intact.
+3. Run exactly ONE professional holdout score on event SHA `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`.
+4. Require unchanged threshold >= `0.99`, critical mismatches `0`, and already-locked PDF-event fidelity `1.0` for completion.
+5. If score fails, expose broad failure classes only; correction must remain general/reference-free and require another brand-new freeze before rescoring.
