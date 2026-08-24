@@ -4,34 +4,23 @@ Updated: 2026-08-24 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
-## Absolute boundary
-Work only on `v143-contextual-prune-lobo`. Never modify/merge `main`, deploy/change live V143 Modal/Production, promote Production, make payments, send customer emails, or weaken professional threshold.
-Required path: `user audio → Rhythm → reference-free Jimmy PAIge → authenticated events → exact professional preview/full PDF → post-freeze professional-human holdout score`.
-Human professional reference is scorer-only. Runtime may NEVER read/train/tune/select from it. After scored failure, corrections remain general/reference-free. After accepting correction create a **BRAND-NEW** approved-audio run/freeze/PDF identity before another score.
-Completion requires score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`. **Rhythm is NOT complete.**
+## Hard boundaries
+- Work only on `v143-contextual-prune-lobo`; do not modify/merge `main` or change live Production.
+- Protected `analyzer/v143_reference_free_rhythm_pipeline.py` must remain blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- Approved fixture SHA256: `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
+- Professional human reference is scorer-only. Runtime/shadows may never read/train/tune/select from it.
+- Retired scored freeze event SHA `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb` must never be rescored.
+- Any accepted correction requires a completely new approved-audio candidate → immutable freeze/PDF → lock → one professional score.
+- Completion remains score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`. **Rhythm is not complete.**
 
-## Protected/runtime boundary
-Protected `analyzer/v143_reference_free_rhythm_pipeline.py` required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`. Fixture `public/gomywayfullaitest.m4a` SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`. Protected exact; Production unchanged. Never rescore retired or already-scored freezes.
+## Last proven candidate/freeze
+- Combined repaired timing + precision: 449 repaired beats, 0 interval outliers, 113 measures / 1796 slots, all measures populated, explicit primary complete.
+- Exact 2-pass proof run `32697939613` passed.
+- Candidate product blob `20e7a583fcb96249636cc63b01cf9ae0044f2c62`; pre-freeze run `32699399835`. Do not rerun it.
+- Fresh scored lock came from preholdout run `32702772593`; PDF-event fidelity `1.0`; protected/Production unchanged.
 
-## Determinism + candidate gates — GREEN
-- oneDNN-off Demucs byte-exact across AWS Intel / GCP AMD.
-- Full separator single-pass GREEN.
-- Combined repaired timing + precision single-pass GREEN: 449 repaired beats, 0 outliers, 113 measures/1796 slots, 725 retained attacks, 987 pitch hypotheses, explicit primary complete, all 113 measures populated.
-- Final 2-pass exact proof run `32697939613`: `passed=true`, every stage hash/section exact, no invariant failures, protected exact, Production unchanged.
-- Candidate product `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json` GREEN at bot commit `289a04e0fe30b5668ddaf39427404d8472ca1f51`, blob `20e7a583fcb96249636cc63b01cf9ae0044f2c62`. Candidate pre-freeze run `32699399835`, raw candidate events SHA `641a3928d7389e3c3e1593fc3b8432206434655bd798df79aeaa4b09666cf012`. Do not rerun candidate.
-
-## Fresh Jimmy freeze/PDF + permanent lock — GREEN / SCORED ONCE
-Fresh preholdout run `32702772593`, source commit `23a64776333a8fd44dd092890d87e08a4a767e14`, artifact `9511117529`, artifact digest `sha256:e51777f07b2505b47f5dcf280e1eb9c758c89461ae431f879cdd102f13be05d9`.
-Permanent lock `debug/v143-contextual-prune/rhythm-professional-preholdout-artifact-lock.json` schema3: `passed=true`, `locked=true`, 725 attack locations / 985 events / all 113 measures, frozen/PDF event SHA `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`, PDF-event fidelity `1.0`, all rendered MIDIs trace to frozen pitch hypotheses, unique measure/step/string occupancy true, reference-free safety true, Production/live endpoint unchanged.
-This freeze has now been professionally scored exactly once. It is retired from any future rescore.
-
-## Professional holdout score — FAILED, DIAGNOSIS BROAD ONLY
-New one-shot scorer workflow `.github/workflows/v143-repaired-timing-precision-professional-score.yml` bound to the exact current lock before reference access, then opened immutable scorer-only V2 and used the unchanged scorer + `--minimum 0.99`.
-Score diagnostic: `debug/v143-contextual-prune/repaired-timing-precision-professional-score.json`, run `32731885778`:
-- scorer V2 SHA exact `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`
-- V2 completeness passed: 113 measures / 603 playable onsets / 946 notes / 104 populated measures
-- reference opened only after freeze validation; reference payload not committed
-- PDF-event fidelity `1.0`; lock/event identity exact; protected pipeline unchanged; Production unchanged
+## One-shot professional score — FAILED
+Run `32731885778` used immutable scorer-only V2 after lock validation. Broad results only:
 - measure coverage recall `1.0`
 - pitch-content F1 `0.23718280683583634`
 - pitch+timing tolerant F1 `0.033143448990160536`
@@ -39,38 +28,45 @@ Score diagnostic: `debug/v143-contextual-prune/repaired-timing-precision-profess
 - chord pitch-set tolerant F1 `0.006024096385542168`
 - exact voicing tolerant F1 `0.006024096385542168`
 - critical mismatches `1723`
-- gross unmatched generated notes `881`; gross unmatched reference notes `842`
-- near-100 gate false; `rhythmComplete=false`; scorer return code `2`.
-Allowed broad diagnosis only: measure coverage is solved, but pitch identity and especially timing/grid identity remain fundamentally wrong; string/fret and chord/voicing necessarily remain low downstream. Do NOT derive song-specific corrections from professional-reference events.
+Allowed diagnosis: coverage is solved; timing/grid identity and pitch identity remain fundamentally wrong. Scorer/reference is closed again.
+
+## Timing audit finding — GENERAL / REFERENCE-FREE
+The adapter sign convention itself is coherent: `first_beat_in_measure = (-downbeat_index_mod4) % 4` and serialization uses that phase consistently.
+
+A general defect was found one stage earlier: `v143_reference_free_beat_grid_repair.py` reconstructs a new clean beat sequence but copies the raw tracker's `first_beat_in_measure` and `downbeat_index_mod4` unchanged and declares `barPhaseChanged=false`. Raw phase is defined by raw `sequence_index % 4`; once inserted/sub-beat/duplicate pulse indices are repaired, that phase is not a safe invariant.
+
+Existing audio-only diagnostics already expose this disagreement without professional-reference data:
+- raw timing: 447 beats, 38 interval outliers, `downbeatIndexMod4=1`, `firstBeatInMeasure=3`, bar confidence `0.08797`
+- repaired timing: 449 beats, 0 interval outliers
+- independent post-repair bar consensus: phase `2`, `firstBeatInMeasure=2`, confidence `0.1978`, two signal winners, not stable across halves
+This proves inherited phase is logically unsafe; it does **not** yet prove phase 2 should be accepted.
+
+## New diagnostic-only work staged
+1. `analyzer/v143_post_repair_bar_phase_shadow.py`
+   - created commit `1880c8da7f0e31f0cdfdb36a7b204bd00a904a7b`
+   - current trigger commit `26a95a3cdb37110b8663ea895b39f94f6f74b4da`
+   - evaluates seven long bar-residue-aligned windows of the repaired pulse train and aggregates independent audio-only phase votes/scores.
+   - recommendation only; does not mutate runtime timing.
+2. `analyzer/check_v143_post_repair_bar_phase_shadow.py`
+   - commit `f7675600ceaa31378528b7db8851d081f0c70f75`
+   - synthetic proof inserts one false sub-beat early, demonstrating how raw index phase becomes wrong while repair restores physical beat continuity; post-repair audio-only phase must recover the physical phase.
+3. `.github/workflows/v143-post-repair-bar-phase-shadow.yml`
+   - commit `473b0bc9b8abb2d1fcd89022f5c1da00579486c0`
+   - CPU-only; no Modal/GPU. Runs syntax/synthetic/anti-leakage/protected gates, then one approved-audio post-repair phase shadow and writes `debug/v143-contextual-prune/post-repair-bar-phase-approved-audio-shadow.json`.
+   - `runtimePhaseChanged=false`, live output unchanged, Production unchanged.
+
+The workflow was explicitly triggered by commit `26a95a3cdb37110b8663ea895b39f94f6f74b4da`. At this checkpoint the diagnostic file had not yet appeared, so do not infer pass/fail yet.
 
 ## Cost control
-Do not rescore event SHA `a81190d...`. Do not rerun candidate/freeze. No repeated L4 loops. Next correction must be justified using source/static/audio-only/reference-free evidence first.
+- No Modal/GPU inference has been used in this continuation.
+- Do not rerun old candidate/freeze or old scorer.
+- Inspect the single CPU phase-shadow result first.
+- If ambiguous, improve generic audio-only phase evidence only; no song-specific offset and no professional-event diagnosis.
 
-## Current work NOW
-1. Keep scorer/reference CLOSED again.
-2. Inspect current reference-free carrier/timing/pitch-selection logic and existing audio-only diagnostics only.
-3. Identify a GENERAL reference-free explanation for the very low pitch/timing self-consistency; no professional event-level data may be read or used.
-4. Build static/CPU/reference-free shadow proof first; use at most one targeted inference run only when a concrete general fix requires it.
-5. If a correction is accepted, create a BRAND-NEW approved-audio candidate → immutable freeze/PDF → lock before another single professional score.
-
-## Saved next execution plan
-1. **Audit timing carrier before pitch.** Trace how repaired beats, `downbeatIndexMod4`, `firstBeatInMeasure`, 16th-slot assignment, attack timestamps, and measure/step serialization interact. Look for a general phase/indexing mismatch that can explain extremely low timing agreement despite 113/113 measure coverage.
-2. **Audit pitch carrier independently.** Trace direct/cascade stem evidence → pitch hypotheses → primary MIDI selection → legal guitar voicing. Quantify reference-free self-consistency only: spectral agreement, octave/harmonic ambiguity, duplicate hypotheses, and whether selected primaries are actually supported by the isolated guitar carrier.
-3. **Do not use professional-reference events for diagnosis.** The previous score supplies only the already-recorded broad classes: timing/grid identity and pitch identity. No event-level scorer payload, locations, pitch values, or song-specific corrections may be read or converted into runtime rules.
-4. **Prefer source/static tests first.** Add small deterministic diagnostics/checkers around timing phase and pitch-selection invariants. Reuse existing approved-audio artifacts where possible; no Modal/L4 inference merely to explore hypotheses.
-5. **Build one general reference-free shadow correction at a time.** A candidate fix must preserve attack locations unless audio-only evidence justifies change, preserve explicit-primary provenance, preserve legal voicing, preserve all 113 measures where physically supported, and never invent pitch or attack evidence.
-6. **Require a cheap shadow proof before inference.** Static/syntax/invariant/hash checks must pass first. If audio inference is genuinely necessary, run exactly one targeted CPU/lowest-cost diagnostic pass, then inspect before any further compute.
-7. **Re-establish determinism after any accepted runtime-affecting correction.** Separator controls remain locked. Any new timing/pitch correction must have exact repeatability and protected-runtime/Production safety checks before product generation.
-8. **Create a completely new Jimmy identity after an accepted correction.** New approved-audio candidate → new authenticated events → new professional preview/full PDF → new immutable lock. Never reuse or rescore event SHA `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`.
-9. **Open scorer exactly once only after the new lock is complete.** Require scorer V2 completeness, PDF-event fidelity `1.0`, protected pipeline exact, Production unchanged, then run the unchanged `>=0.99` professional holdout gate.
-10. **Completion remains strict.** Rhythm is complete only at score `>=0.99`, critical mismatches `0`, and PDF-event fidelity `1.0`. If the next score fails, close the scorer again and repeat only with another general/reference-free correction and another brand-new freeze.
-
-## Continuation audit — 2026-08-24
-- Resumed directly from this branch/checkpoint; protected rhythm pipeline remains untouched.
-- Inspected `analyzer/v143_candidate_timing_adapter.py`, `analyzer/v143_reference_free_timing.py`, `analyzer/v143_reference_free_beat_grid_repair.py`, `analyzer/v143_reference_free_bar_phase_consensus.py`, and the repaired-timing shadow path using only source/static/audio-only diagnostics.
-- Current adapter maps `downbeat_index_mod4` to `first_beat_in_measure = (-downbeat_index_mod4) % 4`, then serializes `absolute_beat = first_beat_in_measure + beat_index`; no sign/indexing defect is present in that mapping itself.
-- **General timing defect identified:** beat repair reconstructs a new clean pulse sequence after the raw tracker has 38 interval outliers, but explicitly copies the raw sequence's `first_beat_in_measure` / `downbeat_index_mod4` into the repaired timing and enforces `barPhaseChanged=false`. Raw phase was computed from `sequence_index % 4`; therefore it is not a safe invariant once malformed/duplicate pulse indices are repaired. The phase must be re-established on the repaired pulse train from audio-only evidence rather than inherited blindly.
-- Existing approved-audio proof makes the defect observable without professional reference: raw timing is 447 beats, phase `downbeatIndexMod4=1`, `firstBeatInMeasure=3`, bar confidence `0.08797`; repair produces 449 beats / 0 interval outliers, while the already-existing post-repair independent consensus selects phase `2` / `firstBeatInMeasure=2` (confidence `0.1978`, two independent signal winners, not stable across halves). This disagreement is diagnostic evidence that inherited phase is not coherent with the repaired carrier; it is **not yet sufficient by itself to accept phase 2 as production-correct**.
-- The older raw consensus also shows the tracker begins in quieter audio and contains 26 severe short intervals; the count/phase problem is therefore a generic beat-index corruption problem, not a scorer-derived offset.
-- Current repaired-timing precision shadow still hard-fails if repair changes phase, so the next change must first be a separate cheap reference-free post-repair phase shadow/checker. No current candidate/freeze will be touched.
-- Immediate next action: add deterministic synthetic tests proving phase inheritance fails after inserted/removed beat-index anomalies, then add one CPU-only approved-audio post-repair phase robustness diagnostic (window/section stability + independent audio signal votes). Only after that proof may the repaired shadow adopt a rephased timing estimate.
+## Next exact actions
+1. Read `debug/v143-contextual-prune/post-repair-bar-phase-approved-audio-shadow.json` once it exists.
+2. If the shadow is robust and internally consistent, create a NEW repaired timing shadow that applies rephasing after repair; update its invariants so phase change is explicit and audio-derived rather than forbidden.
+3. Re-establish deterministic/static gates before any Modal inference.
+4. Only then run at most one targeted low-cost combined inference to validate the new timing carrier.
+5. After timing is coherent, continue the independent pitch-carrier audit; current static note is that pitch selection is extremely conservative across the two guitar views and needs separate audio-only evidence before change.
+6. If a timing/pitch correction is accepted, create a brand-new candidate/freeze/PDF/lock identity before one new professional score.
