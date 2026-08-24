@@ -29,36 +29,79 @@ jobs:
           sudo apt-get install -y -qq ffmpeg
           python -m pip install --disable-pip-version-check --quiet numpy scipy soundfile
       - name: Run reference-free repair phase audit
+        id: diagnostic
+        continue-on-error: true
         shell: bash
         run: |
-          set -euo pipefail
+          set +e
+          mkdir -p debug/v143-contextual-prune
+          log=/tmp/v143-beat-repair-phase.log
+          : > "$log"
+          status=0
           python -m py_compile \
             analyzer/v143_reference_free_timing.py \
             analyzer/v143_reference_free_beat_grid_repair.py \
-            analyzer/v143_reference_free_beat_repair_phase_consistency_diagnostic.py
-          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
-          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
-          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr' analyzer/v143_reference_free_beat_repair_phase_consistency_diagnostic.py; then
-            echo 'Forbidden scorer/reference token in beat-repair audit' >&2
-            exit 1
+            analyzer/v143_reference_free_beat_repair_phase_consistency_diagnostic.py >>"$log" 2>&1 || status=$?
+          if test "$status" -eq 0; then
+            test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f' || status=$?
+            test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1' || status=$?
           fi
-          ffmpeg -y -v error -i public/gomywayfullaitest.m4a \
-            -map 0:a:0 -vn -ar 44100 -ac 2 -c:a pcm_s16le /tmp/v143-approved-fullmix.wav
-          PYTHONPATH=analyzer python analyzer/v143_reference_free_beat_repair_phase_consistency_diagnostic.py \
-            /tmp/v143-approved-fullmix.wav \
-            debug/v143-contextual-prune/beat-repair-phase-consistency-diagnostic.json
-      - name: Commit diagnostic result
+          if test "$status" -eq 0; then
+            if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr' analyzer/v143_reference_free_beat_repair_phase_consistency_diagnostic.py >>"$log" 2>&1; then
+              echo 'Forbidden scorer/reference token in beat-repair audit' >>"$log"
+              status=41
+            fi
+          fi
+          if test "$status" -eq 0; then
+            ffmpeg -y -v error -i public/gomywayfullaitest.m4a \
+              -map 0:a:0 -vn -ar 44100 -ac 2 -c:a pcm_s16le /tmp/v143-approved-fullmix.wav >>"$log" 2>&1 || status=$?
+          fi
+          if test "$status" -eq 0; then
+            PYTHONPATH=analyzer python analyzer/v143_reference_free_beat_repair_phase_consistency_diagnostic.py \
+              /tmp/v143-approved-fullmix.wav \
+              debug/v143-contextual-prune/beat-repair-phase-consistency-diagnostic.json >>"$log" 2>&1 || status=$?
+          fi
+          export V143_REPAIR_STATUS="$status"
+          export V143_REPAIR_LOG="$log"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          status = int(os.environ['V143_REPAIR_STATUS'])
+          log = Path(os.environ['V143_REPAIR_LOG']).read_text(errors='replace')
+          result = {
+              'schemaVersion': 1,
+              'passed': status == 0,
+              'exitCode': status,
+              'modalInvoked': False,
+              'newInferenceUsed': False,
+              'professionalReferenceUsed': False,
+              'productionModified': False,
+              'protectedPipelineBlob': '7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+              'logTail': log[-6000:],
+          }
+          Path('debug/v143-contextual-prune/beat-repair-phase-consistency-run-status.json').write_text(
+              json.dumps(result, indent=2, sort_keys=True) + '\n'
+          )
+          PY
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit "$status"
+      - name: Commit audit result and status
+        if: always()
         shell: bash
         run: |
           set -euo pipefail
-          git add debug/v143-contextual-prune/beat-repair-phase-consistency-diagnostic.json
+          git add debug/v143-contextual-prune/beat-repair-phase-consistency-run-status.json
+          if test -f debug/v143-contextual-prune/beat-repair-phase-consistency-diagnostic.json; then
+            git add debug/v143-contextual-prune/beat-repair-phase-consistency-diagnostic.json
+          fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record beat-repair phase consistency diagnostic'
+          git commit -m 'Record beat-repair phase consistency diagnostic status'
           for attempt in 1 2 3 4; do
             git fetch origin v143-contextual-prune-lobo
-            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && break
             git rebase --abort 2>/dev/null || true
             sleep 2
           done
-          exit 1
+          test '${{ steps.diagnostic.outputs.exit_code }}' = '0'
