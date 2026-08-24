@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-reference-free-beat-grid-repair-approved-audio",
+  "runId": 32682450467,
+  "runAttempt": 1,
+  "triggerSha": "22aa5fe8571bf0831162e74f0cfd85da6b87f24c",
+  "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "originalTiming": {
+    "tempoBpm": 129.19921875,
+    "beatConfidence": 0.7232655115770845,
+    "firstBeatInMeasure": 3,
+    "downbeatIndexMod4": 1,
+    "barConfidence": 0.08797341408427677,
+    "beatCount": 447
+  },
+  "repair": {
+    "originalBeatCount": 447,
+    "repairedBeatCount": 435,
+    "originalIntervalOutlierCount": 38,
+    "repairedIntervalOutlierCount": 0,
+    "stableAnchorStartIndex": 0,
+    "stableAnchorEndIndex": 109,
+    "stableAnchorPeriodSeconds": 0.46439909297052395,
+    "activeAudioStartSeconds": 1.6346485260770975,
+    "activeAudioEndSeconds": 209.1231746031746,
+    "leadingExtendedBeatCount": 0,
+    "trailingExtendedBeatCount": 1,
+    "continuityOnlyBeatCount": 5,
+    "snappedBeatCount": 429,
+    "boundaryEvidenceFloor": 0.5944737866354368,
+    "originalIntervals": {
+      "count": 446,
+      "ratioP01": 0.5250000000000135,
+      "ratioP05": 0.725000000000013,
+      "ratioP50": 1.000000000000005,
+      "ratioP95": 1.0500000000000023,
+      "ratioP99": 1.0750000000000008
+    },
+    "repairedIntervals": {
+      "count": 434,
+      "ratioP01": 0.899999999999998,
+      "ratioP05": 0.9500000000000053,
+      "ratioP50": 1.000000000000005,
+      "ratioP95": 1.0500000000000023,
+      "ratioP99": 1.075000000000011
+    },
+    "barPhaseChanged": false,
+    "tempoChanged": false,
+    "referenceFree": true,
+    "runtimeLabelsRequired": false,
+    "productionModified": false
+  },
+  "repairedBarPhaseConsensus": {
+    "winnerDownbeatIndexMod4": 0,
+    "winnerFirstBeatInMeasure": 0,
+    "confidence": 0.19746266179484878,
+    "signalWinners": {
+      "accent": 0,
+      "lowAccent": 2,
+      "harmonicChange": 3,
+      "bassChange": 0
+    },
+    "stableAcrossHalves": false,
+    "consensusSignalCount": 2,
+    "candidates": [
+      {
+        "downbeatIndexMod4": 0,
+        "firstBeatInMeasure": 0,
+        "combinedScore": 0.181129629723012,
+        "accentScore": 0.17112706667630337,
+        "lowAccentScore": 0.20139770780318283,
+        "harmonicChangeScore": 0.1709835469589538,
+        "bassChangeScore": 0.19314715784782965
+      },
+      {
+        "downbeatIndexMod4": 1,
+        "firstBeatInMeasure": 3,
+        "combinedScore": -0.16204362149257534,
+        "accentScore": -0.1857347959623259,
+        "lowAccentScore": -0.1772502982348213,
+        "harmonicChangeScore": -0.20282598304714403,
+        "bassChangeScore": -0.07555137221804475
+      },
+      {
+        "downbeatIndexMod4": 2,
+        "firstBeatInMeasure": 2,
+        "combinedScore": -0.1494936264450524,
+        "accentScore": -0.048785939275296106,
+        "lowAccentScore": 0.30007001102037617,
+        "harmonicChangeScore": -0.4374665202767781,
+        "bassChangeScore": -0.19451356092994623
+      },
+      {
+        "downbeatIndexMod4": 3,
+        "firstBeatInMeasure": 1,
+        "combinedScore": 0.13121260351223693,
+        "accentScore": 0.06378498750305502,
+        "lowAccentScore": -0.32621876269113725,
+        "harmonicChangeScore": 0.4722059252314191,
+        "bassChangeScore": 0.07739257638226114
+      }
+    ],
+    "referenceFree": true,
+    "runtimeLabelsRequired": false,
+    "productionModified": false
+  },
+  "grid": {
+    "originalSlotCount": 1788,
+    "repairedSlotCount": 1740,
+    "originalFirstMeasure": 1,
+    "originalLastMeasure": 113,
+    "repairedFirstMeasure": 1,
+    "repairedLastMeasure": 110,
+    "originalMeasureCount": 113,
+    "repairedMeasureCount": 110,
+    "originalBoundarySteps": {
+      "first": 4,
+      "last": 8
+    },
+    "repairedBoundarySteps": {
+      "first": 4,
+      "last": 8
+    }
+  },
+  "invariants": {
+    "referenceFree": true,
+    "runtimeLabelsRequired": false,
+    "tempoChanged": false,
+    "barPhaseChanged": false,
+    "liveRhythmOutputChanged": false,
+    "productionModified": false,
+    "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+    "protectedPipelineUnchanged": true
+  }
+}
