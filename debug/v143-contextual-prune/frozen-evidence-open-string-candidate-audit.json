@@ -1,0 +1,633 @@
+{
+  "attackCount": 725,
+  "candidateDiversity": {
+    "anySelectedVoicingNoteOpen": {
+      "count": 319,
+      "hypothesisCount": {
+        "count": 319,
+        "max": 3.0,
+        "mean": 1.3103448275862069,
+        "median": 1.0,
+        "min": 1.0,
+        "q25": 1.0,
+        "q75": 2.0
+      },
+      "multiHypothesisCount": 93,
+      "rateAllAttacks": 0.44,
+      "singleHypothesisCount": 226,
+      "singleHypothesisRate": 0.7084639498432602
+    },
+    "midi64MinusNon64SingleHypothesisRate": 0.2972284800181739,
+    "noSelectedVoicingNoteOpen": {
+      "count": 406,
+      "hypothesisCount": {
+        "count": 406,
+        "max": 6.0,
+        "mean": 1.4014778325123152,
+        "median": 1.0,
+        "min": 1.0,
+        "q25": 1.0,
+        "q75": 2.0
+      },
+      "multiHypothesisCount": 145,
+      "rateAllAttacks": 0.56,
+      "singleHypothesisCount": 261,
+      "singleHypothesisRate": 0.6428571428571429
+    },
+    "non64": {
+      "count": 523,
+      "hypothesisCount": {
+        "count": 523,
+        "max": 6.0,
+        "mean": 1.4550669216061185,
+        "median": 1.0,
+        "min": 1.0,
+        "q25": 1.0,
+        "q75": 2.0
+      },
+      "multiHypothesisCount": 215,
+      "rateAllAttacks": 0.7213793103448276,
+      "singleHypothesisCount": 308,
+      "singleHypothesisRate": 0.5889101338432122
+    },
+    "openHighE64": {
+      "count": 186,
+      "hypothesisCount": {
+        "count": 186,
+        "max": 2.0,
+        "mean": 1.0376344086021505,
+        "median": 1.0,
+        "min": 1.0,
+        "q25": 1.0,
+        "q75": 1.0
+      },
+      "multiHypothesisCount": 7,
+      "rateAllAttacks": 0.25655172413793104,
+      "singleHypothesisCount": 179,
+      "singleHypothesisRate": 0.9623655913978495
+    },
+    "otherPrimaryMappedOpen": {
+      "count": 78,
+      "hypothesisCount": {
+        "count": 78,
+        "max": 3.0,
+        "mean": 1.435897435897436,
+        "median": 1.0,
+        "min": 1.0,
+        "q25": 1.0,
+        "q75": 2.0
+      },
+      "multiHypothesisCount": 31,
+      "rateAllAttacks": 0.10758620689655173,
+      "singleHypothesisCount": 47,
+      "singleHypothesisRate": 0.6025641025641025
+    },
+    "primaryMappedFretted": {
+      "count": 461,
+      "hypothesisCount": {
+        "count": 461,
+        "max": 6.0,
+        "mean": 1.4793926247288502,
+        "median": 1.0,
+        "min": 1.0,
+        "q25": 1.0,
+        "q75": 2.0
+      },
+      "multiHypothesisCount": 200,
+      "rateAllAttacks": 0.6358620689655172,
+      "singleHypothesisCount": 261,
+      "singleHypothesisRate": 0.5661605206073753
+    },
+    "primaryMidi64": {
+      "count": 202,
+      "hypothesisCount": {
+        "count": 202,
+        "max": 3.0,
+        "mean": 1.118811881188119,
+        "median": 1.0,
+        "min": 1.0,
+        "q25": 1.0,
+        "q75": 1.0
+      },
+      "multiHypothesisCount": 23,
+      "rateAllAttacks": 0.2786206896551724,
+      "singleHypothesisCount": 179,
+      "singleHypothesisRate": 0.8861386138613861
+    },
+    "primaryMidiNotStandardOpenPitch": {
+      "count": 419,
+      "hypothesisCount": {
+        "count": 419,
+        "max": 6.0,
+        "mean": 1.4176610978520285,
+        "median": 1.0,
+        "min": 1.0,
+        "q25": 1.0,
+        "q75": 2.0
+      },
+      "multiHypothesisCount": 158,
+      "rateAllAttacks": 0.5779310344827586,
+      "singleHypothesisCount": 261,
+      "singleHypothesisRate": 0.6229116945107399
+    },
+    "primaryMidiStandardOpenPitch": {
+      "count": 306,
+      "hypothesisCount": {
+        "count": 306,
+        "max": 3.0,
+        "mean": 1.2843137254901962,
+        "median": 1.0,
+        "min": 1.0,
+        "q25": 1.0,
+        "q75": 2.0
+      },
+      "multiHypothesisCount": 80,
+      "rateAllAttacks": 0.4220689655172414,
+      "singleHypothesisCount": 226,
+      "singleHypothesisRate": 0.738562091503268
+    }
+  },
+  "candidateRenderProduced": false,
+  "commonPrimaryMidiTableMin10": [
+    {
+      "anySelectedOpenCount": 186,
+      "count": 202,
+      "hypothesisCountMean": 1.118811881188119,
+      "hypothesisCountMedian": 1.0,
+      "primaryMappedOpenCount": 186,
+      "primaryMidi": 64,
+      "singleHypothesisCount": 179,
+      "singleHypothesisRate": 0.8861386138613861
+    },
+    {
+      "anySelectedOpenCount": 46,
+      "count": 107,
+      "hypothesisCountMean": 1.588785046728972,
+      "hypothesisCountMedian": 2.0,
+      "primaryMappedOpenCount": 0,
+      "primaryMidi": 52,
+      "singleHypothesisCount": 51,
+      "singleHypothesisRate": 0.4766355140186916
+    },
+    {
+      "anySelectedOpenCount": 0,
+      "count": 76,
+      "hypothesisCountMean": 1.4210526315789473,
+      "hypothesisCountMedian": 1.0,
+      "primaryMappedOpenCount": 0,
+      "primaryMidi": 62,
+      "singleHypothesisCount": 46,
+      "singleHypothesisRate": 0.6052631578947368
+    },
+    {
+      "anySelectedOpenCount": 39,
+      "count": 61,
+      "hypothesisCountMean": 1.5901639344262295,
+      "hypothesisCountMedian": 2.0,
+      "primaryMappedOpenCount": 39,
+      "primaryMidi": 59,
+      "singleHypothesisCount": 29,
+      "singleHypothesisRate": 0.47540983606557374
+    },
+    {
+      "anySelectedOpenCount": 9,
+      "count": 39,
+      "hypothesisCountMean": 1.7179487179487178,
+      "hypothesisCountMedian": 2.0,
+      "primaryMappedOpenCount": 0,
+      "primaryMidi": 57,
+      "singleHypothesisCount": 13,
+      "singleHypothesisRate": 0.3333333333333333
+    },
+    {
+      "anySelectedOpenCount": 0,
+      "count": 36,
+      "hypothesisCountMean": 1.2222222222222223,
+      "hypothesisCountMedian": 1.0,
+      "primaryMappedOpenCount": 0,
+      "primaryMidi": 67,
+      "singleHypothesisCount": 29,
+      "singleHypothesisRate": 0.8055555555555556
+    },
+    {
+      "anySelectedOpenCount": 0,
+      "count": 22,
+      "hypothesisCountMean": 1.3636363636363635,
+      "hypothesisCountMedian": 1.0,
+      "primaryMappedOpenCount": 0,
+      "primaryMidi": 69,
+      "singleHypothesisCount": 15,
+      "singleHypothesisRate": 0.6818181818181818
+    },
+    {
+      "anySelectedOpenCount": 19,
+      "count": 19,
+      "hypothesisCountMean": 1.5789473684210527,
+      "hypothesisCountMedian": 1.0,
+      "primaryMappedOpenCount": 19,
+      "primaryMidi": 45,
+      "singleHypothesisCount": 10,
+      "singleHypothesisRate": 0.5263157894736842
+    },
+    {
+      "anySelectedOpenCount": 0,
+      "count": 19,
+      "hypothesisCountMean": 1.263157894736842,
+      "hypothesisCountMedian": 1.0,
+      "primaryMappedOpenCount": 0,
+      "primaryMidi": 65,
+      "singleHypothesisCount": 15,
+      "singleHypothesisRate": 0.7894736842105263
+    },
+    {
+      "anySelectedOpenCount": 15,
+      "count": 15,
+      "hypothesisCountMean": 1.6666666666666667,
+      "hypothesisCountMedian": 2.0,
+      "primaryMappedOpenCount": 15,
+      "primaryMidi": 40,
+      "singleHypothesisCount": 5,
+      "singleHypothesisRate": 0.3333333333333333
+    },
+    {
+      "anySelectedOpenCount": 0,
+      "count": 15,
+      "hypothesisCountMean": 1.3333333333333333,
+      "hypothesisCountMedian": 1.0,
+      "primaryMappedOpenCount": 0,
+      "primaryMidi": 61,
+      "singleHypothesisCount": 11,
+      "singleHypothesisRate": 0.7333333333333333
+    },
+    {
+      "anySelectedOpenCount": 0,
+      "count": 15,
+      "hypothesisCountMean": 1.2666666666666666,
+      "hypothesisCountMedian": 1.0,
+      "primaryMappedOpenCount": 0,
+      "primaryMidi": 66,
+      "singleHypothesisCount": 11,
+      "singleHypothesisRate": 0.7333333333333333
+    },
+    {
+      "anySelectedOpenCount": 0,
+      "count": 15,
+      "hypothesisCountMean": 1.4,
+      "hypothesisCountMedian": 1.0,
+      "primaryMappedOpenCount": 0,
+      "primaryMidi": 68,
+      "singleHypothesisCount": 10,
+      "singleHypothesisRate": 0.6666666666666666
+    },
+    {
+      "anySelectedOpenCount": 0,
+      "count": 13,
+      "hypothesisCountMean": 1.0769230769230769,
+      "hypothesisCountMedian": 1.0,
+      "primaryMappedOpenCount": 0,
+      "primaryMidi": 76,
+      "singleHypothesisCount": 12,
+      "singleHypothesisRate": 0.9230769230769231
+    },
+    {
+      "anySelectedOpenCount": 0,
+      "count": 11,
+      "hypothesisCountMean": 1.2727272727272727,
+      "hypothesisCountMedian": 1.0,
+      "primaryMappedOpenCount": 0,
+      "primaryMidi": 71,
+      "singleHypothesisCount": 8,
+      "singleHypothesisRate": 0.7272727272727273
+    }
+  ],
+  "definitionAudit": {
+    "counts": {
+      "anySelectedVoicingNoteOpen": 319,
+      "noSelectedVoicingNoteOpen": 406,
+      "openHighE64MappedString0Fret0": 186,
+      "primaryMappedFretted": 461,
+      "primaryMappedOpen": 264,
+      "primaryMidi64": 202,
+      "primaryMidiIsNotStandardOpenPitch": 419,
+      "primaryMidiIsStandardOpenPitch": 306,
+      "primaryMidiNot64": 523
+    },
+    "partitionChecks": {
+      "anySelectedOpenPlusNone": true,
+      "openHighE64SubsetPrimaryMappedOpen": true,
+      "openHighE64SubsetPrimaryMidi64": true,
+      "primaryMappedOpenPlusFretted": true,
+      "primaryMidi64PlusNot64": true,
+      "primaryMidiStandardOpenPlusNot": true
+    }
+  },
+  "diagnosticClassification": "midi64-candidate-diversity-collapse-clue",
+  "diagnosticFlags": {
+    "midi64AtLeast20PercentOfAttacks": true,
+    "midi64SingleHypothesisRateAtLeast20PointsAboveNon64": true,
+    "midi64SingleHypothesisRateAtLeast85Percent": true
+  },
+  "eightMeasureMidi64Distribution": [
+    {
+      "attackCount": 58,
+      "endMeasure": 8,
+      "midi64Count": 14,
+      "midi64Rate": 0.2413793103448276,
+      "midi64SingleHypothesisCount": 14,
+      "midi64SingleHypothesisRate": 1.0,
+      "startMeasure": 1
+    },
+    {
+      "attackCount": 50,
+      "endMeasure": 16,
+      "midi64Count": 24,
+      "midi64Rate": 0.48,
+      "midi64SingleHypothesisCount": 24,
+      "midi64SingleHypothesisRate": 1.0,
+      "startMeasure": 9
+    },
+    {
+      "attackCount": 42,
+      "endMeasure": 24,
+      "midi64Count": 15,
+      "midi64Rate": 0.35714285714285715,
+      "midi64SingleHypothesisCount": 12,
+      "midi64SingleHypothesisRate": 0.8,
+      "startMeasure": 17
+    },
+    {
+      "attackCount": 44,
+      "endMeasure": 32,
+      "midi64Count": 8,
+      "midi64Rate": 0.18181818181818182,
+      "midi64SingleHypothesisCount": 8,
+      "midi64SingleHypothesisRate": 1.0,
+      "startMeasure": 25
+    },
+    {
+      "attackCount": 53,
+      "endMeasure": 40,
+      "midi64Count": 13,
+      "midi64Rate": 0.24528301886792453,
+      "midi64SingleHypothesisCount": 13,
+      "midi64SingleHypothesisRate": 1.0,
+      "startMeasure": 33
+    },
+    {
+      "attackCount": 55,
+      "endMeasure": 48,
+      "midi64Count": 24,
+      "midi64Rate": 0.43636363636363634,
+      "midi64SingleHypothesisCount": 22,
+      "midi64SingleHypothesisRate": 0.9166666666666666,
+      "startMeasure": 41
+    },
+    {
+      "attackCount": 46,
+      "endMeasure": 56,
+      "midi64Count": 13,
+      "midi64Rate": 0.2826086956521739,
+      "midi64SingleHypothesisCount": 12,
+      "midi64SingleHypothesisRate": 0.9230769230769231,
+      "startMeasure": 49
+    },
+    {
+      "attackCount": 45,
+      "endMeasure": 64,
+      "midi64Count": 10,
+      "midi64Rate": 0.2222222222222222,
+      "midi64SingleHypothesisCount": 8,
+      "midi64SingleHypothesisRate": 0.8,
+      "startMeasure": 57
+    },
+    {
+      "attackCount": 51,
+      "endMeasure": 72,
+      "midi64Count": 10,
+      "midi64Rate": 0.19607843137254902,
+      "midi64SingleHypothesisCount": 6,
+      "midi64SingleHypothesisRate": 0.6,
+      "startMeasure": 65
+    },
+    {
+      "attackCount": 41,
+      "endMeasure": 80,
+      "midi64Count": 10,
+      "midi64Rate": 0.24390243902439024,
+      "midi64SingleHypothesisCount": 9,
+      "midi64SingleHypothesisRate": 0.9,
+      "startMeasure": 73
+    },
+    {
+      "attackCount": 48,
+      "endMeasure": 88,
+      "midi64Count": 17,
+      "midi64Rate": 0.3541666666666667,
+      "midi64SingleHypothesisCount": 12,
+      "midi64SingleHypothesisRate": 0.7058823529411765,
+      "startMeasure": 81
+    },
+    {
+      "attackCount": 53,
+      "endMeasure": 96,
+      "midi64Count": 8,
+      "midi64Rate": 0.1509433962264151,
+      "midi64SingleHypothesisCount": 6,
+      "midi64SingleHypothesisRate": 0.75,
+      "startMeasure": 89
+    },
+    {
+      "attackCount": 60,
+      "endMeasure": 104,
+      "midi64Count": 14,
+      "midi64Rate": 0.23333333333333334,
+      "midi64SingleHypothesisCount": 12,
+      "midi64SingleHypothesisRate": 0.8571428571428571,
+      "startMeasure": 97
+    },
+    {
+      "attackCount": 69,
+      "endMeasure": 112,
+      "midi64Count": 22,
+      "midi64Rate": 0.3188405797101449,
+      "midi64SingleHypothesisCount": 21,
+      "midi64SingleHypothesisRate": 0.9545454545454546,
+      "startMeasure": 105
+    }
+  ],
+  "eventMutationProposed": false,
+  "interpretationBoundary": "This is a reference-free candidate-diversity audit. Concentration or low diversity is not proof that MIDI64 is wrong. No attack, pitch, timing, voicing, or render event is changed.",
+  "invariants": {
+    "all725AttacksRead": true,
+    "allPrimaryMappingPartitionsReconcile": true,
+    "attackGridMutated": false,
+    "eventsMutated": false,
+    "pitchSelectionMutated": false,
+    "referenceConsulted": false,
+    "standardTuningMappingsValidated": true
+  },
+  "midi64RivalPhysics": {
+    "bestCombinedRivalMidiCounts": {
+      "57": 2,
+      "59": 5,
+      "61": 4,
+      "62": 1,
+      "65": 1,
+      "68": 2,
+      "74": 1,
+      "76": 3,
+      "80": 2,
+      "83": 2
+    },
+    "multiHypothesisCount": 23,
+    "primaryAttackLosesToBestAttackRivalCount": 8,
+    "primaryCombinedLosesToBestCombinedRivalCount": 8,
+    "primaryCombinedWinsButAttackLosesToSameRivalCount": 1,
+    "primaryCombinedWinsButAttackLosesToSameRivalRate": 0.043478260869565216,
+    "primaryMinusBestAttackRivalAttackSupport": {
+      "count": 23,
+      "max": 0.46380299999999997,
+      "mean": 0.039596608695652194,
+      "median": 0.15379699999999996,
+      "min": -1.277932,
+      "q25": -0.1491100000000002,
+      "q75": 0.27014800000000005
+    },
+    "primaryMinusBestCombinedRival": {
+      "attack": {
+        "count": 23,
+        "max": 0.46380299999999997,
+        "mean": 0.039596608695652194,
+        "median": 0.15379699999999996,
+        "min": -1.277932,
+        "q25": -0.1491100000000002,
+        "q75": 0.27014800000000005
+      },
+      "body": {
+        "count": 23,
+        "max": 0.5855609999999998,
+        "mean": 0.18481086956521742,
+        "median": 0.18891999999999998,
+        "min": -0.28620800000000024,
+        "q25": 0.11346800000000012,
+        "q75": 0.35638150000000013
+      },
+      "combined": {
+        "count": 23,
+        "max": 0.8139672000000013,
+        "mean": 0.15804109782608697,
+        "median": 0.23635085,
+        "min": -1.2071813499999995,
+        "q25": -0.04894987500000014,
+        "q75": 0.49546392500000014
+      },
+      "persistence": {
+        "count": 23,
+        "max": 1.0608339999999998,
+        "mean": -0.011217173913043492,
+        "median": -0.051578000000000124,
+        "min": -1.1188859999999998,
+        "q25": -0.3076479999999999,
+        "q75": 0.34804650000000004
+      }
+    }
+  },
+  "modalUsed": false,
+  "mode": "v143-frozen-evidence-open-string-candidate-audit",
+  "non64RivalPhysics": {
+    "bestCombinedRivalMidiCounts": {
+      "41": 1,
+      "43": 1,
+      "49": 1,
+      "50": 5,
+      "52": 7,
+      "53": 1,
+      "54": 1,
+      "55": 1,
+      "57": 4,
+      "59": 18,
+      "60": 1,
+      "61": 5,
+      "62": 19,
+      "63": 1,
+      "64": 73,
+      "65": 2,
+      "66": 9,
+      "67": 6,
+      "68": 1,
+      "69": 11,
+      "70": 1,
+      "71": 11,
+      "72": 1,
+      "74": 9,
+      "76": 3,
+      "77": 2,
+      "78": 8,
+      "79": 2,
+      "80": 1,
+      "81": 4,
+      "83": 4,
+      "86": 1
+    },
+    "multiHypothesisCount": 215,
+    "primaryAttackLosesToBestAttackRivalCount": 143,
+    "primaryCombinedLosesToBestCombinedRivalCount": 136,
+    "primaryCombinedWinsButAttackLosesToSameRivalCount": 13,
+    "primaryCombinedWinsButAttackLosesToSameRivalRate": 0.06046511627906977,
+    "primaryMinusBestAttackRivalAttackSupport": {
+      "count": 215,
+      "max": 0.863013,
+      "mean": -0.21643971162790698,
+      "median": -0.18669599999999997,
+      "min": -1.5510080000000002,
+      "q25": -0.514378,
+      "q75": 0.11844849999999996
+    },
+    "primaryMinusBestCombinedRival": {
+      "attack": {
+        "count": 215,
+        "max": 0.863013,
+        "mean": -0.2155143023255814,
+        "median": -0.18669599999999997,
+        "min": -1.5510080000000002,
+        "q25": -0.5141015,
+        "q75": 0.11844849999999996
+      },
+      "body": {
+        "count": 215,
+        "max": 1.0196329999999998,
+        "mean": -0.09390449767441862,
+        "median": -0.04024300000000025,
+        "min": -1.2063859999999997,
+        "q25": -0.30912499999999987,
+        "q75": 0.19833899999999993
+      },
+      "combined": {
+        "count": 215,
+        "max": 1.6714169499999993,
+        "mean": -0.27624931093023264,
+        "median": -0.24343059999999994,
+        "min": -2.546082,
+        "q25": -0.6575444750000001,
+        "q75": 0.22774269999999985
+      },
+      "persistence": {
+        "count": 215,
+        "max": 1.425772,
+        "mean": 0.002019432558139536,
+        "median": 0.006912999999999947,
+        "min": -1.6744819999999998,
+        "q25": -0.37561350000000004,
+        "q75": 0.380726
+      }
+    }
+  },
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "protectedRuntimeModified": false,
+  "referenceFree": true,
+  "referenceRuntimeInputUsed": false,
+  "schemaVersion": 1,
+  "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "sourceRetiredEventSha256": "a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb"
+}
