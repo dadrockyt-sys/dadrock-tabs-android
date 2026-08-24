@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 08:40 America/Thunder_Bay
+Updated: 2026-08-24 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -65,9 +65,12 @@ Do not rescore event SHA `a81190d...`. Do not rerun candidate/freeze. No repeate
 9. **Open scorer exactly once only after the new lock is complete.** Require scorer V2 completeness, PDF-event fidelity `1.0`, protected pipeline exact, Production unchanged, then run the unchanged `>=0.99` professional holdout gate.
 10. **Completion remains strict.** Rhythm is complete only at score `>=0.99`, critical mismatches `0`, and PDF-event fidelity `1.0`. If the next score fails, close the scorer again and repeat only with another general/reference-free correction and another brand-new freeze.
 
-## Continuation audit — 2026-08-24 08:40
+## Continuation audit — 2026-08-24
 - Resumed directly from this branch/checkpoint; protected rhythm pipeline remains untouched.
-- Inspected `analyzer/v143_candidate_timing_adapter.py` and `analyzer/v143_reference_free_timing.py` only as source/static evidence.
-- Current adapter maps `downbeat_index_mod4` to `first_beat_in_measure = (-downbeat_index_mod4) % 4`, then serializes `absolute_beat = first_beat_in_measure + beat_index`; no sign/indexing defect has yet been proven from static inspection alone.
-- Existing audio-only bar-phase diagnostic shows competing timing candidates disagree on residue-class phase and 4/4 phase confidence is extremely weak, so the simple accent-residue phase estimate must not be treated as trustworthy evidence by itself.
-- Immediate next action: trace the exact 477→449 repaired-beat path and determine whether post-repair phase/origin metadata is preserved or recomputed; then build a cheap reference-free phase/invariant shadow diagnostic before any runtime change or inference.
+- Inspected `analyzer/v143_candidate_timing_adapter.py`, `analyzer/v143_reference_free_timing.py`, `analyzer/v143_reference_free_beat_grid_repair.py`, `analyzer/v143_reference_free_bar_phase_consensus.py`, and the repaired-timing shadow path using only source/static/audio-only diagnostics.
+- Current adapter maps `downbeat_index_mod4` to `first_beat_in_measure = (-downbeat_index_mod4) % 4`, then serializes `absolute_beat = first_beat_in_measure + beat_index`; no sign/indexing defect is present in that mapping itself.
+- **General timing defect identified:** beat repair reconstructs a new clean pulse sequence after the raw tracker has 38 interval outliers, but explicitly copies the raw sequence's `first_beat_in_measure` / `downbeat_index_mod4` into the repaired timing and enforces `barPhaseChanged=false`. Raw phase was computed from `sequence_index % 4`; therefore it is not a safe invariant once malformed/duplicate pulse indices are repaired. The phase must be re-established on the repaired pulse train from audio-only evidence rather than inherited blindly.
+- Existing approved-audio proof makes the defect observable without professional reference: raw timing is 447 beats, phase `downbeatIndexMod4=1`, `firstBeatInMeasure=3`, bar confidence `0.08797`; repair produces 449 beats / 0 interval outliers, while the already-existing post-repair independent consensus selects phase `2` / `firstBeatInMeasure=2` (confidence `0.1978`, two independent signal winners, not stable across halves). This disagreement is diagnostic evidence that inherited phase is not coherent with the repaired carrier; it is **not yet sufficient by itself to accept phase 2 as production-correct**.
+- The older raw consensus also shows the tracker begins in quieter audio and contains 26 severe short intervals; the count/phase problem is therefore a generic beat-index corruption problem, not a scorer-derived offset.
+- Current repaired-timing precision shadow still hard-fails if repair changes phase, so the next change must first be a separate cheap reference-free post-repair phase shadow/checker. No current candidate/freeze will be touched.
+- Immediate next action: add deterministic synthetic tests proving phase inheritance fails after inserted/removed beat-index anomalies, then add one CPU-only approved-audio post-repair phase robustness diagnostic (window/section stability + independent audio signal votes). Only after that proof may the repaired shadow adopt a rephased timing estimate.
