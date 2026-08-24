@@ -6,12 +6,12 @@ from pathlib import Path
 
 
 REQUIRED_SETTINGS = {
-    "atenCpuCapability": "avx2",
+    "atenCpuCapability": "default",
     "mklCbwr": "COMPATIBLE",
     "mklDynamic": "FALSE",
     "ompDynamic": "FALSE",
-    "oneDnnMaxCpuIsa": "AVX2",
-    "dnnlMaxCpuIsa": "AVX2",
+    "oneDnnMaxCpuIsa": "SSE41",
+    "dnnlMaxCpuIsa": "SSE41",
 }
 EXPECTED_SHIFT = ["0,22050,6026"]
 
@@ -40,12 +40,17 @@ def main() -> None:
             failures.append(f"probe{index}:safety")
         if inv.get("modalGpuRequested") is not False or inv.get("productionModified") is not False:
             failures.append(f"probe{index}:gpu-or-production")
+        if inv.get("childRuntimeTracePresent") is not True:
+            failures.append(f"probe{index}:child-runtime-trace")
         if item.get("demucsShiftTrace") != EXPECTED_SHIFT:
             failures.append(f"probe{index}:shift")
         settings = item.get("settings") or {}
         for key, expected in REQUIRED_SETTINGS.items():
             if settings.get(key) != expected:
                 failures.append(f"probe{index}:{key}={settings.get(key)!r}")
+        child = item.get("childRuntime") or {}
+        if str(child.get("torchCpuCapability") or "").upper() != "DEFAULT":
+            failures.append(f"probe{index}:effective-aten={child.get('torchCpuCapability')!r}")
 
     for key in ("sourceSha256", "normalizedWavSha256", "directGuitarSha256", "directPcmInt16Sha256"):
         if first.get(key) != second.get(key):
@@ -64,6 +69,7 @@ def main() -> None:
         "directGuitarSha256": first.get("directGuitarSha256"),
         "directPcmInt16Sha256": first.get("directPcmInt16Sha256"),
         "shiftTrace": EXPECTED_SHIFT,
+        "effectiveAten": "DEFAULT",
     }, sort_keys=True))
 
 
