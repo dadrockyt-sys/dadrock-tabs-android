@@ -92,6 +92,7 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
         source.write_bytes(source_audio)
         normalized = normalize_input_audio(source, root / "normalized")
         shift_trace = root / "demucs-shift-trace.txt"
+        runtime_trace = root / "demucs-runtime-trace.json"
 
         common_env = {
             "PYTHONHASHSEED": SEPARATOR_SEED,
@@ -101,6 +102,7 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
         }
         demucs_env = dict(DEMUCS_SINGLE_THREAD_ENV)
         demucs_env["V143_DEMUCS_SHIFT_TRACE_PATH"] = str(shift_trace)
+        demucs_env["V143_DEMUCS_RUNTIME_TRACE_PATH"] = str(runtime_trace)
 
         host = _host_fingerprint()
         with _temporary_environment(common_env):
@@ -118,9 +120,10 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
         pcm, sample_rate = sf.read(str(direct_path), dtype="int16", always_2d=True)
         pcm_le = np.asarray(pcm, dtype="<i2", order="C")
         trace_lines = shift_trace.read_text(encoding="utf-8").splitlines() if shift_trace.exists() else []
+        child_runtime = json.loads(runtime_trace.read_text(encoding="utf-8")) if runtime_trace.exists() else None
 
         return {
-            "schemaVersion": 1,
+            "schemaVersion": 2,
             "gate": "v143-demucs-cpu-host-probe",
             "sourceSha256": _sha256_bytes(source_audio),
             "normalizedWavSha256": _sha256_file(normalized),
@@ -133,6 +136,7 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
             "demucsShiftTrace": trace_lines,
             "expectedSeed143FirstShift": 6026,
             "host": host,
+            "childRuntime": child_runtime,
             "settings": {
                 "demucsSingleStem": "Guitar",
                 "demucsShifts": 1,
@@ -155,6 +159,7 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
                 "modalGpuRequested": False,
                 "productionModified": False,
                 "protectedPipelineModified": False,
+                "childRuntimeTracePresent": child_runtime is not None,
             },
         }
 
@@ -175,6 +180,8 @@ def approved_audio(
         raise RuntimeError(f"probe invariant failure: {inv}")
     if inv.get("modalGpuRequested") is not False or inv.get("productionModified") is not False:
         raise RuntimeError(f"probe safety failure: {inv}")
+    if inv.get("childRuntimeTracePresent") is not True:
+        raise RuntimeError("Demucs child runtime trace missing")
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n", encoding="utf-8")
