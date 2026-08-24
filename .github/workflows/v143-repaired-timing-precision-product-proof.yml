@@ -7,7 +7,12 @@ on:
     paths:
       - .github/workflows/v143-repaired-timing-precision-product-proof.yml
       - analyzer/v143_repaired_timing_precision_candidate_product_modal.py
+      - analyzer/v143_precision_sustain_promotion.py
+      - analyzer/check_v143_precision_sustain_onset_handoff.py
+      - analyzer/v143_contextual_prune_precision_candidate_events.py
       - validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs
+      - validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs
+      - lib/v143RenderContract.js
 
 permissions:
   contents: read
@@ -31,11 +36,17 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --disable-pip-version-check --quiet numpy scipy
-          python -m py_compile analyzer/v143_repaired_timing_precision_candidate_product_modal.py
+          python -m py_compile \
+            analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
+            analyzer/v143_precision_sustain_promotion.py \
+            analyzer/check_v143_precision_sustain_onset_handoff.py
           node --check validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs
+          node --check validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs
           PYTHONPATH=analyzer python analyzer/check_v143_reference_free_beat_grid_repair.py
           PYTHONPATH=analyzer python analyzer/check_v143_contextual_prune_precision_shadow.py
           PYTHONPATH=analyzer python analyzer/check_v143_contextual_prune_precision_primary_adapter.py
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_sustain_onset_handoff.py
+          node validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs
       - name: Enforce anti-leakage and protected runtime
         shell: bash
         run: |
@@ -43,9 +54,14 @@ jobs:
           test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
           if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
             analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
-            validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs; then
+            analyzer/v143_precision_sustain_promotion.py \
+            analyzer/check_v143_precision_sustain_onset_handoff.py \
+            validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs \
+            validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs; then
             echo 'Forbidden scorer/source token in repaired-timing product path' >&2
             exit 1
           fi
           grep -q 'measureRangeDerivedFromAudio' analyzer/v143_repaired_timing_precision_candidate_product_modal.py
           grep -q 'repairedIntervalOutliersZero' validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs
+          grep -q 'physicalOnsetPreserved' analyzer/v143_precision_sustain_promotion.py
+          grep -q 'renderProjectionIndependentOfPhysicalOnset' validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs
