@@ -1,9 +1,9 @@
 {
-  "exitCode": 127,
-  "logTail": "/home/runner/work/_temp/4419af39-715b-4540-9073-ed73dc83e2aa.sh: line 21: ffmpeg: command not found\n",
+  "exitCode": 0,
+  "logTail": "{\"analysis\": {\"analysisSampleRate\": 22050, \"firstTrackedBeatSeconds\": 0.6733786848072563, \"historicalTempoBpm\": 129.19921875, \"lastTrackedBeatSeconds\": 203.03528344671201, \"sourceSampleRate\": 44100, \"tempoBpm\": 129.19921875, \"tempoConfidence\": 0.5742546331955145, \"tempoDeltaBpm\": 0.0, \"trackedBeatCount\": 447}, \"combined16Vote\": {\"dominantPhase\": 1, \"dominantPhaseCount\": 12, \"dominantPhaseRate\": 0.4444444444444444, \"historicalPhaseWinnerCount\": 12, \"historicalPhaseWinnerRate\": 0.4444444444444444, \"windowCount\": 27, \"winnerCounts\": {\"0\": 3, \"1\": 12, \"2\": 7, \"3\": 5}}, \"combined32Vote\": {\"dominantPhase\": 1, \"dominantPhaseCount\": 9, \"dominantPhaseRate\": 0.34615384615384615, \"historicalPhaseWinnerCount\": 9, \"historicalPhaseWinnerRate\": 0.34615384615384615, \"windowCount\": 26, \"winnerCounts\": {\"0\": 3, \"1\": 9, \"2\": 6, \"3\": 8}}, \"flags\": {\"allGlobalAccentViewsAgree\": false, \"allGlobalAccentViewsMatchHistoricalPhase\": false, \"combined16WindowHistoricalWinRateAtLeast75Percent\": false, \"combined32WindowHistoricalWinRateAtLeast75Percent\": false, \"combinedGlobalMatchesHistoricalPhase\": true}, \"globalWinnerAgreement\": {\"allThreeViewsAgree\": false, \"allThreeViewsMatchHistoricalPhase\": false, \"viewsMatchingHistoricalPhase\": 2, \"winners\": {\"combinedExistingEstimator\": 1, \"lowBandOnly\": 0, \"onsetOnly\": 1}}}\n",
   "modalInvoked": false,
   "newInferenceUsed": false,
-  "passed": false,
+  "passed": true,
   "productionModified": false,
   "professionalReferenceUsed": false,
   "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",

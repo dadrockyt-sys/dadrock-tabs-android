@@ -1,0 +1,1482 @@
+{
+  "analysis": {
+    "analysisSampleRate": 22050,
+    "firstTrackedBeatSeconds": 0.6733786848072563,
+    "historicalTempoBpm": 129.19921875,
+    "lastTrackedBeatSeconds": 203.03528344671201,
+    "sourceSampleRate": 44100,
+    "tempoBpm": 129.19921875,
+    "tempoConfidence": 0.5742546331955145,
+    "tempoDeltaBpm": 0.0,
+    "trackedBeatCount": 447
+  },
+  "candidateRenderProduced": false,
+  "diagnosticFlags": {
+    "allGlobalAccentViewsAgree": false,
+    "allGlobalAccentViewsMatchHistoricalPhase": false,
+    "combined16WindowHistoricalWinRateAtLeast75Percent": false,
+    "combined32WindowHistoricalWinRateAtLeast75Percent": false,
+    "combinedGlobalMatchesHistoricalPhase": true
+  },
+  "eventMutationProposed": false,
+  "globalViews": {
+    "combinedExistingEstimator": {
+      "beatAccentMean": 1.2784655306092718,
+      "beatAccentStd": 0.4156655720174601,
+      "normalizedTopMinusRunnerUp": 0.08797341408427677,
+      "scores": [
+        -0.06145369403137968,
+        0.0576347922820204,
+        -0.017122596282039826,
+        0.02106727279435061
+      ],
+      "topMinusRunnerUp": 0.036567519487669786,
+      "winnerDownbeatIndexMod4": 1,
+      "winnerFirstBeatInMeasure": 3
+    },
+    "lowBandOnly": {
+      "beatAccentMean": 0.5915959375063604,
+      "beatAccentStd": 0.2697753893707458,
+      "normalizedTopMinusRunnerUp": 0.07058455073587731,
+      "scores": [
+        0.08192541161702283,
+        -0.061510420738584703,
+        0.06288343695869236,
+        -0.0837987186950111
+      ],
+      "topMinusRunnerUp": 0.019041974658330463,
+      "winnerDownbeatIndexMod4": 0,
+      "winnerFirstBeatInMeasure": 0
+    },
+    "onsetOnly": {
+      "beatAccentMean": 1.1305665462326817,
+      "beatAccentStd": 0.4111631664074214,
+      "normalizedTopMinusRunnerUp": 0.07538478037658077,
+      "scores": [
+        -0.08193504693563569,
+        0.07301239746666677,
+        -0.03284345552171297,
+        0.042016952468103774
+      ],
+      "topMinusRunnerUp": 0.030995444998562993,
+      "winnerDownbeatIndexMod4": 1,
+      "winnerFirstBeatInMeasure": 3
+    }
+  },
+  "globalWinnerAgreement": {
+    "allThreeViewsAgree": false,
+    "allThreeViewsMatchHistoricalPhase": false,
+    "viewsMatchingHistoricalPhase": 2,
+    "winners": {
+      "combinedExistingEstimator": 1,
+      "lowBandOnly": 0,
+      "onsetOnly": 1
+    }
+  },
+  "historicalBarPhase": {
+    "downbeatIndexMod4": 1,
+    "firstBeatInMeasure": 3
+  },
+  "interpretationBoundary": "This reruns only the existing reference-free full-mix timing front end and tests whether its chosen 4/4 bar phase is stable across accent views and local beat windows. It does not consult labels or the professional reference and does not select or mutate a replacement phase.",
+  "invariants": {
+    "attackGridMutated": false,
+    "eventsMutated": false,
+    "modalInvoked": false,
+    "pitchSelectionMutated": false,
+    "referenceConsulted": false
+  },
+  "modalUsed": false,
+  "mode": "v143-reference-free-fullmix-bar-phase-stability-diagnostic",
+  "newInferenceUsed": false,
+  "nonOverlapping16BeatWindows": {
+    "combinedExistingEstimator": {
+      "vote": {
+        "dominantPhase": 1,
+        "dominantPhaseCount": 12,
+        "dominantPhaseRate": 0.4444444444444444,
+        "historicalPhaseWinnerCount": 12,
+        "historicalPhaseWinnerRate": 0.4444444444444444,
+        "windowCount": 27,
+        "winnerCounts": {
+          "0": 3,
+          "1": 12,
+          "2": 7,
+          "3": 5
+        }
+      },
+      "windows": [
+        {
+          "endBeatIndexExclusive": 16,
+          "normalizedTopMinusRunnerUp": 1.11004689740843,
+          "startBeatIndex": 0,
+          "topMinusRunnerUp": 0.1446608950654864,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 32,
+          "normalizedTopMinusRunnerUp": 0.6788469864556791,
+          "startBeatIndex": 16,
+          "topMinusRunnerUp": 0.11153805334325895,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 48,
+          "normalizedTopMinusRunnerUp": 0.8662604002759572,
+          "startBeatIndex": 32,
+          "topMinusRunnerUp": 0.11370465403282015,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 64,
+          "normalizedTopMinusRunnerUp": 0.5552314340094288,
+          "startBeatIndex": 48,
+          "topMinusRunnerUp": 0.062007757254739504,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 80,
+          "normalizedTopMinusRunnerUp": 1.2803020448003457,
+          "startBeatIndex": 64,
+          "topMinusRunnerUp": 0.382782812867684,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 96,
+          "normalizedTopMinusRunnerUp": 0.8473482140895219,
+          "startBeatIndex": 80,
+          "topMinusRunnerUp": 0.21962901327012507,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 112,
+          "normalizedTopMinusRunnerUp": 0.5810146065562268,
+          "startBeatIndex": 96,
+          "topMinusRunnerUp": 0.11912554189879843,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 128,
+          "normalizedTopMinusRunnerUp": 0.605079608683877,
+          "startBeatIndex": 112,
+          "topMinusRunnerUp": 0.13649494274785368,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 144,
+          "normalizedTopMinusRunnerUp": 0.45524945245909687,
+          "startBeatIndex": 128,
+          "topMinusRunnerUp": 0.11738670419388386,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 160,
+          "normalizedTopMinusRunnerUp": 0.8897750949587163,
+          "startBeatIndex": 144,
+          "topMinusRunnerUp": 0.3822407653446559,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 176,
+          "normalizedTopMinusRunnerUp": 0.23221290653476043,
+          "startBeatIndex": 160,
+          "topMinusRunnerUp": 0.035720740530250206,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 192,
+          "normalizedTopMinusRunnerUp": 2.3551479537027964,
+          "startBeatIndex": 176,
+          "topMinusRunnerUp": 0.5838275160636239,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 208,
+          "normalizedTopMinusRunnerUp": 0.047980512030075646,
+          "startBeatIndex": 192,
+          "topMinusRunnerUp": 0.012655551107453311,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 224,
+          "normalizedTopMinusRunnerUp": 1.5485001070564786,
+          "startBeatIndex": 208,
+          "topMinusRunnerUp": 0.46178679826427427,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 240,
+          "normalizedTopMinusRunnerUp": 1.1497147737246527,
+          "startBeatIndex": 224,
+          "topMinusRunnerUp": 0.2348194052677779,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 256,
+          "normalizedTopMinusRunnerUp": 0.8646026460870702,
+          "startBeatIndex": 240,
+          "topMinusRunnerUp": 0.23790694109073351,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 272,
+          "normalizedTopMinusRunnerUp": 0.16990013047018138,
+          "startBeatIndex": 256,
+          "topMinusRunnerUp": 0.05461305824730278,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 288,
+          "normalizedTopMinusRunnerUp": 0.2537704503047737,
+          "startBeatIndex": 272,
+          "topMinusRunnerUp": 0.21428899779413224,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 304,
+          "normalizedTopMinusRunnerUp": 0.27877967267164505,
+          "startBeatIndex": 288,
+          "topMinusRunnerUp": 0.10557277766779238,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 320,
+          "normalizedTopMinusRunnerUp": 0.25298654621050704,
+          "startBeatIndex": 304,
+          "topMinusRunnerUp": 0.085177865337972,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 336,
+          "normalizedTopMinusRunnerUp": 0.36334160642103985,
+          "startBeatIndex": 320,
+          "topMinusRunnerUp": 0.15309638206085951,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 352,
+          "normalizedTopMinusRunnerUp": 0.42145793879202387,
+          "startBeatIndex": 336,
+          "topMinusRunnerUp": 0.14547565238804205,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 368,
+          "normalizedTopMinusRunnerUp": 0.4310244114762132,
+          "startBeatIndex": 352,
+          "topMinusRunnerUp": 0.132615974473814,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 384,
+          "normalizedTopMinusRunnerUp": 0.05635424128271093,
+          "startBeatIndex": 368,
+          "topMinusRunnerUp": 0.03464697181926091,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 400,
+          "normalizedTopMinusRunnerUp": 1.5371713774671356,
+          "startBeatIndex": 384,
+          "topMinusRunnerUp": 0.4533013238306396,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 416,
+          "normalizedTopMinusRunnerUp": 2.2264343732006218,
+          "startBeatIndex": 400,
+          "topMinusRunnerUp": 0.5321704635542335,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 432,
+          "normalizedTopMinusRunnerUp": 1.270309671855844,
+          "startBeatIndex": 416,
+          "topMinusRunnerUp": 0.4521843792602591,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        }
+      ]
+    },
+    "lowBandOnly": {
+      "vote": {
+        "dominantPhase": 0,
+        "dominantPhaseCount": 11,
+        "dominantPhaseRate": 0.4074074074074074,
+        "historicalPhaseWinnerCount": 6,
+        "historicalPhaseWinnerRate": 0.2222222222222222,
+        "windowCount": 27,
+        "winnerCounts": {
+          "0": 11,
+          "1": 6,
+          "2": 7,
+          "3": 3
+        }
+      },
+      "windows": [
+        {
+          "endBeatIndexExclusive": 16,
+          "normalizedTopMinusRunnerUp": 0.021433518474607775,
+          "startBeatIndex": 0,
+          "topMinusRunnerUp": 0.002494712058588644,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 32,
+          "normalizedTopMinusRunnerUp": 0.31472364930030183,
+          "startBeatIndex": 16,
+          "topMinusRunnerUp": 0.05066754692408998,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 48,
+          "normalizedTopMinusRunnerUp": 0.17049761497985766,
+          "startBeatIndex": 32,
+          "topMinusRunnerUp": 0.036088458505300625,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 64,
+          "normalizedTopMinusRunnerUp": 0.06724315908835449,
+          "startBeatIndex": 48,
+          "topMinusRunnerUp": 0.014375745509805138,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 80,
+          "normalizedTopMinusRunnerUp": 0.12225916752219211,
+          "startBeatIndex": 64,
+          "topMinusRunnerUp": 0.035720741258138844,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 96,
+          "normalizedTopMinusRunnerUp": 0.09009528020959154,
+          "startBeatIndex": 80,
+          "topMinusRunnerUp": 0.021204119485567774,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 112,
+          "normalizedTopMinusRunnerUp": 0.2202531719825615,
+          "startBeatIndex": 96,
+          "topMinusRunnerUp": 0.06115474353162531,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 128,
+          "normalizedTopMinusRunnerUp": 0.5515455372499706,
+          "startBeatIndex": 112,
+          "topMinusRunnerUp": 0.13862273659676905,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 144,
+          "normalizedTopMinusRunnerUp": 0.3207680445446371,
+          "startBeatIndex": 128,
+          "topMinusRunnerUp": 0.048964150673250106,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 160,
+          "normalizedTopMinusRunnerUp": 0.6183748690268492,
+          "startBeatIndex": 144,
+          "topMinusRunnerUp": 0.1461712723513499,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 176,
+          "normalizedTopMinusRunnerUp": 0.1827553831401204,
+          "startBeatIndex": 160,
+          "topMinusRunnerUp": 0.04559261395791886,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 192,
+          "normalizedTopMinusRunnerUp": 0.011148726302730732,
+          "startBeatIndex": 176,
+          "topMinusRunnerUp": 0.001726671633842658,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 208,
+          "normalizedTopMinusRunnerUp": 0.5467103841595417,
+          "startBeatIndex": 192,
+          "topMinusRunnerUp": 0.1280267631476677,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 224,
+          "normalizedTopMinusRunnerUp": 0.6036567453136293,
+          "startBeatIndex": 208,
+          "topMinusRunnerUp": 0.1370207330329709,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 240,
+          "normalizedTopMinusRunnerUp": 0.2435930354711076,
+          "startBeatIndex": 224,
+          "topMinusRunnerUp": 0.0555427939401687,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 256,
+          "normalizedTopMinusRunnerUp": 0.29903379675444747,
+          "startBeatIndex": 240,
+          "topMinusRunnerUp": 0.05004885908417389,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 272,
+          "normalizedTopMinusRunnerUp": 0.28793561868490125,
+          "startBeatIndex": 256,
+          "topMinusRunnerUp": 0.055785986003827115,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 288,
+          "normalizedTopMinusRunnerUp": 0.8551431274838325,
+          "startBeatIndex": 272,
+          "topMinusRunnerUp": 0.12208221603338418,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 304,
+          "normalizedTopMinusRunnerUp": 0.09086820314907004,
+          "startBeatIndex": 288,
+          "topMinusRunnerUp": 0.006342111545235923,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 320,
+          "normalizedTopMinusRunnerUp": 0.6287148260405763,
+          "startBeatIndex": 304,
+          "topMinusRunnerUp": 0.16795416163005067,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 336,
+          "normalizedTopMinusRunnerUp": 0.11101318780052763,
+          "startBeatIndex": 320,
+          "topMinusRunnerUp": 0.02048600051823357,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 352,
+          "normalizedTopMinusRunnerUp": 1.0188366283135617,
+          "startBeatIndex": 336,
+          "topMinusRunnerUp": 0.18756809932429164,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 368,
+          "normalizedTopMinusRunnerUp": 0.581082597268715,
+          "startBeatIndex": 352,
+          "topMinusRunnerUp": 0.0863352620259471,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 384,
+          "normalizedTopMinusRunnerUp": 0.16285860018701093,
+          "startBeatIndex": 368,
+          "topMinusRunnerUp": 0.030640024637920038,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 400,
+          "normalizedTopMinusRunnerUp": 0.09994814623287097,
+          "startBeatIndex": 384,
+          "topMinusRunnerUp": 0.022209273149426334,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 416,
+          "normalizedTopMinusRunnerUp": 0.004692363567572783,
+          "startBeatIndex": 400,
+          "topMinusRunnerUp": 0.0012012365059820285,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 432,
+          "normalizedTopMinusRunnerUp": 0.19760838853958676,
+          "startBeatIndex": 416,
+          "topMinusRunnerUp": 0.026803111681054537,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        }
+      ]
+    },
+    "onsetOnly": {
+      "vote": {
+        "dominantPhase": 1,
+        "dominantPhaseCount": 12,
+        "dominantPhaseRate": 0.4444444444444444,
+        "historicalPhaseWinnerCount": 12,
+        "historicalPhaseWinnerRate": 0.4444444444444444,
+        "windowCount": 27,
+        "winnerCounts": {
+          "0": 3,
+          "1": 12,
+          "2": 6,
+          "3": 6
+        }
+      },
+      "windows": [
+        {
+          "endBeatIndexExclusive": 16,
+          "normalizedTopMinusRunnerUp": 1.146801043136624,
+          "startBeatIndex": 0,
+          "topMinusRunnerUp": 0.14581156759139768,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 32,
+          "normalizedTopMinusRunnerUp": 0.4838893467495107,
+          "startBeatIndex": 16,
+          "topMinusRunnerUp": 0.07266766079820641,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 48,
+          "normalizedTopMinusRunnerUp": 1.52754954763831,
+          "startBeatIndex": 32,
+          "topMinusRunnerUp": 0.2346195935558043,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 64,
+          "normalizedTopMinusRunnerUp": 0.6083695266390737,
+          "startBeatIndex": 48,
+          "topMinusRunnerUp": 0.08304430539779095,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 80,
+          "normalizedTopMinusRunnerUp": 1.1241878934162892,
+          "startBeatIndex": 64,
+          "topMinusRunnerUp": 0.3883754312458676,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 96,
+          "normalizedTopMinusRunnerUp": 0.9031058816555938,
+          "startBeatIndex": 80,
+          "topMinusRunnerUp": 0.26163324316477155,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 112,
+          "normalizedTopMinusRunnerUp": 1.0509652079408824,
+          "startBeatIndex": 96,
+          "topMinusRunnerUp": 0.2209411276345028,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 128,
+          "normalizedTopMinusRunnerUp": 1.0829169784624004,
+          "startBeatIndex": 112,
+          "topMinusRunnerUp": 0.25930944286471724,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 144,
+          "normalizedTopMinusRunnerUp": 0.5364957488853457,
+          "startBeatIndex": 128,
+          "topMinusRunnerUp": 0.14568961339725017,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 160,
+          "normalizedTopMinusRunnerUp": 0.7891015075645738,
+          "startBeatIndex": 144,
+          "topMinusRunnerUp": 0.3196117957573197,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 176,
+          "normalizedTopMinusRunnerUp": 0.00012516385978363464,
+          "startBeatIndex": 160,
+          "topMinusRunnerUp": 2.0583122581241398e-05,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 192,
+          "normalizedTopMinusRunnerUp": 2.533115274010036,
+          "startBeatIndex": 176,
+          "topMinusRunnerUp": 0.667452555578559,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 208,
+          "normalizedTopMinusRunnerUp": 0.48041572476959177,
+          "startBeatIndex": 192,
+          "topMinusRunnerUp": 0.12341414756203117,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 224,
+          "normalizedTopMinusRunnerUp": 1.4657849893995218,
+          "startBeatIndex": 208,
+          "topMinusRunnerUp": 0.4800935627768379,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 240,
+          "normalizedTopMinusRunnerUp": 1.1542283614954603,
+          "startBeatIndex": 224,
+          "topMinusRunnerUp": 0.24767591615467022,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 256,
+          "normalizedTopMinusRunnerUp": 0.7536262143282048,
+          "startBeatIndex": 240,
+          "topMinusRunnerUp": 0.22523792584290003,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 272,
+          "normalizedTopMinusRunnerUp": 0.5447865443698792,
+          "startBeatIndex": 256,
+          "topMinusRunnerUp": 0.18096045677570816,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 288,
+          "normalizedTopMinusRunnerUp": 0.20771144557291,
+          "startBeatIndex": 272,
+          "topMinusRunnerUp": 0.17194356893534468,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 304,
+          "normalizedTopMinusRunnerUp": 0.273928287265743,
+          "startBeatIndex": 288,
+          "topMinusRunnerUp": 0.10398724978148399,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 320,
+          "normalizedTopMinusRunnerUp": 0.16734359982795502,
+          "startBeatIndex": 304,
+          "topMinusRunnerUp": 0.06006792415241158,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 336,
+          "normalizedTopMinusRunnerUp": 0.25357150161050973,
+          "startBeatIndex": 320,
+          "topMinusRunnerUp": 0.11535251104511346,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 352,
+          "normalizedTopMinusRunnerUp": 0.33144274462479206,
+          "startBeatIndex": 336,
+          "topMinusRunnerUp": 0.12317166299631821,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 368,
+          "normalizedTopMinusRunnerUp": 0.3917016073777816,
+          "startBeatIndex": 352,
+          "topMinusRunnerUp": 0.12410967132166806,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 384,
+          "normalizedTopMinusRunnerUp": 0.020757065953210495,
+          "startBeatIndex": 368,
+          "topMinusRunnerUp": 0.012272806341911524,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 400,
+          "normalizedTopMinusRunnerUp": 1.4359512767467344,
+          "startBeatIndex": 384,
+          "topMinusRunnerUp": 0.451244853869774,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 416,
+          "normalizedTopMinusRunnerUp": 2.336778399290565,
+          "startBeatIndex": 400,
+          "topMinusRunnerUp": 0.6265402975571808,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 432,
+          "normalizedTopMinusRunnerUp": 1.2008522416238216,
+          "startBeatIndex": 416,
+          "topMinusRunnerUp": 0.4316363240916232,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        }
+      ]
+    }
+  },
+  "overlapping32BeatWindowsStride16": {
+    "combinedExistingEstimator": {
+      "vote": {
+        "dominantPhase": 1,
+        "dominantPhaseCount": 9,
+        "dominantPhaseRate": 0.34615384615384615,
+        "historicalPhaseWinnerCount": 9,
+        "historicalPhaseWinnerRate": 0.34615384615384615,
+        "windowCount": 26,
+        "winnerCounts": {
+          "0": 3,
+          "1": 9,
+          "2": 6,
+          "3": 8
+        }
+      },
+      "windows": [
+        {
+          "endBeatIndexExclusive": 32,
+          "normalizedTopMinusRunnerUp": 0.07938498929956476,
+          "startBeatIndex": 0,
+          "topMinusRunnerUp": 0.016561420861113785,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 48,
+          "normalizedTopMinusRunnerUp": 0.23934556304855123,
+          "startBeatIndex": 16,
+          "topMinusRunnerUp": 0.036583553126808166,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 64,
+          "normalizedTopMinusRunnerUp": 1.0309523731806955,
+          "startBeatIndex": 32,
+          "topMinusRunnerUp": 0.12563515817666304,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 80,
+          "normalizedTopMinusRunnerUp": 0.9570786386652859,
+          "startBeatIndex": 48,
+          "topMinusRunnerUp": 0.22239528506121164,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 96,
+          "normalizedTopMinusRunnerUp": 1.0741089302589755,
+          "startBeatIndex": 64,
+          "topMinusRunnerUp": 0.30120591306890443,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 112,
+          "normalizedTopMinusRunnerUp": 1.1968704081916965,
+          "startBeatIndex": 80,
+          "topMinusRunnerUp": 0.28600726977131274,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 128,
+          "normalizedTopMinusRunnerUp": 0.6236753647043422,
+          "startBeatIndex": 96,
+          "topMinusRunnerUp": 0.14002947186972503,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 144,
+          "normalizedTopMinusRunnerUp": 0.6560321028267331,
+          "startBeatIndex": 112,
+          "topMinusRunnerUp": 0.15903878336971577,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 160,
+          "normalizedTopMinusRunnerUp": 0.34751236344757525,
+          "startBeatIndex": 128,
+          "topMinusRunnerUp": 0.12410310224414367,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 176,
+          "normalizedTopMinusRunnerUp": 0.38654652648196797,
+          "startBeatIndex": 144,
+          "topMinusRunnerUp": 0.12557091973789536,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 192,
+          "normalizedTopMinusRunnerUp": 1.3215310722875828,
+          "startBeatIndex": 160,
+          "topMinusRunnerUp": 0.2740533877666871,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 208,
+          "normalizedTopMinusRunnerUp": 1.0027587337907604,
+          "startBeatIndex": 176,
+          "topMinusRunnerUp": 0.27168831563045814,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 224,
+          "normalizedTopMinusRunnerUp": 0.5677381249091423,
+          "startBeatIndex": 192,
+          "topMinusRunnerUp": 0.16109490805256543,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 240,
+          "normalizedTopMinusRunnerUp": 0.43375183964044106,
+          "startBeatIndex": 208,
+          "topMinusRunnerUp": 0.11211205184614137,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 256,
+          "normalizedTopMinusRunnerUp": 0.9341555029310928,
+          "startBeatIndex": 224,
+          "topMinusRunnerUp": 0.23773481783136297,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 272,
+          "normalizedTopMinusRunnerUp": 0.5833644073636105,
+          "startBeatIndex": 240,
+          "topMinusRunnerUp": 0.17552892381280905,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 288,
+          "normalizedTopMinusRunnerUp": 0.1663508739788111,
+          "startBeatIndex": 256,
+          "topMinusRunnerUp": 0.10950715723273641,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 304,
+          "normalizedTopMinusRunnerUp": 0.07587548241191593,
+          "startBeatIndex": 272,
+          "topMinusRunnerUp": 0.05435811006317004,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 320,
+          "normalizedTopMinusRunnerUp": 0.14908701711497604,
+          "startBeatIndex": 288,
+          "topMinusRunnerUp": 0.05346329091057256,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 336,
+          "normalizedTopMinusRunnerUp": 0.08903588118924993,
+          "startBeatIndex": 304,
+          "topMinusRunnerUp": 0.03395925836144387,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 352,
+          "normalizedTopMinusRunnerUp": 0.009833376556972383,
+          "startBeatIndex": 320,
+          "topMinusRunnerUp": 0.0038103648364087306,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 368,
+          "normalizedTopMinusRunnerUp": 0.10255956240868896,
+          "startBeatIndex": 336,
+          "topMinusRunnerUp": 0.033738190115693456,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 384,
+          "normalizedTopMinusRunnerUp": 0.08774062997288157,
+          "startBeatIndex": 352,
+          "topMinusRunnerUp": 0.0489845013272765,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 400,
+          "normalizedTopMinusRunnerUp": 0.357482849978482,
+          "startBeatIndex": 368,
+          "topMinusRunnerUp": 0.20932717600568962,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 416,
+          "normalizedTopMinusRunnerUp": 0.46632525819687787,
+          "startBeatIndex": 384,
+          "topMinusRunnerUp": 0.12524860980216523,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 432,
+          "normalizedTopMinusRunnerUp": 1.5297012890219825,
+          "startBeatIndex": 400,
+          "topMinusRunnerUp": 0.4983281911917199,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        }
+      ]
+    },
+    "lowBandOnly": {
+      "vote": {
+        "dominantPhase": 0,
+        "dominantPhaseCount": 10,
+        "dominantPhaseRate": 0.38461538461538464,
+        "historicalPhaseWinnerCount": 7,
+        "historicalPhaseWinnerRate": 0.2692307692307692,
+        "windowCount": 26,
+        "winnerCounts": {
+          "0": 10,
+          "1": 7,
+          "2": 9
+        }
+      },
+      "windows": [
+        {
+          "endBeatIndexExclusive": 32,
+          "normalizedTopMinusRunnerUp": 0.24614755977073788,
+          "startBeatIndex": 0,
+          "topMinusRunnerUp": 0.03580254367361374,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 48,
+          "normalizedTopMinusRunnerUp": 0.24268149925800395,
+          "startBeatIndex": 16,
+          "topMinusRunnerUp": 0.059696555837454535,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 64,
+          "normalizedTopMinusRunnerUp": 0.11824876545796525,
+          "startBeatIndex": 32,
+          "topMinusRunnerUp": 0.02523210200755288,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 80,
+          "normalizedTopMinusRunnerUp": 0.03941235782542089,
+          "startBeatIndex": 48,
+          "topMinusRunnerUp": 0.010672497874166798,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 96,
+          "normalizedTopMinusRunnerUp": 0.027356131646815943,
+          "startBeatIndex": 64,
+          "topMinusRunnerUp": 0.007258310886285535,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 112,
+          "normalizedTopMinusRunnerUp": 0.07732804472095167,
+          "startBeatIndex": 80,
+          "topMinusRunnerUp": 0.01997531202302877,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 128,
+          "normalizedTopMinusRunnerUp": 0.07693667557724308,
+          "startBeatIndex": 96,
+          "topMinusRunnerUp": 0.02046807878351875,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 144,
+          "normalizedTopMinusRunnerUp": 0.44952196793828614,
+          "startBeatIndex": 112,
+          "topMinusRunnerUp": 0.09379344363500963,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 160,
+          "normalizedTopMinusRunnerUp": 0.7618069012633921,
+          "startBeatIndex": 128,
+          "topMinusRunnerUp": 0.16043667698888175,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 176,
+          "normalizedTopMinusRunnerUp": 0.5285788710358006,
+          "startBeatIndex": 144,
+          "topMinusRunnerUp": 0.12911752531304255,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 192,
+          "normalizedTopMinusRunnerUp": 0.14732962338176392,
+          "startBeatIndex": 160,
+          "topMinusRunnerUp": 0.03409891797532971,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 208,
+          "normalizedTopMinusRunnerUp": 0.31708653327615627,
+          "startBeatIndex": 176,
+          "topMinusRunnerUp": 0.0631500457569123,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 224,
+          "normalizedTopMinusRunnerUp": 0.5675799345772,
+          "startBeatIndex": 192,
+          "topMinusRunnerUp": 0.1325237480903193,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 240,
+          "normalizedTopMinusRunnerUp": 0.17804896195061554,
+          "startBeatIndex": 208,
+          "topMinusRunnerUp": 0.040738969546401105,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 256,
+          "normalizedTopMinusRunnerUp": 0.013475218763517666,
+          "startBeatIndex": 224,
+          "topMinusRunnerUp": 0.0027469674279974043,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 272,
+          "normalizedTopMinusRunnerUp": 0.01584413636174477,
+          "startBeatIndex": 240,
+          "topMinusRunnerUp": 0.0028685634598266674,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 288,
+          "normalizedTopMinusRunnerUp": 0.19380713232180313,
+          "startBeatIndex": 256,
+          "topMinusRunnerUp": 0.05679786471566167,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 304,
+          "normalizedTopMinusRunnerUp": 0.6551676370495576,
+          "startBeatIndex": 272,
+          "topMinusRunnerUp": 0.07374785450255272,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 320,
+          "normalizedTopMinusRunnerUp": 0.3839074620501343,
+          "startBeatIndex": 288,
+          "topMinusRunnerUp": 0.10368228659148654,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 336,
+          "normalizedTopMinusRunnerUp": 0.714528524696777,
+          "startBeatIndex": 304,
+          "topMinusRunnerUp": 0.1865402675172988,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 352,
+          "normalizedTopMinusRunnerUp": 0.559373078273752,
+          "startBeatIndex": 320,
+          "topMinusRunnerUp": 0.10402704992126266,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 368,
+          "normalizedTopMinusRunnerUp": 0.45656442267199543,
+          "startBeatIndex": 336,
+          "topMinusRunnerUp": 0.07677144335785413,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 384,
+          "normalizedTopMinusRunnerUp": 0.1732215706890675,
+          "startBeatIndex": 352,
+          "topMinusRunnerUp": 0.03446464388845838,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 400,
+          "normalizedTopMinusRunnerUp": 0.31767283416903647,
+          "startBeatIndex": 368,
+          "topMinusRunnerUp": 0.06652763832671893,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 416,
+          "normalizedTopMinusRunnerUp": 0.16620424270556322,
+          "startBeatIndex": 384,
+          "topMinusRunnerUp": 0.04018077179354307,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 432,
+          "normalizedTopMinusRunnerUp": 0.06807067433498057,
+          "startBeatIndex": 400,
+          "topMinusRunnerUp": 0.014002174093518116,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        }
+      ]
+    },
+    "onsetOnly": {
+      "vote": {
+        "dominantPhase": 1,
+        "dominantPhaseCount": 10,
+        "dominantPhaseRate": 0.38461538461538464,
+        "historicalPhaseWinnerCount": 10,
+        "historicalPhaseWinnerRate": 0.38461538461538464,
+        "windowCount": 26,
+        "winnerCounts": {
+          "0": 3,
+          "1": 10,
+          "2": 6,
+          "3": 7
+        }
+      },
+      "windows": [
+        {
+          "endBeatIndexExclusive": 32,
+          "normalizedTopMinusRunnerUp": 0.1870860051410154,
+          "startBeatIndex": 0,
+          "topMinusRunnerUp": 0.03657195339659569,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 48,
+          "normalizedTopMinusRunnerUp": 0.6055074321353404,
+          "startBeatIndex": 16,
+          "topMinusRunnerUp": 0.09200888052925738,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 64,
+          "normalizedTopMinusRunnerUp": 1.0926459173636316,
+          "startBeatIndex": 32,
+          "topMinusRunnerUp": 0.15883194947679757,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 80,
+          "normalizedTopMinusRunnerUp": 0.860760897957683,
+          "startBeatIndex": 48,
+          "topMinusRunnerUp": 0.23570986832182905,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 96,
+          "normalizedTopMinusRunnerUp": 1.017874368746223,
+          "startBeatIndex": 64,
+          "topMinusRunnerUp": 0.32500433720531974,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 112,
+          "normalizedTopMinusRunnerUp": 1.1357042425528352,
+          "startBeatIndex": 80,
+          "topMinusRunnerUp": 0.29184419870853473,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 128,
+          "normalizedTopMinusRunnerUp": 0.7183662392638555,
+          "startBeatIndex": 96,
+          "topMinusRunnerUp": 0.16931732425748947,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 144,
+          "normalizedTopMinusRunnerUp": 0.8348968144642113,
+          "startBeatIndex": 112,
+          "topMinusRunnerUp": 0.21377889987390664,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 160,
+          "normalizedTopMinusRunnerUp": 0.1269215264586539,
+          "startBeatIndex": 128,
+          "topMinusRunnerUp": 0.04390478361132888,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 176,
+          "normalizedTopMinusRunnerUp": 0.2850141139527551,
+          "startBeatIndex": 144,
+          "topMinusRunnerUp": 0.08855735819948762,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 192,
+          "normalizedTopMinusRunnerUp": 1.5192625862932598,
+          "startBeatIndex": 160,
+          "topMinusRunnerUp": 0.33373656935057006,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 208,
+          "normalizedTopMinusRunnerUp": 1.0943917589129728,
+          "startBeatIndex": 176,
+          "topMinusRunnerUp": 0.299550041289695,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 224,
+          "normalizedTopMinusRunnerUp": 0.6034816833396979,
+          "startBeatIndex": 192,
+          "topMinusRunnerUp": 0.17833970760740336,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 240,
+          "normalizedTopMinusRunnerUp": 0.41686460810391995,
+          "startBeatIndex": 208,
+          "topMinusRunnerUp": 0.11620882331108384,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 256,
+          "normalizedTopMinusRunnerUp": 0.8793942927802871,
+          "startBeatIndex": 224,
+          "topMinusRunnerUp": 0.2364569209987848,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 272,
+          "normalizedTopMinusRunnerUp": 0.6555968245530875,
+          "startBeatIndex": 240,
+          "topMinusRunnerUp": 0.2081592347654091,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 288,
+          "normalizedTopMinusRunnerUp": 0.05701058468989028,
+          "startBeatIndex": 256,
+          "topMinusRunnerUp": 0.036397123585721114,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 304,
+          "normalizedTopMinusRunnerUp": 0.04811350472186532,
+          "startBeatIndex": 272,
+          "topMinusRunnerUp": 0.03397815957693062,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 0,
+          "winnerDownbeatIndexMod4WithinWindow": 0
+        },
+        {
+          "endBeatIndexExclusive": 320,
+          "normalizedTopMinusRunnerUp": 0.009370396254468016,
+          "startBeatIndex": 288,
+          "topMinusRunnerUp": 0.0034747100233143424,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 336,
+          "normalizedTopMinusRunnerUp": 0.06732401162087438,
+          "startBeatIndex": 304,
+          "topMinusRunnerUp": 0.02764229344635094,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 352,
+          "normalizedTopMinusRunnerUp": 0.00937668627336641,
+          "startBeatIndex": 320,
+          "topMinusRunnerUp": 0.003909575975602486,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 1,
+          "winnerDownbeatIndexMod4WithinWindow": 1
+        },
+        {
+          "endBeatIndexExclusive": 368,
+          "normalizedTopMinusRunnerUp": 0.10107630371399783,
+          "startBeatIndex": 336,
+          "topMinusRunnerUp": 0.03505308091672865,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        },
+        {
+          "endBeatIndexExclusive": 384,
+          "normalizedTopMinusRunnerUp": 0.10442846636969791,
+          "startBeatIndex": 352,
+          "topMinusRunnerUp": 0.05591843248987827,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 400,
+          "normalizedTopMinusRunnerUp": 0.38306790996919865,
+          "startBeatIndex": 368,
+          "topMinusRunnerUp": 0.21948602376393112,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 416,
+          "normalizedTopMinusRunnerUp": 0.427116387464202,
+          "startBeatIndex": 384,
+          "topMinusRunnerUp": 0.12476137864080528,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 2,
+          "winnerDownbeatIndexMod4WithinWindow": 2
+        },
+        {
+          "endBeatIndexExclusive": 432,
+          "normalizedTopMinusRunnerUp": 1.6252220688008252,
+          "startBeatIndex": 400,
+          "topMinusRunnerUp": 0.5532398195266686,
+          "winnerDownbeatIndexMod4RelativeToGlobalSequence": 3,
+          "winnerDownbeatIndexMod4WithinWindow": 3
+        }
+      ]
+    }
+  },
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "protectedRuntimeModified": false,
+  "referenceFree": true,
+  "referenceRuntimeInputUsed": false,
+  "runtimeLabelsRequired": false,
+  "schemaVersion": 1,
+  "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+}
