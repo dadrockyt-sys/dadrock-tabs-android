@@ -1,0 +1,33 @@
+V143 precision sustain onset handoff defect proven statically
+{
+  "schemaVersion": 1,
+  "gate": "v143-precision-sustain-onset-handoff-static-proof",
+  "assemblySourceSha256": "df14691f9ba21667073ffe0b052844cf8eb7074bdc170067f7a9bc96109e38b0",
+  "productSourceSha256": "71c2908f8d3ab30af57f365ddfa93fc2e0a3dc5cf13f27d15dbbce94c3bd173b",
+  "assemblyGridExpression": "float(grid[key])",
+  "assemblyPhysicalOnsetExpression": "float(row.get('onsetTime') or grid_time)",
+  "assemblySourceTimeExpression": "grid_time",
+  "assemblySourceOnsetExpression": "physical_onset",
+  "assemblySeparatesPhysicalFromGrid": true,
+  "promotionStartExpression": "float(event['timeSeconds'])",
+  "promotionOnsetExpression": "start",
+  "promotionOffsetExpression": "start + duration_seconds",
+  "promotionAnchorsStartToGrid": true,
+  "promotionOverwritesPhysicalOnset": true,
+  "promotionOffsetsFromGridStart": true,
+  "promotionClaimsAttackTimingChangedFalse": true,
+  "synthetic": {
+    "gridTimeSeconds": 10.0,
+    "physicalOnsetSecondsBeforePromotion": 10.083,
+    "onsetSecondsAfterCurrentPromotion": 10.0,
+    "physicalOnsetDeltaSeconds": -0.08300000000000018
+  },
+  "defectProven": true,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "expectedProtectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "protectedPipelineUnchanged": true,
+  "professionalReferenceUsed": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "modalGpuUsed": false
+}
