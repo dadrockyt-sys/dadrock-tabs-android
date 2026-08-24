@@ -1,0 +1,82 @@
+name: V143 Precision Polyphonic Expansion Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-precision-polyphonic-expansion-audit.yml
+      - analyzer/check_v143_precision_polyphonic_expansion.py
+      - analyzer/v143_contextual_prune_precision_shadow.py
+      - analyzer/v143_contextual_prune_precision_candidate_events.py
+      - analyzer/v143_contextual_prune_reference_free_carrier.py
+      - debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json
+      - analyzer/v143_reference_free_rhythm_pipeline.py
+
+concurrency:
+  group: v143-precision-polyphonic-expansion-audit
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Audit committed candidate expansion without inference or scorer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile analyzer/check_v143_precision_polyphonic_expansion.py
+          python analyzer/check_v143_precision_polyphonic_expansion.py \
+            | tee debug/v143-contextual-prune/precision-polyphonic-expansion-audit.log
+
+      - name: Commit audio-only audit diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/precision-polyphonic-expansion-audit.json \
+            debug/v143-contextual-prune/precision-polyphonic-expansion-audit.log
+          if git diff --cached --quiet; then
+            echo "No precision expansion diagnostic changed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 precision polyphonic expansion audit"
+          git push origin HEAD:v143-contextual-prune-lobo
+
+      - name: Enforce audit safety
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("debug/v143-contextual-prune/precision-polyphonic-expansion-audit.json").read_text(encoding="utf-8"))
+          required = {
+              "selectedCountMatchesUniqueRenderedAttacks": True,
+              "noteCountMatchesEvents": True,
+              "protectedPipelineUnchanged": True,
+              "professionalReferenceUsed": False,
+              "runtimeLabelsRequired": False,
+              "productionModified": False,
+              "modalGpuUsed": False,
+          }
+          failed = [key for key, expected in required.items() if data.get(key) is not expected]
+          if failed:
+              raise SystemExit(f"V143 precision expansion audit safety failed: {failed}")
+          print("V143 precision polyphonic expansion audit safety passed")
+          PY
