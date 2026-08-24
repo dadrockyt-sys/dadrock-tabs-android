@@ -1,0 +1,3971 @@
+{
+  "attackCount": 725,
+  "candidateRenderProduced": false,
+  "diagnosticInterpretation": "sectional-or-mixed-phase-accent-clue",
+  "eventMutationProposed": false,
+  "globalMeasures1To113": {
+    "endMeasure": 113,
+    "measureCount": 113,
+    "occupiedOnlyContrastWinnerOffset": 8,
+    "pairedEightVsZero": {
+      "bothPositionsOccupiedCount": 36,
+      "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+      "phase0Wins": 41,
+      "phase8WinFractionAllMeasures": 0.415929203539823,
+      "phase8WinFractionNonTies": 0.5340909090909091,
+      "phase8Wins": 47,
+      "supportDifferenceEightMinusZero": {
+        "count": 113,
+        "max": 3.460281,
+        "mean": 0.056793123893805315,
+        "median": 0.0,
+        "min": -3.685955,
+        "q25": -1.357247,
+        "q75": 1.197097
+      },
+      "ties": 25
+    },
+    "phases": [
+      {
+        "beatStepsModuloCurrentMeasure": [
+          0,
+          4,
+          8,
+          12
+        ],
+        "measureCount": 113,
+        "occupancy": {
+          "downbeatCount": 66,
+          "downbeatRate": 0.584070796460177,
+          "otherWholeBeatCount": 178,
+          "otherWholeBeatRate": 0.5250737463126843
+        },
+        "occupiedOnly": {
+          "downbeatContrastVsOtherBeats": -0.047463684031324505,
+          "downbeatMean": 2.1367287878787877,
+          "otherWholeBeatMean": 2.1841924719101122
+        },
+        "offsetSixteenthStepsFromCurrent": 0,
+        "zeroFilled": {
+          "downbeatContrastVsOtherBeats": 0.10113876106194697,
+          "downbeatMean": 1.2480008849557522,
+          "otherWholeBeatMean": 1.1468621238938053
+        }
+      },
+      {
+        "beatStepsModuloCurrentMeasure": [
+          4,
+          8,
+          12,
+          0
+        ],
+        "measureCount": 113,
+        "occupancy": {
+          "downbeatCount": 53,
+          "downbeatRate": 0.4690265486725664,
+          "otherWholeBeatCount": 191,
+          "otherWholeBeatRate": 0.5634218289085545
+        },
+        "occupiedOnly": {
+          "downbeatContrastVsOtherBeats": -0.16734894201323725,
+          "downbeatMean": 2.0403553773584906,
+          "otherWholeBeatMean": 2.207704319371728
+        },
+        "offsetSixteenthStepsFromCurrent": 4,
+        "zeroFilled": {
+          "downbeatContrastVsOtherBeats": -0.2868879646017698,
+          "downbeatMean": 0.9569808407079646,
+          "otherWholeBeatMean": 1.2438688053097344
+        }
+      },
+      {
+        "beatStepsModuloCurrentMeasure": [
+          8,
+          12,
+          0,
+          4
+        ],
+        "measureCount": 113,
+        "occupancy": {
+          "downbeatCount": 58,
+          "downbeatRate": 0.5132743362831859,
+          "otherWholeBeatCount": 186,
+          "otherWholeBeatRate": 0.5486725663716814
+        },
+        "occupiedOnly": {
+          "downbeatContrastVsOtherBeats": 0.48635331219873956,
+          "downbeatMean": 2.5420986724137933,
+          "otherWholeBeatMean": 2.0557453602150537
+        },
+        "offsetSixteenthStepsFromCurrent": 8,
+        "zeroFilled": {
+          "downbeatContrastVsOtherBeats": 0.17686292625368738,
+          "downbeatMean": 1.3047940088495575,
+          "otherWholeBeatMean": 1.1279310825958702
+        }
+      },
+      {
+        "beatStepsModuloCurrentMeasure": [
+          12,
+          0,
+          4,
+          8
+        ],
+        "measureCount": 113,
+        "occupancy": {
+          "downbeatCount": 67,
+          "downbeatRate": 0.5929203539823009,
+          "otherWholeBeatCount": 177,
+          "otherWholeBeatRate": 0.5221238938053098
+        },
+        "occupiedOnly": {
+          "downbeatContrastVsOtherBeats": -0.2525594765157264,
+          "downbeatMean": 1.9881448059701492,
+          "otherWholeBeatMean": 2.2407042824858756
+        },
+        "offsetSixteenthStepsFromCurrent": 12,
+        "zeroFilled": {
+          "downbeatContrastVsOtherBeats": 0.008886277286135558,
+          "downbeatMean": 1.1788115221238937,
+          "otherWholeBeatMean": 1.1699252448377582
+        }
+      }
+    ],
+    "startMeasure": 1,
+    "zeroFilledContrastDifferenceEightMinusZero": 0.07572416519174041,
+    "zeroFilledContrastRanking": [
+      8,
+      0,
+      12,
+      4
+    ],
+    "zeroFilledContrastWinnerOffset": 8
+  },
+  "invariants": {
+    "all725AttacksRead": true,
+    "attackGridMutated": false,
+    "eventsMutated": false,
+    "missingAttackSupportZeroFilled": true,
+    "phaseEdgeTruncation": false,
+    "pitchSelectionMutated": false,
+    "referenceConsulted": false,
+    "sameMeasureSetForAllPhases": true
+  },
+  "method": {
+    "edgeSafety": "all phase offsets are compared on the identical current-measure set; beat positions rotate modulo 16, so no leading/trailing attacks are discarded by phase",
+    "localStability": "non-overlapping 8-measure windows plus 16-measure windows with 8-measure stride; both stop at measure 112 so the single final measure cannot dominate a window vote",
+    "occupancyHandling": "missing attacks at a tested beat position contribute zero support; occupied-only means are reported separately",
+    "phaseSelectionPerformed": false,
+    "purpose": "test whether the apparent half-bar attack-accent preference survives edge-safe, occupancy-aware local analysis"
+  },
+  "modalUsed": false,
+  "mode": "v143-frozen-evidence-phase-stability-diagnostic",
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "protectedRuntimeModified": false,
+  "referenceFree": true,
+  "referenceRuntimeInputUsed": false,
+  "runtimeLabelsRequired": false,
+  "schemaVersion": 1,
+  "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "sourceRetiredEventSha256": "a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb",
+  "stablePhase8PhysicalAccentClue": false,
+  "tempoBpm": 129.19921875,
+  "windowVoteSummary": {
+    "eightMeasure": {
+      "overallPhaseWinnerOffsets": [
+        8,
+        8,
+        8,
+        8,
+        0,
+        8,
+        8,
+        8,
+        4,
+        12,
+        12,
+        12,
+        12,
+        12
+      ],
+      "phase0WinsVs8": 7,
+      "phase8OverallPhaseWinnerCount": 7,
+      "phase8Vs0ContrastDifference": {
+        "count": 14,
+        "max": 1.6930865000000002,
+        "mean": 0.08239790476190474,
+        "median": 0.11168149999999993,
+        "min": -1.3421088333333333,
+        "q25": -0.6852256666666667,
+        "q75": 0.9278439166666667
+      },
+      "phase8WinFractionVs0": 0.5,
+      "phase8WinsVs0": 7,
+      "ties": 0,
+      "windowCount": 14
+    },
+    "sixteenMeasure": {
+      "overallPhaseWinnerOffsets": [
+        8,
+        8,
+        8,
+        4,
+        0,
+        8,
+        8,
+        4,
+        4,
+        12,
+        12,
+        12,
+        12
+      ],
+      "phase0WinsVs8": 7,
+      "phase8OverallPhaseWinnerCount": 5,
+      "phase8Vs0ContrastDifference": {
+        "count": 13,
+        "max": 1.3807985,
+        "mean": 0.12791560897435897,
+        "median": -0.10653733333333348,
+        "min": -1.0055064999999999,
+        "q25": -0.5456810833333333,
+        "q75": 0.9009536666666667
+      },
+      "phase8WinFractionVs0": 0.46153846153846156,
+      "phase8WinsVs0": 6,
+      "ties": 0,
+      "windowCount": 13
+    }
+  },
+  "windows16MeasuresStride8": [
+    {
+      "endMeasure": 16,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 9,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 3,
+        "phase8WinFractionAllMeasures": 0.6875,
+        "phase8WinFractionNonTies": 0.7857142857142857,
+        "phase8Wins": 11,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 3.460281,
+          "mean": 0.6073153124999999,
+          "median": 0.3653899999999999,
+          "min": -2.465017,
+          "q25": 0.0,
+          "q75": 1.23925625
+        },
+        "ties": 2
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 11,
+            "downbeatRate": 0.6875,
+            "otherWholeBeatCount": 27,
+            "otherWholeBeatRate": 0.5625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.02688969360269322,
+            "downbeatMean": 2.1929375454545452,
+            "otherWholeBeatMean": 2.166047851851852
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.28924264583333326,
+            "downbeatMean": 1.5076445625,
+            "otherWholeBeatMean": 1.2184019166666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.3125,
+            "otherWholeBeatCount": 33,
+            "otherWholeBeatRate": 0.6875
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.6937764909090907,
+            "downbeatMean": 1.5713416,
+            "otherWholeBeatMean": 2.2651180909090907
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -1.0662244374999998,
+            "downbeatMean": 0.49104424999999996,
+            "otherWholeBeatMean": 1.5572686875
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 12,
+            "downbeatRate": 0.75,
+            "otherWholeBeatCount": 26,
+            "otherWholeBeatRate": 0.5416666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.9443216153846152,
+            "downbeatMean": 2.8199465,
+            "otherWholeBeatMean": 1.8756248846153847
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 1.098996395833333,
+            "downbeatMean": 2.114959875,
+            "otherWholeBeatMean": 1.0159634791666667
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 10,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 28,
+            "otherWholeBeatRate": 0.5833333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.6719337928571427,
+            "downbeatMean": 1.6787226,
+            "otherWholeBeatMean": 2.3506563928571427
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.3220146041666667,
+            "downbeatMean": 1.049201625,
+            "otherWholeBeatMean": 1.3712162291666667
+          }
+        }
+      ],
+      "startMeasure": 1,
+      "zeroFilledContrastDifferenceEightMinusZero": 0.8097537499999998,
+      "zeroFilledContrastRanking": [
+        8,
+        0,
+        12,
+        4
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 24,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 7,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 4,
+        "phase8WinFractionAllMeasures": 0.6875,
+        "phase8WinFractionNonTies": 0.7333333333333333,
+        "phase8Wins": 11,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 3.460281,
+          "mean": 0.6757152500000001,
+          "median": 0.8581690000000002,
+          "min": -2.607052,
+          "q25": -0.030538749999999948,
+          "q75": 1.8911465
+        },
+        "ties": 1
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 10,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 29,
+            "otherWholeBeatRate": 0.6041666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.1527814517241377,
+            "downbeatMean": 2.2419618999999997,
+            "otherWholeBeatMean": 2.089180448275862
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.13901300000000005,
+            "downbeatMean": 1.4012261875,
+            "otherWholeBeatMean": 1.2622131875
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 9,
+            "downbeatRate": 0.5625,
+            "otherWholeBeatCount": 30,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.8165422222222221,
+            "downbeatMean": 1.5002457777777778,
+            "otherWholeBeatMean": 2.316788
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.60410425,
+            "downbeatMean": 0.84388825,
+            "otherWholeBeatMean": 1.4479925
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 12,
+            "downbeatRate": 0.75,
+            "otherWholeBeatCount": 27,
+            "otherWholeBeatRate": 0.5625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.9257445462962963,
+            "downbeatMean": 2.76925525,
+            "otherWholeBeatMean": 1.8435107037037037
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 1.0399666666666667,
+            "downbeatMean": 2.0769414375,
+            "otherWholeBeatMean": 1.0369747708333332
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 8,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 31,
+            "otherWholeBeatRate": 0.6458333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.49911876612903217,
+            "downbeatMean": 1.73161975,
+            "otherWholeBeatMean": 2.230738516129032
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.5748754166666666,
+            "downbeatMean": 0.865809875,
+            "otherWholeBeatMean": 1.4406852916666666
+          }
+        }
+      ],
+      "startMeasure": 9,
+      "zeroFilledContrastDifferenceEightMinusZero": 0.9009536666666667,
+      "zeroFilledContrastRanking": [
+        8,
+        0,
+        12,
+        4
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 32,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 2,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 4,
+        "phase8WinFractionAllMeasures": 0.5,
+        "phase8WinFractionNonTies": 0.6666666666666666,
+        "phase8Wins": 8,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 3.281934,
+          "mean": 0.703794625,
+          "median": 0.4634530000000001,
+          "min": -2.768687,
+          "q25": -0.030538749999999948,
+          "q75": 2.53363275
+        },
+        "ties": 4
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.3125,
+            "otherWholeBeatCount": 25,
+            "otherWholeBeatRate": 0.5208333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.26784719999999984,
+            "downbeatMean": 2.3409956,
+            "otherWholeBeatMean": 2.0731484
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.3482036666666666,
+            "downbeatMean": 0.731561125,
+            "otherWholeBeatMean": 1.0797647916666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 9,
+            "downbeatRate": 0.5625,
+            "otherWholeBeatCount": 21,
+            "otherWholeBeatRate": 0.4375
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.5391549841269843,
+            "downbeatMean": 1.7403811111111112,
+            "otherWholeBeatMean": 2.2795360952380954
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.018332666666666664,
+            "downbeatMean": 0.978964375,
+            "otherWholeBeatMean": 0.9972970416666667
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 9,
+            "downbeatRate": 0.5625,
+            "otherWholeBeatCount": 21,
+            "otherWholeBeatRate": 0.4375
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.6199342222222222,
+            "downbeatMean": 2.5517435555555554,
+            "otherWholeBeatMean": 1.9318093333333333
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.5901891666666668,
+            "downbeatMean": 1.43535575,
+            "otherWholeBeatMean": 0.8451665833333333
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.4375,
+            "otherWholeBeatCount": 23,
+            "otherWholeBeatRate": 0.4791666666666667
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.3027837018633541,
+            "downbeatMean": 1.8856554285714286,
+            "otherWholeBeatMean": 2.1884391304347828
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.2236528333333333,
+            "downbeatMean": 0.82497425,
+            "otherWholeBeatMean": 1.0486270833333333
+          }
+        }
+      ],
+      "startMeasure": 17,
+      "zeroFilledContrastDifferenceEightMinusZero": 0.9383928333333333,
+      "zeroFilledContrastRanking": [
+        8,
+        4,
+        12,
+        0
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 40,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 3,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 6,
+        "phase8WinFractionAllMeasures": 0.375,
+        "phase8WinFractionNonTies": 0.5,
+        "phase8Wins": 6,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 3.281934,
+          "mean": 0.033508625,
+          "median": 0.0,
+          "min": -2.768687,
+          "q25": -1.48060975,
+          "q75": 1.04894125
+        },
+        "ties": 4
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 8,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 24,
+            "otherWholeBeatRate": 0.5
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.10896862499999971,
+            "downbeatMean": 2.036137,
+            "otherWholeBeatMean": 2.145105625
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.054484312499999854,
+            "downbeatMean": 1.0180685,
+            "otherWholeBeatMean": 1.0725528125
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 9,
+            "downbeatRate": 0.5625,
+            "otherWholeBeatCount": 23,
+            "otherWholeBeatRate": 0.4791666666666667
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.15488460386473424,
+            "downbeatMean": 2.2291867777777776,
+            "otherWholeBeatMean": 2.0743021739130434
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.25998110416666675,
+            "downbeatMean": 1.2539175625,
+            "otherWholeBeatMean": 0.9939364583333333
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.4375,
+            "otherWholeBeatCount": 25,
+            "otherWholeBeatRate": 0.5208333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.36574897714285726,
+            "downbeatMean": 2.403604857142857,
+            "otherWholeBeatMean": 2.03785588
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.009806145833333169,
+            "downbeatMean": 1.0515771250000001,
+            "otherWholeBeatMean": 1.0613832708333333
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 8,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 24,
+            "otherWholeBeatRate": 0.5
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.3913812916666668,
+            "downbeatMean": 1.8243274999999999,
+            "otherWholeBeatMean": 2.2157087916666667
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.1956906458333334,
+            "downbeatMean": 0.9121637499999999,
+            "otherWholeBeatMean": 1.1078543958333333
+          }
+        }
+      ],
+      "startMeasure": 25,
+      "zeroFilledContrastDifferenceEightMinusZero": 0.044678166666666685,
+      "zeroFilledContrastRanking": [
+        4,
+        8,
+        0,
+        12
+      ],
+      "zeroFilledContrastWinnerOffset": 4
+    },
+    {
+      "endMeasure": 48,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 6,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 6,
+        "phase8WinFractionAllMeasures": 0.4375,
+        "phase8WinFractionNonTies": 0.5384615384615384,
+        "phase8Wins": 7,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 3.394466,
+          "mean": -0.07990300000000004,
+          "median": 0.0,
+          "min": -2.296122,
+          "q25": -1.4234577499999999,
+          "q75": 0.6324619999999999
+        },
+        "ties": 3
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 11,
+            "downbeatRate": 0.6875,
+            "otherWholeBeatCount": 27,
+            "otherWholeBeatRate": 0.5625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.18529993602693606,
+            "downbeatMean": 1.9585135454545455,
+            "otherWholeBeatMean": 2.1438134814814815
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.14058297916666684,
+            "downbeatMean": 1.3464780625000001,
+            "otherWholeBeatMean": 1.2058950833333333
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 8,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 30,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.2334611999999998,
+            "downbeatMean": 2.2744855,
+            "otherWholeBeatMean": 2.0410243
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.1383974375000001,
+            "downbeatMean": 1.13724275,
+            "otherWholeBeatMean": 1.2756401875
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 8,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 30,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.5611030583333334,
+            "downbeatMean": 2.533150125,
+            "otherWholeBeatMean": 1.9720470666666667
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.03404564583333336,
+            "downbeatMean": 1.2665750625,
+            "otherWholeBeatMean": 1.2325294166666667
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 11,
+            "downbeatRate": 0.6875,
+            "otherWholeBeatCount": 27,
+            "otherWholeBeatRate": 0.5625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.45677219191919205,
+            "downbeatMean": 1.7656253636363637,
+            "otherWholeBeatMean": 2.2223975555555557
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.03623118749999987,
+            "downbeatMean": 1.2138674375,
+            "otherWholeBeatMean": 1.250098625
+          }
+        }
+      ],
+      "startMeasure": 33,
+      "zeroFilledContrastDifferenceEightMinusZero": -0.10653733333333348,
+      "zeroFilledContrastRanking": [
+        0,
+        8,
+        12,
+        4
+      ],
+      "zeroFilledContrastWinnerOffset": 0
+    },
+    {
+      "endMeasure": 56,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 5,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 3,
+        "phase8WinFractionAllMeasures": 0.6875,
+        "phase8WinFractionNonTies": 0.7857142857142857,
+        "phase8Wins": 11,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 3.394466,
+          "mean": 1.035598875,
+          "median": 1.1556164999999998,
+          "min": -1.731018,
+          "q25": 0.0,
+          "q75": 2.27264
+        },
+        "ties": 2
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 8,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 31,
+            "otherWholeBeatRate": 0.6458333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.4217918225806452,
+            "downbeatMean": 1.7057465,
+            "otherWholeBeatMean": 2.1275383225806452
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.5211619166666666,
+            "downbeatMean": 0.85287325,
+            "otherWholeBeatMean": 1.3740351666666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 9,
+            "downbeatRate": 0.5625,
+            "otherWholeBeatCount": 30,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.21049243333333334,
+            "downbeatMean": 1.8790996666666666,
+            "otherWholeBeatMean": 2.0895921
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.2490015000000001,
+            "downbeatMean": 1.0569935625,
+            "otherWholeBeatMean": 1.3059950625
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 11,
+            "downbeatRate": 0.6875,
+            "otherWholeBeatCount": 28,
+            "otherWholeBeatRate": 0.5833333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.9831504740259742,
+            "downbeatMean": 2.7468685454545456,
+            "otherWholeBeatMean": 1.7637180714285714
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.8596365833333335,
+            "downbeatMean": 1.888472125,
+            "otherWholeBeatMean": 1.0288355416666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 11,
+            "downbeatRate": 0.6875,
+            "otherWholeBeatCount": 28,
+            "otherWholeBeatRate": 0.5833333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.45900330194805217,
+            "downbeatMean": 1.711476090909091,
+            "otherWholeBeatMean": 2.170479392857143
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.08947316666666683,
+            "downbeatMean": 1.1766398125,
+            "otherWholeBeatMean": 1.2661129791666668
+          }
+        }
+      ],
+      "startMeasure": 41,
+      "zeroFilledContrastDifferenceEightMinusZero": 1.3807985,
+      "zeroFilledContrastRanking": [
+        8,
+        12,
+        4,
+        0
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 64,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 5,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 5,
+        "phase8WinFractionAllMeasures": 0.625,
+        "phase8WinFractionNonTies": 0.6666666666666666,
+        "phase8Wins": 10,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 2.958236,
+          "mean": 0.8011057500000001,
+          "median": 1.3342614999999998,
+          "min": -2.181895,
+          "q25": -1.22586975,
+          "q75": 2.3576544999999998
+        },
+        "ties": 1
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 9,
+            "downbeatRate": 0.5625,
+            "otherWholeBeatCount": 31,
+            "otherWholeBeatRate": 0.6458333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.3802169641577062,
+            "downbeatMean": 1.6707657777777778,
+            "otherWholeBeatMean": 2.050982741935484
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.3847872708333334,
+            "downbeatMean": 0.93980575,
+            "otherWholeBeatMean": 1.3245930208333334
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 11,
+            "downbeatRate": 0.6875,
+            "otherWholeBeatCount": 29,
+            "otherWholeBeatRate": 0.6041666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.21610948902821292,
+            "downbeatMean": 1.8087545454545455,
+            "otherWholeBeatMean": 2.0248640344827584
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.020163395833333375,
+            "downbeatMean": 1.24351875,
+            "otherWholeBeatMean": 1.2233553541666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 11,
+            "downbeatRate": 0.6875,
+            "otherWholeBeatCount": 29,
+            "otherWholeBeatRate": 0.6041666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.7817944608150471,
+            "downbeatMean": 2.532234909090909,
+            "otherWholeBeatMean": 1.750440448275862
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.6833537291666667,
+            "downbeatMean": 1.7409115,
+            "otherWholeBeatMean": 1.0575577708333332
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 9,
+            "downbeatRate": 0.5625,
+            "otherWholeBeatCount": 31,
+            "otherWholeBeatRate": 0.6458333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.2665697956989246,
+            "downbeatMean": 1.7588423333333334,
+            "otherWholeBeatMean": 2.025412129032258
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.31872985416666655,
+            "downbeatMean": 0.9893488125000001,
+            "otherWholeBeatMean": 1.3080786666666666
+          }
+        }
+      ],
+      "startMeasure": 49,
+      "zeroFilledContrastDifferenceEightMinusZero": 1.0681410000000002,
+      "zeroFilledContrastRanking": [
+        8,
+        4,
+        12,
+        0
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 72,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 4,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 5,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 7,
+        "phase8WinFractionAllMeasures": 0.375,
+        "phase8WinFractionNonTies": 0.46153846153846156,
+        "phase8Wins": 6,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 2.446762,
+          "mean": -0.0928015,
+          "median": 0.0,
+          "min": -2.181895,
+          "q25": -1.51008625,
+          "q75": 1.33302875
+        },
+        "ties": 3
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 10,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 24,
+            "otherWholeBeatRate": 0.5
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.2316782333333336,
+            "downbeatMean": 2.0902236,
+            "otherWholeBeatMean": 2.3219018333333334
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.14543883333333318,
+            "downbeatMean": 1.30638975,
+            "otherWholeBeatMean": 1.1609509166666667
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 9,
+            "downbeatRate": 0.5625,
+            "otherWholeBeatCount": 25,
+            "otherWholeBeatRate": 0.5208333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.2534331911111112,
+            "downbeatMean": 2.440109111111111,
+            "otherWholeBeatMean": 2.18667592
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.23366766666666683,
+            "downbeatMean": 1.372561375,
+            "otherWholeBeatMean": 1.1388937083333333
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 8,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 26,
+            "otherWholeBeatRate": 0.5416666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.2267738846153846,
+            "downbeatMean": 2.4271765,
+            "otherWholeBeatMean": 2.2004026153846152
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.021703499999999876,
+            "downbeatMean": 1.21358825,
+            "otherWholeBeatMean": 1.19188475
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.4375,
+            "otherWholeBeatCount": 27,
+            "otherWholeBeatRate": 0.5625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.25708285714285717,
+            "downbeatMean": 2.049607142857143,
+            "otherWholeBeatMean": 2.30669
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.4008100000000001,
+            "downbeatMean": 0.8967031249999999,
+            "otherWholeBeatMean": 1.297513125
+          }
+        }
+      ],
+      "startMeasure": 57,
+      "zeroFilledContrastDifferenceEightMinusZero": -0.12373533333333331,
+      "zeroFilledContrastRanking": [
+        4,
+        0,
+        8,
+        12
+      ],
+      "zeroFilledContrastWinnerOffset": 4
+    },
+    {
+      "endMeasure": 80,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 2,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 6,
+        "phase8WinFractionAllMeasures": 0.1875,
+        "phase8WinFractionNonTies": 0.3333333333333333,
+        "phase8Wins": 3,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 3.296719,
+          "mean": -0.43633299999999997,
+          "median": 0.0,
+          "min": -3.685955,
+          "q25": -1.76177425,
+          "q75": 0.0
+        },
+        "ties": 7
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.4375,
+            "otherWholeBeatCount": 17,
+            "otherWholeBeatRate": 0.3541666666666667
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.0424977478991595,
+            "downbeatMean": 2.517446571428571,
+            "otherWholeBeatMean": 2.4749488235294117
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.22483850000000005,
+            "downbeatMean": 1.101382875,
+            "otherWholeBeatMean": 0.876544375
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.4375,
+            "otherWholeBeatCount": 17,
+            "otherWholeBeatRate": 0.3541666666666667
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.09226769747899155,
+            "downbeatMean": 2.5527002857142858,
+            "otherWholeBeatMean": 2.460432588235294
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.24540316666666662,
+            "downbeatMean": 1.116806375,
+            "otherWholeBeatMean": 0.8714032083333333
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.25,
+            "otherWholeBeatCount": 20,
+            "otherWholeBeatRate": 0.4166666666666667
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.20742660000000024,
+            "downbeatMean": 2.6601995,
+            "otherWholeBeatMean": 2.4527729
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.3569388333333334,
+            "downbeatMean": 0.665049875,
+            "otherWholeBeatMean": 1.0219887083333334
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 6,
+            "downbeatRate": 0.375,
+            "otherWholeBeatCount": 18,
+            "otherWholeBeatRate": 0.375
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.3021408888888888,
+            "downbeatMean": 2.2607383333333333,
+            "otherWholeBeatMean": 2.562879222222222
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.11330283333333335,
+            "downbeatMean": 0.847776875,
+            "otherWholeBeatMean": 0.9610797083333333
+          }
+        }
+      ],
+      "startMeasure": 65,
+      "zeroFilledContrastDifferenceEightMinusZero": -0.5817773333333335,
+      "zeroFilledContrastRanking": [
+        4,
+        0,
+        12,
+        8
+      ],
+      "zeroFilledContrastWinnerOffset": 4
+    },
+    {
+      "endMeasure": 88,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 1,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 4,
+        "phase8WinFractionAllMeasures": 0.1875,
+        "phase8WinFractionNonTies": 0.42857142857142855,
+        "phase8Wins": 3,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 3.296719,
+          "mean": -0.2148636875,
+          "median": 0.0,
+          "min": -3.685955,
+          "q25": -0.37385175,
+          "q75": 0.0
+        },
+        "ties": 9
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.3125,
+            "otherWholeBeatCount": 15,
+            "otherWholeBeatRate": 0.3125
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.3713040000000003,
+            "downbeatMean": 2.5134362,
+            "otherWholeBeatMean": 2.1421322
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.11603249999999998,
+            "downbeatMean": 0.7854488125,
+            "otherWholeBeatMean": 0.6694163125
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.25,
+            "otherWholeBeatCount": 16,
+            "otherWholeBeatRate": 0.3333333333333333
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.3477843125000002,
+            "downbeatMean": 1.95673075,
+            "otherWholeBeatMean": 2.3045150625
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.278989,
+            "downbeatMean": 0.4891826875,
+            "otherWholeBeatMean": 0.7681716875
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 3,
+            "downbeatRate": 0.1875,
+            "otherWholeBeatCount": 17,
+            "otherWholeBeatRate": 0.3541666666666667
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.9507793725490199,
+            "downbeatMean": 3.043120666666667,
+            "otherWholeBeatMean": 2.092341294117647
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.17045241666666666,
+            "downbeatMean": 0.570585125,
+            "otherWholeBeatMean": 0.7410375416666667
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 8,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 12,
+            "otherWholeBeatRate": 0.25
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.5633265833333332,
+            "downbeatMean": 1.89696225,
+            "otherWholeBeatMean": 2.4602888333333333
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.3334089166666667,
+            "downbeatMean": 0.948481125,
+            "otherWholeBeatMean": 0.6150722083333333
+          }
+        }
+      ],
+      "startMeasure": 73,
+      "zeroFilledContrastDifferenceEightMinusZero": -0.28648491666666664,
+      "zeroFilledContrastRanking": [
+        12,
+        0,
+        8,
+        4
+      ],
+      "zeroFilledContrastWinnerOffset": 12
+    },
+    {
+      "endMeasure": 96,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 2,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 6,
+        "phase8WinFractionAllMeasures": 0.25,
+        "phase8WinFractionNonTies": 0.4,
+        "phase8Wins": 4,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 1.8952609999999996,
+          "mean": -0.4092608125,
+          "median": 0.0,
+          "min": -3.165395,
+          "q25": -1.60950325,
+          "q75": 0.143845
+        },
+        "ties": 6
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 8,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 20,
+            "otherWholeBeatRate": 0.4166666666666667
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.07559074999999993,
+            "downbeatMean": 2.0500355,
+            "otherWholeBeatMean": 2.12562625
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.13934014583333332,
+            "downbeatMean": 1.02501775,
+            "otherWholeBeatMean": 0.8856776041666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 6,
+            "downbeatRate": 0.375,
+            "otherWholeBeatCount": 22,
+            "otherWholeBeatRate": 0.4583333333333333
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.12067498484848516,
+            "downbeatMean": 2.0092128333333332,
+            "otherWholeBeatMean": 2.1298878181818184
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.2227437708333333,
+            "downbeatMean": 0.7534548125,
+            "otherWholeBeatMean": 0.9761985833333333
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.25,
+            "otherWholeBeatCount": 24,
+            "otherWholeBeatRate": 0.5
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.4188320000000001,
+            "downbeatMean": 2.46302775,
+            "otherWholeBeatMean": 2.04419575
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.4063409375,
+            "downbeatMean": 0.6157569375,
+            "otherWholeBeatMean": 1.022097875
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 10,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 18,
+            "otherWholeBeatRate": 0.375
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.0676903000000002,
+            "downbeatMean": 2.0605137,
+            "otherWholeBeatMean": 2.128204
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.4897445625,
+            "downbeatMean": 1.2878210625,
+            "otherWholeBeatMean": 0.7980765
+          }
+        }
+      ],
+      "startMeasure": 81,
+      "zeroFilledContrastDifferenceEightMinusZero": -0.5456810833333333,
+      "zeroFilledContrastRanking": [
+        12,
+        0,
+        4,
+        8
+      ],
+      "zeroFilledContrastWinnerOffset": 12
+    },
+    {
+      "endMeasure": 104,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 12,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 6,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 9,
+        "phase8WinFractionAllMeasures": 0.25,
+        "phase8WinFractionNonTies": 0.3076923076923077,
+        "phase8Wins": 4,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 1.881267,
+          "mean": -0.622569375,
+          "median": -0.3374480000000001,
+          "min": -3.165395,
+          "q25": -1.727223,
+          "q75": 0.03182400000000002
+        },
+        "ties": 3
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 12,
+            "downbeatRate": 0.75,
+            "otherWholeBeatCount": 26,
+            "otherWholeBeatRate": 0.5416666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.18000276282051275,
+            "downbeatMean": 1.8763210833333333,
+            "otherWholeBeatMean": 2.056323846153846
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.29339872916666665,
+            "downbeatMean": 1.4072408125,
+            "otherWholeBeatMean": 1.1138420833333333
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.4375,
+            "otherWholeBeatCount": 31,
+            "otherWholeBeatRate": 0.6458333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.09573024423963128,
+            "downbeatMean": 1.921385142857143,
+            "otherWholeBeatMean": 2.017115387096774
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.4621143541666667,
+            "downbeatMean": 0.8406060000000001,
+            "otherWholeBeatMean": 1.3027203541666668
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.4375,
+            "otherWholeBeatCount": 31,
+            "otherWholeBeatRate": 0.6458333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.2524501244239632,
+            "downbeatMean": 1.7935347142857143,
+            "otherWholeBeatMean": 2.0459848387096775
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.5366937708333334,
+            "downbeatMean": 0.7846714375,
+            "otherWholeBeatMean": 1.3213652083333334
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 12,
+            "downbeatRate": 0.75,
+            "otherWholeBeatCount": 26,
+            "otherWholeBeatRate": 0.5416666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.4221666730769229,
+            "downbeatMean": 2.2883317499999998,
+            "otherWholeBeatMean": 1.8661650769230769
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.7054093958333332,
+            "downbeatMean": 1.7162488125,
+            "otherWholeBeatMean": 1.0108394166666668
+          }
+        }
+      ],
+      "startMeasure": 89,
+      "zeroFilledContrastDifferenceEightMinusZero": -0.8300925,
+      "zeroFilledContrastRanking": [
+        12,
+        0,
+        4,
+        8
+      ],
+      "zeroFilledContrastWinnerOffset": 12
+    },
+    {
+      "endMeasure": 112,
+      "measureCount": 16,
+      "occupiedOnlyContrastWinnerOffset": 12,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 9,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 10,
+        "phase8WinFractionAllMeasures": 0.25,
+        "phase8WinFractionNonTies": 0.2857142857142857,
+        "phase8Wins": 4,
+        "supportDifferenceEightMinusZero": {
+          "count": 16,
+          "max": 0.497819,
+          "mean": -0.7541298750000001,
+          "median": -0.39771100000000004,
+          "min": -3.067276,
+          "q25": -1.43794175,
+          "q75": 0.03182400000000002
+        },
+        "ties": 2
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 14,
+            "downbeatRate": 0.875,
+            "otherWholeBeatCount": 29,
+            "otherWholeBeatRate": 0.6041666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.05631662561576345,
+            "downbeatMean": 2.1321468571428572,
+            "otherWholeBeatMean": 2.1884634827586207
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.5434318124999999,
+            "downbeatMean": 1.8656285,
+            "otherWholeBeatMean": 1.3221966875
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 6,
+            "downbeatRate": 0.375,
+            "otherWholeBeatCount": 37,
+            "otherWholeBeatRate": 0.7708333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.22026169369369386,
+            "downbeatMean": 1.9806003333333333,
+            "otherWholeBeatMean": 2.200862027027027
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.9537726875000001,
+            "downbeatMean": 0.742725125,
+            "otherWholeBeatMean": 1.6964978125
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 9,
+            "downbeatRate": 0.5625,
+            "otherWholeBeatCount": 34,
+            "otherWholeBeatRate": 0.7083333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.24551770915032667,
+            "downbeatMean": 1.9759975555555556,
+            "otherWholeBeatMean": 2.2215152647058822
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.4620746874999999,
+            "downbeatMean": 1.111498625,
+            "otherWholeBeatMean": 1.5735733125
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 16,
+          "occupancy": {
+            "downbeatCount": 14,
+            "downbeatRate": 0.875,
+            "otherWholeBeatCount": 29,
+            "otherWholeBeatRate": 0.6041666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.36180065270935957,
+            "downbeatMean": 2.4141329285714286,
+            "otherWholeBeatMean": 2.052332275862069
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.8724155624999999,
+            "downbeatMean": 2.1123663125,
+            "otherWholeBeatMean": 1.23995075
+          }
+        }
+      ],
+      "startMeasure": 97,
+      "zeroFilledContrastDifferenceEightMinusZero": -1.0055064999999999,
+      "zeroFilledContrastRanking": [
+        12,
+        0,
+        8,
+        4
+      ],
+      "zeroFilledContrastWinnerOffset": 12
+    }
+  ],
+  "windows8MeasuresNonOverlapping": [
+    {
+      "endMeasure": 8,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 4,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 2,
+        "phase8WinFractionAllMeasures": 0.5,
+        "phase8WinFractionNonTies": 0.6666666666666666,
+        "phase8Wins": 4,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 3.101374,
+          "mean": 0.24258324999999997,
+          "median": 0.007594000000000101,
+          "min": -1.524365,
+          "q25": -0.12700375000000008,
+          "q75": 0.237595
+        },
+        "ties": 2
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 11,
+            "otherWholeBeatRate": 0.4583333333333333
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.03727890909090936,
+            "downbeatMean": 2.127797,
+            "otherWholeBeatMean": 2.090518090909091
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.371719,
+            "downbeatMean": 1.329873125,
+            "otherWholeBeatMean": 0.958154125
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 1,
+            "downbeatRate": 0.125,
+            "otherWholeBeatCount": 15,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.7749074666666669,
+            "downbeatMean": 1.375692,
+            "otherWholeBeatMean": 2.150599466666667
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -1.1721631666666665,
+            "downbeatMean": 0.1719615,
+            "otherWholeBeatMean": 1.3441246666666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 11,
+            "otherWholeBeatRate": 0.4583333333333333
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.6018362909090911,
+            "downbeatMean": 2.5159302,
+            "otherWholeBeatMean": 1.914093909090909
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.6951633333333334,
+            "downbeatMean": 1.572456375,
+            "otherWholeBeatMean": 0.8772930416666667
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 11,
+            "otherWholeBeatRate": 0.4583333333333333
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.42777679999999996,
+            "downbeatMean": 1.8080711999999999,
+            "otherWholeBeatMean": 2.235848
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.10528083333333327,
+            "downbeatMean": 1.1300445,
+            "otherWholeBeatMean": 1.0247636666666666
+          }
+        }
+      ],
+      "startMeasure": 1,
+      "zeroFilledContrastDifferenceEightMinusZero": 0.32344433333333333,
+      "zeroFilledContrastRanking": [
+        8,
+        0,
+        12,
+        4
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 16,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 5,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 1,
+        "phase8WinFractionAllMeasures": 0.875,
+        "phase8WinFractionNonTies": 0.875,
+        "phase8Wins": 7,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 3.460281,
+          "mean": 0.972047375,
+          "median": 0.9932645000000001,
+          "min": -2.465017,
+          "q25": 0.4248259999999998,
+          "q75": 1.6988185
+        },
+        "ties": 0
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 6,
+            "downbeatRate": 0.75,
+            "otherWholeBeatCount": 16,
+            "otherWholeBeatRate": 0.6666666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.02924677083333327,
+            "downbeatMean": 2.247221333333333,
+            "otherWholeBeatMean": 2.2179745625
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.20676629166666682,
+            "downbeatMean": 1.685416,
+            "otherWholeBeatMean": 1.4786497083333332
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 18,
+            "otherWholeBeatRate": 0.75
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.7402962777777775,
+            "downbeatMean": 1.620254,
+            "otherWholeBeatMean": 2.3605502777777776
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.9602857083333332,
+            "downbeatMean": 0.810127,
+            "otherWholeBeatMean": 1.7704127083333332
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.875,
+            "otherWholeBeatCount": 15,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 1.1896867333333332,
+            "downbeatMean": 3.037101,
+            "otherWholeBeatMean": 1.8474142666666666
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 1.5028294583333333,
+            "downbeatMean": 2.657463375,
+            "otherWholeBeatMean": 1.1546339166666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 17,
+            "otherWholeBeatRate": 0.7083333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.8755701764705883,
+            "downbeatMean": 1.549374,
+            "otherWholeBeatMean": 2.4249441764705884
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.7493100416666667,
+            "downbeatMean": 0.9683587499999999,
+            "otherWholeBeatMean": 1.7176687916666666
+          }
+        }
+      ],
+      "startMeasure": 9,
+      "zeroFilledContrastDifferenceEightMinusZero": 1.2960631666666664,
+      "zeroFilledContrastRanking": [
+        8,
+        0,
+        12,
+        4
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 24,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 2,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 3,
+        "phase8WinFractionAllMeasures": 0.5,
+        "phase8WinFractionNonTies": 0.5714285714285714,
+        "phase8Wins": 4,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 2.954508,
+          "mean": 0.3793831250000001,
+          "median": 0.4634530000000001,
+          "min": -2.607052,
+          "q25": -0.6518612499999998,
+          "q75": 1.8911465
+        },
+        "ties": 1
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 13,
+            "otherWholeBeatRate": 0.5416666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.30340813461538474,
+            "downbeatMean": 2.23407275,
+            "otherWholeBeatMean": 1.9306646153846154
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.07125970833333328,
+            "downbeatMean": 1.117036375,
+            "otherWholeBeatMean": 1.0457766666666668
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 12,
+            "otherWholeBeatRate": 0.5
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.8469053833333333,
+            "downbeatMean": 1.4042392,
+            "otherWholeBeatMean": 2.2511445833333332
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.24792279166666664,
+            "downbeatMean": 0.8776495,
+            "otherWholeBeatMean": 1.1255722916666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 12,
+            "otherWholeBeatRate": 0.5
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.55563995,
+            "downbeatMean": 2.3942712,
+            "otherWholeBeatMean": 1.83863125
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.577103875,
+            "downbeatMean": 1.4964195,
+            "otherWholeBeatMean": 0.919315625
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 3,
+            "downbeatRate": 0.375,
+            "otherWholeBeatCount": 14,
+            "otherWholeBeatRate": 0.5833333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.04044530952380976,
+            "downbeatMean": 2.035362666666667,
+            "otherWholeBeatMean": 1.9949173571428571
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.4004407916666668,
+            "downbeatMean": 0.763261,
+            "otherWholeBeatMean": 1.1637017916666668
+          }
+        }
+      ],
+      "startMeasure": 17,
+      "zeroFilledContrastDifferenceEightMinusZero": 0.5058441666666668,
+      "zeroFilledContrastRanking": [
+        8,
+        0,
+        4,
+        12
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 32,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 0,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 1,
+        "phase8WinFractionAllMeasures": 0.5,
+        "phase8WinFractionNonTies": 0.8,
+        "phase8Wins": 4,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 3.281934,
+          "mean": 1.028206125,
+          "median": 1.2613205,
+          "min": -2.768687,
+          "q25": 0.0,
+          "q75": 2.58074425
+        },
+        "ties": 3
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 1,
+            "downbeatRate": 0.125,
+            "otherWholeBeatCount": 12,
+            "otherWholeBeatRate": 0.5
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.5411811666666666,
+            "downbeatMean": 2.768687,
+            "otherWholeBeatMean": 2.2275058333333333
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.7676670416666667,
+            "downbeatMean": 0.346085875,
+            "otherWholeBeatMean": 1.1137529166666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 9,
+            "otherWholeBeatRate": 0.375
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.1568329444444445,
+            "downbeatMean": 2.1605585,
+            "otherWholeBeatMean": 2.3173914444444446
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.21125745833333331,
+            "downbeatMean": 1.08027925,
+            "otherWholeBeatMean": 0.8690217916666667
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 9,
+            "otherWholeBeatRate": 0.375
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.6925372222222226,
+            "downbeatMean": 2.748584,
+            "otherWholeBeatMean": 2.0560467777777776
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.6032744583333334,
+            "downbeatMean": 1.374292,
+            "otherWholeBeatMean": 0.7710175416666667
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 9,
+            "otherWholeBeatRate": 0.375
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.7160979999999999,
+            "downbeatMean": 1.773375,
+            "otherWholeBeatMean": 2.489473
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.04686487500000003,
+            "downbeatMean": 0.8866875,
+            "otherWholeBeatMean": 0.933552375
+          }
+        }
+      ],
+      "startMeasure": 25,
+      "zeroFilledContrastDifferenceEightMinusZero": 1.3709415,
+      "zeroFilledContrastRanking": [
+        8,
+        4,
+        12,
+        0
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 40,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 4,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 3,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 5,
+        "phase8WinFractionAllMeasures": 0.25,
+        "phase8WinFractionNonTies": 0.2857142857142857,
+        "phase8Wins": 2,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 0.5577079999999999,
+          "mean": -0.961188875,
+          "median": -1.1615745,
+          "min": -2.296122,
+          "q25": -1.918936,
+          "q75": 0.09628550000000002
+        },
+        "ties": 1
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.875,
+            "otherWholeBeatCount": 12,
+            "otherWholeBeatRate": 0.5
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.13121841666666678,
+            "downbeatMean": 1.931487,
+            "otherWholeBeatMean": 2.0627054166666667
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.6586984166666667,
+            "downbeatMean": 1.690051125,
+            "otherWholeBeatMean": 1.0313527083333334
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 14,
+            "otherWholeBeatRate": 0.5833333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.3660589000000001,
+            "downbeatMean": 2.2840894,
+            "otherWholeBeatMean": 1.9180305
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.30870474999999997,
+            "downbeatMean": 1.427555875,
+            "otherWholeBeatMean": 1.118851125
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 3,
+            "downbeatRate": 0.375,
+            "otherWholeBeatCount": 16,
+            "otherWholeBeatRate": 0.6666666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.08399083333333324,
+            "downbeatMean": 1.9436326666666666,
+            "otherWholeBeatMean": 2.0276235
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.6228867500000002,
+            "downbeatMean": 0.7288622499999999,
+            "otherWholeBeatMean": 1.351749
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 15,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.17617026666666646,
+            "downbeatMean": 1.87528,
+            "otherWholeBeatMean": 2.0514502666666665
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.34451641666666655,
+            "downbeatMean": 0.93764,
+            "otherWholeBeatMean": 1.2821564166666666
+          }
+        }
+      ],
+      "startMeasure": 33,
+      "zeroFilledContrastDifferenceEightMinusZero": -1.2815851666666669,
+      "zeroFilledContrastRanking": [
+        0,
+        4,
+        12,
+        8
+      ],
+      "zeroFilledContrastWinnerOffset": 0
+    },
+    {
+      "endMeasure": 48,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 3,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 1,
+        "phase8WinFractionAllMeasures": 0.625,
+        "phase8WinFractionNonTies": 0.8333333333333334,
+        "phase8Wins": 5,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 3.394466,
+          "mean": 0.8013828749999999,
+          "median": 0.6636529999999998,
+          "min": -1.602719,
+          "q25": 0.0,
+          "q75": 1.5193994999999998
+        },
+        "ties": 2
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 15,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.20288993333333316,
+            "downbeatMean": 2.0058100000000003,
+            "otherWholeBeatMean": 2.2086999333333335
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.37753245833333327,
+            "downbeatMean": 1.0029050000000002,
+            "otherWholeBeatMean": 1.3804374583333334
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 3,
+            "downbeatRate": 0.375,
+            "otherWholeBeatCount": 16,
+            "otherWholeBeatRate": 0.6666666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.10983512500000003,
+            "downbeatMean": 2.258479,
+            "otherWholeBeatMean": 2.148643875
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.585499625,
+            "downbeatMean": 0.846929625,
+            "otherWholeBeatMean": 1.43242925
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 14,
+            "otherWholeBeatRate": 0.5833333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.9783294571428569,
+            "downbeatMean": 2.8868606,
+            "otherWholeBeatMean": 1.908531142857143
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.6909780416666667,
+            "downbeatMean": 1.804287875,
+            "otherWholeBeatMean": 1.1133098333333333
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.875,
+            "otherWholeBeatCount": 12,
+            "otherWholeBeatRate": 0.5
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.7331160952380951,
+            "downbeatMean": 1.7029655714285714,
+            "otherWholeBeatMean": 2.4360816666666665
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.2720540416666668,
+            "downbeatMean": 1.490094875,
+            "otherWholeBeatMean": 1.2180408333333332
+          }
+        }
+      ],
+      "startMeasure": 41,
+      "zeroFilledContrastDifferenceEightMinusZero": 1.0685105,
+      "zeroFilledContrastRanking": [
+        8,
+        12,
+        0,
+        4
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 56,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 2,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 2,
+        "phase8WinFractionAllMeasures": 0.75,
+        "phase8WinFractionNonTies": 0.75,
+        "phase8Wins": 6,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 2.958236,
+          "mean": 1.269814875,
+          "median": 1.9494730000000002,
+          "min": -1.731018,
+          "q25": 0.26358399999999993,
+          "q75": 2.8881257500000004
+        },
+        "ties": 0
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 16,
+            "otherWholeBeatRate": 0.6666666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.6457663124999999,
+            "downbeatMean": 1.405683,
+            "otherWholeBeatMean": 2.0514493125
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.664791375,
+            "downbeatMean": 0.7028415,
+            "otherWholeBeatMean": 1.367632875
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 6,
+            "downbeatRate": 0.75,
+            "otherWholeBeatCount": 14,
+            "otherWholeBeatRate": 0.5833333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.3326943571428571,
+            "downbeatMean": 1.68941,
+            "otherWholeBeatMean": 2.022104357142857
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.087496625,
+            "downbeatMean": 1.2670575,
+            "otherWholeBeatMean": 1.179560875
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 6,
+            "downbeatRate": 0.75,
+            "otherWholeBeatCount": 14,
+            "otherWholeBeatRate": 0.5833333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 1.0113035000000001,
+            "downbeatMean": 2.6302085,
+            "otherWholeBeatMean": 1.618905
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 1.028295125,
+            "downbeatMean": 1.9726563750000001,
+            "otherWholeBeatMean": 0.94436125
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 16,
+            "otherWholeBeatRate": 0.6666666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.24490818749999987,
+            "downbeatMean": 1.7263695000000001,
+            "otherWholeBeatMean": 1.9712776875
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.451000375,
+            "downbeatMean": 0.8631847500000001,
+            "otherWholeBeatMean": 1.314185125
+          }
+        }
+      ],
+      "startMeasure": 49,
+      "zeroFilledContrastDifferenceEightMinusZero": 1.6930865000000002,
+      "zeroFilledContrastRanking": [
+        8,
+        4,
+        12,
+        0
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 64,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 3,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 3,
+        "phase8WinFractionAllMeasures": 0.5,
+        "phase8WinFractionNonTies": 0.5714285714285714,
+        "phase8Wins": 4,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 2.446762,
+          "mean": 0.332396625,
+          "median": 0.665898,
+          "min": -2.181895,
+          "q25": -1.22586975,
+          "q75": 1.5845332499999998
+        },
+        "ties": 1
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 15,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.16765306666666646,
+            "downbeatMean": 1.882832,
+            "otherWholeBeatMean": 2.0504850666666665
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.10478316666666654,
+            "downbeatMean": 1.17677,
+            "otherWholeBeatMean": 1.2815531666666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 15,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.07547173333333346,
+            "downbeatMean": 1.951968,
+            "otherWholeBeatMean": 2.0274397333333334
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.047169833333333244,
+            "downbeatMean": 1.21998,
+            "otherWholeBeatMean": 1.2671498333333333
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 15,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.5414597333333333,
+            "downbeatMean": 2.4146666,
+            "otherWholeBeatMean": 1.8732068666666666
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.3384123333333333,
+            "downbeatMean": 1.509166625,
+            "otherWholeBeatMean": 1.1707542916666667
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 15,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.29833493333333316,
+            "downbeatMean": 1.7848206,
+            "otherWholeBeatMean": 2.083155533333333
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.1864593333333333,
+            "downbeatMean": 1.115512875,
+            "otherWholeBeatMean": 1.3019722083333334
+          }
+        }
+      ],
+      "startMeasure": 57,
+      "zeroFilledContrastDifferenceEightMinusZero": 0.44319549999999985,
+      "zeroFilledContrastRanking": [
+        8,
+        4,
+        0,
+        12
+      ],
+      "zeroFilledContrastWinnerOffset": 8
+    },
+    {
+      "endMeasure": 72,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 4,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 2,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 4,
+        "phase8WinFractionAllMeasures": 0.25,
+        "phase8WinFractionNonTies": 0.3333333333333333,
+        "phase8Wins": 2,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 1.863258,
+          "mean": -0.517999625,
+          "median": -0.49289800000000006,
+          "min": -2.042607,
+          "q25": -1.76177425,
+          "q75": 0.17415975
+        },
+        "ties": 2
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 9,
+            "otherWholeBeatRate": 0.375
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.47664791111111127,
+            "downbeatMean": 2.2976152,
+            "otherWholeBeatMean": 2.7742631111111113
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.39566083333333335,
+            "downbeatMean": 1.4360095,
+            "otherWholeBeatMean": 1.0403486666666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 10,
+            "otherWholeBeatRate": 0.4166666666666667
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.6247553000000003,
+            "downbeatMean": 3.0502855,
+            "otherWholeBeatMean": 2.4255302
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.5145051666666667,
+            "downbeatMean": 1.52514275,
+            "otherWholeBeatMean": 1.0106375833333334
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 3,
+            "downbeatRate": 0.375,
+            "otherWholeBeatCount": 11,
+            "otherWholeBeatRate": 0.4583333333333333
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.1985523030303029,
+            "downbeatMean": 2.4480263333333334,
+            "otherWholeBeatMean": 2.6465786363636363
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.29500533333333334,
+            "downbeatMean": 0.9180098750000001,
+            "otherWholeBeatMean": 1.2130152083333334
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 2,
+            "downbeatRate": 0.25,
+            "otherWholeBeatCount": 12,
+            "otherWholeBeatRate": 0.5
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.12546541666666666,
+            "downbeatMean": 2.7115735,
+            "otherWholeBeatMean": 2.5861080833333334
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.6151606666666667,
+            "downbeatMean": 0.677893375,
+            "otherWholeBeatMean": 1.2930540416666667
+          }
+        }
+      ],
+      "startMeasure": 65,
+      "zeroFilledContrastDifferenceEightMinusZero": -0.6906661666666667,
+      "zeroFilledContrastRanking": [
+        4,
+        0,
+        8,
+        12
+      ],
+      "zeroFilledContrastWinnerOffset": 4
+    },
+    {
+      "endMeasure": 80,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 0,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 2,
+        "phase8WinFractionAllMeasures": 0.125,
+        "phase8WinFractionNonTies": 0.3333333333333333,
+        "phase8Wins": 1,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 3.296719,
+          "mean": -0.354666375,
+          "median": 0.0,
+          "min": -3.685955,
+          "q25": -0.61202375,
+          "q75": 0.0
+        },
+        "ties": 5
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 2,
+            "downbeatRate": 0.25,
+            "otherWholeBeatCount": 8,
+            "otherWholeBeatRate": 0.3333333333333333
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.9288047500000003,
+            "downbeatMean": 3.067025,
+            "otherWholeBeatMean": 2.13822025
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.05401616666666664,
+            "downbeatMean": 0.76675625,
+            "otherWholeBeatMean": 0.7127400833333334
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 3,
+            "downbeatRate": 0.375,
+            "otherWholeBeatCount": 7,
+            "otherWholeBeatRate": 0.2916666666666667
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.6210398095238097,
+            "downbeatMean": 1.8892533333333332,
+            "otherWholeBeatMean": 2.510293142857143
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.023698833333333447,
+            "downbeatMean": 0.7084699999999999,
+            "otherWholeBeatMean": 0.7321688333333334
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 1,
+            "downbeatRate": 0.125,
+            "otherWholeBeatCount": 9,
+            "otherWholeBeatRate": 0.375
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 1.0808197777777777,
+            "downbeatMean": 3.296719,
+            "otherWholeBeatMean": 2.2158992222222222
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.41887233333333335,
+            "downbeatMean": 0.412089875,
+            "otherWholeBeatMean": 0.8309622083333333
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 6,
+            "otherWholeBeatRate": 0.25
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.48110074999999997,
+            "downbeatMean": 2.03532075,
+            "otherWholeBeatMean": 2.5164215
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.388555,
+            "downbeatMean": 1.017660375,
+            "otherWholeBeatMean": 0.629105375
+          }
+        }
+      ],
+      "startMeasure": 73,
+      "zeroFilledContrastDifferenceEightMinusZero": -0.4728885,
+      "zeroFilledContrastRanking": [
+        12,
+        0,
+        4,
+        8
+      ],
+      "zeroFilledContrastWinnerOffset": 12
+    },
+    {
+      "endMeasure": 88,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 8,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 1,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 2,
+        "phase8WinFractionAllMeasures": 0.25,
+        "phase8WinFractionNonTies": 0.5,
+        "phase8Wins": 2,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 1.8952609999999996,
+          "mean": -0.07506100000000004,
+          "median": 0.0,
+          "min": -2.788431,
+          "q25": -0.37385175,
+          "q75": 0.44702225
+        },
+        "ties": 4
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 3,
+            "downbeatRate": 0.375,
+            "otherWholeBeatCount": 7,
+            "otherWholeBeatRate": 0.2916666666666667
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.0022259999999998392,
+            "downbeatMean": 2.144377,
+            "otherWholeBeatMean": 2.146603
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.17804883333333343,
+            "downbeatMean": 0.804141375,
+            "otherWholeBeatMean": 0.6260925416666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 1,
+            "downbeatRate": 0.125,
+            "otherWholeBeatCount": 9,
+            "otherWholeBeatRate": 0.375
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.014697555555555297,
+            "downbeatMean": 2.159163,
+            "otherWholeBeatMean": 2.1444654444444446
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.5342791666666666,
+            "downbeatMean": 0.269895375,
+            "otherWholeBeatMean": 0.8041745416666667
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 2,
+            "downbeatRate": 0.25,
+            "otherWholeBeatCount": 8,
+            "otherWholeBeatRate": 0.3333333333333333
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.962982875,
+            "downbeatMean": 2.9163215,
+            "otherWholeBeatMean": 1.953338625
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.07796749999999997,
+            "downbeatMean": 0.729080375,
+            "otherWholeBeatMean": 0.651112875
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 6,
+            "otherWholeBeatRate": 0.25
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.6455524166666666,
+            "downbeatMean": 1.75860375,
+            "otherWholeBeatMean": 2.4041561666666666
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.27826283333333335,
+            "downbeatMean": 0.879301875,
+            "otherWholeBeatMean": 0.6010390416666667
+          }
+        }
+      ],
+      "startMeasure": 81,
+      "zeroFilledContrastDifferenceEightMinusZero": -0.10008133333333347,
+      "zeroFilledContrastRanking": [
+        12,
+        0,
+        8,
+        4
+      ],
+      "zeroFilledContrastWinnerOffset": 12
+    },
+    {
+      "endMeasure": 96,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 12,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 1,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 4,
+        "phase8WinFractionAllMeasures": 0.25,
+        "phase8WinFractionNonTies": 0.3333333333333333,
+        "phase8Wins": 2,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 1.881267,
+          "mean": -0.743460625,
+          "median": -0.659595,
+          "min": -3.165395,
+          "q25": -1.95583275,
+          "q75": 0.143845
+        },
+        "ties": 2
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 13,
+            "otherWholeBeatRate": 0.5416666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.12090047692307682,
+            "downbeatMean": 1.9934306,
+            "otherWholeBeatMean": 2.1143310769230768
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.1006314583333332,
+            "downbeatMean": 1.245894125,
+            "otherWholeBeatMean": 1.1452626666666668
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 13,
+            "otherWholeBeatRate": 0.5416666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.14057281538461552,
+            "downbeatMean": 1.9792228,
+            "otherWholeBeatMean": 2.1197956153846156
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.08879162500000004,
+            "downbeatMean": 1.23701425,
+            "otherWholeBeatMean": 1.148222625
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 2,
+            "downbeatRate": 0.25,
+            "otherWholeBeatCount": 16,
+            "otherWholeBeatRate": 0.6666666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.0798903124999999,
+            "downbeatMean": 2.009734,
+            "otherWholeBeatMean": 2.0896243125
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.890649375,
+            "downbeatMean": 0.5024335,
+            "otherWholeBeatMean": 1.393082875
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 6,
+            "downbeatRate": 0.75,
+            "otherWholeBeatCount": 12,
+            "otherWholeBeatRate": 0.5
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.27155908333333323,
+            "downbeatMean": 2.261787,
+            "otherWholeBeatMean": 1.9902279166666668
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.7012262916666666,
+            "downbeatMean": 1.69634025,
+            "otherWholeBeatMean": 0.9951139583333334
+          }
+        }
+      ],
+      "startMeasure": 89,
+      "zeroFilledContrastDifferenceEightMinusZero": -0.9912808333333332,
+      "zeroFilledContrastRanking": [
+        12,
+        0,
+        4,
+        8
+      ],
+      "zeroFilledContrastWinnerOffset": 12
+    },
+    {
+      "endMeasure": 104,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 12,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 5,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 5,
+        "phase8WinFractionAllMeasures": 0.25,
+        "phase8WinFractionNonTies": 0.2857142857142857,
+        "phase8Wins": 2,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 0.497819,
+          "mean": -0.501678125,
+          "median": -0.3374480000000001,
+          "min": -1.868814,
+          "q25": -0.7311095,
+          "q75": 0.03182400000000002
+        },
+        "ties": 1
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.875,
+            "otherWholeBeatCount": 13,
+            "otherWholeBeatRate": 0.5416666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.205645186813187,
+            "downbeatMean": 1.7926714285714285,
+            "otherWholeBeatMean": 1.9983166153846155
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.4861660000000001,
+            "downbeatMean": 1.5685875,
+            "otherWholeBeatMean": 1.0824215
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 2,
+            "downbeatRate": 0.25,
+            "otherWholeBeatCount": 18,
+            "otherWholeBeatRate": 0.75
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.16616644444444417,
+            "downbeatMean": 1.7767910000000002,
+            "otherWholeBeatMean": 1.9429574444444444
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -1.0130203333333332,
+            "downbeatMean": 0.44419775000000006,
+            "otherWholeBeatMean": 1.4572180833333332
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 5,
+            "downbeatRate": 0.625,
+            "otherWholeBeatCount": 15,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.29238106666666663,
+            "downbeatMean": 1.707055,
+            "otherWholeBeatMean": 1.9994360666666666
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.18273816666666653,
+            "downbeatMean": 1.066909375,
+            "otherWholeBeatMean": 1.2496475416666666
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 6,
+            "downbeatRate": 0.75,
+            "otherWholeBeatCount": 14,
+            "otherWholeBeatRate": 0.5833333333333334
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.555051,
+            "downbeatMean": 2.3148765,
+            "otherWholeBeatMean": 1.7598255
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.7095924999999998,
+            "downbeatMean": 1.736157375,
+            "otherWholeBeatMean": 1.026564875
+          }
+        }
+      ],
+      "startMeasure": 97,
+      "zeroFilledContrastDifferenceEightMinusZero": -0.6689041666666666,
+      "zeroFilledContrastRanking": [
+        12,
+        0,
+        8,
+        4
+      ],
+      "zeroFilledContrastWinnerOffset": 12
+    },
+    {
+      "endMeasure": 112,
+      "measureCount": 8,
+      "occupiedOnlyContrastWinnerOffset": 12,
+      "pairedEightVsZero": {
+        "bothPositionsOccupiedCount": 4,
+        "definition": "paired within-current-measure zero-filled primary attack support at step 8 minus step 0",
+        "phase0Wins": 5,
+        "phase8WinFractionAllMeasures": 0.25,
+        "phase8WinFractionNonTies": 0.2857142857142857,
+        "phase8Wins": 2,
+        "supportDifferenceEightMinusZero": {
+          "count": 8,
+          "max": 0.4039999999999997,
+          "mean": -1.006581625,
+          "median": -0.7451479999999997,
+          "min": -3.067276,
+          "q25": -1.7062145000000002,
+          "q75": 0.05282074999999997
+        },
+        "ties": 1
+      },
+      "phases": [
+        {
+          "beatStepsModuloCurrentMeasure": [
+            0,
+            4,
+            8,
+            12
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 7,
+            "downbeatRate": 0.875,
+            "otherWholeBeatCount": 16,
+            "otherWholeBeatRate": 0.6666666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.12866447321428565,
+            "downbeatMean": 2.4716222857142855,
+            "otherWholeBeatMean": 2.3429578125
+          },
+          "offsetSixteenthStepsFromCurrent": 0,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 0.6006976249999998,
+            "downbeatMean": 2.1626695,
+            "otherWholeBeatMean": 1.561971875
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            4,
+            8,
+            12,
+            0
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 19,
+            "otherWholeBeatRate": 0.7916666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.36268768421052666,
+            "downbeatMean": 2.082505,
+            "otherWholeBeatMean": 2.4451926842105265
+          },
+          "offsetSixteenthStepsFromCurrent": 4,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.8945250416666668,
+            "downbeatMean": 1.0412525,
+            "otherWholeBeatMean": 1.9357775416666667
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            8,
+            12,
+            0,
+            4
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 4,
+            "downbeatRate": 0.5,
+            "otherWholeBeatCount": 19,
+            "otherWholeBeatRate": 0.7916666666666666
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": -0.08466519736842137,
+            "downbeatMean": 2.3121757499999998,
+            "otherWholeBeatMean": 2.396840947368421
+          },
+          "offsetSixteenthStepsFromCurrent": 8,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": -0.7414112083333335,
+            "downbeatMean": 1.1560878749999999,
+            "otherWholeBeatMean": 1.8974990833333334
+          }
+        },
+        {
+          "beatStepsModuloCurrentMeasure": [
+            12,
+            0,
+            4,
+            8
+          ],
+          "measureCount": 8,
+          "occupancy": {
+            "downbeatCount": 8,
+            "downbeatRate": 1.0,
+            "otherWholeBeatCount": 15,
+            "otherWholeBeatRate": 0.625
+          },
+          "occupiedOnly": {
+            "downbeatContrastVsOtherBeats": 0.16323665000000043,
+            "downbeatMean": 2.4885752500000002,
+            "otherWholeBeatMean": 2.3253386
+          },
+          "offsetSixteenthStepsFromCurrent": 12,
+          "zeroFilled": {
+            "downbeatContrastVsOtherBeats": 1.0352386250000003,
+            "downbeatMean": 2.4885752500000002,
+            "otherWholeBeatMean": 1.453336625
+          }
+        }
+      ],
+      "startMeasure": 105,
+      "zeroFilledContrastDifferenceEightMinusZero": -1.3421088333333333,
+      "zeroFilledContrastRanking": [
+        12,
+        0,
+        8,
+        4
+      ],
+      "zeroFilledContrastWinnerOffset": 12
+    }
+  ]
+}
