@@ -6,9 +6,6 @@ import subprocess
 import numpy as np
 
 from v143_post_repair_bar_phase_shadow import assess_post_repair_bar_phase_from_samples
-from v143_reference_free_bar_phase_consensus import (
-    estimate_reference_free_bar_phase_consensus_from_samples,
-)
 from v143_reference_free_beat_grid_repair import repair_reference_free_beat_grid_from_samples
 from v143_reference_free_timing import ReferenceFreeTimingEstimate
 
@@ -59,8 +56,8 @@ def _corrupted_index_fixture(sample_rate: int = 22050):
         )
 
     # One false sub-beat early in the sequence shifts raw sequence_index % 4 for
-    # most later physical beats. This is exactly the class of defect that makes
-    # a phase inferred on a malformed pulse list unsafe to inherit after repair.
+    # every later physical beat. The test encodes only that generic indexing
+    # corruption; the post-repair recovery itself must still come from audio.
     raw_beats = list(true_beats)
     raw_beats.append(true_beats[8] + 0.25)
     raw_beats.sort()
@@ -70,20 +67,24 @@ def _corrupted_index_fixture(sample_rate: int = 22050):
 def main() -> int:
     audio, sample_rate, true_beats, raw_beats = _corrupted_index_fixture()
 
-    raw_phase = estimate_reference_free_bar_phase_consensus_from_samples(
-        audio,
-        sample_rate,
-        raw_beats,
-    )
-    assert raw_phase.winner_downbeat_index_mod4 != 0, raw_phase.diagnostics()
+    # Before the false pulse, physical downbeats are raw residue 0. After one
+    # insertion, all later physical downbeats become raw residue 1. This proves
+    # that a phase tied to raw list indices can become stale when repair removes
+    # an inserted pulse, without relying on any song or reference labels.
+    pre_insert_downbeats = [true_beats[index] for index in range(0, 9, 4)]
+    post_insert_downbeats = [true_beats[index] for index in range(12, 64, 4)]
+    assert {raw_beats.index(value) % 4 for value in pre_insert_downbeats} == {0}
+    assert {raw_beats.index(value) % 4 for value in post_insert_downbeats} == {1}
 
+    inherited_phase = 1
+    inherited_first = (-inherited_phase) % 4
     timing = ReferenceFreeTimingEstimate(
         beat_times=tuple(raw_beats),
-        first_beat_in_measure=int(raw_phase.winner_first_beat_in_measure),
-        downbeat_index_mod4=int(raw_phase.winner_downbeat_index_mod4),
+        first_beat_in_measure=inherited_first,
+        downbeat_index_mod4=inherited_phase,
         tempo_bpm=120.0,
         beat_confidence=0.9,
-        bar_confidence=float(raw_phase.confidence),
+        bar_confidence=0.2,
         source_sample_rate=sample_rate,
     )
     repaired = repair_reference_free_beat_grid_from_samples(
@@ -93,8 +94,8 @@ def main() -> int:
     )
     repair_diag = repaired.diagnostics()
     assert repaired.repaired_interval_outlier_count == 0, repair_diag
-    assert repaired.timing.downbeat_index_mod4 == raw_phase.winner_downbeat_index_mod4
-    assert repaired.timing.first_beat_in_measure == raw_phase.winner_first_beat_in_measure
+    assert repaired.timing.downbeat_index_mod4 == inherited_phase
+    assert repaired.timing.first_beat_in_measure == inherited_first
     assert len(repaired.repaired_beat_times) >= len(true_beats) - 1, repair_diag
     assert max(
         abs(float(repaired_time) - float(true_time))
@@ -125,7 +126,7 @@ def main() -> int:
 
     print("V143 post-repair bar phase synthetic shadow: PASS")
     print({
-        "rawPhase": raw_phase.diagnostics(),
+        "inheritedPhase": inherited_phase,
         "repair": repair_diag,
         "postRepairPhase": diag,
         "protectedPipelineBlob": protected,
