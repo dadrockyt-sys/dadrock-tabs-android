@@ -2,6 +2,19 @@ name: V143 Repaired Timing Precision Candidate Product
 
 on:
   workflow_dispatch:
+    inputs:
+      paid_capture_authorized:
+        description: 'Explicitly authorize one Modal/L4 carrier capture'
+        required: true
+        default: 'NO'
+        type: choice
+        options:
+          - 'NO'
+          - 'YES'
+
+concurrency:
+  group: v143-precision-v2-paid-capture
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -20,6 +33,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Explicit paid-capture authorization and one-shot lock gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          test '${{ inputs.paid_capture_authorized }}' = 'YES'
+          lock='debug/v143-contextual-prune/precision-v2-capture-lock.json'
+          if test -f "$lock"; then
+            echo 'A successful precision-v2 paid capture is already locked. Refusing another Modal run.' >&2
+            cat "$lock" >&2
+            exit 1
+          fi
       - name: Safety and anti-leakage gate
         shell: bash
         run: |
@@ -56,7 +80,7 @@ jobs:
             echo 'Forbidden scorer/source token in candidate product path' >&2
             exit 1
           fi
-      - name: Run approved-audio candidate product
+      - name: Run exactly one approved-audio candidate capture
         shell: bash
         run: |
           set -euo pipefail
@@ -209,16 +233,49 @@ jobs:
           python analyzer/v143_precision_replay_policy_compare.py \
             --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
             --output debug/v143-contextual-prune/precision-v2-replay-policy-compare.json
+      - name: Create one-shot capture lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          product = json.loads(Path('debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json').read_text())
+          trace = product.get('preFreezeTrace') or {}
+          candidate = product.get('candidate') or {}
+          policy = product.get('precisionPolicy') or {}
+          if trace.get('passed') is not True:
+              raise SystemExit('cannot lock a failed capture')
+          lock = {
+              'schemaVersion': 1,
+              'locked': True,
+              'singlePaidCaptureConsumed': True,
+              'runId': int(trace['runId']),
+              'triggerSha': str(trace['triggerSha']),
+              'approvedAudioSha256': str(candidate['sourceSha256']),
+              'policy': str(policy['name']),
+              'eventsSha256': str(trace['eventsSha256']),
+              'replayEvidenceSha256': str(trace['replayEvidenceSha256']),
+              'replayAttackCount': int(trace['replayAttackCount']),
+              'replayOriginalPitchHypothesisCount': int(trace['replayOriginalPitchHypothesisCount']),
+              'professionalReferenceUsed': False,
+              'productionModified': False,
+          }
+          Path('debug/v143-contextual-prune/precision-v2-capture-lock.json').write_text(
+              json.dumps(lock, indent=2, sort_keys=True) + '\n'
+          )
+          PY
       - name: Commit pre-freeze candidate diagnostic
         shell: bash
         run: |
           set -euo pipefail
           git add \
             debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
-            debug/v143-contextual-prune/precision-v2-replay-policy-compare.json
+            debug/v143-contextual-prune/precision-v2-replay-policy-compare.json \
+            debug/v143-contextual-prune/precision-v2-capture-lock.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record repaired-timing precision v2 candidate product with replay evidence'
+          git commit -m 'Record single repaired-timing precision v2 capture with replay evidence'
           for attempt in 1 2 3 4; do
             git fetch origin v143-contextual-prune-lobo
             git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
