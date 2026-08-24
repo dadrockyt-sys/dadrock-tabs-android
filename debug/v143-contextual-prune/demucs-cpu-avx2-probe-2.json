@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-demucs-cpu-host-probe",
+  "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "normalizedWavSha256": "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+  "directGuitarSha256": "4b4ff912dd17b921228eaf6b6217f3fe763e111c31a6633c49ff43e00a827705",
+  "directPcmInt16Sha256": "39e8edfa23a7d902ead4c4198e9c7301cb57227da83fc7076ff155186061daa3",
+  "directBytes": 37298220,
+  "sampleRate": 44100,
+  "pcmFrames": 9324544,
+  "pcmChannels": 2,
+  "demucsShiftTrace": [
+    "0,22050,6026"
+  ],
+  "expectedSeed143FirstShift": 6026,
+  "host": {
+    "platform": "Linux-4.19.0-gvisor-x86_64-with-glibc2.36",
+    "machine": "x86_64",
+    "processor": "",
+    "cpuModelName": "unknown",
+    "cpuFlags": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm pni pclmulqdq monitor ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx avx512f avx512dq rdseed adx smap clwb avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves pku ospke avx512_vnni",
+    "lscpu": "Architecture:        x86_64\nCPU op-mode(s):      32-bit, 64-bit\nAddress sizes:       46 bits physical, 48 bits virtual\nByte Order:          Little Endian\nCPU(s):              17\nOn-line CPU(s) list: 0-16\nVendor ID:           GenuineIntel\nModel name:          unknown\nCPU family:          6\nModel:               85\nThread(s) per core:  1\nCore(s) per socket:  17\nSocket(s):           1\nStepping:            unknown\nBogoMIPS:            3097.66\nFlags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm pni pclmulqdq monitor ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx avx512f avx512dq rdseed adx smap clwb avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves pku ospke avx512_vnni\n",
+    "affinityCpuCount": 17,
+    "osCpuCount": 17,
+    "torchVersion": "2.13.0+cu130",
+    "torchCudaAvailable": false,
+    "torchConfig": "PyTorch built with:\n  - GCC 13.3\n  - C++ Version: 202002\n  - Intel(R) oneAPI Math Kernel Library Version 2024.2-Product Build 20240605 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\n  - OpenMP 201511 (a.k.a. OpenMP 4.5)\n  - LAPACK is enabled (usually provided by MKL)\n  - NNPACK is enabled\n  - CPU capability usage: AVX512\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=cf30153c4c131c8164ee7798e5022d810682e2cb, CUDA_FLAGS= -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS -Xfatbin -compress-all -DONNX_NAMESPACE=onnx_torch -gencode arch=compute_75,code=sm_75 -gencode arch=compute_80,code=sm_80 -gencode arch=compute_86,code=sm_86 -gencode arch=compute_90,code=sm_90 -gencode arch=compute_100,code=sm_100 -gencode arch=compute_120,code=sm_120 -Xcudafe --diag_suppress=cc_clobber_ignored,--diag_suppress=field_without_dll_interface,--diag_suppress=base_class_has_different_dll_interface,--diag_suppress=dll_interface_conflict_none_assumed,--diag_suppress=dll_interface_conflict_dllexport_assumed,--diag_suppress=bad_friend_decl --expt-relaxed-constexpr --expt-extended-lambda -Xfatbin -compress-all --threads 2 -compress-mode=size -Wno-deprecated-gpu-targets --expt-extended-lambda -DCUB_WRAPPED_NAMESPACE=at_cuda_detail -DDISABLE_CUSPARSE_DEPRECATED -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -DC10_NODEPRECATED, CUDA_VERSION=13.0, CUDNN_VERSION=9.20.0, CXX_COMPILER=/opt/rh/gcc-toolset-13/root/usr/bin/c++, CXX_FLAGS= -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DHAS_CUPTI -DUSE_FBGEMM -DUSE_MSLK -DUSE_PYTORCH_QNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -DC10_NODEPRECATED -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=range-loop-construct -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-unknown-pragmas -Wno-unused-parameter -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=old-style-cast -faligned-new -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-dangling-reference -Wno-error=dangling-reference -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.13.0, USE_CUDA=1, USE_CUDNN=ON, USE_CUSPARSELT=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n",
+    "mkldnnAvailable": true,
+    "mkldnnEnabled": true
+  },
+  "settings": {
+    "demucsSingleStem": "Guitar",
+    "demucsShifts": 1,
+    "demucsOverlap": 0.1,
+    "demucsSegmentSize": 6,
+    "demucsExecutionDevice": "cpu",
+    "demucsCpuThreads": 1,
+    "modalGpuRequested": false,
+    "deterministicSeed": 143,
+    "atenCpuCapability": "avx2",
+    "mklCbwr": "COMPATIBLE",
+    "mklDynamic": "FALSE",
+    "ompDynamic": "FALSE",
+    "oneDnnMaxCpuIsa": "AVX2",
+    "dnnlMaxCpuIsa": "AVX2"
+  },
+  "invariants": {
+    "approvedFixture": true,
+    "referenceFree": true,
+    "modalGpuRequested": false,
+    "productionModified": false,
+    "protectedPipelineModified": false
+  }
+}
