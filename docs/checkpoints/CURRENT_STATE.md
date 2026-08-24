@@ -28,7 +28,7 @@ Approved fixture:
 - `public/gomywayfullaitest.m4a`
 - SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
 
-All current scorer diagnostics prove protected pipeline unchanged and Production modified false.
+All current scorer/shadow diagnostics prove protected pipeline unchanged and Production modified false.
 
 ## Historical scored freeze — never rescore
 
@@ -152,32 +152,58 @@ Use the score only to quantify broad failure classes, never to derive song-speci
 Confirmed general classes on the corrected candidate:
 
 1. **Attack over-selection**
-   - corrected candidate has 979 attack locations versus a much sparser human performance structure.
-   - coverage is now complete, so the prior whole-measure-loss problem was fixed, but rescue/retention is too permissive.
-
+   - corrected candidate has 979 attack locations and complete coverage; rescue/retention is too permissive.
 2. **Polyphony / harmonic inflation remains severe**
-   - 2,009 generated notes from 979 attacks.
-   - only 207 generated/reference notes can be grossly paired by same-measure/same-MIDI within ±2 steps under the scorer.
-   - chord pitch-set and exact voicing are effectively zero.
-
+   - 2,009 generated notes from 979 attacks; chord pitch-set and exact voicing effectively zero.
 3. **Pitch/position/timing mismatch remains severe**
-   - pitch content ~0.246
-   - tolerant timing ~0.071
-   - string/fret timing ~0.026.
-
+   - pitch content ~0.246; tolerant timing ~0.071; string/fret timing ~0.026.
 4. **Measure coverage is fixed**
    - all source measures covered; no missing reference measures.
 
+## New isolated general/reference-free precision shadow
+
+Implemented after the failed corrected-candidate holdout, without reopening/using the human reference in runtime:
+- `analyzer/v143_contextual_prune_precision_shadow.py`
+- creation commit `818a6409f39a7efec5a286636e8b806e31277a0e`
+- `analyzer/check_v143_contextual_prune_precision_shadow.py`
+- creation commit `edcf00b67d92080c05f8c1cf516871c9138100a6`
+- CPU gate workflow `.github/workflows/v143-contextual-prune-precision-shadow.yml`
+- CPU proof workflow `.github/workflows/v143-contextual-prune-precision-shadow-proof.yml`
+- CPU proof diagnostic `debug/v143-contextual-prune/precision-shadow-cpu-proof.json`
+
+CPU proof is GREEN:
+- checkerPassed true
+- no unobserved attacks
+- no relocated attacks
+- no unobserved pitches
+- referenceFree true
+- protected pipeline blob exact `7f72f8...`
+- Production unchanged.
+
+General rule only:
+- an attack must have substantial two-view transient energy relative to its local body (`attack/body >= 0.70`), with a narrow `>=0.60` local-prominence exception;
+- if pruning would erase a whole measure, retain only the strongest already-observed physically supported attack as a coverage fail-safe;
+- pitches are selected only from the carrier's observed candidate set;
+- lower observed fundamentals can be promoted when upper observed candidates form a physically supported harmonic family;
+- secondary tones require strong independent physical support, with stricter support for candidates explainable as upper harmonics;
+- no key/chord/section/song/reference labels or target event counts enter the rule.
+
+Approved-audio precision shadow runner:
+- `analyzer/v143_contextual_prune_precision_shadow_modal.py`
+- workflow `.github/workflows/v143-contextual-prune-precision-shadow-approved-audio.yml`
+- current Actions run `32680288667`
+- preflight anti-leakage/protected-runtime step GREEN
+- Modal approved-audio precision shadow currently running at this checkpoint.
+
+Do not accept/integrate this precision correction until its approved-audio internal invariants and coverage/pitch-support diagnostics are reviewed. Do not score any shadow output. If accepted, a brand-new approved-audio Jimmy freeze/PDF must be created before scorer access.
+
 ## Immediate next work
 
-1. Do **not** tune/rescore the `c621ab...` freeze again.
-2. Build an isolated, general/reference-free precision shadow using only audio/internal evidence:
-   - prune attacks that lack independent two-view onset/body support or strong contextual/local-peak evidence;
-   - retain rescue only where strict physical evidence materially exceeds neighboring slots;
-   - prune simultaneous pitch hypotheses using within-attack physical-score dominance, independent-view support, harmonic-family redundancy, and legal guitar voicing without human chord labels;
-   - preserve complete measure coverage through a fail-safe that keeps only the strongest physically supported attack when a measure would otherwise become empty.
-3. Validate correction entirely without professional reference: static/CPU gates, anti-leakage, protected blob, no Production change, no relocation/invented pitch.
-4. If accepted, run a **brand-new approved-audio analysis → corrected events → Jimmy payload → freeze → full/preview PDF** identity.
-5. Only then reopen scorer-only human source and score the new immutable freeze.
-6. Repeat only through general/reference-free corrections until >=0.99, 0 critical mismatches, fidelity 1.0.
-7. Then create `Final Rhythm Pipeline`; only afterward resume Bass, then Lead.
+1. Finish run `32680288667`; inspect `debug/v143-contextual-prune/precision-shadow-approved-audio.json`.
+2. Accept only if reference-free invariants hold, all 113 measures remain populated, pruning is physically coherent, and fail-safe use is not pathological.
+3. If not acceptable, adjust only on internal physical diagnostics — never on human reference/event counts.
+4. Once accepted, adapt the precision result into isolated candidate event assembly without adding/relocating attacks or pitches.
+5. Run a **brand-new approved-audio analysis → precision events → Jimmy payload → freeze → full/preview PDF** identity.
+6. Only then reopen scorer-only human source and score the new immutable freeze.
+7. Repeat only through general/reference-free corrections until >=0.99, 0 critical mismatches, fidelity 1.0.
+8. Then create `Final Rhythm Pipeline`; only afterward resume Bass, then Lead.
