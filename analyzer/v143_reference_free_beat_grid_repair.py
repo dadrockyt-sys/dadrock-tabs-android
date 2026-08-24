@@ -26,6 +26,7 @@ MIN_STABLE_INTERVAL_RUN = 8
 LOCAL_PERIOD_WINDOW = 12
 BOUNDARY_ENERGY_RATIO_TO_RAW_BEATS = 0.20
 BOUNDARY_RMS_WINDOW_SECONDS = 0.14
+BOUNDARY_LOOKAHEAD_BEATS = 2
 
 
 @dataclass(frozen=True)
@@ -46,6 +47,7 @@ class BeatGridRepairResult:
     snapped_beat_count: int
     boundary_evidence_floor: float
     boundary_energy_floor: float
+    lookahead_bridge_beat_count: int
 
     def diagnostics(self) -> dict[str, Any]:
         expected_period = 60.0 / float(self.timing.tempo_bpm)
@@ -85,6 +87,8 @@ class BeatGridRepairResult:
             "snappedBeatCount": int(self.snapped_beat_count),
             "boundaryEvidenceFloor": float(self.boundary_evidence_floor),
             "boundaryEnergyFloor": float(self.boundary_energy_floor),
+            "boundaryLookaheadBeats": BOUNDARY_LOOKAHEAD_BEATS,
+            "lookaheadBridgeBeatCount": int(self.lookahead_bridge_beat_count),
             "originalIntervals": summary(original_intervals),
             "repairedIntervals": summary(repaired_intervals),
             "barPhaseChanged": False,
@@ -165,6 +169,62 @@ def _snap_prediction(predicted: float, period: float, frame_times: np.ndarray, a
     return chosen, evidence, abs(chosen - predicted) <= radius
 
 
+def _boundary_point_supported(
+    predicted: float,
+    period: float,
+    audio: np.ndarray,
+    sample_rate: int,
+    frame_times: np.ndarray,
+    accents: np.ndarray,
+    evidence_floor: float,
+    energy_floor: float,
+) -> tuple[bool, float, float]:
+    chosen, evidence, _snapped = _snap_prediction(
+        predicted,
+        period,
+        frame_times,
+        accents,
+        boundary=True,
+    )
+    energy = _local_rms(audio, sample_rate, chosen)
+    return bool(evidence >= evidence_floor or energy >= energy_floor), float(evidence), float(energy)
+
+
+def _boundary_has_lookahead_support(
+    predicted: float,
+    period: float,
+    direction: int,
+    limit: float,
+    audio: np.ndarray,
+    sample_rate: int,
+    frame_times: np.ndarray,
+    accents: np.ndarray,
+    evidence_floor: float,
+    energy_floor: float,
+) -> bool:
+    """Allow at most two weak boundary beats only when later audio proves continuation."""
+    direction = 1 if int(direction) >= 0 else -1
+    for offset in range(1, BOUNDARY_LOOKAHEAD_BEATS + 1):
+        probe = float(predicted + direction * offset * period)
+        if direction > 0 and probe > limit + 0.10 * period:
+            break
+        if direction < 0 and (probe < limit - 0.10 * period or probe < 0.0):
+            break
+        supported, _evidence, _energy = _boundary_point_supported(
+            probe,
+            period,
+            audio,
+            sample_rate,
+            frame_times,
+            accents,
+            evidence_floor,
+            energy_floor,
+        )
+        if supported:
+            return True
+    return False
+
+
 def _interval_outlier_count(beat_times: Sequence[float], expected_period: float) -> int:
     return sum(not (STABLE_INTERVAL_MIN_RATIO <= (b - a) / expected_period <= STABLE_INTERVAL_MAX_RATIO) for a, b in zip(beat_times[:-1], beat_times[1:]))
 
@@ -175,10 +235,11 @@ def repair_reference_free_beat_grid_from_samples(samples: Any, sample_rate: int,
     Tempo and existing bar phase remain immutable. A longest tempo-stable region
     anchors one pulse per beat. Interior beats may use tempo continuity because a
     musical beat need not contain a note onset. Outside the original tracked span,
-    extension is allowed only inside audio-active energy and only while either a
-    nearby transient or substantial local RMS energy supports continuation. This
-    prevents both premature truncation of sustained/fading music and fabricated
-    beats in silence. No external labels, target counts, or song identity enter.
+    extension is allowed only inside audio-active energy. A weak boundary pulse
+    may be bridged by tempo continuity only when one of the next two predicted
+    pulses has independent transient/RMS support; this handles short rests or
+    sustains without fabricating a silent tail. No labels, target counts, or song
+    identity enter the repair.
     """
     if not isinstance(timing, ReferenceFreeTimingEstimate):
         raise TypeError("timing must be ReferenceFreeTimingEstimate")
@@ -216,6 +277,7 @@ def repair_reference_free_beat_grid_from_samples(samples: Any, sample_rate: int,
     snapped_count = 0
     continuity_only = 0
     trailing_extended = 0
+    lookahead_bridges = 0
 
     while True:
         local_period = float(median(forward_intervals[-LOCAL_PERIOD_WINDOW:])) if forward_intervals else anchor_period
@@ -226,8 +288,29 @@ def repair_reference_free_beat_grid_from_samples(samples: Any, sample_rate: int,
         boundary = predicted > raw_last + 0.35 * expected_period
         chosen, evidence, snapped = _snap_prediction(predicted, local_period, frame_times, accents, boundary=boundary)
         local_energy = _local_rms(analysis_audio, TIMING_SAMPLE_RATE, chosen)
-        if boundary and evidence < boundary_floor and local_energy < boundary_energy_floor:
-            break
+        current_supported = evidence >= boundary_floor or local_energy >= boundary_energy_floor
+        bridge = False
+        if boundary and not current_supported:
+            bridge = _boundary_has_lookahead_support(
+                predicted,
+                local_period,
+                1,
+                forward_limit,
+                analysis_audio,
+                TIMING_SAMPLE_RATE,
+                frame_times,
+                accents,
+                boundary_floor,
+                boundary_energy_floor,
+            )
+            if not bridge:
+                break
+            # Preserve metrical continuity through the weak/rest beat. Do not snap
+            # the bridge to a weak local transient merely because one exists.
+            chosen = predicted
+            snapped = False
+            lookahead_bridges += 1
+
         interval = chosen - accepted_forward[-1]
         ratio = interval / expected_period
         if not (STABLE_INTERVAL_MIN_RATIO <= ratio <= STABLE_INTERVAL_MAX_RATIO):
@@ -235,8 +318,23 @@ def repair_reference_free_beat_grid_from_samples(samples: Any, sample_rate: int,
             interval = local_period
             snapped = False
             local_energy = _local_rms(analysis_audio, TIMING_SAMPLE_RATE, chosen)
-            if boundary and evidence < boundary_floor and local_energy < boundary_energy_floor:
-                break
+            current_supported = evidence >= boundary_floor or local_energy >= boundary_energy_floor
+            if boundary and not current_supported and not bridge:
+                bridge = _boundary_has_lookahead_support(
+                    predicted,
+                    local_period,
+                    1,
+                    forward_limit,
+                    analysis_audio,
+                    TIMING_SAMPLE_RATE,
+                    frame_times,
+                    accents,
+                    boundary_floor,
+                    boundary_energy_floor,
+                )
+                if not bridge:
+                    break
+                lookahead_bridges += 1
         accepted_forward.append(float(chosen))
         forward_intervals.append(float(interval))
         snapped_count += int(snapped)
@@ -258,8 +356,27 @@ def repair_reference_free_beat_grid_from_samples(samples: Any, sample_rate: int,
         boundary = predicted < raw_first - 0.35 * expected_period
         chosen, evidence, snapped = _snap_prediction(predicted, local_period, frame_times, accents, boundary=boundary)
         local_energy = _local_rms(analysis_audio, TIMING_SAMPLE_RATE, chosen)
-        if boundary and evidence < boundary_floor and local_energy < boundary_energy_floor:
-            break
+        current_supported = evidence >= boundary_floor or local_energy >= boundary_energy_floor
+        bridge = False
+        if boundary and not current_supported:
+            bridge = _boundary_has_lookahead_support(
+                predicted,
+                local_period,
+                -1,
+                backward_limit,
+                analysis_audio,
+                TIMING_SAMPLE_RATE,
+                frame_times,
+                accents,
+                boundary_floor,
+                boundary_energy_floor,
+            )
+            if not bridge:
+                break
+            chosen = predicted
+            snapped = False
+            lookahead_bridges += 1
+
         interval = current - chosen
         ratio = interval / expected_period
         if not (STABLE_INTERVAL_MIN_RATIO <= ratio <= STABLE_INTERVAL_MAX_RATIO):
@@ -267,8 +384,23 @@ def repair_reference_free_beat_grid_from_samples(samples: Any, sample_rate: int,
             interval = local_period
             snapped = False
             local_energy = _local_rms(analysis_audio, TIMING_SAMPLE_RATE, chosen)
-            if boundary and evidence < boundary_floor and local_energy < boundary_energy_floor:
-                break
+            current_supported = evidence >= boundary_floor or local_energy >= boundary_energy_floor
+            if boundary and not current_supported and not bridge:
+                bridge = _boundary_has_lookahead_support(
+                    predicted,
+                    local_period,
+                    -1,
+                    backward_limit,
+                    analysis_audio,
+                    TIMING_SAMPLE_RATE,
+                    frame_times,
+                    accents,
+                    boundary_floor,
+                    boundary_energy_floor,
+                )
+                if not bridge:
+                    break
+                lookahead_bridges += 1
         accepted_backward.append(float(chosen))
         backward_intervals.append(float(interval))
         snapped_count += int(snapped)
@@ -313,12 +445,14 @@ def repair_reference_free_beat_grid_from_samples(samples: Any, sample_rate: int,
         snapped_beat_count=int(snapped_count),
         boundary_evidence_floor=float(boundary_floor),
         boundary_energy_floor=float(boundary_energy_floor),
+        lookahead_bridge_beat_count=int(lookahead_bridges),
     )
 
 
 __all__ = [
     "STABLE_INTERVAL_MIN_RATIO",
     "STABLE_INTERVAL_MAX_RATIO",
+    "BOUNDARY_LOOKAHEAD_BEATS",
     "BeatGridRepairResult",
     "repair_reference_free_beat_grid_from_samples",
 ]
