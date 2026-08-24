@@ -1,0 +1,1106 @@
+{
+  "attackCount": 725,
+  "candidateRenderProduced": false,
+  "contextOctaveSupport": {
+    "examplesLowerOctaveNeighbor": [
+      {
+        "contextLowerOctave": 40,
+        "measure": 2,
+        "primary": 52,
+        "step": 1
+      },
+      {
+        "contextLowerOctave": 40,
+        "measure": 2,
+        "primary": 52,
+        "step": 7
+      },
+      {
+        "contextLowerOctave": 40,
+        "measure": 2,
+        "primary": 52,
+        "step": 8
+      },
+      {
+        "contextLowerOctave": 40,
+        "measure": 2,
+        "primary": 52,
+        "step": 11
+      },
+      {
+        "contextLowerOctave": 40,
+        "measure": 2,
+        "primary": 52,
+        "step": 12
+      },
+      {
+        "contextLowerOctave": 40,
+        "measure": 3,
+        "primary": 52,
+        "step": 0
+      },
+      {
+        "contextLowerOctave": 40,
+        "measure": 3,
+        "primary": 52,
+        "step": 3
+      },
+      {
+        "contextLowerOctave": 40,
+        "measure": 3,
+        "primary": 52,
+        "step": 7
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 4,
+        "primary": 64,
+        "step": 8
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 4,
+        "primary": 64,
+        "step": 9
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 4,
+        "primary": 64,
+        "step": 10
+      },
+      {
+        "contextLowerOctave": 40,
+        "measure": 4,
+        "primary": 52,
+        "step": 11
+      },
+      {
+        "contextLowerOctave": 55,
+        "measure": 5,
+        "primary": 67,
+        "step": 15
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 6,
+        "primary": 64,
+        "step": 1
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 6,
+        "primary": 64,
+        "step": 8
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 6,
+        "primary": 64,
+        "step": 10
+      },
+      {
+        "contextLowerOctave": 40,
+        "measure": 6,
+        "primary": 52,
+        "step": 11
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 7,
+        "primary": 64,
+        "step": 0
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 8,
+        "primary": 64,
+        "step": 0
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 8,
+        "primary": 64,
+        "step": 2
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 8,
+        "primary": 64,
+        "step": 7
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 9,
+        "primary": 64,
+        "step": 0
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 9,
+        "primary": 64,
+        "step": 8
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 10,
+        "primary": 64,
+        "step": 7
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 10,
+        "primary": 64,
+        "step": 8
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 10,
+        "primary": 64,
+        "step": 10
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 11,
+        "primary": 64,
+        "step": 0
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 12,
+        "primary": 64,
+        "step": 7
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 12,
+        "primary": 64,
+        "step": 8
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 12,
+        "primary": 64,
+        "step": 10
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 12,
+        "primary": 64,
+        "step": 11
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 13,
+        "primary": 64,
+        "step": 6
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 14,
+        "primary": 64,
+        "step": 8
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 14,
+        "primary": 64,
+        "step": 10
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 15,
+        "primary": 64,
+        "step": 0
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 16,
+        "primary": 64,
+        "step": 0
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 16,
+        "primary": 64,
+        "step": 8
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 17,
+        "primary": 64,
+        "step": 0
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 17,
+        "primary": 64,
+        "step": 9
+      },
+      {
+        "contextLowerOctave": 52,
+        "measure": 18,
+        "primary": 64,
+        "step": 10
+      }
+    ],
+    "legalLowerOctaveAppearsAsNeighborPrimaryCount": 157,
+    "legalUpperOctaveAppearsAsNeighborPrimaryCount": 146,
+    "lowerOctaveNeighborRate": 0.22986822840409957,
+    "neighborRadiusAttacks": 4,
+    "primaryHasLegalLowerOctaveCount": 683,
+    "primaryHasLegalUpperOctaveCount": 703,
+    "upperOctaveNeighborRate": 0.20768136557610242
+  },
+  "eventMutationProposed": false,
+  "hypothesisSelection": {
+    "anyLowerHypothesisThanPrimaryAttackCount": 48,
+    "bestDiffIsNonHarmonicFamilyCount": 48,
+    "bestDiffIsUpperHarmonicFamilyCount": 96,
+    "bestHypothesisDiffersFromPrimaryCount": 144,
+    "bestHypothesisDiffersFromPrimaryRate": 0.1986206896551724,
+    "bestMinusPrimaryIntervalCounts": {
+      "-1": 1,
+      "-3": 4,
+      "-4": 3,
+      "-5": 3,
+      "0": 581,
+      "10": 1,
+      "12": 78,
+      "14": 2,
+      "16": 2,
+      "17": 1,
+      "19": 11,
+      "24": 6,
+      "28": 1,
+      "3": 5,
+      "4": 4,
+      "5": 10,
+      "6": 1,
+      "7": 10,
+      "9": 1
+    },
+    "bestScoreMarginVsPrimaryWhenDifferent": {
+      "count": 144,
+      "max": 2.546082,
+      "mean": 0.6542397371527778,
+      "median": 0.5430014000000001,
+      "min": 0.009471350000000545,
+      "q10": 0.10396796999999995,
+      "q25": 0.2619018874999999,
+      "q75": 0.9642918250000004,
+      "q90": 1.382739945
+    },
+    "differentBestWithMarginAtMost025Count": 35,
+    "exactLowerOctaveHypothesisAttackCount": 0,
+    "exactUpperOctaveHypothesisAttackCount": 86,
+    "hypothesisCountPerAttack": {
+      "count": 725,
+      "max": 6.0,
+      "mean": 1.3613793103448275,
+      "median": 1.0,
+      "min": 1.0,
+      "q10": 1.0,
+      "q25": 1.0,
+      "q75": 2.0,
+      "q90": 2.0
+    },
+    "nonHarmonicDifferentBestWithMarginAtMost05Count": 32,
+    "primaryRankCounts": {
+      "1": 581,
+      "2": 134,
+      "3": 10
+    },
+    "singleHypothesisAttackCount": 487
+  },
+  "interpretationBoundary": "all octave folding, continuity and voicing tests are diagnostics only; no pitch is changed or selected by this report",
+  "invariants": {
+    "all725AttacksRead": true,
+    "attackGridMutated": false,
+    "eventsMutated": false,
+    "pitchSelectionMutated": false,
+    "referenceConsulted": false,
+    "standardTuningMappingsValidated": true
+  },
+  "modalUsed": false,
+  "mode": "v143-frozen-evidence-pitch-register-diagnostic",
+  "primaryContinuity": {
+    "absolutePrimarySemitoneJump": {
+      "count": 724,
+      "max": 38.0,
+      "mean": 5.705801104972376,
+      "median": 3.0,
+      "min": 0.0,
+      "q10": 0.0,
+      "q25": 0.0,
+      "q75": 10.0,
+      "q90": 15.0
+    },
+    "adjacentPairCount": 724,
+    "interpretationBoundary": "octave-equivalent folding is diagnostic only and is not a proposed pitch correction",
+    "jumpAtLeast12Count": 168,
+    "jumpAtLeast19Count": 39,
+    "largeJumpCouldBecomeSevenSemitonesOrLessByOctaveEquivalentFoldCount": 167,
+    "potentialFoldReductionSemitones": {
+      "count": 167,
+      "max": 36.0,
+      "mean": 13.688622754491018,
+      "median": 12.0,
+      "min": 12.0,
+      "q10": 12.0,
+      "q25": 12.0,
+      "q75": 12.0,
+      "q90": 20.0
+    },
+    "samePitchClassOctaveJumpCount": 80,
+    "samePitchClassOctaveJumpSize": {
+      "count": 80,
+      "max": 24.0,
+      "mean": 13.35,
+      "median": 12.0,
+      "min": 12.0,
+      "q10": 12.0,
+      "q25": 12.0,
+      "q75": 12.0,
+      "q90": 24.0
+    }
+  },
+  "primaryRegister": {
+    "midi": {
+      "count": 725,
+      "max": 83.0,
+      "mean": 61.19586206896552,
+      "median": 64.0,
+      "min": 40.0,
+      "q10": 52.0,
+      "q25": 57.0,
+      "q75": 64.0,
+      "q90": 69.0
+    },
+    "midiCounts": {
+      "40": 15,
+      "41": 1,
+      "43": 1,
+      "45": 19,
+      "47": 1,
+      "49": 1,
+      "50": 4,
+      "52": 107,
+      "53": 1,
+      "55": 5,
+      "56": 1,
+      "57": 39,
+      "58": 5,
+      "59": 61,
+      "60": 5,
+      "61": 15,
+      "62": 76,
+      "63": 5,
+      "64": 202,
+      "65": 19,
+      "66": 15,
+      "67": 36,
+      "68": 15,
+      "69": 22,
+      "70": 1,
+      "71": 11,
+      "72": 1,
+      "74": 5,
+      "75": 1,
+      "76": 13,
+      "77": 2,
+      "78": 4,
+      "79": 3,
+      "80": 1,
+      "81": 3,
+      "82": 2,
+      "83": 7
+    },
+    "pitchClassCounts": {
+      "0": 6,
+      "1": 16,
+      "10": 8,
+      "11": 80,
+      "2": 85,
+      "3": 6,
+      "4": 337,
+      "5": 23,
+      "6": 19,
+      "7": 45,
+      "8": 17,
+      "9": 83
+    },
+    "primaryAtOrAboveMidi64Count": 363,
+    "primaryAtOrAboveMidi67Count": 127,
+    "primaryBelowMidi52Count": 42,
+    "primaryFret": {
+      "count": 725,
+      "max": 23.0,
+      "mean": 3.550344827586207,
+      "median": 2.0,
+      "min": 0.0,
+      "q10": 0.0,
+      "q25": 0.0,
+      "q75": 4.0,
+      "q90": 12.0
+    },
+    "primaryStringCounts": {
+      "0": 325,
+      "1": 127,
+      "2": 63,
+      "3": 144,
+      "4": 39,
+      "5": 27
+    }
+  },
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "protectedRuntimeModified": false,
+  "rankedNonHarmonicBestAlternatives": [
+    {
+      "bestHypothesis": 50,
+      "interval": 5,
+      "measure": 111,
+      "primary": 45,
+      "scoreMargin": 2.546082,
+      "selectedMidis": [
+        45,
+        50
+      ],
+      "step": 12
+    },
+    {
+      "bestHypothesis": 50,
+      "interval": 5,
+      "measure": 111,
+      "primary": 45,
+      "scoreMargin": 2.297740349999999,
+      "selectedMidis": [
+        45,
+        50
+      ],
+      "step": 13
+    },
+    {
+      "bestHypothesis": 61,
+      "interval": -3,
+      "measure": 83,
+      "primary": 64,
+      "scoreMargin": 1.2071813499999995,
+      "selectedMidis": [
+        61,
+        64
+      ],
+      "step": 7
+    },
+    {
+      "bestHypothesis": 62,
+      "interval": 5,
+      "measure": 94,
+      "primary": 57,
+      "scoreMargin": 1.0976529500000014,
+      "selectedMidis": [
+        57,
+        62
+      ],
+      "step": 10
+    },
+    {
+      "bestHypothesis": 59,
+      "interval": 7,
+      "measure": 97,
+      "primary": 52,
+      "scoreMargin": 0.8835211000000003,
+      "selectedMidis": [
+        52,
+        59
+      ],
+      "step": 0
+    },
+    {
+      "bestHypothesis": 59,
+      "interval": 7,
+      "measure": 19,
+      "primary": 52,
+      "scoreMargin": 0.8709268000000008,
+      "selectedMidis": [
+        52,
+        59
+      ],
+      "step": 11
+    },
+    {
+      "bestHypothesis": 61,
+      "interval": 9,
+      "measure": 38,
+      "primary": 52,
+      "scoreMargin": 0.6729438499999998,
+      "selectedMidis": [
+        52,
+        61
+      ],
+      "step": 11
+    },
+    {
+      "bestHypothesis": 59,
+      "interval": 7,
+      "measure": 49,
+      "primary": 52,
+      "scoreMargin": 0.6709638500000001,
+      "selectedMidis": [
+        52,
+        59
+      ],
+      "step": 11
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": 5,
+      "measure": 60,
+      "primary": 59,
+      "scoreMargin": 0.6423498999999993,
+      "selectedMidis": [
+        59,
+        64
+      ],
+      "step": 11
+    },
+    {
+      "bestHypothesis": 59,
+      "interval": 7,
+      "measure": 23,
+      "primary": 52,
+      "scoreMargin": 0.6230583499999995,
+      "selectedMidis": [
+        52,
+        59
+      ],
+      "step": 2
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": -4,
+      "measure": 72,
+      "primary": 68,
+      "scoreMargin": 0.6124705000000001,
+      "selectedMidis": [
+        64,
+        68,
+        69
+      ],
+      "step": 14
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": -3,
+      "measure": 90,
+      "primary": 67,
+      "scoreMargin": 0.5906795000000011,
+      "selectedMidis": [
+        64,
+        67
+      ],
+      "step": 1
+    },
+    {
+      "bestHypothesis": 62,
+      "interval": 3,
+      "measure": 34,
+      "primary": 59,
+      "scoreMargin": 0.5672621000000002,
+      "selectedMidis": [
+        59,
+        62
+      ],
+      "step": 0
+    },
+    {
+      "bestHypothesis": 78,
+      "interval": 16,
+      "measure": 51,
+      "primary": 62,
+      "scoreMargin": 0.5582423500000004,
+      "selectedMidis": [
+        62,
+        78
+      ],
+      "step": 4
+    },
+    {
+      "bestHypothesis": 62,
+      "interval": 3,
+      "measure": 33,
+      "primary": 59,
+      "scoreMargin": 0.5260635000000007,
+      "selectedMidis": [
+        59,
+        62
+      ],
+      "step": 14
+    },
+    {
+      "bestHypothesis": 61,
+      "interval": 4,
+      "measure": 35,
+      "primary": 57,
+      "scoreMargin": 0.5091071500000002,
+      "selectedMidis": [
+        57,
+        61
+      ],
+      "step": 0
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": 14,
+      "measure": 111,
+      "primary": 50,
+      "scoreMargin": 0.48127159999999947,
+      "selectedMidis": [
+        50,
+        64
+      ],
+      "step": 11
+    },
+    {
+      "bestHypothesis": 59,
+      "interval": 7,
+      "measure": 18,
+      "primary": 52,
+      "scoreMargin": 0.4479858499999998,
+      "selectedMidis": [
+        52,
+        59
+      ],
+      "step": 12
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": 5,
+      "measure": 32,
+      "primary": 59,
+      "scoreMargin": 0.4466784500000003,
+      "selectedMidis": [
+        59,
+        64
+      ],
+      "step": 3
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": 5,
+      "measure": 54,
+      "primary": 59,
+      "scoreMargin": 0.4413216499999999,
+      "selectedMidis": [
+        59,
+        64
+      ],
+      "step": 2
+    },
+    {
+      "bestHypothesis": 76,
+      "interval": 14,
+      "measure": 92,
+      "primary": 62,
+      "scoreMargin": 0.3715670499999999,
+      "selectedMidis": [
+        62,
+        76
+      ],
+      "step": 13
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": -5,
+      "measure": 66,
+      "primary": 69,
+      "scoreMargin": 0.3508102500000003,
+      "selectedMidis": [
+        64,
+        69
+      ],
+      "step": 15
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": -1,
+      "measure": 8,
+      "primary": 65,
+      "scoreMargin": 0.33562955000000017,
+      "selectedMidis": [
+        64,
+        65
+      ],
+      "step": 9
+    },
+    {
+      "bestHypothesis": 65,
+      "interval": 6,
+      "measure": 103,
+      "primary": 59,
+      "scoreMargin": 0.3203692500000006,
+      "selectedMidis": [
+        58,
+        59,
+        65
+      ],
+      "step": 6
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": 7,
+      "measure": 68,
+      "primary": 57,
+      "scoreMargin": 0.31797280000000017,
+      "selectedMidis": [
+        57,
+        64
+      ],
+      "step": 13
+    },
+    {
+      "bestHypothesis": 57,
+      "interval": 5,
+      "measure": 68,
+      "primary": 52,
+      "scoreMargin": 0.31288389999999966,
+      "selectedMidis": [
+        52,
+        57
+      ],
+      "step": 15
+    },
+    {
+      "bestHypothesis": 62,
+      "interval": 3,
+      "measure": 38,
+      "primary": 59,
+      "scoreMargin": 0.30372295000000005,
+      "selectedMidis": [
+        59,
+        62
+      ],
+      "step": 0
+    },
+    {
+      "bestHypothesis": 59,
+      "interval": 7,
+      "measure": 98,
+      "primary": 52,
+      "scoreMargin": 0.2797882500000002,
+      "selectedMidis": [
+        52,
+        59
+      ],
+      "step": 15
+    },
+    {
+      "bestHypothesis": 61,
+      "interval": 4,
+      "measure": 34,
+      "primary": 57,
+      "scoreMargin": 0.2624883499999999,
+      "selectedMidis": [
+        57,
+        61
+      ],
+      "step": 13
+    },
+    {
+      "bestHypothesis": 52,
+      "interval": -5,
+      "measure": 39,
+      "primary": 57,
+      "scoreMargin": 0.2601424999999997,
+      "selectedMidis": [
+        52,
+        57
+      ],
+      "step": 4
+    },
+    {
+      "bestHypothesis": 66,
+      "interval": 4,
+      "measure": 91,
+      "primary": 62,
+      "scoreMargin": 0.24402135000000058,
+      "selectedMidis": [
+        62,
+        66
+      ],
+      "step": 13
+    },
+    {
+      "bestHypothesis": 59,
+      "interval": -3,
+      "measure": 105,
+      "primary": 62,
+      "scoreMargin": 0.24343059999999994,
+      "selectedMidis": [
+        59,
+        62
+      ],
+      "step": 9
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": 7,
+      "measure": 110,
+      "primary": 57,
+      "scoreMargin": 0.2272185499999999,
+      "selectedMidis": [
+        57,
+        64
+      ],
+      "step": 14
+    },
+    {
+      "bestHypothesis": 50,
+      "interval": 5,
+      "measure": 112,
+      "primary": 45,
+      "scoreMargin": 0.22510104999999925,
+      "selectedMidis": [
+        44,
+        45,
+        50
+      ],
+      "step": 1
+    },
+    {
+      "bestHypothesis": 65,
+      "interval": -4,
+      "measure": 59,
+      "primary": 69,
+      "scoreMargin": 0.2245035999999998,
+      "selectedMidis": [
+        65,
+        69
+      ],
+      "step": 5
+    },
+    {
+      "bestHypothesis": 66,
+      "interval": 4,
+      "measure": 71,
+      "primary": 62,
+      "scoreMargin": 0.2213058499999998,
+      "selectedMidis": [
+        62,
+        66
+      ],
+      "step": 13
+    },
+    {
+      "bestHypothesis": 62,
+      "interval": 3,
+      "measure": 104,
+      "primary": 59,
+      "scoreMargin": 0.1876878000000004,
+      "selectedMidis": [
+        59,
+        62
+      ],
+      "step": 9
+    },
+    {
+      "bestHypothesis": 74,
+      "interval": 10,
+      "measure": 20,
+      "primary": 64,
+      "scoreMargin": 0.1822339000000004,
+      "selectedMidis": [
+        64,
+        74
+      ],
+      "step": 4
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": -4,
+      "measure": 35,
+      "primary": 68,
+      "scoreMargin": 0.18167840000000002,
+      "selectedMidis": [
+        64,
+        68
+      ],
+      "step": 13
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": 5,
+      "measure": 53,
+      "primary": 59,
+      "scoreMargin": 0.16180855000000038,
+      "selectedMidis": [
+        59,
+        64
+      ],
+      "step": 2
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": 5,
+      "measure": 44,
+      "primary": 59,
+      "scoreMargin": 0.1592389500000002,
+      "selectedMidis": [
+        59,
+        64
+      ],
+      "step": 12
+    },
+    {
+      "bestHypothesis": 62,
+      "interval": 3,
+      "measure": 64,
+      "primary": 59,
+      "scoreMargin": 0.13903825000000047,
+      "selectedMidis": [
+        59,
+        62
+      ],
+      "step": 5
+    },
+    {
+      "bestHypothesis": 69,
+      "interval": 17,
+      "measure": 16,
+      "primary": 52,
+      "scoreMargin": 0.12194155000000029,
+      "selectedMidis": [
+        52,
+        69
+      ],
+      "step": 12
+    },
+    {
+      "bestHypothesis": 78,
+      "interval": 16,
+      "measure": 15,
+      "primary": 62,
+      "scoreMargin": 0.10245989999999994,
+      "selectedMidis": [
+        62,
+        78
+      ],
+      "step": 4
+    },
+    {
+      "bestHypothesis": 62,
+      "interval": -5,
+      "measure": 94,
+      "primary": 67,
+      "scoreMargin": 0.08850175000000027,
+      "selectedMidis": [
+        62,
+        67
+      ],
+      "step": 0
+    },
+    {
+      "bestHypothesis": 61,
+      "interval": -3,
+      "measure": 90,
+      "primary": 64,
+      "scoreMargin": 0.05096180000000006,
+      "selectedMidis": [
+        61,
+        64
+      ],
+      "step": 6
+    },
+    {
+      "bestHypothesis": 64,
+      "interval": 7,
+      "measure": 110,
+      "primary": 57,
+      "scoreMargin": 0.03371924999999987,
+      "selectedMidis": [
+        57,
+        64
+      ],
+      "step": 15
+    },
+    {
+      "bestHypothesis": 59,
+      "interval": 7,
+      "measure": 21,
+      "primary": 52,
+      "scoreMargin": 0.018766849999999113,
+      "selectedMidis": [
+        52,
+        59,
+        64
+      ],
+      "step": 10
+    }
+  ],
+  "referenceFree": true,
+  "referenceRuntimeInputUsed": false,
+  "runtimeLabelsRequired": false,
+  "schemaVersion": 1,
+  "selectedVoicingPhysics": {
+    "disconnectedSelectedStringSetCount": 145,
+    "multiNoteAttackWithAnyHarmonicFamilyPairCount": 107,
+    "multiNoteAttackWithExactOctavePairCount": 89,
+    "multiNoteAttackWithoutHarmonicFamilyPairCount": 129,
+    "primaryAboveLowestSelectedInterval": {
+      "count": 725,
+      "max": 26.0,
+      "mean": 0.32413793103448274,
+      "median": 0.0,
+      "min": 0.0,
+      "q10": 0.0,
+      "q25": 0.0,
+      "q75": 0.0,
+      "q90": 0.0
+    },
+    "primaryNotLowestSelectedPitchCount": 48,
+    "primaryNotLowestSelectedPitchRate": 0.06620689655172414,
+    "selectedFretSpan": {
+      "count": 725,
+      "max": 11.0,
+      "mean": 0.45379310344827584,
+      "median": 0.0,
+      "min": 0.0,
+      "q10": 0.0,
+      "q25": 0.0,
+      "q75": 0.0,
+      "q90": 2.0
+    },
+    "selectedNoteCountPerAttack": {
+      "1": 489,
+      "2": 215,
+      "3": 20,
+      "6": 1
+    },
+    "selectedNoteCountSummary": {
+      "count": 725,
+      "max": 6.0,
+      "mean": 1.3586206896551725,
+      "median": 1.0,
+      "min": 1.0,
+      "q10": 1.0,
+      "q25": 1.0,
+      "q75": 2.0,
+      "q90": 2.0
+    },
+    "selectedPitchSpanSemitones": {
+      "count": 725,
+      "max": 28.0,
+      "mean": 3.1186206896551725,
+      "median": 0.0,
+      "min": 0.0,
+      "q10": 0.0,
+      "q25": 0.0,
+      "q75": 5.0,
+      "q90": 12.0
+    },
+    "wideSelectedFretSpanAtLeast6Count": 2
+  },
+  "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "sourceRetiredEventSha256": "a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb"
+}
