@@ -1,0 +1,11 @@
+{
+  "exitCode": 0,
+  "logTail": "{\"originalTiming\": {\"barConfidence\": 0.08797341408427677, \"beatConfidence\": 0.7232655115770844, \"beatCount\": 447, \"downbeatIndexMod4\": 1, \"firstBeatInMeasure\": 3, \"firstBeatTimeSeconds\": 0.6733786848072563, \"lastBeatTimeSeconds\": 203.03528344671201, \"tempoBpm\": 129.19921875}, \"phaseConsistency\": {\"actualRepairedDownbeatIndexMod4\": 1, \"actualRepairedFirstBeatInMeasure\": 3, \"downbeatCoordinateConsistent\": true, \"expectedDownbeatIndexMod4AfterPrepend\": 1, \"expectedFirstBeatInMeasureAfterPrepend\": 3, \"firstBeatCoordinateConsistent\": true, \"leadingExtensionModulo4\": 0, \"phaseReindexNeededIfLeadingBeatsPrepended\": false, \"repairPhaseCoordinateConsistent\": true}, \"repair\": {\"leadingExtendedBeatCount\": 0, \"lookaheadBridgeBeatCount\": 3, \"originalBeatCount\": 447, \"repairedBeatCount\": 449, \"trailingExtendedBeatCount\": 13}}\n",
+  "modalInvoked": false,
+  "newInferenceUsed": false,
+  "passed": true,
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "schemaVersion": 1
+}
