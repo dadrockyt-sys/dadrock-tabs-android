@@ -1,0 +1,64 @@
+name: v143 beat-repair phase consistency diagnostic
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_reference_free_beat_repair_phase_consistency_diagnostic.py
+      - .github/workflows/v143-beat-repair-phase-consistency-diagnostic.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU audio dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python -m pip install --disable-pip-version-check --quiet numpy scipy soundfile
+      - name: Run reference-free repair phase audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            analyzer/v143_reference_free_timing.py \
+            analyzer/v143_reference_free_beat_grid_repair.py \
+            analyzer/v143_reference_free_beat_repair_phase_consistency_diagnostic.py
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr' analyzer/v143_reference_free_beat_repair_phase_consistency_diagnostic.py; then
+            echo 'Forbidden scorer/reference token in beat-repair audit' >&2
+            exit 1
+          fi
+          ffmpeg -y -v error -i public/gomywayfullaitest.m4a \
+            -map 0:a:0 -vn -ar 44100 -ac 2 -c:a pcm_s16le /tmp/v143-approved-fullmix.wav
+          PYTHONPATH=analyzer python analyzer/v143_reference_free_beat_repair_phase_consistency_diagnostic.py \
+            /tmp/v143-approved-fullmix.wav \
+            debug/v143-contextual-prune/beat-repair-phase-consistency-diagnostic.json
+      - name: Commit diagnostic result
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/beat-repair-phase-consistency-diagnostic.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record beat-repair phase consistency diagnostic'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
