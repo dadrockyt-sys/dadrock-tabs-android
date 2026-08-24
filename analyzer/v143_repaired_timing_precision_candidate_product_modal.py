@@ -33,6 +33,7 @@ CANDIDATE_MODULES = (
     "v143_contextual_prune_runtime",
     "v143_contextual_prune_shadow_correction",
     "v143_contextual_prune_precision_shadow",
+    "v143_contextual_prune_precision_shadow_v2",
     "v143_precision_promoted_harmonic_guard",
     "v143_contextual_prune_candidate_events",
     "v143_contextual_prune_precision_candidate_events",
@@ -130,7 +131,11 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
     import soundfile as sf
 
     from v143_contextual_prune_precision_candidate_events import build_precision_candidate_assembly
-    from v143_contextual_prune_precision_shadow import apply_reference_free_precision_shadow
+    from v143_contextual_prune_precision_shadow_v2 import (
+        POLICY_NAME,
+        apply_reference_free_precision_shadow_v2,
+        build_precision_replay_evidence,
+    )
     from v143_contextual_prune_reference_free_carrier import build_contextual_prune_reference_free_carrier
     from v143_contextual_prune_runtime import run_contextual_prune
     from v143_contextual_prune_shadow_correction import apply_reference_free_shadow_correction
@@ -177,8 +182,18 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
         targets = set(range(carrier.measure_start, carrier.measure_end + 1))
         base = run_contextual_prune(carrier.rows_by_measure, carrier.grid, targets, context_measures=targets)
         correction = apply_reference_free_shadow_correction(carrier.rows, carrier.grid, base.candidate_events, targets)
-        precision = apply_reference_free_precision_shadow(carrier.rows, carrier.grid, correction, targets)
+        precision = apply_reference_free_precision_shadow_v2(
+            carrier.rows,
+            carrier.grid,
+            correction,
+            targets,
+        )
         precision, promoted_harmonic_guard = apply_reference_free_promoted_harmonic_guard(
+            carrier.rows,
+            carrier.grid,
+            precision,
+        )
+        replay_evidence = build_precision_replay_evidence(
             carrier.rows,
             carrier.grid,
             precision,
@@ -219,7 +234,7 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
         })
         source_sha = _sha256_bytes(source_audio)
         return {
-            "schemaVersion": 4,
+            "schemaVersion": 5,
             "generatedTab": render_rhythm_tab(events),
             "tuning": "E Standard",
             "tempo": float(carrier.timing.tempo_bpm),
@@ -234,8 +249,8 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
             "selectedCount": int(len(precision.retained_events)),
             "audioDerivedMeasureCount": len(targets),
             "assembly": {
-                "version": 6,
-                "mode": "v143-repaired-timing-contextual-prune-precision-promoted-harmonic-guard-candidate",
+                "version": 7,
+                "mode": "v143-repaired-timing-contextual-prune-precision-v2-promoted-harmonic-guard-candidate",
                 "polyphonicExpansion": len(events) > len(precision.retained_events),
                 "selectedAttackCount": len(precision.retained_events),
                 "renderNoteCount": len(events),
@@ -247,6 +262,15 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
             "candidateDiagnostics": candidate.diagnostics(),
             "correctionDiagnostics": correction.diagnostics(),
             "precisionDiagnostics": precision.diagnostics(),
+            "precisionPolicy": {
+                "name": POLICY_NAME,
+                "nonHarmonicSecondaryConsensus": "two-of-three-score-attack-body-at-legacy-0.80-floor",
+                "harmonicUpperSecondaryConsensus": "legacy-three-of-three-score-attack-body-at-0.92-floor",
+                "newNumericThresholdIntroduced": False,
+                "referenceFree": True,
+                "professionalReferenceUsed": False,
+            },
+            "precisionReplayEvidence": replay_evidence,
             "promotedHarmonicGuardDiagnostics": promoted_harmonic_guard.to_dict(),
             "semanticGuard": semantic_diagnostics.to_dict(),
             "sustainDiagnostics": sustain_diagnostics,
@@ -265,17 +289,17 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
                 "measureEnd": int(carrier.measure_end),
             },
             "liveV143": {
-                "version": 7,
+                "version": 8,
                 "rhythmOnly": True,
                 "referenceFree": True,
                 "professionalReferenceUsed": False,
                 "referenceRuntimeInputUsed": False,
                 "runtimeLabelsRequired": False,
-                "candidateMode": "isolated-repaired-timing-contextual-prune-precision-promoted-harmonic-guard",
+                "candidateMode": "isolated-repaired-timing-contextual-prune-precision-v2-promoted-harmonic-guard",
             },
             "candidate": {
-                "schemaVersion": 4,
-                "mode": "v143-repaired-timing-contextual-prune-precision-promoted-harmonic-guard-approved-audio",
+                "schemaVersion": 5,
+                "mode": "v143-repaired-timing-contextual-prune-precision-v2-promoted-harmonic-guard-approved-audio",
                 "approvedFixture": source_sha == APPROVED_AUDIO_SHA256,
                 "sourceSha256": source_sha,
                 "sourceBytes": len(source_audio),
@@ -315,12 +339,22 @@ def approved_audio(
         raise RuntimeError("repaired precision candidate used a non-audio measure range")
     if candidate.get("repairedIntervalOutliersZero") is not True:
         raise RuntimeError("repaired precision candidate timing contains outliers")
+    replay = result.get("precisionReplayEvidence") or {}
+    if int(replay.get("retainedAttackCount") or 0) <= 0:
+        raise RuntimeError("precision v2 candidate did not persist replay attack evidence")
+    if int(replay.get("originalPitchHypothesisCount") or 0) <= 0:
+        raise RuntimeError("precision v2 candidate did not persist replay pitch evidence")
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     print(json.dumps(result["timing"], sort_keys=True))
     print(json.dumps(result["candidateDiagnostics"], sort_keys=True))
     print(json.dumps(result["precisionDiagnostics"], sort_keys=True))
+    print(json.dumps(result["precisionPolicy"], sort_keys=True))
+    print(json.dumps({
+        "retainedAttackCount": replay.get("retainedAttackCount"),
+        "originalPitchHypothesisCount": replay.get("originalPitchHypothesisCount"),
+    }, sort_keys=True))
     print(json.dumps(result["promotedHarmonicGuardDiagnostics"], sort_keys=True))
     print(json.dumps(result["semanticGuard"], sort_keys=True))
     print(json.dumps(result["sustainDiagnostics"], sort_keys=True))
