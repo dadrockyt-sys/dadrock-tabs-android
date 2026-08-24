@@ -7,6 +7,8 @@ on:
     paths:
       - analyzer/v143_contextual_prune_precision_shadow.py
       - analyzer/check_v143_contextual_prune_precision_shadow.py
+      - analyzer/v143_contextual_prune_precision_candidate_events.py
+      - analyzer/check_v143_contextual_prune_precision_primary_adapter.py
       - .github/workflows/v143-contextual-prune-precision-shadow.yml
 
 permissions:
@@ -23,12 +25,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Compile isolated precision shadow
-        run: python -m py_compile analyzer/v143_contextual_prune_precision_shadow.py analyzer/check_v143_contextual_prune_precision_shadow.py
-      - name: Run invariants checker
+      - name: Install checker dependency
+        run: python -m pip install --disable-pip-version-check --quiet numpy
+      - name: Compile isolated precision shadow and adapter
+        run: |
+          python -m py_compile \
+            analyzer/v143_contextual_prune_precision_shadow.py \
+            analyzer/check_v143_contextual_prune_precision_shadow.py \
+            analyzer/v143_contextual_prune_precision_candidate_events.py \
+            analyzer/check_v143_contextual_prune_precision_primary_adapter.py
+      - name: Run precision invariants checker
         env:
           PYTHONPATH: analyzer
         run: python analyzer/check_v143_contextual_prune_precision_shadow.py
+      - name: Run explicit primary propagation regression
+        env:
+          PYTHONPATH: analyzer
+        run: python analyzer/check_v143_contextual_prune_precision_primary_adapter.py
       - name: Verify protected production runtime blob
         run: |
           test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
