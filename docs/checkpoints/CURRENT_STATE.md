@@ -133,3 +133,11 @@ Exact score result:
 - Next reference-free diagnostic is therefore separated from the protected runtime: classify whether a selected attack is a real new pick versus continued carrier/sustain energy, using only persisted pre-scorer onset/carrier/pitch evidence. Confident repicks must be preserved; only weak-new-onset + strong-carryover cases may be proposed as retrigger suppressions.
 - In parallel, broad pitch diagnosis will evaluate fundamental-vs-harmonic-family support from attack/body evidence rather than strongest-bin-only selection.
 - No scorer/reference opened, no Modal/L4 used, protected pipeline unchanged, Production untouched.
+
+## Attack-physics / bar-phase diagnostic — 2026-08-24 14:05 America/Montreal
+- Synced to newer branch head `8137b0b5a180fe0e9e04c6a4823b55cebdbbcb3c` before making any new change; it records `debug/v143-contextual-prune/frozen-evidence-attack-physics-diagnostic.json` and `analyzer/v143_frozen_evidence_attack_physics_diagnostic.py`.
+- The diagnostic remains fully reference-free/CPU-only and mutates no events.
+- Global lag recurrence metrics are effectively phase-rotation insensitive apart from edge effects, so their split winners at offsets 4/8/12 are not sufficient evidence for a bar-boundary correction.
+- Physical primary-attack support is materially different: the strongest whole-beat phase candidate is offset **8 sixteenth steps** from the current boundary (a half-bar shift). This is now a source-level clue, but **not yet a correction**.
+- Next action: test 0-vs-8 attack-support contrast across contiguous local windows / musical sections with edge-safe aggregation, robust median and sign-vote statistics. Only if the half-bar signal is stable across the piece will measure-origin mapping be inspected for a global phase defect; if it is sectional, inspect pickup/local reset behavior instead.
+- Scorer/reference remains closed. Modal/L4 remains closed. Protected runtime and Production remain untouched.
