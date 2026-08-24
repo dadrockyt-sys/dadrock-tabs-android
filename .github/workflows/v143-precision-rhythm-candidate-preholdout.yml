@@ -1,0 +1,283 @@
+name: V143 Precision Rhythm Candidate Pre-Holdout
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-precision-rhythm-candidate-preholdout.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-precision-rhythm-candidate-preholdout
+  cancel-in-progress: true
+
+jobs:
+  freeze-and-render:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+    steps:
+      - name: Check out exact triggering revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install isolated freeze dependencies
+        run: |
+          set -euo pipefail
+          mkdir -p .candidate
+          cat > .candidate/package.json <<'JSON'
+          {"private":true,"dependencies":{"pdf-lib":"1.17.1"}}
+          JSON
+          npm install --prefix .candidate --ignore-scripts --no-audit --no-fund --package-lock=false
+          python -m pip install --disable-pip-version-check --quiet modal pypdf
+
+      - name: Enforce anti-leakage and protected runtime before candidate analysis
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .candidate/logs debug/v143-contextual-prune
+          python validation/rhythm_holdout/verify_runtime_isolation.py > .candidate/logs/runtime-isolation.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('.candidate/logs/runtime-isolation.json').read_text())
+          if report.get('passed') is not True:
+              raise SystemExit('runtime isolation gate failed')
+          PY
+          if grep -E -n \
+            'gomyway-professional-rhythm-reference|Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_contextual_prune_precision_shadow.py \
+            analyzer/v143_contextual_prune_precision_candidate_events.py \
+            analyzer/v143_contextual_prune_precision_candidate_product_modal.py \
+            validation/rhythm_holdout/prepare_precision_candidate_freeze_payload.mjs; then
+            echo 'Forbidden scorer/reference token found in precision candidate runtime path' >&2
+            exit 31
+          fi
+          protected_blob=$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)
+          test "$protected_blob" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          echo "$protected_blob" > .candidate/logs/protected-pipeline-blob.txt
+
+      - name: Prepare standalone ESM freeze and renderer tools
+        run: |
+          set -euo pipefail
+          mkdir -p .candidate/esm
+          cp lib/v143RenderContract.js .candidate/esm/v143RenderContract.mjs
+          sed "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
+            lib/v143AnalyzerQuality.js > .candidate/esm/v143AnalyzerQuality.mjs
+          sed \
+            -e "s#'./v143AnalyzerQuality.js'#'./v143AnalyzerQuality.mjs'#" \
+            -e "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" \
+            lib/jimmyPaigeAnalysisPayload.js > .candidate/esm/jimmyPaigeAnalysisPayload.mjs
+          sed \
+            "s#../../lib/jimmyPaigeAnalysisPayload.js#./jimmyPaigeAnalysisPayload.mjs#" \
+            validation/rhythm_holdout/prepare_precision_candidate_freeze_payload.mjs \
+            > .candidate/esm/prepare-freeze.mjs
+          sed "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" \
+            lib/createV143RhythmPdf.js > .candidate/esm/createV143RhythmPdf.mjs
+          sed "s#../../lib/v143RenderContract.js#./v143RenderContract.mjs#" \
+            validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs \
+            > .candidate/esm/render-frozen.mjs
+          node --check .candidate/esm/v143RenderContract.mjs
+          node --check .candidate/esm/v143AnalyzerQuality.mjs
+          node --check .candidate/esm/jimmyPaigeAnalysisPayload.mjs
+          node --check .candidate/esm/prepare-freeze.mjs
+          node --check .candidate/esm/createV143RhythmPdf.mjs
+          node --check .candidate/esm/render-frozen.mjs
+
+      - name: Run brand-new approved-audio precision candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${MODAL_TOKEN_ID:-}" ] || [ -z "${MODAL_TOKEN_SECRET:-}" ]; then
+            echo 'Modal credentials are required for precision candidate analysis.' >&2
+            exit 1
+          fi
+          python -m modal run \
+            analyzer/v143_contextual_prune_precision_candidate_product_modal.py::approved_audio \
+            --audio-path public/gomywayfullaitest.m4a \
+            --output-path .candidate/precision-candidate-product.json \
+            > .candidate/logs/modal-candidate.log 2>&1
+          test -s .candidate/precision-candidate-product.json
+
+      - name: Freeze exact precision candidate events before reference access
+        run: |
+          set -euo pipefail
+          node .candidate/esm/prepare-freeze.mjs \
+            .candidate/precision-candidate-product.json \
+            .candidate/rhythm-freeze-input.json \
+            > .candidate/logs/prepare-freeze.log 2>&1
+          checked_out_commit=$(git rev-parse HEAD)
+          test "$checked_out_commit" = "$GITHUB_SHA"
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .candidate/rhythm-freeze-input.json \
+            .candidate/freeze \
+            --source-commit "$checked_out_commit" \
+            > .candidate/logs/freeze.log 2>&1
+          test -s .candidate/freeze/rhythm-frozen-analysis.json
+          test -s .candidate/freeze/rhythm-freeze-manifest.json
+
+      - name: Render exact Jimmy PAIge preview and full PDF
+        run: |
+          set -euo pipefail
+          NODE_PATH="$PWD/.candidate/node_modules" node .candidate/esm/render-frozen.mjs \
+            .candidate/freeze/rhythm-frozen-analysis.json \
+            .candidate/freeze/pdf \
+            .candidate/esm/createV143RhythmPdf.mjs \
+            > .candidate/logs/render-pdf.log 2>&1
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .candidate/freeze \
+            .candidate/freeze/pdf/pdf-event-evidence.json \
+            > .candidate/logs/pdf-fidelity.log 2>&1
+          test -s .candidate/freeze/pdf/full-frozen-rhythm.pdf
+          test -s .candidate/freeze/pdf/preview-frozen-rhythm.pdf
+          test -s .candidate/freeze/rhythm-pdf-event-fidelity.json
+
+      - name: Verify professional presentation contract
+        run: |
+          set -euo pipefail
+          NODE_PATH="$PWD/.candidate/node_modules" node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import { summarizeV143RhythmPresentation } from './.candidate/esm/v143RenderContract.mjs';
+          const frozen=JSON.parse(await fs.readFile('.candidate/freeze/rhythm-frozen-analysis.json','utf8'));
+          const p=summarizeV143RhythmPresentation(frozen.renderEvents || []);
+          const checks={
+            eventCountPositive:p.eventCount>0,
+            allMeasuresPresent:p.uniqueMeasureCount===113,
+            multiNoteDensity:p.averageNotesPerMeasure>2,
+            polyphony:p.multiNoteOnsetCount>0,
+            sections:p.sectionCount>=2,
+            noOneNoteCollapse:p.oneNotePerMeasureCollapseDetected===false,
+            referenceFree:p.referenceFree===true,
+            professionalReferenceNotUsed:p.professionalReferenceUsed===false,
+          };
+          const failed=Object.entries(checks).filter(([,ok])=>!ok).map(([name])=>name);
+          const report={schemaVersion:1,gate:'precision-candidate-presentation',presentation:p,checks,failedChecks:failed,passed:failed.length===0};
+          await fs.writeFile('.candidate/freeze/pdf/presentation.json',JSON.stringify(report,null,2)+'\n');
+          if(failed.length) throw new Error('precision candidate presentation failed: '+failed.join(', '));
+          NODE
+
+      - name: Write compact immutable pre-holdout diagnostic
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          raw=json.loads(Path('.candidate/precision-candidate-product.json').read_text())
+          manifest=json.loads(Path('.candidate/freeze/rhythm-freeze-manifest.json').read_text())
+          fidelity=json.loads(Path('.candidate/freeze/rhythm-pdf-event-fidelity.json').read_text())
+          evidence=json.loads(Path('.candidate/freeze/pdf/pdf-event-evidence.json').read_text())
+          presentation=json.loads(Path('.candidate/freeze/pdf/presentation.json').read_text())
+          protected=Path('.candidate/logs/protected-pipeline-blob.txt').read_text().strip()
+          candidate=raw.get('candidate') or {}
+          diag=raw.get('candidateDiagnostics') or {}
+          correction=raw.get('correctionDiagnostics') or {}
+          precision=raw.get('precisionDiagnostics') or {}
+          checks={
+              'approvedFixture': candidate.get('approvedFixture') is True,
+              'referenceFree': candidate.get('professionalReferenceUsed') is False,
+              'runtimeLabelsNotRequired': candidate.get('runtimeLabelsRequired') is False,
+              'protectedPipelineExact': protected == '7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+              'productionUnmodified': candidate.get('productionModified') is False,
+              'liveEndpointUnmodified': candidate.get('liveEndpointDeployedOrModified') is False,
+              'allPrecisionAttacksRendered': diag.get('everyCorrectedAttackRendered') is True,
+              'noInventedPitch': diag.get('candidateAddsUnobservedPitch') is False and candidate.get('addsUnobservedPitch') is False,
+              'noInventedAttack': candidate.get('addsUnobservedAttack') is False,
+              'noRelocation': diag.get('candidateRelocatesEvents') is False and candidate.get('relocatesAttack') is False,
+              'precisionReferenceFree': precision.get('referenceFree') is True,
+              'precisionNoInventedAttack': precision.get('candidateAddsUnobservedAttack') is False,
+              'precisionNoInventedPitch': precision.get('candidateAddsUnobservedPitch') is False,
+              'precisionNoRelocation': precision.get('candidateRelocatesEvents') is False,
+              'all113Measures': int(manifest.get('uniqueMeasureCount') or 0) == 113,
+              'pdfEventFidelity': float(fidelity.get('pdfEventFidelity') or 0) == 1.0,
+              'rendererProjectionExact': evidence.get('rendererProjectionExactlyEqual') is True,
+              'presentationPassed': presentation.get('passed') is True,
+          }
+          failed=[name for name,ok in checks.items() if not ok]
+          out={
+              'schemaVersion':1,
+              'gate':'v143-precision-rhythm-candidate-preholdout',
+              'runId':int('${{ github.run_id }}'),
+              'runAttempt':int('${{ github.run_attempt }}'),
+              'artifactName':'v143-precision-rhythm-professional-freeze',
+              'triggerSha':'${{ github.sha }}',
+              'protectedPipelineBlob':protected,
+              'candidateDiagnostics':diag,
+              'correctionDiagnostics':correction,
+              'precisionDiagnostics':precision,
+              'semanticGuard':raw.get('semanticGuard'),
+              'sustainDiagnostics':raw.get('sustainDiagnostics'),
+              'eventCount':manifest.get('eventCount'),
+              'selectedAttackCount':raw.get('selectedCount'),
+              'uniqueMeasureCount':manifest.get('uniqueMeasureCount'),
+              'eventSha256':manifest.get('eventSha256'),
+              'snapshotSha256':manifest.get('snapshotSha256'),
+              'pdfEventSha256':fidelity.get('pdfEventSha256'),
+              'pdfEventFidelity':fidelity.get('pdfEventFidelity'),
+              'fullPdfBytes':evidence.get('fullPdfBytes'),
+              'previewPdfBytes':evidence.get('previewPdfBytes'),
+              'fullPageCount':evidence.get('fullPageCount'),
+              'previewPageCount':evidence.get('previewPageCount'),
+              'presentation':presentation.get('presentation'),
+              'checks':checks,
+              'failedChecks':failed,
+              'professionalReferenceOpened':False,
+              'productionModified':False,
+              'passed':not failed,
+          }
+          path=Path('debug/v143-contextual-prune/precision-candidate-preholdout.json')
+          path.write_text(json.dumps(out,indent=2)+'\n')
+          if failed:
+              raise SystemExit('precision candidate preholdout failed: '+', '.join(failed))
+          PY
+
+      - name: Upload new professional PDF freeze artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-precision-rhythm-professional-freeze
+          path: |
+            .candidate/freeze/rhythm-frozen-analysis.json
+            .candidate/freeze/rhythm-freeze-manifest.json
+            .candidate/freeze/rhythm-pdf-event-fidelity.json
+            .candidate/freeze/pdf/full-frozen-rhythm.pdf
+            .candidate/freeze/pdf/preview-frozen-rhythm.pdf
+            .candidate/freeze/pdf/pdf-event-evidence.json
+            .candidate/freeze/pdf/presentation.json
+            .candidate/precision-candidate-product.json
+          retention-days: 14
+
+      - name: Commit compact pre-holdout diagnostic with race-safe retry
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/precision-candidate-preholdout.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Record V143 precision Rhythm candidate pre-holdout"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then
+              exit 0
+            fi
+            echo "Push race on attempt $attempt; retrying" >&2
+            sleep 2
+          done
+          echo 'Unable to push precision pre-holdout diagnostic after retries' >&2
+          exit 1
