@@ -120,3 +120,8 @@ Exact score result:
 3. Look for a general audio-only correction that materially changes timing/pitch identity rather than merely suppressing a small subset of notes.
 4. Prove any proposed correction on reference-free invariants and create a genuinely new corrected render identity.
 5. Only after new freeze/PDF fidelity 1.0 and fail-closed lock may another professional score be considered.
+
+## Resume log — 2026-08-24 11:45 America/Thunder_Bay
+- Reopened branch `v143-contextual-prune-lobo`; head at resume was `079d274c2cb132d942c331890949c93b44320eff` (`Checkpoint frozen-evidence professional score result`).
+- Re-read this checkpoint and reaffirmed all hard boundaries, especially **CPU-only/reference-free work and no Modal/L4**.
+- Immediate work resumed on dominant unresolved grid/timing and broad-pitch diagnosis from persisted approved-audio evidence; scorer/reference remains closed.
