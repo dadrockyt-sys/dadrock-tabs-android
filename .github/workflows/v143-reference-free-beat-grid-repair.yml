@@ -59,10 +59,21 @@ jobs:
           import hashlib, json, subprocess
           from collections import Counter
           from pathlib import Path
+          import numpy as np
           import soundfile as sf
           from v143_candidate_timing_adapter import build_subdivision_grid
-          from v143_reference_free_timing import estimate_reference_free_timing
-          from v143_reference_free_beat_grid_repair import repair_reference_free_beat_grid_from_samples
+          from v143_reference_free_timing import (
+              TIMING_SAMPLE_RATE,
+              _finite_audio,
+              _normalized_onset_envelope,
+              _resample_audio,
+              estimate_reference_free_timing,
+          )
+          from v143_reference_free_beat_grid_repair import (
+              _local_rms,
+              _nearest_accent_index,
+              repair_reference_free_beat_grid_from_samples,
+          )
           from v143_reference_free_bar_phase_consensus import estimate_reference_free_bar_phase_consensus_from_samples
 
           source=Path('public/gomywayfullaitest.m4a')
@@ -79,9 +90,33 @@ jobs:
           repaired_grid=build_subdivision_grid(repaired.repaired_beat_times, first_beat_in_measure=timing.first_beat_in_measure)
           original_measures=Counter(int(slot.measure) for slot in original_grid)
           repaired_measures=Counter(int(slot.measure) for slot in repaired_grid)
+
+          mono=_finite_audio(samples)
+          analysis_audio=_resample_audio(mono,int(sr),TIMING_SAMPLE_RATE)
+          onset,low_energy,frame_times=_normalized_onset_envelope(analysis_audio,TIMING_SAMPLE_RATE)
+          accents=np.asarray(onset+0.25*low_energy,dtype=np.float64)
+          period=60.0/float(timing.tempo_bpm)
+          last=float(repaired.repaired_beat_times[-1])
+          duration=len(analysis_audio)/float(TIMING_SAMPLE_RATE)
+          tail_probe=[]
+          for offset in range(1,9):
+              predicted=last+offset*period
+              if predicted>duration+0.05:
+                  break
+              idx=_nearest_accent_index(frame_times,predicted)
+              tail_probe.append({
+                  'offsetBeats':offset,
+                  'predictedTime':predicted,
+                  'accent':float(accents[idx]),
+                  'localRms':_local_rms(analysis_audio,TIMING_SAMPLE_RATE,predicted),
+                  'aboveBoundaryAccentFloor':float(accents[idx])>=float(repaired.boundary_evidence_floor),
+                  'aboveBoundaryEnergyFloor':_local_rms(analysis_audio,TIMING_SAMPLE_RATE,predicted)>=float(repaired.boundary_energy_floor),
+                  'insideActiveAudioBound':predicted<=float(repaired.active_audio_end_seconds)+0.10*period,
+              })
+
           protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
           out={
-            'schemaVersion':1,
+            'schemaVersion':2,
             'gate':'v143-reference-free-beat-grid-repair-approved-audio',
             'runId':int('${{ github.run_id }}'),'runAttempt':int('${{ github.run_attempt }}'),'triggerSha':'${{ github.sha }}',
             'approvedAudioSha256':digest,
@@ -91,6 +126,7 @@ jobs:
               'barConfidence':timing.bar_confidence,'beatCount':len(timing.beat_times),
             },
             'repair':repaired.diagnostics(),
+            'tailBoundaryProbe':tail_probe,
             'repairedBarPhaseConsensus':repaired_consensus.diagnostics(),
             'grid':{
               'originalSlotCount':len(original_grid),'repairedSlotCount':len(repaired_grid),
@@ -111,6 +147,7 @@ jobs:
           }
           Path('debug/v143-contextual-prune/beat-grid-repair-approved-audio.json').write_text(json.dumps(out,indent=2)+'\n')
           print(json.dumps(out['repair'],sort_keys=True))
+          print(json.dumps(out['tailBoundaryProbe'],sort_keys=True))
           print(json.dumps(out['repairedBarPhaseConsensus'],sort_keys=True))
           print(json.dumps(out['grid'],sort_keys=True))
           if repaired.repaired_interval_outlier_count != 0:
