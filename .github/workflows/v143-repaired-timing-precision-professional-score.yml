@@ -1,0 +1,225 @@
+name: V143 Repaired Timing Precision Professional Score
+
+# One current locked freeze only. Creating this workflow triggers exactly one score.
+on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v143-repaired-timing-precision-professional-score.yml]
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: v143-repaired-timing-precision-professional-score
+  cancel-in-progress: true
+
+jobs:
+  score:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Validate current permanent lock and exact freeze before reference access
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .score/download .score/current-freeze .score/results
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          lock=json.loads(Path('debug/v143-contextual-prune/rhythm-professional-preholdout-artifact-lock.json').read_text(encoding='utf-8'))
+          proof=json.loads(Path('debug/v143-contextual-prune/rhythm-professional-preholdout-real-audio.json').read_text(encoding='utf-8'))
+          expected_event='a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb'
+          checks={
+            'lockPassed':lock.get('passed') is True,
+            'lockLocked':lock.get('locked') is True,
+            'lockSchema3':int(lock.get('schemaVersion') or 0)>=3,
+            'run':str(lock.get('workflowRunId'))=='32702772593',
+            'artifact':int(lock.get('artifactId') or 0)==9511117529,
+            'artifactDigest':lock.get('artifactDigest')=='sha256:e51777f07b2505b47f5dcf280e1eb9c758c89461ae431f879cdd102f13be05d9',
+            'head':lock.get('headCommit')=='23a64776333a8fd44dd092890d87e08a4a767e14',
+            'audio':lock.get('sourceAudioSha256')=='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+            'events':int(lock.get('eventCount') or 0)==985,
+            'measures':int(lock.get('uniqueMeasureCount') or 0)==113,
+            'frozenHash':lock.get('frozenEventSha256')==expected_event,
+            'pdfHash':lock.get('pdfEventSha256')==expected_event,
+            'fidelity':lock.get('pdfEventFidelity')==1.0,
+            'referenceFree':lock.get('referenceFree') is True,
+            'professionalReferenceNotUsed':lock.get('professionalReferenceUsed') is False,
+            'referenceRuntimeInputNotUsed':lock.get('referenceRuntimeInputUsed') is False,
+            'runtimeLabelsNotRequired':lock.get('runtimeLabelsRequired') is False,
+            'referenceSealedAtFreeze':lock.get('referenceOpenedDuringFreeze') is False,
+            'productionUnmodified':lock.get('productionModified') is False,
+            'proofPassed':proof.get('passed') is True,
+            'proofRun':str(proof.get('workflowRunId'))=='32702772593',
+            'proofFrozenHash':proof.get('frozenEventSha256')==expected_event,
+            'proofPdfHash':proof.get('pdfEventSha256')==expected_event,
+            'proofFidelity':proof.get('pdfEventFidelity')==1.0,
+            'humanReferenceStillSealed':proof.get('checks',{}).get('humanReferenceStillSealed') is True,
+          }
+          failed=[k for k,v in checks.items() if not v]
+          if failed: raise SystemExit('current lock gate failed: '+', '.join(failed))
+          Path('.score/results/pre-reference-lock-gate.json').write_text(json.dumps({'checks':checks,'failedChecks':failed,'passed':True},indent=2)+'\n',encoding='utf-8')
+          PY
+
+          curl -fsSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/actions/artifacts/9511117529/zip -o .score/freeze.zip
+          echo "e51777f07b2505b47f5dcf280e1eb9c758c89461ae431f879cdd102f13be05d9  .score/freeze.zip" | sha256sum -c -
+          unzip -q .score/freeze.zip -d .score/download
+          manifest=$(find .score/download -type f -name rhythm-freeze-manifest.json -print -quit)
+          test -n "$manifest"
+          freeze_root=$(dirname "$manifest")
+          cp -a "$freeze_root"/. .score/current-freeze/
+
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'validation/rhythm_holdout')
+          import score_rhythm_holdout as scorer
+          manifest, events, _ = scorer.validate_pre_reference(Path('.score/current-freeze'))
+          expected='a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb'
+          assert manifest['eventSha256']==expected
+          assert manifest['pdfEventSha256']==expected
+          assert float(manifest['pdfEventFidelity'])==1.0
+          assert len(events)==985
+          assert int(manifest['uniqueMeasureCount'])==113
+          print('PRE-REFERENCE CURRENT LOCKED FREEZE GATE GREEN')
+          PY
+
+      - name: Open locked scorer-only structured human source and build exact V2 reference
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .score/source validation/rhythm_holdout/reference .score/results
+          curl -fsSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/actions/artifacts/9502117311/zip -o .score/source.zip
+          echo "380165b5eb160cc8a35196192032c7d50224402880e453de448eed906c3b7dcb  .score/source.zip" | sha256sum -c -
+          unzip -q .score/source.zip -d .score/source
+          echo "18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8  .score/source/rhythm-track.json" | sha256sum -c -
+          python - <<'PY'
+          from fractions import Fraction
+          from pathlib import Path
+          import hashlib, json
+          src=json.loads(Path('.score/source/rhythm-track.json').read_text())
+          assert src['songId']==243 and src['revisionId']==7868948 and len(src['measures'])==113
+          assert src['name']=='Craig Ross | 1953 Gibson Les Paul Goldtop | Rhythm Guitar'
+          tuning=src['tuning']; assert tuning==[64,59,55,50,45,40]
+          measures=[]; onset_count=note_count=populated=0
+          for mn,m in enumerate(src['measures'],1):
+              by={}; section=(m.get('marker') or {}).get('text') if isinstance(m.get('marker'),dict) else None
+              for voice in m.get('voices') or []:
+                  pos=Fraction(0,1)
+                  for beat in voice.get('beats') or []:
+                      step=max(0,min(15,int(round(float(pos*16)))))
+                      for n in beat.get('notes') or []:
+                          if not isinstance(n,dict) or n.get('rest') or n.get('dead') or n.get('tie'): continue
+                          s=n.get('string'); f=n.get('fret')
+                          if isinstance(s,int) and isinstance(f,int) and 0<=s<=5 and 0<=f<=36:
+                              by.setdefault(step,set()).add((s,f,int(tuning[s])+f))
+                      a,d=beat.get('duration') or [1,4]; pos += Fraction(int(a),int(d))
+              events=[]
+              for step in sorted(by):
+                  notes=[{'stringIndex':s,'fret':f,'midi':midi} for s,f,midi in sorted(by[step])]
+                  if notes:
+                      events.append({'step':step,'notes':notes}); onset_count+=1; note_count+=len(notes)
+              if events: populated+=1
+              row={'measure':mn,'events':events}
+              if section: row['section']=section
+              measures.append(row)
+          assert (onset_count,note_count,populated)==(603,946,104),(onset_count,note_count,populated)
+          ref={
+            'schemaVersion':1,'instrument':'rhythm','holdout':True,'completeReference':True,
+            'transcribedFromCompleteSource':True,
+            'source':{'kind':'professional-human-tab','title':'Are You Gonna Go My Way','artist':'Lenny Kravitz',
+              'provenance':'Exact scorer-only structured extraction of immutable human-written revision 7868948 corresponding to Professionalexample.jpg',
+              'pageCount':8,'sourceSha256':'aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9','completeSource':True,
+              'sourceRevisionId':7868948,'structuredSourceSha256':'18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8'},
+            'measureRange':{'firstMeasure':1,'lastMeasure':113,'measureCount':113},'tempoBpm':129,
+            'timeSignature':{'beats':4,'noteValue':4},'stepsPerMeasure':16,'tuning':['E4','B3','G3','D3','A2','E2'],'measures':measures}
+          p=Path('validation/rhythm_holdout/reference/professional-rhythm-structured-source-v2.json')
+          p.write_text(json.dumps(ref,indent=2,sort_keys=True)+'\n')
+          digest=hashlib.sha256(p.read_bytes()).hexdigest()
+          assert digest=='18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac',digest
+          Path('.score/results/reference-build.json').write_text(json.dumps({
+            'referenceJsonSha256':digest,'playableOnsetCount':onset_count,'playableNoteCount':note_count,
+            'populatedMeasureCount':populated,'measureCount':113,'structuredSourceSha256':'18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8',
+            'professionalSourceSha256':'aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9'},indent=2,sort_keys=True)+'\n')
+          PY
+
+      - name: Verify completeness and score at unchanged 0.99 threshold
+        shell: bash
+        run: |
+          set -euo pipefail
+          REF=validation/rhythm_holdout/reference/professional-rhythm-structured-source-v2.json
+          FREEZE=.score/current-freeze
+          python validation/rhythm_holdout/verify_reference_completeness.py "$FREEZE" "$REF" --output .score/results/rhythm-reference-completeness.json
+          set +e
+          python validation/rhythm_holdout/score_rhythm_holdout.py "$FREEZE" "$REF" --output .score/results/rhythm-professional-holdout-score.json --minimum 0.99
+          rc=$?
+          set -e
+          test "$rc" -eq 0 -o "$rc" -eq 2
+          echo "$rc" > .score/results/scorer-return-code.txt
+
+      - name: Commit score diagnostic only and remove reference payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          b=json.loads(Path('.score/results/reference-build.json').read_text())
+          c=json.loads(Path('.score/results/rhythm-reference-completeness.json').read_text())
+          s=json.loads(Path('.score/results/rhythm-professional-holdout-score.json').read_text())
+          lock=json.loads(Path('debug/v143-contextual-prune/rhythm-professional-preholdout-artifact-lock.json').read_text())
+          br=s.get('criticalMismatchBreakdown') or {}; mc=(s.get('metrics') or {}).get('measureCoverage') or {}
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          out={
+            'schemaVersion':1,'gate':'v143-repaired-timing-precision-professional-score','runId':int('${{ github.run_id }}'),'runAttempt':int('${{ github.run_attempt }}'),
+            'triggerSha':'${{ github.sha }}','freezeArtifactId':9511117529,'freezeArtifactSha256':'e51777f07b2505b47f5dcf280e1eb9c758c89461ae431f879cdd102f13be05d9',
+            'freezeHeadCommit':'23a64776333a8fd44dd092890d87e08a4a767e14','frozenEventSha256':s.get('frozenEventSha256'),'pdfEventSha256':s.get('pdfEventSha256'),'pdfEventFidelity':s.get('pdfEventFidelity'),
+            'generatedNoteCount':s.get('generatedEventCount'),'referenceNoteCount':s.get('referenceNoteCount'),'referencePlayableOnsetCount':b.get('playableOnsetCount'),
+            'referenceMeasureCount':b.get('measureCount'),'referencePopulatedMeasureCount':b.get('populatedMeasureCount'),'referenceJsonSha256':b.get('referenceJsonSha256'),
+            'structuredHumanSourceSha256':b.get('structuredSourceSha256'),'professionalSourceSha256':b.get('professionalSourceSha256'),
+            'gatedMetrics':s.get('gatedMetrics'),'criticalMismatchCount':s.get('criticalMismatchCount'),'grossUnmatchedGeneratedNotes':br.get('grossUnmatchedGeneratedNotes'),
+            'grossUnmatchedReferenceNotes':br.get('grossUnmatchedReferenceNotes'),'missingReferenceMeasures':mc.get('missingReferenceMeasures'),
+            'near100ProfessionalGatePassed':s.get('near100ProfessionalGatePassed'),'rhythmComplete':s.get('rhythmComplete'),'scorerReturnCode':int(Path('.score/results/scorer-return-code.txt').read_text()),
+            'referenceCompletenessPassed':c.get('passed'),'referenceOpenedOnlyAfterFreezeValidation':c.get('referenceOpenedOnlyAfterFreezeValidation'),
+            'professionalReferenceUsedByAnalyzer':False,'referenceRuntimeInputUsed':False,'runtimeLabelsRequired':False,'protectedPipelineBlob':protected,
+            'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1','productionModified':False,'productionPromotionAuthorized':False,'referencePayloadCommitted':False,
+            'lockPassed':lock.get('passed') is True,'lockEventSha256':lock.get('frozenEventSha256')}
+          Path('debug/v143-contextual-prune/repaired-timing-precision-professional-score.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          assert out['protectedPipelineUnchanged'] and out['referenceCompletenessPassed'] and out['pdfEventFidelity']==1.0
+          assert out['referenceJsonSha256']=='18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac'
+          assert out['frozenEventSha256']=='a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb'
+          assert out['pdfEventSha256']==out['frozenEventSha256']==out['lockEventSha256']
+          PY
+          rm -f validation/rhythm_holdout/reference/professional-rhythm-structured-source-v2.json
+          git add debug/v143-contextual-prune/repaired-timing-precision-professional-score.json
+          git config user.name 'github-actions[bot]'
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git commit -m 'Record repaired-timing precision Rhythm professional score'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            sleep 2
+          done
+          exit 1
+
+      - name: Upload scorer reports only
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-repaired-timing-precision-rhythm-professional-score
+          path: .score/results/
+          retention-days: 14
