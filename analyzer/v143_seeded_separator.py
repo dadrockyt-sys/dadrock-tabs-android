@@ -30,12 +30,13 @@ DEMUCS_SINGLE_THREAD_ENV = {
     "VECLIB_MAXIMUM_THREADS": "1",
     "NUMEXPR_NUM_THREADS": "1",
     "TBB_NUM_THREADS": "1",
-    # Both observed Modal CPU host classes support AVX2. Pin every major CPU
-    # dispatcher to that common branch so Intel AVX512 hosts and AMD AVX2 hosts
-    # execute the same general/reference-free numerical path.
-    "ATEN_CPU_CAPABILITY": "avx2",
-    "ONEDNN_MAX_CPU_ISA": "AVX2",
-    "DNNL_MAX_CPU_ISA": "AVX2",
+    # Common baseline research execution path. The previous AVX2 pin still
+    # produced different PCM on AMD vs Intel, so use ATen DEFAULT plus the
+    # lowest common oneDNN x86 JIT branch while oneMKL stays in cross-vendor
+    # conditional numerical reproducibility mode. Musical settings are unchanged.
+    "ATEN_CPU_CAPABILITY": "default",
+    "ONEDNN_MAX_CPU_ISA": "SSE41",
+    "DNNL_MAX_CPU_ISA": "SSE41",
 }
 
 
@@ -71,9 +72,10 @@ def build_seeded_v143_stems(
     segment=6, plus BS-RoFormer Instrumental -> Demucs6s. BS-RoFormer is already
     byte-exact across cold sessions. Demucs is CPU-only/single-thread, its
     intentional shift trick uses a private RNG seeded only by V143_SEPARATOR_SEED,
-    and the research child pins ATen/oneDNN to common AVX2 plus oneMKL CNR
-    COMPATIBLE so CPU-family/ISA auto-dispatch cannot silently change kernels.
-    Model weights and all musical separator parameters remain identical.
+    and the research child uses ATen baseline + oneDNN SSE4.1 + oneMKL CNR
+    COMPATIBLE to remove CPU-family/ISA auto-dispatch as far as the supported
+    libraries allow. Model weights and all musical separator parameters remain
+    identical.
 
     No song/reference labels, human targets, or scorer values enter this path.
     """
@@ -106,8 +108,6 @@ def build_seeded_v143_stems(
                 work / "direct",
             )
 
-        # BS-RoFormer has proven byte-identical and does not receive the Demucs
-        # CPU-dispatch/private-shift environment controls.
         with _temporary_environment({"CUDA_VISIBLE_DEVICES": None}):
             roformer = separate_roformer_instrumental(
                 cli,
@@ -155,9 +155,9 @@ def build_seeded_v143_stems(
             "demucsExecutionDevice": "cpu",
             "demucsCpuThreads": 1,
             "demucsShiftRng": "private-seed-143",
-            "demucsAtenCpuCapability": "avx2",
+            "demucsAtenCpuCapability": "default",
             "demucsMklCbwr": "COMPATIBLE",
-            "demucsOneDnnMaxCpuIsa": "AVX2",
+            "demucsOneDnnMaxCpuIsa": "SSE41",
             "demucsMklDynamic": False,
             "demucsOmpDynamic": False,
             "roformerSingleStem": "Instrumental",
