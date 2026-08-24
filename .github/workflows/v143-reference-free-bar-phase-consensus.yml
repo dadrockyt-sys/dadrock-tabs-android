@@ -1,0 +1,126 @@
+name: V143 Reference-Free Bar Phase Consensus
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - .github/workflows/v143-reference-free-bar-phase-consensus.yml
+      - analyzer/v143_reference_free_bar_phase_consensus.py
+      - analyzer/check_v143_reference_free_bar_phase_consensus.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-reference-free-bar-phase-consensus
+  cancel-in-progress: true
+
+jobs:
+  diagnose:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU timing dependencies
+        run: python -m pip install --disable-pip-version-check --quiet numpy scipy soundfile
+      - name: Run synthetic checker and anti-leakage gate
+        env:
+          PYTHONPATH: analyzer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/check_v143_reference_free_bar_phase_consensus.py
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+             analyzer/v143_reference_free_bar_phase_consensus.py \
+             analyzer/check_v143_reference_free_bar_phase_consensus.py; then
+            echo 'Forbidden scorer/source token in bar-phase module' >&2
+            exit 1
+          fi
+      - name: Run approved-audio timing and multi-signal phase diagnostic
+        env:
+          PYTHONPATH: analyzer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          import soundfile as sf
+          from v143_reference_free_timing import estimate_reference_free_timing
+          from v143_reference_free_bar_phase_consensus import estimate_reference_free_bar_phase_consensus_from_samples
+
+          audio_path=Path('public/gomywayfullaitest.m4a')
+          expected='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          digest=hashlib.sha256(audio_path.read_bytes()).hexdigest()
+          assert digest==expected,digest
+          # SoundFile may not decode m4a on every runner, so normalize with ffmpeg first.
+          normalized=Path('/tmp/v143-phase-normalized.wav')
+          subprocess.run(['ffmpeg','-y','-v','error','-i',str(audio_path),'-map','0:a:0','-vn','-ar','44100','-ac','2','-c:a','pcm_s16le',str(normalized)],check=True)
+          timing=estimate_reference_free_timing(normalized)
+          samples,sr=sf.read(str(normalized),always_2d=False)
+          consensus=estimate_reference_free_bar_phase_consensus_from_samples(samples,int(sr),timing.beat_times)
+          beat_times=list(timing.beat_times)
+          intervals=[b-a for a,b in zip(beat_times[:-1],beat_times[1:])]
+          median_interval=sorted(intervals)[len(intervals)//2]
+          duration=len(samples)/float(sr)
+          out={
+            'schemaVersion':1,
+            'gate':'v143-reference-free-bar-phase-consensus-approved-audio',
+            'runId':int('${{ github.run_id }}'),
+            'runAttempt':int('${{ github.run_attempt }}'),
+            'triggerSha':'${{ github.sha }}',
+            'approvedAudioSha256':digest,
+            'timing':{
+              'tempoBpm':timing.tempo_bpm,
+              'beatConfidence':timing.beat_confidence,
+              'accentOnlyFirstBeatInMeasure':timing.first_beat_in_measure,
+              'accentOnlyDownbeatIndexMod4':timing.downbeat_index_mod4,
+              'accentOnlyBarConfidence':timing.bar_confidence,
+              'beatCount':len(beat_times),
+              'firstBeatTime':beat_times[0],
+              'lastBeatTime':beat_times[-1],
+              'medianBeatInterval':median_interval,
+              'audioDuration':duration,
+              'leadingAudioBeforeFirstBeat':beat_times[0],
+              'trailingAudioAfterLastBeat':duration-beat_times[-1],
+              'first12BeatTimes':beat_times[:12],
+              'last12BeatTimes':beat_times[-12:],
+            },
+            'consensus':consensus.diagnostics(),
+            'invariants':{
+              'referenceFree':True,
+              'runtimeLabelsRequired':False,
+              'phaseChanged':False,
+              'liveRhythmOutputChanged':False,
+              'productionModified':False,
+              'protectedPipelineUnchanged':subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()=='7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+            }
+          }
+          Path('debug/v143-contextual-prune/bar-phase-consensus-approved-audio.json').write_text(json.dumps(out,indent=2)+'\n')
+          print(json.dumps(out['timing'],sort_keys=True))
+          print(json.dumps(out['consensus'],sort_keys=True))
+          PY
+      - name: Commit diagnostic race-safe
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/bar-phase-consensus-approved-audio.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record approved-audio bar phase consensus'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            sleep 2
+          done
+          exit 1
