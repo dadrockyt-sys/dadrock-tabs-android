@@ -21,6 +21,7 @@ CUBLAS_WORKSPACE_CONFIG = ":4096:8"
 DEMUCS_SINGLE_THREAD_ENV = {
     "CUDA_VISIBLE_DEVICES": "",
     "V143_DEMUCS_FIXED_SHIFT_RNG": "1",
+    "V143_DEMUCS_DISABLE_MKLDNN": "1",
     "OMP_NUM_THREADS": "1",
     "OMP_DYNAMIC": "FALSE",
     "MKL_NUM_THREADS": "1",
@@ -30,10 +31,11 @@ DEMUCS_SINGLE_THREAD_ENV = {
     "VECLIB_MAXIMUM_THREADS": "1",
     "NUMEXPR_NUM_THREADS": "1",
     "TBB_NUM_THREADS": "1",
-    # Common baseline research execution path. The previous AVX2 pin still
-    # produced different PCM on AMD vs Intel, so use ATen DEFAULT plus the
-    # lowest common oneDNN x86 JIT branch while oneMKL stays in cross-vendor
-    # conditional numerical reproducibility mode. Musical settings are unchanged.
+    # Common baseline research execution path. ATen DEFAULT removes AVX2/AVX512
+    # DispatchStub selection; oneDNN is explicitly disabled in the Demucs child
+    # because baseline probes still diverged across AMD microarchitectures while
+    # oneDNN remained enabled. oneMKL stays in cross-vendor CNR mode. Musical
+    # model/settings/input are unchanged.
     "ATEN_CPU_CAPABILITY": "default",
     "ONEDNN_MAX_CPU_ISA": "SSE41",
     "DNNL_MAX_CPU_ISA": "SSE41",
@@ -72,10 +74,9 @@ def build_seeded_v143_stems(
     segment=6, plus BS-RoFormer Instrumental -> Demucs6s. BS-RoFormer is already
     byte-exact across cold sessions. Demucs is CPU-only/single-thread, its
     intentional shift trick uses a private RNG seeded only by V143_SEPARATOR_SEED,
-    and the research child uses ATen baseline + oneDNN SSE4.1 + oneMKL CNR
-    COMPATIBLE to remove CPU-family/ISA auto-dispatch as far as the supported
-    libraries allow. Model weights and all musical separator parameters remain
-    identical.
+    and the research child uses ATen DEFAULT with oneDNN disabled plus oneMKL CNR
+    COMPATIBLE to remove host-kernel variation as far as the supported libraries
+    allow. Model weights and all musical separator parameters remain identical.
 
     No song/reference labels, human targets, or scorer values enter this path.
     """
@@ -157,6 +158,7 @@ def build_seeded_v143_stems(
             "demucsShiftRng": "private-seed-143",
             "demucsAtenCpuCapability": "default",
             "demucsMklCbwr": "COMPATIBLE",
+            "demucsMkldnnEnabled": False,
             "demucsOneDnnMaxCpuIsa": "SSE41",
             "demucsMklDynamic": False,
             "demucsOmpDynamic": False,
