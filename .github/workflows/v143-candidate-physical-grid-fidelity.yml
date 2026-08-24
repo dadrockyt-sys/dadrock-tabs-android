@@ -1,0 +1,86 @@
+name: V143 Candidate Physical Grid Fidelity
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - analyzer/check_v143_candidate_physical_grid_fidelity.py
+      - .github/workflows/v143-candidate-physical-grid-fidelity.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-candidate-physical-grid-fidelity
+  cancel-in-progress: true
+
+jobs:
+  diagnostic:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Static safety gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile analyzer/check_v143_candidate_physical_grid_fidelity.py
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          test -f debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/check_v143_candidate_physical_grid_fidelity.py; then
+            echo 'Forbidden scorer/source token in physical-grid diagnostic' >&2
+            exit 1
+          fi
+
+      - name: Analyze committed candidate only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/check_v143_candidate_physical_grid_fidelity.py \
+            --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
+            --output debug/v143-contextual-prune/repaired-timing-precision-candidate-physical-grid-fidelity.json
+
+      - name: Attach trace and commit diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          p=Path('debug/v143-contextual-prune/repaired-timing-precision-candidate-physical-grid-fidelity.json')
+          d=json.loads(p.read_text())
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          d['actionTrace']={
+            'runId':int('${{ github.run_id }}'),
+            'runAttempt':int('${{ github.run_attempt }}'),
+            'triggerSha':'${{ github.sha }}',
+            'checkerBlob':subprocess.check_output(['git','hash-object','analyzer/check_v143_candidate_physical_grid_fidelity.py'],text=True).strip(),
+            'candidateProductBlob':subprocess.check_output(['git','hash-object','debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json'],text=True).strip(),
+            'protectedPipelineBlob':protected,
+            'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+            'referenceFree':True,
+            'runtimeOutputChanged':False,
+            'productionModified':False,
+          }
+          p.write_text(json.dumps(d,indent=2,allow_nan=False)+'\n')
+          PY
+          git add debug/v143-contextual-prune/repaired-timing-precision-candidate-physical-grid-fidelity.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record candidate physical-grid fidelity diagnostic'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            sleep 2
+          done
+          exit 1
