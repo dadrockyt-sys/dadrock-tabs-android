@@ -26,7 +26,10 @@ MIN_STABLE_INTERVAL_RUN = 8
 LOCAL_PERIOD_WINDOW = 12
 BOUNDARY_ENERGY_RATIO_TO_RAW_BEATS = 0.20
 BOUNDARY_RMS_WINDOW_SECONDS = 0.14
-BOUNDARY_LOOKAHEAD_BEATS = 2
+# General 4/4 guard: a full bar may contain rests/sustains with no transient.
+# Bridge weak boundary pulses only when a later pulse within that one-bar horizon
+# has independent transient/RMS support and remains inside active audio.
+BOUNDARY_LOOKAHEAD_BEATS = 4
 
 
 @dataclass(frozen=True)
@@ -84,7 +87,7 @@ class BeatGridRepairResult:
             "leadingExtendedBeatCount": int(self.leading_extended_beat_count),
             "trailingExtendedBeatCount": int(self.trailing_extended_beat_count),
             "continuityOnlyBeatCount": int(self.continuity_only_beat_count),
-            "snappedBeatCount": int(self.snapped_beat_count),
+            "snappedBeatCount": int(self.snapped_count) if hasattr(self, "snapped_count") else int(self.snapped_beat_count),
             "boundaryEvidenceFloor": float(self.boundary_evidence_floor),
             "boundaryEnergyFloor": float(self.boundary_energy_floor),
             "boundaryLookaheadBeats": BOUNDARY_LOOKAHEAD_BEATS,
@@ -202,7 +205,7 @@ def _boundary_has_lookahead_support(
     evidence_floor: float,
     energy_floor: float,
 ) -> bool:
-    """Allow at most two weak boundary beats only when later audio proves continuation."""
+    """Bridge at most one 4/4 bar of weak pulses when later audio proves continuation."""
     direction = 1 if int(direction) >= 0 else -1
     for offset in range(1, BOUNDARY_LOOKAHEAD_BEATS + 1):
         probe = float(predicted + direction * offset * period)
@@ -236,10 +239,9 @@ def repair_reference_free_beat_grid_from_samples(samples: Any, sample_rate: int,
     anchors one pulse per beat. Interior beats may use tempo continuity because a
     musical beat need not contain a note onset. Outside the original tracked span,
     extension is allowed only inside audio-active energy. A weak boundary pulse
-    may be bridged by tempo continuity only when one of the next two predicted
-    pulses has independent transient/RMS support; this handles short rests or
-    sustains without fabricating a silent tail. No labels, target counts, or song
-    identity enter the repair.
+    may be bridged by tempo continuity only when a later pulse within one 4/4 bar
+    has independent transient/RMS support; this handles rests or sustains without
+    fabricating a silent tail. No labels, target counts, or song identity enter.
     """
     if not isinstance(timing, ReferenceFreeTimingEstimate):
         raise TypeError("timing must be ReferenceFreeTimingEstimate")
@@ -267,8 +269,6 @@ def repair_reference_free_beat_grid_from_samples(samples: Any, sample_rate: int,
     boundary_floor = max(float(np.quantile(accents, 0.70)), 0.30 * float(median(raw_accent_values)))
     boundary_energy_floor = BOUNDARY_ENERGY_RATIO_TO_RAW_BEATS * float(median(raw_rms_values))
 
-    # Never let a conservative cumulative-energy bound erase an already tracked
-    # edge; bounds only control NEW leading/trailing extension.
     forward_limit = max(active_end, raw_last)
     backward_limit = min(active_start, raw_first)
 
@@ -305,8 +305,6 @@ def repair_reference_free_beat_grid_from_samples(samples: Any, sample_rate: int,
             )
             if not bridge:
                 break
-            # Preserve metrical continuity through the weak/rest beat. Do not snap
-            # the bridge to a weak local transient merely because one exists.
             chosen = predicted
             snapped = False
             lookahead_bridges += 1
