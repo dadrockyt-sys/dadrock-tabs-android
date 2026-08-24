@@ -52,76 +52,55 @@ Cheap dual-timing projection proof: `validation/rhythm_holdout/check_v143_precis
 - **Do not dispatch it as-is.** Future preholdout must fail closed on `a81190...` and bind a genuinely new scoring-relevant candidate.
 
 ## Precision polyphonic expansion — audio-only defect PROVEN
-Source audit first established that secondaries are not arbitrary:
-- carrier groups per-pitch Basic Pitch clusters within a ≤30 ms onset group;
-- precision requires positive two-view CQT attack/body evidence;
-- non-harmonic secondary floor `0.80`, harmonic-above-primary floor `0.92`;
-- assembly only renders selected observed pitches that can be jointly voiced.
-
-However the committed-product CPU audit found a specific internal contradiction, not a reference-tuned hypothesis.
-
-Audit files:
-- `analyzer/check_v143_precision_polyphonic_expansion.py` initial commit `3f5874ce3ce2b569eed1f0dd958afc4e2c91bf32`, expanded proof commit `16bf59f87f71ee057938009728bc80baf4b1cf9e`.
-- workflow `.github/workflows/v143-precision-polyphonic-expansion-audit.yml` initial commit `241234a7a25de06df12b6c98e649b84884a10732`.
-- observed diagnostic `debug/v143-contextual-prune/precision-polyphonic-expansion-audit.json` schemaVersion 2.
-
-Observed old-candidate counts, no scorer/GPU:
+Committed-product CPU audit established:
 - 725 attacks → 985 notes = 260 secondary notes.
 - 236 multi-note attacks; chord histogram: 489×1, 215×2, 20×3, 1×6.
-- 106/260 secondaries are harmonic-family intervals (`40.77%`): +12 = 86, +19 = 13, +24 = 6, +28 = 1.
-- precision metadata reports **144 fundamental promotions**.
-- serialized evidence independently reconstructs **144 promoted primaries**.
-- **all 144/144 still render the strongest raw pitch**.
-- **96/144 promoted primaries also render that strongest raw pitch at a harmonic-family interval above the promoted primary**; interval distribution includes +12 = 78, +19 = 11, +24 = 6, +28 = 1.
-- synthetic proof reproduces the logic: observed 40/52, 52 strongest raw, 40 promoted as fundamental, yet selected set remains `[40,52]`.
+- 106/260 secondaries are harmonic-family intervals: +12=86, +19=13, +24=6, +28=1.
+- precision metadata reports 144 fundamental promotions; serialized evidence reconstructs all 144.
+- all 144/144 promoted attacks still rendered the strongest raw pitch.
+- 96/144 promoted attacks rendered that strongest raw pitch at a harmonic-family interval above the promoted primary; +12=78, +19=11, +24=6, +28=1.
+- synthetic proof reproduces observed `[40,52]`: 52 strongest raw, 40 promoted as fundamental, yet 52 remains selected/rendered.
 - `harmonicPromotionDoubleCountPathProven=true`.
 - protected pipeline unchanged; no professional reference/runtime labels/Production/Modal GPU.
 
-Why this is a real structural defect:
-- precision’s own rationale says a lower physically observed candidate may replace a stronger **overtone** when harmonic-family evidence makes the lower pitch the likely fundamental.
-- immediately afterward, the strongest raw pitch has ratio `1.0` to itself, so it automatically passes secondary retention and is rendered as an independent note.
-- the same upper pitch is therefore treated simultaneously as the overtone evidence that justified lower-fundamental promotion and as a separate chord note.
-- This directly changes scored MIDI identity and does not depend on professional-reference labels.
+Why structural: the upper pitch is used as overtone evidence to justify promoting the lower fundamental, then the same strongest upper pitch automatically passes the secondary-retention ratios and is rendered as an independent chord note.
 
-Secondary provenance note:
-- all 238 multi-hypothesis attacks serialize identical group-level Basic Pitch `stemSupport/sweepSupport/detectionCount` across their per-pitch hypotheses; true per-pitch Basic Pitch support is not recoverable from the committed serialized hypotheses.
-- Do not invent per-pitch support from those group maxima.
-
-## Minimal scoring-relevant correction — committed, CPU proof pending Actions artifact
+## Minimal promoted-harmonic guard — PROVEN GREEN
 Added `analyzer/v143_precision_promoted_harmonic_guard.py`, commit `588b314c3103ffbea8a0a933351562551750f670`.
 
-Guard is deliberately minimal:
+Guard behavior:
 - recompute strongest positive raw MIDI from the same physical row/evidence ordering used by precision;
-- if primary differs from strongest raw **and** strongest raw is an upper interval in `HARMONIC_INTERVAL_WEIGHTS` **and** it survived selected pitches, remove only that exact strongest harmonic pitch;
-- do not change attacks, grid positions, primary MIDI, non-harmonic secondaries, weaker harmonic secondaries, or add any pitch.
-- result remains a `PrecisionShadowResult`; suppressed pitch count increases only by actual removals.
+- only when primary differs from strongest raw, strongest raw is an upper `HARMONIC_INTERVAL_WEIGHTS` interval, and it survived the selected pitch set, remove that exact strongest harmonic pitch;
+- do not change attacks, grid positions, primary MIDI, non-harmonic secondaries, weaker harmonic secondaries, or add pitches.
 
-Synthetic checker `analyzer/check_v143_precision_promoted_harmonic_guard.py`:
-- initial commit `938f7512e3ffc2f6f7f06adee71ccc3919ba9508`;
-- diagnostic-producing update commit `34998ba2a84662f2d2b8e72e319c3ee6e8150edb`.
-- proves promoted +12 strongest is suppressed, non-harmonic +7 strongest is preserved, unpromoted pitch set is preserved, attack/primary identity unchanged, no invented pitch/attack/relocation.
-- binds the observed old-candidate audit: 144 promotions / 96 scoring-relevant harmonic-strongest opportunities / 78 octave opportunities.
+Synthetic checker `analyzer/check_v143_precision_promoted_harmonic_guard.py` initial commit `938f7512e3ffc2f6f7f06adee71ccc3919ba9508`, diagnostic update `34998ba2a84662f2d2b8e72e319c3ee6e8150ed`.
+
+Observed Actions proof `debug/v143-contextual-prune/precision-promoted-harmonic-guard-proof.json` PASSED:
+- `passed=true`.
+- old-candidate opportunity count = 96, including 78 octave opportunities.
+- attack identity unchanged; primary MIDI unchanged; scoring pitch identity changes.
+- no pitch/attack added, no relocation.
+- protected pipeline exact expected blob.
+- anti-leakage passed; professional reference false; runtime labels false; Production false; Modal GPU false.
 
 Product path updated commit `534be3fec36cf5ec4a87089b1298becb4933693d`:
-- bundles `v143_precision_promoted_harmonic_guard` in candidate image;
-- applies guard immediately after reference-free precision and before candidate assembly;
-- output schemaVersion 4 / assembly version 6 / liveV143 version 7 / candidate schemaVersion 4;
+- bundles/apply guard after reference-free precision and before candidate assembly;
 - emits `promotedHarmonicGuardDiagnostics`;
-- candidate mode explicitly names promoted-harmonic guard.
+- output schemaVersion 4 / assembly version 6 / liveV143 version 7 / candidate schemaVersion 4.
 
-CPU audit workflow updated commit `f8022a7a90baf8ce2a902217b2ceb499fa58e84a` to run both expansion audit and guard proof and commit `precision-promoted-harmonic-guard-proof.json`/log. It enforces expected old-candidate opportunity count 96, scoring-relevant pitch change, unchanged attack identity, protected runtime, anti-leakage, no GPU/reference/Production.
-
-At this checkpoint, **do not yet claim the guard proof Actions artifact passed** until `debug/v143-contextual-prune/precision-promoted-harmonic-guard-proof.json` is observed with `passed=true`.
+CPU audit workflow updated commit `f8022a7a90baf8ce2a902217b2ceb499fa58e84a` and observed guard proof green.
+Product-proof workflow extended commit `30d7da578667f7d128824d7d343be782bf064533` to compile/run the guard checker, include guard files/artifacts in path triggers, and enforce anti-leakage/protected-runtime tokens.
 
 ## Cost control
-- No Modal/GPU inference in this continuation so far.
+- No Modal/GPU inference has been run for this new guard yet.
 - No professional scorer/reference opened.
 - Old candidate/freeze/scorer remain untouched.
-- The new harmonic guard is the first correction in this continuation proven by source + committed-audio evidence to be capable of changing scored pitch identity.
+- The harmonic guard is a source/audio-only correction proven capable of changing scored MIDI identity, so exactly one new approved-audio inference is now justified.
 
 ## Next exact actions
-1. Observe `debug/v143-contextual-prune/precision-promoted-harmonic-guard-proof.json`; require `passed=true`, protected pipeline unchanged, opportunity count 96, no reference/GPU/Production.
-2. Extend cheap product proof/anti-leakage gates to include `v143_precision_promoted_harmonic_guard.py` and its checker if not already transitively covered.
-3. Fail-close future preholdout path on retired scored SHA `a81190...`; do not dispatch stale preholdout.
-4. If all CPU/static gates remain clean, **one new approved-audio candidate inference is now justified** because this correction changes scored MIDI identity. It must write a new candidate identity/path; do not overwrite or rescore retired freeze.
-5. Before any professional score: prove new candidate determinism, freeze/PDF fidelity, brand-new render-event SHA != `a81190...`, then lock and score exactly once.
+1. Create a brand-new harmonic-guard candidate output path/workflow; never overwrite retired `repaired-timing-precision-candidate-product.json`.
+2. Make that workflow require the green guard proof, protected hash, approved audio SHA, anti-leakage, and no Production mutation before inference.
+3. Run exactly one approved-audio inference into the new path.
+4. Prove new candidate invariants and deterministic/render projection identity; require projected render-event SHA != retired `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`.
+5. Create/use a new preholdout path bound to the new candidate and fail closed on all retired scored render identities, including `a81190...`; do not dispatch stale preholdout.
+6. Only after deterministic new identity + freeze/PDF fidelity 1.0: immutable lock, then exactly one professional score.
