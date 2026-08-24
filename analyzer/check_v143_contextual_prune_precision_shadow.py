@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import subprocess
 from pathlib import Path
 
@@ -50,8 +49,6 @@ def main() -> int:
             body={52: 2.15, 64: 2.30, 67: 1.95},
             candidates=[52, 64, 67],
         ),
-        # Steady-state/body-heavy slot: should be pruned when another precise
-        # attack already keeps this measure populated.
         _row(
             1,
             0.5,
@@ -59,8 +56,6 @@ def main() -> int:
             body={59: 1.80, 71: 1.85},
             candidates=[59, 71],
         ),
-        # Only attack in measure 2 is deliberately body-heavy; fail-safe must
-        # retain the already-observed slot rather than inventing coverage.
         _row(
             2,
             2.0,
@@ -88,9 +83,12 @@ def main() -> int:
     assert (2, 0) in result.fail_safe_events
     assert {measure for measure, _step in result.retained_events} == {1, 2}
     assert result.fundamental_promotions >= 1
+    assert result.primary_midis[(1, 0)] == 52, result.primary_midis
+    assert set(result.primary_midis) == set(result.retained_events)
     for key, midis in result.pitch_sets.items():
         observed = set(next(row["candidateMidis"] for row in rows if row["measure"] == key[0] and abs(row["onsetTime"] - grid[key]) < 1e-9))
         assert set(midis).issubset(observed)
+        assert int(result.primary_midis[key]) in set(midis)
 
     protected = subprocess.check_output(
         ["git", "hash-object", "analyzer/v143_reference_free_rhythm_pipeline.py"],
@@ -103,6 +101,7 @@ def main() -> int:
     assert not any(token in source for token in forbidden)
 
     diag = result.diagnostics()
+    assert diag["explicitPrimaryMidiComplete"] is True
     assert diag["candidateAddsUnobservedAttack"] is False
     assert diag["candidateRelocatesEvents"] is False
     assert diag["candidateAddsUnobservedPitch"] is False
