@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 00:21 America/Thunder_Bay
+Updated: 2026-08-24 00:30 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -41,14 +41,22 @@ Key commits: `3c5eb669b909a7d56e130b325e66eeab144553ff`, `0b3d73bb5f68fee0f76e4f
 - reference-free/no-GPU/Production/protected invariants green.
 
 ## ACTIVE compute — ONE TARGETED CPU-ONLY GCP RUN
-Launch `bf9e16a84d3e1618c17d5a3b6c765872260ba145`: exactly one second oneDNN-off CPU probe with `--cloud gcp`; workflow restored manual immediately at `8927316f8738b64b1ce0afae67cdac2f578ca4b1`. Expected file `debug/v143-contextual-prune/demucs-cpu-nomkldnn-probe-2.json`. No L4 requested. Do not launch any further compute until this resolves.
+Launch `bf9e16a84d3e1618c17d5a3b6c765872260ba145`: exactly one second oneDNN-off CPU probe with `--cloud gcp`; workflow restored manual immediately at `8927316f8738b64b1ce0afae67cdac2f578ca4b1`. Expected file `debug/v143-contextual-prune/demucs-cpu-nomkldnn-probe-2.json`. No L4 requested.
+At 00:30 America/Thunder_Bay the expected probe2 file is still not committed. No additional compute has been launched while it is unresolved.
+
+## Validation continuation prepared
+- Cross-host checker is ready to require exact source/normalized/WAV/PCM/shift, effective ATen `DEFAULT`, and effective oneDNN disabled across two different host vendors/providers.
+- Manual full-separator single-pass smoke remains gated behind successful CPU cross-host exactness.
+- Manual repaired-timing/precision single-pass smoke was prepared at `7aca7545c5f05288f4b4777cb4dd3e99b2972de6`; it requires the full-separator smoke artifact first.
+- Candidate-product workflow was hardened at `ec1390e908a30ab009655dfd6087923c2c9e07f5` so it cannot proceed before deterministic proof artifacts are present.
 
 ## Current work NOW
-1. Wait/poll only for targeted GCP probe2.
+1. Continue polling only for targeted GCP probe2; do not launch another compute job until it resolves.
 2. Require effective ATen `DEFAULT`, oneDNN false, same source/normalized/shift and safety invariants.
 3. Compare WAV/PCM to probe1 (`0ac47da6...` / `2c22f040...`) and record GCP host vendor/microarchitecture/region.
 4. If exact across provider/host diversity, run cross-host checker; only then one manual full-separator smoke. If mismatch, do not spend L4; continue CPU/source isolation only.
-5. Keep scorer closed until separator + combined path exact and BRAND-NEW Jimmy freeze/PDF locked.
+5. After separator smoke green, run exactly one combined repaired-timing/precision smoke, then fresh pre-freeze/candidate path.
+6. Keep scorer closed until separator + combined path exact and BRAND-NEW Jimmy freeze/PDF locked.
 
 ## After determinism is green
 Run combined candidate/pre-freeze → new Jimmy analysis/authenticated events/freeze/PDF → fidelity1.0/protected exact/Production unchanged → ONLY THEN scorer V2 at unchanged >=0.99. If failed, broad failure classes only and another fresh freeze.
