@@ -1,0 +1,39 @@
+name: v143 precision shadow v2 CPU guard
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_contextual_prune_precision_shadow_v2.py
+      - analyzer/check_v143_precision_shadow_v2_policy.py
+      - .github/workflows/v143-precision-shadow-v2-cpu-guard.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile and test reference-free v2 policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            analyzer/v143_contextual_prune_precision_shadow_v2.py \
+            analyzer/check_v143_precision_shadow_v2_policy.py
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_shadow_v2_policy.py
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr' \
+            analyzer/v143_contextual_prune_precision_shadow_v2.py \
+            analyzer/check_v143_precision_shadow_v2_policy.py; then
+            echo 'Forbidden scorer/reference token in precision v2 path' >&2
+            exit 1
+          fi
