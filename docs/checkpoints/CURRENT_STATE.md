@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 16:59 America/Montreal
+Updated: 2026-08-24 16:24 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -93,10 +93,9 @@ Findings:
 - Repo searches found no carrier/stem snapshot.
 - Therefore exact relaxed-policy replay on the historical 7,535 rows is impossible without one new carrier capture.
 
-## Precision v2 — prepared, NOT RUN
+## Precision v2 — CPU PREFLIGHT GREEN, PAID CANDIDATE NOT RUN
 Module:
 - `analyzer/v143_contextual_prune_precision_shadow_v2.py`
-- creation commit `efcc90b6d8b004395159e35fd1a87f079952a3e1`
 - policy `envelope-balanced-secondary-v2`.
 
 Policy:
@@ -105,46 +104,60 @@ Policy:
 - Exact upper-harmonic intervals `{12,19,24,28,31,36}` keep the full legacy 3-of-3 0.92 gate.
 - No new numeric threshold, pitch, attack, key/chord/song rule, runtime label, or professional information introduced.
 
-Policy guard:
-- `analyzer/check_v143_precision_shadow_v2_policy.py`, commit `e923c597bef9fdd88ef59392a8f61bf7f8ce8b1c`.
-- CPU-only workflow `.github/workflows/v143-precision-shadow-v2-cpu-guard.yml` now self-tests the policy, historical accounting, replay comparison, compiles the candidate integration, verifies the protected runtime blob, checks anti-leakage tokens, and on success writes `debug/v143-contextual-prune/precision-v2-cpu-guard-result.json`.
-- Latest CPU-guard workflow definition commit `6b952122c2f66dd05fa73341f363647fc0239751`.
-- The result file had not appeared yet at the immediate post-commit check; do not claim this guard green until the persisted result is observed.
+### CPU guard — GREEN
+Persisted result:
+- `debug/v143-contextual-prune/precision-v2-cpu-guard-result.json`
+- run `32777140959`, job `97590681839`, conclusion `success`.
+- `passed=true`.
+- `policySelfTestPassed=true`.
+- `replayCompareSelfTestPassed=true`.
+- `historicalOptionalAccountingPassed=true`.
+- `singlePaidCaptureStaticGuardPassed=true`.
+- `newInferenceUsed=false`.
+- `modalInvoked=false`.
+- `professionalReferenceUsed=false`.
+- `productionModified=false`.
+- protected pipeline blob exact `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- Guard source SHA `930b768107b9f6e93382a5ddf00462fc36543e78`.
+- Logs explicitly passed v2 policy self-test, replay comparison self-test, historical 6,666 optional-candidate accounting, anti-leakage grep, protected-runtime check, and static single-paid-capture checks.
 
 ## Replay-complete candidate path — prepared, NOT RUN
 Candidate producer:
-- `analyzer/v143_repaired_timing_precision_candidate_product_modal.py`
-- v2 integration commit `83c050f5a8246dfbd80b118390039cab7d29909b`; blob `859040d832d3f77be4e5b361bdc86cbf186fb354` at that commit.
+- `analyzer/v143_repaired_timing_precision_candidate_product_modal.py`.
 - Future candidate uses precision v2 then the existing promoted-harmonic guard.
 - It persists `precisionReplayEvidence` for every retained attack: every original candidate MIDI plus attack/early/sustain/body/continuity/score evidence and selected/primary flags.
-- Producer was locally syntax-compiled before commit.
+- Replay evidence is generated **after** the common promoted-harmonic guard so stored selected flags match the actual candidate pitch sets.
 
 Replay comparison tool:
-- `analyzer/v143_precision_replay_policy_compare.py`, commit `707b45a0c1733769c8e24afd9238d130250fcc1c`.
-- Recomputes legacy vs v2 on one captured source universe, verifies stored v2 selection, reports exact additions/removals and failed physical dimensions, and requires zero professional/reference input.
-- Includes a synthetic self-test.
+- `analyzer/v143_precision_replay_policy_compare.py`.
+- Recomputes legacy vs v2 on one captured source universe, applies the common promoted-harmonic guard to both policies, verifies stored v2 selection, reports exact additions/removals and failed physical dimensions, and requires zero professional/reference input.
+- Synthetic self-test passed in CPU guard run `32777140959`.
 
 Candidate workflow:
-- `.github/workflows/v143-repaired-timing-precision-candidate-product.yml` latest definition commit `cfdd33117a649ee0b24088428079f88085de3a5b`.
-- Before any future paid invocation it compiles/self-tests v2 and checks protected-runtime/source/anti-leakage invariants.
-- After the one capture it rejects the product unless replay attack/pitch counts reconcile exactly with `precisionDiagnostics`, every candidate identity is unique/complete, exactly one selected primary exists per attack, all physical fields are finite, and selected totals reconcile.
+- `.github/workflows/v143-repaired-timing-precision-candidate-product.yml`.
+- Manual `workflow_dispatch` only.
+- Requires explicit input `paid_capture_authorized=YES`; default is `NO`.
+- One-shot lock `debug/v143-contextual-prune/precision-v2-capture-lock.json` prevents a second successful paid capture.
+- Static guard verifies exactly one `python -m modal run` in workflow and exactly one `.remote(` producer invocation.
+- Before paid invocation it compiles/self-tests v2 and checks protected-runtime/source/anti-leakage invariants.
+- After capture it rejects the product unless replay attack/pitch counts reconcile exactly with `precisionDiagnostics`, every candidate identity is unique/complete, exactly one selected primary exists per attack, all physical fields are finite, and selected totals reconcile.
 - It cryptographically binds replay evidence in `preFreezeTrace.replayEvidenceSha256`.
-- It then runs the CPU replay comparison and commits both the candidate product and `debug/v143-contextual-prune/precision-v2-replay-policy-compare.json`.
+- It then runs the CPU replay comparison and commits candidate product + comparison + one-shot lock.
 - This prevents another evidence-loss cycle: after one future carrier capture, further precision experiments can be CPU-only.
 
 ## Current mutation/cost state
 - No new candidate generated.
-- No Modal/L4 invoked during this work.
+- No Modal/L4 invoked during current v2 work.
 - No professional scorer/reference invoked.
 - No render events mutated.
 - Protected runtime unchanged.
 - `main` and Production untouched.
 
 ## Next exact actions
-1. Check for persisted `precision-v2-cpu-guard-result.json`; if present, require `passed=true`, no inference, no Modal, no professional reference, protected blob exact.
-2. Fix any CPU guard failure for free before considering a capture.
-3. Under current hard boundary, **do not dispatch the candidate workflow yet**.
-4. Once CPU preflight is green, the remaining hard blocker is one explicit user-authorized carrier/candidate capture. It will persist the complete replay universe and immediately emit exact legacy-v2 comparison.
-5. Use replay evidence for all further threshold/policy analysis CPU-only; no repeated separator inference.
-6. Only if source-only evidence supports the corrected candidate: immutable freeze/PDF → fidelity 1.0 → lock → exactly one professional score.
+1. CPU preflight is complete and green; no free preflight blocker remains.
+2. Under the current hard boundary, **do not dispatch the candidate workflow** until the user explicitly authorizes paid Modal/L4 usage.
+3. If explicitly authorized, dispatch exactly one capture with `paid_capture_authorized=YES`; the one-shot lock must prevent repeats.
+4. Immediately require persisted candidate replay evidence + `precision-v2-replay-policy-compare.json` to reconcile exactly before any further inference or mutation.
+5. Use captured replay evidence for all later precision experiments CPU-only; do not repeat separator inference.
+6. Only if source-only replay evidence supports the corrected candidate: immutable freeze/PDF → fidelity 1.0 → lock → exactly one professional score.
 7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
