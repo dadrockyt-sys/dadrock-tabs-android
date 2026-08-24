@@ -1,0 +1,97 @@
+name: V143 Frozen Evidence Harmonic Guard Reconstruction
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_reconstruct_harmonic_guard_from_frozen_evidence.py
+      - debug/v143-contextual-prune/frozen-approved-audio-preholdout-evidence.json
+      - .github/workflows/v143-frozen-evidence-harmonic-guard-reconstruction.yml
+      - debug/v143-contextual-prune/RUN_FROZEN_EVIDENCE_HARMONIC_GUARD_RECONSTRUCTION_ONCE
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-frozen-evidence-harmonic-guard-reconstruction
+  cancel-in-progress: false
+
+jobs:
+  reconstruct:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Reconstruct corrected candidate from frozen pre-scorer evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile analyzer/v143_reconstruct_harmonic_guard_from_frozen_evidence.py
+          PYTHONPATH=analyzer python analyzer/v143_reconstruct_harmonic_guard_from_frozen_evidence.py \
+            debug/v143-contextual-prune/frozen-approved-audio-preholdout-evidence.json \
+            debug/v143-contextual-prune/harmonic-guard-frozen-evidence-corrected-render.json \
+            debug/v143-contextual-prune/harmonic-guard-frozen-evidence-reconstruction-proof.json
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('debug/v143-contextual-prune/harmonic-guard-frozen-evidence-reconstruction-proof.json').read_text())
+          required={
+            'passed': True,
+            'attackCount': 725,
+            'suppressedHarmonicCount': 96,
+            'correctedRenderEventCount': 889,
+            'remappedSurvivorCount': 48,
+            'retainedEvidenceBackedLegatoLinkCount': 27,
+            'strippedInvalidatedLegatoLinkCount': 1,
+            'conservativelyClampedSustainCount': 13,
+            'referenceFree': True,
+            'professionalReferenceUsed': False,
+            'referenceRuntimeInputUsed': False,
+            'modalUsed': False,
+            'freshSeparatorInference': False,
+            'productionModified': False,
+          }
+          failed={k:(p.get(k),v) for k,v in required.items() if p.get(k)!=v}
+          if failed:
+              raise SystemExit(f'reconstruction proof failed: {failed}')
+          if p.get('correctedRenderEventsCanonicalSha256') == 'a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb':
+              raise SystemExit('corrected render identity illegally equals retired scored identity')
+          PY
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_reconstruct_harmonic_guard_from_frozen_evidence.py; then
+            echo 'Forbidden scorer/source token in frozen-evidence reconstruction path' >&2
+            exit 31
+          fi
+
+      - name: Commit CPU-only corrected reconstruction and proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- \
+            debug/v143-contextual-prune/harmonic-guard-frozen-evidence-corrected-render.json \
+            debug/v143-contextual-prune/harmonic-guard-frozen-evidence-reconstruction-proof.json
+          if test -f debug/v143-contextual-prune/RUN_FROZEN_EVIDENCE_HARMONIC_GUARD_RECONSTRUCTION_ONCE; then
+            git rm -- debug/v143-contextual-prune/RUN_FROZEN_EVIDENCE_HARMONIC_GUARD_RECONSTRUCTION_ONCE
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record frozen-evidence harmonic guard reconstruction'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
