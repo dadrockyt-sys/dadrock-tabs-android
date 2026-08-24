@@ -34,31 +34,51 @@ The first physical-grid diagnostic also had the wrong product-schema assumption:
 - old product contains no top-level `sourceRows`, so its `sourceRows.rowCount=0` result is not a physical-provenance measurement.
 - all 985 serialized top-level events have `onsetTime == timeSeconds`, so the diagnostic trivially reports zero residual there. This does **not** prove the detected physical onset was on the grid.
 
-### New direct source-level timing handoff defect
+## Direct source-level timing handoff defect — PROVEN
 `build_precision_candidate_assembly()` explicitly preserves two separate timing facts before downstream semantics:
 - `grid_time = grid[key]`
 - `physical_onset = row.get("onsetTime") or grid_time`
 - source/event row gets `timeSeconds=grid_time` and `onsetTime=physical_onset`.
 
-But `analyzer/v143_repaired_timing_precision_candidate_product_modal.py::_promote_candidate_sustain()` later does:
-- `start = event["timeSeconds"]`
-- writes `rhythmSustain.attackTimingChanged = False`
-- then overwrites `event["onsetTime"] = start`
-- and `event["offsetTime"] = start + duration_seconds`.
-Thus any distinct physical onset provenance is erased and replaced by the quantized grid time while the same promoted sustain metadata asserts attack timing was not changed.
+The old `_promote_candidate_sustain()` then overwrote `onsetTime` with `timeSeconds` while claiming `rhythmSustain.attackTimingChanged=False`.
 
-This also explains why the committed old product cannot be used to recover physical onset residuals after the fact: the physical `onsetTime` exists in the immediate candidate assembly but is not serialized separately, and the promoted product overwrites it before output.
+Cheap proof:
+- checker `analyzer/check_v143_precision_sustain_onset_handoff.py` initially added in commit `45b260a60afa82ec8c5f6c02a7104df9a2ffd28c`.
+- workflow `.github/workflows/v143-precision-sustain-onset-handoff-static-proof.yml` initially added in commit `885e1154af9e08f9e38dfcb6da14132383e654e0`.
+- committed schema-v1 diagnostic proved `assemblySeparatesPhysicalFromGrid=true`, `promotionOverwritesPhysicalOnset=true`, `promotionClaimsAttackTimingChangedFalse=true`, with a synthetic `10.083s` physical attack overwritten to grid `10.000s` (`-0.083s` loss).
+- protected pipeline remained exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- no Modal/GPU or professional reference/scorer used.
 
-`v143_rhythm_sustain_consensus_shadow.py` additionally uses `timeSeconds` (not physical `onsetTime`) as its sustain-analysis onset, so the sustain stage itself is grid-anchored. That may be intentional for quantized sustain, but it makes preserving the separate physical onset provenance even more important.
+## Candidate-only correction now committed — CI RESULT PENDING
+- Added pure CPU helper `analyzer/v143_precision_sustain_promotion.py` in commit `89143dc7382b200af449b607d1fbd294ba6916fd`.
+- Updated `analyzer/v143_repaired_timing_precision_candidate_product_modal.py` in commit `c72ed6ff569e402f8761dbe1be5ea802c8e68059` to bundle the helper and delegate `_promote_candidate_sustain()` to it.
+- Updated static/synthetic checker in commit `2e488187fd53414090efdf0c47d39fa1cca72229`.
+- Updated workflow enforcement in commit `38c4cc9b56bf3cd9356b2456837555c1cbd3d0cf`.
 
-## Cheap static proof added — 2026-08-24 continuation
-- Added `analyzer/check_v143_precision_sustain_onset_handoff.py` in commit `45b260a60afa82ec8c5f6c02a7104df9a2ffd28c`.
-- Added `.github/workflows/v143-precision-sustain-onset-handoff-static-proof.yml` in commit `885e1154af9e08f9e38dfcb6da14132383e654e0`.
-- Checker is stdlib/AST-only plus `git hash-object`; it does **not** import/run Modal or inference code.
-- It proves from source structure that assembly keeps quantized `timeSeconds` and distinct physical `onsetTime`, then current sustain promotion replaces `onsetTime` with grid-derived `start` while claiming `attackTimingChanged=False`.
-- It includes a synthetic nonzero physical-vs-grid residual to make the destructive handoff explicit and enforces the protected pipeline blob.
-- Workflow is CPU-only and writes a diagnostic JSON/log. No Modal/GPU inference and no professional reference/scorer access.
-- At this checkpoint the workflow result has not yet been inspected; do not claim the static proof has passed CI until its run is verified.
+Corrected timing contract:
+- `timeSeconds` remains the quantized tab-grid identity.
+- `start = timeSeconds` remains the quantized presentation start.
+- `onsetTime` now preserves the physical detected attack from candidate assembly; it is no longer overwritten by sustain promotion.
+- `end`, `duration`, and `offsetTime` remain grid-start-plus-sustain-duration because the current sustain consensus itself is grid-anchored.
+- `rhythmSustain` now explicitly serializes `physicalOnsetPreserved=true`, `analysisTimingBasis=quantized-timeSeconds`, `presentationStartBasis=quantized-timeSeconds`, and `offsetTimingBasis=quantized-timeSeconds-plus-durationSeconds`.
+- `physicalOnsetDeltaFromGridSeconds` is serialized directly from the two preserved timing facts; no timing is invented.
+- `attackTimingChanged=false` is now truthful: promotion preserves the incoming physical attack while retaining the separate grid start.
+
+Post-fix checker exercises two synthetic residual directions and requires:
+- same event count;
+- same `(measure,step)`, MIDI, string, fret, and `timeSeconds`;
+- physical `onsetTime` preserved exactly;
+- `start == timeSeconds`;
+- `end-start == duration == rhythmSustain.durationSeconds` and `offsetTime == end`;
+- residual metadata equals `onsetTime-timeSeconds`;
+- no invented attack or pitch;
+- protected pipeline unchanged;
+- no Modal/GPU and no scorer/reference.
+
+At this checkpoint, the branch still shows the earlier schema-v1 defect diagnostic; the new schema-v2 corrected proof has not yet been observed/committed by Actions. **Do not claim the correction has passed CI until the schema-v2 diagnostic appears.**
+
+## Sustain semantics note
+`v143_rhythm_sustain_consensus_shadow.py` still intentionally analyzes sustain from `timeSeconds` through `_event_time()`, so the promoted absolute sustain endpoint remains grid-derived. This correction does not silently change sustain inference; it only preserves the independent physical attack provenance and makes timing bases explicit.
 
 ## Existing diagnostic files from earlier audit
 - `analyzer/check_v143_candidate_physical_grid_fidelity.py` commit `013053025984172752af46ef2d10112dd22aec1f` and workflow commit `13ba13453424ce861c96d02d0c4c483817a74c6c` exist, but their first result is schema-limited as described above. Do not use its zero top-level residual as evidence of physical timing accuracy.
@@ -66,11 +86,10 @@ This also explains why the committed old product cannot be used to recover physi
 ## Cost control
 - No Modal/GPU inference in this continuation yet.
 - Do not rerun old candidate/freeze/scorer.
-- Prove the onset-provenance overwrite statically/synthetically before changing candidate runtime behavior.
+- Current work is source/static/synthetic only.
 
 ## Next exact actions
-1. Verify the new cheap static-proof workflow run and inspect its diagnostic; protected pipeline must remain unchanged.
-2. If proof passes, correct `_promote_candidate_sustain()` so quantized `timeSeconds/start` remains the tab-grid identity while physical `onsetTime` survives promotion and serialization.
-3. Decide offset/duration semantics carefully so `durationSeconds` stays internally consistent and no attack/pitch/event identity changes occur.
-4. Add synthetic post-fix invariants: same `(measure,step)`, same MIDI/string/fret, same `timeSeconds`, same event count, physical `onsetTime` preserved, no invented timing, and promoted sustain truthfully reports whether attack timing changed.
-5. Only after static post-fix proof consider one new low-cost approved-audio candidate inference with a brand-new identity; never modify/rescore the retired freeze.
+1. Verify the updated cheap workflow emits schema-v2 diagnostic with `passed=true`, `defectPresent=false`, `physicalOnsetPreserved=true`, identity invariants true, and protected pipeline unchanged.
+2. If static proof passes, inspect candidate serialization/render consumers for any assumption that `onsetTime == start`; keep the new dual-time contract explicit and isolated.
+3. Add/adjust any cheap downstream static invariant needed for serialization fidelity; no Modal/GPU yet.
+4. Only after the static chain is clean consider one new low-cost approved-audio candidate inference with a brand-new identity; never modify/rescore the retired freeze.
