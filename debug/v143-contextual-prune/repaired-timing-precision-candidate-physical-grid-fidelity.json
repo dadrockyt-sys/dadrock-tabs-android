@@ -1,0 +1,549 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-candidate-physical-grid-fidelity",
+  "candidateMode": null,
+  "selectedCountDeclared": 725,
+  "noteCountDeclared": 985,
+  "sourceRows": {
+    "rowCount": 0,
+    "validResidualCount": 0,
+    "invalidResidualCount": 0,
+    "signedMeanSeconds": 0.0,
+    "signedMedianSeconds": 0.0,
+    "absoluteMeanSeconds": 0.0,
+    "absoluteMedianSeconds": 0.0,
+    "absoluteP90Seconds": 0.0,
+    "absoluteP95Seconds": 0.0,
+    "absoluteP99Seconds": 0.0,
+    "absoluteMaxSeconds": 0.0,
+    "within30msCount": 0,
+    "within60msCount": 0,
+    "within100msCount": 0,
+    "within150msCount": 0,
+    "within300msCount": 0,
+    "within500msCount": 0,
+    "within30msFraction": 0.0,
+    "within60msFraction": 0.0,
+    "within100msFraction": 0.0,
+    "within150msFraction": 0.0,
+    "within300msFraction": 0.0,
+    "within500msFraction": 0.0,
+    "over300msCount": 0,
+    "over500msCount": 0,
+    "worstResidualRows": []
+  },
+  "events": {
+    "rowCount": 985,
+    "validResidualCount": 985,
+    "invalidResidualCount": 0,
+    "signedMeanSeconds": 0.0,
+    "signedMedianSeconds": 0.0,
+    "absoluteMeanSeconds": 0.0,
+    "absoluteMedianSeconds": 0.0,
+    "absoluteP90Seconds": 0.0,
+    "absoluteP95Seconds": 0.0,
+    "absoluteP99Seconds": 0.0,
+    "absoluteMaxSeconds": 0.0,
+    "within30msCount": 985,
+    "within60msCount": 985,
+    "within100msCount": 985,
+    "within150msCount": 985,
+    "within300msCount": 985,
+    "within500msCount": 985,
+    "within30msFraction": 1.0,
+    "within60msFraction": 1.0,
+    "within100msFraction": 1.0,
+    "within150msFraction": 1.0,
+    "within300msFraction": 1.0,
+    "within500msFraction": 1.0,
+    "over300msCount": 0,
+    "over500msCount": 0,
+    "worstResidualRows": [
+      {
+        "index": 0,
+        "measure": 1,
+        "step": 12,
+        "timeSeconds": 0.6965986394557823,
+        "onsetTime": 0.6965986394557823,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 49,
+        "midi": 49
+      },
+      {
+        "index": 1,
+        "measure": 1,
+        "step": 14,
+        "timeSeconds": 0.9404081632653061,
+        "onsetTime": 0.9404081632653061,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 57,
+        "midi": 69
+      },
+      {
+        "index": 2,
+        "measure": 1,
+        "step": 14,
+        "timeSeconds": 0.9404081632653061,
+        "onsetTime": 0.9404081632653061,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 57,
+        "midi": 57
+      },
+      {
+        "index": 3,
+        "measure": 2,
+        "step": 0,
+        "timeSeconds": 1.18421768707483,
+        "onsetTime": 1.18421768707483,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 57,
+        "midi": 71
+      },
+      {
+        "index": 4,
+        "measure": 2,
+        "step": 0,
+        "timeSeconds": 1.18421768707483,
+        "onsetTime": 1.18421768707483,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 57,
+        "midi": 57
+      },
+      {
+        "index": 5,
+        "measure": 2,
+        "step": 1,
+        "timeSeconds": 1.3090249433106576,
+        "onsetTime": 1.3090249433106576,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 57
+      },
+      {
+        "index": 6,
+        "measure": 2,
+        "step": 1,
+        "timeSeconds": 1.3090249433106576,
+        "onsetTime": 1.3090249433106576,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 52
+      },
+      {
+        "index": 7,
+        "measure": 2,
+        "step": 5,
+        "timeSeconds": 1.8024489795918368,
+        "onsetTime": 1.8024489795918368,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 40,
+        "midi": 64
+      },
+      {
+        "index": 8,
+        "measure": 2,
+        "step": 5,
+        "timeSeconds": 1.8024489795918368,
+        "onsetTime": 1.8024489795918368,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 40,
+        "midi": 40
+      },
+      {
+        "index": 9,
+        "measure": 2,
+        "step": 7,
+        "timeSeconds": 2.040453514739229,
+        "onsetTime": 2.040453514739229,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 52
+      },
+      {
+        "index": 10,
+        "measure": 2,
+        "step": 8,
+        "timeSeconds": 2.159455782312925,
+        "onsetTime": 2.159455782312925,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 52
+      },
+      {
+        "index": 11,
+        "measure": 2,
+        "step": 9,
+        "timeSeconds": 2.281360544217687,
+        "onsetTime": 2.281360544217687,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 40,
+        "midi": 52
+      },
+      {
+        "index": 12,
+        "measure": 2,
+        "step": 9,
+        "timeSeconds": 2.281360544217687,
+        "onsetTime": 2.281360544217687,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 40,
+        "midi": 40
+      },
+      {
+        "index": 13,
+        "measure": 2,
+        "step": 11,
+        "timeSeconds": 2.5251700680272107,
+        "onsetTime": 2.5251700680272107,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 64
+      },
+      {
+        "index": 14,
+        "measure": 2,
+        "step": 11,
+        "timeSeconds": 2.5251700680272107,
+        "onsetTime": 2.5251700680272107,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 52
+      },
+      {
+        "index": 15,
+        "measure": 2,
+        "step": 12,
+        "timeSeconds": 2.647074829931973,
+        "onsetTime": 2.647074829931973,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 52
+      },
+      {
+        "index": 16,
+        "measure": 2,
+        "step": 13,
+        "timeSeconds": 2.766077097505669,
+        "onsetTime": 2.766077097505669,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 40,
+        "midi": 40
+      },
+      {
+        "index": 17,
+        "measure": 2,
+        "step": 14,
+        "timeSeconds": 2.885079365079365,
+        "onsetTime": 2.885079365079365,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 57,
+        "midi": 69
+      },
+      {
+        "index": 18,
+        "measure": 2,
+        "step": 14,
+        "timeSeconds": 2.885079365079365,
+        "onsetTime": 2.885079365079365,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 57,
+        "midi": 57
+      },
+      {
+        "index": 19,
+        "measure": 2,
+        "step": 15,
+        "timeSeconds": 3.0040816326530613,
+        "onsetTime": 3.0040816326530613,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 67,
+        "midi": 79
+      },
+      {
+        "index": 20,
+        "measure": 2,
+        "step": 15,
+        "timeSeconds": 3.0040816326530613,
+        "onsetTime": 3.0040816326530613,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 67,
+        "midi": 67
+      },
+      {
+        "index": 21,
+        "measure": 2,
+        "step": 15,
+        "timeSeconds": 3.0040816326530613,
+        "onsetTime": 3.0040816326530613,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 67,
+        "midi": 57
+      },
+      {
+        "index": 22,
+        "measure": 3,
+        "step": 0,
+        "timeSeconds": 3.1230839002267574,
+        "onsetTime": 3.1230839002267574,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 64
+      },
+      {
+        "index": 23,
+        "measure": 3,
+        "step": 0,
+        "timeSeconds": 3.1230839002267574,
+        "onsetTime": 3.1230839002267574,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 52
+      },
+      {
+        "index": 24,
+        "measure": 3,
+        "step": 2,
+        "timeSeconds": 3.355283446712018,
+        "onsetTime": 3.355283446712018,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 59,
+        "midi": 59
+      },
+      {
+        "index": 25,
+        "measure": 3,
+        "step": 3,
+        "timeSeconds": 3.4713832199546486,
+        "onsetTime": 3.4713832199546486,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 52
+      },
+      {
+        "index": 26,
+        "measure": 3,
+        "step": 4,
+        "timeSeconds": 3.5874829931972787,
+        "onsetTime": 3.5874829931972787,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 40,
+        "midi": 52
+      },
+      {
+        "index": 27,
+        "measure": 3,
+        "step": 4,
+        "timeSeconds": 3.5874829931972787,
+        "onsetTime": 3.5874829931972787,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 40,
+        "midi": 40
+      },
+      {
+        "index": 28,
+        "measure": 3,
+        "step": 7,
+        "timeSeconds": 3.9531972789115644,
+        "onsetTime": 3.9531972789115644,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 64
+      },
+      {
+        "index": 29,
+        "measure": 3,
+        "step": 7,
+        "timeSeconds": 3.9531972789115644,
+        "onsetTime": 3.9531972789115644,
+        "signedResidualSeconds": 0.0,
+        "absoluteResidualSeconds": 0.0,
+        "dominantMidi": 52,
+        "midi": 52
+      }
+    ]
+  },
+  "sourceEventConsistency": {
+    "sourceUniqueKeyCount": 0,
+    "eventUniqueKeyCount": 725,
+    "duplicateSourceKeyCount": 0,
+    "duplicateSourceKeys": [],
+    "eventKeysMissingSourceCount": 985,
+    "eventKeysMissingSource": [
+      {
+        "measure": 1,
+        "step": 12
+      },
+      {
+        "measure": 1,
+        "step": 14
+      },
+      {
+        "measure": 1,
+        "step": 14
+      },
+      {
+        "measure": 2,
+        "step": 0
+      },
+      {
+        "measure": 2,
+        "step": 0
+      },
+      {
+        "measure": 2,
+        "step": 1
+      },
+      {
+        "measure": 2,
+        "step": 1
+      },
+      {
+        "measure": 2,
+        "step": 5
+      },
+      {
+        "measure": 2,
+        "step": 5
+      },
+      {
+        "measure": 2,
+        "step": 7
+      },
+      {
+        "measure": 2,
+        "step": 8
+      },
+      {
+        "measure": 2,
+        "step": 9
+      },
+      {
+        "measure": 2,
+        "step": 9
+      },
+      {
+        "measure": 2,
+        "step": 11
+      },
+      {
+        "measure": 2,
+        "step": 11
+      },
+      {
+        "measure": 2,
+        "step": 12
+      },
+      {
+        "measure": 2,
+        "step": 13
+      },
+      {
+        "measure": 2,
+        "step": 14
+      },
+      {
+        "measure": 2,
+        "step": 14
+      },
+      {
+        "measure": 2,
+        "step": 15
+      },
+      {
+        "measure": 2,
+        "step": 15
+      },
+      {
+        "measure": 2,
+        "step": 15
+      },
+      {
+        "measure": 3,
+        "step": 0
+      },
+      {
+        "measure": 3,
+        "step": 0
+      },
+      {
+        "measure": 3,
+        "step": 2
+      },
+      {
+        "measure": 3,
+        "step": 3
+      },
+      {
+        "measure": 3,
+        "step": 4
+      },
+      {
+        "measure": 3,
+        "step": 4
+      },
+      {
+        "measure": 3,
+        "step": 7
+      },
+      {
+        "measure": 3,
+        "step": 7
+      }
+    ],
+    "sourceKeysWithoutEventsCount": 0,
+    "sourceKeysWithoutEvents": [],
+    "eventSourceOnsetMismatchCount": 0,
+    "eventSourceTimeSecondsMismatchCount": 0,
+    "eventSourceDominantMidiMismatchCount": 0,
+    "maximumEventSourceOnsetDeltaSeconds": 0.0,
+    "maximumEventSourceGridDeltaSeconds": 0.0
+  },
+  "referenceFree": true,
+  "professionalReferenceUsed": false,
+  "runtimeLabelsRequired": false,
+  "runtimeOutputChanged": false,
+  "productionModified": false,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "protectedPipelineUnchanged": true,
+  "actionTrace": {
+    "runId": 32738538663,
+    "runAttempt": 1,
+    "triggerSha": "13ba13453424ce861c96d02d0c4c483817a74c6c",
+    "checkerBlob": "e8c7aafa8c53b73cfc1a776ab23be4d981009b3e",
+    "candidateProductBlob": "20e7a583fcb96249636cc63b01cf9ae0044f2c62",
+    "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+    "protectedPipelineUnchanged": true,
+    "referenceFree": true,
+    "runtimeOutputChanged": false,
+    "productionModified": false
+  }
+}
