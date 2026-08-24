@@ -35,6 +35,7 @@ CANDIDATE_MODULES = (
     "v143_contextual_prune_precision_shadow",
     "v143_contextual_prune_candidate_events",
     "v143_contextual_prune_precision_candidate_events",
+    "v143_precision_sustain_promotion",
     "v143_correlation_safe_fixed_count_reranker_freeze",
     "v143_intro_sequence_event_model",
     "v143_intro_learned_grid_event_selector",
@@ -113,35 +114,9 @@ def _build_stems(normalized: Path, output_dir: Path) -> tuple[Path, Path]:
 
 
 def _promote_candidate_sustain(events: list[dict[str, Any]], tempo_bpm: float) -> list[dict[str, Any]]:
-    from v143_rhythm_sustain_technique_enricher import step_seconds_from_tempo, sustain_tier
+    from v143_precision_sustain_promotion import promote_candidate_sustain
 
-    one_step = step_seconds_from_tempo(float(tempo_bpm))
-    output: list[dict[str, Any]] = []
-    for index, raw in enumerate(events):
-        event = dict(raw)
-        shadow = event.get("rhythmSustainShadow") if isinstance(event.get("rhythmSustainShadow"), dict) else {}
-        duration_steps = max(1, int(shadow.get("durationSteps") or 1))
-        duration_seconds = float(shadow.get("durationSeconds") or one_step)
-        event["rhythmSustain"] = {
-            "version": 3,
-            "durationSeconds": duration_seconds,
-            "durationSteps": duration_steps,
-            "stepSeconds": float(one_step),
-            "tier": sustain_tier(duration_steps),
-            "source": "reference-free-two-view-harmonic-persistence-repaired-timing-precision-candidate",
-            "attackTimingChanged": False,
-            "professionalReferenceUsed": False,
-            "runtimeLabelsRequired": False,
-        }
-        start = float(event["timeSeconds"])
-        event["eventIndex"] = int(index)
-        event["start"] = start
-        event["end"] = start + duration_seconds
-        event["duration"] = duration_seconds
-        event["onsetTime"] = start
-        event["offsetTime"] = start + duration_seconds
-        output.append(event)
-    return output
+    return promote_candidate_sustain(events, tempo_bpm)
 
 
 @app.function(image=candidate_image, gpu="L4", timeout=1800, memory=12288)
