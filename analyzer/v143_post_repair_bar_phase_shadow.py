@@ -14,6 +14,7 @@ from v143_reference_free_bar_phase_consensus import (
 
 BEATS_PER_MEASURE = 4
 MIN_WINDOW_BEATS = 32
+# Diagnostic-only shadow: no runtime timing mutation occurs in this module.
 
 
 @dataclass(frozen=True)
