@@ -3,6 +3,11 @@ name: V143 Repaired Timing Precision Final Pre-Holdout
 # Freeze/render the already-green committed candidate. No Modal analysis is run here.
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-repaired-timing-precision-final-preholdout.yml'
 
 permissions:
   contents: write
