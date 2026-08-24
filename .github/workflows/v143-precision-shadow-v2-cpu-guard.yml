@@ -10,6 +10,7 @@ on:
       - analyzer/v143_repaired_timing_precision_candidate_product_modal.py
       - analyzer/v143_precision_optional_candidate_accounting.py
       - analyzer/v143_precision_replay_policy_compare.py
+      - .github/workflows/v143-repaired-timing-precision-candidate-product.yml
       - .github/workflows/v143-precision-shadow-v2-cpu-guard.yml
   workflow_dispatch:
 
@@ -50,6 +51,14 @@ jobs:
             echo 'Forbidden scorer/reference token in precision v2 path' >&2
             exit 1
           fi
+          workflow='.github/workflows/v143-repaired-timing-precision-candidate-product.yml'
+          grep -q 'paid_capture_authorized' "$workflow"
+          grep -q 'precision-v2-capture-lock.json' "$workflow"
+          grep -q 'precisionReplayEvidence' "$workflow"
+          grep -q 'replayEvidenceSha256' "$workflow"
+          grep -q 'v143_precision_replay_policy_compare.py' "$workflow"
+          test "$(grep -c 'python -m modal run' "$workflow")" -eq 1
+          test "$(grep -c '\.remote(' analyzer/v143_repaired_timing_precision_candidate_product_modal.py)" -eq 1
       - name: Persist green CPU guard
         shell: bash
         run: |
@@ -59,7 +68,7 @@ jobs:
           import json
           from pathlib import Path
           result = {
-              'schemaVersion': 1,
+              'schemaVersion': 2,
               'passed': True,
               'policy': 'envelope-balanced-secondary-v2',
               'sourceSha': '${{ github.sha }}',
@@ -68,6 +77,7 @@ jobs:
               'policySelfTestPassed': True,
               'replayCompareSelfTestPassed': True,
               'historicalOptionalAccountingPassed': True,
+              'singlePaidCaptureStaticGuardPassed': True,
               'newInferenceUsed': False,
               'modalInvoked': False,
               'professionalReferenceUsed': False,
