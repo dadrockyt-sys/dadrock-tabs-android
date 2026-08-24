@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 01:34 America/Thunder_Bay
+Updated: 2026-08-24 01:36 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -30,11 +30,10 @@ oneDNN-off CPU proof is byte-exact across AWS Intel and GCP AMD with same source
 ## Combined repaired-timing + precision single-pass — GREEN
 `debug/v143-contextual-prune/repaired-timing-precision-single-pass-smoke.json` completed successfully:
 - repaired beats 449, interval outliers 0, 113 measures / 1796 grid slots
-- correction: 984 attacks
-- precision: 725 retained attacks / 987 pitch hypotheses / 144 fundamental promotions
-- explicit primary MIDI complete: 725/725
-- all 113 target measures populated
-- no unobserved attack, relocation, or unobserved pitch; reference-free; protected/Production unchanged
+- correction 984 attacks
+- precision 725 retained attacks / 987 pitch hypotheses / 144 fundamental promotions
+- explicit primary MIDI complete 725/725; all 113 target measures populated
+- no unobserved attack, relocation, or unobserved pitch; reference-free; Production unchanged
 - direct stem `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`
 - cascade stem `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`
 - repaired beats SHA `c74915787c824d91ba82b1314f3ce52e83bc40c6b72fec13efbf0b23d954e6aa`
@@ -42,14 +41,20 @@ oneDNN-off CPU proof is byte-exact across AWS Intel and GCP AMD with same source
 - precision pitch sets SHA `4a986b255002fe2fce2e1a74df73b9b2ed73ebea9a611a857779ccbcbba839e9`
 - precision primary MIDI SHA `bd08caf874fc3afd969cadc1595f87f1fb68a539bf1ff9af2977f976bf46a6a8`
 
-This clears the combined single-pass bridge gate. Scorer is still closed.
+## ACTIVE compute — FINAL 2-PASS COMBINED EXACT PROOF
+- Final proof preflight hardened at commit `0b6e7a58801e7bdd84e0528e98c7dce89def479b`.
+- It now requires current dispatch controls, exact AWS/GCP cross-host proof, separator single-pass smoke, combined single-pass smoke, fixture/protected hashes, and anti-leakage before Modal compute.
+- One-shot launch commit: `4288dbf8551a0746a7eadf137d1ebf834f6d1178`.
+- Workflow restored manual-only immediately at `e4bb2c8956ce1b314fe6d0f1e788607d56322575`.
+- Exactly two independent combined passes are active. Expected result: `debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json`.
+- Do not launch any more compute until this result is assessed.
 
 ## Modal cost-control — ACTIVE
-No debugging loops. Final 2-pass exact combined proof is now the next acceptance gate; after it resolves do not launch additional compute until assessed. Scorer remains closed.
+No debugging loops. This is the final 2-pass combined acceptance proof, not a repeated diagnostic. Scorer remains closed.
 
 ## Current work NOW
-1. Harden the final 2-pass combined exact proof preflight to require the committed cross-host CPU proofs, current dispatch controls, separator smoke, and combined single-pass smoke.
-2. Launch the final 2-pass exact combined proof exactly once.
-3. If exact and all invariants green, run candidate/pre-freeze path.
+1. Poll only for `repaired-timing-precision-cold-exact-proof.json`.
+2. Require `passed=true`, every stage hash exact, every section exact, no invariant failures, protected exact, Production unchanged.
+3. If green, run candidate/pre-freeze path.
 4. Create BRAND-NEW Jimmy analysis/authenticated events/freeze/PDF identity; verify fidelity1.0, protected exact, Production unchanged.
 5. ONLY THEN reopen scorer V2 and score at unchanged >=0.99 threshold.
