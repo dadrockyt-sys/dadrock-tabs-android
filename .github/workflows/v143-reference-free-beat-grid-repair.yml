@@ -1,0 +1,135 @@
+name: V143 Reference-Free Beat Grid Repair
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - analyzer/v143_reference_free_beat_grid_repair.py
+      - analyzer/check_v143_reference_free_beat_grid_repair.py
+      - .github/workflows/v143-reference-free-beat-grid-repair.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-reference-free-beat-grid-repair
+  cancel-in-progress: true
+
+jobs:
+  repair-shadow:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU audio dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python -m pip install --disable-pip-version-check --quiet numpy scipy soundfile
+      - name: Run checker and anti-leakage gate
+        env:
+          PYTHONPATH: analyzer
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/check_v143_reference_free_beat_grid_repair.py
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_reference_free_beat_grid_repair.py \
+            analyzer/check_v143_reference_free_beat_grid_repair.py; then
+            echo 'Forbidden scorer/source token in beat repair module' >&2
+            exit 1
+          fi
+      - name: Run approved-audio beat repair shadow
+        env:
+          PYTHONPATH: analyzer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import hashlib, json, subprocess
+          from collections import Counter
+          from pathlib import Path
+          import soundfile as sf
+          from v143_candidate_timing_adapter import build_subdivision_grid
+          from v143_reference_free_timing import estimate_reference_free_timing
+          from v143_reference_free_beat_grid_repair import repair_reference_free_beat_grid_from_samples
+          from v143_reference_free_bar_phase_consensus import estimate_reference_free_bar_phase_consensus_from_samples
+
+          source=Path('public/gomywayfullaitest.m4a')
+          expected='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          digest=hashlib.sha256(source.read_bytes()).hexdigest()
+          assert digest==expected,digest
+          normalized=Path('/tmp/v143-beat-repair.wav')
+          subprocess.run(['ffmpeg','-y','-v','error','-i',str(source),'-map','0:a:0','-vn','-ar','44100','-ac','2','-c:a','pcm_s16le',str(normalized)],check=True)
+          timing=estimate_reference_free_timing(normalized)
+          samples,sr=sf.read(str(normalized),always_2d=False)
+          repaired=repair_reference_free_beat_grid_from_samples(samples,int(sr),timing)
+          repaired_consensus=estimate_reference_free_bar_phase_consensus_from_samples(samples,int(sr),repaired.repaired_beat_times)
+          original_grid=build_subdivision_grid(timing.beat_times, first_beat_in_measure=timing.first_beat_in_measure)
+          repaired_grid=build_subdivision_grid(repaired.repaired_beat_times, first_beat_in_measure=timing.first_beat_in_measure)
+          original_measures=Counter(int(slot.measure) for slot in original_grid)
+          repaired_measures=Counter(int(slot.measure) for slot in repaired_grid)
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          out={
+            'schemaVersion':1,
+            'gate':'v143-reference-free-beat-grid-repair-approved-audio',
+            'runId':int('${{ github.run_id }}'),'runAttempt':int('${{ github.run_attempt }}'),'triggerSha':'${{ github.sha }}',
+            'approvedAudioSha256':digest,
+            'originalTiming':{
+              'tempoBpm':timing.tempo_bpm,'beatConfidence':timing.beat_confidence,
+              'firstBeatInMeasure':timing.first_beat_in_measure,'downbeatIndexMod4':timing.downbeat_index_mod4,
+              'barConfidence':timing.bar_confidence,'beatCount':len(timing.beat_times),
+            },
+            'repair':repaired.diagnostics(),
+            'repairedBarPhaseConsensus':repaired_consensus.diagnostics(),
+            'grid':{
+              'originalSlotCount':len(original_grid),'repairedSlotCount':len(repaired_grid),
+              'originalFirstMeasure':min(original_measures),'originalLastMeasure':max(original_measures),
+              'repairedFirstMeasure':min(repaired_measures),'repairedLastMeasure':max(repaired_measures),
+              'originalMeasureCount':len(original_measures),'repairedMeasureCount':len(repaired_measures),
+              'originalBoundarySteps':{
+                'first':original_measures[min(original_measures)],'last':original_measures[max(original_measures)]},
+              'repairedBoundarySteps':{
+                'first':repaired_measures[min(repaired_measures)],'last':repaired_measures[max(repaired_measures)]},
+            },
+            'invariants':{
+              'referenceFree':True,'runtimeLabelsRequired':False,'tempoChanged':False,'barPhaseChanged':False,
+              'liveRhythmOutputChanged':False,'productionModified':False,
+              'protectedPipelineBlob':protected,
+              'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+            }
+          }
+          Path('debug/v143-contextual-prune/beat-grid-repair-approved-audio.json').write_text(json.dumps(out,indent=2)+'\n')
+          print(json.dumps(out['repair'],sort_keys=True))
+          print(json.dumps(out['repairedBarPhaseConsensus'],sort_keys=True))
+          print(json.dumps(out['grid'],sort_keys=True))
+          if repaired.repaired_interval_outlier_count != 0:
+              raise SystemExit('Repaired beat grid still contains tempo-interval outliers')
+          if protected!='7f72f8ed9b14af8bc93e95544195204d99c6bec1':
+              raise SystemExit('Protected runtime changed')
+          PY
+      - name: Commit diagnostic race-safe
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/beat-grid-repair-approved-audio.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record approved-audio beat grid repair shadow'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            sleep 2
+          done
+          exit 1
