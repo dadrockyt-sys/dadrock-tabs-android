@@ -33,6 +33,7 @@ CANDIDATE_MODULES = (
     "v143_contextual_prune_runtime",
     "v143_contextual_prune_shadow_correction",
     "v143_contextual_prune_precision_shadow",
+    "v143_precision_promoted_harmonic_guard",
     "v143_contextual_prune_candidate_events",
     "v143_contextual_prune_precision_candidate_events",
     "v143_precision_sustain_promotion",
@@ -133,6 +134,7 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
     from v143_contextual_prune_reference_free_carrier import build_contextual_prune_reference_free_carrier
     from v143_contextual_prune_runtime import run_contextual_prune
     from v143_contextual_prune_shadow_correction import apply_reference_free_shadow_correction
+    from v143_precision_promoted_harmonic_guard import apply_reference_free_promoted_harmonic_guard
     from v143_reference_free_beat_grid_repair import repair_reference_free_beat_grid_from_samples
     from v143_reference_free_timing import estimate_reference_free_timing
     from v143_rhythm_bend_consensus import enrich_rhythm_assembly_with_consensus_bends
@@ -176,6 +178,11 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
         base = run_contextual_prune(carrier.rows_by_measure, carrier.grid, targets, context_measures=targets)
         correction = apply_reference_free_shadow_correction(carrier.rows, carrier.grid, base.candidate_events, targets)
         precision = apply_reference_free_precision_shadow(carrier.rows, carrier.grid, correction, targets)
+        precision, promoted_harmonic_guard = apply_reference_free_promoted_harmonic_guard(
+            carrier.rows,
+            carrier.grid,
+            precision,
+        )
         candidate = build_precision_candidate_assembly(carrier.rows, carrier.grid, precision, carrier.timing)
 
         with_bends = enrich_rhythm_assembly_with_consensus_bends(candidate.assembly, carrier_stem_paths=(direct, cascade))
@@ -212,7 +219,7 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
         })
         source_sha = _sha256_bytes(source_audio)
         return {
-            "schemaVersion": 3,
+            "schemaVersion": 4,
             "generatedTab": render_rhythm_tab(events),
             "tuning": "E Standard",
             "tempo": float(carrier.timing.tempo_bpm),
@@ -227,8 +234,8 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
             "selectedCount": int(len(precision.retained_events)),
             "audioDerivedMeasureCount": len(targets),
             "assembly": {
-                "version": 5,
-                "mode": "v143-repaired-timing-contextual-prune-precision-candidate",
+                "version": 6,
+                "mode": "v143-repaired-timing-contextual-prune-precision-promoted-harmonic-guard-candidate",
                 "polyphonicExpansion": len(events) > len(precision.retained_events),
                 "selectedAttackCount": len(precision.retained_events),
                 "renderNoteCount": len(events),
@@ -240,6 +247,7 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
             "candidateDiagnostics": candidate.diagnostics(),
             "correctionDiagnostics": correction.diagnostics(),
             "precisionDiagnostics": precision.diagnostics(),
+            "promotedHarmonicGuardDiagnostics": promoted_harmonic_guard.to_dict(),
             "semanticGuard": semantic_diagnostics.to_dict(),
             "sustainDiagnostics": sustain_diagnostics,
             "timing": {
@@ -257,17 +265,17 @@ def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".au
                 "measureEnd": int(carrier.measure_end),
             },
             "liveV143": {
-                "version": 6,
+                "version": 7,
                 "rhythmOnly": True,
                 "referenceFree": True,
                 "professionalReferenceUsed": False,
                 "referenceRuntimeInputUsed": False,
                 "runtimeLabelsRequired": False,
-                "candidateMode": "isolated-repaired-timing-contextual-prune-precision",
+                "candidateMode": "isolated-repaired-timing-contextual-prune-precision-promoted-harmonic-guard",
             },
             "candidate": {
-                "schemaVersion": 3,
-                "mode": "v143-repaired-timing-contextual-prune-precision-approved-audio",
+                "schemaVersion": 4,
+                "mode": "v143-repaired-timing-contextual-prune-precision-promoted-harmonic-guard-approved-audio",
                 "approvedFixture": source_sha == APPROVED_AUDIO_SHA256,
                 "sourceSha256": source_sha,
                 "sourceBytes": len(source_audio),
@@ -313,6 +321,7 @@ def approved_audio(
     print(json.dumps(result["timing"], sort_keys=True))
     print(json.dumps(result["candidateDiagnostics"], sort_keys=True))
     print(json.dumps(result["precisionDiagnostics"], sort_keys=True))
+    print(json.dumps(result["promotedHarmonicGuardDiagnostics"], sort_keys=True))
     print(json.dumps(result["semanticGuard"], sort_keys=True))
     print(json.dumps(result["sustainDiagnostics"], sort_keys=True))
     print(f"WROTE={output}")
