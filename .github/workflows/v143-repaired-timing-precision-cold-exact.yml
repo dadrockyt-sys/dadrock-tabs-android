@@ -29,11 +29,38 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --disable-pip-version-check --quiet numpy scipy
-          python -m py_compile analyzer/v143_repaired_timing_precision_shadow_modal.py
+          python -m py_compile \
+            analyzer/v143_repaired_timing_precision_shadow_modal.py \
+            analyzer/v143_seeded_separator.py \
+            analyzer/v143_seeded_audio_separator_cli.py \
+            analyzer/check_v143_demucs_cpu_dispatch_controls.py \
+            analyzer/check_v143_demucs_cpu_cross_host_exact.py
           PYTHONPATH=analyzer python analyzer/check_v143_reference_free_beat_grid_repair.py
           PYTHONPATH=analyzer python analyzer/check_v143_contextual_prune_precision_shadow.py
+          PYTHONPATH=analyzer python analyzer/check_v143_demucs_cpu_dispatch_controls.py
+          PYTHONPATH=analyzer python analyzer/check_v143_demucs_cpu_cross_host_exact.py \
+            debug/v143-contextual-prune/demucs-cpu-nomkldnn-probe-1.json \
+            debug/v143-contextual-prune/demucs-cpu-nomkldnn-probe-2.json
+          test -f debug/v143-contextual-prune/separator-single-pass-smoke.json
+          test -f debug/v143-contextual-prune/repaired-timing-precision-single-pass-smoke.json
           test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
           test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          sep=json.loads(Path('debug/v143-contextual-prune/separator-single-pass-smoke.json').read_text())
+          combo=json.loads(Path('debug/v143-contextual-prune/repaired-timing-precision-single-pass-smoke.json').read_text())
+          hashes=combo.get('stageHashes') or {}
+          inv=combo.get('invariants') or {}
+          if sep.get('directGuitarSha256') != hashes.get('directGuitarStemSha256'):
+              raise SystemExit('combined smoke direct stem does not match separator smoke')
+          if sep.get('cascadeGuitarSha256') != hashes.get('cascadeGuitarStemSha256'):
+              raise SystemExit('combined smoke cascade stem does not match separator smoke')
+          if inv.get('referenceFree') is not True or inv.get('productionModified') is not False:
+              raise SystemExit('combined smoke safety invariant failed')
+          if inv.get('explicitPrimaryComplete') is not True or inv.get('allTargetMeasuresPopulated') is not True:
+              raise SystemExit('combined smoke musical invariant failed')
+          PY
           if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
             analyzer/v143_repaired_timing_precision_shadow_modal.py \
             analyzer/v143_reference_free_beat_grid_repair.py \
