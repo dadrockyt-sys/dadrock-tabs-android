@@ -1,0 +1,34 @@
+name: V143 Contextual Prune Precision Shadow
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - analyzer/v143_contextual_prune_precision_shadow.py
+      - analyzer/check_v143_contextual_prune_precision_shadow.py
+      - .github/workflows/v143-contextual-prune-precision-shadow.yml
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile isolated precision shadow
+        run: python -m py_compile analyzer/v143_contextual_prune_precision_shadow.py analyzer/check_v143_contextual_prune_precision_shadow.py
+      - name: Run invariants checker
+        env:
+          PYTHONPATH: analyzer
+        run: python analyzer/check_v143_contextual_prune_precision_shadow.py
+      - name: Verify protected production runtime blob
+        run: |
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
