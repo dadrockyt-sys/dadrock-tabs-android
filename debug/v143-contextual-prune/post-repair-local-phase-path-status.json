@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-post-repair-local-phase-path-self-report",
+  "runId": 32737275715,
+  "runAttempt": 1,
+  "triggerSha": "c680158f29b61ceaa721acc7f8fb99223795456a",
+  "staticOutcome": "success",
+  "approvedOutcome": "success",
+  "approvedDiagnosticExists": true,
+  "staticLogTail": [
+    "V143 post-repair local phase path checker: PASS",
+    "{'windowCount': 5, 'strongWindowCount': 4, 'phaseWindowCounts': {'1': 3, '2': 2}, 'strongPhaseWindowCounts': {'1': 2, '2': 2}, 'strongRuns': [{'phase': 1, 'firstBeatInMeasure': 3, 'windowCount': 2, 'startBeatIndex': 0, 'endBeatIndexExclusive': 80, 'minimumConfidence': 0.4, 'meanConfidence': 0.4}, {'phase': 2, 'firstBeatInMeasure': 2, 'windowCount': 2, 'startBeatIndex': 48, 'endBeatIndexExclusive': 128, 'minimumConfidence': 0.4, 'meanConfidence': 0.4}], 'strongTransitionCount': 1, 'strongTransitions': [{'fromPhase': 1, 'toPhase': 2, 'leftEndBeatIndexExclusive': 80, 'rightStartBeatIndex': 48}], 'multipleStrongPhasesObserved': True, 'referenceFree': True, 'runtimeLabelsRequired': False, 'productionModified': False}"
+  ],
+  "approvedLogTail": [
+    "{\"multipleStrongPhasesObserved\": true, \"phaseWindowCounts\": {\"0\": 2, \"1\": 13, \"2\": 8, \"3\": 3}, \"productionModified\": false, \"referenceFree\": true, \"runtimeLabelsRequired\": false, \"strongPhaseWindowCounts\": {\"1\": 12, \"2\": 1, \"3\": 2}, \"strongRuns\": [{\"endBeatIndexExclusive\": 272, \"firstBeatInMeasure\": 3, \"meanConfidence\": 0.5483519613565477, \"minimumConfidence\": 0.407068186852082, \"phase\": 1, \"startBeatIndex\": 32, \"windowCount\": 12}, {\"endBeatIndexExclusive\": 384, \"firstBeatInMeasure\": 1, \"meanConfidence\": 0.5000573462865493, \"minimumConfidence\": 0.4864580125293494, \"phase\": 3, \"startBeatIndex\": 304, \"windowCount\": 2}, {\"endBeatIndexExclusive\": 432, \"firstBeatInMeasure\": 2, \"meanConfidence\": 0.48565252704793926, \"minimumConfidence\": 0.48565252704793926, \"phase\": 2, \"startBeatIndex\": 368, \"windowCount\": 1}], \"strongTransitionCount\": 2, \"strongTransitions\": [{\"fromPhase\": 1, \"leftEndBeatIndexExclusive\": 272, \"rightStartBeatIndex\": 304, \"toPhase\": 3}, {\"fromPhase\": 3, \"leftEndBeatIndexExclusive\": 384, \"rightStartBeatIndex\": 368, \"toPhase\": 2}], \"strongWindowCount\": 15, \"windowCount\": 26}",
+    "WROTE=debug/v143-contextual-prune/post-repair-local-phase-path-approved-audio-shadow.json"
+  ],
+  "referenceFree": true,
+  "professionalReferenceUsed": false,
+  "runtimeLabelsRequired": false,
+  "runtimePhaseChanged": false,
+  "liveRhythmOutputChanged": false,
+  "productionModified": false,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "protectedPipelineUnchanged": true
+}

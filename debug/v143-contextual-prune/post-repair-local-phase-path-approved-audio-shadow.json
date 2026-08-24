@@ -1,0 +1,801 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-post-repair-local-phase-path-approved-audio-shadow",
+  "runId": 32737275715,
+  "runAttempt": 1,
+  "triggerSha": "c680158f29b61ceaa721acc7f8fb99223795456a",
+  "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "originalTiming": {
+    "tempoBpm": 129.19921875,
+    "beatCount": 447,
+    "firstBeatInMeasure": 3,
+    "downbeatIndexMod4": 1,
+    "barConfidence": 0.08797341408427677
+  },
+  "repair": {
+    "originalBeatCount": 447,
+    "repairedBeatCount": 449,
+    "originalFirstBeatTime": 0.6733786848072563,
+    "originalLastBeatTime": 203.03528344671201,
+    "repairedFirstBeatTime": 0.6965986394557823,
+    "repairedLastBeatTime": 209.09569160997734,
+    "originalIntervalOutlierCount": 38,
+    "repairedIntervalOutlierCount": 0,
+    "stableAnchorStartIndex": 0,
+    "stableAnchorEndIndex": 109,
+    "stableAnchorPeriodSeconds": 0.46439909297052395,
+    "activeAudioStartSeconds": 1.6346485260770975,
+    "activeAudioEndSeconds": 209.1231746031746,
+    "leadingExtendedBeatCount": 0,
+    "trailingExtendedBeatCount": 13,
+    "continuityOnlyBeatCount": 8,
+    "snappedBeatCount": 440,
+    "boundaryEvidenceFloor": 0.5944737866354368,
+    "boundaryEnergyFloor": 0.05812348996682043,
+    "boundaryLookaheadBeats": 4,
+    "lookaheadBridgeBeatCount": 3,
+    "originalIntervals": {
+      "count": 446,
+      "ratioP01": 0.5250000000000135,
+      "ratioP05": 0.725000000000013,
+      "ratioP50": 1.000000000000005,
+      "ratioP95": 1.0500000000000023,
+      "ratioP99": 1.0750000000000008
+    },
+    "repairedIntervals": {
+      "count": 448,
+      "ratioP01": 0.899999999999999,
+      "ratioP05": 0.950000000000003,
+      "ratioP50": 1.000000000000005,
+      "ratioP95": 1.0500000000000023,
+      "ratioP99": 1.075000000000009
+    },
+    "barPhaseChanged": false,
+    "tempoChanged": false,
+    "referenceFree": true,
+    "runtimeLabelsRequired": false,
+    "productionModified": false
+  },
+  "phasePath": {
+    "schemaVersion": 2,
+    "mode": "v143-post-repair-local-phase-path-shadow",
+    "windowBeats": 64,
+    "strideBeats": 16,
+    "beatCount": 449,
+    "featureExtractionPassCount": 1,
+    "windows": [
+      {
+        "name": "local-000",
+        "startBeatIndex": 0,
+        "endBeatIndexExclusive": 64,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 0,
+        "winnerFirstBeatInMeasure": 0,
+        "confidence": 0.19947494302261212,
+        "consensusSignalCount": 1,
+        "stableAcrossHalves": false,
+        "independentSignalSupported": false,
+        "strong": false,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 2,
+          "harmonicChange": 1,
+          "bassChange": 0
+        },
+        "candidateCombinedScores": {
+          "0": 0.40936787162755656,
+          "1": 0.16053466491064072,
+          "2": -0.2162751198614136,
+          "3": -0.3536274166767836
+        }
+      },
+      {
+        "name": "local-001",
+        "startBeatIndex": 16,
+        "endBeatIndexExclusive": 80,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.44329560606720997,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": false,
+        "independentSignalSupported": true,
+        "strong": false,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 2,
+          "harmonicChange": 1,
+          "bassChange": 0
+        },
+        "candidateCombinedScores": {
+          "0": -0.08089074496750531,
+          "1": 0.515321712959628,
+          "2": -0.08174179789066405,
+          "3": -0.35268917010145895
+        }
+      },
+      {
+        "name": "local-002",
+        "startBeatIndex": 32,
+        "endBeatIndexExclusive": 96,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.5706984577567749,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 2
+        },
+        "candidateCombinedScores": {
+          "0": -0.4987176894552039,
+          "1": 0.5979251989183906,
+          "2": 0.1630397372366687,
+          "3": -0.2622472466998555
+        }
+      },
+      {
+        "name": "local-003",
+        "startBeatIndex": 48,
+        "endBeatIndexExclusive": 112,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.5709676881763723,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 2,
+          "harmonicChange": 1,
+          "bassChange": 2
+        },
+        "candidateCombinedScores": {
+          "0": -0.6504560704834927,
+          "1": 0.7343920995859882,
+          "2": 0.29890834808293865,
+          "3": -0.38284437718543396
+        }
+      },
+      {
+        "name": "local-004",
+        "startBeatIndex": 64,
+        "endBeatIndexExclusive": 128,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.407068186852082,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 2,
+          "harmonicChange": 1,
+          "bassChange": 2
+        },
+        "candidateCombinedScores": {
+          "0": -0.804627706616507,
+          "1": 0.6425045109073483,
+          "2": 0.5712418734582771,
+          "3": -0.4091186777491188
+        }
+      },
+      {
+        "name": "local-005",
+        "startBeatIndex": 80,
+        "endBeatIndexExclusive": 144,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.4328693945440045,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 2,
+          "harmonicChange": 1,
+          "bassChange": 2
+        },
+        "candidateCombinedScores": {
+          "0": -0.5362937048269257,
+          "1": 0.5260510399896072,
+          "2": 0.397452385447375,
+          "3": -0.3872097206100563
+        }
+      },
+      {
+        "name": "local-006",
+        "startBeatIndex": 96,
+        "endBeatIndexExclusive": 160,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.4871024146997827,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 2
+        },
+        "candidateCombinedScores": {
+          "0": -0.2912643339933767,
+          "1": 0.4164180189841161,
+          "2": 0.16730154187348784,
+          "3": -0.2924552268642271
+        }
+      },
+      {
+        "name": "local-007",
+        "startBeatIndex": 112,
+        "endBeatIndexExclusive": 176,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.4599904253622608,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 2
+        },
+        "candidateCombinedScores": {
+          "0": -0.17710599324650958,
+          "1": 0.24112565811626702,
+          "2": 0.05225804620013187,
+          "3": -0.11627771106988949
+        }
+      },
+      {
+        "name": "local-008",
+        "startBeatIndex": 128,
+        "endBeatIndexExclusive": 192,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.5393768356316537,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 0
+        },
+        "candidateCombinedScores": {
+          "0": 0.018497011005682906,
+          "1": 0.3837788679649136,
+          "2": -0.2114705199582952,
+          "3": -0.19080535901230125
+        }
+      },
+      {
+        "name": "local-009",
+        "startBeatIndex": 144,
+        "endBeatIndexExclusive": 208,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.6901266601416858,
+        "consensusSignalCount": 3,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 1
+        },
+        "candidateCombinedScores": {
+          "0": -0.22469721872810877,
+          "1": 0.5044943400212119,
+          "2": -0.00134268251586777,
+          "3": -0.2784544387772354
+        }
+      },
+      {
+        "name": "local-010",
+        "startBeatIndex": 160,
+        "endBeatIndexExclusive": 224,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.6153866560853176,
+        "consensusSignalCount": 3,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 2,
+          "harmonicChange": 1,
+          "bassChange": 1
+        },
+        "candidateCombinedScores": {
+          "0": -0.4118793155656312,
+          "1": 0.5799238819614541,
+          "2": 0.2401757573274147,
+          "3": -0.4082203237232378
+        }
+      },
+      {
+        "name": "local-011",
+        "startBeatIndex": 176,
+        "endBeatIndexExclusive": 240,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.623675913747785,
+        "consensusSignalCount": 3,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 1
+        },
+        "candidateCombinedScores": {
+          "0": -0.6103328081685588,
+          "1": 0.7085055074344154,
+          "2": 0.3503368102171154,
+          "3": -0.44850950948297197
+        }
+      },
+      {
+        "name": "local-012",
+        "startBeatIndex": 192,
+        "endBeatIndexExclusive": 256,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.5478934633962083,
+        "consensusSignalCount": 3,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 2,
+          "harmonicChange": 1,
+          "bassChange": 1
+        },
+        "candidateCombinedScores": {
+          "0": -0.6890976261962127,
+          "1": 0.5725743627504368,
+          "2": 0.3828111107588629,
+          "3": -0.2662878473130871
+        }
+      },
+      {
+        "name": "local-013",
+        "startBeatIndex": 208,
+        "endBeatIndexExclusive": 272,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.6350674398846448,
+        "consensusSignalCount": 3,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 1
+        },
+        "candidateCombinedScores": {
+          "0": -0.4360735313957511,
+          "1": 0.5669117138306063,
+          "2": 0.18342851408695135,
+          "3": -0.3142666965218066
+        }
+      },
+      {
+        "name": "local-014",
+        "startBeatIndex": 224,
+        "endBeatIndexExclusive": 288,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.08935957288483425,
+        "consensusSignalCount": 1,
+        "stableAcrossHalves": false,
+        "independentSignalSupported": false,
+        "strong": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 1
+        },
+        "candidateCombinedScores": {
+          "0": -0.1798712467738529,
+          "1": 0.18173060327758606,
+          "2": 0.1858629874661066,
+          "3": -0.1877223439698396
+        }
+      },
+      {
+        "name": "local-015",
+        "startBeatIndex": 240,
+        "endBeatIndexExclusive": 304,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.2967231192843994,
+        "consensusSignalCount": 3,
+        "stableAcrossHalves": false,
+        "independentSignalSupported": true,
+        "strong": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 0,
+          "harmonicChange": 2,
+          "bassChange": 2
+        },
+        "candidateCombinedScores": {
+          "0": 0.1308905615896396,
+          "1": -0.24496746990514146,
+          "2": 0.20694193777719389,
+          "3": -0.09286502946169224
+        }
+      },
+      {
+        "name": "local-016",
+        "startBeatIndex": 256,
+        "endBeatIndexExclusive": 320,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 0,
+        "winnerFirstBeatInMeasure": 0,
+        "confidence": 0.1259643878969452,
+        "consensusSignalCount": 1,
+        "stableAcrossHalves": false,
+        "independentSignalSupported": false,
+        "strong": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 3,
+          "harmonicChange": 3,
+          "bassChange": 0
+        },
+        "candidateCombinedScores": {
+          "0": 0.21673360513501622,
+          "1": -0.3786127719046647,
+          "2": 0.1312571875862491,
+          "3": 0.030621979183399397
+        }
+      },
+      {
+        "name": "local-017",
+        "startBeatIndex": 272,
+        "endBeatIndexExclusive": 336,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.12447647876967363,
+        "consensusSignalCount": 1,
+        "stableAcrossHalves": false,
+        "independentSignalSupported": false,
+        "strong": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 3,
+          "harmonicChange": 3,
+          "bassChange": 3
+        },
+        "candidateCombinedScores": {
+          "0": 0.1624960306411204,
+          "1": -0.5981800922498983,
+          "2": 0.2589270072151375,
+          "3": 0.17675705439364053
+        }
+      },
+      {
+        "name": "local-018",
+        "startBeatIndex": 288,
+        "endBeatIndexExclusive": 352,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 3,
+        "winnerFirstBeatInMeasure": 1,
+        "confidence": 0.26637138188169723,
+        "consensusSignalCount": 3,
+        "stableAcrossHalves": false,
+        "independentSignalSupported": true,
+        "strong": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 3,
+          "harmonicChange": 3,
+          "bassChange": 3
+        },
+        "candidateCombinedScores": {
+          "0": 0.14242825420151214,
+          "1": -0.5097727296892847,
+          "2": 0.1793707023197782,
+          "3": 0.18797377316799435
+        }
+      },
+      {
+        "name": "local-019",
+        "startBeatIndex": 304,
+        "endBeatIndexExclusive": 368,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 3,
+        "winnerFirstBeatInMeasure": 1,
+        "confidence": 0.5136566800437492,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 1,
+          "harmonicChange": 3,
+          "bassChange": 3
+        },
+        "candidateCombinedScores": {
+          "0": -0.28922503636568414,
+          "1": -0.11360856248886798,
+          "2": 0.04735382160088787,
+          "3": 0.355479777253664
+        }
+      },
+      {
+        "name": "local-020",
+        "startBeatIndex": 320,
+        "endBeatIndexExclusive": 384,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 3,
+        "winnerFirstBeatInMeasure": 1,
+        "confidence": 0.4864580125293494,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 1,
+          "harmonicChange": 3,
+          "bassChange": 3
+        },
+        "candidateCombinedScores": {
+          "0": -0.32661616072824207,
+          "1": -0.05154808485852562,
+          "2": 0.06523988664966222,
+          "3": 0.31292435893710535
+        }
+      },
+      {
+        "name": "local-021",
+        "startBeatIndex": 336,
+        "endBeatIndexExclusive": 400,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.2111719237149091,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": false,
+        "independentSignalSupported": true,
+        "strong": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 1,
+          "harmonicChange": 2,
+          "bassChange": 3
+        },
+        "candidateCombinedScores": {
+          "0": -0.13321867014732572,
+          "1": -0.1308772598355804,
+          "2": 0.172238991341352,
+          "3": 0.091856938641554
+        }
+      },
+      {
+        "name": "local-022",
+        "startBeatIndex": 352,
+        "endBeatIndexExclusive": 416,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.32381332625319015,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": false,
+        "independentSignalSupported": true,
+        "strong": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 3,
+          "harmonicChange": 2,
+          "bassChange": 3
+        },
+        "candidateCombinedScores": {
+          "0": -0.09712155929452182,
+          "1": -0.16692692859432073,
+          "2": 0.2973723842257437,
+          "3": -0.033323896336901096
+        }
+      },
+      {
+        "name": "local-023",
+        "startBeatIndex": 368,
+        "endBeatIndexExclusive": 432,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.48565252704793926,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "independentSignalSupported": true,
+        "strong": true,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 1,
+          "harmonicChange": 2,
+          "bassChange": 0
+        },
+        "candidateCombinedScores": {
+          "0": 0.046246365867881487,
+          "1": -0.2068483439846834,
+          "2": 0.29214087041885767,
+          "3": -0.13153889230205554
+        }
+      },
+      {
+        "name": "local-024",
+        "startBeatIndex": 384,
+        "endBeatIndexExclusive": 448,
+        "beatCount": 64,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.24678978826507586,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": false,
+        "independentSignalSupported": true,
+        "strong": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 1,
+          "harmonicChange": 2,
+          "bassChange": 0
+        },
+        "candidateCombinedScores": {
+          "0": 0.10304616188566243,
+          "1": -0.11736249641553742,
+          "2": 0.2625790246969421,
+          "3": -0.24826269016706717
+        }
+      },
+      {
+        "name": "local-025-tail",
+        "startBeatIndex": 384,
+        "endBeatIndexExclusive": 449,
+        "beatCount": 65,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.18663088462993974,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": false,
+        "independentSignalSupported": true,
+        "strong": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 1,
+          "harmonicChange": 2,
+          "bassChange": 0
+        },
+        "candidateCombinedScores": {
+          "0": 0.18922989111525995,
+          "1": -0.14047778833787095,
+          "2": 0.21507630140401496,
+          "3": -0.27155207320651664
+        }
+      }
+    ],
+    "summary": {
+      "windowCount": 26,
+      "strongWindowCount": 15,
+      "phaseWindowCounts": {
+        "0": 2,
+        "1": 13,
+        "2": 8,
+        "3": 3
+      },
+      "strongPhaseWindowCounts": {
+        "1": 12,
+        "2": 1,
+        "3": 2
+      },
+      "strongRuns": [
+        {
+          "phase": 1,
+          "firstBeatInMeasure": 3,
+          "windowCount": 12,
+          "startBeatIndex": 32,
+          "endBeatIndexExclusive": 272,
+          "minimumConfidence": 0.407068186852082,
+          "meanConfidence": 0.5483519613565477
+        },
+        {
+          "phase": 3,
+          "firstBeatInMeasure": 1,
+          "windowCount": 2,
+          "startBeatIndex": 304,
+          "endBeatIndexExclusive": 384,
+          "minimumConfidence": 0.4864580125293494,
+          "meanConfidence": 0.5000573462865493
+        },
+        {
+          "phase": 2,
+          "firstBeatInMeasure": 2,
+          "windowCount": 1,
+          "startBeatIndex": 368,
+          "endBeatIndexExclusive": 432,
+          "minimumConfidence": 0.48565252704793926,
+          "meanConfidence": 0.48565252704793926
+        }
+      ],
+      "strongTransitionCount": 2,
+      "strongTransitions": [
+        {
+          "fromPhase": 1,
+          "toPhase": 3,
+          "leftEndBeatIndexExclusive": 272,
+          "rightStartBeatIndex": 304
+        },
+        {
+          "fromPhase": 3,
+          "toPhase": 2,
+          "leftEndBeatIndexExclusive": 384,
+          "rightStartBeatIndex": 368
+        }
+      ],
+      "multipleStrongPhasesObserved": true,
+      "referenceFree": true,
+      "runtimeLabelsRequired": false,
+      "productionModified": false
+    },
+    "referenceFree": true,
+    "professionalReferenceUsed": false,
+    "runtimeLabelsRequired": false,
+    "runtimePhaseChanged": false,
+    "liveRhythmOutputChanged": false,
+    "productionModified": false
+  },
+  "invariants": {
+    "referenceFree": true,
+    "professionalReferenceUsed": false,
+    "runtimeLabelsRequired": false,
+    "repairedIntervalOutliersZero": true,
+    "featureExtractionSinglePass": true,
+    "recommendationOnly": true,
+    "runtimePhaseChanged": false,
+    "liveRhythmOutputChanged": false,
+    "productionModified": false,
+    "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+    "protectedPipelineUnchanged": true
+  }
+}
