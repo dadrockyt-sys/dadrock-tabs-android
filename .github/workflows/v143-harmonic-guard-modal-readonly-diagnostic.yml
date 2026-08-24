@@ -1,0 +1,153 @@
+name: V143 Harmonic Guard Modal Readonly Diagnostic
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v143-contextual-prune/RUN_HARMONIC_GUARD_MODAL_DIAGNOSTIC_ONCE
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-harmonic-guard-modal-readonly-diagnostic
+  cancel-in-progress: false
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      APP_NAME: dadrock-v143-repaired-timing-precision-candidate-product
+    steps:
+      - name: Check out exact diagnostic trigger
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Read-only Modal token, app history, and recent logs
+        shell: bash
+        run: |
+          set -euo pipefail
+          marker='debug/v143-contextual-prune/RUN_HARMONIC_GUARD_MODAL_DIAGNOSTIC_ONCE'
+          test -f "$marker"
+          python -m pip install --disable-pip-version-check --quiet modal
+          python - <<'PY'
+          import json, os, re, subprocess
+          from pathlib import Path
+
+          app=os.environ['APP_NAME']
+          token_id=os.environ.get('MODAL_TOKEN_ID','')
+          token_secret=os.environ.get('MODAL_TOKEN_SECRET','')
+
+          def run(cmd):
+              p=subprocess.run(cmd,capture_output=True,text=True,check=False,timeout=120)
+              return p.returncode,p.stdout or '',p.stderr or ''
+
+          token_rc, token_out, token_err = run(['python','-m','modal','token','info'])
+          list_rc, list_out, list_err = run(['python','-m','modal','app','list','--json'])
+          hist_rc, hist_out, hist_err = run(['python','-m','modal','app','history',app,'--json'])
+          logs_rc, logs_out, logs_err = run(['python','-m','modal','app','logs',app,'--since','4h','--tail','1000','--timestamps'])
+
+          def loads(value):
+              try: return json.loads(value)
+              except Exception: return None
+
+          def walk(value, out):
+              if isinstance(value, dict):
+                  name=str(value.get('name') or value.get('app_name') or value.get('description') or '')
+                  if app in name or name == app:
+                      keep={}
+                      for k,v in value.items():
+                          lk=str(k).lower()
+                          if lk in {'name','app_name','state','status','created_at','started_at','stopped_at','finished_at','updated_at','last_active','last_active_at'}:
+                              keep[str(k)]=v
+                      if keep: out.append(keep)
+                  for v in value.values(): walk(v,out)
+              elif isinstance(value,list):
+                  for v in value: walk(v,out)
+
+          app_matches=[]
+          list_json=loads(list_out)
+          walk(list_json,app_matches)
+
+          hist_json=loads(hist_out)
+          def history_count(v):
+              if isinstance(v,list): return len(v)
+              if isinstance(v,dict):
+                  for key in ('history','deployments','items','apps'):
+                      if isinstance(v.get(key),list): return len(v[key])
+              return None
+
+          combined='\n'.join([logs_out,logs_err,hist_err,list_err])
+          if token_id: combined=combined.replace(token_id,'<REDACTED_TOKEN_ID>')
+          if token_secret: combined=combined.replace(token_secret,'<REDACTED_TOKEN_SECRET>')
+          signal=re.compile(r'(error|traceback|exception|fail|cancel|timeout|wrote=|harmonic|candidate|build|container|gpu)',re.I)
+          signal_lines=[]
+          for line in combined.splitlines():
+              if signal.search(line):
+                  line=re.sub(r'\b(?:ak|ap|fc|fu|ta)-[A-Za-z0-9_-]+\b','<REDACTED_MODAL_ID>',line)
+                  signal_lines.append(line[-500:])
+          signal_lines=signal_lines[-80:]
+
+          proof={
+            'schemaVersion':1,
+            'gate':'v143-harmonic-guard-modal-readonly-diagnostic',
+            'triggerSha':os.environ.get('GITHUB_SHA'),
+            'appName':app,
+            'checks':{
+              'tokenInfoSucceeded': token_rc == 0,
+              'appListSucceeded': list_rc == 0,
+              'appHistoryCommandSucceeded': hist_rc == 0,
+              'appLogsCommandSucceeded': logs_rc == 0,
+            },
+            'appListMatchCount':len(app_matches),
+            'appListMatches':app_matches[:10],
+            'historyJsonValid':hist_json is not None,
+            'historyEntryCount':history_count(hist_json),
+            'diagnosticSignalLines':signal_lines,
+            'commandReturnCodes':{
+              'tokenInfo':token_rc,
+              'appList':list_rc,
+              'appHistory':hist_rc,
+              'appLogs':logs_rc,
+            },
+            'modalRunInvoked':False,
+            'remoteFunctionInvoked':False,
+            'modalGpuUsed':False,
+            'professionalReferenceUsed':False,
+            'runtimeLabelsRequired':False,
+            'productionModified':False,
+          }
+          proof['passed']=proof['checks']['tokenInfoSucceeded'] and proof['checks']['appListSucceeded']
+          out=Path('debug/v143-contextual-prune/harmonic-guard-modal-readonly-diagnostic.json')
+          out.parent.mkdir(parents=True,exist_ok=True)
+          out.write_text(json.dumps(proof,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+          print(json.dumps(proof,indent=2))
+          PY
+
+      - name: Commit read-only diagnostic and retire only diagnostic marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/harmonic-guard-modal-readonly-diagnostic.json
+          git rm -- debug/v143-contextual-prune/RUN_HARMONIC_GUARD_MODAL_DIAGNOSTIC_ONCE
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record harmonic guard Modal read-only diagnostic'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
