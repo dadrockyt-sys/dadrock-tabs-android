@@ -1,4 +1,5 @@
 name: V143 Separator Cold Determinism Status
+# refresh v2 after CPU Demucs isolation
 
 on:
   workflow_dispatch:
