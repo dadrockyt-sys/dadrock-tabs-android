@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-repaired-timing-precision-cold-exact-proof",
+  "runId": 32697939613,
+  "triggerSha": "4288dbf8551a0746a7eadf137d1ebf834f6d1178",
+  "independentPassCount": 2,
+  "stageHashComparisons": {
+    "sourceBytesSha256": {
+      "values": [
+        "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+        "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+      ],
+      "exact": true
+    },
+    "normalizedWavSha256": {
+      "values": [
+        "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f",
+        "ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f"
+      ],
+      "exact": true
+    },
+    "originalBeatTimesSha256": {
+      "values": [
+        "e49e77d507e2a524148bf8c3a74627c000bc514e07241873ccb9e180156ea7af",
+        "e49e77d507e2a524148bf8c3a74627c000bc514e07241873ccb9e180156ea7af"
+      ],
+      "exact": true
+    },
+    "repairedBeatTimesSha256": {
+      "values": [
+        "c74915787c824d91ba82b1314f3ce52e83bc40c6b72fec13efbf0b23d954e6aa",
+        "c74915787c824d91ba82b1314f3ce52e83bc40c6b72fec13efbf0b23d954e6aa"
+      ],
+      "exact": true
+    },
+    "directGuitarStemSha256": {
+      "values": [
+        "0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c",
+        "0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c"
+      ],
+      "exact": true
+    },
+    "cascadeGuitarStemSha256": {
+      "values": [
+        "546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41",
+        "546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41"
+      ],
+      "exact": true
+    },
+    "carrierGridSha256": {
+      "values": [
+        "ccedc78898c84d86099f912a18605d72ae52b5d14c66bf35a1878f0c91f81b83",
+        "ccedc78898c84d86099f912a18605d72ae52b5d14c66bf35a1878f0c91f81b83"
+      ],
+      "exact": true
+    },
+    "carrierRowsSha256": {
+      "values": [
+        "b308a052c5c0e42091db242815227b8963fc62408548650d8f0f27a49e9cf498",
+        "b308a052c5c0e42091db242815227b8963fc62408548650d8f0f27a49e9cf498"
+      ],
+      "exact": true
+    },
+    "baseCandidateEventsSha256": {
+      "values": [
+        "1a92fec3a34e5642b36c159cfee43fba0c8bc98f0667d84fae0eff6a0a987a67",
+        "1a92fec3a34e5642b36c159cfee43fba0c8bc98f0667d84fae0eff6a0a987a67"
+      ],
+      "exact": true
+    },
+    "correctionEventsSha256": {
+      "values": [
+        "a82398b03ccb4053dbbb70a2504b037b1e1924059b4164739614729817e11012",
+        "a82398b03ccb4053dbbb70a2504b037b1e1924059b4164739614729817e11012"
+      ],
+      "exact": true
+    },
+    "correctionPitchSetsSha256": {
+      "values": [
+        "89c5741064ddeba334627f761379c0bb13fdd9d76f65e4db5e340133fb271806",
+        "89c5741064ddeba334627f761379c0bb13fdd9d76f65e4db5e340133fb271806"
+      ],
+      "exact": true
+    },
+    "precisionEventsSha256": {
+      "values": [
+        "a418118222079a423b4319c7362867c13710620e506f5b211d73e974015392cc",
+        "a418118222079a423b4319c7362867c13710620e506f5b211d73e974015392cc"
+      ],
+      "exact": true
+    },
+    "precisionPitchSetsSha256": {
+      "values": [
+        "4a986b255002fe2fce2e1a74df73b9b2ed73ebea9a611a857779ccbcbba839e9",
+        "4a986b255002fe2fce2e1a74df73b9b2ed73ebea9a611a857779ccbcbba839e9"
+      ],
+      "exact": true
+    },
+    "precisionPrimaryMidisSha256": {
+      "values": [
+        "bd08caf874fc3afd969cadc1595f87f1fb68a539bf1ff9af2977f976bf46a6a8",
+        "bd08caf874fc3afd969cadc1595f87f1fb68a539bf1ff9af2977f976bf46a6a8"
+      ],
+      "exact": true
+    }
+  },
+  "sectionHashComparisons": {
+    "timing": {
+      "values": [
+        "f346491f049aeb4c2c338d571dae22a02c5dd23808d0bac003fdbb11475be4a5",
+        "f346491f049aeb4c2c338d571dae22a02c5dd23808d0bac003fdbb11475be4a5"
+      ],
+      "exact": true
+    },
+    "carrier": {
+      "values": [
+        "ac206b777f3b480051dbf2198c67f4a767a8664fa3f0bf1d2c61373c126f629b",
+        "ac206b777f3b480051dbf2198c67f4a767a8664fa3f0bf1d2c61373c126f629b"
+      ],
+      "exact": true
+    },
+    "baseSelector": {
+      "values": [
+        "b17a5a274da5b0547f09f46b27a601f39475dd5529b53f6d8cd23dae59a92725",
+        "b17a5a274da5b0547f09f46b27a601f39475dd5529b53f6d8cd23dae59a92725"
+      ],
+      "exact": true
+    },
+    "correction": {
+      "values": [
+        "b7a3abb33a499d6d2169932217534cd3bb5b30b72e946eacdbaddbee5cef8e4f",
+        "b7a3abb33a499d6d2169932217534cd3bb5b30b72e946eacdbaddbee5cef8e4f"
+      ],
+      "exact": true
+    },
+    "precision": {
+      "values": [
+        "c58b5e9f1aee0648632dd15d1f598fc10ab823756dda377305f5df396303f4ea",
+        "c58b5e9f1aee0648632dd15d1f598fc10ab823756dda377305f5df396303f4ea"
+      ],
+      "exact": true
+    },
+    "pitchSupport": {
+      "values": [
+        "e0e38f992ea0ea9e8b2a75a143769ed8a016a47768aa925bc534a5388ff3648b",
+        "e0e38f992ea0ea9e8b2a75a143769ed8a016a47768aa925bc534a5388ff3648b"
+      ],
+      "exact": true
+    },
+    "coverage": {
+      "values": [
+        "cf66f67fa563a9b3355e312298d9253e59c7880856a1145dc44d887fa5d83f83",
+        "cf66f67fa563a9b3355e312298d9253e59c7880856a1145dc44d887fa5d83f83"
+      ],
+      "exact": true
+    },
+    "invariants": {
+      "values": [
+        "b113be64b7ee6b9805856d31b08fb0e5e29db2b27bb74db985ddafa78937f8cc",
+        "b113be64b7ee6b9805856d31b08fb0e5e29db2b27bb74db985ddafa78937f8cc"
+      ],
+      "exact": true
+    }
+  },
+  "firstStageHashMismatch": null,
+  "firstSectionMismatch": null,
+  "invariantFailures": [],
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "protectedPipelineUnchanged": true,
+  "productionModified": false,
+  "passed": true
+}
