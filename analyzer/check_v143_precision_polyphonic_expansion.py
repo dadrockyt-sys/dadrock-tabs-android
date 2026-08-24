@@ -10,12 +10,16 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
+from v143_contextual_prune_precision_shadow import _precision_pitch_set
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PRODUCT = ROOT / "debug" / "v143-contextual-prune" / "repaired-timing-precision-candidate-product.json"
 DEFAULT_OUTPUT = ROOT / "debug" / "v143-contextual-prune" / "precision-polyphonic-expansion-audit.json"
 EXPECTED_PROTECTED_BLOB = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
 HARMONIC_INTERVALS = {12, 19, 24, 28, 31, 36}
+SPECTRUM_MIDI_MIN = 28
+SPECTRUM_MIDI_MAX = 112
 
 
 def _finite(value: Any, fallback: float = 0.0) -> float:
@@ -65,6 +69,48 @@ def _quantiles(values: Iterable[float]) -> dict[str, float | None]:
     }
 
 
+def _synthetic_harmonic_promotion_double_count() -> dict[str, Any]:
+    size = SPECTRUM_MIDI_MAX - SPECTRUM_MIDI_MIN + 1
+
+    def vector(lower: float, upper: float) -> list[float]:
+        values = [-2.0] * size
+        values[40 - SPECTRUM_MIDI_MIN] = float(lower)
+        values[52 - SPECTRUM_MIDI_MIN] = float(upper)
+        return values
+
+    lower = 0.78
+    upper = 0.90
+    row = {
+        "candidateMidis": [40, 52],
+        "viewA": {
+            "attackMax": vector(lower, upper),
+            "earlyMean": vector(lower, upper),
+            "sustainMean": vector(lower, upper),
+        },
+        "viewB": {
+            "attackMax": vector(lower, upper),
+            "earlyMean": vector(lower, upper),
+            "sustainMean": vector(lower, upper),
+        },
+    }
+    selected, promoted, primary = _precision_pitch_set(row)
+    strongest_raw = 52
+    interval = strongest_raw - int(primary)
+    return {
+        "syntheticObservedMidis": [40, 52],
+        "syntheticPrimaryMidi": int(primary),
+        "syntheticStrongestRawMidi": strongest_raw,
+        "syntheticSelectedMidis": list(selected),
+        "syntheticPrimaryPromoted": bool(promoted),
+        "syntheticStrongestRawIntervalAbovePrimary": interval,
+        "syntheticStrongestHarmonicRetainedAsSecondary": bool(
+            promoted
+            and interval in HARMONIC_INTERVALS
+            and strongest_raw in set(selected)
+        ),
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--product", default=str(DEFAULT_PRODUCT))
@@ -88,6 +134,10 @@ def main() -> None:
     rendered_secondary_count = 0
     harmonic_secondary_count = 0
     nonharmonic_secondary_count = 0
+    promoted_primary_attack_count = 0
+    promoted_primary_with_strongest_rendered_count = 0
+    promoted_primary_with_harmonic_strongest_rendered_count = 0
+    promoted_primary_strongest_interval_histogram: Counter[int] = Counter()
     max_chord_size = 0
     chord_size_histogram: Counter[int] = Counter()
     secondary_score_ratios: list[float] = []
@@ -145,10 +195,29 @@ def main() -> None:
         strongest_score = max((_finite(item.get("physicalScore"), -99.0) for item in evidence_values), default=-99.0)
         strongest_attack = max((_finite(item.get("physicalAttack"), -99.0) for item in evidence_values), default=-99.0)
         strongest_body = max((_finite(item.get("physicalBody"), -99.0) for item in evidence_values), default=-99.0)
+        strongest_midi = None
+        if hypothesis_map:
+            strongest_midi = max(
+                hypothesis_map,
+                key=lambda midi: (
+                    _finite(hypothesis_map[midi].get("physicalScore"), -99.0),
+                    _finite(hypothesis_map[midi].get("physicalAttack"), -99.0),
+                    -int(midi),
+                ),
+            )
 
         rendered_midis = {int(event["midi"]) for event in group}
         if primary not in rendered_midis:
             bad_groups.append(f"{key}: primary not rendered")
+
+        if strongest_midi is not None and int(primary) != int(strongest_midi):
+            promoted_primary_attack_count += 1
+            interval = int(strongest_midi) - int(primary)
+            promoted_primary_strongest_interval_histogram[interval] += 1
+            if int(strongest_midi) in rendered_midis:
+                promoted_primary_with_strongest_rendered_count += 1
+                if interval in HARMONIC_INTERVALS:
+                    promoted_primary_with_harmonic_strongest_rendered_count += 1
 
         for midi in sorted(rendered_midis - {primary}):
             rendered_secondary_count += 1
@@ -181,6 +250,9 @@ def main() -> None:
     selected_count = int(product.get("selectedCount") or 0)
     note_count = int(product.get("noteCount") or len(events))
     attack_count = len(by_key)
+    precision_diagnostics = product.get("precisionDiagnostics") if isinstance(product.get("precisionDiagnostics"), Mapping) else {}
+    fundamental_promotions_metadata = int(precision_diagnostics.get("fundamentalPromotionCount") or 0)
+    synthetic = _synthetic_harmonic_promotion_double_count()
     protected_blob = subprocess.check_output(
         ["git", "hash-object", "analyzer/v143_reference_free_rhythm_pipeline.py"],
         cwd=ROOT,
@@ -188,7 +260,7 @@ def main() -> None:
     ).strip()
 
     report = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "gate": "v143-precision-polyphonic-expansion-audio-only-audit",
         "candidateProductSha256": _sha256(product_path),
         "selectedCountMetadata": selected_count,
@@ -204,6 +276,13 @@ def main() -> None:
         "harmonicSecondaryFraction": _ratio(harmonic_secondary_count, rendered_secondary_count) if rendered_secondary_count else 0.0,
         "renderedSecondaryIntervalHistogram": {str(key): value for key, value in sorted(rendered_secondary_interval_histogram.items())},
         "renderedHarmonicIntervalHistogram": {str(key): value for key, value in sorted(rendered_harmonic_interval_histogram.items())},
+        "fundamentalPromotionCountMetadata": fundamental_promotions_metadata,
+        "promotedPrimaryAttackCountFromSerializedEvidence": promoted_primary_attack_count,
+        "promotedPrimaryWithStrongestRenderedCount": promoted_primary_with_strongest_rendered_count,
+        "promotedPrimaryWithHarmonicStrongestRenderedCount": promoted_primary_with_harmonic_strongest_rendered_count,
+        "promotedPrimaryStrongestIntervalHistogram": {str(key): value for key, value in sorted(promoted_primary_strongest_interval_histogram.items())},
+        "promotionStrongestRetentionFraction": _ratio(promoted_primary_with_strongest_rendered_count, promoted_primary_attack_count) if promoted_primary_attack_count else 0.0,
+        "promotionHarmonicStrongestRetentionFraction": _ratio(promoted_primary_with_harmonic_strongest_rendered_count, promoted_primary_attack_count) if promoted_primary_attack_count else 0.0,
         "secondaryScoreRatioQuantiles": _quantiles(secondary_score_ratios),
         "secondaryAttackRatioQuantiles": _quantiles(secondary_attack_ratios),
         "secondaryBodyRatioQuantiles": _quantiles(secondary_body_ratios),
@@ -215,6 +294,8 @@ def main() -> None:
         "pitchSupportIndistinguishableAttackCount": pitch_support_indistinguishable_attacks,
         "pitchSupportIndistinguishableFraction": _ratio(pitch_support_indistinguishable_attacks, multi_hypothesis_attack_count) if multi_hypothesis_attack_count else 0.0,
         "perPitchBasicPitchSupportRecoverableFromSerializedHypotheses": pitch_support_indistinguishable_attacks < multi_hypothesis_attack_count,
+        **synthetic,
+        "harmonicPromotionDoubleCountPathProven": synthetic["syntheticStrongestHarmonicRetainedAsSecondary"],
         "badGroupCount": len(bad_groups),
         "badGroupExamples": bad_groups[:20],
         "selectedCountMatchesUniqueRenderedAttacks": selected_count == attack_count,
@@ -237,6 +318,8 @@ def main() -> None:
         raise SystemExit("selected attack count does not match unique rendered attack count")
     if not report["noteCountMatchesEvents"]:
         raise SystemExit("note count metadata does not match events")
+    if not report["harmonicPromotionDoubleCountPathProven"]:
+        raise SystemExit("synthetic harmonic promotion double-count path was not reproduced")
     if not report["protectedPipelineUnchanged"]:
         raise SystemExit("protected rhythm pipeline changed")
 
