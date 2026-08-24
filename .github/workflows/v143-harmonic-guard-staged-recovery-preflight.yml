@@ -8,6 +8,7 @@ on:
       - analyzer/v143_harmonic_guard_staged_recovery_modal.py
       - analyzer/check_v143_harmonic_guard_staged_recovery.py
       - .github/workflows/v143-harmonic-guard-staged-recovery-preflight.yml
+      - debug/v143-contextual-prune/RUN_HARMONIC_GUARD_STAGED_RECOVERY_PREFLIGHT_ONCE
 
 permissions:
   contents: write
@@ -53,6 +54,9 @@ jobs:
         run: |
           set -euo pipefail
           git add -- debug/v143-contextual-prune/harmonic-guard-staged-recovery-preflight.json
+          if test -f debug/v143-contextual-prune/RUN_HARMONIC_GUARD_STAGED_RECOVERY_PREFLIGHT_ONCE; then
+            git rm -- debug/v143-contextual-prune/RUN_HARMONIC_GUARD_STAGED_RECOVERY_PREFLIGHT_ONCE
+          fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m 'Record staged harmonic guard recovery preflight'
