@@ -1,0 +1,175 @@
+name: V143 Harmonic Guard Modal Stopped App Diagnostic
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v143-contextual-prune/RUN_HARMONIC_GUARD_MODAL_STOPPED_APP_DIAGNOSTIC_ONCE
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-harmonic-guard-modal-stopped-app-diagnostic
+  cancel-in-progress: false
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      APP_NAME: dadrock-v143-repaired-timing-precision-candidate-product
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Resolve stopped app ID and inspect history/logs read-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f debug/v143-contextual-prune/RUN_HARMONIC_GUARD_MODAL_STOPPED_APP_DIAGNOSTIC_ONCE
+          python -m pip install --disable-pip-version-check --quiet modal
+          python - <<'PY'
+          import hashlib, json, os, re, subprocess
+          from pathlib import Path
+
+          app_name=os.environ['APP_NAME']
+          token_id=os.environ.get('MODAL_TOKEN_ID','')
+          token_secret=os.environ.get('MODAL_TOKEN_SECRET','')
+
+          def run(cmd, timeout=120):
+              p=subprocess.run(cmd,capture_output=True,text=True,check=False,timeout=timeout)
+              return p.returncode,p.stdout or '',p.stderr or ''
+
+          token_rc,_,token_err=run(['python','-m','modal','token','info'])
+          list_rc,list_out,list_err=run(['python','-m','modal','app','list','--json'])
+          try:
+              listed=json.loads(list_out)
+          except Exception:
+              listed=None
+
+          candidates=[]
+          def walk(v):
+              if isinstance(v,dict):
+                  name=str(v.get('name') or v.get('app_name') or v.get('appName') or '')
+                  if name == app_name:
+                      candidates.append(v)
+                  for x in v.values(): walk(x)
+              elif isinstance(v,list):
+                  for x in v: walk(x)
+          walk(listed)
+
+          def get_id(v):
+              for k in ('app_id','appId','id','identifier'):
+                  value=v.get(k) if isinstance(v,dict) else None
+                  if isinstance(value,str) and value.startswith('ap-'):
+                      return value
+              return None
+
+          chosen=None
+          if candidates:
+              def sortkey(v):
+                  return str(v.get('created_at') or v.get('createdAt') or '')
+              chosen=sorted(candidates,key=sortkey)[-1]
+          app_id=get_id(chosen or {})
+
+          hist_rc=logs_rc=-1
+          hist_out=hist_err=logs_out=logs_err=''
+          if app_id:
+              hist_rc,hist_out,hist_err=run(['python','-m','modal','app','history',app_id,'--json'])
+              logs_rc,logs_out,logs_err=run([
+                  'python','-m','modal','app','logs',app_id,
+                  '--since','6h','--tail','2000','--timestamps',
+                  '--show-function-id','--show-function-call-id','--show-container-id'
+              ])
+
+          def redact(text):
+              if token_id: text=text.replace(token_id,'<REDACTED_TOKEN_ID>')
+              if token_secret: text=text.replace(token_secret,'<REDACTED_TOKEN_SECRET>')
+              text=re.sub(r'\b(?:ap|fc|fu|ta|im|mo|st)-[A-Za-z0-9_-]+\b','<REDACTED_MODAL_ID>',text)
+              return text
+
+          try:
+              hist_json=json.loads(hist_out) if hist_out else None
+          except Exception:
+              hist_json=None
+
+          def count_history(v):
+              if isinstance(v,list): return len(v)
+              if isinstance(v,dict):
+                  for k in ('history','deployments','items','versions'):
+                      if isinstance(v.get(k),list): return len(v[k])
+              return None
+
+          combined=redact('\n'.join([logs_out,logs_err,hist_err,list_err,token_err]))
+          strong=re.compile(r'(timeout|timed out|cancel|cancelled|error|traceback|exception|failed|failure|killed|deadline|WROTE=)',re.I)
+          stage=re.compile(r'(container|image|build|basic[- ]pitch|separator|stem|demucs|beat|timing|carrier|contextual|precision|harmonic|semantic|sustain|legato|bend|gpu|running|starting|stopping|finished)',re.I)
+          lines=combined.splitlines()
+          strong_lines=[line[-700:] for line in lines if strong.search(line)][-100:]
+          stage_lines=[line[-700:] for line in lines if stage.search(line)][-160:]
+          tail_lines=[line[-700:] for line in lines[-120:]]
+
+          app_id_hash=hashlib.sha256(app_id.encode()).hexdigest() if app_id else None
+          proof={
+              'schemaVersion':1,
+              'gate':'v143-harmonic-guard-modal-stopped-app-readonly-diagnostic',
+              'triggerSha':os.environ.get('GITHUB_SHA'),
+              'appName':app_name,
+              'tokenInfoSucceeded':token_rc==0,
+              'appListSucceeded':list_rc==0,
+              'matchingAppCount':len(candidates),
+              'stoppedAppIdResolved':bool(app_id),
+              'stoppedAppIdSha256':app_id_hash,
+              'chosenAppMetadata':{
+                  k:chosen.get(k) for k in ('state','status','created_at','stopped_at','started_at','finished_at')
+                  if isinstance(chosen,dict) and k in chosen
+              },
+              'historyCommandSucceeded':hist_rc==0,
+              'historyJsonValid':hist_json is not None,
+              'historyEntryCount':count_history(hist_json),
+              'logsCommandSucceeded':logs_rc==0,
+              'strongFailureLines':strong_lines,
+              'stageSignalLines':stage_lines,
+              'tailLines':tail_lines,
+              'commandReturnCodes':{
+                  'tokenInfo':token_rc,'appList':list_rc,'appHistoryById':hist_rc,'appLogsById':logs_rc
+              },
+              'modalRunInvoked':False,
+              'remoteFunctionInvoked':False,
+              'modalGpuUsed':False,
+              'professionalReferenceUsed':False,
+              'runtimeLabelsRequired':False,
+              'productionModified':False,
+          }
+          proof['passed']=proof['tokenInfoSucceeded'] and proof['appListSucceeded'] and proof['stoppedAppIdResolved']
+          out=Path('debug/v143-contextual-prune/harmonic-guard-modal-stopped-app-diagnostic.json')
+          out.write_text(json.dumps(proof,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+          print(json.dumps(proof,indent=2))
+          PY
+
+      - name: Commit stopped-app diagnostic and retire only its marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/harmonic-guard-modal-stopped-app-diagnostic.json
+          git rm -- debug/v143-contextual-prune/RUN_HARMONIC_GUARD_MODAL_STOPPED_APP_DIAGNOSTIC_ONCE
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record harmonic guard stopped Modal app diagnostic'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
