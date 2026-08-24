@@ -4,7 +4,12 @@ on:
   workflow_dispatch:
   push:
     branches: [v143-contextual-prune-lobo]
-    paths: [.github/workflows/v143-contextual-prune-precision-shadow-proof.yml]
+    paths:
+      - analyzer/v143_contextual_prune_precision_shadow.py
+      - analyzer/check_v143_contextual_prune_precision_shadow.py
+      - analyzer/v143_contextual_prune_precision_candidate_events.py
+      - analyzer/check_v143_contextual_prune_precision_primary_adapter.py
+      - .github/workflows/v143-contextual-prune-precision-shadow-proof.yml
 
 permissions:
   contents: write
@@ -21,13 +26,20 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install checker dependency
+        run: python -m pip install --disable-pip-version-check --quiet numpy
       - name: Run isolated CPU proof
         env:
           PYTHONPATH: analyzer
         run: |
           set -euo pipefail
-          python -m py_compile analyzer/v143_contextual_prune_precision_shadow.py analyzer/check_v143_contextual_prune_precision_shadow.py
+          python -m py_compile \
+            analyzer/v143_contextual_prune_precision_shadow.py \
+            analyzer/check_v143_contextual_prune_precision_shadow.py \
+            analyzer/v143_contextual_prune_precision_candidate_events.py \
+            analyzer/check_v143_contextual_prune_precision_primary_adapter.py
           python analyzer/check_v143_contextual_prune_precision_shadow.py
+          python analyzer/check_v143_contextual_prune_precision_primary_adapter.py
       - name: Record proof
         shell: bash
         run: |
@@ -39,12 +51,16 @@ jobs:
           def sha(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
           protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
           out={
-            'schemaVersion':1,
+            'schemaVersion':2,
             'gate':'v143-contextual-prune-precision-shadow-cpu-proof',
             'triggerSha':'${{ github.sha }}',
             'moduleSha256':sha('analyzer/v143_contextual_prune_precision_shadow.py'),
             'checkerSha256':sha('analyzer/check_v143_contextual_prune_precision_shadow.py'),
+            'primaryAdapterSha256':sha('analyzer/v143_contextual_prune_precision_candidate_events.py'),
+            'primaryAdapterCheckerSha256':sha('analyzer/check_v143_contextual_prune_precision_primary_adapter.py'),
             'checkerPassed':True,
+            'primaryPropagationCheckerPassed':True,
+            'explicitPrimaryPreserved':True,
             'referenceFree':True,
             'runtimeLabelsRequired':False,
             'candidateAddsUnobservedAttack':False,
@@ -61,7 +77,11 @@ jobs:
           git add debug/v143-contextual-prune/precision-shadow-cpu-proof.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record precision shadow CPU proof'
-          git fetch origin v143-contextual-prune-lobo
-          git rebase origin/v143-contextual-prune-lobo
-          git push origin HEAD:v143-contextual-prune-lobo
+          git commit -m 'Record precision primary propagation proof'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            sleep 2
+          done
+          exit 1
