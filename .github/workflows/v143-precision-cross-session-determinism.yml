@@ -1,0 +1,145 @@
+name: V143 Precision Cross-Session Determinism
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - .github/workflows/v143-precision-cross-session-determinism.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-precision-cross-session-determinism
+  cancel-in-progress: true
+
+jobs:
+  independent-pass:
+    if: github.actor != 'github-actions[bot]'
+    strategy:
+      fail-fast: false
+      matrix:
+        pass: [1, 2]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Anti-leakage and protected runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_contextual_prune_precision_shadow_modal.py; then
+            echo 'Forbidden scorer/source token in cross-session determinism path' >&2
+            exit 1
+          fi
+      - name: Run independent Modal session
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet modal
+          mkdir -p /tmp/v143-determinism
+          python -m modal run analyzer/v143_contextual_prune_precision_shadow_modal.py::approved_audio \
+            --audio-path public/gomywayfullaitest.m4a \
+            --output-path /tmp/v143-determinism/pass-${{ matrix.pass }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v143-precision-independent-pass-${{ matrix.pass }}
+          path: /tmp/v143-determinism/pass-${{ matrix.pass }}.json
+          if-no-files-found: error
+          retention-days: 3
+
+  compare:
+    needs: independent-pass
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: v143-precision-independent-pass-*
+          path: /tmp/v143-cross-session
+          merge-multiple: true
+      - name: Compare independent sessions exactly
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+
+          a=json.loads(Path('/tmp/v143-cross-session/pass-1.json').read_text())
+          b=json.loads(Path('/tmp/v143-cross-session/pass-2.json').read_text())
+          order=[
+            'sourceBytesSha256','normalizedWavSha256','directGuitarStemSha256','cascadeGuitarStemSha256',
+            'carrierGridSha256','carrierRowsSha256','baseCandidateEventsSha256','correctionEventsSha256',
+            'correctionPitchSetsSha256','precisionEventsSha256','precisionPitchSetsSha256','precisionPrimaryMidisSha256'
+          ]
+          ah=a.get('stageHashes') or {}
+          bh=b.get('stageHashes') or {}
+          comparisons={key:{'pass1':ah.get(key),'pass2':bh.get(key),'exact':ah.get(key)==bh.get(key)} for key in order}
+          first=next((key for key in order if not comparisons[key]['exact']),None)
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          out={
+            'schemaVersion':1,
+            'gate':'v143-reference-free-precision-cross-session-determinism',
+            'runId':int('${{ github.run_id }}'),
+            'runAttempt':int('${{ github.run_attempt }}'),
+            'triggerSha':'${{ github.sha }}',
+            'pass1':{
+              'carrier':a.get('carrier'),'baseSelector':a.get('baseSelector'),'correction':a.get('correction'),
+              'precision':a.get('precision'),'stageHashes':ah,
+            },
+            'pass2':{
+              'carrier':b.get('carrier'),'baseSelector':b.get('baseSelector'),'correction':b.get('correction'),
+              'precision':b.get('precision'),'stageHashes':bh,
+            },
+            'comparisons':comparisons,
+            'firstMismatchStage':first,
+            'allStageHashesExact':first is None,
+            'invariants':{
+              'independentModalSessions':True,
+              'referenceFree':True,
+              'runtimeLabelsRequired':False,
+              'professionalReferenceUsed':False,
+              'protectedPipelineBlob':protected,
+              'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+              'productionModified':False,
+            }
+          }
+          Path('debug/v143-contextual-prune/precision-cross-session-determinism.json').write_text(json.dumps(out,indent=2)+'\n')
+          print(json.dumps({'firstMismatchStage':first,'allStageHashesExact':first is None},sort_keys=True))
+          if first is not None:
+              raise SystemExit(f'Cross-session precision determinism mismatch begins at {first}')
+          if not out['invariants']['protectedPipelineUnchanged']:
+              raise SystemExit('Protected runtime changed')
+          PY
+      - name: Commit proof race-safe
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/precision-cross-session-determinism.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record precision cross-session determinism proof'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            sleep 2
+          done
+          exit 1
