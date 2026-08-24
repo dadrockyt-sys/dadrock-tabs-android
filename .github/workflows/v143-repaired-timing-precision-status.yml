@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
   push:
     branches: [v143-contextual-prune-lobo]
-    paths: [.github/workflows/v143-repaired-timing-precision-status.yml]
+    paths:
+      - .github/workflows/v143-repaired-timing-precision-status.yml
+      - analyzer/v143_repaired_timing_precision_shadow_modal.py
 
 permissions:
   actions: read
