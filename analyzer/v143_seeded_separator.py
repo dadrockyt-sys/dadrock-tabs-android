@@ -30,12 +30,12 @@ DEMUCS_SINGLE_THREAD_ENV = {
     "VECLIB_MAXIMUM_THREADS": "1",
     "NUMEXPR_NUM_THREADS": "1",
     "TBB_NUM_THREADS": "1",
-    # Cross-host numerical dispatch controls only. These do not alter model,
-    # musical separator settings, audio, or reference-free selection logic.
-    # oneMKL COMPATIBLE forces its common Intel/Intel-compatible SSE2 path;
-    # oneDNN/DNNL SSE41 caps JIT dispatch to a common x86 ISA.
-    "ONEDNN_MAX_CPU_ISA": "SSE41",
-    "DNNL_MAX_CPU_ISA": "SSE41",
+    # Both observed Modal CPU host classes support AVX2. Pin every major CPU
+    # dispatcher to that common branch so Intel AVX512 hosts and AMD AVX2 hosts
+    # execute the same general/reference-free numerical path.
+    "ATEN_CPU_CAPABILITY": "avx2",
+    "ONEDNN_MAX_CPU_ISA": "AVX2",
+    "DNNL_MAX_CPU_ISA": "AVX2",
 }
 
 
@@ -71,8 +71,8 @@ def build_seeded_v143_stems(
     segment=6, plus BS-RoFormer Instrumental -> Demucs6s. BS-RoFormer is already
     byte-exact across cold sessions. Demucs is CPU-only/single-thread, its
     intentional shift trick uses a private RNG seeded only by V143_SEPARATOR_SEED,
-    and the research child pins oneMKL/oneDNN CPU dispatch to common cross-host
-    branches so CPU family/ISA auto-dispatch cannot silently change float kernels.
+    and the research child pins ATen/oneDNN to common AVX2 plus oneMKL CNR
+    COMPATIBLE so CPU-family/ISA auto-dispatch cannot silently change kernels.
     Model weights and all musical separator parameters remain identical.
 
     No song/reference labels, human targets, or scorer values enter this path.
@@ -155,8 +155,9 @@ def build_seeded_v143_stems(
             "demucsExecutionDevice": "cpu",
             "demucsCpuThreads": 1,
             "demucsShiftRng": "private-seed-143",
+            "demucsAtenCpuCapability": "avx2",
             "demucsMklCbwr": "COMPATIBLE",
-            "demucsOneDnnMaxCpuIsa": "SSE41",
+            "demucsOneDnnMaxCpuIsa": "AVX2",
             "demucsMklDynamic": False,
             "demucsOmpDynamic": False,
             "roformerSingleStem": "Instrumental",
