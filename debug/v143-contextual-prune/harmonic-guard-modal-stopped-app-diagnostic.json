@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-harmonic-guard-modal-stopped-app-readonly-diagnostic",
+  "triggerSha": "bc220c351365b9974b9437c427250afbcf936c54",
+  "appName": "dadrock-v143-repaired-timing-precision-candidate-product",
+  "tokenInfoSucceeded": true,
+  "appListSucceeded": true,
+  "matchingAppCount": 0,
+  "stoppedAppIdResolved": false,
+  "stoppedAppIdSha256": null,
+  "chosenAppMetadata": {},
+  "historyCommandSucceeded": false,
+  "historyJsonValid": false,
+  "historyEntryCount": null,
+  "logsCommandSucceeded": false,
+  "strongFailureLines": [],
+  "stageSignalLines": [],
+  "tailLines": [
+    "",
+    "",
+    "",
+    ""
+  ],
+  "commandReturnCodes": {
+    "tokenInfo": 0,
+    "appList": 0,
+    "appHistoryById": -1,
+    "appLogsById": -1
+  },
+  "modalRunInvoked": false,
+  "remoteFunctionInvoked": false,
+  "modalGpuUsed": false,
+  "professionalReferenceUsed": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "passed": false
+}
