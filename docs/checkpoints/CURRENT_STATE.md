@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 15:20 America/Montreal
+Updated: 2026-08-24 16:42 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -146,10 +146,23 @@ Exact source files used by that candidate:
 - The artifact does **not** itself expose the 5,624 carrier rows or per-event `original_pitch_sets`; the next search is historical workflow/debug artifacts for those source rows.
 - No event/runtime mutation made. Modal/L4 remains closed. Professional reference remains closed.
 
+## Exact candidate workflow persistence audit — 2026-08-24 16:42 America/Montreal
+- Candidate product `preFreezeTrace` identifies exact generation run `32699399835`; exact successful job `97347696711`.
+- The workflow run has **zero uploaded artifacts**.
+- Exact job logs were inspected. They print only aggregate timing/candidate/precision/semantic/sustain diagnostics, including the known `7,535 → 987` precision collapse; they do **not** print the per-event `candidateMidis`, `rawPhysicalAttacks`, or suppressed hypothesis rows.
+- The producer ran separator/carrier → precision → candidate adapter in memory and wrote only `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json`, which the job then committed to `v143-contextual-prune-lobo`.
+- The candidate adapter filters each event's `pitchHypotheses` to the post-precision support set, so the committed product cannot reconstruct the 6,548 suppressed hypotheses.
+- Recursive inspection of recovered `.preholdout/raw-product-output.json` found physical hypothesis fields only under final `events[].pitchHypotheses`; its diagnostics preserve aggregate pre/post counts but no hidden `candidateMidis`, `rawPhysicalAttacks`, carrier rows, or original per-event hypothesis sets.
+- Repo debug listing/search likewise has not exposed a persisted raw carrier snapshot.
+- Current evidence therefore indicates the 6,548 suppressed per-event rows were transient during historical candidate generation and were never persisted.
+- This is an evidence-retention limitation, **not** a reason to reopen paid inference. Continue CPU-only with the retained physical evidence and exact historical source logic.
+- No Modal/L4 was run during this audit; no professional reference was opened; no event/runtime/Production mutation was made.
+
 ## Next exact actions
-1. Search historical CPU/GitHub workflow/debug artifacts for persisted carrier rows or per-event `original_pitch_sets` from the exact historical candidate.
-2. If recoverable, build a fully reference-free threshold-sensitivity diagnostic over the exact retained attacks.
-3. Quantify separately how the score, attack, body, harmonic-above-primary `0.92` gate, and fundamental-primary promotion contribute to the `7,535→987` collapse.
-4. Test conservative physically supported alternatives to the `0.80/0.92` hard intersection only on source evidence; do not inspect/tune against professional mismatches.
-5. Do **not** mutate events yet. First prove a less destructive precision rule on frozen/pre-precision evidence.
-6. Only after a genuinely new corrected candidate is frozen/locked may the professional scorer be considered again.
+1. Build a CPU-only/reference-free **precision survivorship and gate-brittleness diagnostic** from the retained physical hypothesis evidence in the immutable historical raw product.
+2. Group by attack and reconstruct unique post-precision support sets; quantify retained secondary score/attack/body ratios to each primary, harmonic-family status, and threshold margins.
+3. Quantify how often retained secondaries barely survive one or more gates and how the hard three-way `score AND attack AND body` intersection concentrates survivorship; separately audit MIDI64 versus non64 and promoted-fundamental cases where identifiable.
+4. Use those source-only findings to define the least-destructive physically justified replacement rule. Do **not** tune against professional mismatches and do **not** invent exact recovery counts for the unavailable suppressed rows.
+5. Do **not** mutate events yet. First commit the non-mutating diagnostic and its report.
+6. Only if the reference-free evidence supports a correction should a new candidate path be implemented; no Modal/L4 unless the user explicitly reopens paid usage.
+7. Only after a genuinely new corrected candidate is frozen/locked may the professional scorer be considered again.
