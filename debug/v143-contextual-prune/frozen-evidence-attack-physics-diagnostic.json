@@ -1,5 +1,183 @@
 {
   "attackCount": 725,
+  "barPhaseRecurrence": {
+    "candidateOffsetsSixteenthSteps": [
+      0,
+      4,
+      8,
+      12
+    ],
+    "candidates": [
+      {
+        "beatStepPrimaryAttackMeans": {
+          "0": 2.1367287878787877,
+          "12": 1.9881448059701492,
+          "4": 2.0403553773584906,
+          "8": 2.5420986724137933
+        },
+        "downbeatAttackContrastVsOtherBeats": -0.05347083070202352,
+        "lagRecurrence": {
+          "1": {
+            "barPairCount": 112,
+            "occupancyJaccardMean": 0.319597342141985,
+            "occupancyJaccardMedian": 0.3205128205128205,
+            "primaryAgreement": 0.2897727272727273,
+            "selectedPitchSetJaccardMean": 0.3162878787878788,
+            "sharedStepCount": 352
+          },
+          "2": {
+            "barPairCount": 111,
+            "occupancyJaccardMean": 0.3208033208033208,
+            "occupancyJaccardMedian": 0.3333333333333333,
+            "primaryAgreement": 0.3008595988538682,
+            "selectedPitchSetJaccardMean": 0.3116045845272206,
+            "sharedStepCount": 349
+          },
+          "4": {
+            "barPairCount": 109,
+            "occupancyJaccardMean": 0.30090078117601055,
+            "occupancyJaccardMedian": 0.3,
+            "primaryAgreement": 0.2236024844720497,
+            "selectedPitchSetJaccardMean": 0.24314182194616976,
+            "sharedStepCount": 322
+          }
+        },
+        "offsetSixteenthStepsFromCurrent": 0,
+        "populatedBarCount": 113,
+        "retainedAttackCount": 725
+      },
+      {
+        "beatStepPrimaryAttackMeans": {
+          "0": 2.0403553773584906,
+          "12": 2.1367287878787877,
+          "4": 2.5420986724137933,
+          "8": 1.9881448059701492
+        },
+        "downbeatAttackContrastVsOtherBeats": -0.18196871139575288,
+        "lagRecurrence": {
+          "1": {
+            "barPairCount": 112,
+            "occupancyJaccardMean": 0.3217857043749901,
+            "occupancyJaccardMedian": 0.31666666666666665,
+            "primaryAgreement": 0.2897727272727273,
+            "selectedPitchSetJaccardMean": 0.3162878787878788,
+            "sharedStepCount": 352
+          },
+          "2": {
+            "barPairCount": 111,
+            "occupancyJaccardMean": 0.3259024509024509,
+            "occupancyJaccardMedian": 0.3,
+            "primaryAgreement": 0.3008595988538682,
+            "selectedPitchSetJaccardMean": 0.3116045845272206,
+            "sharedStepCount": 349
+          },
+          "4": {
+            "barPairCount": 109,
+            "occupancyJaccardMean": 0.30212437918859936,
+            "occupancyJaccardMedian": 0.3,
+            "primaryAgreement": 0.2236024844720497,
+            "selectedPitchSetJaccardMean": 0.24314182194616976,
+            "sharedStepCount": 322
+          }
+        },
+        "offsetSixteenthStepsFromCurrent": 4,
+        "populatedBarCount": 113,
+        "retainedAttackCount": 725
+      },
+      {
+        "beatStepPrimaryAttackMeans": {
+          "0": 2.5420986724137933,
+          "12": 2.0403553773584906,
+          "4": 1.9881448059701492,
+          "8": 2.1367287878787877
+        },
+        "downbeatAttackContrastVsOtherBeats": 0.4870223486779839,
+        "lagRecurrence": {
+          "1": {
+            "barPairCount": 112,
+            "occupancyJaccardMean": 0.3223119142762,
+            "occupancyJaccardMedian": 0.3333333333333333,
+            "primaryAgreement": 0.2897727272727273,
+            "selectedPitchSetJaccardMean": 0.3162878787878788,
+            "sharedStepCount": 352
+          },
+          "2": {
+            "barPairCount": 111,
+            "occupancyJaccardMean": 0.3231109731109731,
+            "occupancyJaccardMedian": 0.3,
+            "primaryAgreement": 0.3008595988538682,
+            "selectedPitchSetJaccardMean": 0.3116045845272206,
+            "sharedStepCount": 349
+          },
+          "4": {
+            "barPairCount": 109,
+            "occupancyJaccardMean": 0.30207417455123875,
+            "occupancyJaccardMedian": 0.3,
+            "primaryAgreement": 0.2236024844720497,
+            "selectedPitchSetJaccardMean": 0.24314182194616976,
+            "sharedStepCount": 322
+          }
+        },
+        "offsetSixteenthStepsFromCurrent": 8,
+        "populatedBarCount": 113,
+        "retainedAttackCount": 725
+      },
+      {
+        "beatStepPrimaryAttackMeans": {
+          "0": 1.9881448059701492,
+          "12": 2.5420986724137933,
+          "4": 2.1367287878787877,
+          "8": 2.0403553773584906
+        },
+        "downbeatAttackContrastVsOtherBeats": -0.25158280658020815,
+        "lagRecurrence": {
+          "1": {
+            "barPairCount": 112,
+            "occupancyJaccardMean": 0.3197787827252113,
+            "occupancyJaccardMedian": 0.3333333333333333,
+            "primaryAgreement": 0.2897727272727273,
+            "selectedPitchSetJaccardMean": 0.3162878787878788,
+            "sharedStepCount": 352
+          },
+          "2": {
+            "barPairCount": 111,
+            "occupancyJaccardMean": 0.3243086743086743,
+            "occupancyJaccardMedian": 0.3,
+            "primaryAgreement": 0.3008595988538682,
+            "selectedPitchSetJaccardMean": 0.3116045845272206,
+            "sharedStepCount": 349
+          },
+          "4": {
+            "barPairCount": 109,
+            "occupancyJaccardMean": 0.2977259743314789,
+            "occupancyJaccardMedian": 0.3,
+            "primaryAgreement": 0.2236024844720497,
+            "selectedPitchSetJaccardMean": 0.24314182194616976,
+            "sharedStepCount": 322
+          }
+        },
+        "offsetSixteenthStepsFromCurrent": 12,
+        "populatedBarCount": 113,
+        "retainedAttackCount": 725
+      }
+    ],
+    "currentBoundaryOffset": 0,
+    "definition": "rotate current 16-step bar boundary by whole-beat offsets; compare recurrence and physical onset accent without changing any event",
+    "metricWinners": {
+      "downbeatAttackContrast": 8,
+      "lag1OccupancyJaccard": 8,
+      "lag1PitchSetJaccard": 12,
+      "lag1PrimaryAgreement": 12,
+      "lag2OccupancyJaccard": 4,
+      "lag4OccupancyJaccard": 4
+    },
+    "phaseSelectedOrChanged": false,
+    "winnerCounts": {
+      "12": 2,
+      "4": 2,
+      "8": 2
+    }
+  },
   "candidateRenderProduced": false,
   "harmonicFamilyPhysics": {
     "lowerFamilyAttackCount": 0,
@@ -308,7 +486,7 @@
     "strictWeakFrontStrongBodyCount": 0
   },
   "runtimeLabelsRequired": false,
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "sixteenthStepSeconds": 0.11609977324263039,
   "sourceAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
   "tempoBpm": 129.19921875
