@@ -86,3 +86,5 @@ jobs:
           fi
           git commit -m "diagnostic: persist edge-safe phase stability report"
           git push origin HEAD:v143-contextual-prune-lobo
+
+# Intentional no-op revision: ensure this push is evaluated with the workflow already present.
