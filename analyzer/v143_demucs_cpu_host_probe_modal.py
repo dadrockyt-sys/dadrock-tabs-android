@@ -55,6 +55,8 @@ def _host_fingerprint() -> dict[str, Any]:
         "platform": platform.platform(),
         "machine": platform.machine(),
         "processor": platform.processor(),
+        "modalCloudProvider": os.environ.get("MODAL_CLOUD_PROVIDER"),
+        "modalRegion": os.environ.get("MODAL_REGION"),
         "cpuModelName": model_name,
         "cpuFlags": flags,
         "lscpu": (lscpu.stdout or lscpu.stderr or "")[:12000],
