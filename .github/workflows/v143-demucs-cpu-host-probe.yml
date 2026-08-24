@@ -1,10 +1,8 @@
 name: V143 Demucs CPU Host Probe
 
-# One cheap CPU-only diagnostic pass. This initial push trigger is removed after the first result.
+# Cheap diagnostic only; manual so bug edits never create compute automatically.
 on:
-  push:
-    branches: [v143-contextual-prune-lobo]
-    paths: [.github/workflows/v143-demucs-cpu-host-probe.yml]
+  workflow_dispatch:
 
 permissions: {contents: write}
 
