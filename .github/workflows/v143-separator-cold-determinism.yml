@@ -1,0 +1,152 @@
+name: V143 Separator Cold Determinism
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - .github/workflows/v143-separator-cold-determinism.yml
+
+permissions:
+  contents: write
+
+jobs:
+  independent-pass:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        pass: [1, 2, 3]
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Anti-leakage and protected-runtime gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_seeded_audio_separator_cli.py \
+            analyzer/v143_seeded_separator.py \
+            analyzer/v143_deterministic_separator.py \
+            analyzer/v143_separator_cold_determinism_probe_modal.py; then
+            echo 'Forbidden scorer/reference token in separator determinism path' >&2
+            exit 31
+          fi
+      - name: Run genuinely independent Modal separator pass
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet modal
+          mkdir -p .cold
+          python -m modal run analyzer/v143_separator_cold_determinism_probe_modal.py::approved_audio \
+            --audio-path public/gomywayfullaitest.m4a \
+            --output-path .cold/pass-${{ matrix.pass }}.json
+          test -s .cold/pass-${{ matrix.pass }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: separator-cold-pass-${{ matrix.pass }}
+          path: .cold/pass-${{ matrix.pass }}.json
+          retention-days: 7
+
+  compare:
+    if: always() && github.actor != 'github-actions[bot]'
+    needs: independent-pass
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: separator-cold-pass-*
+          path: .cold/downloaded
+          merge-multiple: true
+      - name: Compare exact separator identities and write diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          files=sorted(Path('.cold/downloaded').glob('pass-*.json'))
+          if len(files)!=3:
+              raise SystemExit(f'expected 3 independent passes, found {len(files)}')
+          passes=[json.loads(path.read_text()) for path in files]
+          keys=('sourceSha256','normalizedWavSha256','directGuitarSha256','roformerInstrumentalSha256','cascadeGuitarSha256')
+          comparisons={}
+          first_mismatch=None
+          for key in keys:
+              values=[p.get(key) for p in passes]
+              exact=len(set(values))==1 and all(isinstance(v,str) and v for v in values)
+              comparisons[key]={'values':values,'exact':exact}
+              if not exact and first_mismatch is None:
+                  first_mismatch=key
+          inv_ok=all(
+              (p.get('invariants') or {}).get('approvedFixture') is True
+              and (p.get('invariants') or {}).get('referenceFree') is True
+              and (p.get('invariants') or {}).get('deterministicFlag') is True
+              and (p.get('invariants') or {}).get('productionModified') is False
+              and (p.get('invariants') or {}).get('protectedPipelineModified') is False
+              for p in passes
+          )
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          passed=all(item['exact'] for item in comparisons.values()) and inv_ok and protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          report={
+              'schemaVersion':1,
+              'gate':'v143-separator-cold-determinism',
+              'runId':int('${{ github.run_id }}'),
+              'runAttempt':int('${{ github.run_attempt }}'),
+              'triggerSha':'${{ github.sha }}',
+              'independentPassCount':len(passes),
+              'passes':passes,
+              'comparisons':comparisons,
+              'firstMismatchStage':first_mismatch,
+              'allSeparatorHashesExact':all(item['exact'] for item in comparisons.values()),
+              'invariantsPassed':inv_ok,
+              'protectedPipelineBlob':protected,
+              'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+              'productionModified':False,
+              'passed':passed,
+          }
+          Path('debug/v143-contextual-prune/separator-cold-determinism.json').write_text(json.dumps(report,indent=2)+'\n')
+          print(json.dumps({'passed':passed,'firstMismatchStage':first_mismatch,'comparisons':comparisons},indent=2))
+          PY
+      - name: Commit diagnostic race-safe
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/separator-cold-determinism.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record separator cold determinism proof'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
+      - name: Enforce exact cold-session identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('debug/v143-contextual-prune/separator-cold-determinism.json').read_text())
+          if d.get('passed') is not True:
+              raise SystemExit('separator cold determinism failed at '+str(d.get('firstMismatchStage')))
+          PY
