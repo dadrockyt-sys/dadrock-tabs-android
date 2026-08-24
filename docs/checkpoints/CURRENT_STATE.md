@@ -19,41 +19,36 @@ Priority: **finish Rhythm end-to-end before Bass/Lead**.
 - One-shot professional run `32731885778` failed broadly: coverage recall `1.0`, pitch-content F1 `0.23718280683583634`, pitch+timing F1 `0.033143448990160536`, critical mismatches `1723`.
 - Allowed diagnosis only: coverage solved; timing/grid identity and pitch identity fundamentally wrong. Scorer/reference closed again.
 
-## General timing defect
-Beat-grid repair can rebuild a clean pulse train after malformed raw beat intervals but still blindly inherit raw modulo-4 phase. Raw phase is defined by raw sequence index, so inserted/sub-beat/duplicate pulse removal can make inherited phase stale.
+## General timing defect remains real, but simple phase correction rejected
+Beat-grid repair rebuilds a clean pulse train after malformed raw beat intervals but blindly inherits raw modulo-4 phase. Synthetic proof confirms that can become stale after inserted/sub-beat/duplicate pulses. However, approved-audio evidence does **not** support a simple global or raw-index-derived rephase.
 
-## Approved post-repair global phase diagnostic
-CPU run `32736686527`: synthetic + approved success, protected/live/Production unchanged. Repaired grid 449 beats / 0 interval outliers. Global multi-window preferred phase 2 with 5/7 votes and weighted fraction `0.6784292`, but first half strongly/stably prefers phase 1 while second half strongly/stably prefers phase 2. Global phase replacement remains unsafe.
+## Global + local phase diagnostics
+- Global post-repair CPU run `32736686527`: preferred phase 2 with 5/7 votes / weighted fraction `0.6784292`, but first half strongly/stably phase 1 and second half strongly/stably phase 2. Global replacement rejected.
+- Local phase CPU run `32737275715`: 26 windows, strong phase counts phase1=12, phase3=2, phase2=1. Strong phase1 run repaired indices 32→272; ambiguous region ~224→304; strong phase3 run 304→384; one later strong phase2 window 368→432. Runtime untouched.
 
-## Approved local phase-path diagnostic — GREEN / IMPORTANT
-CPU run `32737275715`, trigger `c680158f29b61ceaa721acc7f8fb99223795456a`:
-- static `success`, approved `success`, protected exact, reference-free, single feature extraction pass, runtime/live/Production unchanged.
-- 26 local windows (64 repaired beats / 16-beat stride).
-- first strong run: phase 1, 12 strong windows, repaired beat indices 32→272, mean confidence `0.54835`, min `0.40707`.
-- transition region 224→304 is ambiguous/unstable (winners 2/0/2 with insufficient stability).
-- later strong run: phase 3, 2 strong windows, repaired indices 304→384, mean confidence `0.50006`.
-- later strong phase 2: one strong window, repaired indices 368→432, confidence `0.48565`.
-- overall strong windows: phase1=12, phase3=2, phase2=1; multiple strong phases observed.
-This rules out treating the full-file phase-2 vote as a simple global correction. The repaired pulse train or musical phase evidence changes materially later in the track.
+## Raw↔repaired index alignment — GREEN / INTERPRETATION COMPLETE
+Enhanced CPU run `32737637171`, trigger `6ce76949057eaae6a10ed160de061e984db7f023`:
+- static `success`, approved `success`, protected exact, reference-free, runtime/live/Production unchanged.
+- 323/449 repaired beats matched raw beats within 0.25 period (`0.7193764`), median absolute residual `0.0s`, mean `0.007584s`.
+- raw-minus-repaired index modulo changes at repaired indices approximately 111, 149, 227, 230, 271, 344, 368, 378, 392, 419, 435.
+- early raw/repaired offset runs cycle 0→1→2→3→0→1 while the independent local audio phase remains strongly/stably **phase 1 continuously from repaired indices 32→272**.
+- therefore raw/repaired modulo-offset changes do **not** map one-for-one to musical bar phase. Raw tracker index drift proves inherited raw phase lacks provenance, but it cannot itself be used to derive a corrected musical phase.
+- the later strong phase1→phase3 change begins around local window start 304, while the next raw/repaired offset change is much later at 344; this does not support repair-index drift as the cause of that phase transition.
+- the later phase3→phase2 evidence overlaps an index-offset change at 368, but this isolated coincidence is insufficient given the many earlier offset changes with no corresponding musical-phase change.
 
-## Raw↔repaired index-alignment diagnostic staged
-To distinguish repair-index drift from arrangement-only accent changes, added a purely reference-free raw/repaired index provenance test:
-- `analyzer/v143_repair_index_alignment_shadow.py` commit `f11e47147e9840280e10f7aef2762ab2c1502603`.
-  - nearest raw-beat match within 0.25 expected period (same generic scale as repair boundary search), traces `rawIndex - repairedIndex` and modulo-4 offset runs/change points.
-  - a raw inserted pulse should objectively produce a later modulo offset change even when repaired intervals are clean.
-- `analyzer/check_v143_repair_index_alignment_shadow.py` commit `2159d9172b37cf88fef4141115b70d10417b8a9f`.
-  - synthetic false-sub-beat proof requires offset run 0 before insertion and offset run 1 afterward; no song/reference labels.
-- Updated CPU-only phase-path workflow at commit `6ce76949057eaae6a10ed160de061e984db7f023` to run both static checkers and add `rawRepairedIndexAlignment` to the approved diagnostic.
-- This triggers one new CPU-only pass; still no Modal/GPU, no runtime timing mutation.
+### Timing decision
+**Do not mutate runtime bar phase globally or by raw-index offset.** The generic evidence says the audio contains changing/ambiguous local bar-accent structure, while the repaired pulse train itself has zero interval outliers. Any phase correction derived solely from raw beat-list index provenance would be unsafe.
+
+Timing audit can now move from bar-phase hypothesis to **subdivision/attack-grid self-consistency**: verify that retained physical onsets are assigned to appropriate 16th slots and that grid residuals / quantization behavior remain coherent through repaired regions. This stays reference-free and can use existing candidate/carrier diagnostics before any new inference.
 
 ## Cost control
 - No Modal/GPU inference in this continuation.
 - Do not rerun old candidate/freeze/scorer.
-- Inspect only the single CPU index-alignment-enhanced local-phase-path run triggered by `6ce7694...`.
+- Prefer existing committed candidate/event diagnostics and static source inspection for subdivision/attack audit.
 
 ## Next exact actions
-1. Read the new `post-repair-local-phase-path-status.json` and enhanced approved diagnostic.
-2. Compare raw↔repaired modulo-offset change points with the local phase-path transition region around repaired indices ~224–304 and later phase changes.
-3. If index-offset changes line up with phase changes, build a general post-repair phase provenance correction; if they do not, treat local phase changes as musical/arrangement evidence and do not mutate the global beat index.
-4. Stay CPU/reference-free until this distinction is resolved.
-5. Only after timing coherence, resume independent pitch-carrier audit; any accepted correction still requires a brand-new candidate/freeze/PDF/lock before one new professional score.
+1. Inspect current candidate product/event payload for `onsetTime` vs `timeSeconds` / measure-step assignments and residual distributions, especially around repaired-index anomaly regions.
+2. Trace `build_subdivision_grid` + `nearest_timing_slot` + candidate assembly to rule out a 16th-grid serialization/quantization defect independent of bar phase.
+3. If subdivision timing is internally coherent, close timing changes for now and resume independent pitch-carrier audit.
+4. Pitch audit should quantify the effect of taking the minimum across deterministic guitar views and harmonic/fundamental selection using only audio/carrier evidence; no correction accepted yet.
+5. Any accepted runtime-affecting correction still requires a brand-new candidate/freeze/PDF/lock before one new professional score.
