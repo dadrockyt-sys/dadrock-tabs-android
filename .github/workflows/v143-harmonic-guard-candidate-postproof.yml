@@ -1,0 +1,150 @@
+name: V143 Harmonic Guard Candidate Post-Proof
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-product.json
+      - debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-proof.json
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-harmonic-guard-candidate-postproof
+  cancel-in-progress: true
+
+jobs:
+  proof:
+    if: github.actor == 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Recompute final committed candidate identity and determinism inheritance
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .harmonic-guard-postproof
+          candidate='debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-product.json'
+          proof='debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-proof.json'
+          cold='debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json'
+          test -s "$candidate"
+          test -s "$proof"
+          test -s "$cold"
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_promoted_harmonic_guard.py
+          node validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs \
+            "$candidate" \
+            .harmonic-guard-postproof/rhythm-freeze-input.json \
+            > .harmonic-guard-postproof/prepare-freeze.log 2>&1
+          PYTHONPATH=validation/rhythm_holdout python - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          from canonical import canonical_events, sha256_json
+
+          candidate_path=Path('debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-product.json')
+          initial_proof_path=Path('debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-proof.json')
+          cold_path=Path('debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json')
+          freeze_path=Path('.harmonic-guard-postproof/rhythm-freeze-input.json')
+          output_path=Path('debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-binding-proof.json')
+
+          candidate=json.loads(candidate_path.read_text(encoding='utf-8'))
+          initial=json.loads(initial_proof_path.read_text(encoding='utf-8'))
+          cold=json.loads(cold_path.read_text(encoding='utf-8'))
+          freeze=json.loads(freeze_path.read_text(encoding='utf-8'))
+          render=canonical_events(freeze.get('renderEvents') or [])
+          render_sha=sha256_json(render)
+          retired='a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb'
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          final_blob=subprocess.check_output(['git','hash-object',str(candidate_path)],text=True).strip()
+          raw_events=candidate.get('events') or []
+          raw_sha=hashlib.sha256(json.dumps(raw_events,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode('utf-8')).hexdigest()
+          stage_exact=all(bool(item.get('exact')) for item in (cold.get('stageHashComparisons') or {}).values())
+          section_exact=all(bool(item.get('exact')) for item in (cold.get('sectionHashComparisons') or {}).values())
+          trace=candidate.get('preFreezeTrace') or {}
+          guard=candidate.get('promotedHarmonicGuardDiagnostics') or {}
+          checks={
+            'initialCandidateProofPassed':initial.get('passed') is True,
+            'initialProjectedIdentityNew':initial.get('projectedRenderIdentityIsNew') is True,
+            'finalProjectionMatchesInitialProof':initial.get('projectedRenderEventSha256')==render_sha,
+            'finalProjectionMatchesCandidateTrace':trace.get('projectedRenderEventsSha256')==render_sha,
+            'finalRawEventsMatchCandidateTrace':trace.get('rawEventsSha256')==raw_sha,
+            'finalRenderIdentityNew':render_sha != retired,
+            'guardSuppressedPositive':int(guard.get('suppressedStrongestHarmonicCount') or 0)>0,
+            'guardReferenceFree':guard.get('referenceFree') is True and guard.get('professionalReferenceUsed') is False,
+            'coldExactProofPassed':cold.get('passed') is True,
+            'coldIndependentPassesTwo':int(cold.get('independentPassCount') or 0)==2,
+            'coldStagesExact':stage_exact,
+            'coldSectionsExact':section_exact,
+            'coldProtectedPipelineExact':cold.get('protectedPipelineUnchanged') is True,
+            'protectedPipelineExactNow':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+            'productionUnmodified':candidate.get('candidate',{}).get('productionModified') is False,
+          }
+          failed=[k for k,v in checks.items() if not v]
+          report={
+            'schemaVersion':1,
+            'gate':'v143-harmonic-guard-final-candidate-binding-and-determinism-inheritance',
+            'finalCandidateBlobSha':final_blob,
+            'rawEventSha256':raw_sha,
+            'rawEventCount':len(raw_events),
+            'projectedRenderEventSha256':render_sha,
+            'projectedRenderEventCount':len(render),
+            'retiredScoredRenderEventSha256':retired,
+            'projectedRenderIdentityIsNew':render_sha != retired,
+            'selectedAttackCount':int(candidate.get('selectedCount') or 0),
+            'guardDiagnostics':guard,
+            'determinismBasis':{
+              'inheritedColdExactRunId':cold.get('runId'),
+              'independentPassCount':cold.get('independentPassCount'),
+              'allUpstreamStageHashesExact':stage_exact,
+              'allUpstreamSectionHashesExact':section_exact,
+              'newGuardIsPureDeterministicPostPrecisionTransform':True,
+              'secondGpuInferenceRequiredForThisProof':False,
+            },
+            'checks':checks,
+            'failedChecks':failed,
+            'professionalReferenceUsed':False,
+            'runtimeLabelsRequired':False,
+            'productionModified':False,
+            'modalGpuUsed':False,
+            'passed':not failed,
+          }
+          output_path.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n',encoding='utf-8')
+          if failed:
+            raise SystemExit('harmonic-guard postproof failed: '+', '.join(failed))
+          print(json.dumps(report,indent=2))
+          PY
+
+      - name: Commit binding proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-binding-proof.json
+          if git diff --cached --quiet; then
+            echo 'No candidate binding proof change.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Bind harmonic-guard candidate identity'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
