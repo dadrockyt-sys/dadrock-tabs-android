@@ -1,0 +1,297 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-post-repair-bar-phase-approved-audio-shadow",
+  "runId": 32736686527,
+  "runAttempt": 1,
+  "triggerSha": "acc3d0d89ff8973186e093b4e2f155cdcc87aa60",
+  "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "originalTiming": {
+    "tempoBpm": 129.19921875,
+    "beatCount": 447,
+    "firstBeatInMeasure": 3,
+    "downbeatIndexMod4": 1,
+    "barConfidence": 0.08797341408427677
+  },
+  "repair": {
+    "originalBeatCount": 447,
+    "repairedBeatCount": 449,
+    "originalFirstBeatTime": 0.6733786848072563,
+    "originalLastBeatTime": 203.03528344671201,
+    "repairedFirstBeatTime": 0.6965986394557823,
+    "repairedLastBeatTime": 209.09569160997734,
+    "originalIntervalOutlierCount": 38,
+    "repairedIntervalOutlierCount": 0,
+    "stableAnchorStartIndex": 0,
+    "stableAnchorEndIndex": 109,
+    "stableAnchorPeriodSeconds": 0.46439909297052395,
+    "activeAudioStartSeconds": 1.6346485260770975,
+    "activeAudioEndSeconds": 209.1231746031746,
+    "leadingExtendedBeatCount": 0,
+    "trailingExtendedBeatCount": 13,
+    "continuityOnlyBeatCount": 8,
+    "snappedBeatCount": 440,
+    "boundaryEvidenceFloor": 0.5944737866354368,
+    "boundaryEnergyFloor": 0.05812348996682043,
+    "boundaryLookaheadBeats": 4,
+    "lookaheadBridgeBeatCount": 3,
+    "originalIntervals": {
+      "count": 446,
+      "ratioP01": 0.5250000000000135,
+      "ratioP05": 0.725000000000013,
+      "ratioP50": 1.000000000000005,
+      "ratioP95": 1.0500000000000023,
+      "ratioP99": 1.0750000000000008
+    },
+    "repairedIntervals": {
+      "count": 448,
+      "ratioP01": 0.899999999999999,
+      "ratioP05": 0.950000000000003,
+      "ratioP50": 1.000000000000005,
+      "ratioP95": 1.0500000000000023,
+      "ratioP99": 1.075000000000009
+    },
+    "barPhaseChanged": false,
+    "tempoChanged": false,
+    "referenceFree": true,
+    "runtimeLabelsRequired": false,
+    "productionModified": false
+  },
+  "postRepairPhase": {
+    "inheritedDownbeatIndexMod4": 1,
+    "inheritedFirstBeatInMeasure": 3,
+    "preferredDownbeatIndexMod4": 2,
+    "preferredFirstBeatInMeasure": 2,
+    "windowCount": 7,
+    "preferredWindowVoteCount": 5,
+    "preferredWindowVoteFraction": 0.7142857142857143,
+    "preferredWeightedVoteFraction": 0.6784292365230369,
+    "fullConsensusSignalCount": 2,
+    "fullConsensusConfidence": 0.19779501492451862,
+    "fullWinnerMatchesPreferred": true,
+    "robustPreference": true,
+    "phaseChangeRecommended": true,
+    "windows": [
+      {
+        "name": "full",
+        "startBeatIndex": 0,
+        "endBeatIndexExclusive": 449,
+        "beatCount": 449,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.19779501492451862,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 2
+        },
+        "voteWeight": 0.47389750746225934,
+        "candidateCombinedScores": {
+          "0": -0.11135050052321047,
+          "1": 0.11274191491189378,
+          "2": 0.16339750363304628,
+          "3": -0.16412808419073127
+        }
+      },
+      {
+        "name": "trim-one-bar",
+        "startBeatIndex": 4,
+        "endBeatIndexExclusive": 445,
+        "beatCount": 441,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.19948777727495023,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 2
+        },
+        "voteWeight": 0.47474388863747513,
+        "candidateCombinedScores": {
+          "0": -0.14968128120764812,
+          "1": 0.12721340883799218,
+          "2": 0.18163069167121496,
+          "3": -0.15825840068399014
+        }
+      },
+      {
+        "name": "first-half",
+        "startBeatIndex": 0,
+        "endBeatIndexExclusive": 224,
+        "beatCount": 224,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.48126023886563435,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 2,
+          "harmonicChange": 1,
+          "bassChange": 2
+        },
+        "voteWeight": 0.6156301194328172,
+        "candidateCombinedScores": {
+          "0": -0.23731257415189413,
+          "1": 0.3947323765765225,
+          "2": 0.15859851243066836,
+          "3": -0.31601831485529674
+        }
+      },
+      {
+        "name": "second-half",
+        "startBeatIndex": 224,
+        "endBeatIndexExclusive": 449,
+        "beatCount": 225,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.4488162960470534,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": true,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 3,
+          "harmonicChange": 2,
+          "bassChange": 3
+        },
+        "voteWeight": 0.5994081480235267,
+        "candidateCombinedScores": {
+          "0": -0.01765557608827608,
+          "1": -0.11598200629823188,
+          "2": 0.1489413687766298,
+          "3": -0.015094844661266614
+        }
+      },
+      {
+        "name": "middle-half",
+        "startBeatIndex": 112,
+        "endBeatIndexExclusive": 336,
+        "beatCount": 224,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.1020169006115425,
+        "consensusSignalCount": 1,
+        "stableAcrossHalves": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 1
+        },
+        "voteWeight": 0.3635084503057713,
+        "candidateCombinedScores": {
+          "0": -0.16366243751122334,
+          "1": 0.1236239239263213,
+          "2": 0.1558837030630824,
+          "3": -0.11584518947818008
+        }
+      },
+      {
+        "name": "first-three-quarters",
+        "startBeatIndex": 0,
+        "endBeatIndexExclusive": 336,
+        "beatCount": 336,
+        "winnerDownbeatIndexMod4": 1,
+        "winnerFirstBeatInMeasure": 3,
+        "confidence": 0.19211713478452205,
+        "consensusSignalCount": 2,
+        "stableAcrossHalves": false,
+        "signalWinners": {
+          "accent": 1,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 2
+        },
+        "voteWeight": 0.47105856739226104,
+        "candidateCombinedScores": {
+          "0": -0.15952730940828885,
+          "1": 0.1951091526137994,
+          "2": 0.1570710753148615,
+          "3": -0.192652918520372
+        }
+      },
+      {
+        "name": "last-three-quarters",
+        "startBeatIndex": 112,
+        "endBeatIndexExclusive": 449,
+        "beatCount": 337,
+        "winnerDownbeatIndexMod4": 2,
+        "winnerFirstBeatInMeasure": 2,
+        "confidence": 0.13713528317664744,
+        "consensusSignalCount": 1,
+        "stableAcrossHalves": false,
+        "signalWinners": {
+          "accent": 2,
+          "lowAccent": 0,
+          "harmonicChange": 1,
+          "bassChange": 1
+        },
+        "voteWeight": 0.38106764158832374,
+        "candidateCombinedScores": {
+          "0": -0.1057983045706557,
+          "1": 0.04841263365057574,
+          "2": 0.15871326293201451,
+          "3": -0.10049124177817438
+        }
+      }
+    ],
+    "aggregateCandidates": [
+      {
+        "downbeatIndexMod4": 0,
+        "firstBeatInMeasure": 0,
+        "windowVoteCount": 0,
+        "weightedVote": 0.0,
+        "meanCombinedScore": -0.13499828335159952,
+        "medianCombinedScore": -0.14968128120764812,
+        "minimumCombinedScore": -0.23731257415189413
+      },
+      {
+        "downbeatIndexMod4": 1,
+        "firstBeatInMeasure": 3,
+        "windowVoteCount": 2,
+        "weightedVote": 1.0866886868250782,
+        "meanCombinedScore": 0.12655020060269614,
+        "medianCombinedScore": 0.1236239239263213,
+        "minimumCombinedScore": -0.11598200629823188
+      },
+      {
+        "downbeatIndexMod4": 2,
+        "firstBeatInMeasure": 2,
+        "windowVoteCount": 5,
+        "weightedVote": 2.2926256360173562,
+        "meanCombinedScore": 0.16060515968878827,
+        "medianCombinedScore": 0.15859851243066836,
+        "minimumCombinedScore": 0.1489413687766298
+      },
+      {
+        "downbeatIndexMod4": 3,
+        "firstBeatInMeasure": 1,
+        "windowVoteCount": 0,
+        "weightedVote": 0.0,
+        "meanCombinedScore": -0.15178414202400162,
+        "medianCombinedScore": -0.15825840068399014,
+        "minimumCombinedScore": -0.31601831485529674
+      }
+    ],
+    "referenceFree": true,
+    "runtimeLabelsRequired": false,
+    "productionModified": false
+  },
+  "invariants": {
+    "referenceFree": true,
+    "professionalReferenceUsed": false,
+    "runtimeLabelsRequired": false,
+    "repairedIntervalOutliersZero": true,
+    "recommendationOnly": true,
+    "runtimePhaseChanged": false,
+    "liveRhythmOutputChanged": false,
+    "productionModified": false,
+    "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+    "protectedPipelineUnchanged": true
+  }
+}
