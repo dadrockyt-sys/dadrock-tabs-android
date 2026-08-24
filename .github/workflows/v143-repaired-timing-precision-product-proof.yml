@@ -9,7 +9,11 @@ on:
       - analyzer/v143_repaired_timing_precision_candidate_product_modal.py
       - analyzer/v143_precision_sustain_promotion.py
       - analyzer/check_v143_precision_sustain_onset_handoff.py
+      - analyzer/v143_precision_promoted_harmonic_guard.py
+      - analyzer/check_v143_precision_promoted_harmonic_guard.py
       - analyzer/v143_contextual_prune_precision_candidate_events.py
+      - debug/v143-contextual-prune/precision-polyphonic-expansion-audit.json
+      - debug/v143-contextual-prune/precision-promoted-harmonic-guard-proof.json
       - validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs
       - validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs
       - lib/v143RenderContract.js
@@ -39,13 +43,16 @@ jobs:
           python -m py_compile \
             analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
             analyzer/v143_precision_sustain_promotion.py \
-            analyzer/check_v143_precision_sustain_onset_handoff.py
+            analyzer/check_v143_precision_sustain_onset_handoff.py \
+            analyzer/v143_precision_promoted_harmonic_guard.py \
+            analyzer/check_v143_precision_promoted_harmonic_guard.py
           node --check validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs
           node --check validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs
           PYTHONPATH=analyzer python analyzer/check_v143_reference_free_beat_grid_repair.py
           PYTHONPATH=analyzer python analyzer/check_v143_contextual_prune_precision_shadow.py
           PYTHONPATH=analyzer python analyzer/check_v143_contextual_prune_precision_primary_adapter.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_sustain_onset_handoff.py
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_promoted_harmonic_guard.py
           node validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs
       - name: Enforce anti-leakage and protected runtime
         shell: bash
@@ -56,6 +63,8 @@ jobs:
             analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
             analyzer/v143_precision_sustain_promotion.py \
             analyzer/check_v143_precision_sustain_onset_handoff.py \
+            analyzer/v143_precision_promoted_harmonic_guard.py \
+            analyzer/check_v143_precision_promoted_harmonic_guard.py \
             validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs \
             validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs; then
             echo 'Forbidden scorer/source token in repaired-timing product path' >&2
@@ -64,4 +73,6 @@ jobs:
           grep -q 'measureRangeDerivedFromAudio' analyzer/v143_repaired_timing_precision_candidate_product_modal.py
           grep -q 'repairedIntervalOutliersZero' validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs
           grep -q 'physicalOnsetPreserved' analyzer/v143_precision_sustain_promotion.py
+          grep -q 'promotedHarmonicGuardDiagnostics' analyzer/v143_repaired_timing_precision_candidate_product_modal.py
+          grep -q 'suppressedStrongestHarmonicCount' analyzer/v143_precision_promoted_harmonic_guard.py
           grep -q 'renderProjectionIndependentOfPhysicalOnset' validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs
