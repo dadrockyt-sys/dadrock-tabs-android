@@ -1,4 +1,5 @@
 name: V143 Bar Phase Status
+# refresh: 2
 
 on:
   workflow_dispatch:
