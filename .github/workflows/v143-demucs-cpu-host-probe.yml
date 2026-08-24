@@ -1,8 +1,10 @@
 name: V143 Demucs CPU Host Probe
 
-# Cheap diagnostic only; manual so bug edits never create compute automatically.
+# One cheap CPU-only common-AVX2 diagnostic pass, then restored to manual.
 on:
-  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v143-demucs-cpu-host-probe.yml]
 
 permissions: {contents: write}
 
@@ -22,35 +24,37 @@ jobs:
       - name: Free preflight
         run: |
           set -euo pipefail
-          python -m py_compile analyzer/v143_demucs_cpu_host_probe_modal.py analyzer/v143_seeded_audio_separator_cli.py analyzer/v143_seeded_separator.py
+          python -m py_compile analyzer/v143_demucs_cpu_host_probe_modal.py analyzer/v143_seeded_audio_separator_cli.py analyzer/v143_seeded_separator.py analyzer/check_v143_demucs_cpu_dispatch_controls.py
+          PYTHONPATH=analyzer python analyzer/check_v143_demucs_cpu_dispatch_controls.py
           test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
           test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
-          grep -q 'cpu=1.0' analyzer/v143_demucs_cpu_host_probe_modal.py
-          grep -q 'modalGpuRequested.*False' analyzer/v143_demucs_cpu_host_probe_modal.py
-          grep -q 'V143_DEMUCS_SHIFT_TRACE_PATH' analyzer/v143_seeded_audio_separator_cli.py
-          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' analyzer/v143_demucs_cpu_host_probe_modal.py analyzer/v143_seeded_audio_separator_cli.py analyzer/v143_seeded_separator.py; then exit 31; fi
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' analyzer/v143_demucs_cpu_host_probe_modal.py analyzer/v143_seeded_audio_separator_cli.py analyzer/v143_seeded_separator.py analyzer/check_v143_demucs_cpu_dispatch_controls.py; then exit 31; fi
       - name: One CPU-only Modal direct-Demucs pass
         run: |
           set -euo pipefail
           python -m pip install --disable-pip-version-check --quiet modal
-          python -m modal run analyzer/v143_demucs_cpu_host_probe_modal.py::approved_audio --audio-path public/gomywayfullaitest.m4a --output-path debug/v143-contextual-prune/demucs-cpu-host-probe.json
+          python -m modal run analyzer/v143_demucs_cpu_host_probe_modal.py::approved_audio --audio-path public/gomywayfullaitest.m4a --output-path debug/v143-contextual-prune/demucs-cpu-avx2-probe-1.json
       - name: Validate and commit diagnostic
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
           from pathlib import Path
-          p=Path('debug/v143-contextual-prune/demucs-cpu-host-probe.json')
+          p=Path('debug/v143-contextual-prune/demucs-cpu-avx2-probe-1.json')
           d=json.loads(p.read_text())
           inv=d.get('invariants') or {}
+          s=d.get('settings') or {}
           if inv.get('approvedFixture') is not True or inv.get('referenceFree') is not True: raise SystemExit('safety invariant failed')
           if inv.get('modalGpuRequested') is not False or inv.get('productionModified') is not False: raise SystemExit('GPU/production invariant failed')
+          expected={'atenCpuCapability':'avx2','mklCbwr':'COMPATIBLE','mklDynamic':'FALSE','ompDynamic':'FALSE','oneDnnMaxCpuIsa':'AVX2','dnnlMaxCpuIsa':'AVX2'}
+          bad={k:(s.get(k),v) for k,v in expected.items() if s.get(k)!=v}
+          if bad: raise SystemExit('dispatch controls mismatch '+repr(bad))
           trace=d.get('demucsShiftTrace') or []
-          if not trace: raise SystemExit('Demucs shift hook was not exercised')
-          print(json.dumps({'direct':d.get('directGuitarSha256'),'pcm':d.get('directPcmInt16Sha256'),'shiftTrace':trace,'cpuModel':(d.get('host') or {}).get('cpuModelName')},indent=2))
+          if trace != ['0,22050,6026']: raise SystemExit('unexpected shift trace '+repr(trace))
+          print(json.dumps({'direct':d.get('directGuitarSha256'),'pcm':d.get('directPcmInt16Sha256'),'shiftTrace':trace,'settings':s,'lscpu':(d.get('host') or {}).get('lscpu','')[:500]},indent=2))
           PY
-          git add debug/v143-contextual-prune/demucs-cpu-host-probe.json
+          git add debug/v143-contextual-prune/demucs-cpu-avx2-probe-1.json
           git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record CPU-only Demucs host probe'
+          git commit -m 'Record common AVX2 CPU probe 1'
           for n in 1 2 3 4; do git fetch origin v143-contextual-prune-lobo; git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0; git rebase --abort 2>/dev/null || true; sleep 2; done
           exit 1
