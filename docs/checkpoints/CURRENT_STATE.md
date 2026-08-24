@@ -6,187 +6,178 @@ Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
 ## Absolute boundary
 
-Work only on `v143-contextual-prune-lobo`. Do not modify/merge `main`, deploy/alter live V143 Modal, promote Production, make payments, send customer emails, or weaken the professional threshold.
+Work only on `v143-contextual-prune-lobo`. Do not modify/merge `main`, deploy/alter live V143 Modal/Production, promote Production, make payments, send customer emails, or weaken scoring thresholds.
 
 Required path:
 `user audio → Rhythm → reference-free Jimmy PAIge → authenticated events → exact professional preview/full PDF → post-freeze professional-human holdout score`
 
-Professional human reference is scorer-only. Runtime may never read/train/tune/select from it. Corrections after a holdout failure must remain general/reference-free. After accepting any correction, create a **brand-new approved-audio analysis/freeze/PDF identity before another professional score**.
+Professional human reference is scorer-only. Runtime may never read/train/tune/select from it. After a holdout failure, musical corrections must remain general/reference-free. After accepting any correction, create a **brand-new approved-audio run/freeze/PDF identity before another professional score**.
 
 Rhythm completion requires professional score >= `0.99`, critical mismatches = `0`, PDF-event fidelity = `1.0`.
 
 **Rhythm is NOT complete.**
 
-## Locked identities
+## Protected runtime / approved fixture
 
-Protected runtime: `analyzer/v143_reference_free_rhythm_pipeline.py`
-Required blob: `7f72f8ed9b14af8bc93e95544195204d99c6bec1`
-Restore commit: `4ff233346b8dc7b80d8f4316fe1317338b5be718`
+Protected runtime file:
+- `analyzer/v143_reference_free_rhythm_pipeline.py`
+- required Git blob: `7f72f8ed9b14af8bc93e95544195204d99c6bec1`
+- restore commit: `4ff233346b8dc7b80d8f4316fe1317338b5be718`
 
-Approved audio: `public/gomywayfullaitest.m4a`
-SHA256: `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
+Approved fixture:
+- `public/gomywayfullaitest.m4a`
+- SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
 
-Scorer-only professional reference (never commit):
-`/mnt/data/scorer_workspace/validation/rhythm_holdout/reference/professional-rhythm-complete.json`
-SHA256: `4d3e7ee6b5485c747bc917077b0648747da7f7d7325c8ccce5058fc41090d8cd`
-Complete measures 1–113; 577 playable onset objects; 925 playable note entries; completeness verifier passed.
+All current scorer diagnostics prove protected pipeline unchanged and Production modified false.
 
-Old scored freeze must not be rescored: 358 attacks / 1,017 notes / 112 populated measures, missing 101 / event SHA `a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e` / PDF fidelity 1.0.
+## Historical scored freeze — never rescore
 
-Old professional holdout FAILED:
+Old freeze:
+- 358 attacks / 1,017 rendered notes
+- 112 populated measures; missing m101
+- event SHA `a089a82996f51bfddc182abdf1e0f07732c135c7c6e7bfd6105b6daf37c1175e`
+- PDF fidelity 1.0
+
+Old temporary manually structured scorer reference:
+- SHA256 `4d3e7ee6b5485c747bc917077b0648747da7f7d7325c8ccce5058fc41090d8cd`
+- 113 contiguous measures
+- 577 playable onset objects
+- 925 playable note entries
+- 104 populated measures
+- exact bytes were temporary and were not preserved/committed.
+
+Old holdout failed:
 - pitchContentF1 `0.2626158599382081`
 - pitchTimingTolerantF1 `0.07209062821833163`
 - stringFretTimingTolerantF1 `0.030895983522142123`
 - chordPitchSetTolerantF1 `0.0`
 - exactVoicingTolerantF1 `0.0`
 - measureCoverageRecall `0.9911504424778761`
+- PDF fidelity `1.0`
 - critical mismatches `1653`
 
-General failure classes only: attack under-selection/measure loss; polyphony/harmonic inflation; broad pitch-position-timing mismatch. No song-specific runtime rules from scorer/reference.
+## Corrected candidate / first fresh corrected professional freeze
 
-## Boundary-grid fix — GREEN
+Reference-free correction path already green before scoring:
+- boundary-grid correction
+- strict physical attack rescue
+- unsupported pitch suppression
+- semantic primary-note guard
+- two-view sustain consensus
+- corrected candidate event adapter
+- isolated corrected candidate → Jimmy structured product/PDF path
 
-Carrier `analyzer/v143_contextual_prune_reference_free_carrier.py`, commit `9b0adba5cda329cccbee0b7eed58cd4f75277ee0`.
-Approved audio legitimately contains 1,788 timing slots because it starts inside measure 1 and ends inside measure 113. No synthetic pre/post-audio timing slots. Interior measures remain full 16-step grids; first/last partial boundaries must be contiguous suffix/prefix shapes.
-
-`debug/v143-contextual-prune/boundary-grid.json` GREEN:
-- m1 steps 12–15, m2–112 full, m113 steps 0–7
-- grid count 1,788
-- protected blob exact; anti-leakage pass; Production unchanged
-
-## Approved reference-free attack/pitch correction — GREEN
-
-Approved action/report:
-- `debug/v143-contextual-prune/shadow-correction-approved-audio-action.json`
-- `debug/v143-contextual-prune/shadow-correction-approved-audio.json`
-
-Result:
-- carrier rows 5,484; raw detections 143,902
-- contextual selector 1,116 base → 949 candidate attacks
-- strict physical rescue 949 → 979 attacks (+30 observed local peaks)
-- all 113 measures populated before/after
-- observed pitch hypotheses 10,686 → supported 2,055
-- mean pitches/attack 10.915 → 2.099; max 33 → 8
-- 959 attacks changed only by pitch suppression; 8,631 unsupported pitches removed
-- >=5 pitches 884 → 41; >=6 pitches 833 → 14
-- no event relocation; no invented pitch; protected/live/Production untouched
-
-Timing is diagnostic-only: tempo `129.19921875`, first beat in measure 3, downbeat mod4 1. Current four-way phase is the label-free winner but confidence is low `0.08797339512490407`; phase was not selected/changed. Strict residual median ~27.3 ms; ~99.65% within 60 ms; ~15.97% strict rows have <=20 ms nearest-vs-runner ambiguity.
-
-## Independent real physical review — GREEN
-
-`debug/v143-contextual-prune/approved-shadow-physical-review.json` validates the real approved correction:
-- base 949 / corrected 979 / rescued 30 / suppressed 8,631
+Fresh corrected freeze artifact:
+- Actions run `32662674725`
+- artifact ID `9499229323`
+- artifact SHA256 `980070d12011c3c6724d9d7c26da3b2158b0161d6ed54c561454ab254ba1706a`
+- 979 corrected attacks
+- 2,009 rendered authenticated notes
+- 2,055 physically supported pitches before legal voicing
+- 46 voicing-only drops
 - all 113 measures populated
-- 959 pitch changes reconcile; suppression-only
-- no phase mutation
-- professional reference not used
-- protected exact; Production unchanged
+- event SHA256 `c621ab4fd3a14849946a349b1ce2ed430322e3a8b49310f073b51cd8f417a194`
+- frozen/PDF event SHA identical
+- PDF-event fidelity `1.0`
+- full/preview PDF green
+- reference not opened during freeze
+- protected/live pipeline unchanged; Production unchanged.
 
-This proves physical/internal consistency only, not professional correctness.
+This freeze is now scored and must never be rescored after tuning.
 
-## Reference-free semantics + sustain — approved audio GREEN
+## Professional human source / reproducible scorer reference V2
 
-`debug/v143-contextual-prune/rhythm-semantics-sustain-approved-shadow-action.json` and report are GREEN.
-On the old production-compatible 358-attack assembly:
-- semantic guard 1,020 notes; technique events 82 → 22; secondary-technique events 53 → 0; bends 40 → 13; legato sources 42 → 9
-- event/timing/pitch/string/fret identity unchanged
-- sustain shadow annotated 652/1,020; no attack/pitch invention; no tie/let-ring inference
-- protected/live/Production unchanged
+Immutable professional source:
+- `Professionalexample.jpg`
+- source SHA256 `aca2da3e8d551b2fd82b4ab3ecafa0c8932d6c0a27b54b6213ffc990ca08a9a9`
+- human-written `Are You Gonna Go My Way`, Rhythm Guitar, revision `7868948` dated 2026-07-12
+- complete measures 1–113
 
-## Corrected candidate event adapter — CPU GREEN
+Exact scorer-only structured-source artifact:
+- artifact ID `9502117311`
+- artifact SHA256 `380165b5eb160cc8a35196192032c7d50224402880e453de448eed906c3b7dcb`
+- `rhythm-track.json` SHA256 `18cdb4f8afb49562aac5b600730384636070d6ca8650823e759276a81ee4afc8`
+- AI-generated flag false; source is human-written.
 
-`analyzer/v143_contextual_prune_candidate_events.py`
-- creation commit `ce240773ed3f95bf4989853a7e10a215f180f0fa`
-- green source blob `175db5dbbdf77e2be9113ba16f2413a3993aebb2`
+Because the old 577/925 temporary JSON bytes were not preserved, a deterministic scorer-only reference V2 was generated directly from the exact immutable human-written structured source **only after the corrected freeze/PDF identity gate passed**. It excludes tied continuation notes, dead/muted X notes, and rests as attack pitches; it quantizes human beat positions to the fixed 16-step scorer grid and merges same-step duplicate notes.
 
-`analyzer/check_v143_contextual_prune_candidate_events.py`
-- creation commit `b7f650da6dbe1c02c675f2716898cfb3474cbfd3`
-- green checker blob `e831b36e5a5b5f06c941e29349646ac70eea7804`
+Reference V2:
+- SHA256 `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`
+- 113 contiguous measures
+- 603 playable onset objects
+- 946 playable note entries
+- 104 populated measures
+- completeness verifier passed
+- reference payload was never committed
+- runtime/reference inputs remained false.
 
-`debug/v143-contextual-prune/candidate-events.json` GREEN:
-- every corrected attack rendered
-- emitted pitches are subsets of accepted physical pitch sets only
-- legal six-string joint voicing; >6-pitch sets reduce only through physical/playability constraints
-- no relocation/reference/Production change; protected exact
+Score diagnostic:
+- `debug/v143-contextual-prune/corrected-candidate-professional-score.json`
+- Actions run `32679830055`
 
-## FIRST corrected Jimmy PAIge professional freeze/PDF — GREEN
+## Corrected candidate professional score — FAILED
 
-Isolated candidate runner:
-`analyzer/v143_contextual_prune_candidate_product_modal.py`
-commit `2bacb894bbdb0555acfcd5c75363a78200f95e35`
+Scored exact corrected freeze `c621ab...` against deterministic scorer-only human source V2 at unchanged minimum `0.99`.
 
-Freeze preparer:
-`validation/rhythm_holdout/prepare_corrected_candidate_freeze_payload.mjs`
-commit `0565b16a649a490cc9ee34940f486696159055b7`
+Results:
+- generated notes: `2009`
+- reference notes: `946`
+- pitchContentF1: `0.2463620981387479`
+- pitchTimingTolerantF1: `0.07106598984771574`
+- stringFretTimingTolerantF1: `0.026395939086294416`
+- chordPitchSetTolerantF1: `0.0025284450063211127`
+- exactVoicingTolerantF1: `0.0025284450063211127`
+- measureCoverageRecall: `1.0`
+- PDF-event fidelity: `1.0`
+- criticalMismatchCount: `2541`
+  - gross unmatched generated notes: `1802`
+  - gross unmatched reference notes: `739`
+  - missing reference measures: none
+- near100ProfessionalGatePassed: false
+- rhythmComplete: false
+- scorer return code: `2`
 
-Pre-holdout workflow:
-`.github/workflows/v143-corrected-rhythm-candidate-preholdout.yml`
-commit `ec63baa13870ec357934f0530409bb04ccb4dc73`
+Safety stayed green:
+- professionalReferenceUsedByAnalyzer false
+- referenceRuntimeInputUsed false
+- runtimeLabelsRequired false
+- protected pipeline exact
+- Production modified false
+- reference payload not committed.
 
-Green immutable diagnostic:
-`debug/v143-contextual-prune/corrected-candidate-preholdout.json`
-Bot commit: `345cb4ed4d6d6f545e00c5642e6814ef1f8b3066`
-Trigger SHA: `ec63baa13870ec357934f0530409bb04ccb4dc73`
+## Allowed failure diagnosis — GENERAL CLASSES ONLY
 
-Freeze/PDF identity:
-- corrected attacks: **979**
-- rendered authenticated notes: **2,009**
-- supported physical pitches before six-string voicing: 2,055
-- voicing-only drops: 46
-- unique measures: **113**
-- event SHA256: `c621ab4fd3a14849946a349b1ce2ed430322e3a8b49310f073b51cd8f417a194`
-- snapshot SHA256: `15490767571f0ba96f77c20cfc8c8bcef7fab72988e1c87d3d130b9b8dc7e1d8`
-- PDF event SHA256: `c621ab4fd3a14849946a349b1ce2ed430322e3a8b49310f073b51cd8f417a194`
-- **PDF-event fidelity = 1.0**
-- renderer projection exact = true
-- full PDF bytes 1,767,161
-- preview PDF bytes 1,712,052
-- full pages 4; preview pages 4
-- professional reference opened = false
-- protected pipeline exact; live endpoint and Production unchanged
+Use the score only to quantify broad failure classes, never to derive song-specific runtime rules.
 
-Presentation:
-- 979 unique onsets
-- 2,009 rendered notes
-- average notes/measure 17.779
-- min/max notes per populated measure 3 / 50
-- max chord size 6
-- 569 multi-note onsets
-- 37 technique events; hammer-on/pull-off/slide-up/slide-down
-- 7 reference-free sections
-- no one-note-per-measure collapse
+Confirmed general classes on the corrected candidate:
 
-Semantic guard on this corrected candidate:
-- 2,009 events; 979 primary / 1,030 secondary
-- stripped 101 secondary legato links + 10 invalid primary-to-secondary links
-- event/timing/pitch/string/fret identity unchanged
+1. **Attack over-selection**
+   - corrected candidate has 979 attack locations versus a much sparser human performance structure.
+   - coverage is now complete, so the prior whole-measure-loss problem was fixed, but rescue/retention is too permissive.
 
-Candidate sustain:
-- 1,498/2,009 events received two-view sustain evidence
-- all 1,498 were longer than the old fallback detector because this candidate path had not populated production sustain first
-- no attack/pitch change; no tie/let-ring inference
+2. **Polyphony / harmonic inflation remains severe**
+   - 2,009 generated notes from 979 attacks.
+   - only 207 generated/reference notes can be grossly paired by same-measure/same-MIDI within ±2 steps under the scorer.
+   - chord pitch-set and exact voicing are effectively zero.
 
-All pre-holdout checks passed. This is the first corrected candidate that is eligible for a professional scorer-only holdout.
+3. **Pitch/position/timing mismatch remains severe**
+   - pitch content ~0.246
+   - tolerant timing ~0.071
+   - string/fret timing ~0.026.
 
-## Traceable workflow diagnostic
+4. **Measure coverage is fixed**
+   - all source measures covered; no missing reference measures.
 
-Added race-safe candidate diagnostic workflow:
-`.github/workflows/v143-corrected-candidate-approved-audio.yml`
-commit `a6ea1526c6ce40a894f42654aeb7042b9c38206a`
-It always commits an action diagnostic, includes GitHub `runId`/attempt/source blobs, and never opens the professional reference. Its result may still be pending; it is diagnostic only and does not replace the already-green freeze above.
+## Immediate next work
 
-## Scorer/reference availability
-
-The complete human reference is intentionally absent from GitHub; the repository reference folder contains only `.gitignore`, `reference-inventory.json`, and `reference.schema.json`.
-The prior complete scorer JSON was temporary/local and is not present in the current ChatGPT Library as a JSON file. The Library does contain the user's supplied/proof tablature images, including multiple `Are You Gonna Go My Way` rhythm-tab pages. Do not reconstruct/open scorer labels until using the now-immutable green freeze.
-
-## Immediate next steps
-
-1. Make the successful freeze artifact traceable/downloadable by GitHub Actions run ID (the first green workflow diagnostic did not record its run ID).
-2. Download the exact `v143-corrected-rhythm-professional-freeze` artifact containing the immutable freeze, preview/full PDF and event evidence.
-3. Recover/materialize the provided complete human reference into a **local scorer-only** workspace without committing it.
-4. Verify its SHA256 is `4d3e7ee6b5485c747bc917077b0648747da7f7d7325c8ccce5058fc41090d8cd` and completeness still passes.
-5. Run `score_rhythm_holdout.py` only against this new immutable freeze.
-6. Use any failures only as broad/general diagnostics; no song-specific runtime rule. Every accepted correction requires another brand-new approved-audio freeze/PDF before another score.
-7. Rhythm complete only at >=0.99, zero critical mismatches and PDF-event fidelity 1.0.
+1. Do **not** tune/rescore the `c621ab...` freeze again.
+2. Build an isolated, general/reference-free precision shadow using only audio/internal evidence:
+   - prune attacks that lack independent two-view onset/body support or strong contextual/local-peak evidence;
+   - retain rescue only where strict physical evidence materially exceeds neighboring slots;
+   - prune simultaneous pitch hypotheses using within-attack physical-score dominance, independent-view support, harmonic-family redundancy, and legal guitar voicing without human chord labels;
+   - preserve complete measure coverage through a fail-safe that keeps only the strongest physically supported attack when a measure would otherwise become empty.
+3. Validate correction entirely without professional reference: static/CPU gates, anti-leakage, protected blob, no Production change, no relocation/invented pitch.
+4. If accepted, run a **brand-new approved-audio analysis → corrected events → Jimmy payload → freeze → full/preview PDF** identity.
+5. Only then reopen scorer-only human source and score the new immutable freeze.
+6. Repeat only through general/reference-free corrections until >=0.99, 0 critical mismatches, fidelity 1.0.
+7. Then create `Final Rhythm Pipeline`; only afterward resume Bass, then Lead.
