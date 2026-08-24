@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-23 23:03 America/Thunder_Bay
+Updated: 2026-08-23 23:05 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -40,22 +40,12 @@ Freeze 2: preholdout run `32680719988`, artifact `9504147164`, artifact SHA `ded
 Allowed broad diagnosis only: count inflation largely fixed; dominant remaining classes pitch identity and timing/grid identity. Never derive song-specific runtime rules from scorer events.
 
 ## General reference-free fixes already green
-### Explicit primary
-- precision carries explicit `primary_midis`;
-- candidate adapter preserves selected primary through legal voicing;
-- CPU/approved-audio proofs passed; no invented attack/pitch/relocation.
-
-### Beat-grid repair
-- original 447 beats / 38 interval outliers / premature tail;
-- audio-only repair preserves tempo/current phase, anchors stable pulse, removes sub-beat duplicates, bridges weak boundary beats only when later physical evidence exists within one 4/4 bar;
-- run `32683424669`: 447→449 beats, outliers38→0, repaired last `209.0956916100s`, active audio end `209.1231746032s`, grid113 measures /1796 slots;
-- keep `downbeatIndexMod4=1`, `firstBeatInMeasure=3`.
+- Explicit-primary propagation is green; candidate adapter preserves selected primary; no invented attack/pitch/relocation.
+- Beat-grid repair run `32683424669`: 447→449 beats, interval outliers38→0, repaired last `209.0956916100s`, active audio end `209.1231746032s`, 113 measures/1796 slots; keep `downbeatIndexMod4=1`, `firstBeatInMeasure=3`.
 
 ## Combined repaired timing + explicit primary — NOT ACCEPTED
-Run `32684108550` attempt1 passed invariants: repaired outliers0, 113 measures/1796 slots, correction987 attacks, precision722 attacks /998 pitch hypotheses /153 promotions, all113 measures, explicit primary complete, no invented/relocated attack/pitch.
-
-Attempt2 exposed separator drift before scorer: normalized SHA exact `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`; repaired beat SHA exact `c74915787c824d91ba82b1314f3ce52e83bc40c6b72fec13efbf0b23d954e6aa`; direct/cascade stems changed; precision `722/998/153 → 728/1004/154`.
-
+Run `32684108550` attempt1 passed invariants: correction987 attacks, precision722 attacks /998 pitch hypotheses /153 promotions, all113 measures, explicit primary complete, no invented/relocated attack/pitch.
+Attempt2 exposed separator drift before scorer: normalized/repaired timing exact, direct/cascade stems changed; precision `722/998/153 → 728/1004/154`.
 No new Jimmy freeze accepted; scorer remains closed.
 
 ## Separator graph — musically unchanged
@@ -63,74 +53,63 @@ No new Jimmy freeze accepted; scorer remains closed.
 - BS-RoFormer `model_bs_roformer_ep_317_sdr_12.9755.ckpt`, Instrumental, batch1
 - cascade = BS-RoFormer Instrumental → same Demucs6s Guitar.
 
-Research wrappers only:
-- `analyzer/v143_deterministic_separator.py`
-- `analyzer/v143_seeded_separator.py`
-- `analyzer/v143_seeded_audio_separator_cli.py`
-- `analyzer/v143_separator_cold_determinism_probe_modal.py`
-- `analyzer/v143_demucs_cpu_host_probe_modal.py`
-
 ## Determinism history
-- Run `32684922439`: GPU controls insufficient; first mismatch direct Demucs.
-- Run `32685233870`: CPU direct two-state `7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c` / `be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849`.
-- Run `32685887212`: same exact CPU two-state despite one-thread controls; protected exact; Production false.
-- Run `32686215820`: dedicated Demucs shift RNG still same two-state; source/normalized/RoFormer exact; first mismatch direct; protected exact; Production false.
+- `32684922439`: GPU controls insufficient; first mismatch direct Demucs.
+- `32685233870`: CPU direct two-state `7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c` / `be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849`.
+- `32685887212`: same two-state despite one-thread controls.
+- `32686215820`: dedicated Demucs shift RNG still same two-state; source/normalized/RoFormer exact; first mismatch direct.
 
 ## Modal cost-control mode — ACTIVE
 Billing screenshot: L4 `$11.92`, memory `$1.40`, CPU `$1.09`, total `$14.41`; L4 is dominant.
-
-Rules:
-1. no repeated 3-pass full-song Modal during bug iteration;
-2. static/source/syntax/anti-leakage/protected-blob/fixture checks first;
-3. direct Demucs only and CPU-only when runtime evidence is genuinely needed;
-4. one diagnostic run at a time;
-5. reserve multi-pass L4 for final determinism proof after a concrete fix;
-6. do not run full repaired-timing/precision until separator exactness;
-7. scorer stays closed until deterministic fresh freeze.
-
-Expensive `.github/workflows/v143-separator-private-shift-cold-proof.yml` is manual-only since `4e366290c52f7b54b2d5b1ac087f6050f97ecbf2`. CPU probe workflow is manual-only outside explicit one-shot launches.
+Rules: static/free checks first; only one CPU-only direct-Demucs diagnostic at a time; no repeated full-song 3-pass L4 during debugging; multi-pass L4 only at final determinism gate; full repaired-timing/precision and scorer stay closed until separator exactness.
+Expensive separator 3-pass workflow is manual-only since `4e366290c52f7b54b2d5b1ac087f6050f97ecbf2`.
 
 ## ROOT CAUSE CONFIRMED — CPU host ISA/kernel dispatch
-Two cheap CPU-only direct-Demucs probes isolate the exact two states while proving the Demucs shift integer is identical.
+Two CPU-only probes used identical approved fixture, normalized bytes, shifts/model/settings, one thread, and exact shift trace `0,22050,6026`:
 
-### CPU probe 1 — AMD / AVX2
+### AMD / AVX2
 `debug/v143-contextual-prune/demucs-cpu-host-probe.json`, bot commit `ff339c08df4b8bfb4774af1102ddcbb85f33ffca`:
-- direct WAV SHA **`7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c`**
+- WAV SHA `7999b372798b2b92a2172e42176a194ba73f36b09435ba0d939a2eb208b3ab6c`
 - PCM SHA `820cec705b357eaee03369cb183840216214b98c76f62885184a6259c023efd0`
-- shift trace **`0,22050,6026`**
-- `AuthenticAMD`, AVX2, PyTorch runtime capability AVX2.
+- `AuthenticAMD`, AVX2; PyTorch runtime capability AVX2.
 
-### CPU probe 2 — Intel / AVX512
+### Intel / AVX512
 `debug/v143-contextual-prune/demucs-cpu-host-probe-2.json`, bot commit `961161f48018da29a85d10ddefd149f8aa53b1b8`:
-- direct WAV SHA **`be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849`**
+- WAV SHA `be081481a9b33f60806707ca79bc974e954ab5e74ad2d588df2b6f1d57269849`
 - PCM SHA `a15084b514701163ae4ff9029d077f814f75fe74d6d3f83479311a85384109c3`
-- shift trace **`0,22050,6026`** exactly identical
-- `GenuineIntel`, AVX512, same PyTorch build runtime capability AVX512.
+- `GenuineIntel`, AVX512; same PyTorch build runtime capability AVX512.
 
-Therefore same fixture + normalized bytes + shift + model/settings + single thread produces one state on AMD/AVX2 and the other on Intel/AVX512. The drift is CPU ISA/kernel dispatch, not RNG or musical/event logic.
+The two old output states map directly to CPU ISA host class. RNG is ruled out.
 
-## General/reference-free dispatch correction
-Official/source evidence checked without Modal:
-- PyTorch `DispatchStub.cpp` reads `ATEN_CPU_CAPABILITY`; valid x64 values include `avx2`, `avx512`, and `default`. PyTorch’s own CPU README documents using `ATEN_CPU_CAPABILITY=avx2` to force AVX2 codepaths.
-- oneDNN supports `ONEDNN_MAX_CPU_ISA` / `DNNL_MAX_CPU_ISA`; both observed hosts support AVX2.
-- Intel oneMKL CNR provides `MKL_CBWR=COMPATIBLE` for Intel and Intel-compatible CPUs; fixed threads plus `MKL_DYNAMIC=FALSE` and `OMP_DYNAMIC=FALSE` support reproducibility.
+## Dispatch-control experiments
+### SSE41 oneDNN + oneMKL COMPATIBLE — completed, NOT final candidate
+Initial conservative research candidate `7713f13f18d23917d71813b87b5cfa793ea1d488` pinned `MKL_CBWR=COMPATIBLE`, `MKL_DYNAMIC=FALSE`, `OMP_DYNAMIC=FALSE`, `ONEDNN_MAX_CPU_ISA=SSE41`, `DNNL_MAX_CPU_ISA=SSE41`; no ATen CPU-capability pin.
+One CPU-only run was launched by `c3e43f3af3c133eb21274a475423739aab1cd232`, workflow restored manual by `d96ed98f7ec11f98ffd166413123ad9a36a9001b`.
+Result committed as `debug/v143-contextual-prune/demucs-cpu-dispatch-probe-1.json`:
+- host: Intel AVX512 class
+- shift exact `0,22050,6026`
+- requested controls present: `MKL_CBWR=COMPATIBLE`, oneDNN/DNNL `SSE41`, dynamic threading false
+- WAV SHA **`b6cc6404c0b262673b6217ece869ded150c780b88f0e517f9662e6e5fa80b35f`**
+- PCM SHA **`8f0cf1c8d7c5bbdddbf16fae56ca6d2c8e6de8ac23e721831a03be993ce338`**
+This is a third deterministic numerical state. It proves the CPU dispatch controls are effective enough to alter the inference path, but SSE41 alone is not the desired common path and does not pin ATen native dispatch.
 
-Initial conservative SSE41 candidate was committed at `7713f13f18d23917d71813b87b5cfa793ea1d488`. One CPU-only SSE41 direct probe was launched by commit `c3e43f3af3c133eb21274a475423739aab1cd232`, then workflow was immediately restored to manual at `d96ed98f7ec11f98ffd166413123ad9a36a9001b`. No L4 was requested. At this checkpoint no committed result exists yet; do not launch another Modal pass until that one is known finished/failed.
+### Refined common AVX2 candidate — PREPARED, NOT YET RUNTIME-TESTED
+Source evidence confirms PyTorch `ATEN_CPU_CAPABILITY=avx2` forces AVX2 native ATen codepaths. Both observed Modal CPU host classes support AVX2. oneDNN also supports AVX2 cap. oneMKL CNR COMPATIBLE remains cross-vendor.
 
-The better common-host candidate is now prepared, not yet runtime-tested:
-- `1661a86bfb79239efbb3a7e3f5b9a41ac1bb4ddc`: research-only `DEMUCS_SINGLE_THREAD_ENV` now pins `ATEN_CPU_CAPABILITY=avx2`, `ONEDNN_MAX_CPU_ISA=AVX2`, `DNNL_MAX_CPU_ISA=AVX2`, `MKL_CBWR=COMPATIBLE`, `MKL_DYNAMIC=FALSE`, `OMP_DYNAMIC=FALSE`, while preserving model/shifts1/overlap.10/segment6/audio/private shift seed.
-- `6ce928b0e5ad846304115ce945fc86a7013b9fae`: cheap CPU probe records ATen/oneDNN/MKL requested controls.
-- `d722b7a1612367b13fa66243a5b546ff9006b95c`: static checker updated for exact common-AVX2 controls.
-- `analyzer/check_v143_demucs_cpu_dispatch_controls.py` is reference-free and asserts settings + anti-leakage tokens + musical separator settings.
+Research commits:
+- `1661a86bfb79239efbb3a7e3f5b9a41ac1bb4ddc`: `ATEN_CPU_CAPABILITY=avx2`, `ONEDNN_MAX_CPU_ISA=AVX2`, `DNNL_MAX_CPU_ISA=AVX2`, `MKL_CBWR=COMPATIBLE`, `MKL_DYNAMIC=FALSE`, `OMP_DYNAMIC=FALSE`, one thread; musical settings unchanged.
+- `6ce928b0e5ad846304115ce945fc86a7013b9fae`: cheap CPU probe reports ATen/oneDNN/MKL requested controls.
+- `d722b7a1612367b13fa66243a5b546ff9006b95c`: static checker updated for exact common AVX2 controls.
+- `analyzer/check_v143_demucs_cpu_dispatch_controls.py` asserts settings, anti-leakage tokens, shifts1/overlap.10/segment6.
 
-No Production file changed; protected runtime remains outside these research wrappers.
+No Production file changed; protected pipeline remains untouched.
 
 ## Current work NOW
-1. Wait only for the already-launched CPU-only SSE41 probe to finish/resolve; no second compute launch while it may still be active.
-2. Then run exactly one cheap direct-Demucs CPU test of the refined common-AVX2 candidate.
-3. If green, run one second cheap cold-host CPU test and require exact WAV + PCM + shift trace across AMD/Intel host classes.
-4. Only after CPU cross-host exactness run one full separator graph pass; multi-pass L4 proof remains final-only.
-5. Keep repaired timing/precision and scorer closed until separator exactness.
+1. Launch exactly one cheap CPU-only direct-Demucs run of the refined common-AVX2 candidate.
+2. If successful, launch one second cheap cold-host CPU run and require exact WAV + PCM + shift trace across host classes.
+3. Only after cross-host exactness run one full separator graph pass; reserve multi-pass L4 for final proof.
+4. Keep repaired-timing/precision and scorer closed until separator exactness.
+5. Save each result here.
 
 ## After separator + combined determinism are green
 1. Accept combined correction only after exact cold-session reproducibility and all safety/coverage invariants pass.
