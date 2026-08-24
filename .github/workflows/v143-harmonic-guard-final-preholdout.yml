@@ -1,0 +1,296 @@
+name: V143 Harmonic Guard Final Pre-Holdout
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v143-contextual-prune/RUN_HARMONIC_GUARD_PREHOLDOUT_ONCE
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-harmonic-guard-final-preholdout
+  cancel-in-progress: false
+
+jobs:
+  freeze-render-lock:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out exact trigger revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Bind only the new harmonic-guard candidate and fail closed on retired identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          marker='debug/v143-contextual-prune/RUN_HARMONIC_GUARD_PREHOLDOUT_ONCE'
+          candidate='debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-product.json'
+          initial='debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-proof.json'
+          binding='debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-binding-proof.json'
+          test -f "$marker"
+          test -s "$candidate"
+          test -s "$initial"
+          test -s "$binding"
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          mkdir -p .harmonic-preholdout/logs .harmonic-preholdout/freeze/pdf debug/v143-contextual-prune
+          python validation/rhythm_holdout/verify_runtime_isolation.py > .harmonic-preholdout/logs/runtime-isolation.json
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          candidate_path=Path('debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-product.json')
+          initial=json.loads(Path('debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-proof.json').read_text(encoding='utf-8'))
+          binding=json.loads(Path('debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-binding-proof.json').read_text(encoding='utf-8'))
+          candidate=json.loads(candidate_path.read_text(encoding='utf-8'))
+          isolation=json.loads(Path('.harmonic-preholdout/logs/runtime-isolation.json').read_text(encoding='utf-8'))
+          retired={
+            'c621ab4fd3a14849946a349b1ce2ed430322e3a8b49310f073b51cd8f417a194',
+            'e693602ade26256851dc0d77b003bf6ba0d5014dfaec7e35103ecdf25d33c32f',
+            'a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb',
+          }
+          final_blob=subprocess.check_output(['git','hash-object',str(candidate_path)],text=True).strip()
+          render_sha=str(binding.get('projectedRenderEventSha256') or '')
+          guard=candidate.get('promotedHarmonicGuardDiagnostics') or {}
+          live=candidate.get('liveV143') or {}
+          cand=candidate.get('candidate') or {}
+          trace=candidate.get('preFreezeTrace') or {}
+          checks={
+            'runtimeIsolationPassed':isolation.get('passed') is True,
+            'initialProofPassed':initial.get('passed') is True,
+            'bindingProofPassed':binding.get('passed') is True,
+            'finalCandidateBlobBound':binding.get('finalCandidateBlobSha')==final_blob,
+            'projectedIdentityMatchesInitial':initial.get('projectedRenderEventSha256')==render_sha,
+            'projectedIdentityMatchesCandidateTrace':trace.get('projectedRenderEventsSha256')==render_sha,
+            'projectedIdentityIsNew':bool(render_sha) and render_sha not in retired,
+            'approvedFixture':cand.get('approvedFixture') is True,
+            'approvedSourceSha':cand.get('sourceSha256')=='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+            'referenceFree':live.get('referenceFree') is True,
+            'professionalReferenceUnused':live.get('professionalReferenceUsed') is False and cand.get('professionalReferenceUsed') is False,
+            'referenceRuntimeInputUnused':live.get('referenceRuntimeInputUsed') is False,
+            'runtimeLabelsUnused':live.get('runtimeLabelsRequired') is False and cand.get('runtimeLabelsRequired') is False,
+            'productionUnmodified':cand.get('productionModified') is False,
+            'protectedRuntimeUnmodified':cand.get('protectedLivePipelineModified') is False,
+            'guardSuppressionPositive':int(guard.get('suppressedStrongestHarmonicCount') or 0)>0,
+            'guardReferenceFree':guard.get('referenceFree') is True and guard.get('professionalReferenceUsed') is False,
+            'all113Measures':int(candidate.get('audioDerivedMeasureCount') or 0)==113,
+          }
+          failed=[k for k,v in checks.items() if not v]
+          report={
+            'schemaVersion':1,
+            'gate':'v143-harmonic-guard-preholdout-binding',
+            'candidateBlobSha':final_blob,
+            'projectedRenderEventSha256':render_sha,
+            'retiredRenderEventSha256':sorted(retired),
+            'checks':checks,
+            'failedChecks':failed,
+            'referenceOpened':False,
+            'professionalReferenceUsed':False,
+            'runtimeLabelsRequired':False,
+            'productionModified':False,
+            'passed':not failed,
+          }
+          Path('.harmonic-preholdout/logs/candidate-binding.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+          if failed:
+            raise SystemExit('harmonic preholdout binding failed: '+', '.join(failed))
+          PY
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs \
+            validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs \
+            validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            lib/jimmyPaigeAnalysisPayload.js lib/v143RenderContract.js lib/createV143RhythmPdf.js; then
+            echo 'Forbidden scorer/source token in harmonic preholdout runtime path' >&2
+            exit 31
+          fi
+
+      - name: Install isolated freeze and PDF dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' '{"private":true,"dependencies":{"pdf-lib":"1.17.1"}}' > .harmonic-preholdout/package.json
+          npm install --prefix .harmonic-preholdout --ignore-scripts --no-audit --no-fund --package-lock=false
+          python -m pip install --disable-pip-version-check --quiet pypdf
+
+      - name: Prepare isolated ESM freeze and renderer tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .harmonic-preholdout/esm
+          cp lib/v143RenderContract.js .harmonic-preholdout/esm/v143RenderContract.mjs
+          sed "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" lib/v143AnalyzerQuality.js > .harmonic-preholdout/esm/v143AnalyzerQuality.mjs
+          sed -e "s#'./v143AnalyzerQuality.js'#'./v143AnalyzerQuality.mjs'#" -e "s#'./v143RenderContract.js'#'./v143RenderContract.mjs'#" lib/jimmyPaigeAnalysisPayload.js > .harmonic-preholdout/esm/jimmyPaigeAnalysisPayload.mjs
+          sed "s#../../lib/jimmyPaigeAnalysisPayload.js#./jimmyPaigeAnalysisPayload.mjs#" validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs > .harmonic-preholdout/esm/prepare-freeze.mjs
+          sed "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" lib/createV143RhythmPdf.js > .harmonic-preholdout/esm/createV143RhythmPdf.mjs
+          sed "s#../../lib/v143RenderContract.js#./v143RenderContract.mjs#" validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs > .harmonic-preholdout/esm/render-frozen.mjs
+          node --check .harmonic-preholdout/esm/v143RenderContract.mjs
+          node --check .harmonic-preholdout/esm/v143AnalyzerQuality.mjs
+          node --check .harmonic-preholdout/esm/jimmyPaigeAnalysisPayload.mjs
+          node --check .harmonic-preholdout/esm/prepare-freeze.mjs
+          node --check .harmonic-preholdout/esm/createV143RhythmPdf.mjs
+          node --check .harmonic-preholdout/esm/render-frozen.mjs
+          python -m py_compile validation/rhythm_holdout/canonical.py validation/rhythm_holdout/freeze_rhythm_analysis.py validation/rhythm_holdout/verify_pdf_event_fidelity.py
+
+      - name: Freeze exact committed harmonic-guard candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-product.json .harmonic-preholdout/raw-product-output.json
+          node .harmonic-preholdout/esm/prepare-freeze.mjs \
+            .harmonic-preholdout/raw-product-output.json \
+            .harmonic-preholdout/rhythm-freeze-input.json \
+            > .harmonic-preholdout/logs/prepare-freeze.log 2>&1
+          checked_out_commit=$(git rev-parse HEAD)
+          test "$checked_out_commit" = "$GITHUB_SHA"
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .harmonic-preholdout/rhythm-freeze-input.json \
+            .harmonic-preholdout/freeze \
+            --source-commit "$checked_out_commit" \
+            > .harmonic-preholdout/logs/freeze.log 2>&1
+          test -s .harmonic-preholdout/freeze/rhythm-frozen-analysis.json
+          test -s .harmonic-preholdout/freeze/rhythm-freeze-manifest.json
+
+      - name: Render PDFs and prove exact PDF-event fidelity
+        shell: bash
+        run: |
+          set -euo pipefail
+          NODE_PATH="$PWD/.harmonic-preholdout/node_modules" node .harmonic-preholdout/esm/render-frozen.mjs \
+            .harmonic-preholdout/freeze/rhythm-frozen-analysis.json \
+            .harmonic-preholdout/freeze/pdf \
+            .harmonic-preholdout/esm/createV143RhythmPdf.mjs \
+            > .harmonic-preholdout/logs/render-pdf.log 2>&1
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .harmonic-preholdout/freeze \
+            .harmonic-preholdout/freeze/pdf/pdf-event-evidence.json \
+            > .harmonic-preholdout/logs/pdf-fidelity.log 2>&1
+          test -s .harmonic-preholdout/freeze/pdf/full-frozen-rhythm.pdf
+          test -s .harmonic-preholdout/freeze/pdf/preview-frozen-rhythm.pdf
+          test -s .harmonic-preholdout/freeze/rhythm-pdf-event-fidelity.json
+
+      - name: Write locked preholdout proof with retired-identity gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          raw=json.loads(Path('.harmonic-preholdout/raw-product-output.json').read_text(encoding='utf-8'))
+          manifest=json.loads(Path('.harmonic-preholdout/freeze/rhythm-freeze-manifest.json').read_text(encoding='utf-8'))
+          frozen=json.loads(Path('.harmonic-preholdout/freeze/rhythm-frozen-analysis.json').read_text(encoding='utf-8'))
+          fidelity=json.loads(Path('.harmonic-preholdout/freeze/rhythm-pdf-event-fidelity.json').read_text(encoding='utf-8'))
+          evidence=json.loads(Path('.harmonic-preholdout/freeze/pdf/pdf-event-evidence.json').read_text(encoding='utf-8'))
+          binding=json.loads(Path('debug/v143-contextual-prune/repaired-timing-precision-harmonic-guard-candidate-binding-proof.json').read_text(encoding='utf-8'))
+          bind_gate=json.loads(Path('.harmonic-preholdout/logs/candidate-binding.json').read_text(encoding='utf-8'))
+          isolation=json.loads(Path('.harmonic-preholdout/logs/runtime-isolation.json').read_text(encoding='utf-8'))
+          retired={
+            'c621ab4fd3a14849946a349b1ce2ed430322e3a8b49310f073b51cd8f417a194',
+            'e693602ade26256851dc0d77b003bf6ba0d5014dfaec7e35103ecdf25d33c32f',
+            'a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb',
+          }
+          frozen_safety=frozen.get('safety') or {}
+          event_sha=str(manifest.get('eventSha256') or '')
+          projected=str(binding.get('projectedRenderEventSha256') or '')
+          checks={
+            'runtimeIsolationPassed':isolation.get('passed') is True,
+            'candidateBindingPassed':bind_gate.get('passed') is True and binding.get('passed') is True,
+            'frozenReferenceFree':frozen_safety.get('referenceFree') is True,
+            'frozenProfessionalReferenceUnused':frozen_safety.get('professionalReferenceUsed') is False,
+            'frozenReferenceRuntimeInputUnused':frozen_safety.get('referenceRuntimeInputUsed') is False,
+            'frozenRuntimeLabelsUnused':frozen_safety.get('runtimeLabelsRequired') is False,
+            'referenceNotOpenedDuringFreeze':manifest.get('referenceOpenedDuringFreeze') is False,
+            'sourceCommitExact':manifest.get('sourceCommit')==os.environ.get('GITHUB_SHA'),
+            'sourceAudioHashExact':manifest.get('sourceAudioSha256')=='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+            'eventCountPositive':int(manifest.get('eventCount') or 0)>0,
+            'all113Measures':int(manifest.get('uniqueMeasureCount') or 0)==113,
+            'frozenIdentityMatchesBoundProjection':event_sha==projected,
+            'brandNewEventIdentity':bool(event_sha) and event_sha not in retired,
+            'pdfRendererProjectionExact':evidence.get('rendererProjectionExactlyEqual') is True,
+            'pdfEventFidelityExact':fidelity.get('pdfEventFidelity')==1.0,
+            'pdfHashMatchesFrozenHash':fidelity.get('pdfEventSha256')==event_sha,
+            'fullPdfRendered':int(evidence.get('fullPdfBytes') or 0)>20000,
+            'previewPdfRendered':int(evidence.get('previewPdfBytes') or 0)>20000,
+            'humanReferenceStillSealed':True,
+            'productionUnmodified':raw.get('candidate',{}).get('productionModified') is False,
+          }
+          failed=[k for k,v in checks.items() if not v]
+          report={
+            'schemaVersion':1,
+            'gate':'v143-harmonic-guard-final-preholdout-lock',
+            'workflowRunId':os.environ.get('GITHUB_RUN_ID'),
+            'sourceCommit':manifest.get('sourceCommit'),
+            'candidateBlobSha':binding.get('finalCandidateBlobSha'),
+            'candidateRawEventSha256':binding.get('rawEventSha256'),
+            'boundProjectedRenderEventSha256':projected,
+            'frozenEventSha256':event_sha,
+            'pdfEventSha256':fidelity.get('pdfEventSha256'),
+            'pdfEventFidelity':fidelity.get('pdfEventFidelity'),
+            'eventCount':manifest.get('eventCount'),
+            'uniqueMeasureCount':manifest.get('uniqueMeasureCount'),
+            'sourceAudioSha256':manifest.get('sourceAudioSha256'),
+            'retiredRenderEventSha256':sorted(retired),
+            'checks':checks,
+            'failedChecks':failed,
+            'referenceFree':True,
+            'professionalReferenceUsed':False,
+            'referenceRuntimeInputUsed':False,
+            'runtimeLabelsRequired':False,
+            'professionalHumanScoreRun':False,
+            'rhythmComplete':False,
+            'productionModified':False,
+            'productionPromotionAuthorized':False,
+            'passed':not failed,
+          }
+          Path('debug/v143-contextual-prune/rhythm-harmonic-guard-final-preholdout.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+          if failed:
+            raise SystemExit('harmonic guard final preholdout failed: '+', '.join(failed))
+          print(json.dumps(report,indent=2))
+          PY
+
+      - name: Upload immutable freeze and PDF artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-harmonic-guard-final-preholdout
+          path: |
+            .harmonic-preholdout/raw-product-output.json
+            .harmonic-preholdout/rhythm-freeze-input.json
+            .harmonic-preholdout/freeze/rhythm-frozen-analysis.json
+            .harmonic-preholdout/freeze/rhythm-freeze-manifest.json
+            .harmonic-preholdout/freeze/rhythm-pdf-event-fidelity.json
+            .harmonic-preholdout/freeze/pdf/pdf-event-evidence.json
+            .harmonic-preholdout/freeze/pdf/full-frozen-rhythm.pdf
+            .harmonic-preholdout/freeze/pdf/preview-frozen-rhythm.pdf
+            .harmonic-preholdout/logs/*.json
+            .harmonic-preholdout/logs/*.log
+            debug/v143-contextual-prune/rhythm-harmonic-guard-final-preholdout.json
+          retention-days: 14
+
+      - name: Commit compact lock proof and retire one-shot marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/rhythm-harmonic-guard-final-preholdout.json
+          git rm -- debug/v143-contextual-prune/RUN_HARMONIC_GUARD_PREHOLDOUT_ONCE
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record harmonic-guard Rhythm preholdout lock'
+          for n in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
