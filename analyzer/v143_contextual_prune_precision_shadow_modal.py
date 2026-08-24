@@ -69,6 +69,39 @@ def _sha256_bytes(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
 
 
+def _sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _canonical_sha(value: Any) -> str:
+    payload = json.dumps(
+        value,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+        allow_nan=False,
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _event_set_payload(values: Any) -> list[list[int]]:
+    return [[int(measure), int(step)] for measure, step in sorted(values)]
+
+
+def _pitch_map_payload(values: dict[tuple[int, int], tuple[int, ...]]) -> list[list[Any]]:
+    return [
+        [int(key[0]), int(key[1]), [int(midi) for midi in midis]]
+        for key, midis in sorted(values.items())
+    ]
+
+
+def _primary_map_payload(values: dict[tuple[int, int], int]) -> list[list[int]]:
+    return [
+        [int(key[0]), int(key[1]), int(midi)]
+        for key, midi in sorted(values.items())
+    ]
+
+
 def _normalize(source: Path, destination: Path) -> None:
     result = subprocess.run(
         ["ffmpeg", "-y", "-v", "error", "-i", str(source), "-map", "0:a:0", "-vn", "-ar", "44100", "-ac", "2", "-c:a", "pcm_s16le", str(destination)],
@@ -131,10 +164,35 @@ def analyze_precision_shadow(source_audio: bytes, suffix: str = ".audio") -> dic
             for key in precision.pitch_sets
         )
 
+        carrier_grid_payload = [
+            [int(key[0]), int(key[1]), float(value)]
+            for key, value in sorted(carrier.grid.items())
+        ]
+        carrier_rows_payload = [dict(row) for row in carrier.rows]
+        correction_pitch_payload = _pitch_map_payload(correction.pitch_sets)
+        precision_pitch_payload = _pitch_map_payload(precision.pitch_sets)
+        precision_primary_payload = _primary_map_payload(precision.primary_midis)
+
+        stage_hashes = {
+            "sourceBytesSha256": _sha256_bytes(source_audio),
+            "normalizedWavSha256": _sha256_file(normalized),
+            "directGuitarStemSha256": _sha256_file(direct),
+            "cascadeGuitarStemSha256": _sha256_file(cascade),
+            "carrierGridSha256": _canonical_sha(carrier_grid_payload),
+            "carrierRowsSha256": _canonical_sha(carrier_rows_payload),
+            "baseCandidateEventsSha256": _canonical_sha(_event_set_payload(base.candidate_events)),
+            "correctionEventsSha256": _canonical_sha(_event_set_payload(correction.corrected_events)),
+            "correctionPitchSetsSha256": _canonical_sha(correction_pitch_payload),
+            "precisionEventsSha256": _canonical_sha(_event_set_payload(precision.retained_events)),
+            "precisionPitchSetsSha256": _canonical_sha(precision_pitch_payload),
+            "precisionPrimaryMidisSha256": _canonical_sha(precision_primary_payload),
+        }
+
         return {
-            "schemaVersion": 1,
+            "schemaVersion": 2,
             "mode": "v143-contextual-prune-reference-free-precision-shadow",
             "sourceSha256": _sha256_bytes(source_audio),
+            "stageHashes": stage_hashes,
             "carrier": carrier.summary(),
             "baseSelector": base.diagnostics(),
             "correction": correction.diagnostics(),
@@ -203,6 +261,82 @@ def approved_audio(
     print(json.dumps(result["precision"], sort_keys=True))
     print(json.dumps(result["coverage"], sort_keys=True))
     print(json.dumps(result["pitchSupport"], sort_keys=True))
+    print(json.dumps(result["stageHashes"], sort_keys=True))
+    print(f"WROTE={output}")
+
+
+@app.local_entrypoint(name="determinism_proof")
+def determinism_proof(
+    audio_path: str = "public/gomywayfullaitest.m4a",
+    output_path: str = "debug/v143-contextual-prune/precision-determinism-proof.json",
+) -> None:
+    source = Path(audio_path)
+    if not source.exists() or source.stat().st_size <= 0:
+        raise RuntimeError(f"Approved audio fixture missing: {source}")
+    data = source.read_bytes()
+    digest = _sha256_bytes(data)
+    if digest != APPROVED_AUDIO_SHA256:
+        raise RuntimeError(f"Approved fixture SHA changed: {digest}")
+
+    first = analyze_precision_shadow.remote(data, source.suffix)
+    second = analyze_precision_shadow.remote(data, source.suffix)
+    first_hashes = dict(first.get("stageHashes") or {})
+    second_hashes = dict(second.get("stageHashes") or {})
+    order = [
+        "sourceBytesSha256",
+        "normalizedWavSha256",
+        "directGuitarStemSha256",
+        "cascadeGuitarStemSha256",
+        "carrierGridSha256",
+        "carrierRowsSha256",
+        "baseCandidateEventsSha256",
+        "correctionEventsSha256",
+        "correctionPitchSetsSha256",
+        "precisionEventsSha256",
+        "precisionPitchSetsSha256",
+        "precisionPrimaryMidisSha256",
+    ]
+    comparisons = {
+        key: {
+            "first": first_hashes.get(key),
+            "second": second_hashes.get(key),
+            "exact": first_hashes.get(key) == second_hashes.get(key),
+        }
+        for key in order
+    }
+    first_mismatch = next((key for key in order if not comparisons[key]["exact"]), None)
+    out = {
+        "schemaVersion": 1,
+        "gate": "v143-reference-free-precision-determinism-proof",
+        "approvedAudioSha256": digest,
+        "first": {
+            "carrier": first.get("carrier"),
+            "baseSelector": first.get("baseSelector"),
+            "correction": first.get("correction"),
+            "precision": first.get("precision"),
+            "stageHashes": first_hashes,
+        },
+        "second": {
+            "carrier": second.get("carrier"),
+            "baseSelector": second.get("baseSelector"),
+            "correction": second.get("correction"),
+            "precision": second.get("precision"),
+            "stageHashes": second_hashes,
+        },
+        "comparisons": comparisons,
+        "firstMismatchStage": first_mismatch,
+        "allStageHashesExact": first_mismatch is None,
+        "invariants": {
+            "referenceFree": True,
+            "runtimeLabelsRequired": False,
+            "professionalReferenceUsed": False,
+            "productionModified": False,
+        },
+    }
+    output = Path(output_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"firstMismatchStage": first_mismatch, "allStageHashesExact": first_mismatch is None}, sort_keys=True))
     print(f"WROTE={output}")
 
 
