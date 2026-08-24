@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "gate": "v143-reference-free-beat-grid-repair-approved-audio",
-  "runId": 32682596045,
+  "runId": 32682813632,
   "runAttempt": 1,
-  "triggerSha": "1ab7dc7d16adfa37502c39c172bc7f711e52e9db",
+  "triggerSha": "ec426f8093f3a27346c013ad8840cb427dea4d93",
   "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
   "originalTiming": {
     "tempoBpm": 129.19921875,
-    "beatConfidence": 0.7232655115770844,
+    "beatConfidence": 0.7232655115770845,
     "firstBeatInMeasure": 3,
     "downbeatIndexMod4": 1,
     "barConfidence": 0.08797341408427677,
@@ -33,6 +33,8 @@
     "snappedBeatCount": 439,
     "boundaryEvidenceFloor": 0.5944737866354368,
     "boundaryEnergyFloor": 0.05812348996682043,
+    "boundaryLookaheadBeats": 2,
+    "lookaheadBridgeBeatCount": 0,
     "originalIntervals": {
       "count": 446,
       "ratioP01": 0.5250000000000135,
@@ -58,7 +60,7 @@
   "repairedBarPhaseConsensus": {
     "winnerDownbeatIndexMod4": 2,
     "winnerFirstBeatInMeasure": 2,
-    "confidence": 0.19808823738312922,
+    "confidence": 0.1980882373831292,
     "signalWinners": {
       "accent": 2,
       "lowAccent": 0,
@@ -74,26 +76,26 @@
         "combinedScore": -0.14105031430002776,
         "accentScore": -0.05188046784168745,
         "lowAccentScore": 0.2738165898664323,
-        "harmonicChangeScore": -0.40863115218255003,
-        "bassChangeScore": -0.17587726709088544
+        "harmonicChangeScore": -0.4086311521825497,
+        "bassChangeScore": -0.1758772670908859
       },
       {
         "downbeatIndexMod4": 1,
         "firstBeatInMeasure": 3,
-        "combinedScore": 0.12417621210194174,
+        "combinedScore": 0.12417621210194178,
         "accentScore": 0.05539951875135579,
         "lowAccentScore": -0.31261827618334886,
         "harmonicChangeScore": 0.46008908352937683,
-        "bassChangeScore": 0.06568949138089708
+        "bassChangeScore": 0.06568949138089723
       },
       {
         "downbeatIndexMod4": 2,
         "firstBeatInMeasure": 2,
-        "combinedScore": 0.1754834062866734,
+        "combinedScore": 0.17548340628667336,
         "accentScore": 0.1681123879733661,
         "lowAccentScore": 0.2071052434033435,
         "harmonicChangeScore": 0.15748732304950863,
-        "bassChangeScore": 0.18695082587723777
+        "bassChangeScore": 0.18695082587723766
       },
       {
         "downbeatIndexMod4": 3,
