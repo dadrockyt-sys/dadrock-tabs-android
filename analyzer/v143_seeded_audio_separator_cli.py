@@ -2,9 +2,23 @@ from __future__ import annotations
 
 import os
 import random
+from typing import Any
 
 
 SEED = int(os.environ.get("V143_SEPARATOR_SEED", "143"))
+
+
+class _DedicatedRandom:
+    """Module-like RNG wrapper backed by one private deterministic generator."""
+
+    def __init__(self, seed: int):
+        self._rng = random.Random(int(seed))
+
+    def randint(self, a: int, b: int) -> int:
+        return int(self._rng.randint(int(a), int(b)))
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._rng, name)
 
 
 def seed_separator_runtime(seed: int = SEED) -> None:
@@ -12,9 +26,8 @@ def seed_separator_runtime(seed: int = SEED) -> None:
 
     This is a reference-free execution boundary only. Model choices, Demucs
     shifts/overlap/segment size, RoFormer batch size, and all musical rules remain
-    unchanged. CPU Demucs is forced to one Torch thread so reduction order cannot
-    vary across fresh hosts; GPU controls remain deterministic for components that
-    use acceleration.
+    unchanged. CPU Demucs uses one Torch/native math thread; accelerated components
+    keep deterministic Torch/cuDNN/cuBLAS controls.
     """
     value = int(seed)
     random.seed(value)
@@ -29,13 +42,10 @@ def seed_separator_runtime(seed: int = SEED) -> None:
     try:
         import torch
 
-        # Set CPU thread topology before separator/model inference begins.
         torch.set_num_threads(1)
         try:
             torch.set_num_interop_threads(1)
         except RuntimeError:
-            # May already be fixed by Torch initialization; one process executes
-            # this boundary only once before audio-separator import.
             pass
 
         torch.manual_seed(value)
@@ -62,8 +72,25 @@ def seed_separator_runtime(seed: int = SEED) -> None:
         raise
 
 
+def install_dedicated_demucs_shift_rng(seed: int = SEED) -> None:
+    """Give Demucs' shift trick a private RNG whose state nothing else can consume.
+
+    audio-separator's bundled Demucs `apply_model` intentionally calls
+    `random.randint` for each shift. Seeding Python at process start is not a
+    sufficient isolation boundary if unrelated imports/model setup consume the
+    process-global RNG first. Replacing only that module's `random` handle keeps
+    shifts=1 and the exact Demucs algorithm while making its shift sequence depend
+    solely on V143_SEPARATOR_SEED. This path contains no song/reference data.
+    """
+    from audio_separator.separator.uvr_lib_v5.demucs import apply as demucs_apply
+
+    demucs_apply.random = _DedicatedRandom(int(seed))
+
+
 if __name__ == "__main__":
     seed_separator_runtime()
     from audio_separator.utils.cli import main
 
+    if os.environ.get("V143_DEMUCS_FIXED_SHIFT_RNG") == "1":
+        install_dedicated_demucs_shift_rng()
     main()
