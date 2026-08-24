@@ -1,9 +1,8 @@
 name: V143 Separator Private Shift Cold Proof
 
+# FINAL determinism gate only. Bug iterations must not auto-spawn three Modal L4 jobs.
 on:
-  push:
-    branches: [v143-contextual-prune-lobo]
-    paths: [.github/workflows/v143-separator-private-shift-cold-proof.yml]
+  workflow_dispatch:
 
 permissions: {contents: write}
 
