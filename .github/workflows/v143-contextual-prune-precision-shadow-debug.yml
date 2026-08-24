@@ -1,0 +1,62 @@
+name: V143 Precision Shadow CPU Result
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - .github/workflows/v143-contextual-prune-precision-shadow-debug.yml
+
+permissions:
+  contents: write
+
+jobs:
+  result:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Capture checker result
+        env:
+          PYTHONPATH: analyzer
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p debug/v143-contextual-prune
+          set +e
+          python -m py_compile analyzer/v143_contextual_prune_precision_shadow.py analyzer/check_v143_contextual_prune_precision_shadow.py > /tmp/compile.log 2>&1
+          compile_rc=$?
+          python analyzer/check_v143_contextual_prune_precision_shadow.py > /tmp/check.log 2>&1
+          check_rc=$?
+          set -e
+          export COMPILE_RC="$compile_rc" CHECK_RC="$check_rc"
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          out={
+            'schemaVersion':1,'gate':'v143-precision-shadow-cpu-result','triggerSha':'${{ github.sha }}',
+            'compileReturnCode':int(os.environ['COMPILE_RC']),'checkerReturnCode':int(os.environ['CHECK_RC']),
+            'compileLog':Path('/tmp/compile.log').read_text()[-6000:],
+            'checkerLog':Path('/tmp/check.log').read_text()[-6000:],
+            'protectedPipelineBlob':protected,
+            'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+            'productionModified':False,
+          }
+          out['passed']=out['compileReturnCode']==0 and out['checkerReturnCode']==0 and out['protectedPipelineUnchanged']
+          Path('debug/v143-contextual-prune/precision-shadow-cpu-result.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          PY
+          git add debug/v143-contextual-prune/precision-shadow-cpu-result.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record precision shadow CPU result'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
