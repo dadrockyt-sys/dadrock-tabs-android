@@ -1,0 +1,189 @@
+name: V143 Repaired Timing Precision Cold Exact Proof
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  pass:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        n: [1, 2]
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Safety and anti-leakage gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet numpy scipy
+          python -m py_compile analyzer/v143_repaired_timing_precision_shadow_modal.py
+          PYTHONPATH=analyzer python analyzer/check_v143_reference_free_beat_grid_repair.py
+          PYTHONPATH=analyzer python analyzer/check_v143_contextual_prune_precision_shadow.py
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_repaired_timing_precision_shadow_modal.py \
+            analyzer/v143_reference_free_beat_grid_repair.py \
+            analyzer/v143_contextual_prune_precision_shadow.py \
+            analyzer/v143_seeded_separator.py \
+            analyzer/v143_seeded_audio_separator_cli.py; then
+            echo 'Forbidden scorer/source token in cold exact path' >&2
+            exit 1
+          fi
+      - name: Fresh combined Modal pass
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check --quiet modal
+          mkdir -p .cold
+          python -m modal run analyzer/v143_repaired_timing_precision_shadow_modal.py::approved_audio \
+            --audio-path public/gomywayfullaitest.m4a \
+            --output-path .cold/pass-${{ matrix.n }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repaired-timing-precision-cold-pass-${{ matrix.n }}
+          path: .cold/pass-${{ matrix.n }}.json
+          retention-days: 7
+
+  compare:
+    if: always()
+    needs: pass
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: repaired-timing-precision-cold-pass-*
+          path: .cold
+          merge-multiple: true
+      - name: Exact combined comparison
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import hashlib
+          import json
+          import subprocess
+          from pathlib import Path
+
+          files = sorted(Path('.cold').glob('pass-*.json'))
+          if len(files) != 2:
+              raise SystemExit(f'expected 2 cold passes, got {len(files)}')
+          payloads = [json.loads(path.read_text()) for path in files]
+          required_hashes = (
+              'sourceBytesSha256',
+              'normalizedWavSha256',
+              'originalBeatTimesSha256',
+              'repairedBeatTimesSha256',
+              'directGuitarStemSha256',
+              'cascadeGuitarStemSha256',
+              'carrierGridSha256',
+              'carrierRowsSha256',
+              'baseCandidateEventsSha256',
+              'correctionEventsSha256',
+              'correctionPitchSetsSha256',
+              'precisionEventsSha256',
+              'precisionPitchSetsSha256',
+              'precisionPrimaryMidisSha256',
+          )
+          comparisons = {}
+          for key in required_hashes:
+              values = [(item.get('stageHashes') or {}).get(key) for item in payloads]
+              comparisons[key] = {'values': values, 'exact': len(set(values)) == 1 and None not in values}
+
+          sections = ('timing', 'carrier', 'baseSelector', 'correction', 'precision', 'pitchSupport', 'coverage', 'invariants')
+          section_hashes = {}
+          for section in sections:
+              values = []
+              for item in payloads:
+                  raw = json.dumps(item.get(section), sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False).encode('utf-8')
+                  values.append(hashlib.sha256(raw).hexdigest())
+              section_hashes[section] = {'values': values, 'exact': len(set(values)) == 1}
+
+          first_hash_mismatch = next((key for key in required_hashes if not comparisons[key]['exact']), None)
+          first_section_mismatch = next((key for key in sections if not section_hashes[key]['exact']), None)
+
+          invariant_failures = []
+          required_true = (
+              'sourceIsApprovedFixture','referenceFree','measureRangeDerivedFromAudio','repairedIntervalOutliersZero',
+              'carrierUsesRepairedTiming','precisionAttacksSubsetOfCorrectedAttacks',
+              'precisionPitchesSubsetOfObservedCarrierPitches','explicitPrimaryComplete','allTargetMeasuresPopulated',
+          )
+          required_false = (
+              'professionalReferenceUsed','referenceRuntimeInputUsed','runtimeLabelsRequired','tempoChangedByRepair',
+              'barPhaseChangedByRepair','candidateAddsUnobservedAttack','candidateRelocatesEvents',
+              'candidateAddsUnobservedPitch','liveRhythmOutputChanged','leadChanged','bassChanged','productionModified',
+          )
+          for index, item in enumerate(payloads, start=1):
+              inv = item.get('invariants') or {}
+              for key in required_true:
+                  if inv.get(key) is not True:
+                      invariant_failures.append(f'pass{index}:{key}!=true')
+              for key in required_false:
+                  if inv.get(key) is not False:
+                      invariant_failures.append(f'pass{index}:{key}!=false')
+
+          protected = subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'], text=True).strip()
+          protected_ok = protected == '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          passed = first_hash_mismatch is None and first_section_mismatch is None and not invariant_failures and protected_ok
+          result = {
+              'schemaVersion': 1,
+              'gate': 'v143-repaired-timing-precision-cold-exact-proof',
+              'runId': int('${{ github.run_id }}'),
+              'triggerSha': '${{ github.sha }}',
+              'independentPassCount': 2,
+              'stageHashComparisons': comparisons,
+              'sectionHashComparisons': section_hashes,
+              'firstStageHashMismatch': first_hash_mismatch,
+              'firstSectionMismatch': first_section_mismatch,
+              'invariantFailures': invariant_failures,
+              'protectedPipelineBlob': protected,
+              'protectedPipelineUnchanged': protected_ok,
+              'productionModified': False,
+              'passed': passed,
+          }
+          out = Path('debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json')
+          out.write_text(json.dumps(result, indent=2) + '\n')
+          print(json.dumps(result, indent=2))
+          PY
+      - name: Commit diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record repaired-timing precision cold exact proof'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
+      - name: Enforce exact proof
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('debug/v143-contextual-prune/repaired-timing-precision-cold-exact-proof.json').read_text())
+          if data.get('passed') is not True:
+              raise SystemExit('combined cold exact proof failed: stage=' + str(data.get('firstStageHashMismatch')) + ', section=' + str(data.get('firstSectionMismatch')) + ', invariants=' + str(data.get('invariantFailures')))
+          PY
