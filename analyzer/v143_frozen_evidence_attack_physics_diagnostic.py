@@ -52,6 +52,74 @@ def _primary_sustain(attack: list[Any]) -> bool:
     return False
 
 
+def _jaccard(left: set[int], right: set[int]) -> float:
+    union = left | right
+    if not union:
+        return 1.0
+    return len(left & right) / len(union)
+
+
+def _phase_metrics(rows: list[dict[str, Any]], offset_steps: int) -> dict[str, Any]:
+    total_steps = 113 * 16
+    bars: dict[int, dict[int, dict[str, Any]]] = {}
+    for row in rows:
+        global_step = (int(row["measure"]) - 1) * 16 + int(row["step"])
+        shifted = global_step - int(offset_steps)
+        if shifted < 0 or shifted >= total_steps:
+            continue
+        bar = shifted // 16 + 1
+        step = shifted % 16
+        bars.setdefault(bar, {})[step] = row
+
+    lag_metrics: dict[str, Any] = {}
+    for lag in (1, 2, 4):
+        occupancy_scores: list[float] = []
+        primary_equal = 0
+        primary_shared = 0
+        pitch_jaccards: list[float] = []
+        for bar in range(1, 114 - lag):
+            left = bars.get(bar) or {}
+            right = bars.get(bar + lag) or {}
+            if not left or not right:
+                continue
+            occupancy_scores.append(_jaccard(set(left), set(right)))
+            for step in sorted(set(left) & set(right)):
+                primary_shared += 1
+                primary_equal += int(int(left[step]["primaryMidi"]) == int(right[step]["primaryMidi"]))
+                pitch_jaccards.append(_jaccard(set(left[step]["selectedMidis"]), set(right[step]["selectedMidis"])))
+        lag_metrics[str(lag)] = {
+            "barPairCount": len(occupancy_scores),
+            "occupancyJaccardMean": statistics.mean(occupancy_scores) if occupancy_scores else None,
+            "occupancyJaccardMedian": statistics.median(occupancy_scores) if occupancy_scores else None,
+            "sharedStepCount": primary_shared,
+            "primaryAgreement": primary_equal / primary_shared if primary_shared else None,
+            "selectedPitchSetJaccardMean": statistics.mean(pitch_jaccards) if pitch_jaccards else None,
+        }
+
+    step_attack: dict[int, list[float]] = {step: [] for step in range(16)}
+    for bar_rows in bars.values():
+        for step, row in bar_rows.items():
+            step_attack[int(step)].append(float(row["primaryAttackSupport"]))
+    beat_step_means = {
+        str(step): statistics.mean(step_attack[step]) if step_attack[step] else None
+        for step in (0, 4, 8, 12)
+    }
+    other_beat_means = [value for step, value in beat_step_means.items() if step != "0" and value is not None]
+    downbeat_mean = beat_step_means["0"]
+    downbeat_contrast = None
+    if downbeat_mean is not None and other_beat_means:
+        downbeat_contrast = downbeat_mean - statistics.mean(other_beat_means)
+
+    return {
+        "offsetSixteenthStepsFromCurrent": int(offset_steps),
+        "retainedAttackCount": sum(len(value) for value in bars.values()),
+        "populatedBarCount": len(bars),
+        "lagRecurrence": lag_metrics,
+        "beatStepPrimaryAttackMeans": beat_step_means,
+        "downbeatAttackContrastVsOtherBeats": downbeat_contrast,
+    }
+
+
 def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
     provenance = evidence.get("provenance") or {}
     if provenance.get("sourceAudioSha256") != APPROVED_AUDIO_SHA256:
@@ -95,6 +163,7 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
             "step": int(attack[1]),
             "timeSeconds": float(attack[2]),
             "primaryMidi": primary,
+            "selectedMidis": sorted({int(note[1]) for note in attack[5]}),
             "primaryAttackSupport": attack_support,
             "primaryBodySupport": body_support,
             "primaryPersistenceSupport": persistence_support,
@@ -113,8 +182,6 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
     carryover_strict: list[dict[str, Any]] = []
     for current_index in range(1, len(rows)):
         current = rows[current_index]
-        # Find the most recent selected attack with the same primary pitch. This is
-        # intentionally independent of string/fret mapping and any scored reference.
         previous = None
         for prior_index in range(current_index - 1, -1, -1):
             if rows[prior_index]["primaryMidi"] == current["primaryMidi"]:
@@ -193,7 +260,6 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
                 "primaryScore": primary_score, "family": lower,
             })
 
-    # Rank diagnostic examples only. No events are changed or selected for rendering.
     carryover_ranked = sorted(
         carryover_q25,
         key=lambda item: (float(item["currentFrontMinusBody"]), float(item["currentAttackSupport"]), float(item["gapSixteenthSteps"])),
@@ -204,8 +270,27 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
         reverse=True,
     )[:80]
 
+    phase_candidates = [_phase_metrics(rows, offset) for offset in (0, 4, 8, 12)]
+    metric_winners: dict[str, int] = {}
+    metric_paths = {
+        "lag1OccupancyJaccard": lambda p: p["lagRecurrence"]["1"]["occupancyJaccardMean"],
+        "lag2OccupancyJaccard": lambda p: p["lagRecurrence"]["2"]["occupancyJaccardMean"],
+        "lag4OccupancyJaccard": lambda p: p["lagRecurrence"]["4"]["occupancyJaccardMean"],
+        "lag1PrimaryAgreement": lambda p: p["lagRecurrence"]["1"]["primaryAgreement"],
+        "lag1PitchSetJaccard": lambda p: p["lagRecurrence"]["1"]["selectedPitchSetJaccardMean"],
+        "downbeatAttackContrast": lambda p: p["downbeatAttackContrastVsOtherBeats"],
+    }
+    for name, getter in metric_paths.items():
+        valid = [(float(getter(p)), int(p["offsetSixteenthStepsFromCurrent"])) for p in phase_candidates if getter(p) is not None]
+        if valid:
+            metric_winners[name] = max(valid)[1]
+    winner_counts: dict[str, int] = {}
+    for offset in metric_winners.values():
+        key = str(offset)
+        winner_counts[key] = winner_counts.get(key, 0) + 1
+
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "mode": "v143-frozen-evidence-attack-physics-diagnostic",
         "sourceAudioSha256": APPROVED_AUDIO_SHA256,
         "referenceFree": True,
@@ -245,6 +330,15 @@ def diagnose(evidence: dict[str, Any]) -> dict[str, Any]:
             "lowerFamilyOutscoresPrimaryAttackCount": lower_outscores_primary,
             "rankedLowerFundamentalCandidates": lower_ranked,
         },
+        "barPhaseRecurrence": {
+            "definition": "rotate current 16-step bar boundary by whole-beat offsets; compare recurrence and physical onset accent without changing any event",
+            "candidateOffsetsSixteenthSteps": [0, 4, 8, 12],
+            "candidates": phase_candidates,
+            "metricWinners": metric_winners,
+            "winnerCounts": winner_counts,
+            "currentBoundaryOffset": 0,
+            "phaseSelectedOrChanged": False,
+        },
         "invariants": {
             "all725AttacksRead": len(rows) == 725,
             "eventsMutated": False,
@@ -265,6 +359,8 @@ def main(source: str, destination: str) -> None:
         "attackCount": report["attackCount"],
         "repeatPhysics": {k: v for k, v in report["repeatPhysics"].items() if not k.endswith("Suspects")},
         "harmonicFamilyPhysics": {k: v for k, v in report["harmonicFamilyPhysics"].items() if not k.startswith("ranked")},
+        "barPhaseMetricWinners": report["barPhaseRecurrence"]["metricWinners"],
+        "barPhaseWinnerCounts": report["barPhaseRecurrence"]["winnerCounts"],
     }, sort_keys=True))
 
 
