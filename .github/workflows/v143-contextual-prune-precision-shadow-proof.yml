@@ -1,0 +1,67 @@
+name: V143 Contextual Prune Precision Shadow Proof
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths: [.github/workflows/v143-contextual-prune-precision-shadow-proof.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  proof:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run isolated CPU proof
+        env:
+          PYTHONPATH: analyzer
+        run: |
+          set -euo pipefail
+          python -m py_compile analyzer/v143_contextual_prune_precision_shadow.py analyzer/check_v143_contextual_prune_precision_shadow.py
+          python analyzer/check_v143_contextual_prune_precision_shadow.py
+      - name: Record proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          def sha(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+          protected=subprocess.check_output(['git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'],text=True).strip()
+          out={
+            'schemaVersion':1,
+            'gate':'v143-contextual-prune-precision-shadow-cpu-proof',
+            'triggerSha':'${{ github.sha }}',
+            'moduleSha256':sha('analyzer/v143_contextual_prune_precision_shadow.py'),
+            'checkerSha256':sha('analyzer/check_v143_contextual_prune_precision_shadow.py'),
+            'checkerPassed':True,
+            'referenceFree':True,
+            'runtimeLabelsRequired':False,
+            'candidateAddsUnobservedAttack':False,
+            'candidateRelocatesEvents':False,
+            'candidateAddsUnobservedPitch':False,
+            'protectedPipelineBlob':protected,
+            'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+            'productionModified':False,
+            'passed':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+          }
+          Path('debug/v143-contextual-prune/precision-shadow-cpu-proof.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          assert out['passed']
+          PY
+          git add debug/v143-contextual-prune/precision-shadow-cpu-proof.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record precision shadow CPU proof'
+          git fetch origin v143-contextual-prune-lobo
+          git rebase origin/v143-contextual-prune-lobo
+          git push origin HEAD:v143-contextual-prune-lobo
