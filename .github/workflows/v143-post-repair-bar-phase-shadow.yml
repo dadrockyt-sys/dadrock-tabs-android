@@ -34,31 +34,47 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
           python -m pip install --disable-pip-version-check --quiet numpy scipy soundfile
+
       - name: Static synthetic proof and anti-leakage gate
+        id: synthetic
+        continue-on-error: true
         env:
           PYTHONPATH: analyzer
         shell: bash
         run: |
-          set -euo pipefail
-          python -m py_compile \
-            analyzer/v143_post_repair_bar_phase_shadow.py \
-            analyzer/check_v143_post_repair_bar_phase_shadow.py
-          python analyzer/check_v143_post_repair_bar_phase_shadow.py
-          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
-          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
-            analyzer/v143_post_repair_bar_phase_shadow.py \
-            analyzer/check_v143_post_repair_bar_phase_shadow.py; then
-            echo 'Forbidden scorer/source token in post-repair phase shadow' >&2
-            exit 1
-          fi
+          set +e
+          mkdir -p /tmp/v143-post-repair-phase
+          (
+            set -euo pipefail
+            python -m py_compile \
+              analyzer/v143_post_repair_bar_phase_shadow.py \
+              analyzer/check_v143_post_repair_bar_phase_shadow.py
+            python analyzer/check_v143_post_repair_bar_phase_shadow.py
+            test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "7f72f8ed9b14af8bc93e95544195204d99c6bec1"
+            if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Are You Gonna Go My Way|Lenny Kravitz|Craig Ross' \
+              analyzer/v143_post_repair_bar_phase_shadow.py \
+              analyzer/check_v143_post_repair_bar_phase_shadow.py; then
+              echo 'Forbidden scorer/source token in post-repair phase shadow' >&2
+              exit 1
+            fi
+          ) > /tmp/v143-post-repair-phase/synthetic.log 2>&1
+          status=$?
+          cat /tmp/v143-post-repair-phase/synthetic.log
+          exit "$status"
+
       - name: Run approved-audio post-repair CPU shadow
+        id: approved
+        if: steps.synthetic.outcome == 'success'
+        continue-on-error: true
         env:
           PYTHONPATH: analyzer
         shell: bash
         run: |
-          set -euo pipefail
-          mkdir -p debug/v143-contextual-prune
-          python - <<'PY'
+          set +e
+          mkdir -p debug/v143-contextual-prune /tmp/v143-post-repair-phase
+          (
+            set -euo pipefail
+            python - <<'PY'
           import hashlib, json, subprocess
           from pathlib import Path
           import soundfile as sf
@@ -133,14 +149,77 @@ jobs:
           print(json.dumps(out['postRepairPhase'],sort_keys=True))
           print(f'WROTE={path}')
           PY
-      - name: Commit diagnostic race-safe
+          ) > /tmp/v143-post-repair-phase/approved.log 2>&1
+          status=$?
+          cat /tmp/v143-post-repair-phase/approved.log
+          exit "$status"
+
+      - name: Write self-report status
+        if: always()
+        env:
+          SYNTHETIC_OUTCOME: ${{ steps.synthetic.outcome }}
+          APPROVED_OUTCOME: ${{ steps.approved.outcome }}
         shell: bash
         run: |
           set -euo pipefail
-          git add debug/v143-contextual-prune/post-repair-bar-phase-approved-audio-shadow.json
+          mkdir -p debug/v143-contextual-prune /tmp/v143-post-repair-phase
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+
+          def tail(path, limit=60):
+              p=Path(path)
+              if not p.exists(): return []
+              lines=p.read_text(errors='replace').splitlines()
+              return lines[-limit:]
+
+          protected=subprocess.check_output([
+              'git','hash-object','analyzer/v143_reference_free_rhythm_pipeline.py'
+          ],text=True).strip()
+          approved=Path('debug/v143-contextual-prune/post-repair-bar-phase-approved-audio-shadow.json')
+          out={
+            'schemaVersion':1,
+            'gate':'v143-post-repair-bar-phase-shadow-self-report',
+            'runId':int('${{ github.run_id }}'),
+            'runAttempt':int('${{ github.run_attempt }}'),
+            'triggerSha':'${{ github.sha }}',
+            'syntheticOutcome':os.environ.get('SYNTHETIC_OUTCOME','unknown'),
+            'approvedOutcome':os.environ.get('APPROVED_OUTCOME','unknown'),
+            'approvedDiagnosticExists':approved.exists(),
+            'syntheticLogTail':tail('/tmp/v143-post-repair-phase/synthetic.log'),
+            'approvedLogTail':tail('/tmp/v143-post-repair-phase/approved.log'),
+            'referenceFree':True,
+            'professionalReferenceUsed':False,
+            'runtimeLabelsRequired':False,
+            'runtimePhaseChanged':False,
+            'liveRhythmOutputChanged':False,
+            'productionModified':False,
+            'protectedPipelineBlob':protected,
+            'protectedPipelineUnchanged':protected=='7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+          }
+          Path('debug/v143-contextual-prune/post-repair-bar-phase-shadow-status.json').write_text(
+              json.dumps(out,indent=2,allow_nan=False)+'\n'
+          )
+          print(json.dumps({
+              'syntheticOutcome':out['syntheticOutcome'],
+              'approvedOutcome':out['approvedOutcome'],
+              'approvedDiagnosticExists':out['approvedDiagnosticExists'],
+              'protectedPipelineUnchanged':out['protectedPipelineUnchanged'],
+          },sort_keys=True))
+          PY
+
+      - name: Commit status and diagnostic race-safe
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add debug/v143-contextual-prune/post-repair-bar-phase-shadow-status.json
+          if test -f debug/v143-contextual-prune/post-repair-bar-phase-approved-audio-shadow.json; then
+            git add debug/v143-contextual-prune/post-repair-bar-phase-approved-audio-shadow.json
+          fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Record post-repair bar phase CPU shadow'
+          git commit -m 'Record post-repair bar phase CPU shadow status'
           for attempt in 1 2 3 4; do
             git fetch origin v143-contextual-prune-lobo
             git rebase origin/v143-contextual-prune-lobo
@@ -148,3 +227,14 @@ jobs:
             sleep 2
           done
           exit 1
+
+      - name: Require successful diagnostic
+        if: always()
+        env:
+          SYNTHETIC_OUTCOME: ${{ steps.synthetic.outcome }}
+          APPROVED_OUTCOME: ${{ steps.approved.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$SYNTHETIC_OUTCOME" = success
+          test "$APPROVED_OUTCOME" = success
