@@ -170,13 +170,25 @@ def probe(source_audio: bytes, suffix: str = ".m4a") -> dict[str, Any]:
 def approved_audio(
     audio_path: str = "public/gomywayfullaitest.m4a",
     output_path: str = "debug/v143-contextual-prune/demucs-cpu-host-probe.json",
+    cloud: str = "",
+    region: str = "",
 ) -> None:
     source = Path(audio_path)
     data = source.read_bytes()
     digest = _sha256_bytes(data)
     if digest != APPROVED_AUDIO_SHA256:
         raise RuntimeError(f"approved fixture SHA changed: {digest}")
-    result = probe.remote(data, source.suffix)
+
+    options: dict[str, Any] = {}
+    if cloud:
+        if cloud not in {"aws", "gcp", "oci"}:
+            raise RuntimeError(f"unsupported cloud selection: {cloud}")
+        options["cloud"] = cloud
+    if region:
+        options["region"] = region
+    remote_probe = probe.with_options(**options) if options else probe
+    result = remote_probe.remote(data, source.suffix)
+
     inv = result.get("invariants") or {}
     if inv.get("approvedFixture") is not True or inv.get("referenceFree") is not True:
         raise RuntimeError(f"probe invariant failure: {inv}")
