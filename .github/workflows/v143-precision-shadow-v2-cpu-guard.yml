@@ -9,6 +9,7 @@ on:
       - analyzer/check_v143_precision_shadow_v2_policy.py
       - analyzer/v143_repaired_timing_precision_candidate_product_modal.py
       - analyzer/v143_precision_optional_candidate_accounting.py
+      - analyzer/v143_precision_replay_policy_compare.py
       - .github/workflows/v143-precision-shadow-v2-cpu-guard.yml
   workflow_dispatch:
 
@@ -32,8 +33,10 @@ jobs:
             analyzer/v143_contextual_prune_precision_shadow_v2.py \
             analyzer/check_v143_precision_shadow_v2_policy.py \
             analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
-            analyzer/v143_precision_optional_candidate_accounting.py
+            analyzer/v143_precision_optional_candidate_accounting.py \
+            analyzer/v143_precision_replay_policy_compare.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_shadow_v2_policy.py
+          python analyzer/v143_precision_replay_policy_compare.py --self-test
           python analyzer/v143_precision_optional_candidate_accounting.py \
             --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
             --output /tmp/precision-optional-candidate-accounting.json
@@ -42,7 +45,8 @@ jobs:
             analyzer/v143_contextual_prune_precision_shadow_v2.py \
             analyzer/check_v143_precision_shadow_v2_policy.py \
             analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
-            analyzer/v143_precision_optional_candidate_accounting.py; then
+            analyzer/v143_precision_optional_candidate_accounting.py \
+            analyzer/v143_precision_replay_policy_compare.py; then
             echo 'Forbidden scorer/reference token in precision v2 path' >&2
             exit 1
           fi
