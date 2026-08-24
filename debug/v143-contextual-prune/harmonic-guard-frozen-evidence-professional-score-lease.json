@@ -1,10 +1,11 @@
 {
   "frozenEventSha256": "07b12f807295219d39198641de3a9e170c684de60d274befd2b6f6f50af9588c",
   "preholdoutRunId": "32751771832",
-  "professionalReferenceOpened": false,
-  "professionalScoreRun": false,
+  "professionalReferenceOpened": true,
+  "professionalScoreRun": true,
   "schemaVersion": 1,
-  "state": "authorization-consumed-before-reference-open",
+  "scoreDiagnostic": "debug/v143-contextual-prune/harmonic-guard-frozen-evidence-professional-score.json",
+  "state": "score-completed",
   "triggerSha": "b1014ef35607987b0767d856919a39468d244b3f",
   "workflowRunId": "32752374788"
 }
