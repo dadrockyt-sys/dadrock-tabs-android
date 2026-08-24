@@ -16,6 +16,7 @@ from v143_production_separator import (
 
 
 SEPARATOR_SEED = "143"
+CUBLAS_WORKSPACE_CONFIG = ":4096:8"
 
 
 def seeded_audio_separator_cli() -> list[str]:
@@ -26,17 +27,15 @@ def build_seeded_v143_stems(
     input_audio: Path | str,
     output_dir: Path | str,
 ) -> dict[str, Any]:
-    """Run the frozen V143 separator graph through a seeded CLI wrapper.
+    """Run the frozen V143 separator graph through a deterministic child boundary.
 
     The model choices and production parameters remain exactly the frozen V143
     values: Demucs6s Guitar, shifts=1, overlap=.10, segment=6, plus
     BS-RoFormer Instrumental -> Demucs6s.
 
-    PYTHONHASHSEED must be inherited by each child interpreter at process
-    startup; setting it inside v143_seeded_audio_separator_cli.py is too late to
-    affect Python's hash randomization. This parent boundary therefore exports
-    only startup RNG environment values while leaving all frozen separator math
-    and model parameters unchanged.
+    Startup environment is exported before each child interpreter launches so
+    Python hash randomization and CUDA/cuBLAS determinism are configured before
+    Torch/audio-separator imports. No song/reference labels or target counts enter.
     """
     input_path = Path(input_audio)
     root = Path(output_dir)
@@ -52,10 +51,16 @@ def build_seeded_v143_stems(
         work / "normalized",
     )
 
-    previous_hash_seed = os.environ.get("PYTHONHASHSEED")
-    previous_separator_seed = os.environ.get("V143_SEPARATOR_SEED")
-    os.environ["PYTHONHASHSEED"] = SEPARATOR_SEED
-    os.environ["V143_SEPARATOR_SEED"] = SEPARATOR_SEED
+    managed_env = {
+        "PYTHONHASHSEED": SEPARATOR_SEED,
+        "V143_SEPARATOR_SEED": SEPARATOR_SEED,
+        "CUBLAS_WORKSPACE_CONFIG": CUBLAS_WORKSPACE_CONFIG,
+        # Explicitly disable NVIDIA TF32 override; child Torch also disables
+        # TF32 through backend settings before audio-separator is imported.
+        "NVIDIA_TF32_OVERRIDE": "0",
+    }
+    previous = {key: os.environ.get(key) for key in managed_env}
+    os.environ.update(managed_env)
     try:
         direct = separate_demucs_guitar(
             cli,
@@ -73,23 +78,24 @@ def build_seeded_v143_stems(
             work / "cascade",
         )
     finally:
-        if previous_hash_seed is None:
-            os.environ.pop("PYTHONHASHSEED", None)
-        else:
-            os.environ["PYTHONHASHSEED"] = previous_hash_seed
-        if previous_separator_seed is None:
-            os.environ.pop("V143_SEPARATOR_SEED", None)
-        else:
-            os.environ["V143_SEPARATOR_SEED"] = previous_separator_seed
+        for key, value in previous.items():
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value
 
     direct_out = root / "direct-demucs6s-guitar.wav"
+    roformer_out = root / "bsroformer-instrumental.wav"
     cascade_out = root / "bsroformer-demucs6s-guitar.wav"
     shutil.copy2(direct["path"], direct_out)
+    shutil.copy2(roformer["path"], roformer_out)
     shutil.copy2(cascade["path"], cascade_out)
 
     if (
         not direct_out.exists()
         or direct_out.stat().st_size <= 0
+        or not roformer_out.exists()
+        or roformer_out.stat().st_size <= 0
         or not cascade_out.exists()
         or cascade_out.stat().st_size <= 0
     ):
@@ -97,6 +103,7 @@ def build_seeded_v143_stems(
 
     return {
         "directGuitar": str(direct_out),
+        "roformerInstrumental": str(roformer_out),
         "cascadeGuitar": str(cascade_out),
         "models": {
             "demucs": DEMUCS_6S_MODEL,
@@ -112,6 +119,9 @@ def build_seeded_v143_stems(
             "useSoundfile": True,
             "deterministicSeed": 143,
             "pythonHashSeedAtChildStartup": 143,
+            "cublasWorkspaceConfig": CUBLAS_WORKSPACE_CONFIG,
+            "tf32Disabled": True,
+            "torchDeterministicAlgorithms": True,
         },
         "referenceFree": True,
         "diagnosticOnly": True,
@@ -119,6 +129,8 @@ def build_seeded_v143_stems(
 
 
 __all__ = [
+    "SEPARATOR_SEED",
+    "CUBLAS_WORKSPACE_CONFIG",
     "seeded_audio_separator_cli",
     "build_seeded_v143_stems",
 ]
