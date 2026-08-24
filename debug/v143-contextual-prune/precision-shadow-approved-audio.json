@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "mode": "v143-contextual-prune-reference-free-precision-shadow",
+  "sourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "carrier": {
+    "schemaVersion": 1,
+    "carrier": "v143-contextual-prune-reference-free",
+    "measureStart": 1,
+    "measureEnd": 113,
+    "measureCount": 113,
+    "rowCount": 5482,
+    "gridCount": 1788,
+    "rawEventCount": 143884,
+    "candidateClusterCount": 52668,
+    "onsetGroupCount": 5482,
+    "candidateStemCount": 2,
+    "sweepEventCounts": {
+      "o015_f010": 82728,
+      "o020_f012": 31627,
+      "o025_f015": 18268,
+      "o030_f020": 11261
+    },
+    "stemEventCounts": {
+      "stem0:direct-demucs6s-guitar.wav": 72641,
+      "stem1:bsroformer-demucs6s-guitar.wav": 71243
+    },
+    "tempoBpm": 129.19921875,
+    "firstBeatInMeasure": 3,
+    "downbeatIndexMod4": 1,
+    "beatConfidence": 0.7232655171250919,
+    "barConfidence": 0.08797339512490356,
+    "sweeps": [
+      {
+        "name": "o030_f020",
+        "onsetThreshold": 0.3,
+        "frameThreshold": 0.2
+      },
+      {
+        "name": "o025_f015",
+        "onsetThreshold": 0.25,
+        "frameThreshold": 0.15
+      },
+      {
+        "name": "o020_f012",
+        "onsetThreshold": 0.2,
+        "frameThreshold": 0.12
+      },
+      {
+        "name": "o015_f010",
+        "onsetThreshold": 0.15,
+        "frameThreshold": 0.1
+      }
+    ],
+    "wideGridToleranceSeconds": 0.3,
+    "clusterToleranceSeconds": 0.03,
+    "onsetGroupToleranceSeconds": 0.03,
+    "targetSampleRate": 22050,
+    "hopLength": 128,
+    "binsPerOctave": 36,
+    "spectrumMidiMin": 28,
+    "spectrumMidiMax": 112,
+    "guitarMidiMin": 40,
+    "guitarMidiMax": 88,
+    "referenceFree": true,
+    "professionalReferenceUsedByAnalyzer": false,
+    "professionalReferenceRequiredAtRuntime": false,
+    "runtimeLabelsRequired": false,
+    "productionModified": false
+  },
+  "baseSelector": {
+    "baseEventCount": 1118,
+    "candidateEventCount": 951,
+    "prunedEventCount": 167,
+    "baseThreshold": 0.27,
+    "pruneFraction": 0.15,
+    "candidateSubsetOfBase": true,
+    "candidateAddsEvents": false,
+    "candidateRelocatesEvents": false,
+    "professionalReferenceRequiredAtRuntime": false
+  },
+  "correction": {
+    "baseEventCount": 951,
+    "correctedEventCount": 982,
+    "rescuedEventCount": 31,
+    "suppressedPitchCount": 8612,
+    "observedSlotCount": 1788,
+    "strictSlotCount": 1636,
+    "baseEventsPreserved": true,
+    "rescuesAreObservedSlots": true,
+    "localPeakRescueEnabled": true,
+    "emptyMeasureFailSafeEnabled": true,
+    "candidateRelocatesEvents": false,
+    "referenceFree": true,
+    "runtimeLabelsRequired": false,
+    "productionModified": false
+  },
+  "precision": {
+    "inputAttackCount": 982,
+    "retainedAttackCount": 711,
+    "prunedAttackCount": 271,
+    "failSafeAttackCount": 0,
+    "originalPitchHypothesisCount": 7537,
+    "retainedPitchHypothesisCount": 962,
+    "explicitPrimaryMidiCount": 711,
+    "explicitPrimaryMidiComplete": true,
+    "suppressedPitchCount": 6575,
+    "fundamentalPromotionCount": 134,
+    "attackTransientRatioFloor": 0.7,
+    "attackTransientRatioExceptionFloor": 0.6,
+    "secondaryRawRatio": 0.8,
+    "harmonicSecondaryRawRatio": 0.92,
+    "candidateAddsUnobservedAttack": false,
+    "candidateRelocatesEvents": false,
+    "candidateAddsUnobservedPitch": false,
+    "emptyMeasureFailSafeEnabled": true,
+    "referenceFree": true,
+    "runtimeLabelsRequired": false,
+    "productionModified": false
+  },
+  "coverage": {
+    "targetMeasureCount": 113,
+    "inputPopulatedMeasureCount": 113,
+    "retainedPopulatedMeasureCount": 113,
+    "missingMeasuresAfterPrecision": []
+  },
+  "pitchSupport": {
+    "before": {
+      "attackCount": 711,
+      "totalPitchHypotheses": 7537,
+      "meanPitchesPerAttack": 10.60056258790436,
+      "maxPitchesPerAttack": 26,
+      "histogram": {
+        "1": 2,
+        "2": 10,
+        "3": 19,
+        "4": 28,
+        "5": 49,
+        "6": 46,
+        "7": 56,
+        "8": 48,
+        "9": 72,
+        "10": 54,
+        "11": 48,
+        "12": 52,
+        "13": 39,
+        "14": 36,
+        "15": 44,
+        "16": 18,
+        "17": 21,
+        "18": 15,
+        "19": 15,
+        "20": 12,
+        "21": 11,
+        "22": 8,
+        "23": 4,
+        "24": 2,
+        "25": 1,
+        "26": 1
+      }
+    },
+    "after": {
+      "attackCount": 711,
+      "totalPitchHypotheses": 962,
+      "meanPitchesPerAttack": 1.3530239099859354,
+      "maxPitchesPerAttack": 4,
+      "histogram": {
+        "1": 487,
+        "2": 198,
+        "3": 25,
+        "4": 1
+      }
+    },
+    "fundamentalPromotionCount": 134,
+    "suppressedPitchCount": 6575
+  },
+  "failSafeEvents": [],
+  "invariants": {
+    "sourceIsApprovedFixture": true,
+    "referenceFree": true,
+    "runtimeLabelsRequired": false,
+    "precisionAttacksSubsetOfCorrectedAttacks": true,
+    "precisionPitchesSubsetOfObservedCarrierPitches": true,
+    "allTargetMeasuresPopulated": true,
+    "candidateAddsUnobservedAttack": false,
+    "candidateRelocatesEvents": false,
+    "candidateAddsUnobservedPitch": false,
+    "liveRhythmOutputChanged": false,
+    "leadChanged": false,
+    "bassChanged": false,
+    "productionModified": false
+  },
+  "actionTrace": {
+    "runId": 32682664616,
+    "runAttempt": 1,
+    "triggerSha": "625e20563498d469b4868ac5d14e32041559659f",
+    "precisionModuleBlob": "feeaafea511bf727099d1532a323f9106af75b7a",
+    "precisionPrimaryAdapterBlob": "4e46e9b52385a981429589b5bd5a2332d4dbef75",
+    "precisionModalBlob": "1294b72e3a28013def9d2c5467e0e14813c771cc",
+    "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+    "protectedPipelineUnchanged": true,
+    "productionModified": false
+  }
+}
