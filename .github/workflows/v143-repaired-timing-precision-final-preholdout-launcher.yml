@@ -1,0 +1,69 @@
+name: Launch V143 Repaired Precision Final Pre-Holdout
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-repaired-timing-precision-final-preholdout-launcher.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  launch-once:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Launch one push-triggered freeze and restore manual-only workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          target='.github/workflows/v143-repaired-timing-precision-final-preholdout.yml'
+          cp "$target" /tmp/final-preholdout.manual.yml
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('.github/workflows/v143-repaired-timing-precision-final-preholdout.yml')
+          s=p.read_text()
+          old="on:\n  workflow_dispatch:\n"
+          new="on:\n  workflow_dispatch:\n  push:\n    branches:\n      - v143-contextual-prune-lobo\n    paths:\n      - '.github/workflows/v143-repaired-timing-precision-final-preholdout.yml'\n"
+          if old not in s: raise SystemExit('manual trigger block not found')
+          s=s.replace(old,new,1)
+          old_guard="    if: github.actor != 'github-actions[bot]'\n"
+          if old_guard not in s: raise SystemExit('manual actor guard not found')
+          s=s.replace(old_guard,"    if: github.event_name == 'push'\n",1)
+          p.write_text(s)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$target"
+          git commit -m 'One-shot launch fresh repaired-precision preholdout'
+          pushed=0
+          for n in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then pushed=1; break; fi
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          test "$pushed" = 1
+          echo "launch_sha=$(git rev-parse HEAD)"
+          sleep 3
+          cp /tmp/final-preholdout.manual.yml "$target"
+          git add "$target"
+          git commit -m 'Restore repaired-precision preholdout manual only'
+          restored=0
+          for n in 1 2 3 4 5; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo
+            if git push origin HEAD:v143-contextual-prune-lobo; then restored=1; break; fi
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          test "$restored" = 1
