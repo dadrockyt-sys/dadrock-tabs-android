@@ -25,34 +25,43 @@ Priority: **finish Rhythm end-to-end before Bass/Lead**.
 - Local phase evidence changes through the audio while repaired intervals are clean; raw↔repaired index offsets do not track those local musical phase changes one-for-one.
 - Decision: **do not mutate global bar phase or derive musical phase from raw beat-list offset**.
 
-## Current subdivision/attack-grid audit — NEW HIGH-PRIORITY FINDING TO QUANTIFY
-Static source inspection found a potentially more direct timing handoff defect:
-- carrier admission originally accepts Basic Pitch physical onsets only when `nearest_timing_slot(...)` is within `WIDE_GRID_TOLERANCE_SECONDS=0.30` of the global grid.
-- precision selection has its own `_best_rows_by_slot` implementation.
-- `build_precision_candidate_assembly()` later imports a different `_best_rows_by_slot` from `v143_contextual_prune_candidate_events.py` and recomputes the physical row for each retained `(measure, step)` key instead of preserving the exact row selected by precision.
-- both helpers constrain row mapping to slots inside the row's current **measure**, and the assembly helper has no hard grid-error ceiling.
-- therefore a retained key can potentially be reattached to a physically distant row during assembly.
-- sample from committed old candidate product appears alarming: one source row has measure 1 / step 3 / `timeSeconds≈0.6966` but `onsetTime≈1.60088`, residual ≈`0.9043s`; another row is normal at ≈`0.038s`. This is not yet generalized until full residual distribution is measured.
+## Subdivision / event-timing audit — CORRECTED FINDING
+The previous hypothesis that precision and assembly choose different physical rows has been **retracted** after source comparison:
+- `v143_contextual_prune_precision_shadow.py::_best_rows_by_slot` and `v143_contextual_prune_candidate_events.py::_best_rows_by_slot` are semantically identical: same per-measure nearest-slot selection, same pitch evidence, same strength formula, same strict `>` replacement/tie behavior. Different private diagnostic field names do not change selection.
+- Therefore do **not** claim assembly reattaches retained keys because of helper-formula divergence.
 
-## Physical-grid fidelity diagnostic staged — CPU/STATIC ONLY
-- Added `analyzer/check_v143_candidate_physical_grid_fidelity.py` commit `013053025984172752af46ef2d10112dd22aec1f`.
-  - reads the already-committed candidate product only; no audio inference.
-  - computes source-row and event `onsetTime - timeSeconds` residual p50/p90/p95/p99/max, fractions within 30/60/100/150/300/500ms, counts >300ms and >500ms, worst rows, duplicate `(measure,step)` source keys, event/source key and onset/grid consistency.
-  - diagnostic only; no arbitrary acceptance threshold, no runtime mutation.
-- Added `.github/workflows/v143-candidate-physical-grid-fidelity.yml` commit `13ba13453424ce861c96d02d0c4c483817a74c6c`.
-  - CPU/stdlib only, reads existing `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json`.
-  - protected-blob + anti-reference gates.
-  - writes `debug/v143-contextual-prune/repaired-timing-precision-candidate-physical-grid-fidelity.json` and commits it.
-  - no Modal/GPU, scorer, runtime, or Production change.
+The first physical-grid diagnostic also had the wrong product-schema assumption:
+- old product contains no top-level `sourceRows`, so its `sourceRows.rowCount=0` result is not a physical-provenance measurement.
+- all 985 serialized top-level events have `onsetTime == timeSeconds`, so the diagnostic trivially reports zero residual there. This does **not** prove the detected physical onset was on the grid.
+
+### New direct source-level timing handoff defect
+`build_precision_candidate_assembly()` explicitly preserves two separate timing facts before downstream semantics:
+- `grid_time = grid[key]`
+- `physical_onset = row.get("onsetTime") or grid_time`
+- source/event row gets `timeSeconds=grid_time` and `onsetTime=physical_onset`.
+
+But `analyzer/v143_repaired_timing_precision_candidate_product_modal.py::_promote_candidate_sustain()` later does:
+- `start = event["timeSeconds"]`
+- writes `rhythmSustain.attackTimingChanged = False`
+- then overwrites `event["onsetTime"] = start`
+- and `event["offsetTime"] = start + duration_seconds`.
+Thus any distinct physical onset provenance is erased and replaced by the quantized grid time while the same promoted sustain metadata asserts attack timing was not changed.
+
+This also explains why the committed old product cannot be used to recover physical onset residuals after the fact: the physical `onsetTime` exists in the immediate candidate assembly but is not serialized separately, and the promoted product overwrites it before output.
+
+`v143_rhythm_sustain_consensus_shadow.py` additionally uses `timeSeconds` (not physical `onsetTime`) as its sustain-analysis onset, so the sustain stage itself is grid-anchored. That may be intentional for quantized sustain, but it makes preserving the separate physical onset provenance even more important.
+
+## Existing diagnostic files from this audit
+- `analyzer/check_v143_candidate_physical_grid_fidelity.py` commit `013053025984172752af46ef2d10112dd22aec1f` and workflow commit `13ba13453424ce861c96d02d0c4c483817a74c6c` exist, but their first result is schema-limited as described above. Do not use its zero top-level residual as evidence of physical timing accuracy.
 
 ## Cost control
 - No Modal/GPU inference in this continuation.
 - Do not rerun old candidate/freeze/scorer.
-- Inspect only the new CPU diagnostic result before code changes.
+- Prove the onset-provenance overwrite statically/synthetically before changing candidate runtime behavior.
 
 ## Next exact actions
-1. Read `repaired-timing-precision-candidate-physical-grid-fidelity.json` when committed.
-2. If many source rows exceed the original 300ms physical-grid admission tolerance, treat this as a general reference-free candidate-assembly handoff defect.
-3. Trace/compare the two `_best_rows_by_slot` implementations and design a correction that preserves the exact physical row identity selected by precision instead of recomputing it downstream.
-4. Prove the correction with synthetic/static invariants first: no invented attack/pitch, retained key unchanged, explicit primary preserved, physical-grid residual remains tied to the selected carrier row.
-5. Only then consider one new low-cost inference. Any accepted correction still needs a brand-new candidate/freeze/PDF/lock before one new professional score.
+1. Add a cheap source/static checker proving the candidate assembly preserves physical onset and `_promote_candidate_sustain` overwrites it while claiming `attackTimingChanged=False`.
+2. Design a general correction that keeps quantized `timeSeconds/start` for tab-grid identity but preserves `onsetTime` as the physical detected attack (and keeps any physical provenance explicit through serialization). Do not change protected Production runtime.
+3. Decide offset/duration semantics carefully so `durationSeconds` stays internally consistent and no attack/pitch/event identity changes occur.
+4. Add synthetic invariants: same `(measure,step)`, same MIDI/string/fret, same `timeSeconds`, same event count, physical `onsetTime` preserved, no invented timing, and promoted sustain truthfully reports whether attack timing changed.
+5. Only after static proof consider one new low-cost approved-audio candidate inference with a brand-new identity; never modify/rescore the retired freeze.
