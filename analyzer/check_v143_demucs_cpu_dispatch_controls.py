@@ -17,9 +17,9 @@ EXPECTED = {
     "VECLIB_MAXIMUM_THREADS": "1",
     "NUMEXPR_NUM_THREADS": "1",
     "TBB_NUM_THREADS": "1",
-    "ATEN_CPU_CAPABILITY": "avx2",
-    "ONEDNN_MAX_CPU_ISA": "AVX2",
-    "DNNL_MAX_CPU_ISA": "AVX2",
+    "ATEN_CPU_CAPABILITY": "default",
+    "ONEDNN_MAX_CPU_ISA": "SSE41",
+    "DNNL_MAX_CPU_ISA": "SSE41",
 }
 
 FORBIDDEN = (
@@ -52,7 +52,7 @@ def main() -> None:
     if '"demucsSegmentSize": 6' not in source:
         raise SystemExit("Demucs segment setting changed or missing")
 
-    print("PASS v143 Demucs CPU dispatch controls")
+    print("PASS v143 Demucs CPU baseline dispatch controls")
 
 
 if __name__ == "__main__":
