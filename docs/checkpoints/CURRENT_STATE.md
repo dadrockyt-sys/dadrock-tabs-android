@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 14:42 America/Montreal
+Updated: 2026-08-24 14:57 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -89,27 +89,36 @@ Files:
 - `.github/workflows/v143-frozen-evidence-open-string-bias-diagnostic.yml`
 - `debug/v143-contextual-prune/frozen-evidence-open-string-bias-diagnostic.json`
 
-Reference-free result:
+Reference-free result recorded at 14:42:
 - Diagnostic classification: `open-high-e-persistence-bias-clue`.
 - Open high E / MIDI 64 as canonical open string occurs on **186/725 attacks (25.66%)**.
 - **179/186 E64 attacks (96.24%) are single-hypothesis attacks** — no alternative pitch candidate exists to re-rank.
 - E64 alone accounts for **179/487 = 36.76% of every single-hypothesis attack**.
-- Compare single-hypothesis rates:
-  - open high E64: `96.24%` (179/186)
-  - other open-string primaries: `62.29%` (147/236)
-  - fretted primaries: `56.44%` (171/303)
-- Any open-string primary occurs 423/725 (`58.34%`), but the severe hypothesis collapse is specifically concentrated at E64 rather than being generic to all open strings.
-- E64 median persistence support `2.5238` vs fretted `1.9409`.
-- E64 median attack-minus-body `-0.5406` vs fretted `-0.5383`; this difference is tiny and must not be overstated.
-- E64 sustain-evidence rate `8.60%` vs fretted `5.94%`; not enough to prove a generic ringing-only mechanism.
-- Sequential E64: 100 runs, max run length 9; 54 runs length >=2, 12 length >=4. 55 consecutive E64 pairs are <=2.35 sixteenth steps apart; only 6 have previous sustain evidence and only 3 combine previous sustain with current attack<body.
-- E64 concentration is sectional but widespread: m81–88 `56.86%`, m89–96 `65.22%`; zero in m17–24 and m33–40.
-- **Current conclusion:** there is a strong upstream E64/high-E candidate-proposal or pruning defect clue. The evidence does NOT justify deleting or transposing E64 events directly. First recover the exact pre-scorer pitch-candidate generation/pruning path and explain why E64 so often becomes the sole hypothesis.
+- The 14:42 checkpoint text also recorded `423/725` any-open-string primaries and `303` fretted primaries. **Those two values are now known to be inconsistent with the committed report/source and must not be used.**
 - No event mutation, no scorer/reference, no Modal/L4, protected runtime unchanged, Production untouched.
 
+## Open-string definition audit — 2026-08-24 14:57 America/Montreal
+- Re-read the committed diagnostic source and its committed JSON report at branch head `98e95060a0cef65a2d253f48e0580c5cb7da4941`.
+- Source definition `primaryHasOpenStringMapping` is exact: the selected note whose MIDI equals the primary must have a validated standard-tuning mapping with `fret == 0`.
+- Under that exact definition, the committed report says:
+  - `anyOpenStringPrimary.count = 264`
+  - `frettedPrimary.count = 461`
+  - partition check: `264 + 461 = 725`
+- Therefore the earlier `423 open / 303 fretted` statement is stale or misclassified and is rejected. It does not reconcile to 725 and is not what the committed diagnostic computed.
+- This materially weakens any generic “most attacks are open strings” interpretation. The useful clue is narrower: high-E/MIDI64 candidate diversity must be audited distinctly from generic open-string mapping.
+- Also keep distinct:
+  - primary MIDI value equals `64`
+  - primary is physically mapped to string 0 / fret 0 (`openHighE64`)
+  - any note in the selected voicing is open
+  - primary MIDI equals one of standard-tuning open pitches
+  These are not interchangeable classes.
+- Current E64 hypothesis-collapse conclusion is therefore **under audit, not a correction**.
+- No events changed; professional reference/scorer remains closed; Modal/L4 remains closed; protected runtime and Production untouched.
+
 ## Next exact actions
-1. Recover the exact candidate-generation ancestry used by the frozen v143 pre-scorer evidence, starting from `analyzer/v143_reference_free_ensemble_selection_rubric.md` and its referenced contextual GuitarNote/shadow implementation.
-2. Locate the logic that generates/prunes attack pitch hypotheses and specifically inspect treatment of MIDI64/high-E/open-string candidates, persistence/carrier support, pitch-range ceilings, and single-hypothesis fallback behavior.
-3. Build a CPU-only/reference-free diagnostic that explains the E64 sole-hypothesis collapse from already persisted evidence/source logic; do **not** mutate events yet.
-4. Only if a general source-level defect is independently proven, build a new corrected candidate identity and fresh freeze/PDF proof.
-5. Only after that new identity passes all fail-closed gates may another one-shot professional score be considered.
+1. Build one CPU-only/reference-free candidate-diversity audit from the already persisted frozen evidence that reports all open-string definitions side-by-side and reconciles every partition to 725 where applicable.
+2. For primary MIDI64 attacks, measure hypothesis count, single-hypothesis rate, strongest non-64 rival when available, and attack/body/persistence/combined-score margins; compare against non-64/common-primary baselines.
+3. Test whether MIDI64 wins combined score while losing attack support, and whether its single-hypothesis rate is uniquely abnormal after controlling for primary frequency/register.
+4. If E64 is uniquely proposal-starved, trace upstream hypothesis proposal/pruning source ancestry. If not, abandon the E64-collapse premise and follow the broader actual candidate-generation failure.
+5. Do **not** mutate events until a source-level defect is independently proven.
+6. Only after a genuinely new corrected candidate is frozen/locked may the professional scorer be considered again.
