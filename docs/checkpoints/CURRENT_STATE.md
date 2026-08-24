@@ -79,8 +79,17 @@ Exact result:
 - `productionModified=false`
 - one-shot trigger marker was consumed/removed by the successful workflow.
 
+## Professional score authorization — PREPARED
+- User explicitly authorized the single professional holdout score for the new locked identity.
+- New fail-closed workflow: `.github/workflows/v143-frozen-evidence-harmonic-guard-professional-score.yml`, creation commit `bfda89db6dc9fbc9b5bb27d977c0db704607d35d`.
+- It binds preholdout run `32751771832`, corrected SHA `07b12f...`, 889 events, 113 measures, PDF fidelity 1.0, protected runtime blob and approved source hash before any reference access.
+- It creates and pushes a permanent score-authorization lease before opening the professional source, so an accidental duplicate score is refused.
+- It uses the same immutable scorer-only professional structured source/revision and unchanged `0.99` scorer as the prior holdout.
+- It contains no Modal/L4 step and does not authorize Production.
+- Score trigger marker has NOT yet been created at this checkpoint.
+
 ## Current gate state
-The corrected no-Modal candidate is now frozen/PDF-locked with exact PDF-event fidelity 1.0 and a genuinely new immutable render identity. All preholdout requirements for allowing **exactly one** professional score are satisfied. No professional score has yet been run against this new identity.
+The corrected no-Modal candidate is frozen/PDF-locked with exact PDF-event fidelity 1.0 and a genuinely new immutable render identity. All preholdout requirements are satisfied, and the one-shot scorer workflow is prepared but not yet triggered at this checkpoint.
 
 ## Next exact action
-Run exactly one professional holdout score against frozen event SHA `07b12f807295219d39198641de3a9e170c684de60d274befd2b6f6f50af9588c`, using the immutable freeze/PDF from workflow run `32751771832`. Do not rerun/rescore any retired identity. After that score, close the reference again and evaluate against completion threshold: score >= 0.99, critical mismatches 0, PDF-event fidelity 1.0.
+Create `debug/v143-contextual-prune/RUN_FROZEN_EVIDENCE_HARMONIC_GUARD_SCORE_ONCE` once to trigger the professional score. Observe exactly one result, close the scorer/reference, save the diagnostic, and evaluate completion against score >= 0.99, critical mismatches 0, PDF-event fidelity 1.0. Never rerun any retired identity.
