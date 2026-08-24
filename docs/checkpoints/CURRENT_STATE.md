@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 00:07 America/Thunder_Bay
+Updated: 2026-08-24 00:15 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -11,14 +11,13 @@ Human professional reference is scorer-only. Runtime may NEVER read/train/tune/s
 Completion requires score >= `0.99`, critical mismatches `0`, PDF-event fidelity `1.0`. **Rhythm is NOT complete.**
 
 ## Protected runtime / fixture
-- protected `analyzer/v143_reference_free_rhythm_pipeline.py`
-- required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`
+- protected `analyzer/v143_reference_free_rhythm_pipeline.py`, required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`
 - fixture `public/gomywayfullaitest.m4a`, SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`
 - protected exact; Production unchanged.
 
 ## Scorer-only — CLOSED
 Scorer V2 SHA `18fd868ae960dfcdd1ffb0110f1a9dfd8acc2ffeb46e247d1116cd54291526ac`; 113 measures / 603 playable onsets / 946 notes / 104 populated. Do not open until a brand-new deterministic freeze/PDF identity is locked.
-Retired Freeze2 event/PDF SHA `e693602ade26256851dc0d77b003bf6ba0d5014dfaec7e35103ecdf25d33c32f`; never rescore it. Last score: pitch `.2624150549`, timing `.0522739153`, string/fret `.0282279143`, chord `.00759301443`, critical1649. Allowed diagnosis only: broad pitch identity + timing/grid identity.
+Retired Freeze2 event/PDF SHA `e693602ade26256851dc0d77b003bf6ba0d5014dfaec7e35103ecdf25d33c32f`; never rescore. Last score: pitch `.2624150549`, timing `.0522739153`, string/fret `.0282279143`, chord `.00759301443`, critical1649. Allowed diagnosis only: broad pitch identity + timing/grid identity.
 
 ## Reference-free musical fixes already green
 - explicit-primary propagation green; no invented attack/pitch/relocation.
@@ -29,31 +28,33 @@ Retired Freeze2 event/PDF SHA `e693602ade26256851dc0d77b003bf6ba0d5014dfaec7e351
 Demucs6s Guitar, shifts1, overlap0.10, segment6; BS-RoFormer Instrumental batch1; cascade = RoFormer Instrumental → same Demucs6s Guitar.
 
 ## Modal cost-control — ACTIVE
-Billing screenshot showed L4 `$11.92`, memory `$1.40`, CPU `$1.09`, total `$14.41`. Rules: free/static first; exactly one CPU-only direct-Demucs diagnostic at a time; no repeated 3-pass L4 during debugging; final multi-pass L4 only after a concrete deterministic fix. Full repaired-timing/precision and scorer remain closed.
-Expensive separator proof and full combined exact workflows are manual-only. Prepared one-pass full separator smoke remains dormant.
+Billing screenshot: L4 `$11.92`, memory `$1.40`, CPU `$1.09`, total `$14.41`. Rules: free/static first; exactly one CPU-only direct-Demucs diagnostic at a time; no repeated 3-pass L4 during debugging; final multi-pass L4 only after a concrete deterministic fix. Full repaired-timing/precision and scorer closed.
+Expensive separator proof and combined exact workflows are manual-only. One-pass full separator smoke remains dormant.
 
 ## Confirmed failure class
-Unpinned output mapped to CPU host/ISA. Common AVX2 pin also failed cross-vendor exactness. RNG is ruled out: every probe uses exact private shift `0,22050,6026` with identical source/normalized bytes.
+Unpinned output mapped to CPU host/ISA. Common AVX2 pin failed cross-vendor. ATen DEFAULT + oneDNN SSE41 also failed across AMD microarchitectures despite effective child `DEFAULT`, same source/normalized bytes and same shift `0,22050,6026`:
+- AMD family175/model1 baseline WAV `a58e260f4b91d208b5d6f0bf33590b503cb47ea3b316d3b34841e69329a4c48a`, PCM `551e22e13abe4f8e47182db9c868817141ed8fa702235099364521d9c6d18654`
+- AMD family175/model17 baseline WAV `5d27860c04cf7ac25c13ab7f264fea4a8959ab3e811c9c4f8db3319a306506e1`, PCM `bddb7e52dd4a4707741d19be8f65eda8bfab1b8743df504c4068c4fa732b28f6`
+RNG is ruled out. Do not spend L4 on these failed candidates.
 
-## ATen DEFAULT + oneDNN SSE41 baseline — FAILED ACROSS AMD MICROARCHITECTURES
-Probe1 `demucs-cpu-baseline-probe-1.json`: AuthenticAMD family175/model1, WAV `a58e260f4b91d208b5d6f0bf33590b503cb47ea3b316d3b34841e69329a4c48a`, PCM `551e22e13abe4f8e47182db9c868817141ed8fa702235099364521d9c6d18654`.
-Probe2 `demucs-cpu-baseline-probe-2.json`: AuthenticAMD family175/model1, byte-exact with probe1.
-Probe3 `demucs-cpu-baseline-probe-3.json`, bot commit `52f0c112b46f99bd228e2ed6d4aa3f22ed036ea2`: AuthenticAMD family175/model17 with AVX512 physically exposed, effective child still `torchCpuCapability=DEFAULT`, oneDNN SSE41 requested, one thread, same shift/source/normalized bytes, but WAV **`5d27860c04cf7ac25c13ab7f264fea4a8959ab3e811c9c4f8db3319a306506e1`**, PCM **`bddb7e52dd4a4707741d19be8f65eda8bfab1b8743df504c4068c4fa732b28f6`**.
-Therefore baseline with oneDNN enabled is not byte-exact even inside AMD across microarchitectures. Do NOT spend L4 on it.
-
-## New cheapest isolation — oneDNN OFF, PREPARED
+## Current oneDNN-OFF candidate
 Research-only, no musical change:
-- commit `3c5eb669b909a7d56e130b325e66eeab144553ff`: optional `V143_DEMUCS_DISABLE_MKLDNN=1` makes Demucs child set `torch.backends.mkldnn.enabled=False` before audio-separator/model import; runtime trace records effective state.
-- commit `0b3d73bb5f68fee0f76e4fb2827c1f982ea117eb`: Demucs research env enables that switch while keeping `ATEN_CPU_CAPABILITY=default`, `MKL_CBWR=COMPATIBLE`, one thread/dynamic false, model/shifts1/overlap.10/segment6 unchanged.
-- commit `a49d30ce85cb1ecd7d6f927b6c8e71c5bce895ae`: static checker requires oneDNN-off implementation/settings.
-- commit `293bfe5777e951b9532328e718d03fea153801c1`: CPU probe now records Modal cloud provider/region for cheaper host-placement diagnosis on future runs.
+- `3c5eb669b909a7d56e130b325e66eeab144553ff`: optional child switch sets `torch.backends.mkldnn.enabled=False` before audio-separator/model import; trace records effective state.
+- `0b3d73bb5f68fee0f76e4fb2827c1f982ea117eb`: research Demucs env enables it while keeping ATen DEFAULT, oneMKL COMPATIBLE, one thread/dynamic false, model/shifts1/overlap.10/segment6 unchanged.
+- `a49d30ce85cb1ecd7d6f927b6c8e71c5bce895ae`: static checker requires oneDNN-off implementation/settings.
+- `ab7182a10da664d92ca19ff1f8613b51092baf75`: cross-host checker now requires effective `mkldnnEnabled=false` and disable env.
+- `63152be78cdde2b18a761e431cecadb3c4f02c09`: CPU probe supports targeted `cloud=aws|gcp|oci` / optional region and records `MODAL_CLOUD_PROVIDER` + `MODAL_REGION`, so future diversity tests can avoid blind random repeats.
 No Production/protected/scorer file changed.
 
+## ACTIVE compute — ONE CPU-ONLY RUN
+Launch commit `f5a93bc6dd38474262d2a4a36916c966e592432f`: exactly one CPU-only direct-Demucs oneDNN-off probe. Workflow restored manual immediately at `e003782ffd8c1b9471a1dd836e92d0e56e379051`. Expected file `debug/v143-contextual-prune/demucs-cpu-nomkldnn-probe-1.json`.
+At this checkpoint it is still running/not committed; **no L4 requested**. oneDNN-off may run slower on CPU, so do not launch another compute job until this resolves.
+
 ## Current work NOW
-1. Run free/static gate for oneDNN-off candidate.
-2. Launch exactly ONE cheap CPU-only direct-Demucs probe, no L4, and require effective child `mkldnnEnabled=false`, ATen `DEFAULT`, exact shift/source/normalized bytes.
-3. If green, run only one second cold CPU probe; compare exact WAV/PCM. Prefer a different microarchitecture/provider/region if placement evidence allows, rather than random repeated spend.
-4. Only after cross-host exactness run one manual full-separator smoke. Final 3-pass L4 proof stays last.
+1. Wait/poll only for `demucs-cpu-nomkldnn-probe-1.json`.
+2. Require source/normalized/shift exact, ATen `DEFAULT`, `mkldnnEnabled=false`, reference-free/Production/protected invariants green. Record provider/region/CPU family.
+3. If green, choose ONE targeted second CPU probe on another cloud/provider when practical and require exact WAV+PCM. Avoid random repeated spend.
+4. Only after cross-host exactness run one manual full-separator smoke; final 3-pass L4 proof stays last.
 5. Keep scorer closed until separator + combined path are exact and a BRAND-NEW immutable Jimmy freeze/PDF is locked.
 
 ## After determinism is green
