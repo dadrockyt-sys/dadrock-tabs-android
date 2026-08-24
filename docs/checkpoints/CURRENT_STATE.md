@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 08:13 America/Thunder_Bay
+Updated: 2026-08-24 08:36 America/Thunder_Bay
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -52,3 +52,15 @@ Do not rescore event SHA `a81190d...`. Do not rerun candidate/freeze. No repeate
 3. Identify a GENERAL reference-free explanation for the very low pitch/timing self-consistency; no professional event-level data may be read or used.
 4. Build static/CPU/reference-free shadow proof first; use at most one targeted inference run only when a concrete general fix requires it.
 5. If a correction is accepted, create a BRAND-NEW approved-audio candidate → immutable freeze/PDF → lock before another single professional score.
+
+## Saved next execution plan
+1. **Audit timing carrier before pitch.** Trace how repaired beats, `downbeatIndexMod4`, `firstBeatInMeasure`, 16th-slot assignment, attack timestamps, and measure/step serialization interact. Look for a general phase/indexing mismatch that can explain extremely low timing agreement despite 113/113 measure coverage.
+2. **Audit pitch carrier independently.** Trace direct/cascade stem evidence → pitch hypotheses → primary MIDI selection → legal guitar voicing. Quantify reference-free self-consistency only: spectral agreement, octave/harmonic ambiguity, duplicate hypotheses, and whether selected primaries are actually supported by the isolated guitar carrier.
+3. **Do not use professional-reference events for diagnosis.** The previous score supplies only the already-recorded broad classes: timing/grid identity and pitch identity. No event-level scorer payload, locations, pitch values, or song-specific corrections may be read or converted into runtime rules.
+4. **Prefer source/static tests first.** Add small deterministic diagnostics/checkers around timing phase and pitch-selection invariants. Reuse existing approved-audio artifacts where possible; no Modal/L4 inference merely to explore hypotheses.
+5. **Build one general reference-free shadow correction at a time.** A candidate fix must preserve attack locations unless audio-only evidence justifies change, preserve explicit-primary provenance, preserve legal voicing, preserve all 113 measures where physically supported, and never invent pitch or attack evidence.
+6. **Require a cheap shadow proof before inference.** Static/syntax/invariant/hash checks must pass first. If audio inference is genuinely necessary, run exactly one targeted CPU/lowest-cost diagnostic pass, then inspect before any further compute.
+7. **Re-establish determinism after any accepted runtime-affecting correction.** Separator controls remain locked. Any new timing/pitch correction must have exact repeatability and protected-runtime/Production safety checks before product generation.
+8. **Create a completely new Jimmy identity after an accepted correction.** New approved-audio candidate → new authenticated events → new professional preview/full PDF → new immutable lock. Never reuse or rescore event SHA `a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb`.
+9. **Open scorer exactly once only after the new lock is complete.** Require scorer V2 completeness, PDF-event fidelity `1.0`, protected pipeline exact, Production unchanged, then run the unchanged `>=0.99` professional holdout gate.
+10. **Completion remains strict.** Rhythm is complete only at score `>=0.99`, critical mismatches `0`, and PDF-event fidelity `1.0`. If the next score fails, close the scorer again and repeat only with another general/reference-free correction and another brand-new freeze.
