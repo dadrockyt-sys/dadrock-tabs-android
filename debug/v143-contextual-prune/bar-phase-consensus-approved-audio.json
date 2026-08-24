@@ -1,12 +1,13 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gate": "v143-reference-free-bar-phase-consensus-approved-audio",
-  "runId": 32681695858,
+  "runId": 32681947873,
   "runAttempt": 1,
-  "triggerSha": "f56665172c1260e527eb7a3d15e75c4a46a1ef7d",
+  "triggerSha": "d8ee81de42c3d9d2cb86ca6d47d0d1552b1c3378",
   "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
   "timing": {
     "tempoBpm": 129.19921875,
+    "expectedBeatPeriodSeconds": 0.46439909297052157,
     "beatConfidence": 0.7232655115770844,
     "accentOnlyFirstBeatInMeasure": 3,
     "accentOnlyDownbeatIndexMod4": 1,
@@ -14,10 +15,7 @@
     "beatCount": 447,
     "firstBeatTime": 0.6733786848072563,
     "lastBeatTime": 203.03528344671201,
-    "medianBeatInterval": 0.46439909297052395,
     "audioDuration": 211.44090702947847,
-    "leadingAudioBeforeFirstBeat": 0.6733786848072563,
-    "trailingAudioAfterLastBeat": 8.405623582766452,
     "first12BeatTimes": [
       0.6733786848072563,
       1.18421768707483,
@@ -46,6 +44,221 @@
       202.75664399092972,
       203.03528344671201
     ]
+  },
+  "beatGridHealth": {
+    "intervalCount": 446,
+    "intervalSecondsP01": 0.24380952380953005,
+    "intervalSecondsP05": 0.33668934240363413,
+    "intervalSecondsP50": 0.46439909297052395,
+    "intervalSecondsP95": 0.48761904761904873,
+    "intervalSecondsP99": 0.4992290249433111,
+    "periodRatioP01": 0.5250000000000135,
+    "periodRatioP05": 0.725000000000013,
+    "periodRatioP50": 1.000000000000005,
+    "periodRatioP95": 1.0500000000000023,
+    "periodRatioP99": 1.0750000000000008,
+    "shortIntervalsUnder075Period": 26,
+    "shortIntervalsUnder085Period": 37,
+    "longIntervalsOver125Period": 0,
+    "longIntervalsOver135Period": 0,
+    "anomalyCountOutside075To135": 26,
+    "first40Anomalies": [
+      {
+        "afterBeatIndex": 109,
+        "leftBeatTime": 51.977868480725625,
+        "rightBeatTime": 52.31455782312925,
+        "intervalSeconds": 0.33668934240362347,
+        "periodRatio": 0.72499999999999
+      },
+      {
+        "afterBeatIndex": 110,
+        "leftBeatTime": 52.31455782312925,
+        "rightBeatTime": 52.65124716553288,
+        "intervalSeconds": 0.3366893424036306,
+        "periodRatio": 0.7250000000000053
+      },
+      {
+        "afterBeatIndex": 112,
+        "leftBeatTime": 52.99954648526077,
+        "rightBeatTime": 53.336235827664396,
+        "intervalSeconds": 0.33668934240362347,
+        "periodRatio": 0.72499999999999
+      },
+      {
+        "afterBeatIndex": 147,
+        "leftBeatTime": 69.12580498866213,
+        "rightBeatTime": 69.40444444444445,
+        "intervalSeconds": 0.27863945578232574,
+        "periodRatio": 0.6000000000000275
+      },
+      {
+        "afterBeatIndex": 150,
+        "leftBeatTime": 70.31002267573696,
+        "rightBeatTime": 70.60027210884354,
+        "intervalSeconds": 0.290249433106581,
+        "periodRatio": 0.6250000000000109
+      },
+      {
+        "afterBeatIndex": 227,
+        "leftBeatTime": 106.02231292517007,
+        "rightBeatTime": 106.3590022675737,
+        "intervalSeconds": 0.3366893424036306,
+        "periodRatio": 0.7250000000000053
+      },
+      {
+        "afterBeatIndex": 229,
+        "leftBeatTime": 106.71891156462586,
+        "rightBeatTime": 107.03238095238095,
+        "intervalSeconds": 0.3134693877550916,
+        "periodRatio": 0.6749999999999775
+      },
+      {
+        "afterBeatIndex": 231,
+        "leftBeatTime": 107.38068027210885,
+        "rightBeatTime": 107.71736961451248,
+        "intervalSeconds": 0.3366893424036306,
+        "periodRatio": 0.7250000000000053
+      },
+      {
+        "afterBeatIndex": 232,
+        "leftBeatTime": 107.71736961451248,
+        "rightBeatTime": 108.04244897959184,
+        "intervalSeconds": 0.3250793650793611,
+        "periodRatio": 0.6999999999999914
+      },
+      {
+        "afterBeatIndex": 233,
+        "leftBeatTime": 108.04244897959184,
+        "rightBeatTime": 108.39074829931972,
+        "intervalSeconds": 0.34829931972788586,
+        "periodRatio": 0.7499999999999886
+      },
+      {
+        "afterBeatIndex": 234,
+        "leftBeatTime": 108.39074829931972,
+        "rightBeatTime": 108.70421768707483,
+        "intervalSeconds": 0.3134693877551058,
+        "periodRatio": 0.675000000000008
+      },
+      {
+        "afterBeatIndex": 271,
+        "leftBeatTime": 125.37614512471656,
+        "rightBeatTime": 125.58512471655328,
+        "intervalSeconds": 0.208979591836723,
+        "periodRatio": 0.44999999999997475
+      },
+      {
+        "afterBeatIndex": 310,
+        "leftBeatTime": 143.2322902494331,
+        "rightBeatTime": 143.580589569161,
+        "intervalSeconds": 0.34829931972788586,
+        "periodRatio": 0.7499999999999886
+      },
+      {
+        "afterBeatIndex": 311,
+        "leftBeatTime": 143.580589569161,
+        "rightBeatTime": 143.91727891156464,
+        "intervalSeconds": 0.3366893424036448,
+        "periodRatio": 0.7250000000000358
+      },
+      {
+        "afterBeatIndex": 312,
+        "leftBeatTime": 143.91727891156464,
+        "rightBeatTime": 144.25396825396825,
+        "intervalSeconds": 0.33668934240361637,
+        "periodRatio": 0.7249999999999747
+      },
+      {
+        "afterBeatIndex": 349,
+        "leftBeatTime": 160.79818594104307,
+        "rightBeatTime": 161.04199546485262,
+        "intervalSeconds": 0.24380952380954568,
+        "periodRatio": 0.5250000000000471
+      },
+      {
+        "afterBeatIndex": 351,
+        "leftBeatTime": 161.45995464852606,
+        "rightBeatTime": 161.7385941043084,
+        "intervalSeconds": 0.27863945578232574,
+        "periodRatio": 0.6000000000000275
+      },
+      {
+        "afterBeatIndex": 374,
+        "leftBeatTime": 171.87410430839003,
+        "rightBeatTime": 172.11791383219955,
+        "intervalSeconds": 0.24380952380951726,
+        "periodRatio": 0.5249999999999859
+      },
+      {
+        "afterBeatIndex": 375,
+        "leftBeatTime": 172.11791383219955,
+        "rightBeatTime": 172.3849433106576,
+        "intervalSeconds": 0.26702947845805625,
+        "periodRatio": 0.5750000000000136
+      },
+      {
+        "afterBeatIndex": 385,
+        "leftBeatTime": 176.3091156462585,
+        "rightBeatTime": 176.6225850340136,
+        "intervalSeconds": 0.3134693877551058,
+        "periodRatio": 0.675000000000008
+      },
+      {
+        "afterBeatIndex": 399,
+        "leftBeatTime": 182.50884353741498,
+        "rightBeatTime": 182.83392290249432,
+        "intervalSeconds": 0.32507936507934687,
+        "periodRatio": 0.6999999999999608
+      },
+      {
+        "afterBeatIndex": 400,
+        "leftBeatTime": 182.83392290249432,
+        "rightBeatTime": 183.0661224489796,
+        "intervalSeconds": 0.2321995464852762,
+        "periodRatio": 0.5000000000000332
+      },
+      {
+        "afterBeatIndex": 427,
+        "leftBeatTime": 195.0592290249433,
+        "rightBeatTime": 195.30303854875282,
+        "intervalSeconds": 0.24380952380951726,
+        "periodRatio": 0.5249999999999859
+      },
+      {
+        "afterBeatIndex": 428,
+        "leftBeatTime": 195.30303854875282,
+        "rightBeatTime": 195.59328798185942,
+        "intervalSeconds": 0.29024943310659523,
+        "periodRatio": 0.6250000000000414
+      },
+      {
+        "afterBeatIndex": 444,
+        "leftBeatTime": 202.52444444444444,
+        "rightBeatTime": 202.75664399092972,
+        "intervalSeconds": 0.2321995464852762,
+        "periodRatio": 0.5000000000000332
+      },
+      {
+        "afterBeatIndex": 445,
+        "leftBeatTime": 202.75664399092972,
+        "rightBeatTime": 203.03528344671201,
+        "intervalSeconds": 0.2786394557822973,
+        "periodRatio": 0.5999999999999663
+      }
+    ],
+    "activeAudioStart": 15.046530612244897,
+    "activeAudioEnd": 209.18857142857144,
+    "activeAudioDuration": 194.14204081632653,
+    "leadingInactiveAudioSeconds": 15.046530612244897,
+    "trailingInactiveAudioSeconds": 2.252335600907031,
+    "firstBeatMinusActiveStartSeconds": -14.373151927437641,
+    "activeEndMinusLastBeatSeconds": 6.153287981859421,
+    "approxExpectedBeatCountAcrossActiveAudio": 419.04999999999995,
+    "trackedBeatCount": 447,
+    "trackedMinusApproxExpected": 27.950000000000045,
+    "rmsNoiseFloor": 0.09730771244830676,
+    "rmsRobustPeak": 0.44058250905941637,
+    "rmsActiveThreshold": 0.29192313734492026
   },
   "consensus": {
     "winnerDownbeatIndexMod4": 1,
@@ -105,6 +318,7 @@
     "referenceFree": true,
     "runtimeLabelsRequired": false,
     "phaseChanged": false,
+    "beatGridChanged": false,
     "liveRhythmOutputChanged": false,
     "productionModified": false,
     "protectedPipelineUnchanged": true
