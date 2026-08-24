@@ -1,6 +1,6 @@
 # CURRENT STATE — DadRock `/ai-tab`
 
-Updated: 2026-08-24 15:18 America/Montreal
+Updated: 2026-08-24 15:20 America/Montreal
 Branch: `v143-contextual-prune-lobo`
 Priority: **finish Rhythm end-to-end before Bass/Lead**.
 
@@ -139,11 +139,17 @@ Exact source files used by that candidate:
 - There is no MIDI64 special-case in these source files. The MIDI64 symptom is likely an interaction between its strong primary evidence and the aggressive precision secondary gates, not a hard-coded E4 boundary.
 - No event mutation has been made; scorer/reference closed; Modal/L4 closed; protected runtime and Production untouched.
 
+## Historical pre-holdout artifact recovery — 2026-08-24 15:20 America/Montreal
+- Exact run `32702772593` artifact `rhythm-professional-preholdout-real-audio` is still available and was recovered without new inference.
+- Artifact contains the immutable raw product/freeze/PDF evidence, including `.preholdout/raw-product-output.json` and final `precisionDiagnostics`.
+- It reconfirms `984` precision input attacks → `725` retained attacks and `7,535` original observed pitch hypotheses → `987` retained, with `6,548` suppressed and `144` fundamental promotions.
+- The artifact does **not** itself expose the 5,624 carrier rows or per-event `original_pitch_sets`; the next search is historical workflow/debug artifacts for those source rows.
+- No event/runtime mutation made. Modal/L4 remains closed. Professional reference remains closed.
+
 ## Next exact actions
-1. Stop pursuing upstream proposal starvation as the primary pitch defect.
-2. Reconstruct as much **pre-precision pitch-set behavior** as possible from already committed diagnostics/artifacts, without fresh separator inference.
-3. Audit the precision pruning law itself: quantify how much each of score, attack, body, harmonic-above-primary 0.92 gate, and fundamental-primary promotion contributes to the 7,535→987 collapse.
-4. Search historical CPU/GitHub artifacts for persisted pre-precision `original_pitch_sets` or carrier rows; if available, build a fully reference-free threshold-sensitivity diagnostic over the exact 725 attacks.
-5. If per-event pre-precision evidence is recoverable, test conservative physically supported alternatives to the 0.80/0.92 hard intersection using source-only criteria and hold out the professional reference completely.
-6. Do **not** mutate events yet. First prove a less destructive precision rule on frozen/pre-precision evidence.
-7. Only after a genuinely new corrected candidate is frozen/locked may the professional scorer be considered again.
+1. Search historical CPU/GitHub workflow/debug artifacts for persisted carrier rows or per-event `original_pitch_sets` from the exact historical candidate.
+2. If recoverable, build a fully reference-free threshold-sensitivity diagnostic over the exact retained attacks.
+3. Quantify separately how the score, attack, body, harmonic-above-primary `0.92` gate, and fundamental-primary promotion contribute to the `7,535→987` collapse.
+4. Test conservative physically supported alternatives to the `0.80/0.92` hard intersection only on source evidence; do not inspect/tune against professional mismatches.
+5. Do **not** mutate events yet. First prove a less destructive precision rule on frozen/pre-precision evidence.
+6. Only after a genuinely new corrected candidate is frozen/locked may the professional scorer be considered again.
