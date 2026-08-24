@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import random
+from pathlib import Path
 from typing import Any
 
 
@@ -15,7 +16,14 @@ class _DedicatedRandom:
         self._rng = random.Random(int(seed))
 
     def randint(self, a: int, b: int) -> int:
-        return int(self._rng.randint(int(a), int(b)))
+        value = int(self._rng.randint(int(a), int(b)))
+        trace_path = os.environ.get("V143_DEMUCS_SHIFT_TRACE_PATH")
+        if trace_path:
+            path = Path(trace_path)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with path.open("a", encoding="utf-8") as handle:
+                handle.write(f"{int(a)},{int(b)},{value}\n")
+        return value
 
     def __getattr__(self, name: str) -> Any:
         return getattr(self._rng, name)
@@ -81,6 +89,11 @@ def install_dedicated_demucs_shift_rng(seed: int = SEED) -> None:
     process-global RNG first. Replacing only that module's `random` handle keeps
     shifts=1 and the exact Demucs algorithm while making its shift sequence depend
     solely on V143_SEPARATOR_SEED. This path contains no song/reference data.
+
+    When V143_DEMUCS_SHIFT_TRACE_PATH is set, the wrapper records only the randint
+    bounds and selected integer so a research probe can prove whether this hook was
+    actually exercised. The trace switch is off by default and changes no inference
+    setting or musical behavior.
     """
     from audio_separator.separator.uvr_lib_v5.demucs import apply as demucs_apply
 
