@@ -1,0 +1,237 @@
+name: V143 Frozen Evidence Harmonic Guard Pre-Holdout
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v143-contextual-prune/RUN_FROZEN_EVIDENCE_HARMONIC_GUARD_PREHOLDOUT_ONCE
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v143-frozen-evidence-harmonic-guard-preholdout
+  cancel-in-progress: false
+
+jobs:
+  freeze-render-prove:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Bind frozen upstream reconstruction and prepare exact freeze input
+        shell: bash
+        run: |
+          set -euo pipefail
+          marker='debug/v143-contextual-prune/RUN_FROZEN_EVIDENCE_HARMONIC_GUARD_PREHOLDOUT_ONCE'
+          corrected='debug/v143-contextual-prune/harmonic-guard-frozen-evidence-corrected-render.json'
+          proof='debug/v143-contextual-prune/harmonic-guard-frozen-evidence-reconstruction-proof.json'
+          evidence='debug/v143-contextual-prune/frozen-approved-audio-preholdout-evidence.json'
+          test -f "$marker"
+          test -s "$corrected"
+          test -s "$proof"
+          test -s "$evidence"
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          mkdir -p .reuse-preholdout/freeze/pdf .reuse-preholdout/logs debug/v143-contextual-prune
+          python validation/rhythm_holdout/verify_runtime_isolation.py > .reuse-preholdout/logs/runtime-isolation.json
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          corrected_path=Path('debug/v143-contextual-prune/harmonic-guard-frozen-evidence-corrected-render.json')
+          corrected=json.loads(corrected_path.read_text(encoding='utf-8'))
+          proof=json.loads(Path('debug/v143-contextual-prune/harmonic-guard-frozen-evidence-reconstruction-proof.json').read_text(encoding='utf-8'))
+          evidence=json.loads(Path('debug/v143-contextual-prune/frozen-approved-audio-preholdout-evidence.json').read_text(encoding='utf-8'))
+          isolation=json.loads(Path('.reuse-preholdout/logs/runtime-isolation.json').read_text(encoding='utf-8'))
+          events=corrected.get('renderEvents') or []
+          checks={
+            'runtimeIsolationPassed':isolation.get('passed') is True,
+            'reconstructionPassed':proof.get('passed') is True,
+            'approvedAudioExact':corrected.get('sourceAudioSha256')=='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+            'referenceFree':corrected.get('referenceFree') is True,
+            'professionalReferenceUnused':corrected.get('professionalReferenceUsed') is False,
+            'referenceRuntimeInputUnused':corrected.get('referenceRuntimeInputUsed') is False,
+            'runtimeLabelsUnused':corrected.get('runtimeLabelsRequired') is False,
+            'historicalReuseExplicit':corrected.get('historicalFrozenUpstreamReused') is True and corrected.get('freshSeparatorInference') is False,
+            'productionUnmodified':corrected.get('productionModified') is False,
+            'attackCount725':len({(int(e['measure']),int(e['step'])) for e in events})==725,
+            'renderCount889':len(events)==889,
+            'all113Measures':len({int(e['measure']) for e in events})==113,
+            'guardCount96':int(proof.get('suppressedHarmonicCount') or 0)==96,
+            'remapCount48':int(proof.get('remappedSurvivorCount') or 0)==48,
+            'legatoConservative':int(proof.get('retainedEvidenceBackedLegatoLinkCount') or 0)==27 and int(proof.get('strippedInvalidatedLegatoLinkCount') or 0)==1,
+            'sustainConservative':int(proof.get('conservativelyClampedSustainCount') or 0)==13,
+            'historicalEvidencePreScorer':(evidence.get('provenance') or {}).get('preScorer') is True,
+          }
+          failed=[k for k,v in checks.items() if not v]
+          if failed:
+            raise SystemExit('frozen reuse preholdout binding failed: '+', '.join(failed))
+          payload={
+            'schemaVersion':3,
+            'instrument':'rhythm',
+            'referenceFree':True,
+            'professionalReferenceUsed':False,
+            'referenceRuntimeInputUsed':False,
+            'runtimeLabelsRequired':False,
+            'v143RuntimeSafetyVerified':True,
+            'tempoBpm':float(corrected['tempoBpm']),
+            'timeSignature':corrected.get('timeSignature') or '4/4',
+            'tuning':corrected.get('tuning') or 'E Standard',
+            'structuredMode':'v143-promoted-harmonic-guard-frozen-upstream-reuse',
+            'sourceAudioSha256':corrected['sourceAudioSha256'],
+            'sourceAudioBytes':3478611,
+            'renderEvents':events,
+          }
+          Path('.reuse-preholdout/rhythm-freeze-input.json').write_text(json.dumps(payload,indent=2)+'\n',encoding='utf-8')
+          binding={
+            'schemaVersion':1,'passed':True,'checks':checks,'failedChecks':[],
+            'correctedRenderBlobSha':subprocess.check_output(['git','hash-object',str(corrected_path)],text=True).strip(),
+            'correctedRenderEventsCanonicalSha256':proof.get('correctedRenderEventsCanonicalSha256'),
+            'referenceOpened':False,'modalUsed':False,'professionalReferenceUsed':False,'productionModified':False,
+          }
+          Path('.reuse-preholdout/logs/binding.json').write_text(json.dumps(binding,indent=2,sort_keys=True)+'\n',encoding='utf-8')
+          PY
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_reconstruct_harmonic_guard_from_frozen_evidence.py \
+            validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs \
+            validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            lib/v143RenderContract.js lib/createV143RhythmPdf.js; then
+            echo 'Forbidden scorer/source token in frozen-evidence preholdout path' >&2
+            exit 31
+          fi
+
+      - name: Freeze corrected 889-event stream
+        shell: bash
+        run: |
+          set -euo pipefail
+          python validation/rhythm_holdout/freeze_rhythm_analysis.py \
+            .reuse-preholdout/rhythm-freeze-input.json \
+            .reuse-preholdout/freeze \
+            --source-commit "$GITHUB_SHA" \
+            > .reuse-preholdout/logs/freeze.log 2>&1
+          test -s .reuse-preholdout/freeze/rhythm-frozen-analysis.json
+          test -s .reuse-preholdout/freeze/rhythm-freeze-manifest.json
+
+      - name: Render PDFs and verify exact event fidelity
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' '{"private":true,"dependencies":{"pdf-lib":"1.17.1"}}' > .reuse-preholdout/package.json
+          npm install --prefix .reuse-preholdout --ignore-scripts --no-audit --no-fund --package-lock=false
+          python -m pip install --disable-pip-version-check --quiet pypdf
+          mkdir -p .reuse-preholdout/esm
+          cp lib/v143RenderContract.js .reuse-preholdout/esm/v143RenderContract.mjs
+          sed "s#@/lib/v143RenderContract#./v143RenderContract.mjs#" lib/createV143RhythmPdf.js > .reuse-preholdout/esm/createV143RhythmPdf.mjs
+          sed "s#../../lib/v143RenderContract.js#./v143RenderContract.mjs#" validation/rhythm_holdout/render_frozen_rhythm_pdf.mjs > .reuse-preholdout/esm/render-frozen.mjs
+          NODE_PATH="$PWD/.reuse-preholdout/node_modules" node .reuse-preholdout/esm/render-frozen.mjs \
+            .reuse-preholdout/freeze/rhythm-frozen-analysis.json \
+            .reuse-preholdout/freeze/pdf \
+            .reuse-preholdout/esm/createV143RhythmPdf.mjs \
+            > .reuse-preholdout/logs/render-pdf.log 2>&1
+          python validation/rhythm_holdout/verify_pdf_event_fidelity.py \
+            .reuse-preholdout/freeze \
+            .reuse-preholdout/freeze/pdf/pdf-event-evidence.json \
+            > .reuse-preholdout/logs/pdf-fidelity.log 2>&1
+          test -s .reuse-preholdout/freeze/pdf/full-frozen-rhythm.pdf
+          test -s .reuse-preholdout/freeze/pdf/preview-frozen-rhythm.pdf
+          test -s .reuse-preholdout/freeze/rhythm-pdf-event-fidelity.json
+
+      - name: Write locked CPU-only preholdout proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          manifest=json.loads(Path('.reuse-preholdout/freeze/rhythm-freeze-manifest.json').read_text())
+          fidelity=json.loads(Path('.reuse-preholdout/freeze/rhythm-pdf-event-fidelity.json').read_text())
+          pdf_evidence=json.loads(Path('.reuse-preholdout/freeze/pdf/pdf-event-evidence.json').read_text())
+          binding=json.loads(Path('.reuse-preholdout/logs/binding.json').read_text())
+          retired={
+            'c621ab4fd3a14849946a349b1ce2ed430322e3a8b49310f073b51cd8f417a194',
+            'e693602ade26256851dc0d77b003bf6ba0d5014dfaec7e35103ecdf25d33c32f',
+            'a81190d05b5dbaa745e003a8c0c43c1b8f8edc629f3ce01975c4f1af8c51dfdb',
+          }
+          event_sha=str(manifest.get('eventSha256') or '')
+          checks={
+            'bindingPassed':binding.get('passed') is True,
+            'sourceCommitExact':manifest.get('sourceCommit')==os.environ.get('GITHUB_SHA'),
+            'sourceAudioExact':manifest.get('sourceAudioSha256')=='215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f',
+            'eventCount889':int(manifest.get('eventCount') or 0)==889,
+            'all113Measures':int(manifest.get('uniqueMeasureCount') or 0)==113,
+            'brandNewFrozenIdentity':bool(event_sha) and event_sha not in retired,
+            'referenceStillSealed':manifest.get('referenceOpenedDuringFreeze') is False,
+            'pdfRendererProjectionExact':pdf_evidence.get('rendererProjectionExactlyEqual') is True,
+            'pdfEventFidelityExact':fidelity.get('pdfEventFidelity')==1.0,
+            'pdfHashMatchesFrozen':fidelity.get('pdfEventSha256')==event_sha,
+          }
+          failed=[k for k,v in checks.items() if not v]
+          report={
+            'schemaVersion':1,
+            'gate':'v143-frozen-evidence-harmonic-guard-preholdout',
+            'workflowRunId':os.environ.get('GITHUB_RUN_ID'),
+            'sourceCommit':manifest.get('sourceCommit'),
+            'correctedRenderBlobSha':binding.get('correctedRenderBlobSha'),
+            'correctedRenderEventsCanonicalSha256':binding.get('correctedRenderEventsCanonicalSha256'),
+            'frozenEventSha256':event_sha,
+            'pdfEventSha256':fidelity.get('pdfEventSha256'),
+            'pdfEventFidelity':fidelity.get('pdfEventFidelity'),
+            'eventCount':manifest.get('eventCount'),
+            'uniqueMeasureCount':manifest.get('uniqueMeasureCount'),
+            'checks':checks,
+            'failedChecks':failed,
+            'referenceOpened':False,
+            'professionalScoreRun':False,
+            'modalUsed':False,
+            'productionModified':False,
+            'passed':not failed,
+          }
+          Path('debug/v143-contextual-prune/harmonic-guard-frozen-evidence-preholdout-proof.json').write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
+          if failed:
+            raise SystemExit('frozen-evidence preholdout failed: '+', '.join(failed))
+          PY
+
+      - name: Commit proof and consume marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/harmonic-guard-frozen-evidence-preholdout-proof.json
+          git rm -- debug/v143-contextual-prune/RUN_FROZEN_EVIDENCE_HARMONIC_GUARD_PREHOLDOUT_ONCE
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record frozen-evidence harmonic guard preholdout proof'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v143-frozen-evidence-harmonic-guard-preholdout
+          path: |
+            .reuse-preholdout/freeze/rhythm-frozen-analysis.json
+            .reuse-preholdout/freeze/rhythm-freeze-manifest.json
+            .reuse-preholdout/freeze/rhythm-pdf-event-fidelity.json
+            .reuse-preholdout/freeze/pdf/pdf-event-evidence.json
+            .reuse-preholdout/freeze/pdf/full-frozen-rhythm.pdf
+            .reuse-preholdout/freeze/pdf/preview-frozen-rhythm.pdf
+            debug/v143-contextual-prune/harmonic-guard-frozen-evidence-preholdout-proof.json
+          retention-days: 7
