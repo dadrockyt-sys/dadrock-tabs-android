@@ -8,6 +8,7 @@ from v143_seeded_separator import DEMUCS_SINGLE_THREAD_ENV
 EXPECTED = {
     "CUDA_VISIBLE_DEVICES": "",
     "V143_DEMUCS_FIXED_SHIFT_RNG": "1",
+    "V143_DEMUCS_DISABLE_MKLDNN": "1",
     "OMP_NUM_THREADS": "1",
     "OMP_DYNAMIC": "FALSE",
     "MKL_NUM_THREADS": "1",
@@ -40,7 +41,8 @@ def main() -> None:
         raise SystemExit(f"dispatch control mismatch: {missing}")
 
     source = Path(__file__).with_name("v143_seeded_separator.py").read_text(encoding="utf-8")
-    source += "\n" + Path(__file__).with_name("v143_seeded_audio_separator_cli.py").read_text(encoding="utf-8")
+    cli_source = Path(__file__).with_name("v143_seeded_audio_separator_cli.py").read_text(encoding="utf-8")
+    source += "\n" + cli_source
     hits = [token for token in FORBIDDEN if token in source]
     if hits:
         raise SystemExit(f"forbidden scorer/source token in reference-free dispatch path: {hits}")
@@ -51,8 +53,10 @@ def main() -> None:
         raise SystemExit("Demucs overlap setting changed or missing")
     if '"demucsSegmentSize": 6' not in source:
         raise SystemExit("Demucs segment setting changed or missing")
+    if 'torch.backends.mkldnn.enabled = False' not in cli_source:
+        raise SystemExit("oneDNN disable implementation missing")
 
-    print("PASS v143 Demucs CPU baseline dispatch controls")
+    print("PASS v143 Demucs CPU oneDNN-off baseline controls")
 
 
 if __name__ == "__main__":
