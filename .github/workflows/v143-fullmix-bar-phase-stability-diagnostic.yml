@@ -21,6 +21,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install audio decoder
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
       - name: Run CPU-only full-mix bar-phase stability diagnostic
         id: diagnostic
         continue-on-error: true
