@@ -125,3 +125,11 @@ Exact score result:
 - Reopened branch `v143-contextual-prune-lobo`; head at resume was `079d274c2cb132d942c331890949c93b44320eff` (`Checkpoint frozen-evidence professional score result`).
 - Re-read this checkpoint and reaffirmed all hard boundaries, especially **CPU-only/reference-free work and no Modal/L4**.
 - Immediate work resumed on dominant unresolved grid/timing and broad-pitch diagnosis from persisted approved-audio evidence; scorer/reference remains closed.
+
+## Reference-free diagnosis — 2026-08-24 13:44 America/Montreal
+- Recovered the exact prior approved-shadow physical-review implementation from its persisted source blobs (`c8025ee99596354d731628b57e42f69e0ca39c10` review logic; `e2facac5a63d49af05bd85f4bcf05625113284cf` checker).
+- Confirmed the old physical review was deliberately constrained to `attackTimingChanged=false`, `candidateRelocatesEvents=false`, and preservation of all base events. It therefore **could not diagnose or repair sustained-note retriggers / wrong attack-grid identity**.
+- The historical harmonic-guard reconstruction likewise has a fail-closed invariant that preserves all 725 attack keys. That was appropriate for the retired harmonic-only correction, but must not constrain the next genuinely new candidate.
+- Next reference-free diagnostic is therefore separated from the protected runtime: classify whether a selected attack is a real new pick versus continued carrier/sustain energy, using only persisted pre-scorer onset/carrier/pitch evidence. Confident repicks must be preserved; only weak-new-onset + strong-carryover cases may be proposed as retrigger suppressions.
+- In parallel, broad pitch diagnosis will evaluate fundamental-vs-harmonic-family support from attack/body evidence rather than strongest-bin-only selection.
+- No scorer/reference opened, no Modal/L4 used, protected pipeline unchanged, Production untouched.
