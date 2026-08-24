@@ -1,0 +1,72 @@
+name: V143 Persist Frozen Historical Upstream Evidence
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - analyzer/v143_extract_frozen_preholdout_evidence.py
+      - .github/workflows/v143-freeze-historical-upstream-evidence.yml
+      - debug/v143-contextual-prune/RUN_FREEZE_HISTORICAL_UPSTREAM_EVIDENCE_ONCE
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: v143-freeze-historical-upstream-evidence
+  cancel-in-progress: false
+
+jobs:
+  persist:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: rhythm-professional-preholdout-real-audio
+          path: .historical-artifact
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: dadrockyt-sys/dadrock-tabs-android
+          run-id: 32702772593
+
+      - name: Extract minimal immutable pre-scorer evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/v143_extract_frozen_preholdout_evidence.py \
+            .historical-artifact \
+            debug/v143-contextual-prune/frozen-approved-audio-preholdout-evidence.json \
+            | tee /tmp/extract-proof.json
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
+          if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr|Lenny Kravitz|Craig Ross' \
+            analyzer/v143_extract_frozen_preholdout_evidence.py; then
+            echo 'Forbidden scorer/source token in frozen-evidence extraction path' >&2
+            exit 31
+          fi
+
+      - name: Commit immutable evidence fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- debug/v143-contextual-prune/frozen-approved-audio-preholdout-evidence.json
+          if test -f debug/v143-contextual-prune/RUN_FREEZE_HISTORICAL_UPSTREAM_EVIDENCE_ONCE; then
+            git rm -- debug/v143-contextual-prune/RUN_FREEZE_HISTORICAL_UPSTREAM_EVIDENCE_ONCE
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Persist frozen approved-audio upstream evidence'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
