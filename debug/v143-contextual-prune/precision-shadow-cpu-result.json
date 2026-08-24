@@ -1,0 +1,13 @@
+{
+  "checkerLog": "V143 contextual-prune precision shadow checker: PASS\n{'inputAttackCount': 3, 'retainedAttackCount': 2, 'prunedAttackCount': 1, 'failSafeAttackCount': 1, 'originalPitchHypothesisCount': 5, 'retainedPitchHypothesisCount': 5, 'suppressedPitchCount': 0, 'fundamentalPromotionCount': 2, 'attackTransientRatioFloor': 0.7, 'attackTransientRatioExceptionFloor': 0.6, 'secondaryRawRatio': 0.8, 'harmonicSecondaryRawRatio': 0.92, 'candidateAddsUnobservedAttack': False, 'candidateRelocatesEvents': False, 'candidateAddsUnobservedPitch': False, 'emptyMeasureFailSafeEnabled': True, 'referenceFree': True, 'runtimeLabelsRequired': False, 'productionModified': False}\n",
+  "checkerReturnCode": 0,
+  "compileLog": "",
+  "compileReturnCode": 0,
+  "gate": "v143-precision-shadow-cpu-result",
+  "passed": true,
+  "productionModified": false,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "protectedPipelineUnchanged": true,
+  "schemaVersion": 1,
+  "triggerSha": "f532216ccfd325468768bb48149eb5a0ba9ad334"
+}
