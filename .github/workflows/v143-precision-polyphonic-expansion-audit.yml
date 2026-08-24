@@ -8,9 +8,12 @@ on:
     paths:
       - .github/workflows/v143-precision-polyphonic-expansion-audit.yml
       - analyzer/check_v143_precision_polyphonic_expansion.py
+      - analyzer/check_v143_precision_promoted_harmonic_guard.py
+      - analyzer/v143_precision_promoted_harmonic_guard.py
       - analyzer/v143_contextual_prune_precision_shadow.py
       - analyzer/v143_contextual_prune_precision_candidate_events.py
       - analyzer/v143_contextual_prune_reference_free_carrier.py
+      - analyzer/v143_repaired_timing_precision_candidate_product_modal.py
       - debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json
       - analyzer/v143_reference_free_rhythm_pipeline.py
 
@@ -34,39 +37,48 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Audit committed candidate expansion without inference or scorer
+      - name: Audit committed candidate and prove harmonic guard without inference or scorer
         shell: bash
         run: |
           set -euo pipefail
-          python -m py_compile analyzer/check_v143_precision_polyphonic_expansion.py
-          python analyzer/check_v143_precision_polyphonic_expansion.py \
+          python -m py_compile \
+            analyzer/check_v143_precision_polyphonic_expansion.py \
+            analyzer/check_v143_precision_promoted_harmonic_guard.py \
+            analyzer/v143_precision_promoted_harmonic_guard.py
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_polyphonic_expansion.py \
             | tee debug/v143-contextual-prune/precision-polyphonic-expansion-audit.log
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_promoted_harmonic_guard.py \
+            | tee debug/v143-contextual-prune/precision-promoted-harmonic-guard-proof.log
 
-      - name: Commit audio-only audit diagnostic
+      - name: Commit audio-only audit diagnostics
         shell: bash
         run: |
           set -euo pipefail
           git add -- \
             debug/v143-contextual-prune/precision-polyphonic-expansion-audit.json \
-            debug/v143-contextual-prune/precision-polyphonic-expansion-audit.log
+            debug/v143-contextual-prune/precision-polyphonic-expansion-audit.log \
+            debug/v143-contextual-prune/precision-promoted-harmonic-guard-proof.json \
+            debug/v143-contextual-prune/precision-promoted-harmonic-guard-proof.log
           if git diff --cached --quiet; then
-            echo "No precision expansion diagnostic changed."
+            echo "No precision expansion/guard diagnostic changed."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Record V143 precision polyphonic expansion audit"
+          git commit -m "Record V143 precision harmonic guard proof"
           git push origin HEAD:v143-contextual-prune-lobo
 
-      - name: Enforce audit safety
+      - name: Enforce audit and correction safety
         shell: bash
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
 
-          data = json.loads(Path("debug/v143-contextual-prune/precision-polyphonic-expansion-audit.json").read_text(encoding="utf-8"))
-          required = {
+          audit = json.loads(Path("debug/v143-contextual-prune/precision-polyphonic-expansion-audit.json").read_text(encoding="utf-8"))
+          proof = json.loads(Path("debug/v143-contextual-prune/precision-promoted-harmonic-guard-proof.json").read_text(encoding="utf-8"))
+          audit_required = {
+              "harmonicPromotionDoubleCountPathProven": True,
               "selectedCountMatchesUniqueRenderedAttacks": True,
               "noteCountMatchesEvents": True,
               "protectedPipelineUnchanged": True,
@@ -75,8 +87,24 @@ jobs:
               "productionModified": False,
               "modalGpuUsed": False,
           }
-          failed = [key for key, expected in required.items() if data.get(key) is not expected]
+          proof_required = {
+              "passed": True,
+              "correctionChangesPitchIdentity": True,
+              "correctionChangesAttackIdentity": False,
+              "correctionAddsPitch": False,
+              "correctionRelocatesAttack": False,
+              "protectedPipelineUnchanged": True,
+              "antiLeakagePassed": True,
+              "professionalReferenceUsed": False,
+              "runtimeLabelsRequired": False,
+              "productionModified": False,
+              "modalGpuUsed": False,
+          }
+          failed = [f"audit.{key}" for key, expected in audit_required.items() if audit.get(key) is not expected]
+          failed += [f"proof.{key}" for key, expected in proof_required.items() if proof.get(key) is not expected]
           if failed:
-              raise SystemExit(f"V143 precision expansion audit safety failed: {failed}")
-          print("V143 precision polyphonic expansion audit safety passed")
+              raise SystemExit(f"V143 precision harmonic guard safety failed: {failed}")
+          if int(proof.get("oldCandidateScoringRelevantSuppressionOpportunityCount") or 0) != 96:
+              raise SystemExit("Expected exactly 96 old-candidate harmonic strongest suppression opportunities")
+          print("V143 precision harmonic guard audio-only proof passed")
           PY
