@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   policy:
@@ -50,3 +50,41 @@ jobs:
             echo 'Forbidden scorer/reference token in precision v2 path' >&2
             exit 1
           fi
+      - name: Persist green CPU guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = {
+              'schemaVersion': 1,
+              'passed': True,
+              'policy': 'envelope-balanced-secondary-v2',
+              'sourceSha': '${{ github.sha }}',
+              'runId': int('${{ github.run_id }}'),
+              'protectedPipelineBlob': '7f72f8ed9b14af8bc93e95544195204d99c6bec1',
+              'policySelfTestPassed': True,
+              'replayCompareSelfTestPassed': True,
+              'historicalOptionalAccountingPassed': True,
+              'newInferenceUsed': False,
+              'modalInvoked': False,
+              'professionalReferenceUsed': False,
+              'productionModified': False,
+          }
+          Path('debug/v143-contextual-prune/precision-v2-cpu-guard-result.json').write_text(
+              json.dumps(result, indent=2, sort_keys=True) + '\n'
+          )
+          PY
+          git add debug/v143-contextual-prune/precision-v2-cpu-guard-result.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Record precision v2 CPU guard result'
+          for attempt in 1 2 3 4; do
+            git fetch origin v143-contextual-prune-lobo
+            git rebase origin/v143-contextual-prune-lobo && git push origin HEAD:v143-contextual-prune-lobo && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep 2
+          done
+          exit 1
