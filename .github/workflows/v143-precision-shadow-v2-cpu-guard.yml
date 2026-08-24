@@ -7,6 +7,8 @@ on:
     paths:
       - analyzer/v143_contextual_prune_precision_shadow_v2.py
       - analyzer/check_v143_precision_shadow_v2_policy.py
+      - analyzer/v143_repaired_timing_precision_candidate_product_modal.py
+      - analyzer/v143_precision_optional_candidate_accounting.py
       - .github/workflows/v143-precision-shadow-v2-cpu-guard.yml
   workflow_dispatch:
 
@@ -28,12 +30,19 @@ jobs:
           set -euo pipefail
           python -m py_compile \
             analyzer/v143_contextual_prune_precision_shadow_v2.py \
-            analyzer/check_v143_precision_shadow_v2_policy.py
+            analyzer/check_v143_precision_shadow_v2_policy.py \
+            analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
+            analyzer/v143_precision_optional_candidate_accounting.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_shadow_v2_policy.py
+          python analyzer/v143_precision_optional_candidate_accounting.py \
+            --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
+            --output /tmp/precision-optional-candidate-accounting.json
           test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
           if grep -E -n 'Professionalexample|professional-rhythm-complete|rhythm-professional-holdout-score|Songsterr' \
             analyzer/v143_contextual_prune_precision_shadow_v2.py \
-            analyzer/check_v143_precision_shadow_v2_policy.py; then
+            analyzer/check_v143_precision_shadow_v2_policy.py \
+            analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
+            analyzer/v143_precision_optional_candidate_accounting.py; then
             echo 'Forbidden scorer/reference token in precision v2 path' >&2
             exit 1
           fi
