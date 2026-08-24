@@ -28,8 +28,10 @@ jobs:
             analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
             analyzer/v143_contextual_prune_precision_shadow_v2.py \
             analyzer/check_v143_precision_shadow_v2_policy.py \
+            analyzer/v143_precision_replay_policy_compare.py \
             analyzer/check_v143_demucs_cpu_dispatch_controls.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_shadow_v2_policy.py
+          python analyzer/v143_precision_replay_policy_compare.py --self-test
           PYTHONPATH=analyzer python analyzer/check_v143_demucs_cpu_dispatch_controls.py
           test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
           test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
@@ -47,6 +49,7 @@ jobs:
             analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
             analyzer/v143_contextual_prune_precision_shadow_v2.py \
             analyzer/check_v143_precision_shadow_v2_policy.py \
+            analyzer/v143_precision_replay_policy_compare.py \
             analyzer/v143_contextual_prune_precision_candidate_events.py \
             analyzer/v143_seeded_separator.py \
             analyzer/v143_seeded_audio_separator_cli.py; then
@@ -199,11 +202,20 @@ jobs:
           if failures:
               raise SystemExit('candidate product invariant failure: ' + str(failures))
           PY
+      - name: Build CPU replay policy comparison
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/v143_precision_replay_policy_compare.py \
+            --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
+            --output debug/v143-contextual-prune/precision-v2-replay-policy-compare.json
       - name: Commit pre-freeze candidate diagnostic
         shell: bash
         run: |
           set -euo pipefail
-          git add debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json
+          git add \
+            debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
+            debug/v143-contextual-prune/precision-v2-replay-policy-compare.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m 'Record repaired-timing precision v2 candidate product with replay evidence'
