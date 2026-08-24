@@ -18,6 +18,15 @@ from v143_production_separator import (
 
 SEPARATOR_SEED = "143"
 CUBLAS_WORKSPACE_CONFIG = ":4096:8"
+DEMUCS_SINGLE_THREAD_ENV = {
+    "CUDA_VISIBLE_DEVICES": "",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "TBB_NUM_THREADS": "1",
+}
 
 
 def seeded_audio_separator_cli() -> list[str]:
@@ -50,10 +59,10 @@ def build_seeded_v143_stems(
 
     The musical graph is unchanged: Demucs6s Guitar, shifts=1, overlap=.10,
     segment=6, plus BS-RoFormer Instrumental -> Demucs6s. Cold-session proof
-    showed BS-RoFormer is already byte-exact on GPU, while Demucs remains
-    nondeterministic across fresh GPU executions even with deterministic Torch,
-    cuDNN and cuBLAS controls. Therefore only Demucs inference is isolated onto
-    CPU. Model weights and all musical separator parameters remain identical.
+    showed BS-RoFormer is byte-exact, while Demucs remains two-state across fresh
+    executions even after CUDA determinism and then CPU isolation. Demucs is
+    therefore CPU-only with a fixed single-thread math topology. Model weights and
+    all musical separator parameters remain identical.
 
     No song/reference labels, human targets, or scorer values enter this path.
     """
@@ -79,19 +88,17 @@ def build_seeded_v143_stems(
     }
 
     with _temporary_environment(common_env):
-        # Demucs is the proven earliest cold-session mismatch. Hide CUDA before
-        # launching each Demucs child so Torch is CPU-only from interpreter
-        # startup. This avoids tolerating numerical drift that changes event IDs.
-        with _temporary_environment({"CUDA_VISIBLE_DEVICES": ""}):
+        # Demucs is the proven earliest mismatch. CUDA is hidden before process
+        # startup and every common native CPU thread pool is pinned to one worker
+        # so floating-point reduction order cannot vary with host scheduling.
+        with _temporary_environment(DEMUCS_SINGLE_THREAD_ENV):
             direct = separate_demucs_guitar(
                 cli,
                 normalized_input,
                 work / "direct",
             )
 
-        # BS-RoFormer was byte-identical in the three-session probe, so retain
-        # its accelerated path rather than changing a component already proven
-        # deterministic.
+        # BS-RoFormer has already proven byte-identical across cold sessions.
         with _temporary_environment({"CUDA_VISIBLE_DEVICES": None}):
             roformer = separate_roformer_instrumental(
                 cli,
@@ -99,7 +106,7 @@ def build_seeded_v143_stems(
                 work / "roformer",
             )
 
-        with _temporary_environment({"CUDA_VISIBLE_DEVICES": ""}):
+        with _temporary_environment(DEMUCS_SINGLE_THREAD_ENV):
             cascade = separate_demucs_guitar(
                 cli,
                 Path(roformer["path"]),
@@ -137,6 +144,7 @@ def build_seeded_v143_stems(
             "demucsOverlap": 0.10,
             "demucsSegmentSize": 6,
             "demucsExecutionDevice": "cpu",
+            "demucsCpuThreads": 1,
             "roformerSingleStem": "Instrumental",
             "roformerBatchSize": 1,
             "roformerExecutionDevice": "gpu-auto-proven-deterministic",
@@ -155,6 +163,7 @@ def build_seeded_v143_stems(
 __all__ = [
     "SEPARATOR_SEED",
     "CUBLAS_WORKSPACE_CONFIG",
+    "DEMUCS_SINGLE_THREAD_ENV",
     "seeded_audio_separator_cli",
     "build_seeded_v143_stems",
 ]
