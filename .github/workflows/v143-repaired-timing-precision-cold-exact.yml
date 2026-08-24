@@ -1,6 +1,10 @@
 name: V143 Repaired Timing Precision Cold Exact Proof
 
 on:
+  push:
+    branches: [v143-contextual-prune-lobo]
+    paths:
+      - '.github/workflows/v143-repaired-timing-precision-cold-exact.yml'
   workflow_dispatch:
 
 permissions:
