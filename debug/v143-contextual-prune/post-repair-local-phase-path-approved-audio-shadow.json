@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gate": "v143-post-repair-local-phase-path-approved-audio-shadow",
-  "runId": 32737275715,
+  "runId": 32737637171,
   "runAttempt": 1,
-  "triggerSha": "c680158f29b61ceaa721acc7f8fb99223795456a",
+  "triggerSha": "6ce76949057eaae6a10ed160de061e984db7f023",
   "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
   "originalTiming": {
     "tempoBpm": 129.19921875,
@@ -71,7 +71,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 0,
         "winnerFirstBeatInMeasure": 0,
-        "confidence": 0.19947494302261212,
+        "confidence": 0.19947494302261215,
         "consensusSignalCount": 1,
         "stableAcrossHalves": false,
         "independentSignalSupported": false,
@@ -83,10 +83,10 @@
           "bassChange": 0
         },
         "candidateCombinedScores": {
-          "0": 0.40936787162755656,
-          "1": 0.16053466491064072,
-          "2": -0.2162751198614136,
-          "3": -0.3536274166767836
+          "0": 0.4093678716275564,
+          "1": 0.16053466491064053,
+          "2": -0.21627511986141346,
+          "3": -0.35362741667678377
         }
       },
       {
@@ -96,7 +96,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 1,
         "winnerFirstBeatInMeasure": 3,
-        "confidence": 0.44329560606720997,
+        "confidence": 0.4432956060672103,
         "consensusSignalCount": 2,
         "stableAcrossHalves": false,
         "independentSignalSupported": true,
@@ -108,10 +108,10 @@
           "bassChange": 0
         },
         "candidateCombinedScores": {
-          "0": -0.08089074496750531,
-          "1": 0.515321712959628,
-          "2": -0.08174179789066405,
-          "3": -0.35268917010145895
+          "0": -0.08089074496750566,
+          "1": 0.5153217129596283,
+          "2": -0.08174179789066355,
+          "3": -0.35268917010145906
         }
       },
       {
@@ -121,7 +121,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 1,
         "winnerFirstBeatInMeasure": 3,
-        "confidence": 0.5706984577567749,
+        "confidence": 0.5706984577567746,
         "consensusSignalCount": 2,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -133,10 +133,10 @@
           "bassChange": 2
         },
         "candidateCombinedScores": {
-          "0": -0.4987176894552039,
-          "1": 0.5979251989183906,
-          "2": 0.1630397372366687,
-          "3": -0.2622472466998555
+          "0": -0.49871768945520395,
+          "1": 0.5979251989183904,
+          "2": 0.16303973723666876,
+          "3": -0.26224724669985533
         }
       },
       {
@@ -159,9 +159,9 @@
         },
         "candidateCombinedScores": {
           "0": -0.6504560704834927,
-          "1": 0.7343920995859882,
-          "2": 0.29890834808293865,
-          "3": -0.38284437718543396
+          "1": 0.7343920995859881,
+          "2": 0.29890834808293854,
+          "3": -0.38284437718543374
         }
       },
       {
@@ -171,7 +171,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 1,
         "winnerFirstBeatInMeasure": 3,
-        "confidence": 0.407068186852082,
+        "confidence": 0.40706818685208196,
         "consensusSignalCount": 2,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -183,10 +183,10 @@
           "bassChange": 2
         },
         "candidateCombinedScores": {
-          "0": -0.804627706616507,
-          "1": 0.6425045109073483,
+          "0": -0.8046277066165068,
+          "1": 0.6425045109073482,
           "2": 0.5712418734582771,
-          "3": -0.4091186777491188
+          "3": -0.4091186777491186
         }
       },
       {
@@ -196,7 +196,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 1,
         "winnerFirstBeatInMeasure": 3,
-        "confidence": 0.4328693945440045,
+        "confidence": 0.43286939454400447,
         "consensusSignalCount": 2,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -208,9 +208,9 @@
           "bassChange": 2
         },
         "candidateCombinedScores": {
-          "0": -0.5362937048269257,
+          "0": -0.5362937048269261,
           "1": 0.5260510399896072,
-          "2": 0.397452385447375,
+          "2": 0.39745238544737505,
           "3": -0.3872097206100563
         }
       },
@@ -221,7 +221,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 1,
         "winnerFirstBeatInMeasure": 3,
-        "confidence": 0.4871024146997827,
+        "confidence": 0.4871024146997826,
         "consensusSignalCount": 2,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -234,9 +234,9 @@
         },
         "candidateCombinedScores": {
           "0": -0.2912643339933767,
-          "1": 0.4164180189841161,
-          "2": 0.16730154187348784,
-          "3": -0.2924552268642271
+          "1": 0.41641801898411607,
+          "2": 0.167301541873488,
+          "3": -0.2924552268642273
         }
       },
       {
@@ -246,7 +246,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 1,
         "winnerFirstBeatInMeasure": 3,
-        "confidence": 0.4599904253622608,
+        "confidence": 0.45999042536226065,
         "consensusSignalCount": 2,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -258,10 +258,10 @@
           "bassChange": 2
         },
         "candidateCombinedScores": {
-          "0": -0.17710599324650958,
-          "1": 0.24112565811626702,
-          "2": 0.05225804620013187,
-          "3": -0.11627771106988949
+          "0": -0.17710599324650977,
+          "1": 0.24112565811626685,
+          "2": 0.052258046200132066,
+          "3": -0.1162777110698891
         }
       },
       {
@@ -283,10 +283,10 @@
           "bassChange": 0
         },
         "candidateCombinedScores": {
-          "0": 0.018497011005682906,
-          "1": 0.3837788679649136,
-          "2": -0.2114705199582952,
-          "3": -0.19080535901230125
+          "0": 0.018497011005682948,
+          "1": 0.38377886796491334,
+          "2": -0.21147051995829508,
+          "3": -0.1908053590123011
         }
       },
       {
@@ -296,7 +296,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 1,
         "winnerFirstBeatInMeasure": 3,
-        "confidence": 0.6901266601416858,
+        "confidence": 0.6901266601416856,
         "consensusSignalCount": 3,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -308,9 +308,9 @@
           "bassChange": 1
         },
         "candidateCombinedScores": {
-          "0": -0.22469721872810877,
-          "1": 0.5044943400212119,
-          "2": -0.00134268251586777,
+          "0": -0.22469721872810883,
+          "1": 0.5044943400212116,
+          "2": -0.001342682515867468,
           "3": -0.2784544387772354
         }
       },
@@ -321,7 +321,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 1,
         "winnerFirstBeatInMeasure": 3,
-        "confidence": 0.6153866560853176,
+        "confidence": 0.6153866560853174,
         "consensusSignalCount": 3,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -334,9 +334,9 @@
         },
         "candidateCombinedScores": {
           "0": -0.4118793155656312,
-          "1": 0.5799238819614541,
-          "2": 0.2401757573274147,
-          "3": -0.4082203237232378
+          "1": 0.5799238819614536,
+          "2": 0.2401757573274148,
+          "3": -0.4082203237232374
         }
       },
       {
@@ -358,10 +358,10 @@
           "bassChange": 1
         },
         "candidateCombinedScores": {
-          "0": -0.6103328081685588,
-          "1": 0.7085055074344154,
+          "0": -0.6103328081685587,
+          "1": 0.7085055074344155,
           "2": 0.3503368102171154,
-          "3": -0.44850950948297197
+          "3": -0.448509509482972
         }
       },
       {
@@ -371,7 +371,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 1,
         "winnerFirstBeatInMeasure": 3,
-        "confidence": 0.5478934633962083,
+        "confidence": 0.547893463396208,
         "consensusSignalCount": 3,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -383,9 +383,9 @@
           "bassChange": 1
         },
         "candidateCombinedScores": {
-          "0": -0.6890976261962127,
-          "1": 0.5725743627504368,
-          "2": 0.3828111107588629,
+          "0": -0.6890976261962124,
+          "1": 0.5725743627504365,
+          "2": 0.38281111075886287,
           "3": -0.2662878473130871
         }
       },
@@ -396,7 +396,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 1,
         "winnerFirstBeatInMeasure": 3,
-        "confidence": 0.6350674398846448,
+        "confidence": 0.6350674398846445,
         "consensusSignalCount": 3,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -408,10 +408,10 @@
           "bassChange": 1
         },
         "candidateCombinedScores": {
-          "0": -0.4360735313957511,
-          "1": 0.5669117138306063,
-          "2": 0.18342851408695135,
-          "3": -0.3142666965218066
+          "0": -0.436073531395751,
+          "1": 0.5669117138306058,
+          "2": 0.1834285140869512,
+          "3": -0.31426669652180655
         }
       },
       {
@@ -421,7 +421,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 2,
         "winnerFirstBeatInMeasure": 2,
-        "confidence": 0.08935957288483425,
+        "confidence": 0.08935957288483426,
         "consensusSignalCount": 1,
         "stableAcrossHalves": false,
         "independentSignalSupported": false,
@@ -433,10 +433,10 @@
           "bassChange": 1
         },
         "candidateCombinedScores": {
-          "0": -0.1798712467738529,
-          "1": 0.18173060327758606,
-          "2": 0.1858629874661066,
-          "3": -0.1877223439698396
+          "0": -0.17987124677385286,
+          "1": 0.18173060327758583,
+          "2": 0.1858629874661064,
+          "3": -0.1877223439698394
         }
       },
       {
@@ -446,7 +446,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 2,
         "winnerFirstBeatInMeasure": 2,
-        "confidence": 0.2967231192843994,
+        "confidence": 0.2967231192843993,
         "consensusSignalCount": 3,
         "stableAcrossHalves": false,
         "independentSignalSupported": true,
@@ -458,10 +458,10 @@
           "bassChange": 2
         },
         "candidateCombinedScores": {
-          "0": 0.1308905615896396,
-          "1": -0.24496746990514146,
-          "2": 0.20694193777719389,
-          "3": -0.09286502946169224
+          "0": 0.13089056158963974,
+          "1": -0.24496746990514165,
+          "2": 0.2069419377771939,
+          "3": -0.09286502946169213
         }
       },
       {
@@ -471,7 +471,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 0,
         "winnerFirstBeatInMeasure": 0,
-        "confidence": 0.1259643878969452,
+        "confidence": 0.12596438789694528,
         "consensusSignalCount": 1,
         "stableAcrossHalves": false,
         "independentSignalSupported": false,
@@ -483,10 +483,10 @@
           "bassChange": 0
         },
         "candidateCombinedScores": {
-          "0": 0.21673360513501622,
-          "1": -0.3786127719046647,
+          "0": 0.21673360513501638,
+          "1": -0.3786127719046648,
           "2": 0.1312571875862491,
-          "3": 0.030621979183399397
+          "3": 0.03062197918339944
         }
       },
       {
@@ -496,7 +496,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 2,
         "winnerFirstBeatInMeasure": 2,
-        "confidence": 0.12447647876967363,
+        "confidence": 0.12447647876967372,
         "consensusSignalCount": 1,
         "stableAcrossHalves": false,
         "independentSignalSupported": false,
@@ -508,10 +508,10 @@
           "bassChange": 3
         },
         "candidateCombinedScores": {
-          "0": 0.1624960306411204,
+          "0": 0.16249603064112056,
           "1": -0.5981800922498983,
           "2": 0.2589270072151375,
-          "3": 0.17675705439364053
+          "3": 0.17675705439364037
         }
       },
       {
@@ -533,10 +533,10 @@
           "bassChange": 3
         },
         "candidateCombinedScores": {
-          "0": 0.14242825420151214,
-          "1": -0.5097727296892847,
-          "2": 0.1793707023197782,
-          "3": 0.18797377316799435
+          "0": 0.1424282542015123,
+          "1": -0.5097727296892846,
+          "2": 0.179370702319778,
+          "3": 0.18797377316799416
         }
       },
       {
@@ -546,7 +546,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 3,
         "winnerFirstBeatInMeasure": 1,
-        "confidence": 0.5136566800437492,
+        "confidence": 0.5136566800437494,
         "consensusSignalCount": 2,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -558,9 +558,9 @@
           "bassChange": 3
         },
         "candidateCombinedScores": {
-          "0": -0.28922503636568414,
-          "1": -0.11360856248886798,
-          "2": 0.04735382160088787,
+          "0": -0.2892250363656841,
+          "1": -0.11360856248886794,
+          "2": 0.04735382160088751,
           "3": 0.355479777253664
         }
       },
@@ -571,7 +571,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 3,
         "winnerFirstBeatInMeasure": 1,
-        "confidence": 0.4864580125293494,
+        "confidence": 0.48645801252934967,
         "consensusSignalCount": 2,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -583,10 +583,10 @@
           "bassChange": 3
         },
         "candidateCombinedScores": {
-          "0": -0.32661616072824207,
-          "1": -0.05154808485852562,
-          "2": 0.06523988664966222,
-          "3": 0.31292435893710535
+          "0": -0.3266161607282421,
+          "1": -0.05154808485852529,
+          "2": 0.0652398866496619,
+          "3": 0.3129243589371056
         }
       },
       {
@@ -596,7 +596,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 2,
         "winnerFirstBeatInMeasure": 2,
-        "confidence": 0.2111719237149091,
+        "confidence": 0.21117192371490895,
         "consensusSignalCount": 2,
         "stableAcrossHalves": false,
         "independentSignalSupported": true,
@@ -608,10 +608,10 @@
           "bassChange": 3
         },
         "candidateCombinedScores": {
-          "0": -0.13321867014732572,
-          "1": -0.1308772598355804,
-          "2": 0.172238991341352,
-          "3": 0.091856938641554
+          "0": -0.13321867014732577,
+          "1": -0.13087725983558002,
+          "2": 0.17223899134135165,
+          "3": 0.09185693864155396
         }
       },
       {
@@ -633,10 +633,10 @@
           "bassChange": 3
         },
         "candidateCombinedScores": {
-          "0": -0.09712155929452182,
-          "1": -0.16692692859432073,
-          "2": 0.2973723842257437,
-          "3": -0.033323896336901096
+          "0": -0.09712155929452154,
+          "1": -0.16692692859432076,
+          "2": 0.2973723842257436,
+          "3": -0.03332389633690127
         }
       },
       {
@@ -646,7 +646,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 2,
         "winnerFirstBeatInMeasure": 2,
-        "confidence": 0.48565252704793926,
+        "confidence": 0.4856525270479391,
         "consensusSignalCount": 2,
         "stableAcrossHalves": true,
         "independentSignalSupported": true,
@@ -658,10 +658,10 @@
           "bassChange": 0
         },
         "candidateCombinedScores": {
-          "0": 0.046246365867881487,
-          "1": -0.2068483439846834,
-          "2": 0.29214087041885767,
-          "3": -0.13153889230205554
+          "0": 0.04624636586788171,
+          "1": -0.20684834398468338,
+          "2": 0.29214087041885756,
+          "3": -0.13153889230205582
         }
       },
       {
@@ -671,7 +671,7 @@
         "beatCount": 64,
         "winnerDownbeatIndexMod4": 2,
         "winnerFirstBeatInMeasure": 2,
-        "confidence": 0.24678978826507586,
+        "confidence": 0.24678978826507575,
         "consensusSignalCount": 2,
         "stableAcrossHalves": false,
         "independentSignalSupported": true,
@@ -683,10 +683,10 @@
           "bassChange": 0
         },
         "candidateCombinedScores": {
-          "0": 0.10304616188566243,
-          "1": -0.11736249641553742,
-          "2": 0.2625790246969421,
-          "3": -0.24826269016706717
+          "0": 0.10304616188566268,
+          "1": -0.11736249641553759,
+          "2": 0.26257902469694216,
+          "3": -0.24826269016706723
         }
       },
       {
@@ -696,7 +696,7 @@
         "beatCount": 65,
         "winnerDownbeatIndexMod4": 2,
         "winnerFirstBeatInMeasure": 2,
-        "confidence": 0.18663088462993974,
+        "confidence": 0.18663088462993965,
         "consensusSignalCount": 2,
         "stableAcrossHalves": false,
         "independentSignalSupported": true,
@@ -708,10 +708,10 @@
           "bassChange": 0
         },
         "candidateCombinedScores": {
-          "0": 0.18922989111525995,
-          "1": -0.14047778833787095,
-          "2": 0.21507630140401496,
-          "3": -0.27155207320651664
+          "0": 0.18922989111526017,
+          "1": -0.1404777883378711,
+          "2": 0.215076301404015,
+          "3": -0.2715520732065169
         }
       }
     ],
@@ -736,8 +736,8 @@
           "windowCount": 12,
           "startBeatIndex": 32,
           "endBeatIndexExclusive": 272,
-          "minimumConfidence": 0.407068186852082,
-          "meanConfidence": 0.5483519613565477
+          "minimumConfidence": 0.40706818685208196,
+          "meanConfidence": 0.5483519613565475
         },
         {
           "phase": 3,
@@ -745,8 +745,8 @@
           "windowCount": 2,
           "startBeatIndex": 304,
           "endBeatIndexExclusive": 384,
-          "minimumConfidence": 0.4864580125293494,
-          "meanConfidence": 0.5000573462865493
+          "minimumConfidence": 0.48645801252934967,
+          "meanConfidence": 0.5000573462865495
         },
         {
           "phase": 2,
@@ -754,8 +754,8 @@
           "windowCount": 1,
           "startBeatIndex": 368,
           "endBeatIndexExclusive": 432,
-          "minimumConfidence": 0.48565252704793926,
-          "meanConfidence": 0.48565252704793926
+          "minimumConfidence": 0.4856525270479391,
+          "meanConfidence": 0.4856525270479391
         }
       ],
       "strongTransitionCount": 2,
@@ -785,12 +785,277 @@
     "liveRhythmOutputChanged": false,
     "productionModified": false
   },
+  "rawRepairedIndexAlignment": {
+    "schemaVersion": 1,
+    "originalBeatCount": 447,
+    "repairedBeatCount": 449,
+    "matchTolerancePeriodRatio": 0.25,
+    "matchToleranceSeconds": 0.11609977324263039,
+    "matchedBeatCount": 323,
+    "matchedBeatFraction": 0.7193763919821826,
+    "absoluteResidualMeanSeconds": 0.007584226673125277,
+    "absoluteResidualMedianSeconds": 0.0,
+    "offsetRuns": [
+      {
+        "rawMinusRepairedIndexMod4": 0,
+        "matchCount": 111,
+        "startRepairedIndex": 0,
+        "endRepairedIndexExclusive": 111,
+        "startTimeSeconds": 0.6965986394557823,
+        "endTimeSeconds": 52.39582766439909,
+        "medianRawMinusRepairedIndex": 0.0,
+        "minimumRawMinusRepairedIndex": 0,
+        "maximumRawMinusRepairedIndex": 0
+      },
+      {
+        "rawMinusRepairedIndexMod4": 1,
+        "matchCount": 36,
+        "startRepairedIndex": 111,
+        "endRepairedIndexExclusive": 147,
+        "startTimeSeconds": 52.895056689342404,
+        "endTimeSeconds": 69.12580498866213,
+        "medianRawMinusRepairedIndex": 1.0,
+        "minimumRawMinusRepairedIndex": 1,
+        "maximumRawMinusRepairedIndex": 1
+      },
+      {
+        "rawMinusRepairedIndexMod4": 2,
+        "matchCount": 6,
+        "startRepairedIndex": 149,
+        "endRepairedIndexExclusive": 155,
+        "startTimeSeconds": 70.50739229024943,
+        "endTimeSeconds": 72.84099773242632,
+        "medianRawMinusRepairedIndex": 2.0,
+        "minimumRawMinusRepairedIndex": 2,
+        "maximumRawMinusRepairedIndex": 2
+      },
+      {
+        "rawMinusRepairedIndexMod4": 2,
+        "matchCount": 60,
+        "startRepairedIndex": 166,
+        "endRepairedIndexExclusive": 226,
+        "startTimeSeconds": 78.47183673469388,
+        "endTimeSeconds": 106.02231292517007,
+        "medianRawMinusRepairedIndex": 2.0,
+        "minimumRawMinusRepairedIndex": 2,
+        "maximumRawMinusRepairedIndex": 2
+      },
+      {
+        "rawMinusRepairedIndexMod4": 3,
+        "matchCount": 3,
+        "startRepairedIndex": 227,
+        "endRepairedIndexExclusive": 230,
+        "startTimeSeconds": 106.93950113378685,
+        "endTimeSeconds": 107.8334693877551,
+        "medianRawMinusRepairedIndex": 3.0,
+        "minimumRawMinusRepairedIndex": 3,
+        "maximumRawMinusRepairedIndex": 3
+      },
+      {
+        "rawMinusRepairedIndexMod4": 0,
+        "matchCount": 38,
+        "startRepairedIndex": 230,
+        "endRepairedIndexExclusive": 268,
+        "startTimeSeconds": 108.28625850340136,
+        "endTimeSeconds": 125.39936507936508,
+        "medianRawMinusRepairedIndex": 4.0,
+        "minimumRawMinusRepairedIndex": 4,
+        "maximumRawMinusRepairedIndex": 4
+      },
+      {
+        "rawMinusRepairedIndexMod4": 1,
+        "matchCount": 5,
+        "startRepairedIndex": 271,
+        "endRepairedIndexExclusive": 276,
+        "startTimeSeconds": 127.22213151927437,
+        "endTimeSeconds": 129.07972789115647,
+        "medianRawMinusRepairedIndex": 5.0,
+        "minimumRawMinusRepairedIndex": 5,
+        "maximumRawMinusRepairedIndex": 5
+      },
+      {
+        "rawMinusRepairedIndexMod4": 1,
+        "matchCount": 1,
+        "startRepairedIndex": 307,
+        "endRepairedIndexExclusive": 308,
+        "startTimeSeconds": 143.91727891156464,
+        "endTimeSeconds": 143.91727891156464,
+        "medianRawMinusRepairedIndex": 5.0,
+        "minimumRawMinusRepairedIndex": 5,
+        "maximumRawMinusRepairedIndex": 5
+      },
+      {
+        "rawMinusRepairedIndexMod4": 2,
+        "matchCount": 2,
+        "startRepairedIndex": 344,
+        "endRepairedIndexExclusive": 346,
+        "startTimeSeconds": 161.04199546485262,
+        "endTimeSeconds": 161.45995464852606,
+        "medianRawMinusRepairedIndex": 6.0,
+        "minimumRawMinusRepairedIndex": 6,
+        "maximumRawMinusRepairedIndex": 6
+      },
+      {
+        "rawMinusRepairedIndexMod4": 3,
+        "matchCount": 1,
+        "startRepairedIndex": 368,
+        "endRepairedIndexExclusive": 369,
+        "startTimeSeconds": 172.11791383219955,
+        "endTimeSeconds": 172.11791383219955,
+        "medianRawMinusRepairedIndex": 7.0,
+        "minimumRawMinusRepairedIndex": 7,
+        "maximumRawMinusRepairedIndex": 7
+      },
+      {
+        "rawMinusRepairedIndexMod4": 3,
+        "matchCount": 2,
+        "startRepairedIndex": 374,
+        "endRepairedIndexExclusive": 376,
+        "startTimeSeconds": 174.75337868480725,
+        "endTimeSeconds": 175.20616780045353,
+        "medianRawMinusRepairedIndex": 7.0,
+        "minimumRawMinusRepairedIndex": 7,
+        "maximumRawMinusRepairedIndex": 7
+      },
+      {
+        "rawMinusRepairedIndexMod4": 0,
+        "matchCount": 14,
+        "startRepairedIndex": 378,
+        "endRepairedIndexExclusive": 392,
+        "startTimeSeconds": 176.63419501133788,
+        "endTimeSeconds": 182.61333333333334,
+        "medianRawMinusRepairedIndex": 8.0,
+        "minimumRawMinusRepairedIndex": 8,
+        "maximumRawMinusRepairedIndex": 8
+      },
+      {
+        "rawMinusRepairedIndexMod4": 1,
+        "matchCount": 27,
+        "startRepairedIndex": 392,
+        "endRepairedIndexExclusive": 419,
+        "startTimeSeconds": 183.0661224489796,
+        "endTimeSeconds": 195.0592290249433,
+        "medianRawMinusRepairedIndex": 9.0,
+        "minimumRawMinusRepairedIndex": 9,
+        "maximumRawMinusRepairedIndex": 9
+      },
+      {
+        "rawMinusRepairedIndexMod4": 2,
+        "matchCount": 16,
+        "startRepairedIndex": 419,
+        "endRepairedIndexExclusive": 435,
+        "startTimeSeconds": 195.52362811791383,
+        "endTimeSeconds": 202.52444444444444,
+        "medianRawMinusRepairedIndex": 10.0,
+        "minimumRawMinusRepairedIndex": 10,
+        "maximumRawMinusRepairedIndex": 10
+      },
+      {
+        "rawMinusRepairedIndexMod4": 3,
+        "matchCount": 1,
+        "startRepairedIndex": 435,
+        "endRepairedIndexExclusive": 436,
+        "startTimeSeconds": 202.98884353741497,
+        "endTimeSeconds": 202.98884353741497,
+        "medianRawMinusRepairedIndex": 11.0,
+        "minimumRawMinusRepairedIndex": 11,
+        "maximumRawMinusRepairedIndex": 11
+      }
+    ],
+    "offsetChangePointCount": 11,
+    "offsetChangePoints": [
+      {
+        "fromRawMinusRepairedIndexMod4": 0,
+        "toRawMinusRepairedIndexMod4": 1,
+        "leftEndRepairedIndexExclusive": 111,
+        "rightStartRepairedIndex": 111,
+        "rightStartTimeSeconds": 52.895056689342404
+      },
+      {
+        "fromRawMinusRepairedIndexMod4": 1,
+        "toRawMinusRepairedIndexMod4": 2,
+        "leftEndRepairedIndexExclusive": 147,
+        "rightStartRepairedIndex": 149,
+        "rightStartTimeSeconds": 70.50739229024943
+      },
+      {
+        "fromRawMinusRepairedIndexMod4": 2,
+        "toRawMinusRepairedIndexMod4": 3,
+        "leftEndRepairedIndexExclusive": 226,
+        "rightStartRepairedIndex": 227,
+        "rightStartTimeSeconds": 106.93950113378685
+      },
+      {
+        "fromRawMinusRepairedIndexMod4": 3,
+        "toRawMinusRepairedIndexMod4": 0,
+        "leftEndRepairedIndexExclusive": 230,
+        "rightStartRepairedIndex": 230,
+        "rightStartTimeSeconds": 108.28625850340136
+      },
+      {
+        "fromRawMinusRepairedIndexMod4": 0,
+        "toRawMinusRepairedIndexMod4": 1,
+        "leftEndRepairedIndexExclusive": 268,
+        "rightStartRepairedIndex": 271,
+        "rightStartTimeSeconds": 127.22213151927437
+      },
+      {
+        "fromRawMinusRepairedIndexMod4": 1,
+        "toRawMinusRepairedIndexMod4": 2,
+        "leftEndRepairedIndexExclusive": 308,
+        "rightStartRepairedIndex": 344,
+        "rightStartTimeSeconds": 161.04199546485262
+      },
+      {
+        "fromRawMinusRepairedIndexMod4": 2,
+        "toRawMinusRepairedIndexMod4": 3,
+        "leftEndRepairedIndexExclusive": 346,
+        "rightStartRepairedIndex": 368,
+        "rightStartTimeSeconds": 172.11791383219955
+      },
+      {
+        "fromRawMinusRepairedIndexMod4": 3,
+        "toRawMinusRepairedIndexMod4": 0,
+        "leftEndRepairedIndexExclusive": 376,
+        "rightStartRepairedIndex": 378,
+        "rightStartTimeSeconds": 176.63419501133788
+      },
+      {
+        "fromRawMinusRepairedIndexMod4": 0,
+        "toRawMinusRepairedIndexMod4": 1,
+        "leftEndRepairedIndexExclusive": 392,
+        "rightStartRepairedIndex": 392,
+        "rightStartTimeSeconds": 183.0661224489796
+      },
+      {
+        "fromRawMinusRepairedIndexMod4": 1,
+        "toRawMinusRepairedIndexMod4": 2,
+        "leftEndRepairedIndexExclusive": 419,
+        "rightStartRepairedIndex": 419,
+        "rightStartTimeSeconds": 195.52362811791383
+      },
+      {
+        "fromRawMinusRepairedIndexMod4": 2,
+        "toRawMinusRepairedIndexMod4": 3,
+        "leftEndRepairedIndexExclusive": 435,
+        "rightStartRepairedIndex": 435,
+        "rightStartTimeSeconds": 202.98884353741497
+      }
+    ],
+    "multipleModuloOffsetsObserved": true,
+    "referenceFree": true,
+    "professionalReferenceUsed": false,
+    "runtimeLabelsRequired": false,
+    "runtimePhaseChanged": false,
+    "productionModified": false
+  },
   "invariants": {
     "referenceFree": true,
     "professionalReferenceUsed": false,
     "runtimeLabelsRequired": false,
     "repairedIntervalOutliersZero": true,
     "featureExtractionSinglePass": true,
+    "indexAlignmentHasMatches": true,
     "recommendationOnly": true,
     "runtimePhaseChanged": false,
     "liveRhythmOutputChanged": false,
