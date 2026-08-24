@@ -3,15 +3,19 @@
   "candidateAddsUnobservedPitch": false,
   "candidateRelocatesEvents": false,
   "checkerPassed": true,
-  "checkerSha256": "88f6b6b9dd9ce2c4d4b2390525ba57a6f7281ca6c8737ef8ef8aa59e2c08fc92",
+  "checkerSha256": "07f70c0c1168a82f6f06a0d05b0e3a51d1962bed8c11afab09107733daf3d1eb",
+  "explicitPrimaryPreserved": true,
   "gate": "v143-contextual-prune-precision-shadow-cpu-proof",
-  "moduleSha256": "95bae514c6441260ea2cddd476928c2fbd607b7a930185d74ced63ead2b2c137",
+  "moduleSha256": "763efe637b253e47c3c61aac7ffbd63c92d424f640bab512f12d069bda3bfd65",
   "passed": true,
+  "primaryAdapterCheckerSha256": "a75bf197fa7cc833d7803fc5b9376773df97030890853697e9f25472098f063c",
+  "primaryAdapterSha256": "df14691f9ba21667073ffe0b052844cf8eb7074bdc170067f7a9bc96109e38b0",
+  "primaryPropagationCheckerPassed": true,
   "productionModified": false,
   "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
   "protectedPipelineUnchanged": true,
   "referenceFree": true,
   "runtimeLabelsRequired": false,
-  "schemaVersion": 1,
-  "triggerSha": "600821f8793243639f2e7d4f76b3ae90b4ae6bf5"
+  "schemaVersion": 2,
+  "triggerSha": "05874926efa83e162c2471399618cce0bf19cd1c"
 }
