@@ -1,9 +1,9 @@
 {
   "schemaVersion": 2,
   "gate": "v143-reference-free-beat-grid-repair-approved-audio",
-  "runId": 32683234132,
+  "runId": 32683424669,
   "runAttempt": 1,
-  "triggerSha": "9011486c54e033ca97eb9654801ad91563048d6e",
+  "triggerSha": "8bcf0af59a1504baf7a7378f28d23ad6e472361d",
   "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
   "originalTiming": {
     "tempoBpm": 129.19921875,
@@ -15,11 +15,11 @@
   },
   "repair": {
     "originalBeatCount": 447,
-    "repairedBeatCount": 445,
+    "repairedBeatCount": 449,
     "originalFirstBeatTime": 0.6733786848072563,
     "originalLastBeatTime": 203.03528344671201,
     "repairedFirstBeatTime": 0.6965986394557823,
-    "repairedLastBeatTime": 207.23809523809524,
+    "repairedLastBeatTime": 209.09569160997734,
     "originalIntervalOutlierCount": 38,
     "repairedIntervalOutlierCount": 0,
     "stableAnchorStartIndex": 0,
@@ -28,13 +28,13 @@
     "activeAudioStartSeconds": 1.6346485260770975,
     "activeAudioEndSeconds": 209.1231746031746,
     "leadingExtendedBeatCount": 0,
-    "trailingExtendedBeatCount": 9,
-    "continuityOnlyBeatCount": 5,
-    "snappedBeatCount": 439,
+    "trailingExtendedBeatCount": 13,
+    "continuityOnlyBeatCount": 8,
+    "snappedBeatCount": 440,
     "boundaryEvidenceFloor": 0.5944737866354368,
     "boundaryEnergyFloor": 0.05812348996682043,
-    "boundaryLookaheadBeats": 2,
-    "lookaheadBridgeBeatCount": 0,
+    "boundaryLookaheadBeats": 4,
+    "lookaheadBridgeBeatCount": 3,
     "originalIntervals": {
       "count": 446,
       "ratioP01": 0.5250000000000135,
@@ -44,12 +44,12 @@
       "ratioP99": 1.0750000000000008
     },
     "repairedIntervals": {
-      "count": 444,
-      "ratioP01": 0.8999999999999988,
-      "ratioP05": 0.950000000000008,
+      "count": 448,
+      "ratioP01": 0.899999999999999,
+      "ratioP05": 0.950000000000003,
       "ratioP50": 1.000000000000005,
       "ratioP95": 1.0500000000000023,
-      "ratioP99": 1.0750000000000095
+      "ratioP99": 1.075000000000009
     },
     "barPhaseChanged": false,
     "tempoChanged": false,
@@ -60,42 +60,6 @@
   "tailBoundaryProbe": [
     {
       "offsetBeats": 1,
-      "predictedTime": 207.70249433106576,
-      "accent": 0.03517902385225743,
-      "localRms": 0.05425683209823929,
-      "aboveBoundaryAccentFloor": false,
-      "aboveBoundaryEnergyFloor": false,
-      "insideActiveAudioBound": true
-    },
-    {
-      "offsetBeats": 2,
-      "predictedTime": 208.1668934240363,
-      "accent": 0.026999522318577218,
-      "localRms": 0.04479791089096907,
-      "aboveBoundaryAccentFloor": false,
-      "aboveBoundaryEnergyFloor": false,
-      "insideActiveAudioBound": true
-    },
-    {
-      "offsetBeats": 3,
-      "predictedTime": 208.6312925170068,
-      "accent": 0.024419451194880454,
-      "localRms": 0.043411086368731075,
-      "aboveBoundaryAccentFloor": false,
-      "aboveBoundaryEnergyFloor": false,
-      "insideActiveAudioBound": true
-    },
-    {
-      "offsetBeats": 4,
-      "predictedTime": 209.09569160997734,
-      "accent": 1.6447713749936983,
-      "localRms": 0.24524983152218374,
-      "aboveBoundaryAccentFloor": true,
-      "aboveBoundaryEnergyFloor": true,
-      "insideActiveAudioBound": true
-    },
-    {
-      "offsetBeats": 5,
       "predictedTime": 209.56009070294786,
       "accent": 0.02843298488981121,
       "localRms": 0.03542845362737585,
@@ -104,7 +68,7 @@
       "insideActiveAudioBound": false
     },
     {
-      "offsetBeats": 6,
+      "offsetBeats": 2,
       "predictedTime": 210.02448979591838,
       "accent": 0.010416191735654714,
       "localRms": 0.01609229411022676,
@@ -113,8 +77,8 @@
       "insideActiveAudioBound": false
     },
     {
-      "offsetBeats": 7,
-      "predictedTime": 210.48888888888888,
+      "offsetBeats": 3,
+      "predictedTime": 210.4888888888889,
       "accent": 0.0016724365072448392,
       "localRms": 0.0023200056150351547,
       "aboveBoundaryAccentFloor": false,
@@ -122,10 +86,19 @@
       "insideActiveAudioBound": false
     },
     {
-      "offsetBeats": 8,
-      "predictedTime": 210.9532879818594,
+      "offsetBeats": 4,
+      "predictedTime": 210.95328798185943,
       "accent": 0.00010964475845300974,
       "localRms": 0.00018624449862630983,
+      "aboveBoundaryAccentFloor": false,
+      "aboveBoundaryEnergyFloor": false,
+      "insideActiveAudioBound": false
+    },
+    {
+      "offsetBeats": 5,
+      "predictedTime": 211.41768707482996,
+      "accent": 1.972031042610789e-05,
+      "localRms": 4.942687447927762e-05,
       "aboveBoundaryAccentFloor": false,
       "aboveBoundaryEnergyFloor": false,
       "insideActiveAudioBound": false
@@ -134,7 +107,7 @@
   "repairedBarPhaseConsensus": {
     "winnerDownbeatIndexMod4": 2,
     "winnerFirstBeatInMeasure": 2,
-    "confidence": 0.1980882373831292,
+    "confidence": 0.19779501492451862,
     "signalWinners": {
       "accent": 2,
       "lowAccent": 0,
@@ -147,38 +120,38 @@
       {
         "downbeatIndexMod4": 0,
         "firstBeatInMeasure": 0,
-        "combinedScore": -0.14105031430002776,
-        "accentScore": -0.05188046784168745,
-        "lowAccentScore": 0.2738165898664323,
-        "harmonicChangeScore": -0.4086311521825497,
-        "bassChangeScore": -0.1758772670908859
+        "combinedScore": -0.11135050052321047,
+        "accentScore": -0.020188368092938166,
+        "lowAccentScore": 0.2771156477307358,
+        "harmonicChangeScore": -0.36594878217773397,
+        "bassChangeScore": -0.14830681040647686
       },
       {
         "downbeatIndexMod4": 1,
         "firstBeatInMeasure": 3,
-        "combinedScore": 0.12417621210194178,
-        "accentScore": 0.05539951875135579,
-        "lowAccentScore": -0.31261827618334886,
-        "harmonicChangeScore": 0.46008908352937683,
-        "bassChangeScore": 0.06568949138089723
+        "combinedScore": 0.11274191491189378,
+        "accentScore": 0.04405261289650715,
+        "lowAccentScore": -0.3095883715810444,
+        "harmonicChangeScore": 0.4396234195703853,
+        "bassChangeScore": 0.0563094436359308
       },
       {
         "downbeatIndexMod4": 2,
         "firstBeatInMeasure": 2,
-        "combinedScore": 0.17548340628667336,
-        "accentScore": 0.1681123879733661,
-        "lowAccentScore": 0.2071052434033435,
-        "harmonicChangeScore": 0.15748732304950863,
-        "bassChangeScore": 0.18695082587723766
+        "combinedScore": 0.16339750363304628,
+        "accentScore": 0.15411670300524621,
+        "lowAccentScore": 0.20206617542991784,
+        "harmonicChangeScore": 0.14273474901609617,
+        "bassChangeScore": 0.17612856684862357
       },
       {
         "downbeatIndexMod4": 3,
         "firstBeatInMeasure": 1,
-        "combinedScore": -0.15776469142810798,
-        "accentScore": -0.17132077739895205,
-        "lowAccentScore": -0.16994317738502826,
-        "harmonicChangeScore": -0.2064983612694939,
-        "bassChangeScore": -0.07570989287927991
+        "combinedScore": -0.16412808419073127,
+        "accentScore": -0.17786113553526642,
+        "lowAccentScore": -0.17123805483023644,
+        "harmonicChangeScore": -0.21423758354715863,
+        "bassChangeScore": -0.08325104096587312
       }
     ],
     "referenceFree": true,
@@ -187,13 +160,13 @@
   },
   "grid": {
     "originalSlotCount": 1788,
-    "repairedSlotCount": 1780,
+    "repairedSlotCount": 1796,
     "originalFirstMeasure": 1,
     "originalLastMeasure": 113,
     "repairedFirstMeasure": 1,
-    "repairedLastMeasure": 112,
+    "repairedLastMeasure": 113,
     "originalMeasureCount": 113,
-    "repairedMeasureCount": 112,
+    "repairedMeasureCount": 113,
     "originalBoundarySteps": {
       "first": 4,
       "last": 8
