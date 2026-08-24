@@ -1,7 +1,7 @@
 name: V143 Repaired Timing Precision Single Pass Smoke
 
 # Low-cost bridge gate. Manual only; exactly one full combined pass.
-# Do not run until the separator single-pass smoke is green.
+# Requires green cross-host CPU proof and green separator single-pass smoke.
 on:
   workflow_dispatch:
 
@@ -24,10 +24,11 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --disable-pip-version-check --quiet numpy scipy
-          python -m py_compile analyzer/v143_repaired_timing_precision_shadow_modal.py analyzer/v143_seeded_separator.py analyzer/v143_seeded_audio_separator_cli.py
+          python -m py_compile analyzer/v143_repaired_timing_precision_shadow_modal.py analyzer/v143_seeded_separator.py analyzer/v143_seeded_audio_separator_cli.py analyzer/check_v143_demucs_cpu_cross_host_exact.py
           PYTHONPATH=analyzer python analyzer/check_v143_reference_free_beat_grid_repair.py
           PYTHONPATH=analyzer python analyzer/check_v143_contextual_prune_precision_shadow.py
           PYTHONPATH=analyzer python analyzer/check_v143_demucs_cpu_dispatch_controls.py
+          python analyzer/check_v143_demucs_cpu_cross_host_exact.py debug/v143-contextual-prune/demucs-cpu-nomkldnn-probe-1.json debug/v143-contextual-prune/demucs-cpu-nomkldnn-probe-2.json
           test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
           test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
           test -f debug/v143-contextual-prune/separator-single-pass-smoke.json
