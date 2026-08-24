@@ -1,6 +1,6 @@
 V143 precision polyphonic expansion audio-only audit complete
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gate": "v143-precision-polyphonic-expansion-audio-only-audit",
   "candidateProductSha256": "c4d2af1bdadea04b326205388227645b432ea1a8f99123fab6dd4c565c21f371",
   "selectedCountMetadata": 725,
@@ -58,6 +58,32 @@ V143 precision polyphonic expansion audio-only audit complete
     "24": 6,
     "28": 1
   },
+  "fundamentalPromotionCountMetadata": 144,
+  "promotedPrimaryAttackCountFromSerializedEvidence": 144,
+  "promotedPrimaryWithStrongestRenderedCount": 144,
+  "promotedPrimaryWithHarmonicStrongestRenderedCount": 96,
+  "promotedPrimaryStrongestIntervalHistogram": {
+    "-5": 3,
+    "-4": 3,
+    "-3": 4,
+    "-1": 1,
+    "3": 5,
+    "4": 4,
+    "5": 10,
+    "6": 1,
+    "7": 10,
+    "9": 1,
+    "10": 1,
+    "12": 78,
+    "14": 2,
+    "16": 2,
+    "17": 1,
+    "19": 11,
+    "24": 6,
+    "28": 1
+  },
+  "promotionStrongestRetentionFraction": 1.0,
+  "promotionHarmonicStrongestRetentionFraction": 0.6666666666666666,
   "secondaryScoreRatioQuantiles": {
     "min": 0.8014531447561166,
     "p10": 0.8584554778898953,
@@ -125,6 +151,20 @@ V143 precision polyphonic expansion audio-only audit complete
   "pitchSupportIndistinguishableAttackCount": 238,
   "pitchSupportIndistinguishableFraction": 1.0,
   "perPitchBasicPitchSupportRecoverableFromSerializedHypotheses": false,
+  "syntheticObservedMidis": [
+    40,
+    52
+  ],
+  "syntheticPrimaryMidi": 40,
+  "syntheticStrongestRawMidi": 52,
+  "syntheticSelectedMidis": [
+    40,
+    52
+  ],
+  "syntheticPrimaryPromoted": true,
+  "syntheticStrongestRawIntervalAbovePrimary": 12,
+  "syntheticStrongestHarmonicRetainedAsSecondary": true,
+  "harmonicPromotionDoubleCountPathProven": true,
   "badGroupCount": 0,
   "badGroupExamples": [],
   "selectedCountMatchesUniqueRenderedAttacks": true,
