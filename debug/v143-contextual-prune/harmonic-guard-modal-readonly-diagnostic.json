@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "gate": "v143-harmonic-guard-modal-readonly-diagnostic",
+  "triggerSha": "75ffba2ce1156fbce9a04c14b3a7f5b2c920fa03",
+  "appName": "dadrock-v143-repaired-timing-precision-candidate-product",
+  "checks": {
+    "tokenInfoSucceeded": true,
+    "appListSucceeded": true,
+    "appHistoryCommandSucceeded": false,
+    "appLogsCommandSucceeded": false
+  },
+  "appListMatchCount": 1,
+  "appListMatches": [
+    {
+      "state": "stopped",
+      "created_at": "2026-08-24 15:09:13+00:00",
+      "stopped_at": "2026-08-24 15:39:28+00:00"
+    }
+  ],
+  "historyJsonValid": false,
+  "historyEntryCount": null,
+  "diagnosticSignalLines": [
+    "\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+    "\u2502 No App with name 'dadrock-v143-repaired-timing-precision-candidate-product'  \u2502",
+    "\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e",
+    "\u2502 No App with name 'dadrock-v143-repaired-timing-precision-candidate-product'  \u2502"
+  ],
+  "commandReturnCodes": {
+    "tokenInfo": 0,
+    "appList": 0,
+    "appHistory": 1,
+    "appLogs": 1
+  },
+  "modalRunInvoked": false,
+  "remoteFunctionInvoked": false,
+  "modalGpuUsed": false,
+  "professionalReferenceUsed": false,
+  "runtimeLabelsRequired": false,
+  "productionModified": false,
+  "passed": true
+}
