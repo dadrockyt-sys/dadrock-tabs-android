@@ -42,6 +42,8 @@ def main() -> None:
     require("automaticRetryAllowed" in workflow, "reservation does not explicitly prohibit automatic retry")
     require("reserved_before_modal" in workflow, "pre-Modal reservation state missing")
     require("singlePaidCaptureConsumed" in workflow, "capture-consumption state missing")
+    require("actions/upload-artifact@v4" in workflow, "failure-path artifact salvage missing")
+    require("if: always()" in workflow, "capture outputs are not preserved on failure")
 
     modal_command = "python -m modal run analyzer/v143_repaired_timing_precision_candidate_product_modal.py::approved_audio"
     require(workflow.count(modal_command) == 1, "workflow must contain exactly one paid Modal command")
@@ -62,6 +64,7 @@ def main() -> None:
             "Validate candidate invariants and replay evidence",
             "Build CPU replay policy comparison",
             "Finalize one-shot capture lock",
+            "Preserve one-shot capture outputs",
         ),
         "required pre-reservation/capture/finalization ordering is broken",
     )
@@ -92,6 +95,7 @@ def main() -> None:
     print("reservation_precedes_modal=true")
     print("automatic_retry_allowed=false")
     print("cpu_replay_modal_free=true")
+    print("failure_path_artifact_salvage=true")
 
 
 if __name__ == "__main__":
