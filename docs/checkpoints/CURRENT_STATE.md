@@ -69,18 +69,27 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce a genuinely profe
 - Therefore do not integrate a sequence voicing optimizer as an accuracy fix without independent string/hand-position evidence. This is now secondary to obtaining a guitar-specific tablature evidence source.
 
 ## Specialized guitar-AMT research — strongest new strategic lead
-- Public MIT-licensed 2026 project `ErenReyhanlioglu/Guitar-Transcription` (“Cascaded Multi-Task Learning for Automatic Guitar Tablature Transcription”) directly predicts guitar tablature/string-fret state, hand position, string activity, pitch class and multipitch from HCQT + Mel features.
-- Public pretrained weights exist in `ErenReyhanlioglu/Guitar-Transcription-Weights`; six fold `model_best.pt` checkpoints are ~26.8 MB each.
-- Reported six-fold GuitarSet results are far above the current heuristic pitch result: tablature F1 ~`0.783/0.784`, TDR ~`0.946`, tab-derived multipitch F1 ~`0.845`, auxiliary multipitch F1 ~`0.864`.
-- Model config: 22050 Hz, hop 512, HCQT `6x144` with harmonics `[0.5,1,2,3,4,5]`, Mel 256, 19-frame context, standard tuning `[40,45,50,55,59,64]`, frets 0-19 + silence, MIDI 40-88.
-- This model is trained on GuitarSet acoustic guitar, so electric/separated-rhythm domain gap must be tested rather than assumed. It should first be treated as an **independent source-only tab/pitch/string evidence branch**, not a blind replacement for our already-strong timing grid.
-- Strategic architecture if benchmark proves useful: preserve V143 beat/grid timing -> obtain guitar-AMT frame/string/fret evidence -> snap/fuse only source-supported attacks/pitches onto frozen grid -> preserve no-invention and deterministic render contracts -> then run semantic/sustain/render stages.
+- Public MIT-licensed 2026 project `ErenReyhanlioglu/Guitar-Transcription` directly predicts guitar tablature/string-fret state, hand position, string activity, pitch class and multipitch from HCQT + Mel features.
+- Public pretrained weights exist in `ErenReyhanlioglu/Guitar-Transcription-Weights`; six fold `model_best.pt` checkpoints are ~26.8 MB each. The weights repository license is also MIT.
+- Reported six-fold GuitarSet results: tablature F1 ~`0.784`, TDR ~`0.946`, tab-derived multipitch F1 ~`0.845`, auxiliary multipitch F1 ~`0.864`.
+- Model config: 22050 Hz, hop 512, HCQT `6x144` harmonics `[0.5,1,2,3,4,5]`, Mel 256, 19-frame context, standard tuning `[40,45,50,55,59,64]`, frets 0-19 + silence, MIDI 40-88.
+- Acoustic GuitarSet domain gap must be tested; treat this as independent source-only tab/pitch/string evidence, not a blind timing replacement.
+- Strategic architecture: preserve V143 beat/grid timing -> guitar-AMT frame/string/fret evidence -> snap/fuse only source-supported attacks/pitches onto frozen grid -> preserve no-invention/render contracts -> semantic/sustain/render.
+
+### Bounded guitar-AMT probe harness now committed
+- `analyzer/v143_specialized_guitar_amt_probe.py`, commit `97c76dd32e236663850f3ad7996b86f9a527ea2c`.
+- Durable feature-contract self-test: `debug/v143-contextual-prune/specialized-guitar-amt-probe-self-test.json`, commit `27d71618538bd5b7d0e860b2f0513f916f0315a0`.
+- Self-test reproduces HCQT shape `6x144x44` and Mel shape `1x256x44` for a synthetic one-second signal; green.
+- Harness records source-audio SHA, checkpoint SHA, upstream provenance/license/blobs, and refuses a non-approved source SHA unless `--allow-nonapproved-domain-probe` is explicitly supplied.
+- It loads upstream code/checkpoint from caller-supplied paths; no third-party weights/code are vendored into DadRock.
+- It reproduces the upstream amt-tools feature contract with librosa: VQT harmonic stack, -80..0 dB -> 0..1 scaling, Mel 256, 19-frame windows, 500-frame chunk inference.
+- With `--v143-product`, it samples the model on the existing 984 frozen V143 eligible grid attacks and exports model tab/string/fret notes, candidate multipitch probabilities, string activity and hand-position probabilities. This is designed for source-only fusion diagnostics without changing timing/attacks.
+- Current environment could inspect public checkpoint metadata but cannot retrieve the ~26.8 MB binary through the available GitHub text connector; no checkpoint inference has been run yet. This is a tooling-access limit, not a model rejection.
 
 ## Audio availability check
-- The ChatGPT file library contains `DS Music - Are You Gonna Go My Way (Remastered 2025) - Lenny Kravitz.m4a`, size 3,464,988 bytes, duration ~210.675 s.
-- Materialized SHA256 is `c187bead44529d38544b8452f57328aaf17ce606f08217b78e3157c648392481`, **not** the approved fixture SHA `215bd5a6...`.
-- It may be the same musical recording in a different encoding, but under the hard fixture contract it cannot be substituted for freeze/score/candidate claims. It may only be useful for isolated exploratory model-compatibility research if clearly kept separate.
-- The preserved paid artifact ZIP contains JSON evidence, not source audio/stems, so exact approved-fixture inference with a new model is currently unavailable from the saved artifact alone.
+- ChatGPT library file `DS Music - Are You Gonna Go My Way (Remastered 2025) - Lenny Kravitz.m4a`: 3,464,988 bytes, duration ~210.675 s, SHA256 `c187bead44529d38544b8452f57328aaf17ce606f08217b78e3157c648392481`.
+- It does **not** match approved fixture SHA `215bd5a6...`; it cannot be substituted for freeze/score/candidate claims. It may only be a clearly isolated domain-compatibility probe.
+- Preserved paid artifact ZIP contains JSON evidence, not audio/stems; exact approved-fixture inference with a new model is unavailable from it alone.
 
 ## Timing/current mutation state
 - Relative sixteenth spacing remains strongly source-supported; tempo `129.19921875`; no global timing mutation justified.
@@ -89,11 +98,11 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce a genuinely profe
 ## Next exact actions
 1. Reverify protected runtime blob after checkpoint.
 2. Stay CPU-only/no Modal.
-3. Build a bounded guitar-AMT research adapter/benchmark harness that cannot modify production and that records model/license/config/weights hashes and source-audio SHA before inference.
-4. If CPU inference is feasible, use the library M4A only as a clearly non-approved **domain-compatibility probe**, never as the approved candidate fixture; compare only source-independent structural behavior (guitar activity/string/fret plausibility), not professional reference labels.
+3. Continue trying a zero-cost/local route to obtain one MIT guitar-AMT checkpoint binary; if unavailable, keep harness ready rather than weakening boundaries.
+4. If checkpoint becomes locally accessible, first run only the library M4A as an explicitly non-approved domain probe and inspect structural guitar/string/fret plausibility; never score it as the approved fixture.
 5. Keep contextual harmonic-primary V1 and Attack V2 as conservative source-only shadows; no arbitrary weight expansion.
-6. Do not integrate sequence voicing optimization without independent string/hand-position evidence; a guitar-AMT branch can provide exactly that missing evidence.
-7. Once exact approved audio becomes available to the benchmark harness, test guitar-AMT evidence against V143 frozen timing/source invariants before considering any producer integration.
+6. Do not integrate sequence voicing optimization without independent string/hand-position evidence; the guitar-AMT branch can supply that missing evidence.
+7. Once exact approved audio is available to the harness, test guitar-AMT evidence against frozen timing/source invariants before producer integration.
 8. Improve conventional PDF rhythm notation only after musical content is materially stronger.
 9. Do not freeze/professional-score while required downstream evidence is absent.
 10. No Modal/L4 without fresh explicit authorization.
