@@ -4,8 +4,8 @@ Keywords:        guitar tablature rhythm guitar DadRock Tabs
 Author:          DadRock Tabs Studio
 Creator:         DadRock Tabs Studio
 Producer:        DadRock Tabs Studio
-CreationDate:    Tue Aug 25 07:30:33 2026 UTC
-ModDate:         Tue Aug 25 07:30:33 2026 UTC
+CreationDate:    Tue Aug 25 16:08:41 2026 UTC
+ModDate:         Tue Aug 25 16:08:41 2026 UTC
 Custom Metadata: no
 Metadata Stream: no
 Tagged:          no
@@ -17,6 +17,6 @@ Pages:           6
 Encrypted:       no
 Page size:       612 x 792 pts (letter)
 Page rot:        0
-File size:       1748093 bytes
+File size:       1748095 bytes
 Optimized:       no
 PDF version:     1.7
