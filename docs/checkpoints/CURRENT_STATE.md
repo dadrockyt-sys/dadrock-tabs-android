@@ -88,24 +88,33 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; musical accuracy first, P
 - Historical technique identities: `25`; lost through corrected-primary replacement: `4`; invented technique identities: **0**. All four omissions occur only at corrected attacks.
 - `metadataPolicyResolved=true`, `neutralFallbackConservative=true`, `validationPassed=true`, while `freezeReady=false` remains intentionally unchanged.
 
-## Freeze-readiness audit — IN PROGRESS
-- Branch head immediately before this audit was `be76bd59ec1cf227ab0cf51b24a5318cc5fd7d40`.
+## Freeze-readiness audit — COMPLETE
 - Protected runtime blob was re-read from the branch and is still exactly `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
 - `materialize-report.txt` has `validationPassed=true` and `freezeReady=false`; `neutral-metadata-policy-report.json` has every listed check true, `validationPassed=true`, `metadataPolicyResolved=true`, and `freezeReady=false`; `render-report.json` is reference-free and also carries `freezeReady=false`.
-- Inspection of materializer commit `a6505ba21e30af1b0e985b945de71ae3698bf08f` confirms its `freezeReady` value is a literal `False` safety sentinel rather than a failed computed validation check.
-- Current persisted hashes re-confirm render stream `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`, PDF `f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5`, inspection first `33693e32ee4a578e48f7e96360d0c06191bf0fff16f68d76d97e1e384f1aa5f3`, middle `1e265e8486e75505262de9ea33dea444f60731e025db20dea063dd1f75448775`, last `487df510c3931403017576dac2fe3e587479b9d827a496ea9d792fa5a2764671`.
-- Next audit step: inspect the renderer and neutral-policy validator origins of `freezeReady=false`, then create a separate source-only frozen-candidate manifest instead of weakening these sentinels.
+- Materializer commit `a6505ba21e30af1b0e985b945de71ae3698bf08f` sets `freezeReady` to literal `False`; it is not computed from a failing check.
+- Neutral-policy validator commit `4153614d58f286e9e218207393582b420bf24622` likewise sets `freezeReady` to literal `False` after computing `validationPassed` independently from all policy checks.
+- Current render script `scripts/v143-render-v5-shadow-pdf.mjs` explicitly refuses any input whose `freezeReady` is not `false`, then emits `freezeReady:false` in its render report. The render sentinel is therefore deliberate, not a failed render invariant.
+- **Conclusion:** all observed `freezeReady=false` values are final-gate safety sentinels. They must remain false and must not be weakened to represent source-only freeze readiness.
+
+## Source-only frozen candidate — MATERIALIZED; VALIDATION RUN ACTIVE
+- Pre-freeze branch commit pinned by manifest: `f415bf180fc402a3aa8292304a90b4916d32a5d3`.
+- Frozen-candidate manifest created in commit `1525f04c9b1750860afe7070bebc4eeae1947f0c`: `debug/v143-contextual-prune/v5-professional-pdf/source-only-frozen-candidate-manifest.json`.
+- Manifest pins protected runtime, materializer, neutral validator, renderer, render contract, V3/V4/V5 evidence blobs, exact render stream/PDF/inspection blobs, known SHA256 identities, counts, tempo, and closed-gate semantics.
+- Source-only freeze validator created in commit `17254353bb64944f410741792052f3ea85aaeaef`: `analyzer/validate_v143_v5_source_only_frozen_candidate.py`.
+- Dedicated CPU-only validation workflow created in commit `f771707af5ed5ae16efbc36c199eb6f3a1d1b479`: `.github/workflows/v143-validate-source-only-frozen-candidate.yml`.
+- Workflow run `32872086764` is validating the frozen candidate entirely from committed Git bytes; no professional reference/scorer and no Modal are involved.
+- Existing final-gate `freezeReady=false` sentinels remain intentionally untouched.
 
 ## Current integrity
 - Protected runtime untouched.
 - `main`/Production untouched.
 - No professional reference/scorer used.
 - No Modal/L4 used in this continuation.
-- Branch changes in this continuation: checkpoint commits, one neutral-policy validator, its CPU-only PDF-workflow integration, the resulting persisted validation/rerender evidence, and this freeze-readiness audit checkpoint.
+- Current persisted hashes remain render stream `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`, PDF `f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5`, inspection first `33693e32ee4a578e48f7e96360d0c06191bf0fff16f68d76d97e1e384f1aa5f3`, middle `1e265e8486e75505262de9ea33dea444f60731e025db20dea063dd1f75448775`, last `487df510c3931403017576dac2fe3e587479b9d827a496ea9d792fa5a2764671`.
 
 ## Next exact actions
-1. Finish the `freezeReady=false` audit in renderer + neutral-policy validator and distinguish hardcoded safety sentinels from genuine pre-freeze invariants.
-2. Prepare a fully source-only frozen-candidate manifest that pins content/render-stream hashes, protected-runtime blob, neutral-policy validator/report, and inspected PDF fidelity evidence without opening the professional reference/scorer.
-3. Validate that manifest entirely from committed branch bytes and record a source-only freeze verdict separately from the existing final-gate `freezeReady=false` sentinels.
-4. Only after the candidate is irreversibly frozen should the final professional holdout/scorer ever be considered; do not tune or select from it.
-5. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
+1. Inspect workflow run `32872086764`; if it passes, persist and verify `source-only-freeze-validation-report.json` and record source-only candidate state as frozen.
+2. After a passing source-only freeze report, make no further candidate tuning or selection changes before the final professional holdout.
+3. Only then consider the one final professional holdout/scorer gate against the immutable candidate; do not tune or select from its failures.
+4. Keep final-gate `freezeReady=false` sentinels false until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
+5. Do not claim Rhythm complete before all final completion gates pass.
