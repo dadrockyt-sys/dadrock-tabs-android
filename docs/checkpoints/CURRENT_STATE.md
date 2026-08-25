@@ -52,7 +52,7 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; professional musical accu
 ## Exact separated source-view blocker — updated archaeology
 - Exact downstream replay needs `direct-demucs6s-guitar.wav` + `bsroformer-demucs6s-guitar.wav` from the approved source.
 - Authorized run `32805316807` logs prove direct Demucs ran CPU-only; BS-RoFormer/cascade requires CUDA/GPU. No new GPU/Modal is authorized.
-- Authorized run artifact `9548666053` contains manifest/product/guard/report/lock JSON only, not stems. Historical artifacts for runs `32503444051` and `32806344264` are unavailable (404).
+- Authorized run artifact `9548666053` contains manifest/product/guard/report/lock JSON only, not standalone stems. Historical artifacts for runs `32503444051` and `32806344264` are unavailable (404).
 - Aug 21 SHA `42daa2df...` packaging/modal-smoke runs retain zero artifacts.
 - Aug 24 determinism artifacts from `f086412...`, `d2db253...`, `b1520a8...`, `c8f18da...`, `7713f13...` are log-only; early versions failed cross-worker exactness. The successful `7713f13...` Modal-smoke retained no artifact.
 
@@ -61,32 +61,40 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; professional musical accu
 - Its dual-band run is `32692406659`; run conclusion is `failure` only because the broader historical replay gate still failed, **not because separator repeatability failed**.
 - Retained artifact `9508202377` (`v143-dual-band-cross-container-behavior-log`) is live through 2026-08-31 and contains only `dual-band-cross-container-behavior.log`, no stems.
 - The log uses the exact approved source SHA256 `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
-- Across **three independent L4 workers**, separator output is byte-identical at the PCM level:
-  - `directStemPcmExactAcrossWorkers=true`
-  - `cascadeStemPcmExactAcrossWorkers=true`
+- Across **three independent L4 workers**, separator output is byte-identical at the PCM level: `directStemPcmExactAcrossWorkers=true`, `cascadeStemPcmExactAcrossWorkers=true`.
 - Exact deterministic output identities from all three workers:
   - normalized input SHA256 `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`
-  - direct WAV file SHA256 `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`
-  - direct PCM SHA256 `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`
-  - cascade WAV file SHA256 `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`
-  - cascade PCM SHA256 `75c0feefb416d8438641ceebe903253f935bd19c550e97e9ef0a90426e7727ba`
-  - both stems: 44,100 Hz, 9,324,544 frames, stereo.
-- The log confirms the cascade path: normalized source -> BS-RoFormer instrumental `input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav` -> Demucs guitar -> `bsroformer-demucs6s-guitar.wav`.
-- Although separator PCM is now proven deterministic on the approved full source, `carrierSemanticExactAcrossWorkers=false`; downstream decision exactness across workers is true, and historical exact replay count is still 0. Do not confuse current deterministic separator output with proof that it equals the older authorized-run stem bytes.
+  - direct WAV SHA256 `0ac47da671df6f8387c1ad1343171de0cf7a0db6985dadf3f30e4a9c7cf0189c`; PCM SHA256 `2c22f04014c0f5c9c0c036125c3d702c8b87a9f67358e0dd0d3836c39c936bed`
+  - cascade WAV SHA256 `546e5170870cc6c73e1f0a8eeb8314f7b6262079593e0b484207bb38f323cc41`; PCM SHA256 `75c0feefb416d8438641ceebe903253f935bd19c550e97e9ef0a90426e7727ba`
+  - both stems 44,100 Hz, 9,324,544 frames, stereo.
+- Although separator PCM is proven deterministic on the approved source, `carrierSemanticExactAcrossWorkers=false`; historical exact replay count remains 0. Do not assert these final deterministic stems equal the older authorized-run stem bytes without proof.
 - Paired Modal-smoke run `32692406651` failed and retains zero artifacts.
-- Repository code search finds neither final direct/cascade file hash nor `bsroformer-demucs6s-guitar.wav` as preserved content; exact source-view bytes are still not recovered.
+
+## NEW: embedded historical downstream evidence may bypass some stem recovery
+- Authorized artifact `9548666053` from run `32805316807` was downloaded and its ~15.4 MB `repaired-timing-precision-candidate-product.json` inspected locally.
+- Its `precisionReplayEvidence` contains all **984 eligible attacks / 10,585 candidate pitches / 970 selected pitches / 725 primary events**, including the 259 attacks pruned by that policy.
+- Candidate replay records include scalar two-view source evidence (`viewAEarly`, `viewBEarly`, `viewASustain`, `viewBSustain`, `viewAAttack`, `viewBAttack`), normalized strength ranks, and source identifiers. This is useful aggregate carrier evidence for every candidate.
+- Full recursive scan of the authorized product found **zero primitive numeric arrays longer than 20 values**. Therefore it does not secretly embed waveform/CQT/energy-trajectory arrays sufficient for a full downstream replay by itself.
+- Earlier manual precision run `32801442757` (failure, SHA `230878039491788af0807afffa4be45a717a877c`) still has artifact `9547279904`; its product contains **985 events** and substantial two-view downstream metadata.
+- Comparing event identity `(measure, step, midi, stringIndex, fret)` between that earlier product and the successful authorized product yields **657 common events**; **546** common events have `rhythmSustainShadow` in both.
+- For **all 546/546 common shadows**, both direct and cascade source-derived fields are exactly identical for `source`, `floorEnergy`, `attackPeak`, and `threshold`. Full shadow objects often differ only in neighborhood-dependent `hardEnd` and resulting duration because the selected-event graph differs.
+- This is strong source-only evidence that the observed carrier analysis quantities were stable between the earlier failed run and authorized run for every common comparable shadow; it is not yet proof of complete stem byte identity.
+- Earlier-only evidence inventory: **328 unique event keys**, **191** with sustain shadow, **9** with nonempty techniques; **234 unique attack positions**, **140** positions with at least one sustain shadow.
+- Therefore a no-GPU route may exist for a meaningful subset of V5's 166 rescued attacks by reusing historical per-event two-view evidence and recomputing only neighborhood-dependent limits under the exact frozen algorithms.
+- **Exact overlap with V5's 166 rescued attacks has not yet been computed. Do not claim coverage yet.** The next task is to recover the exact V3 rescue set from its committed materializer/validation logic and measure overlap.
 
 ## Current integrity
 - Protected runtime remains exact.
 - No Production/main change; no professional scorer/reference; no new Modal/L4 usage in this continuation.
 - Historical artifacts were only downloaded/inspected; no historical workflow was rerun.
-- Exact downstream implementation remains available; the only replay blocker is recovering/proving the required source-view bytes.
+- Exact downstream implementation remains available. Raw source-view bytes are still missing, but embedded historical evidence now offers a potential partial source-free downstream reconstruction path.
 
 ## Next exact actions
-1. Search all remaining Aug 24–25 V143 workflow artifacts/manual runs/caches/checkpoints for preserved final direct/cascade bytes or byte-identical derived pitch-energy arrays, using the final hashes above as identifiers.
-2. Inspect workflow definitions/history to determine whether any successful/manual run uploaded stems under a different artifact name or persisted them outside normal Actions artifacts.
-3. If exact authorized source views are recovered/proven, build CPU-only V5 downstream replay with exact downstream modules/order; preserve `1209/891/113`, timing and tempo.
-4. Re-render V5 PDF with recomputed downstream metadata and enforce renderer fidelity.
-5. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
-6. No Modal/L4 without fresh explicit authorization.
-7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
+1. Inspect Attack V3 commit `8c1a36f2254197adabc1ed1e1ef65ba62853d073` and its materializer/validation files to derive the exact 166 rescued attack positions without inventing policy.
+2. Compare those exact 166 positions against the earlier product's 234 earlier-only positions / 140 shadowed positions; quantify event and pitch coverage.
+3. For covered rescued events, prove whether historical sustain/legato/bend evidence can be transformed exactly under V5's changed same-string neighborhood. In particular, only clip an earlier sustain result when the new hard end is no later than the historical hard end; treat later-hard-end cases as censored/unresolved unless another historical run covers them.
+4. Search other historical precision products for complementary retained events to increase rescued-event coverage without GPU/Modal.
+5. If exact authorized source views are eventually recovered/proven, use the exact downstream modules/order for a complete CPU-only V5 replay; preserve `1209/891/113`, timing and tempo.
+6. Re-render V5 PDF only after downstream metadata completeness is proven.
+7. No Modal/L4 without fresh explicit authorization; do not use the professional reference/scorer for tuning.
+8. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
