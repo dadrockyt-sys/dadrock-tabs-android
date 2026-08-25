@@ -1,0 +1,109 @@
+name: v143 precision paid capture dispatch relay
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - debug/v143-contextual-prune/precision-v2-paid-capture-authorized.json
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      TARGET_BRANCH: v143-contextual-prune-lobo
+      AUTH_MARKER: debug/v143-contextual-prune/precision-v2-paid-capture-authorized.json
+      CAPTURE_LOCK: debug/v143-contextual-prune/precision-v2-capture-lock.json
+      CPU_RESULT: debug/v143-contextual-prune/precision-v2-cpu-guard-result.json
+      PROTECTED_BLOB: 7f72f8ed9b14af8bc93e95544195204d99c6bec1
+      APPROVED_AUDIO_SHA256: 215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f
+      AUTHORIZED_CPU_RUN_ID: '32801119456'
+      AUTHORIZED_CPU_SOURCE_SHA: 7d366e90019006bb0a98b83b1ba2039342eab8c9
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Validate explicit one-shot authorization marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/$TARGET_BRANCH"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git fetch origin "$TARGET_BRANCH"
+          test "$(git rev-parse "origin/$TARGET_BRANCH")" = "$GITHUB_SHA"
+          test ! -e "$CAPTURE_LOCK"
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = "$PROTECTED_BLOB"
+          test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = "$APPROVED_AUDIO_SHA256"
+          git merge-base --is-ancestor "$AUTHORIZED_CPU_SOURCE_SHA" HEAD
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          marker = json.loads(Path(os.environ['AUTH_MARKER']).read_text())
+          cpu = json.loads(Path(os.environ['CPU_RESULT']).read_text())
+          required_marker = {
+              'schemaVersion': 1,
+              'paidCaptureAuthorized': 'YES',
+              'authorizedPaidCaptureCount': 1,
+              'steps1Through5Authorized': True,
+              'targetBranch': os.environ['TARGET_BRANCH'],
+              'expectedProtectedPipelineBlob': os.environ['PROTECTED_BLOB'],
+              'expectedApprovedAudioSha256': os.environ['APPROVED_AUDIO_SHA256'],
+              'expectedCpuGuardRunId': int(os.environ['AUTHORIZED_CPU_RUN_ID']),
+              'expectedCpuGuardSourceSha': os.environ['AUTHORIZED_CPU_SOURCE_SHA'],
+              'professionalReferenceAuthorized': False,
+              'productionModificationAuthorized': False,
+          }
+          for key, expected in required_marker.items():
+              if marker.get(key) != expected:
+                  raise SystemExit(f'authorization marker mismatch: {key}')
+          if cpu.get('schemaVersion') != 7 or cpu.get('passed') is not True:
+              raise SystemExit('schema-7 CPU guard is not green')
+          for key in (
+              'captureReadinessPassed',
+              'deterministicTimingReplayPassed',
+              'deterministicVoicingReplayPassed',
+              'fixedBestRowAttackReplayPassed',
+              'paidFinalLockBindingPassed',
+              'precisionStrengthRecomputePassed',
+              'primaryRecomputePassed',
+              'replayArtifactValidatorSelfTestPassed',
+              'replayCaptureOrderPassed',
+              'replayCompareSelfTestPassed',
+              'replayCorruptionRejectionPassed',
+              'singlePaidCaptureStaticGuardPassed',
+              'sourceViewEvidenceBindingPassed',
+              'storedV2ReplayStrictPassed',
+              'zeroValuePreservationPassed',
+          ):
+              if cpu.get(key) is not True:
+                  raise SystemExit(f'CPU guard missing green {key}')
+          if int(cpu.get('runId') or -1) != int(os.environ['AUTHORIZED_CPU_RUN_ID']):
+              raise SystemExit('CPU guard runId mismatch')
+          if cpu.get('sourceSha') != os.environ['AUTHORIZED_CPU_SOURCE_SHA']:
+              raise SystemExit('CPU guard source SHA mismatch')
+          if cpu.get('protectedPipelineBlob') != os.environ['PROTECTED_BLOB']:
+              raise SystemExit('CPU guard protected blob mismatch')
+          if cpu.get('modalInvoked') is not False or cpu.get('newInferenceUsed') is not False:
+              raise SystemExit('CPU guard unexpectedly used paid/new inference')
+          if cpu.get('professionalReferenceUsed') is not False or cpu.get('productionModified') is not False:
+              raise SystemExit('CPU guard provenance boundary violated')
+          PY
+      - name: Dispatch exactly one authorized paid workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api --method POST \
+            "repos/${GITHUB_REPOSITORY}/actions/workflows/v143-repaired-timing-precision-candidate-product.yml/dispatches" \
+            -f ref="$TARGET_BRANCH" \
+            -f 'inputs[paid_capture_authorized]=YES'
+          echo 'paid_capture_dispatch_requested=true'
