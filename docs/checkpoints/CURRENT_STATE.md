@@ -80,19 +80,26 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; professional musical accu
 - Current seeded BS-RoFormer separator requires CUDA; normal GitHub CPU cannot reproduce that view exactly. No new Modal/GPU use is authorized.
 - Authorized run artifact `9548666053` was inspected and contains only manifest/product/guard/report/lock JSON, **not stems**.
 - Historical artifact API lookups for runs `32503444051` and `32806344264` currently return 404, so those specific run artifacts cannot presently be relied upon as stem storage.
-- Seeded-separator code history was identified for artifact archaeology: initial baseline-pinned candidate `8a5a52cca8fd970a05f759a07da5b03f0ee96b27` (Aug 19), then determinism commits `b5e5ed685bde7007a7762fbf1a834153affd0bd4`, `b71f1ae17e9cea5bb2f3ba26c09c6ca79716212e`, `dbbd2afcb642f21ea29d6166b3b4bc3f8e10e37f`, followed by Aug 24 seed/CUDA hardening commits. The initial push run only executed artifact cleanup, not separation.
-- Direct Actions queries on 2026-08-25 for the three Aug 19 determinism SHAs `b5e5ed685bde7007a7762fbf1a834153affd0bd4`, `b71f1ae17e9cea5bb2f3ba26c09c6ca79716212e`, and `dbbd2afcb642f21ea29d6166b3b4bc3f8e10e37f` each return `total_count=0`. These commits therefore have no retained Actions run from which an artifact can be recovered.
-- Therefore the preferred path remains locating any preserved workflow artifact containing the exact BS-RoFormer guitar view (or byte-identical source arrays); direct Demucs repeatability can be tested CPU-only if useful.
+- Seeded-separator code history was identified for artifact archaeology: initial baseline-pinned candidate `8a5a52cca8fd970a05f759a07da5b03f0ee96b27` (Aug 18), then determinism commits `b5e5ed685bde7007a7762fbf1a834153affd0bd4`, `b71f1ae17e9cea5bb2f3ba26c09c6ca79716212e`, `dbbd2afcb642f21ea29d6166b3b4bc3f8e10e37f`, followed by Aug 21/24 seed/CUDA/CPU hardening commits. The initial push run only executed artifact cleanup, not separation.
+- Direct Actions queries on 2026-08-25 for the three determinism SHAs `b5e5ed685bde7007a7762fbf1a834153affd0bd4`, `b71f1ae17e9cea5bb2f3ba26c09c6ca79716212e`, and `dbbd2afcb642f21ea29d6166b3b4bc3f8e10e37f` each return `total_count=0`. These commits therefore have no retained Actions run from which an artifact can be recovered.
+- Aug 21 separator-hardening SHA `42daa2df6520613c7500e89a33b19db24defb052` did execute V143 packaging + Modal-smoke workflows, but retained artifact APIs for runs `32453352974` and `32453353040` both return zero artifacts.
+- **Live historical artifact recovered:** Aug 24 SHA `f08641244b5a1f96a03e2563c601cffd14482e3e` (`Export deterministic CUDA separator startup env`) ran `V143 Dual-Band Cross-Container Behavior` as run `32684878077`. Its still-live artifact `9505412448`, `v143-dual-band-cross-container-behavior-log`, contains a 100,722-byte execution log only; it contains no audio stems.
+- That log proves the historical cascade path actually produced BS-RoFormer instrumental `input-normalized_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav`, then Demucs guitar which was consumed as `bsroformer-demucs6s-guitar.wav`. It therefore validates path/naming archaeology without invoking any new model compute.
+- The same diagnostic **failed cross-worker byte repeatability**: `directStemPcmExactAcrossWorkers=false` and `cascadeStemPcmExactAcrossWorkers=false`. Workers 1 and 3 agreed on direct file SHA `f26e282dd634dc96f31fa88d75b335e1d0d936554c4617b5cfe3c2493abab994` and cascade file SHA `277ec12dafe3809974e93a5a2df80e7e1c3f3e79275f389e0a318cc22fba86c8`, while worker 2 differed (`c464b66a670fb24f4794a0a02cb1c438d4d23b5886db874ecdd7f24d8ec31ca7`, `599a51f583312f05784becd7d104bb5ded21b43a2e884b905e397e8b275d2029`). This diagnostic artifact cannot be promoted to exact source recovery.
+- The diagnostic normalized input SHA was `ab64e7cdd8a792aecfb6eec518577d8d7e9d2f8aa43007e632470d9fe4511e7f`; because this differs from the approved full-source audio SHA and the artifact is a diagnostic, **do not assert its worker stems are the exact authorized V5 full-source views.** Use it only to guide later historical search.
+- Therefore the preferred path remains locating any preserved workflow artifact containing the exact BS-RoFormer guitar view (or byte-identical source arrays), especially later Aug 24 determinism runs after `f086412...`; direct Demucs repeatability can be tested CPU-only if useful.
 
 ## Current integrity
 - Protected runtime remains exact.
 - No Production/main change; no professional scorer/reference; no new Modal/L4 usage.
+- This continuation has downloaded/inspected historical GitHub Actions artifacts only; no historical workflow was rerun.
 - Exact downstream replay source is still present byte-identically on `v143-contextual-prune-lobo`; only source-view bytes block a faithful replay.
 
 ## Next exact actions
-1. Continue historical V143 workflow/checkpoint archaeology for preserved `bsroformer-demucs6s-guitar.wav`, `bsroformer-instrumental.wav`, or byte-identical analysis-view arrays, prioritizing other Aug 19–24 runs/checkpoints outside the three now-proven absent determinism SHAs.
-2. If exact BS-RoFormer source view is recovered, build a CPU-only V5 downstream replay using preserved BS-RoFormer view + exact direct Demucs reconstruction + the byte-identical downstream modules in the exact authorized call order; validate every rescued attack and preserve `1209/891/113`, timing and tempo.
-3. Re-render V5 PDF with recomputed downstream metadata and enforce renderer fidelity.
-4. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
-5. No Modal/L4 without fresh explicit authorization.
-6. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
+1. Continue historical V143 workflow/checkpoint archaeology for preserved `bsroformer-demucs6s-guitar.wav`, `bsroformer-instrumental.wav`, or byte-identical analysis-view arrays, prioritizing later Aug 24 separator determinism commits after `f086412...` and any branch-head/manual runs whose Actions head SHA differs from the code-change SHA.
+2. Inspect surviving determinism diagnostic logs/artifacts for exact source-view hashes and any stem-upload path; do not mistake short/diagnostic stem hashes for the authorized full-source V5 views.
+3. If exact BS-RoFormer source view is recovered, build a CPU-only V5 downstream replay using preserved BS-RoFormer view + exact direct Demucs reconstruction + the byte-identical downstream modules in the exact authorized call order; validate every rescued attack and preserve `1209/891/113`, timing and tempo.
+4. Re-render V5 PDF with recomputed downstream metadata and enforce renderer fidelity.
+5. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
+6. No Modal/L4 without fresh explicit authorization.
+7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
