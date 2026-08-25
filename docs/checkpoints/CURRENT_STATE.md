@@ -258,3 +258,14 @@ The one-shot capture path is now CPU-preflight green through source evidence, at
 - The protected runtime remains the required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
 - **No further Modal/L4 run is authorized.** All next precision work must use the persisted replay CPU-only until a new explicit authorization is given.
 - Immediate next work: remove the temporary retry relay/authorization marker after this checkpoint, then perform source-only CPU replay diagnostics/precision experiments from the saved schema-2 evidence. Do not professional-score yet.
+
+## Durable Modal-capture CPU fixture — 2026-08-24 23:24 America/Montreal
+- User requested preserving the last successful Modal work so future bug/precision testing can avoid repeated L4 runs.
+- Verified the expensive successful capture is already durable in Git at pinned commit `c1451df43cc1162ed2b38aa3f3300b7af4d9b527`; the commit contains the full `debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json` including schema-2 `precisionReplayEvidence`, plus replay validation, replay policy comparison and final capture lock.
+- The Actions artifact `v143-precision-v2-one-shot-32805316807` (artifact `9548666053`) is a secondary copy only; future CPU testing must not depend on its retention window.
+- Added permanent fixture manifest `analyzer/fixtures/v143_precision_v2_modal_capture_32805316807.json` at commit `87b4b698010fa11c62e76e061a2bbe91825de5ba`.
+- Added CPU-only materializer `analyzer/materialize_v143_precision_fixture.py` at commit `72f43d8c82629b9ff388fa0013fe6e06b024a660`. It reconstructs the exact four successful-run files directly from the pinned Git commit and verifies their SHA256 values before use.
+- Pinned hashes: candidate product `a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951`; replay validation `182247f2beda257a49cfb454b1e7fc920594ffe5ecce39f7b9517ed15b21b95a`; replay comparison `c77f923db45099f79df563e2c2d2487e46dceaef6f9469db8bd790f78f8cfcda`; capture lock `49898a441aed8519d96a71bc46c3e85d5d6c64c4be6da5398e9749ab1d6287be`.
+- Standard future path: materialize this pinned fixture and run source-only CPU replay diagnostics/precision experiments against it before considering any new inference.
+- **No Modal/L4 run is authorized or required for fixture reuse.** A new paid capture still requires fresh explicit user authorization and should only be considered if a needed source evidence dimension is genuinely absent from the preserved fixture.
+- No professional scorer/reference was invoked. `main` and Production remain untouched. Protected runtime remains exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
