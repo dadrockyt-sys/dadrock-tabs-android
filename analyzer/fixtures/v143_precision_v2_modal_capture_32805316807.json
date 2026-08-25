@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "classification": "pinned-paid-capture-cpu-replay-fixture",
+  "runId": 32805316807,
+  "artifactId": 9548666053,
+  "branch": "v143-contextual-prune-lobo",
+  "pinnedCommit": "c1451df43cc1162ed2b38aa3f3300b7af4d9b527",
+  "triggerSha": "74b0f815ff3f66f325220975c410621503de440f",
+  "policy": "envelope-balanced-secondary-v2",
+  "referenceFree": true,
+  "modalCaptureRequiredForReuse": false,
+  "professionalReferenceRequiredForReuse": false,
+  "files": {
+    "candidateProduct": {
+      "path": "debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json",
+      "sha256": "a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951"
+    },
+    "replayValidation": {
+      "path": "debug/v143-contextual-prune/precision-v2-replay-artifact-validation.json",
+      "sha256": "182247f2beda257a49cfb454b1e7fc920594ffe5ecce39f7b9517ed15b21b95a"
+    },
+    "replayPolicyCompare": {
+      "path": "debug/v143-contextual-prune/precision-v2-replay-policy-compare.json",
+      "sha256": "c77f923db45099f79df563e2c2d2487e46dceaef6f9469db8bd790f78f8cfcda"
+    },
+    "captureLock": {
+      "path": "debug/v143-contextual-prune/precision-v2-capture-lock.json",
+      "sha256": "49898a441aed8519d96a71bc46c3e85d5d6c64c4be6da5398e9749ab1d6287be"
+    }
+  },
+  "captureCounts": {
+    "inputAttacks": 984,
+    "eligibleAttacks": 984,
+    "retainedAttacks": 725,
+    "prunedAttacks": 259,
+    "originalPitchHypotheses": 7535,
+    "eligibleReplayPitchHypotheses": 10585,
+    "storedSelectedPitches": 970,
+    "renderedPitches": 967,
+    "voicingDrops": 3,
+    "measureStart": 1,
+    "measureEnd": 113
+  },
+  "reuse": {
+    "materializer": "analyzer/materialize_v143_precision_fixture.py",
+    "description": "Recover the exact successful paid capture from the pinned Git commit and run future precision diagnostics CPU-only. Do not dispatch Modal/L4 for tests that can consume this fixture."
+  }
+}
