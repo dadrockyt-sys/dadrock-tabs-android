@@ -11,7 +11,7 @@ on:
       - 'scripts/v143-professional-pdf-fixture.mjs'
       - 'public/DadRock-Tabs-Logo.png'
       - 'package.json'
-      - 'yarn.lock'
+      - 'package-lock.json'
 
 permissions:
   contents: write
@@ -33,9 +33,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
+          cache: npm
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: npm ci --ignore-scripts
       - name: Render professional fixture
         shell: bash
         run: |
