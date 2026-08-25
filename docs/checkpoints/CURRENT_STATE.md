@@ -212,3 +212,19 @@ The one-shot capture path is now CPU-preflight green through source evidence, at
 - CPU result commit / branch head immediately before this checkpoint save: `251933c9d1e592b9c875ea94c0227ea436e5cac9`.
 - The earlier run `32800965126` had all tests green but its result-persist step lost a concurrent JSON rebase race; run `32801119456` subsequently completed cleanly and is the authoritative preflight.
 - Paid capture has **not yet** been dispatched at this checkpoint. Next action is immediate protected-blob/head/lock reverification, then one manual dispatch with `paid_capture_authorized=YES` under the user's explicit authorization.
+
+## Paid-capture timeout recovery checkpoint — 2026-08-24 America/Montreal
+- The previously authorized one-shot paid workflow ran as GitHub Actions run `32801442757`. Reservation landed before Modal and exactly one Modal invocation occurred.
+- The Modal function timed out at exactly `1800s` while the second deterministic CPU Demucs pass was at `39/40`; the first direct Demucs pass had taken about 14m33s. This was a timeout-boundary failure, not a model crash.
+- No completed new candidate/replay product was accepted. Post-capture artifact validation, replay comparison, final lock, mutation/freeze and professional scoring were skipped.
+- Failure-path artifact salvage succeeded, but salvaged files are not a validated new capture product.
+- The paid attempt is now explicitly recorded as consumed in `debug/v143-contextual-prune/precision-v2-capture-lock.json`: schema 3, `captureState=failed_timeout`, `modalRunAttemptConsumed=true`, `singlePaidCaptureConsumed=true`, `automaticRetryAllowed=false`, `retryAuthorizationRequired=true`.
+- The temporary one-shot dispatch relay workflow and its authorization marker were deleted after use, preventing accidental reuse.
+- CPU-only timeout correction changed exactly one producer line: Modal function timeout `1800 -> 3000` seconds. Deterministic Demucs remains CPU-only/single-thread with its proven execution controls; no musical model/settings/path logic changed.
+- CPU guard run `32804303926` on source SHA `7bf45837aa6c784a24823d4dd4902a7744539444` is **GREEN**. Persisted schema-7 result reports `passed=true`, `paidFinalLockBindingPassed=true`, `modalInvoked=false`, `newInferenceUsed=false`, `professionalReferenceUsed=false`, `productionModified=false`.
+- A separate Product Proof run initially exposed a static anti-leakage false positive: its grep scanned checker code that intentionally contains a forbidden-token test string. Only that checker was removed from the grep target list; it remains compiled and executed as a safety checker.
+- Product Proof rerun `32804488611` is **GREEN** after the one-line workflow correction. The exact workflow diff was one deletion only.
+- Branch head immediately before this checkpoint save: `d568daaff3173a52d055467269677305f7a9b5f6`.
+- Protected runtime reverified at exact required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- `main`/Production remain untouched. Professional reference/scorer remains closed.
+- **Do not run another Modal/L4 capture from a generic “continue”. A second paid attempt requires fresh explicit user authorization.** If authorized later, preserve attempt-1 history, establish a new one-shot authorization/reservation, and dispatch exactly once with the corrected `3000s` timeout.
