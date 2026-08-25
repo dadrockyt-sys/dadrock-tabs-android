@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/v143-render-v5-shadow-professional-pdf.yml'
       - 'analyzer/materialize_v143_combined_content_shadow_v5_render_stream.py'
+      - 'analyzer/validate_v143_v5_neutral_metadata_policy.py'
       - 'analyzer/v143_contextual_prune_attack_shadow_v3_replay_validator.py'
       - 'analyzer/v143_contextual_prune_combined_content_shadow_v5_replay_validator.py'
       - 'analyzer/materialize_v143_precision_fixture.py'
@@ -59,6 +60,15 @@ jobs:
             debug/v143-contextual-prune/contextual-harmonic-primary-shadow-v4-validation.json \
             debug/v143-contextual-prune/combined-content-shadow-v5-validation.json \
             --output "$OUT/v5-render-stream.json" | tee "$OUT/materialize-report.txt"
+      - name: Validate conservative neutral metadata policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/v5-professional-pdf
+          PYTHONPATH=analyzer python3 analyzer/validate_v143_v5_neutral_metadata_policy.py \
+            debug/v143-contextual-prune-ci/pinned-capture/repaired-timing-precision-candidate-product.json \
+            "$OUT/v5-render-stream.json" \
+            --output "$OUT/neutral-metadata-policy-report.json"
       - uses: actions/setup-node@v4
         with:
           node-version: 20
