@@ -1,5 +1,0 @@
-authorized-by-user=true
-attempt=2
-reason=attempt-1-timeout-only
-timeout-seconds=3000
-relay-condition-fixed=true
