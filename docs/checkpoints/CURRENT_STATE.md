@@ -54,19 +54,23 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; professional musical accu
 - Sustain distribution from exact baseline: durationSteps 1:679, 2:144, 3:64, 4:31, 5:9, 6:8, 7:12, 8:5, 9:4, 10:4, 11:2, 12:1, 15:1, 16:1, 21:1, 26:1; tiers short 679 / medium 144 / long 144.
 - Existing techniques: 942 empty; 25 one-technique events = hammer-on 4, pull-off 4, slide-down 7, slide-up 10; all source `reference-free-audio-legato-evidence`.
 
-## Exact downstream implementation source — FOUND (major milestone)
-- The original authorized-run wrapper `analyzer/v143_repaired_timing_precision_candidate_product_modal.py` at trigger SHA `74b0f815ff3f66f325220975c410621503de440f` explicitly imports the exact downstream modules. We do **not** need to reverse-engineer thresholds.
-- Exact modules fetched from the historical trigger SHA (and key ones still exist on current branch):
-  - `analyzer/v143_rhythm_sustain_consensus_shadow.py`
-  - `analyzer/v143_precision_sustain_promotion.py`
-  - `analyzer/v143_rhythm_legato_evidence.py`
-  - `analyzer/v143_rhythm_semantic_primary_note_guard.py`
-  - `analyzer/v143_rhythm_bend_consensus.py`
-  - `analyzer/v143_rhythm_bend_evidence.py`
-- Exact sustain config in source: sample rate 44100, frame 4096, hop 512, harmonic count 4, sigma 38 cents, relative threshold 0.18, tail floor multiplier 2.4, absolute floor 1e-10, minimum view duration 0.04 s. Consensus requires both source views and max view-duration disagreement `<= max(0.06, 0.75 * stepSeconds)`; accepted duration is min(view durations), hard-ended before next same-string attack.
-- `v143_precision_sustain_promotion.py` promotes only when shadow duration exceeds detector duration and strict two-view agreement holds; attack/pitch are preserved.
-- `v143_rhythm_legato_evidence.py` is the exact reference-free cross-separated pitch-path/reattack implementation; bend and semantic guard source are also preserved.
-- **Do not invent or tune any replacement thresholds now that exact source is known.**
+## Exact downstream implementation source — FOUND and interface-mapped
+- The original authorized-run wrapper `analyzer/v143_repaired_timing_precision_candidate_product_modal.py` at trigger SHA `74b0f815ff3f66f325220975c410621503de440f` explicitly imports and calls the exact downstream modules. No threshold reconstruction is required or allowed.
+- Authorized replay order after candidate assembly is exact: `enrich_rhythm_assembly_with_consensus_bends(candidate.assembly, carrier_stem_paths=(direct,cascade))` -> `enrich_rhythm_assembly_with_legato(with_bends, carrier_stem_paths=(direct,cascade))` -> `guard_semantic_events(with_legato.events)` -> rebuild `RhythmEventAssemblyResult` -> `build_pitch_energy_view(direct/cascade)` -> `annotate_sustain_shadow(guarded.events, pitch_views, tempo_bpm=...)` -> `promote_candidate_sustain(events, tempo_bpm)`.
+- Trigger-SHA/current-branch blob identity is proven for the replay-critical modules:
+  - `v143_rhythm_bend_consensus.py` `7434e0e2ea8849942fa53d61a0efcc022638c2a2`
+  - `v143_rhythm_bend_evidence.py` `2f5a9e6d8feb90bad26f16de1ca59507f55e9ca3`
+  - `v143_rhythm_legato_evidence.py` `69991ecab59438f18321a42ed27fd9a7aa2c4390`
+  - `v143_rhythm_semantic_primary_note_guard.py` `d233b1982599c807248529744127da832d1eddbc`
+  - `v143_rhythm_sustain_consensus_shadow.py` `7bc16d01fd688394f22fd925c78544628fcb4b51`
+  - `v143_precision_sustain_promotion.py` `7542d726159795c42a3c54c17dd2f965bff2e327`
+  - helper `v143_rhythm_sustain_technique_enricher.py` `bbfb577d8528a9ddfebbb7fd448062c0274fb1c7`
+- Bend evidence builds `PitchEnergyView` from each separated stem using mono 22050 Hz audio, harmonic extraction margin 3.0, hop 256, CQT 48 bins/octave, 240 bins from C2. Bend consensus requires every available production carrier view (two when both exist) and identical bend semitone amount before annotation survives.
+- Legato exact interface is `enrich_rhythm_assembly_with_legato(assembly, *, carrier_stem_paths, view_builder=build_legato_view)`. It examines only the next selected event on the same mapped string; requires strict two-view consensus in production; skips pairs touching detected bends; then semantic guard strips audio-derived semantics from non-primary chord tones and invalid primary->secondary legato links without changing event count, attack timing, pitch, or string/fret.
+- Exact sustain shadow is `annotate_sustain_shadow(events, views, *, tempo_bpm)`. It uses the same per-stem `PitchEnergyView` harmonic CQT energy. Source constants: pre-onset window 0.12 s, pre-onset guard 0.03 s, attack window 0.10 s, sustain start offset 0.04 s, dynamic threshold fraction 0.18, max inactive gap 0.10 s, max sustain 3.0 s, same-string guard 0.01 s, 4 subdivisions/beat. Required views = min(2, available); consensus duration is conservatively the minimum supported duration across required views; same-string next attack hard-limits the window.
+- Correction to an earlier checkpoint note: `v143_precision_sustain_promotion.py` does **not** condition promotion on “shadow longer than detector.” It deterministically rewrites `rhythmSustain` for every event from `rhythmSustainShadow`, using a one-step default when no shadow is present. It preserves physical `onsetTime`, uses quantized `timeSeconds` as presentation start, and sets end/duration/offset from the promoted duration. This is the exact authorized source behavior and must be replayed unchanged.
+- `v143_rhythm_sustain_technique_enricher.py` provides the pre-shadow baseline detector from pitch-hypothesis onset/offset or max-duration plus explicit-technique-only labeling; long duration alone never invents let-ring/tie.
+- **Do not invent, tune, or substitute thresholds now that the exact authorized implementation and call order are known.**
 
 ## Remaining blocker: exact separated source views
 - Exact downstream code needs the two separated guitar source views used by the authorized run: `direct-demucs6s-guitar.wav` and `bsroformer-demucs6s-guitar.wav`.
@@ -76,18 +80,18 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; professional musical accu
 - Current seeded BS-RoFormer separator requires CUDA; normal GitHub CPU cannot reproduce that view exactly. No new Modal/GPU use is authorized.
 - Authorized run artifact `9548666053` was inspected and contains only manifest/product/guard/report/lock JSON, **not stems**.
 - Historical artifact API lookups for runs `32503444051` and `32806344264` currently return 404, so those specific run artifacts cannot presently be relied upon as stem storage.
+- Seeded-separator code history was identified for artifact archaeology: initial baseline-pinned candidate `8a5a52cca8fd970a05f759a07da5b03f0ee96b27` (Aug 19), then determinism commits `b5e5ed685bde7007a7762fbf1a834153affd0bd4`, `b71f1ae17e9cea5bb2f3ba26c09c6ca79716212e`, `dbbd2afcb642f21ea29d6166b3b4bc3f8e10e37f`, followed by Aug 24 seed/CUDA hardening commits. The initial push run only executed artifact cleanup, not separation.
 - Therefore the preferred path remains locating any preserved workflow artifact containing the exact BS-RoFormer guitar view (or byte-identical source arrays); direct Demucs repeatability can be tested CPU-only if useful.
 
 ## Current integrity
-- Branch head before the 2026-08-25 separator-provenance checkpoint update: `d6cecb794b93a3bbb6883948789f9dbcdbf3ecd0`.
 - Protected runtime remains exact.
 - No Production/main change; no professional scorer/reference; no new Modal/L4 usage.
+- Exact downstream replay source is still present byte-identically on `v143-contextual-prune-lobo`; only source-view bytes block a faithful replay.
 
 ## Next exact actions
-1. Search historical V143 workflow runs/artifacts for preserved `bsroformer-demucs6s-guitar.wav`, `bsroformer-instrumental.wav`, or byte-identical analysis-view arrays; prioritize runs that introduced/tested deterministic/seeded separator repeatability.
-2. Fully map exact legato/bend/semantic-guard function signatures and dependencies from trigger SHA `74b0...` so the replay wrapper uses source unchanged.
-3. If exact BS-RoFormer source view is recovered, build a CPU-only V5 downstream replay using preserved BS-RoFormer view + exact direct Demucs reconstruction + exact existing algorithms; validate every rescued attack and preserve `1209/891/113`, timing and tempo.
-4. Re-render V5 PDF with recomputed downstream metadata and enforce renderer fidelity.
-5. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
-6. No Modal/L4 without fresh explicit authorization.
-7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
+1. Continue historical V143 workflow/checkpoint archaeology for preserved `bsroformer-demucs6s-guitar.wav`, `bsroformer-instrumental.wav`, or byte-identical analysis-view arrays, prioritizing the Aug 19 seeded-separator determinism sequence and any deleted/renamed workflows associated with it.
+2. If exact BS-RoFormer source view is recovered, build a CPU-only V5 downstream replay using preserved BS-RoFormer view + exact direct Demucs reconstruction + the byte-identical downstream modules in the exact authorized call order; validate every rescued attack and preserve `1209/891/113`, timing and tempo.
+3. Re-render V5 PDF with recomputed downstream metadata and enforce renderer fidelity.
+4. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
+5. No Modal/L4 without fresh explicit authorization.
+6. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
