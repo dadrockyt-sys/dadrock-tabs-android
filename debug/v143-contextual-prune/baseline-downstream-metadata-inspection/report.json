@@ -1,0 +1,1307 @@
+{
+  "candidate": {
+    "eventCount": 967,
+    "measureCount": 113,
+    "measureRange": [
+      1,
+      113
+    ],
+    "path": "/home/runner/work/dadrock-tabs-android/dadrock-tabs-android/debug/v143-contextual-prune-ci/pinned-capture/repaired-timing-precision-candidate-product.json",
+    "sha256": "a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951",
+    "uniqueOnsets": 725
+  },
+  "candidateInterestPathsExcludingEvents": [
+    {
+      "length": 4,
+      "path": "$.techniques",
+      "sample": [
+        "hammer-on",
+        "pull-off",
+        "slide-down",
+        "slide-up"
+      ],
+      "type": "array"
+    },
+    {
+      "path": "$.assembly.selectedAttackCount",
+      "type": "int",
+      "value": 725
+    },
+    {
+      "keys": [
+        "candidateAddsUnobservedPitch",
+        "candidateRelocatesEvents",
+        "correctedAttackCount",
+        "everyCorrectedAttackRendered",
+        "productionModified",
+        "referenceFree",
+        "renderedNoteCount",
+        "renderedPitchCount",
+        "runtimeLabelsRequired",
+        "supportedPitchCount",
+        "voicingDroppedPitchCount"
+      ],
+      "path": "$.candidateDiagnostics",
+      "type": "object"
+    },
+    {
+      "path": "$.candidateDiagnostics.correctedAttackCount",
+      "type": "int",
+      "value": 725
+    },
+    {
+      "path": "$.candidateDiagnostics.everyCorrectedAttackRendered",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "keys": [
+        "baseEventCount",
+        "baseEventsPreserved",
+        "candidateRelocatesEvents",
+        "correctedEventCount",
+        "emptyMeasureFailSafeEnabled",
+        "localPeakRescueEnabled",
+        "observedSlotCount",
+        "productionModified",
+        "referenceFree",
+        "rescuedEventCount",
+        "rescuesAreObservedSlots",
+        "runtimeLabelsRequired",
+        "strictSlotCount",
+        "suppressedPitchCount"
+      ],
+      "path": "$.correctionDiagnostics",
+      "type": "object"
+    },
+    {
+      "keys": [
+        "attackTransientRatioExceptionFloor",
+        "attackTransientRatioFloor",
+        "candidateAddsUnobservedAttack",
+        "candidateAddsUnobservedPitch",
+        "candidateRelocatesEvents",
+        "emptyMeasureFailSafeEnabled",
+        "explicitPrimaryMidiComplete",
+        "explicitPrimaryMidiCount",
+        "failSafeAttackCount",
+        "fundamentalPromotionCount",
+        "harmonicSecondaryRawRatio",
+        "inputAttackCount",
+        "originalPitchHypothesisCount",
+        "productionModified",
+        "prunedAttackCount",
+        "referenceFree",
+        "retainedAttackCount",
+        "retainedPitchHypothesisCount",
+        "runtimeLabelsRequired",
+        "secondaryRawRatio",
+        "suppressedPitchCount"
+      ],
+      "path": "$.precisionDiagnostics",
+      "type": "object"
+    },
+    {
+      "path": "$.precisionDiagnostics.inputAttackCount",
+      "type": "int",
+      "value": 984
+    },
+    {
+      "path": "$.precisionDiagnostics.retainedAttackCount",
+      "type": "int",
+      "value": 725
+    },
+    {
+      "path": "$.precisionDiagnostics.prunedAttackCount",
+      "type": "int",
+      "value": 259
+    },
+    {
+      "path": "$.precisionDiagnostics.failSafeAttackCount",
+      "type": "int",
+      "value": 0
+    },
+    {
+      "path": "$.precisionDiagnostics.attackTransientRatioFloor",
+      "type": "float",
+      "value": 0.7
+    },
+    {
+      "path": "$.precisionDiagnostics.attackTransientRatioExceptionFloor",
+      "type": "float",
+      "value": 0.6
+    },
+    {
+      "path": "$.precisionDiagnostics.harmonicSecondaryRawRatio",
+      "type": "float",
+      "value": 0.92
+    },
+    {
+      "path": "$.precisionDiagnostics.candidateAddsUnobservedAttack",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "path": "$.precisionPolicy.nonHarmonicSecondaryConsensus",
+      "type": "str",
+      "value": "two-of-three-score-attack-body-at-legacy-0.80-floor"
+    },
+    {
+      "path": "$.precisionPolicy.harmonicUpperSecondaryConsensus",
+      "type": "str",
+      "value": "legacy-three-of-three-score-attack-body-at-0.92-floor"
+    },
+    {
+      "keys": [
+        "attackPolicyReplayReady",
+        "attacks",
+        "candidateAddsUnobservedAttack",
+        "candidateAddsUnobservedPitch",
+        "carrierMissingInputAttackKeys",
+        "eligibleAttackCount",
+        "eligibleAttacks",
+        "eligiblePitchHypothesisCount",
+        "fixedRetainedAttackPitchReplayReady",
+        "inputAttackCount",
+        "inputAttackKeys",
+        "originalPitchHypothesisCount",
+        "policy",
+        "precisionStrengthRecomputeReady",
+        "productionModified",
+        "professionalReferenceUsed",
+        "prunedAttackCount",
+        "referenceFree",
+        "replayCompleteness",
+        "retainedAttackCount",
+        "retainedOriginalPitchHypothesisCount",
+        "runtimeLabelsRequired",
+        "schemaVersion",
+        "sourceViewEvidenceReady",
+        "zeroValuePreservationReady"
+      ],
+      "path": "$.precisionReplayEvidence",
+      "type": "object"
+    },
+    {
+      "path": "$.precisionReplayEvidence.inputAttackCount",
+      "type": "int",
+      "value": 984
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttackCount",
+      "type": "int",
+      "value": 984
+    },
+    {
+      "path": "$.precisionReplayEvidence.retainedAttackCount",
+      "type": "int",
+      "value": 725
+    },
+    {
+      "path": "$.precisionReplayEvidence.prunedAttackCount",
+      "type": "int",
+      "value": 259
+    },
+    {
+      "length": 984,
+      "path": "$.precisionReplayEvidence.inputAttackKeys",
+      "type": "array"
+    },
+    {
+      "length": 0,
+      "path": "$.precisionReplayEvidence.carrierMissingInputAttackKeys",
+      "type": "array"
+    },
+    {
+      "length": 725,
+      "path": "$.precisionReplayEvidence.attacks",
+      "type": "array"
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].onsetTime",
+      "type": "float",
+      "value": 0.547780707
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[0].attack",
+      "type": "float",
+      "value": 2.625241
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[0].sustain",
+      "type": "float",
+      "value": 0.600708
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[0].viewA.attack",
+      "type": "float",
+      "value": 2.625241
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[0].viewA.sustain",
+      "type": "float",
+      "value": 0.600708
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[0].viewB.attack",
+      "type": "float",
+      "value": 2.647587
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[0].viewB.sustain",
+      "type": "float",
+      "value": 0.610179
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[1].attack",
+      "type": "float",
+      "value": 1.654098
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[1].sustain",
+      "type": "float",
+      "value": 1.466542
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[1].viewA.attack",
+      "type": "float",
+      "value": 1.677648
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[1].viewA.sustain",
+      "type": "float",
+      "value": 1.466542
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[1].viewB.attack",
+      "type": "float",
+      "value": 1.654098
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[1].viewB.sustain",
+      "type": "float",
+      "value": 1.469528
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[2].attack",
+      "type": "float",
+      "value": 2.085925
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[2].sustain",
+      "type": "float",
+      "value": 2.131627
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[2].viewA.attack",
+      "type": "float",
+      "value": 2.102069
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[2].viewA.sustain",
+      "type": "float",
+      "value": 2.131627
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[2].viewB.attack",
+      "type": "float",
+      "value": 2.085925
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[0].candidates[2].viewB.sustain",
+      "type": "float",
+      "value": 2.133097
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].onsetTime",
+      "type": "float",
+      "value": 0.925105028
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[0].attack",
+      "type": "float",
+      "value": -1.107102
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[0].sustain",
+      "type": "float",
+      "value": -0.623394
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[0].viewA.attack",
+      "type": "float",
+      "value": -1.100768
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[0].viewA.sustain",
+      "type": "float",
+      "value": -0.621352
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[0].viewB.attack",
+      "type": "float",
+      "value": -1.107102
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[0].viewB.sustain",
+      "type": "float",
+      "value": -0.623394
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[1].attack",
+      "type": "float",
+      "value": 1.697902
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[1].sustain",
+      "type": "float",
+      "value": 1.595216
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[1].viewA.attack",
+      "type": "float",
+      "value": 1.697902
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[1].viewA.sustain",
+      "type": "float",
+      "value": 1.595537
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[1].viewB.attack",
+      "type": "float",
+      "value": 1.69852
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[1].viewB.sustain",
+      "type": "float",
+      "value": 1.595216
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[2].attack",
+      "type": "float",
+      "value": 2.113227
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[2].sustain",
+      "type": "float",
+      "value": 0.170255
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[2].viewA.attack",
+      "type": "float",
+      "value": 2.113227
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[2].viewA.sustain",
+      "type": "float",
+      "value": 0.170255
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[2].viewB.attack",
+      "type": "float",
+      "value": 2.113326
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[1].candidates[2].viewB.sustain",
+      "type": "float",
+      "value": 0.171248
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].onsetTime",
+      "type": "float",
+      "value": 1.208727639
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[0].attack",
+      "type": "float",
+      "value": -0.195992
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[0].sustain",
+      "type": "float",
+      "value": 0.999022
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[0].viewA.attack",
+      "type": "float",
+      "value": -0.195992
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[0].viewA.sustain",
+      "type": "float",
+      "value": 0.999022
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[0].viewB.attack",
+      "type": "float",
+      "value": -0.195255
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[0].viewB.sustain",
+      "type": "float",
+      "value": 1.000167
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[1].attack",
+      "type": "float",
+      "value": 0.016853
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[1].sustain",
+      "type": "float",
+      "value": -0.129509
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[1].viewA.attack",
+      "type": "float",
+      "value": 0.016978
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[1].viewA.sustain",
+      "type": "float",
+      "value": -0.129509
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[1].viewB.attack",
+      "type": "float",
+      "value": 0.016853
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[1].viewB.sustain",
+      "type": "float",
+      "value": -0.128328
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[2].attack",
+      "type": "float",
+      "value": -0.615105
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[2].sustain",
+      "type": "float",
+      "value": 0.104639
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[2].viewA.attack",
+      "type": "float",
+      "value": -0.615105
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[2].viewA.sustain",
+      "type": "float",
+      "value": 0.104663
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[2].viewB.attack",
+      "type": "float",
+      "value": -0.614687
+    },
+    {
+      "path": "$.precisionReplayEvidence.attacks[2].candidates[2].viewB.sustain",
+      "type": "float",
+      "value": 0.104639
+    },
+    {
+      "length": 984,
+      "path": "$.precisionReplayEvidence.eligibleAttacks",
+      "type": "array"
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].onsetTime",
+      "type": "float",
+      "value": 0.547780707
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[0].attack",
+      "type": "float",
+      "value": 2.625241
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[0].sustain",
+      "type": "float",
+      "value": 0.600708
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[0].viewA.attack",
+      "type": "float",
+      "value": 2.625241
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[0].viewA.sustain",
+      "type": "float",
+      "value": 0.600708
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[0].viewB.attack",
+      "type": "float",
+      "value": 2.647587
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[0].viewB.sustain",
+      "type": "float",
+      "value": 0.610179
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[1].attack",
+      "type": "float",
+      "value": 1.654098
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[1].sustain",
+      "type": "float",
+      "value": 1.466542
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[1].viewA.attack",
+      "type": "float",
+      "value": 1.677648
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[1].viewA.sustain",
+      "type": "float",
+      "value": 1.466542
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[1].viewB.attack",
+      "type": "float",
+      "value": 1.654098
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[1].viewB.sustain",
+      "type": "float",
+      "value": 1.469528
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[2].attack",
+      "type": "float",
+      "value": 2.085925
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[2].sustain",
+      "type": "float",
+      "value": 2.131627
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[2].viewA.attack",
+      "type": "float",
+      "value": 2.102069
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[2].viewA.sustain",
+      "type": "float",
+      "value": 2.131627
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[2].viewB.attack",
+      "type": "float",
+      "value": 2.085925
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[0].candidates[2].viewB.sustain",
+      "type": "float",
+      "value": 2.133097
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].onsetTime",
+      "type": "float",
+      "value": 0.925105028
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[0].attack",
+      "type": "float",
+      "value": -1.107102
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[0].sustain",
+      "type": "float",
+      "value": -0.623394
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[0].viewA.attack",
+      "type": "float",
+      "value": -1.100768
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[0].viewA.sustain",
+      "type": "float",
+      "value": -0.621352
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[0].viewB.attack",
+      "type": "float",
+      "value": -1.107102
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[0].viewB.sustain",
+      "type": "float",
+      "value": -0.623394
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[1].attack",
+      "type": "float",
+      "value": 1.697902
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[1].sustain",
+      "type": "float",
+      "value": 1.595216
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[1].viewA.attack",
+      "type": "float",
+      "value": 1.697902
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[1].viewA.sustain",
+      "type": "float",
+      "value": 1.595537
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[1].viewB.attack",
+      "type": "float",
+      "value": 1.69852
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[1].viewB.sustain",
+      "type": "float",
+      "value": 1.595216
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[2].attack",
+      "type": "float",
+      "value": 2.113227
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[2].sustain",
+      "type": "float",
+      "value": 0.170255
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[2].viewA.attack",
+      "type": "float",
+      "value": 2.113227
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[2].viewA.sustain",
+      "type": "float",
+      "value": 0.170255
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[2].viewB.attack",
+      "type": "float",
+      "value": 2.113326
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[1].candidates[2].viewB.sustain",
+      "type": "float",
+      "value": 0.171248
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].onsetTime",
+      "type": "float",
+      "value": 1.208727639
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[0].attack",
+      "type": "float",
+      "value": -0.195992
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[0].sustain",
+      "type": "float",
+      "value": 0.999022
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[0].viewA.attack",
+      "type": "float",
+      "value": -0.195992
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[0].viewA.sustain",
+      "type": "float",
+      "value": 0.999022
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[0].viewB.attack",
+      "type": "float",
+      "value": -0.195255
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[0].viewB.sustain",
+      "type": "float",
+      "value": 1.000167
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[1].attack",
+      "type": "float",
+      "value": 0.016853
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[1].sustain",
+      "type": "float",
+      "value": -0.129509
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[1].viewA.attack",
+      "type": "float",
+      "value": 0.016978
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[1].viewA.sustain",
+      "type": "float",
+      "value": -0.129509
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[1].viewB.attack",
+      "type": "float",
+      "value": 0.016853
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[1].viewB.sustain",
+      "type": "float",
+      "value": -0.128328
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[2].attack",
+      "type": "float",
+      "value": -0.615105
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[2].sustain",
+      "type": "float",
+      "value": 0.104639
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[2].viewA.attack",
+      "type": "float",
+      "value": -0.615105
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[2].viewA.sustain",
+      "type": "float",
+      "value": 0.104663
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[2].viewB.attack",
+      "type": "float",
+      "value": -0.614687
+    },
+    {
+      "path": "$.precisionReplayEvidence.eligibleAttacks[2].candidates[2].viewB.sustain",
+      "type": "float",
+      "value": 0.104639
+    },
+    {
+      "path": "$.precisionReplayEvidence.fixedRetainedAttackPitchReplayReady",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "path": "$.precisionReplayEvidence.attackPolicyReplayReady",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "path": "$.precisionReplayEvidence.sourceViewEvidenceReady",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "path": "$.precisionReplayEvidence.candidateAddsUnobservedAttack",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "keys": [
+        "addsUnobservedAttack",
+        "addsUnobservedPitch",
+        "attackIdentityChanged",
+        "guard",
+        "harmonicStrongestAbovePromotedPrimaryCount",
+        "inspectedAttackCount",
+        "primaryMidiChanged",
+        "productionModified",
+        "professionalReferenceUsed",
+        "promotedPrimaryCount",
+        "referenceFree",
+        "relocatesAttack",
+        "runtimeLabelsRequired",
+        "schemaVersion",
+        "suppressedStrongestHarmonicCount"
+      ],
+      "path": "$.promotedHarmonicGuardDiagnostics",
+      "type": "object"
+    },
+    {
+      "path": "$.promotedHarmonicGuardDiagnostics.inspectedAttackCount",
+      "type": "int",
+      "value": 725
+    },
+    {
+      "path": "$.promotedHarmonicGuardDiagnostics.harmonicStrongestAbovePromotedPrimaryCount",
+      "type": "int",
+      "value": 96
+    },
+    {
+      "path": "$.promotedHarmonicGuardDiagnostics.suppressedStrongestHarmonicCount",
+      "type": "int",
+      "value": 96
+    },
+    {
+      "path": "$.promotedHarmonicGuardDiagnostics.attackIdentityChanged",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "path": "$.promotedHarmonicGuardDiagnostics.addsUnobservedAttack",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "path": "$.promotedHarmonicGuardDiagnostics.relocatesAttack",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "path": "$.semanticGuard.strippedSecondaryBends",
+      "type": "int",
+      "value": 0
+    },
+    {
+      "path": "$.semanticGuard.strippedAudioTechniqueLabels",
+      "type": "int",
+      "value": 18
+    },
+    {
+      "path": "$.semanticGuard.attackTimingChanged",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "path": "$.semanticGuard.stringFretChanged",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "keys": [
+        "annotatedEventCount",
+        "attackTimingChanged",
+        "eventCount",
+        "eventCountChanged",
+        "longerThanDetectorCount",
+        "pitchChanged",
+        "productionModified",
+        "referenceFree",
+        "runtimeLabelsRequired",
+        "shorterThanDetectorCount",
+        "tieOrLetRingInferred"
+      ],
+      "path": "$.sustainDiagnostics",
+      "type": "object"
+    },
+    {
+      "path": "$.sustainDiagnostics.attackTimingChanged",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "path": "$.sustainDiagnostics.tieOrLetRingInferred",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "path": "$.candidate.sourceSha256",
+      "type": "str",
+      "value": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+    },
+    {
+      "path": "$.candidate.sourceBytes",
+      "type": "int",
+      "value": 3478611
+    },
+    {
+      "path": "$.candidate.addsUnobservedAttack",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "path": "$.candidate.relocatesAttack",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "path": "$.preFreezeTrace.replayEvidenceSha256",
+      "type": "str",
+      "value": "2c42c590bd9ddb47e304b385b67319cd15873b2dd75953d17e90b9b16bb140a2"
+    },
+    {
+      "path": "$.preFreezeTrace.replayInputAttackCount",
+      "type": "int",
+      "value": 984
+    },
+    {
+      "path": "$.preFreezeTrace.replayEligibleAttackCount",
+      "type": "int",
+      "value": 984
+    },
+    {
+      "path": "$.preFreezeTrace.replayAttackCount",
+      "type": "int",
+      "value": 725
+    },
+    {
+      "path": "$.preFreezeTrace.attackPolicyReplayReady",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "path": "$.preFreezeTrace.sourceViewEvidenceReady",
+      "type": "bool",
+      "value": true
+    }
+  ],
+  "eventSchema": {
+    "candidateMode": {
+      "presentCount": 967,
+      "types": {
+        "str": 967
+      }
+    },
+    "dominantMidi": {
+      "presentCount": 967,
+      "types": {
+        "int": 967
+      }
+    },
+    "duration": {
+      "presentCount": 967,
+      "types": {
+        "float": 967
+      }
+    },
+    "end": {
+      "presentCount": 967,
+      "types": {
+        "float": 967
+      }
+    },
+    "eventIndex": {
+      "presentCount": 967,
+      "types": {
+        "int": 967
+      }
+    },
+    "fret": {
+      "presentCount": 967,
+      "types": {
+        "int": 967
+      }
+    },
+    "legatoContinuationFromEventIndex": {
+      "presentCount": 25,
+      "types": {
+        "int": 25
+      }
+    },
+    "legatoContinuationType": {
+      "presentCount": 25,
+      "types": {
+        "str": 25
+      }
+    },
+    "legatoEvidence": {
+      "presentCount": 25,
+      "types": {
+        "object": 25
+      }
+    },
+    "legatoTargetEventIndex": {
+      "presentCount": 25,
+      "types": {
+        "int": 25
+      }
+    },
+    "legatoTargetFret": {
+      "presentCount": 25,
+      "types": {
+        "int": 25
+      }
+    },
+    "legatoTargetMidi": {
+      "presentCount": 25,
+      "types": {
+        "int": 25
+      }
+    },
+    "measure": {
+      "presentCount": 967,
+      "types": {
+        "int": 967
+      }
+    },
+    "midi": {
+      "presentCount": 967,
+      "types": {
+        "int": 967
+      }
+    },
+    "noteMapping": {
+      "presentCount": 967,
+      "types": {
+        "object": 967
+      }
+    },
+    "offsetTime": {
+      "presentCount": 967,
+      "types": {
+        "float": 967
+      }
+    },
+    "onsetTime": {
+      "presentCount": 967,
+      "types": {
+        "float": 967
+      }
+    },
+    "physicalOnsetDeltaFromGridSeconds": {
+      "presentCount": 967,
+      "types": {
+        "float": 967
+      }
+    },
+    "pitchHypotheses": {
+      "presentCount": 967,
+      "types": {
+        "array": 967
+      }
+    },
+    "rhythmSustain": {
+      "presentCount": 967,
+      "types": {
+        "object": 967
+      }
+    },
+    "rhythmSustainShadow": {
+      "presentCount": 669,
+      "types": {
+        "object": 669
+      }
+    },
+    "rhythmTechniques": {
+      "presentCount": 967,
+      "types": {
+        "array": 967
+      }
+    },
+    "semanticPrimaryNoteGuard": {
+      "presentCount": 967,
+      "types": {
+        "object": 967
+      }
+    },
+    "start": {
+      "presentCount": 967,
+      "types": {
+        "float": 967
+      }
+    },
+    "step": {
+      "presentCount": 967,
+      "types": {
+        "int": 967
+      }
+    },
+    "stringIndex": {
+      "presentCount": 967,
+      "types": {
+        "int": 967
+      }
+    },
+    "stringName": {
+      "presentCount": 967,
+      "types": {
+        "str": 967
+      }
+    },
+    "timeSeconds": {
+      "presentCount": 967,
+      "types": {
+        "float": 967
+      }
+    },
+    "v143Rank": {
+      "presentCount": 967,
+      "types": {
+        "int": 967
+      }
+    },
+    "v143Score": {
+      "presentCount": 967,
+      "types": {
+        "float": 967
+      }
+    },
+    "v143Selected": {
+      "presentCount": 967,
+      "types": {
+        "bool": 967
+      }
+    }
+  },
+  "guards": {
+    "contentMutation": false,
+    "expectedEvents": 967,
+    "expectedMeasures": 113,
+    "expectedOnsets": 725,
+    "modalInvoked": false,
+    "professionalReferenceUsed": false
+  },
+  "nonNeutralPerformanceContexts": [],
+  "nonNeutralPerformanceEventCount": 0,
+  "performanceMetadataDistributions": {
+    "accent": {
+      "null": 967
+    },
+    "ghost": {
+      "null": 967
+    },
+    "harmonic": {
+      "null": 967
+    },
+    "letRing": {
+      "null": 967
+    },
+    "palmMute": {
+      "null": 967
+    },
+    "sustainSteps": {
+      "null": 967
+    },
+    "technique": {
+      "null": 967
+    },
+    "techniqueTargetFret": {
+      "null": 967
+    },
+    "techniqueTargetString": {
+      "null": 967
+    }
+  },
+  "performanceSignatureCounts": [
+    {
+      "count": 967,
+      "signature": {
+        "accent": null,
+        "ghost": null,
+        "harmonic": null,
+        "letRing": null,
+        "palmMute": null,
+        "sustainSteps": null,
+        "technique": null,
+        "techniqueTargetFret": null,
+        "techniqueTargetString": null
+      }
+    }
+  ],
+  "purpose": "evidence-only inspection; no inference or musical mutation",
+  "schemaVersion": "v143-baseline-downstream-metadata-inspection-v1",
+  "topLevel": {
+    "assembly": {
+      "length": 9,
+      "type": "object"
+    },
+    "audioDerivedMeasureCount": {
+      "type": "int"
+    },
+    "candidate": {
+      "length": 17,
+      "type": "object"
+    },
+    "candidateCount": {
+      "type": "int"
+    },
+    "candidateDiagnostics": {
+      "length": 11,
+      "type": "object"
+    },
+    "confidence": {
+      "type": "null"
+    },
+    "correctionDiagnostics": {
+      "length": 14,
+      "type": "object"
+    },
+    "difficulty": {
+      "type": "null"
+    },
+    "events": {
+      "length": 967,
+      "type": "array"
+    },
+    "generatedTab": {
+      "type": "str"
+    },
+    "keySignature": {
+      "type": "null"
+    },
+    "liveV143": {
+      "length": 7,
+      "type": "object"
+    },
+    "noteCount": {
+      "type": "int"
+    },
+    "preFreezeTrace": {
+      "length": 19,
+      "type": "object"
+    },
+    "precisionDiagnostics": {
+      "length": 21,
+      "type": "object"
+    },
+    "precisionPolicy": {
+      "length": 6,
+      "type": "object"
+    },
+    "precisionReplayEvidence": {
+      "length": 25,
+      "type": "object"
+    },
+    "promotedHarmonicGuardDiagnostics": {
+      "length": 15,
+      "type": "object"
+    },
+    "schemaVersion": {
+      "type": "int"
+    },
+    "selectedCount": {
+      "type": "int"
+    },
+    "semanticGuard": {
+      "length": 14,
+      "type": "object"
+    },
+    "sustainDiagnostics": {
+      "length": 11,
+      "type": "object"
+    },
+    "techniques": {
+      "length": 4,
+      "type": "array"
+    },
+    "tempo": {
+      "type": "float"
+    },
+    "timeSignature": {
+      "type": "str"
+    },
+    "timing": {
+      "length": 12,
+      "type": "object"
+    },
+    "tuning": {
+      "type": "str"
+    }
+  }
+}

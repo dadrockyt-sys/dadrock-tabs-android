@@ -1,0 +1,9 @@
+{
+  "candidateSha256": "a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951",
+  "events": 967,
+  "interestPaths": 168,
+  "measures": 113,
+  "nonNeutralPerformanceEvents": 0,
+  "onsets": 725,
+  "output": "debug/v143-contextual-prune/baseline-downstream-metadata-inspection/report.json"
+}
