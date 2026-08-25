@@ -1,0 +1,42 @@
+name: V143 research electric TabCNN fetch
+
+on:
+  pull_request:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - 'debug/v143-contextual-prune/research-electric-tabcnn-trigger.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  fetch-electric-tabcnn:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch public electric-guitar robust TabCNN checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://zenodo.org/records/11406378/files/best_TabCNN_tablature_trancription_model?download=1'
+          curl --fail --location --retry 5 --retry-delay 5 --user-agent 'DadRock-V143-research/1.0' --output best_TabCNN_tablature_trancription_model "$url"
+          test -s best_TabCNN_tablature_trancription_model
+          md5sum best_TabCNN_tablature_trancription_model | awk '{print $1}' > checkpoint-md5.txt
+          sha256sum best_TabCNN_tablature_trancription_model | awk '{print $1}' > checkpoint-sha256.txt
+          test "$(cat checkpoint-md5.txt)" = 'ce168b2cd426f81a2a78499214e40605'
+          bytes=$(wc -c < best_TabCNN_tablature_trancription_model | tr -d ' ')
+          printf 'source=Zenodo record 11406378\npaper=Leveraging Electric Guitar Tones and Effects to Improve Robustness in Guitar Tablature Transcription Modeling\nmodel=TabCNN trained with GuitarProFX\nbytes=%s\nmd5=%s\nsha256=%s\nresearch_only=true\n' \
+            "$bytes" "$(cat checkpoint-md5.txt)" "$(cat checkpoint-sha256.txt)" > checkpoint-manifest.txt
+
+      - name: Upload bounded research artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-public-electric-guitar-tabcnn-checkpoint
+          path: |
+            best_TabCNN_tablature_trancription_model
+            checkpoint-manifest.txt
+            checkpoint-md5.txt
+            checkpoint-sha256.txt
+          if-no-files-found: error
+          retention-days: 1
