@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import math
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -18,6 +19,16 @@ class ReplayVoicingValidationError(ValueError):
 def _require(condition: bool, message: str) -> None:
     if not condition:
         raise ReplayVoicingValidationError(message)
+
+
+def _finite(value: Any, label: str) -> float:
+    try:
+        number = float(value)
+    except (TypeError, ValueError) as exc:
+        raise ReplayVoicingValidationError(f"{label} is not numeric") from exc
+    if not math.isfinite(number):
+        raise ReplayVoicingValidationError(f"{label} is not finite")
+    return number
 
 
 def _expected_voicing(attack: Mapping[str, Any]) -> tuple[list[int], dict[int, dict[str, Any]]]:
@@ -79,6 +90,8 @@ def validate_product_voicing(product: Mapping[str, Any]) -> dict[str, Any]:
         key = (int(attack["measure"]), int(attack["step"]))
         _require(key not in attack_by_key, f"duplicate replay attack {key}")
         _require(attack.get("retained") is True, f"replay attack {key} is not retained")
+        _finite(attack.get("gridTime"), f"replay gridTime at {key}")
+        _finite(attack.get("onsetTime"), f"replay onsetTime at {key}")
         attack_by_key[key] = attack
         selected_total += sum(
             1
@@ -97,15 +110,19 @@ def validate_product_voicing(product: Mapping[str, Any]) -> dict[str, Any]:
     voicing_dropped_total = 0
     for key in sorted(attack_by_key):
         attack = attack_by_key[key]
+        grid_time = _finite(attack.get("gridTime"), f"replay gridTime at {key}")
+        onset_time = _finite(attack.get("onsetTime"), f"replay onsetTime at {key}")
         candidates = {
             int(item["midi"]): item
             for item in (attack.get("candidates") or [])
         }
-        primary = next(
+        primaries = [
             int(midi)
             for midi, item in candidates.items()
             if item.get("primary") is True
-        )
+        ]
+        _require(len(primaries) == 1, f"retained replay attack must have one primary at {key}")
+        primary = primaries[0]
         supported = {
             int(midi)
             for midi, item in candidates.items()
@@ -127,6 +144,24 @@ def validate_product_voicing(product: Mapping[str, Any]) -> dict[str, Any]:
             _require(str(event.get("stringName")) == str(position["stringName"]), f"string name mismatch at {key} MIDI {midi}")
             _require(int(event.get("fret")) == int(position["fret"]), f"fret mismatch at {key} MIDI {midi}")
             _require(int(event.get("dominantMidi")) == primary, f"dominant/primary mismatch at {key} MIDI {midi}")
+            _require(
+                math.isclose(
+                    _finite(event.get("timeSeconds"), f"event timeSeconds at {key} MIDI {midi}"),
+                    grid_time,
+                    rel_tol=0.0,
+                    abs_tol=1e-12,
+                ),
+                f"grid timing mismatch at {key} MIDI {midi}",
+            )
+            _require(
+                math.isclose(
+                    _finite(event.get("onsetTime"), f"event onsetTime at {key} MIDI {midi}"),
+                    onset_time,
+                    rel_tol=0.0,
+                    abs_tol=1e-12,
+                ),
+                f"physical onset mismatch at {key} MIDI {midi}",
+            )
             mapping = event.get("noteMapping") or {}
             _require(mapping.get("precisionPrimaryPreserved") is True, f"primary-preservation marker missing at {key}")
             _require(int(mapping.get("sourceAttackMidi")) == primary, f"sourceAttackMidi mismatch at {key}")
@@ -143,7 +178,7 @@ def validate_product_voicing(product: Mapping[str, Any]) -> dict[str, Any]:
         _require(int(diagnostics.get("supportedPitchCount")) == selected_total, "candidate supportedPitchCount mismatch")
 
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "classification": "v143-precision-deterministic-voicing-replay",
         "passed": True,
         "attackCount": len(attack_by_key),
@@ -152,6 +187,8 @@ def validate_product_voicing(product: Mapping[str, Any]) -> dict[str, Any]:
         "voicingDroppedPitchCount": voicing_dropped_total,
         "stringFretReplayMatches": True,
         "primaryPreservationMatches": True,
+        "gridTimingReplayMatches": True,
+        "physicalOnsetReplayMatches": True,
         "referenceFree": True,
         "newInferenceUsed": False,
         "professionalReferenceUsed": False,
@@ -159,10 +196,19 @@ def validate_product_voicing(product: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
-def _event_for(midi: int, position: Mapping[str, Any], *, primary: int) -> dict[str, Any]:
+def _event_for(
+    midi: int,
+    position: Mapping[str, Any],
+    *,
+    primary: int,
+    grid_time: float,
+    onset_time: float,
+) -> dict[str, Any]:
     return {
         "measure": 1,
         "step": 0,
+        "timeSeconds": float(grid_time),
+        "onsetTime": float(onset_time),
         "midi": int(midi),
         "dominantMidi": int(primary),
         "stringIndex": int(position["stringIndex"]),
@@ -180,6 +226,8 @@ def _self_test() -> None:
     attack = {
         "measure": 1,
         "step": 0,
+        "gridTime": 1.0,
+        "onsetTime": 1.0125,
         "retained": True,
         "candidateMidis": [60, 64, 67],
         "candidates": [
@@ -196,7 +244,16 @@ def _self_test() -> None:
             "professionalReferenceUsed": False,
             "attacks": [attack],
         },
-        "events": [_event_for(midi, voicing[midi], primary=60) for midi in expected_midis],
+        "events": [
+            _event_for(
+                midi,
+                voicing[midi],
+                primary=60,
+                grid_time=float(attack["gridTime"]),
+                onset_time=float(attack["onsetTime"]),
+            )
+            for midi in expected_midis
+        ],
         "candidateDiagnostics": {
             "supportedPitchCount": 3,
             "renderedPitchCount": len(expected_midis),
@@ -207,17 +264,37 @@ def _self_test() -> None:
     report = validate_product_voicing(product)
     assert report["passed"] is True
     assert report["stringFretReplayMatches"] is True
+    assert report["gridTimingReplayMatches"] is True
+    assert report["physicalOnsetReplayMatches"] is True
 
-    broken = copy.deepcopy(product)
-    broken["events"][0]["fret"] = int(broken["events"][0]["fret"]) + 1
+    broken_fret = copy.deepcopy(product)
+    broken_fret["events"][0]["fret"] = int(broken_fret["events"][0]["fret"]) + 1
     try:
-        validate_product_voicing(broken)
+        validate_product_voicing(broken_fret)
     except ReplayVoicingValidationError:
         pass
     else:
         raise AssertionError("voicing validator failed to reject corrupted fret")
 
-    print("PASS v143 precision deterministic voicing replay self-test")
+    broken_grid_time = copy.deepcopy(product)
+    broken_grid_time["events"][0]["timeSeconds"] = float(broken_grid_time["events"][0]["timeSeconds"]) + 0.1
+    try:
+        validate_product_voicing(broken_grid_time)
+    except ReplayVoicingValidationError:
+        pass
+    else:
+        raise AssertionError("voicing validator failed to reject corrupted grid time")
+
+    broken_onset = copy.deepcopy(product)
+    broken_onset["events"][0]["onsetTime"] = float(broken_onset["events"][0]["onsetTime"]) + 0.1
+    try:
+        validate_product_voicing(broken_onset)
+    except ReplayVoicingValidationError:
+        pass
+    else:
+        raise AssertionError("voicing validator failed to reject corrupted physical onset")
+
+    print("PASS v143 precision deterministic voicing/timing replay self-test")
 
 
 def main() -> None:
