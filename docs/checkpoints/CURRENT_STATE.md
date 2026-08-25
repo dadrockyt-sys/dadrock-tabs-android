@@ -239,3 +239,22 @@ The one-shot capture path is now CPU-preflight green through source evidence, at
 - No second Modal/L4 invocation occurred. No scorer/reference, render mutation, freeze, Production, or `main` change occurred.
 - No further free algorithmic change is justified before the carrier/replay capture; avoid speculative hardening or payload growth.
 - Next paid boundary is a **new explicitly authorized one-shot retry** using the already-corrected `3000s` timeout, while preserving attempt-1 history.
+
+## Successful paid retry completion checkpoint — 2026-08-24 23:06 America/Montreal
+- User gave fresh explicit authorization for exactly one paid Modal retry after the attempt-1 timeout.
+- The attempt-1 failed lock was preserved separately before retry; the active one-shot lock was cleared only for the newly authorized retry.
+- Authorized retry workflow run `32805316807` completed **successfully**. Every workflow step passed, including the single paid capture, candidate invariant validation, replay artifact exact-binding validator, CPU replay policy comparison, strict final lock, branch commit, and artifact preservation.
+- The corrected producer timeout was `3000s`. Exactly one Modal command was run for this retry; no automatic retry is allowed.
+- Successful capture/replay commit: `c1451df43cc1162ed2b38aa3f3300b7af4d9b527` (`Record single repaired-timing precision v2 capture with replay evidence`).
+- Final lock `debug/v143-contextual-prune/precision-v2-capture-lock.json` is now `captureState=completed`, `singlePaidCaptureConsumed=true`, `automaticRetryAllowed=false`.
+- Strict final-lock replay checks are all green: baseline attack replay, attack-policy replay, source-view evidence, precision-strength recomputation, zero preservation, independent primary recomputation, strict stored-v2 replay, deterministic voicing/string/fret, grid timing, and physical onset.
+- Replay mismatch counts are exactly zero: `primaryRecomputeMismatchAttackCount=0`, `v2ReplayMismatchAttackCount=0`.
+- Capture counts: input/eligible attacks `984`, retained attacks `725`, pruned attacks `259`; original observed pitch hypotheses `7535`; eligible replay pitch hypotheses `10585`; stored selected pitches `970`; rendered pitches `967`; voicing drops `3`; fail-safe attacks `0`; measures `1–113`.
+- CPU replay comparison: legacy recomputed selected pitches `891`; v2 selected pitches `970`; v2 adds `79`, removes `0`, across `75` changed attacks. Added-pitch weak-dimension counts: attack `47`, body `32`.
+- Deterministic voicing validation: `passed=true`, `stringFretReplayMatches=true`, `primaryPreservationMatches=true`, `gridTimingReplayMatches=true`, `physicalOnsetReplayMatches=true`.
+- Final lock hashes: candidate product SHA256 `a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951`; replay validation SHA256 `182247f2beda257a49cfb454b1e7fc920594ffe5ecce39f7b9517ed15b21b95a`; replay policy compare SHA256 `c77f923db45099f79df563e2c2d2487e46dceaef6f9469db8bd790f78f8cfcda`; events SHA256 `20fef66fdfd48b4e26ae3ec34fe215a4538375e6e6541a4c3f94b97e6fd8d547`; replay evidence SHA256 `2c42c590bd9ddb47e304b385b67319cd15873b2dd75953d17e90b9b16bb140a2`.
+- GitHub artifact `v143-precision-v2-one-shot-32805316807`, artifact ID `9548666053`, was preserved successfully; ZIP SHA256 `5104522aab3e6193c6b06fe3abb807994065f858a945a81070c611fc63707d4f`.
+- `professionalReferenceUsed=false`, `newInferenceUsed=false`, `productionModified=false`. `main`/Production remain untouched and the professional scorer remains CLOSED.
+- The protected runtime remains the required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- **No further Modal/L4 run is authorized.** All next precision work must use the persisted replay CPU-only until a new explicit authorization is given.
+- Immediate next work: remove the temporary retry relay/authorization marker after this checkpoint, then perform source-only CPU replay diagnostics/precision experiments from the saved schema-2 evidence. Do not professional-score yet.
