@@ -59,10 +59,12 @@ jobs:
             analyzer/v143_contextual_prune_precision_shadow_v2.py \
             analyzer/check_v143_precision_shadow_v2_policy.py \
             analyzer/v143_precision_replay_policy_compare.py \
+            analyzer/v143_precision_replay_artifact_validator.py \
             analyzer/check_v143_demucs_cpu_dispatch_controls.py \
             analyzer/check_v143_precision_capture_readiness.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_shadow_v2_policy.py
           python analyzer/v143_precision_replay_policy_compare.py --self-test
+          python analyzer/v143_precision_replay_artifact_validator.py --self-test
           PYTHONPATH=analyzer python analyzer/check_v143_demucs_cpu_dispatch_controls.py
           python analyzer/check_v143_precision_capture_readiness.py
           test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
@@ -271,6 +273,13 @@ jobs:
           if failures:
               raise SystemExit('candidate product invariant failure: ' + str(failures))
           PY
+      - name: Validate replay artifact exact binding
+        shell: bash
+        run: |
+          set -euo pipefail
+          python analyzer/v143_precision_replay_artifact_validator.py \
+            --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
+            --output debug/v143-contextual-prune/precision-v2-replay-artifact-validation.json
       - name: Build CPU replay policy comparison
         shell: bash
         run: |
@@ -290,11 +299,13 @@ jobs:
 
           product_path = Path('debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json')
           compare_path = Path('debug/v143-contextual-prune/precision-v2-replay-policy-compare.json')
+          validation_path = Path('debug/v143-contextual-prune/precision-v2-replay-artifact-validation.json')
           lock_path = Path('debug/v143-contextual-prune/precision-v2-capture-lock.json')
           product = json.loads(product_path.read_text())
           trace = product.get('preFreezeTrace') or {}
           candidate = product.get('candidate') or {}
           policy = product.get('precisionPolicy') or {}
+          validation = json.loads(validation_path.read_text())
           lock = json.loads(lock_path.read_text())
           if lock.get('captureState') != 'reserved_before_modal':
               raise SystemExit('capture lock was not reserved before Modal')
@@ -304,6 +315,12 @@ jobs:
               raise SystemExit('capture lock triggerSha mismatch')
           if trace.get('passed') is not True:
               raise SystemExit('cannot finalize a failed capture')
+          if validation.get('passed') is not True:
+              raise SystemExit('cannot finalize capture with failed replay artifact binding')
+          if validation.get('eventsSha256') != trace.get('eventsSha256'):
+              raise SystemExit('replay artifact validation events hash mismatch')
+          if validation.get('replayEvidenceSha256') != trace.get('replayEvidenceSha256'):
+              raise SystemExit('replay artifact validation replay hash mismatch')
           lock.update({
               'captureState': 'completed',
               'singlePaidCaptureConsumed': True,
@@ -316,6 +333,7 @@ jobs:
               'replayOriginalPitchHypothesisCount': int(trace['replayOriginalPitchHypothesisCount']),
               'candidateProductSha256': hashlib.sha256(product_path.read_bytes()).hexdigest(),
               'replayPolicyCompareSha256': hashlib.sha256(compare_path.read_bytes()).hexdigest(),
+              'replayArtifactValidationSha256': hashlib.sha256(validation_path.read_bytes()).hexdigest(),
               'professionalReferenceUsed': False,
               'productionModified': False,
           })
@@ -328,6 +346,7 @@ jobs:
           git add \
             debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
             debug/v143-contextual-prune/precision-v2-replay-policy-compare.json \
+            debug/v143-contextual-prune/precision-v2-replay-artifact-validation.json \
             debug/v143-contextual-prune/precision-v2-capture-lock.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -349,4 +368,5 @@ jobs:
           path: |
             debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json
             debug/v143-contextual-prune/precision-v2-replay-policy-compare.json
+            debug/v143-contextual-prune/precision-v2-replay-artifact-validation.json
             debug/v143-contextual-prune/precision-v2-capture-lock.json
