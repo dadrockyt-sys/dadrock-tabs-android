@@ -88,6 +88,12 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; professional musical accu
 - Confirmed one-shot runs so far: `32801442757` (failed, artifact `9547279904`) and `32805316807` (successful authorized, artifact `9548666053`).
 - Aug 25 branch Actions pagination contains `209` runs. Page 3 (oldest remaining nine runs around 01:18 UTC) contains no match for the one-shot workflow name, so any additional one-shot product run must be on pages 1–2 or another date/branch context.
 
+## Live continuation — 2026-08-25
+- Re-opened this exact branch checkpoint before continuing.
+- Enumerated the first two 100-run pages of branch Actions history and began filtering retained precision/candidate runs; no workflow was rerun and no Modal/L4 resource was invoked.
+- Confirmed this branch already contains extensive retained-artifact/source-view archaeology machinery, so the continuation is consuming those retained results rather than creating duplicate probes.
+- Immediate focus is to identify every distinct retained precision product/source view, test direct overlap with the exact `166` rescued attack positions / `242` rendered rescued V5 events, and only then decide whether any source-only downstream replay path remains.
+
 ## Current integrity
 - Protected runtime remains exact.
 - No Production/main change; no professional scorer/reference; no new Modal/L4 usage in this continuation.
