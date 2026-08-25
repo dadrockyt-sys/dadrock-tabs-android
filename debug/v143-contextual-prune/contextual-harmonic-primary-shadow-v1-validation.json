@@ -1,0 +1,32 @@
+{
+  "changedAttackIdentity": false,
+  "correctedPrimaryCount": 12,
+  "corrections": [
+    {"harmonicInterval":12,"measure":3,"neighborSupportCount":1,"newPrimary":40,"newSelected":[40],"oldPrimary":52,"oldSelected":[52],"step":3},
+    {"harmonicInterval":12,"measure":4,"neighborSupportCount":1,"newPrimary":52,"newSelected":[52],"oldPrimary":64,"oldSelected":[64],"step":9},
+    {"harmonicInterval":12,"measure":4,"neighborSupportCount":2,"newPrimary":52,"newSelected":[52],"oldPrimary":64,"oldSelected":[64],"step":10},
+    {"harmonicInterval":12,"measure":18,"neighborSupportCount":1,"newPrimary":52,"newSelected":[52,59],"oldPrimary":64,"oldSelected":[59,64],"step":11},
+    {"harmonicInterval":12,"measure":23,"neighborSupportCount":1,"newPrimary":52,"newSelected":[52],"oldPrimary":64,"oldSelected":[64],"step":8},
+    {"harmonicInterval":24,"measure":40,"neighborSupportCount":1,"newPrimary":40,"newSelected":[40],"oldPrimary":64,"oldSelected":[64],"step":12},
+    {"harmonicInterval":12,"measure":46,"neighborSupportCount":2,"newPrimary":52,"newSelected":[52],"oldPrimary":64,"oldSelected":[64],"step":10},
+    {"harmonicInterval":12,"measure":68,"neighborSupportCount":1,"newPrimary":52,"newSelected":[52,57],"oldPrimary":64,"oldSelected":[57,64],"step":14},
+    {"harmonicInterval":12,"measure":95,"neighborSupportCount":1,"newPrimary":50,"newSelected":[50,67],"oldPrimary":62,"oldSelected":[62,67],"step":0},
+    {"harmonicInterval":12,"measure":96,"neighborSupportCount":1,"newPrimary":52,"newSelected":[52],"oldPrimary":64,"oldSelected":[64],"step":12},
+    {"harmonicInterval":12,"measure":98,"neighborSupportCount":2,"newPrimary":52,"newSelected":[52],"oldPrimary":64,"oldSelected":[64],"step":10},
+    {"harmonicInterval":12,"measure":99,"neighborSupportCount":1,"newPrimary":52,"newSelected":[52],"oldPrimary":64,"oldSelected":[64],"step":11}
+  ],
+  "harmonicIntervals":{"12":11,"24":1},
+  "inputRetainedAttackCount":725,
+  "invalidPrimaryCount":0,
+  "inventedPitchCount":0,
+  "newPrimaryMidi64Count":192,
+  "oldPrimaryMidi64Count":202,
+  "outputRetainedAttackCount":725,
+  "policy":"same-measure-neighbor-supported-harmonic-primary-v1",
+  "primaryTransitions":{"52->40":1,"62->50":1,"64->40":1,"64->52":9},
+  "productionModified":false,
+  "professionalReferenceUsed":false,
+  "referenceFree":true,
+  "schemaVersion":1,
+  "validationPassed":true
+}
