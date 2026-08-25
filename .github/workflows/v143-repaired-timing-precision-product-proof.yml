@@ -64,7 +64,6 @@ jobs:
             analyzer/v143_precision_sustain_promotion.py \
             analyzer/check_v143_precision_sustain_onset_handoff.py \
             analyzer/v143_precision_promoted_harmonic_guard.py \
-            analyzer/check_v143_precision_promoted_harmonic_guard.py \
             validation/rhythm_holdout/prepare_repaired_timing_precision_candidate_freeze_payload.mjs \
             validation/rhythm_holdout/check_v143_precision_dual_timing_projection.mjs; then
             echo 'Forbidden scorer/source token in repaired-timing product path' >&2
