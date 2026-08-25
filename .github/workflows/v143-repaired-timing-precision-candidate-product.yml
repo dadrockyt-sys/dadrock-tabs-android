@@ -60,13 +60,17 @@ jobs:
             analyzer/check_v143_precision_shadow_v2_policy.py \
             analyzer/v143_precision_replay_policy_compare.py \
             analyzer/v143_precision_replay_artifact_validator.py \
+            analyzer/v143_precision_replay_voicing_validator.py \
+            analyzer/v143_precision_paid_capture_finalizer.py \
             analyzer/check_v143_demucs_cpu_dispatch_controls.py \
             analyzer/check_v143_precision_capture_readiness.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_shadow_v2_policy.py
-          python analyzer/v143_precision_replay_policy_compare.py --self-test
-          python analyzer/v143_precision_replay_artifact_validator.py --self-test
+          PYTHONPATH=analyzer python analyzer/v143_precision_replay_policy_compare.py --self-test
+          PYTHONPATH=analyzer python analyzer/v143_precision_replay_artifact_validator.py --self-test
+          PYTHONPATH=analyzer python analyzer/v143_precision_replay_voicing_validator.py --self-test
+          PYTHONPATH=analyzer python analyzer/v143_precision_paid_capture_finalizer.py --self-test
           PYTHONPATH=analyzer python analyzer/check_v143_demucs_cpu_dispatch_controls.py
-          python analyzer/check_v143_precision_capture_readiness.py
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_capture_readiness.py
           test "$(sha256sum public/gomywayfullaitest.m4a | awk '{print $1}')" = '215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f'
           test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
           test -f debug/v143-contextual-prune/repaired-timing-precision-single-pass-smoke.json
@@ -85,6 +89,8 @@ jobs:
             analyzer/check_v143_precision_shadow_v2_policy.py \
             analyzer/v143_precision_replay_policy_compare.py \
             analyzer/v143_precision_replay_artifact_validator.py \
+            analyzer/v143_precision_replay_voicing_validator.py \
+            analyzer/v143_precision_paid_capture_finalizer.py \
             analyzer/v143_contextual_prune_precision_candidate_events.py \
             analyzer/v143_seeded_separator.py \
             analyzer/v143_seeded_audio_separator_cli.py; then
@@ -167,6 +173,9 @@ jobs:
               'replay.referenceFree': replay.get('referenceFree'),
               'replay.fixedRetainedAttackPitchReplayReady': replay.get('fixedRetainedAttackPitchReplayReady'),
               'replay.attackPolicyReplayReady': replay.get('attackPolicyReplayReady'),
+              'replay.sourceViewEvidenceReady': replay.get('sourceViewEvidenceReady'),
+              'replay.precisionStrengthRecomputeReady': replay.get('precisionStrengthRecomputeReady'),
+              'replay.zeroValuePreservationReady': replay.get('zeroValuePreservationReady'),
           }
           for key, value in required_true.items():
               if value is not True:
@@ -287,6 +296,9 @@ jobs:
               'replayEligiblePitchHypothesisCount': replay_eligible_pitch_count,
               'replayOriginalPitchHypothesisCount': replay_pitch_count,
               'attackPolicyReplayReady': replay.get('attackPolicyReplayReady') is True,
+              'sourceViewEvidenceReady': replay.get('sourceViewEvidenceReady') is True,
+              'precisionStrengthRecomputeReady': replay.get('precisionStrengthRecomputeReady') is True,
+              'zeroValuePreservationReady': replay.get('zeroValuePreservationReady') is True,
               'protectedPipelineBlob': protected,
               'protectedPipelineUnchanged': protected == '7f72f8ed9b14af8bc93e95544195204d99c6bec1',
               'productionModified': False,
@@ -301,75 +313,27 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python analyzer/v143_precision_replay_artifact_validator.py \
+          PYTHONPATH=analyzer python analyzer/v143_precision_replay_artifact_validator.py \
             --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
             --output debug/v143-contextual-prune/precision-v2-replay-artifact-validation.json
       - name: Build CPU replay policy comparison
         shell: bash
         run: |
           set -euo pipefail
-          python analyzer/v143_precision_replay_policy_compare.py \
+          PYTHONPATH=analyzer python analyzer/v143_precision_replay_policy_compare.py \
             --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
             --output debug/v143-contextual-prune/precision-v2-replay-policy-compare.json
       - name: Finalize one-shot capture lock
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
-          import hashlib
-          import json
-          import os
-          from pathlib import Path
-
-          product_path = Path('debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json')
-          compare_path = Path('debug/v143-contextual-prune/precision-v2-replay-policy-compare.json')
-          validation_path = Path('debug/v143-contextual-prune/precision-v2-replay-artifact-validation.json')
-          lock_path = Path('debug/v143-contextual-prune/precision-v2-capture-lock.json')
-          product = json.loads(product_path.read_text())
-          trace = product.get('preFreezeTrace') or {}
-          candidate = product.get('candidate') or {}
-          policy = product.get('precisionPolicy') or {}
-          validation = json.loads(validation_path.read_text())
-          lock = json.loads(lock_path.read_text())
-          if lock.get('captureState') != 'reserved_before_modal':
-              raise SystemExit('capture lock was not reserved before Modal')
-          if int(lock.get('runId') or -1) != int(os.environ['GITHUB_RUN_ID']):
-              raise SystemExit('capture lock runId mismatch')
-          if str(lock.get('triggerSha') or '') != os.environ['GITHUB_SHA']:
-              raise SystemExit('capture lock triggerSha mismatch')
-          if trace.get('passed') is not True:
-              raise SystemExit('cannot finalize a failed capture')
-          if validation.get('passed') is not True:
-              raise SystemExit('cannot finalize capture with failed replay artifact binding')
-          if validation.get('baselineAttackReplayMatches') is not True or validation.get('attackPolicyReplayReady') is not True:
-              raise SystemExit('cannot finalize capture without exact attack-policy replay')
-          if validation.get('eventsSha256') != trace.get('eventsSha256'):
-              raise SystemExit('replay artifact validation events hash mismatch')
-          if validation.get('replayEvidenceSha256') != trace.get('replayEvidenceSha256'):
-              raise SystemExit('replay artifact validation replay hash mismatch')
-          lock.update({
-              'captureState': 'completed',
-              'singlePaidCaptureConsumed': True,
-              'automaticRetryAllowed': False,
-              'approvedAudioSha256': str(candidate['sourceSha256']),
-              'policy': str(policy['name']),
-              'eventsSha256': str(trace['eventsSha256']),
-              'replayEvidenceSha256': str(trace['replayEvidenceSha256']),
-              'replayInputAttackCount': int(validation['inputAttackCount']),
-              'replayEligibleAttackCount': int(validation['eligibleAttackCount']),
-              'replayAttackCount': int(validation['retainedAttackCount']),
-              'replayEligiblePitchHypothesisCount': int(validation['eligiblePitchHypothesisCount']),
-              'replayOriginalPitchHypothesisCount': int(validation['originalPitchHypothesisCount']),
-              'attackPolicyReplayReady': True,
-              'baselineAttackReplayMatches': True,
-              'candidateProductSha256': hashlib.sha256(product_path.read_bytes()).hexdigest(),
-              'replayPolicyCompareSha256': hashlib.sha256(compare_path.read_bytes()).hexdigest(),
-              'replayArtifactValidationSha256': hashlib.sha256(validation_path.read_bytes()).hexdigest(),
-              'professionalReferenceUsed': False,
-              'productionModified': False,
-          })
-          lock_path.write_text(json.dumps(lock, indent=2, sort_keys=True) + '\n')
-          PY
+          PYTHONPATH=analyzer python analyzer/v143_precision_paid_capture_finalizer.py \
+            --product debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
+            --compare debug/v143-contextual-prune/precision-v2-replay-policy-compare.json \
+            --validation debug/v143-contextual-prune/precision-v2-replay-artifact-validation.json \
+            --lock debug/v143-contextual-prune/precision-v2-capture-lock.json \
+            --run-id "$GITHUB_RUN_ID" \
+            --trigger-sha "$GITHUB_SHA"
       - name: Commit pre-freeze candidate diagnostic
         shell: bash
         run: |
