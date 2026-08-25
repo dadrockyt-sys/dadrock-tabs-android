@@ -70,20 +70,23 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; professional musical accu
 
 ## Remaining blocker: exact separated source views
 - Exact downstream code needs the two separated guitar source views used by the authorized run: `direct-demucs6s-guitar.wav` and `bsroformer-demucs6s-guitar.wav`.
-- Original wrapper creates them via `analyzer/v143_deterministic_separator.py` and `analyzer/v143_seeded_separator.py`, seed `1430317`.
-- Current seeded BS-RoFormer separator requires CUDA; normal GitHub CPU cannot reproduce it exactly. No new Modal/GPU use is authorized.
+- Original wrapper creates them via `analyzer/v143_deterministic_separator.py` and `analyzer/v143_seeded_separator.py`.
+- Authorized trigger `74b0f815...` and current branch both prove the exact Demucs musical parameters are `shifts=1`, `overlap=0.10`, `segment=6`; there is no separator-flag drift between those revisions.
+- Authorized run `32805316807`, job `97674196169` logs show the direct Demucs stage ran CPU-only; BS-RoFormer is the CUDA/GPU stage. Therefore the direct source view can be reproduced without Modal/GPU, while the BS-RoFormer/cascade view remains the external-compute blocker unless preserved bytes are recovered.
+- Current seeded BS-RoFormer separator requires CUDA; normal GitHub CPU cannot reproduce that view exactly. No new Modal/GPU use is authorized.
 - Authorized run artifact `9548666053` was inspected and contains only manifest/product/guard/report/lock JSON, **not stems**.
-- Therefore the preferred path is to locate an earlier preserved workflow artifact containing the exact two guitar stems (or their byte-identical source arrays), then run exact downstream replay CPU-only from those preserved views.
+- Historical artifact API lookups for runs `32503444051` and `32806344264` currently return 404, so those specific run artifacts cannot presently be relied upon as stem storage.
+- Therefore the preferred path remains locating any preserved workflow artifact containing the exact BS-RoFormer guitar view (or byte-identical source arrays); direct Demucs repeatability can be tested CPU-only if useful.
 
 ## Current integrity
-- Branch head before this checkpoint update: `d6cecb794b93a3bbb6883948789f9dbcdbf3ecd0`.
+- Branch head before the 2026-08-25 separator-provenance checkpoint update: `d6cecb794b93a3bbb6883948789f9dbcdbf3ecd0`.
 - Protected runtime remains exact.
 - No Production/main change; no professional scorer/reference; no new Modal/L4 usage.
 
 ## Next exact actions
-1. Search historical V143 workflow runs/artifacts for preserved `direct-demucs6s` and `bsroformer-demucs6s` guitar stems or byte-identical analysis-view arrays; prioritize runs that introduced/tested deterministic/seeded separator repeatability.
+1. Search historical V143 workflow runs/artifacts for preserved `bsroformer-demucs6s-guitar.wav`, `bsroformer-instrumental.wav`, or byte-identical analysis-view arrays; prioritize runs that introduced/tested deterministic/seeded separator repeatability.
 2. Fully map exact legato/bend/semantic-guard function signatures and dependencies from trigger SHA `74b0...` so the replay wrapper uses source unchanged.
-3. If exact source views are recovered, build a CPU-only V5 downstream replay using **only** preserved stems + exact existing algorithms; validate every rescued attack and preserve `1209/891/113`, timing and tempo.
+3. If exact BS-RoFormer source view is recovered, build a CPU-only V5 downstream replay using preserved BS-RoFormer view + exact direct Demucs reconstruction + exact existing algorithms; validate every rescued attack and preserve `1209/891/113`, timing and tempo.
 4. Re-render V5 PDF with recomputed downstream metadata and enforce renderer fidelity.
 5. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
 6. No Modal/L4 without fresh explicit authorization.
