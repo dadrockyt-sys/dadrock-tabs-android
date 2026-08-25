@@ -11,6 +11,7 @@ PRODUCER = ROOT / "analyzer/v143_repaired_timing_precision_candidate_product_mod
 POLICY = ROOT / "analyzer/v143_contextual_prune_precision_shadow_v2.py"
 REPLAY = ROOT / "analyzer/v143_precision_replay_policy_compare.py"
 VALIDATOR = ROOT / "analyzer/v143_precision_replay_artifact_validator.py"
+VOICING_VALIDATOR = ROOT / "analyzer/v143_precision_replay_voicing_validator.py"
 CORRUPTION_CHECK = ROOT / "analyzer/check_v143_precision_replay_corruption_rejection.py"
 CAPTURE_ORDER_CHECK = ROOT / "analyzer/check_v143_precision_replay_capture_order.py"
 PROTECTED = ROOT / "analyzer/v143_reference_free_rhythm_pipeline.py"
@@ -36,7 +37,6 @@ def ordered(text: str, *needles: str) -> bool:
 
 
 def main() -> None:
-    # These are CPU-only source-integrity checks and run before any reservation.
     check_replay_corruption_rejection()
     check_replay_capture_order()
 
@@ -45,6 +45,7 @@ def main() -> None:
     policy = POLICY.read_text(encoding="utf-8")
     replay = REPLAY.read_text(encoding="utf-8")
     validator = VALIDATOR.read_text(encoding="utf-8")
+    voicing_validator = VOICING_VALIDATOR.read_text(encoding="utf-8")
     corruption_check = CORRUPTION_CHECK.read_text(encoding="utf-8")
     capture_order_check = CAPTURE_ORDER_CHECK.read_text(encoding="utf-8")
 
@@ -87,36 +88,34 @@ def main() -> None:
 
     require("import modal" not in replay and ".remote(" not in replay and "modal run" not in replay, "CPU replay path contains Modal usage")
     require("import modal" not in validator and ".remote(" not in validator and "modal run" not in validator, "replay validator contains Modal usage")
-    require("validate_product(" in validator and "_self_test()" in validator, "replay validator API/self-test missing")
-    require('replay.get("schemaVersion") == 2' in validator, "replay validator does not require schemaVersion 2")
+    require("import modal" not in voicing_validator and ".remote(" not in voicing_validator and "modal run" not in voicing_validator, "voicing replay contains Modal usage")
+
     for token in (
-        "baselineAttackReplayMatches",
-        "sourceViewEvidenceMatches",
-        "precisionStrengthRecomputeMatches",
-        "zeroValuePreservationMatches",
-        "_legacy_strength(",
-        "_recompute_attack_policy(",
-        "eligibleAttackCount",
-        "eligiblePitchHypothesisCount",
+        "validate_product(", "_self_test()", 'replay.get("schemaVersion") == 2',
+        "baselineAttackReplayMatches", "sourceViewEvidenceMatches", "precisionStrengthRecomputeMatches",
+        "zeroValuePreservationMatches", "_legacy_strength(", "_recompute_attack_policy(",
+        "eligibleAttackCount", "eligiblePitchHypothesisCount",
     ):
         require(token in validator, f"replay validator token missing: {token}")
 
     for token in (
-        "_recomputed_primary_midi(",
-        "_verified_primary_midi(",
-        "primaryRecomputeMatches",
-        "primaryRecomputeMismatchAttackCount",
-        "storedV2ReplayMatches",
-        "v2ReplayMismatchAttackCount",
-        "stored v2 selection disagrees with independent CPU replay",
+        "_recomputed_primary_midi(", "_verified_primary_midi(", "primaryRecomputeMatches",
+        "primaryRecomputeMismatchAttackCount", "storedV2ReplayMatches", "v2ReplayMismatchAttackCount",
+        "stored v2 selection disagrees with independent CPU replay", "validate_product_voicing",
+        'report["voicingValidation"]',
     ):
         require(token in replay, f"strict pitch replay token missing: {token}")
+
+    for token in (
+        "validate_product_voicing(", "_expected_voicing(", "resolve_joint_chord_voicing(",
+        "stringFretReplayMatches", "primaryPreservationMatches", "voicingDroppedPitchCount",
+    ):
+        require(token in voicing_validator, f"voicing replay token missing: {token}")
 
     require("two-view aggregate mismatch" in corruption_check, "corruption guard lacks two-view mismatch test")
     require("precision strength mismatch" in corruption_check, "corruption guard lacks strength mismatch test")
     require("grid/onset error mismatch" in corruption_check, "corruption guard lacks grid/onset mismatch test")
     require("-= 0.20" in corruption_check, "two-view corruption must force aggregate minimum to change")
-
     require("post-harmonic-guard and pre-voicing" in capture_order_check, "capture-order scope assertion missing")
     require("carrier.rows" in capture_order_check and "carrier.grid" in capture_order_check, "capture-order source binding missing")
 
@@ -146,7 +145,6 @@ def main() -> None:
     require(workflow.find('test "$GITHUB_REF" = "refs/heads/$TARGET_BRANCH"') < reserve_pos, "branch identity gate must run before reservation")
     require(workflow.find('test "$(git rev-parse "origin/$TARGET_BRANCH")" = "$GITHUB_SHA"') < reserve_pos, "remote-head binding gate must run before reservation")
     require(workflow.find('if test -f "$lock"; then') < reserve_pos, "preexisting-lock refusal must run before reservation")
-
     require(len(PROTECTED.read_bytes()) > 0, "protected pipeline unexpectedly empty")
 
     print("v143 precision capture readiness checks passed")
@@ -162,6 +160,7 @@ def main() -> None:
     print("zero_value_preservation=true")
     print("primary_recompute_binding=true")
     print("stored_v2_replay_strict=true")
+    print("deterministic_voicing_replay=true")
     print("negative_corruption_rejection=true")
     print("replay_capture_order_guarded=true")
     print("fixed_best_row_attack_replay_universe=true")
