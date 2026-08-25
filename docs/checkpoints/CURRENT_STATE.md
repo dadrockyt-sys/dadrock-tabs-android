@@ -8,9 +8,9 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; musical accuracy first, P
 - Work only on `v143-contextual-prune-lobo`; never modify/merge `main` or Production.
 - Protected `analyzer/v143_reference_free_rhythm_pipeline.py` must remain Git blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
 - Approved source SHA256: `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f`.
-- Professional reference/scorer is CLOSED. No tuning/selection from it.
+- Source-only candidate is now irreversibly frozen. The professional reference/scorer may be opened only for the one final immutable holdout; **no tuning, candidate modification, or candidate selection may follow from its results.**
 - No Modal/L4 without fresh explicit user authorization. **None is currently authorized.**
-- Timing frozen unless new source-only evidence proves otherwise; tempo exactly `129.19921875`.
+- Timing frozen; tempo exactly `129.19921875`.
 - Completion gate remains score >= `0.99`, critical mismatches `0`, PDF fidelity `1.0`. **Rhythm is NOT complete.**
 
 ## Frozen content state
@@ -21,7 +21,7 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; musical accuracy first, P
 - Combined V5 validation commit `b0dce933d8686d0dbd1c1a7da78460053a71739f`; SHA256 `eb2cd7172ec2edd49e37709b1a4b638c0eb61607524827b3192993ab4b0d52ee`.
 - V5 exact: `891` attacks / `1214` selected / `1209` rendered / `5` voicing drops / `113` measures. No invented/unplayable pitch, attack relocation, or timing change.
 - Exact V5 render stream has `967` `v5AttackClass=baseline` events + **242 exact `v5AttackClass=rescued` events**. The rescued event set is explicit; no rescue-policy reconstruction is needed.
-- Exact baseline performance metadata is preserved on `933` V5 events. The `34` corrected-primary notes + `242` rescued notes are now explicitly validated under a conservative neutral metadata fallback rather than treated as unresolved reconstructed semantics.
+- Exact baseline performance metadata is preserved on `933` V5 events. The `34` corrected-primary notes + `242` rescued notes use the validated conservative neutral metadata fallback.
 
 ## PDF state
 - Renderer upgrade commit `08ee3bcc1cec3428641741a8281206aa4218cb8d`; V5 materializer commit `a6505ba21e30af1b0e985b945de71ae3698bf08f`.
@@ -96,25 +96,28 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; musical accuracy first, P
 - Current render script `scripts/v143-render-v5-shadow-pdf.mjs` explicitly refuses any input whose `freezeReady` is not `false`, then emits `freezeReady:false` in its render report. The render sentinel is therefore deliberate, not a failed render invariant.
 - **Conclusion:** all observed `freezeReady=false` values are final-gate safety sentinels. They must remain false and must not be weakened to represent source-only freeze readiness.
 
-## Source-only frozen candidate — MATERIALIZED; VALIDATION RUN ACTIVE
+## Source-only frozen candidate — VALIDATED / FROZEN
 - Pre-freeze branch commit pinned by manifest: `f415bf180fc402a3aa8292304a90b4916d32a5d3`.
 - Frozen-candidate manifest created in commit `1525f04c9b1750860afe7070bebc4eeae1947f0c`: `debug/v143-contextual-prune/v5-professional-pdf/source-only-frozen-candidate-manifest.json`.
 - Manifest pins protected runtime, materializer, neutral validator, renderer, render contract, V3/V4/V5 evidence blobs, exact render stream/PDF/inspection blobs, known SHA256 identities, counts, tempo, and closed-gate semantics.
 - Source-only freeze validator created in commit `17254353bb64944f410741792052f3ea85aaeaef`: `analyzer/validate_v143_v5_source_only_frozen_candidate.py`.
 - Dedicated CPU-only validation workflow created in commit `f771707af5ed5ae16efbc36c199eb6f3a1d1b479`: `.github/workflows/v143-validate-source-only-frozen-candidate.yml`.
-- Workflow run `32872086764` is validating the frozen candidate entirely from committed Git bytes; no professional reference/scorer and no Modal are involved.
+- Workflow run `32872086764` completed **SUCCESS**. Persisted report: `debug/v143-contextual-prune/v5-professional-pdf/source-only-freeze-validation-report.json`, Git blob `2f28ca4d382b0cbe78dabfdc647691edfbbba78e`.
+- Report verdict: `sourceOnlyFreezeValidationPassed=true`, `sourceOnlyFrozen=true`, all checks true, `mismatches=[]`, `referenceFree=true`, `professionalReferenceUsed=false`, `professionalHoldoutOpened=false`, `modalInvoked=false`, `productionModified=false`.
+- Exact Git-blob pins and exact SHA256 pins all passed from committed branch bytes. Counts, tempo, neutral policy, render report, render stream, PDF, and inspection evidence all passed their frozen identities.
 - Existing final-gate `freezeReady=false` sentinels remain intentionally untouched.
+- **Candidate is now immutable. No content, timing, metadata, renderer-driven selection, threshold tuning, or candidate replacement is permitted before or after opening the final professional holdout.**
 
 ## Current integrity
 - Protected runtime untouched.
 - `main`/Production untouched.
-- No professional reference/scorer used.
+- Source-only freeze was completed without professional reference/scorer access.
 - No Modal/L4 used in this continuation.
 - Current persisted hashes remain render stream `7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2`, PDF `f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5`, inspection first `33693e32ee4a578e48f7e96360d0c06191bf0fff16f68d76d97e1e384f1aa5f3`, middle `1e265e8486e75505262de9ea33dea444f60731e025db20dea063dd1f75448775`, last `487df510c3931403017576dac2fe3e587479b9d827a496ea9d792fa5a2764671`.
 
 ## Next exact actions
-1. Inspect workflow run `32872086764`; if it passes, persist and verify `source-only-freeze-validation-report.json` and record source-only candidate state as frozen.
-2. After a passing source-only freeze report, make no further candidate tuning or selection changes before the final professional holdout.
-3. Only then consider the one final professional holdout/scorer gate against the immutable candidate; do not tune or select from its failures.
-4. Keep final-gate `freezeReady=false` sentinels false until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
+1. Locate and audit the exact final professional holdout/reference/scorer machinery, including reference completeness and scorer semantics, without changing the frozen candidate.
+2. Save the audit state before triggering any final holdout.
+3. If and only if the reference is complete and the official holdout path is valid, run it once against the immutable frozen candidate. Persist the result; **do not tune, modify, or select a replacement candidate from failures.**
+4. Keep final-gate `freezeReady=false` sentinels false unless score >=0.99, critical mismatches=0, PDF fidelity=1.0 are all independently proven.
 5. Do not claim Rhythm complete before all final completion gates pass.
