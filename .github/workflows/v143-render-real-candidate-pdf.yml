@@ -1,0 +1,90 @@
+name: V143 render real candidate PDF
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-render-real-candidate-pdf.yml'
+      - 'scripts/v143-render-real-candidate-pdf.mjs'
+      - 'lib/createV143RhythmPdf.js'
+      - 'lib/v143RenderContract.js'
+      - 'analyzer/materialize_v143_precision_fixture.py'
+      - 'analyzer/fixtures/v143_precision_v2_modal_capture_32805316807.json'
+      - 'public/DadRock-Tabs-Logo.png'
+      - 'package.json'
+      - 'package-lock.json'
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Reverify protected runtime identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+      - name: Materialize immutable paid capture CPU-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin c1451df43cc1162ed2b38aa3f3300b7af4d9b527
+          python3 analyzer/materialize_v143_precision_fixture.py \
+            --output-dir debug/v143-contextual-prune-ci/pinned-capture
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install renderer dependencies
+        run: npm ci --ignore-scripts
+      - name: Install PDF inspection tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -y
+          sudo apt-get install -y poppler-utils
+      - name: Render actual preserved 113-measure candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/real-candidate-professional-pdf
+          mkdir -p "$OUT"
+          node --experimental-default-type=module scripts/v143-render-real-candidate-pdf.mjs \
+            debug/v143-contextual-prune-ci/pinned-capture/repaired-timing-precision-candidate-product.json \
+            "$OUT/v143-approved-rhythm-reference.pdf" | tee "$OUT/render-report.json"
+          pdfinfo "$OUT/v143-approved-rhythm-reference.pdf" | tee "$OUT/pdfinfo.txt"
+          pdftoppm -png -r 150 "$OUT/v143-approved-rhythm-reference.pdf" "$OUT/page"
+          PAGE_COUNT=$(pdfinfo "$OUT/v143-approved-rhythm-reference.pdf" | awk '/^Pages:/ {print $2}')
+          MID_PAGE=$(( (PAGE_COUNT + 1) / 2 ))
+          cp "$OUT/page-1.png" "$OUT/inspection-first.png"
+          cp "$OUT/page-${MID_PAGE}.png" "$OUT/inspection-middle.png"
+          cp "$OUT/page-${PAGE_COUNT}.png" "$OUT/inspection-last.png"
+          sha256sum "$OUT/v143-approved-rhythm-reference.pdf" "$OUT/inspection-first.png" "$OUT/inspection-middle.png" "$OUT/inspection-last.png" \
+            | tee "$OUT/sha256.txt"
+      - name: Persist compact real-render evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=debug/v143-contextual-prune/real-candidate-professional-pdf
+          rm -f "$OUT"/page-*.png
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$OUT"
+          if ! git diff --cached --quiet; then
+            git commit -m 'Persist real V143 professional PDF render'
+            git push origin HEAD:v143-contextual-prune-lobo
+          fi
+      - name: Upload real candidate PDF and inspection images
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-real-candidate-professional-pdf
+          path: debug/v143-contextual-prune/real-candidate-professional-pdf/
+          retention-days: 1
