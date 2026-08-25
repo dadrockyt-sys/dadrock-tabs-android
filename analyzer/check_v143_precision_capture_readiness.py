@@ -2,12 +2,15 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from check_v143_precision_replay_corruption_rejection import check as check_replay_corruption_rejection
+
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github/workflows/v143-repaired-timing-precision-candidate-product.yml"
 PRODUCER = ROOT / "analyzer/v143_repaired_timing_precision_candidate_product_modal.py"
 POLICY = ROOT / "analyzer/v143_contextual_prune_precision_shadow_v2.py"
 REPLAY = ROOT / "analyzer/v143_precision_replay_policy_compare.py"
 VALIDATOR = ROOT / "analyzer/v143_precision_replay_artifact_validator.py"
+CORRUPTION_CHECK = ROOT / "analyzer/check_v143_precision_replay_corruption_rejection.py"
 PROTECTED = ROOT / "analyzer/v143_reference_free_rhythm_pipeline.py"
 
 TARGET_BRANCH = "v143-contextual-prune-lobo"
@@ -31,11 +34,16 @@ def ordered(text: str, *needles: str) -> bool:
 
 
 def main() -> None:
+    # Run the negative corruption tests from the same CPU-only readiness command
+    # that the candidate workflow already executes before reservation/Modal.
+    check_replay_corruption_rejection()
+
     workflow = WORKFLOW.read_text(encoding="utf-8")
     producer = PRODUCER.read_text(encoding="utf-8")
     policy = POLICY.read_text(encoding="utf-8")
     replay = REPLAY.read_text(encoding="utf-8")
     validator = VALIDATOR.read_text(encoding="utf-8")
+    corruption_check = CORRUPTION_CHECK.read_text(encoding="utf-8")
 
     require(TARGET_BRANCH in workflow, "target branch missing from workflow")
     require('refs/heads/$TARGET_BRANCH' in workflow, "workflow dispatch ref is not pinned to target branch variable")
@@ -73,6 +81,8 @@ def main() -> None:
         '"carrierMissingInputAttackKeys"',
         '"eligibleAttacks"',
         '"precisionStrength"',
+        '"sourceViewEvidenceReady": True',
+        '"precisionStrengthRecomputeReady": True',
         '"fixedRetainedAttackPitchReplayReady": True',
         '"attackPolicyReplayReady": True',
     ):
@@ -83,8 +93,15 @@ def main() -> None:
     require("validate_product(" in validator and "_self_test()" in validator, "replay validator API/self-test missing")
     require('replay.get("schemaVersion") == 2' in validator, "replay validator does not require schemaVersion 2")
     require("baselineAttackReplayMatches" in validator, "replay validator does not report baseline attack replay fidelity")
+    require("sourceViewEvidenceMatches" in validator, "replay validator does not report per-view source fidelity")
+    require("precisionStrengthRecomputeMatches" in validator, "replay validator does not report strength recomputation fidelity")
     require("_recompute_attack_policy(" in validator, "replay validator does not reconstruct attack policy")
     require("eligibleAttackCount" in validator and "eligiblePitchHypothesisCount" in validator, "replay validator does not bind full eligible source counts")
+
+    require("two-view aggregate mismatch" in corruption_check, "corruption guard does not test two-view aggregate mismatch")
+    require("precision strength mismatch" in corruption_check, "corruption guard does not test precision-strength mismatch")
+    require("grid/onset error mismatch" in corruption_check, "corruption guard does not test grid/onset mismatch")
+    require("-= 0.20" in corruption_check, "two-view corruption test must force the minimum to change")
 
     require(
         ordered(
@@ -124,6 +141,9 @@ def main() -> None:
     print("cpu_replay_modal_free=true")
     print("failure_path_artifact_salvage=true")
     print("replay_artifact_exact_binding=true")
+    print("source_view_evidence_binding=true")
+    print("precision_strength_recompute_binding=true")
+    print("negative_corruption_rejection=true")
     print("full_attack_replay_universe=true")
 
 
