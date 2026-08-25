@@ -228,3 +228,14 @@ The one-shot capture path is now CPU-preflight green through source evidence, at
 - Protected runtime reverified at exact required blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
 - `main`/Production remain untouched. Professional reference/scorer remains closed.
 - **Do not run another Modal/L4 capture from a generic “continue”. A second paid attempt requires fresh explicit user authorization.** If authorized later, preserve attempt-1 history, establish a new one-shot authorization/reservation, and dispatch exactly once with the corrected `3000s` timeout.
+
+## CPU-only continuation revalidation — 2026-08-24 22:18 America/Montreal
+- Generic `Please continue` was treated as CPU-only continuation, not fresh paid authorization.
+- Branch head at revalidation: `85fc7bb9f71d3cb485dfa1009b430fa163e8cdcd`.
+- Protected runtime remains exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+- Persisted CPU guard run `32804303926` remains schema 7 / `passed=true`, with all replay/final-lock checks green and `modalInvoked=false`, `newInferenceUsed=false`, `professionalReferenceUsed=false`, `productionModified=false`.
+- Product Proof run `32804488611` remains completed / `success`.
+- Attempt-1 lock remains schema 3 / `captureState=failed_timeout`, `singlePaidCaptureConsumed=true`, `automaticRetryAllowed=false`, `retryAuthorizationRequired=true`.
+- No second Modal/L4 invocation occurred. No scorer/reference, render mutation, freeze, Production, or `main` change occurred.
+- No further free algorithmic change is justified before the carrier/replay capture; avoid speculative hardening or payload growth.
+- Next paid boundary is a **new explicitly authorized one-shot retry** using the already-corrected `3000s` timeout, while preserving attempt-1 history.
