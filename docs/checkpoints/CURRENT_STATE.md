@@ -115,10 +115,15 @@ Hardening now present:
 - A **reservation lock is committed and pushed before Modal** with `captureState=reserved_before_modal` and `automaticRetryAllowed=false`.
 - Any reserved or completed lock blocks another automatic Modal attempt.
 - If the paid call succeeds, finalization updates the same lock to `captureState=completed` / `singlePaidCaptureConsumed=true` with event, replay, candidate-product and replay-comparison hashes.
-- `actions/upload-artifact@v4` runs with `if: always()` so any product/compare/lock created during the one-shot attempt is salvaged even when later validation or git steps fail.
+- `actions/upload-artifact@v4` runs with `if: always()` so any product/compare/validation/lock created during the one-shot attempt is salvaged even when later validation or git steps fail.
+- Added `analyzer/v143_precision_replay_artifact_validator.py`, a CPU-only exact-binding validator with a synthetic positive self-test and a negative invented-pitch rejection test.
+- The validator checks replay policy/source identity, exact attack keys, candidate MIDI identity/order/uniqueness, finite attack/early/sustain/body/continuity/score evidence, body/continuity derivation, score formula, one selected primary per attack, replay↔precision counts, render attack/pitch subset binding, voicing-drop accounting, and exact audio-derived measure coverage.
+- Workflow runs the validator self-test before reservation and runs full artifact validation after the one-shot product exists.
+- Validator canonical `eventsSha256` and `replayEvidenceSha256` must equal the independently created `preFreezeTrace` hashes before the final lock can complete.
+- The final lock also binds the validation artifact SHA256 as `replayArtifactValidationSha256`.
 - This changes the semantics intentionally: a failed/interrupted reserved attempt is **not automatically retryable**. A second paid attempt would require fresh explicit user authorization plus deliberate lock handling.
-- Relevant hardening commits returned by GitHub connector: workflow `6bfe3452fcebb36edbdc6cc98a5ca3bbf2179dc1`; readiness guard latest `de1b3d1a40cfb70e99f7c7ffe28f9a6a58ff5f06`.
-- Current branch head observed after hardening: `de1b3d1a40cfb70e99f7c7ffe28f9a6a58ff5f06`.
+- Relevant new commits returned by GitHub connector: validator `83b29d873bc4770c4f2c4c2e2daf52e4b136af64`; workflow exact-binding integration `7661f5065500479fdb44a5e72ddf0108d4e8b73a`; readiness guard latest `58d4144983ec9f7fa422887a62ad0586f9e68e94`.
+- Current branch head observed after this hardening: `58d4144983ec9f7fa422887a62ad0586f9e68e94`.
 - **No workflow was dispatched and no Modal/L4 call was made.**
 
 # Timing diagnosis — relative grid is strong; absolute bar phase is ambiguous
@@ -177,13 +182,14 @@ Hardening now present:
 - Preauthorization workflow failure paths were hardened without using paid inference.
 - The single paid budget is now protected by branch/head binding plus a pre-Modal persistent reservation.
 - Failure artifacts are preserved with `if: always()`.
-- The new checker makes these invariants static and reviewable before any future capture.
+- The readiness checker and replay artifact validator make the reservation, failure salvage, source-row binding, and final hash binding explicit before any future capture.
+- Standalone validator self-test passed CPU-only during implementation; no model/separator inference was used.
 - No completion claim is made.
 
 # Next exact actions
 1. Reverify branch and protected runtime blob before every candidate-path mutation; keep `main` and Production untouched.
 2. Keep timing frozen.
-3. Continue CPU-only audit of replay serialization/binding and validate that all future v1/v2 experiments can be reconstructed solely from persisted `precisionReplayEvidence`.
+3. Continue CPU-only audit of replay-policy fidelity: prove replay recomputation matches the actual legacy/v2 secondary logic on synthetic edge cases and is explicitly scoped to the fixed retained-attack universe.
 4. Strengthen static/self-test coverage where useful; do not call Modal.
 5. Precision v2 remains the strongest justified pitch correction; do not tune it against professional mismatches.
 6. **Do not dispatch the paid candidate workflow unless the user explicitly authorizes Modal/L4 usage.**
