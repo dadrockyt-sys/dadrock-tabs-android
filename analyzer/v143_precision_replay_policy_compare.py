@@ -5,8 +5,9 @@ import json
 import math
 from collections import Counter
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, Mapping
 
+EXPECTED_POLICY = "envelope-balanced-secondary-v2"
 SECONDARY_RAW_RATIO = 0.80
 HARMONIC_SECONDARY_RAW_RATIO = 0.92
 HARMONIC_INTERVALS = frozenset({12, 19, 24, 28, 31, 36})
@@ -68,10 +69,7 @@ def _strongest_raw_midi(candidates: Mapping[int, Mapping[str, Any]]) -> int:
     )
 
 
-def _ratios(
-    item: Mapping[str, Any],
-    strongest: Mapping[str, Any],
-) -> dict[str, float]:
+def _ratios(item: Mapping[str, Any], strongest: Mapping[str, Any]) -> dict[str, float]:
     return {
         "score": _finite(item["score"]) / max(1e-6, _finite(strongest["score"])),
         "attack": _finite(item["attack"]) / max(1e-6, _finite(strongest["attack"])),
@@ -79,11 +77,7 @@ def _ratios(
     }
 
 
-def _select(
-    attack: Mapping[str, Any],
-    *,
-    policy: str,
-) -> tuple[set[int], list[dict[str, Any]]]:
+def _select(attack: Mapping[str, Any], *, policy: str) -> tuple[set[int], list[dict[str, Any]]]:
     candidates = _candidate_map(attack)
     if not candidates:
         raise ValueError("replay attack has no candidates")
@@ -134,14 +128,30 @@ def _select(
 
 
 def build_report(replay: Mapping[str, Any]) -> dict[str, Any]:
+    if replay.get("schemaVersion") != 2:
+        raise ValueError("replay evidence schemaVersion must be 2")
+    if replay.get("policy") != EXPECTED_POLICY:
+        raise ValueError("replay evidence policy mismatch")
+    if replay.get("fixedRetainedAttackPitchReplayReady") is not True:
+        raise ValueError("fixed retained-attack pitch replay is not marked ready")
+    if replay.get("attackPolicyReplayReady") is not True:
+        raise ValueError("full attack-policy replay is not marked ready")
     if replay.get("referenceFree") is not True:
         raise ValueError("replay evidence is not marked reference-free")
     if replay.get("professionalReferenceUsed") is not False:
         raise ValueError("replay evidence indicates forbidden professional reference use")
+    if replay.get("runtimeLabelsRequired") is not False:
+        raise ValueError("replay evidence indicates runtime labels are required")
+    if replay.get("productionModified") is not False:
+        raise ValueError("replay evidence indicates production mutation")
 
     attacks = replay.get("attacks") or []
     if len(attacks) != int(replay.get("retainedAttackCount") or -1):
         raise ValueError("replay attack count mismatch")
+    eligible_attack_count = int(replay.get("eligibleAttackCount") or -1)
+    eligible_pitch_count = int(replay.get("eligiblePitchHypothesisCount") or -1)
+    if eligible_attack_count < len(attacks):
+        raise ValueError("eligible attack universe is smaller than retained universe")
 
     candidate_total = 0
     stored_selected_total = 0
@@ -156,12 +166,22 @@ def build_report(replay: Mapping[str, Any]) -> dict[str, Any]:
     primary64_changed_count = 0
     non64_attack_count = 0
     non64_changed_count = 0
+    seen_attack_keys: set[tuple[int, int]] = set()
 
     per_attack: list[dict[str, Any]] = []
     for attack in attacks:
+        key = (int(attack["measure"]), int(attack["step"]))
+        if key in seen_attack_keys:
+            raise ValueError(f"duplicate retained replay attack {key}")
+        seen_attack_keys.add(key)
+        if attack.get("retained") is not True:
+            raise ValueError(f"retained replay attack {key} is not marked retained")
+
         candidates = _candidate_map(attack)
         primary = _primary_midi(candidates)
         stored = {midi for midi, item in candidates.items() if item.get("selected") is True}
+        if primary not in stored:
+            raise ValueError(f"replay primary is not stored-selected at {key}")
         legacy, legacy_decisions = _select(attack, policy="legacy")
         v2, v2_decisions = _select(attack, policy="v2")
 
@@ -171,8 +191,7 @@ def build_report(replay: Mapping[str, Any]) -> dict[str, Any]:
         removals = sorted(legacy - v2)
         if additions or removals:
             changed_attacks += 1
-        if removals:
-            removed_total += len(removals)
+        removed_total += len(removals)
 
         decision_by_midi = {int(item["midi"]): item for item in v2_decisions}
         for midi in additions:
@@ -210,16 +229,25 @@ def build_report(replay: Mapping[str, Any]) -> dict[str, Any]:
 
     if candidate_total != int(replay.get("originalPitchHypothesisCount") or -1):
         raise ValueError("replay original pitch total mismatch")
+    if candidate_total != int(replay.get("retainedOriginalPitchHypothesisCount") or -1):
+        raise ValueError("replay retained original pitch total mismatch")
+    if eligible_pitch_count < candidate_total:
+        raise ValueError("eligible pitch universe is smaller than retained pitch universe")
     if removed_total != 0:
         raise RuntimeError("v2 unexpectedly removed a legacy-supported pitch")
 
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "classification": "reference-free-replay-policy-compare",
         "source": {
             "replayPolicy": str(replay.get("policy") or ""),
+            "attackUniverse": "fixed-retained-attacks",
             "retainedAttackCount": len(attacks),
+            "eligibleAttackCount": eligible_attack_count,
             "originalPitchHypothesisCount": candidate_total,
+            "eligiblePitchHypothesisCount": eligible_pitch_count,
+            "fixedRetainedAttackPitchReplayReady": True,
+            "attackPolicyReplayReady": True,
             "professionalReferenceUsed": False,
             "newInferenceUsed": False,
         },
@@ -244,25 +272,151 @@ def build_report(replay: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
+def _item(
+    midi: int,
+    score: float,
+    attack: float,
+    body: float,
+    *,
+    primary: bool = False,
+    selected: bool = False,
+) -> dict[str, Any]:
+    return {
+        "midi": midi,
+        "score": score,
+        "attack": attack,
+        "body": body,
+        "primary": primary,
+        "selected": selected,
+    }
+
+
+def _attack(*items: dict[str, Any], measure: int = 1, step: int = 0) -> dict[str, Any]:
+    return {
+        "measure": measure,
+        "step": step,
+        "retained": True,
+        "candidateMidis": [int(item["midi"]) for item in items],
+        "candidates": list(items),
+    }
+
+
 def _self_test() -> None:
+    from v143_contextual_prune_precision_shadow import (
+        HARMONIC_SECONDARY_RAW_RATIO as ACTUAL_HARMONIC_SECONDARY_RAW_RATIO,
+        POSITIVE_ATTACK_FLOOR as ACTUAL_POSITIVE_ATTACK_FLOOR,
+        POSITIVE_BODY_FLOOR as ACTUAL_POSITIVE_BODY_FLOOR,
+        SECONDARY_RAW_RATIO as ACTUAL_SECONDARY_RAW_RATIO,
+    )
+    from v143_contextual_prune_precision_shadow_v2 import secondary_gate_decision
+
+    assert SECONDARY_RAW_RATIO == ACTUAL_SECONDARY_RAW_RATIO
+    assert HARMONIC_SECONDARY_RAW_RATIO == ACTUAL_HARMONIC_SECONDARY_RAW_RATIO
+    assert POSITIVE_ATTACK_FLOOR == ACTUAL_POSITIVE_ATTACK_FLOOR
+    assert POSITIVE_BODY_FLOOR == ACTUAL_POSITIVE_BODY_FLOOR
+
+    cases = [
+        (
+            "score+attack",
+            _attack(
+                _item(60, 1.0, 1.0, 1.0, primary=True, selected=True),
+                _item(64, 0.86, 0.83, 0.79, selected=True),
+            ),
+            {60},
+            {60, 64},
+        ),
+        (
+            "score+body",
+            _attack(
+                _item(60, 1.0, 1.0, 1.0, primary=True, selected=True),
+                _item(64, 0.86, 0.79, 0.83, selected=True),
+            ),
+            {60},
+            {60, 64},
+        ),
+        (
+            "attack+body",
+            _attack(
+                _item(60, 1.0, 1.0, 1.0, primary=True, selected=True),
+                _item(64, 0.79, 0.86, 0.86, selected=True),
+            ),
+            {60},
+            {60, 64},
+        ),
+        (
+            "one-dimension-only",
+            _attack(
+                _item(60, 1.0, 1.0, 1.0, primary=True, selected=True),
+                _item(64, 0.86, 0.79, 0.79, selected=False),
+            ),
+            {60},
+            {60},
+        ),
+        (
+            "harmonic-two-of-three-stays-strict",
+            _attack(
+                _item(60, 1.0, 1.0, 1.0, primary=True, selected=True),
+                _item(72, 0.95, 0.95, 0.91, selected=False),
+            ),
+            {60},
+            {60},
+        ),
+        (
+            "harmonic-three-of-three",
+            _attack(
+                _item(60, 1.0, 1.0, 1.0, primary=True, selected=True),
+                _item(72, 0.95, 0.95, 0.95, selected=True),
+            ),
+            {60, 72},
+            {60, 72},
+        ),
+        (
+            "promoted-strongest-harmonic-common-guard",
+            _attack(
+                _item(60, 0.80, 0.80, 0.80, primary=True, selected=True),
+                _item(72, 1.00, 1.00, 1.00, selected=False),
+            ),
+            {60},
+            {60},
+        ),
+        (
+            "no-positive-fallback",
+            _attack(
+                _item(60, -0.40, -0.10, -0.30, primary=True, selected=True),
+                _item(64, -0.50, -0.20, -0.40, selected=True),
+            ),
+            {60, 64},
+            {60, 64},
+        ),
+    ]
+
+    for name, attack, expected_legacy, expected_v2 in cases:
+        legacy, _legacy_decisions = _select(attack, policy="legacy")
+        v2, _v2_decisions = _select(attack, policy="v2")
+        assert legacy == expected_legacy, (name, legacy, expected_legacy)
+        assert v2 == expected_v2, (name, v2, expected_v2)
+
+    assert secondary_gate_decision(score_ratio=0.86, attack_ratio=0.83, body_ratio=0.79, harmonic_above_primary=False) is True
+    assert secondary_gate_decision(score_ratio=0.86, attack_ratio=0.79, body_ratio=0.79, harmonic_above_primary=False) is False
+    assert secondary_gate_decision(score_ratio=0.95, attack_ratio=0.95, body_ratio=0.91, harmonic_above_primary=True) is False
+    assert secondary_gate_decision(score_ratio=0.95, attack_ratio=0.95, body_ratio=0.95, harmonic_above_primary=True) is True
+
+    replay_attack = cases[0][1]
     replay = {
-        "policy": "envelope-balanced-secondary-v2",
+        "schemaVersion": 2,
+        "policy": EXPECTED_POLICY,
         "retainedAttackCount": 1,
-        "originalPitchHypothesisCount": 3,
+        "eligibleAttackCount": 2,
+        "originalPitchHypothesisCount": 2,
+        "retainedOriginalPitchHypothesisCount": 2,
+        "eligiblePitchHypothesisCount": 5,
+        "fixedRetainedAttackPitchReplayReady": True,
+        "attackPolicyReplayReady": True,
         "referenceFree": True,
         "professionalReferenceUsed": False,
-        "attacks": [
-            {
-                "measure": 1,
-                "step": 0,
-                "candidateMidis": [60, 64, 72],
-                "candidates": [
-                    {"midi": 60, "score": 1.0, "attack": 1.0, "body": 1.0, "primary": True, "selected": True},
-                    {"midi": 64, "score": 0.86, "attack": 0.83, "body": 0.79, "primary": False, "selected": True},
-                    {"midi": 72, "score": 0.95, "attack": 0.95, "body": 0.91, "primary": False, "selected": False},
-                ],
-            }
-        ],
+        "runtimeLabelsRequired": False,
+        "productionModified": False,
+        "attacks": [replay_attack],
     }
     report = build_report(replay)
     comparison = report["comparison"]
@@ -272,7 +426,9 @@ def _self_test() -> None:
     assert comparison["v2RemovedPitchCount"] == 0
     assert comparison["v2ReplayMismatchAttackCount"] == 0
     assert comparison["addedPitchFailedDimensionCounts"] == {"body": 1}
-    print("PASS precision replay policy compare self-test")
+    assert report["source"]["attackUniverse"] == "fixed-retained-attacks"
+    assert report["source"]["attackPolicyReplayReady"] is True
+    print("PASS precision replay policy compare schema2 edge-case self-test")
 
 
 def main() -> None:
