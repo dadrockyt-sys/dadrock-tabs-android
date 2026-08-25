@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from check_v143_precision_replay_capture_order import check as check_replay_capture_order
 from check_v143_precision_replay_corruption_rejection import check as check_replay_corruption_rejection
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,6 +12,7 @@ POLICY = ROOT / "analyzer/v143_contextual_prune_precision_shadow_v2.py"
 REPLAY = ROOT / "analyzer/v143_precision_replay_policy_compare.py"
 VALIDATOR = ROOT / "analyzer/v143_precision_replay_artifact_validator.py"
 CORRUPTION_CHECK = ROOT / "analyzer/check_v143_precision_replay_corruption_rejection.py"
+CAPTURE_ORDER_CHECK = ROOT / "analyzer/check_v143_precision_replay_capture_order.py"
 PROTECTED = ROOT / "analyzer/v143_reference_free_rhythm_pipeline.py"
 
 TARGET_BRANCH = "v143-contextual-prune-lobo"
@@ -34,9 +36,9 @@ def ordered(text: str, *needles: str) -> bool:
 
 
 def main() -> None:
-    # Run the negative corruption tests from the same CPU-only readiness command
-    # that the candidate workflow already executes before reservation/Modal.
+    # These are CPU-only source-integrity checks and run before any reservation.
     check_replay_corruption_rejection()
+    check_replay_capture_order()
 
     workflow = WORKFLOW.read_text(encoding="utf-8")
     producer = PRODUCER.read_text(encoding="utf-8")
@@ -44,6 +46,7 @@ def main() -> None:
     replay = REPLAY.read_text(encoding="utf-8")
     validator = VALIDATOR.read_text(encoding="utf-8")
     corruption_check = CORRUPTION_CHECK.read_text(encoding="utf-8")
+    capture_order_check = CAPTURE_ORDER_CHECK.read_text(encoding="utf-8")
 
     require(TARGET_BRANCH in workflow, "target branch missing from workflow")
     require('refs/heads/$TARGET_BRANCH' in workflow, "workflow dispatch ref is not pinned to target branch variable")
@@ -54,13 +57,9 @@ def main() -> None:
     require("automaticRetryAllowed" in workflow, "reservation does not explicitly prohibit automatic retry")
     require("reserved_before_modal" in workflow, "pre-Modal reservation state missing")
     require("singlePaidCaptureConsumed" in workflow, "capture-consumption state missing")
-    require("actions/upload-artifact@v4" in workflow, "failure-path artifact salvage missing")
-    require("if: always()" in workflow, "capture outputs are not preserved on failure")
-    require(
-        "python analyzer/v143_precision_replay_artifact_validator.py --self-test" in workflow,
-        "replay artifact validator self-test is not in the pre-Modal gate",
-    )
-    require("replayArtifactValidationSha256" in workflow, "final lock does not bind replay artifact validation")
+    require("actions/upload-artifact@v4" in workflow and "if: always()" in workflow, "failure-path artifact salvage missing")
+    require("python analyzer/v143_precision_replay_artifact_validator.py --self-test" in workflow, "replay validator self-test missing from pre-Modal gate")
+    require("replayArtifactValidationSha256" in workflow, "final lock does not bind replay validation artifact")
     require("replayEligibleAttackCount" in workflow, "final lock does not bind eligible attack universe")
     require("replayEligiblePitchHypothesisCount" in workflow, "final lock does not bind eligible pitch universe")
     require("baselineAttackReplayMatches" in workflow, "final lock does not require exact baseline attack replay")
@@ -69,10 +68,7 @@ def main() -> None:
     modal_command = "python -m modal run analyzer/v143_repaired_timing_precision_candidate_product_modal.py::approved_audio"
     require(workflow.count(modal_command) == 1, "workflow must contain exactly one paid Modal command")
     require(producer.count(".remote(") == 1, "producer must contain exactly one Modal .remote call")
-    require(
-        "precisionReplayEvidence" in producer and "build_precision_replay_evidence(" in producer,
-        "producer replay evidence persistence missing",
-    )
+    require("precisionReplayEvidence" in producer and "build_precision_replay_evidence(" in producer, "producer replay evidence persistence missing")
 
     for token in (
         '"schemaVersion": 2',
@@ -93,23 +89,36 @@ def main() -> None:
     require("import modal" not in validator and ".remote(" not in validator and "modal run" not in validator, "replay validator contains Modal usage")
     require("validate_product(" in validator and "_self_test()" in validator, "replay validator API/self-test missing")
     require('replay.get("schemaVersion") == 2' in validator, "replay validator does not require schemaVersion 2")
-    require("baselineAttackReplayMatches" in validator, "replay validator does not report baseline attack replay fidelity")
-    require("sourceViewEvidenceMatches" in validator, "replay validator does not report per-view source fidelity")
-    require("precisionStrengthRecomputeMatches" in validator, "replay validator does not report strength recomputation fidelity")
-    require("zeroValuePreservationMatches" in validator, "replay validator does not report zero-value preservation fidelity")
-    require("_legacy_strength(" in validator, "replay validator does not reproduce legacy zero-strength decision semantics")
-    require("_recompute_attack_policy(" in validator, "replay validator does not reconstruct attack policy")
-    require("eligibleAttackCount" in validator and "eligiblePitchHypothesisCount" in validator, "replay validator does not bind full eligible source counts")
+    for token in (
+        "baselineAttackReplayMatches",
+        "sourceViewEvidenceMatches",
+        "precisionStrengthRecomputeMatches",
+        "zeroValuePreservationMatches",
+        "_legacy_strength(",
+        "_recompute_attack_policy(",
+        "eligibleAttackCount",
+        "eligiblePitchHypothesisCount",
+    ):
+        require(token in validator, f"replay validator token missing: {token}")
 
-    require("_recomputed_primary_midi(" in replay, "pitch replay does not independently recompute primary")
-    require("_verified_primary_midi(" in replay, "pitch replay does not verify stored primary against recomputation")
-    require("primaryRecomputeMatches" in replay, "pitch replay report does not bind primary recomputation")
-    require("primaryRecomputeMismatchAttackCount" in replay, "pitch replay report does not expose primary mismatch count")
+    for token in (
+        "_recomputed_primary_midi(",
+        "_verified_primary_midi(",
+        "primaryRecomputeMatches",
+        "primaryRecomputeMismatchAttackCount",
+        "storedV2ReplayMatches",
+        "v2ReplayMismatchAttackCount",
+        "stored v2 selection disagrees with independent CPU replay",
+    ):
+        require(token in replay, f"strict pitch replay token missing: {token}")
 
-    require("two-view aggregate mismatch" in corruption_check, "corruption guard does not test two-view aggregate mismatch")
-    require("precision strength mismatch" in corruption_check, "corruption guard does not test precision-strength mismatch")
-    require("grid/onset error mismatch" in corruption_check, "corruption guard does not test grid/onset mismatch")
-    require("-= 0.20" in corruption_check, "two-view corruption test must force the minimum to change")
+    require("two-view aggregate mismatch" in corruption_check, "corruption guard lacks two-view mismatch test")
+    require("precision strength mismatch" in corruption_check, "corruption guard lacks strength mismatch test")
+    require("grid/onset error mismatch" in corruption_check, "corruption guard lacks grid/onset mismatch test")
+    require("-= 0.20" in corruption_check, "two-view corruption must force aggregate minimum to change")
+
+    require("post-harmonic-guard and pre-voicing" in capture_order_check, "capture-order scope assertion missing")
+    require("carrier.rows" in capture_order_check and "carrier.grid" in capture_order_check, "capture-order source binding missing")
 
     require(
         ordered(
@@ -127,7 +136,7 @@ def main() -> None:
             "Finalize one-shot capture lock",
             "Preserve one-shot capture outputs",
         ),
-        "required pre-reservation/capture/finalization ordering is broken",
+        "required reservation/capture/validation/finalization ordering is broken",
     )
 
     reserve_pos = workflow.find("Reserve the one-shot capture before Modal")
@@ -138,8 +147,7 @@ def main() -> None:
     require(workflow.find('test "$(git rev-parse "origin/$TARGET_BRANCH")" = "$GITHUB_SHA"') < reserve_pos, "remote-head binding gate must run before reservation")
     require(workflow.find('if test -f "$lock"; then') < reserve_pos, "preexisting-lock refusal must run before reservation")
 
-    protected_bytes = PROTECTED.read_bytes()
-    require(len(protected_bytes) > 0, "protected pipeline unexpectedly empty")
+    require(len(PROTECTED.read_bytes()) > 0, "protected pipeline unexpectedly empty")
 
     print("v143 precision capture readiness checks passed")
     print("paid_modal_commands=1")
@@ -153,8 +161,10 @@ def main() -> None:
     print("precision_strength_recompute_binding=true")
     print("zero_value_preservation=true")
     print("primary_recompute_binding=true")
+    print("stored_v2_replay_strict=true")
     print("negative_corruption_rejection=true")
-    print("full_attack_replay_universe=true")
+    print("replay_capture_order_guarded=true")
+    print("fixed_best_row_attack_replay_universe=true")
 
 
 if __name__ == "__main__":
