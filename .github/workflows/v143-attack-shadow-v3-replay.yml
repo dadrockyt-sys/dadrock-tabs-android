@@ -1,0 +1,54 @@
+name: V143 attack shadow v3 replay
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-attack-shadow-v3-replay.yml'
+      - 'analyzer/v143_contextual_prune_attack_shadow_v3_replay_validator.py'
+      - 'analyzer/fixtures/v143_precision_v2_modal_capture_32805316807.json'
+      - 'debug/v143-contextual-prune/electric-tabcnn-subfloor-attack-evidence.json'
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Reverify protected runtime identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+      - name: Replay electric-consensus attack shadow v3
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p debug/v143-contextual-prune-ci
+          python3 analyzer/v143_contextual_prune_attack_shadow_v3_replay_validator.py \
+            analyzer/fixtures/v143_precision_v2_modal_capture_32805316807.json \
+            debug/v143-contextual-prune/electric-tabcnn-subfloor-attack-evidence.json \
+            --output debug/v143-contextual-prune-ci/attack-shadow-v3-replay-validation.json
+      - name: Show validation result
+        if: always()
+        shell: bash
+        run: |
+          if test -f debug/v143-contextual-prune-ci/attack-shadow-v3-replay-validation.json; then
+            cat debug/v143-contextual-prune-ci/attack-shadow-v3-replay-validation.json
+            sha256sum debug/v143-contextual-prune-ci/attack-shadow-v3-replay-validation.json
+          fi
+      - name: Upload validation artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-attack-shadow-v3-replay-validation
+          path: debug/v143-contextual-prune-ci/attack-shadow-v3-replay-validation.json
+          if-no-files-found: warn
+          retention-days: 1
