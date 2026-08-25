@@ -1,0 +1,2146 @@
+{
+  "addsUnobservedAttack": false,
+  "addsUnobservedPitch": false,
+  "baselinePrunedAttackCount": 259,
+  "baselineRenderedPitchCount": 967,
+  "baselineRetainedAttackCount": 725,
+  "baselineSelectedPitchCount": 970,
+  "baselineVoicingDropCount": 3,
+  "classification": "v143-reference-free-electric-consensus-attack-shadow-v3",
+  "constantsReusedWithoutChange": {
+    "fundamentalMinRawRatio": 0.55,
+    "harmonicIntervals": [
+      12,
+      19,
+      24,
+      28,
+      31,
+      36
+    ],
+    "harmonicSecondaryRawRatio": 0.92,
+    "legacyRatioExceptionFloor": 0.6,
+    "legacyRatioFloor": 0.7,
+    "positiveAttackFloor": 0.0,
+    "positiveBodyFloor": -0.25,
+    "secondaryRawRatio": 0.8
+  },
+  "downstreamTechniqueSustainRecomputed": false,
+  "electricEvidenceAttackCount": 43,
+  "electricEvidenceShaBinding": {
+    "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "checkpointSha256": "1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c"
+  },
+  "electricSubfloorRescueCount": 43,
+  "electricSubfloorSourceGroups": {
+    "remaining-positive-subfloor-nonlocal": 38,
+    "v2-subfloor-local-peak-rescue": 5
+  },
+  "eligibleAttackCount": 984,
+  "exceptionBandRescueCount": 123,
+  "freezeReady": false,
+  "gridIdentityCollisionCount": 0,
+  "invalidPrimaryCount": 0,
+  "inventedPitchCount": 0,
+  "measureCoverageCount": 113,
+  "missingMeasures": [],
+  "modalInvoked": false,
+  "newInferenceUsed": false,
+  "newNumericThresholdIntroduced": false,
+  "newRescueFundamentalPromotionCount": 41,
+  "policy": "existing-exception-band-plus-electric-tabcnn-subfloor-consensus-v3",
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "reasonCounts": {
+    "electric-tabcnn-candidate-overlap-below-0.60": 43,
+    "existing-exception-band": 123
+  },
+  "referenceFree": true,
+  "relocatesAttack": false,
+  "remainingNonpositiveAttackCount": 6,
+  "remainingPositiveAttackCount": 87,
+  "remainingPrunedAttackCount": 93,
+  "rescuedAttackCount": 166,
+  "rescuedAttackKeys": [
+    {
+      "electricOverlapMidis": [],
+      "measure": 2,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 3,
+      "transientRatio": 0.6923835454989279
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 2,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 10,
+      "transientRatio": 0.6757108836350953
+    },
+    {
+      "electricOverlapMidis": [
+        62
+      ],
+      "measure": 3,
+      "primaryMidi": 62,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        62
+      ],
+      "step": 8,
+      "transientRatio": 0.4714304324208736
+    },
+    {
+      "electricOverlapMidis": [
+        55,
+        62
+      ],
+      "measure": 3,
+      "primaryMidi": 62,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        62,
+        67
+      ],
+      "step": 9,
+      "transientRatio": 0.5453890942106352
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 4,
+      "primaryMidi": 71,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        71,
+        76
+      ],
+      "step": 6,
+      "transientRatio": 0.6438432918525331
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 5,
+      "primaryMidi": 40,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        40
+      ],
+      "step": 0,
+      "transientRatio": 0.665706674146647
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 5,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52,
+        59
+      ],
+      "step": 2,
+      "transientRatio": 0.6487162414537896
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 5,
+      "primaryMidi": 62,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62
+      ],
+      "step": 8,
+      "transientRatio": 0.6596826017725479
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 6,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 0,
+      "transientRatio": 0.6546112215392416
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 6,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 5,
+      "transientRatio": 0.6193681884204485
+    },
+    {
+      "electricOverlapMidis": [
+        64
+      ],
+      "measure": 6,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 6,
+      "transientRatio": 0.5648450361488028
+    },
+    {
+      "electricOverlapMidis": [
+        40,
+        58
+      ],
+      "measure": 7,
+      "primaryMidi": 40,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        40
+      ],
+      "step": 4,
+      "transientRatio": 0.5556074256877431
+    },
+    {
+      "electricOverlapMidis": [
+        58
+      ],
+      "measure": 7,
+      "primaryMidi": 83,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        83
+      ],
+      "step": 12,
+      "transientRatio": 0.5163119419188728
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 7,
+      "primaryMidi": 71,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        71
+      ],
+      "step": 13,
+      "transientRatio": 0.6418863796887977
+    },
+    {
+      "electricOverlapMidis": [
+        64
+      ],
+      "measure": 8,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 5,
+      "transientRatio": 0.5736338059440667
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 8,
+      "primaryMidi": 71,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        71
+      ],
+      "step": 13,
+      "transientRatio": 0.6253040247460172
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 9,
+      "primaryMidi": 40,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        40
+      ],
+      "step": 7,
+      "transientRatio": 0.6481840409474957
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 9,
+      "primaryMidi": 62,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62
+      ],
+      "step": 10,
+      "transientRatio": 0.695082070482289
+    },
+    {
+      "electricOverlapMidis": [
+        40,
+        50
+      ],
+      "measure": 11,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 8,
+      "transientRatio": 0.5811023472851258
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 11,
+      "primaryMidi": 69,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        69
+      ],
+      "step": 12,
+      "transientRatio": 0.6581546413458317
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 12,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        59,
+        64
+      ],
+      "step": 2,
+      "transientRatio": 0.5527521399525325
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 12,
+      "primaryMidi": 62,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62
+      ],
+      "step": 4,
+      "transientRatio": 0.6500222512473361
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 12,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64,
+        65
+      ],
+      "step": 6,
+      "transientRatio": 0.6399993787641622
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 13,
+      "primaryMidi": 62,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62
+      ],
+      "step": 4,
+      "transientRatio": 0.6518334404536559
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 14,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 6,
+      "transientRatio": 0.6943406490761047
+    },
+    {
+      "electricOverlapMidis": [
+        59
+      ],
+      "measure": 15,
+      "primaryMidi": 59,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        59
+      ],
+      "step": 13,
+      "transientRatio": 0.5345523485788257
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 16,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52,
+        62,
+        66,
+        78
+      ],
+      "step": 4,
+      "transientRatio": 0.6998516547152609
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 17,
+      "primaryMidi": 59,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        59
+      ],
+      "step": 2,
+      "transientRatio": 0.6114021167934107
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 17,
+      "primaryMidi": 74,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        74
+      ],
+      "step": 4,
+      "transientRatio": 0.6809387342612617
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 17,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 8,
+      "transientRatio": 0.5997815714872781
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 18,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64,
+        71
+      ],
+      "step": 0,
+      "transientRatio": 0.6603269079377473
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 18,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 2,
+      "transientRatio": 0.6538905954657138
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 18,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 5,
+      "transientRatio": 0.19767876339557805
+    },
+    {
+      "electricOverlapMidis": [
+        52,
+        64
+      ],
+      "measure": 19,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 0,
+      "transientRatio": 0.5712168230856318
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 19,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52,
+        86
+      ],
+      "step": 6,
+      "transientRatio": 0.6255959056015543
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 19,
+      "primaryMidi": 59,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        52,
+        59
+      ],
+      "step": 10,
+      "transientRatio": 0.5243524714314309
+    },
+    {
+      "electricOverlapMidis": [
+        40,
+        52
+      ],
+      "measure": 21,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 7,
+      "transientRatio": 0.5441096979826159
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 23,
+      "primaryMidi": 69,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        69,
+        71
+      ],
+      "step": 13,
+      "transientRatio": 0.34130593980065604
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 24,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 0,
+      "transientRatio": 0.6797163445343924
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 24,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64,
+        71
+      ],
+      "step": 6,
+      "transientRatio": 0.6330927314013995
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 24,
+      "primaryMidi": 69,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        69
+      ],
+      "step": 14,
+      "transientRatio": 0.672148402199572
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 25,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 0,
+      "transientRatio": 0.6280583493969939
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 25,
+      "primaryMidi": 78,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64,
+        78
+      ],
+      "step": 4,
+      "transientRatio": 0.6241668249796563
+    },
+    {
+      "electricOverlapMidis": [
+        43,
+        50,
+        55
+      ],
+      "measure": 27,
+      "primaryMidi": 55,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        55
+      ],
+      "step": 0,
+      "transientRatio": 0.5140004486593863
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 27,
+      "primaryMidi": 65,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        65
+      ],
+      "step": 4,
+      "transientRatio": 0.6961955039356522
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 28,
+      "primaryMidi": 67,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        67
+      ],
+      "step": 6,
+      "transientRatio": 0.6090534297926312
+    },
+    {
+      "electricOverlapMidis": [
+        43,
+        49,
+        50
+      ],
+      "measure": 28,
+      "primaryMidi": 67,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        62,
+        67
+      ],
+      "step": 12,
+      "transientRatio": 0.26169448038519566
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 30,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 0,
+      "transientRatio": 0.5571511607167213
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 30,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        59,
+        64
+      ],
+      "step": 10,
+      "transientRatio": 0.6795873887301473
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 31,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 0,
+      "transientRatio": 0.6797642760546001
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 31,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64,
+        71
+      ],
+      "step": 6,
+      "transientRatio": 0.6345367143194707
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 31,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 10,
+      "transientRatio": 0.6909810967961514
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 31,
+      "primaryMidi": 78,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        78
+      ],
+      "step": 13,
+      "transientRatio": 0.6616524859224674
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 31,
+      "primaryMidi": 55,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        55,
+        56
+      ],
+      "step": 15,
+      "transientRatio": 0.6539557417626687
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 32,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 0,
+      "transientRatio": 0.6494475923989155
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 33,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 6,
+      "transientRatio": 0.6405261104037799
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 33,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 9,
+      "transientRatio": 0.6871302530635682
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 34,
+      "primaryMidi": 61,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        57,
+        61
+      ],
+      "step": 14,
+      "transientRatio": 0.6899461316808649
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 34,
+      "primaryMidi": 57,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        57,
+        80
+      ],
+      "step": 15,
+      "transientRatio": 0.6908162281056818
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 35,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 12,
+      "transientRatio": 0.6695835276535178
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 37,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 3,
+      "transientRatio": 0.6077032452423927
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 38,
+      "primaryMidi": 59,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        59
+      ],
+      "step": 4,
+      "transientRatio": 0.6698733317305889
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 38,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 10,
+      "transientRatio": 0.6877692485087897
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 38,
+      "primaryMidi": 57,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        57
+      ],
+      "step": 12,
+      "transientRatio": 0.6517881633518441
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 38,
+      "primaryMidi": 57,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        57,
+        61
+      ],
+      "step": 13,
+      "transientRatio": 0.6530806712951267
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 40,
+      "primaryMidi": 40,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        40
+      ],
+      "step": 9,
+      "transientRatio": 0.6510530679826071
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 40,
+      "primaryMidi": 57,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        41,
+        57
+      ],
+      "step": 15,
+      "transientRatio": 0.6431228828133735
+    },
+    {
+      "electricOverlapMidis": [
+        60
+      ],
+      "measure": 41,
+      "primaryMidi": 67,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        62,
+        67
+      ],
+      "step": 10,
+      "transientRatio": 0.5965877581953922
+    },
+    {
+      "electricOverlapMidis": [
+        62
+      ],
+      "measure": 41,
+      "primaryMidi": 59,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        59
+      ],
+      "step": 13,
+      "transientRatio": 0.25836015940614826
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 43,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 6,
+      "transientRatio": 0.5688570370284757
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 44,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 6,
+      "transientRatio": 0.6025497063470286
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 46,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 8,
+      "transientRatio": 0.6391394740833936
+    },
+    {
+      "electricOverlapMidis": [
+        40,
+        47,
+        50
+      ],
+      "measure": 47,
+      "primaryMidi": 62,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        62
+      ],
+      "step": 4,
+      "transientRatio": 0.3895634428314845
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 49,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        59,
+        64,
+        68
+      ],
+      "step": 10,
+      "transientRatio": 0.6465445161038689
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 51,
+      "primaryMidi": 57,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        57
+      ],
+      "step": 14,
+      "transientRatio": 0.6930491654426914
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 52,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 6,
+      "transientRatio": 0.6624731296333652
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 52,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52,
+        64
+      ],
+      "step": 10,
+      "transientRatio": 0.6312164195470734
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 53,
+      "primaryMidi": 78,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        74,
+        78
+      ],
+      "step": 4,
+      "transientRatio": 0.6937308113829856
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 53,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 7,
+      "transientRatio": 0.6958565564166876
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 53,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 10,
+      "transientRatio": 0.6893639759919598
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 53,
+      "primaryMidi": 74,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        57,
+        74,
+        79
+      ],
+      "step": 15,
+      "transientRatio": 0.6787033668762695
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 54,
+      "primaryMidi": 52,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        52,
+        59
+      ],
+      "step": 10,
+      "transientRatio": 0.5164341508051279
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 55,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 10,
+      "transientRatio": 0.6000533250986275
+    },
+    {
+      "electricOverlapMidis": [
+        43
+      ],
+      "measure": 56,
+      "primaryMidi": 67,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        67,
+        71
+      ],
+      "step": 0,
+      "transientRatio": 0.43594295195568894
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 56,
+      "primaryMidi": 68,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        67,
+        68
+      ],
+      "step": 6,
+      "transientRatio": 0.6029605227598798
+    },
+    {
+      "electricOverlapMidis": [
+        55
+      ],
+      "measure": 57,
+      "primaryMidi": 67,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        67
+      ],
+      "step": 6,
+      "transientRatio": 0.49996009486227666
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 57,
+      "primaryMidi": 74,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        74
+      ],
+      "step": 12,
+      "transientRatio": 0.6730155864719721
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 58,
+      "primaryMidi": 67,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        67
+      ],
+      "step": 0,
+      "transientRatio": 0.6866392482410534
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 59,
+      "primaryMidi": 71,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        71
+      ],
+      "step": 12,
+      "transientRatio": 0.6312568213714116
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 61,
+      "primaryMidi": 52,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        52,
+        59
+      ],
+      "step": 2,
+      "transientRatio": 0.5687311971798129
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 61,
+      "primaryMidi": 52,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        52
+      ],
+      "step": 6,
+      "transientRatio": 0.5731708035677457
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 61,
+      "primaryMidi": 59,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        59,
+        64
+      ],
+      "step": 10,
+      "transientRatio": 0.6893088502332736
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 62,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 10,
+      "transientRatio": 0.6776561412624917
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 62,
+      "primaryMidi": 57,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        57,
+        69
+      ],
+      "step": 14,
+      "transientRatio": 0.6000085363160161
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 63,
+      "primaryMidi": 62,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62
+      ],
+      "step": 4,
+      "transientRatio": 0.6743333809752738
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 64,
+      "primaryMidi": 59,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        59,
+        62
+      ],
+      "step": 4,
+      "transientRatio": 0.6805638644847394
+    },
+    {
+      "electricOverlapMidis": [
+        50
+      ],
+      "measure": 64,
+      "primaryMidi": 58,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        57,
+        58,
+        59
+      ],
+      "step": 10,
+      "transientRatio": 0.5937055588953466
+    },
+    {
+      "electricOverlapMidis": [
+        64
+      ],
+      "measure": 64,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        61,
+        64
+      ],
+      "step": 13,
+      "transientRatio": 0.4675433696148394
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 65,
+      "primaryMidi": 69,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        69
+      ],
+      "step": 4,
+      "transientRatio": 0.6790444490450407
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 65,
+      "primaryMidi": 68,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64,
+        68
+      ],
+      "step": 12,
+      "transientRatio": 0.611028264783063
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 67,
+      "primaryMidi": 67,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64,
+        67
+      ],
+      "step": 6,
+      "transientRatio": 0.6313383652864984
+    },
+    {
+      "electricOverlapMidis": [
+        59
+      ],
+      "measure": 67,
+      "primaryMidi": 59,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        59,
+        62
+      ],
+      "step": 15,
+      "transientRatio": 0.503972907322942
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 68,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        57,
+        64
+      ],
+      "step": 12,
+      "transientRatio": 0.6675110178848243
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 71,
+      "primaryMidi": 63,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        63,
+        65,
+        66
+      ],
+      "step": 2,
+      "transientRatio": 0.6108397293963006
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 71,
+      "primaryMidi": 69,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        69
+      ],
+      "step": 10,
+      "transientRatio": 0.6383000303020436
+    },
+    {
+      "electricOverlapMidis": [
+        54
+      ],
+      "measure": 71,
+      "primaryMidi": 66,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        66
+      ],
+      "step": 12,
+      "transientRatio": 0.5727121069986266
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 72,
+      "primaryMidi": 61,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        61
+      ],
+      "step": 10,
+      "transientRatio": 0.6792835824161996
+    },
+    {
+      "electricOverlapMidis": [
+        64
+      ],
+      "measure": 72,
+      "primaryMidi": 58,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        58,
+        64
+      ],
+      "step": 12,
+      "transientRatio": 0.5892164522007303
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 73,
+      "primaryMidi": 65,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        65
+      ],
+      "step": 8,
+      "transientRatio": 0.6090083546872268
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 73,
+      "primaryMidi": 66,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62,
+        66
+      ],
+      "step": 12,
+      "transientRatio": 0.6083720968779367
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 74,
+      "primaryMidi": 63,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62,
+        63
+      ],
+      "step": 12,
+      "transientRatio": 0.69509246090392
+    },
+    {
+      "electricOverlapMidis": [
+        54
+      ],
+      "measure": 77,
+      "primaryMidi": 62,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        62,
+        66
+      ],
+      "step": 12,
+      "transientRatio": 0.5017683712861638
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 78,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        62,
+        64
+      ],
+      "step": 14,
+      "transientRatio": 0.4981076162787556
+    },
+    {
+      "electricOverlapMidis": [
+        52,
+        64
+      ],
+      "measure": 79,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64,
+        65
+      ],
+      "step": 0,
+      "transientRatio": 0.5661702571048999
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 79,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 6,
+      "transientRatio": 0.6952249215981475
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 79,
+      "primaryMidi": 65,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        65
+      ],
+      "step": 8,
+      "transientRatio": 0.6767540357261695
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 79,
+      "primaryMidi": 67,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        67
+      ],
+      "step": 13,
+      "transientRatio": 0.6483765411403845
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 80,
+      "primaryMidi": 66,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62,
+        66
+      ],
+      "step": 8,
+      "transientRatio": 0.657603595763887
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 80,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 10,
+      "transientRatio": 0.6943784748870927
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 80,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 14,
+      "transientRatio": 0.6831119184713305
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 81,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 9,
+      "transientRatio": 0.43615552591556395
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 82,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 0,
+      "transientRatio": 0.6297962688260643
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 82,
+      "primaryMidi": 61,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        61
+      ],
+      "step": 9,
+      "transientRatio": 0.6361770401363419
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 82,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 10,
+      "transientRatio": 0.6119639162011928
+    },
+    {
+      "electricOverlapMidis": [
+        59
+      ],
+      "measure": 82,
+      "primaryMidi": 59,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        59
+      ],
+      "step": 13,
+      "transientRatio": 0.5904450221289678
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 82,
+      "primaryMidi": 59,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        59,
+        64,
+        68
+      ],
+      "step": 15,
+      "transientRatio": 0.5658729313258098
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 83,
+      "primaryMidi": 59,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        58,
+        59
+      ],
+      "step": 0,
+      "transientRatio": 0.6545965998625101
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 83,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 14,
+      "transientRatio": 0.6764086710385506
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 84,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 0,
+      "transientRatio": 0.6857747010618688
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 84,
+      "primaryMidi": 62,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62,
+        66,
+        76
+      ],
+      "step": 8,
+      "transientRatio": 0.6884137068967822
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 84,
+      "primaryMidi": 76,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        61,
+        76
+      ],
+      "step": 11,
+      "transientRatio": 0.6601171850389566
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 84,
+      "primaryMidi": 62,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        61,
+        62,
+        76,
+        77
+      ],
+      "step": 12,
+      "transientRatio": 0.6918893716978866
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 85,
+      "primaryMidi": 76,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        76
+      ],
+      "step": 1,
+      "transientRatio": 0.6003961648186817
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 86,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 4,
+      "transientRatio": 0.6771587601708058
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 86,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 14,
+      "transientRatio": 0.6546473968148749
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 87,
+      "primaryMidi": 66,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62,
+        66,
+        76
+      ],
+      "step": 4,
+      "transientRatio": 0.6987620042709604
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 88,
+      "primaryMidi": 61,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        61
+      ],
+      "step": 4,
+      "transientRatio": 0.6155451021919404
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 88,
+      "primaryMidi": 66,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62,
+        66
+      ],
+      "step": 8,
+      "transientRatio": 0.696225113605811
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 89,
+      "primaryMidi": 83,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        83
+      ],
+      "step": 10,
+      "transientRatio": 0.6029777035753329
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 90,
+      "primaryMidi": 67,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64,
+        67
+      ],
+      "step": 0,
+      "transientRatio": 0.6760883308771906
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 90,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        61,
+        64
+      ],
+      "step": 5,
+      "transientRatio": 0.6920070210198105
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 90,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64,
+        68
+      ],
+      "step": 15,
+      "transientRatio": 0.670387482925313
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 91,
+      "primaryMidi": 71,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        71,
+        83
+      ],
+      "step": 9,
+      "transientRatio": 0.6338193931075919
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 91,
+      "primaryMidi": 74,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        66,
+        74
+      ],
+      "step": 12,
+      "transientRatio": 0.6898569901118976
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 92,
+      "primaryMidi": 66,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        66
+      ],
+      "step": 8,
+      "transientRatio": 0.6838228999278666
+    },
+    {
+      "electricOverlapMidis": [
+        50
+      ],
+      "measure": 92,
+      "primaryMidi": 62,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        62
+      ],
+      "step": 10,
+      "transientRatio": 0.5866649822530877
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 92,
+      "primaryMidi": 76,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        59,
+        76,
+        79
+      ],
+      "step": 14,
+      "transientRatio": 0.5568706346180368
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 93,
+      "primaryMidi": 74,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64,
+        74
+      ],
+      "step": 0,
+      "transientRatio": 0.6736444172682302
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 93,
+      "primaryMidi": 71,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        71
+      ],
+      "step": 8,
+      "transientRatio": 0.6726763117606255
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 95,
+      "primaryMidi": 50,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        50
+      ],
+      "step": 11,
+      "transientRatio": 0.6920876755174257
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 96,
+      "primaryMidi": 59,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        59,
+        64
+      ],
+      "step": 6,
+      "transientRatio": 0.3613815488544109
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 99,
+      "primaryMidi": 59,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        59
+      ],
+      "step": 0,
+      "transientRatio": 0.6876378675337926
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 99,
+      "primaryMidi": 62,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62
+      ],
+      "step": 8,
+      "transientRatio": 0.6296787892641532
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 100,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52
+      ],
+      "step": 4,
+      "transientRatio": 0.6630624565366011
+    },
+    {
+      "electricOverlapMidis": [
+        64
+      ],
+      "measure": 102,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 12,
+      "transientRatio": 0.5618317332179291
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 103,
+      "primaryMidi": 52,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        52,
+        59,
+        68
+      ],
+      "step": 14,
+      "transientRatio": 0.678128649350461
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 103,
+      "primaryMidi": 59,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        59
+      ],
+      "step": 15,
+      "transientRatio": 0.6015249009999754
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 104,
+      "primaryMidi": 62,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62
+      ],
+      "step": 11,
+      "transientRatio": 0.6458364265921903
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 105,
+      "primaryMidi": 62,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        62
+      ],
+      "step": 11,
+      "transientRatio": 0.6123732900092467
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 106,
+      "primaryMidi": 57,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        57,
+        64
+      ],
+      "step": 7,
+      "transientRatio": 0.6292774278279057
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 106,
+      "primaryMidi": 57,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        57
+      ],
+      "step": 10,
+      "transientRatio": 0.6738082880704281
+    },
+    {
+      "electricOverlapMidis": [
+        40
+      ],
+      "measure": 107,
+      "primaryMidi": 64,
+      "reason": "electric-tabcnn-candidate-overlap-below-0.60",
+      "selectedMidis": [
+        64
+      ],
+      "step": 14,
+      "transientRatio": 0.43953693520938003
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 108,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 14,
+      "transientRatio": 0.6154504042459109
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 110,
+      "primaryMidi": 64,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        64
+      ],
+      "step": 6,
+      "transientRatio": 0.6022781921199957
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 110,
+      "primaryMidi": 57,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        57,
+        64
+      ],
+      "step": 7,
+      "transientRatio": 0.6821913240346267
+    },
+    {
+      "electricOverlapMidis": [],
+      "measure": 113,
+      "primaryMidi": 43,
+      "reason": "existing-exception-band",
+      "selectedMidis": [
+        43,
+        44
+      ],
+      "step": 14,
+      "transientRatio": 0.6009500725126632
+    }
+  ],
+  "rescuedPitchCountDistribution": {
+    "1": 101,
+    "2": 54,
+    "3": 9,
+    "4": 2
+  },
+  "rescuedRenderedPitchCount": 242,
+  "rescuedSelectedPitchCount": 244,
+  "rescuedVoicingDropCount": 2,
+  "schemaVersion": 1,
+  "shadowRenderedPitchCount": 1209,
+  "shadowRetainedAttackCount": 891,
+  "shadowSelectedPitchCount": 1214,
+  "shadowVoicingDropAttacks": [
+    {
+      "measure": 19,
+      "primary": 52,
+      "rendered": [
+        52
+      ],
+      "selected": [
+        52,
+        86
+      ],
+      "step": 6
+    },
+    {
+      "measure": 40,
+      "primary": 40,
+      "rendered": [
+        40
+      ],
+      "selected": [
+        40,
+        78
+      ],
+      "step": 14
+    },
+    {
+      "measure": 63,
+      "primary": 78,
+      "rendered": [
+        78
+      ],
+      "selected": [
+        47,
+        78
+      ],
+      "step": 14
+    },
+    {
+      "measure": 113,
+      "primary": 41,
+      "rendered": [
+        41
+      ],
+      "selected": [
+        41,
+        43
+      ],
+      "step": 13
+    },
+    {
+      "measure": 113,
+      "primary": 43,
+      "rendered": [
+        43
+      ],
+      "selected": [
+        43,
+        44
+      ],
+      "step": 14
+    }
+  ],
+  "shadowVoicingDropCount": 5,
+  "sourcePitchPolicy": "envelope-balanced-secondary-v2",
+  "unplayablePrimaryCount": 0,
+  "validationPassed": true
+}
