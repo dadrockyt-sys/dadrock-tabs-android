@@ -83,6 +83,7 @@ def main() -> None:
         '"precisionStrength"',
         '"sourceViewEvidenceReady": True',
         '"precisionStrengthRecomputeReady": True',
+        '"zeroValuePreservationReady": True',
         '"fixedRetainedAttackPitchReplayReady": True',
         '"attackPolicyReplayReady": True',
     ):
@@ -95,8 +96,15 @@ def main() -> None:
     require("baselineAttackReplayMatches" in validator, "replay validator does not report baseline attack replay fidelity")
     require("sourceViewEvidenceMatches" in validator, "replay validator does not report per-view source fidelity")
     require("precisionStrengthRecomputeMatches" in validator, "replay validator does not report strength recomputation fidelity")
+    require("zeroValuePreservationMatches" in validator, "replay validator does not report zero-value preservation fidelity")
+    require("_legacy_strength(" in validator, "replay validator does not reproduce legacy zero-strength decision semantics")
     require("_recompute_attack_policy(" in validator, "replay validator does not reconstruct attack policy")
     require("eligibleAttackCount" in validator and "eligiblePitchHypothesisCount" in validator, "replay validator does not bind full eligible source counts")
+
+    require("_recomputed_primary_midi(" in replay, "pitch replay does not independently recompute primary")
+    require("_verified_primary_midi(" in replay, "pitch replay does not verify stored primary against recomputation")
+    require("primaryRecomputeMatches" in replay, "pitch replay report does not bind primary recomputation")
+    require("primaryRecomputeMismatchAttackCount" in replay, "pitch replay report does not expose primary mismatch count")
 
     require("two-view aggregate mismatch" in corruption_check, "corruption guard does not test two-view aggregate mismatch")
     require("precision strength mismatch" in corruption_check, "corruption guard does not test precision-strength mismatch")
@@ -143,6 +151,8 @@ def main() -> None:
     print("replay_artifact_exact_binding=true")
     print("source_view_evidence_binding=true")
     print("precision_strength_recompute_binding=true")
+    print("zero_value_preservation=true")
+    print("primary_recompute_binding=true")
     print("negative_corruption_rejection=true")
     print("full_attack_replay_universe=true")
 
