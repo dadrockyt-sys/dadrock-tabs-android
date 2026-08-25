@@ -239,67 +239,119 @@ def apply_reference_free_precision_shadow_v2(
     )
 
 
+def _serialize_replay_attack(
+    key: EventKey,
+    row: Mapping[str, Any],
+    precision: PrecisionShadowResult,
+) -> dict[str, Any]:
+    retained = key in precision.retained_events
+    original = _candidate_midis(row)
+    selected = set(precision.pitch_sets.get(key) or ()) if retained else set()
+    primary = precision.primary_midis.get(key) if retained else None
+
+    if retained:
+        if tuple(original) != tuple(precision.original_pitch_sets.get(key) or ()):
+            raise RuntimeError(f"Replay evidence candidate identity mismatch at {key}")
+        if primary is None or int(primary) not in selected:
+            raise RuntimeError(f"Replay evidence retained primary mismatch at {key}")
+
+    candidates: list[dict[str, Any]] = []
+    for midi in original:
+        evidence = _pitch_evidence(row, midi)
+        candidates.append(
+            {
+                "midi": int(midi),
+                "attack": float(evidence["attack"]),
+                "early": float(evidence["early"]),
+                "sustain": float(evidence["sustain"]),
+                "body": float(evidence["body"]),
+                "continuity": float(evidence["continuity"]),
+                "score": float(evidence["score"]),
+                "selected": retained and int(midi) in selected,
+                "primary": retained and int(midi) == int(primary),
+            }
+        )
+
+    return {
+        "measure": int(key[0]),
+        "step": int(key[1]),
+        "onsetTime": float(row.get("onsetTime") or 0.0),
+        "precisionStrength": float(row.get("_precisionStrength") or -99.0),
+        "precisionGridErrorSeconds": float(row.get("_precisionGridErrorSeconds") or 0.0),
+        "retained": bool(retained),
+        "failSafe": key in precision.fail_safe_events,
+        "candidateMidis": [int(value) for value in original],
+        "candidates": candidates,
+    }
+
+
 def build_precision_replay_evidence(
     carrier_rows: Sequence[Mapping[str, Any]],
     grid: Mapping[EventKey, float],
     precision: PrecisionShadowResult,
 ) -> dict[str, Any]:
-    """Serialize compact source evidence needed for future CPU-only replay.
+    """Serialize the one-shot source universe needed for future CPU-only replay.
 
-    This intentionally stores only observed candidate pitches and their derived
-    two-view physical evidence for retained attacks. It avoids stems/CQT arrays,
-    professional labels, runtime labels, or any invented pitch. A single future
-    carrier capture can therefore support many later policy experiments without
-    repeating separator or Basic Pitch inference.
+    `attacks` preserves the historical retained-attack pitch replay contract.
+    `eligibleAttacks` additionally preserves every corrected input attack that
+    has a physical carrier row, including row-level precision strength and the
+    full observed pitch evidence. This makes both pitch-policy experiments on
+    the fixed retained set and future attack-policy experiments replayable
+    without separator or Basic Pitch inference.
     """
     rows_by_slot = _best_rows_by_slot(carrier_rows, grid)
-    attacks: list[dict[str, Any]] = []
-    candidate_count = 0
+    input_keys = sorted(precision.input_events)
+    retained_keys = set(precision.retained_events)
 
-    for key in sorted(precision.retained_events):
+    eligible_attacks: list[dict[str, Any]] = []
+    retained_attacks: list[dict[str, Any]] = []
+    missing_input_keys: list[dict[str, int]] = []
+    eligible_pitch_count = 0
+    retained_pitch_count = 0
+
+    for key in input_keys:
         row = rows_by_slot.get(key)
         if row is None:
-            raise RuntimeError(f"Replay evidence missing carrier row at {key}")
-        original = _candidate_midis(row)
-        if tuple(original) != tuple(precision.original_pitch_sets.get(key) or ()):
-            raise RuntimeError(f"Replay evidence candidate identity mismatch at {key}")
+            missing_input_keys.append({"measure": int(key[0]), "step": int(key[1])})
+            continue
+        record = _serialize_replay_attack(key, row, precision)
+        eligible_attacks.append(record)
+        eligible_pitch_count += len(record["candidates"])
+        if key in retained_keys:
+            retained_attacks.append(record)
+            retained_pitch_count += len(record["candidates"])
 
-        candidates: list[dict[str, Any]] = []
-        for midi in original:
-            evidence = _pitch_evidence(row, midi)
-            candidates.append(
-                {
-                    "midi": int(midi),
-                    "attack": float(evidence["attack"]),
-                    "early": float(evidence["early"]),
-                    "sustain": float(evidence["sustain"]),
-                    "body": float(evidence["body"]),
-                    "continuity": float(evidence["continuity"]),
-                    "score": float(evidence["score"]),
-                    "selected": int(midi) in set(precision.pitch_sets[key]),
-                    "primary": int(midi) == int(precision.primary_midis[key]),
-                }
-            )
-        candidate_count += len(candidates)
-        attacks.append(
-            {
-                "measure": int(key[0]),
-                "step": int(key[1]),
-                "onsetTime": float(row.get("onsetTime") or 0.0),
-                "candidateMidis": [int(value) for value in original],
-                "candidates": candidates,
-            }
-        )
-
-    if candidate_count != sum(len(value) for value in precision.original_pitch_sets.values()):
-        raise RuntimeError("Replay evidence candidate count mismatch")
+    serialized_retained_keys = {
+        (int(item["measure"]), int(item["step"]))
+        for item in retained_attacks
+    }
+    if serialized_retained_keys != retained_keys:
+        raise RuntimeError("Replay evidence retained attack universe mismatch")
+    if retained_pitch_count != sum(len(value) for value in precision.original_pitch_sets.values()):
+        raise RuntimeError("Replay evidence retained candidate count mismatch")
+    if any(item.get("retained") is not True for item in retained_attacks):
+        raise RuntimeError("Replay evidence retained attack flag mismatch")
 
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "policy": POLICY_NAME,
-        "retainedAttackCount": len(attacks),
-        "originalPitchHypothesisCount": int(candidate_count),
-        "attacks": attacks,
+        "replayCompleteness": "retained-pitch-plus-eligible-attack-source-universe",
+        "inputAttackCount": len(input_keys),
+        "eligibleAttackCount": len(eligible_attacks),
+        "retainedAttackCount": len(retained_attacks),
+        "prunedAttackCount": len(precision.pruned_events),
+        "originalPitchHypothesisCount": int(retained_pitch_count),
+        "retainedOriginalPitchHypothesisCount": int(retained_pitch_count),
+        "eligiblePitchHypothesisCount": int(eligible_pitch_count),
+        "inputAttackKeys": [
+            {"measure": int(key[0]), "step": int(key[1])}
+            for key in input_keys
+        ],
+        "carrierMissingInputAttackKeys": missing_input_keys,
+        "attacks": retained_attacks,
+        "eligibleAttacks": eligible_attacks,
+        "fixedRetainedAttackPitchReplayReady": True,
+        "attackPolicyReplayReady": True,
         "candidateAddsUnobservedAttack": False,
         "candidateAddsUnobservedPitch": False,
         "referenceFree": True,
