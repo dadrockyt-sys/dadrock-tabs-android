@@ -1,0 +1,16 @@
+{
+  "approvedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "automaticRetryAllowed": false,
+  "captureAuthorizationReserved": true,
+  "captureState": "reserved_before_modal",
+  "locked": true,
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "runAttempt": 1,
+  "runId": 32805316807,
+  "schemaVersion": 2,
+  "singlePaidCaptureConsumed": false,
+  "targetBranch": "v143-contextual-prune-lobo",
+  "triggerSha": "74b0f815ff3f66f325220975c410621503de440f"
+}
