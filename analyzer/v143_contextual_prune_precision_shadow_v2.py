@@ -254,6 +254,13 @@ def _view_triplet(row: Mapping[str, Any], midi: int) -> dict[str, dict[str, floa
     return {"viewA": values(view_a), "viewB": values(view_b)}
 
 
+def _float_field(row: Mapping[str, Any], key: str, default: float) -> float:
+    raw = row.get(key)
+    if raw is None:
+        return float(default)
+    return float(raw)
+
+
 def _serialize_replay_attack(
     key: EventKey,
     row: Mapping[str, Any],
@@ -291,15 +298,22 @@ def _serialize_replay_attack(
             }
         )
 
-    onset_time = float(row.get("onsetTime") or grid_time)
+    onset_time = _float_field(row, "onsetTime", grid_time)
+    precision_strength = _float_field(row, "_precisionStrength", -99.0)
+    precision_grid_error = _float_field(
+        row,
+        "_precisionGridErrorSeconds",
+        abs(onset_time - grid_time),
+    )
+    candidate_strength = _float_field(row, "_candidateStrength", 0.0)
     return {
         "measure": int(key[0]),
         "step": int(key[1]),
         "gridTime": float(grid_time),
         "onsetTime": onset_time,
-        "precisionStrength": float(row.get("_precisionStrength") or -99.0),
-        "precisionGridErrorSeconds": float(row.get("_precisionGridErrorSeconds") or abs(onset_time - grid_time)),
-        "candidateStrength": float(row.get("_candidateStrength") or 0.0),
+        "precisionStrength": precision_strength,
+        "precisionGridErrorSeconds": precision_grid_error,
+        "candidateStrength": candidate_strength,
         "stemSupportMax": int(row.get("stemSupportMax") or 0),
         "sweepSupportMax": int(row.get("sweepSupportMax") or 0),
         "detectionCountSum": int(row.get("detectionCountSum") or 0),
@@ -380,6 +394,7 @@ def build_precision_replay_evidence(
         "attackPolicyReplayReady": True,
         "sourceViewEvidenceReady": True,
         "precisionStrengthRecomputeReady": True,
+        "zeroValuePreservationReady": True,
         "candidateAddsUnobservedAttack": False,
         "candidateAddsUnobservedPitch": False,
         "referenceFree": True,
