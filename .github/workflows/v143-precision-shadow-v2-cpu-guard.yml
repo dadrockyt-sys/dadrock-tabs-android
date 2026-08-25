@@ -89,7 +89,7 @@ jobs:
           import json
           from pathlib import Path
           result = {
-              'schemaVersion': 5,
+              'schemaVersion': 6,
               'passed': True,
               'policy': 'envelope-balanced-secondary-v2',
               'sourceSha': '${{ github.sha }}',
@@ -99,6 +99,7 @@ jobs:
               'replayCompareSelfTestPassed': True,
               'storedV2ReplayStrictPassed': True,
               'deterministicVoicingReplayPassed': True,
+              'deterministicTimingReplayPassed': True,
               'replayArtifactValidatorSelfTestPassed': True,
               'replayCorruptionRejectionPassed': True,
               'replayCaptureOrderPassed': True,
