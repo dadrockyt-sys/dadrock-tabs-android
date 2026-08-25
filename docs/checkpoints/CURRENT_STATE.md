@@ -74,15 +74,23 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce genuinely profess
 - Visual inspection of the **V5** first/middle/last persisted snapshots from workflow run `32821861294`, artifact `9553423573`, passed: no clipping, broken glyphs, unreadable dense systems, or obvious fret/text collisions at the higher 1209-event density; dense chords and two-digit frets remain legible. The final page retains acceptable lower whitespace.
 - The remaining blocker is downstream technique/sustain recomputation for the 166 rescued attacks; rescued events are intentionally neutral in this inspection render.
 
+## Downstream technique/sustain source investigation — ACTIVE
+- Modern V143 runtime wrapper imports `external_processing.v143_audio`, `external_processing.v143_models`, and `external_processing.v143_product`, but those implementation modules are not committed/searchable on this branch. Repository/commit search has not found a modern source copy of `build_reference_free_rhythm_product`; therefore **no replacement thresholds/rules will be invented**.
+- Historical Java commit `ac46281f8112cd16a959d9c37f8936270ad4f716` contains old sustain-engine work, but it is treated as historical context only, not V143 source truth.
+- Added evidence-only inspector `analyzer/inspect_v143_baseline_downstream_metadata.py` at commit `037e1c717ea1db34907984bda1013ef7f9de8302`. It reads the immutable pinned product only, validates exact `967/725/113`, summarizes all existing performance metadata distributions/signatures and non-neutral contexts, and scans non-event product fields for source/evidence/diagnostic paths. It performs **zero inference or musical mutation**.
+- Added guarded CPU-only workflow `.github/workflows/v143-inspect-baseline-downstream-metadata.yml` at commit `dfc2706d02e2ef192a424dbb039d5a505d2b1eb1`. It re-verifies the protected runtime blob, rematerializes the immutable paid capture from pinned commit `c1451df...`, runs only the inspector, persists compact JSON evidence, and invokes no Modal/professional reference.
+- Inspection workflow result is pending; next step is to use its exact evidence to determine whether a source-faithful replay is possible without guessing.
+
 ## Current integrity
-- Branch head before this checkpoint update: `78d4f5be246b69560c4f62a9ba4e43a4ec5ae6e7`.
-- Protected runtime guard passed in both real baseline and V5 shadow render workflows.
+- Branch head before this checkpoint update: `dfc2706d02e2ef192a424dbb039d5a505d2b1eb1`.
+- Protected runtime guard passed in prior real baseline and V5 shadow render workflows; new metadata-inspection workflow also contains an explicit protected-runtime guard.
 - No Production/main change; no professional scorer/reference; no new Modal/L4 usage.
 
 ## Next exact actions
-1. Build a CPU-only, source-only downstream **technique/sustain replay** for all 166 rescued attacks using existing runtime logic/evidence only; no professional reference and no new Modal/L4.
-2. Validate exact rescued-attack coverage and prove no technique/duration invention beyond what source/runtime evidence supports; preserve timing/tempo.
-3. Re-materialize V5 with recomputed downstream metadata, re-render the professional PDF, and enforce `1209/891/113` content identity plus renderer fidelity.
-4. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
-5. No Modal/L4 without fresh explicit authorization.
-6. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
+1. Read the guarded baseline downstream-metadata inspection result and identify any exact candidate-side source/evidence/diagnostic fields supporting modern technique/sustain replay.
+2. If exact source support exists, build a CPU-only, source-only downstream **technique/sustain replay** for all 166 rescued attacks using that evidence only; no professional reference and no new Modal/L4. If it does not exist, do not invent thresholds—trace the V143 runtime packaging/provenance further.
+3. Validate exact rescued-attack coverage and prove no technique/duration invention beyond what source/runtime evidence supports; preserve timing/tempo.
+4. Re-materialize V5 with recomputed downstream metadata, re-render the professional PDF, and enforce `1209/891/113` content identity plus renderer fidelity.
+5. Only after downstream completeness is proven consider the closed professional score gate; do not tune against the professional reference.
+6. No Modal/L4 without fresh explicit authorization.
+7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
