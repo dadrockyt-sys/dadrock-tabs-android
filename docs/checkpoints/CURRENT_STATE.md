@@ -70,6 +70,11 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; musical accuracy first, P
 - First local exact full-mix CQT attempt exceeded the single tool-call timeout during harmonic/CQT construction; it made no branch/content change. Continue via an interactive CPU process, not Modal.
 - If full-mix holdout fidelity is insufficient, keep it shadow-only and record the blocker; do not invent a threshold to force agreement.
 
+## Continuation checkpoint — resumed 2026-08-25
+- Re-downloaded/materialized the trusted authorized product artifact `9548666053` and approved source artifact `9570238003` for the CPU sustain investigation.
+- Reverified the approved source SHA256 exactly `215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f` before analysis.
+- Full-mix harmonic/CQT sustain evidence investigation is resumed locally. No protected runtime code, timing, main/Production, or Modal/L4 has been touched.
+
 ## Current integrity
 - Protected runtime untouched.
 - `main`/Production untouched.
