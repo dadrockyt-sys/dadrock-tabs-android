@@ -1,16 +1,24 @@
 {
+  "captureReadinessPassed": true,
+  "fullAttackReplayUniversePassed": true,
   "historicalOptionalAccountingPassed": true,
   "modalInvoked": false,
   "newInferenceUsed": false,
   "passed": true,
   "policy": "envelope-balanced-secondary-v2",
   "policySelfTestPassed": true,
+  "precisionStrengthRecomputePassed": true,
+  "primaryRecomputePassed": true,
   "productionModified": false,
   "professionalReferenceUsed": false,
   "protectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "replayArtifactValidatorSelfTestPassed": true,
   "replayCompareSelfTestPassed": true,
-  "runId": 32798508800,
-  "schemaVersion": 2,
+  "replayCorruptionRejectionPassed": true,
+  "runId": 32798761603,
+  "schemaVersion": 3,
   "singlePaidCaptureStaticGuardPassed": true,
-  "sourceSha": "69d3d06ed183c359dddada4ce86be38626552911"
+  "sourceSha": "74d54037d7d22db27e0be8b155d0f4e5e45dbfdd",
+  "sourceViewEvidenceBindingPassed": true,
+  "zeroValuePreservationPassed": true
 }
