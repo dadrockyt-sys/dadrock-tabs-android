@@ -1,0 +1,43 @@
+name: V143 research checkpoint fetch
+
+on:
+  pull_request:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - 'debug/v143-contextual-prune/research-checkpoint-trigger.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  fetch-public-checkpoint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch public MIT checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://raw.githubusercontent.com/ErenReyhanlioglu/Guitar-Transcription-Weights/main/cnn_mtl_20251210_113013/fold_1/model_best.pt'
+          curl --fail --location --retry 3 --output model_best.pt "$url"
+          test -s model_best.pt
+          bytes=$(wc -c < model_best.pt | tr -d ' ')
+          printf 'blob %s\0' "$bytes" > blob-header.bin
+          cat blob-header.bin model_best.pt | sha1sum | awk '{print $1}' > git-blob-sha1.txt
+          sha256sum model_best.pt | awk '{print $1}' > checkpoint-sha256.txt
+          test "$(cat git-blob-sha1.txt)" = '82094eecad83603b331b1bfbce0f0310f8942df8'
+          printf 'source=ErenReyhanlioglu/Guitar-Transcription-Weights\nlicense=MIT\npath=cnn_mtl_20251210_113013/fold_1/model_best.pt\nbytes=%s\ngit_blob_sha1=%s\nsha256=%s\n' \
+            "$bytes" "$(cat git-blob-sha1.txt)" "$(cat checkpoint-sha256.txt)" > checkpoint-manifest.txt
+
+      - name: Upload bounded research artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-public-guitar-amt-fold1-checkpoint
+          path: |
+            model_best.pt
+            checkpoint-manifest.txt
+            checkpoint-sha256.txt
+            git-blob-sha1.txt
+          if-no-files-found: error
+          retention-days: 1
