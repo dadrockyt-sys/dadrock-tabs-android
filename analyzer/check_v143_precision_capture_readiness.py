@@ -5,6 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github/workflows/v143-repaired-timing-precision-candidate-product.yml"
 PRODUCER = ROOT / "analyzer/v143_repaired_timing_precision_candidate_product_modal.py"
+POLICY = ROOT / "analyzer/v143_contextual_prune_precision_shadow_v2.py"
 REPLAY = ROOT / "analyzer/v143_precision_replay_policy_compare.py"
 VALIDATOR = ROOT / "analyzer/v143_precision_replay_artifact_validator.py"
 PROTECTED = ROOT / "analyzer/v143_reference_free_rhythm_pipeline.py"
@@ -32,6 +33,7 @@ def ordered(text: str, *needles: str) -> bool:
 def main() -> None:
     workflow = WORKFLOW.read_text(encoding="utf-8")
     producer = PRODUCER.read_text(encoding="utf-8")
+    policy = POLICY.read_text(encoding="utf-8")
     replay = REPLAY.read_text(encoding="utf-8")
     validator = VALIDATOR.read_text(encoding="utf-8")
 
@@ -50,18 +52,39 @@ def main() -> None:
         "python analyzer/v143_precision_replay_artifact_validator.py --self-test" in workflow,
         "replay artifact validator self-test is not in the pre-Modal gate",
     )
-    require(
-        "replayArtifactValidationSha256" in workflow,
-        "final lock does not bind replay artifact validation",
-    )
+    require("replayArtifactValidationSha256" in workflow, "final lock does not bind replay artifact validation")
+    require("replayEligibleAttackCount" in workflow, "final lock does not bind eligible attack universe")
+    require("replayEligiblePitchHypothesisCount" in workflow, "final lock does not bind eligible pitch universe")
+    require("baselineAttackReplayMatches" in workflow, "final lock does not require exact baseline attack replay")
+    require("attackPolicyReplayReady" in workflow, "final lock does not require attack-policy replay readiness")
 
     modal_command = "python -m modal run analyzer/v143_repaired_timing_precision_candidate_product_modal.py::approved_audio"
     require(workflow.count(modal_command) == 1, "workflow must contain exactly one paid Modal command")
     require(producer.count(".remote(") == 1, "producer must contain exactly one Modal .remote call")
-    require("precisionReplayEvidence" in producer and "build_replay_evidence(" in producer, "producer replay evidence persistence missing")
+    require(
+        "precisionReplayEvidence" in producer and "build_precision_replay_evidence(" in producer,
+        "producer replay evidence persistence missing",
+    )
+
+    for token in (
+        '"schemaVersion": 2',
+        '"replayCompleteness": "retained-pitch-plus-eligible-attack-source-universe"',
+        '"inputAttackKeys"',
+        '"carrierMissingInputAttackKeys"',
+        '"eligibleAttacks"',
+        '"precisionStrength"',
+        '"fixedRetainedAttackPitchReplayReady": True',
+        '"attackPolicyReplayReady": True',
+    ):
+        require(token in policy, f"full replay serializer token missing: {token}")
+
     require("import modal" not in replay and ".remote(" not in replay and "modal run" not in replay, "CPU replay path contains Modal usage")
     require("import modal" not in validator and ".remote(" not in validator and "modal run" not in validator, "replay validator contains Modal usage")
     require("validate_product(" in validator and "_self_test()" in validator, "replay validator API/self-test missing")
+    require('replay.get("schemaVersion") == 2' in validator, "replay validator does not require schemaVersion 2")
+    require("baselineAttackReplayMatches" in validator, "replay validator does not report baseline attack replay fidelity")
+    require("_recompute_attack_policy(" in validator, "replay validator does not reconstruct attack policy")
+    require("eligibleAttackCount" in validator and "eligiblePitchHypothesisCount" in validator, "replay validator does not bind full eligible source counts")
 
     require(
         ordered(
@@ -86,18 +109,9 @@ def main() -> None:
     modal_pos = workflow.find(modal_command)
     finalize_pos = workflow.find("Finalize one-shot capture lock")
     require(0 <= reserve_pos < modal_pos < finalize_pos, "lock is not reserved before the paid call")
-    require(
-        workflow.find('test "$GITHUB_REF" = "refs/heads/$TARGET_BRANCH"') < reserve_pos,
-        "branch identity gate must run before reservation",
-    )
-    require(
-        workflow.find('test "$(git rev-parse "origin/$TARGET_BRANCH")" = "$GITHUB_SHA"') < reserve_pos,
-        "remote-head binding gate must run before reservation",
-    )
-    require(
-        workflow.find('if test -f "$lock"; then') < reserve_pos,
-        "preexisting-lock refusal must run before reservation",
-    )
+    require(workflow.find('test "$GITHUB_REF" = "refs/heads/$TARGET_BRANCH"') < reserve_pos, "branch identity gate must run before reservation")
+    require(workflow.find('test "$(git rev-parse "origin/$TARGET_BRANCH")" = "$GITHUB_SHA"') < reserve_pos, "remote-head binding gate must run before reservation")
+    require(workflow.find('if test -f "$lock"; then') < reserve_pos, "preexisting-lock refusal must run before reservation")
 
     protected_bytes = PROTECTED.read_bytes()
     require(len(protected_bytes) > 0, "protected pipeline unexpectedly empty")
@@ -110,6 +124,7 @@ def main() -> None:
     print("cpu_replay_modal_free=true")
     print("failure_path_artifact_salvage=true")
     print("replay_artifact_exact_binding=true")
+    print("full_attack_replay_universe=true")
 
 
 if __name__ == "__main__":
