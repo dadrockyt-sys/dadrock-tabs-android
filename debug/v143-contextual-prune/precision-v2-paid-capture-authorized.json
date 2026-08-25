@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "paidCaptureAuthorized": "YES",
+  "authorizedPaidCaptureCount": 1,
+  "steps1Through5Authorized": true,
+  "targetBranch": "v143-contextual-prune-lobo",
+  "expectedProtectedPipelineBlob": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+  "expectedApprovedAudioSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+  "expectedCpuGuardRunId": 32801119456,
+  "expectedCpuGuardSourceSha": "7d366e90019006bb0a98b83b1ba2039342eab8c9",
+  "professionalReferenceAuthorized": false,
+  "productionModificationAuthorized": false
+}
