@@ -10,6 +10,9 @@ on:
       - analyzer/v143_repaired_timing_precision_candidate_product_modal.py
       - analyzer/v143_precision_optional_candidate_accounting.py
       - analyzer/v143_precision_replay_policy_compare.py
+      - analyzer/v143_precision_replay_artifact_validator.py
+      - analyzer/check_v143_precision_replay_corruption_rejection.py
+      - analyzer/check_v143_precision_capture_readiness.py
       - .github/workflows/v143-repaired-timing-precision-candidate-product.yml
       - .github/workflows/v143-precision-shadow-v2-cpu-guard.yml
   workflow_dispatch:
@@ -35,9 +38,15 @@ jobs:
             analyzer/check_v143_precision_shadow_v2_policy.py \
             analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
             analyzer/v143_precision_optional_candidate_accounting.py \
-            analyzer/v143_precision_replay_policy_compare.py
+            analyzer/v143_precision_replay_policy_compare.py \
+            analyzer/v143_precision_replay_artifact_validator.py \
+            analyzer/check_v143_precision_replay_corruption_rejection.py \
+            analyzer/check_v143_precision_capture_readiness.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_shadow_v2_policy.py
-          python analyzer/v143_precision_replay_policy_compare.py --self-test
+          PYTHONPATH=analyzer python analyzer/v143_precision_replay_policy_compare.py --self-test
+          PYTHONPATH=analyzer python analyzer/v143_precision_replay_artifact_validator.py --self-test
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_replay_corruption_rejection.py
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_capture_readiness.py
           python analyzer/v143_precision_optional_candidate_accounting.py \
             --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
             --output /tmp/precision-optional-candidate-accounting.json
@@ -47,7 +56,10 @@ jobs:
             analyzer/check_v143_precision_shadow_v2_policy.py \
             analyzer/v143_repaired_timing_precision_candidate_product_modal.py \
             analyzer/v143_precision_optional_candidate_accounting.py \
-            analyzer/v143_precision_replay_policy_compare.py; then
+            analyzer/v143_precision_replay_policy_compare.py \
+            analyzer/v143_precision_replay_artifact_validator.py \
+            analyzer/check_v143_precision_replay_corruption_rejection.py \
+            analyzer/check_v143_precision_capture_readiness.py; then
             echo 'Forbidden scorer/reference token in precision v2 path' >&2
             exit 1
           fi
@@ -57,6 +69,7 @@ jobs:
           grep -q 'precisionReplayEvidence' "$workflow"
           grep -q 'replayEvidenceSha256' "$workflow"
           grep -q 'v143_precision_replay_policy_compare.py' "$workflow"
+          grep -q 'v143_precision_replay_artifact_validator.py' "$workflow"
           test "$(grep -c 'python -m modal run' "$workflow")" -eq 1
           test "$(grep -c '\.remote(' analyzer/v143_repaired_timing_precision_candidate_product_modal.py)" -eq 1
       - name: Persist green CPU guard
@@ -68,7 +81,7 @@ jobs:
           import json
           from pathlib import Path
           result = {
-              'schemaVersion': 2,
+              'schemaVersion': 3,
               'passed': True,
               'policy': 'envelope-balanced-secondary-v2',
               'sourceSha': '${{ github.sha }}',
@@ -76,6 +89,14 @@ jobs:
               'protectedPipelineBlob': '7f72f8ed9b14af8bc93e95544195204d99c6bec1',
               'policySelfTestPassed': True,
               'replayCompareSelfTestPassed': True,
+              'replayArtifactValidatorSelfTestPassed': True,
+              'replayCorruptionRejectionPassed': True,
+              'captureReadinessPassed': True,
+              'sourceViewEvidenceBindingPassed': True,
+              'precisionStrengthRecomputePassed': True,
+              'zeroValuePreservationPassed': True,
+              'primaryRecomputePassed': True,
+              'fullAttackReplayUniversePassed': True,
               'historicalOptionalAccountingPassed': True,
               'singlePaidCaptureStaticGuardPassed': True,
               'newInferenceUsed': False,
