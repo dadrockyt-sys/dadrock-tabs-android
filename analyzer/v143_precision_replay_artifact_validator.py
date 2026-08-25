@@ -10,6 +10,7 @@ from typing import Any, Mapping, Sequence
 EXPECTED_POLICY = "envelope-balanced-secondary-v2"
 EXPECTED_AUDIO_SHA256 = "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
 EVIDENCE_FIELDS = ("attack", "early", "sustain", "body", "continuity", "score")
+VIEW_FIELDS = ("attack", "early", "sustain")
 ATTACK_TRANSIENT_RATIO_FLOOR = 0.70
 ATTACK_TRANSIENT_RATIO_EXCEPTION_FLOOR = 0.60
 LOCAL_STRENGTH_MARGIN = 0.20
@@ -63,19 +64,25 @@ def _key_record(value: Mapping[str, Any], label: str) -> tuple[int, int]:
 
 def _candidate_values(item: Mapping[str, Any], label: str) -> dict[str, float]:
     values = {field: _finite(item.get(field), f"{label}.{field}") for field in EVIDENCE_FIELDS}
-    _require(
-        math.isclose(values["body"], max(values["early"], values["sustain"]), rel_tol=0.0, abs_tol=1e-12),
-        f"{label} body is not max(early,sustain)",
-    )
-    _require(
-        math.isclose(values["continuity"], min(values["early"], values["sustain"]), rel_tol=0.0, abs_tol=1e-12),
-        f"{label} continuity is not min(early,sustain)",
-    )
+    views: dict[str, dict[str, float]] = {}
+    for view_name in ("viewA", "viewB"):
+        raw_view = item.get(view_name)
+        _require(isinstance(raw_view, Mapping), f"{label}.{view_name} is not a mapping")
+        views[view_name] = {
+            field: _finite(raw_view.get(field), f"{label}.{view_name}.{field}")
+            for field in VIEW_FIELDS
+        }
+
+    expected_attack = min(views["viewA"]["attack"], views["viewB"]["attack"])
+    expected_early = min(views["viewA"]["early"], views["viewB"]["early"])
+    expected_sustain = min(views["viewA"]["sustain"], views["viewB"]["sustain"])
+    _require(math.isclose(values["attack"], expected_attack, rel_tol=0.0, abs_tol=1e-12), f"{label} attack does not match two-view minimum")
+    _require(math.isclose(values["early"], expected_early, rel_tol=0.0, abs_tol=1e-12), f"{label} early does not match two-view minimum")
+    _require(math.isclose(values["sustain"], expected_sustain, rel_tol=0.0, abs_tol=1e-12), f"{label} sustain does not match two-view minimum")
+    _require(math.isclose(values["body"], max(values["early"], values["sustain"]), rel_tol=0.0, abs_tol=1e-12), f"{label} body is not max(early,sustain)")
+    _require(math.isclose(values["continuity"], min(values["early"], values["sustain"]), rel_tol=0.0, abs_tol=1e-12), f"{label} continuity is not min(early,sustain)")
     expected_score = values["attack"] + 0.65 * values["body"] + 0.15 * values["continuity"]
-    _require(
-        math.isclose(values["score"], expected_score, rel_tol=0.0, abs_tol=1e-10),
-        f"{label} score formula mismatch",
-    )
+    _require(math.isclose(values["score"], expected_score, rel_tol=0.0, abs_tol=1e-10), f"{label} score formula mismatch")
     return values
 
 
@@ -86,10 +93,16 @@ def _validate_attack_record(
     require_retained: bool | None,
 ) -> tuple[tuple[int, int], set[int], set[int], int | None]:
     key = _key_record(attack, label)
-    _finite(attack.get("onsetTime"), f"{label}.onsetTime")
-    _finite(attack.get("precisionStrength"), f"{label}.precisionStrength")
+    grid_time = _finite(attack.get("gridTime"), f"{label}.gridTime")
+    onset_time = _finite(attack.get("onsetTime"), f"{label}.onsetTime")
+    precision_strength = _finite(attack.get("precisionStrength"), f"{label}.precisionStrength")
     grid_error = _finite(attack.get("precisionGridErrorSeconds"), f"{label}.precisionGridErrorSeconds")
+    _finite(attack.get("candidateStrength"), f"{label}.candidateStrength")
+    stem_support = _int(attack.get("stemSupportMax"), f"{label}.stemSupportMax")
+    sweep_support = _int(attack.get("sweepSupportMax"), f"{label}.sweepSupportMax")
+    detection_count = _int(attack.get("detectionCountSum"), f"{label}.detectionCountSum")
     _require(grid_error >= 0.0, f"{label}.precisionGridErrorSeconds is negative")
+    _require(math.isclose(grid_error, abs(onset_time - grid_time), rel_tol=0.0, abs_tol=1e-10), f"{label} grid error does not match onset/grid time")
     _require(isinstance(attack.get("retained"), bool), f"{label}.retained is not boolean")
     _require(isinstance(attack.get("failSafe"), bool), f"{label}.failSafe is not boolean")
     retained = attack.get("retained") is True
@@ -100,24 +113,20 @@ def _validate_attack_record(
 
     candidate_midis_raw = attack.get("candidateMidis") or []
     candidates = attack.get("candidates") or []
-    _require(
-        isinstance(candidate_midis_raw, Sequence) and not isinstance(candidate_midis_raw, (str, bytes, bytearray)),
-        f"{label}.candidateMidis is not a sequence",
-    )
-    _require(
-        isinstance(candidates, Sequence) and not isinstance(candidates, (str, bytes, bytearray)),
-        f"{label}.candidates is not a sequence",
-    )
+    _require(isinstance(candidate_midis_raw, Sequence) and not isinstance(candidate_midis_raw, (str, bytes, bytearray)), f"{label}.candidateMidis is not a sequence")
+    _require(isinstance(candidates, Sequence) and not isinstance(candidates, (str, bytes, bytearray)), f"{label}.candidates is not a sequence")
 
     candidate_midis = [_int(value, f"{label}.candidateMidi") for value in candidate_midis_raw]
     candidate_records: list[int] = []
     selected: set[int] = set()
     primaries: list[int] = []
+    strongest_score = -99.0
     for index, item in enumerate(candidates):
         _require(isinstance(item, Mapping), f"{label}.candidates[{index}] is not a mapping")
         midi = _int(item.get("midi"), f"{label}.candidates[{index}].midi")
         candidate_records.append(midi)
-        _candidate_values(item, f"{label}.MIDI{midi}")
+        values = _candidate_values(item, f"{label}.MIDI{midi}")
+        strongest_score = max(strongest_score, values["score"])
         _require(isinstance(item.get("selected"), bool), f"{label}.MIDI{midi}.selected is not boolean")
         _require(isinstance(item.get("primary"), bool), f"{label}.MIDI{midi}.primary is not boolean")
         if item.get("selected") is True:
@@ -127,6 +136,15 @@ def _validate_attack_record(
 
     _require(candidate_midis == candidate_records, f"{label} candidate identity/order mismatch")
     _require(len(candidate_records) == len(set(candidate_records)), f"{label} contains duplicate MIDI")
+    expected_strength = (
+        strongest_score
+        + 0.10 * min(4, max(0, sweep_support))
+        + 0.03 * min(16, max(0, detection_count))
+        - 2.0 * grid_error
+    )
+    _require(math.isclose(precision_strength, expected_strength, rel_tol=0.0, abs_tol=1e-10), f"{label} precisionStrength cannot be recomputed from persisted source evidence")
+    _require(stem_support == int(stem_support), f"{label}.stemSupportMax invalid")
+
     if retained:
         _require(len(candidate_records) > 0, f"{label} retained attack has no pitch hypotheses")
         _require(len(primaries) == 1, f"{label} retained attack must contain exactly one primary")
@@ -147,14 +165,7 @@ def _best_candidate(attack: Mapping[str, Any]) -> Mapping[str, Any] | None:
     candidates = _candidate_map(attack)
     if not candidates:
         return None
-    midi = max(
-        candidates,
-        key=lambda value: (
-            float(candidates[value]["score"]),
-            float(candidates[value]["attack"]),
-            -int(value),
-        ),
-    )
+    midi = max(candidates, key=lambda value: (float(candidates[value]["score"]), float(candidates[value]["attack"]), -int(value)))
     return candidates[midi]
 
 
@@ -184,9 +195,7 @@ def _attack_is_precise(
     neighbors = [
         float(other["precisionStrength"])
         for other_key, other in eligible.items()
-        if other_key != key
-        and other_key[0] == key[0]
-        and abs(int(other_key[1]) - int(key[1])) <= LOCAL_RADIUS_STEPS
+        if other_key != key and other_key[0] == key[0] and abs(int(other_key[1]) - int(key[1])) <= LOCAL_RADIUS_STEPS
     ]
     if not neighbors:
         return True
@@ -200,34 +209,24 @@ def _recompute_attack_policy(
     scoped = {key: attack for key, attack in eligible.items() if key[0] in target_measures}
     retained = {key for key, attack in scoped.items() if _attack_is_precise(key, attack, scoped)}
     fail_safe: set[tuple[int, int]] = set()
-
     for measure in sorted(target_measures):
         measure_inputs = sorted(key for key in scoped if key[0] == measure)
         if not measure_inputs or any(key in retained for key in measure_inputs):
             continue
-        winner = max(
-            measure_inputs,
-            key=lambda key: (_transient_ratio(scoped[key]), float(scoped[key]["precisionStrength"]), -int(key[1])),
-        )
+        winner = max(measure_inputs, key=lambda key: (_transient_ratio(scoped[key]), float(scoped[key]["precisionStrength"]), -int(key[1])))
         retained.add(winner)
         fail_safe.add(winner)
-
     for key in list(retained):
         if not (scoped[key].get("candidateMidis") or []):
             retained.remove(key)
             fail_safe.discard(key)
-
     retained_measures = {measure for measure, _step in retained}
     for measure in sorted(target_measures - retained_measures):
         candidates = [key for key in scoped if key[0] == measure and (scoped[key].get("candidateMidis") or [])]
         _require(bool(candidates), f"no pitched eligible attack can preserve measure {measure}")
-        winner = max(
-            candidates,
-            key=lambda key: (_transient_ratio(scoped[key]), float(scoped[key]["precisionStrength"]), -int(key[1])),
-        )
+        winner = max(candidates, key=lambda key: (_transient_ratio(scoped[key]), float(scoped[key]["precisionStrength"]), -int(key[1])))
         retained.add(winner)
         fail_safe.add(winner)
-
     return retained, fail_safe
 
 
@@ -259,6 +258,8 @@ def validate_product(product: Mapping[str, Any]) -> dict[str, Any]:
     _require(replay.get("replayCompleteness") == "retained-pitch-plus-eligible-attack-source-universe", "unexpected replay completeness mode")
     _require(replay.get("fixedRetainedAttackPitchReplayReady") is True, "fixed retained-attack replay is not ready")
     _require(replay.get("attackPolicyReplayReady") is True, "attack-policy replay is not ready")
+    _require(replay.get("sourceViewEvidenceReady") is True, "per-view source replay is not ready")
+    _require(replay.get("precisionStrengthRecomputeReady") is True, "precision-strength replay is not ready")
     _require(replay.get("referenceFree") is True, "replay is not reference-free")
     _require(replay.get("professionalReferenceUsed") is False, "replay indicates professional reference use")
     _require(replay.get("runtimeLabelsRequired") is False, "replay requires runtime labels")
@@ -402,6 +403,8 @@ def validate_product(product: Mapping[str, Any]) -> dict[str, Any]:
         "measureStart": measure_start,
         "measureEnd": measure_end,
         "baselineAttackReplayMatches": True,
+        "sourceViewEvidenceMatches": True,
+        "precisionStrengthRecomputeMatches": True,
         "fixedRetainedAttackPitchReplayReady": True,
         "attackPolicyReplayReady": True,
         "replayEvidenceSha256": _canonical_sha256(replay),
@@ -425,18 +428,32 @@ def _candidate(midi: int, attack: float, early: float, sustain: float, *, select
         "body": body,
         "continuity": continuity,
         "score": attack + 0.65 * body + 0.15 * continuity,
+        "viewA": {"attack": attack, "early": early, "sustain": sustain},
+        "viewB": {"attack": attack, "early": early, "sustain": sustain},
         "selected": selected,
         "primary": primary,
     }
 
 
-def _attack_record(measure: int, step: int, candidates: list[dict[str, Any]], *, retained: bool, fail_safe: bool, strength: float) -> dict[str, Any]:
+def _attack_record(measure: int, step: int, candidates: list[dict[str, Any]], *, retained: bool, fail_safe: bool) -> dict[str, Any]:
+    grid_time = float(measure)
+    onset_time = grid_time + 0.01 * (step + 1)
+    grid_error = abs(onset_time - grid_time)
+    sweep_support = 0
+    detection_count = 0
+    strongest_score = max((float(item["score"]) for item in candidates), default=-99.0)
+    precision_strength = strongest_score + 0.10 * min(4, sweep_support) + 0.03 * min(16, detection_count) - 2.0 * grid_error
     return {
         "measure": measure,
         "step": step,
-        "onsetTime": float(measure) + 0.01 * step,
-        "precisionStrength": strength,
-        "precisionGridErrorSeconds": 0.01,
+        "gridTime": grid_time,
+        "onsetTime": onset_time,
+        "precisionStrength": precision_strength,
+        "precisionGridErrorSeconds": grid_error,
+        "candidateStrength": 0.0,
+        "stemSupportMax": 0,
+        "sweepSupportMax": sweep_support,
+        "detectionCountSum": detection_count,
         "retained": retained,
         "failSafe": fail_safe,
         "candidateMidis": [int(item["midi"]) for item in candidates],
@@ -445,19 +462,9 @@ def _attack_record(measure: int, step: int, candidates: list[dict[str, Any]], *,
 
 
 def _self_test_product() -> dict[str, Any]:
-    strong = _attack_record(
-        1, 0,
-        [_candidate(60, 1.0, 0.8, 0.6, selected=True, primary=True), _candidate(64, 0.9, 0.7, 0.5, selected=True, primary=False)],
-        retained=True, fail_safe=False, strength=2.0,
-    )
-    weak_pruned = _attack_record(
-        1, 1, [_candidate(62, 0.3, 0.8, 0.7, selected=False, primary=False)],
-        retained=False, fail_safe=False, strength=1.0,
-    )
-    weak_fail_safe = _attack_record(
-        2, 0, [_candidate(65, 0.25, 0.8, 0.7, selected=True, primary=True)],
-        retained=True, fail_safe=True, strength=0.5,
-    )
+    strong = _attack_record(1, 0, [_candidate(60, 1.0, 0.8, 0.6, selected=True, primary=True), _candidate(64, 0.9, 0.7, 0.5, selected=True, primary=False)], retained=True, fail_safe=False)
+    weak_pruned = _attack_record(1, 1, [_candidate(62, 0.3, 0.8, 0.7, selected=False, primary=False)], retained=False, fail_safe=False)
+    weak_fail_safe = _attack_record(2, 0, [_candidate(65, 0.25, 0.8, 0.7, selected=True, primary=True)], retained=True, fail_safe=True)
     retained = [strong, weak_fail_safe]
     eligible = [strong, weak_pruned, weak_fail_safe]
     return {
@@ -479,6 +486,8 @@ def _self_test_product() -> dict[str, Any]:
             "eligibleAttacks": eligible,
             "fixedRetainedAttackPitchReplayReady": True,
             "attackPolicyReplayReady": True,
+            "sourceViewEvidenceReady": True,
+            "precisionStrengthRecomputeReady": True,
             "candidateAddsUnobservedAttack": False,
             "candidateAddsUnobservedPitch": False,
             "referenceFree": True,
@@ -498,10 +507,28 @@ def _self_test_product() -> dict[str, Any]:
 
 
 def _self_test() -> None:
+    from v143_contextual_prune_precision_shadow import (
+        ATTACK_TRANSIENT_RATIO_EXCEPTION_FLOOR as ACTUAL_ATTACK_TRANSIENT_RATIO_EXCEPTION_FLOOR,
+        ATTACK_TRANSIENT_RATIO_FLOOR as ACTUAL_ATTACK_TRANSIENT_RATIO_FLOOR,
+        LOCAL_RADIUS_STEPS as ACTUAL_LOCAL_RADIUS_STEPS,
+        LOCAL_STRENGTH_MARGIN as ACTUAL_LOCAL_STRENGTH_MARGIN,
+        POSITIVE_ATTACK_FLOOR as ACTUAL_POSITIVE_ATTACK_FLOOR,
+        POSITIVE_BODY_FLOOR as ACTUAL_POSITIVE_BODY_FLOOR,
+    )
+
+    assert ATTACK_TRANSIENT_RATIO_FLOOR == ACTUAL_ATTACK_TRANSIENT_RATIO_FLOOR
+    assert ATTACK_TRANSIENT_RATIO_EXCEPTION_FLOOR == ACTUAL_ATTACK_TRANSIENT_RATIO_EXCEPTION_FLOOR
+    assert LOCAL_STRENGTH_MARGIN == ACTUAL_LOCAL_STRENGTH_MARGIN
+    assert LOCAL_RADIUS_STEPS == ACTUAL_LOCAL_RADIUS_STEPS
+    assert POSITIVE_ATTACK_FLOOR == ACTUAL_POSITIVE_ATTACK_FLOOR
+    assert POSITIVE_BODY_FLOOR == ACTUAL_POSITIVE_BODY_FLOOR
+
     product = _self_test_product()
     report = validate_product(product)
     assert report["passed"] is True
     assert report["baselineAttackReplayMatches"] is True
+    assert report["sourceViewEvidenceMatches"] is True
+    assert report["precisionStrengthRecomputeMatches"] is True
     assert report["eligibleAttackCount"] == 3
     assert report["retainedAttackCount"] == 2
     assert report["failSafeAttackCount"] == 1
@@ -531,7 +558,16 @@ def _self_test() -> None:
     else:
         raise AssertionError("validator failed to reject a corrupted retained-attack baseline")
 
-    print("PASS v143 precision replay artifact schema2 exact-binding self-test")
+    broken_view = json.loads(json.dumps(product))
+    broken_view["precisionReplayEvidence"]["eligibleAttacks"][0]["candidates"][0]["viewA"]["attack"] += 0.1
+    try:
+        validate_product(broken_view)
+    except ReplayArtifactValidationError:
+        pass
+    else:
+        raise AssertionError("validator failed to reject corrupted per-view source evidence")
+
+    print("PASS v143 precision replay schema2 source-complete exact-binding self-test")
 
 
 def main() -> None:
