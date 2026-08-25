@@ -38,7 +38,7 @@ def main() -> None:
     validator = VALIDATOR.read_text(encoding="utf-8")
 
     require(TARGET_BRANCH in workflow, "target branch missing from workflow")
-    require(f"refs/heads/{TARGET_BRANCH}" in workflow, "workflow dispatch ref is not pinned to target branch")
+    require('refs/heads/$TARGET_BRANCH' in workflow, "workflow dispatch ref is not pinned to target branch variable")
     require("GITHUB_SHA" in workflow and "origin/$TARGET_BRANCH" in workflow, "dispatch SHA is not bound to remote target head")
     require(PROTECTED_BLOB in workflow, "protected pipeline blob guard missing")
     require(APPROVED_AUDIO_SHA256 in workflow, "approved fixture SHA guard missing")
