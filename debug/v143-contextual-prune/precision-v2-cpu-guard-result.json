@@ -15,10 +15,10 @@
   "replayArtifactValidatorSelfTestPassed": true,
   "replayCompareSelfTestPassed": true,
   "replayCorruptionRejectionPassed": true,
-  "runId": 32798761603,
+  "runId": 32798946035,
   "schemaVersion": 3,
   "singlePaidCaptureStaticGuardPassed": true,
-  "sourceSha": "74d54037d7d22db27e0be8b155d0f4e5e45dbfdd",
+  "sourceSha": "bcf240a2327983e7602e2d7b553f00a93addc31d",
   "sourceViewEvidenceBindingPassed": true,
   "zeroValuePreservationPassed": true
 }
