@@ -88,7 +88,7 @@ def main() -> None:
 
     require("import modal" not in replay and ".remote(" not in replay and "modal run" not in replay, "CPU replay path contains Modal usage")
     require("import modal" not in validator and ".remote(" not in validator and "modal run" not in validator, "replay validator contains Modal usage")
-    require("import modal" not in voicing_validator and ".remote(" not in voicing_validator and "modal run" not in voicing_validator, "voicing replay contains Modal usage")
+    require("import modal" not in voicing_validator and ".remote(" not in voicing_validator and "modal run" not in voicing_validator, "voicing/timing replay contains Modal usage")
 
     for token in (
         "validate_product(", "_self_test()", 'replay.get("schemaVersion") == 2',
@@ -109,8 +109,11 @@ def main() -> None:
     for token in (
         "validate_product_voicing(", "_expected_voicing(", "resolve_joint_chord_voicing(",
         "stringFretReplayMatches", "primaryPreservationMatches", "voicingDroppedPitchCount",
+        "gridTimingReplayMatches", "physicalOnsetReplayMatches",
+        'event.get("timeSeconds")', 'event.get("onsetTime")',
+        'attack.get("gridTime")', 'attack.get("onsetTime")',
     ):
-        require(token in voicing_validator, f"voicing replay token missing: {token}")
+        require(token in voicing_validator, f"voicing/timing replay token missing: {token}")
 
     require("two-view aggregate mismatch" in corruption_check, "corruption guard lacks two-view mismatch test")
     require("precision strength mismatch" in corruption_check, "corruption guard lacks strength mismatch test")
@@ -161,6 +164,8 @@ def main() -> None:
     print("primary_recompute_binding=true")
     print("stored_v2_replay_strict=true")
     print("deterministic_voicing_replay=true")
+    print("deterministic_grid_timing_replay=true")
+    print("deterministic_physical_onset_replay=true")
     print("negative_corruption_rejection=true")
     print("replay_capture_order_guarded=true")
     print("fixed_best_row_attack_replay_universe=true")
