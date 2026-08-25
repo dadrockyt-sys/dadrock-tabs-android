@@ -12,6 +12,7 @@ on:
       - analyzer/v143_precision_replay_policy_compare.py
       - analyzer/v143_precision_replay_artifact_validator.py
       - analyzer/check_v143_precision_replay_corruption_rejection.py
+      - analyzer/check_v143_precision_replay_capture_order.py
       - analyzer/check_v143_precision_capture_readiness.py
       - .github/workflows/v143-repaired-timing-precision-candidate-product.yml
       - .github/workflows/v143-precision-shadow-v2-cpu-guard.yml
@@ -41,11 +42,13 @@ jobs:
             analyzer/v143_precision_replay_policy_compare.py \
             analyzer/v143_precision_replay_artifact_validator.py \
             analyzer/check_v143_precision_replay_corruption_rejection.py \
+            analyzer/check_v143_precision_replay_capture_order.py \
             analyzer/check_v143_precision_capture_readiness.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_shadow_v2_policy.py
           PYTHONPATH=analyzer python analyzer/v143_precision_replay_policy_compare.py --self-test
           PYTHONPATH=analyzer python analyzer/v143_precision_replay_artifact_validator.py --self-test
           PYTHONPATH=analyzer python analyzer/check_v143_precision_replay_corruption_rejection.py
+          PYTHONPATH=analyzer python analyzer/check_v143_precision_replay_capture_order.py
           PYTHONPATH=analyzer python analyzer/check_v143_precision_capture_readiness.py
           python analyzer/v143_precision_optional_candidate_accounting.py \
             --input debug/v143-contextual-prune/repaired-timing-precision-candidate-product.json \
@@ -59,6 +62,7 @@ jobs:
             analyzer/v143_precision_replay_policy_compare.py \
             analyzer/v143_precision_replay_artifact_validator.py \
             analyzer/check_v143_precision_replay_corruption_rejection.py \
+            analyzer/check_v143_precision_replay_capture_order.py \
             analyzer/check_v143_precision_capture_readiness.py; then
             echo 'Forbidden scorer/reference token in precision v2 path' >&2
             exit 1
@@ -81,7 +85,7 @@ jobs:
           import json
           from pathlib import Path
           result = {
-              'schemaVersion': 3,
+              'schemaVersion': 4,
               'passed': True,
               'policy': 'envelope-balanced-secondary-v2',
               'sourceSha': '${{ github.sha }}',
@@ -89,14 +93,16 @@ jobs:
               'protectedPipelineBlob': '7f72f8ed9b14af8bc93e95544195204d99c6bec1',
               'policySelfTestPassed': True,
               'replayCompareSelfTestPassed': True,
+              'storedV2ReplayStrictPassed': True,
               'replayArtifactValidatorSelfTestPassed': True,
               'replayCorruptionRejectionPassed': True,
+              'replayCaptureOrderPassed': True,
               'captureReadinessPassed': True,
               'sourceViewEvidenceBindingPassed': True,
               'precisionStrengthRecomputePassed': True,
               'zeroValuePreservationPassed': True,
               'primaryRecomputePassed': True,
-              'fullAttackReplayUniversePassed': True,
+              'fixedBestRowAttackReplayPassed': True,
               'historicalOptionalAccountingPassed': True,
               'singlePaidCaptureStaticGuardPassed': True,
               'newInferenceUsed': False,
