@@ -1,0 +1,107 @@
+name: V143 real candidate schema inspect
+
+on:
+  push:
+    branches:
+      - v143-contextual-prune-lobo
+    paths:
+      - '.github/workflows/v143-real-candidate-schema-inspect.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v143-contextual-prune-lobo
+          fetch-depth: 1
+      - name: Reverify protected runtime identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object analyzer/v143_reference_free_rhythm_pipeline.py)" = '7f72f8ed9b14af8bc93e95544195204d99c6bec1'
+      - name: Materialize immutable paid capture CPU-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin c1451df43cc1162ed2b38aa3f3300b7af4d9b527
+          python3 analyzer/materialize_v143_precision_fixture.py \
+            --output-dir debug/v143-contextual-prune-ci/pinned-capture
+      - name: Inspect candidate schema without mutating content
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          source = Path('debug/v143-contextual-prune-ci/pinned-capture/repaired-timing-precision-candidate-product.json')
+          data = json.loads(source.read_text())
+          report = {
+              'topLevelType': type(data).__name__,
+              'topLevelKeys': sorted(data.keys()) if isinstance(data, dict) else [],
+              'candidateArrays': [],
+              'eventLikeArrays': [],
+          }
+
+          def scalar_summary(value):
+              if isinstance(value, (str, int, float, bool)) or value is None:
+                  text = repr(value)
+                  return text[:180]
+              return type(value).__name__
+
+          def walk(value, path='$', depth=0):
+              if depth > 12:
+                  return
+              if isinstance(value, dict):
+                  for key, child in value.items():
+                      walk(child, f'{path}.{key}', depth + 1)
+              elif isinstance(value, list):
+                  sample = value[0] if value else None
+                  entry = {
+                      'path': path,
+                      'length': len(value),
+                      'sampleType': type(sample).__name__ if sample is not None else None,
+                  }
+                  if isinstance(sample, dict):
+                      entry['sampleKeys'] = sorted(sample.keys())
+                      event_keys = {'measure', 'step', 'stringIndex', 'fret'}
+                      if event_keys.issubset(sample.keys()):
+                          details = dict(entry)
+                          details['sample'] = {k: scalar_summary(sample.get(k)) for k in sorted(sample.keys()) if k in {
+                              'eventIndex','measure','step','stringIndex','fret','midi','durationSteps','techniques',
+                              'bendSemitones','bendTargetFret','bendTargetMidi','bendRelease','legatoTargetEventIndex'
+                          }}
+                          report['eventLikeArrays'].append(details)
+                  report['candidateArrays'].append(entry)
+                  for index, child in enumerate(value[:3]):
+                      walk(child, f'{path}[{index}]', depth + 1)
+
+          walk(data)
+          report['candidateArrays'] = sorted(report['candidateArrays'], key=lambda x: (-x['length'], x['path']))[:120]
+          report['eventLikeArrays'] = sorted(report['eventLikeArrays'], key=lambda x: (-x['length'], x['path']))
+          out = Path('debug/v143-contextual-prune/real-candidate-schema-report.json')
+          out.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n')
+          print(json.dumps(report, indent=2, sort_keys=True))
+          PY
+      - name: Persist schema report
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/v143-contextual-prune/real-candidate-schema-report.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Persist real V143 candidate schema report'
+            git push origin HEAD:v143-contextual-prune-lobo
+          fi
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: v143-real-candidate-schema-report
+          path: debug/v143-contextual-prune/real-candidate-schema-report.json
+          retention-days: 1
