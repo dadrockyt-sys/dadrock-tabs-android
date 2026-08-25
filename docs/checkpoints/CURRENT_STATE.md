@@ -64,6 +64,7 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; professional musical accu
   - both stems 44,100 Hz, 9,324,544 frames, stereo.
 - `carrierSemanticExactAcrossWorkers=false`; historical exact replay count remains 0. Do not assert these final deterministic stems equal the older authorized-run stem bytes without proof.
 - Paired Modal-smoke run `32692406651` failed and retained zero artifacts.
+- Current artifact query for deterministic run `32692406659` shows exactly one retained artifact: `v143-seeded-separator-determinism-log`, artifact ID `9509611954`, 14,213 bytes. No stems are retained there.
 
 ## Embedded historical product evidence
 - Authorized artifact `9548666053` from run `32805316807` was downloaded and its ~15.4 MB `repaired-timing-precision-candidate-product.json` inspected locally.
@@ -83,29 +84,34 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; professional musical accu
 - Therefore the earlier 985-event precision product cannot directly supply downstream sustain/legato/bend metadata for **any** V5 rescued attack. The previously observed `546/546` source-field stability remains useful cross-run consistency evidence only.
 - The partial-reconstruction idea based specifically on run `32801442757` is closed; do not spend further work transforming its event shadows for rescued V5 events.
 
-## Current historical product search
-- One-shot workflow is `V143 Repaired Timing Precision Candidate Product (One Shot)`, workflow ID `341007940`, path `.github/workflows/v143-repaired-timing-precision-candidate-product-one-shot.yml`.
-- Confirmed one-shot runs so far: `32801442757` (failed, artifact `9547279904`) and `32805316807` (successful authorized, artifact `9548666053`).
-- Aug 25 branch Actions pagination contains `209` runs. Page 3 (oldest remaining nine runs around 01:18 UTC) contains no match for the one-shot workflow name, so any additional one-shot product run must be on pages 1–2 or another date/branch context.
+## Current historical product search — retention closed
+- One-shot workflow is `V143 Repaired Timing Precision Candidate Product (One Shot)`, workflow ID `341007940`, actual path `.github/workflows/v143-repaired-timing-precision-candidate-product.yml`.
+- Exact workflow metadata: `32801442757` is run number `2` (failure, artifact `9547279904`); `32805316807` is run number `3` (success, artifact `9548666053`).
+- Exact Aug 25 Actions query scoped to this branch + `workflow_dispatch` returns only those two runs; Aug 24 returns zero. A historical run number `1` therefore existed but is no longer present in currently retained Actions history.
+- Trigger-SHA workflow source proves the upload artifact `v143-precision-v2-one-shot` contained only four JSON files: full candidate product, manifest, capture guard, and candidate report. It never uploaded either separated stem.
+- The workflow's persistence commit staged only candidate YAML, candidate report, capture lock, and durable capture manifest. It never committed the full product or either separated stem.
+- This closes the retained one-shot workflow as a hidden-stem recovery route. Raw separated source-view bytes remain unavailable without recomputation.
 
 ## Live continuation — 2026-08-25
 - Re-opened this exact branch checkpoint before continuing.
-- Enumerated the first two 100-run pages of branch Actions history and began filtering retained precision/candidate runs; no workflow was rerun and no Modal/L4 resource was invoked.
-- Confirmed this branch already contains extensive retained-artifact/source-view archaeology machinery, so the continuation is consuming those retained results rather than creating duplicate probes.
-- Historical run `22239097880` now returns GitHub 404, and `fetch_workflow_run_artifacts` for that run also returns 404. Its recorded artifact `5205963324` is therefore not currently recoverable through the retained run; recovery focus has moved to still-retained runs plus commit/source history.
-- Immediate focus is to identify every distinct retained precision product/source view, test direct overlap with the exact `166` rescued attack positions / `242` rendered rescued V5 events, and only then decide whether any source-only downstream replay path remains.
+- Enumerated retained branch Actions history and exact workflow-dispatch history; no workflow was rerun and no Modal/L4 resource was invoked.
+- Historical run `22239097880` and its recorded artifact `5205963324` now return GitHub 404 and are not recoverable through retained Actions.
+- Exact workflow run metadata corrected the prior checkpoint path and established one-shot run numbers 2/3 plus the missing/unretained run 1.
+- Trigger-SHA workflow source established that neither one-shot artifacts nor their persistence commits ever contained stems.
+- Deterministic separator run `32692406659` retains only the 14,213-byte log artifact `9509611954`, not source audio.
+- Immediate focus now shifts away from repeated raw-stem archaeology toward determining whether the authorized product's scalar two-view evidence plus baseline source-derived downstream metadata can support a rigorously validated, reference-free CPU-only shadow reconstruction for the rescued set.
 
 ## Current integrity
 - Protected runtime remains exact.
 - No Production/main change; no professional scorer/reference; no new Modal/L4 usage in this continuation.
-- Historical artifacts were only downloaded/inspected; no workflow was rerun.
-- Raw source-view bytes are still missing. The exact V5 rescue set is now known, and the first alternate historical product has been conclusively ruled out for rescued-event coverage.
+- Historical artifacts were only queried/downloaded/inspected; no workflow was rerun.
+- Raw source-view bytes are still missing. The one-shot workflow and deterministic separator retained artifacts are now both proven not to contain them.
 
 ## Next exact actions
-1. Enumerate all retained Actions artifacts/runs named `v143-precision-v2-one-shot` (and related precision candidate products) across Aug 24–25, then test each product directly against the exact 166 rescued positions / 242 rendered rescued events.
-2. Search historical commit trees/checkpoints for any persisted full candidate product, source-view derivative, or stem whose events/hashes overlap the exact rescue set.
-3. Keep the authorized product's per-candidate scalar two-view evidence as source-only support, but do not treat it as a substitute for the missing downstream time trajectories.
-4. If exact authorized source views are recovered/proven, use the exact downstream modules/order for a complete CPU-only V5 replay; preserve `1209/891/113`, timing and tempo.
+1. Inspect the authorized/persisted candidate structures and expanded downstream-evidence artifact to inventory source-only scalar fields that exist for both baseline and all exact 166 rescued attacks / 242 rescued events.
+2. Build an evidence table over baseline events to test whether those scalar fields plus event-neighborhood structure can reproduce the existing exact source-derived sustain/technique metadata without professional reference input.
+3. Use strict holdout/cross-validation; do not introduce an unvalidated threshold or treat scalar evidence as waveform-equivalent. If reconstruction is not robust, keep it shadow-only and report the blocker.
+4. If an exact authorized source view is unexpectedly recovered/proven, prefer the exact downstream modules/order for a complete replay; preserve `1209/891/113`, timing and tempo.
 5. Re-render V5 PDF only after downstream metadata completeness is proven.
 6. No Modal/L4 without fresh explicit authorization; do not use the professional reference/scorer for tuning.
 7. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, PDF fidelity=1.0.
