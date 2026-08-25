@@ -1,0 +1,116 @@
+{
+  "checkpoint": {
+    "md5": "ce168b2cd426f81a2a78499214e40605",
+    "sha256": "1470a308896629352a811082843eb708cbc2f1aa3092757340055ef76a53ed0c",
+    "training": "TabCNN plus GuitarProFX",
+    "weightsRecord": "Zenodo 11406378"
+  },
+  "featureContract": {
+    "binsPerOctave": 24,
+    "cqtBins": 192,
+    "fmin": "C1",
+    "frameCount": 9107,
+    "hopLength": 512,
+    "sampleRate": 22050,
+    "windowFrames": 9
+  },
+  "groupSummaries": {
+    "baseline-retained": {
+      "count": 725,
+      "medianMaxCandidateProbability": 0.3919951021671295,
+      "modelActiveAttackCount": 577,
+      "modelChosenCandidateOverlapCount": 348
+    },
+    "remaining-nonpositive": {
+      "count": 6,
+      "medianMaxCandidateProbability": 0.0840131975710392,
+      "modelActiveAttackCount": 2,
+      "modelChosenCandidateOverlapCount": 0
+    },
+    "remaining-positive-subfloor-nonlocal": {
+      "count": 105,
+      "medianMaxCandidateProbability": 0.30097439885139465,
+      "modelActiveAttackCount": 73,
+      "modelChosenCandidateOverlapCount": 38
+    },
+    "v2-exception-band-rescue": {
+      "count": 123,
+      "medianMaxCandidateProbability": 0.3867523670196533,
+      "modelActiveAttackCount": 96,
+      "modelChosenCandidateOverlapCount": 60
+    },
+    "v2-subfloor-local-peak-rescue": {
+      "count": 25,
+      "medianMaxCandidateProbability": 0.09362713992595673,
+      "modelActiveAttackCount": 15,
+      "modelChosenCandidateOverlapCount": 5
+    }
+  },
+  "modalInvoked": false,
+  "probe": "v143-electric-guitar-robust-tabcnn-exact-grid",
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "referenceFree": true,
+  "schemaVersion": 1,
+  "sourceAudio": {
+    "approvedFixture": true,
+    "sha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f"
+  },
+  "sourceCode": {
+    "license": "CC0-1.0",
+    "repository": "robust-guitar-tabs/code"
+  },
+  "v3CorrectionComparisons": [
+    {"measure":3,"step":3,"oldPrimary":52,"newPrimary":40,"reason":"same-measure-local-primary-support","oldMaxLegalProbability":0.073632114,"newMaxLegalProbability":0.895230711,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":4,"step":9,"oldPrimary":64,"newPrimary":52,"reason":"same-measure-local-primary-support","oldMaxLegalProbability":0.36709106,"newMaxLegalProbability":0.5412907,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":4,"step":10,"oldPrimary":64,"newPrimary":52,"reason":"same-measure-local-primary-support","oldMaxLegalProbability":0.15592292,"newMaxLegalProbability":0.171062186,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":4,"step":12,"oldPrimary":52,"newPrimary":40,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.111073643,"newMaxLegalProbability":0.722192466,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":6,"step":8,"oldPrimary":64,"newPrimary":52,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.285069406,"newMaxLegalProbability":0.587503433,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":8,"step":0,"oldPrimary":64,"newPrimary":40,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.319976568,"newMaxLegalProbability":0.270272821,"newPreferred":false,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":12,"step":8,"oldPrimary":64,"newPrimary":52,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.680684328,"newMaxLegalProbability":0.784838498,"newPreferred":true,"modelChoosesOld":true,"modelChoosesNew":true},
+    {"measure":12,"step":13,"oldPrimary":71,"newPrimary":59,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.004708556,"newMaxLegalProbability":0.367767692,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":13,"step":6,"oldPrimary":64,"newPrimary":52,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.110752121,"newMaxLegalProbability":0.343564928,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":18,"step":10,"oldPrimary":64,"newPrimary":52,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.010600269,"newMaxLegalProbability":0.089274406,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":18,"step":11,"oldPrimary":64,"newPrimary":52,"reason":"local+two-view-extra-harmonic-support","oldMaxLegalProbability":0.004256283,"newMaxLegalProbability":0.000124052,"newPreferred":false,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":23,"step":8,"oldPrimary":64,"newPrimary":52,"reason":"same-measure-local-primary-support","oldMaxLegalProbability":0.053916261,"newMaxLegalProbability":0.266850114,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":30,"step":2,"oldPrimary":64,"newPrimary":40,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.643715441,"newMaxLegalProbability":0.963746905,"newPreferred":true,"modelChoosesOld":true,"modelChoosesNew":true},
+    {"measure":31,"step":2,"oldPrimary":59,"newPrimary":40,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.100657463,"newMaxLegalProbability":0.805910349,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":31,"step":8,"oldPrimary":71,"newPrimary":52,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.000033126,"newMaxLegalProbability":0.089396924,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":40,"step":1,"oldPrimary":64,"newPrimary":52,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.036637053,"newMaxLegalProbability":0.234027952,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":40,"step":12,"oldPrimary":64,"newPrimary":40,"reason":"local+two-view-extra-harmonic-support","oldMaxLegalProbability":0.000036019,"newMaxLegalProbability":0.950841188,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":41,"step":0,"oldPrimary":67,"newPrimary":55,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.000035718,"newMaxLegalProbability":0.00061522,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":42,"step":14,"oldPrimary":71,"newPrimary":59,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.10300041,"newMaxLegalProbability":0.071424603,"newPreferred":false,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":45,"step":14,"oldPrimary":69,"newPrimary":57,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.027771417,"newMaxLegalProbability":0.002596592,"newPreferred":false,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":46,"step":10,"oldPrimary":64,"newPrimary":52,"reason":"same-measure-local-primary-support","oldMaxLegalProbability":0.048117872,"newMaxLegalProbability":0.073393248,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":52,"step":11,"oldPrimary":52,"newPrimary":40,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.078592472,"newMaxLegalProbability":0.932817101,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":53,"step":12,"oldPrimary":52,"newPrimary":40,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.015312674,"newMaxLegalProbability":0.657050848,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":58,"step":9,"oldPrimary":67,"newPrimary":55,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.000008293,"newMaxLegalProbability":0.030521138,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":60,"step":8,"oldPrimary":64,"newPrimary":52,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.228099942,"newMaxLegalProbability":0.260189146,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":62,"step":4,"oldPrimary":52,"newPrimary":40,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.075588509,"newMaxLegalProbability":0.724519312,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":64,"step":0,"oldPrimary":59,"newPrimary":47,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.179557696,"newMaxLegalProbability":0.000942135,"newPreferred":false,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":65,"step":1,"oldPrimary":69,"newPrimary":57,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.000040356,"newMaxLegalProbability":0.004818482,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":68,"step":14,"oldPrimary":64,"newPrimary":52,"reason":"local+two-view-extra-harmonic-support","oldMaxLegalProbability":0.315603763,"newMaxLegalProbability":0.669311941,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":77,"step":8,"oldPrimary":52,"newPrimary":40,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.451044917,"newMaxLegalProbability":0.11271292,"newPreferred":false,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":91,"step":0,"oldPrimary":76,"newPrimary":64,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.000008756,"newMaxLegalProbability":0.763096333,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":94,"step":5,"oldPrimary":62,"newPrimary":50,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.217478767,"newMaxLegalProbability":0.309098393,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":95,"step":0,"oldPrimary":62,"newPrimary":50,"reason":"local+two-view-extra-harmonic-support","oldMaxLegalProbability":0.03866221,"newMaxLegalProbability":0.18083635,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":95,"step":12,"oldPrimary":69,"newPrimary":50,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.001554683,"newMaxLegalProbability":0.489031732,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":96,"step":0,"oldPrimary":71,"newPrimary":59,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.000003722,"newMaxLegalProbability":0.000734837,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":96,"step":12,"oldPrimary":64,"newPrimary":52,"reason":"local+two-view-extra-harmonic-support","oldMaxLegalProbability":0.460750312,"newMaxLegalProbability":0.415001601,"newPreferred":false,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":98,"step":2,"oldPrimary":69,"newPrimary":57,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.001240462,"newMaxLegalProbability":0.018525837,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":98,"step":10,"oldPrimary":64,"newPrimary":52,"reason":"local+two-view-extra-harmonic-support","oldMaxLegalProbability":0.000437497,"newMaxLegalProbability":0.118612878,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":99,"step":11,"oldPrimary":64,"newPrimary":52,"reason":"local+two-view-extra-harmonic-support","oldMaxLegalProbability":0.120873153,"newMaxLegalProbability":0.022253584,"newPreferred":false,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":100,"step":11,"oldPrimary":64,"newPrimary":52,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.245120302,"newMaxLegalProbability":0.682012677,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true},
+    {"measure":101,"step":3,"oldPrimary":67,"newPrimary":55,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.019927766,"newMaxLegalProbability":0.046971686,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":101,"step":10,"oldPrimary":65,"newPrimary":53,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.003206204,"newMaxLegalProbability":0.000280126,"newPreferred":false,"modelChoosesOld":false,"modelChoosesNew":false},
+    {"measure":106,"step":8,"oldPrimary":64,"newPrimary":52,"reason":"two-view-extra-harmonic-support","oldMaxLegalProbability":0.426775277,"newMaxLegalProbability":0.937753379,"newPreferred":true,"modelChoosesOld":false,"modelChoosesNew":true}
+  ],
+  "v3CorrectionSummary": {
+    "count": 43,
+    "medianNewMinusOldProbability": 0.10415416955947876,
+    "modelChoosesNewCount": 16,
+    "modelChoosesOldCount": 2,
+    "newPreferredCount": 34,
+    "oldPreferredCount": 9
+  }
+}
