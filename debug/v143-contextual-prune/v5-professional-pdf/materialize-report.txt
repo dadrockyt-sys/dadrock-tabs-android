@@ -1,0 +1,19 @@
+{
+  "baselineRenderedEventCount": 967,
+  "droppedLegatoLinkCount": 1,
+  "freezeReady": false,
+  "measureCoverageCount": 113,
+  "modalInvoked": false,
+  "neutralBaselineEventCount": 34,
+  "neutralRescuedEventCount": 242,
+  "output": "debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json",
+  "preservedBaselineMetadataEventCount": 933,
+  "primaryV4CorrectionAttackCount": 34,
+  "professionalReferenceUsed": false,
+  "remappedLegatoLinkCount": 20,
+  "renderedEventCount": 1209,
+  "rescuedRenderedEventCount": 242,
+  "retainedOnsetCount": 891,
+  "techniqueEventCount": 21,
+  "validationPassed": true
+}

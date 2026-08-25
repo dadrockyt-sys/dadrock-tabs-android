@@ -1,0 +1,23 @@
+{
+  "output": "debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf",
+  "renderedEventCount": 1209,
+  "uniqueMeasureCount": 113,
+  "uniqueOnsetCount": 891,
+  "maximumNotesPerPopulatedMeasure": 22,
+  "maximumChordSize": 5,
+  "multiNoteOnsetCount": 272,
+  "techniqueEventCount": 21,
+  "techniqueTypes": [
+    "hammer-on",
+    "pull-off",
+    "slide-down",
+    "slide-up"
+  ],
+  "sectionCount": 7,
+  "pdfBytes": 1748093,
+  "freezeReady": false,
+  "referenceFree": true,
+  "professionalReferenceUsed": false,
+  "modalInvoked": false,
+  "productionModified": false
+}
