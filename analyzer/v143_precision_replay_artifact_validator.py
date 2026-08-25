@@ -176,6 +176,12 @@ def _transient_ratio(attack: Mapping[str, Any]) -> float:
     return float(max(0.0, float(item["attack"])) / max(1e-6, float(item["body"])))
 
 
+def _legacy_strength(attack: Mapping[str, Any]) -> float:
+    """Match legacy `float(row.get('_precisionStrength') or -99.0)` exactly."""
+    value = float(attack["precisionStrength"])
+    return value if value else -99.0
+
+
 def _attack_is_precise(
     key: tuple[int, int],
     attack: Mapping[str, Any],
@@ -191,9 +197,9 @@ def _attack_is_precise(
         return True
     if ratio < ATTACK_TRANSIENT_RATIO_EXCEPTION_FLOOR:
         return False
-    strength = float(attack["precisionStrength"])
+    strength = _legacy_strength(attack)
     neighbors = [
-        float(other["precisionStrength"])
+        _legacy_strength(other)
         for other_key, other in eligible.items()
         if other_key != key and other_key[0] == key[0] and abs(int(other_key[1]) - int(key[1])) <= LOCAL_RADIUS_STEPS
     ]
@@ -213,7 +219,7 @@ def _recompute_attack_policy(
         measure_inputs = sorted(key for key in scoped if key[0] == measure)
         if not measure_inputs or any(key in retained for key in measure_inputs):
             continue
-        winner = max(measure_inputs, key=lambda key: (_transient_ratio(scoped[key]), float(scoped[key]["precisionStrength"]), -int(key[1])))
+        winner = max(measure_inputs, key=lambda key: (_transient_ratio(scoped[key]), _legacy_strength(scoped[key]), -int(key[1])))
         retained.add(winner)
         fail_safe.add(winner)
     for key in list(retained):
@@ -224,7 +230,7 @@ def _recompute_attack_policy(
     for measure in sorted(target_measures - retained_measures):
         candidates = [key for key in scoped if key[0] == measure and (scoped[key].get("candidateMidis") or [])]
         _require(bool(candidates), f"no pitched eligible attack can preserve measure {measure}")
-        winner = max(candidates, key=lambda key: (_transient_ratio(scoped[key]), float(scoped[key]["precisionStrength"]), -int(key[1])))
+        winner = max(candidates, key=lambda key: (_transient_ratio(scoped[key]), _legacy_strength(scoped[key]), -int(key[1])))
         retained.add(winner)
         fail_safe.add(winner)
     return retained, fail_safe
@@ -260,6 +266,7 @@ def validate_product(product: Mapping[str, Any]) -> dict[str, Any]:
     _require(replay.get("attackPolicyReplayReady") is True, "attack-policy replay is not ready")
     _require(replay.get("sourceViewEvidenceReady") is True, "per-view source replay is not ready")
     _require(replay.get("precisionStrengthRecomputeReady") is True, "precision-strength replay is not ready")
+    _require(replay.get("zeroValuePreservationReady") is True, "zero-value source replay is not ready")
     _require(replay.get("referenceFree") is True, "replay is not reference-free")
     _require(replay.get("professionalReferenceUsed") is False, "replay indicates professional reference use")
     _require(replay.get("runtimeLabelsRequired") is False, "replay requires runtime labels")
@@ -405,6 +412,7 @@ def validate_product(product: Mapping[str, Any]) -> dict[str, Any]:
         "baselineAttackReplayMatches": True,
         "sourceViewEvidenceMatches": True,
         "precisionStrengthRecomputeMatches": True,
+        "zeroValuePreservationMatches": True,
         "fixedRetainedAttackPitchReplayReady": True,
         "attackPolicyReplayReady": True,
         "replayEvidenceSha256": _canonical_sha256(replay),
@@ -488,6 +496,7 @@ def _self_test_product() -> dict[str, Any]:
             "attackPolicyReplayReady": True,
             "sourceViewEvidenceReady": True,
             "precisionStrengthRecomputeReady": True,
+            "zeroValuePreservationReady": True,
             "candidateAddsUnobservedAttack": False,
             "candidateAddsUnobservedPitch": False,
             "referenceFree": True,
@@ -529,6 +538,7 @@ def _self_test() -> None:
     assert report["baselineAttackReplayMatches"] is True
     assert report["sourceViewEvidenceMatches"] is True
     assert report["precisionStrengthRecomputeMatches"] is True
+    assert report["zeroValuePreservationMatches"] is True
     assert report["eligibleAttackCount"] == 3
     assert report["retainedAttackCount"] == 2
     assert report["failSafeAttackCount"] == 1
@@ -559,13 +569,56 @@ def _self_test() -> None:
         raise AssertionError("validator failed to reject a corrupted retained-attack baseline")
 
     broken_view = json.loads(json.dumps(product))
-    broken_view["precisionReplayEvidence"]["eligibleAttacks"][0]["candidates"][0]["viewA"]["attack"] += 0.1
+    broken_view["precisionReplayEvidence"]["eligibleAttacks"][0]["candidates"][0]["viewA"]["attack"] -= 0.20
     try:
         validate_product(broken_view)
     except ReplayArtifactValidationError:
         pass
     else:
         raise AssertionError("validator failed to reject corrupted per-view source evidence")
+
+    # Exact legacy semantics treat a raw precisionStrength of 0.0 as -99.0 in
+    # local-prominence/fail-safe comparisons because the legacy code uses
+    # `value or -99.0`. Preserve raw zero in replay, but reproduce that decision
+    # behavior when validating attack-policy identity.
+    zero_attack = {
+        "measure": 3,
+        "step": 0,
+        "precisionStrength": 0.0,
+        "candidateMidis": [60],
+        "candidates": [{"midi": 60, "score": 1.0, "attack": 0.65, "body": 1.0}],
+    }
+    neighbor = {
+        "measure": 3,
+        "step": 1,
+        "precisionStrength": -98.9,
+        "candidateMidis": [62],
+        "candidates": [{"midi": 62, "score": 1.0, "attack": 0.65, "body": 1.0}],
+    }
+    edge = {(3, 0): zero_attack, (3, 1): neighbor}
+    assert _legacy_strength(zero_attack) == -99.0
+    assert _attack_is_precise((3, 0), zero_attack, edge) is False
+
+    weak_zero = {
+        "measure": 4,
+        "step": 0,
+        "precisionStrength": 0.0,
+        "candidateMidis": [60],
+        "candidates": [{"midi": 60, "score": 1.0, "attack": 0.5, "body": 1.0}],
+    }
+    weak_neighbor = {
+        "measure": 4,
+        "step": 1,
+        "precisionStrength": -98.9,
+        "candidateMidis": [62],
+        "candidates": [{"midi": 62, "score": 1.0, "attack": 0.5, "body": 1.0}],
+    }
+    retained_edge, fail_safe_edge = _recompute_attack_policy(
+        {(4, 0): weak_zero, (4, 1): weak_neighbor},
+        {4},
+    )
+    assert retained_edge == {(4, 1)}
+    assert fail_safe_edge == {(4, 1)}
 
     print("PASS v143 precision replay schema2 source-complete exact-binding self-test")
 
