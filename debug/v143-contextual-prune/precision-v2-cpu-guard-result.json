@@ -1,5 +1,6 @@
 {
   "captureReadinessPassed": true,
+  "deterministicTimingReplayPassed": true,
   "deterministicVoicingReplayPassed": true,
   "fixedBestRowAttackReplayPassed": true,
   "historicalOptionalAccountingPassed": true,
@@ -17,10 +18,10 @@
   "replayCaptureOrderPassed": true,
   "replayCompareSelfTestPassed": true,
   "replayCorruptionRejectionPassed": true,
-  "runId": 32799500831,
-  "schemaVersion": 5,
+  "runId": 32799534696,
+  "schemaVersion": 6,
   "singlePaidCaptureStaticGuardPassed": true,
-  "sourceSha": "681b8bcf4cb03ca188839aa6c1b383f3bb1f6bd7",
+  "sourceSha": "69b24d6a978f27f5e40326d54145c7b4580e198e",
   "sourceViewEvidenceBindingPassed": true,
   "storedV2ReplayStrictPassed": true,
   "zeroValuePreservationPassed": true
