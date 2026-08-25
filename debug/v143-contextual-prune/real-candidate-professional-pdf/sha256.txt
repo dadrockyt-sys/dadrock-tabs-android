@@ -1,0 +1,4 @@
+3b47dfa93b8ad05b7de94c6d51f65acc9fa2d9a05701e1daecb3cdf78c0c768f  debug/v143-contextual-prune/real-candidate-professional-pdf/v143-approved-rhythm-reference.pdf
+7e8f510383d1e5abb6d7e10297ecc080d6b99124eeee777f70aff8776df6c5df  debug/v143-contextual-prune/real-candidate-professional-pdf/inspection-first.png
+1297a69bbb616cda2000f49b9a3400197b8b5ba7efbff4188d9d91dee3f9d811  debug/v143-contextual-prune/real-candidate-professional-pdf/inspection-middle.png
+de4b86a29548373d647e88722b8c567be5d94da6575081a87e251f02dee76e14  debug/v143-contextual-prune/real-candidate-professional-pdf/inspection-last.png

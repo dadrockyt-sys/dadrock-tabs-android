@@ -1,0 +1,29 @@
+{
+  "input": "debug/v143-contextual-prune-ci/pinned-capture/repaired-timing-precision-candidate-product.json",
+  "output": "debug/v143-contextual-prune/real-candidate-professional-pdf/v143-approved-rhythm-reference.pdf",
+  "sourceEventCount": 967,
+  "projectedEventCount": 967,
+  "uniqueMeasureCount": 113,
+  "uniqueOnsetCount": 725,
+  "averageNotesPerMeasure": 8.557522123893806,
+  "maximumNotesPerPopulatedMeasure": 18,
+  "maximumChordSize": 5,
+  "multiNoteOnsetCount": 209,
+  "techniqueEventCount": 25,
+  "techniqueTypes": [
+    "hammer-on",
+    "pull-off",
+    "slide-down",
+    "slide-up"
+  ],
+  "sectionCount": 8,
+  "tempo": 129.19921875,
+  "tuning": "E Standard",
+  "timeSignature": "4/4",
+  "keySignature": "",
+  "pdfBytes": 1738077,
+  "referenceFree": true,
+  "professionalReferenceUsed": false,
+  "modalInvoked": false,
+  "productionModified": false
+}
