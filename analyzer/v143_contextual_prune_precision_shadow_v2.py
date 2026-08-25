@@ -18,6 +18,7 @@ from v143_contextual_prune_precision_shadow import (
     _harmonic_family_score,
     _pitch_evidence,
     _transient_ratio,
+    _vector_value,
 )
 from v143_contextual_prune_shadow_correction import ShadowCorrectionResult
 
@@ -239,10 +240,25 @@ def apply_reference_free_precision_shadow_v2(
     )
 
 
+def _view_triplet(row: Mapping[str, Any], midi: int) -> dict[str, dict[str, float]]:
+    view_a = row.get("viewA") if isinstance(row.get("viewA"), Mapping) else {}
+    view_b = row.get("viewB") if isinstance(row.get("viewB"), Mapping) else {}
+
+    def values(view: Mapping[str, Any]) -> dict[str, float]:
+        return {
+            "attack": float(_vector_value(view.get("attackMax"), midi)),
+            "early": float(_vector_value(view.get("earlyMean"), midi)),
+            "sustain": float(_vector_value(view.get("sustainMean"), midi)),
+        }
+
+    return {"viewA": values(view_a), "viewB": values(view_b)}
+
+
 def _serialize_replay_attack(
     key: EventKey,
     row: Mapping[str, Any],
     precision: PrecisionShadowResult,
+    grid_time: float,
 ) -> dict[str, Any]:
     retained = key in precision.retained_events
     original = _candidate_midis(row)
@@ -258,6 +274,7 @@ def _serialize_replay_attack(
     candidates: list[dict[str, Any]] = []
     for midi in original:
         evidence = _pitch_evidence(row, midi)
+        views = _view_triplet(row, midi)
         candidates.append(
             {
                 "midi": int(midi),
@@ -267,17 +284,25 @@ def _serialize_replay_attack(
                 "body": float(evidence["body"]),
                 "continuity": float(evidence["continuity"]),
                 "score": float(evidence["score"]),
+                "viewA": views["viewA"],
+                "viewB": views["viewB"],
                 "selected": retained and int(midi) in selected,
                 "primary": retained and int(midi) == int(primary),
             }
         )
 
+    onset_time = float(row.get("onsetTime") or grid_time)
     return {
         "measure": int(key[0]),
         "step": int(key[1]),
-        "onsetTime": float(row.get("onsetTime") or 0.0),
+        "gridTime": float(grid_time),
+        "onsetTime": onset_time,
         "precisionStrength": float(row.get("_precisionStrength") or -99.0),
-        "precisionGridErrorSeconds": float(row.get("_precisionGridErrorSeconds") or 0.0),
+        "precisionGridErrorSeconds": float(row.get("_precisionGridErrorSeconds") or abs(onset_time - grid_time)),
+        "candidateStrength": float(row.get("_candidateStrength") or 0.0),
+        "stemSupportMax": int(row.get("stemSupportMax") or 0),
+        "sweepSupportMax": int(row.get("sweepSupportMax") or 0),
+        "detectionCountSum": int(row.get("detectionCountSum") or 0),
         "retained": bool(retained),
         "failSafe": key in precision.fail_safe_events,
         "candidateMidis": [int(value) for value in original],
@@ -293,11 +318,10 @@ def build_precision_replay_evidence(
     """Serialize the one-shot source universe needed for future CPU-only replay.
 
     `attacks` preserves the historical retained-attack pitch replay contract.
-    `eligibleAttacks` additionally preserves every corrected input attack that
-    has a physical carrier row, including row-level precision strength and the
-    full observed pitch evidence. This makes both pitch-policy experiments on
-    the fixed retained set and future attack-policy experiments replayable
-    without separator or Basic Pitch inference.
+    `eligibleAttacks` preserves every corrected input attack that has a physical
+    carrier row, including row-level strength inputs and per-view pitch evidence.
+    This makes fixed-retained pitch experiments and precision-stage attack-policy
+    experiments replayable without separator or Basic Pitch inference.
     """
     rows_by_slot = _best_rows_by_slot(carrier_rows, grid)
     input_keys = sorted(precision.input_events)
@@ -314,7 +338,9 @@ def build_precision_replay_evidence(
         if row is None:
             missing_input_keys.append({"measure": int(key[0]), "step": int(key[1])})
             continue
-        record = _serialize_replay_attack(key, row, precision)
+        if key not in grid:
+            raise RuntimeError(f"Replay evidence missing grid time for {key}")
+        record = _serialize_replay_attack(key, row, precision, float(grid[key]))
         eligible_attacks.append(record)
         eligible_pitch_count += len(record["candidates"])
         if key in retained_keys:
@@ -352,6 +378,8 @@ def build_precision_replay_evidence(
         "eligibleAttacks": eligible_attacks,
         "fixedRetainedAttackPitchReplayReady": True,
         "attackPolicyReplayReady": True,
+        "sourceViewEvidenceReady": True,
+        "precisionStrengthRecomputeReady": True,
         "candidateAddsUnobservedAttack": False,
         "candidateAddsUnobservedPitch": False,
         "referenceFree": True,
