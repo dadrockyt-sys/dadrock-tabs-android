@@ -1,0 +1,86 @@
+{
+  "attackPolicy": {
+    "baselinePrunedAttackCount": 259,
+    "baselineReplayMismatchAttackCount": 0,
+    "baselineRetainedAttackCount": 725,
+    "eligibleAttackCount": 984,
+    "reasonCounts": {
+      "existing-exception-band-without-composite-local-max": 123,
+      "subfloor-local-transient-peak": 25
+    },
+    "remainingPrunedAttackCount": 111,
+    "remainingReasonCounts": {
+      "nonpositive-best-attack-or-body": 6,
+      "subfloor-nonlocal": 105
+    },
+    "removedBaselineAttackCount": 0,
+    "rescuedAttackCount": 148,
+    "shadowRetainedAttackCount": 873,
+    "thresholdsAdded": 0
+  },
+  "classification": "v143-reference-free-attack-shadow-v2-validation",
+  "downstreamBoundary": {
+    "freezeReady": false,
+    "note": "Precision/pitch/voicing/timing are replayable from schema-2; full downstream technique/sustain evidence for newly retained attacks is not.",
+    "techniqueSustainReplayAvailableForNewlyRescuedAttacks": false
+  },
+  "exceptionBandSourceComparison": {
+    "prunedCount": 123,
+    "prunedMedianDetectionCount": 40.0,
+    "prunedMedianGridError": 0.019600000607709944,
+    "prunedMedianViewAttackConsistency": 0.9965938158894608,
+    "prunedStem2": 122,
+    "prunedSweep4": 108,
+    "retainedCount": 33,
+    "retainedMedianDetectionCount": 31.0,
+    "retainedMedianGridError": 0.028569614160971923,
+    "retainedMedianViewAttackConsistency": 0.9663834710211912,
+    "retainedStem2": 32,
+    "retainedSweep4": 29
+  },
+  "modalInvoked": false,
+  "newInferenceUsed": false,
+  "pitchReplay": {
+    "pitchCountDistribution": {
+      "1": 94,
+      "2": 44,
+      "3": 8,
+      "4": 2
+    },
+    "rescuedSelectedPitchCount": 214,
+    "unobservedPitchCount": 0
+  },
+  "productionModified": false,
+  "professionalReferenceUsed": false,
+  "referenceFree": true,
+  "schemaVersion": 2,
+  "sourceFixtureRunId": 32805316807,
+  "sourcePinnedCommit": "c1451df43cc1162ed2b38aa3f3300b7af4d9b527",
+  "structuralRecurrenceDiagnostic": {
+    "exactStepPrimaryPitchSetSeenInBaselineCount": 81,
+    "sameStepPrimarySeenInBaselineCount": 124,
+    "usedForSelection": false
+  },
+  "voicingReplay": {
+    "drops": [
+      {
+        "measure": 19,
+        "renderedPitchSet": [52],
+        "selectedPitchSet": [52, 86],
+        "step": 6
+      },
+      {
+        "measure": 113,
+        "renderedPitchSet": [43],
+        "selectedPitchSet": [43, 44],
+        "step": 14
+      }
+    ],
+    "gridTimeCollisionWithBaselineCount": 0,
+    "maxFret": 24,
+    "renderedPitchCount": 212,
+    "standardTuning": true,
+    "unplayablePrimaryCount": 0,
+    "voicingDroppedPitchCount": 2
+  }
+}
