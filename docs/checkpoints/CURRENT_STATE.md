@@ -71,10 +71,15 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce a genuinely profe
 - Durable validation: `debug/v143-contextual-prune/contextual-harmonic-primary-shadow-v4-validation.json`, commit `a742a3df5b468ee54b6fadf72c0f111b8c824424`; local full validation SHA256 `7eea032a2bdc12fcb0d5e0c4693bdc7a6ea06db447d1a28c0044192e724cad99`.
 - V4 is still a **shadow**: not inserted into producer, not frozen, not professionally scored.
 
-## Electric evidence for attack research — not yet promoted
+## Electric evidence for attack research — now persisted, replay pending
 - Below the old 0.60 transient floor, the robust electric model produces a discrete predicted tablature pitch that intersects the existing V143 candidate MIDI universe on `43` attacks total: `5/25` V2 local-peak rescues + `38/105` previously unrescued positive subfloor attacks; `0/6` nonpositive.
-- This gives a promising no-new-threshold future attack policy: below 0.60, require independent electric model/tab candidate overlap instead of relying on local transient prominence alone.
-- Do not promote yet. First build an exact CPU replay/voicing validator and quantify the resulting attack/pitch set. Downstream technique/sustain remains a separate freeze boundary.
+- Durable evidence: `debug/v143-contextual-prune/electric-tabcnn-subfloor-attack-evidence.json`, commit `bb7d5d2050bce1c6a5f3995df2c741468a43b014`.
+- Evidence is exact-approved-audio-bound and reference-free; no Modal, no new numeric threshold, no new pitch, and no production modification.
+- Intended V3 attack policy: preserve baseline retained attacks + all existing `0.60-0.70` exception-band rescues + below-`0.60` attacks only where electric TabCNN discrete MIDI intersects the already-observed V143 candidate MIDI set.
+- Deterministic replay validator added at `analyzer/v143_contextual_prune_attack_shadow_v3_replay_validator.py`, commit `d00e2699f07f60b6a5b76d81fc7197f9e5f23e8c`.
+- Validator expects `984` eligible, `725` baseline, `123` existing exception rescues, `43` electric subfloor rescues -> `891` retained attacks, then recomputes the existing V2 pitch-set policy and deterministic voicing. It rejects invented pitches, invalid/unplayable primaries, grid collisions, or missing measures.
+- Validator has not yet been executed against the preserved product capture in a durable CPU run. That is the immediate next action.
+- Newly rescued attacks still do **not** have recomputed downstream technique/sustain, so even a passing replay is not freeze-ready.
 
 ## PDF/string-fret state
 - `lib/createV143RhythmPdf.js` is already a structured graphical six-line renderer; historical PDF fidelity reached `1.0`. Musical content correctness remains the main blocker.
@@ -86,13 +91,13 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce a genuinely profe
 - No Modal/L4 used in this entire specialized-model phase.
 
 ## Current integrity
-- Branch head before this checkpoint: `a742a3df5b468ee54b6fadf72c0f111b8c824424`.
-- Protected runtime reverified exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1` immediately before checkpoint.
+- Branch head immediately before this checkpoint update: `d00e2699f07f60b6a5b76d81fc7197f9e5f23e8c`.
+- Protected runtime reverified exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1` immediately before this checkpoint update.
 - No Production/main change; no professional scorer/reference; no freeze-ready candidate yet.
 
 ## Next exact actions
-1. Reverify branch head + protected blob after this checkpoint commit.
-2. Build **Attack V3 electric-consensus replay shadow**: baseline retained + full existing 0.60-0.70 exception band + below-0.60 attacks only when exact-approved electric TabCNN's discrete predicted MIDI intersects the already-observed V143 candidate MIDI set. Recompute V2 pitch sets and deterministic voicing CPU-only; no thresholds/new pitches.
+1. Run `analyzer/v143_contextual_prune_attack_shadow_v3_replay_validator.py` CPU-only against `analyzer/fixtures/v143_precision_v2_modal_capture_32805316807.json` plus `debug/v143-contextual-prune/electric-tabcnn-subfloor-attack-evidence.json`; persist exact validation output.
+2. If replay passes, quantify attack/pitch/voicing deltas and preserve the evidence without touching protected production.
 3. Keep V4 as current strongest primary correction and apply it to existing retained attacks in any combined content shadow.
 4. Investigate electric-model string/fret consensus only where it agrees with V143-observed pitch; do not blindly replace current voicing.
 5. Resolve downstream technique/sustain evidence for any newly rescued attacks before freeze/professional scoring.
