@@ -121,7 +121,7 @@ def _promote_candidate_sustain(events: list[dict[str, Any]], tempo_bpm: float) -
     return promote_candidate_sustain(events, tempo_bpm)
 
 
-@app.function(image=candidate_image, gpu="L4", timeout=1800, memory=12288)
+@app.function(image=candidate_image, gpu="L4", timeout=3000, memory=12288)
 def analyze_repaired_precision_candidate(source_audio: bytes, suffix: str = ".audio") -> dict[str, Any]:
     if not source_audio:
         raise ValueError("source audio is empty")
