@@ -269,3 +269,18 @@ The one-shot capture path is now CPU-preflight green through source evidence, at
 - Standard future path: materialize this pinned fixture and run source-only CPU replay diagnostics/precision experiments against it before considering any new inference.
 - **No Modal/L4 run is authorized or required for fixture reuse.** A new paid capture still requires fresh explicit user authorization and should only be considered if a needed source evidence dimension is genuinely absent from the preserved fixture.
 - No professional scorer/reference was invoked. `main` and Production remain untouched. Protected runtime remains exact blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
+
+## Attack-pruning CPU shadow checkpoint — 2026-08-24 America/Montreal
+- Continued entirely from the pinned successful Modal fixture; **no new Modal/L4 inference and no professional scorer/reference use**.
+- Added source-only attack diagnostic `analyzer/v143_contextual_prune_attack_shadow_v1.py` at commit `674dd4de5331e079f80e6f2fc798b9c80de9d289`.
+- Baseline attack-policy CPU recomputation exactly reproduces all `725` retained attacks from the `984` eligible universe; baseline mismatch count `0`.
+- Diagnosis: legacy borderline attack pruning compares the body-heavy composite `precisionStrength` locally. A conservative shadow rescue instead reuses the existing local radius `2` and margin `0.20` on the actual two-view-minimum transient `attack` dimension, while preserving the existing positive attack/body gates. **No new numeric threshold was introduced.**
+- Shadow result: `26` of the `259` pruned attacks are local transient maxima; adds `26`, removes `0`, producing `751` shadow attacks. Reason split: `25` below legacy ratio `0.60` but local attack peaks; `1` in legacy `0.60–0.70` exception band but not a composite-strength maximum.
+- All `26` rescues have positive aggregate attack evidence from both source views; `19/26` have grid error tighter than the baseline-retained median.
+- Added independent rescued-attack pitch/voicing replay validator `analyzer/v143_attack_shadow_v1_replay_validator.py` at commit `d917e1193bf57d3b31bebce2427fae9523ac7057` and durable summary `debug/v143-contextual-prune/precision-attack-shadow-v1-validation.json` at commit `bf25366d68561fc7c995e2b115e5e1314f8e7ff4`.
+- Independent v2 pitch reconstruction for the 26 rescued attacks yields `36` observed/source-supported pitches total: `18` single-note attacks, `6` two-note attacks, `2` three-note attacks; unobserved/invented pitches `0`.
+- Deterministic standard-tuning voicing keeps all `36`; voicing drops `0`, unplayable primaries `0`, grid-time collisions with baseline attacks `0`.
+- Important boundary: schema-2 intentionally does not persist the full downstream CQT/stem universe needed to recompute technique/sustain for hypothetical newly retained attacks. Therefore this is a validated **precision shadow**, not a freeze-ready candidate; do not fabricate missing technique annotations.
+- A temporary connector-push CPU workflow/marker did not start and was removed cleanly (`081a18c8542b0f374416360ca616bb763b4123f5`, `30abd44f77fa1fd940b39fccfd869c40b50da038`); no result is claimed from that unused workflow.
+- Next CPU-only work: test whether the 26 rescues are structurally supported across repeated source patterns and inspect the remaining `233` pruned attacks for a second general source-only failure mode. Do not broaden the attack policy or authorize L4 from these results alone.
+- `main`/Production untouched. Protected runtime remains blob `7f72f8ed9b14af8bc93e95544195204d99c6bec1`.
