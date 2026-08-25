@@ -10,7 +10,16 @@ from typing import Any, Mapping
 EXPECTED_POLICY = "envelope-balanced-secondary-v2"
 SECONDARY_RAW_RATIO = 0.80
 HARMONIC_SECONDARY_RAW_RATIO = 0.92
-HARMONIC_INTERVALS = frozenset({12, 19, 24, 28, 31, 36})
+FUNDAMENTAL_MIN_RAW_RATIO = 0.55
+HARMONIC_INTERVAL_WEIGHTS = {
+    12: 0.35,
+    19: 0.25,
+    24: 0.20,
+    28: 0.12,
+    31: 0.10,
+    36: 0.08,
+}
+HARMONIC_INTERVALS = frozenset(HARMONIC_INTERVAL_WEIGHTS)
 POSITIVE_ATTACK_FLOOR = 0.0
 POSITIVE_BODY_FLOOR = -0.25
 
@@ -38,7 +47,7 @@ def _candidate_map(attack: Mapping[str, Any]) -> dict[int, Mapping[str, Any]]:
     return output
 
 
-def _primary_midi(candidates: Mapping[int, Mapping[str, Any]]) -> int:
+def _stored_primary_midi(candidates: Mapping[int, Mapping[str, Any]]) -> int:
     primaries = [midi for midi, item in candidates.items() if item.get("primary") is True]
     if len(primaries) != 1:
         raise ValueError(f"expected exactly one replay primary, found {len(primaries)}")
@@ -69,6 +78,63 @@ def _strongest_raw_midi(candidates: Mapping[int, Mapping[str, Any]]) -> int:
     )
 
 
+def _harmonic_family_score(
+    midi: int,
+    positive: Mapping[int, Mapping[str, Any]],
+) -> float:
+    base = positive[midi]
+    score = _finite(base["score"])
+    for interval, weight in HARMONIC_INTERVAL_WEIGHTS.items():
+        upper = positive.get(int(midi) + int(interval))
+        if upper is None:
+            continue
+        if _finite(upper["attack"]) <= POSITIVE_ATTACK_FLOOR:
+            continue
+        if _finite(upper["body"]) <= POSITIVE_BODY_FLOOR:
+            continue
+        score += float(weight) * max(
+            0.0,
+            min(_finite(base["score"]), _finite(upper["score"])),
+        )
+    return float(score)
+
+
+def _recomputed_primary_midi(candidates: Mapping[int, Mapping[str, Any]]) -> int:
+    if not candidates:
+        raise ValueError("cannot recompute primary from empty candidate set")
+    positive = _positive(candidates)
+    if not positive:
+        return _strongest_raw_midi(candidates)
+
+    strongest_raw_midi = _strongest_raw_midi(candidates)
+    strongest_score = max(1e-6, _finite(positive[strongest_raw_midi]["score"]))
+    family_scores = {
+        midi: _harmonic_family_score(midi, positive)
+        for midi in positive
+    }
+    primary = max(
+        family_scores,
+        key=lambda midi: (
+            family_scores[midi],
+            _finite(positive[midi]["attack"]),
+            -int(midi),
+        ),
+    )
+    if _finite(positive[primary]["score"]) < FUNDAMENTAL_MIN_RAW_RATIO * strongest_score:
+        primary = strongest_raw_midi
+    return int(primary)
+
+
+def _verified_primary_midi(candidates: Mapping[int, Mapping[str, Any]]) -> int:
+    stored = _stored_primary_midi(candidates)
+    recomputed = _recomputed_primary_midi(candidates)
+    if stored != recomputed:
+        raise ValueError(
+            f"stored replay primary {stored} does not match independently recomputed primary {recomputed}"
+        )
+    return int(recomputed)
+
+
 def _ratios(item: Mapping[str, Any], strongest: Mapping[str, Any]) -> dict[str, float]:
     return {
         "score": _finite(item["score"]) / max(1e-6, _finite(strongest["score"])),
@@ -81,7 +147,7 @@ def _select(attack: Mapping[str, Any], *, policy: str) -> tuple[set[int], list[d
     candidates = _candidate_map(attack)
     if not candidates:
         raise ValueError("replay attack has no candidates")
-    primary = _primary_midi(candidates)
+    primary = _verified_primary_midi(candidates)
     positive = _positive(candidates)
     if not positive:
         return set(candidates), []
@@ -136,6 +202,10 @@ def build_report(replay: Mapping[str, Any]) -> dict[str, Any]:
         raise ValueError("fixed retained-attack pitch replay is not marked ready")
     if replay.get("attackPolicyReplayReady") is not True:
         raise ValueError("full attack-policy replay is not marked ready")
+    if replay.get("sourceViewEvidenceReady") is not True:
+        raise ValueError("source-view replay evidence is not marked ready")
+    if replay.get("precisionStrengthRecomputeReady") is not True:
+        raise ValueError("precision-strength replay evidence is not marked ready")
     if replay.get("referenceFree") is not True:
         raise ValueError("replay evidence is not marked reference-free")
     if replay.get("professionalReferenceUsed") is not False:
@@ -178,11 +248,11 @@ def build_report(replay: Mapping[str, Any]) -> dict[str, Any]:
             raise ValueError(f"retained replay attack {key} is not marked retained")
 
         candidates = _candidate_map(attack)
-        primary = _primary_midi(candidates)
+        primary = _verified_primary_midi(candidates)
         stored = {midi for midi, item in candidates.items() if item.get("selected") is True}
         if primary not in stored:
             raise ValueError(f"replay primary is not stored-selected at {key}")
-        legacy, legacy_decisions = _select(attack, policy="legacy")
+        legacy, _legacy_decisions = _select(attack, policy="legacy")
         v2, v2_decisions = _select(attack, policy="v2")
 
         if stored != v2:
@@ -218,6 +288,7 @@ def build_report(replay: Mapping[str, Any]) -> dict[str, Any]:
                     "measure": int(attack["measure"]),
                     "step": int(attack["step"]),
                     "primaryMidi": int(primary),
+                    "primaryRecomputed": True,
                     "legacyPitchSet": sorted(legacy),
                     "v2PitchSet": sorted(v2),
                     "storedSelectedPitchSet": sorted(stored),
@@ -248,6 +319,9 @@ def build_report(replay: Mapping[str, Any]) -> dict[str, Any]:
             "eligiblePitchHypothesisCount": eligible_pitch_count,
             "fixedRetainedAttackPitchReplayReady": True,
             "attackPolicyReplayReady": True,
+            "sourceViewEvidenceReady": True,
+            "precisionStrengthRecomputeReady": True,
+            "primaryRecomputeMatches": True,
             "professionalReferenceUsed": False,
             "newInferenceUsed": False,
         },
@@ -259,6 +333,7 @@ def build_report(replay: Mapping[str, Any]) -> dict[str, Any]:
             "v2RemovedPitchCount": removed_total,
             "changedAttackCount": changed_attacks,
             "v2ReplayMismatchAttackCount": v2_replay_mismatch_count,
+            "primaryRecomputeMismatchAttackCount": 0,
             "addedPitchFailedDimensionCounts": dict(sorted(failed_dimension_counts.items())),
             "primaryMidi64AttackCount": primary64_attack_count,
             "primaryMidi64ChangedAttackCount": primary64_changed_count,
@@ -303,6 +378,8 @@ def _attack(*items: dict[str, Any], measure: int = 1, step: int = 0) -> dict[str
 
 def _self_test() -> None:
     from v143_contextual_prune_precision_shadow import (
+        FUNDAMENTAL_MIN_RAW_RATIO as ACTUAL_FUNDAMENTAL_MIN_RAW_RATIO,
+        HARMONIC_INTERVAL_WEIGHTS as ACTUAL_HARMONIC_INTERVAL_WEIGHTS,
         HARMONIC_SECONDARY_RAW_RATIO as ACTUAL_HARMONIC_SECONDARY_RAW_RATIO,
         POSITIVE_ATTACK_FLOOR as ACTUAL_POSITIVE_ATTACK_FLOOR,
         POSITIVE_BODY_FLOOR as ACTUAL_POSITIVE_BODY_FLOOR,
@@ -312,6 +389,8 @@ def _self_test() -> None:
 
     assert SECONDARY_RAW_RATIO == ACTUAL_SECONDARY_RAW_RATIO
     assert HARMONIC_SECONDARY_RAW_RATIO == ACTUAL_HARMONIC_SECONDARY_RAW_RATIO
+    assert FUNDAMENTAL_MIN_RAW_RATIO == ACTUAL_FUNDAMENTAL_MIN_RAW_RATIO
+    assert HARMONIC_INTERVAL_WEIGHTS == ACTUAL_HARMONIC_INTERVAL_WEIGHTS
     assert POSITIVE_ATTACK_FLOOR == ACTUAL_POSITIVE_ATTACK_FLOOR
     assert POSITIVE_BODY_FLOOR == ACTUAL_POSITIVE_BODY_FLOOR
 
@@ -391,6 +470,8 @@ def _self_test() -> None:
     ]
 
     for name, attack, expected_legacy, expected_v2 in cases:
+        candidates = _candidate_map(attack)
+        assert _verified_primary_midi(candidates) == _stored_primary_midi(candidates), name
         legacy, _legacy_decisions = _select(attack, policy="legacy")
         v2, _v2_decisions = _select(attack, policy="v2")
         assert legacy == expected_legacy, (name, legacy, expected_legacy)
@@ -400,6 +481,17 @@ def _self_test() -> None:
     assert secondary_gate_decision(score_ratio=0.86, attack_ratio=0.79, body_ratio=0.79, harmonic_above_primary=False) is False
     assert secondary_gate_decision(score_ratio=0.95, attack_ratio=0.95, body_ratio=0.91, harmonic_above_primary=True) is False
     assert secondary_gate_decision(score_ratio=0.95, attack_ratio=0.95, body_ratio=0.95, harmonic_above_primary=True) is True
+
+    corrupted_primary = _attack(
+        _item(60, 0.80, 0.80, 0.80, primary=False, selected=True),
+        _item(72, 1.00, 1.00, 1.00, primary=True, selected=True),
+    )
+    try:
+        _verified_primary_midi(_candidate_map(corrupted_primary))
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("primary recomputation failed to reject corrupted stored primary")
 
     replay_attack = cases[0][1]
     replay = {
@@ -412,6 +504,8 @@ def _self_test() -> None:
         "eligiblePitchHypothesisCount": 5,
         "fixedRetainedAttackPitchReplayReady": True,
         "attackPolicyReplayReady": True,
+        "sourceViewEvidenceReady": True,
+        "precisionStrengthRecomputeReady": True,
         "referenceFree": True,
         "professionalReferenceUsed": False,
         "runtimeLabelsRequired": False,
@@ -425,10 +519,12 @@ def _self_test() -> None:
     assert comparison["v2AddedPitchCount"] == 1
     assert comparison["v2RemovedPitchCount"] == 0
     assert comparison["v2ReplayMismatchAttackCount"] == 0
+    assert comparison["primaryRecomputeMismatchAttackCount"] == 0
     assert comparison["addedPitchFailedDimensionCounts"] == {"body": 1}
     assert report["source"]["attackUniverse"] == "fixed-retained-attacks"
     assert report["source"]["attackPolicyReplayReady"] is True
-    print("PASS precision replay policy compare schema2 edge-case self-test")
+    assert report["source"]["primaryRecomputeMatches"] is True
+    print("PASS precision replay policy compare schema2 primary-recompute edge-case self-test")
 
 
 def main() -> None:
