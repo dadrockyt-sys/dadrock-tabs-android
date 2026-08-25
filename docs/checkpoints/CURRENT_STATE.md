@@ -49,36 +49,52 @@ Priority: **finish Rhythm end-to-end before Bass/Lead; produce a genuinely profe
 ## Pitch/fundamental diagnosis
 - Producer: `analyzer/v143_repaired_timing_precision_candidate_product_modal.py`.
 - Existing lower-fundamental promotion occurs in `v143_contextual_prune_precision_shadow[_v2].py`; `v143_precision_promoted_harmonic_guard.py` only removes a contradictory strongest upper harmonic after a promotion and never changes primary MIDI itself.
-- Current retained primary distribution from the exact saved replay is heavily concentrated: MIDI 64=`202/725`, 52=`107`, 62=`76`, 59=`61`, 57=`39`, 67=`36`. Of the MIDI-64 primaries, `194/202` remain the strongest raw pitch rather than a promoted lower fundamental.
-- Lower observed candidates are common under MIDI-64 primaries (MIDI52 coexists in `117`; MIDI40 in `67`). Weak physical fundamentals can therefore lose to strong overtones under the existing independent per-attack harmonic-family ranking.
-- Do **not** select an uncapped harmonic weighting just because it changes this song's distribution; that has no independent acceptance criterion.
+- Current retained primary distribution from exact saved replay: MIDI 64=`202/725`, 52=`107`, 62=`76`, 59=`61`, 57=`39`, 67=`36`. Of MIDI64 primaries, `194/202` remain strongest raw rather than a promoted lower fundamental.
+- Lower observed candidates are common under MIDI64 primaries: MIDI52 coexists in `117`; MIDI40 in `67`. Weak physical fundamentals can lose to strong overtones under existing independent per-attack ranking.
+- Do **not** select uncapped harmonic weighting merely because it changes this song's distribution; no independent acceptance criterion exists.
 
-## New contextual harmonic-primary shadow V1 — CPU-only, reference-free
-- Module: `analyzer/v143_contextual_harmonic_primary_shadow_v1.py`, commit `ece9b156b4e9d9cd14294ba767a71b025a12dd21`.
-- Replay validator: `analyzer/v143_contextual_harmonic_primary_shadow_v1_replay_validator.py`, commit `9d8344c339aeb19f50eb1b16c323643578d00e78`.
-- Durable validation: `debug/v143-contextual-prune/contextual-harmonic-primary-shadow-v1-validation.json`, commit `5bdaccd327beaa55366d26e27276d94c1d4bf27a`.
-- Purpose: repair isolated strongest-raw upper-harmonic primary flips only when a lower candidate is already physically observed/positive at that attack, the current primary is in the existing harmonic interval family above it, the **existing `FUNDAMENTAL_MIN_RAW_RATIO=0.55`** guard passes, and a retained attack in the same measure within the **existing ±2-step local radius** already uses that exact lower MIDI as primary.
-- No new numeric threshold, song/key/chord/reference label, attack or unobserved pitch is introduced. Input neighbor primaries are immutable during the pass, so corrections cannot cascade.
-- Exact CPU replay result: `12/725` primaries corrected; attacks unchanged `725->725`; invented pitches `0`; invalid primaries `0`; validation green.
-- Transitions: `64->52` x9, `64->40` x1, `52->40` x1, `62->50` x1. Harmonic intervals: octave x11, two octaves x1. MIDI64 primary count falls `202->192` for this conservative shadow.
-- This is a **shadow only**. It has not been inserted into the paid producer, frozen, or professionally scored.
+## Contextual harmonic-primary shadow V1 — CPU-only, reference-free
+- Module `analyzer/v143_contextual_harmonic_primary_shadow_v1.py`, commit `ece9b156b4e9d9cd14294ba767a71b025a12dd21`.
+- Validator `analyzer/v143_contextual_harmonic_primary_shadow_v1_replay_validator.py`, commit `9d8344c339aeb19f50eb1b16c323643578d00e78`.
+- Validation `debug/v143-contextual-prune/contextual-harmonic-primary-shadow-v1-validation.json`, commit `5bdaccd327beaa55366d26e27276d94c1d4bf27a`.
+- Only repairs a strongest-raw upper-harmonic primary when a lower candidate is observed/positive at the same attack, the upper-lower interval is already in the harmonic family, existing `FUNDAMENTAL_MIN_RAW_RATIO=0.55` passes, and a retained attack in the same measure within existing ±2-step local radius already uses that lower MIDI as primary.
+- No new numeric threshold/song/key/chord/reference rule; no cascading corrections.
+- CPU replay: `12/725` primaries corrected; attacks `725->725`; invented pitches `0`; invalid primaries `0`; validation green. Transitions `64->52` x9, `64->40` x1, `52->40` x1, `62->50` x1; octave x11/two-octave x1; MIDI64 primaries `202->192`.
+- All 12 changed pitch sets remain jointly playable in standard tuning under current resolver. **Shadow only**, not producer-integrated/frozen/scored.
 
-## Fingering/voicing quality
-- `v143_rhythm_guitar_note_mapper.py::resolve_joint_chord_voicing` is stateless and independently minimizes chord fret span/max/sum each attack, tending toward open/lowest-fret legal positions rather than phrase-continuous human fingering.
-- A sequence-aware deterministic voicing optimizer remains a safe CPU-only improvement path if it preserves exact attack/MIDI content, standard-tuning legality, unique/non-crossing strings and deterministic output while reducing physical position jumps. Build/validate as shadow before integration.
+## Fingering/voicing research — important limit discovered
+- Current resolver is stateless and heavily favors lowest-fret legal placements.
+- Exact rendered product groups into 725 attacks: 516 single-note, 181 two-note, 24 three-note, 3 four-note, 1 five-note. Enumerating all legal noncrossing standard-tuning voicings is cheap (max 20 states/attack; median 6).
+- A CPU dynamic-programming prototype using physical fret/string geometry reduced cumulative hand-motion dramatically versus baseline, but predictably shifted many attacks higher on the neck because **MIDI alone cannot determine the performer's intended string/fret choice**. A continuity optimizer can make fingering smoother but cannot prove source-accurate fingering.
+- Therefore do not integrate a sequence voicing optimizer as an accuracy fix without independent string/hand-position evidence. This is now secondary to obtaining a guitar-specific tablature evidence source.
+
+## Specialized guitar-AMT research — strongest new strategic lead
+- Public MIT-licensed 2026 project `ErenReyhanlioglu/Guitar-Transcription` (“Cascaded Multi-Task Learning for Automatic Guitar Tablature Transcription”) directly predicts guitar tablature/string-fret state, hand position, string activity, pitch class and multipitch from HCQT + Mel features.
+- Public pretrained weights exist in `ErenReyhanlioglu/Guitar-Transcription-Weights`; six fold `model_best.pt` checkpoints are ~26.8 MB each.
+- Reported six-fold GuitarSet results are far above the current heuristic pitch result: tablature F1 ~`0.783/0.784`, TDR ~`0.946`, tab-derived multipitch F1 ~`0.845`, auxiliary multipitch F1 ~`0.864`.
+- Model config: 22050 Hz, hop 512, HCQT `6x144` with harmonics `[0.5,1,2,3,4,5]`, Mel 256, 19-frame context, standard tuning `[40,45,50,55,59,64]`, frets 0-19 + silence, MIDI 40-88.
+- This model is trained on GuitarSet acoustic guitar, so electric/separated-rhythm domain gap must be tested rather than assumed. It should first be treated as an **independent source-only tab/pitch/string evidence branch**, not a blind replacement for our already-strong timing grid.
+- Strategic architecture if benchmark proves useful: preserve V143 beat/grid timing -> obtain guitar-AMT frame/string/fret evidence -> snap/fuse only source-supported attacks/pitches onto frozen grid -> preserve no-invention and deterministic render contracts -> then run semantic/sustain/render stages.
+
+## Audio availability check
+- The ChatGPT file library contains `DS Music - Are You Gonna Go My Way (Remastered 2025) - Lenny Kravitz.m4a`, size 3,464,988 bytes, duration ~210.675 s.
+- Materialized SHA256 is `c187bead44529d38544b8452f57328aaf17ce606f08217b78e3157c648392481`, **not** the approved fixture SHA `215bd5a6...`.
+- It may be the same musical recording in a different encoding, but under the hard fixture contract it cannot be substituted for freeze/score/candidate claims. It may only be useful for isolated exploratory model-compatibility research if clearly kept separate.
+- The preserved paid artifact ZIP contains JSON evidence, not source audio/stems, so exact approved-fixture inference with a new model is currently unavailable from the saved artifact alone.
 
 ## Timing/current mutation state
 - Relative sixteenth spacing remains strongly source-supported; tempo `129.19921875`; no global timing mutation justified.
 - No Modal/L4 after run `32805316807`; no professional scorer/reference; no Production/main change; protected runtime unchanged; no freeze-ready candidate.
 
 ## Next exact actions
-1. Reverify protected runtime blob after this checkpoint.
-2. Stay CPU-only on pinned fixture.
-3. Validate contextual harmonic-primary V1 more deeply for playable voicing and structural consistency; do not expand its criteria without independent source evidence.
-4. Build/validate sequence-aware professional voicing shadow without changing attacks or MIDI content.
-5. Continue general two-view harmonic/fundamental research; no arbitrary song-specific weights.
-6. Keep Attack V2 as strongest attack correction; do not broaden remaining 105 positive subfloor attacks without new evidence.
-7. Improve conventional PDF rhythm notation only after musical content is materially stronger.
-8. Do not freeze/professional-score while newly rescued attacks lack recomputable downstream technique/sustain evidence.
-9. No Modal/L4 without fresh explicit authorization for a clearly identified missing evidence dimension.
-10. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
+1. Reverify protected runtime blob after checkpoint.
+2. Stay CPU-only/no Modal.
+3. Build a bounded guitar-AMT research adapter/benchmark harness that cannot modify production and that records model/license/config/weights hashes and source-audio SHA before inference.
+4. If CPU inference is feasible, use the library M4A only as a clearly non-approved **domain-compatibility probe**, never as the approved candidate fixture; compare only source-independent structural behavior (guitar activity/string/fret plausibility), not professional reference labels.
+5. Keep contextual harmonic-primary V1 and Attack V2 as conservative source-only shadows; no arbitrary weight expansion.
+6. Do not integrate sequence voicing optimization without independent string/hand-position evidence; a guitar-AMT branch can provide exactly that missing evidence.
+7. Once exact approved audio becomes available to the benchmark harness, test guitar-AMT evidence against V143 frozen timing/source invariants before considering any producer integration.
+8. Improve conventional PDF rhythm notation only after musical content is materially stronger.
+9. Do not freeze/professional-score while required downstream evidence is absent.
+10. No Modal/L4 without fresh explicit authorization.
+11. Do not claim Rhythm complete until score >=0.99, critical mismatches=0, fidelity=1.0.
