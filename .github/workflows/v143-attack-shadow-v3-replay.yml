@@ -12,7 +12,7 @@ on:
       - 'debug/v143-contextual-prune/electric-tabcnn-subfloor-attack-evidence.json'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   replay:
@@ -43,6 +43,19 @@ jobs:
             debug/v143-contextual-prune-ci/pinned-capture/repaired-timing-precision-candidate-product.json \
             debug/v143-contextual-prune/electric-tabcnn-subfloor-attack-evidence.json \
             --output debug/v143-contextual-prune-ci/attack-shadow-v3-replay-validation.json
+      - name: Persist exact passing validation on research branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp debug/v143-contextual-prune-ci/attack-shadow-v3-replay-validation.json \
+            debug/v143-contextual-prune/attack-shadow-v3-replay-validation.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/v143-contextual-prune/attack-shadow-v3-replay-validation.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Persist attack shadow v3 replay validation'
+            git push origin HEAD:v143-contextual-prune-lobo
+          fi
       - name: Show validation result
         if: always()
         shell: bash
