@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "classification": "v143-v5-source-only-frozen-candidate",
+  "branch": "v143-contextual-prune-lobo",
+  "candidatePreFreezeCommit": "f415bf180fc402a3aa8292304a90b4916d32a5d3",
+  "frozenDate": "2026-08-25",
+  "status": {
+    "sourceOnlyFrozen": true,
+    "referenceFree": true,
+    "professionalReferenceUsed": false,
+    "professionalHoldoutOpened": false,
+    "finalCompletionReady": false,
+    "modalInvoked": false,
+    "productionModified": false,
+    "timingFrozen": true,
+    "existingFinalGateFreezeReadySentinelsRemainFalse": true
+  },
+  "boundaries": {
+    "tempo": 129.19921875,
+    "completionGate": {
+      "minimumProfessionalScore": 0.99,
+      "maximumCriticalMismatches": 0,
+      "requiredPdfFidelity": 1.0
+    },
+    "professionalReferenceScorerClosedDuringFreeze": true,
+    "modalAuthorizationPresent": false
+  },
+  "authorizedSource": {
+    "authorizedRunId": 32805316807,
+    "triggerCommit": "74b0f815ff3f66f325220975c410621503de440f",
+    "approvedSourceSha256": "215bd5a657c5326f08f132ae358595a95c30b39bb7493a52c2f910d5a608149f",
+    "baselineCandidateSha256": "a2d451a39391b797e55623bb3c616735a3f1b39648103cb630a9bb1035430951"
+  },
+  "contentIdentity": {
+    "attackV3ValidationSha256": "039a42d06abdc60a111cd85f0db9ac07b81caf1c1d91fd65e260ffb6119b1892",
+    "combinedV5ValidationSha256": "eb2cd7172ec2edd49e37709b1a4b638c0eb61607524827b3192993ab4b0d52ee",
+    "retainedAttackCount": 891,
+    "selectedPitchCount": 1214,
+    "renderedEventCount": 1209,
+    "voicingDropCount": 5,
+    "measureCoverageCount": 113,
+    "baselineRenderedEventCount": 967,
+    "rescuedRenderedEventCount": 242,
+    "preservedMetadataEventCount": 933,
+    "neutralMetadataEventCount": 276,
+    "techniqueEventCount": 21
+  },
+  "gitBlobPins": {
+    "analyzer/v143_reference_free_rhythm_pipeline.py": "7f72f8ed9b14af8bc93e95544195204d99c6bec1",
+    "analyzer/materialize_v143_combined_content_shadow_v5_render_stream.py": "e0b6621cee28c59aadeaf60de58c6c31544ae77e",
+    "analyzer/validate_v143_v5_neutral_metadata_policy.py": "fe2eb40a72ec55035a3a4e70f873171325d538a1",
+    "scripts/v143-render-v5-shadow-pdf.mjs": "9292073c81e8c98eb292bd6e94d773e568cc4485",
+    "lib/createV143RhythmPdf.js": "4f0e1372dd5903c05c25f0f0a302dd35e81de36b",
+    "lib/v143RenderContract.js": "ccbb93c48982798cc474309fd981f6ca02d5c8d4",
+    "debug/v143-contextual-prune/electric-tabcnn-subfloor-attack-evidence.json": "e4d11a44b2b3b9eda89b97842a59ac5cf16f032b",
+    "debug/v143-contextual-prune/attack-shadow-v3-replay-validation.json": "53e43071efc244e07cf26ebfbc4697f91dd24fd8",
+    "debug/v143-contextual-prune/contextual-harmonic-primary-shadow-v4-validation.json": "099b5ac472f397aa6aa67af477382d3498b3ddfa",
+    "debug/v143-contextual-prune/combined-content-shadow-v5-validation.json": "121cae5b3a8807279a239e6566e1c96107bb6411",
+    "debug/v143-contextual-prune/v5-professional-pdf/neutral-metadata-policy-report.json": "c8ea8efdb17d1b61875ef61e97ca15628afb8cb2",
+    "debug/v143-contextual-prune/v5-professional-pdf/materialize-report.txt": "c55b12ac1c51d4667680550c89c1cdfd2ac201ba",
+    "debug/v143-contextual-prune/v5-professional-pdf/render-report.json": "b367c9b7d9ade5beed89ff28e5fb61634ff9028a",
+    "debug/v143-contextual-prune/v5-professional-pdf/pdfinfo.txt": "2535f9eba6c71be638de1fcc282601e94e04e3d7",
+    "debug/v143-contextual-prune/v5-professional-pdf/sha256.txt": "0fd5d6e706ca667e6186eab64c6625bc69c422cd",
+    "debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json": "fe61f7ad53a4d71348a5113ecc9e3876eaad98d4",
+    "debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf": "5ac9a0c07db84720aa77dd1592cd23044b5f0e14",
+    "debug/v143-contextual-prune/v5-professional-pdf/inspection-first.png": "a290e945a7b13c314c94e5e9086820481460e820",
+    "debug/v143-contextual-prune/v5-professional-pdf/inspection-middle.png": "686e75446be10923b184e6708055becb271bd77e",
+    "debug/v143-contextual-prune/v5-professional-pdf/inspection-last.png": "a78941720e3764f792c0878edc80f6466715ed63"
+  },
+  "sha256Pins": {
+    "debug/v143-contextual-prune/attack-shadow-v3-replay-validation.json": "039a42d06abdc60a111cd85f0db9ac07b81caf1c1d91fd65e260ffb6119b1892",
+    "debug/v143-contextual-prune/combined-content-shadow-v5-validation.json": "eb2cd7172ec2edd49e37709b1a4b638c0eb61607524827b3192993ab4b0d52ee",
+    "debug/v143-contextual-prune/v5-professional-pdf/v5-render-stream.json": "7c3399d3f5e05ecc8ac98d71d0e5300e1e78f63ae96c1642fe4a19debb4061b2",
+    "debug/v143-contextual-prune/v5-professional-pdf/v5-rhythm-shadow.pdf": "f4c1238e868cadfb90b8a359b1555b0b90e7740b9ebaa276aa394c8991f37ce5",
+    "debug/v143-contextual-prune/v5-professional-pdf/inspection-first.png": "33693e32ee4a578e48f7e96360d0c06191bf0fff16f68d76d97e1e384f1aa5f3",
+    "debug/v143-contextual-prune/v5-professional-pdf/inspection-middle.png": "1e265e8486e75505262de9ea33dea444f60731e025db20dea063dd1f75448775",
+    "debug/v143-contextual-prune/v5-professional-pdf/inspection-last.png": "487df510c3931403017576dac2fe3e587479b9d827a496ea9d792fa5a2764671"
+  },
+  "metadataPolicy": {
+    "policy": "preserve-exact-baseline-metadata-else-one-step-no-technique-no-relational-semantics",
+    "validationPassed": true,
+    "metadataPolicyResolved": true,
+    "neutralFallbackConservative": true,
+    "professionalReferenceUsed": false,
+    "modalInvoked": false
+  },
+  "pdfFidelityEvidence": {
+    "pageCount": 6,
+    "pageSize": "612 x 792 pts (letter)",
+    "pdfBytes": 1748095,
+    "inspectionCoverage": ["first", "middle", "last"],
+    "inspectionImagesByteIdenticalToPriorAcceptedRerender": true,
+    "fidelityGateNotYetProfessionallyScored": true
+  },
+  "freezeSemantics": {
+    "sourceOnlyFreezeVerdict": "FROZEN",
+    "finalProfessionalGateVerdict": "PENDING",
+    "reasonExistingFreezeReadyIsFalse": "Deliberate hardcoded safety sentinel in V5 materializer, neutral metadata validator, and render script; not a failed source-only invariant.",
+    "tuningAfterThisManifestIsForbiddenBeforeFinalHoldout": true,
+    "candidateSelectionAfterProfessionalHoldoutIsForbidden": true
+  }
+}
